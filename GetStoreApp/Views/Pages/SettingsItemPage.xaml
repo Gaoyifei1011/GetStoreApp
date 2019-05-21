@@ -77,19 +77,26 @@
                     IsTapEnabled="True"
                     Tag="3"
                     Tapped="{x:Bind OnSelectorBarTapped}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/AppInstaller')}" />
+                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/Download')}" />
 
                 <SelectorBarItem
                     FontSize="16"
                     IsTapEnabled="True"
                     Tag="4"
                     Tapped="{x:Bind OnSelectorBarTapped}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/Advanced')}" />
+                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/AppInstaller')}" />
 
                 <SelectorBarItem
                     FontSize="16"
                     IsTapEnabled="True"
                     Tag="5"
+                    Tapped="{x:Bind OnSelectorBarTapped}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/Advanced')}" />
+
+                <SelectorBarItem
+                    FontSize="16"
+                    IsTapEnabled="True"
+                    Tag="6"
                     Tapped="{x:Bind OnSelectorBarTapped}"
                     Text="{x:Bind root:ResourceService.GetLocalized('Settings/About')}" />
             </SelectorBar>

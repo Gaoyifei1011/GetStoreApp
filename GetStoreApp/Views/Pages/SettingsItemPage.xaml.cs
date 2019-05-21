@@ -49,7 +49,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private List<Type> PageList { get; } = [typeof(SettingsGeneralPage), typeof(SettingsStoreAndUpdatePage), typeof(SettingsWinGetPage), typeof(SettingsAppInstallerPage), typeof(SettingsAdvancedPage), typeof(SettingsAboutPage)];
+        private List<Type> PageList { get; } = [typeof(SettingsGeneralPage), typeof(SettingsStoreAndUpdatePage), typeof(SettingsWinGetPage), typeof(SettingsDownloadPage), typeof(SettingsAppInstallerPage), typeof(SettingsAdvancedPage), typeof(SettingsAboutPage)];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -112,6 +112,10 @@ namespace GetStoreApp.Views.Pages
                 else if (index is 5 && !Equals(GetCurrentPageType(), PageList[5]))
                 {
                     NavigateTo(PageList[5], null, index > currentIndex);
+                }
+                else if (index is 6 && !Equals(GetCurrentPageType(), PageList[6]))
+                {
+                    NavigateTo(PageList[6], null, index > currentIndex);
                 }
             }
         }
