@@ -284,6 +284,7 @@ namespace GetStoreApp.Services.Controls.Download
                 }
                 else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[2]))
                 {
+                    Aria2Service.InitializeAria2Conf();
                     Aria2Service.Initialize();
                     Aria2Service.DownloadProgress += OnDownloadProgress;
                 }
@@ -414,6 +415,10 @@ namespace GetStoreApp.Services.Controls.Download
             else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[1]))
             {
                 BitsService.TerminateDownload();
+            }
+            else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[2]))
+            {
+                Aria2Service.Release();
             }
         }
 

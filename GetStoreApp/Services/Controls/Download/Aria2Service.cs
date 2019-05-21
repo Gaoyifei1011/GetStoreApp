@@ -46,7 +46,7 @@ namespace GetStoreApp.Services.Controls.Download
                 // 原配置文件存在且新的配置文件不存在，拷贝到指定目录
                 if (!File.Exists(Aria2ConfPath))
                 {
-                    byte[] mileAria2 = ResourceService.GetEmbeddedData("Files/EmbedAssets/Mile.Aria2.conf");
+                    byte[] mileAria2 = ResourceService.GetEmbeddedData("Files/Assets/Embed/Mile.Aria2.conf");
                     FileStream fileStream = new(Aria2ConfPath, FileMode.Create);
                     fileStream.Write(mileAria2, 0, mileAria2.Length);
                     fileStream.Flush();

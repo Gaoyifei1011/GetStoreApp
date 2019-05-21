@@ -298,6 +298,7 @@ namespace GetStoreApp.Services.Root
         {
             DoEngineModeList.Add(KeyValuePair.Create("DeliveryOptimization", GetLocalized("Settings/DoEngineDo")));
             DoEngineModeList.Add(KeyValuePair.Create("BITS", GetLocalized("Settings/DoEngineBits")));
+            DoEngineModeList.Add(KeyValuePair.Create("Aria2", GetLocalized("Settings/DoEngineAria2")));
         }
 
         /// <summary>
