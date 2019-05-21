@@ -328,7 +328,7 @@
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/Download')}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadInstruction')}"
                             TextAlignment="Left" />
 
                         <TextBlock
