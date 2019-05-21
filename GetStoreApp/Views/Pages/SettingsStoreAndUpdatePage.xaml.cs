@@ -1,15 +1,9 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Root;
-using GetStoreApp.Models.Controls.Settings;
+﻿using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
-using GetStoreApp.UI.TeachingTips;
-using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.Windows.Storage.Pickers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,11 +12,10 @@ using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 using Windows.Globalization;
-using Windows.Storage;
 using Windows.System;
 
-// 抑制 CS8305，IDE0060 警告
-#pragma warning disable CS8305,IDE0060
+// 抑制 IDE0060 警告
+#pragma warning disable IDE0060
 
 namespace GetStoreApp.Views.Pages
 {
@@ -159,43 +152,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private StorageFolder _downloadFolder = DownloadOptionsService.DownloadFolder;
-
-        public StorageFolder DownloadFolder
-        {
-            get { return _downloadFolder; }
-
-            set
-            {
-                if (!Equals(_downloadFolder, value))
-                {
-                    _downloadFolder = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadFolder)));
-                }
-            }
-        }
-
-        private KeyValuePair<string, string> _doEngineMode = DownloadOptionsService.DoEngineMode;
-
-        public KeyValuePair<string, string> DoEngineMode
-        {
-            get { return _doEngineMode; }
-
-            set
-            {
-                if (!Equals(_doEngineMode, value))
-                {
-                    _doEngineMode = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DoEngineMode)));
-                }
-            }
-        }
-
         private List<KeyValuePair<string, string>> QueryLinksModeList { get; } = QueryLinksModeService.QueryLinksModeList;
 
         private List<KeyValuePair<string, string>> InstallModeList { get; } = InstallModeService.InstallModeList;
-
-        private List<KeyValuePair<string, string>> DoEngineModeList { get; } = DownloadOptionsService.DoEngineModeList;
 
         private ObservableCollection<StoreRegionModel> StoreRegionCollection { get; } = [];
 
@@ -380,110 +339,6 @@ namespace GetStoreApp.Views.Pages
             {
                 LinkFilterService.SetBlockMapFilterValue(toggleSwitch.IsOn);
                 BlockMapFilterValue = toggleSwitch.IsOn;
-            }
-        }
-
-        /// <summary>
-        /// 打开下载文件存放目录
-        /// </summary>
-        private async void OnDownloadOpenFolderClicked(Hyperlink sender, HyperlinkClickEventArgs args)
-        {
-            await DownloadOptionsService.OpenFolderAsync(DownloadFolder);
-        }
-
-        /// <summary>
-        /// 修改下载文件存放目录
-        /// </summary>
-        private async void OnDownloadChangeFolderClicked(object sender, RoutedEventArgs args)
-        {
-            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is string tag)
-            {
-                switch (tag)
-                {
-                    case "AppCache":
-                        {
-                            DownloadFolder = DownloadOptionsService.DefaultDownloadFolder;
-                            DownloadOptionsService.SetFolder(DownloadFolder);
-                            break;
-                        }
-                    case "Download":
-                        {
-                            DownloadFolder = await StorageFolder.GetFolderFromPathAsync(InfoHelper.UserDataPath.Downloads);
-                            DownloadOptionsService.SetFolder(DownloadFolder);
-                            break;
-                        }
-                    case "Desktop":
-                        {
-                            DownloadFolder = await StorageFolder.GetFolderFromPathAsync(InfoHelper.UserDataPath.Desktop);
-                            DownloadOptionsService.SetFolder(DownloadFolder);
-                            break;
-                        }
-                    case "Custom":
-                        {
-                            try
-                            {
-                                FolderPicker folderPicker = new(MainWindow.Current.AppWindow.Id)
-                                {
-                                    SuggestedStartLocation = PickerLocationId.Downloads
-                                };
-
-                                if (await folderPicker.PickSingleFolderAsync() is PickFolderResult pickFolderResult)
-                                {
-                                    DownloadFolder = await StorageFolder.GetFolderFromPathAsync(pickFolderResult.Path);
-                                    DownloadOptionsService.SetFolder(DownloadFolder);
-                                }
-                            }
-                            catch (Exception e)
-                            {
-                                LogService.WriteLog(LoggingLevel.Error, "Open folderPicker failed", e);
-                                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.FolderPicker));
-                            }
-
-                            break;
-                        }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 打开传递优化设置
-        /// </summary>
-        private void OnOpenDeliveryOptimizationClicked(object sender, RoutedEventArgs args)
-        {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new Uri("ms-settings:delivery-optimization"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
-        }
-
-        /// <summary>
-        /// 下载引擎说明
-        /// </summary>
-        private void OnLearnDoEngineClicked(object sender, RoutedEventArgs args)
-        {
-            if (MainWindow.Current.GetFrameContent() is SettingsPage settingsPage)
-            {
-                settingsPage.ShowSettingsInstruction();
-            }
-        }
-
-        /// <summary>
-        /// 下载引擎方式设置
-        /// </summary>
-
-        private void OnDoEngineModeSelectClicked(object sender, RoutedEventArgs args)
-        {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
-            {
-                DoEngineMode = DoEngineModeList[Convert.ToInt32(tag)];
-                DownloadOptionsService.SetDoEngineMode(DoEngineMode);
             }
         }
 
