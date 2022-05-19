@@ -63,11 +63,11 @@
 ### Multilingual translation
 #### The app already supports multilingual features, and you only need the following few steps to complete.
 #### Step 1: Fork the project and download the code locally
-Step 2: Open Visual Studio 2022
-Step 3: Open the Strings folder in the GetStoreApp project and create the language you are using, such as (English (United States)) folder name en-us, you can refer to the table of language (culture) codes and countries
-Step 4: Translate
-Step 5: Compile and run the code and test your language, english (United States) is displayed by default if the application is not in the language you are using when it is first opened
-Step 6: Create a PR, then submit the modified content to this project and wait for the merge
+#### Step 2: Open Visual Studio 2022
+#### Step 3: Open the Strings folder in the GetStoreApp project and create the language you are using, such as (English (United States)) folder name en-us, you can refer to the table of language (culture) codes and countries
+#### Step 4: Translate
+#### Step 5: Compile and run the code and test your language, english (United States) is displayed by default if the application is not in the language you are using when it is first opened
+#### Step 6: Create a PR, then submit the modified content to this project and wait for the merge
 
 ## 目前该应用处于开发阶段，有大量功能尚未实现，目前仅提供基础的功能，由于我是c#的初学者，且本人时间较为紧张，只能利用自己的闲余时间开发，开发进度较为缓慢，请谅解
 ## At present, the application is in the development stage, there are a large number of functions have not yet been implemented, currently only provide basic functions, because I am a beginner in C#, and I am more time-critical, can only use their spare time to develop, the development progress is relatively slow, please understand
