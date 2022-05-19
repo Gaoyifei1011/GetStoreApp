@@ -1,0 +1,399 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppDisplayName" xml:space="preserve">
+    <value>GetStoreApp (Dev)</value>
+    <comment>Application display name</comment>
+  </data>
+  <data name="AppDescription" xml:space="preserve">
+    <value>GetStoreApp (Dev)</value>
+    <comment>Application description</comment>
+  </data>
+  <data name="Shell_Main.Content" xml:space="preserve">
+    <value>Main</value>
+    <comment>Navigation view item name for Main</comment>
+  </data>
+  <data name="Shell_Download.Content" xml:space="preserve">
+    <value>Download</value>
+    <comment>Navigation view item name for Download</comment>
+  </data>
+  <data name="Shell_History.Content" xml:space="preserve">
+    <value>History Record</value>
+    <comment>Navigation view item name for History</comment>
+  </data>
+  <data name="Shell_About.Content" xml:space="preserve">
+    <value>About</value>
+    <comment>Navigation view item name for About</comment>
+  </data>
+  <data name="Settings_Theme.Text" xml:space="preserve">
+    <value>Application themes</value>
+    <comment>Application Theme text for Settings</comment>
+  </data>
+  <data name="Settings_Theme_Dark.Content" xml:space="preserve">
+    <value>Dark</value>
+    <comment>Dark theme text for Settings</comment>
+  </data>
+  <data name="Settings_Theme_Default.Content" xml:space="preserve">
+    <value>Windows default</value>
+    <comment>Windows default theme text for Settings</comment>
+  </data>
+  <data name="Settings_Theme_Light.Content" xml:space="preserve">
+    <value>Light</value>
+    <comment>Light theme text for Settings</comment>
+  </data>
+  <data name="Settings_About.Text" xml:space="preserve">
+    <value>About this application</value>
+    <comment>About this application title for Settings</comment>
+  </data>
+  <data name="Settings_AboutDescription.Text" xml:space="preserve">
+    <value>Settings page placeholder text.  Your app description goes here.</value>
+    <comment>About this application description for Settings</comment>
+  </data>
+  <data name="Settings_PrivacyTermsLink.Content" xml:space="preserve">
+    <value>Privacy Statement</value>
+    <comment>Privacy Statement link content for Settings</comment>
+  </data>
+  <data name="Settings_PrivacyTermsLink.NavigateUri" xml:space="preserve">
+    <value>https://YourPrivacyUrlGoesHere/</value>
+    <comment>Here is your Privacy Statement url for Settings</comment>
+  </data>
+  <data name="Settings_Appearance.Text" xml:space="preserve">
+    <value>Appearance</value>
+    <comment>Appearance text for Settings</comment>
+  </data>
+  <data name="About_Title.Text" xml:space="preserve">
+    <value>About</value>
+    <comment>The name of the About page title</comment>
+  </data>
+  <data name="Download_Title.Text" xml:space="preserve">
+    <value>Download</value>
+    <comment>The name of the Download page title</comment>
+  </data>
+  <data name="HistoryCount.Text" xml:space="preserve">
+    <value>There are {0} results.</value>
+    <comment>The number of History Record entries</comment>
+  </data>
+  <data name="History_Type_All.Content" xml:space="preserve">
+    <value>ALL</value>
+    <comment>The History type drop-down selection box</comment>
+  </data>
+  <data name="History_Type.Text" xml:space="preserve">
+    <value>Type:</value>
+    <comment>History type label</comment>
+  </data>
+  <data name="History_Refresh_Name.Text" xml:space="preserve">
+    <value>Refresh</value>
+    <comment>History data refresh</comment>
+  </data>
+  <data name="History_Title.Text" xml:space="preserve">
+    <value>History Record</value>
+    <comment>The name of the History Record page title</comment>
+  </data>
+  <data name="History_Type_CID.Content" xml:space="preserve">
+    <value>CategoryID</value>
+    <comment>The History type drop-down selection box</comment>
+  </data>
+  <data name="History_Type_PFN.Content" xml:space="preserve">
+    <value>PackageFamilyName</value>
+    <comment>The History type drop-down selection box</comment>
+  </data>
+  <data name="History_Type_PID.Content" xml:space="preserve">
+    <value>ProductID</value>
+    <comment>The History type drop-down selection box</comment>
+  </data>
+  <data name="History_Type_URL.Content" xml:space="preserve">
+    <value>URL(Link)</value>
+    <comment>The History type drop-down selection box</comment>
+  </data>
+  <data name="Main_Description1.Text" xml:space="preserve">
+    <value>Online link generator for Microsoft Store</value>
+    <comment>Main page text description 1</comment>
+  </data>
+  <data name="Main_Description2.Text" xml:space="preserve">
+    <value>Enter the link from the Microsoft Store and click on the checkbox - to get all available links</value>
+    <comment>Main page text description 2</comment>
+  </data>
+  <data name="Main_GetLinks.Content" xml:space="preserve">
+    <value>Get Links</value>
+    <comment>Gets a text description of the link button</comment>
+  </data>
+  <data name="Main_Title.Text" xml:space="preserve">
+    <value>Main</value>
+    <comment>The name of the Main page title</comment>
+  </data>
+  <data name="Main_Type_CID" xml:space="preserve">
+    <value>CategoryID</value>
+    <comment>Main category type</comment>
+  </data>
+  <data name="Main_Type_PFN" xml:space="preserve">
+    <value>PackageFamilyName</value>
+    <comment>Main category type</comment>
+  </data>
+  <data name="Main_Type_PID" xml:space="preserve">
+    <value>ProductID</value>
+    <comment>Main category type</comment>
+  </data>
+  <data name="Main_Type_URL" xml:space="preserve">
+    <value>URL(Link)</value>
+    <comment>Main category type</comment>
+  </data>
+  <data name="AppTitle.Text" xml:space="preserve">
+    <value>GetStoreApp (Dev)</value>
+    <comment>Application display name</comment>
+  </data>
+  <data name="PackageDisplayName" xml:space="preserve">
+    <value>GetStoreApp</value>
+    <comment>Application package display name</comment>
+  </data>
+  <data name="Settings_Theme_Description.Text" xml:space="preserve">
+    <value>Select the application theme to display</value>
+    <comment>"Settings" uses system Settings text</comment>
+  </data>
+  <data name="Settings_Title.Text" xml:space="preserve">
+    <value>Settings</value>
+    <comment>The name of the Settings page title</comment>
+  </data>
+  <data name="Main_History.Text" xml:space="preserve">
+    <value>History Record</value>
+    <comment>Main page Historical record text description</comment>
+  </data>
+  <data name="Main_History_ViewMore.Content" xml:space="preserve">
+    <value>View More</value>
+    <comment>Main page for more buttons</comment>
+  </data>
+  <data name="Main_Search_Result.Text" xml:space="preserve">
+    <value>Search Result</value>
+    <comment>Text description of search results on the main page</comment>
+  </data>
+  <data name="Main_Status_Info.Welcome" xml:space="preserve">
+    <value>Welcome to use GetStoreApp</value>
+    <comment>Home page Status Initial Text Indicates the initial text description</comment>
+  </data>
+  <data name="Settings_Language.Text" xml:space="preserve">
+    <value>Language</value>
+    <comment>Set the page Language description</comment>
+  </data>
+  <data name="Settings_Language_Description.Text" xml:space="preserve">
+    <value>The language in which the application is displayed</value>
+    <comment>Set the page detailed language description</comment>
+  </data>
+  <data name="Settings_General.Text" xml:space="preserve">
+    <value>General Options</value>
+    <comment>General Settings text description on the Settings page</comment>
+  </data>
+  <data name="Main_Channel_Fast" xml:space="preserve">
+    <value>Fast</value>
+  </data>
+  <data name="Main_Channel_Retail" xml:space="preserve">
+    <value>Retail</value>
+  </data>
+  <data name="Main_Channel_RP" xml:space="preserve">
+    <value>Release Preview</value>
+  </data>
+  <data name="Main_Channel_Slow" xml:space="preserve">
+    <value>Slow</value>
+  </data>
+  <data name="Main_Link_Example_Text" xml:space="preserve">
+    <value>Sample Data: </value>
+  </data>
+  <data name="Main_Status_Info.Success" xml:space="preserve">
+    <value>The links were successfully received from the Microsoft Store server</value>
+  </data>
+  <data name="Main_Status_Info.Get" xml:space="preserve">
+    <value>Queries are being made from the servers in the Microsoft Store, please be patient...</value>
+  </data>
+  <data name="Main_Status_Instruction.Content" xml:space="preserve">
+    <value>Direction for Use</value>
+  </data>
+  <data name="Settings_Instruction_Button.Text" xml:space="preserve">
+    <value>Instructions for use button</value>
+  </data>
+  <data name="Settings_Instruction_Button_Description.Text" xml:space="preserve">
+    <value>After the app launches, the Instructions button appears when the main page opens</value>
+  </data>
+  <data name="Settings_Instruction_ToggleSwitch.OffContent" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="Settings_Instruction_ToggleSwitch.OnContent" xml:space="preserve">
+    <value>Displayed</value>
+  </data>
+  <data name="Settings_Advanced.Text" xml:space="preserve">
+    <value>Advanced Options</value>
+  </data>
+  <data name="Main_History_Channels.Text" xml:space="preserve">
+    <value>Channels Name</value>
+  </data>
+  <data name="Main_History_Empty.Text" xml:space="preserve">
+    <value>The history record is empty</value>
+  </data>
+  <data name="Main_History_Links.Text" xml:space="preserve">
+    <value>Links Name</value>
+  </data>
+  <data name="Main_History_Operations.Text" xml:space="preserve">
+    <value>Operations Mode</value>
+  </data>
+  <data name="Main_History_Types.Text" xml:space="preserve">
+    <value>Types Name</value>
+  </data>
+  <data name="Main_Status_Info.Error" xml:space="preserve">
+    <value>An error occurred to get data from the microsoft store server, please click the specific information button on the right for specific problems</value>
+  </data>
+  <data name="Main_Status_Info.Warning" xml:space="preserve">
+    <value>The server returned an empty list. Either you have not entered the link correctly, or this service does not support generation for this product.</value>
+  </data>
+  <data name="Main_History_GetLinks" xml:space="preserve">
+    <value>Get Links</value>
+  </data>
+  <data name="Settings_HistoryItem.Text" xml:space="preserve">
+    <value>The number of main page history item displays</value>
+  </data>
+  <data name="Settings_HistoryItem_Description.Text" xml:space="preserve">
+    <value>The maximum number of history entries that will appear when the main page opens after the app launches</value>
+  </data>
+  <data name="Settings_HistoryItem_Maximum" xml:space="preserve">
+    <value>More</value>
+  </data>
+  <data name="Settings_HistoryItem_Minimal" xml:space="preserve">
+    <value>Less</value>
+  </data>
+  <data name="Main_Result_AppLinkExpireTime.Text" xml:space="preserve">
+    <value>Link Expire Time</value>
+  </data>
+  <data name="Main_Result_AppPackageName.Text" xml:space="preserve">
+    <value>File Name</value>
+  </data>
+  <data name="Main_Result_AppPackageSize.Text" xml:space="preserve">
+    <value>File Size</value>
+  </data>
+  <data name="Main_Result_AppSHA1.Text" xml:space="preserve">
+    <value>File SHA-1</value>
+  </data>
+  <data name="Main_Result_Bottom.Text" xml:space="preserve">
+    <value>The search results have reached the bottom</value>
+  </data>
+  <data name="Main_Result_CategoryID" xml:space="preserve">
+    <value>CategoryID:</value>
+  </data>
+  <data name="Main_Result_Count" xml:space="preserve">
+    <value>{0} results were obtained from Microsoft Store servers</value>
+  </data>
+  <data name="Main_Search_Result_Empty.Text" xml:space="preserve">
+    <value>No results have been searched, please check the link you entered and try again</value>
+  </data>
+</root>

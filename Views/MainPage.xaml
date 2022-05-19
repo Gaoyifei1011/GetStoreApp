@@ -1,0 +1,39 @@
+﻿<Page
+    x:Class="GetStoreApp.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mainctr="using:GetStoreApp.UI.Controls.Main"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="using:GetStoreApp.ViewModels.Pages"
+    NavigationCacheMode="Enabled"
+    Style="{StaticResource PageStyle}"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <viewModel:MainViewModel x:Name="ViewModel" />
+    </Page.DataContext>
+
+    <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            x:Name="ContentArea"
+            Margin="{StaticResource PageMargin}"
+            Spacing="{StaticResource PageSpacing}">
+
+            <!--  标题栏部分  -->
+            <mainctr:TitleControl />
+
+            <!--  选择列表  -->
+            <mainctr:RequestControl />
+
+            <!--  状态栏  -->
+            <mainctr:StatusBarControl />
+
+            <!--  主页部分历史记录列表  -->
+            <mainctr:SimpleHistoryControl />
+
+            <!--  获取结果列表  -->
+            <mainctr:ResultControl />
+        </StackPanel>
+    </ScrollViewer>
+</Page>

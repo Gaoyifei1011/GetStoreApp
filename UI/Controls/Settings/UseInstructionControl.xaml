@@ -1,0 +1,61 @@
+﻿<UserControl
+    x:Class="GetStoreApp.UI.Controls.Settings.UseInstructionControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:gc="using:GetStoreApp.UI.Controls.General"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="using:GetStoreApp.ViewModels.Controls.Settings"
+    mc:Ignorable="d">
+
+    <UserControl.DataContext>
+        <viewModel:UseInstructionViewModel x:Name="ViewModel" />
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/_SettingsFontIcon.xaml" />
+                <ResourceDictionary Source="/Styles/_Thickness.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <!--  “使用说明”按钮  -->
+    <gc:CardControl>
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <FontIcon
+                Grid.Column="0"
+                Glyph="&#xE897;"
+                Style="{StaticResource SettingsFontIconStyle}" />
+
+            <StackPanel Grid.Column="1" Orientation="Vertical">
+                <TextBlock
+                    x:Uid="Settings_Instruction_Button"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource BodyTextBlockStyle}"
+                    Text="Instructions for use button"
+                    TextWrapping="WrapWholeWords" />
+                <TextBlock
+                    x:Uid="Settings_Instruction_Button_Description"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="Always display the Instructions for Use button when the main page is first opened"
+                    TextWrapping="WrapWholeWords" />
+            </StackPanel>
+            <ToggleSwitch
+                x:Uid="Settings_Instruction_ToggleSwitch"
+                Grid.Column="2"
+                FlowDirection="RightToLeft"
+                IsOn="{x:Bind ViewModel.UseInsVisValue, Mode=TwoWay}"
+                OffContent="Closed"
+                OnContent="Displayed" />
+        </Grid>
+    </gc:CardControl>
+</UserControl>

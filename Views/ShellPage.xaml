@@ -1,0 +1,149 @@
+﻿<Page
+    x:Class="GetStoreApp.Views.ShellPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:conGen="using:GetStoreApp.Converters.General"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helper="using:GetStoreApp.Helpers"
+    xmlns:helpers="using:GetStoreApp.Helpers"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sc="using:GetStoreApp.UI.Controls.Shell"
+    xmlns:viewModel="using:GetStoreApp.ViewModels.Pages"
+    xmlns:views="using:GetStoreApp.Views"
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
+    winui:BackdropMaterial.ApplyToRootOrPageBackground="True"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <viewModel:ShellViewModel x:Name="ViewModel" />
+    </Page.DataContext>
+
+    <Page.Resources>
+        <ResourceDictionary>
+
+            <conGen:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/_Colors.xaml" />
+                <ResourceDictionary Source="/Styles/_Thickness.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid>
+        <i:Interaction.Behaviors>
+            <ic:EventTriggerBehavior EventName="Loaded">
+                <ic:InvokeCommandAction Command="{x:Bind ViewModel.LoadedCommand}" />
+            </ic:EventTriggerBehavior>
+        </i:Interaction.Behaviors>
+
+        <!--  应用标题和图标  -->
+        <Border
+            x:Name="AppTitleBar"
+            Height="50"
+            Margin="{StaticResource AppTitleBarMargin}"
+            VerticalAlignment="Top"
+            Background="Transparent"
+            Canvas.ZIndex="1"
+            IsHitTestVisible="True">
+            <StackPanel Orientation="Horizontal">
+                <Image
+                    x:Name="AppIcon"
+                    Width="20"
+                    Height="20"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Source="/Assets/Square44x44Logo.png" />
+                <TextBlock
+                    x:Name="AppTitle"
+                    x:Uid="AppTitle"
+                    Margin="{StaticResource AppTitleTextBlockMargin}"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="Get Store App" />
+            </StackPanel>
+        </Border>
+
+        <winui:NavigationView
+            x:Name="navigationView"
+            Grid.ColumnSpan="2"
+            AlwaysShowHeader="False"
+            Background="Transparent"
+            Canvas.ZIndex="0"
+            DisplayModeChanged="NavigationView_DisplayModeChanged"
+            IsBackButtonVisible="Visible"
+            IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
+            IsSettingsVisible="True"
+            IsTabStop="True"
+            IsTitleBarAutoPaddingEnabled="False"
+            OpenPaneLength="200"
+            SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}">
+
+            <!--  导航顶部条目  -->
+            <winui:NavigationView.MenuItems>
+                <winui:NavigationViewItem
+                    x:Uid="Shell_Main"
+                    helpers:NavHelper.NavigateTo="views:MainPage"
+                    Content="Home"
+                    Icon="Home" />
+                <winui:NavigationViewItem
+                    x:Uid="Shell_Download"
+                    helpers:NavHelper.NavigateTo="views:DownloadPage"
+                    Content="Download"
+                    Icon="Download" />
+                <winui:NavigationViewItem
+                    x:Uid="Shell_History"
+                    helpers:NavHelper.NavigateTo="views:HistoryPage"
+                    Content="History Record">
+                    <winui:NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF738;" />
+                    </winui:NavigationViewItem.Icon>
+                </winui:NavigationViewItem>
+            </winui:NavigationView.MenuItems>
+
+            <!--  底部导航条目  -->
+            <winui:NavigationView.FooterMenuItems>
+                <winui:NavigationViewItem
+                    x:Uid="Shell_About"
+                    helpers:NavHelper.NavigateTo="views:AboutPage"
+                    Content="About">
+                    <winui:NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE946;" />
+                    </winui:NavigationViewItem.Icon>
+                </winui:NavigationViewItem>
+            </winui:NavigationView.FooterMenuItems>
+
+            <i:Interaction.Behaviors>
+                <ic:EventTriggerBehavior EventName="ItemInvoked">
+                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.ItemInvokedCommand}" />
+                </ic:EventTriggerBehavior>
+            </i:Interaction.Behaviors>
+
+            <Grid>
+                <Frame x:Name="shellFrame" />
+            </Grid>
+        </winui:NavigationView>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WindowFocusStates">
+                <VisualState x:Name="WindowFocused" />
+                <VisualState x:Name="WindowNotFocused">
+                    <VisualState.Setters>
+                        <Setter Target="AppTitle.Foreground" Value="{ThemeResource SystemControlForegroundChromeDisabledLowBrush}" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="640" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</Page>

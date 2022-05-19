@@ -1,0 +1,50 @@
+﻿<UserControl
+    x:Class="GetStoreApp.UI.Controls.Main.StatusBarControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:conGen="using:GetStoreApp.Converters.General"
+    xmlns:conMain="using:GetStoreApp.Converters.Main"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:gc="using:GetStoreApp.UI.Controls.General"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="using:GetStoreApp.ViewModels.Controls.Main"
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d">
+
+    <UserControl.DataContext>
+        <viewModel:StatusBarViewModel x:Name="ViewModel" />
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <conGen:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
+
+        <conMain:MainStatImageConverter x:Name="MainStatImageConverter" />
+    </UserControl.Resources>
+
+    <gc:CardControl>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Image
+                Grid.Column="0"
+                Width="40"
+                Height="40"
+                Source="{x:Bind ViewModel.MainStatImage, Converter={StaticResource MainStatImageConverter}, Mode=OneWay}" />
+            <TextBlock
+                Grid.Column="1"
+                Margin="10,0,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Text="{x:Bind ViewModel.MainStatInfoText, Mode=OneWay}" />
+            <winui:ProgressRing
+                x:Name="MainStatPrRing"
+                Grid.Column="3"
+                IsActive="{x:Bind ViewModel.MainStatPrRingActValue, Mode=OneWay}"
+                Visibility="{x:Bind ViewModel.MainStatPrRingVisValue, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
+        </Grid>
+    </gc:CardControl>
+</UserControl>
