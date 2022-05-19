@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:conGen="using:GetStoreApp.Converters.General"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:helper="using:GetStoreApp.Helpers"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:GetStoreApp.Core.Models"
     xmlns:uwp="using:Richasy.ExpanderEx.Uwp"
@@ -19,7 +18,7 @@
         <conGen:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
         <conGen:IntToVisibilityConverter x:Name="IntToVisibilityConverter" />
         <conGen:IntToReverseVisibilityConverter x:Name="IntToReverseVisibilityConverter" />
-        <conGen:DataTimeFormatConverter x:Name="DataTimeFormatConverter"/>
+        <conGen:DataTimeFormatConverter x:Name="DataTimeFormatConverter" />
 
         <Thickness x:Key="MainCtrlLeftMargin">0,0,2,0</Thickness>
         <Thickness x:Key="MainCtrlLeftRightMargin">2,0,2,0</Thickness>
@@ -57,10 +56,10 @@
                                 Grid.Column="1"
                                 IsTextSelectionEnabled="True"
                                 Style="{StaticResource SimpleHisTextStyle}"
-                                Text="{x:Bind AppLinkExpireTime,Converter={StaticResource DataTimeFormatConverter}}"
+                                Text="{x:Bind AppLinkExpireTime, Converter={StaticResource DataTimeFormatConverter}}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap"
-                                ToolTipService.ToolTip="{x:Bind AppLinkExpireTime,Converter={StaticResource DataTimeFormatConverter}}" />
+                                ToolTipService.ToolTip="{x:Bind AppLinkExpireTime, Converter={StaticResource DataTimeFormatConverter}}" />
                             <TextBlock
                                 Grid.Column="2"
                                 IsTextSelectionEnabled="True"
@@ -166,28 +165,28 @@
                                         Style="{StaticResource SimpleHisTextStyle}"
                                         Text="File Name"
                                         TextWrapping="NoWrap"
-                                        ToolTipService.ToolTip="File Name"/>
+                                        ToolTipService.ToolTip="File Name" />
                                     <TextBlock
                                         x:Uid="Main_Result_AppLinkExpireTime"
                                         Grid.Column="1"
                                         Style="{StaticResource SimpleHisTextStyle}"
                                         Text="Link Expire Time"
                                         TextWrapping="NoWrap"
-                                        ToolTipService.ToolTip="Link Expire Time"/>
+                                        ToolTipService.ToolTip="Link Expire Time" />
                                     <TextBlock
                                         x:Uid="Main_Result_AppSHA1"
                                         Grid.Column="2"
                                         Style="{StaticResource SimpleHisTextStyle}"
                                         Text="File SHA-1"
                                         TextWrapping="NoWrap"
-                                        ToolTipService.ToolTip="File SHA-1"/>
+                                        ToolTipService.ToolTip="File SHA-1" />
                                     <TextBlock
                                         x:Uid="Main_Result_AppPackageSize"
                                         Grid.Column="3"
                                         Style="{StaticResource SimpleHisTextStyle}"
                                         Text="File Size"
                                         TextWrapping="NoWrap"
-                                        ToolTipService.ToolTip="File Size"/>
+                                        ToolTipService.ToolTip="File Size" />
                                 </Grid>
                             </uwp:ExpanderExWrapper.MainContent>
                         </uwp:ExpanderExWrapper>
@@ -209,7 +208,7 @@
                         <TextBlock
                             x:Uid="Main_Result_Bottom"
                             Style="{StaticResource SimpleHisTextStyle}"
-                            Text="The search results have reached the bottom"/>
+                            Text="The search results have reached the bottom" />
                     </uwp:ExpanderExWrapper.MainContent>
                 </uwp:ExpanderExWrapper>
             </uwp:ExpanderExMenuPanel>
