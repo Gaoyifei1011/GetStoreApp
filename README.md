@@ -36,6 +36,24 @@
 ### 注意：项目正在开发中，在调试代码的时候默认将获取商店区域选择在“zh-cn”，这个问题下一个版本解决，并在设置中提供修改选项
 ### Note: The project is under development, when debugging the code, the default will get the store area selected in "zh-cn", this problem is solved in the next version, and the modification option is provided in the settings
 
+## 使用参考的库或项目
+### [Html Agility Pack](https://github.com/zzzprojects/html-agility-pack)
+### [microsoft-ui-xaml](https://github.com/microsoft/microsoft-ui-xaml)
+### [MVVM Toolkit](https://docs.microsoft.com/zh-cn/dotnet/communitytoolkit/mvvm/introduction)
+### [MvvmLightLibs](https://www.nuget.org/packages/MvvmLightLibs)
+### [ExpanderEx](https://github.com/Richasy/ExpanderEx)
+### [SQLite for Universal Windows Platform](https://marketplace.visualstudio.com/items?itemName=SQLiteDevelopmentTeam.SQLiteforUniversalWindowsPlatform)
+### [SQLitePCL](https://www.nuget.org/packages/SQLitePCL/)
+
+## Use a reference library or project
+### [Html Agility Pack](https://github.com/zzzprojects/html-agility-pack)
+### [microsoft-ui-xaml](https://github.com/microsoft/microsoft-ui-xaml)
+### [MVVM Toolkit](https://docs.microsoft.com/zh-cn/dotnet/communitytoolkit/mvvm/introduction)
+### [MvvmLightLibs](https://www.nuget.org/packages/MvvmLightLibs)
+### [ExpanderEx](https://github.com/Richasy/ExpanderEx)
+### [SQLite for Universal Windows Platform](https://marketplace.visualstudio.com/items?itemName=SQLiteDevelopmentTeam.SQLiteforUniversalWindowsPlatform)
+### [SQLitePCL](https://www.nuget.org/packages/SQLitePCL/)
+
 ## 应用运行图（中文（简体））
 ### 应用初次打开界面
 ![image](https://user-images.githubusercontent.com/49179966/169338562-f365f10c-c34a-4fad-8ee0-5abbd023880b.png)
