@@ -13,6 +13,7 @@
 | 应用说明                     | 0%，预计7月初完成        |
 | 控制台应用程序                    | 0%，计划中      |
 | 设置内容                     | 30%，随着其他项目进度共同开发        |
+| 迁移到Winui3                     | 0%，待到项目总完成度到达80%时开始迁移        |
 
 | Project progress                    | Development progress |
 | --------------------------- | ----------- |
@@ -22,6 +23,7 @@
 | Application Notes                   | 0%, expected to be completed in early July        |
 | Console applications                       | 0% is planned      |
 | Settings                     | 30%, co-developed with the progress of other projects |
+| 迁移到Winui3                 | 0%, and start the migration when the total project completion reaches 80%. |
 
 ## 该项目的功能
 ### 该项目主要包括以下功能：通过[Store](https://store.rg-adguard.net/)提供的API来生成带有文件链接
