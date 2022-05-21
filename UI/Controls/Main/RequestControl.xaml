@@ -6,6 +6,7 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mvm="using:GetStoreApp.ViewModels.Pages"
     xmlns:viewModel="using:GetStoreApp.ViewModels.Controls.Main"
     mc:Ignorable="d">
 
@@ -52,12 +53,11 @@
                 PlaceholderText="{x:Bind ViewModel.MainLinkPHText, Mode=OneWay}"
                 Text="{x:Bind ViewModel.MainLinkText, Mode=TwoWay}" />
             <Button
-                x:Uid="Main_GetLinks"
                 Grid.Column="3"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Bottom"
                 Command="{x:Bind ViewModel.MainGetLinksCommand}"
-                Content="Get Links"
+                Content="{x:Bind mvm:MainViewModel.GetLinks}"
                 Style="{StaticResource AccentButtonStyle}" />
         </Grid>
     </Grid>

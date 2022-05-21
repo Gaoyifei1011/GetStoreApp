@@ -9,15 +9,15 @@ namespace GetStoreApp.ViewModels.Pages
 {
     public class MainViewModel : ObservableObject
     {
-        private static readonly string Main_Type_URL = LanguageSelectorService.GetResources("Main_Type_URL");
-        private static readonly string Main_Type_PID = LanguageSelectorService.GetResources("Main_Type_PID");
-        private static readonly string Main_Type_PFN = LanguageSelectorService.GetResources("Main_Type_PFN");
-        private static readonly string Main_Type_CID = LanguageSelectorService.GetResources("Main_Type_CID");
+        private static readonly string Main_Type_URL = LanguageSettings.GetResources("Main_Type_URL");
+        private static readonly string Main_Type_PID = LanguageSettings.GetResources("Main_Type_PID");
+        private static readonly string Main_Type_PFN = LanguageSettings.GetResources("Main_Type_PFN");
+        private static readonly string Main_Type_CID = LanguageSettings.GetResources("Main_Type_CID");
 
-        private static readonly string Main_Channel_Fast = LanguageSelectorService.GetResources("Main_Channel_Fast");
-        private static readonly string Main_Channel_Slow = LanguageSelectorService.GetResources("Main_Channel_Slow");
-        private static readonly string Main_Channel_RP = LanguageSelectorService.GetResources("Main_Channel_RP");
-        private static readonly string Main_Channel_Retail = LanguageSelectorService.GetResources("Main_Channel_Retail");
+        private static readonly string Main_Channel_Fast = LanguageSettings.GetResources("Main_Channel_Fast");
+        private static readonly string Main_Channel_Slow = LanguageSettings.GetResources("Main_Channel_Slow");
+        private static readonly string Main_Channel_RP = LanguageSettings.GetResources("Main_Channel_RP");
+        private static readonly string Main_Channel_Retail = LanguageSettings.GetResources("Main_Channel_Retail");
 
         // 列表数据
         // 初始化MainType列表
@@ -37,5 +37,15 @@ namespace GetStoreApp.ViewModels.Pages
                 new MainChannelModel(DisplayName:Main_Channel_RP, InternalName:"RP"),
                 new MainChannelModel(DisplayName:Main_Channel_Retail, InternalName:"Retail")
             }.AsReadOnly();
+
+        // RequestControl
+        public static string GetLinks = LanguageSettings.GetResources("/MainResources/GetLinks");
+
+        // ResultControl
+        public static string SearchResult = LanguageSettings.GetResources("/MainResources/SearchResult");
+
+        public static string BatchOperation = LanguageSettings.GetResources("/MainResources/BatchOperation");
+
+        public static string SearchResultEmpty = LanguageSettings.GetResources("/MainResources/SearchResultEmpty");
     }
 }

@@ -8,6 +8,8 @@
     xmlns:model="using:GetStoreApp.Core.Models"
     xmlns:uwp="using:Richasy.ExpanderEx.Uwp"
     xmlns:viewModel="using:GetStoreApp.ViewModels.Controls.Main"
+    xmlns:mvm="using:GetStoreApp.ViewModels.Pages"
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
 
     <UserControl.DataContext>
@@ -33,165 +35,142 @@
             <Setter Property="TextAlignment" Value="Center" />
         </Style>
 
+        <!--获取列表数据模板-->
         <DataTemplate x:Key="ResultDataTemplete" x:DataType="model:ResultDataModel">
             <StackPanel>
                 <uwp:ExpanderExItemSeparator StrokeThickness="1" />
-                <uwp:ExpanderExWrapper>
-                    <uwp:ExpanderExWrapper.MainContent>
-                        <Grid Margin="0,5,0,5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="4*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="4*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <HyperlinkButton
-                                Grid.Column="0"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Content="{x:Bind AppPackageName}"
-                                NavigateUri="{x:Bind AppLink}"
-                                ToolTipService.ToolTip="{x:Bind AppPackageName}" />
-                            <TextBlock
-                                Grid.Column="1"
-                                IsTextSelectionEnabled="True"
-                                Style="{StaticResource SimpleHisTextStyle}"
-                                Text="{x:Bind AppLinkExpireTime, Converter={StaticResource DataTimeFormatConverter}}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap"
-                                ToolTipService.ToolTip="{x:Bind AppLinkExpireTime, Converter={StaticResource DataTimeFormatConverter}}" />
-                            <TextBlock
-                                Grid.Column="2"
-                                IsTextSelectionEnabled="True"
-                                Style="{StaticResource SimpleHisTextStyle}"
-                                Text="{x:Bind AppSHA1}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap"
-                                ToolTipService.ToolTip="{x:Bind AppSHA1}" />
-                            <TextBlock
-                                Grid.Column="3"
-                                IsTextSelectionEnabled="True"
-                                Style="{StaticResource SimpleHisTextStyle}"
-                                Text="{x:Bind AppPackageSize}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap"
-                                ToolTipService.ToolTip="{x:Bind AppPackageSize}" />
-                        </Grid>
-                    </uwp:ExpanderExWrapper.MainContent>
-                </uwp:ExpanderExWrapper>
+                <Grid Margin="0,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*" />
+                        <ColumnDefinition Width="1.5*" />
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <HyperlinkButton
+                        Grid.Column="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Content="{x:Bind AppPackageName}"
+                        NavigateUri="{x:Bind AppLink}"
+                        ToolTipService.ToolTip="{x:Bind AppPackageName}" />
+                    <TextBlock
+                        Grid.Column="1"
+                        IsTextSelectionEnabled="True"
+                        Style="{StaticResource SimpleHisTextStyle}"
+                        Text="{x:Bind AppLinkExpireTime, Converter={StaticResource DataTimeFormatConverter}}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap"
+                        ToolTipService.ToolTip="{x:Bind AppLinkExpireTime, Converter={StaticResource DataTimeFormatConverter}}" />
+                    <TextBlock
+                        Grid.Column="2"
+                        IsTextSelectionEnabled="True"
+                        Style="{StaticResource SimpleHisTextStyle}"
+                        Text="{x:Bind AppSHA1}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap"
+                        ToolTipService.ToolTip="{x:Bind AppSHA1}" />
+                    <TextBlock
+                        Grid.Column="3"
+                        IsTextSelectionEnabled="True"
+                        Style="{StaticResource SimpleHisTextStyle}"
+                        Text="{x:Bind AppPackageSize}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap"
+                        ToolTipService.ToolTip="{x:Bind AppPackageSize}" />
+                </Grid>
             </StackPanel>
         </DataTemplate>
     </UserControl.Resources>
 
     <!--  获取结果列表  -->
-    <uwp:ExpanderEx
+    <winui:Expander
         HorizontalAlignment="Stretch"
         VerticalAlignment="Top"
         HorizontalContentAlignment="Stretch"
         VerticalContentAlignment="Stretch"
+        ExpandDirection="Down"
         IsExpanded="True"
         Visibility="{x:Bind ViewModel.MainResult, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
 
-        <uwp:ExpanderEx.Header>
+        <winui:Expander.Header>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock
-                    x:Uid="Main_Search_Result"
                     Grid.Column="0"
                     Margin="{StaticResource MainCtrlLeftMargin}"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
-                    Text="Search Result" />
-                <AppBarSeparator/>
-                <Button Grid.Column="1" Content="Batch Operation"/>
-
+                    Text="{x:Bind mvm:MainViewModel.SearchResult}" />
+                <Button Grid.Column="1" Content="{x:Bind mvm:MainViewModel.BatchOperation}" />
             </Grid>
-        </uwp:ExpanderEx.Header>
+        </winui:Expander.Header>
 
-        <uwp:ExpanderEx.Content>
-            <uwp:ExpanderExMenuPanel>
-
+        <winui:Expander.Content>
+            <StackPanel>
                 <!--  数据为空时显示的文字提示  -->
-                <uwp:ExpanderExWrapper Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToReverseVisibilityConverter}, Mode=OneWay}">
-                    <uwp:ExpanderExWrapper.MainContent>
-                        <TextBlock
-                            x:Uid="Main_Search_Result_Empty"
-                            Margin="5"
-                            Style="{StaticResource SimpleHisTextStyle}"
-                            Text="No results have been searched, please check the link you entered and try again" />
-                    </uwp:ExpanderExWrapper.MainContent>
-                </uwp:ExpanderExWrapper>
+                <TextBlock
+                    Margin="5"
+                    Style="{StaticResource SimpleHisTextStyle}"
+                    Text="{x:Bind mvm:MainViewModel.SearchResultEmpty}"
+                    Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToReverseVisibilityConverter}, Mode=OneWay}" />
 
-                <uwp:ExpanderExWrapper Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
-                    <uwp:ExpanderExWrapper.MainContent>
-                        <Grid Margin="0,5,0,5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <TextBlock
-                                Grid.Row="0"
-                                Margin="0,0,0,5"
-                                IsTextSelectionEnabled="True"
-                                Text="{x:Bind ViewModel.MainCategoryId, Mode=OneWay}"
-                                TextAlignment="Center" />
-                            <TextBlock
-                                x:Uid="Main_Result_Count"
-                                Grid.Row="1"
-                                Text="{x:Bind ViewModel.MainResultCount, Mode=OneWay}"
-                                TextAlignment="Center" />
-                        </Grid>
-                    </uwp:ExpanderExWrapper.MainContent>
-                </uwp:ExpanderExWrapper>
-
-                <uwp:ExpanderExItemSeparator StrokeThickness="1" Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}" />
+                <StackPanel Margin="0,5,0,5" Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
+                    <TextBlock
+                        Margin="0,5,0,3"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind ViewModel.MainCategoryId, Mode=OneWay}"
+                        TextAlignment="Center" />
+                    <TextBlock
+                        x:Uid="Main_Result_Count"
+                        Margin="0,3,0,5"
+                        Text="{x:Bind ViewModel.MainResultCount, Mode=OneWay}"
+                        TextAlignment="Center" />
+                    <uwp:ExpanderExItemSeparator StrokeThickness="1" />
+                </StackPanel>
 
                 <!--  数据（存在时）标题  -->
                 <ListView SelectionMode="None" Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
                     <StackPanel>
-                        <uwp:ExpanderExWrapper>
-                            <uwp:ExpanderExWrapper.MainContent>
-                                <Grid Margin="0,5,0,5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="4*" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="4*" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock
-                                        x:Uid="Main_Result_AppPackageName"
-                                        Grid.Column="0"
-                                        Style="{StaticResource SimpleHisTextStyle}"
-                                        Text="File Name"
-                                        TextWrapping="NoWrap"
-                                        ToolTipService.ToolTip="File Name" />
-                                    <TextBlock
-                                        x:Uid="Main_Result_AppLinkExpireTime"
-                                        Grid.Column="1"
-                                        Style="{StaticResource SimpleHisTextStyle}"
-                                        Text="Link Expire Time"
-                                        TextWrapping="NoWrap"
-                                        ToolTipService.ToolTip="Link Expire Time" />
-                                    <TextBlock
-                                        x:Uid="Main_Result_AppSHA1"
-                                        Grid.Column="2"
-                                        Style="{StaticResource SimpleHisTextStyle}"
-                                        Text="File SHA-1"
-                                        TextWrapping="NoWrap"
-                                        ToolTipService.ToolTip="File SHA-1" />
-                                    <TextBlock
-                                        x:Uid="Main_Result_AppPackageSize"
-                                        Grid.Column="3"
-                                        Style="{StaticResource SimpleHisTextStyle}"
-                                        Text="File Size"
-                                        TextWrapping="NoWrap"
-                                        ToolTipService.ToolTip="File Size" />
-                                </Grid>
-                            </uwp:ExpanderExWrapper.MainContent>
-                        </uwp:ExpanderExWrapper>
+                        <Grid Margin="0,0,0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4*" />
+                                <ColumnDefinition Width="1.5*" />
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                x:Uid="Main_Result_AppPackageName"
+                                Grid.Column="0"
+                                Style="{StaticResource SimpleHisTextStyle}"
+                                Text="File Name"
+                                TextWrapping="NoWrap"
+                                ToolTipService.ToolTip="File Name" />
+
+                            <TextBlock
+                                x:Uid="Main_Result_AppLinkExpireTime"
+                                Grid.Column="1"
+                                Style="{StaticResource SimpleHisTextStyle}"
+                                Text="Link Expire Time"
+                                TextWrapping="NoWrap"
+                                ToolTipService.ToolTip="Link Expire Time" />
+                            <TextBlock
+                                x:Uid="Main_Result_AppSHA1"
+                                Grid.Column="2"
+                                Style="{StaticResource SimpleHisTextStyle}"
+                                Text="File SHA-1"
+                                TextWrapping="NoWrap"
+                                ToolTipService.ToolTip="File SHA-1" />
+                            <TextBlock
+                                x:Uid="Main_Result_AppPackageSize"
+                                Grid.Column="3"
+                                Style="{StaticResource SimpleHisTextStyle}"
+                                Text="File Size"
+                                TextWrapping="NoWrap"
+                                ToolTipService.ToolTip="File Size" />
+                        </Grid>
                     </StackPanel>
                 </ListView>
 
@@ -203,17 +182,17 @@
                     SelectionMode="None"
                     Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}" />
 
-                <uwp:ExpanderExItemSeparator StrokeThickness="1" Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}" />
+                <StackPanel>
+                    <uwp:ExpanderExItemSeparator StrokeThickness="1" Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}" />
+                    <TextBlock
+                        x:Uid="Main_Result_Bottom"
+                        Margin="0,10,0,0"
+                        Style="{StaticResource SimpleHisTextStyle}"
+                        Text="The search results have reached the bottom"
+                        Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}" />
+                </StackPanel>
 
-                <uwp:ExpanderExWrapper Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
-                    <uwp:ExpanderExWrapper.MainContent>
-                        <TextBlock
-                            x:Uid="Main_Result_Bottom"
-                            Style="{StaticResource SimpleHisTextStyle}"
-                            Text="The search results have reached the bottom" />
-                    </uwp:ExpanderExWrapper.MainContent>
-                </uwp:ExpanderExWrapper>
-            </uwp:ExpanderExMenuPanel>
-        </uwp:ExpanderEx.Content>
-    </uwp:ExpanderEx>
+            </StackPanel>
+        </winui:Expander.Content>
+    </winui:Expander>
 </UserControl>

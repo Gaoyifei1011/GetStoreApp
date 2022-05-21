@@ -8,6 +8,7 @@
     xmlns:model="using:GetStoreApp.Core.Models"
     xmlns:uwp="using:Richasy.ExpanderEx.Uwp"
     xmlns:viewModel="using:GetStoreApp.ViewModels.Controls.Main"
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
 
     <UserControl.DataContext>
@@ -21,50 +22,46 @@
         <DataTemplate x:Key="SimpleHisDataTemplete" x:DataType="model:HistoryDisplayDataModel">
             <StackPanel>
                 <uwp:ExpanderExItemSeparator StrokeThickness="1" />
-                <uwp:ExpanderExWrapper>
-                    <uwp:ExpanderExWrapper.MainContent>
-                        <Grid Margin="0,5,0,5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="4*" />
-                                <ColumnDefinition Width="1.2*" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock
-                                x:Uid="Main_History_Types"
-                                Grid.Column="0"
-                                Style="{StaticResource SimpleHisTextStyle}"
-                                Text="{x:Bind TypeName}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap"
-                                ToolTipService.ToolTip="{x:Bind TypeName}" />
-                            <TextBlock
-                                x:Uid="Main_History_Channels"
-                                Grid.Column="1"
-                                Style="{StaticResource SimpleHisTextStyle}"
-                                Text="{x:Bind ChannelName}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap"
-                                ToolTipService.ToolTip="{x:Bind ChannelName}" />
-                            <TextBlock
-                                x:Uid="Main_History_Links"
-                                Grid.Column="2"
-                                Style="{StaticResource SimpleHisTextStyle}"
-                                Text="{x:Bind LinkName}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap"
-                                ToolTipService.ToolTip="{x:Bind LinkName}" />
-                            <Button
-                                Grid.Column="3"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Command="{Binding ElementName=SimpleHisDataListView, Path=DataContext.MainHisGetLinksCommand, Mode=TwoWay}"
-                                CommandParameter="{Binding}"
-                                Content="{Binding ElementName=SimpleHisDataListView, Path=DataContext.MainHisGetLinksContent, Mode=TwoWay}"
-                                ToolTipService.ToolTip="{Binding ElementName=SimpleHisDataListView, Path=DataContext.MainHisGetLinksContent, Mode=TwoWay}" />
-                        </Grid>
-                    </uwp:ExpanderExWrapper.MainContent>
-                </uwp:ExpanderExWrapper>
+                <Grid Margin="0,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="4*" />
+                        <ColumnDefinition Width="1.2*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        x:Uid="Main_History_Types"
+                        Grid.Column="0"
+                        Style="{StaticResource SimpleHisTextStyle}"
+                        Text="{x:Bind TypeName}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap"
+                        ToolTipService.ToolTip="{x:Bind TypeName}" />
+                    <TextBlock
+                        x:Uid="Main_History_Channels"
+                        Grid.Column="1"
+                        Style="{StaticResource SimpleHisTextStyle}"
+                        Text="{x:Bind ChannelName}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap"
+                        ToolTipService.ToolTip="{x:Bind ChannelName}" />
+                    <TextBlock
+                        x:Uid="Main_History_Links"
+                        Grid.Column="2"
+                        Style="{StaticResource SimpleHisTextStyle}"
+                        Text="{x:Bind LinkName}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap"
+                        ToolTipService.ToolTip="{x:Bind LinkName}" />
+                    <Button
+                        Grid.Column="3"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Command="{Binding ElementName=SimpleHisDataListView, Path=DataContext.MainHisGetLinksCommand, Mode=TwoWay}"
+                        CommandParameter="{Binding}"
+                        Content="{Binding ElementName=SimpleHisDataListView, Path=DataContext.MainHisGetLinksContent, Mode=TwoWay}"
+                        ToolTipService.ToolTip="{Binding ElementName=SimpleHisDataListView, Path=DataContext.MainHisGetLinksContent, Mode=TwoWay}" />
+                </Grid>
             </StackPanel>
         </DataTemplate>
 
@@ -79,7 +76,7 @@
     </UserControl.Resources>
 
     <!--  主页部分历史记录列表  -->
-    <uwp:ExpanderEx
+    <winui:Expander
         HorizontalAlignment="Stretch"
         VerticalAlignment="Top"
         HorizontalContentAlignment="Stretch"
@@ -87,7 +84,7 @@
         IsExpanded="True"
         Visibility="Visible">
 
-        <uwp:ExpanderEx.Header>
+        <winui:Expander.Header>
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
                 <TextBlock
                     x:Uid="Main_History"
@@ -101,67 +98,60 @@
                     Command="{x:Bind ViewModel.MainHisVMCommand}"
                     Content="View More" />
             </Grid>
-        </uwp:ExpanderEx.Header>
+        </winui:Expander.Header>
 
-        <uwp:ExpanderEx.Content>
-            <uwp:ExpanderExMenuPanel>
+        <winui:Expander.Content>
+            <StackPanel>
                 <!--  数据为空时显示的文字提示  -->
-                <uwp:ExpanderExWrapper Visibility="{x:Bind ViewModel.SimpleHistoryDataList.Count, Converter={StaticResource IntToReverseVisibilityConverter}, Mode=OneWay}">
-                    <uwp:ExpanderExWrapper.MainContent>
-                        <TextBlock
-                            x:Uid="Main_History_Empty"
-                            Margin="0,5,0,5"
-                            Style="{StaticResource SimpleHisTextStyle}"
-                            Text="The history record is empty" />
-                    </uwp:ExpanderExWrapper.MainContent>
-                </uwp:ExpanderExWrapper>
+                <TextBlock
+                    x:Uid="Main_History_Empty"
+                    Margin="0,5,0,5"
+                    Style="{StaticResource SimpleHisTextStyle}"
+                    Text="The history record is empty"
+                    Visibility="{x:Bind ViewModel.SimpleHistoryDataList.Count, Converter={StaticResource IntToReverseVisibilityConverter}, Mode=OneWay}" />
                 <!--  数据（存在时）标题  -->
                 <ListView SelectionMode="None" Visibility="{x:Bind ViewModel.SimpleHistoryDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
                     <StackPanel>
-                        <uwp:ExpanderExWrapper>
-                            <uwp:ExpanderExWrapper.MainContent>
-                                <Grid Margin="0,5,0,5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="4*" />
-                                        <ColumnDefinition Width="1.2*" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock
-                                        x:Uid="Main_History_Types"
-                                        Grid.Column="0"
-                                        Style="{StaticResource SimpleHisTextStyle}"
-                                        Text="Type Name"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap"
-                                        ToolTipService.ToolTip="Type Name" />
-                                    <TextBlock
-                                        x:Uid="Main_History_Channels"
-                                        Grid.Column="1"
-                                        Style="{StaticResource SimpleHisTextStyle}"
-                                        Text="Channel Name"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap"
-                                        ToolTipService.ToolTip="Channel Name" />
-                                    <TextBlock
-                                        x:Uid="Main_History_Links"
-                                        Grid.Column="2"
-                                        Style="{StaticResource SimpleHisTextStyle}"
-                                        Text="Link Name"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap"
-                                        ToolTipService.ToolTip="Link Name" />
-                                    <TextBlock
-                                        x:Uid="Main_History_Operations"
-                                        Grid.Column="3"
-                                        Style="{StaticResource SimpleHisTextStyle}"
-                                        Text="Operation Mode"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap"
-                                        ToolTipService.ToolTip="Operation Mode" />
-                                </Grid>
-                            </uwp:ExpanderExWrapper.MainContent>
-                        </uwp:ExpanderExWrapper>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="4*" />
+                                <ColumnDefinition Width="1.2*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                x:Uid="Main_History_Types"
+                                Grid.Column="0"
+                                Style="{StaticResource SimpleHisTextStyle}"
+                                Text="Type Name"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap"
+                                ToolTipService.ToolTip="Type Name" />
+                            <TextBlock
+                                x:Uid="Main_History_Channels"
+                                Grid.Column="1"
+                                Style="{StaticResource SimpleHisTextStyle}"
+                                Text="Channel Name"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap"
+                                ToolTipService.ToolTip="Channel Name" />
+                            <TextBlock
+                                x:Uid="Main_History_Links"
+                                Grid.Column="2"
+                                Style="{StaticResource SimpleHisTextStyle}"
+                                Text="Link Name"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap"
+                                ToolTipService.ToolTip="Link Name" />
+                            <TextBlock
+                                x:Uid="Main_History_Operations"
+                                Grid.Column="3"
+                                Style="{StaticResource SimpleHisTextStyle}"
+                                Text="Operation Mode"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap"
+                                ToolTipService.ToolTip="Operation Mode" />
+                        </Grid>
                     </StackPanel>
                 </ListView>
 
@@ -172,7 +162,7 @@
                     ItemsSource="{x:Bind ViewModel.SimpleHistoryDataList}"
                     SelectionMode="None"
                     Visibility="{x:Bind ViewModel.SimpleHistoryDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}" />
-            </uwp:ExpanderExMenuPanel>
-        </uwp:ExpanderEx.Content>
-    </uwp:ExpanderEx>
+            </StackPanel>
+        </winui:Expander.Content>
+    </winui:Expander>
 </UserControl>

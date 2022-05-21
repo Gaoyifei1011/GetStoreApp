@@ -14,12 +14,12 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         {
             get
             {
-                _useInsVisValue = UseInstructionService.UseInsVisValue;
+                _useInsVisValue = UseInstructionSettings.UseInsVisValue;
                 return _useInsVisValue;
             }
             set
             {
-                UseInstructionService.SetUseInsVisValue(value);
+                UseInstructionSettings.SetUseInsVisValue(value);
                 Messenger.Default.Send(value, "UseInsVisValue");
                 SetProperty(ref _useInsVisValue, value);
             }

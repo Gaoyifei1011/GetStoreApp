@@ -9,9 +9,9 @@ namespace GetStoreApp.ViewModels.Controls.Main
     public class StatusBarViewModel : ObservableObject
     {
         // 初始化设置Main_Status_Image图标：提示状态
-        private MainStatImageMode _mainStatImage = MainStatImageMode.Notification;
+        private StatImageMode _mainStatImage = StatImageMode.Notification;
 
-        public MainStatImageMode MainStatImage
+        public StatImageMode MainStatImage
         {
             get { return _mainStatImage; }
 
@@ -19,7 +19,7 @@ namespace GetStoreApp.ViewModels.Controls.Main
         }
 
         // 初始化设置Main_Status_Info文本：欢迎使用
-        private string _mainStatInfoText = LanguageSelectorService.GetResources("Main_Status_Info/Welcome");
+        private string _mainStatInfoText = LanguageSettings.GetResources("Main_Status_Info/Welcome");
 
         public string MainStatInfoText
         {
@@ -53,13 +53,13 @@ namespace GetStoreApp.ViewModels.Controls.Main
             // Main_Stat_Image的图标，根据传入的int值转换为Enum值确定显示的图标状态
             Messenger.Default.Register(this, "MainStatImage", (int obj) =>
             {
-                MainStatImage = (MainStatImageMode)obj;
+                MainStatImage = (StatImageMode)obj;
             });
 
             // 设置Main_Status_Info文本
             Messenger.Default.Register(this, "MainStatInfoText", (string obj) =>
             {
-                MainStatInfoText = LanguageSelectorService.GetResources(obj);
+                MainStatInfoText = LanguageSettings.GetResources(obj);
             });
 
             // 设置Main_Status_Progressring激活和显示状态

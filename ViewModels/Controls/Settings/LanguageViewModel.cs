@@ -10,7 +10,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
     public class LanguageViewModel : ObservableObject
     {
         // 语言设置
-        private string _selectedLanguage = LanguageSelectorService.PriLangCodeName;
+        private string _selectedLanguage = LanguageSettings.PriLangCodeName;
 
         public string SelectedLanguage
         {
@@ -20,12 +20,12 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             }
             set
             {
-                LanguageSelectorService.SetLanguage(value);
+                LanguageSettings.SetLanguage(value);
                 SetProperty(ref _selectedLanguage, value);
             }
         }
 
         // 语言列表
-        public List<LanguageModel> LanguageList = LanguageSelectorService.LanguageList;
+        public List<LanguageModel> LanguageList = LanguageSettings.LanguageList;
     }
 }

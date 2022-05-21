@@ -5,20 +5,35 @@ using Windows.Storage;
 namespace GetStoreApp.Services.Settings
 {
     /// <summary>
-    /// 修改主页面历史记录显示的条目数量
-    /// Modify the number of entries displayed in the main page history
+    /// 主页面历史记录显示的条目数量设置服务
+    /// The number of entries displayed in the main page history is set for the service
     /// </summary>
-    public static class SimpleHistoryItemSelectorService
+    public static class SimpleHistoryItemSettings
     {
+        /// <summary>
+        /// 设置存储时需要使用到的键值
+        /// The key value that you need to use when setting the store
+        /// </summary>
         private const string SettingsKey = "SimpleHistoryItemValue";
 
-        // 默认设置显示较少的历史记录条目数量:3条
+        /// <summary>
+        /// 默认设置显示较少的历史记录条目数量（3条）
+        /// Default setting shows a smaller number of history entries (3)
+        /// </summary>
         private static readonly int DefaultHisItemValue = 3;
 
+        /// <summary>
+        /// 主页面历史记录显示的条目数量
+        /// The number of entries displayed in the main page history
+        /// </summary>
         public static int SimpleHisItemValue;
 
-        static SimpleHistoryItemSelectorService()
+        /// <summary>
+        /// 静态资源初始化
+        /// </summary>
+        static SimpleHistoryItemSettings()
         {
+            // 从设置存储中加载当前主页面历史记录显示的条目数量值
             SimpleHisItemValue = GetSimpleHisItem();
         }
 

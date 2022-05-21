@@ -10,29 +10,51 @@ namespace GetStoreApp.Services.Main
 {
     public class HtmlRequestService
     {
-        // API链接
+        /// <summary>
+        /// 请求数据时需要使用的API链接
+        /// Api links that need to be used when requesting data
+        /// </summary>
         private const string API = "https://store.rg-adguard.net/api/GetFiles";
 
-        // 数据请求信息，包含数据请求的状态
+        /// <summary>
+        /// 数据请求信息
+        /// Data request information
+        /// </summary>
         private HttpRequestDataModel httpRequestDataModel;
 
-        // 数据的请求状态，0是正常状态，1是网络异常（WebExpection），2是超时异常（TimeOutExpection），3是其他异常（默认值）
+        /// <summary>
+        /// 数据的请求状态，0是正常状态，1是网络异常（WebExpection），2是超时异常（TimeOutExpection），3是其他异常（默认值）
+        /// The request status of the data, 0 is the normal state, 1 is the network exception (WebExpection), 2 is the timeout exception (TimeOutExpection), 3 is the other exception (default)
+        /// </summary>
         private int RequestId = 3;
 
-        // 网页状态请求码
+        /// <summary>
+        /// 网页状态请求码
+        /// The page status request code
+        /// </summary>
         private string RequestStatusCode = string.Empty;
 
-        // 网页正常请求时返回的内容，包括返回的有信息的内容和空列表
+        /// <summary>
+        /// 网页正常请求时返回的内容
+        /// The content that is returned when the page is normally requested
+        /// </summary>
         private string RequestContent = string.Empty;
 
-        // 网页异常请求时返回的内容
+        /// <summary>
+        /// 网页异常请求时返回的内容
+        /// The content returned when a web page is requested unexpectedly
+        /// </summary>
         private string RequestExpectionContent = string.Empty;
 
-        public HtmlRequestService()
-        {
-        }
-
-        // 生成要请求的content内容
+        /// <summary>
+        /// 生成要请求的content内容
+        /// Generate the content to be requested
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="url"></param>
+        /// <param name="ring"></param>
+        /// <param name="language"></param>
+        /// <returns></returns>
         public string GenerateContent(string type, string url, string ring, string language)
         {
             return string.Format("type={0}&url={1}&ring={2}&lang={3}", type, url, ring, language);
@@ -138,6 +160,7 @@ namespace GetStoreApp.Services.Main
                     RequestExpectionContent = e.Message;
                 }
             }
+            // 添加数据
             finally
             {
                 httpRequestDataModel = new HttpRequestDataModel

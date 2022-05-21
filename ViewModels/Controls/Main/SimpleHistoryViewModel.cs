@@ -20,7 +20,7 @@ namespace GetStoreApp.ViewModels.Controls.Main
     public class SimpleHistoryViewModel : ObservableObject
     {
         // 设置主页面历史记录的最多显示个数
-        private int SimpleHisDataListMaxSize = SimpleHistoryItemSelectorService.SimpleHisItemValue;
+        private int SimpleHisDataListMaxSize = SimpleHistoryItemSettings.SimpleHisItemValue;
 
         public ObservableCollection<HistoryDisplayDataModel> SimpleHistoryDataList = new ObservableCollection<HistoryDisplayDataModel>();
 
@@ -65,7 +65,7 @@ namespace GetStoreApp.ViewModels.Controls.Main
 
         public SimpleHistoryViewModel()
         {
-            MainHisGetLinksContent = LanguageSelectorService.GetResources("Main_History_GetLinks");
+            MainHisGetLinksContent = LanguageSettings.GetResources("Main_History_GetLinks");
 
             // 响应“查看更多”按钮的点击事件
             MainHisVMCommand = new RelayCommand(MainHisVM_Clicked);

@@ -10,25 +10,45 @@ using Windows.Storage;
 namespace GetStoreApp.Services.Settings
 {
     /// <summary>
-    /// 修改应用使用的语言
-    /// Modify the language your app uses
+    /// 语言设置服务
+    /// Language settings service
     /// </summary>
-    public static class LanguageSelectorService
+    public static class LanguageSettings
     {
+        /// <summary>
+        /// 设置存储时需要使用到的键值
+        /// The key value that you need to use when setting the store
+        /// </summary>
         private const string SettingsKey = "AppSelectedLanguage";
 
-        // 默认显示语言编码为：“English(United States)”
+        /// <summary>
+        /// 默认显示的语言编码
+        /// The default displayed language encoding
+        /// </summary>
         private static readonly string DefaultLangCodeName;
 
-        // 应用初次打开时设定的语言值
+        /// <summary>
+        /// 应用初次打开时的语言编码
+        /// The language encoding of the app when it was first opened
+        /// </summary>
         public static readonly string PriLangCodeName;
 
-        //应用程序清单包含的语言列表信息
+        /// <summary>
+        /// 应用程序清单包含的语言列表信息
+        /// The application manifest contains language list information
+        /// </summary>
         private static readonly IReadOnlyList<string> AppLanguages = ApplicationLanguages.ManifestLanguages;
 
-        // 语言列表
+        /// <summary>
+        /// 自定义的语言列表
+        /// A list of custom languages
+        /// </summary>
         public static List<LanguageModel> LanguageList = new List<LanguageModel>();
 
+        /// <summary>
+        /// UI字符串本地化
+        /// UI string localization
+        /// </summary>
         private static ResourceContext resourceContext;
 
         private static ResourceMap resourceMap;
@@ -36,12 +56,12 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 静态资源初始化
         /// </summary>
-        static LanguageSelectorService()
+        static LanguageSettings()
         {
             // 初始化语言列表内容
             InitializeLanguageList();
 
-            // 默认语言编码值
+            // 默认语言编码值:English(United States)
             DefaultLangCodeName = LanguageList.Find(item => item.CodeName.Equals("en-US")).CodeName;
 
             // 从设置存储中加载当前应用程序初次设定的语言编码值
@@ -139,7 +159,12 @@ namespace GetStoreApp.Services.Settings
             return LoadLanguageFromSettings();
         }
 
-        // UI 字符串本地化
+        /// <summary>
+        /// UI字符串本地化
+        /// UI string localization
+        /// </summary>
+        /// <param name="resource"></param>
+        /// <returns>返回本地化后的信息</returns>
         public static string GetResources(string resource)
         {
             return resourceMap.GetValue(resource, resourceContext).ValueAsString;

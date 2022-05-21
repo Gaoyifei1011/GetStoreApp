@@ -5,6 +5,10 @@ using System.Text;
 
 namespace GetStoreApp.Helpers
 {
+    /// <summary>
+    /// C# 获取 Windows 支持的国家/地区列表
+    /// Get a list of Windows supported countries with C#
+    /// </summary>
     public static class GeographicalLocationHelper
     {
         private static List<GeographicalLocationModel> _geographicalLocations;
