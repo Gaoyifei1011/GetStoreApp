@@ -90,7 +90,7 @@
         HorizontalContentAlignment="Stretch"
         VerticalContentAlignment="Stretch"
         IsExpanded="True"
-        Visibility="Visible">
+        Visibility="{x:Bind ViewModel.MainResult, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
 
         <uwp:ExpanderEx.Header>
             <Grid>
