@@ -10,7 +10,11 @@ using Windows.UI.Xaml;
 
 namespace GetStoreApp.Services.Settings
 {
-    public static class ThemeSelectorService
+    /// <summary>
+    /// 主题设置服务
+    /// Theme settings service
+    /// </summary>
+    public static class ThemeSettings
     {
         private const string SettingsKey = "AppBackgroundRequestedTheme";
 

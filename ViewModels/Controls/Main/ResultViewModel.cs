@@ -52,7 +52,7 @@ namespace GetStoreApp.ViewModels.Controls.Main
             //Messenger.Default.Register(this, "ResultDataListClear", (bool obj) => { if (obj) { ResultDataList.Clear(); } });
 
             // 添加CategoryId信息
-            Messenger.Default.Register(this, "MainCategoryId", (string obj) => { MainCategoryId = string.Concat(LanguageSelectorService.GetResources("Main_Result_CategoryID"), obj); });
+            Messenger.Default.Register(this, "MainCategoryId", (string obj) => { MainCategoryId = string.Concat(LanguageSettings.GetResources("Main_Result_CategoryID"), obj); });
 
             // 解析获取到的数据
             Messenger.Default.Register(this, "ResultDataList", (ObservableCollection<ResultDataModel> obj) =>
@@ -64,7 +64,7 @@ namespace GetStoreApp.ViewModels.Controls.Main
             });
 
             // 结果列表中获取到的条目数量
-            Messenger.Default.Register(this, "MainResultCount", (bool obj) => { if (obj) { MainResultCount = string.Format(LanguageSelectorService.GetResources("Main_Result_Count"), ResultDataList.Count); } });
+            Messenger.Default.Register(this, "MainResultCount", (bool obj) => { if (obj) { MainResultCount = string.Format(LanguageSettings.GetResources("Main_Result_Count"), ResultDataList.Count); } });
         }
     }
 }

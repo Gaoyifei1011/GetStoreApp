@@ -7,6 +7,10 @@ using Windows.UI.Xaml.Navigation;
 
 namespace GetStoreApp.Services.Shell
 {
+    /// <summary>
+    /// 主页面NavigationView导航服务
+    /// The main page is the NavigationView navigation service
+    /// </summary>
     public static class NavigationService
     {
         public static event NavigatedEventHandler Navigated;

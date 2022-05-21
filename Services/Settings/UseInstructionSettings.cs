@@ -5,20 +5,35 @@ using Windows.Storage;
 namespace GetStoreApp.Services.Settings
 {
     /// <summary>
-    /// 修改主页面“使用说明”按钮的显示状态
-    /// Modify the display state of the Instructions for Use button on the main page
+    /// 主页面“使用说明”按钮的显示状态设置服务
+    /// The display status of the "Instructions for Use" button on the main page sets the service
     /// </summary>
-    public static class UseInstructionService
+    public static class UseInstructionSettings
     {
+        /// <summary>
+        /// 设置存储时需要使用到的键值
+        /// The key value that you need to use when setting the store
+        /// </summary>
         private const string SettingsKey = "UseInsVisibilityValue";
 
-        public static bool UseInsVisValue;
-
-        // 按钮显示控制:默认设置为显示
+        /// <summary>
+        /// 设置按钮的默认状态：显示
+        /// Sets the default state of the button: Display
+        /// </summary>
         private static readonly bool DefaultVisable = true;
 
-        static UseInstructionService()
+        /// <summary>
+        /// 主页面按钮的显示状态值
+        /// The display status value of the main page button
+        /// </summary>
+        public static bool UseInsVisValue;
+
+        /// <summary>
+        /// 静态资源初始化
+        /// </summary>
+        static UseInstructionSettings()
         {
+            // 从设置存储中加载按钮的显示状态值
             UseInsVisValue = GetUseInsVisValue();
         }
 
@@ -33,8 +48,8 @@ namespace GetStoreApp.Services.Settings
         }
 
         /// <summary>
-        /// 检测存储的键值是否为空,如果不存在,设置默认值
-        /// Detects whether the stored key value is empty, and if it does not exist, sets the default value
+        /// 设置默认值
+        /// Sets the default value
         /// </summary>
         private static void InitializeSettingsKey()
         {

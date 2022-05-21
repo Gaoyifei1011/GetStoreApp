@@ -7,29 +7,51 @@ using Windows.Storage;
 
 namespace GetStoreApp.Services.Settings
 {
-    public static class RegionSelectorService
+    /// <summary>
+    /// 区域设置服务
+    /// Region Settings Service
+    /// </summary>
+    public static class RegionSettings
     {
+        /// <summary>
+        /// 设置存储时需要使用到的键值
+        /// The key value that you need to use when setting the store
+        /// </summary>
         private const string SettingsKey = "AppSelectedRegion";
 
+        /// <summary>
+        /// 当前系统的区域编码
+        /// The region code of the current system
+        /// </summary>
         private static string CurrSysRegionCodeName = RegionInfo.CurrentRegion.TwoLetterISORegionName;
 
-        // 根据当前地理位置决定
+        /// <summary>
+        /// 默认区域编码
+        /// The default region encoding
+        /// </summary>
         private static readonly string DefaultRegionCodeName;
 
-        // 应用设定的区域值
+        /// <summary>
+        /// 应用设定的区域编码
+        /// Apply the set region code
+        /// </summary>
         public static string RegionCodeName;
 
-        // 系统中包含的区域信息
+        /// <summary>
+        /// Windows 系统中包含的区域信息
+        /// The region information contained in the Windows system
+        /// </summary>
         public static List<GeographicalLocationModel> AppGlobalLocations = GeographicalLocationHelper.GetGeographicalLocations().OrderBy(item => item.FriendlyName).ToList();
 
         /// <summary>
         /// 静态资源初始化
         /// </summary>
-        static RegionSelectorService()
+        static RegionSettings()
         {
-            // 默认区域编码值
+            // 初次打开时的区域编码为当前系统的区域编码
             DefaultRegionCodeName = AppGlobalLocations.Find(item => item.ISO2 == CurrSysRegionCodeName).ISO2;
 
+            // 获取设置中存储的区域编码
             RegionCodeName = GetRegion();
         }
 

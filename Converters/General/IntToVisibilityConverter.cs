@@ -6,20 +6,16 @@ using Windows.UI.Xaml.Data;
 namespace GetStoreApp.Converters.General
 {
     /// <summary>
-    /// 将整数值转换为控件显示状态的值
-    /// Converts an integer value to a value for the display state of the control
+    /// 整数值转与Visability值的转换器=
+    /// Integer value conversion with Visability value converter.
     /// </summary>
     public class IntToVisibilityConverter : IValueConverter
     {
         /// <summary>
-        /// 将整数值转换为控件显示状态的值（整数值为0时隐藏，不为0时显示）
-        /// Converts an integer value to a value for the control's display state (displayed when the integer value is 0, hidden when not 0)
+        /// 将整数值转换为Visability值
+        /// Converts an integer value to a Visability value
         /// </summary>
-        /// <param name="value">绑定源生成的值</param>
-        /// <param name="targetType">绑定目标属性的类型</param>
-        /// <param name="parameter">要使用的转换器参数</param>
-        /// <param name="language">要用在转换器中的区域性</param>
-        /// <returns>转换后的值</returns>
+        /// <returns>转换完之后的Visability的值</returns>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value == null)
@@ -29,6 +25,10 @@ namespace GetStoreApp.Converters.General
             return result != 0 ? Visibility.Visible : (object)Visibility.Collapsed;
         }
 
+        /// <summary>
+        /// 将转换为Visability值转换为整数值（单向转换，无需实现）
+        /// Converting a Converted Visability Value to an integer Value (One-Way Conversion, No Implementation Required)
+        /// </summary>
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             throw new NotImplementedException();

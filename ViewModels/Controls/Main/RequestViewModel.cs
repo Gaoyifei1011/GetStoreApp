@@ -15,10 +15,10 @@ namespace GetStoreApp.ViewModels.Controls.Main
 {
     public class RequestViewModel : ObservableObject
     {
-        private string RegionCodeName = RegionSelectorService.RegionCodeName;
+        private string RegionCodeName = RegionSettings.RegionCodeName;
 
         // 样例标题
-        private string _sampleTitle = LanguageSelectorService.GetResources("Main_Link_Example_Text");
+        private string _sampleTitle = LanguageSettings.GetResources("/MainResources/LinkExample");
 
         public string SampleTitle
         {
@@ -249,7 +249,7 @@ namespace GetStoreApp.ViewModels.Controls.Main
                     }
                 case 1:
                     {
-                        // 设置Main_Status_Info文本：获取发生了错误，警示状态
+                        // 设置Main_Status_Info文本：获取发生了异常，警示状态
                         Messenger.Default.Send("Main_Status_Info/Warning", "MainStatInfoText");
                         break;
                     }

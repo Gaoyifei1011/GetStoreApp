@@ -24,13 +24,13 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         {
             get
             {
-                _selectedHisItemValue = SimpleHistoryItemSelectorService.SimpleHisItemValue;
+                _selectedHisItemValue = SimpleHistoryItemSettings.SimpleHisItemValue;
                 return _selectedHisItemValue;
             }
 
             set
             {
-                SimpleHistoryItemSelectorService.SetSimpleHisItem(value);
+                SimpleHistoryItemSettings.SetSimpleHisItem(value);
                 Messenger.Default.Send(value, "SimpleHisItemValue");
                 SetProperty(ref _selectedHisItemValue, value);
             }
@@ -44,7 +44,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             // UI字符串本地化
             resourceContext = new ResourceContext();
 
-            resourceContext.QualifierValues["Language"] = LanguageSelectorService.PriLangCodeName;
+            resourceContext.QualifierValues["Language"] = LanguageSettings.PriLangCodeName;
 
             resourceMap = ResourceManager.Current.MainResourceMap.GetSubtree("Resources");
 

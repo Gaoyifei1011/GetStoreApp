@@ -12,7 +12,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
     public class ThemeViewModel : ObservableObject
     {
         // 主题设置
-        private ElementTheme _elementTheme = ThemeSelectorService.Theme;
+        private ElementTheme _elementTheme = ThemeSettings.Theme;
 
         public ElementTheme ElementTheme
         {
@@ -34,7 +34,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
                         async (param) =>
                         {
                             ElementTheme = param;
-                            await ThemeSelectorService.SetThemeAsync(param);
+                            await ThemeSettings.SetThemeAsync(param);
                         });
                 }
 

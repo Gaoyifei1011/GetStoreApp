@@ -15,7 +15,7 @@ namespace GetStoreApp.ViewModels.Controls.Main
     public class TitleViewModel : ObservableObject
     {
         // Main_Status_Instruction按钮的显示状态
-        private bool _mainInsVisValue = UseInstructionService.UseInsVisValue;
+        private bool _mainInsVisValue = UseInstructionSettings.UseInsVisValue;
 
         public bool MainInsVisValue
         {

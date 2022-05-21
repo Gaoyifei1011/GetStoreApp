@@ -10,15 +10,15 @@ namespace GetStoreApp.Converters.Main
 {
     /// <summary>
     /// 将后台MainStatImageMode的Enum值转换成Image图片源对应的位置路径
-    /// Converts the Enum value of the background MainStatImageMode to the location path corresponding to the Image image source
+    /// Converts the Enum value of the background StatImageMode to the location path corresponding to the Image image source
     /// </summary>
-    public class MainStatImageConverter : IValueConverter
+    public class StatImageConverter : IValueConverter
     {
         private readonly BitmapImage bitmapImage = new BitmapImage();
 
         /// <summary>
         /// 将后台MainStatImageMode的Enum值转换成Image图片源对应的位置路径
-        /// Converts the Enum value of the background MainStatImageMode to the location path corresponding to the Image image source
+        /// Converts the Enum value of the background StatImageMode to the location path corresponding to the Image image source
         /// </summary>
         /// <param name="value">绑定源生成的值</param>
         /// <param name="targetType">绑定目标属性的类型</param>
@@ -30,23 +30,23 @@ namespace GetStoreApp.Converters.Main
             if (value == null)
                 return DependencyProperty.UnsetValue;
 
-            MainStatImageMode? result = value as MainStatImageMode?;
-            if (result == MainStatImageMode.Error)
+            StatImageMode? result = value as StatImageMode?;
+            if (result == StatImageMode.Error)
             {
                 Uri uri = new Uri("ms-appx:///Assets/Logo/Error.png");
                 bitmapImage.UriSource = uri;
             }
-            else if (result == MainStatImageMode.Warning)
+            else if (result == StatImageMode.Warning)
             {
                 Uri uri = new Uri("ms-appx:///Assets/Logo/Warning.png");
                 bitmapImage.UriSource = uri;
             }
-            else if (result == MainStatImageMode.Notification)
+            else if (result == StatImageMode.Notification)
             {
                 Uri uri = new Uri("ms-appx:///Assets/Logo/Notification.png");
                 bitmapImage.UriSource = uri;
             }
-            else if (result == MainStatImageMode.Success)
+            else if (result == StatImageMode.Success)
             {
                 Uri uri = new Uri("ms-appx:///Assets/Logo/Success.png");
                 bitmapImage.UriSource = uri;

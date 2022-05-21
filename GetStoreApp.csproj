@@ -135,6 +135,9 @@
     <PackageReference Include="Microsoft.Toolkit.Mvvm">
       <Version>7.1.2</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.DataGrid">
+      <Version>7.1.2</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.8.0-prerelease.220413001</Version>
     </PackageReference>
@@ -159,7 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activation\ActivationHandler.cs" />
-    <Compile Include="Behaviors\MainStatImageMode.cs" />
+    <Compile Include="Behaviors\StatImageMode.cs" />
     <Compile Include="Behaviors\NavigationViewHeaderBehavior.cs" />
     <Compile Include="Behaviors\NavigationViewHeaderMode.cs" />
     <Compile Include="Converters\General\BooleanToVisibilityConverter.cs" />
@@ -167,7 +170,7 @@
     <Compile Include="Converters\General\EnumToBooleanConverter.cs" />
     <Compile Include="Converters\General\IntToReverseVisibilityConverter.cs" />
     <Compile Include="Converters\General\IntToVisibilityConverter.cs" />
-    <Compile Include="Converters\Main\MainStatImageConverter.cs" />
+    <Compile Include="Converters\Main\StatImageConverter.cs" />
     <Compile Include="Helpers\GeographicalLocationHelper.cs" />
     <Compile Include="Helpers\NavHelper.cs" />
     <Compile Include="Helpers\SettingsStorageExtensions.cs" />
@@ -176,12 +179,12 @@
     <Compile Include="Activation\DefaultActivationHandler.cs" />
     <Compile Include="Services\Main\HtmlParseService.cs" />
     <Compile Include="Services\Main\HtmlRequestService.cs" />
-    <Compile Include="Services\Settings\RegionSelectorService.cs" />
-    <Compile Include="Services\Settings\SimpleHistoryItemSelectorService.cs" />
-    <Compile Include="Services\Settings\UseInstructionService.cs" />
-    <Compile Include="Services\Settings\LanguageSelectorService.cs" />
+    <Compile Include="Services\Settings\RegionSettings.cs" />
+    <Compile Include="Services\Settings\SimpleHistoryItemSettings.cs" />
+    <Compile Include="Services\Settings\UseInstructionSettings.cs" />
+    <Compile Include="Services\Settings\LanguageSettings.cs" />
     <Compile Include="Services\Shell\NavigationService.cs" />
-    <Compile Include="Services\Settings\ThemeSelectorService.cs" />
+    <Compile Include="Services\Settings\ThemeSettings.cs" />
     <Compile Include="UI\Controls\Main\RequestControl.xaml.cs">
       <DependentUpon>RequestControl.xaml</DependentUpon>
     </Compile>
@@ -422,6 +425,10 @@
     <None Include=".editorconfig" />
     <None Include="GetStoreApp_TemporaryKey.pfx" />
     <None Include="Settings.XamlStyler" />
+    <PRIResource Include="Strings\zh-hans\MainResources.resw" />
+    <PRIResource Include="Strings\en-us\MainResources.resw" />
+    <PRIResource Include="Strings\zh-hans\Converter.resw" />
+    <PRIResource Include="Strings\en-us\Converter.resw" />
     <PRIResource Include="Strings\zh-hans\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
