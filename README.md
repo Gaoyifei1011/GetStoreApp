@@ -33,8 +33,6 @@
 #### Record the link to the content that has been successfully generated and the options selected for easy use next time
 #### Download the downloaded install package in-app and install it yourself (using App Installer or Powershell)
 
-#### 注意：项目正在开发中，在调试代码的时候默认将获取商店区域选择在“zh-cn”，这个问题下一个版本解决，并在设置中提供修改选项<br>Note: The project is under development, when debugging the code, the default will get the store area selected in "zh-cn", this problem is solved in the next version, and the modification option is provided in the settings
-
 ### 使用参考的库或项目
 #### [Html Agility Pack](https://github.com/zzzprojects/html-agility-pack)
 #### [microsoft-ui-xaml](https://github.com/microsoft/microsoft-ui-xaml)
