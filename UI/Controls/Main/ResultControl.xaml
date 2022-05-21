@@ -90,7 +90,7 @@
         HorizontalContentAlignment="Stretch"
         VerticalContentAlignment="Stretch"
         IsExpanded="True"
-        Visibility="{x:Bind ViewModel.MainResult, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" d:IsLocked="True">
+        Visibility="Visible">
 
         <uwp:ExpanderEx.Header>
             <Grid>
@@ -107,6 +107,7 @@
                     Text="Search Result" />
                 <AppBarSeparator/>
                 <Button Grid.Column="1" Content="Batch Operation"/>
+
             </Grid>
         </uwp:ExpanderEx.Header>
 
