@@ -15,6 +15,8 @@ namespace GetStoreApp.ViewModels.Controls.Main
 {
     public class RequestViewModel : ObservableObject
     {
+        private string RegionCodeName = RegionSelectorService.RegionCodeName;
+
         // 样例标题
         private string _sampleTitle = LanguageSelectorService.GetResources("Main_Link_Example_Text");
 
@@ -113,6 +115,8 @@ namespace GetStoreApp.ViewModels.Controls.Main
 
             // 初始化最初选中的MainChannel
             SelectedMainChannel = MainChannelList[2];
+
+            Messenger.Default.Register(this, "SelectedRegion", (string obj) => { RegionCodeName = obj; });
         }
 
         // 设置Main_Link的占位符文本
@@ -158,7 +162,7 @@ namespace GetStoreApp.ViewModels.Controls.Main
             HtmlRequestService htmlRequestService = new HtmlRequestService();
 
             // 生成请求的内容
-            string content = htmlRequestService.GenerateContent(type: SelectedMainType.InternalName, url: MainLinkText, ring: SelectedMainChannel.InternalName, language: "zh-cn");
+            string content = htmlRequestService.GenerateContent(type: SelectedMainType.InternalName, url: MainLinkText, ring: SelectedMainChannel.InternalName, language: RegionCodeName);
             // 通过Post请求获得网页中的数据
             HttpRequestDataModel HttpRequestData = await htmlRequestService.HttpRequestAsync(content);
 

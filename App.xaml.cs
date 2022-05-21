@@ -8,7 +8,7 @@ namespace GetStoreApp
 {
     public sealed partial class App : Application
     {
-        private readonly Lazy<ActivationService> _activationService;
+        private Lazy<ActivationService> _activationService;
 
         private ActivationService ActivationService
         {

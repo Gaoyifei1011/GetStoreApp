@@ -24,10 +24,10 @@ namespace GetStoreApp.Services.Settings
         public static readonly string PriLangCodeName;
 
         //应用程序清单包含的语言列表信息
-        private static readonly IReadOnlyList<string> AppLanguages;
+        private static readonly IReadOnlyList<string> AppLanguages = ApplicationLanguages.ManifestLanguages;
 
         // 语言列表
-        public static List<LanguageModel> LanguageList;
+        public static List<LanguageModel> LanguageList = new List<LanguageModel>();
 
         private static ResourceContext resourceContext;
 
@@ -38,10 +38,6 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         static LanguageSelectorService()
         {
-            AppLanguages = ApplicationLanguages.ManifestLanguages;
-
-            LanguageList = new List<LanguageModel>();
-
             // 初始化语言列表内容
             InitializeLanguageList();
 
@@ -101,7 +97,7 @@ namespace GetStoreApp.Services.Settings
         /// 初始化语言列表信息
         /// Initializes the language list information
         /// </summary>
-        public static void InitializeLanguageList()
+        private static void InitializeLanguageList()
         {
             foreach (var item in AppLanguages)
             {
@@ -118,19 +114,19 @@ namespace GetStoreApp.Services.Settings
         private static string GetLanguage()
         {
             // 当前系统的语言编码
-            string CurrentSystemLanguageCodeName = CultureInfo.CurrentCulture.Parent.Name;
+            string CurrSysLangCodeName = CultureInfo.CurrentCulture.Parent.Name;
 
             // 先检查默认值是否存在，设定完默认值后然后获取语言编码值
             // 检测存储的键值是否为空,如果不存在,设置默认值
             if (IsSettingsKeyNullOrEmpty())
             {
                 // 判断当前语言是否存在应用默认添加的语言列表中
-                bool result = IsExistsInLanguageList(CurrentSystemLanguageCodeName);
+                bool result = IsExistsInLanguageList(CurrSysLangCodeName);
 
                 // 如果存在，设置存储值和应用初次设置的语言为当前系统的语言
                 if (result)
                 {
-                    InitializeSettingsKey(CurrentSystemLanguageCodeName);
+                    InitializeSettingsKey(CurrSysLangCodeName);
                 }
                 // 不存在，设置存储值和应用初次设置的语言为默认语言：English(United States)
                 else

@@ -396,4 +396,10 @@
   <data name="Main_Search_Result_Empty.Text" xml:space="preserve">
     <value>没有搜索到任何结果，请检查您输入的链接后重试</value>
   </data>
+  <data name="Settings_Region.Text" xml:space="preserve">
+    <value>应用在应用商店对应的区域</value>
+  </data>
+  <data name="Settings_Region_Description.Text" xml:space="preserve">
+    <value>应用如果在特定的地区上架，需要调整区域</value>
+  </data>
 </root>

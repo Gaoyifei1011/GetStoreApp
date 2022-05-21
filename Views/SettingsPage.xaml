@@ -50,6 +50,9 @@
             <!--  “主页面历史记录数目”设置  -->
             <sc:HistoryItemValueControl />
 
+            <!--区域设置-->
+            <sc:RegionControl />
+
             <!--<TextBlock x:Uid="Settings_Advanced"
                    Text="Advanced Settings"
                    FontSize="16"

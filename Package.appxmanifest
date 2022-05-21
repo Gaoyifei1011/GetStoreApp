@@ -4,12 +4,13 @@
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
   xmlns:genTemplate="http://schemas.microsoft.com/appx/developer/windowsTemplateStudio"
-  IgnorableNamespaces="uap mp genTemplate">
+  IgnorableNamespaces="uap uap5 mp genTemplate">
 
   <Identity
     Name="E15C4991-528B-4EBB-8C14-657078A77CA3"
-    Publisher="CN=default"
+    Publisher="CN=高怡飞"
     Version="0.1.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="E15C4991-528B-4EBB-8C14-657078A77CA3" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
@@ -29,7 +30,7 @@
   </Resources>
 
   <Applications>
-    <Application Id="App"
+    <Application Id="GetStoreApp"
       Executable="$targetnametoken$.exe"
       EntryPoint="GetStoreApp.App">
       <uap:VisualElements
@@ -47,12 +48,8 @@
         </uap:DefaultTile >
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
-
-      <Extensions>
-      </Extensions>
     </Application>
   </Applications>
-
   <Capabilities>
     <Capability Name="internetClient" />
   </Capabilities>

@@ -17,7 +17,17 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
-    <PackageCertificateKeyFile>GetStoreApp_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>
+    </PackageCertificateKeyFile>
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+    <PackageCertificateThumbprint>8685E201D907BF310E55D2F2D25FD26EB60AB9D9</PackageCertificateThumbprint>
+    <AppxPackageSigningTimestampServerUrl>http://timestamp.digicert.com</AppxPackageSigningTimestampServerUrl>
+    <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
+    <AppxBundle>Always</AppxBundle>
+    <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
+    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -158,12 +168,15 @@
     <Compile Include="Converters\General\IntToReverseVisibilityConverter.cs" />
     <Compile Include="Converters\General\IntToVisibilityConverter.cs" />
     <Compile Include="Converters\Main\MainStatImageConverter.cs" />
+    <Compile Include="Helpers\GeographicalLocationHelper.cs" />
     <Compile Include="Helpers\NavHelper.cs" />
     <Compile Include="Helpers\SettingsStorageExtensions.cs" />
+    <Compile Include="Helpers\SystemGeographicalLocation.cs" />
     <Compile Include="Services\App\ActivationService.cs" />
     <Compile Include="Activation\DefaultActivationHandler.cs" />
     <Compile Include="Services\Main\HtmlParseService.cs" />
     <Compile Include="Services\Main\HtmlRequestService.cs" />
+    <Compile Include="Services\Settings\RegionSelectorService.cs" />
     <Compile Include="Services\Settings\SimpleHistoryItemSelectorService.cs" />
     <Compile Include="Services\Settings\UseInstructionService.cs" />
     <Compile Include="Services\Settings\LanguageSelectorService.cs" />
@@ -184,12 +197,16 @@
     <Compile Include="UI\Controls\Main\TitleControl.xaml.cs">
       <DependentUpon>TitleControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Controls\Settings\RegionControl.xaml.cs">
+      <DependentUpon>RegionControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\Controls\General\CardViewModel.cs" />
     <Compile Include="ViewModels\Controls\Main\RequestViewModel.cs" />
     <Compile Include="ViewModels\Controls\Main\ResultViewModel.cs" />
     <Compile Include="ViewModels\Controls\Main\SimpleHistoryViewModel.cs" />
     <Compile Include="ViewModels\Controls\Main\StatusBarViewModel.cs" />
     <Compile Include="ViewModels\Controls\Main\TitleViewModel.cs" />
+    <Compile Include="ViewModels\Controls\Settings\RegionViewModel.cs" />
     <Compile Include="ViewModels\Pages\AboutViewModel.cs" />
     <Compile Include="ViewModels\Pages\DownloadViewModel.cs" />
     <Compile Include="ViewModels\Pages\HistoryViewModel.cs" />
@@ -282,6 +299,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Controls\Main\TitleControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Controls\Settings\RegionControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
