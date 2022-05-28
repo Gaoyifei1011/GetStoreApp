@@ -1,5 +1,5 @@
 ﻿using GetStoreApp.Contracts.Services;
-using GetStoreApp.Core.Helpers;
+using GetStoreApp.Helpers;
 using System.Threading.Tasks;
 using Windows.Storage;
 

@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Core.Helpers;
-using System;
+﻿using System;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
