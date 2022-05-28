@@ -1,8 +1,8 @@
-﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace GetStoreApp.ViewModels.Pages
 {
-    public class AboutViewModel : ObservableObject
+    public class AboutViewModel : ObservableRecipient
     {
         public AboutViewModel()
         {

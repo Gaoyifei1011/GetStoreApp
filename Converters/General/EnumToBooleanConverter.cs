@@ -1,7 +1,7 @@
 ﻿using GetStoreApp.Services.Settings;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Data;
 using System;
-
-using Windows.UI.Xaml.Data;
 
 namespace GetStoreApp.Converters.General
 {
@@ -11,8 +11,6 @@ namespace GetStoreApp.Converters.General
     /// </summary>
     public class EnumToBooleanConverter : IValueConverter
     {
-        public Type EnumType { get; set; }
-
         /// <summary>
         /// 将枚举值转换为布尔值
         /// Converts an enumeration value to a Boolean value
@@ -22,17 +20,17 @@ namespace GetStoreApp.Converters.General
         {
             if (parameter is string enumString)
             {
-                if (!Enum.IsDefined(EnumType, value))
+                if (!Enum.IsDefined(typeof(ElementTheme), value))
                 {
-                    throw new ArgumentException(LanguageSettings.GetResources("/Converter/EnumToBooleanValueArgumentException"));
+                    throw new ArgumentException(LanguageService.GetResources("/Converter/EnumToBooleanTypeArgumentException"));
                 }
 
-                object enumValue = Enum.Parse(EnumType, enumString);
+                var enumValue = Enum.Parse(typeof(ElementTheme), enumString);
 
                 return enumValue.Equals(value);
             }
 
-            throw new ArgumentException(LanguageSettings.GetResources("/Converter/EnumToBooleanParameterArgumentException"));
+            throw new ArgumentException(LanguageService.GetResources("/Converter/EnumToBooleanParameterArgumentException"));
         }
 
         /// <summary>
@@ -43,10 +41,10 @@ namespace GetStoreApp.Converters.General
         {
             if (parameter is string enumString)
             {
-                return Enum.Parse(EnumType, enumString);
+                return Enum.Parse(typeof(ElementTheme), enumString);
             }
 
-            throw new ArgumentException(LanguageSettings.GetResources("EnumToBooleanParameterArgumentException"));
+            throw new ArgumentException(LanguageService.GetResources("/Converter/EnumToBooleanParameterArgumentException"));
         }
     }
 }

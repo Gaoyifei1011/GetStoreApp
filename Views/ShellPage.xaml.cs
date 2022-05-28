@@ -1,123 +1,150 @@
-﻿using Windows.ApplicationModel.Core;
-using Windows.UI;
-using Windows.UI.Core;
-using Windows.UI.ViewManagement;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
-using winui = Microsoft.UI.Xaml.Controls;
+﻿using GetStoreApp.Contracts.Services;
+using GetStoreApp.ViewModels.Pages;
+using Microsoft.UI;
+using Microsoft.UI.Windowing;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
+using System;
+using System.Runtime.InteropServices;
+using Windows.System;
+using WinRT.Interop;
 
 namespace GetStoreApp.Views
 {
-    // TODO WTS: Change the icons and titles for all NavigationViewItems in ShellPage.xaml.
+    // TODO: Change the icons and titles for all NavigationViewItems in ShellPage.xaml.
     public sealed partial class ShellPage : Page
     {
-        public ShellPage()
+        private readonly KeyboardAccelerator _altLeftKeyboardAccelerator = BuildKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu);
+        private readonly KeyboardAccelerator _backKeyboardAccelerator = BuildKeyboardAccelerator(VirtualKey.GoBack);
+
+        private readonly AppWindow m_AppWindow;
+
+        public ShellViewModel ViewModel { get; }
+
+        public ShellPage(ShellViewModel viewModel)
         {
+            ViewModel = viewModel;
             InitializeComponent();
-            DataContext = ViewModel;
-            ViewModel.Initialize(shellFrame, navigationView, KeyboardAccelerators);
+            ViewModel.NavigationService.Frame = shellFrame;
+            ViewModel.NavigationViewService.Initialize(navigationView);
 
-            // 简单的颜色自定义
-            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            m_AppWindow = GetAppWindowForCurrentWindow();
+            m_AppWindow.Changed += AppWindow_Changed;
 
-            titleBar.ButtonBackgroundColor = Colors.Transparent;
-            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-
-            // 完全自定义
-            // 隐藏默认标题栏
-            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.ExtendViewIntoTitleBar = true;
-            UpdateTitleBarLayout(coreTitleBar);
-
-            // 注册一个处理程序，当覆盖的标题控件的大小改变。
-            // 例如，当应用程序移动到一个不同的DPI屏幕。
-            coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
-
-            // 注册标题栏可见性改变的处理程序。
-            // 例如，在全屏模式下调用标题栏。
-            coreTitleBar.IsVisibleChanged += CoreTitleBar_IsVisibleChanged;
-
-            // 当窗口改变焦点时，注册一个处理程序
-            Window.Current.Activated += Current_Activated;
-
-            // 设置XAML元素为可拖动区域
-            Window.Current.SetTitleBar(AppTitleBar);
-
-            Loaded += OnLoaded;
-        }
-
-        private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
-        {
-            UpdateTitleBarLayout(sender);
-        }
-
-        private void UpdateTitleBarLayout(CoreApplicationViewTitleBar coreTitleBar)
-        {
-            // Ensure the custom title bar does not overlap window caption controls
-            Thickness currMargin = AppTitleBar.Margin;
-            AppTitleBar.Margin = new Thickness(currMargin.Left, 0, coreTitleBar.SystemOverlayRightInset, currMargin.Bottom);
-        }
-
-        //应用主页面及窗口设置
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            SetTitleBarControlColors();
-        }
-
-        private void CoreTitleBar_IsVisibleChanged(CoreApplicationViewTitleBar sender, object args)
-        {
-            if (sender.IsVisible)
+            // Check to see if customization is supported.
+            // Currently only supported on Windows 11.
+            if (AppWindowTitleBar.IsCustomizationSupported())
             {
-                AppTitleBar.Visibility = Visibility.Visible;
+                var titleBar = m_AppWindow.TitleBar;
+                titleBar.ExtendsContentIntoTitleBar = true;
+                titleBar.ButtonBackgroundColor = Colors.Transparent;
+                titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+                AppTitleBar.Loaded += AppTitleBar_Loaded;
+                AppTitleBar.SizeChanged += AppTitleBar_SizeChanged;
             }
             else
             {
+                // Title bar customization using these APIs is currently
+                // supported only on Windows 11. In other cases, hide
+                // the custom title bar element.
                 AppTitleBar.Visibility = Visibility.Collapsed;
+
+                // Show alternative UI for any functionality in
+                // the title bar, such as search.
             }
         }
 
-        //根据应用程序的未激活/激活状态更新TitleBar
-        private void Current_Activated(object sender, WindowActivatedEventArgs e)
+        private void AppTitleBar_Loaded(object sender, RoutedEventArgs e)
         {
-            VisualStateManager.GoToState(
-                this, e.WindowActivationState == CoreWindowActivationState.Deactivated ? WindowNotFocused.Name : WindowFocused.Name, false);
+            if (AppWindowTitleBar.IsCustomizationSupported())
+            {
+            }
         }
 
-        // 设置应用标题栏按钮颜色
-        private void SetTitleBarControlColors()
+        private void AppTitleBar_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            var applicationView = ApplicationView.GetForCurrentView();
-            if (applicationView == null)
+            if (AppWindowTitleBar.IsCustomizationSupported()
+                && m_AppWindow.TitleBar.ExtendsContentIntoTitleBar)
             {
-                return;
+                // Update drag region if the size of the title bar changes.
+                //SetDragRegionForCustomTitleBar(m_AppWindow);
             }
-
-            var applicationTitleBar = applicationView.TitleBar;
-            if (applicationTitleBar == null)
-            {
-                return;
-            }
-
-            Color bgColor = Colors.Transparent;
-            Color fgColor = ((SolidColorBrush)Resources["ButtonForegroundColor"]).Color;
-            Color inactivefgColor = ((SolidColorBrush)Resources["ButtonInactiveForegroundBrush"]).Color;
-            Color hoverbgColor = ((SolidColorBrush)Resources["ButtonHoverBackgroundBrush"]).Color;
-            Color hoverfgColor = ((SolidColorBrush)Resources["ButtonHoverForegroundBrush"]).Color;
-            Color pressedbgColor = ((SolidColorBrush)Resources["ButtonPressedBackgroundBrush"]).Color;
-            Color pressedfgColor = ((SolidColorBrush)Resources["ButtonPressedForegroundBrush"]).Color;
-
-            applicationTitleBar.ButtonBackgroundColor = bgColor;
-            applicationTitleBar.ButtonForegroundColor = fgColor;
-            applicationTitleBar.ButtonInactiveBackgroundColor = bgColor;
-            applicationTitleBar.ButtonInactiveForegroundColor = inactivefgColor;
-            applicationTitleBar.ButtonHoverBackgroundColor = hoverbgColor;
-            applicationTitleBar.ButtonHoverForegroundColor = hoverfgColor;
-            applicationTitleBar.ButtonPressedBackgroundColor = pressedbgColor;
-            applicationTitleBar.ButtonPressedForegroundColor = pressedfgColor;
         }
 
-        private void NavigationView_DisplayModeChanged(winui.NavigationView sender, winui.NavigationViewDisplayModeChangedEventArgs args)
+        private AppWindow GetAppWindowForCurrentWindow()
+        {
+            IntPtr hWnd = WindowNative.GetWindowHandle(App.MainWindow);
+            WindowId wndId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
+            return AppWindow.GetFromWindowId(wndId);
+        }
+
+        [DllImport("Shcore.dll", SetLastError = true)]
+        internal static extern int GetDpiForMonitor(IntPtr hmonitor, Monitor_DPI_Type dpiType, out uint dpiX, out uint dpiY);
+
+        internal enum Monitor_DPI_Type : int
+        {
+            MDT_Effective_DPI = 0,
+            MDT_Angular_DPI = 1,
+            MDT_Raw_DPI = 2,
+            MDT_Default = MDT_Effective_DPI
+        }
+
+        private double GetScaleAdjustment()
+        {
+            IntPtr hWnd = WindowNative.GetWindowHandle(App.MainWindow);
+            WindowId wndId = Win32Interop.GetWindowIdFromWindow(hWnd);
+            DisplayArea displayArea = DisplayArea.GetFromWindowId(wndId, DisplayAreaFallback.Primary);
+            IntPtr hMonitor = Win32Interop.GetMonitorFromDisplayId(displayArea.DisplayId);
+
+            // Get DPI.
+            int result = GetDpiForMonitor(hMonitor, Monitor_DPI_Type.MDT_Default, out uint dpiX, out uint _);
+            if (result != 0)
+            {
+                throw new Exception("Could not get DPI for monitor.");
+            }
+
+            uint scaleFactorPercent = (uint)(((long)dpiX * 100 + (96 >> 1)) / 96);
+            return scaleFactorPercent / 100.0;
+        }
+
+        private void AppWindow_Changed(AppWindow sender, AppWindowChangedEventArgs args)
+        {
+            if (args.DidPresenterChange
+                && AppWindowTitleBar.IsCustomizationSupported())
+            {
+                switch (sender.Presenter.Kind)
+                {
+                    case AppWindowPresenterKind.CompactOverlay:
+                        // Compact overlay - hide custom title bar
+                        // and use the default system title bar instead.
+                        AppTitleBar.Visibility = Visibility.Collapsed;
+                        sender.TitleBar.ResetToDefault();
+                        break;
+
+                    case AppWindowPresenterKind.FullScreen:
+                        // Full screen - hide the custom title bar
+                        // and the default system title bar.
+                        AppTitleBar.Visibility = Visibility.Collapsed;
+                        sender.TitleBar.ExtendsContentIntoTitleBar = true;
+                        break;
+
+                    case AppWindowPresenterKind.Overlapped:
+                        // Normal - hide the system title bar
+                        // and use the custom title bar instead.
+                        AppTitleBar.Visibility = Visibility.Visible;
+                        sender.TitleBar.ExtendsContentIntoTitleBar = true;
+                        break;
+
+                    default:
+                        // Use the default system title bar.
+                        sender.TitleBar.ResetToDefault();
+                        break;
+                }
+            }
+        }
+
+        private void NavigationView_DisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)
         {
             // 标题栏AppTitleBar距离左边栏间隔
             const int NormalTitleBarIndent = 48;
@@ -137,12 +164,12 @@ namespace GetStoreApp.Views
             Thickness ShellFrameMargin = shellFrame.Margin;
 
             // 根据navigationView导航视图显示模式设置AppTitleBar标题栏左边距和ShellFrame距离上边栏边距
-            if (sender.DisplayMode == winui.NavigationViewDisplayMode.Compact)
+            if (sender.DisplayMode == NavigationViewDisplayMode.Compact)
             {
                 AppTitleBar.Margin = new Thickness(NormalTitleBarIndent, AppTitleBarMargin.Top, AppTitleBarMargin.Right, AppTitleBarMargin.Bottom);
                 shellFrame.Margin = new Thickness(ShellFrameMargin.Left, NormalFrameIndent, ShellFrameMargin.Right, ShellFrameMargin.Bottom);
             }
-            else if (sender.DisplayMode == winui.NavigationViewDisplayMode.Minimal)
+            else if (sender.DisplayMode == NavigationViewDisplayMode.Minimal)
             {
                 AppTitleBar.Margin = new Thickness(MinimalTitleBarIndent, AppTitleBarMargin.Top, AppTitleBarMargin.Right, AppTitleBarMargin.Bottom);
                 shellFrame.Margin = new Thickness(ShellFrameMargin.Left, MinimalFrameIndent, ShellFrameMargin.Right, ShellFrameMargin.Bottom);
@@ -152,6 +179,33 @@ namespace GetStoreApp.Views
                 AppTitleBar.Margin = new Thickness(NormalTitleBarIndent, AppTitleBarMargin.Top, AppTitleBarMargin.Right, AppTitleBarMargin.Bottom);
                 shellFrame.Margin = new Thickness(ShellFrameMargin.Left, NormalFrameIndent, ShellFrameMargin.Right, ShellFrameMargin.Bottom);
             }
+        }
+
+        private void OnLoaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            // Keyboard accelerators are added here to avoid showing 'Alt + left' tooltip on the page.
+            // More info on tracking issue https://github.com/Microsoft/microsoft-ui-xaml/issues/8
+            KeyboardAccelerators.Add(_altLeftKeyboardAccelerator);
+            KeyboardAccelerators.Add(_backKeyboardAccelerator);
+        }
+
+        private static KeyboardAccelerator BuildKeyboardAccelerator(VirtualKey key, VirtualKeyModifiers? modifiers = null)
+        {
+            var keyboardAccelerator = new KeyboardAccelerator() { Key = key };
+            if (modifiers.HasValue)
+            {
+                keyboardAccelerator.Modifiers = modifiers.Value;
+            }
+
+            keyboardAccelerator.Invoked += OnKeyboardAcceleratorInvoked;
+            return keyboardAccelerator;
+        }
+
+        private static void OnKeyboardAcceleratorInvoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+        {
+            var navigationService = App.GetService<INavigationService>();
+            var result = navigationService.GoBack();
+            args.Handled = result;
         }
     }
 }

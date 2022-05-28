@@ -1,14 +1,19 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using GetStoreApp.ViewModels.Controls.Settings;
+using Microsoft.UI.Xaml.Controls;
 
-//https://go.microsoft.com/fwlink/?LinkId=234236 上介绍了“用户控件”项模板
+// To learn more about WinUI, the WinUI project structure,
+// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace GetStoreApp.UI.Controls.Settings
 {
     public sealed partial class ThemeControl : UserControl
     {
+        public ThemeViewModel ViewModel { get; }
+
         public ThemeControl()
         {
-            this.InitializeComponent();
+            ViewModel = App.GetService<ThemeViewModel>();
+            InitializeComponent();
         }
     }
 }

@@ -1,39 +1,30 @@
-﻿using GetStoreApp.Services.Shell;
-
+﻿using GetStoreApp.Contracts.Services;
+using GetStoreApp.ViewModels.Pages;
+using Microsoft.UI.Xaml;
 using System;
 using System.Threading.Tasks;
 
-using Windows.ApplicationModel.Activation;
-
 namespace GetStoreApp.Activation
 {
-    internal class DefaultActivationHandler : ActivationHandler<IActivatedEventArgs>
+    public class DefaultActivationHandler : ActivationHandler<LaunchActivatedEventArgs>
     {
-        private readonly Type _navElement;
+        private readonly INavigationService _navigationService;
 
-        public DefaultActivationHandler(Type navElement)
+        public DefaultActivationHandler(INavigationService navigationService)
         {
-            _navElement = navElement;
+            _navigationService = navigationService;
         }
 
-        protected override async Task HandleInternalAsync(IActivatedEventArgs args)
+        protected override async Task HandleInternalAsync(LaunchActivatedEventArgs args)
         {
-            // When the navigation stack isn't restored, navigate to the first page and configure
-            // the new page by passing required information in the navigation parameter
-            object arguments = null;
-            if (args is LaunchActivatedEventArgs launchArgs)
-            {
-                arguments = launchArgs.Arguments;
-            }
-
-            NavigationService.Navigate(_navElement, arguments);
+            _navigationService.NavigateTo(typeof(HomeViewModel).FullName, args.Arguments);
             await Task.CompletedTask;
         }
 
-        protected override bool CanHandleInternal(IActivatedEventArgs args)
+        protected override bool CanHandleInternal(LaunchActivatedEventArgs args)
         {
             // None of the ActivationHandlers has handled the app activation
-            return NavigationService.Frame.Content == null && _navElement != null;
+            return _navigationService.Frame.Content == null;
         }
     }
 }

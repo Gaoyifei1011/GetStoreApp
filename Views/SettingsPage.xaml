@@ -2,6 +2,7 @@
     x:Class="GetStoreApp.Views.SettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:congen="using:GetStoreApp.Converters.General"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sc="using:GetStoreApp.UI.Controls.Settings"
@@ -10,26 +11,22 @@
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
 
-    <Page.DataContext>
-        <viewModel:SettingsViewModel x:Name="ViewModel" />
-    </Page.DataContext>
-
-    <Page.Resources />
+    <Page.Resources>
+        <congen:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+    </Page.Resources>
 
     <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
         <StackPanel
             x:Name="ContentArea"
             Margin="{StaticResource PageMargin}"
             Spacing="{StaticResource PageSpacing}">
+
+            <TextBlock FontSize="{StaticResource TitleFontSize}" Text="{x:Bind viewModel:SettingsViewModel.Title}" />
+
             <TextBlock
-                x:Uid="Settings_Title"
-                FontSize="{StaticResource TitleFontSize}"
-                Text="Settings" />
-            <TextBlock
-                x:Uid="Settings_Appearance"
                 FontSize="16"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="Appearance" />
+                Text="{x:Bind viewModel:SettingsViewModel.Appearance}" />
 
             <!--  应用主题设置  -->
             <sc:ThemeControl />
@@ -39,10 +36,9 @@
 
             <!--  常规选项  -->
             <TextBlock
-                x:Uid="Settings_General"
                 FontSize="16"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="General Options" />
+                Text="{x:Bind viewModel:SettingsViewModel.General}" />
 
             <!--  “使用说明”按钮  -->
             <sc:UseInstructionControl />
@@ -50,33 +46,22 @@
             <!--  “主页面历史记录数目”设置  -->
             <sc:HistoryItemValueControl />
 
-            <!--区域设置-->
+            <!--  区域设置  -->
             <sc:RegionControl />
 
-            <!--<TextBlock x:Uid="Settings_Advanced"
-                   Text="Advanced Settings"
-                   FontSize="16"
-                   Style="{StaticResource BodyTextBlockStyle}"
-                   Visibility="Collapsed" />-->
+            <!--  文件过滤设置  -->
+            <sc:LinkFilterControl />
 
-            <TextBlock
-                x:Uid="Settings_About"
-                FontSize="16"
-                Style="{StaticResource BodyTextBlockStyle}"
-                Text="About this application" />
+            <TextBlock x:Uid="Settings_About" Style="{StaticResource BodyTextBlockStyle}" />
 
             <StackPanel Margin="{StaticResource XSmallTopMargin}">
                 <TextBlock Style="{ThemeResource BodyTextBlockStyle}" Text="{x:Bind ViewModel.VersionDescription, Mode=OneWay}" />
+
                 <TextBlock
                     x:Uid="Settings_AboutDescription"
                     Margin="{StaticResource XSmallTopMargin}"
-                    Style="{ThemeResource BodyTextBlockStyle}"
-                    Text="Settings page placeholder text.Your app description goes here." />
-
-                <HyperlinkButton
-                    x:Uid="Settings_PrivacyTermsLink"
-                    Margin="{StaticResource XSmallTopMargin}"
-                    Content="Privacy Statement" />
+                    Style="{ThemeResource BodyTextBlockStyle}" />
+                <HyperlinkButton x:Uid="SettingsPage_PrivacyTermsLink" Margin="{StaticResource XSmallTopMargin}" />
             </StackPanel>
         </StackPanel>
     </ScrollViewer>

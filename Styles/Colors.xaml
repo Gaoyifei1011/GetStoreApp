@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="ThemeControlForegroundBaseHighBrush" Color="{ThemeResource SystemBaseHighColor}" />
+
+    <SolidColorBrush x:Key="ButtonForegroundColor" Color="{ThemeResource SystemBaseHighColor}" />
+    <SolidColorBrush x:Key="ButtonInactiveForegroundBrush" Color="{ThemeResource SystemChromeDisabledLowColor}" />
+    <SolidColorBrush x:Key="ButtonHoverBackgroundBrush" Color="{ThemeResource SystemListLowColor}" />
+    <SolidColorBrush x:Key="ButtonHoverForegroundBrush" Color="{ThemeResource SystemBaseHighColor}" />
+    <SolidColorBrush x:Key="ButtonPressedBackgroundBrush" Color="{ThemeResource SystemListMediumColor}" />
+    <SolidColorBrush x:Key="ButtonPressedForegroundBrush" Color="{ThemeResource SystemBaseHighColor}" />
+</ResourceDictionary>

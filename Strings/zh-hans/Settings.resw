@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Appearance" xml:space="preserve">
+    <value>外观</value>
+  </data>
+  <data name="BlockMap" xml:space="preserve">
+    <value>不显示文件扩展名称为BlockMap的文件</value>
+  </data>
+  <data name="BlockMapButton" xml:space="preserve">
+    <value>了解</value>
+  </data>
+  <data name="BlockMapDescription" xml:space="preserve">
+    <value>BlockMap文件由makeappx.exe打包时自动创建</value>
+  </data>
+  <data name="BlockMapInstruction" xml:space="preserve">
+    <value>包块映射文件是一个XML文档，其中包含应用的文件列表，以及存储在包中的每个数据块的索引和加密哈希</value>
+  </data>
+  <data name="BlockMapOffContent" xml:space="preserve">
+    <value>不过滤</value>
+  </data>
+  <data name="BlockMapOnContent" xml:space="preserve">
+    <value>过滤</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>常规选项</value>
+  </data>
+  <data name="HistoryItem" xml:space="preserve">
+    <value>主页面“历史记录”显示数目</value>
+  </data>
+  <data name="HistoryItemDescription" xml:space="preserve">
+    <value>应用启动后在主页面打开时最多显示的“历史记录”条目数量</value>
+  </data>
+  <data name="HistoryItemValueMax" xml:space="preserve">
+    <value>多</value>
+  </data>
+  <data name="HistoryItemValueMin" xml:space="preserve">
+    <value>少</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>界面语言</value>
+  </data>
+  <data name="LanguageDescription" xml:space="preserve">
+    <value>修改应用界面显示的语言，重启应用后生效</value>
+  </data>
+  <data name="LanguageTip" xml:space="preserve">
+    <value>帮助</value>
+  </data>
+  <data name="LanguageTipDescription" xml:space="preserve">
+    <value>"开始"菜单应用的名称并不会跟随应用语言设置发生改变。请在设置中找到应用点击修复按钮，应用名称随即发生改变，这不会清除您应用的数据。</value>
+  </data>
+  <data name="LaunchSettingsInstalledApps" xml:space="preserve">
+    <value>打开“设置”</value>
+  </data>
+  <data name="LinkFilter" xml:space="preserve">
+    <value>链接过滤</value>
+  </data>
+  <data name="LinkFilterDescription" xml:space="preserve">
+    <value>过滤掉不会使用的链接，提升查找应用的效率</value>
+  </data>
+  <data name="LinkFilterInstruction" xml:space="preserve">
+    <value>链接过滤说明</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>应用在应用商店对应的区域</value>
+  </data>
+  <data name="RegionDescription" xml:space="preserve">
+    <value>应用如果在特定的地区上架，需要调整区域</value>
+  </data>
+  <data name="StartsWithE" xml:space="preserve">
+    <value>不显示文件扩展名称以'.e'开头的文件</value>
+  </data>
+  <data name="StartsWithEButton" xml:space="preserve">
+    <value>了解</value>
+  </data>
+  <data name="StartsWithEDescription" xml:space="preserve">
+    <value>该类型文件是从Windows 8.1应用商店以来提供的加密的应用程序包</value>
+  </data>
+  <data name="StartsWithEInstruction" xml:space="preserve">
+    <value>以'.e'开头的文件包括'.eappx'、'.eappxbundle'、 '.emsix'、'.emsixbundle'这些格式的文件</value>
+  </data>
+  <data name="StartsWithEOffContent" xml:space="preserve">
+    <value>不过滤</value>
+  </data>
+  <data name="StartsWithEOnContent" xml:space="preserve">
+    <value>过滤</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>应用程序主题</value>
+  </data>
+  <data name="ThemeDark" xml:space="preserve">
+    <value>深色</value>
+  </data>
+  <data name="ThemeDefault" xml:space="preserve">
+    <value>使用系统设置</value>
+  </data>
+  <data name="ThemeDescription" xml:space="preserve">
+    <value>选择要显示的应用主题</value>
+  </data>
+  <data name="ThemeLight" xml:space="preserve">
+    <value>浅色</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="UseInstructionButton" xml:space="preserve">
+    <value>“使用说明”按钮</value>
+  </data>
+  <data name="UseInstructionButtonDescription" xml:space="preserve">
+    <value>应用启动后在主页面打开时显示“使用说明”按钮</value>
+  </data>
+  <data name="UseInstructionOffContent" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="UseInstructionOnContent" xml:space="preserve">
+    <value>显示</value>
+  </data>
+</root>

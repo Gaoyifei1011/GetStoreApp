@@ -117,69 +117,33 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppDisplayName" xml:space="preserve">
-    <value>获取商店应用 (Dev)</value>
-    <comment>应用名称显示</comment>
+  <data name="About_Title.Text" xml:space="preserve">
+    <value>关于</value>
+    <comment>”关于“页面标题的名称</comment>
   </data>
   <data name="AppDescription" xml:space="preserve">
     <value>获取商店应用 (Dev)</value>
     <comment>应用描述</comment>
   </data>
-  <data name="Shell_Main.Content" xml:space="preserve">
-    <value>主页</value>
-    <comment>”主页“的导航视图项目名称</comment>
+  <data name="AppDisplayName" xml:space="preserve">
+    <value>获取商店应用 (Dev)</value>
+    <comment>应用名称显示</comment>
   </data>
-  <data name="Shell_Download.Content" xml:space="preserve">
-    <value>下载</value>
-    <comment>“下载”的导航视图项目名称</comment>
+  <data name="AppTitle.Text" xml:space="preserve">
+    <value>获取商店应用 (Dev)</value>
+    <comment>应用名称显示</comment>
   </data>
-  <data name="Shell_History.Content" xml:space="preserve">
-    <value>历史记录</value>
-    <comment>”历史记录“的导航视图项目名称</comment>
+  <data name="BrowserBackButton.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Browser back</value>
   </data>
-  <data name="Shell_About.Content" xml:space="preserve">
-    <value>关于</value>
-    <comment>“关于”的导航视图项目名称</comment>
+  <data name="BrowserBackButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Browser back</value>
   </data>
-  <data name="Settings_Theme.Text" xml:space="preserve">
-    <value>应用程序主题</value>
-    <comment>“设置”应用程序主题文本</comment>
+  <data name="BrowserForwardButton.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Browser forward</value>
   </data>
-  <data name="Settings_Theme_Dark.Content" xml:space="preserve">
-    <value>深色</value>
-    <comment>“设置”的深色主题文本</comment>
-  </data>
-  <data name="Settings_Theme_Default.Content" xml:space="preserve">
-    <value>使用系统设置</value>
-    <comment>“设置”的 Windows 默认主题文本</comment>
-  </data>
-  <data name="Settings_Theme_Light.Content" xml:space="preserve">
-    <value>浅色</value>
-    <comment>“设置”的浅色主题文本</comment>
-  </data>
-  <data name="Settings_About.Text" xml:space="preserve">
-    <value>关于此应用</value>
-    <comment>关于“设置”的此应用程序标题</comment>
-  </data>
-  <data name="Settings_AboutDescription.Text" xml:space="preserve">
-    <value>设置页面占位符文本。 你的应用提要转到此处。</value>
-    <comment>关于“设置”的此应用程序说明</comment>
-  </data>
-  <data name="Settings_PrivacyTermsLink.Content" xml:space="preserve">
-    <value>隐私声明</value>
-    <comment>“设置”的隐私声明链接内容</comment>
-  </data>
-  <data name="Settings_PrivacyTermsLink.NavigateUri" xml:space="preserve">
-    <value>https://YourPrivacyUrlGoesHere/</value>
-    <comment>这是您的隐私声明 URL 设置</comment>
-  </data>
-  <data name="Settings_Appearance.Text" xml:space="preserve">
-    <value>外观</value>
-    <comment>“设置”的外观文本</comment>
-  </data>
-  <data name="About_Title.Text" xml:space="preserve">
-    <value>关于</value>
-    <comment>”关于“页面标题的名称</comment>
+  <data name="BrowserForwardButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Browser forward</value>
   </data>
   <data name="Download_Title.Text" xml:space="preserve">
     <value>下载</value>
@@ -221,126 +185,18 @@
     <value>URL（链接）</value>
     <comment>”历史记录“类型下拉选择框</comment>
   </data>
-  <data name="Main_Description1.Text" xml:space="preserve">
-    <value>微软商店的在线链接生成器</value>
-    <comment>主页面文字描述1</comment>
-  </data>
-  <data name="Main_Description2.Text" xml:space="preserve">
-    <value>输入从微软商店获取到的链接，然后单击复选框——以获得所有可用的链接</value>
-    <comment>主页面文字描述2</comment>
-  </data>
-  <data name="Main_GetLinks.Content" xml:space="preserve">
-    <value>获取链接</value>
-    <comment>获取链接按钮文字描述</comment>
-  </data>
-  <data name="Main_Title.Text" xml:space="preserve">
-    <value>主页</value>
-    <comment>”主页“页面标题的名称</comment>
-  </data>
-  <data name="Main_Type_CID" xml:space="preserve">
-    <value>CategoryID</value>
-    <comment>”主页“类型下拉选择框</comment>
-  </data>
-  <data name="Main_Type_PFN" xml:space="preserve">
-    <value>PackageFamilyName</value>
-    <comment>”主页“类型下拉选择框</comment>
-  </data>
-  <data name="Main_Type_PID" xml:space="preserve">
-    <value>ProductID</value>
-    <comment>”主页“类型下拉选择框</comment>
-  </data>
-  <data name="Main_Type_URL" xml:space="preserve">
-    <value>URL（链接）</value>
-    <comment>”主页“类型下拉选择框</comment>
-  </data>
-  <data name="AppTitle.Text" xml:space="preserve">
-    <value>获取商店应用 (Dev)</value>
-    <comment>应用名称显示</comment>
-  </data>
-  <data name="PackageDisplayName" xml:space="preserve">
-    <value>获取商店应用</value>
-    <comment>应用程序包显示名称</comment>
-  </data>
-  <data name="Settings_Theme_Description.Text" xml:space="preserve">
-    <value>选择要显示的应用主题</value>
-    <comment>“设置”的使用系统设置文本</comment>
-  </data>
-  <data name="Settings_Title.Text" xml:space="preserve">
-    <value>设置</value>
-    <comment>”设置“页面标题的名称</comment>
-  </data>
   <data name="Main_History.Text" xml:space="preserve">
     <value>历史记录</value>
     <comment>主页面历史记录文字描述</comment>
-  </data>
-  <data name="Main_History_ViewMore.Content" xml:space="preserve">
-    <value>查看更多</value>
-    <comment>“主页”查看更多按钮</comment>
-  </data>
-  <data name="Main_Search_Result.Text" xml:space="preserve">
-    <value>搜索结果</value>
-    <comment>主页面搜索结果文字描述</comment>
-  </data>
-  <data name="Main_Status_Info.Welcome" xml:space="preserve">
-    <value>欢迎使用获取商店应用APP</value>
-    <comment>主页面状态信息初始文字文字描述</comment>
-  </data>
-  <data name="Settings_Language.Text" xml:space="preserve">
-    <value>语言</value>
-    <comment>设置页面“语言”文字描述</comment>
-  </data>
-  <data name="Settings_Language_Description.Text" xml:space="preserve">
-    <value>应用程序显示的语言</value>
-    <comment>设置页面语言具体文字描述</comment>
-  </data>
-  <data name="Settings_General.Text" xml:space="preserve">
-    <value>常规选项</value>
-    <comment>设置页面“通用设置”文字描述</comment>
-  </data>
-  <data name="Main_Channel_Fast" xml:space="preserve">
-    <value>快速</value>
-  </data>
-  <data name="Main_Channel_Retail" xml:space="preserve">
-    <value>正式版</value>
-  </data>
-  <data name="Main_Channel_RP" xml:space="preserve">
-    <value>发布预览</value>
-  </data>
-  <data name="Main_Channel_Slow" xml:space="preserve">
-    <value>慢速</value>
-  </data>
-  <data name="Main_Link_Example_Text" xml:space="preserve">
-    <value>例如：</value>
-  </data>
-  <data name="Main_Status_Info.Success" xml:space="preserve">
-    <value>已成功从微软商店的服务器中接收到这些链接</value>
-  </data>
-  <data name="Main_Status_Info.Get" xml:space="preserve">
-    <value>正在从微软商店的服务器中进行查询，请耐心等待......</value>
-  </data>
-  <data name="Main_Status_Instruction.Content" xml:space="preserve">
-    <value>使用说明</value>
-  </data>
-  <data name="Settings_Instruction_Button.Text" xml:space="preserve">
-    <value>“使用说明”按钮</value>
-  </data>
-  <data name="Settings_Instruction_Button_Description.Text" xml:space="preserve">
-    <value>应用启动后在主页面打开时显示“使用说明”按钮</value>
-  </data>
-  <data name="Settings_Instruction_ToggleSwitch.OffContent" xml:space="preserve">
-    <value>关闭</value>
-  </data>
-  <data name="Settings_Instruction_ToggleSwitch.OnContent" xml:space="preserve">
-    <value>显示</value>
-  </data>
-  <data name="Settings_Advanced.Text" xml:space="preserve">
-    <value>高级选项</value>
   </data>
   <data name="Main_History_Channels.Text" xml:space="preserve">
     <value>通道名称</value>
   </data>
   <data name="Main_History_Empty.Text" xml:space="preserve">
     <value>历史记录空空如也</value>
+  </data>
+  <data name="Main_History_GetLinks" xml:space="preserve">
+    <value>获取链接</value>
   </data>
   <data name="Main_History_Links.Text" xml:space="preserve">
     <value>链接名称</value>
@@ -351,55 +207,61 @@
   <data name="Main_History_Types.Text" xml:space="preserve">
     <value>类型名称</value>
   </data>
-  <data name="Main_Status_Info.Error" xml:space="preserve">
-    <value>从微软商店的服务器中获取数据发生了错误，具体问题请点击右侧的具体信息按钮</value>
+  <data name="Main_History_ViewMore.Content" xml:space="preserve">
+    <value>查看更多</value>
+    <comment>“主页”查看更多按钮</comment>
   </data>
-  <data name="Main_Status_Info.Warning" xml:space="preserve">
-    <value>服务器返回一个空列表。您没有正确输入链接，或者此服务不支持此产品的生成。</value>
+  <data name="OpenInBrowserButton.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Open in browser</value>
   </data>
-  <data name="Main_History_GetLinks" xml:space="preserve">
-    <value>获取链接</value>
+  <data name="OpenInBrowserButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Open in browser</value>
   </data>
-  <data name="Settings_HistoryItem.Text" xml:space="preserve">
-    <value>主页面“历史记录”显示数目</value>
+  <data name="PackageDisplayName" xml:space="preserve">
+    <value>获取商店应用</value>
+    <comment>应用程序包显示名称</comment>
   </data>
-  <data name="Settings_HistoryItem_Description.Text" xml:space="preserve">
-    <value>应用启动后在主页面打开时最多显示的“历史记录”条目数量</value>
+  <data name="ReloadButton.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Reload</value>
   </data>
-  <data name="Settings_HistoryItem_Maximum" xml:space="preserve">
-    <value>多</value>
+  <data name="ReloadButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Reload</value>
   </data>
-  <data name="Settings_HistoryItem_Minimal" xml:space="preserve">
-    <value>少</value>
+  <data name="SettingsPage_PrivacyTermsLink.Content" xml:space="preserve">
+    <value>Privacy Statement</value>
   </data>
-  <data name="Main_Result_AppLinkExpireTime.Text" xml:space="preserve">
-    <value>链接过期时间</value>
+  <data name="SettingsPage_PrivacyTermsLink.NavigateUri" xml:space="preserve">
+    <value>https://YourPrivacyUrlGoesHere/</value>
   </data>
-  <data name="Main_Result_AppPackageName.Text" xml:space="preserve">
-    <value>文件名称</value>
+  <data name="Settings_About.Text" xml:space="preserve">
+    <value>关于此应用</value>
+    <comment>关于“设置”的此应用程序标题</comment>
   </data>
-  <data name="Main_Result_AppPackageSize.Text" xml:space="preserve">
-    <value>文件大小</value>
+  <data name="Settings_AboutDescription.Text" xml:space="preserve">
+    <value>设置页面占位符文本。 你的应用提要转到此处。</value>
+    <comment>关于“设置”的此应用程序说明</comment>
   </data>
-  <data name="Main_Result_AppSHA1.Text" xml:space="preserve">
-    <value>文件SHA-1值</value>
+  <data name="Settings_Advanced.Text" xml:space="preserve">
+    <value>高级选项</value>
   </data>
-  <data name="Main_Result_Bottom.Text" xml:space="preserve">
-    <value>搜索结果已经到达底部</value>
+  <data name="Settings_Personalization.Text" xml:space="preserve">
+    <value>Personalization</value>
   </data>
-  <data name="Main_Result_CategoryID" xml:space="preserve">
-    <value>CategoryID：</value>
+  <data name="Settings_PrivacyTermsLink.Content" xml:space="preserve">
+    <value>隐私声明</value>
+    <comment>“设置”的隐私声明链接内容</comment>
   </data>
-  <data name="Main_Result_Count" xml:space="preserve">
-    <value>从微软商店服务器中获得了{0}条结果</value>
+  <data name="Settings_PrivacyTermsLink.NavigateUri" xml:space="preserve">
+    <value>https://YourPrivacyUrlGoesHere/</value>
+    <comment>这是您的隐私声明 URL 设置</comment>
   </data>
-  <data name="Main_Search_Result_Empty.Text" xml:space="preserve">
-    <value>没有搜索到任何结果，请检查您输入的链接后重试</value>
+  <data name="WebView_FailedMessage.Text" xml:space="preserve">
+    <value>Page failed to load. Check connection and reload.</value>
   </data>
-  <data name="Settings_Region.Text" xml:space="preserve">
-    <value>应用在应用商店对应的区域</value>
+  <data name="WebView_Loading.Text" xml:space="preserve">
+    <value>Loading...</value>
   </data>
-  <data name="Settings_Region_Description.Text" xml:space="preserve">
-    <value>应用如果在特定的地区上架，需要调整区域</value>
+  <data name="WebView_Reload.Content" xml:space="preserve">
+    <value>Reload</value>
   </data>
 </root>

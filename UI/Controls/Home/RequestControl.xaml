@@ -1,0 +1,59 @@
+﻿<UserControl
+    x:Class="GetStoreApp.UI.Controls.Home.RequestControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="using:GetStoreApp.ViewModels.Pages"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <Thickness x:Key="MainCtrlLeftMargin">0,0,2,0</Thickness>
+        <Thickness x:Key="MainCtrlLeftRightMargin">2,0,2,0</Thickness>
+        <Thickness x:Key="MainCtrlRightMargin">2,0,0,0</Thickness>
+    </UserControl.Resources>
+
+    <Grid>
+        <!--  选择列表  -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <ComboBox
+                Grid.Column="0"
+                Margin="{StaticResource MainCtrlLeftMargin}"
+                DisplayMemberPath="DisplayName"
+                ItemsSource="{x:Bind ViewModel.TypeList}"
+                SelectedItem="{x:Bind ViewModel.SelectedType, Mode=TwoWay}">
+                <i:Interaction.Behaviors>
+                    <ic:EventTriggerBehavior EventName="SelectionChanged">
+                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.TypeSelectionChangedCommand}" />
+                    </ic:EventTriggerBehavior>
+                </i:Interaction.Behaviors>
+            </ComboBox>
+            <ComboBox
+                Grid.Column="1"
+                Margin="{StaticResource MainCtrlLeftRightMargin}"
+                DisplayMemberPath="DisplayName"
+                ItemsSource="{x:Bind ViewModel.ChannelList}"
+                SelectedItem="{x:Bind ViewModel.SelectedChannel, Mode=TwoWay}" />
+            <TextBox
+                Grid.Column="2"
+                Margin="{StaticResource MainCtrlLeftMargin}"
+                PlaceholderText="{x:Bind ViewModel.LinkPlaceHolderText, Mode=OneWay}"
+                Text="{x:Bind ViewModel.LinkText, Mode=TwoWay}" />
+            <Button
+                Grid.Column="3"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                Command="{x:Bind ViewModel.GetLinksCommand}"
+                Content="{x:Bind viewModel:HomeViewModel.GetLinks}"
+                Style="{StaticResource AccentButtonStyle}" />
+        </Grid>
+    </Grid>
+</UserControl>

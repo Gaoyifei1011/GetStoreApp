@@ -1,18 +1,15 @@
-﻿using GetStoreApp.Services.Settings;
-
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
-
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using GetStoreApp.Contracts.Services;
+using Microsoft.UI.Xaml;
 using System.Windows.Input;
-
-using Windows.UI.Xaml;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
 {
-    public class ThemeViewModel : ObservableObject
+    public class ThemeViewModel : ObservableRecipient
     {
-        // 主题设置
-        private ElementTheme _elementTheme = ThemeSettings.Theme;
+        private readonly IThemeSelectorService _themeSelectorService;
+        private ElementTheme _elementTheme;
 
         public ElementTheme ElementTheme
         {
@@ -21,7 +18,15 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             set { SetProperty(ref _elementTheme, value); }
         }
 
-        // 主题修改Command
+        private string _versionDescription;
+
+        public string VersionDescription
+        {
+            get { return _versionDescription; }
+
+            set { SetProperty(ref _versionDescription, value); }
+        }
+
         private ICommand _switchThemeCommand;
 
         public ICommand SwitchThemeCommand
@@ -33,8 +38,11 @@ namespace GetStoreApp.ViewModels.Controls.Settings
                     _switchThemeCommand = new RelayCommand<ElementTheme>(
                         async (param) =>
                         {
-                            ElementTheme = param;
-                            await ThemeSettings.SetThemeAsync(param);
+                            if (ElementTheme != param)
+                            {
+                                ElementTheme = param;
+                                await _themeSelectorService.SetThemeAsync(param);
+                            }
                         });
                 }
 
@@ -42,8 +50,10 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             }
         }
 
-        public ThemeViewModel()
+        public ThemeViewModel(IThemeSelectorService themeSelectorService)
         {
+            _themeSelectorService = themeSelectorService;
+            _elementTheme = _themeSelectorService.Theme;
         }
     }
 }

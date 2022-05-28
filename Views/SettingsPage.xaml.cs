@@ -1,19 +1,17 @@
-﻿using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
+﻿using GetStoreApp.ViewModels.Pages;
+using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.Views
 {
-    // TODO WTS: Change the URL for your privacy policy in the Resource File, currently set to https://YourPrivacyUrlGoesHere
+    // TODO: Set the URL for your privacy policy by updating SettingsPage_PrivacyTermsLink.NavigateUri in Resources.resw.
     public sealed partial class SettingsPage : Page
     {
+        public SettingsViewModel ViewModel { get; }
+
         public SettingsPage()
         {
+            ViewModel = App.GetService<SettingsViewModel>();
             InitializeComponent();
-        }
-
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
-        {
-            await ViewModel.InitializeAsync();
         }
     }
 }

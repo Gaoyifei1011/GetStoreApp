@@ -1,74 +1,56 @@
 ﻿using GetStoreApp.Activation;
-using GetStoreApp.Services.Settings;
-
-using System;
+using GetStoreApp.Contracts.Services;
+using GetStoreApp.Views;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using Windows.ApplicationModel.Activation;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-
 namespace GetStoreApp.Services.App
 {
-    // For more information on understanding and extending activation flow see
-    // https://github.com/Microsoft/WindowsTemplateStudio/blob/release/docs/UWP/activation.md
-    internal class ActivationService
+    public class ActivationService : IActivationService
     {
-        private readonly GetStoreApp.App _app;
-        private readonly Type _defaultNavItem;
-        private readonly Lazy<UIElement> _shell;
+        private readonly ActivationHandler<LaunchActivatedEventArgs> _defaultHandler;
+        private readonly IEnumerable<IActivationHandler> _activationHandlers;
+        private readonly INavigationService _navigationService;
+        private readonly IThemeSelectorService _themeSelectorService;
+        private UIElement _shell = null;
 
-        private object _lastActivationArgs;
-
-        public ActivationService(GetStoreApp.App app, Type defaultNavItem, Lazy<UIElement> shell = null)
+        public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers, INavigationService navigationService, IThemeSelectorService themeSelectorService)
         {
-            _app = app;
-            _shell = shell;
-            _defaultNavItem = defaultNavItem;
+            _defaultHandler = defaultHandler;
+            _activationHandlers = activationHandlers;
+            _navigationService = navigationService;
+            _themeSelectorService = themeSelectorService;
         }
 
         public async Task ActivateAsync(object activationArgs)
         {
-            if (IsInteractive(activationArgs))
-            {
-                // Initialize services that you need before app activation
-                // take into account that the splash screen is shown while this code runs.
-                await InitializeAsync();
+            // Initialize services that you need before app activation
+            // take into account that the splash screen is shown while this code runs.
+            await InitializeAsync();
 
-                // Do not repeat app initialization when the Window already has content,
-                // just ensure that the window is active
-                if (Window.Current.Content == null)
-                {
-                    // Create a Shell or Frame to act as the navigation context
-                    Window.Current.Content = _shell?.Value ?? new Frame();
-                }
+            if (GetStoreApp.App.MainWindow.Content == null)
+            {
+                _shell = GetStoreApp.App.GetService<ShellPage>();
+                GetStoreApp.App.MainWindow.Content = _shell ?? new Frame();
             }
 
             // Depending on activationArgs one of ActivationHandlers or DefaultActivationHandler
             // will navigate to the first page
             await HandleActivationAsync(activationArgs);
-            _lastActivationArgs = activationArgs;
 
-            if (IsInteractive(activationArgs))
-            {
-                // Ensure the current window is active
-                Window.Current.Activate();
+            // Ensure the current window is active
+            GetStoreApp.App.MainWindow.Activate();
 
-                // Tasks after activation
-                await StartupAsync();
-            }
-        }
-
-        private async Task InitializeAsync()
-        {
-            await ThemeSettings.InitializeAsync().ConfigureAwait(false);
+            // Tasks after activation
+            await StartupAsync();
         }
 
         private async Task HandleActivationAsync(object activationArgs)
         {
-            var activationHandler = GetActivationHandlers()
+            var activationHandler = _activationHandlers
                                                 .FirstOrDefault(h => h.CanHandle(activationArgs));
 
             if (activationHandler != null)
@@ -76,29 +58,22 @@ namespace GetStoreApp.Services.App
                 await activationHandler.HandleAsync(activationArgs);
             }
 
-            if (IsInteractive(activationArgs))
+            if (_defaultHandler.CanHandle(activationArgs))
             {
-                var defaultHandler = new DefaultActivationHandler(_defaultNavItem);
-                if (defaultHandler.CanHandle(activationArgs))
-                {
-                    await defaultHandler.HandleAsync(activationArgs);
-                }
+                await _defaultHandler.HandleAsync(activationArgs);
             }
+        }
+
+        private async Task InitializeAsync()
+        {
+            await _themeSelectorService.InitializeAsync().ConfigureAwait(false);
+            await Task.CompletedTask;
         }
 
         private async Task StartupAsync()
         {
-            await ThemeSettings.SetRequestedThemeAsync();
-        }
-
-        private IEnumerable<ActivationHandler> GetActivationHandlers()
-        {
-            yield break;
-        }
-
-        private bool IsInteractive(object args)
-        {
-            return args is IActivatedEventArgs;
+            await _themeSelectorService.SetRequestedThemeAsync();
+            await Task.CompletedTask;
         }
     }
 }

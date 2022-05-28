@@ -5,18 +5,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:gc="using:GetStoreApp.UI.Controls.General"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewModel="using:GetStoreApp.ViewModels.Controls.Settings"
+    xmlns:viewModel="using:GetStoreApp.ViewModels.Pages"
     mc:Ignorable="d">
-
-    <UserControl.DataContext>
-        <viewModel:LanguageViewModel x:Name="ViewModel" />
-    </UserControl.DataContext>
 
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Styles/_SettingsFontIcon.xaml" />
-                <ResourceDictionary Source="/Styles/_Thickness.xaml" />
+                <ResourceDictionary Source="/Styles/SettingsFontIcon.xaml" />
+                <ResourceDictionary Source="/Styles/Thickness.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -28,30 +24,53 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <FontIcon
                 Grid.Column="0"
+                FontFamily="Segoe Fluent Icons"
                 Glyph="&#xF2B7;"
                 Style="{StaticResource SettingsFontIconStyle}" />
 
             <StackPanel Grid.Column="1" Orientation="Vertical">
                 <TextBlock
-                    x:Uid="Settings_Language"
                     VerticalAlignment="Center"
                     Style="{StaticResource BodyTextBlockStyle}"
-                    Text="Language"
+                    Text="{x:Bind viewModel:SettingsViewModel.Language}"
                     TextWrapping="WrapWholeWords" />
                 <TextBlock
-                    x:Uid="Settings_Language_Description"
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Style="{StaticResource CaptionTextBlockStyle}"
-                    Text="The language in which the application is displayed"
+                    Text="{x:Bind viewModel:SettingsViewModel.LanguageDescription}"
                     TextWrapping="WrapWholeWords" />
             </StackPanel>
-            <ComboBox
-                x:Uid="Settings_Language_Selector"
+            <Button
                 Grid.Column="2"
+                BorderThickness="0"
+                ToolTipService.ToolTip="{x:Bind viewModel:SettingsViewModel.LanguageTip}">
+                <Button.Content>
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE946;" />
+                </Button.Content>
+                <Button.Flyout>
+                    <Flyout>
+                        <StackPanel Width="350">
+                            <TextBlock
+                                Margin="0,0,0,12"
+                                FontSize="13"
+                                Style="{ThemeResource CaptionTextBlockStyle}"
+                                Text="{x:Bind viewModel:SettingsViewModel.LanguageTipDescription}"
+                                TextWrapping="Wrap" />
+                            <Button
+                                HorizontalAlignment="Right"
+                                Command="{x:Bind ViewModel.LaunchSettingsInstalledAppsCommand}"
+                                Content="{x:Bind viewModel:SettingsViewModel.LaunchSettingsInstalledApps}" />
+                        </StackPanel>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
+            <ComboBox
+                Grid.Column="3"
                 Width="Auto"
                 DisplayMemberPath="DisplayName"
                 ItemsSource="{x:Bind ViewModel.LanguageList}"

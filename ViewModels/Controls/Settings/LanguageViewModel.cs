@@ -1,16 +1,19 @@
-﻿using GetStoreApp.Core.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using GetStoreApp.Models;
 using GetStoreApp.Services.Settings;
-
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-
+using GetStoreApp.ViewModels.Pages;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
 {
-    public class LanguageViewModel : ObservableObject
+    public class LanguageViewModel : ObservableRecipient
     {
         // 语言设置
-        private string _selectedLanguage = LanguageSettings.PriLangCodeName;
+        private string _selectedLanguage = LanguageService.PriLangCodeName;
 
         public string SelectedLanguage
         {
@@ -20,12 +23,30 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             }
             set
             {
-                LanguageSettings.SetLanguage(value);
                 SetProperty(ref _selectedLanguage, value);
+                LanguageService.SetLanguage(value);
             }
         }
 
+        private ICommand _launchSettingsInstalledAppsCommand;
+
+        public ICommand LaunchSettingsInstalledAppsCommand
+        {
+            get { return _launchSettingsInstalledAppsCommand; }
+            set { SetProperty(ref _launchSettingsInstalledAppsCommand, value); }
+        }
+
         // 语言列表
-        public List<LanguageModel> LanguageList = LanguageSettings.LanguageList;
+        public List<LanguageModel> LanguageList = SettingsViewModel.LanguageList;
+
+        public LanguageViewModel()
+        {
+            LaunchSettingsInstalledAppsCommand = new RelayCommand(async () => { await LaunchSettingsInstalledAppsClickedAsync(); });
+        }
+
+        private static async Task LaunchSettingsInstalledAppsClickedAsync()
+        {
+            await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
+        }
     }
 }

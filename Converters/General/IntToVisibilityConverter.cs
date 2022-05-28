@@ -1,7 +1,6 @@
-﻿using System;
-
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Data;
+﻿using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Data;
+using System;
 
 namespace GetStoreApp.Converters.General
 {
@@ -22,7 +21,7 @@ namespace GetStoreApp.Converters.General
                 return DependencyProperty.UnsetValue;
 
             int? result = value as int?;
-            return result != 0 ? Visibility.Visible : (object)Visibility.Collapsed;
+            return result != 0 ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>

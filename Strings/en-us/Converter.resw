@@ -120,7 +120,7 @@
   <data name="EnumToBooleanParameterArgumentException" xml:space="preserve">
     <value>parameter must be an Enum name!</value>
   </data>
-  <data name="EnumToBooleanValueArgumentException" xml:space="preserve">
-    <value>value must be an Enum!</value>
+  <data name="EnumToBooleanTypeArgumentException" xml:space="preserve">
+    <value>The type of the incoming value must be an enumeration type</value>
   </data>
 </root>

@@ -5,18 +5,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:gc="using:GetStoreApp.UI.Controls.General"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewModel="using:GetStoreApp.ViewModels.Controls.Settings"
+    xmlns:viewModel="using:GetStoreApp.ViewModels.Pages"
     mc:Ignorable="d">
-
-    <UserControl.DataContext>
-        <viewModel:HistoryItemValueViewModel x:Name="ViewModel" />
-    </UserControl.DataContext>
 
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Styles/_SettingsFontIcon.xaml" />
-                <ResourceDictionary Source="/Styles/_Thickness.xaml" />
+                <ResourceDictionary Source="/Styles/SettingsFontIcon.xaml" />
+                <ResourceDictionary Source="/Styles/Thickness.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -31,29 +27,28 @@
 
             <FontIcon
                 Grid.Column="0"
+                FontFamily="Segoe Fluent Icons"
                 Glyph="&#xF738;"
                 Style="{StaticResource SettingsFontIconStyle}" />
 
             <StackPanel Grid.Column="1" Orientation="Vertical">
                 <TextBlock
-                    x:Uid="Settings_HistoryItem"
                     VerticalAlignment="Center"
                     Style="{StaticResource BodyTextBlockStyle}"
-                    Text="The number of main page history item displays"
+                    Text="{x:Bind viewModel:SettingsViewModel.HistoryItem}"
                     TextWrapping="WrapWholeWords" />
                 <TextBlock
-                    x:Uid="Settings_HistoryItem_Description"
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Style="{StaticResource CaptionTextBlockStyle}"
-                    Text="The maximum number of history entries that will appear when the main page opens after the app launches"
+                    Text="{x:Bind viewModel:SettingsViewModel.HistoryItemDescription}"
                     TextWrapping="WrapWholeWords" />
             </StackPanel>
             <ComboBox
                 Grid.Column="2"
-                DisplayMemberPath="SimpleHisItemName"
-                ItemsSource="{x:Bind ViewModel.SimpleHisItemList}"
-                SelectedValue="{x:Bind ViewModel.SelectedHisItemValue, Mode=TwoWay}"
-                SelectedValuePath="SimpleHisItemValue" />
+                DisplayMemberPath="HistoryItemName"
+                ItemsSource="{x:Bind ViewModel.HistoryItemValueList}"
+                SelectedValue="{x:Bind ViewModel.SelectedHistoryItemValue, Mode=TwoWay}"
+                SelectedValuePath="HistoryItemValue" />
         </Grid>
     </gc:CardControl>
 </UserControl>

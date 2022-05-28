@@ -1,16 +1,13 @@
-﻿using GetStoreApp.Services.Shell;
+﻿using GetStoreApp.Contracts.Services;
 
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Xaml.Interactivity;
-
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
-
-using WinUI = Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.Behaviors
 {
-    public class NavigationViewHeaderBehavior : Behavior<WinUI.NavigationView>
+    public class NavigationViewHeaderBehavior : Behavior<NavigationView>
     {
         private static NavigationViewHeaderBehavior _current;
         private Page _currentPage;
@@ -36,7 +33,7 @@ namespace GetStoreApp.Behaviors
         }
 
         public static readonly DependencyProperty HeaderModeProperty =
-            DependencyProperty.RegisterAttached("HeaderMode", typeof(bool), typeof(NavigationViewHeaderBehavior), new PropertyMetadata(NavigationViewHeaderMode.Always, (d, e) => _current.UpdateHeader()));
+            DependencyProperty.RegisterAttached("HeaderMode", typeof(bool), typeof(NavigationViewHeaderBehavior), new PropertyMetadata(NavigationViewHeaderMode.Never, (d, e) => _current.UpdateHeader()));
 
         public static object GetHeaderContext(Page item)
         {
@@ -68,13 +65,15 @@ namespace GetStoreApp.Behaviors
         {
             base.OnAttached();
             _current = this;
-            NavigationService.Navigated += OnNavigated;
+            var navigationService = App.GetService<INavigationService>();
+            navigationService.Navigated += OnNavigated;
         }
 
         protected override void OnDetaching()
         {
             base.OnDetaching();
-            NavigationService.Navigated -= OnNavigated;
+            var navigationService = App.GetService<INavigationService>();
+            navigationService.Navigated -= OnNavigated;
         }
 
         private void OnNavigated(object sender, NavigationEventArgs e)

@@ -120,7 +120,7 @@
   <data name="EnumToBooleanParameterArgumentException" xml:space="preserve">
     <value>参数必须是枚举类型的值！</value>
   </data>
-  <data name="EnumToBooleanValueArgumentException" xml:space="preserve">
-    <value>传入的值必须是枚举类型的值！</value>
+  <data name="EnumToBooleanTypeArgumentException" xml:space="preserve">
+    <value>传入值的类型必须是枚举类型</value>
   </data>
 </root>
