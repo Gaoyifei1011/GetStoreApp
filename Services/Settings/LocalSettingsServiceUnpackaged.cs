@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Contracts.Services;
-using GetStoreApp.Core.Contracts.Services;
-using GetStoreApp.Core.Helpers;
+using GetStoreApp.Helpers;
 using GetStoreApp.Models;
 using Microsoft.Extensions.Options;
 using System;

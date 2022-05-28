@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Activation;
 using GetStoreApp.Contracts.Services;
-using GetStoreApp.Core.Contracts.Services;
 using GetStoreApp.Core.Services;
 using GetStoreApp.Helpers;
 using GetStoreApp.Models;
