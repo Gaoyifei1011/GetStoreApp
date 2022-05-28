@@ -1,0 +1,10 @@
+﻿{
+  "profiles": {
+    "GetStoreApp (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "GetStoreApp (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

@@ -1,8 +1,8 @@
-﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace GetStoreApp.ViewModels.Pages
 {
-    public class DownloadViewModel : ObservableObject
+    public class DownloadViewModel : ObservableRecipient
     {
         public DownloadViewModel()
         {

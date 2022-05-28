@@ -3,7 +3,7 @@ using System.Text;
 
 namespace GetStoreApp.Helpers
 {
-    public sealed class SystemGeographicalLocation
+    public class SystemGeographicalLocation
     {
         public const int GEOCLASS_NATION = 0x10;
 

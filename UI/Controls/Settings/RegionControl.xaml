@@ -5,18 +5,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:gc="using:GetStoreApp.UI.Controls.General"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewModel="using:GetStoreApp.ViewModels.Controls.Settings"
+    xmlns:viewModel="using:GetStoreApp.ViewModels.Pages"
     mc:Ignorable="d">
-
-    <UserControl.DataContext>
-        <viewModel:RegionViewModel x:Name="ViewModel" />
-    </UserControl.DataContext>
 
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Styles/_SettingsFontIcon.xaml" />
-                <ResourceDictionary Source="/Styles/_Thickness.xaml" />
+                <ResourceDictionary Source="/Styles/SettingsFontIcon.xaml" />
+                <ResourceDictionary Source="/Styles/Thickness.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -31,21 +27,20 @@
 
             <FontIcon
                 Grid.Column="0"
-                Glyph="&#xF738;"
+                FontFamily="Segoe Fluent Icons"
+                Glyph="&#xF49a;"
                 Style="{StaticResource SettingsFontIconStyle}" />
 
             <StackPanel Grid.Column="1" Orientation="Vertical">
                 <TextBlock
-                    x:Uid="Settings_Region"
                     VerticalAlignment="Center"
                     Style="{StaticResource BodyTextBlockStyle}"
-                    Text="The app is in the corresponding area of the Store"
+                    Text="{x:Bind viewModel:SettingsViewModel.Region}"
                     TextWrapping="WrapWholeWords" />
                 <TextBlock
-                    x:Uid="Settings_Region_Description"
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Style="{StaticResource CaptionTextBlockStyle}"
-                    Text="If the app is available in a specific region, the region needs to be adjusted"
+                    Text="{x:Bind viewModel:SettingsViewModel.RegionDescription}"
                     TextWrapping="WrapWholeWords" />
             </StackPanel>
             <ComboBox

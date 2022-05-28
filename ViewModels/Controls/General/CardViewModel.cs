@@ -1,8 +1,8 @@
-﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace GetStoreApp.ViewModels.Controls.General
 {
-    public class CardViewModel : ObservableObject
+    public class CardViewModel : ObservableRecipient
     {
     }
 }

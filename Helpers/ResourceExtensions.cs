@@ -1,14 +1,14 @@
-﻿using Windows.ApplicationModel.Resources;
+﻿using Microsoft.Windows.ApplicationModel.Resources;
 
 namespace GetStoreApp.Helpers
 {
     internal static class ResourceExtensions
     {
-        private static ResourceLoader _resLoader = new ResourceLoader();
+        private static ResourceLoader _resourceLoader = new ResourceLoader();
 
         public static string GetLocalized(this string resourceKey)
         {
-            return _resLoader.GetString(resourceKey);
+            return _resourceLoader.GetString(resourceKey);
         }
     }
 }

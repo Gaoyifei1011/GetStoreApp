@@ -1,63 +1,34 @@
-﻿using GalaSoft.MvvmLight.Messaging;
-using GetStoreApp.Core.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Messages;
+using GetStoreApp.Models;
 using GetStoreApp.Services.Settings;
-
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-
+using GetStoreApp.ViewModels.Pages;
 using System.Collections.Generic;
-
-using Windows.ApplicationModel.Resources.Core;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
 {
-    public class HistoryItemValueViewModel : ObservableObject
+    public class HistoryItemValueViewModel : ObservableRecipient
     {
-        // 加载本地资源
-        private readonly ResourceContext resourceContext;
-
-        private readonly ResourceMap resourceMap;
-
         // 主页“历史记录”展示条目设置
-        private int _selectedHisItemValue;
+        private int _selectedHistoryItemValue;
 
-        public int SelectedHisItemValue
+        public int SelectedHistoryItemValue
         {
             get
             {
-                _selectedHisItemValue = SimpleHistoryItemSettings.SimpleHisItemValue;
-                return _selectedHisItemValue;
+                _selectedHistoryItemValue = HistoryItemValueService.HistoryItemValue;
+                return _selectedHistoryItemValue;
             }
 
             set
             {
-                SimpleHistoryItemSettings.SetSimpleHisItem(value);
-                Messenger.Default.Send(value, "SimpleHisItemValue");
-                SetProperty(ref _selectedHisItemValue, value);
+                SetProperty(ref _selectedHistoryItemValue, value);
+                HistoryItemValueService.SetHistoryItemValue(value);
+                Messenger.Send(new HistoryItemValueMessage(value));
             }
         }
 
-        // 列表数据
-        public List<HistoryItemValueModel> SimpleHisItemList;
-
-        public HistoryItemValueViewModel()
-        {
-            // UI字符串本地化
-            resourceContext = new ResourceContext();
-
-            resourceContext.QualifierValues["Language"] = LanguageSettings.PriLangCodeName;
-
-            resourceMap = ResourceManager.Current.MainResourceMap.GetSubtree("Resources");
-
-            // 初始化HisItem列表
-            string Set_HisItem_Min = resourceMap.GetValue("Settings_HistoryItem_Minimal", resourceContext).ValueAsString;
-
-            string Set_HisItem_Max = resourceMap.GetValue("Settings_HistoryItem_Maximum", resourceContext).ValueAsString;
-
-            SimpleHisItemList = new List<HistoryItemValueModel>()
-            {
-                new HistoryItemValueModel(HisItemDisplayName:Set_HisItem_Min,SimpleHisItemValue:3),
-                new HistoryItemValueModel(HisItemDisplayName:Set_HisItem_Max,SimpleHisItemValue:5)
-            };
-        }
+        public List<HistoryItemValueModel> HistoryItemValueList = SettingsViewModel.HistoryItemValueList;
     }
 }

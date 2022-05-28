@@ -4,12 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewModel="using:GetStoreApp.ViewModels.Controls.General"
     mc:Ignorable="d">
-
-    <UserControl.DataContext>
-        <viewModel:CardViewModel x:Name="ViewModel" />
-    </UserControl.DataContext>
 
     <Grid
         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
@@ -17,7 +12,7 @@
         BorderThickness="1"
         CornerRadius="{ThemeResource ControlCornerRadius}">
         <Grid Padding="16,12" Background="Transparent">
-            <ContentPresenter Content="{x:Bind MainContent}" />
+            <ContentPresenter Content="{x:Bind HomeContent}" />
         </Grid>
     </Grid>
 </UserControl>

@@ -1,6 +1,6 @@
-﻿using System;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Data;
+﻿using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Data;
+using System;
 
 namespace GetStoreApp.Converters.General
 {
@@ -20,7 +20,6 @@ namespace GetStoreApp.Converters.General
             if (value == null)
                 return DependencyProperty.UnsetValue;
 
-            //string RawDataTime = value.ToString().Remove(value.ToString().Length - 4, 4);
             string RawDataTime = value.ToString();
 
             DateTime dt = System.Convert.ToDateTime(RawDataTime).ToLocalTime();

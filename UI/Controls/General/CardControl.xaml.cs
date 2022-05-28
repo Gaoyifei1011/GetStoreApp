@@ -1,23 +1,28 @@
-﻿using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Markup;
+﻿using GetStoreApp.ViewModels.Controls.General;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Markup;
 
-//https://go.microsoft.com/fwlink/?LinkId=234236 上介绍了“用户控件”项模板
+// To learn more about WinUI, the WinUI project structure,
+// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace GetStoreApp.UI.Controls.General
 {
-    [ContentProperty(Name = "MainContent")]
+    [ContentProperty(Name = "HomeContent")]
     public sealed partial class CardControl : UserControl
     {
+        public CardViewModel ViewModel { get; }
+
         public CardControl()
         {
+            ViewModel = App.GetService<CardViewModel>();
             this.InitializeComponent();
         }
 
         public static DependencyProperty MainContentProperty =
-            DependencyProperty.Register("MainContent", typeof(object), typeof(CardControl), null);
+    DependencyProperty.Register("MainContent", typeof(object), typeof(CardControl), null);
 
-        public object MainContent
+        public object HomeContent
         {
             get => GetValue(MainContentProperty);
             set => SetValue(MainContentProperty, value);

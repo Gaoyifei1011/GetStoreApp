@@ -1,15 +1,17 @@
-﻿using GalaSoft.MvvmLight.Messaging;
-using GetStoreApp.Core.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Messages;
+using GetStoreApp.Models;
 using GetStoreApp.Services.Settings;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
+using GetStoreApp.ViewModels.Pages;
 using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
 {
-    public class RegionViewModel : ObservableObject
+    public class RegionViewModel : ObservableRecipient
     {
         // 区域设置
-        private string _selectedRegion = RegionSettings.RegionCodeName;
+        private string _selectedRegion = RegionService.RegionCodeName;
 
         public string SelectedRegion
         {
@@ -17,12 +19,12 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
             set
             {
-                Messenger.Default.Send(value, "SelectedRegion");
-                RegionSettings.SetRegion(value);
+                Messenger.Send(new RegionMessage(value));
+                RegionService.SetRegion(value);
             }
         }
 
         // 区域列表
-        public List<GeographicalLocationModel> RegionList = RegionSettings.AppGlobalLocations;
+        public List<GeographicalLocationModel> RegionList = SettingsViewModel.RegionList;
     }
 }
