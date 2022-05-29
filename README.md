@@ -34,11 +34,7 @@
 ### 使用参考的库或项目
 #### [Html Agility Pack](https://github.com/zzzprojects/html-agility-pack)
 #### [microsoft-ui-xaml](https://github.com/microsoft/microsoft-ui-xaml)
-#### [MVVM Toolkit](https://docs.microsoft.com/zh-cn/dotnet/communitytoolkit/mvvm/introduction)
-#### [MvvmLightLibs](https://www.nuget.org/packages/MvvmLightLibs)
-#### [ExpanderEx](https://github.com/Richasy/ExpanderEx)
-#### [SQLite for Universal Windows Platform](https://marketplace.visualstudio.com/items?itemName=SQLiteDevelopmentTeam.SQLiteforUniversalWindowsPlatform)
-#### [SQLitePCL](https://www.nuget.org/packages/SQLitePCL/)
+#### [MVVM Toolkit](https://docs.microsoft.com/zh-cn/dotnet/communitytoolkit/mvvm/introduction) 
 
 ### Use a reference library or project
 #### [Html Agility Pack](https://github.com/zzzprojects/html-agility-pack)
