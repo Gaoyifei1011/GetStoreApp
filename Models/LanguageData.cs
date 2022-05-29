@@ -1,6 +1,6 @@
 ﻿namespace GetStoreApp.Models
 {
-    public class LanguageModel
+    public class LanguageData
     {
         /// <summary>
         /// 设置页面显示的语言名称
@@ -13,11 +13,5 @@
         /// The language name displayed on the settings page corresponds to the internal language encoding
         /// </summary>
         public string CodeName { get; set; }
-
-        public LanguageModel(string displayName, string codeName)
-        {
-            DisplayName = displayName;
-            CodeName = codeName;
-        }
     }
 }

@@ -50,28 +50,13 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public StatusBarViewModel()
         {
-            // 修改StatImage的图标，根据传入的Enum值确定显示的图标状态
-            Messenger.Register<StatusBarViewModel, StateImageModeMessage>(this, (statusBarViewModel, stateImageModeMessage) =>
-            {
-                statusBarViewModel.StateImage = stateImageModeMessage.Value;
-            });
-
-            // 修改StatusInfo文本
-            Messenger.Register<StatusBarViewModel, StateInfoTextMessage>(this, (statusBarViewModel, stateInfoTextMessage) =>
-            {
-                statusBarViewModel.StateInfoText = stateInfoTextMessage.Value;
-            });
-
-            // 设置StatusProgressring激活和显示状态
-            Messenger.Register<StatusBarViewModel, StatePrRingActValueMessage>(this, (statusbarViewModel, statePrRingActValueMessage) =>
-            {
-                statusbarViewModel.StatePrRingActValue = statePrRingActValueMessage.Value;
-            });
-
-            Messenger.Register<StatusBarViewModel, StatePrRingVisValueMessage>(this, (statusbarViewModel, statePrRingVisValueMessage) =>
-            {
-                statusbarViewModel.StatePrRingVisValue = statePrRingVisValueMessage.Value;
-            });
+            Messenger.Register(this, (MessageHandler<StatusBarViewModel, StatusBarStateMessage>)((statusbarViewModel, statusBarStateMessage) =>
+                        {
+                            statusbarViewModel.StateImage = HomeViewModel.StatusBarStateList[statusBarStateMessage.Value].StateImageMode;
+                            statusbarViewModel.StateInfoText = HomeViewModel.StatusBarStateList[statusBarStateMessage.Value].StateInfoText;
+                            statusbarViewModel.StatePrRingVisValue = HomeViewModel.StatusBarStateList[statusBarStateMessage.Value].StatePrRingVisValue;
+                            statusbarViewModel.StatePrRingActValue = HomeViewModel.StatusBarStateList[statusBarStateMessage.Value].StatePrRingActValue;
+                        }));
         }
     }
 }

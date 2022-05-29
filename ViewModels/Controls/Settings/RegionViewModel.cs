@@ -25,6 +25,6 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         }
 
         // 区域列表
-        public List<GeographicalLocationModel> RegionList = SettingsViewModel.RegionList;
+        public List<GeographicalLocation> RegionList = SettingsViewModel.RegionList;
     }
 }

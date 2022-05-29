@@ -17,7 +17,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <!--  应用界面语言  -->
+    <!--  应用界面语言设置  -->
     <gc:CardControl>
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
@@ -27,24 +27,31 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
+            <!--  设置页面语言图标  -->
             <FontIcon
                 Grid.Column="0"
                 FontFamily="Segoe Fluent Icons"
                 Glyph="&#xF2B7;"
                 Style="{StaticResource SettingsFontIconStyle}" />
 
+            <!--  语言设置文字描述  -->
             <StackPanel Grid.Column="1" Orientation="Vertical">
+                <!--  标题  -->
                 <TextBlock
                     VerticalAlignment="Center"
                     Style="{StaticResource BodyTextBlockStyle}"
                     Text="{x:Bind viewModel:SettingsViewModel.Language}"
                     TextWrapping="WrapWholeWords" />
+
+                <!--  详细说明  -->
                 <TextBlock
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Style="{StaticResource CaptionTextBlockStyle}"
                     Text="{x:Bind viewModel:SettingsViewModel.LanguageDescription}"
                     TextWrapping="WrapWholeWords" />
             </StackPanel>
+
+            <!--  修改注意事项说明  -->
             <Button
                 Grid.Column="2"
                 BorderThickness="0"
@@ -69,6 +76,8 @@
                     </Flyout>
                 </Button.Flyout>
             </Button>
+
+            <!--  设置选项  -->
             <ComboBox
                 Grid.Column="3"
                 Width="Auto"

@@ -4,7 +4,7 @@
     /// 主页面通道选择的数据模型
     /// The data model selected channel by the home page channel
     /// </summary>
-    public class HomeChannelModel
+    public class HomeChannel
     {
         /// <summary>
         /// ComboBox列表中显示的条目信息
@@ -17,11 +17,5 @@
         /// ComboBox corresponds to the value set internally after selecting the displayed entry
         /// </summary>
         public string InternalName { get; set; }
-
-        public HomeChannelModel(string displayName, string internalName)
-        {
-            DisplayName = displayName;
-            InternalName = internalName;
-        }
     }
 }

@@ -42,7 +42,7 @@ namespace GetStoreApp.Services.Settings
         /// 自定义的语言列表
         /// A list of custom languages
         /// </summary>
-        public static List<LanguageModel> LanguageList = new List<LanguageModel>();
+        public static List<LanguageData> LanguageList { get; set; } = new List<LanguageData>();
 
         /// <summary>
         /// UI字符串本地化
@@ -92,7 +92,7 @@ namespace GetStoreApp.Services.Settings
         /// <returns>当前系统选定的语言编码值是否存在语言列表LanguageList的布尔值</returns>
         private static bool IsExistsInLanguageList(string currSysLangCodeName)
         {
-            foreach (LanguageModel item in LanguageList)
+            foreach (LanguageData item in LanguageList)
             {
                 if (item.CodeName == currSysLangCodeName)
                 {
@@ -121,7 +121,12 @@ namespace GetStoreApp.Services.Settings
             foreach (var item in AppLanguages)
             {
                 CultureInfo culture = CultureInfo.GetCultureInfo(item);
-                LanguageList.Add(new LanguageModel(culture.NativeName, culture.Name));
+
+                LanguageList.Add(new LanguageData()
+                {
+                    DisplayName = culture.NativeName,
+                    CodeName = culture.Name,
+                });
             }
         }
 

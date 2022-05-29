@@ -38,16 +38,21 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
+                <!--  文件过滤设置图标  -->
                 <FontIcon
                     FontFamily="Segoe Fluent Icons"
                     Glyph="&#xE71c;"
                     Style="{StaticResource SettingsFontIconStyle}" />
 
+                <!--  文件过滤设置描述  -->
                 <StackPanel
                     Grid.Column="1"
                     Margin="0,12"
                     Orientation="Vertical">
+                    <!--  标题  -->
                     <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind viewModel:SettingsViewModel.LinkFilter}" />
+
+                    <!--  详细描述  -->
                     <TextBlock
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
@@ -55,6 +60,7 @@
                         TextWrapping="WrapWholeWords" />
                 </StackPanel>
 
+                <!--  链接过滤注意事项详细说明  -->
                 <Button Grid.Column="2" Content="{x:Bind viewModel:SettingsViewModel.LinkFilterInstruction}">
                     <Button.Flyout>
                         <Flyout>

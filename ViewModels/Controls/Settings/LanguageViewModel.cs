@@ -37,7 +37,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         }
 
         // 语言列表
-        public List<LanguageModel> LanguageList = SettingsViewModel.LanguageList;
+        public List<LanguageData> LanguageList = SettingsViewModel.LanguageList;
 
         public LanguageViewModel()
         {

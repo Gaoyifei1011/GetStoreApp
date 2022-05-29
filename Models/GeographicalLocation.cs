@@ -4,7 +4,7 @@
     /// 国家/地区数据模型
     /// Country/region data model
     /// </summary>
-    public class GeographicalLocationModel
+    public class GeographicalLocation
     {
         public string Nation { get; set; }
         public string Latitude { get; set; }

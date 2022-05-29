@@ -8,6 +8,7 @@
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
 
+    <!--  下载页面  -->
     <StackPanel
         x:Name="ContentArea"
         Margin="{StaticResource PageMargin}"

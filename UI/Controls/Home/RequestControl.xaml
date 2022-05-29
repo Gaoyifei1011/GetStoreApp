@@ -15,8 +15,8 @@
         <Thickness x:Key="MainCtrlRightMargin">2,0,0,0</Thickness>
     </UserControl.Resources>
 
+    <!--  信息输入控件  -->
     <Grid>
-        <!--  选择列表  -->
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -24,6 +24,8 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
+
+            <!--  类型选择  -->
             <ComboBox
                 Grid.Column="0"
                 Margin="{StaticResource MainCtrlLeftMargin}"
@@ -36,17 +38,23 @@
                     </ic:EventTriggerBehavior>
                 </i:Interaction.Behaviors>
             </ComboBox>
+
+            <!--  通道选择  -->
             <ComboBox
                 Grid.Column="1"
                 Margin="{StaticResource MainCtrlLeftRightMargin}"
                 DisplayMemberPath="DisplayName"
                 ItemsSource="{x:Bind ViewModel.ChannelList}"
                 SelectedItem="{x:Bind ViewModel.SelectedChannel, Mode=TwoWay}" />
+
+            <!--  内容输入控件  -->
             <TextBox
                 Grid.Column="2"
                 Margin="{StaticResource MainCtrlLeftMargin}"
                 PlaceholderText="{x:Bind ViewModel.LinkPlaceHolderText, Mode=OneWay}"
                 Text="{x:Bind ViewModel.LinkText, Mode=TwoWay}" />
+
+            <!--  获取链接按钮  -->
             <Button
                 Grid.Column="3"
                 HorizontalAlignment="Center"

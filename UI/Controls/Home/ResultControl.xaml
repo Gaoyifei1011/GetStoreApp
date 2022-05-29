@@ -32,25 +32,26 @@
         </Style>
 
         <!--  获取列表数据模板  -->
-        <DataTemplate x:Key="ResultDataTemplete" x:DataType="model:ResultDataModel">
+        <DataTemplate x:Key="ResultDataTemplete" x:DataType="model:ResultData">
             <StackPanel Margin="-12,0,-12,8">
                 <MenuFlyoutSeparator />
-                <Grid Margin="0,8,0,0" Padding="0,0,0,0">
+                <Grid Margin="0,8,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.3*" />
                         <ColumnDefinition Width="4*" />
                         <ColumnDefinition Width="1.5*" />
                         <ColumnDefinition Width="3*" />
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="0.8*" />
                     </Grid.ColumnDefinitions>
+
                     <!--  列表序号  -->
                     <TextBlock
                         Grid.Column="0"
                         Style="{StaticResource SimpleHisTextStyle}"
                         Text="{x:Bind Index}"
-                        TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap"
                         ToolTipService.ToolTip="{x:Bind Index}" />
+
                     <!--  文件名称及对应的链接  -->
                     <HyperlinkButton
                         Grid.Column="1"
@@ -58,31 +59,38 @@
                         VerticalAlignment="Center"
                         Content="{x:Bind FileName}"
                         NavigateUri="{x:Bind FileLink}"
-                        ToolTipService.ToolTip="{x:Bind FileName, Converter={StaticResource CopyToolTipConverter}}" />
+                        ToolTipService.ToolTip="{x:Bind FileName, Converter={StaticResource CopyToolTipConverter}}">
+                        <HyperlinkButton.ContextFlyout>
+                            <CommandBarFlyout>
+                                <AppBarButton Label="复制应用名称" />
+                                <AppBarButton Label="复制链接" />
+                            </CommandBarFlyout>
+                        </HyperlinkButton.ContextFlyout>
+                    </HyperlinkButton>
+
                     <!--  链接过期时间  -->
                     <TextBlock
                         Grid.Column="2"
                         Style="{StaticResource SimpleHisTextStyle}"
                         Text="{x:Bind FileLinkExpireTime, Converter={StaticResource DataTimeFormatConverter}}"
-                        TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap"
                         ToolTipService.ToolTip="{x:Bind FileLinkExpireTime, Converter={StaticResource DataTimeFormatConverter}}" />
+
                     <!--  文件SHA-1值  -->
                     <TextBlock
                         Grid.Column="3"
                         IsTextSelectionEnabled="True"
                         Style="{StaticResource SimpleHisTextStyle}"
                         Text="{x:Bind FileSHA1}"
-                        TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap"
                         ToolTipService.ToolTip="{x:Bind FileSHA1, Converter={StaticResource CopyToolTipConverter}}" />
+
                     <!--  文件大小  -->
                     <TextBlock
                         Grid.Column="4"
                         IsTextSelectionEnabled="True"
                         Style="{StaticResource SimpleHisTextStyle}"
                         Text="{x:Bind FileSize}"
-                        TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap"
                         ToolTipService.ToolTip="{x:Bind FileSize, Converter={StaticResource CopyToolTipConverter}}" />
                 </Grid>
@@ -98,7 +106,7 @@
         VerticalContentAlignment="Stretch"
         ExpandDirection="Down"
         IsExpanded="True"
-        Visibility="{x:Bind ViewModel.IsResultExist, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+        Visibility="{x:Bind ViewModel.ResultControlVisable, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
 
         <Expander.Header>
             <Grid>
@@ -148,12 +156,13 @@
                             <ColumnDefinition Width="4*" />
                             <ColumnDefinition Width="1.5*" />
                             <ColumnDefinition Width="3*" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="0.8*" />
                         </Grid.ColumnDefinitions>
                         <TextBlock
                             Grid.Column="0"
                             Text="{x:Bind viewModel:HomeViewModel.SerialNumber}"
                             TextAlignment="Center"
+                            TextWrapping="NoWrap"
                             ToolTipService.ToolTip="{x:Bind viewModel:HomeViewModel.SerialNumber}" />
                         <TextBlock
                             Grid.Column="1"
@@ -186,7 +195,7 @@
                 <ListView
                     x:Name="ResultDataListView"
                     ItemTemplate="{StaticResource ResultDataTemplete}"
-                    ItemsSource="{x:Bind ViewModel.ResultDataList}"
+                    ItemsSource="{x:Bind ViewModel.ResultDataList, Mode=OneWay}"
                     SelectionMode="None"
                     Visibility="{x:Bind ViewModel.ResultCount, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}" />
 

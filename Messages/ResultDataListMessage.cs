@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging.Messages;
 using GetStoreApp.Models;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace GetStoreApp.Messages
 {
@@ -9,9 +8,9 @@ namespace GetStoreApp.Messages
     /// API获取并解析得到的ResultDataList消息
     /// The API gets and parses the resulting ResultsDataList message
     /// </summary>
-    public class ResultDataListMessage : ValueChangedMessage<List<ResultDataModel>>
+    public class ResultDataListMessage : ValueChangedMessage<List<ResultData>>
     {
-        public ResultDataListMessage(List<ResultDataModel> value) : base(value)
+        public ResultDataListMessage(List<ResultData> value) : base(value)
         {
         }
     }

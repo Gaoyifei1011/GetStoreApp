@@ -4,7 +4,7 @@
     /// 向API发送请求，正确获得消息并成功解析后得到的结果列表数据模型
     /// The result list data model obtained after sending a request to the API, getting the message correctly and parsing it successfully
     /// </summary>
-    public class ResultDataModel
+    public class ResultData
     {
         /// <summary>
         /// 列表条目中对应的序号
@@ -40,14 +40,5 @@
         /// File size
         /// </summary>
         public string FileSize { get; set; }
-
-        public ResultDataModel(string fileName, string fileLink, string fileLinkExpireTime, string fileSHA1, string fileSize)
-        {
-            FileName = fileName;
-            FileLink = fileLink;
-            FileLinkExpireTime = fileLinkExpireTime;
-            FileSHA1 = fileSHA1;
-            FileSize = fileSize;
-        }
     }
 }

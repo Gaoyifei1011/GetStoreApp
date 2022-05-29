@@ -39,16 +39,22 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
+                <!--  设置界面应用主题图标  -->
                 <FontIcon
                     FontFamily="Segoe Fluent Icons"
                     Glyph="&#xE790;"
                     Style="{StaticResource SettingsFontIconStyle}" />
 
+                <!--  应用主题设置描述  -->
                 <StackPanel
                     Grid.Column="1"
                     Margin="0,12"
                     Orientation="Vertical">
+
+                    <!--  标题  -->
                     <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind viewModel:SettingsViewModel.Theme}" />
+
+                    <!--  详细描述  -->
                     <TextBlock
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
@@ -60,6 +66,8 @@
 
         <Expander.Content>
             <StackPanel Margin="26,0,0,0">
+
+                <!--  浅色按钮  -->
                 <RadioButton
                     Command="{x:Bind ViewModel.SwitchThemeCommand}"
                     Content="{x:Bind viewModel:SettingsViewModel.ThemeLight}"
@@ -70,6 +78,8 @@
                         <xaml:ElementTheme>Light</xaml:ElementTheme>
                     </RadioButton.CommandParameter>
                 </RadioButton>
+
+                <!--  深色按钮  -->
                 <RadioButton
                     Command="{x:Bind ViewModel.SwitchThemeCommand}"
                     Content="{x:Bind viewModel:SettingsViewModel.ThemeDark}"
@@ -80,6 +90,8 @@
                         <xaml:ElementTheme>Dark</xaml:ElementTheme>
                     </RadioButton.CommandParameter>
                 </RadioButton>
+
+                <!--  系统默认设置按钮  -->
                 <RadioButton
                     Command="{x:Bind ViewModel.SwitchThemeCommand}"
                     Content="{x:Bind viewModel:SettingsViewModel.ThemeDefault}"

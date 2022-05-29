@@ -13,7 +13,7 @@ namespace GetStoreApp.Services.Settings
         /// 设置存储时需要使用到的键值
         /// The key value that you need to use when setting the store
         /// </summary>
-        private const string SettingsKey = "HistoryItemValue";
+        private const string SettingsKey = "HistoryItemNum";
 
         /// <summary>
         /// 默认设置显示较少的历史记录条目数量（3条）

@@ -17,6 +17,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
+    <!--  使用说明按钮显示设置  -->
     <gc:CardControl>
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
@@ -25,24 +26,31 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
+            <!--  设置页面使用说明设置按钮图标  -->
             <FontIcon
                 Grid.Column="0"
                 FontFamily="Segoe Fluent Icons"
                 Glyph="&#xF738;"
                 Style="{StaticResource SettingsFontIconStyle}" />
 
+            <!--  设置页面使用说明文字描述  -->
             <StackPanel Grid.Column="1" Orientation="Vertical">
+                <!--  标题  -->
                 <TextBlock
                     VerticalAlignment="Center"
                     Style="{StaticResource BodyTextBlockStyle}"
                     Text="{x:Bind viewModel:SettingsViewModel.HistoryItem}"
                     TextWrapping="WrapWholeWords" />
+
+                <!--  详细说明  -->
                 <TextBlock
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Style="{StaticResource CaptionTextBlockStyle}"
                     Text="{x:Bind viewModel:SettingsViewModel.HistoryItemDescription}"
                     TextWrapping="WrapWholeWords" />
             </StackPanel>
+
+            <!--  设置选项  -->
             <ComboBox
                 Grid.Column="2"
                 DisplayMemberPath="HistoryItemName"

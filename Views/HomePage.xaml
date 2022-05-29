@@ -9,6 +9,7 @@
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
 
+    <!--  主页面  -->
     <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
         <StackPanel
             x:Name="ContentArea"

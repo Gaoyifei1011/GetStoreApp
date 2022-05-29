@@ -37,7 +37,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             {
                 SetProperty(ref _blockMapFilterValue, value);
                 LinkFilterService.SetBlockMapFilterValue(value);
-                Messenger.Send(new BlockMapFilterService(value));
+                Messenger.Send(new BlockMapFilterMessage(value));
             }
         }
 
