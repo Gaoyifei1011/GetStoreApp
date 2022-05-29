@@ -12,7 +12,7 @@
     <UserControl.Resources>
         <congen:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
 
-        <conhome:StatImageConverter x:Name="StatImageConverter" />
+        <conhome:StateImageConverter x:Name="StateImageConverter" />
     </UserControl.Resources>
 
     <gc:CardControl>
@@ -27,7 +27,7 @@
                 Grid.Column="0"
                 Width="40"
                 Height="40"
-                Source="{x:Bind ViewModel.StateImage, Converter={StaticResource StatImageConverter}, Mode=OneWay}" />
+                Source="{x:Bind ViewModel.StateImage, Converter={StaticResource StateImageConverter}, Mode=OneWay}" />
             <TextBlock
                 Grid.Column="1"
                 Margin="10,0,0,0"

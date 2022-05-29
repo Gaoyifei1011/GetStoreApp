@@ -50,7 +50,7 @@
                         Text="{x:Bind Index}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap"
-                        ToolTipService.ToolTip="{x:Bind Index, Mode=OneWay}" />
+                        ToolTipService.ToolTip="{x:Bind Index}" />
                     <!--  文件名称及对应的链接  -->
                     <HyperlinkButton
                         Grid.Column="1"
@@ -62,9 +62,8 @@
                     <!--  链接过期时间  -->
                     <TextBlock
                         Grid.Column="2"
-                        IsTextSelectionEnabled="True"
                         Style="{StaticResource SimpleHisTextStyle}"
-                        Text="{x:Bind FileLinkExpireTime, Converter={StaticResource DataTimeFormatConverter}, Mode=OneWay}"
+                        Text="{x:Bind FileLinkExpireTime, Converter={StaticResource DataTimeFormatConverter}}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap"
                         ToolTipService.ToolTip="{x:Bind FileLinkExpireTime, Converter={StaticResource DataTimeFormatConverter}}" />

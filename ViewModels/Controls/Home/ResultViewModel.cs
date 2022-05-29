@@ -81,6 +81,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
                 for (int i = 0; i < resultDataListMessage.Value.Count; i++)
                 {
+                    // 添加序号
+                    resultDataListMessage.Value[i].Index = (i + 1).ToString();
                     resultViewModel.ResultDataList.Add(resultDataListMessage.Value[i]);
                 }
 

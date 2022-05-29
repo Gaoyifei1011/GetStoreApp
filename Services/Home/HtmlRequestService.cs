@@ -54,7 +54,7 @@ namespace GetStoreApp.Services.Home
         /// <param name="ring"></param>
         /// <param name="language"></param>
         /// <returns></returns>
-        public string GenerateContent(string type, string url, string ring, string language)
+        public static string GenerateContent(string type, string url, string ring, string language)
         {
             return string.Format("type={0}&url={1}&ring={2}&lang={3}", type, url, ring, language);
         }
@@ -97,7 +97,7 @@ namespace GetStoreApp.Services.Home
                 if (stream != null)
                 {
                     // 获取网页响应的数据
-                    StreamReader reader = new StreamReader(stream, Encoding.UTF8);
+                    StreamReader reader = new(stream, Encoding.UTF8);
                     string result = reader.ReadToEnd();
 
                     // 网页请求状态：正确状态
@@ -125,7 +125,7 @@ namespace GetStoreApp.Services.Home
                     if (stream != null)
                     {
                         // 获取数据响应回的内容
-                        StreamReader reader = new StreamReader(stream, Encoding.UTF8);
+                        StreamReader reader = new(stream, Encoding.UTF8);
                         string result = reader.ReadToEnd();
 
                         // 网页请求状态：网络异常

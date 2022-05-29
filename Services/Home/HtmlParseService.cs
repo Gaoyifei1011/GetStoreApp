@@ -5,7 +5,7 @@ using GetStoreApp.Models;
 using GetStoreApp.Services.Settings;
 using HtmlAgilityPack;
 using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GetStoreApp.Services.Home
@@ -16,17 +16,7 @@ namespace GetStoreApp.Services.Home
     /// </summary>
     public class HtmlParseService : ObservableRecipient, IDisposable
     {
-        private HtmlDocument htmlDocument;
-
-        private bool StartsWithEFilterValue { get; set; } = LinkFilterService.LinkFilterValue[0];
-
-        private bool BlockMapFilterValue { get; set; } = LinkFilterService.LinkFilterValue[1];
-
-        /// <summary>
-        /// 解析后得到的数据列表
-        /// The list of data obtained after parsing
-        /// </summary>
-        public ObservableCollection<ResultDataModel> ResultDataList;
+        private HtmlDocument HtmlDocument { get; set; }
 
         /// <summary>
         /// 初始化HtmlParseService类时添加HtmlReqeustService生成的字符串数据
@@ -35,53 +25,37 @@ namespace GetStoreApp.Services.Home
         /// <param name="HttpRequestData">HtmlReqeustService生成的数据</param>
         public HtmlParseService(HttpRequestDataModel HttpRequestData)
         {
-            htmlDocument = new HtmlDocument();
+            HtmlDocument = new HtmlDocument();
+
             // 添加网页请求返回的具体内容
-            htmlDocument.LoadHtml(HttpRequestData.RequestContent);
-
-            ResultDataList = new ObservableCollection<ResultDataModel>();
-
-            // 文件过滤
-            Messenger.Register<HtmlParseService, StartsWithEFilterMessage>(this, (htmlParseService, startsWithEFilterMessage) =>
-            {
-                htmlParseService.StartsWithEFilterValue = startsWithEFilterMessage.Value;
-            });
-
-            Messenger.Register<HtmlParseService, BlockMapFilterService>(this, (htmlParseService, blockMapFilterService) =>
-            {
-                htmlParseService.BlockMapFilterValue = blockMapFilterService.Value;
-            });
+            HtmlDocument.LoadHtml(HttpRequestData.RequestContent);
         }
 
+        /// <summary>
+        /// 类在结束使用后准备回收时注销消息接收
+        /// The class receives an unregister message when it is ready for recycling after it is finished in use
+        /// </summary>
         public void Dispose()
         {
             Messenger.UnregisterAll(this);
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>
         /// 检查服务器返回的内容是空列表还是带有具体内容的信息
         /// Checks whether the content returned by the server is an empty list or information with specific content
         /// </summary>
+        /// <returns>得到带有数据的信息，返回False，没有得到带有数据的信息，返回True</returns>
         public bool IsSuccessfulRequest()
         {
-            // 加载带有返回结果的标签
-            HtmlNode RequestStateNode = htmlDocument.DocumentNode.SelectSingleNode("//p");
+            // 加载带有返回结果状态的标签
+            HtmlNode RequestStateNode = HtmlDocument.DocumentNode.SelectSingleNode("//p");
 
             // 加载带有返回结果的文本信息
             string ReqeustContext = RequestStateNode.InnerText;
 
-            // 服务器获取到正确的信息
-            if (ReqeustContext == "The links were successfully received from the Microsoft Store server.")
-            {
-                return true;
-            }
-            // 服务器获取到的内容不正确
-            else if (ReqeustContext == "The server returned an empty list.<br>Either you have not entered the link correctly, or this service does not support generation for this product.")
-            {
-                return false;
-            }
-            // 其他状况
-            return false;
+            // 服务器获取到正确的信息，此时返回为False，如果返回其他信息，返回True
+            return Convert.ToBoolean(string.Compare(ReqeustContext, "The links were successfully received from the Microsoft Store server."));
         }
 
         /// <summary>
@@ -91,38 +65,26 @@ namespace GetStoreApp.Services.Home
         /// <returns>返回得到的CategoryID字符串数据</returns>
         public string HtmlParseCID()
         {
-            // 加载带有返回内容的标签
-            HtmlNode RequestCIDNode = htmlDocument.DocumentNode.SelectSingleNode("//i");
-
-            // 获取服务器返回应用的CategoryID信息
-            return RequestCIDNode.InnerText;
+            return HtmlDocument.DocumentNode.SelectSingleNode("//i").InnerText;
         }
 
         /// <summary>
         /// 解析网页数据中包含的所有信息
         /// Parse all the information contained in the web page data
         /// </summary>
-        /// <returns>返回得到的所有数据</returns>
-        public ObservableCollection<ResultDataModel> HtmlParseLinks()
+        /// <returns>返回得到的所有所有标签数据</returns>
+        public List<ResultDataModel> HtmlParseLinks()
         {
-            int Index = 1;
+            List<ResultDataModel> ResultDataList = new();
 
             // 获取<table class="tftable" border="1" align="center">标签信息
-            HtmlNode RequestLinkNode = htmlDocument.DocumentNode.SelectSingleNode("//table[@class='tftable' and @border='1' and @align='center']");
+            HtmlNode RequestLinkNode = HtmlDocument.DocumentNode.SelectSingleNode("//table[@class='tftable' and @border='1' and @align='center']");
 
             // 获取<table class="tftable" border="1" align="center">下所有的tr标签
-            var RequestLinkNodeList = RequestLinkNode
+            IEnumerable<HtmlNode> RequestLinkNodeList = RequestLinkNode
                  .Descendants("tr")
                  .Where(x => x.Attributes.Contains("style"));
 
-            // 集合不为空时，清空列表
-            if (ResultDataList.Count != 0)
-            {
-                ResultDataList.Clear();
-            }
-
-            // 遍历tr标签集合
-            // Todo:在添加的时候进行过滤
             foreach (var item in RequestLinkNodeList)
             {
                 // 访问每一个tr标签的所有td标签，td标签包括应用包名称，链接名称，链接过期时间，应用包文件SHA-1值，应用包文件大小
@@ -143,8 +105,8 @@ namespace GetStoreApp.Services.Home
                 // 应用包文件大小
                 string AppPackageSize = TdNodeList[3].InnerText;
 
-                // 将获取到的数据添加到ResultDataList集合中（此时没有为Index索引赋值）
-                ResultDataList.Add(new ResultDataModel(Index++, AppPackageName, AppLink, AppLinkExpireTime, AppSHA1, AppPackageSize));
+                // 将获取到的数据添加到ResultDataList集合中
+                ResultDataList.Add(new ResultDataModel(AppPackageName, AppLink, AppLinkExpireTime, AppSHA1, AppPackageSize));
             }
 
             return ResultDataList;

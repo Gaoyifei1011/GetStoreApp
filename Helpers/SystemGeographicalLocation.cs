@@ -28,10 +28,10 @@ namespace GetStoreApp.Helpers
             GEO_OFFICIALLANGUAGES = 0x000B
         }
 
-        [DllImport("Kernel32.dll", SetLastError = true)]
+        [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern int GetGeoInfo(int location, SYSGEOTYPE geoType, StringBuilder lpGeoData, int cchData, int langId);
 
-        [DllImport("Kernel32.dll", SetLastError = true)]
+        [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern int EnumSystemGeoID(int geoClass, int parentGeoId, EnumGeoInfoProc lpGeoEnumProc);
     }
 }

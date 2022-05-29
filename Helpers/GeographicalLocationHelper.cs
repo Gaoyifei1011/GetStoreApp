@@ -11,10 +11,10 @@ namespace GetStoreApp.Helpers
     /// </summary>
     public static class GeographicalLocationHelper
     {
-        private static List<GeographicalLocationModel> _geographicalLocations;
-        private static List<int> _geoIds;
-        private static SystemGeographicalLocation.EnumGeoInfoProc _callback;
-        private static int _lcid;
+        private static readonly List<GeographicalLocationModel> _geographicalLocations;
+        private static readonly List<int> _geoIds;
+        private static readonly SystemGeographicalLocation.EnumGeoInfoProc _callback;
+        private static readonly int _lcid;
 
         static GeographicalLocationHelper()
         {
@@ -32,19 +32,20 @@ namespace GetStoreApp.Helpers
 
                 foreach (var geoId in _geoIds)
                 {
-                    var location = new GeographicalLocationModel();
-
-                    location.Nation = GetGeoInfoA(geoId, SystemGeographicalLocation.SYSGEOTYPE.GEO_NATION, _lcid);
-                    location.Latitude = GetGeoInfoA(geoId, SystemGeographicalLocation.SYSGEOTYPE.GEO_LATITUDE, _lcid);
-                    location.Longitude = GetGeoInfoA(geoId, SystemGeographicalLocation.SYSGEOTYPE.GEO_LONGITUDE, _lcid);
-                    location.ISO2 = GetGeoInfoA(geoId, SystemGeographicalLocation.SYSGEOTYPE.GEO_ISO2, _lcid);
-                    location.ISO3 = GetGeoInfoA(geoId, SystemGeographicalLocation.SYSGEOTYPE.GEO_ISO3, _lcid);
-                    location.Rfc1766 = GetGeoInfoA(geoId, SystemGeographicalLocation.SYSGEOTYPE.GEO_RFC1766, _lcid);
-                    location.Lcid = GetGeoInfoA(geoId, SystemGeographicalLocation.SYSGEOTYPE.GEO_LCID, _lcid);
-                    location.FriendlyName = GetGeoInfoA(geoId, SystemGeographicalLocation.SYSGEOTYPE.GEO_FRIENDLYNAME, _lcid);
-                    location.OfficialName = GetGeoInfoA(geoId, SystemGeographicalLocation.SYSGEOTYPE.GEO_OFFICIALNAME, _lcid);
-                    location.TimeZones = GetGeoInfoA(geoId, SystemGeographicalLocation.SYSGEOTYPE.GEO_TIMEZONES, _lcid);
-                    location.OfficialLanguages = GetGeoInfoA(geoId, SystemGeographicalLocation.SYSGEOTYPE.GEO_OFFICIALLANGUAGES, _lcid);
+                    var location = new GeographicalLocationModel
+                    {
+                        Nation = GetGeoInfoA(geoId, SystemGeographicalLocation.SYSGEOTYPE.GEO_NATION, _lcid),
+                        Latitude = GetGeoInfoA(geoId, SystemGeographicalLocation.SYSGEOTYPE.GEO_LATITUDE, _lcid),
+                        Longitude = GetGeoInfoA(geoId, SystemGeographicalLocation.SYSGEOTYPE.GEO_LONGITUDE, _lcid),
+                        ISO2 = GetGeoInfoA(geoId, SystemGeographicalLocation.SYSGEOTYPE.GEO_ISO2, _lcid),
+                        ISO3 = GetGeoInfoA(geoId, SystemGeographicalLocation.SYSGEOTYPE.GEO_ISO3, _lcid),
+                        Rfc1766 = GetGeoInfoA(geoId, SystemGeographicalLocation.SYSGEOTYPE.GEO_RFC1766, _lcid),
+                        Lcid = GetGeoInfoA(geoId, SystemGeographicalLocation.SYSGEOTYPE.GEO_LCID, _lcid),
+                        FriendlyName = GetGeoInfoA(geoId, SystemGeographicalLocation.SYSGEOTYPE.GEO_FRIENDLYNAME, _lcid),
+                        OfficialName = GetGeoInfoA(geoId, SystemGeographicalLocation.SYSGEOTYPE.GEO_OFFICIALNAME, _lcid),
+                        TimeZones = GetGeoInfoA(geoId, SystemGeographicalLocation.SYSGEOTYPE.GEO_TIMEZONES, _lcid),
+                        OfficialLanguages = GetGeoInfoA(geoId, SystemGeographicalLocation.SYSGEOTYPE.GEO_OFFICIALLANGUAGES, _lcid)
+                    };
 
                     _geographicalLocations.Add(location);
                 }
@@ -56,9 +57,8 @@ namespace GetStoreApp.Helpers
         private static string GetGeoInfoA(int location, SystemGeographicalLocation.SYSGEOTYPE geoType, int langId)
         {
             var geoDataBuilder = new StringBuilder();
-            int bufferSize = 0;
 
-            bufferSize = SystemGeographicalLocation.GetGeoInfo(location, geoType, geoDataBuilder, 0, langId);
+            int bufferSize = SystemGeographicalLocation.GetGeoInfo(location, geoType, geoDataBuilder, 0, langId);
 
             if (bufferSize > 0)
             {
