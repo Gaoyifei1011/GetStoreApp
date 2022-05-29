@@ -23,7 +23,7 @@ namespace GetStoreApp.Converters.Home
 
             string result = value as string;
 
-            return result + HomeViewModel.CopyToolTip;
+            return string.Format("{0}{1}",result,HomeViewModel.CopyToolTip);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

@@ -39,6 +39,7 @@
                 VerticalAlignment="Center"
                 Command="{x:Bind ViewModel.UseInstructionCommand}"
                 Content="{x:Bind viewModel:HomeViewModel.UseInstruction}"
+                IsEnabled="False"
                 Visibility="{x:Bind ViewModel.UseInsVisValue, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
         </Grid>
 

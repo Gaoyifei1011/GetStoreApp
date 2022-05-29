@@ -57,8 +57,12 @@
                 <NavigationViewItem
                     helpers:NavigationHelper.NavigateTo="GetStoreApp.ViewModels.Pages.DownloadViewModel"
                     Content="{x:Bind viewModel:ShellViewModel.Download}"
-                    Icon="Download" />
-                <NavigationViewItem helpers:NavigationHelper.NavigateTo="GetStoreApp.ViewModels.Pages.HistoryViewModel" Content="{x:Bind viewModel:ShellViewModel.History}">
+                    Icon="Download"
+                    IsEnabled="False" />
+                <NavigationViewItem
+                    helpers:NavigationHelper.NavigateTo="GetStoreApp.ViewModels.Pages.HistoryViewModel"
+                    Content="{x:Bind viewModel:ShellViewModel.History}"
+                    IsEnabled="False">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF738;" />
                     </NavigationViewItem.Icon>
@@ -72,7 +76,10 @@
 
             <!--  底部导航条目  -->
             <NavigationView.FooterMenuItems>
-                <NavigationViewItem helpers:NavigationHelper.NavigateTo="GetStoreApp.ViewModels.Pages.AboutViewModel" Content="{x:Bind viewModel:ShellViewModel.About}">
+                <NavigationViewItem
+                    helpers:NavigationHelper.NavigateTo="GetStoreApp.ViewModels.Pages.AboutViewModel"
+                    Content="{x:Bind viewModel:ShellViewModel.About}"
+                    IsEnabled="False">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE946;" />
                     </NavigationViewItem.Icon>

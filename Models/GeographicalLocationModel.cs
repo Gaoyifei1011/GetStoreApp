@@ -1,5 +1,9 @@
 ﻿namespace GetStoreApp.Models
 {
+    /// <summary>
+    /// 国家/地区数据模型
+    /// Country/region data model
+    /// </summary>
     public class GeographicalLocationModel
     {
         public string Nation { get; set; }
