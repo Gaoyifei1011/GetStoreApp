@@ -10,14 +10,17 @@ namespace GetStoreApp.ViewModels.Controls.Home
 {
     public class ResultViewModel : ObservableRecipient
     {
-        // 服务器是否返回了结果
-        private bool _isResultExist = false;
+        /// <summary>
+        /// 结果控件的显示状态
+        /// The display state of the result control
+        /// </summary>
+        private bool _resultCotnrolVisable = false;
 
-        public bool IsResultExist
+        public bool ResultControlVisable
         {
-            get { return _isResultExist; }
+            get { return _resultCotnrolVisable; }
 
-            set { SetProperty(ref _isResultExist, value); }
+            set { SetProperty(ref _resultCotnrolVisable, value); }
         }
 
         // 成功生成链接后应用包的CateGoryID值
@@ -52,17 +55,17 @@ namespace GetStoreApp.ViewModels.Controls.Home
         private readonly DispatcherQueue _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
         // 保存获取结果数据列表
-        public ObservableCollection<ResultDataModel> ResultDataList = new ObservableCollection<ResultDataModel>();
+        public ObservableCollection<ResultData> ResultDataList = new ObservableCollection<ResultData>();
 
         // 结果数据列表，过滤后的结果
-        public ObservableCollection<ResultDataModel> ResultDataWithFilterList = new ObservableCollection<ResultDataModel>();
+        public ObservableCollection<ResultData> ResultDataWithFilterList = new ObservableCollection<ResultData>();
 
         public ResultViewModel()
         {
             // 设置控件的显示状态
             Messenger.Register<ResultViewModel, ResultControlVisableMessage>(this, (resultViewModel, resultControlVisableMessage) =>
             {
-                resultViewModel.IsResultExist = resultControlVisableMessage.Value;
+                resultViewModel.ResultControlVisable = resultControlVisableMessage.Value;
             });
 
             // 添加CategoryId信息

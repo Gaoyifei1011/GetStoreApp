@@ -4,7 +4,7 @@
     /// 网页数据请求内容数据模型
     /// Web page data request content data model
     /// </summary>
-    public class HttpRequestDataModel
+    public class HttpRequestData
     {
         /// <summary>
         /// 向API发送请求后API传回的数据请求状态
@@ -30,13 +30,5 @@
         /// The information sent back to the API in an abnormal state after sending the request
         /// </summary>
         public string RequestExpectionContent { get; set; }
-
-        public HttpRequestDataModel(int requestId, string requestStatusCode, string requestContent, string requestExpectionContent)
-        {
-            RequestId = requestId;
-            RequestStatusCode = requestStatusCode;
-            RequestContent = requestContent;
-            RequestExpectionContent = requestExpectionContent;
-        }
     }
 }

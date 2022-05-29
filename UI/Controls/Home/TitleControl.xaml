@@ -28,12 +28,14 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
+
             <!--  主页文字描述  -->
             <TextBlock
                 Grid.Column="0"
                 FontSize="{StaticResource TitleFontSize}"
                 Text="{x:Bind viewModel:HomeViewModel.Title}" />
 
+            <!--  使用说明按钮  -->
             <Button
                 Grid.Column="1"
                 VerticalAlignment="Center"
@@ -43,6 +45,7 @@
                 Visibility="{x:Bind ViewModel.UseInsVisValue, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
         </Grid>
 
+        <!--  应用说明描述  -->
         <TextBlock
             Margin="0,0,0,5"
             Style="{StaticResource MainDescriptionStyle}"

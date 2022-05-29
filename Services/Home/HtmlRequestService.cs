@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Home
 {
+    /// <summary>
+    /// 通过Post向API发送请求，从API中获取数据服务
+    /// Send a request to the API via Post to get the data service from the API
+    /// </summary>
     public class HtmlRequestService
     {
         /// <summary>
@@ -19,7 +23,7 @@ namespace GetStoreApp.Services.Home
         /// 数据请求信息
         /// Data request information
         /// </summary>
-        private HttpRequestDataModel httpRequestDataModel;
+        private HttpRequestData httpRequestDataModel;
 
         /// <summary>
         /// 数据的请求状态，0是正常状态，1是网络异常（WebExpection），2是超时异常（TimeOutExpection），3是其他异常（默认值）
@@ -59,7 +63,7 @@ namespace GetStoreApp.Services.Home
             return string.Format("type={0}&url={1}&ring={2}&lang={3}", type, url, ring, language);
         }
 
-        public async Task<HttpRequestDataModel> HttpRequestAsync(string content)
+        public async Task<HttpRequestData> HttpRequestAsync(string content)
         {
             // 将语句执行块放在try中，可以捕捉到异常
             try
@@ -89,10 +93,10 @@ namespace GetStoreApp.Services.Home
                 requestStream.Close();
 
                 // 请求获取数据
-                var response = await request.GetResponseAsync() as HttpWebResponse;
+                HttpWebResponse response = await request.GetResponseAsync() as HttpWebResponse;
 
                 // 获取数据响应流
-                var stream = response.GetResponseStream();
+                Stream stream = response.GetResponseStream();
 
                 if (stream != null)
                 {
@@ -117,7 +121,7 @@ namespace GetStoreApp.Services.Home
                 var response = e.Response;
                 if (response != null)
                 {
-                    var httpWebResponse = (HttpWebResponse)response;
+                    HttpWebResponse httpWebResponse = (HttpWebResponse)response;
 
                     // 获取数据响应流
                     var stream = httpWebResponse.GetResponseStream();
@@ -168,7 +172,13 @@ namespace GetStoreApp.Services.Home
             // 添加数据
             finally
             {
-                httpRequestDataModel = new HttpRequestDataModel(RequestId, RequestStatusCode, RequestContent, RequestExpectionContent);
+                httpRequestDataModel = new HttpRequestData()
+                {
+                    RequestId = RequestId,
+                    RequestStatusCode = RequestStatusCode,
+                    RequestContent = RequestContent,
+                    RequestExpectionContent = RequestExpectionContent
+                };
             }
             return httpRequestDataModel;
         }

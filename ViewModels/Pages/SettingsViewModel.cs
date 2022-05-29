@@ -86,16 +86,16 @@ namespace GetStoreApp.ViewModels.Pages
         public static string BlockMapOnContent { get; } = LanguageService.GetResources("/Settings/BlockMapOnContent");
 
         // 语言列表
-        public static List<LanguageModel> LanguageList { get; } = LanguageService.LanguageList;
+        public static List<LanguageData> LanguageList { get; } = LanguageService.LanguageList;
 
-        public static List<HistoryItemValueModel> HistoryItemValueList { get; } = new List<HistoryItemValueModel>()
+        public static List<HistoryItemValue> HistoryItemValueList { get; } = new List<HistoryItemValue>()
             {
-                new HistoryItemValueModel(HistoryItemValueMin, 3),
-                new HistoryItemValueModel(HistoryItemValueMax, 5)
+                new HistoryItemValue(){ HistoryItemName=HistoryItemValueMin,HistoryItemNum=3 },
+                new HistoryItemValue(){ HistoryItemName=HistoryItemValueMax,HistoryItemNum=5 }
             };
 
         // 区域列表
-        public static List<GeographicalLocationModel> RegionList { get; } = RegionService.AppGlobalLocations;
+        public static List<GeographicalLocation> RegionList { get; } = RegionService.AppGlobalLocations;
 
         private string _versionDescription;
 

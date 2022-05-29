@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using GetStoreApp.Behaviors;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Settings;
 using System.Collections.Generic;
@@ -71,21 +72,21 @@ namespace GetStoreApp.ViewModels.Pages
 
         // 列表数据
         // 初始化HomeType列表
-        public static IReadOnlyList<HomeTypeModel> TypeList { get; } = new List<HomeTypeModel>()
+        public static IReadOnlyList<HomeType> TypeList { get; } = new List<HomeType>()
         {
-            new HomeTypeModel(TypeURL,"url"),
-            new HomeTypeModel(TypePID,"ProductId"),
-            new HomeTypeModel(TypePFN,"PackageFamilyName"),
-            new HomeTypeModel(TypeCID,"CategoryId")
+            new HomeType(){DisplayName=TypeURL,InternalName="url"},
+            new HomeType(){DisplayName=TypePID,InternalName="ProductId"},
+            new HomeType(){DisplayName=TypePFN,InternalName="PackageFamilyName"},
+            new HomeType(){DisplayName=TypeCID,InternalName="CategoryId"}
         };
 
         // 初始化Channel列表
-        public static IReadOnlyList<HomeChannelModel> ChannelList { get; } = new List<HomeChannelModel>()
+        public static IReadOnlyList<HomeChannel> ChannelList { get; } = new List<HomeChannel>()
         {
-            new HomeChannelModel(ChannelFast,"WIF"),
-            new HomeChannelModel(ChannelSlow,"WIS"),
-            new HomeChannelModel(ChannelRP,"RP"),
-            new HomeChannelModel(ChannelRetail,"Retail")
+            new HomeChannel(){ DisplayName=ChannelFast,InternalName="WIF" },
+            new HomeChannel(){ DisplayName=ChannelSlow,InternalName="WIS" },
+            new HomeChannel(){ DisplayName=ChannelRP,InternalName="RP" },
+            new HomeChannel(){ DisplayName=ChannelRetail,InternalName="Retail" }
         };
 
         // 初始化SampleLink列表
@@ -95,6 +96,15 @@ namespace GetStoreApp.ViewModels.Pages
             "9NKSQGP7F2NH",
             "Microsoft.WindowsStore_8wekyb3d8bbwe",
             "d58c3a5f-ca63-4435-842c-7814b5ff91b7"
+        };
+
+        // 状态列表
+        public static IReadOnlyList<StatusBarState> StatusBarStateList { get; } = new List<StatusBarState>()
+        {
+            new StatusBarState(){StateImageMode = StateImageMode.Error,StateInfoText=StatusInfoError,StatePrRingActValue=false,StatePrRingVisValue=false},
+            new StatusBarState(){StateImageMode = StateImageMode.Warning,StateInfoText=StatusInfoWarning,StatePrRingActValue=false,StatePrRingVisValue=false},
+            new StatusBarState(){StateImageMode = StateImageMode.Notification,StateInfoText=StatusInfoGetting,StatePrRingActValue=true,StatePrRingVisValue=true},
+            new StatusBarState(){StateImageMode = StateImageMode.Success,StateInfoText=StatusInfoSuccess,StatePrRingActValue=false,StatePrRingVisValue=false},
         };
     }
 }

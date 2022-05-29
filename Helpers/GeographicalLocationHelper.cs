@@ -11,20 +11,20 @@ namespace GetStoreApp.Helpers
     /// </summary>
     public static class GeographicalLocationHelper
     {
-        private static readonly List<GeographicalLocationModel> _geographicalLocations;
+        private static readonly List<GeographicalLocation> _geographicalLocations;
         private static readonly List<int> _geoIds;
         private static readonly SystemGeographicalLocation.EnumGeoInfoProc _callback;
         private static readonly int _lcid;
 
         static GeographicalLocationHelper()
         {
-            _geographicalLocations = new List<GeographicalLocationModel>();
+            _geographicalLocations = new List<GeographicalLocation>();
             _geoIds = new List<int>();
             _callback = EnumGeoInfoCallback;
             _lcid = CultureInfo.CurrentCulture.LCID;
         }
 
-        public static IEnumerable<GeographicalLocationModel> GetGeographicalLocations()
+        public static IEnumerable<GeographicalLocation> GetGeographicalLocations()
         {
             if (_geographicalLocations.Count == 0)
             {
@@ -32,7 +32,7 @@ namespace GetStoreApp.Helpers
 
                 foreach (var geoId in _geoIds)
                 {
-                    var location = new GeographicalLocationModel
+                    var location = new GeographicalLocation
                     {
                         Nation = GetGeoInfoA(geoId, SystemGeographicalLocation.SYSGEOTYPE.GEO_NATION, _lcid),
                         Latitude = GetGeoInfoA(geoId, SystemGeographicalLocation.SYSGEOTYPE.GEO_LATITUDE, _lcid),

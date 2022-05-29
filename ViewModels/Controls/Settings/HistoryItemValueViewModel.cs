@@ -29,6 +29,6 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             }
         }
 
-        public List<HistoryItemValueModel> HistoryItemValueList = SettingsViewModel.HistoryItemValueList;
+        public List<HistoryItemValue> HistoryItemValueList = SettingsViewModel.HistoryItemValueList;
     }
 }

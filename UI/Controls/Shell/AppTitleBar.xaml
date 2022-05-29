@@ -14,7 +14,9 @@
         Background="Transparent"
         Canvas.ZIndex="1"
         IsHitTestVisible="True">
+
         <StackPanel Orientation="Horizontal">
+            <!--  应用图标  -->
             <Image
                 x:Name="AppIcon"
                 Width="20"
@@ -22,6 +24,8 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Source="/Assets/Square44x44Logo.png" />
+
+            <!--  应用标题  -->
             <TextBlock
                 x:Name="AppTitle"
                 x:Uid="AppTitle"

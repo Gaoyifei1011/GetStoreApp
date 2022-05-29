@@ -14,7 +14,7 @@ namespace GetStoreApp.Services.Settings
         /// 设置存储时需要使用到的键值
         /// The key value that you need to use when setting the store
         /// </summary>
-        private static List<string> SettingsKey = new List<string> { "StartsWithEFilterValue", "BlockMapFilterValue" };
+        private static readonly IReadOnlyList<string> SettingsKey = new List<string> { "StartsWithEFilterValue", "BlockMapFilterValue" };
 
         /// <summary>
         /// 设置按钮的默认状态：全部不过滤

@@ -23,17 +23,23 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
+
+            <!--  状态栏图标  -->
             <Image
                 Grid.Column="0"
                 Width="40"
                 Height="40"
                 Source="{x:Bind ViewModel.StateImage, Converter={StaticResource StateImageConverter}, Mode=OneWay}" />
+
+            <!--  状态栏文字  -->
             <TextBlock
                 Grid.Column="1"
                 Margin="10,0,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{x:Bind ViewModel.StateInfoText, Mode=OneWay}" />
+
+            <!--  状态栏圆环动画  -->
             <ProgressRing
                 x:Name="MainStatPrRing"
                 Grid.Column="3"

@@ -17,7 +17,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <!--  “使用说明”按钮  -->
+    <!--  “使用说明”按钮显示设置  -->
     <gc:CardControl>
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
@@ -26,24 +26,32 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
+            <!--  使用说明图标  -->
             <FontIcon
                 Grid.Column="0"
                 FontFamily="Segoe Fluent Icons"
                 Glyph="&#xE897;"
                 Style="{StaticResource SettingsFontIconStyle}" />
 
+            <!--  使用说明设置描述  -->
             <StackPanel Grid.Column="1" Orientation="Vertical">
+
+                <!--  标题  -->
                 <TextBlock
                     VerticalAlignment="Center"
                     Style="{StaticResource BodyTextBlockStyle}"
                     Text="{x:Bind viewModel:SettingsViewModel.UseInstructionButton}"
                     TextWrapping="WrapWholeWords" />
+
+                <!--  详细描述  -->
                 <TextBlock
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Style="{StaticResource CaptionTextBlockStyle}"
                     Text="{x:Bind viewModel:SettingsViewModel.UseInstructionButtonDescription}"
                     TextWrapping="WrapWholeWords" />
             </StackPanel>
+
+            <!--  设置选项  -->
             <ToggleSwitch
                 Grid.Column="2"
                 FlowDirection="RightToLeft"
