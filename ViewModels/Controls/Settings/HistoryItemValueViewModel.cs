@@ -3,14 +3,12 @@ using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Messages;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Settings;
-using GetStoreApp.ViewModels.Pages;
 using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class HistoryItemValueViewModel : ObservableRecipient
     {
-        // 主页“历史记录”展示条目设置
         private int _selectedHistoryItemValue;
 
         public int SelectedHistoryItemValue
@@ -29,6 +27,10 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             }
         }
 
-        public List<HistoryItemValue> HistoryItemValueList = SettingsViewModel.HistoryItemValueList;
+        public IReadOnlyList<HistoryItemValue> HistoryItemValueList { get; } = new List<HistoryItemValue>()
+            {
+                new HistoryItemValue(){ HistoryItemName=LanguageService.GetResources("/Settings/HistoryItemValueMin"),HistoryItemNum=3 },
+                new HistoryItemValue(){ HistoryItemName=LanguageService.GetResources("/Settings/HistoryItemValueMax"),HistoryItemNum=5 }
+            };
     }
 }

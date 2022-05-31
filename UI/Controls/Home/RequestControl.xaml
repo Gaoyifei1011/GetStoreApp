@@ -6,16 +6,9 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewModel="using:GetStoreApp.ViewModels.Pages"
+    xmlns:service="using:GetStoreApp.Services.Settings"
     mc:Ignorable="d">
 
-    <UserControl.Resources>
-        <Thickness x:Key="MainCtrlLeftMargin">0,0,2,0</Thickness>
-        <Thickness x:Key="MainCtrlLeftRightMargin">2,0,2,0</Thickness>
-        <Thickness x:Key="MainCtrlRightMargin">2,0,0,0</Thickness>
-    </UserControl.Resources>
-
-    <!--  信息输入控件  -->
     <Grid>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -25,10 +18,9 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <!--  类型选择  -->
             <ComboBox
                 Grid.Column="0"
-                Margin="{StaticResource MainCtrlLeftMargin}"
+                Margin="0,0,2,0"
                 DisplayMemberPath="DisplayName"
                 ItemsSource="{x:Bind ViewModel.TypeList}"
                 SelectedItem="{x:Bind ViewModel.SelectedType, Mode=TwoWay}">
@@ -39,28 +31,25 @@
                 </i:Interaction.Behaviors>
             </ComboBox>
 
-            <!--  通道选择  -->
             <ComboBox
                 Grid.Column="1"
-                Margin="{StaticResource MainCtrlLeftRightMargin}"
+                Margin="2,0,2,0"
                 DisplayMemberPath="DisplayName"
                 ItemsSource="{x:Bind ViewModel.ChannelList}"
                 SelectedItem="{x:Bind ViewModel.SelectedChannel, Mode=TwoWay}" />
 
-            <!--  内容输入控件  -->
             <TextBox
                 Grid.Column="2"
-                Margin="{StaticResource MainCtrlLeftMargin}"
+                Margin="2,0,0,0"
                 PlaceholderText="{x:Bind ViewModel.LinkPlaceHolderText, Mode=OneWay}"
                 Text="{x:Bind ViewModel.LinkText, Mode=TwoWay}" />
 
-            <!--  获取链接按钮  -->
             <Button
                 Grid.Column="3"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Bottom"
                 Command="{x:Bind ViewModel.GetLinksCommand}"
-                Content="{x:Bind viewModel:HomeViewModel.GetLinks}"
+                Content="{x:Bind service:LanguageService.GetResources('/Home/GetLinks')}"
                 Style="{StaticResource AccentButtonStyle}" />
         </Grid>
     </Grid>

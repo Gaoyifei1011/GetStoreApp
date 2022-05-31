@@ -1,15 +1,10 @@
-﻿using GetStoreApp.Behaviors;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.Models
 {
     public class StatusBarState
     {
-        public StateImageMode StateImageMode { get; set; }
+        public InfoBarSeverity InfoBarSeverity { get; set; }
 
         public string StateInfoText { get; set; }
 

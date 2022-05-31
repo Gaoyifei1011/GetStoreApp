@@ -135,8 +135,23 @@
   <data name="ChannelSlow" xml:space="preserve">
     <value>Slow</value>
   </data>
-  <data name="CopyToolTip" xml:space="preserve">
-    <value>(Right-click to copy)</value>
+  <data name="Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="CopyAll" xml:space="preserve">
+    <value>Copy all</value>
+  </data>
+  <data name="CopyAsOrder" xml:space="preserve">
+    <value>Copy by serial number</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="DownloadAll" xml:space="preserve">
+    <value>Download All</value>
+  </data>
+  <data name="DownloadAsOrder" xml:space="preserve">
+    <value>Download by serial number</value>
   </data>
   <data name="FileName" xml:space="preserve">
     <value>File Name</value>

@@ -135,8 +135,23 @@
   <data name="ChannelSlow" xml:space="preserve">
     <value>慢速</value>
   </data>
-  <data name="CopyToolTip" xml:space="preserve">
-    <value>（点击右键进行复制）</value>
+  <data name="Copy" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="CopyAll" xml:space="preserve">
+    <value>全部复制</value>
+  </data>
+  <data name="CopyAsOrder" xml:space="preserve">
+    <value>按序号复制</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>下载</value>
+  </data>
+  <data name="DownloadAll" xml:space="preserve">
+    <value>下载全部</value>
+  </data>
+  <data name="DownloadAsOrder" xml:space="preserve">
+    <value>按序号下载</value>
   </data>
   <data name="FileName" xml:space="preserve">
     <value>文件名称</value>

@@ -7,65 +7,23 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Home
 {
-    /// <summary>
-    /// 通过Post向API发送请求，从API中获取数据服务
-    /// Send a request to the API via Post to get the data service from the API
-    /// </summary>
     public class HtmlRequestService
     {
-        /// <summary>
-        /// 请求数据时需要使用的API链接
-        /// Api links that need to be used when requesting data
-        /// </summary>
         private const string API = "https://store.rg-adguard.net/api/GetFiles";
 
-        /// <summary>
-        /// 数据请求信息
-        /// Data request information
-        /// </summary>
         private HttpRequestData httpRequestDataModel;
 
-        /// <summary>
-        /// 数据的请求状态，0是正常状态，1是网络异常（WebExpection），2是超时异常（TimeOutExpection），3是其他异常（默认值）
-        /// The request status of the data, 0 is the normal state, 1 is the network exception (WebExpection), 2 is the timeout exception (TimeOutExpection), 3 is the other exception (default)
-        /// </summary>
+        // 数据的请求状态，0是正常状态，1是网络异常（WebExpection），2是超时异常（TimeOutExpection），3是其他异常（默认值）
         private int RequestId = 3;
 
-        /// <summary>
-        /// 网页状态请求码
-        /// The page status request code
-        /// </summary>
         private string RequestStatusCode = string.Empty;
 
-        /// <summary>
-        /// 网页正常请求时返回的内容
-        /// The content that is returned when the page is normally requested
-        /// </summary>
         private string RequestContent = string.Empty;
 
-        /// <summary>
-        /// 网页异常请求时返回的内容
-        /// The content returned when a web page is requested unexpectedly
-        /// </summary>
         private string RequestExpectionContent = string.Empty;
-
-        /// <summary>
-        /// 生成要请求的content内容
-        /// Generate the content to be requested
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="url"></param>
-        /// <param name="ring"></param>
-        /// <param name="language"></param>
-        /// <returns></returns>
-        public static string GenerateContent(string type, string url, string ring, string language)
-        {
-            return string.Format("type={0}&url={1}&ring={2}&lang={3}", type, url, ring, language);
-        }
 
         public async Task<HttpRequestData> HttpRequestAsync(string content)
         {
-            // 将语句执行块放在try中，可以捕捉到异常
             try
             {
                 // method is depricated
@@ -149,7 +107,6 @@ namespace GetStoreApp.Services.Home
                     }
                 }
             }
-            // 捕捉访问网络期间超时引发的异常
             catch (TimeoutException e)
             {
                 // 网页请求状态：超时异常
@@ -169,7 +126,6 @@ namespace GetStoreApp.Services.Home
                     RequestExpectionContent = e.Message;
                 }
             }
-            // 添加数据
             finally
             {
                 httpRequestDataModel = new HttpRequestData()

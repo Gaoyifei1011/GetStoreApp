@@ -9,28 +9,17 @@
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
 
-    <!--  主页面  -->
     <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
-        <StackPanel
-            x:Name="ContentArea"
-            Margin="{StaticResource PageMargin}"
-            Spacing="{StaticResource PageSpacing}">
+        <StackPanel Margin="{StaticResource PageMargin}" Spacing="{StaticResource PageSpacing}">
 
-            <!--  标题栏部分  -->
             <hc:TitleControl />
 
-            <!--  选择列表  -->
             <hc:RequestControl />
 
-            <!--  状态栏  -->
             <hc:StatusBarControl />
 
-            <!--  主页部分历史记录列表  -->
-            <!--
-            <mainctr:SimpleHistoryControl />
+            <!--<mainctr:SimpleHistoryControl />-->
 
-            -->
-            <!--  获取结果列表  -->
             <hc:ResultControl />
         </StackPanel>
     </ScrollViewer>

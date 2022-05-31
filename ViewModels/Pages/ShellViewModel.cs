@@ -10,16 +10,6 @@ namespace GetStoreApp.ViewModels.Pages
 {
     public class ShellViewModel : ObservableRecipient
     {
-        public static string Home { get; } = LanguageService.GetResources("/Shell/Home");
-
-        public static string Download { get; } = LanguageService.GetResources("/Shell/Download");
-
-        public static string History { get; } = LanguageService.GetResources("/Shell/History");
-
-        public static string Web { get; } = LanguageService.GetResources("/Shell/Web");
-
-        public static string About { get; } = LanguageService.GetResources("/Shell/About");
-
         private bool _isBackEnabled;
         private object _selected;
 

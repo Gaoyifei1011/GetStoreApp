@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:gc="using:GetStoreApp.UI.Controls.General"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewModel="using:GetStoreApp.ViewModels.Pages"
+    xmlns:service="using:GetStoreApp.Services.Settings"
     mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -17,7 +17,6 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <!--  应用界面语言设置  -->
     <gc:CardControl>
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
@@ -27,35 +26,29 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <!--  设置页面语言图标  -->
             <FontIcon
                 Grid.Column="0"
                 FontFamily="Segoe Fluent Icons"
                 Glyph="&#xF2B7;"
                 Style="{StaticResource SettingsFontIconStyle}" />
 
-            <!--  语言设置文字描述  -->
             <StackPanel Grid.Column="1" Orientation="Vertical">
-                <!--  标题  -->
+
                 <TextBlock
                     VerticalAlignment="Center"
                     Style="{StaticResource BodyTextBlockStyle}"
-                    Text="{x:Bind viewModel:SettingsViewModel.Language}"
-                    TextWrapping="WrapWholeWords" />
+                    Text="{x:Bind service:LanguageService.GetResources('/Settings/Language')}" />
 
-                <!--  详细说明  -->
                 <TextBlock
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Style="{StaticResource CaptionTextBlockStyle}"
-                    Text="{x:Bind viewModel:SettingsViewModel.LanguageDescription}"
-                    TextWrapping="WrapWholeWords" />
+                    Text="{x:Bind service:LanguageService.GetResources('/Settings/LanguageDescription')}" />
             </StackPanel>
 
-            <!--  修改注意事项说明  -->
             <Button
                 Grid.Column="2"
                 BorderThickness="0"
-                ToolTipService.ToolTip="{x:Bind viewModel:SettingsViewModel.LanguageTip}">
+                ToolTipService.ToolTip="{x:Bind service:LanguageService.GetResources('/Settings/LanguageTip')}">
                 <Button.Content>
                     <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE946;" />
                 </Button.Content>
@@ -66,25 +59,23 @@
                                 Margin="0,0,0,12"
                                 FontSize="13"
                                 Style="{ThemeResource CaptionTextBlockStyle}"
-                                Text="{x:Bind viewModel:SettingsViewModel.LanguageTipDescription}"
-                                TextWrapping="Wrap" />
+                                Text="{x:Bind service:LanguageService.GetResources('/Settings/LanguageTipDescription')}" />
                             <Button
                                 HorizontalAlignment="Right"
                                 Command="{x:Bind ViewModel.LaunchSettingsInstalledAppsCommand}"
-                                Content="{x:Bind viewModel:SettingsViewModel.LaunchSettingsInstalledApps}" />
+                                Content="{x:Bind service:LanguageService.GetResources('/Settings/LaunchSettingsInstalledApps')}" />
                         </StackPanel>
                     </Flyout>
                 </Button.Flyout>
             </Button>
 
-            <!--  设置选项  -->
             <ComboBox
                 Grid.Column="3"
                 Width="Auto"
                 DisplayMemberPath="DisplayName"
                 ItemsSource="{x:Bind ViewModel.LanguageList}"
                 SelectedValue="{x:Bind ViewModel.SelectedLanguage, Mode=TwoWay}"
-                SelectedValuePath="CodeName" />
+                SelectedValuePath="InternalName" />
         </Grid>
     </gc:CardControl>
 </UserControl>

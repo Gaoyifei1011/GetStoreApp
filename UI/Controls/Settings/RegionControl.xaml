@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:gc="using:GetStoreApp.UI.Controls.General"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewModel="using:GetStoreApp.ViewModels.Pages"
+    xmlns:service="using:GetStoreApp.Services.Settings"
     mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -17,7 +17,6 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <!--  应用获取对应的区域设置  -->
     <gc:CardControl>
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
@@ -26,31 +25,27 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <!--  区域设置图标  -->
             <FontIcon
                 Grid.Column="0"
                 FontFamily="Segoe Fluent Icons"
                 Glyph="&#xF49a;"
                 Style="{StaticResource SettingsFontIconStyle}" />
 
-            <!--  区域设置文字描述  -->
             <StackPanel Grid.Column="1" Orientation="Vertical">
-                <!--  标题  -->
+
                 <TextBlock
                     VerticalAlignment="Center"
                     Style="{StaticResource BodyTextBlockStyle}"
-                    Text="{x:Bind viewModel:SettingsViewModel.Region}"
+                    Text="{x:Bind service:LanguageService.GetResources('/Settings/Region')}"
                     TextWrapping="WrapWholeWords" />
 
-                <!--  详细描述  -->
                 <TextBlock
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Style="{StaticResource CaptionTextBlockStyle}"
-                    Text="{x:Bind viewModel:SettingsViewModel.RegionDescription}"
+                    Text="{x:Bind service:LanguageService.GetResources('/Settings/RegionDescription')}"
                     TextWrapping="WrapWholeWords" />
             </StackPanel>
 
-            <!--  设置选项  -->
             <ComboBox
                 Grid.Column="2"
                 DisplayMemberPath="FriendlyName"

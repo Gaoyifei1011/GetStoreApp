@@ -7,7 +7,6 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class UseInstructionViewModel : ObservableRecipient
     {
-        // 主页“使用说明”按钮显示状态
         private bool _useInsVisValue = UseInstructionService.UseInsVisValue;
 
         public bool UseInsVisValue

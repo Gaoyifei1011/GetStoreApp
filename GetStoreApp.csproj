@@ -15,6 +15,9 @@
     <ApplicationIcon>GetStoreApp.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Styles\Converter.xaml" />
+    <None Remove="Styles\DataGrid.xaml" />
+    <None Remove="Styles\FontIcon.xaml" />
     <None Remove="UI\Controls\Home\RequestControl.xaml" />
     <None Remove="UI\Controls\Home\ResultControl.xaml" />
     <None Remove="UI\Controls\Home\StatusBarControl.xaml" />
@@ -31,6 +34,7 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="7.0.3" />
+    <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.DataGrid" Version="7.1.2" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.42" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.3" />
@@ -42,6 +46,15 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Styles\FontIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\Converter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\DataGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="UI\Controls\Home\ResultControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

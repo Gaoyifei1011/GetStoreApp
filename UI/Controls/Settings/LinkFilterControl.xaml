@@ -5,7 +5,7 @@
     xmlns:congen="using:GetStoreApp.Converters.General"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewModel="using:GetStoreApp.ViewModels.Pages"
+    xmlns:service="using:GetStoreApp.Services.Settings"
     mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -28,7 +28,6 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <!--  文件过滤设置  -->
     <Expander Style="{StaticResource SettingsExpanderStyle}">
         <Expander.Header>
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
@@ -38,30 +37,26 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <!--  文件过滤设置图标  -->
                 <FontIcon
                     FontFamily="Segoe Fluent Icons"
                     Glyph="&#xE71c;"
                     Style="{StaticResource SettingsFontIconStyle}" />
 
-                <!--  文件过滤设置描述  -->
                 <StackPanel
                     Grid.Column="1"
                     Margin="0,12"
                     Orientation="Vertical">
-                    <!--  标题  -->
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind viewModel:SettingsViewModel.LinkFilter}" />
 
-                    <!--  详细描述  -->
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind service:LanguageService.GetResources('/Settings/LinkFilter')}" />
+
+
                     <TextBlock
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind viewModel:SettingsViewModel.LinkFilterDescription}"
-                        TextWrapping="WrapWholeWords" />
+                        Text="{x:Bind service:LanguageService.GetResources('/Settings/LinkFilterDescription')}" />
                 </StackPanel>
 
-                <!--  链接过滤注意事项详细说明  -->
-                <Button Grid.Column="2" Content="{x:Bind viewModel:SettingsViewModel.LinkFilterInstruction}">
+                <Button Grid.Column="2" Content="{x:Bind service:LanguageService.GetResources('/Settings/LinkFilterInstruction')}">
                     <Button.Flyout>
                         <Flyout>
                             <StackPanel Width="350">
@@ -74,14 +69,13 @@
                                         Grid.Column="0"
                                         FontSize="13"
                                         Style="{ThemeResource CaptionTextBlockStyle}"
-                                        Text="{x:Bind viewModel:SettingsViewModel.StartsWithEInstruction}"
-                                        TextWrapping="Wrap" />
+                                        Text="{x:Bind service:LanguageService.GetResources('/Settings/StartsWithEInstruction')}" />
                                     <Button
                                         Grid.Column="1"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Center"
                                         Command="{x:Bind ViewModel.StartsWithECommand}"
-                                        Content="{x:Bind viewModel:SettingsViewModel.StartsWithEButton}" />
+                                        Content="{x:Bind service:LanguageService.GetResources('/Settings/StartsWithEButton')}" />
                                 </Grid>
 
                                 <MenuFlyoutSeparator />
@@ -95,14 +89,13 @@
                                         Grid.Column="0"
                                         FontSize="13"
                                         Style="{ThemeResource CaptionTextBlockStyle}"
-                                        Text="{x:Bind viewModel:SettingsViewModel.BlockMapInstruction}"
-                                        TextWrapping="Wrap" />
+                                        Text="{x:Bind service:LanguageService.GetResources('/Settings/BlockMapInstruction')}" />
                                     <Button
                                         Grid.Column="1"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Center"
                                         Command="{x:Bind ViewModel.BlockMapCommand}"
-                                        Content="{x:Bind viewModel:SettingsViewModel.BlockMapButton}" />
+                                        Content="{x:Bind service:LanguageService.GetResources('/Settings/BlockMapButton')}" />
                                 </Grid>
                             </StackPanel>
                         </Flyout>
@@ -124,20 +117,19 @@
                             <TextBlock
                                 VerticalAlignment="Center"
                                 Style="{StaticResource BodyTextBlockStyle}"
-                                Text="{x:Bind viewModel:SettingsViewModel.StartsWithE}"
-                                TextWrapping="WrapWholeWords" />
+                                Text="{x:Bind service:LanguageService.GetResources('/Settings/StartsWithE')}" />
                             <TextBlock
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
-                                Text="{x:Bind viewModel:SettingsViewModel.StartsWithEDescription}"
-                                TextWrapping="WrapWholeWords" />
+                                Text="{x:Bind service:LanguageService.GetResources('/Settings/StartsWithEDescription')}" />
                         </StackPanel>
+
                         <ToggleSwitch
                             Grid.Column="1"
                             FlowDirection="RightToLeft"
                             IsOn="{x:Bind ViewModel.StartsWithEFilterValue, Mode=TwoWay}"
-                            OffContent="{x:Bind viewModel:SettingsViewModel.StartsWithEOffContent}"
-                            OnContent="{x:Bind viewModel:SettingsViewModel.StartsWithEOnContent}" />
+                            OffContent="{x:Bind service:LanguageService.GetResources('/Settings/StartsWithEOffContent')}"
+                            OnContent="{x:Bind service:LanguageService.GetResources('/Settings/StartsWithEOnContent')}" />
                     </Grid>
                 </StackPanel>
 
@@ -154,20 +146,19 @@
                             <TextBlock
                                 VerticalAlignment="Center"
                                 Style="{StaticResource BodyTextBlockStyle}"
-                                Text="{x:Bind viewModel:SettingsViewModel.BlockMap}"
-                                TextWrapping="WrapWholeWords" />
+                                Text="{x:Bind service:LanguageService.GetResources('/Settings/BlockMap')}" />
                             <TextBlock
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
-                                Text="{x:Bind viewModel:SettingsViewModel.BlockMapDescription}"
-                                TextWrapping="WrapWholeWords" />
+                                Text="{x:Bind service:LanguageService.GetResources('/Settings/BlockMapDescription')}" />
                         </StackPanel>
+
                         <ToggleSwitch
                             Grid.Column="1"
                             FlowDirection="RightToLeft"
                             IsOn="{x:Bind ViewModel.BlockMapFilterValue, Mode=TwoWay}"
-                            OffContent="{x:Bind viewModel:SettingsViewModel.BlockMapOffContent}"
-                            OnContent="{x:Bind viewModel:SettingsViewModel.BlockMapOnContent}" />
+                            OffContent="{x:Bind service:LanguageService.GetResources('/Settings/BlockMapOffContent')}"
+                            OnContent="{x:Bind service:LanguageService.GetResources('/Settings/BlockMapOnContent')}" />
                     </Grid>
                 </StackPanel>
             </StackPanel>

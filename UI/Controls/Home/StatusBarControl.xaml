@@ -2,49 +2,30 @@
     x:Class="GetStoreApp.UI.Controls.Home.StatusBarControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:congen="using:GetStoreApp.Converters.General"
-    xmlns:conhome="using:GetStoreApp.Converters.Home"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:gc="using:GetStoreApp.UI.Controls.General"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
     <UserControl.Resources>
-        <congen:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
-
-        <conhome:StateImageConverter x:Name="StateImageConverter" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/Converter.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
 
-    <gc:CardControl>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-
-            <!--  状态栏图标  -->
-            <Image
-                Grid.Column="0"
-                Width="40"
-                Height="40"
-                Source="{x:Bind ViewModel.StateImage, Converter={StaticResource StateImageConverter}, Mode=OneWay}" />
-
-            <!--  状态栏文字  -->
-            <TextBlock
-                Grid.Column="1"
-                Margin="10,0,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Text="{x:Bind ViewModel.StateInfoText, Mode=OneWay}" />
-
-            <!--  状态栏圆环动画  -->
-            <ProgressRing
-                x:Name="MainStatPrRing"
-                Grid.Column="3"
-                IsActive="{x:Bind ViewModel.StatePrRingActValue, Mode=OneWay}"
-                Visibility="{x:Bind ViewModel.StatePrRingVisValue, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
-        </Grid>
-    </gc:CardControl>
+    <StackPanel>
+        <InfoBar
+            IsClosable="False"
+            IsOpen="True"
+            Message="{x:Bind ViewModel.StateInfoText, Mode=OneWay}"
+            Severity="{x:Bind ViewModel.InfoBarSeverity, Mode=OneWay}">
+            <InfoBar.Content>
+                <ProgressBar
+                    Margin="-45,0,0,0"
+                    IsIndeterminate="{x:Bind ViewModel.StatePrBarActValue, Mode=OneWay}"
+                    Visibility="{x:Bind ViewModel.StatePrBarVisValue, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
+            </InfoBar.Content>
+        </InfoBar>
+    </StackPanel>
 </UserControl>
