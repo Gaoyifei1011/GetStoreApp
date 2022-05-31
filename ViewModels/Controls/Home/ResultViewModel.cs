@@ -2,18 +2,13 @@
 using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Messages;
 using GetStoreApp.Models;
-using GetStoreApp.ViewModels.Pages;
-using Microsoft.UI.Dispatching;
+using GetStoreApp.Services.Settings;
 using System.Collections.ObjectModel;
 
 namespace GetStoreApp.ViewModels.Controls.Home
 {
     public class ResultViewModel : ObservableRecipient
     {
-        /// <summary>
-        /// 结果控件的显示状态
-        /// The display state of the result control
-        /// </summary>
         private bool _resultCotnrolVisable = false;
 
         public bool ResultControlVisable
@@ -23,7 +18,6 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _resultCotnrolVisable, value); }
         }
 
-        // 成功生成链接后应用包的CateGoryID值
         private string _categoryId = string.Empty;
 
         public string CategoryId
@@ -42,7 +36,6 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _resultCount, value); }
         }
 
-        // 成功生成链接后的数量值显示结果
         private string _resultCountInfo;
 
         public string ResultCountInfo
@@ -52,45 +45,34 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _resultCountInfo, value); }
         }
 
-        private readonly DispatcherQueue _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-
-        // 保存获取结果数据列表
-        public ObservableCollection<ResultData> ResultDataList = new ObservableCollection<ResultData>();
-
-        // 结果数据列表，过滤后的结果
-        public ObservableCollection<ResultData> ResultDataWithFilterList = new ObservableCollection<ResultData>();
+        public ObservableCollection<ResultData> ResultDataList { get; set; } = new ObservableCollection<ResultData>();
 
         public ResultViewModel()
         {
-            // 设置控件的显示状态
             Messenger.Register<ResultViewModel, ResultControlVisableMessage>(this, (resultViewModel, resultControlVisableMessage) =>
             {
                 resultViewModel.ResultControlVisable = resultControlVisableMessage.Value;
             });
 
-            // 添加CategoryId信息
             Messenger.Register<ResultViewModel, ResultCategoryIdMessage>(this, (resultViewModel, resultCategoryIdMessage) =>
             {
-                resultViewModel.CategoryId = string.Format(HomeViewModel.CategoryId, resultCategoryIdMessage.Value);
+                resultViewModel.CategoryId = string.Format(LanguageService.GetResources("/Home/CategoryId"), resultCategoryIdMessage.Value);
             });
 
             // TODO:需要性能优化
-            // 解析获取到的数据，并计算获取到的条目数量
             Messenger.Register<ResultViewModel, ResultDataListMessage>(this, (resultViewModel, resultDataListMessage) =>
             {
-                // 清空上一次获取的数据内容
                 resultViewModel.ResultDataList.Clear();
                 resultViewModel.ResultCount = 0;
 
                 for (int i = 0; i < resultDataListMessage.Value.Count; i++)
                 {
-                    // 添加序号
-                    resultDataListMessage.Value[i].Index = (i + 1).ToString();
+                    resultDataListMessage.Value[i].SerialNumber = (i + 1).ToString();
                     resultViewModel.ResultDataList.Add(resultDataListMessage.Value[i]);
                 }
 
                 resultViewModel.ResultCount = resultViewModel.ResultDataList.Count;
-                resultViewModel.ResultCountInfo = string.Format(HomeViewModel.ResultCountInfo, resultViewModel.ResultDataList.Count);
+                resultViewModel.ResultCountInfo = string.Format(LanguageService.GetResources("/Home/ResultCountInfo"), resultViewModel.ResultDataList.Count);
             });
         }
     }

@@ -2,10 +2,9 @@
     x:Class="GetStoreApp.UI.Controls.Settings.ThemeControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:congen="using:GetStoreApp.Converters.General"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewModel="using:GetStoreApp.ViewModels.Pages"
+    xmlns:service="using:GetStoreApp.Services.Settings"
     xmlns:xaml="using:Microsoft.UI.Xaml"
     mc:Ignorable="d">
 
@@ -13,11 +12,10 @@
         <ResourceDictionary>
 
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/Converter.xaml" />
                 <ResourceDictionary Source="/Styles/SettingsFontIcon.xaml" />
                 <ResourceDictionary Source="/Styles/Thickness.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
-            <congen:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
 
             <Style x:Key="SettingsExpanderStyle" TargetType="Expander">
                 <Setter Property="ExpandDirection" Value="Down" />
@@ -30,7 +28,6 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <!--  应用主题设置  -->
     <Expander Style="{StaticResource SettingsExpanderStyle}">
         <Expander.Header>
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
@@ -39,27 +36,22 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <!--  设置界面应用主题图标  -->
                 <FontIcon
                     FontFamily="Segoe Fluent Icons"
                     Glyph="&#xE790;"
                     Style="{StaticResource SettingsFontIconStyle}" />
 
-                <!--  应用主题设置描述  -->
                 <StackPanel
                     Grid.Column="1"
                     Margin="0,12"
                     Orientation="Vertical">
 
-                    <!--  标题  -->
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind viewModel:SettingsViewModel.Theme}" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind service:LanguageService.GetResources('/Settings/Theme')}" />
 
-                    <!--  详细描述  -->
                     <TextBlock
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind viewModel:SettingsViewModel.ThemeDescription}"
-                        TextWrapping="WrapWholeWords" />
+                        Text="{x:Bind service:LanguageService.GetResources('/Settings/ThemeDescription')}" />
                 </StackPanel>
             </Grid>
         </Expander.Header>
@@ -67,10 +59,9 @@
         <Expander.Content>
             <StackPanel Margin="26,0,0,0">
 
-                <!--  浅色按钮  -->
                 <RadioButton
                     Command="{x:Bind ViewModel.SwitchThemeCommand}"
-                    Content="{x:Bind viewModel:SettingsViewModel.ThemeLight}"
+                    Content="{x:Bind service:LanguageService.GetResources('/Settings/ThemeLight')}"
                     FontSize="15"
                     GroupName="AppTheme"
                     IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=OneWay}">
@@ -79,10 +70,9 @@
                     </RadioButton.CommandParameter>
                 </RadioButton>
 
-                <!--  深色按钮  -->
                 <RadioButton
                     Command="{x:Bind ViewModel.SwitchThemeCommand}"
-                    Content="{x:Bind viewModel:SettingsViewModel.ThemeDark}"
+                    Content="{x:Bind service:LanguageService.GetResources('/Settings/ThemeDark')}"
                     FontSize="15"
                     GroupName="AppTheme"
                     IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=OneWay}">
@@ -91,10 +81,9 @@
                     </RadioButton.CommandParameter>
                 </RadioButton>
 
-                <!--  系统默认设置按钮  -->
                 <RadioButton
                     Command="{x:Bind ViewModel.SwitchThemeCommand}"
-                    Content="{x:Bind viewModel:SettingsViewModel.ThemeDefault}"
+                    Content="{x:Bind service:LanguageService.GetResources('/Settings/ThemeDefault')}"
                     FontSize="15"
                     GroupName="AppTheme"
                     IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Default, Mode=OneWay}">

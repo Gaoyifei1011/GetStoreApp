@@ -12,7 +12,6 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class LanguageViewModel : ObservableRecipient
     {
-        // 语言设置
         private string _selectedLanguage = LanguageService.PriLangCodeName;
 
         public string SelectedLanguage
@@ -36,8 +35,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             set { SetProperty(ref _launchSettingsInstalledAppsCommand, value); }
         }
 
-        // 语言列表
-        public List<LanguageData> LanguageList = SettingsViewModel.LanguageList;
+        public IReadOnlyList<LanguageData> LanguageList { get; } = LanguageService.LanguageList;
 
         public LanguageViewModel()
         {

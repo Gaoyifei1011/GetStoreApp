@@ -5,58 +5,50 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:gc="using:GetStoreApp.UI.Controls.General"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewModel="using:GetStoreApp.ViewModels.Pages"
+    xmlns:service="using:GetStoreApp.Services.Settings"
     mc:Ignorable="d">
 
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/SettingsFontIcon.xaml" />
-                <ResourceDictionary Source="/Styles/Thickness.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <!--  使用说明按钮显示设置  -->
     <gc:CardControl>
-        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
+        <Grid VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <!--  设置页面使用说明设置按钮图标  -->
             <FontIcon
                 Grid.Column="0"
                 FontFamily="Segoe Fluent Icons"
                 Glyph="&#xF738;"
                 Style="{StaticResource SettingsFontIconStyle}" />
 
-            <!--  设置页面使用说明文字描述  -->
             <StackPanel Grid.Column="1" Orientation="Vertical">
-                <!--  标题  -->
+
                 <TextBlock
                     VerticalAlignment="Center"
                     Style="{StaticResource BodyTextBlockStyle}"
-                    Text="{x:Bind viewModel:SettingsViewModel.HistoryItem}"
-                    TextWrapping="WrapWholeWords" />
+                    Text="{x:Bind service:LanguageService.GetResources('/Settings/HistoryItem')}" />
 
-                <!--  详细说明  -->
                 <TextBlock
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Style="{StaticResource CaptionTextBlockStyle}"
-                    Text="{x:Bind viewModel:SettingsViewModel.HistoryItemDescription}"
-                    TextWrapping="WrapWholeWords" />
+                    Text="{x:Bind service:LanguageService.GetResources('/Settings/HistoryItemDescription')}" />
             </StackPanel>
 
-            <!--  设置选项  -->
             <ComboBox
                 Grid.Column="2"
                 DisplayMemberPath="HistoryItemName"
                 ItemsSource="{x:Bind ViewModel.HistoryItemValueList}"
                 SelectedValue="{x:Bind ViewModel.SelectedHistoryItemValue, Mode=TwoWay}"
-                SelectedValuePath="HistoryItemValue" />
+                SelectedValuePath="HistoryItemNum" />
         </Grid>
     </gc:CardControl>
 </UserControl>

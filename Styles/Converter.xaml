@@ -1,0 +1,11 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:congen="using:GetStoreApp.Converters.General">
+
+    <congen:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
+    <congen:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+    <congen:IntToVisibilityConverter x:Name="IntToVisibilityConverter" />
+    <congen:IntToReverseVisibilityConverter x:Name="IntToReverseVisibilityConverter" />
+    <congen:DataTimeFormatConverter x:Name="DataTimeFormatConverter" />
+</ResourceDictionary>

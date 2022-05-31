@@ -10,7 +10,6 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class RegionViewModel : ObservableRecipient
     {
-        // 区域设置
         private string _selectedRegion = RegionService.RegionCodeName;
 
         public string SelectedRegion
@@ -24,7 +23,6 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             }
         }
 
-        // 区域列表
-        public List<GeographicalLocation> RegionList = SettingsViewModel.RegionList;
+        public IReadOnlyList<GeographicalLocation> RegionList { get; } = RegionService.AppGlobalLocations;
     }
 }

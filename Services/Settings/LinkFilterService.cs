@@ -4,39 +4,24 @@ using Windows.Storage;
 
 namespace GetStoreApp.Services.Settings
 {
-    /// <summary>
-    /// 文件过滤设置服务
-    /// File filtering settings service
-    /// </summary>
     public static class LinkFilterService
     {
-        /// <summary>
-        /// 设置存储时需要使用到的键值
-        /// The key value that you need to use when setting the store
-        /// </summary>
         private static readonly IReadOnlyList<string> SettingsKey = new List<string> { "StartsWithEFilterValue", "BlockMapFilterValue" };
 
-        /// <summary>
-        /// 设置按钮的默认状态：全部不过滤
-        /// Sets the default state of the button: Display
-        /// </summary>
-        private static List<bool> DefaultValue = new List<bool> { false, false };
+        private static List<bool> DefaultValue { get; } = new List<bool> { true, true };
 
-        public static List<bool> LinkFilterValue;
+        public static List<bool> LinkFilterValue { get; set; }
 
         static LinkFilterService()
         {
             LinkFilterValue = new List<bool>();
 
-            // 从设置存储中加载按钮的设定的值
             LinkFilterValue.Add(GetStartsWithEFilterValue());
-
             LinkFilterValue.Add(GetBlockMapFilterValue());
         }
 
         /// <summary>
         /// 应用初始化时，系统关于该键值存储的信息为空，所以需要判断系统存储的键值是否为空
-        /// When the application is initialized, the system information about the key value storage is empty, so you need to determine whether the system stored key value is empty
         /// </summary>
         private static bool IsStartsWithEFilterValueNullOrEmpty()
         {
@@ -50,7 +35,6 @@ namespace GetStoreApp.Services.Settings
 
         /// <summary>
         /// 设置默认值
-        /// Sets the default value
         /// </summary>
         private static void InitializeStartsWithEFilterValue()
         {
@@ -63,10 +47,8 @@ namespace GetStoreApp.Services.Settings
         }
 
         /// <summary>
-        /// 获取当前设置存储的以“.e”开头文件过滤状态布尔值
-        /// Gets the Usage Instructions display status Boolean value for the current settings store
+        ///  获取当前设置存储的扩展名以“.e”开头的文件过滤状态布尔值
         /// </summary>
-        /// <returns>显示状态布尔值</returns>
         private static bool GetStartsWithEFilterValue()
         {
             if (IsStartsWithEFilterValueNullOrEmpty())
@@ -76,6 +58,9 @@ namespace GetStoreApp.Services.Settings
             return Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsKey[0]]);
         }
 
+        /// <summary>
+        /// 获取当前设置存储的扩展名以“.blockmap”开头的文件过滤状态布尔值
+        /// </summary>
         private static bool GetBlockMapFilterValue()
         {
             if (IsBlockMapFilterValueNullOrEmpty())
@@ -86,10 +71,9 @@ namespace GetStoreApp.Services.Settings
         }
 
         /// <summary>
-        /// 设置主页面“使用说明”的显示状态布尔值
-        /// Sets the Boolean display state value for the main page Instructions for Use
+        /// 修改设置
         /// </summary>
-        /// <param name="useInsVisValue">显示状态布尔值</param>
+        /// <param name="startsWithEFilterValue"></param>
         public static void SetStartsWithEFilterValue(bool startsWithEFilterValue)
         {
             LinkFilterValue[0] = startsWithEFilterValue;

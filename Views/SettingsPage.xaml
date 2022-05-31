@@ -6,64 +6,37 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sc="using:GetStoreApp.UI.Controls.Settings"
-    xmlns:viewModel="using:GetStoreApp.ViewModels.Pages"
-    NavigationCacheMode="Enabled"
+    xmlns:service="using:GetStoreApp.Services.Settings"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
 
-    <Page.Resources>
-        <congen:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
-    </Page.Resources>
-
-    <!--  设置页面  -->
     <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
-        <StackPanel
-            x:Name="ContentArea"
-            Margin="{StaticResource PageMargin}"
-            Spacing="{StaticResource PageSpacing}">
+        <StackPanel Margin="{StaticResource PageMargin}" Spacing="{StaticResource PageSpacing}">
 
-            <TextBlock FontSize="{StaticResource TitleFontSize}" Text="{x:Bind viewModel:SettingsViewModel.Title}" />
+            <TextBlock FontSize="{StaticResource TitleFontSize}" Text="{x:Bind service:LanguageService.GetResources('/Settings/Title')}" />
 
             <TextBlock
                 FontSize="16"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="{x:Bind viewModel:SettingsViewModel.Appearance}" />
+                Text="{x:Bind service:LanguageService.GetResources('/Settings/Appearance')}" />
 
-            <!--  应用主题设置  -->
             <sc:ThemeControl />
 
-            <!--  应用界面语言设置  -->
             <sc:LauguageControl />
 
-            <!--  常规选项  -->
             <TextBlock
                 FontSize="16"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="{x:Bind viewModel:SettingsViewModel.General}" />
+                Text="{x:Bind service:LanguageService.GetResources('/Settings/General')}" />
 
-            <!--  “使用说明”按钮  -->
             <sc:UseInstructionControl />
 
-            <!--  “主页面历史记录数目”设置  -->
             <sc:HistoryItemValueControl />
 
-            <!--  区域设置  -->
             <sc:RegionControl />
 
-            <!--  文件过滤设置  -->
             <sc:LinkFilterControl />
 
-            <TextBlock x:Uid="Settings_About" Style="{StaticResource BodyTextBlockStyle}" />
-
-            <StackPanel Margin="{StaticResource XSmallTopMargin}">
-                <TextBlock Style="{ThemeResource BodyTextBlockStyle}" Text="{x:Bind ViewModel.VersionDescription, Mode=OneWay}" />
-
-                <TextBlock
-                    x:Uid="Settings_AboutDescription"
-                    Margin="{StaticResource XSmallTopMargin}"
-                    Style="{ThemeResource BodyTextBlockStyle}" />
-                <HyperlinkButton x:Uid="SettingsPage_PrivacyTermsLink" Margin="{StaticResource XSmallTopMargin}" />
-            </StackPanel>
         </StackPanel>
     </ScrollViewer>
 </Page>

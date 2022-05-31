@@ -3,31 +3,26 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="using:GetStoreApp.Behaviors"
-    xmlns:congen="using:GetStoreApp.Converters.General"
     xmlns:helpers="using:GetStoreApp.Helpers"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:sc="using:GetStoreApp.UI.Controls.Shell"
-    xmlns:viewModel="using:GetStoreApp.ViewModels.Pages"
+    xmlns:service="using:GetStoreApp.Services.Settings"
     Loaded="OnLoaded"
     Style="{StaticResource PageStyle}">
 
     <Page.Resources>
         <ResourceDictionary>
-            <congen:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
-
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/Colors.xaml" />
+                <ResourceDictionary Source="/Styles/Converter.xaml" />
                 <ResourceDictionary Source="/Styles/Thickness.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
 
-    <!--  导航页面  -->
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <!--  标题栏  -->
         <sc:AppTitleBar x:Name="AppTitleBar" />
 
-        <!--  导航内容区  -->
         <NavigationView
             x:Name="navigationView"
             Grid.Row="1"
@@ -44,42 +39,36 @@
             IsTitleBarAutoPaddingEnabled="False"
             OpenPaneLength="200"
             SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}">
+
             <NavigationView.MenuItems>
-                <!--
-                    TODO: Change the symbols for each item as appropriate for your app
-                    More on Segoe UI Symbol icons: https://docs.microsoft.com/windows/uwp/style/segoe-ui-symbol-font
-                    Or to use an IconElement instead of a Symbol see https://github.com/microsoft/TemplateStudio/blob/main/docs/UWP/projectTypes/navigationpane.md
-                    Edit String/en-US/Resources.resw: Add a menu item title for each page
-                -->
                 <NavigationViewItem
                     helpers:NavigationHelper.NavigateTo="GetStoreApp.ViewModels.Pages.HomeViewModel"
-                    Content="{x:Bind viewModel:ShellViewModel.Home}"
+                    Content="{x:Bind service:LanguageService.GetResources('/Shell/Home')}"
                     Icon="Home" />
                 <NavigationViewItem
                     helpers:NavigationHelper.NavigateTo="GetStoreApp.ViewModels.Pages.DownloadViewModel"
-                    Content="{x:Bind viewModel:ShellViewModel.Download}"
+                    Content="{x:Bind service:LanguageService.GetResources('/Shell/Download')}"
                     Icon="Download"
                     IsEnabled="False" />
                 <NavigationViewItem
                     helpers:NavigationHelper.NavigateTo="GetStoreApp.ViewModels.Pages.HistoryViewModel"
-                    Content="{x:Bind viewModel:ShellViewModel.History}"
+                    Content="{x:Bind service:LanguageService.GetResources('/Shell/History')}"
                     IsEnabled="False">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF738;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem helpers:NavigationHelper.NavigateTo="GetStoreApp.ViewModels.Pages.WebViewModel" Content="{x:Bind viewModel:ShellViewModel.Web}">
+                <NavigationViewItem helpers:NavigationHelper.NavigateTo="GetStoreApp.ViewModels.Pages.WebViewModel" Content="{x:Bind service:LanguageService.GetResources('/Shell/Web')}">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE774;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
 
-            <!--  底部导航条目  -->
             <NavigationView.FooterMenuItems>
                 <NavigationViewItem
                     helpers:NavigationHelper.NavigateTo="GetStoreApp.ViewModels.Pages.AboutViewModel"
-                    Content="{x:Bind viewModel:ShellViewModel.About}"
+                    Content="{x:Bind service:LanguageService.GetResources('/Shell/About')}"
                     IsEnabled="False">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE946;" />

@@ -9,7 +9,6 @@
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
 
-    <!--  网页  -->
     <Grid x:Name="ContentArea">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
