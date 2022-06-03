@@ -1,11 +1,16 @@
 ﻿<Page
     x:Class="GetStoreApp.Views.HistoryPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="using:GetStoreApp.ViewModels.Pages"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
+
+    <Page.DataContext>
+        <viewModel:HistoryViewModel x:Name="ViewModel" />
+    </Page.DataContext>
 
     <Page.Resources>
         <Thickness x:Key="History_Control_Left_Margin">0,0,2,0</Thickness>
@@ -13,12 +18,8 @@
         <Thickness x:Key="History_Control_Right_Margin">2,0,0,0</Thickness>
     </Page.Resources>
 
-    <StackPanel
-        x:Name="ContentArea"
-        Margin="{StaticResource PageMargin}"
-        Spacing="{StaticResource PageSpacing}">
+    <StackPanel Margin="{StaticResource PageMargin}" Spacing="{StaticResource PageSpacing}">
 
-        <!--  页面标题名称  -->
         <TextBlock
             x:Uid="History_Title"
             FontSize="{StaticResource TitleFontSize}"

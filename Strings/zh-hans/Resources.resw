@@ -129,6 +129,9 @@
     <value>获取商店应用 (Dev)</value>
     <comment>应用名称显示</comment>
   </data>
+  <data name="AppShortDisplayName" xml:space="preserve">
+    <value>获取商店应用</value>
+  </data>
   <data name="AppTitle.Text" xml:space="preserve">
     <value>获取商店应用 (Dev)</value>
     <comment>应用名称显示</comment>
@@ -227,41 +230,7 @@
   <data name="ReloadButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Reload</value>
   </data>
-  <data name="SettingsPage_PrivacyTermsLink.Content" xml:space="preserve">
-    <value>Privacy Statement</value>
-  </data>
-  <data name="SettingsPage_PrivacyTermsLink.NavigateUri" xml:space="preserve">
-    <value>https://YourPrivacyUrlGoesHere/</value>
-  </data>
-  <data name="Settings_About.Text" xml:space="preserve">
-    <value>关于此应用</value>
-    <comment>关于“设置”的此应用程序标题</comment>
-  </data>
-  <data name="Settings_AboutDescription.Text" xml:space="preserve">
-    <value>设置页面占位符文本。 你的应用提要转到此处。</value>
-    <comment>关于“设置”的此应用程序说明</comment>
-  </data>
   <data name="Settings_Advanced.Text" xml:space="preserve">
     <value>高级选项</value>
-  </data>
-  <data name="Settings_Personalization.Text" xml:space="preserve">
-    <value>Personalization</value>
-  </data>
-  <data name="Settings_PrivacyTermsLink.Content" xml:space="preserve">
-    <value>隐私声明</value>
-    <comment>“设置”的隐私声明链接内容</comment>
-  </data>
-  <data name="Settings_PrivacyTermsLink.NavigateUri" xml:space="preserve">
-    <value>https://YourPrivacyUrlGoesHere/</value>
-    <comment>这是您的隐私声明 URL 设置</comment>
-  </data>
-  <data name="WebView_FailedMessage.Text" xml:space="preserve">
-    <value>Page failed to load. Check connection and reload.</value>
-  </data>
-  <data name="WebView_Loading.Text" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="WebView_Reload.Content" xml:space="preserve">
-    <value>Reload</value>
   </data>
 </root>

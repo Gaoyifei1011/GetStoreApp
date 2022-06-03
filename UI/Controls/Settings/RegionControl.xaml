@@ -1,21 +1,17 @@
 ﻿<UserControl
     x:Class="GetStoreApp.UI.Controls.Settings.RegionControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:gc="using:GetStoreApp.UI.Controls.General"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:service="using:GetStoreApp.Services.Settings"
+    xmlns:gc="using:GetStoreApp.UI.Controls.General"
+    xmlns:viewModel="using:GetStoreApp.ViewModels.Controls.Settings"
     mc:Ignorable="d">
 
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Styles/SettingsFontIcon.xaml" />
-                <ResourceDictionary Source="/Styles/Thickness.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
+    <UserControl.DataContext>
+        <viewModel:RegionViewModel x:Name="ViewModel" />
+    </UserControl.DataContext>
 
     <gc:CardControl>
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
@@ -29,21 +25,18 @@
                 Grid.Column="0"
                 FontFamily="Segoe Fluent Icons"
                 Glyph="&#xF49a;"
-                Style="{StaticResource SettingsFontIconStyle}" />
+                Style="{StaticResource FontIconStyle}" />
 
             <StackPanel Grid.Column="1" Orientation="Vertical">
 
                 <TextBlock
                     VerticalAlignment="Center"
                     Style="{StaticResource BodyTextBlockStyle}"
-                    Text="{x:Bind service:LanguageService.GetResources('/Settings/Region')}"
-                    TextWrapping="WrapWholeWords" />
-
+                    Text="{x:Bind service:LanguageService.GetResources('/Settings/Region')}" />
                 <TextBlock
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    VerticalAlignment="Center"
                     Style="{StaticResource CaptionTextBlockStyle}"
-                    Text="{x:Bind service:LanguageService.GetResources('/Settings/RegionDescription')}"
-                    TextWrapping="WrapWholeWords" />
+                    Text="{x:Bind service:LanguageService.GetResources('/Settings/RegionDescription')}" />
             </StackPanel>
 
             <ComboBox

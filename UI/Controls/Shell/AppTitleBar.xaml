@@ -1,22 +1,21 @@
 ﻿<UserControl
     x:Class="GetStoreApp.UI.Controls.Shell.AppTitleBar"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <!--  应用标题和图标  -->
     <Border
         Height="50"
-        Margin="{StaticResource AppTitleBarMargin}"
+        Margin="0"
         VerticalAlignment="Top"
         Background="Transparent"
         Canvas.ZIndex="1"
         IsHitTestVisible="True">
 
         <StackPanel Orientation="Horizontal">
-            <!--  应用图标  -->
+
             <Image
                 x:Name="AppIcon"
                 Width="20"
@@ -25,11 +24,10 @@
                 VerticalAlignment="Center"
                 Source="/Assets/Square44x44Logo.png" />
 
-            <!--  应用标题  -->
             <TextBlock
                 x:Name="AppTitle"
                 x:Uid="AppTitle"
-                Margin="{StaticResource AppTitleTextBlockMargin}"
+                Margin="6,0,0,0"
                 VerticalAlignment="Center"
                 Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
                 Style="{StaticResource CaptionTextBlockStyle}"

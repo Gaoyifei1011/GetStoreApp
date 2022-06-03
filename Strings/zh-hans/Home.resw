@@ -168,9 +168,6 @@
   <data name="LinkExpireTime" xml:space="preserve">
     <value>链接过期时间</value>
   </data>
-  <data name="ResultBottom" xml:space="preserve">
-    <value>搜索结果已经到达底部</value>
-  </data>
   <data name="ResultCountInfo" xml:space="preserve">
     <value>从微软商店服务器中获得了{0}条结果</value>
   </data>

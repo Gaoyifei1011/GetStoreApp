@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.Input;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Settings;
-using GetStoreApp.ViewModels.Pages;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
