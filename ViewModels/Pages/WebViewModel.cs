@@ -21,11 +21,10 @@ namespace GetStoreApp.ViewModels.Pages
 
         private Uri _source;
         private bool _isLoading = true;
-        private bool _hasFailures;
         private ICommand _browserBackCommand;
         private ICommand _browserForwardCommand;
         private ICommand _openInBrowserCommand;
-        private ICommand _reloadCommand;
+        private ICommand _refreshCommand;
         private ICommand _retryCommand;
 
         public IWebViewService WebViewService { get; }
@@ -42,19 +41,13 @@ namespace GetStoreApp.ViewModels.Pages
             set => SetProperty(ref _isLoading, value);
         }
 
-        public bool HasFailures
-        {
-            get => _hasFailures;
-            set => SetProperty(ref _hasFailures, value);
-        }
-
         public ICommand BrowserBackCommand => _browserBackCommand ?? (_browserBackCommand = new RelayCommand(
             () => WebViewService?.GoBack(), () => WebViewService?.CanGoBack ?? false));
 
         public ICommand BrowserForwardCommand => _browserForwardCommand ?? (_browserForwardCommand = new RelayCommand(
             () => WebViewService?.GoForward(), () => WebViewService?.CanGoForward ?? false));
 
-        public ICommand ReloadCommand => _reloadCommand ?? (_reloadCommand = new RelayCommand(
+        public ICommand RefreshCommand => _refreshCommand ?? (_refreshCommand = new RelayCommand(
             () => WebViewService?.Reload()));
 
         public ICommand RetryCommand => _retryCommand ?? (_retryCommand = new RelayCommand(OnRetry));
@@ -84,16 +77,10 @@ namespace GetStoreApp.ViewModels.Pages
             IsLoading = false;
             OnPropertyChanged(nameof(BrowserBackCommand));
             OnPropertyChanged(nameof(BrowserForwardCommand));
-            if (webErrorStatus != default)
-            {
-                // Use `webErrorStatus` to vary the displayed message based on the error reason
-                HasFailures = true;
-            }
         }
 
         private void OnRetry()
         {
-            HasFailures = false;
             IsLoading = true;
             WebViewService?.Reload();
         }

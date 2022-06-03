@@ -1,18 +1,5 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-
-    <!--  导航Frame页  -->
-    <Thickness x:Key="NavigationViewContentMargin">0,45,0,0</Thickness>
-
-    <!--  标题栏  -->
-    <Thickness x:Key="AppTitleBarMargin">0,0,0,0</Thickness>
-    <Thickness x:Key="AppTitleMargin">6,0,0,0</Thickness>
-    <Thickness x:Key="AppTitleTextBlockMargin">6,0,0,0</Thickness>
-
-    <!--  Grid控件  -->
-    <Thickness x:Key="PageMargin">30,30,30,0</Thickness>
-
-    <!--  设置页面图标间隔  -->
-    <Thickness x:Key="Settings_FontIcon_Margin">0,0,12,0</Thickness>
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Thickness x:Key="LargeTopMargin">0,36,0,0</Thickness>
     <Thickness x:Key="LargeTopBottomMargin">0,36,0,36</Thickness>

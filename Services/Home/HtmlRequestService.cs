@@ -26,8 +26,6 @@ namespace GetStoreApp.Services.Home
         {
             try
             {
-                // method is depricated
-                // 构建请求链接，请求方法（POST）和提交数据的方式
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(API);
                 request.Method = "POST";
                 request.ContentType = "application/x-www-form-urlencoded";
@@ -35,11 +33,6 @@ namespace GetStoreApp.Services.Home
                 // 添加POST请求需要的内容
                 byte[] data = Encoding.UTF8.GetBytes(content);
                 request.ContentLength = data.Length;
-
-                //HttpClient client = new HttpClient();
-                //client.BaseAddress = new Uri(API);
-                //client.DefaultRequestHeaders.Accept.Clear();
-                //client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/x-www-form-urlencoded"));
 
                 // 获取数据请求流
                 var requestStream = await request.GetRequestStreamAsync();

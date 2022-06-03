@@ -4,19 +4,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="using:GetStoreApp.Behaviors"
     xmlns:helpers="using:GetStoreApp.Helpers"
-    xmlns:i="using:Microsoft.Xaml.Interactivity"
-    xmlns:sc="using:GetStoreApp.UI.Controls.Shell"
     xmlns:service="using:GetStoreApp.Services.Settings"
+    xmlns:sc="using:GetStoreApp.UI.Controls.Shell"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
     Loaded="OnLoaded"
     Style="{StaticResource PageStyle}">
 
     <Page.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Styles/Colors.xaml" />
-                <ResourceDictionary Source="/Styles/Converter.xaml" />
-                <ResourceDictionary Source="/Styles/Thickness.xaml" />
-            </ResourceDictionary.MergedDictionaries>
+            <Thickness x:Key="NavigationViewContentMargin">0,45,0,0</Thickness>
         </ResourceDictionary>
     </Page.Resources>
 
@@ -80,7 +76,7 @@
                 <DataTemplate>
                     <Grid>
                         <TextBlock
-                            Margin="{StaticResource SmallLeftRightMargin}"
+                            Margin="12,0,12,0"
                             Style="{ThemeResource TitleTextBlockStyle}"
                             Text="{Binding}" />
                     </Grid>
@@ -92,7 +88,7 @@
                         <DataTemplate>
                             <Grid>
                                 <TextBlock
-                                    Margin="{StaticResource SmallLeftRightMargin}"
+                                    Margin="12,0,12,0"
                                     Style="{ThemeResource TitleTextBlockStyle}"
                                     Text="{Binding}" />
                             </Grid>

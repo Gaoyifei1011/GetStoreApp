@@ -1,26 +1,35 @@
 ﻿<Page
     x:Class="GetStoreApp.Views.HomePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:hc="using:GetStoreApp.UI.Controls.Home"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:hc="using:GetStoreApp.UI.Controls.Home"
+    xmlns:viewModel="using:GetStoreApp.ViewModels.Pages"
     NavigationCacheMode="Enabled"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
 
-    <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
-        <StackPanel Margin="{StaticResource PageMargin}" Spacing="{StaticResource PageSpacing}">
+    <Page.DataContext>
+        <viewModel:HomeViewModel x:Name="ViewModel" />
+    </Page.DataContext>
 
-            <hc:TitleControl />
+    <Grid Margin="30,30,30,0">
 
-            <hc:RequestControl />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <hc:TitleControl Grid.Row="0" />
 
-            <hc:StatusBarControl />
+        <hc:RequestControl Grid.Row="1" />
 
-            <!--<mainctr:SimpleHistoryControl />-->
+        <hc:StatusBarControl Grid.Row="2" />
 
-            <hc:ResultControl />
-        </StackPanel>
-    </ScrollViewer>
+        <!--<mainctr:SimpleHistoryControl />-->
+
+        <hc:ResultControl Grid.Row="3" />
+    </Grid>
 </Page>

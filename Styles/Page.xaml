@@ -1,9 +1,11 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Thickness x:Key="PageMargin">30,30,30,0</Thickness>
 
     <Style x:Key="PageStyle" TargetType="Page">
         <Setter Property="Background" Value="Transparent" />
     </Style>
 
-    <!--  页面距离控件间隔  -->
     <x:Double x:Key="PageSpacing">10</x:Double>
 </ResourceDictionary>

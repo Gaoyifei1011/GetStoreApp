@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Messages;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Settings;
-using GetStoreApp.ViewModels.Pages;
 using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Settings

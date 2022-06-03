@@ -4,7 +4,6 @@
     <TargetFramework>net6.0-windows10.0.22000.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <RootNamespace>GetStoreApp</RootNamespace>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
     <Platforms>x86;x64;arm64</Platforms>
     <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
     <PublishProfile>Properties\PublishProfiles\win10-$(Platform).pubxml</PublishProfile>
@@ -12,12 +11,23 @@
     <EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
     <PackageCertificateThumbprint>7F64DB0B0770C29C61E5F8DC60430B3DC390D99F</PackageCertificateThumbprint>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+    <UseWPF>False</UseWPF>
+    <UseWindowsForms>False</UseWindowsForms>
+    <StartupObject></StartupObject>
     <ApplicationIcon>GetStoreApp.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <SignAssembly>True</SignAssembly>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>$(VersionPrefix)</Version>
+    <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
+    <ImplicitUsings>disable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Styles\Converter.xaml" />
     <None Remove="Styles\DataGrid.xaml" />
+    <None Remove="Styles\Expander.xaml" />
     <None Remove="Styles\FontIcon.xaml" />
+    <None Remove="UI\Controls\Home\HistoryItemControl.xaml" />
     <None Remove="UI\Controls\Home\RequestControl.xaml" />
     <None Remove="UI\Controls\Home\ResultControl.xaml" />
     <None Remove="UI\Controls\Home\StatusBarControl.xaml" />
@@ -37,6 +47,7 @@
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.DataGrid" Version="7.1.2" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.42" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.197" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.3" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.8" />
     <PackageReference Include="NETStandard.Library" Version="2.0.3" />
@@ -46,6 +57,12 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="UI\Controls\Home\HistoryItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\Expander.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Styles\FontIcon.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -81,7 +98,7 @@
 
   <ItemGroup>
     <Folder Include="UI\Controls\General\" />
-    <Folder Include="UI\Dialogs\" />
+    <Folder Include="UI\Dialogs\Home\" />
   </ItemGroup>
 
   <ItemGroup>
