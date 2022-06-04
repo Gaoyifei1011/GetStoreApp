@@ -117,10 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="About_Title.Text" xml:space="preserve">
-    <value>关于</value>
-    <comment>”关于“页面标题的名称</comment>
-  </data>
   <data name="AppDescription" xml:space="preserve">
     <value>获取商店应用 (Dev)</value>
     <comment>应用描述</comment>
@@ -131,22 +127,6 @@
   </data>
   <data name="AppShortDisplayName" xml:space="preserve">
     <value>获取商店应用</value>
-  </data>
-  <data name="AppTitle.Text" xml:space="preserve">
-    <value>获取商店应用 (Dev)</value>
-    <comment>应用名称显示</comment>
-  </data>
-  <data name="BrowserBackButton.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Browser back</value>
-  </data>
-  <data name="BrowserBackButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Browser back</value>
-  </data>
-  <data name="BrowserForwardButton.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Browser forward</value>
-  </data>
-  <data name="BrowserForwardButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Browser forward</value>
   </data>
   <data name="Download_Title.Text" xml:space="preserve">
     <value>下载</value>
@@ -188,49 +168,8 @@
     <value>URL（链接）</value>
     <comment>”历史记录“类型下拉选择框</comment>
   </data>
-  <data name="Main_History.Text" xml:space="preserve">
-    <value>历史记录</value>
-    <comment>主页面历史记录文字描述</comment>
-  </data>
-  <data name="Main_History_Channels.Text" xml:space="preserve">
-    <value>通道名称</value>
-  </data>
-  <data name="Main_History_Empty.Text" xml:space="preserve">
-    <value>历史记录空空如也</value>
-  </data>
-  <data name="Main_History_GetLinks" xml:space="preserve">
-    <value>获取链接</value>
-  </data>
-  <data name="Main_History_Links.Text" xml:space="preserve">
-    <value>链接名称</value>
-  </data>
-  <data name="Main_History_Operations.Text" xml:space="preserve">
-    <value>操作方式</value>
-  </data>
-  <data name="Main_History_Types.Text" xml:space="preserve">
-    <value>类型名称</value>
-  </data>
-  <data name="Main_History_ViewMore.Content" xml:space="preserve">
-    <value>查看更多</value>
-    <comment>“主页”查看更多按钮</comment>
-  </data>
-  <data name="OpenInBrowserButton.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Open in browser</value>
-  </data>
-  <data name="OpenInBrowserButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Open in browser</value>
-  </data>
   <data name="PackageDisplayName" xml:space="preserve">
     <value>获取商店应用</value>
     <comment>应用程序包显示名称</comment>
-  </data>
-  <data name="ReloadButton.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Reload</value>
-  </data>
-  <data name="ReloadButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Reload</value>
-  </data>
-  <data name="Settings_Advanced.Text" xml:space="preserve">
-    <value>高级选项</value>
   </data>
 </root>

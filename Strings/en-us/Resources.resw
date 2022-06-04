@@ -117,34 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BrowserBackButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Browser back</value>
-  </data>
-  <data name="BrowserBackButton.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Browser back</value>
-  </data>
-  <data name="BrowserForwardButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Browser forward</value>
-  </data>
-  <data name="BrowserForwardButton.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Browser forward</value>
-  </data>
-  <data name="ReloadButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Reload</value>
-  </data>
-  <data name="ReloadButton.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Reload</value>
-  </data>
-  <data name="OpenInBrowserButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Open in browser</value>
-  </data>
-  <data name="OpenInBrowserButton.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Open in browser</value>
-  </data>
-  <data name="About_Title.Text" xml:space="preserve">
-    <value>About</value>
-    <comment>The name of the About page title</comment>
-  </data>
   <data name="AppDescription" xml:space="preserve">
     <value>GetStoreApp (Dev)</value>
     <comment>Application description</comment>
@@ -152,14 +124,6 @@
   <data name="AppDisplayName" xml:space="preserve">
     <value>GetStoreApp (Dev)</value>
     <comment>Application display name</comment>
-  </data>
-  <data name="AppTitle.Text" xml:space="preserve">
-    <value>GetStoreApp (Dev)</value>
-    <comment>Application display name</comment>
-  </data>
-  <data name="Download_Title.Text" xml:space="preserve">
-    <value>Download</value>
-    <comment>The name of the Download page title</comment>
   </data>
   <data name="HistoryCount.Text" xml:space="preserve">
     <value>There are {0} results.</value>
@@ -197,40 +161,15 @@
     <value>URL(Link)</value>
     <comment>The History type drop-down selection box</comment>
   </data>
-  <data name="Main_History.Text" xml:space="preserve">
-    <value>History Record</value>
-    <comment>Main page Historical record text description</comment>
-  </data>
-  <data name="Main_History_Channels.Text" xml:space="preserve">
-    <value>Channels Name</value>
-  </data>
-  <data name="Main_History_Empty.Text" xml:space="preserve">
-    <value>The history record is empty</value>
-  </data>
-  <data name="Main_History_GetLinks" xml:space="preserve">
-    <value>Get Links</value>
-  </data>
-  <data name="Main_History_Links.Text" xml:space="preserve">
-    <value>Links Name</value>
-  </data>
-  <data name="Main_History_Operations.Text" xml:space="preserve">
-    <value>Operations Mode</value>
-  </data>
-  <data name="Main_History_Types.Text" xml:space="preserve">
-    <value>Types Name</value>
-  </data>
-  <data name="Main_History_ViewMore.Content" xml:space="preserve">
-    <value>View More</value>
-    <comment>Main page for more buttons</comment>
-  </data>
   <data name="PackageDisplayName" xml:space="preserve">
     <value>GetStoreApp</value>
     <comment>Application package display name</comment>
   </data>
-  <data name="Settings_Advanced.Text" xml:space="preserve">
-    <value>Advanced Options</value>
-  </data>
   <data name="AppShortDisplayName" xml:space="preserve">
     <value>GetStoreApp (Dev)</value>
+  </data>
+  <data name="Download_Title.Text" xml:space="preserve">
+    <value>Download</value>
+    <comment>The name of the Download page title</comment>
   </data>
 </root>

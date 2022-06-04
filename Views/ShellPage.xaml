@@ -4,11 +4,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="using:GetStoreApp.Behaviors"
     xmlns:helpers="using:GetStoreApp.Helpers"
-    xmlns:service="using:GetStoreApp.Services.Settings"
-    xmlns:sc="using:GetStoreApp.UI.Controls.Shell"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
-    Loaded="OnLoaded"
-    Style="{StaticResource PageStyle}">
+    xmlns:service="using:GetStoreApp.Services.Settings"
+    Background="{ThemeResource SolidBackgroundFillColorBaseBrush}"
+    Loaded="OnLoaded">
 
     <Page.Resources>
         <ResourceDictionary>
@@ -16,16 +15,31 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <sc:AppTitleBar x:Name="AppTitleBar" />
+    <Grid>
+        <Grid
+            x:Name="AppTitleBar"
+            Height="{Binding ElementName=NavigationViewControl, Path=CompactPaneLength}"
+            VerticalAlignment="Top"
+            Canvas.ZIndex="1"
+            IsHitTestVisible="True">
+            <Image
+                Width="22"
+                Height="22"
+                HorizontalAlignment="Left"
+                Source="/Assets/Square44x44Logo.png" />
+            <TextBlock
+                Margin="32,0,0,0"
+                VerticalAlignment="Center"
+                Style="{StaticResource CaptionTextBlockStyle}"
+                Text="{x:Bind service:LanguageService.GetResources('/Shell/AppTitle')}"
+                TextWrapping="NoWrap" />
+        </Grid>
 
         <NavigationView
-            x:Name="navigationView"
-            Grid.Row="1"
-            Grid.ColumnSpan="2"
-            AlwaysShowHeader="False"
+            x:Name="NavigationViewControl"
+            AlwaysShowHeader="True"
             Canvas.ZIndex="0"
-            DisplayModeChanged="NavigationView_DisplayModeChanged"
+            DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
             ExpandedModeThresholdWidth="1280"
             Header="{x:Bind ((ContentControl)ViewModel.Selected).Content, Mode=OneWay}"
             IsBackButtonVisible="Visible"
@@ -97,18 +111,8 @@
                 </behaviors:NavigationViewHeaderBehavior>
             </i:Interaction.Behaviors>
             <Grid>
-                <Frame x:Name="shellFrame" />
+                <Frame x:Name="NavigationFrame" />
             </Grid>
         </NavigationView>
-
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="640" />
-                    </VisualState.StateTriggers>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
     </Grid>
 </Page>

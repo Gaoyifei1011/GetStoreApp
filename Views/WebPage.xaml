@@ -1,10 +1,10 @@
 ﻿<Page
     x:Class="GetStoreApp.Views.WebPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:behaviors="using:GetStoreApp.Behaviors"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:service="using:GetStoreApp.Services.Settings"
     behaviors:NavigationViewHeaderBehavior.HeaderMode="Minimal"
     Style="{StaticResource PageStyle}"
@@ -33,15 +33,18 @@
                     <AppBarButton
                         Command="{x:Bind ViewModel.BrowserBackCommand, Mode=OneWay}"
                         Icon="Back"
-                        Label="{x:Bind service:LanguageService.GetResources('/Web/Back')}" />
+                        Label="{x:Bind service:LanguageService.GetResources('/Web/Back')}"
+                        ToolTipService.ToolTip="{x:Bind service:LanguageService.GetResources('/Web/Back')}" />
                     <AppBarButton
                         Command="{x:Bind ViewModel.BrowserForwardCommand, Mode=OneWay}"
                         Icon="Forward"
-                        Label="{x:Bind service:LanguageService.GetResources('/Web/Forward')}" />
+                        Label="{x:Bind service:LanguageService.GetResources('/Web/Forward')}"
+                        ToolTipService.ToolTip="{x:Bind service:LanguageService.GetResources('/Web/Forward')}" />
                     <AppBarButton
                         Command="{x:Bind ViewModel.RefreshCommand}"
                         Icon="Refresh"
-                        Label="{x:Bind service:LanguageService.GetResources('/Web/Refresh')}" />
+                        Label="{x:Bind service:LanguageService.GetResources('/Web/Refresh')}"
+                        ToolTipService.ToolTip="{x:Bind service:LanguageService.GetResources('/Web/Refresh')}" />
                 </CommandBar>
 
                 <Grid Grid.Column="1" VerticalAlignment="Center">
@@ -73,7 +76,10 @@
                     VerticalAlignment="Center"
                     Background="Transparent"
                     DefaultLabelPosition="Right">
-                    <AppBarButton Command="{x:Bind ViewModel.OpenInBrowserCommand}" Label="{x:Bind service:LanguageService.GetResources('/Web/OpenWithBrowser')}">
+                    <AppBarButton
+                        Command="{x:Bind ViewModel.OpenInBrowserCommand}"
+                        Label="{x:Bind service:LanguageService.GetResources('/Web/OpenWithBrowser')}"
+                        ToolTipService.ToolTip="{x:Bind service:LanguageService.GetResources('/Web/OpenWithBrowser')}">
                         <AppBarButton.Icon>
                             <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE774;" />
                         </AppBarButton.Icon>

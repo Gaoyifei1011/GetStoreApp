@@ -141,6 +141,9 @@
   <data name="CopyAll" xml:space="preserve">
     <value>Copy all</value>
   </data>
+  <data name="CopyAsContent" xml:space="preserve">
+    <value>Copy by content</value>
+  </data>
   <data name="CopyAsOrder" xml:space="preserve">
     <value>Copy by serial number</value>
   </data>
