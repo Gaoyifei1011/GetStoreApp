@@ -141,6 +141,9 @@
   <data name="CopyAll" xml:space="preserve">
     <value>全部复制</value>
   </data>
+  <data name="CopyAsContent" xml:space="preserve">
+    <value>按内容复制</value>
+  </data>
   <data name="CopyAsOrder" xml:space="preserve">
     <value>按序号复制</value>
   </data>

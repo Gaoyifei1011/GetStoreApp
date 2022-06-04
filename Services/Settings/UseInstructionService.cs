@@ -11,12 +11,8 @@ namespace GetStoreApp.Services.Settings
 
         public static bool UseInsVisValue { get; set; }
 
-        /// <summary>
-        /// 静态资源初始化
-        /// </summary>
         static UseInstructionService()
         {
-            // 从设置存储中加载按钮的显示状态值
             UseInsVisValue = GetUseInsVisValue();
         }
 
