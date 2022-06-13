@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using GetStoreApp.ViewModels.Controls.General;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Markup;
 
@@ -10,8 +11,11 @@ namespace GetStoreApp.UI.Controls.General
     [ContentProperty(Name = "HomeContent")]
     public sealed partial class CardControl : UserControl
     {
+        public CardViewModel ViewModel { get; }
+
         public CardControl()
         {
+            ViewModel = App.GetService<CardViewModel>();
             this.InitializeComponent();
         }
 

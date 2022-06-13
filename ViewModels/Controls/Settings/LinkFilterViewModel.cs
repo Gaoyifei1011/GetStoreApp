@@ -5,7 +5,6 @@ using GetStoreApp.Messages;
 using GetStoreApp.Services.Settings;
 using System;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
 {
@@ -39,18 +38,18 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             }
         }
 
-        private ICommand _startsWithECommand;
+        private IAsyncRelayCommand _startsWithECommand;
 
-        public ICommand StartsWithECommand
+        public IAsyncRelayCommand StartsWithECommand
         {
             get { return _startsWithECommand; }
 
             set { SetProperty(ref _startsWithECommand, value); }
         }
 
-        private ICommand _blockMapCommand;
+        private IAsyncRelayCommand _blockMapCommand;
 
-        public ICommand BlockMapCommand
+        public IAsyncRelayCommand BlockMapCommand
         {
             get { return _blockMapCommand; }
 
@@ -59,9 +58,9 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
         public LinkFilterViewModel()
         {
-            StartsWithECommand = new RelayCommand(async () => { await LaunchStartsWithEDescriptionAsync(); });
+            StartsWithECommand = new AsyncRelayCommand(LaunchStartsWithEDescriptionAsync);
 
-            BlockMapCommand = new RelayCommand(async () => { await LaunchBlockMapDescriptionAsync(); });
+            BlockMapCommand = new AsyncRelayCommand(LaunchBlockMapDescriptionAsync);
         }
 
         private async Task LaunchStartsWithEDescriptionAsync()

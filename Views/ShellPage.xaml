@@ -6,7 +6,6 @@
     xmlns:helpers="using:GetStoreApp.Helpers"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:service="using:GetStoreApp.Services.Settings"
-    Background="{ThemeResource SolidBackgroundFillColorBaseBrush}"
     Loaded="OnLoaded">
 
     <Page.Resources>
@@ -60,10 +59,7 @@
                     Content="{x:Bind service:LanguageService.GetResources('/Shell/Download')}"
                     Icon="Download"
                     IsEnabled="False" />
-                <NavigationViewItem
-                    helpers:NavigationHelper.NavigateTo="GetStoreApp.ViewModels.Pages.HistoryViewModel"
-                    Content="{x:Bind service:LanguageService.GetResources('/Shell/History')}"
-                    IsEnabled="False">
+                <NavigationViewItem helpers:NavigationHelper.NavigateTo="GetStoreApp.ViewModels.Pages.HistoryViewModel" Content="{x:Bind service:LanguageService.GetResources('/Shell/History')}">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF738;" />
                     </NavigationViewItem.Icon>

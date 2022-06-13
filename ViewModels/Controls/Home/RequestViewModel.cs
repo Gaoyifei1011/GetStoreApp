@@ -7,8 +7,9 @@ using GetStoreApp.Services.Home;
 using GetStoreApp.Services.Settings;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace GetStoreApp.ViewModels.Controls.Home
 {
@@ -64,18 +65,18 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _linkText, value); }
         }
 
-        private ICommand _typeSelectionChangedCommand;
+        private IAsyncRelayCommand _typeSelectionChangedCommand;
 
-        public ICommand TypeSelectionChangedCommand
+        public IAsyncRelayCommand TypeSelectionChangedCommand
         {
             get { return _typeSelectionChangedCommand; }
 
             set { SetProperty(ref _typeSelectionChangedCommand, value); }
         }
 
-        private ICommand _getLinksCommand;
+        private IAsyncRelayCommand _getLinksCommand;
 
-        public ICommand GetLinksCommand
+        public IAsyncRelayCommand GetLinksCommand
         {
             get { return _getLinksCommand; }
 
@@ -112,9 +113,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             LinkPlaceHolderText = SampleTitle + SampleLink;
 
-            TypeSelectionChangedCommand = new RelayCommand(SetPlaceHolderText);
+            TypeSelectionChangedCommand = new AsyncRelayCommand(SetPlaceHolderTextAsync);
 
-            GetLinksCommand = new RelayCommand(async () => { await GetLinksClickedAsync(); });
+            GetLinksCommand = new AsyncRelayCommand(GetLinksAsync);
 
             SelectedType = TypeList[0];
 
@@ -134,9 +135,16 @@ namespace GetStoreApp.ViewModels.Controls.Home
             {
                 requestViewModel.BlockMapFilterValue = blockMapFilterService.Value;
             });
+
+            Messenger.Register<RequestViewModel, FillinMessage>(this, (requestViewModel, fillinMessage) =>
+            {
+                requestViewModel.SelectedType = fillinMessage.Value.HistoryItemType;
+                requestViewModel.SelectedChannel = fillinMessage.Value.HistoryItemChannel;
+                requestViewModel.LinkText = fillinMessage.Value.HistoryItemLink;
+            });
         }
 
-        private void SetPlaceHolderText()
+        private async Task SetPlaceHolderTextAsync()
         {
             if (SelectedType.InternalName == TypeList[0].InternalName)
             {
@@ -165,26 +173,37 @@ namespace GetStoreApp.ViewModels.Controls.Home
             }
 
             LinkText = string.Empty;
+            await Task.CompletedTask;
         }
 
-        private async Task GetLinksClickedAsync()
+        /// <summary>
+        /// 获取链接
+        /// </summary>
+        private async Task GetLinksAsync()
         {
             bool ResultControlVisable;
 
             string CategoryId = string.Empty;
 
-            List<ResultData> ResultDataList = new();
+            List<ResultData> ResultDataList = new List<ResultData>();
 
             if (string.IsNullOrEmpty(LinkText))
             {
                 LinkText = SampleLink;
             }
 
+            // 记录当前选定的选项和填入的内容
+            HomeType CurrentType = SelectedType;
+
+            HomeChannel CurrentChannel = SelectedChannel;
+
+            string CurrentLink = LinkText;
+
             // 设置获取数据时的相关控件状态
             Messenger.Send(new StatusBarStateMessage(0));
 
             // 生成请求的内容
-            GenerateContentService generateContentService = new();
+            GenerateContentService generateContentService = new GenerateContentService();
             string content = generateContentService.GenerateContent(SelectedType.InternalName, LinkText, SelectedChannel.InternalName, RegionCodeName);
 
             // 获取网页反馈回的原始数据
@@ -198,7 +217,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             // 设置结果控件的显示状态
             ResultControlVisable = state is 1 or 2;
 
-            // 成功状态下解析数据
+            // 成功状态下解析数据，并更新相应的历史记录
             if (state == 1)
             {
                 HtmlParseService htmlParseService = new(httpRequestData);
@@ -208,6 +227,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 ResultDataList = htmlParseService.HtmlParseLinks();
 
                 ResultListFilter(ref ResultDataList);
+
+                await UpdateHistoryAsync(CurrentType, CurrentChannel, CurrentLink);
             }
 
             // 发送消息
@@ -218,6 +239,48 @@ namespace GetStoreApp.ViewModels.Controls.Home
             Messenger.Send(new ResultCategoryIdMessage(CategoryId));
 
             Messenger.Send(new ResultDataListMessage(ResultDataList));
+        }
+
+        /// <summary>
+        /// 更新历史记录，包括主页历史记录内容和数据库中的内容
+        /// </summary>
+        private async Task UpdateHistoryAsync(HomeType currentType, HomeChannel currentChannel, string currentLink)
+        {
+            // 拼接准备要生成唯一的MD5值的内容
+            string Content = string.Format("{0} {1} {2}", currentType.InternalName, currentChannel.InternalName, currentLink);
+
+            // 生成唯一的MD5值
+            string UniqueKey = GenerateUniqueKey(Content);
+
+            Messenger.Send(new HistoryItemMessage(new HistoryItemData()
+            {
+                HistoryItemKey = UniqueKey,
+                HistoryItemType = currentType,
+                HistoryItemChannel = currentChannel,
+                HistoryItemLink = currentLink
+            }));
+
+            await Task.CompletedTask;
+        }
+
+        private string GenerateUniqueKey(string content)
+        {
+            MD5 md5Hash = MD5.Create();
+
+            // 将输入字符串转换为字节数组并计算哈希数据
+            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(content));
+
+            // 创建一个 Stringbuilder 来收集字节并创建字符串
+            StringBuilder str = new StringBuilder();
+
+            // 循环遍历哈希数据的每一个字节并格式化为十六进制字符串
+            for (int i = 0; i < data.Length; i++)
+            {
+                str.Append(data[i].ToString("x2"));//加密结果"x2"结果为32位,"x3"结果为48位,"x4"结果为64位
+            }
+
+            // 返回十六进制字符串
+            return str.ToString();
         }
 
         private void ResultListFilter(ref List<ResultData> resultDataList)

@@ -4,8 +4,5 @@ namespace GetStoreApp.ViewModels.Pages
 {
     public class DownloadViewModel : ObservableRecipient
     {
-        public DownloadViewModel()
-        {
-        }
     }
 }

@@ -1,14 +1,12 @@
 ﻿using GetStoreApp.Activation;
 using GetStoreApp.Contracts.Services;
-using GetStoreApp.Core.Services;
-using GetStoreApp.Helpers;
-using GetStoreApp.Models;
 using GetStoreApp.Services.App;
-using GetStoreApp.Services.Settings;
 using GetStoreApp.Services.Shell;
 using GetStoreApp.Services.Web;
+using GetStoreApp.UI.Controls.General;
 using GetStoreApp.UI.Controls.Home;
 using GetStoreApp.UI.Controls.Settings;
+using GetStoreApp.ViewModels.Controls.General;
 using GetStoreApp.ViewModels.Controls.Home;
 using GetStoreApp.ViewModels.Controls.Settings;
 using GetStoreApp.ViewModels.Pages;
@@ -28,6 +26,7 @@ namespace GetStoreApp
         // https://docs.microsoft.com/dotnet/core/extensions/dependency-injection
         // https://docs.microsoft.com/dotnet/core/extensions/configuration
         // https://docs.microsoft.com/dotnet/core/extensions/logging
+
         private static IHost _host = Host
             .CreateDefaultBuilder()
             .ConfigureServices((context, services) =>
@@ -38,8 +37,6 @@ namespace GetStoreApp
                 // Other Activation Handlers
 
                 // Services
-                services.AddSingleton<ILocalSettingsService, LocalSettingsServicePackaged>();
-                services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
                 services.AddTransient<IWebViewService, WebViewService>();
                 services.AddTransient<INavigationViewService, NavigationViewService>();
 
@@ -51,20 +48,50 @@ namespace GetStoreApp
                 services.AddSingleton<IFileService, FileService>();
 
                 // Pages and ViewModels
+                services.AddTransient<AboutPage>();
+                services.AddTransient<AboutViewModel>();
+                services.AddTransient<DownloadPage>();
+                services.AddTransient<DownloadViewModel>();
+                services.AddTransient<HistoryPage>();
+                services.AddTransient<HistoryViewModel>();
+                services.AddTransient<HomePage>();
+                services.AddTransient<HomeViewModel>();
+                services.AddTransient<SettingsPage>();
+                services.AddTransient<SettingsViewModel>();
                 services.AddTransient<ShellPage>();
                 services.AddTransient<ShellViewModel>();
                 services.AddTransient<WebViewModel>();
                 services.AddTransient<WebPage>();
 
                 // Controls and ViewModels
+                services.AddTransient<CardControl>();
+                services.AddTransient<CardViewModel>();
+
+                services.AddTransient<HistoryItemControl>();
+                services.AddTransient<HistoryItemViewModel>();
+                services.AddTransient<RequestControl>();
+                services.AddTransient<RequestViewModel>();
+                services.AddTransient<ResultControl>();
+                services.AddTransient<ResultViewModel>();
+                services.AddTransient<StatusBarControl>();
+                services.AddTransient<StatusBarViewModel>();
                 services.AddTransient<TitleControl>();
                 services.AddTransient<TitleViewModel>();
 
+                services.AddTransient<BackdropControl>();
+                services.AddTransient<BackdropViewModel>();
+                services.AddTransient<HistoryItemValueControl>();
+                services.AddTransient<HistoryItemValueViewModel>();
+                services.AddTransient<LauguageControl>();
+                services.AddTransient<LanguageViewModel>();
+                services.AddTransient<LinkFilterControl>();
+                services.AddTransient<LinkFilterViewModel>();
+                services.AddTransient<RegionControl>();
+                services.AddTransient<RegionViewModel>();
                 services.AddTransient<ThemeControl>();
                 services.AddTransient<ThemeViewModel>();
-
-                // Configuration
-                services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
+                services.AddTransient<UseInstructionControl>();
+                services.AddTransient<UseInstructionViewModel>();
             })
             .Build();
 
@@ -74,7 +101,7 @@ namespace GetStoreApp
             return _host.Services.GetService(typeof(T)) as T;
         }
 
-        public static Window MainWindow { get; set; } = new Window() { Title = "AppDisplayName".GetLocalized() };
+        public static Window MainWindow { get; set; } = new Window();
 
         public App()
         {

@@ -4,6 +4,7 @@ using GetStoreApp.Messages;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Settings;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Controls.Home
 {
@@ -59,8 +60,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 resultViewModel.CategoryId = string.Format(LanguageService.GetResources("/Home/CategoryId"), resultCategoryIdMessage.Value);
             });
 
-            // TODO:需要性能优化
-            Messenger.Register<ResultViewModel, ResultDataListMessage>(this, (resultViewModel, resultDataListMessage) =>
+            Messenger.Register<ResultViewModel, ResultDataListMessage>(this, async (resultViewModel, resultDataListMessage) =>
             {
                 resultViewModel.ResultDataList.Clear();
                 resultViewModel.ResultCount = 0;
@@ -73,6 +73,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
                 resultViewModel.ResultCount = resultViewModel.ResultDataList.Count;
                 resultViewModel.ResultCountInfo = string.Format(LanguageService.GetResources("/Home/ResultCountInfo"), resultViewModel.ResultDataList.Count);
+                await Task.CompletedTask;
             });
         }
     }

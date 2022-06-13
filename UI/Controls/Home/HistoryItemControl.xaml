@@ -4,57 +4,138 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ctWinUI="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewModel="using:GetStoreApp.ViewModels.Controls.Home"
+    xmlns:service="using:GetStoreApp.Services.Settings"
     mc:Ignorable="d">
 
-    <UserControl.DataContext>
-        <viewModel:HistoryItemViewModel x:Name="ViewModel" />
-    </UserControl.DataContext>
+    <Expander
+        Margin="0,0,0,10"
+        IsExpanded="True"
+        Style="{StaticResource DefaultExpanderStyle}">
 
-    <StackPanel Visibility="Visible">
-        <Grid Style="{StaticResource DataGridDescriptionGridStyle}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
+        <Expander.Header>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
 
-            <FontIcon
-                Grid.Column="0"
-                FontFamily="Segoe Fluent Icons"
-                Glyph="&#xE823;"
-                Style="{StaticResource FontIconStyle}" />
-            <TextBlock
-                Grid.Column="1"
-                VerticalAlignment="Center"
-                Text="最近使用的项目" />
-            <CommandBar
-                Grid.Column="2"
-                VerticalAlignment="Center"
-                Background="Transparent"
-                DefaultLabelPosition="Right">
-                <AppBarButton Label="显示更多" />
-            </CommandBar>
-        </Grid>
+                <FontIcon
+                    Grid.Column="0"
+                    FontFamily="Segoe Fluent Icons"
+                    Glyph="&#xE823;"
+                    Style="{StaticResource FontIconStyle}" />
+                <TextBlock
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Text="{x:Bind service:LanguageService.GetResources('/Home/Recent')}" />
+                <CommandBar
+                    Grid.Column="2"
+                    Margin="0,0,-15,0"
+                    VerticalAlignment="Center"
+                    Background="Transparent"
+                    DefaultLabelPosition="Right">
+                    <AppBarButton
+                        Command="{x:Bind ViewModel.FillinCommand}"
+                        IsEnabled="{x:Bind ViewModel.SelectedHistoryItem, Converter={StaticResource CheckNullConverter}, Mode=OneWay}"
+                        Label="{x:Bind service:LanguageService.GetResources('/Home/Fillin')}"
+                        ToolTipService.ToolTip="{x:Bind service:LanguageService.GetResources('/Home/FillinDescription')}"
+                        Visibility="{x:Bind ViewModel.HistoryItemList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
+                        <FontIcon
+                            Grid.Column="0"
+                            FontFamily="Segoe Fluent Icons"
+                            Glyph="&#xE74a;" />
+                    </AppBarButton>
+                    <AppBarButton
+                        Command="{x:Bind ViewModel.ViewAllCommand}"
+                        Icon="ViewAll"
+                        Label="{x:Bind service:LanguageService.GetResources('/Home/ViewAll')}" />
+                </CommandBar>
+            </Grid>
+        </Expander.Header>
 
-        <TextBlock Text="历史记录空空如也" />
+        <Expander.Content>
+            <Grid>
+                <TextBlock
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    Text="{x:Bind service:LanguageService.GetResources('/Home/HistoryItemEmpty')}"
+                    TextAlignment="Center"
+                    Visibility="{x:Bind ViewModel.HistoryItemList.Count, Converter={StaticResource IntToReverseVisibilityConverter}, Mode=OneWay}" />
 
-        <ctWinUI:DataGrid RowStyle="{StaticResource DataGridRowStyle}" Style="{StaticResource DataGridStyle}">
-            <ctWinUI:DataGrid.Columns>
-                <ctWinUI:DataGridTextColumn Width="Auto" Header="类型" />
-                <ctWinUI:DataGridTextColumn Width="Auto" Header="通道" />
-                <ctWinUI:DataGridTextColumn Width="Auto" Header="链接" />
-                <ctWinUI:DataGridTemplateColumn Header="操作">
-                    <ctWinUI:DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <HyperlinkButton VerticalAlignment="Center" Content="填入" />
-                        </DataTemplate>
-                    </ctWinUI:DataGridTemplateColumn.CellTemplate>
-                </ctWinUI:DataGridTemplateColumn>
-            </ctWinUI:DataGrid.Columns>
-        </ctWinUI:DataGrid>
-    </StackPanel>
+                <ctWinUI:DataGrid
+                    ItemsSource="{x:Bind ViewModel.HistoryItemList, Mode=OneWay}"
+                    RowStyle="{StaticResource DataGridRowStyle}"
+                    SelectedItem="{x:Bind ViewModel.SelectedHistoryItem, Mode=TwoWay}"
+                    SelectionMode="Single"
+                    Style="{StaticResource DataGridInternalStyle}"
+                    Visibility="{x:Bind ViewModel.HistoryItemList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
+
+                    <i:Interaction.Behaviors>
+                        <ic:EventTriggerBehavior EventName="DoubleTapped">
+                            <ic:InvokeCommandAction Command="{x:Bind ViewModel.FillinCommand}" />
+                        </ic:EventTriggerBehavior>
+                    </i:Interaction.Behaviors>
+
+                    <ctWinUI:DataGrid.Columns>
+                        <ctWinUI:DataGridTextColumn
+                            Width="*"
+                            Binding="{Binding HistoryItemType.DisplayName}"
+                            Header="{x:Bind service:LanguageService.GetResources('/Home/Type')}"
+                            HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" />
+                        <ctWinUI:DataGridTextColumn
+                            Width="*"
+                            Binding="{Binding HistoryItemChannel.DisplayName}"
+                            Header="{x:Bind service:LanguageService.GetResources('/Home/Channel')}"
+                            HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" />
+                        <ctWinUI:DataGridTextColumn
+                            Width="3*"
+                            Binding="{Binding HistoryItemLink}"
+                            Header="{x:Bind service:LanguageService.GetResources('/Home/Link')}"
+                            HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" />
+                    </ctWinUI:DataGrid.Columns>
+
+                    <ctWinUI:DataGrid.ContextFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem
+                                Command="{x:Bind ViewModel.FillinCommand}"
+                                IsEnabled="{x:Bind ViewModel.SelectedHistoryItem, Converter={StaticResource CheckNullConverter}, Mode=OneWay}"
+                                Text="{x:Bind service:LanguageService.GetResources('/Home/Fillin')}">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon
+                                        Grid.Column="0"
+                                        FontFamily="Segoe Fluent Icons"
+                                        Glyph="&#xE74a;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutSeparator />
+                            <MenuFlyoutItem
+                                Command="{x:Bind ViewModel.CopyCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
+                                Icon="Link"
+                                IsEnabled="{x:Bind ViewModel.SelectedHistoryItem, Converter={StaticResource CheckNullConverter}, Mode=OneWay}"
+                                Tag="Link"
+                                Text="{x:Bind service:LanguageService.GetResources('/Home/CopyLink')}" />
+                            <MenuFlyoutItem
+                                Command="{x:Bind ViewModel.CopyCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
+                                Icon="Copy"
+                                IsEnabled="{x:Bind ViewModel.SelectedHistoryItem, Converter={StaticResource CheckNullConverter}, Mode=OneWay}"
+                                Tag="CopyAll"
+                                Text="{x:Bind service:LanguageService.GetResources('/Home/CopyAll')}" />
+                            <MenuFlyoutSeparator />
+                            <MenuFlyoutItem
+                                Command="{x:Bind ViewModel.ViewAllCommand}"
+                                Icon="ViewAll"
+                                IsEnabled="{x:Bind ViewModel.SelectedHistoryItem, Converter={StaticResource CheckNullConverter}, Mode=OneWay}"
+                                Text="{x:Bind service:LanguageService.GetResources('/Home/ViewAll')}" />
+                        </MenuFlyout>
+                    </ctWinUI:DataGrid.ContextFlyout>
+                </ctWinUI:DataGrid>
+            </Grid>
+        </Expander.Content>
+    </Expander>
 </UserControl>

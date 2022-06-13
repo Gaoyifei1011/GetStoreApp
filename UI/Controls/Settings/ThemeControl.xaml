@@ -8,7 +8,7 @@
     xmlns:xaml="using:Microsoft.UI.Xaml"
     mc:Ignorable="d">
 
-    <Expander Style="{StaticResource ExpanderStyle}">
+    <Expander>
         <Expander.Header>
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
@@ -37,14 +37,26 @@
         </Expander.Header>
 
         <Expander.Content>
-            <StackPanel Margin="26,0,0,0">
+            <StackPanel Margin="43,6,18,6">
+
+                <RadioButton
+                    Command="{x:Bind ViewModel.SwitchThemeCommand}"
+                    Content="{x:Bind service:LanguageService.GetResources('/Settings/ThemeDefault')}"
+                    FontSize="15"
+                    GroupName="AppTheme"
+                    IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Default, Mode=OneWay}">
+                    <RadioButton.CommandParameter>
+                        <xaml:ElementTheme>Default</xaml:ElementTheme>
+                    </RadioButton.CommandParameter>
+                </RadioButton>
 
                 <RadioButton
                     Command="{x:Bind ViewModel.SwitchThemeCommand}"
                     Content="{x:Bind service:LanguageService.GetResources('/Settings/ThemeLight')}"
                     FontSize="15"
                     GroupName="AppTheme"
-                    IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=OneWay}">
+                    IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=OneWay}"
+                    IsEnabled="False">
                     <RadioButton.CommandParameter>
                         <xaml:ElementTheme>Light</xaml:ElementTheme>
                     </RadioButton.CommandParameter>
@@ -55,20 +67,10 @@
                     Content="{x:Bind service:LanguageService.GetResources('/Settings/ThemeDark')}"
                     FontSize="15"
                     GroupName="AppTheme"
-                    IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=OneWay}">
+                    IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=OneWay}"
+                    IsEnabled="False">
                     <RadioButton.CommandParameter>
                         <xaml:ElementTheme>Dark</xaml:ElementTheme>
-                    </RadioButton.CommandParameter>
-                </RadioButton>
-
-                <RadioButton
-                    Command="{x:Bind ViewModel.SwitchThemeCommand}"
-                    Content="{x:Bind service:LanguageService.GetResources('/Settings/ThemeDefault')}"
-                    FontSize="15"
-                    GroupName="AppTheme"
-                    IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Default, Mode=OneWay}">
-                    <RadioButton.CommandParameter>
-                        <xaml:ElementTheme>Default</xaml:ElementTheme>
                     </RadioButton.CommandParameter>
                 </RadioButton>
             </StackPanel>

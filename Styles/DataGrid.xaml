@@ -106,10 +106,10 @@
     <StaticResource x:Key="DataGridCellInvalidBrush" ResourceKey="InvalidBrush" />
 
     <Style x:Key="DataGridDescriptionGridStyle" TargetType="Grid">
-        <Setter Property="Padding" Value="16,8" />
+        <Setter Property="Padding" Value="16,8,2,8" />
         <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
         <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
-        <Setter Property="BorderThickness" Value="0,0,0,1" />
+        <Setter Property="BorderThickness" Value="1,1,1,1" />
         <Setter Property="CornerRadius" Value="4,4,0,0" />
     </Style>
 
@@ -117,6 +117,26 @@
         <Setter Property="AutoGenerateColumns" Value="False" />
         <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
         <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
+        <Setter Property="BorderThickness" Value="1,0,1,0" />
+        <Setter Property="CanUserReorderColumns" Value="False" />
+        <Setter Property="CanUserSortColumns" Value="False" />
+        <Setter Property="CanUserResizeColumns" Value="False" />
+        <Setter Property="GridLinesVisibility" Value="All" />
+        <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="IsReadOnly" Value="True" />
+        <Setter Property="RowDetailsVisibilityMode" Value="Collapsed" />
+        <Setter Property="RowHeight" Value="40" />
+        <Setter Property="SelectionMode" Value="Single" />
+        <Setter Property="ColumnHeaderHeight" Value="40" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Visible" />
+        <Setter Property="Height" Value="Auto" />
+    </Style>
+
+    <Style x:Key="DataGridInternalStyle" TargetType="ctWinUI:DataGrid">
+        <Setter Property="AutoGenerateColumns" Value="False" />
+        <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
+        <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="CanUserReorderColumns" Value="False" />
         <Setter Property="CanUserSortColumns" Value="False" />
         <Setter Property="CanUserResizeColumns" Value="False" />
@@ -135,6 +155,8 @@
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
         <Setter Property="BorderThickness" Value="1,0,1,0" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="{StaticResource TextFillColorPrimaryBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ctWinUI:DataGridRow">
@@ -276,6 +298,124 @@
         </Setter>
     </Style>
 
+    <Style TargetType="ctWinUI:DataGridCell">
+        <Setter Property="Background" Value="{ThemeResource DataGridCellBackgroundBrush}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ctWinUI:DataGridCell">
+                    <Grid x:Name="CellRoot" Background="{TemplateBinding Background}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Rectangle
+                            x:Name="CurrencyVisual"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Fill="Transparent"
+                            IsHitTestVisible="False"
+                            Opacity="0"
+                            Stroke="{ThemeResource DataGridCurrencyVisualPrimaryBrush}"
+                            StrokeThickness="1" />
+                        <Grid
+                            x:Name="FocusVisual"
+                            IsHitTestVisible="False"
+                            Opacity="0">
+                            <Rectangle
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                Fill="Transparent"
+                                IsHitTestVisible="False"
+                                Stroke="{ThemeResource DataGridCellFocusVisualPrimaryBrush}"
+                                StrokeThickness="2" />
+                            <Rectangle
+                                Margin="2"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                Fill="Transparent"
+                                IsHitTestVisible="False"
+                                Stroke="{ThemeResource DataGridCellFocusVisualSecondaryBrush}"
+                                StrokeThickness="1" />
+                        </Grid>
+
+                        <ContentPresenter
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}" />
+
+                        <Rectangle
+                            x:Name="InvalidVisualElement"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            IsHitTestVisible="False"
+                            Opacity="0"
+                            Stroke="{ThemeResource DataGridCellInvalidBrush}"
+                            StrokeThickness="1" />
+
+                        <Rectangle
+                            x:Name="RightGridLine"
+                            Grid.Column="1"
+                            Width="1"
+                            VerticalAlignment="Stretch"
+                            Fill="{ThemeResource DataGridFillerColumnGridLinesBrush}" />
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CurrentStates">
+                                <VisualState x:Name="Regular" />
+                                <VisualState x:Name="Current">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="CurrencyVisual"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="FocusVisual"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="CurrentWithFocus">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="CurrencyVisual"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="FocusVisual"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="ValidationStates">
+                                <VisualState x:Name="Valid" />
+                                <VisualState x:Name="Invalid">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="InvalidVisualElement"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="DataGridColumnHeaderStyle" TargetType="prim:DataGridColumnHeader">
         <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
         <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
@@ -284,7 +424,8 @@
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="SeparatorBrush" Value="{ThemeResource GridLinesBrush}" />
         <Setter Property="Padding" Value="12,0,0,0" />
-        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="{StaticResource TextFillColorPrimaryBrush}" />
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="Template">
             <Setter.Value>

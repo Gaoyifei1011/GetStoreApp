@@ -12,7 +12,7 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 主页面历史记录显示的条目数量
         /// </summary>
-        public static int HistoryItemValue;
+        public static int HistoryItemValue { get; set; }
 
         static HistoryItemValueService()
         {
@@ -51,7 +51,6 @@ namespace GetStoreApp.Services.Settings
 
         /// <summary>
         /// 修改设置
-        /// Sets the number of entries displayed in the main page history value
         /// </summary>
         public static void SetHistoryItemValue(int historyItemValue)
         {

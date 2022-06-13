@@ -7,11 +7,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:service="using:GetStoreApp.Services.Settings"
     xmlns:viewModel="using:GetStoreApp.ViewModels.Controls.Home"
+    x:Name="ResultControlTest"
     mc:Ignorable="d">
 
-    <UserControl.DataContext>
-        <viewModel:ResultViewModel x:Name="ViewModel" />
-    </UserControl.DataContext>
+    <UserControl.Resources>
+        <viewModel:ResultViewModel x:Name="viewModel" />
+    </UserControl.Resources>
 
     <Grid Visibility="{x:Bind ViewModel.ResultControlVisable, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
         <Grid.RowDefinitions>
@@ -76,6 +77,7 @@
         </Grid>
 
         <ctWinUI:DataGrid
+            x:Name="ResultDataGrid"
             Grid.Row="1"
             ItemsSource="{x:Bind ViewModel.ResultDataList, Mode=OneWay}"
             RowStyle="{StaticResource DataGridRowStyle}"

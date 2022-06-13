@@ -123,6 +123,9 @@
   <data name="CategoryId" xml:space="preserve">
     <value>CategoryID：{0}</value>
   </data>
+  <data name="Channel" xml:space="preserve">
+    <value>通道</value>
+  </data>
   <data name="ChannelFast" xml:space="preserve">
     <value>快速</value>
   </data>
@@ -139,13 +142,16 @@
     <value>复制</value>
   </data>
   <data name="CopyAll" xml:space="preserve">
-    <value>全部复制</value>
+    <value>复制全部</value>
   </data>
   <data name="CopyAsContent" xml:space="preserve">
     <value>按内容复制</value>
   </data>
   <data name="CopyAsOrder" xml:space="preserve">
     <value>按序号复制</value>
+  </data>
+  <data name="CopyLink" xml:space="preserve">
+    <value>复制链接</value>
   </data>
   <data name="Download" xml:space="preserve">
     <value>下载</value>
@@ -165,11 +171,26 @@
   <data name="FileSize" xml:space="preserve">
     <value>文件大小</value>
   </data>
+  <data name="FillIn" xml:space="preserve">
+    <value>填入</value>
+  </data>
+  <data name="FillinDescription" xml:space="preserve">
+    <value>点击填入按钮后会在上面的文本输入框中填入链接，点击“获取链接”即可获取具体内容</value>
+  </data>
   <data name="GetLinks" xml:space="preserve">
     <value>获取链接</value>
   </data>
+  <data name="HistoryItemEmpty" xml:space="preserve">
+    <value>历史记录空空如也</value>
+  </data>
+  <data name="Link" xml:space="preserve">
+    <value>链接</value>
+  </data>
   <data name="LinkExpireTime" xml:space="preserve">
     <value>链接过期时间</value>
+  </data>
+  <data name="Recent" xml:space="preserve">
+    <value>最近使用的项目</value>
   </data>
   <data name="ResultCountInfo" xml:space="preserve">
     <value>从微软商店服务器中获得了{0}条结果</value>
@@ -210,6 +231,9 @@
   <data name="TitleDescription2" xml:space="preserve">
     <value>输入从微软商店获取到的链接，然后单击复选框——以获得所有可用的链接</value>
   </data>
+  <data name="Type" xml:space="preserve">
+    <value>类型</value>
+  </data>
   <data name="TypeCID" xml:space="preserve">
     <value>CategoryID</value>
   </data>
@@ -224,5 +248,8 @@
   </data>
   <data name="UseInstruction" xml:space="preserve">
     <value>使用说明</value>
+  </data>
+  <data name="ViewAll" xml:space="preserve">
+    <value>查看全部</value>
   </data>
 </root>

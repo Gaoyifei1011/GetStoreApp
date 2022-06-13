@@ -5,14 +5,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:service="using:GetStoreApp.Services.Settings"
-    xmlns:viewModel="using:GetStoreApp.ViewModels.Controls.Settings"
     mc:Ignorable="d">
 
-    <UserControl.DataContext>
-        <viewModel:LinkFilterViewModel x:Name="ViewModel" />
-    </UserControl.DataContext>
-
-    <Expander Style="{StaticResource ExpanderStyle}">
+    <Expander Style="{StaticResource DefaultExpanderStyle}">
         <Expander.Header>
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
@@ -88,8 +83,8 @@
         </Expander.Header>
 
         <Expander.Content>
-            <StackPanel>
-                <StackPanel Margin="26,-9,0,5">
+            <StackPanel Padding="43,0,18,0">
+                <StackPanel Margin="0,6,0,6">
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -118,7 +113,7 @@
 
                 <MenuFlyoutSeparator />
 
-                <StackPanel Margin="26,5,0,-9">
+                <StackPanel Margin="0,6,0,6">
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />

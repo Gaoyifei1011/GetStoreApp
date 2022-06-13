@@ -123,6 +123,9 @@
   <data name="CategoryId" xml:space="preserve">
     <value>CategoryID:{0}</value>
   </data>
+  <data name="Channel" xml:space="preserve">
+    <value>Channel</value>
+  </data>
   <data name="ChannelFast" xml:space="preserve">
     <value>Fast</value>
   </data>
@@ -147,6 +150,9 @@
   <data name="CopyAsOrder" xml:space="preserve">
     <value>Copy by serial number</value>
   </data>
+  <data name="CopyLink" xml:space="preserve">
+    <value>Copy Link</value>
+  </data>
   <data name="Download" xml:space="preserve">
     <value>Download</value>
   </data>
@@ -165,11 +171,26 @@
   <data name="FileSize" xml:space="preserve">
     <value>File Size</value>
   </data>
+  <data name="FillIn" xml:space="preserve">
+    <value>Fill in</value>
+  </data>
+  <data name="FillinDescription" xml:space="preserve">
+    <value>Clicking the Fill button will fill in the link in the text input box above, and click "Get Links" to get the specific content</value>
+  </data>
   <data name="GetLinks" xml:space="preserve">
     <value>Get Links</value>
   </data>
+  <data name="HistoryItemEmpty" xml:space="preserve">
+    <value>The history is empty</value>
+  </data>
+  <data name="Link" xml:space="preserve">
+    <value>Link</value>
+  </data>
   <data name="LinkExpireTime" xml:space="preserve">
     <value>Link Expire Time</value>
+  </data>
+  <data name="Recent" xml:space="preserve">
+    <value>Recently used items</value>
   </data>
   <data name="ResultCountInfo" xml:space="preserve">
     <value>{0} results were obtained from Microsoft Store servers</value>
@@ -210,6 +231,9 @@
   <data name="TitleDescription2" xml:space="preserve">
     <value>Enter the link from the Microsoft Store and click on the checkbox - to get all available links</value>
   </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
   <data name="TypeCID" xml:space="preserve">
     <value>CategoryID</value>
   </data>
@@ -224,5 +248,8 @@
   </data>
   <data name="UseInstruction" xml:space="preserve">
     <value>Direction for Use</value>
+  </data>
+  <data name="ViewAll" xml:space="preserve">
+    <value>View all</value>
   </data>
 </root>

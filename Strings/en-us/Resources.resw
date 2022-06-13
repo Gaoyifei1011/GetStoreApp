@@ -125,48 +125,12 @@
     <value>GetStoreApp (Dev)</value>
     <comment>Application display name</comment>
   </data>
-  <data name="HistoryCount.Text" xml:space="preserve">
-    <value>There are {0} results.</value>
-    <comment>The number of History Record entries</comment>
-  </data>
-  <data name="History_Refresh_Name.Text" xml:space="preserve">
-    <value>Refresh</value>
-    <comment>History data refresh</comment>
-  </data>
-  <data name="History_Title.Text" xml:space="preserve">
-    <value>History Record</value>
-    <comment>The name of the History Record page title</comment>
-  </data>
-  <data name="History_Type.Text" xml:space="preserve">
-    <value>Type:</value>
-    <comment>History type label</comment>
-  </data>
-  <data name="History_Type_All.Content" xml:space="preserve">
-    <value>ALL</value>
-    <comment>The History type drop-down selection box</comment>
-  </data>
-  <data name="History_Type_CID.Content" xml:space="preserve">
-    <value>CategoryID</value>
-    <comment>The History type drop-down selection box</comment>
-  </data>
-  <data name="History_Type_PFN.Content" xml:space="preserve">
-    <value>PackageFamilyName</value>
-    <comment>The History type drop-down selection box</comment>
-  </data>
-  <data name="History_Type_PID.Content" xml:space="preserve">
-    <value>ProductID</value>
-    <comment>The History type drop-down selection box</comment>
-  </data>
-  <data name="History_Type_URL.Content" xml:space="preserve">
-    <value>URL(Link)</value>
-    <comment>The History type drop-down selection box</comment>
-  </data>
   <data name="PackageDisplayName" xml:space="preserve">
     <value>GetStoreApp</value>
     <comment>Application package display name</comment>
   </data>
   <data name="AppShortDisplayName" xml:space="preserve">
-    <value>GetStoreApp (Dev)</value>
+    <value>GetStoreApp</value>
   </data>
   <data name="Download_Title.Text" xml:space="preserve">
     <value>Download</value>

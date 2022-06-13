@@ -7,7 +7,6 @@ using GetStoreApp.Services.Settings;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml.Media.Animation;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace GetStoreApp.ViewModels.Controls.Home
 {
@@ -24,9 +23,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _useInsVisValue, value); }
         }
 
-        private ICommand _useInstructionCommand;
+        private IAsyncRelayCommand _useInstructionCommand;
 
-        public ICommand UseInstructionCommand
+        public IAsyncRelayCommand UseInstructionCommand
         {
             get { return _useInstructionCommand; }
 
@@ -37,12 +36,12 @@ namespace GetStoreApp.ViewModels.Controls.Home
         {
             _navigationService = navigationService;
 
-            UseInstructionCommand = new RelayCommand(async () => { await UseIns_ClickedAsync(); });
+            UseInstructionCommand = new AsyncRelayCommand(UseInstructionAsync);
 
             Messenger.Register<TitleViewModel, UseInstructionMessage>(this, (titleViewModel, useInstructionMessage) => titleViewModel.UseInsVisValue = useInstructionMessage.Value);
         }
 
-        private async Task UseIns_ClickedAsync()
+        private async Task UseInstructionAsync()
         {
             _navigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo());
             await Task.CompletedTask;

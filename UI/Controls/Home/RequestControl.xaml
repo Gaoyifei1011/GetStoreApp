@@ -7,12 +7,7 @@
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:service="using:GetStoreApp.Services.Settings"
-    xmlns:viewModel="using:GetStoreApp.ViewModels.Controls.Home"
     mc:Ignorable="d">
-
-    <UserControl.DataContext>
-        <viewModel:RequestViewModel x:Name="ViewModel" />
-    </UserControl.DataContext>
 
     <Grid Margin="0,0,0,10">
         <Grid.ColumnDefinitions>
@@ -44,7 +39,7 @@
 
         <AutoSuggestBox
             Grid.Column="2"
-            Margin="2,0,0,0"
+            Margin="2,0,2,0"
             IsSuggestionListOpen="False"
             PlaceholderText="{x:Bind ViewModel.LinkPlaceHolderText, Mode=OneWay}"
             Text="{x:Bind ViewModel.LinkText, Mode=TwoWay}">
@@ -57,6 +52,7 @@
 
         <Button
             Grid.Column="3"
+            Margin="2,0,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Bottom"
             Command="{x:Bind ViewModel.GetLinksCommand}"

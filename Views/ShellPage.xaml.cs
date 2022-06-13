@@ -1,9 +1,14 @@
 ﻿using GetStoreApp.Contracts.Services;
 using GetStoreApp.Helpers;
 using GetStoreApp.ViewModels.Pages;
+using Microsoft.UI;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using System;
+using System.IO;
+using Windows.ApplicationModel;
 using Windows.System;
 
 namespace GetStoreApp.Views
@@ -26,20 +31,29 @@ namespace GetStoreApp.Views
             // https://docs.microsoft.com/windows/apps/develop/title-bar?tabs=winui3#full-customization
             App.MainWindow.ExtendsContentIntoTitleBar = true;
             App.MainWindow.SetTitleBar(AppTitleBar);
-            App.MainWindow.Activated += MainWindow_Activated;
+
+            BackdropHelper.SetBackdrop();
+            SetAppTitleBarIcon();
         }
 
-        private void OnLoaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        /// <summary>
+        /// 修改标题栏的应用名称
+        /// </summary>
+        private void SetAppTitleBarIcon()
+        {
+            IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
+            WindowId myWndId = Win32Interop.GetWindowIdFromWindow(hWnd);
+            var appWindow = AppWindow.GetFromWindowId(myWndId);
+
+            appWindow.SetIcon(Path.Combine(Package.Current.InstalledLocation.Path, "Assets/Logo/GetStoreApp.ico"));
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
         {
             TitleBarHelper.UpdateTitleBar(RequestedTheme);
 
             KeyboardAccelerators.Add(BuildKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu));
             KeyboardAccelerators.Add(BuildKeyboardAccelerator(VirtualKey.GoBack));
-        }
-
-        private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)
-        {
-            var resource = args.WindowActivationState == WindowActivationState.Deactivated ? "WindowCaptionForegroundDisabled" : "WindowCaptionForeground";
         }
 
         private void NavigationViewControl_DisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)

@@ -5,31 +5,27 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="using:GetStoreApp.UI.Controls.Home"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewModel="using:GetStoreApp.ViewModels.Pages"
     NavigationCacheMode="Enabled"
-    Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
 
-    <Page.DataContext>
-        <viewModel:HomeViewModel x:Name="ViewModel" />
-    </Page.DataContext>
-
-    <Grid Margin="30,30,30,0">
+    <Grid Margin="30,15,30,0">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+
         <hc:TitleControl Grid.Row="0" />
 
         <hc:RequestControl Grid.Row="1" />
 
         <hc:StatusBarControl Grid.Row="2" />
 
-        <!--<mainctr:SimpleHistoryControl />-->
+        <hc:HistoryItemControl Grid.Row="3" />
 
-        <hc:ResultControl Grid.Row="3" />
+        <hc:ResultControl Grid.Row="4" />
     </Grid>
 </Page>
