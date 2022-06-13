@@ -6,20 +6,20 @@
 | 项目进度                     | 开发进展 |
 | --------------------------- | ----------- |
 | 主页面功能                   | 已完成75%的功能（可以通过网页下载）     |
-| 历史记录（记录使用过的链接）   | 0%，预计6月中旬完成        |
+| 历史记录（记录使用过的链接）   | 30%，预计6月中旬完成        |
 | 通过生成的链接下载文件         | 0%，计划中        |
 | 应用说明                     | 0%，预计7月初完成        |
 | 控制台应用程序                    | 0%，计划中      |
-| 设置内容                     | 30%，随着其他项目进度共同开发        |
+| 设置内容                     | 40%，随着其他项目进度共同开发        |
 
 | Project progress                    | Development progress |
 | --------------------------- | ----------- |
 | Main page functionality                    | 75% of the features completed (can be downloaded via web page)     |
-| History (records used links)  | 0%, expected to be completed in mid-June        |
+| History (records used links)  | 30%, expected to be completed in mid-June        |
 | Download the file from the generated link         | 0% is planned        |
 | Application Notes                   | 0%, expected to be completed in early July        |
 | Console applications                       | 0% is planned      |
-| Settings                     | 30%, co-developed with the progress of other projects |
+| Settings                     | 40%, co-developed with the progress of other projects |
 
 ### 该项目的功能
 #### 该项目主要包括以下功能：通过[Store](https://store.rg-adguard.net/)提供的API来生成带有文件链接
@@ -43,15 +43,15 @@
 
 ### 应用运行图（中文（简体））
 #### 应用初次打开界面
-![image](https://user-images.githubusercontent.com/49179966/169338562-f365f10c-c34a-4fad-8ee0-5abbd023880b.png)
+![image](https://user-images.githubusercontent.com/49179966/173263943-27d72513-4b0e-4cb6-a933-85e029e36cad.png)
 #### 应用成功获取界面
-![image](https://user-images.githubusercontent.com/49179966/169338708-bd42edba-3ff2-4dbb-b22c-e84c4853e01b.png)
+![image](https://user-images.githubusercontent.com/49179966/173263928-e6b3dfd0-13f8-4893-91f5-aaf4a045e19f.png)
 
 ### Application Operation Diagram (English(United States))
 #### The app opens the interface for the first time
-![image](https://user-images.githubusercontent.com/49179966/169339278-e32fc9bd-1155-4c03-b1c6-9e052d312b08.png)
+![image](https://user-images.githubusercontent.com/49179966/173263973-b921e7cd-7374-412d-a0fd-3bd08e8553f8.png)
 #### The app successfully gets the interface
-![image](https://user-images.githubusercontent.com/49179966/169339703-af6c711a-3660-418b-b937-5d0f14de1dc7.png)
+![image](https://user-images.githubusercontent.com/49179966/173263993-b3301a71-b349-4f99-af66-e651e9e8cad1.png)
 
 ### 为项目作出贡献
 #### 多语言翻译
