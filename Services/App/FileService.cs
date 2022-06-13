@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Text;
 
-namespace GetStoreApp.Core.Services
+namespace GetStoreApp.Services.App
 {
     public class FileService : IFileService
     {

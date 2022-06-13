@@ -132,42 +132,6 @@
     <value>下载</value>
     <comment>”下载“页面标题的名称</comment>
   </data>
-  <data name="HistoryCount.Text" xml:space="preserve">
-    <value>共计 {0} 条结果</value>
-    <comment>”历史记录“项目数量</comment>
-  </data>
-  <data name="History_Refresh_Name.Text" xml:space="preserve">
-    <value>刷新</value>
-    <comment>”历史记录“数据刷新</comment>
-  </data>
-  <data name="History_Title.Text" xml:space="preserve">
-    <value>历史记录</value>
-    <comment>”历史记录“页面标题的名称</comment>
-  </data>
-  <data name="History_Type.Text" xml:space="preserve">
-    <value>类别：</value>
-    <comment>”历史记录“类型标签</comment>
-  </data>
-  <data name="History_Type_All.Content" xml:space="preserve">
-    <value>全部</value>
-    <comment>”历史记录“类型下拉选择框</comment>
-  </data>
-  <data name="History_Type_CID.Content" xml:space="preserve">
-    <value>CategoryID</value>
-    <comment>”历史记录“类型下拉选择框</comment>
-  </data>
-  <data name="History_Type_PFN.Content" xml:space="preserve">
-    <value>PackageFamilyName</value>
-    <comment>”历史记录“类型下拉选择框</comment>
-  </data>
-  <data name="History_Type_PID.Content" xml:space="preserve">
-    <value>ProductID</value>
-    <comment>”历史记录“类型下拉选择框</comment>
-  </data>
-  <data name="History_Type_URL.Content" xml:space="preserve">
-    <value>URL（链接）</value>
-    <comment>”历史记录“类型下拉选择框</comment>
-  </data>
   <data name="PackageDisplayName" xml:space="preserve">
     <value>获取商店应用</value>
     <comment>应用程序包显示名称</comment>

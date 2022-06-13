@@ -5,6 +5,7 @@ using GetStoreApp.Models;
 using GetStoreApp.Services.Settings;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Controls.Home
 {
@@ -79,12 +80,13 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public StatusBarViewModel()
         {
-            Messenger.Register(this, (MessageHandler<StatusBarViewModel, StatusBarStateMessage>)((statusbarViewModel, statusBarStateMessage) =>
+            Messenger.Register(this, (MessageHandler<StatusBarViewModel, StatusBarStateMessage>)(async (statusbarViewModel, statusBarStateMessage) =>
                         {
                             statusbarViewModel.InfoBarSeverity = StatusBarStateList[statusBarStateMessage.Value].InfoBarSeverity;
                             statusbarViewModel.StateInfoText = StatusBarStateList[statusBarStateMessage.Value].StateInfoText;
                             statusbarViewModel.StatePrBarVisValue = StatusBarStateList[statusBarStateMessage.Value].StatePrRingVisValue;
                             statusbarViewModel.StatePrBarActValue = StatusBarStateList[statusBarStateMessage.Value].StatePrRingActValue;
+                            await Task.CompletedTask;
                         }));
         }
     }

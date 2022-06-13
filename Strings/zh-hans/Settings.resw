@@ -123,6 +123,21 @@
   <data name="Appearance" xml:space="preserve">
     <value>外观</value>
   </data>
+  <data name="Backdrop" xml:space="preserve">
+    <value>背景色</value>
+  </data>
+  <data name="BackdropArylic" xml:space="preserve">
+    <value>亚克力</value>
+  </data>
+  <data name="BackdropDefault" xml:space="preserve">
+    <value>不开启</value>
+  </data>
+  <data name="BackdropDescription" xml:space="preserve">
+    <value>设置应用呈现的背景色</value>
+  </data>
+  <data name="BackdropMica" xml:space="preserve">
+    <value>云母</value>
+  </data>
   <data name="BlockMap" xml:space="preserve">
     <value>不显示文件扩展名称为BlockMap的文件</value>
   </data>

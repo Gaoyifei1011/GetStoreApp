@@ -14,28 +14,51 @@
     <UseWPF>False</UseWPF>
     <UseWindowsForms>False</UseWindowsForms>
     <StartupObject></StartupObject>
-    <ApplicationIcon>GetStoreApp.ico</ApplicationIcon>
+    <ApplicationIcon>Assets\Logo\GetStoreApp.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <SignAssembly>True</SignAssembly>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>$(VersionPrefix)</Version>
+    <Version>0.1.7.0</Version>
     <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
     <ImplicitUsings>disable</ImplicitUsings>
+    <FileVersion>0.1.7.0</FileVersion>
+    <AssemblyVersion></AssemblyVersion>
+    <SupportedOSPlatformVersion>10.0.22000.0</SupportedOSPlatformVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <Optimize>True</Optimize>
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Optimize>True</Optimize>
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm64'">
+    <Optimize>True</Optimize>
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|arm64'">
+    <DebugType>embedded</DebugType>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Styles\Converter.xaml" />
     <None Remove="Styles\DataGrid.xaml" />
     <None Remove="Styles\Expander.xaml" />
+    <None Remove="Styles\ExpanderThemeResources.xaml" />
     <None Remove="Styles\FontIcon.xaml" />
     <None Remove="UI\Controls\Home\HistoryItemControl.xaml" />
     <None Remove="UI\Controls\Home\RequestControl.xaml" />
     <None Remove="UI\Controls\Home\ResultControl.xaml" />
     <None Remove="UI\Controls\Home\StatusBarControl.xaml" />
+    <None Remove="UI\Controls\Settings\BackdropControl.xaml" />
     <None Remove="UI\Controls\Settings\HistoryItemValueControl.xaml" />
     <None Remove="UI\Controls\Settings\LinkFilterControl.xaml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="GetStoreApp.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -58,6 +81,15 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="UI\Controls\Settings\BackdropControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\Button.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\ExpanderThemeResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="UI\Controls\Home\HistoryItemControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -98,6 +130,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Services\History\" />
     <Folder Include="UI\Controls\General\" />
     <Folder Include="UI\Dialogs\Home\" />
   </ItemGroup>

@@ -1,8 +1,8 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices; // For DllImport
 
 namespace GetStoreApp.Helpers
 {
-    public class WindowsSystemDispatcherQueueHelper
+    internal class WindowsSystemDispatcherQueueHelper
     {
         [StructLayout(LayoutKind.Sequential)]
         private struct DispatcherQueueOptions

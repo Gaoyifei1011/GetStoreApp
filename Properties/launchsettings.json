@@ -1,7 +1,8 @@
-﻿{
+{
   "profiles": {
     "GetStoreApp (Package)": {
-      "commandName": "MsixPackage"
+      "commandName": "MsixPackage",
+      "nativeDebugging": true
     },
     "GetStoreApp (Unpackaged)": {
       "commandName": "Project"

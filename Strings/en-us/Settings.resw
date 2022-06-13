@@ -123,6 +123,21 @@
   <data name="Appearance" xml:space="preserve">
     <value>Appearance</value>
   </data>
+  <data name="Backdrop" xml:space="preserve">
+    <value>Backdrop Color</value>
+  </data>
+  <data name="BackdropArylic" xml:space="preserve">
+    <value>Arylic</value>
+  </data>
+  <data name="BackdropDefault" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="BackdropDescription" xml:space="preserve">
+    <value>Sets the background color of the app's rendering</value>
+  </data>
+  <data name="BackdropMica" xml:space="preserve">
+    <value>Mica</value>
+  </data>
   <data name="BlockMap" xml:space="preserve">
     <value>Files with file name extensions called BlockMap are not displayed</value>
   </data>

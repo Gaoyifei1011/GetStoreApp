@@ -3,14 +3,15 @@
 <Package
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   xmlns:genTemplate="http://schemas.microsoft.com/appx/developer/templatestudio"
-  IgnorableNamespaces="uap rescap genTemplate">
+  IgnorableNamespaces="uap uap5 rescap genTemplate">
 
   <Identity
     Name="F6A3B73F-72B3-4D85-B0C1-7E8E960B8F0B"
     Publisher="CN=高怡飞"
-    Version="0.1.6.0" />
+    Version="0.1.7.0" />
 
   <Properties>
     <DisplayName>GetStoreApp</DisplayName>
@@ -28,7 +29,7 @@
   </Resources>
 
   <Applications>
-    <Application Id="App"
+    <Application Id="GetStoreApp"
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
@@ -47,6 +48,11 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
+        <uap5:Extension Category="windows.appExecutionAlias" Executable="GetStoreApp.exe" EntryPoint="Windows.FullTrustApplication">
+          <uap5:AppExecutionAlias>
+            <uap5:ExecutionAlias Alias="GetStoreApp.exe" />
+          </uap5:AppExecutionAlias>
+        </uap5:Extension>
       </Extensions>
     </Application>
   </Applications>

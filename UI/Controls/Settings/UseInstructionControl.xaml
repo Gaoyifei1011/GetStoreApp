@@ -6,12 +6,7 @@
     xmlns:gc="using:GetStoreApp.UI.Controls.General"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:service="using:GetStoreApp.Services.Settings"
-    xmlns:viewModel="using:GetStoreApp.ViewModels.Controls.Settings"
     mc:Ignorable="d">
-
-    <UserControl.DataContext>
-        <viewModel:UseInstructionViewModel x:Name="ViewModel" />
-    </UserControl.DataContext>
 
     <gc:CardControl>
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">

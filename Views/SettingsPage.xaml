@@ -6,16 +6,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sc="using:GetStoreApp.UI.Controls.Settings"
     xmlns:service="using:GetStoreApp.Services.Settings"
-    xmlns:viewModel="using:GetStoreApp.ViewModels.Pages"
-    Style="{StaticResource PageStyle}"
+    NavigationCacheMode="Required"
     mc:Ignorable="d">
 
-    <Page.DataContext>
-        <viewModel:SettingsViewModel x:Name="ViewModel" />
-    </Page.DataContext>
-
     <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
-        <StackPanel Margin="{StaticResource PageMargin}" Spacing="{StaticResource PageSpacing}">
+        <StackPanel Margin="30,15,30,0" Spacing="10">
 
             <TextBlock FontSize="{StaticResource TitleFontSize}" Text="{x:Bind service:LanguageService.GetResources('/Settings/Title')}" />
 
@@ -25,6 +20,8 @@
                 Text="{x:Bind service:LanguageService.GetResources('/Settings/Appearance')}" />
 
             <sc:ThemeControl />
+
+            <sc:BackdropControl />
 
             <sc:LauguageControl />
 

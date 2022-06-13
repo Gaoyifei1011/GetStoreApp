@@ -3,93 +3,88 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:gc="using:GetStoreApp.UI.Controls.General"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewModel="using:GetStoreApp.ViewModels.Pages"
-    Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
 
-    <Page.DataContext>
-        <viewModel:HistoryViewModel x:Name="ViewModel" />
-    </Page.DataContext>
-
-    <Page.Resources>
-        <Thickness x:Key="History_Control_Left_Margin">0,0,2,0</Thickness>
-        <Thickness x:Key="History_Control_LeftRight_Margin">2,0,2,0</Thickness>
-        <Thickness x:Key="History_Control_Right_Margin">2,0,0,0</Thickness>
-    </Page.Resources>
-
-    <StackPanel Margin="{StaticResource PageMargin}" Spacing="{StaticResource PageSpacing}">
+    <Grid Margin="30,15,30,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
         <TextBlock
-            x:Uid="History_Title"
+            Grid.Row="0"
+            Margin="0,0,0,10"
             FontSize="{StaticResource TitleFontSize}"
-            Text="History Record" />
+            Text="历史记录" />
 
-        <Grid>
+        <Grid
+            Grid.Row="1"
+            Margin="0,0,0,10"
+            Style="{StaticResource DataGridDescriptionGridStyle}">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBlock
-                x:Uid="History_Type"
+
+            <FontIcon
                 Grid.Column="0"
-                Margin="{StaticResource History_Control_Left_Margin}"
-                VerticalAlignment="Center"
-                Text="Type:" />
-            <ComboBox
-                x:Name="History_Type"
-                Grid.Column="1"
-                Margin="{StaticResource History_Control_LeftRight_Margin}"
-                PlaceholderText="Select Type"
-                SelectedIndex="0">
-                <ComboBoxItem
-                    x:Uid="History_Type_All"
-                    Content="ALL"
-                    Tag="ALL" />
-                <ComboBoxItem
-                    x:Uid="History_Type_URL"
-                    Content="URL(Link)"
-                    Tag="URL" />
-                <ComboBoxItem
-                    x:Uid="History_Type_PID"
-                    Content="ProductID"
-                    Tag="ProductID" />
-                <ComboBoxItem
-                    x:Uid="History_Type_PFN"
-                    Content="PackageFamilyName"
-                    Tag="PackageFamilyName" />
-                <ComboBoxItem
-                    x:Uid="History_Type_CID"
-                    Content="CategoryID"
-                    Tag="CategoryID" />
-            </ComboBox>
+                FontFamily="Segoe Fluent Icons"
+                Glyph="&#xE74C;"
+                Style="{StaticResource FontIconStyle}" />
             <TextBlock
-                x:Name="History_Count"
-                x:Uid="HistoryCount"
-                Grid.Column="2"
-                Margin="{StaticResource History_Control_LeftRight_Margin}"
+                Grid.Column="1"
                 VerticalAlignment="Center"
-                Text="There are {0} results" />
-            <Button
-                x:Name="History_Refresh"
-                x:Uid="History_Refresh"
+                Text="操作" />
+            <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
+            <TextBlock
                 Grid.Column="3"
-                Margin="{StaticResource History_Control_Right_Margin}"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Center">
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <FontIcon
-                            Margin="0,0,5,0"
-                            FontFamily="Segoe Fluent Icons"
-                            Glyph="&#xE72C;" />
-                        <TextBlock x:Uid="History_Refresh_Name" Text="Refresh" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>
+                VerticalAlignment="Center"
+                Text="没有任何历史记录" />
+            <TextBlock
+                Grid.Column="4"
+                Margin="0,0,10,0"
+                VerticalAlignment="Center"
+                Text="已选中%d项"
+                Visibility="Collapsed" />
+            <AutoSuggestBox
+                Grid.Column="5"
+                MinWidth="230"
+                VerticalAlignment="Center"
+                PlaceholderText="搜索历史记录" />
+            <CommandBar
+                Grid.Column="6"
+                VerticalAlignment="Center"
+                Background="Transparent"
+                DefaultLabelPosition="Right">
+                <AppBarButton Icon="Edit" Label="编辑" />
+                <AppBarButton
+                    Icon="Delete"
+                    Label="删除"
+                    Visibility="Collapsed" />
+                <AppBarButton
+                    Icon="Cancel"
+                    Label="取消"
+                    Visibility="Collapsed" />
+                <AppBarButton Icon="Filter" Label="过滤" />
+                <AppBarButton Icon="Refresh" Label="刷新" />
+            </CommandBar>
         </Grid>
-        <!--  等待数据绑定  -->
-    </StackPanel>
+
+        <gc:CardControl Grid.Row="2">
+            <TextBlock
+                Margin="0,10,0,10"
+                VerticalAlignment="Center"
+                Text="快去获取想要下载的应用吧，您输入过的链接将会显示在此处"
+                TextAlignment="Center" />
+        </gc:CardControl>
+    </Grid>
 </Page>

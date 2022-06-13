@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:congen="using:GetStoreApp.Converters.General">
 
+    <congen:CheckNullConverter x:Name="CheckNullConverter" />
     <congen:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
     <congen:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     <congen:IntToVisibilityConverter x:Name="IntToVisibilityConverter" />

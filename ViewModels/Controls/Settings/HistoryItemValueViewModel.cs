@@ -9,13 +9,12 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class HistoryItemValueViewModel : ObservableRecipient
     {
-        private int _selectedHistoryItemValue;
+        private int _selectedHistoryItemValue = HistoryItemValueService.HistoryItemValue;
 
         public int SelectedHistoryItemValue
         {
             get
             {
-                _selectedHistoryItemValue = HistoryItemValueService.HistoryItemValue;
                 return _selectedHistoryItemValue;
             }
 
