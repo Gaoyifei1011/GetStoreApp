@@ -19,7 +19,7 @@ namespace GetStoreApp.Services.Settings
 
         private static readonly IReadOnlyList<string> AppLanguages = ApplicationLanguages.ManifestLanguages;
 
-        public static List<LanguageData> LanguageList { get; set; } = new List<LanguageData>();
+        public static List<LanguageModel> LanguageList { get; set; } = new List<LanguageModel>();
 
         private static readonly ResourceContext PriResourceContext = new ResourceContext();
         private static readonly ResourceContext DefaultResourceContext = new ResourceContext();
@@ -55,7 +55,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private static bool IsExistsInLanguageList(string currSysLangCodeName)
         {
-            foreach (LanguageData item in LanguageList)
+            foreach (LanguageModel item in LanguageList)
             {
                 if (item.InternalName == currSysLangCodeName)
                 {
@@ -82,7 +82,7 @@ namespace GetStoreApp.Services.Settings
             {
                 CultureInfo culture = CultureInfo.GetCultureInfo(item);
 
-                LanguageList.Add(new LanguageData()
+                LanguageList.Add(new LanguageModel()
                 {
                     DisplayName = culture.NativeName,
                     InternalName = culture.Name,

@@ -2,7 +2,7 @@
 
 namespace GetStoreApp.Models
 {
-    public class HistoryItemValue : DependencyObject
+    public class HistoryItemSetModel : DependencyObject
     {
         public string HistoryItemName
         {
@@ -12,7 +12,7 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for HistoryItemName.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty HistoryItemNameProperty =
-            DependencyProperty.Register("HistoryItemName", typeof(string), typeof(HistoryItemValue), new PropertyMetadata(""));
+            DependencyProperty.Register("HistoryItemName", typeof(string), typeof(HistoryItemSetModel), new PropertyMetadata(string.Empty));
 
         public int HistoryItemNum
         {
@@ -22,6 +22,6 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for HistoryItemNum.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty HistoryItemNumProperty =
-            DependencyProperty.Register("HistoryItemNum", typeof(int), typeof(HistoryItemValue), new PropertyMetadata(0));
+            DependencyProperty.Register("HistoryItemNum", typeof(int), typeof(HistoryItemSetModel), new PropertyMetadata(0));
     }
 }

@@ -27,7 +27,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             }
         }
 
-        public List<BackdropData> BackdropList { get; set; } = new List<BackdropData>();
+        public List<BackdropModel> BackdropList { get; set; } = new List<BackdropModel>();
 
         public BackdropViewModel()
         {
@@ -45,11 +45,11 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
             if (BuildNumber >= 22000)
             {
-                BackdropList.Add(new BackdropData() { DisplayName = LanguageService.GetResources("/Settings/BackdropMica"), InternalName = "Mica" });
+                BackdropList.Add(new BackdropModel { DisplayName = LanguageService.GetResources("/Settings/BackdropMica"), InternalName = "Mica" });
             }
 
-            BackdropList.Add(new BackdropData() { DisplayName = LanguageService.GetResources("/Settings/BackdropArylic"), InternalName = "Acrylic" });
-            BackdropList.Add(new BackdropData() { DisplayName = LanguageService.GetResources("/Settings/BackdropDefault"), InternalName = "Default" });
+            BackdropList.Add(new BackdropModel { DisplayName = LanguageService.GetResources("/Settings/BackdropArylic"), InternalName = "Acrylic" });
+            BackdropList.Add(new BackdropModel { DisplayName = LanguageService.GetResources("/Settings/BackdropDefault"), InternalName = "Default" });
         }
     }
 }

@@ -46,7 +46,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _resultCountInfo, value); }
         }
 
-        public ObservableCollection<ResultData> ResultDataList { get; set; } = new ObservableCollection<ResultData>();
+        public ObservableCollection<ResultModel> ResultDataList { get; set; } = new ObservableCollection<ResultModel>();
 
         public ResultViewModel()
         {

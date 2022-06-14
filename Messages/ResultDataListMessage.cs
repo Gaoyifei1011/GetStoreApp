@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace GetStoreApp.Messages
 {
-    public class ResultDataListMessage : ValueChangedMessage<List<ResultData>>
+    public class ResultDataListMessage : ValueChangedMessage<List<ResultModel>>
     {
-        public ResultDataListMessage(List<ResultData> value) : base(value)
+        public ResultDataListMessage(List<ResultModel> value) : base(value)
         {
         }
     }

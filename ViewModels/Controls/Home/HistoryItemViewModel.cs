@@ -22,9 +22,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         private int HistoryItemValue { get; set; } = HistoryItemValueService.HistoryItemValue;
 
-        private HistoryItemData _selectedHistoryItem;
+        private HistoryModel _selectedHistoryItem;
 
-        public HistoryItemData SelectedHistoryItem
+        public HistoryModel SelectedHistoryItem
         {
             get { return _selectedHistoryItem; }
 
@@ -58,7 +58,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _fillinCommand, value); }
         }
 
-        public ObservableCollection<HistoryItemData> HistoryItemList { get; set; } = new ObservableCollection<HistoryItemData>();
+        public ObservableCollection<HistoryModel> HistoryItemList { get; set; } = new ObservableCollection<HistoryModel>();
 
         public HistoryItemViewModel(INavigationService navigationService)
         {
@@ -92,7 +92,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
         }
 
         // 成功获取数据后，更新历史记录
-        private async Task SuccessfullyRequestedUpdateListAsync(HistoryItemData historyItemData)
+        private async Task SuccessfullyRequestedUpdateListAsync(HistoryModel historyItemData)
         {
             int Position = 0;
             // 添加数据比对，如果比对成功，修改列表元素位置，不添加
@@ -130,12 +130,12 @@ namespace GetStoreApp.ViewModels.Controls.Home
         /// <summary>
         /// 检查列表中是否有重复的元素，如果有，返回True和索引
         /// </summary>
-        private bool CheckRepeatElement(ref int position, HistoryItemData historyItemData)
+        private bool CheckRepeatElement(ref int position, HistoryModel historyItemData)
         {
             // 如果相等，修改索引，直接返回
             for (int i = 0; i < HistoryItemList.Count; i++)
             {
-                if (historyItemData.HistoryItemKey == HistoryItemList[i].HistoryItemKey)
+                if (historyItemData.HistoryKey == HistoryItemList[i].HistoryKey)
                 {
                     position = i;
                     return true;
@@ -170,13 +170,13 @@ namespace GetStoreApp.ViewModels.Controls.Home
             // 复制链接到剪贴板
             else if (content == "Link")
             {
-                CopyPasteService.CopyStringToClicpBoard(SelectedHistoryItem.HistoryItemLink);
+                CopyPasteService.CopyStringToClicpBoard(SelectedHistoryItem.HistoryLink);
             }
 
             // 复制全部内容
             else if (content == "CopyAll")
             {
-                string CopyContent = string.Format("{0}\n{1}\n{2}", SelectedHistoryItem.HistoryItemType.DisplayName, SelectedHistoryItem.HistoryItemChannel.DisplayName, SelectedHistoryItem.HistoryItemLink);
+                string CopyContent = string.Format("{0}\n{1}\n{2}", SelectedHistoryItem.HistoryType.DisplayName, SelectedHistoryItem.HistoryChannel.DisplayName, SelectedHistoryItem.HistoryLink);
                 CopyPasteService.CopyStringToClicpBoard(CopyContent);
             }
 

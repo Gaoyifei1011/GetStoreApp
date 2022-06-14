@@ -22,6 +22,6 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             }
         }
 
-        public IReadOnlyList<GeographicalLocation> RegionList { get; } = RegionService.AppGlobalLocations;
+        public IReadOnlyList<GeographicalLocationModel> RegionList { get; } = RegionService.AppGlobalLocations;
     }
 }

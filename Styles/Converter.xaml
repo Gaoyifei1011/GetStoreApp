@@ -5,6 +5,7 @@
 
     <congen:CheckNullConverter x:Name="CheckNullConverter" />
     <congen:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
+    <congen:BooleanToReverseVisibilityConverter x:Name="BooleanToReverseVisibilityConverter" />
     <congen:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     <congen:IntToVisibilityConverter x:Name="IntToVisibilityConverter" />
     <congen:IntToReverseVisibilityConverter x:Name="IntToReverseVisibilityConverter" />

@@ -47,29 +47,30 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _statePrBarVisValue, value); }
         }
 
-        public static IReadOnlyList<StatusBarState> StatusBarStateList { get; } = new List<StatusBarState>()
+        public static IReadOnlyList<StatusBarStateModel> StatusBarStateList { get; } = new List<StatusBarStateModel>()
         {
-            new StatusBarState(){
+            new StatusBarStateModel
+            {
                 InfoBarSeverity=InfoBarSeverity.Informational,
                 StateInfoText=LanguageService.GetResources("/Home/StatusInfoGetting"),
                 StatePrRingActValue=true,
                 StatePrRingVisValue=true
             },
-            new StatusBarState()
+            new StatusBarStateModel
             {
                 InfoBarSeverity=InfoBarSeverity.Success,
                 StateInfoText=LanguageService.GetResources("/Home/StatusInfoSuccess"),
                 StatePrRingActValue=false,
                 StatePrRingVisValue=false
             },
-            new StatusBarState()
+            new StatusBarStateModel
             {
                 InfoBarSeverity=InfoBarSeverity.Warning,
                 StateInfoText=LanguageService.GetResources("/Home/StatusInfoWarning"),
                 StatePrRingActValue=false,
                 StatePrRingVisValue=false
             },
-            new StatusBarState()
+            new StatusBarStateModel
             {
                 InfoBarSeverity=InfoBarSeverity.Error,
                 StateInfoText=LanguageService.GetResources("/Home/StatusInfoError"),
@@ -80,7 +81,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public StatusBarViewModel()
         {
-            Messenger.Register(this, (MessageHandler<StatusBarViewModel, StatusBarStateMessage>)(async (statusbarViewModel, statusBarStateMessage) =>
+            Messenger.Register(this, (MessageHandler<StatusBarViewModel, StatusBarStateMessage>)(async(statusbarViewModel, statusBarStateMessage) =>
                         {
                             statusbarViewModel.InfoBarSeverity = StatusBarStateList[statusBarStateMessage.Value].InfoBarSeverity;
                             statusbarViewModel.StateInfoText = StatusBarStateList[statusBarStateMessage.Value].StateInfoText;

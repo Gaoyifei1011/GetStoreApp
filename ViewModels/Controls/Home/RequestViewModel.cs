@@ -29,18 +29,18 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         private string SampleLink { get; set; }
 
-        private HomeType _selectedType;
+        private GetAppTypeModel _selectedType;
 
-        public HomeType SelectedType
+        public GetAppTypeModel SelectedType
         {
             get { return _selectedType; }
 
             set { SetProperty(ref _selectedType, value); }
         }
 
-        private HomeChannel _selectedChannel;
+        private GetAppChannelModel _selectedChannel;
 
-        public HomeChannel SelectedChannel
+        public GetAppChannelModel SelectedChannel
         {
             get { return _selectedChannel; }
 
@@ -83,20 +83,20 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _getLinksCommand, value); }
         }
 
-        public IReadOnlyList<HomeType> TypeList { get; } = new List<HomeType>()
+        public IReadOnlyList<GetAppTypeModel> TypeList { get; } = new List<GetAppTypeModel>
         {
-            new HomeType(){DisplayName=LanguageService.GetResources("/Home/TypeURL"),InternalName="url"},
-            new HomeType(){DisplayName=LanguageService.GetResources("/Home/TypePID"),InternalName="ProductId"},
-            new HomeType(){DisplayName=LanguageService.GetResources("/Home/TypePFN"),InternalName="PackageFamilyName"},
-            new HomeType(){DisplayName=LanguageService.GetResources("/Home/TypeCID"),InternalName="CategoryId"}
+            new GetAppTypeModel{DisplayName=LanguageService.GetResources("URL"),InternalName="url"},
+            new GetAppTypeModel{DisplayName=LanguageService.GetResources("ProductID"),InternalName="ProductId"},
+            new GetAppTypeModel{DisplayName=LanguageService.GetResources("PackageFamilyName"),InternalName="PackageFamilyName"},
+            new GetAppTypeModel{DisplayName=LanguageService.GetResources("CategoryID"),InternalName="CategoryId"}
         };
 
-        public IReadOnlyList<HomeChannel> ChannelList { get; } = new List<HomeChannel>()
+        public IReadOnlyList<GetAppChannelModel> ChannelList { get; } = new List<GetAppChannelModel>
         {
-            new HomeChannel(){ DisplayName=LanguageService.GetResources("/Home/ChannelFast"),InternalName="WIF" },
-            new HomeChannel(){ DisplayName=LanguageService.GetResources("/Home/ChannelSlow"),InternalName="WIS" },
-            new HomeChannel(){ DisplayName=LanguageService.GetResources("/Home/ChannelRP"),InternalName="RP" },
-            new HomeChannel(){ DisplayName=LanguageService.GetResources("/Home/ChannelRetail"),InternalName="Retail" }
+            new GetAppChannelModel{ DisplayName=LanguageService.GetResources("Fast"),InternalName="WIF" },
+            new GetAppChannelModel{ DisplayName=LanguageService.GetResources("Slow"),InternalName="WIS" },
+            new GetAppChannelModel{ DisplayName=LanguageService.GetResources("RP"),InternalName="RP" },
+            new GetAppChannelModel{ DisplayName=LanguageService.GetResources("Retail"),InternalName="Retail" }
         };
 
         public static IReadOnlyList<string> SampleLinkList { get; } = new List<string>
@@ -138,9 +138,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             Messenger.Register<RequestViewModel, FillinMessage>(this, (requestViewModel, fillinMessage) =>
             {
-                requestViewModel.SelectedType = fillinMessage.Value.HistoryItemType;
-                requestViewModel.SelectedChannel = fillinMessage.Value.HistoryItemChannel;
-                requestViewModel.LinkText = fillinMessage.Value.HistoryItemLink;
+                requestViewModel.SelectedType = fillinMessage.Value.HistoryType;
+                requestViewModel.SelectedChannel = fillinMessage.Value.HistoryChannel;
+                requestViewModel.LinkText = fillinMessage.Value.HistoryLink;
             });
         }
 
@@ -185,7 +185,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             string CategoryId = string.Empty;
 
-            List<ResultData> ResultDataList = new List<ResultData>();
+            List<ResultModel> ResultDataList = new List<ResultModel>();
 
             if (string.IsNullOrEmpty(LinkText))
             {
@@ -193,9 +193,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
             }
 
             // 记录当前选定的选项和填入的内容
-            HomeType CurrentType = SelectedType;
+            GetAppTypeModel CurrentType = SelectedType;
 
-            HomeChannel CurrentChannel = SelectedChannel;
+            GetAppChannelModel CurrentChannel = SelectedChannel;
 
             string CurrentLink = LinkText;
 
@@ -208,7 +208,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             // 获取网页反馈回的原始数据
             HtmlRequestService htmlRequestService = new HtmlRequestService();
-            HttpRequestData httpRequestData = await htmlRequestService.HttpRequestAsync(content);
+            RequestModel httpRequestData = await htmlRequestService.HttpRequestAsync(content);
 
             // 检查服务器返回获取的状态
             HtmlRequestStateService htmlRequestStateService = new HtmlRequestStateService();
@@ -244,7 +244,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
         /// <summary>
         /// 更新历史记录，包括主页历史记录内容和数据库中的内容
         /// </summary>
-        private async Task UpdateHistoryAsync(HomeType currentType, HomeChannel currentChannel, string currentLink)
+        private async Task UpdateHistoryAsync(GetAppTypeModel currentType, GetAppChannelModel currentChannel, string currentLink)
         {
             // 拼接准备要生成唯一的MD5值的内容
             string Content = string.Format("{0} {1} {2}", currentType.InternalName, currentChannel.InternalName, currentLink);
@@ -252,12 +252,12 @@ namespace GetStoreApp.ViewModels.Controls.Home
             // 生成唯一的MD5值
             string UniqueKey = GenerateUniqueKey(Content);
 
-            Messenger.Send(new HistoryItemMessage(new HistoryItemData()
+            Messenger.Send(new HistoryItemMessage(new HistoryModel()
             {
-                HistoryItemKey = UniqueKey,
-                HistoryItemType = currentType,
-                HistoryItemChannel = currentChannel,
-                HistoryItemLink = currentLink
+                HistoryKey = UniqueKey,
+                HistoryType = currentType,
+                HistoryChannel = currentChannel,
+                HistoryLink = currentLink
             }));
 
             await Task.CompletedTask;
@@ -283,7 +283,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             return str.ToString();
         }
 
-        private void ResultListFilter(ref List<ResultData> resultDataList)
+        private void ResultListFilter(ref List<ResultModel> resultDataList)
         {
             // 按要求过滤列表内容
             if (StartsWithEFilterValue)

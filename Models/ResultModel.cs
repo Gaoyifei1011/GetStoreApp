@@ -2,7 +2,7 @@
 
 namespace GetStoreApp.Models
 {
-    public class ResultData : DependencyObject
+    public class ResultModel : DependencyObject
     {
         public string SerialNumber
         {
@@ -12,7 +12,7 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for SerialNumber.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SerialNumberProperty =
-            DependencyProperty.Register("SerialNumber", typeof(string), typeof(ResultData), new PropertyMetadata(""));
+            DependencyProperty.Register("SerialNumber", typeof(string), typeof(ResultModel), new PropertyMetadata(string.Empty));
 
         public string FileName
         {
@@ -22,7 +22,7 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for FileName.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FileNameProperty =
-            DependencyProperty.Register("FileName", typeof(string), typeof(ResultData), new PropertyMetadata(""));
+            DependencyProperty.Register("FileName", typeof(string), typeof(ResultModel), new PropertyMetadata(string.Empty));
 
         public string FileLink
         {
@@ -32,7 +32,7 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for FileLink.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FileLinkProperty =
-            DependencyProperty.Register("FileLink", typeof(string), typeof(ResultData), new PropertyMetadata(""));
+            DependencyProperty.Register("FileLink", typeof(string), typeof(ResultModel), new PropertyMetadata(string.Empty));
 
         public string FileLinkExpireTime
         {
@@ -42,7 +42,7 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for FileLinkExpireTime.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FileLinkExpireTimeProperty =
-            DependencyProperty.Register("FileLinkExpireTime", typeof(string), typeof(ResultData), new PropertyMetadata(""));
+            DependencyProperty.Register("FileLinkExpireTime", typeof(string), typeof(ResultModel), new PropertyMetadata(string.Empty));
 
         public string FileSHA1
         {
@@ -52,7 +52,7 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for FileSHA1.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FileSHA1Property =
-            DependencyProperty.Register("FileSHA1", typeof(string), typeof(ResultData), new PropertyMetadata(""));
+            DependencyProperty.Register("FileSHA1", typeof(string), typeof(ResultModel), new PropertyMetadata(string.Empty));
 
         public string FileSize
         {
@@ -62,6 +62,6 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for FileSize.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FileSizeProperty =
-            DependencyProperty.Register("FileSize", typeof(string), typeof(ResultData), new PropertyMetadata(""));
+            DependencyProperty.Register("FileSize", typeof(string), typeof(ResultModel), new PropertyMetadata(string.Empty));
     }
 }

@@ -2,7 +2,7 @@
 
 namespace GetStoreApp.Models
 {
-    public class HomeType : DependencyObject
+    public class GetAppChannelModel : DependencyObject
     {
         public string DisplayName
         {
@@ -12,7 +12,7 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for DisplayName.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DisplayNameProperty =
-            DependencyProperty.Register("DisplayName", typeof(string), typeof(HomeType), new PropertyMetadata(""));
+            DependencyProperty.Register("DisplayName", typeof(string), typeof(GetAppChannelModel), new PropertyMetadata(string.Empty));
 
         public string InternalName
         {
@@ -22,6 +22,6 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for InternalName.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty InternalNameProperty =
-            DependencyProperty.Register("InternalName", typeof(string), typeof(HomeType), new PropertyMetadata(""));
+            DependencyProperty.Register("InternalName", typeof(string), typeof(GetAppChannelModel), new PropertyMetadata(string.Empty));
     }
 }

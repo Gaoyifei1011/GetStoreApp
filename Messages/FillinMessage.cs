@@ -3,9 +3,9 @@ using GetStoreApp.Models;
 
 namespace GetStoreApp.Messages
 {
-    public class FillinMessage : ValueChangedMessage<HistoryItemData>
+    public class FillinMessage : ValueChangedMessage<HistoryModel>
     {
-        public FillinMessage(HistoryItemData value) : base(value)
+        public FillinMessage(HistoryModel value) : base(value)
         {
         }
     }

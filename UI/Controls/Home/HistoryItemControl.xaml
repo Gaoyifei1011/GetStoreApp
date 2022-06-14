@@ -40,15 +40,11 @@
                     DefaultLabelPosition="Right">
                     <AppBarButton
                         Command="{x:Bind ViewModel.FillinCommand}"
+                        Icon="Up"
                         IsEnabled="{x:Bind ViewModel.SelectedHistoryItem, Converter={StaticResource CheckNullConverter}, Mode=OneWay}"
                         Label="{x:Bind service:LanguageService.GetResources('/Home/Fillin')}"
                         ToolTipService.ToolTip="{x:Bind service:LanguageService.GetResources('/Home/FillinDescription')}"
-                        Visibility="{x:Bind ViewModel.HistoryItemList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
-                        <FontIcon
-                            Grid.Column="0"
-                            FontFamily="Segoe Fluent Icons"
-                            Glyph="&#xE74a;" />
-                    </AppBarButton>
+                        Visibility="{x:Bind ViewModel.HistoryItemList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}" />
                     <AppBarButton
                         Command="{x:Bind ViewModel.ViewAllCommand}"
                         Icon="ViewAll"
@@ -83,17 +79,17 @@
                     <ctWinUI:DataGrid.Columns>
                         <ctWinUI:DataGridTextColumn
                             Width="*"
-                            Binding="{Binding HistoryItemType.DisplayName}"
+                            Binding="{Binding HistoryType.DisplayName}"
                             Header="{x:Bind service:LanguageService.GetResources('/Home/Type')}"
                             HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" />
                         <ctWinUI:DataGridTextColumn
                             Width="*"
-                            Binding="{Binding HistoryItemChannel.DisplayName}"
+                            Binding="{Binding HistoryChannel.DisplayName}"
                             Header="{x:Bind service:LanguageService.GetResources('/Home/Channel')}"
                             HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" />
                         <ctWinUI:DataGridTextColumn
                             Width="3*"
-                            Binding="{Binding HistoryItemLink}"
+                            Binding="{Binding HistoryLink}"
                             Header="{x:Bind service:LanguageService.GetResources('/Home/Link')}"
                             HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" />
                     </ctWinUI:DataGrid.Columns>
@@ -122,7 +118,7 @@
                             <MenuFlyoutItem
                                 Command="{x:Bind ViewModel.CopyCommand}"
                                 CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
-                                Icon="Copy"
+                                Icon="SelectAll"
                                 IsEnabled="{x:Bind ViewModel.SelectedHistoryItem, Converter={StaticResource CheckNullConverter}, Mode=OneWay}"
                                 Tag="CopyAll"
                                 Text="{x:Bind service:LanguageService.GetResources('/Home/CopyAll')}" />

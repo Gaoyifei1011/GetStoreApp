@@ -11,7 +11,7 @@ namespace GetStoreApp.Services.Home
     {
         private const string API = "https://store.rg-adguard.net/api/GetFiles";
 
-        private HttpRequestData httpRequestDataModel;
+        private RequestModel httpRequestDataModel;
 
         // 数据的请求状态，0是正常状态，1是网络异常（WebExpection），2是超时异常（TimeOutExpection），3是其他异常（默认值）
         private int RequestId = 3;
@@ -22,7 +22,7 @@ namespace GetStoreApp.Services.Home
 
         private string RequestExpectionContent = string.Empty;
 
-        public async Task<HttpRequestData> HttpRequestAsync(string content)
+        public async Task<RequestModel> HttpRequestAsync(string content)
         {
             try
             {
@@ -121,7 +121,7 @@ namespace GetStoreApp.Services.Home
             }
             finally
             {
-                httpRequestDataModel = new HttpRequestData()
+                httpRequestDataModel = new RequestModel
                 {
                     RequestId = RequestId,
                     RequestStatusCode = RequestStatusCode,
