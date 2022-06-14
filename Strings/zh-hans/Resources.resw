@@ -128,12 +128,36 @@
   <data name="AppShortDisplayName" xml:space="preserve">
     <value>获取商店应用</value>
   </data>
+  <data name="CategoryID" xml:space="preserve">
+    <value>CategoryID</value>
+  </data>
   <data name="Download_Title.Text" xml:space="preserve">
     <value>下载</value>
     <comment>”下载“页面标题的名称</comment>
   </data>
+  <data name="Fast" xml:space="preserve">
+    <value>快速</value>
+  </data>
   <data name="PackageDisplayName" xml:space="preserve">
     <value>获取商店应用</value>
     <comment>应用程序包显示名称</comment>
+  </data>
+  <data name="PackageFamilyName" xml:space="preserve">
+    <value>PackageFamilyName</value>
+  </data>
+  <data name="ProductID" xml:space="preserve">
+    <value>ProductID</value>
+  </data>
+  <data name="Retail" xml:space="preserve">
+    <value>正式版</value>
+  </data>
+  <data name="RP" xml:space="preserve">
+    <value>发布预览</value>
+  </data>
+  <data name="Slow" xml:space="preserve">
+    <value>慢速</value>
+  </data>
+  <data name="URL" xml:space="preserve">
+    <value>URL（链接）</value>
   </data>
 </root>

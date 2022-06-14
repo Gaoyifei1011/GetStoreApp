@@ -126,18 +126,6 @@
   <data name="Channel" xml:space="preserve">
     <value>Channel</value>
   </data>
-  <data name="ChannelFast" xml:space="preserve">
-    <value>Fast</value>
-  </data>
-  <data name="ChannelRetail" xml:space="preserve">
-    <value>Retail</value>
-  </data>
-  <data name="ChannelRP" xml:space="preserve">
-    <value>Release Preview</value>
-  </data>
-  <data name="ChannelSlow" xml:space="preserve">
-    <value>Slow</value>
-  </data>
   <data name="Copy" xml:space="preserve">
     <value>Copy</value>
   </data>
@@ -233,18 +221,6 @@
   </data>
   <data name="Type" xml:space="preserve">
     <value>Type</value>
-  </data>
-  <data name="TypeCID" xml:space="preserve">
-    <value>CategoryID</value>
-  </data>
-  <data name="TypePFN" xml:space="preserve">
-    <value>PackageFamilyName</value>
-  </data>
-  <data name="TypePID" xml:space="preserve">
-    <value>ProductID</value>
-  </data>
-  <data name="TypeURL" xml:space="preserve">
-    <value>URL(Link)</value>
   </data>
   <data name="UseInstruction" xml:space="preserve">
     <value>Direction for Use</value>

@@ -101,8 +101,8 @@
     <StaticResource x:Key="DataGridRowGroupHeaderHoveredBackgroundBrush" ResourceKey="SystemControlBackgroundListLowBrush" />
     <StaticResource x:Key="DataGridRowInvalidBrush" ResourceKey="InvalidBrush" />
     <StaticResource x:Key="DataGridCellBackgroundBrush" ResourceKey="SystemControlTransparentBrush" />
-    <StaticResource x:Key="DataGridCellFocusVisualPrimaryBrush" ResourceKey="SystemControlFocusVisualPrimaryBrush" />
-    <StaticResource x:Key="DataGridCellFocusVisualSecondaryBrush" ResourceKey="SystemControlFocusVisualSecondaryBrush" />
+    <SolidColorBrush x:Key="DataGridCellFocusVisualPrimaryBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="DataGridCellFocusVisualSecondaryBrush" Color="Transparent" />
     <StaticResource x:Key="DataGridCellInvalidBrush" ResourceKey="InvalidBrush" />
 
     <Style x:Key="DataGridDescriptionGridStyle" TargetType="Grid">

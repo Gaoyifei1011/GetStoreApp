@@ -26,10 +26,10 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             }
         }
 
-        public IReadOnlyList<HistoryItemValue> HistoryItemValueList { get; } = new List<HistoryItemValue>()
+        public IReadOnlyList<HistoryItemSetModel> HistoryItemValueList { get; } = new List<HistoryItemSetModel>
             {
-                new HistoryItemValue(){ HistoryItemName=LanguageService.GetResources("/Settings/HistoryItemValueMin"),HistoryItemNum=3 },
-                new HistoryItemValue(){ HistoryItemName=LanguageService.GetResources("/Settings/HistoryItemValueMax"),HistoryItemNum=5 }
+                new HistoryItemSetModel{ HistoryItemName=LanguageService.GetResources("/Settings/HistoryItemValueMin"),HistoryItemNum=3 },
+                new HistoryItemSetModel{ HistoryItemName=LanguageService.GetResources("/Settings/HistoryItemValueMax"),HistoryItemNum=5 }
             };
     }
 }

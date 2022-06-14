@@ -81,6 +81,8 @@ namespace GetStoreApp.Services.App
         {
             Theme = await ThemeSelectorService.InitializeAsync();
             await ThemeSelectorService.SetRequestedThemeAsync();
+
+            await DataBaseService.InitializeDataBaseAsync();
         }
     }
 }

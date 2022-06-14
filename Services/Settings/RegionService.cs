@@ -20,7 +20,7 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// Windows 系统中包含的区域信息
         /// </summary>
-        public static List<GeographicalLocation> AppGlobalLocations = GeographicalLocationHelper.GetGeographicalLocations().OrderBy(item => item.FriendlyName).ToList();
+        public static List<GeographicalLocationModel> AppGlobalLocations = GeographicalLocationHelper.GetGeographicalLocations().OrderBy(item => item.FriendlyName).ToList();
 
         static RegionService()
         {

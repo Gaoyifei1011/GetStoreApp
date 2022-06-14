@@ -6,7 +6,7 @@ namespace GetStoreApp.Models
     /// 网页数据请求内容数据模型
     /// Web page data request content data model
     /// </summary>
-    public class HttpRequestData : DependencyObject
+    public class RequestModel : DependencyObject
     {
         public int RequestId
         {
@@ -16,7 +16,7 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for RequestId.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty RequestIdProperty =
-            DependencyProperty.Register("RequestId", typeof(int), typeof(HttpRequestData), new PropertyMetadata(0));
+            DependencyProperty.Register("RequestId", typeof(int), typeof(RequestModel), new PropertyMetadata(0));
 
         public string RequestStatusCode
         {
@@ -26,7 +26,7 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for RequestStatusCode.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty RequestStatusCodeProperty =
-            DependencyProperty.Register("RequestStatusCode", typeof(string), typeof(HttpRequestData), new PropertyMetadata(""));
+            DependencyProperty.Register("RequestStatusCode", typeof(string), typeof(RequestModel), new PropertyMetadata(string.Empty));
 
         public string RequestContent
         {
@@ -36,7 +36,7 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for RequestContent.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty RequestContentProperty =
-            DependencyProperty.Register("RequestContent", typeof(string), typeof(HttpRequestData), new PropertyMetadata(""));
+            DependencyProperty.Register("RequestContent", typeof(string), typeof(RequestModel), new PropertyMetadata(string.Empty));
 
         public string RequestExpectionContent
         {
@@ -46,6 +46,6 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for RequestExpectionContent.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty RequestExpectionContentProperty =
-            DependencyProperty.Register("RequestExpectionContent", typeof(string), typeof(HttpRequestData), new PropertyMetadata(""));
+            DependencyProperty.Register("RequestExpectionContent", typeof(string), typeof(RequestModel), new PropertyMetadata(string.Empty));
     }
 }

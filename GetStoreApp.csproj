@@ -130,7 +130,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\History\" />
     <Folder Include="UI\Controls\General\" />
     <Folder Include="UI\Dialogs\Home\" />
   </ItemGroup>

@@ -126,18 +126,6 @@
   <data name="Channel" xml:space="preserve">
     <value>通道</value>
   </data>
-  <data name="ChannelFast" xml:space="preserve">
-    <value>快速</value>
-  </data>
-  <data name="ChannelRetail" xml:space="preserve">
-    <value>正式版</value>
-  </data>
-  <data name="ChannelRP" xml:space="preserve">
-    <value>发布预览</value>
-  </data>
-  <data name="ChannelSlow" xml:space="preserve">
-    <value>慢速</value>
-  </data>
   <data name="Copy" xml:space="preserve">
     <value>复制</value>
   </data>
@@ -233,18 +221,6 @@
   </data>
   <data name="Type" xml:space="preserve">
     <value>类型</value>
-  </data>
-  <data name="TypeCID" xml:space="preserve">
-    <value>CategoryID</value>
-  </data>
-  <data name="TypePFN" xml:space="preserve">
-    <value>PackageFamilyName</value>
-  </data>
-  <data name="TypePID" xml:space="preserve">
-    <value>ProductID</value>
-  </data>
-  <data name="TypeURL" xml:space="preserve">
-    <value>URL（链接）</value>
   </data>
   <data name="UseInstruction" xml:space="preserve">
     <value>使用说明</value>

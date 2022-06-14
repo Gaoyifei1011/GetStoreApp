@@ -34,7 +34,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             set { SetProperty(ref _launchSettingsInstalledAppsCommand, value); }
         }
 
-        public IReadOnlyList<LanguageData> LanguageList { get; } = LanguageService.LanguageList;
+        public IReadOnlyList<LanguageModel> LanguageList { get; } = LanguageService.LanguageList;
 
         public LanguageViewModel()
         {

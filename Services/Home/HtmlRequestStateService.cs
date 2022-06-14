@@ -8,7 +8,7 @@ namespace GetStoreApp.Services.Home
     {
         private HtmlDocument HtmlDocument { get; set; }
 
-        public int CheckRequestState(HttpRequestData HttpRequestData)
+        public int CheckRequestState(RequestModel HttpRequestData)
         {
             // 服务器请求异常，返回状态值3
             if (HttpRequestData.RequestId != 0)
