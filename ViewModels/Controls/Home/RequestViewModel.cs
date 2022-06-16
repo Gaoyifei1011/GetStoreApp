@@ -3,10 +3,12 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Messages;
 using GetStoreApp.Models;
+using GetStoreApp.Services.History;
 using GetStoreApp.Services.Home;
 using GetStoreApp.Services.Settings;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,18 +31,18 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         private string SampleLink { get; set; }
 
-        private GetAppTypeModel _selectedType;
+        private int _selectedType = 0;
 
-        public GetAppTypeModel SelectedType
+        public int SelectedType
         {
             get { return _selectedType; }
 
             set { SetProperty(ref _selectedType, value); }
         }
 
-        private GetAppChannelModel _selectedChannel;
+        private int _selectedChannel = 3;
 
-        public GetAppChannelModel SelectedChannel
+        public int SelectedChannel
         {
             get { return _selectedChannel; }
 
@@ -65,25 +67,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _linkText, value); }
         }
 
-        private IAsyncRelayCommand _typeSelectionChangedCommand;
+        public IAsyncRelayCommand TypeSelectionChangedCommand { get; set; }
 
-        public IAsyncRelayCommand TypeSelectionChangedCommand
-        {
-            get { return _typeSelectionChangedCommand; }
+        public IAsyncRelayCommand GetLinksCommand { get; set; }
 
-            set { SetProperty(ref _typeSelectionChangedCommand, value); }
-        }
-
-        private IAsyncRelayCommand _getLinksCommand;
-
-        public IAsyncRelayCommand GetLinksCommand
-        {
-            get { return _getLinksCommand; }
-
-            set { SetProperty(ref _getLinksCommand, value); }
-        }
-
-        public IReadOnlyList<GetAppTypeModel> TypeList { get; } = new List<GetAppTypeModel>
+        public List<GetAppTypeModel> TypeList { get; } = new List<GetAppTypeModel>
         {
             new GetAppTypeModel{DisplayName=LanguageService.GetResources("URL"),InternalName="url"},
             new GetAppTypeModel{DisplayName=LanguageService.GetResources("ProductID"),InternalName="ProductId"},
@@ -91,7 +79,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             new GetAppTypeModel{DisplayName=LanguageService.GetResources("CategoryID"),InternalName="CategoryId"}
         };
 
-        public IReadOnlyList<GetAppChannelModel> ChannelList { get; } = new List<GetAppChannelModel>
+        public List<GetAppChannelModel> ChannelList { get; } = new List<GetAppChannelModel>
         {
             new GetAppChannelModel{ DisplayName=LanguageService.GetResources("Fast"),InternalName="WIF" },
             new GetAppChannelModel{ DisplayName=LanguageService.GetResources("Slow"),InternalName="WIS" },
@@ -117,10 +105,6 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             GetLinksCommand = new AsyncRelayCommand(GetLinksAsync);
 
-            SelectedType = TypeList[0];
-
-            SelectedChannel = ChannelList[3];
-
             Messenger.Register<RequestViewModel, RegionMessage>(this, (requestViewModel, regionMessage) =>
             {
                 requestViewModel.RegionCodeName = regionMessage.Value;
@@ -138,39 +122,16 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             Messenger.Register<RequestViewModel, FillinMessage>(this, (requestViewModel, fillinMessage) =>
             {
-                requestViewModel.SelectedType = fillinMessage.Value.HistoryType;
-                requestViewModel.SelectedChannel = fillinMessage.Value.HistoryChannel;
+                requestViewModel.SelectedType = TypeList.FindIndex(item => item.InternalName.Equals(fillinMessage.Value.HistoryType));
+                requestViewModel.SelectedChannel = ChannelList.FindIndex(item => item.InternalName.Equals(fillinMessage.Value.HistoryChannel));
                 requestViewModel.LinkText = fillinMessage.Value.HistoryLink;
             });
         }
 
         private async Task SetPlaceHolderTextAsync()
         {
-            if (SelectedType.InternalName == TypeList[0].InternalName)
-            {
-                SampleLink = SampleLinkList[0];
-                LinkPlaceHolderText = SampleTitle + SampleLink;
-            }
-            else if (SelectedType.InternalName == TypeList[1].InternalName)
-            {
-                SampleLink = SampleLinkList[1];
-                LinkPlaceHolderText = SampleTitle + SampleLink;
-            }
-            else if (SelectedType.InternalName == TypeList[2].InternalName)
-            {
-                SampleLink = SampleLinkList[2];
-                LinkPlaceHolderText = SampleTitle + SampleLink;
-            }
-            else if (SelectedType.InternalName == TypeList[3].InternalName)
-            {
-                SampleLink = SampleLinkList[3];
-                LinkPlaceHolderText = SampleTitle + SampleLink;
-            }
-            else
-            {
-                SampleLink = string.Empty;
-                LinkPlaceHolderText = string.Empty;
-            }
+            SampleLink = SampleLinkList[SelectedType];
+            LinkPlaceHolderText = SampleTitle + SampleLink;
 
             LinkText = string.Empty;
             await Task.CompletedTask;
@@ -193,9 +154,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
             }
 
             // 记录当前选定的选项和填入的内容
-            GetAppTypeModel CurrentType = SelectedType;
+            int CurrentType = SelectedType;
 
-            GetAppChannelModel CurrentChannel = SelectedChannel;
+            int CurrentChannel = SelectedChannel;
 
             string CurrentLink = LinkText;
 
@@ -204,7 +165,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             // 生成请求的内容
             GenerateContentService generateContentService = new GenerateContentService();
-            string content = generateContentService.GenerateContent(SelectedType.InternalName, LinkText, SelectedChannel.InternalName, RegionCodeName);
+            string content = generateContentService.GenerateContent(
+                TypeList[SelectedType].InternalName,
+                LinkText,
+                ChannelList[SelectedChannel].InternalName,
+                RegionCodeName);
 
             // 获取网页反馈回的原始数据
             HtmlRequestService htmlRequestService = new HtmlRequestService();
@@ -229,6 +194,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 ResultListFilter(ref ResultDataList);
 
                 await UpdateHistoryAsync(CurrentType, CurrentChannel, CurrentLink);
+
+                Messenger.Send(new HistoryMessage(true));
             }
 
             // 发送消息
@@ -244,23 +211,31 @@ namespace GetStoreApp.ViewModels.Controls.Home
         /// <summary>
         /// 更新历史记录，包括主页历史记录内容和数据库中的内容
         /// </summary>
-        private async Task UpdateHistoryAsync(GetAppTypeModel currentType, GetAppChannelModel currentChannel, string currentLink)
+        private async Task UpdateHistoryAsync(int currentType, int currentChannel, string currentLink)
         {
             // 拼接准备要生成唯一的MD5值的内容
-            string Content = string.Format("{0} {1} {2}", currentType.InternalName, currentChannel.InternalName, currentLink);
+            string Content = string.Format("{0} {1} {2}", TypeList[currentType].InternalName, ChannelList[currentChannel].InternalName, currentLink);
+
+            // 添加时间戳
+            long TimeStamp = GenerateTimeStamp();
 
             // 生成唯一的MD5值
             string UniqueKey = GenerateUniqueKey(Content);
 
-            Messenger.Send(new HistoryItemMessage(new HistoryModel()
+            await HistoryDataService.AddHistoryDataAsync(new HistoryModel
             {
+                CurrentTimeStamp = TimeStamp,
                 HistoryKey = UniqueKey,
-                HistoryType = currentType,
-                HistoryChannel = currentChannel,
+                HistoryType = TypeList[currentType].InternalName,
+                HistoryChannel = ChannelList[currentChannel].InternalName,
                 HistoryLink = currentLink
-            }));
+            });
+        }
 
-            await Task.CompletedTask;
+        private long GenerateTimeStamp()
+        {
+            TimeSpan TimeSpan = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0);
+            return Convert.ToInt64(TimeSpan.TotalSeconds);
         }
 
         private string GenerateUniqueKey(string content)

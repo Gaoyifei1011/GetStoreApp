@@ -26,13 +26,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             }
         }
 
-        private ICommand _launchSettingsInstalledAppsCommand;
-
-        public ICommand LaunchSettingsInstalledAppsCommand
-        {
-            get { return _launchSettingsInstalledAppsCommand; }
-            set { SetProperty(ref _launchSettingsInstalledAppsCommand, value); }
-        }
+        public ICommand LaunchSettingsInstalledAppsCommand { get; set; }
 
         public IReadOnlyList<LanguageModel> LanguageList { get; } = LanguageService.LanguageList;
 

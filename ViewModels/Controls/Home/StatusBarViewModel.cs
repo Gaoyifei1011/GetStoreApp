@@ -81,7 +81,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public StatusBarViewModel()
         {
-            Messenger.Register(this, (MessageHandler<StatusBarViewModel, StatusBarStateMessage>)(async(statusbarViewModel, statusBarStateMessage) =>
+            Messenger.Register(this, (MessageHandler<StatusBarViewModel, StatusBarStateMessage>)(async (statusbarViewModel, statusBarStateMessage) =>
                         {
                             statusbarViewModel.InfoBarSeverity = StatusBarStateList[statusBarStateMessage.Value].InfoBarSeverity;
                             statusbarViewModel.StateInfoText = StatusBarStateList[statusBarStateMessage.Value].StateInfoText;

@@ -51,11 +51,11 @@ namespace GetStoreApp.Services.App
 
                 string CurrentTimeStampKey = "TIMESTAMP INTEGER NOT NULL UNIQUE";
 
-                string HistoryKey = "HISTORYKEY TEXT NOT NULL UNIQUE";
+                string HistoryKey = "HISTORYKEY CHAR(32) NOT NULL UNIQUE";
 
-                string HistoryType = "TYPE TEXT NOT NULL";
+                string HistoryType = "TYPE VARCHAR(20) NOT NULL";
 
-                string HistoryChannel = "CHANNEL TEXT NOT NULL";
+                string HistoryChannel = "CHANNEL VARCHAR(6) NOT NULL";
 
                 string HistoryLink = "LINK TEXT";
 

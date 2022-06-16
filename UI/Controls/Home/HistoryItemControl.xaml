@@ -10,6 +10,12 @@
     xmlns:service="using:GetStoreApp.Services.Settings"
     mc:Ignorable="d">
 
+    <i:Interaction.Behaviors>
+        <ic:EventTriggerBehavior EventName="Loaded">
+            <ic:InvokeCommandAction Command="{x:Bind ViewModel.LoadedCommand}" />
+        </ic:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+
     <Expander
         Margin="0,0,0,10"
         IsExpanded="True"
@@ -79,12 +85,13 @@
                     <ctWinUI:DataGrid.Columns>
                         <ctWinUI:DataGridTextColumn
                             Width="*"
-                            Binding="{Binding HistoryType.DisplayName}"
+                            Binding="{Binding HistoryType,Converter={StaticResource TypeNameConverter}}"
+                            
                             Header="{x:Bind service:LanguageService.GetResources('/Home/Type')}"
                             HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" />
                         <ctWinUI:DataGridTextColumn
                             Width="*"
-                            Binding="{Binding HistoryChannel.DisplayName}"
+                            Binding="{Binding HistoryChannel,Converter={StaticResource ChannelNameConverter}}"
                             Header="{x:Bind service:LanguageService.GetResources('/Home/Channel')}"
                             HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" />
                         <ctWinUI:DataGridTextColumn
