@@ -22,7 +22,7 @@
             Margin="0,0,2,0"
             DisplayMemberPath="DisplayName"
             ItemsSource="{x:Bind ViewModel.TypeList}"
-            SelectedItem="{x:Bind ViewModel.SelectedType, Mode=TwoWay}">
+            SelectedIndex="{x:Bind ViewModel.SelectedType, Mode=TwoWay}">
             <i:Interaction.Behaviors>
                 <ic:EventTriggerBehavior EventName="SelectionChanged">
                     <ic:InvokeCommandAction Command="{x:Bind ViewModel.TypeSelectionChangedCommand}" />
@@ -35,7 +35,7 @@
             Margin="2,0,2,0"
             DisplayMemberPath="DisplayName"
             ItemsSource="{x:Bind ViewModel.ChannelList}"
-            SelectedItem="{x:Bind ViewModel.SelectedChannel, Mode=TwoWay}" />
+            SelectedIndex="{x:Bind ViewModel.SelectedChannel, Mode=TwoWay}" />
 
         <AutoSuggestBox
             Grid.Column="2"

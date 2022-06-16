@@ -5,12 +5,13 @@ using GetStoreApp.Contracts.Services;
 using GetStoreApp.Messages;
 using GetStoreApp.Models;
 using GetStoreApp.Services.App;
+using GetStoreApp.Services.History;
 using GetStoreApp.Services.Settings;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -31,32 +32,29 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _selectedHistoryItem, value); }
         }
 
-        private IAsyncRelayCommand _viewAllCommand;
+        public IAsyncRelayCommand LoadedCommand { get; set; }
 
-        public IAsyncRelayCommand ViewAllCommand
+        public IAsyncRelayCommand ViewAllCommand { get; set; }
+
+        public ICommand CopyCommand { get; set; }
+
+        public IAsyncRelayCommand FillinCommand { get; set; }
+
+        public List<GetAppTypeModel> TypeList { get; } = new List<GetAppTypeModel>
         {
-            get { return _viewAllCommand; }
+            new GetAppTypeModel{DisplayName=LanguageService.GetResources("URL"),InternalName="url"},
+            new GetAppTypeModel{DisplayName=LanguageService.GetResources("ProductID"),InternalName="ProductId"},
+            new GetAppTypeModel{DisplayName=LanguageService.GetResources("PackageFamilyName"),InternalName="PackageFamilyName"},
+            new GetAppTypeModel{DisplayName=LanguageService.GetResources("CategoryID"),InternalName="CategoryId"}
+        };
 
-            set { SetProperty(ref _viewAllCommand, value); }
-        }
-
-        private ICommand _copyCommand;
-
-        public ICommand CopyCommand
+        public List<GetAppChannelModel> ChannelList { get; } = new List<GetAppChannelModel>
         {
-            get { return _copyCommand; }
-
-            set { SetProperty(ref _copyCommand, value); }
-        }
-
-        private IAsyncRelayCommand _fillinCommand;
-
-        public IAsyncRelayCommand FillinCommand
-        {
-            get { return _fillinCommand; }
-
-            set { SetProperty(ref _fillinCommand, value); }
-        }
+            new GetAppChannelModel{ DisplayName=LanguageService.GetResources("Fast"),InternalName="WIF" },
+            new GetAppChannelModel{ DisplayName=LanguageService.GetResources("Slow"),InternalName="WIS" },
+            new GetAppChannelModel{ DisplayName=LanguageService.GetResources("RP"),InternalName="RP" },
+            new GetAppChannelModel{ DisplayName=LanguageService.GetResources("Retail"),InternalName="Retail" }
+        };
 
         public ObservableCollection<HistoryModel> HistoryItemList { get; set; } = new ObservableCollection<HistoryModel>();
 
@@ -64,86 +62,50 @@ namespace GetStoreApp.ViewModels.Controls.Home
         {
             _navigationService = navigationService;
 
+            // List列表初始化，可以从数据库获得的列表中加载
+            LoadedCommand = new AsyncRelayCommand(UpdateHistoryItemListAsync);
+
             ViewAllCommand = new AsyncRelayCommand(ViewAllAsync);
 
             FillinCommand = new AsyncRelayCommand(FillinAsync);
 
             CopyCommand = new RelayCommand<object>(async (param) => { await CopyAsync(param); });
 
-            // List列表初始化，可以从数据库获得的列表中加载
-            InitialList();
-
-            Messenger.Register<HistoryItemViewModel, HistoryItemMessage>(this, async (historyItemViewModel, historyItemMessage) =>
+            Messenger.Register<HistoryItemViewModel, HistoryMessage>(this, async (historyItemViewModel, historyMessage) =>
             {
-                await SuccessfullyRequestedUpdateListAsync(historyItemMessage.Value);
+                if (historyMessage.Value) await UpdateHistoryItemListAsync();
             });
 
             Messenger.Register<HistoryItemViewModel, HistoryItemValueMessage>(this, async (historyItemViewModel, historyItemValueMessage) =>
             {
                 HistoryItemValue = historyItemValueMessage.Value;
-                await SettingsChangedUpdateListAsync();
+                await UpdateHistoryItemListAsync();
             });
         }
 
-        // 从数据库中获取
-        private void InitialList()
+        /// <summary>
+        /// UI加载完成时/或者是数据库数据发生变化时，从数据库中异步加载数据
+        /// </summary>
+        private async Task UpdateHistoryItemListAsync()
         {
-            //TODO：从数据库中加载
-        }
+            // 获取数据库的原始记录数据
+            List<HistoryModel> HistoryRawList = await HistoryDataService.QueryHistoryDataAsync(HistoryItemValueService.HistoryItemValue);
 
-        // 成功获取数据后，更新历史记录
-        private async Task SuccessfullyRequestedUpdateListAsync(HistoryModel historyItemData)
-        {
-            int Position = 0;
-            // 添加数据比对，如果比对成功，修改列表元素位置，不添加
-            bool CheckResult = CheckRepeatElement(ref Position, historyItemData);
-
-            // 如果存在相等的，删除原来的元素
-            if (CheckResult)
-            {
-                HistoryItemList.RemoveAt(Position);
-            }
-
-            // 添加元素
-            // 数量个数大于等于设置中的数值，删除最后一个并下移
-            if (HistoryItemList.Count >= HistoryItemValue)
-            {
-                HistoryItemList.RemoveAt(HistoryItemList.Count - 1);
-            }
-
-            HistoryItemList.Insert(0, historyItemData);
-            await Task.CompletedTask;
-        }
-
-        // 设置中的选项做出相应的调整后，如有需要，更新列表记录
-        private async Task SettingsChangedUpdateListAsync()
-        {
-            // 当前元素个数大于设置中设定的值，删除元素到指定数目
-            while (HistoryItemList.Count > HistoryItemValue)
-            {
-                HistoryItemList.RemoveAt(HistoryItemList.Count - 1);
-            }
-
-            await Task.CompletedTask;
+            // 更新UI上面的数据
+            UpdateList(HistoryRawList);
         }
 
         /// <summary>
-        /// 检查列表中是否有重复的元素，如果有，返回True和索引
+        /// 更新UI上面的数据
         /// </summary>
-        private bool CheckRepeatElement(ref int position, HistoryModel historyItemData)
+        private void UpdateList(List<HistoryModel> historyRawList)
         {
-            // 如果相等，修改索引，直接返回
-            for (int i = 0; i < HistoryItemList.Count; i++)
-            {
-                if (historyItemData.HistoryKey == HistoryItemList[i].HistoryKey)
-                {
-                    position = i;
-                    return true;
-                }
-            }
+            HistoryItemList.Clear();
 
-            // 没有重复的元素
-            return false;
+            foreach (HistoryModel historyRawData in historyRawList)
+            {
+                HistoryItemList.Add(historyRawData);
+            }
         }
 
         private async Task ViewAllAsync()
@@ -176,7 +138,10 @@ namespace GetStoreApp.ViewModels.Controls.Home
             // 复制全部内容
             else if (content == "CopyAll")
             {
-                string CopyContent = string.Format("{0}\n{1}\n{2}", SelectedHistoryItem.HistoryType.DisplayName, SelectedHistoryItem.HistoryChannel.DisplayName, SelectedHistoryItem.HistoryLink);
+                string CopyContent = string.Format("{0}\n{1}\n{2}",
+                    TypeList.Find(item => item.InternalName.Equals(SelectedHistoryItem.HistoryType)).DisplayName,
+                    ChannelList.Find(item => item.InternalName.Equals(SelectedHistoryItem.HistoryChannel)).DisplayName,
+                    SelectedHistoryItem.HistoryLink);
                 CopyPasteService.CopyStringToClicpBoard(CopyContent);
             }
 

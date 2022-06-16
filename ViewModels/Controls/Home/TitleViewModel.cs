@@ -23,14 +23,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _useInsVisValue, value); }
         }
 
-        private IAsyncRelayCommand _useInstructionCommand;
-
-        public IAsyncRelayCommand UseInstructionCommand
-        {
-            get { return _useInstructionCommand; }
-
-            set { SetProperty(ref _useInstructionCommand, value); }
-        }
+        public IAsyncRelayCommand UseInstructionCommand { get; set; }
 
         public TitleViewModel(INavigationService navigationService)
         {

@@ -10,4 +10,6 @@
     <congen:IntToVisibilityConverter x:Name="IntToVisibilityConverter" />
     <congen:IntToReverseVisibilityConverter x:Name="IntToReverseVisibilityConverter" />
     <congen:DataTimeFormatConverter x:Name="DataTimeFormatConverter" />
+    <congen:TypeNameConverter x:Name="TypeNameConverter" />
+    <congen:ChannelNameConverter x:Name="ChannelNameConverter" />
 </ResourceDictionary>

@@ -2,6 +2,7 @@
 using GetStoreApp.Services.App;
 using Microsoft.Data.Sqlite;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -45,7 +46,7 @@ namespace GetStoreApp.Services.History
                 SqliteCommand SearchCommand = new SqliteCommand();
                 SearchCommand.Connection = db;
 
-                SearchCommand.CommandText = string.Format("SELECT * FROM {0} WHERE HISTORYKEY == {1}", DataBaseService.HistoryTableName, historyKey);
+                SearchCommand.CommandText = string.Format("SELECT * FROM {0} WHERE HISTORYKEY LIKE '{1}'", DataBaseService.HistoryTableName, historyKey);
 
                 SqliteDataReader Query = SearchCommand.ExecuteReader();
 
@@ -69,7 +70,7 @@ namespace GetStoreApp.Services.History
                 SqliteCommand InsertCommand = new SqliteCommand();
                 InsertCommand.Connection = db;
 
-                InsertCommand.CommandText = string.Format("INSERT INTO {0} VALUES ({1},{2},{3},{4},{5})", DataBaseService.HistoryTableName, history.CurrentTimeStamp, history.HistoryKey, history.HistoryType.InternalName, history.HistoryChannel.InternalName, history.HistoryLink);
+                InsertCommand.CommandText = string.Format("INSERT INTO {0} VALUES ({1},'{2}','{3}','{4}','{5}')", DataBaseService.HistoryTableName, history.CurrentTimeStamp, history.HistoryKey, history.HistoryType, history.HistoryChannel, history.HistoryLink);
 
                 InsertCommand.ExecuteReader();
 
@@ -89,7 +90,7 @@ namespace GetStoreApp.Services.History
                 SqliteCommand UpdateCommand = new SqliteCommand();
                 UpdateCommand.Connection = db;
 
-                UpdateCommand.CommandText = string.Format("UPDATE {0} SET TIMESTAMP = {1} WHERE HISTORYKEY = {2}", DataBaseService.HistoryTableName, history.CurrentTimeStamp, history.HistoryKey);
+                UpdateCommand.CommandText = string.Format("UPDATE {0} SET TIMESTAMP = {1} WHERE HISTORYKEY = '{2}'", DataBaseService.HistoryTableName, history.CurrentTimeStamp, history.HistoryKey);
 
                 UpdateCommand.ExecuteReader();
 
@@ -100,9 +101,9 @@ namespace GetStoreApp.Services.History
         /// <summary>
         /// 获取所有的历史记录数据
         /// </summary>
-        public static async Task<List<HistoryRawModel>> QueryAllHistoryDataAsync()
+        public static async Task<List<HistoryModel>> QueryAllHistoryDataAsync()
         {
-            List<HistoryRawModel> HistoryRawList = new List<HistoryRawModel>();
+            List<HistoryModel> HistoryRawList = new List<HistoryModel>();
 
             using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
             {
@@ -111,13 +112,13 @@ namespace GetStoreApp.Services.History
                 SqliteCommand SelectCommand = new SqliteCommand();
                 SelectCommand.Connection = db;
 
-                SelectCommand.CommandText = string.Format("SELECT * from {0} ORDER BY TimeStamp Desc", DataBaseService.HistoryTableName);
+                SelectCommand.CommandText = string.Format("SELECT * FROM {0} ORDER BY TIMESTAMP DESC", DataBaseService.HistoryTableName);
 
                 SqliteDataReader Query = SelectCommand.ExecuteReader();
 
                 while (Query.Read())
                 {
-                    HistoryRawModel historyRawModel = new HistoryRawModel
+                    HistoryModel historyRawModel = new HistoryModel
                     {
                         CurrentTimeStamp = Query.GetInt64(0),
                         HistoryKey = Query.GetString(1),
@@ -138,9 +139,9 @@ namespace GetStoreApp.Services.History
         /// <summary>
         /// 获取一定数量的历史记录数据
         /// </summary>
-        public static async Task<List<HistoryRawModel>> QueryHistoryDataAsync(int value)
+        public static async Task<List<HistoryModel>> QueryHistoryDataAsync(int value)
         {
-            List<HistoryRawModel> HistoryRawList = new List<HistoryRawModel>();
+            List<HistoryModel> HistoryRawList = new List<HistoryModel>();
 
             using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
             {
@@ -149,13 +150,13 @@ namespace GetStoreApp.Services.History
                 SqliteCommand SelectCommand = new SqliteCommand();
                 SelectCommand.Connection = db;
 
-                SelectCommand.CommandText = string.Format("SELECT * from {0} LIMIT {1}", DataBaseService.HistoryTableName, value);
+                SelectCommand.CommandText = string.Format("SELECT * FROM {0} ORDER BY TIMESTAMP DESC LIMIT {1}", DataBaseService.HistoryTableName, value);
 
                 SqliteDataReader Query = SelectCommand.ExecuteReader();
 
                 while (Query.Read())
                 {
-                    HistoryRawModel historyRawModel = new HistoryRawModel
+                    HistoryModel historyRawModel = new HistoryModel
                     {
                         CurrentTimeStamp = Query.GetInt64(0),
                         HistoryKey = Query.GetString(1),
@@ -185,7 +186,7 @@ namespace GetStoreApp.Services.History
                 SqliteCommand DeleteCommand = new SqliteCommand();
                 DeleteCommand.Connection = db;
 
-                DeleteCommand.CommandText = string.Format("DELETE FROM {0} WHERE HISTORYKEY = {1}",DataBaseService.HistoryTableName,historyKey);
+                DeleteCommand.CommandText = string.Format("DELETE FROM {0} WHERE HISTORYKEY = '{1}'", DataBaseService.HistoryTableName, historyKey);
 
                 DeleteCommand.ExecuteReader();
 

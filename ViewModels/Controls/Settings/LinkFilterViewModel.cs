@@ -38,23 +38,9 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             }
         }
 
-        private IAsyncRelayCommand _startsWithECommand;
+        public IAsyncRelayCommand StartsWithECommand { get; set; }
 
-        public IAsyncRelayCommand StartsWithECommand
-        {
-            get { return _startsWithECommand; }
-
-            set { SetProperty(ref _startsWithECommand, value); }
-        }
-
-        private IAsyncRelayCommand _blockMapCommand;
-
-        public IAsyncRelayCommand BlockMapCommand
-        {
-            get { return _blockMapCommand; }
-
-            set { SetProperty(ref _blockMapCommand, value); }
-        }
+        public IAsyncRelayCommand BlockMapCommand { get; set; }
 
         public LinkFilterViewModel()
         {
