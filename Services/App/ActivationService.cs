@@ -4,9 +4,7 @@ using GetStoreApp.Services.Settings;
 using GetStoreApp.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,22 +16,6 @@ namespace GetStoreApp.Services.App
         private readonly IEnumerable<IActivationHandler> _activationHandlers;
         private readonly INavigationService _navigationService;
         private UIElement _shell = null;
-
-        public static event EventHandler<PropertyChangedEventArgs> StaticPropertyChanged;
-
-        private static ElementTheme _theme;
-
-        public static ElementTheme Theme
-        {
-            get { return _theme; }
-
-            set
-            {
-                _theme = value;
-
-                StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(Theme)));
-            }
-        }
 
         public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers, INavigationService navigationService)
         {
@@ -79,9 +61,8 @@ namespace GetStoreApp.Services.App
 
         private async Task StartupAsync()
         {
-            Theme = await ThemeSelectorService.InitializeAsync();
+            await ThemeSelectorService.InitializeAsync();
             await ThemeSelectorService.SetRequestedThemeAsync();
-
             await DataBaseService.InitializeDataBaseAsync();
         }
     }

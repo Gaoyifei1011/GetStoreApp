@@ -6,7 +6,6 @@ using GetStoreApp.Services.Web;
 using GetStoreApp.UI.Controls.General;
 using GetStoreApp.UI.Controls.Home;
 using GetStoreApp.UI.Controls.Settings;
-using GetStoreApp.ViewModels.Controls.General;
 using GetStoreApp.ViewModels.Controls.Home;
 using GetStoreApp.ViewModels.Controls.Settings;
 using GetStoreApp.ViewModels.Pages;
@@ -65,7 +64,6 @@ namespace GetStoreApp
 
                 // Controls and ViewModels
                 services.AddTransient<CardControl>();
-                services.AddTransient<CardViewModel>();
 
                 services.AddTransient<HistoryItemControl>();
                 services.AddTransient<HistoryItemViewModel>();

@@ -17,10 +17,9 @@ namespace GetStoreApp.Services.Settings
             Theme = GetTheme();
         }
 
-        public static async Task<ElementTheme> InitializeAsync()
+        public static async Task InitializeAsync()
         {
             Theme = await LoadThemeFromSettingsAsync();
-            return await LoadThemeFromSettingsAsync();
         }
 
         public static async Task SetThemeAsync(ElementTheme theme)

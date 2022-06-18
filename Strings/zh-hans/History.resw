@@ -138,9 +138,6 @@
   <data name="Delete" xml:space="preserve">
     <value>删除</value>
   </data>
-  <data name="Edit" xml:space="preserve">
-    <value>编辑</value>
-  </data>
   <data name="Fillin" xml:space="preserve">
     <value>填入</value>
   </data>
@@ -164,6 +161,9 @@
   </data>
   <data name="SearchHistoryPHText" xml:space="preserve">
     <value>搜索历史记录</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>多选模式</value>
   </data>
   <data name="SelectedItemValue" xml:space="preserve">
     <value>已选中{0}项</value>

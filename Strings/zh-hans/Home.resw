@@ -120,6 +120,9 @@
   <data name="BatchOperation" xml:space="preserve">
     <value>批量操作</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
   <data name="CategoryId" xml:space="preserve">
     <value>CategoryID：{0}</value>
   </data>
@@ -129,26 +132,14 @@
   <data name="Copy" xml:space="preserve">
     <value>复制</value>
   </data>
-  <data name="CopyAll" xml:space="preserve">
-    <value>复制全部</value>
-  </data>
-  <data name="CopyAsContent" xml:space="preserve">
-    <value>按内容复制</value>
-  </data>
-  <data name="CopyAsOrder" xml:space="preserve">
-    <value>按序号复制</value>
+  <data name="CopyCategoryID" xml:space="preserve">
+    <value>复制CategoryID</value>
   </data>
   <data name="CopyLink" xml:space="preserve">
     <value>复制链接</value>
   </data>
   <data name="Download" xml:space="preserve">
     <value>下载</value>
-  </data>
-  <data name="DownloadAll" xml:space="preserve">
-    <value>下载全部</value>
-  </data>
-  <data name="DownloadAsOrder" xml:space="preserve">
-    <value>按序号下载</value>
   </data>
   <data name="FileName" xml:space="preserve">
     <value>文件名称</value>
@@ -192,6 +183,9 @@
   <data name="SearchResultEmpty" xml:space="preserve">
     <value>没有搜索到任何结果，请检查您输入的链接后重试</value>
   </data>
+  <data name="Select" xml:space="preserve">
+    <value>多选模式</value>
+  </data>
   <data name="SerialNumber" xml:space="preserve">
     <value>序号</value>
   </data>
@@ -214,7 +208,7 @@
     <value>主页</value>
   </data>
   <data name="TitleDescription1" xml:space="preserve">
-    <value>微软商店的在线链接生成器</value>
+    <value>微软商店在线链接生成器</value>
   </data>
   <data name="TitleDescription2" xml:space="preserve">
     <value>输入从微软商店获取到的链接，然后单击复选框——以获得所有可用的链接</value>

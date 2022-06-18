@@ -138,9 +138,6 @@
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Edit</value>
-  </data>
   <data name="Fillin" xml:space="preserve">
     <value>Fill in</value>
   </data>
@@ -164,6 +161,9 @@
   </data>
   <data name="SearchHistoryPHText" xml:space="preserve">
     <value>Search history</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Multi-select mode</value>
   </data>
   <data name="SelectedItemValue" xml:space="preserve">
     <value>The {0} item is selected</value>

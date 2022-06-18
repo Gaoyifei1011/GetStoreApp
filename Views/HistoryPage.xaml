@@ -1,19 +1,25 @@
 ﻿<Page
     x:Class="GetStoreApp.Views.HistoryPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:ctWinUI="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:gc="using:GetStoreApp.UI.Controls.General"
-    xmlns:i="using:Microsoft.Xaml.Interactivity"
-    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ctWinUI="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:service="using:GetStoreApp.Services.Settings"
+    xmlns:gc="using:GetStoreApp.UI.Controls.General"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    NavigationCacheMode="Enabled"
     mc:Ignorable="d">
+
+    <i:Interaction.Behaviors>
+        <ic:EventTriggerBehavior EventName="Loaded">
+            <ic:InvokeCommandAction Command="{x:Bind ViewModel.LoadedCommand}" />
+        </ic:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
 
     <Grid Margin="30,15,30,0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -71,10 +77,16 @@
                 Background="Transparent"
                 DefaultLabelPosition="Right">
                 <AppBarButton
-                    Command="{x:Bind ViewModel.EditCommand}"
-                    Icon="Edit"
-                    Label="{x:Bind service:LanguageService.GetResources('/History/Edit')}"
-                    Visibility="{x:Bind ViewModel.IsEditMode, Converter={StaticResource BooleanToReverseVisibilityConverter}, Mode=OneWay}" />
+                    Command="{x:Bind ViewModel.SelectCommand}"
+                    Label="{x:Bind service:LanguageService.GetResources('/History/Select')}"
+                    Visibility="{x:Bind ViewModel.IsEditMode, Converter={StaticResource BooleanToReverseVisibilityConverter}, Mode=OneWay}">
+                    <AppBarButton.Icon>
+                        <FontIcon
+                            Grid.Column="0"
+                            FontFamily="Segoe Fluent Icons"
+                            Glyph="&#xE762;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
                 <AppBarButton
                     Command="{x:Bind ViewModel.CopyCommand}"
                     Icon="Copy"
@@ -113,37 +125,38 @@
                 Margin="0,10,0,10"
                 VerticalAlignment="Center"
                 Text="{x:Bind service:LanguageService.GetResources('/History/HistoryEmptyDescription')}"
-                TextAlignment="Center" />
+                TextAlignment="Center"
+                Visibility="{x:Bind ViewModel.HistoryList.Count, Converter={StaticResource IntToReverseVisibilityConverter}, Mode=OneWay}" />
         </gc:CardControl>
 
         <ctWinUI:DataGrid
             Grid.Row="2"
             ItemsSource="{x:Bind ViewModel.HistoryList, Mode=OneWay}"
             RowStyle="{StaticResource DataGridRowStyle}"
-            SelectionMode="Single"
-            Style="{StaticResource DataGridInternalStyle}"
-            Visibility="Visible">
+            SelectedItem="{x:Bind ViewModel.SelectedHistoryItem, Mode=TwoWay}"
+            Style="{StaticResource DataGridHistoryStyle}"
+            Visibility="{x:Bind ViewModel.HistoryList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
 
             <i:Interaction.Behaviors>
                 <ic:EventTriggerBehavior EventName="DoubleTapped">
-                    <!--<ic:InvokeCommandAction Command="{x:Bind ViewModel.FillinCommand}" />-->
+                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.FillinCommand}" />
                 </ic:EventTriggerBehavior>
             </i:Interaction.Behaviors>
 
             <ctWinUI:DataGrid.Columns>
                 <ctWinUI:DataGridTextColumn
                     Width="*"
-                    Binding="{Binding HistoryType.DisplayName}"
+                    Binding="{Binding CurrentTimeStamp,Converter={StaticResource UtcToLocalTimeConverter}}"
                     Header="{x:Bind service:LanguageService.GetResources('/History/DataTime')}"
                     HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" />
                 <ctWinUI:DataGridTextColumn
                     Width="*"
-                    Binding="{Binding HistoryType.DisplayName}"
+                    Binding="{Binding HistoryType, Converter={StaticResource TypeNameConverter}}"
                     Header="{x:Bind service:LanguageService.GetResources('/History/Type')}"
                     HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" />
                 <ctWinUI:DataGridTextColumn
                     Width="*"
-                    Binding="{Binding HistoryChannel.DisplayName}"
+                    Binding="{Binding HistoryChannel, Converter={StaticResource ChannelNameConverter}}"
                     Header="{x:Bind service:LanguageService.GetResources('/History/Channel')}"
                     HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" />
                 <ctWinUI:DataGridTextColumn
@@ -166,18 +179,9 @@
                     <MenuFlyoutSeparator />
                     <MenuFlyoutItem
                         Command="{x:Bind ViewModel.CopyCommand}"
-                        CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
-                        Icon="Link"
+                        Icon="Copy"
                         IsEnabled="True"
-                        Tag="Link"
-                        Text="{x:Bind service:LanguageService.GetResources('/History/CopyLink')}" />
-                    <MenuFlyoutItem
-                        Command="{x:Bind ViewModel.CopyCommand}"
-                        CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
-                        Icon="SelectAll"
-                        IsEnabled="True"
-                        Tag="CopyAll"
-                        Text="{x:Bind service:LanguageService.GetResources('/History/CopyAll')}" />
+                        Text="{x:Bind service:LanguageService.GetResources('/History/Copy')}" />
                     <MenuFlyoutSeparator />
                 </MenuFlyout>
             </ctWinUI:DataGrid.ContextFlyout>

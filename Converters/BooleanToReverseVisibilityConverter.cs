@@ -2,7 +2,7 @@
 using Microsoft.UI.Xaml.Data;
 using System;
 
-namespace GetStoreApp.Converters.General
+namespace GetStoreApp.Converters
 {
     public class BooleanToReverseVisibilityConverter : IValueConverter
     {

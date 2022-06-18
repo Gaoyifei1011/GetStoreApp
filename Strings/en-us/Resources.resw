@@ -126,7 +126,7 @@
     <comment>Application display name</comment>
   </data>
   <data name="PackageDisplayName" xml:space="preserve">
-    <value>GetStoreApp</value>
+    <value>GetStoreApp (Dev)</value>
     <comment>Application package display name</comment>
   </data>
   <data name="AppShortDisplayName" xml:space="preserve">
