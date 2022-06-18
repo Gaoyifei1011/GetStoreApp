@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.Messaging.Messages;
-using GetStoreApp.Models;
 
 namespace GetStoreApp.Messages
 {

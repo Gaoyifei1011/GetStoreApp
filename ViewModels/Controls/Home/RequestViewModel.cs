@@ -8,7 +8,6 @@ using GetStoreApp.Services.Home;
 using GetStoreApp.Services.Settings;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;

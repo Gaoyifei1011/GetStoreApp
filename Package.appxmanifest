@@ -11,10 +11,10 @@
   <Identity
     Name="F6A3B73F-72B3-4D85-B0C1-7E8E960B8F0B"
     Publisher="CN=高怡飞"
-    Version="0.1.7.0" />
+    Version="0.1.8.0" />
 
   <Properties>
-    <DisplayName>GetStoreApp</DisplayName>
+    <DisplayName>ms-resource:PackageDisplayName</DisplayName>
     <PublisherDisplayName>高怡飞</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>

@@ -12,7 +12,7 @@ namespace GetStoreApp.Services.App
 
         public static readonly string HistoryTableName = "HISTORY";
 
-        private static readonly string DownloadTableName = "Download";
+        //private static readonly string DownloadTableName = "Download";
 
         public static readonly string DBpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "GetStoreApp.db");
 

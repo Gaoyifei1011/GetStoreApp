@@ -18,12 +18,13 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <SignAssembly>True</SignAssembly>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>0.1.7.0</Version>
+    <Version>0.1.8.0</Version>
     <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
     <ImplicitUsings>disable</ImplicitUsings>
-    <FileVersion>0.1.7.0</FileVersion>
+    <FileVersion>0.1.8.0</FileVersion>
     <AssemblyVersion></AssemblyVersion>
     <SupportedOSPlatformVersion>10.0.22000.0</SupportedOSPlatformVersion>
+    <Copyright>高怡飞</Copyright>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
     <Optimize>True</Optimize>
@@ -47,6 +48,12 @@
     <DebugType>embedded</DebugType>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="UI\Dialogs\Home\**" />
+    <EmbeddedResource Remove="UI\Dialogs\Home\**" />
+    <None Remove="UI\Dialogs\Home\**" />
+    <Page Remove="UI\Dialogs\Home\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Styles\Converter.xaml" />
     <None Remove="Styles\DataGrid.xaml" />
     <None Remove="Styles\Expander.xaml" />
@@ -69,10 +76,10 @@
     <PackageReference Include="CommunityToolkit.Mvvm" Version="7.1.2" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.DataGrid" Version="7.1.2" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.43" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.5" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.6" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.197" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.1" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.1" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.8" />
     <PackageReference Include="NETStandard.Library" Version="2.0.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
@@ -131,7 +138,7 @@
 
   <ItemGroup>
     <Folder Include="UI\Controls\General\" />
-    <Folder Include="UI\Dialogs\Home\" />
+    <Folder Include="UI\Dialogs\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -147,5 +154,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PRIResource Remove="UI\Dialogs\Home\**" />
   </ItemGroup>
 </Project>

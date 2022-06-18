@@ -1,13 +1,13 @@
 ﻿<UserControl
     x:Class="GetStoreApp.UI.Controls.Home.HistoryItemControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:ctWinUI="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:i="using:Microsoft.Xaml.Interactivity"
-    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ctWinUI="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:service="using:GetStoreApp.Services.Settings"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
     mc:Ignorable="d">
 
     <i:Interaction.Behaviors>
@@ -72,8 +72,7 @@
                     ItemsSource="{x:Bind ViewModel.HistoryItemList, Mode=OneWay}"
                     RowStyle="{StaticResource DataGridRowStyle}"
                     SelectedItem="{x:Bind ViewModel.SelectedHistoryItem, Mode=TwoWay}"
-                    SelectionMode="Single"
-                    Style="{StaticResource DataGridInternalStyle}"
+                    Style="{StaticResource DataGridHistoryItemStyle}"
                     Visibility="{x:Bind ViewModel.HistoryItemList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
 
                     <i:Interaction.Behaviors>
@@ -85,13 +84,12 @@
                     <ctWinUI:DataGrid.Columns>
                         <ctWinUI:DataGridTextColumn
                             Width="*"
-                            Binding="{Binding HistoryType,Converter={StaticResource TypeNameConverter}}"
-                            
+                            Binding="{Binding HistoryType, Converter={StaticResource TypeNameConverter}}"
                             Header="{x:Bind service:LanguageService.GetResources('/Home/Type')}"
                             HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" />
                         <ctWinUI:DataGridTextColumn
                             Width="*"
-                            Binding="{Binding HistoryChannel,Converter={StaticResource ChannelNameConverter}}"
+                            Binding="{Binding HistoryChannel, Converter={StaticResource ChannelNameConverter}}"
                             Header="{x:Bind service:LanguageService.GetResources('/Home/Channel')}"
                             HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" />
                         <ctWinUI:DataGridTextColumn
@@ -114,22 +112,12 @@
                                         Glyph="&#xE74a;" />
                                 </MenuFlyoutItem.Icon>
                             </MenuFlyoutItem>
-                            <MenuFlyoutSeparator />
                             <MenuFlyoutItem
                                 Command="{x:Bind ViewModel.CopyCommand}"
                                 CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
-                                Icon="Link"
+                                Icon="Copy"
                                 IsEnabled="{x:Bind ViewModel.SelectedHistoryItem, Converter={StaticResource CheckNullConverter}, Mode=OneWay}"
-                                Tag="Link"
-                                Text="{x:Bind service:LanguageService.GetResources('/Home/CopyLink')}" />
-                            <MenuFlyoutItem
-                                Command="{x:Bind ViewModel.CopyCommand}"
-                                CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
-                                Icon="SelectAll"
-                                IsEnabled="{x:Bind ViewModel.SelectedHistoryItem, Converter={StaticResource CheckNullConverter}, Mode=OneWay}"
-                                Tag="CopyAll"
-                                Text="{x:Bind service:LanguageService.GetResources('/Home/CopyAll')}" />
-                            <MenuFlyoutSeparator />
+                                Text="{x:Bind service:LanguageService.GetResources('/Home/Copy')}" />
                             <MenuFlyoutItem
                                 Command="{x:Bind ViewModel.ViewAllCommand}"
                                 Icon="ViewAll"

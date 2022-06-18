@@ -120,6 +120,9 @@
   <data name="BatchOperation" xml:space="preserve">
     <value>Batch Operation</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="CategoryId" xml:space="preserve">
     <value>CategoryID:{0}</value>
   </data>
@@ -129,26 +132,14 @@
   <data name="Copy" xml:space="preserve">
     <value>Copy</value>
   </data>
-  <data name="CopyAll" xml:space="preserve">
-    <value>Copy all</value>
-  </data>
-  <data name="CopyAsContent" xml:space="preserve">
-    <value>Copy by content</value>
-  </data>
-  <data name="CopyAsOrder" xml:space="preserve">
-    <value>Copy by serial number</value>
+  <data name="CopyCategoryID" xml:space="preserve">
+    <value>Copy CategoryID</value>
   </data>
   <data name="CopyLink" xml:space="preserve">
     <value>Copy Link</value>
   </data>
   <data name="Download" xml:space="preserve">
     <value>Download</value>
-  </data>
-  <data name="DownloadAll" xml:space="preserve">
-    <value>Download All</value>
-  </data>
-  <data name="DownloadAsOrder" xml:space="preserve">
-    <value>Download by serial number</value>
   </data>
   <data name="FileName" xml:space="preserve">
     <value>File Name</value>
@@ -191,6 +182,9 @@
   </data>
   <data name="SearchResultEmpty" xml:space="preserve">
     <value>No results have been searched, please check the link you entered and try again</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Multi-select mode</value>
   </data>
   <data name="SerialNumber" xml:space="preserve">
     <value>S/N</value>

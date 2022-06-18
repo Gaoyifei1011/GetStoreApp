@@ -13,7 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace GetStoreApp.ViewModels.Controls.Home
 {
@@ -36,7 +35,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public IAsyncRelayCommand ViewAllCommand { get; set; }
 
-        public ICommand CopyCommand { get; set; }
+        public IAsyncRelayCommand CopyCommand { get; set; }
 
         public IAsyncRelayCommand FillinCommand { get; set; }
 
@@ -69,7 +68,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             FillinCommand = new AsyncRelayCommand(FillinAsync);
 
-            CopyCommand = new RelayCommand<object>(async (param) => { await CopyAsync(param); });
+            CopyCommand = new AsyncRelayCommand(CopyAsync);
 
             Messenger.Register<HistoryItemViewModel, HistoryMessage>(this, async (historyItemViewModel, historyMessage) =>
             {
@@ -89,7 +88,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
         private async Task UpdateHistoryItemListAsync()
         {
             // 获取数据库的原始记录数据
-            List<HistoryModel> HistoryRawList = await HistoryDataService.QueryHistoryDataAsync(HistoryItemValueService.HistoryItemValue);
+            List<HistoryModel> HistoryRawList = await HistoryDataService.QueryHistoryDataAsync(HistoryItemValue);
 
             // 更新UI上面的数据
             UpdateList(HistoryRawList);
@@ -125,25 +124,13 @@ namespace GetStoreApp.ViewModels.Controls.Home
             await Task.CompletedTask;
         }
 
-        private async Task CopyAsync(object sender)
+        private async Task CopyAsync()
         {
-            if (sender is not string content) return;
-
-            // 复制链接到剪贴板
-            else if (content == "Link")
-            {
-                CopyPasteService.CopyStringToClicpBoard(SelectedHistoryItem.HistoryLink);
-            }
-
-            // 复制全部内容
-            else if (content == "CopyAll")
-            {
-                string CopyContent = string.Format("{0}\n{1}\n{2}",
-                    TypeList.Find(item => item.InternalName.Equals(SelectedHistoryItem.HistoryType)).DisplayName,
-                    ChannelList.Find(item => item.InternalName.Equals(SelectedHistoryItem.HistoryChannel)).DisplayName,
-                    SelectedHistoryItem.HistoryLink);
-                CopyPasteService.CopyStringToClicpBoard(CopyContent);
-            }
+            string CopyContent = string.Format("{0}\t{1}\t{2}",
+                TypeList.Find(item => item.InternalName.Equals(SelectedHistoryItem.HistoryType)).DisplayName,
+                ChannelList.Find(item => item.InternalName.Equals(SelectedHistoryItem.HistoryChannel)).DisplayName,
+                SelectedHistoryItem.HistoryLink);
+            CopyPasteService.CopyStringToClicpBoard(CopyContent);
 
             await Task.CompletedTask;
         }

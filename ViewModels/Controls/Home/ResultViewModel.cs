@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Messages;
 using GetStoreApp.Models;
@@ -46,10 +47,27 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _resultCountInfo, value); }
         }
 
+        private bool _isSelectionMode = false;
+
+        public bool IsSelectionMode
+        {
+            get { return _isSelectionMode; }
+
+            set { SetProperty(ref _isSelectionMode, value); }
+        }
+
+        public IRelayCommand SelectCommand { get; set; }
+
+        public IRelayCommand CancelCommand { get; set; }
+
         public ObservableCollection<ResultModel> ResultDataList { get; set; } = new ObservableCollection<ResultModel>();
 
         public ResultViewModel()
         {
+            SelectCommand = new RelayCommand(() => { IsSelectionMode = true; });
+
+            CancelCommand = new RelayCommand(() => { IsSelectionMode = false; });
+
             Messenger.Register<ResultViewModel, ResultControlVisableMessage>(this, (resultViewModel, resultControlVisableMessage) =>
             {
                 resultViewModel.ResultControlVisable = resultControlVisableMessage.Value;

@@ -2,23 +2,20 @@
 using Microsoft.UI.Xaml.Data;
 using System;
 
-namespace GetStoreApp.Converters.General
+namespace GetStoreApp.Converters
 {
-    public class DataTimeFormatConverter : IValueConverter
+    public class IntToReverseVisibilityConverter : IValueConverter
     {
         /// <summary>
-        /// 将字符串中包含的时间转换为DataTime类型值
+        /// 将整数值转换为Visability值
         /// </summary>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value == null)
                 return DependencyProperty.UnsetValue;
 
-            string RawDataTime = value.ToString();
-
-            DateTime dt = System.Convert.ToDateTime(RawDataTime).ToLocalTime();
-
-            return dt.ToString("F");
+            int? result = value as int?;
+            return result == 0 ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

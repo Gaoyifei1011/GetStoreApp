@@ -139,7 +139,7 @@
     <value>快速</value>
   </data>
   <data name="PackageDisplayName" xml:space="preserve">
-    <value>获取商店应用</value>
+    <value>获取商店应用 (Dev)</value>
     <comment>应用程序包显示名称</comment>
   </data>
   <data name="PackageFamilyName" xml:space="preserve">
