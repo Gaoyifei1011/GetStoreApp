@@ -1,9 +1,9 @@
 ﻿using Microsoft.UI.Xaml.Data;
 using System;
 
-namespace GetStoreApp.Converters
+namespace GetStoreApp.Converters.Checks
 {
-    public class CheckNullConverter : IValueConverter
+    public class NullCheckConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {

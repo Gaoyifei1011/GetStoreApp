@@ -2,9 +2,9 @@
 using Microsoft.UI.Xaml.Data;
 using System;
 
-namespace GetStoreApp.Converters
+namespace GetStoreApp.Converters.Formats
 {
-    public class DataTimeFormatConverter : IValueConverter
+    public class GMTFormatConverter : IValueConverter
     {
         /// <summary>
         /// 将字符串中包含的时间转换为DataTime类型值

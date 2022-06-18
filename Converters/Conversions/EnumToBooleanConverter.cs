@@ -3,7 +3,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
 using System;
 
-namespace GetStoreApp.Converters
+namespace GetStoreApp.Converters.Conversions
 {
     public class EnumToBooleanConverter : IValueConverter
     {

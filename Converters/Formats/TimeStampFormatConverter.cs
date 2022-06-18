@@ -2,9 +2,9 @@
 using Microsoft.UI.Xaml.Data;
 using System;
 
-namespace GetStoreApp.Converters
+namespace GetStoreApp.Converters.Formats
 {
-    public class UtcToLocalTimeConverter : IValueConverter
+    public class TimeStampFormatConverter : IValueConverter
     {
         /// <summary>
         /// 将数据库存储的long类型的UTC标准时间戳转换为当地地区时间

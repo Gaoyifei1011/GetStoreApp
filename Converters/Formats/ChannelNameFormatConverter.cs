@@ -5,9 +5,9 @@ using Microsoft.UI.Xaml.Data;
 using System;
 using System.Collections.Generic;
 
-namespace GetStoreApp.Converters
+namespace GetStoreApp.Converters.Formats
 {
-    public class ChannelNameConverter : IValueConverter
+    public class ChannelNameFormatConverter : IValueConverter
     {
         public List<GetAppChannelModel> ChannelList { get; } = new List<GetAppChannelModel>
         {

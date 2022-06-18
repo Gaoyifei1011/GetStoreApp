@@ -13,7 +13,6 @@
                 <ResourceDictionary Source="ms-appx:///Styles/ExpanderThemeResources.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/FontIcon.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/FontSizes.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/Page.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/TextBlock.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Thickness.xaml" />
             </ResourceDictionary.MergedDictionaries>

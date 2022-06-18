@@ -7,7 +7,7 @@ using Microsoft.UI.Xaml.Markup;
 
 namespace GetStoreApp.UI.Controls.General
 {
-    [ContentProperty(Name = "HomeContent")]
+    [ContentProperty(Name = "CardContent")]
     public sealed partial class CardControl : UserControl
     {
         public CardControl()
@@ -15,13 +15,12 @@ namespace GetStoreApp.UI.Controls.General
             this.InitializeComponent();
         }
 
-        public static DependencyProperty MainContentProperty =
-    DependencyProperty.Register("MainContent", typeof(object), typeof(CardControl), null);
-
-        public object HomeContent
+        public object CardContent
         {
             get => GetValue(MainContentProperty);
             set => SetValue(MainContentProperty, value);
         }
+
+        public static DependencyProperty MainContentProperty = DependencyProperty.Register("CardContent", typeof(object), typeof(CardControl), null);
     }
 }
