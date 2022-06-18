@@ -5,9 +5,9 @@ using Microsoft.UI.Xaml.Data;
 using System;
 using System.Collections.Generic;
 
-namespace GetStoreApp.Converters
+namespace GetStoreApp.Converters.Formats
 {
-    public class TypeNameConverter : IValueConverter
+    public class TypeNameFormatConverter : IValueConverter
     {
         public List<GetAppTypeModel> TypeList { get; } = new List<GetAppTypeModel>
         {

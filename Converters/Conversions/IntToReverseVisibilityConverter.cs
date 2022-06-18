@@ -2,9 +2,9 @@
 using Microsoft.UI.Xaml.Data;
 using System;
 
-namespace GetStoreApp.Converters
+namespace GetStoreApp.Converters.Conversions
 {
-    public class IntToVisibilityConverter : IValueConverter
+    public class IntToReverseVisibilityConverter : IValueConverter
     {
         /// <summary>
         /// 将整数值转换为Visability值
@@ -15,7 +15,7 @@ namespace GetStoreApp.Converters
                 return DependencyProperty.UnsetValue;
 
             int? result = value as int?;
-            return result != 0 ? Visibility.Visible : Visibility.Collapsed;
+            return result == 0 ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

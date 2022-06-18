@@ -1,16 +1,18 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converter="using:GetStoreApp.Converters">
+    xmlns:check="using:GetStoreApp.Converters.Checks"
+    xmlns:convert="using:GetStoreApp.Converters.Conversions"
+    xmlns:format="using:GetStoreApp.Converters.Formats">
 
-    <converter:CheckNullConverter x:Name="CheckNullConverter" />
-    <converter:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
-    <converter:BooleanToReverseVisibilityConverter x:Name="BooleanToReverseVisibilityConverter" />
-    <converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
-    <converter:IntToVisibilityConverter x:Name="IntToVisibilityConverter" />
-    <converter:IntToReverseVisibilityConverter x:Name="IntToReverseVisibilityConverter" />
-    <converter:DataTimeFormatConverter x:Name="DataTimeFormatConverter" />
-    <converter:TypeNameConverter x:Name="TypeNameConverter" />
-    <converter:ChannelNameConverter x:Name="ChannelNameConverter" />
-    <converter:UtcToLocalTimeConverter x:Name="UtcToLocalTimeConverter" />
+    <check:NullCheckConverter x:Name="NullCheckConverter" />
+    <convert:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
+    <convert:BooleanToReverseVisibilityConverter x:Name="BooleanToReverseVisibilityConverter" />
+    <convert:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+    <convert:IntToVisibilityConverter x:Name="IntToVisibilityConverter" />
+    <convert:IntToReverseVisibilityConverter x:Name="IntToReverseVisibilityConverter" />
+    <format:GMTFormatConverter x:Name="GMTFormatConverter" />
+    <format:TypeNameFormatConverter x:Name="TypeNameFormatConverter" />
+    <format:ChannelNameFormatConverter x:Name="ChannelNameFormatConverter" />
+    <format:TimeStampFormatConverter x:Name="TimeStampFormatConverter" />
 </ResourceDictionary>

@@ -115,8 +115,6 @@
     <Style x:Key="DataGridHistoryItemStyle" TargetType="ctWinUI:DataGrid">
         <Setter Property="AutoGenerateColumns" Value="False" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
-        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="CanUserReorderColumns" Value="False" />
         <Setter Property="CanUserSortColumns" Value="False" />
         <Setter Property="CanUserResizeColumns" Value="False" />
@@ -133,7 +131,7 @@
         <Setter Property="AutoGenerateColumns" Value="False" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
-        <Setter Property="BorderThickness" Value="1,0,1,0" />
+        <Setter Property="BorderThickness" Value="1,1,1,0" />
         <Setter Property="CanUserReorderColumns" Value="False" />
         <Setter Property="CanUserSortColumns" Value="False" />
         <Setter Property="CanUserResizeColumns" Value="False" />
@@ -170,7 +168,6 @@
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
         <Setter Property="BorderThickness" Value="1,0,1,0" />
-        <Setter Property="FontSize" Value="12" />
         <Setter Property="Foreground" Value="{ThemeResource TextFillColorPrimaryBrush}" />
         <Setter Property="Template">
             <Setter.Value>
@@ -317,7 +314,7 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
-        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontSize" Value="14" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
@@ -438,7 +435,7 @@
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="SeparatorBrush" Value="{ThemeResource SystemControlGridLinesBaseMediumLowBrush}" />
         <Setter Property="Padding" Value="12,0,0,0" />
-        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontSize" Value="14" />
         <Setter Property="Foreground" Value="{ThemeResource TextFillColorPrimaryBrush}" />
 
         <Setter Property="Template">
