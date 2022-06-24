@@ -55,14 +55,14 @@ namespace GetStoreApp.ViewModels.Controls.Home
             new GetAppChannelModel{ DisplayName=LanguageService.GetResources("Retail"),InternalName="Retail" }
         };
 
-        public ObservableCollection<HistoryModel> HistoryItemList { get; set; } = new ObservableCollection<HistoryModel>();
+        public ObservableCollection<HistoryModel> HistoryItemDataList { get; set; } = new ObservableCollection<HistoryModel>();
 
         public HistoryItemViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
 
             // List列表初始化，可以从数据库获得的列表中加载
-            LoadedCommand = new AsyncRelayCommand(UpdateHistoryItemListAsync);
+            LoadedCommand = new AsyncRelayCommand(GetHistoryItemDataListAsync);
 
             ViewAllCommand = new AsyncRelayCommand(ViewAllAsync);
 
@@ -72,20 +72,20 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             Messenger.Register<HistoryItemViewModel, HistoryMessage>(this, async (historyItemViewModel, historyMessage) =>
             {
-                if (historyMessage.Value) await UpdateHistoryItemListAsync();
+                if (historyMessage.Value) await GetHistoryItemDataListAsync();
             });
 
             Messenger.Register<HistoryItemViewModel, HistoryItemValueMessage>(this, async (historyItemViewModel, historyItemValueMessage) =>
             {
                 HistoryItemValue = historyItemValueMessage.Value;
-                await UpdateHistoryItemListAsync();
+                await GetHistoryItemDataListAsync();
             });
         }
 
         /// <summary>
         /// UI加载完成时/或者是数据库数据发生变化时，从数据库中异步加载数据
         /// </summary>
-        private async Task UpdateHistoryItemListAsync()
+        private async Task GetHistoryItemDataListAsync()
         {
             // 获取数据库的原始记录数据
             List<HistoryModel> HistoryRawList = await HistoryDataService.QueryHistoryDataAsync(HistoryItemValue);
@@ -99,12 +99,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
         /// </summary>
         private void UpdateList(List<HistoryModel> historyRawList)
         {
-            HistoryItemList.Clear();
+            HistoryItemDataList.Clear();
 
-            foreach (HistoryModel historyRawData in historyRawList)
-            {
-                HistoryItemList.Add(historyRawData);
-            }
+            foreach (HistoryModel historyRawData in historyRawList) HistoryItemDataList.Add(historyRawData);
         }
 
         private async Task ViewAllAsync()

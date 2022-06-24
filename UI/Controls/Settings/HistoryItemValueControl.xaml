@@ -30,6 +30,7 @@
                     Text="{x:Bind service:LanguageService.GetResources('/Settings/HistoryItem')}" />
 
                 <TextBlock
+                    VerticalAlignment="Center"
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Style="{StaticResource CaptionTextBlockStyle}"
                     Text="{x:Bind service:LanguageService.GetResources('/Settings/HistoryItemDescription')}" />

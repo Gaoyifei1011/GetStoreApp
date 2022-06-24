@@ -1,13 +1,13 @@
 ﻿<UserControl
     x:Class="GetStoreApp.UI.Controls.Home.HistoryItemControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:ctWinUI="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:i="using:Microsoft.Xaml.Interactivity"
-    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ctWinUI="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:service="using:GetStoreApp.Services.Settings"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
     mc:Ignorable="d">
 
     <i:Interaction.Behaviors>
@@ -50,7 +50,7 @@
                         IsEnabled="{x:Bind ViewModel.SelectedHistoryItem, Converter={StaticResource NullCheckConverter}, Mode=OneWay}"
                         Label="{x:Bind service:LanguageService.GetResources('/Home/Fillin')}"
                         ToolTipService.ToolTip="{x:Bind service:LanguageService.GetResources('/Home/FillinDescription')}"
-                        Visibility="{x:Bind ViewModel.HistoryItemList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}" />
+                        Visibility="{x:Bind ViewModel.HistoryItemDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}" />
                     <AppBarButton
                         Command="{x:Bind ViewModel.ViewAllCommand}"
                         Icon="ViewAll"
@@ -66,14 +66,14 @@
                     VerticalAlignment="Center"
                     Text="{x:Bind service:LanguageService.GetResources('/Home/HistoryItemEmpty')}"
                     TextAlignment="Center"
-                    Visibility="{x:Bind ViewModel.HistoryItemList.Count, Converter={StaticResource IntToReverseVisibilityConverter}, Mode=OneWay}" />
+                    Visibility="{x:Bind ViewModel.HistoryItemDataList.Count, Converter={StaticResource IntToReverseVisibilityConverter}, Mode=OneWay}" />
 
                 <ctWinUI:DataGrid
-                    ItemsSource="{x:Bind ViewModel.HistoryItemList, Mode=OneWay}"
+                    ItemsSource="{x:Bind ViewModel.HistoryItemDataList, Mode=OneWay}"
                     RowStyle="{StaticResource DataGridRowStyle}"
                     SelectedItem="{x:Bind ViewModel.SelectedHistoryItem, Mode=TwoWay}"
                     Style="{StaticResource DataGridHistoryItemStyle}"
-                    Visibility="{x:Bind ViewModel.HistoryItemList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
+                    Visibility="{x:Bind ViewModel.HistoryItemDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
 
                     <i:Interaction.Behaviors>
                         <ic:EventTriggerBehavior EventName="DoubleTapped">
@@ -86,17 +86,20 @@
                             Width="*"
                             Binding="{Binding HistoryType, Converter={StaticResource TypeNameFormatConverter}}"
                             Header="{x:Bind service:LanguageService.GetResources('/Home/Type')}"
-                            HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" />
+                            HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
+                            ToolTipService.ToolTip="{x:Bind service:LanguageService.GetResources('/Home/DoubleTapToInput')}" />
                         <ctWinUI:DataGridTextColumn
                             Width="*"
                             Binding="{Binding HistoryChannel, Converter={StaticResource ChannelNameFormatConverter}}"
                             Header="{x:Bind service:LanguageService.GetResources('/Home/Channel')}"
-                            HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" />
+                            HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
+                            ToolTipService.ToolTip="{x:Bind service:LanguageService.GetResources('/Home/DoubleTapToInput')}" />
                         <ctWinUI:DataGridTextColumn
                             Width="3*"
                             Binding="{Binding HistoryLink}"
                             Header="{x:Bind service:LanguageService.GetResources('/Home/Link')}"
-                            HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" />
+                            HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
+                            ToolTipService.ToolTip="{x:Bind service:LanguageService.GetResources('/Home/DoubleTapToInput')}" />
                     </ctWinUI:DataGrid.Columns>
 
                     <ctWinUI:DataGrid.ContextFlyout>

@@ -5,14 +5,20 @@
     xmlns:convert="using:GetStoreApp.Converters.Conversions"
     xmlns:format="using:GetStoreApp.Converters.Formats">
 
+    <check:FilterValueCheckConverter x:Name="FilterValueCheckConverter" />
     <check:NullCheckConverter x:Name="NullCheckConverter" />
+    <check:TimeSortValueCheckConverter x:Name="TimeSortValueCheckConverter" />
+
     <convert:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
     <convert:BooleanToReverseVisibilityConverter x:Name="BooleanToReverseVisibilityConverter" />
     <convert:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     <convert:IntToVisibilityConverter x:Name="IntToVisibilityConverter" />
     <convert:IntToReverseVisibilityConverter x:Name="IntToReverseVisibilityConverter" />
-    <format:GMTFormatConverter x:Name="GMTFormatConverter" />
-    <format:TypeNameFormatConverter x:Name="TypeNameFormatConverter" />
+
     <format:ChannelNameFormatConverter x:Name="ChannelNameFormatConverter" />
+    <format:GMTFormatConverter x:Name="GMTFormatConverter" />
+    <format:HistoryCountInfoFormatConverter x:Name="HistoryCountInfoFormatConverter" />
+    <format:ResultCountInfoFormatConverter x:Name="ResultCountInfoFormatConverter" />
     <format:TimeStampFormatConverter x:Name="TimeStampFormatConverter" />
+    <format:TypeNameFormatConverter x:Name="TypeNameFormatConverter" />
 </ResourceDictionary>

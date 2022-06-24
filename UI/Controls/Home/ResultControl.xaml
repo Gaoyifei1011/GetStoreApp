@@ -1,10 +1,10 @@
 ﻿<UserControl
     x:Class="GetStoreApp.UI.Controls.Home.ResultControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:ctWinUI="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ctWinUI="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:service="using:GetStoreApp.Services.Settings"
     xmlns:viewModel="using:GetStoreApp.ViewModels.Controls.Home"
     x:Name="ResultControlTest"
@@ -45,15 +45,15 @@
             <StackPanel
                 Grid.Column="3"
                 VerticalAlignment="Center"
-                Visibility="{x:Bind ViewModel.ResultCount, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
+                Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
                 <TextBlock Text="{x:Bind ViewModel.CategoryId, Mode=OneWay}" />
-                <TextBlock Text="{x:Bind ViewModel.ResultCountInfo, Mode=OneWay}" />
+                <TextBlock Text="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource ResultCountInfoFormatConverter}, Mode=OneWay}" />
             </StackPanel>
             <TextBlock
                 Grid.Column="3"
                 VerticalAlignment="Center"
                 Text="{x:Bind service:LanguageService.GetResources('/Home/SearchResultEmpty')}"
-                Visibility="{x:Bind ViewModel.ResultCount, Converter={StaticResource IntToReverseVisibilityConverter}, Mode=OneWay}" />
+                Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToReverseVisibilityConverter}, Mode=OneWay}" />
             <CommandBar
                 Grid.Column="4"
                 VerticalAlignment="Center"
@@ -97,7 +97,7 @@
             ItemsSource="{x:Bind ViewModel.ResultDataList, Mode=OneWay}"
             RowStyle="{StaticResource DataGridRowStyle}"
             Style="{StaticResource DataGridResultStyle}"
-            Visibility="{x:Bind ViewModel.ResultCount, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
+            Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
 
             <ctWinUI:DataGrid.Columns>
 

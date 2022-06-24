@@ -7,12 +7,11 @@
     mc:Ignorable="d">
 
     <Grid
+        Padding="16,12"
         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
         BorderThickness="1"
         CornerRadius="{ThemeResource ControlCornerRadius}">
-        <Grid Padding="16,12" Background="Transparent">
-            <ContentPresenter Content="{x:Bind CardContent}" />
-        </Grid>
+        <ContentPresenter Content="{x:Bind CardContent}" />
     </Grid>
 </UserControl>

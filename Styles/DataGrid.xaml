@@ -150,14 +150,12 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
         <Setter Property="BorderThickness" Value="1,1,1,0" />
-        <Setter Property="CanUserReorderColumns" Value="False" />
-        <Setter Property="CanUserSortColumns" Value="False" />
+        <Setter Property="CanUserReorderColumns" Value="True" />
         <Setter Property="CanUserResizeColumns" Value="False" />
         <Setter Property="GridLinesVisibility" Value="All" />
         <Setter Property="SelectionMode" Value="Single" />
         <Setter Property="CornerRadius" Value="4" />
         <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
-        <Setter Property="IsReadOnly" Value="True" />
         <Setter Property="RowDetailsVisibilityMode" Value="Collapsed" />
         <Setter Property="SelectionMode" Value="Single" />
         <Setter Property="VerticalScrollBarVisibility" Value="Visible" />

@@ -26,9 +26,13 @@
                     Margin="0,12"
                     Orientation="Vertical">
 
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind service:LanguageService.GetResources('/Settings/LinkFilter')}" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind service:LanguageService.GetResources('/Settings/LinkFilter')}" />
 
                     <TextBlock
+                        VerticalAlignment="Center"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
                         Text="{x:Bind service:LanguageService.GetResources('/Settings/LinkFilterDescription')}" />
