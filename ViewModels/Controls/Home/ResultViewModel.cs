@@ -29,24 +29,6 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _categoryId, value); }
         }
 
-        private int _resultCount = 0;
-
-        public int ResultCount
-        {
-            get { return _resultCount; }
-
-            set { SetProperty(ref _resultCount, value); }
-        }
-
-        private string _resultCountInfo;
-
-        public string ResultCountInfo
-        {
-            get { return _resultCountInfo; }
-
-            set { SetProperty(ref _resultCountInfo, value); }
-        }
-
         private bool _isSelectionMode = false;
 
         public bool IsSelectionMode
@@ -81,16 +63,12 @@ namespace GetStoreApp.ViewModels.Controls.Home
             Messenger.Register<ResultViewModel, ResultDataListMessage>(this, async (resultViewModel, resultDataListMessage) =>
             {
                 resultViewModel.ResultDataList.Clear();
-                resultViewModel.ResultCount = 0;
 
                 for (int i = 0; i < resultDataListMessage.Value.Count; i++)
                 {
                     resultDataListMessage.Value[i].SerialNumber = (i + 1).ToString();
                     resultViewModel.ResultDataList.Add(resultDataListMessage.Value[i]);
                 }
-
-                resultViewModel.ResultCount = resultViewModel.ResultDataList.Count;
-                resultViewModel.ResultCountInfo = string.Format(LanguageService.GetResources("/Home/ResultCountInfo"), resultViewModel.ResultDataList.Count);
                 await Task.CompletedTask;
             });
         }

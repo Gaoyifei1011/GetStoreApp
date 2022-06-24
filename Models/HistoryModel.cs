@@ -1,12 +1,34 @@
 ﻿using Microsoft.UI.Xaml;
+using System;
+using System.ComponentModel;
 
 namespace GetStoreApp.Models
 {
     /// <summary>
-    /// 该类用来存放数据库原始数据，用作HistoryModel与数据库数据读取存储的连接桥
+    /// 该类用来存放数据库原始数据
     /// </summary>
-    public class HistoryModel : DependencyObject
+    public class HistoryModel : DependencyObject, INotifyPropertyChanged, IComparable<HistoryModel>
     {
+        /// <summary>
+        /// 在多选模式下，该行历史记录是否被选择的标志
+        /// </summary>
+        private bool _isSelected;
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+
+            set
+            {
+                _isSelected = value;
+
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(nameof(IsSelected)));
+                }
+            }
+        }
+
         /// <summary>
         /// 历史记录生成时对应的时间戳，本地存储时使用的是格林尼治标准时间（GMT+0）
         /// </summary>
@@ -71,5 +93,16 @@ namespace GetStoreApp.Models
         // Using a DependencyProperty as the backing store for HistoryLink.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty HistoryLinkProperty =
             DependencyProperty.Register("HistoryLink", typeof(string), typeof(HistoryModel), new PropertyMetadata(string.Empty));
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// 按时间升序排列
+        /// </summary>
+        /// <param name="other"></param>
+        public int CompareTo(HistoryModel other)
+        {
+            return this.CurrentTimeStamp.CompareTo(other.CurrentTimeStamp);
+        }
     }
 }

@@ -1,27 +1,81 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Services;
 using GetStoreApp.Messages;
 using GetStoreApp.Models;
 using GetStoreApp.Services.App;
 using GetStoreApp.Services.History;
 using GetStoreApp.Services.Settings;
+using Microsoft.UI.Xaml.Media.Animation;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace GetStoreApp.ViewModels.Pages
 {
     public class HistoryViewModel : ObservableRecipient
     {
-        private bool _isEditMode;
+        private readonly INavigationService _navigationService;
 
-        public bool IsEditMode
+        private bool _isSelectMode = false;
+
+        public bool IsSelectMode
         {
-            get { return _isEditMode; }
+            get { return _isSelectMode; }
 
-            set { SetProperty(ref _isEditMode, value); }
+            set { SetProperty(ref _isSelectMode, value); }
+        }
+
+        private bool _isHistoryEmpty = true;
+
+        public bool IsHistoryEmpty
+        {
+            get { return _isHistoryEmpty; }
+
+            set { SetProperty(ref _isHistoryEmpty, value); }
+        }
+
+        private bool _isHistoryEmptyAfterFilter = true;
+
+        public bool IsHistoryEmptyAfterFilter
+        {
+            get { return _isHistoryEmptyAfterFilter; }
+
+            set { SetProperty(ref _isHistoryEmptyAfterFilter, value); }
+        }
+
+        /// <summary>
+        /// 时间排序的规则，false为递减排序，true为递增排序
+        /// </summary>
+        private bool _timeSortOrder = false;
+
+        public bool TimeSortOrder
+        {
+            get { return _timeSortOrder; }
+
+            set { SetProperty(ref _timeSortOrder, value); }
+        }
+
+        private string _typeFilter = "None";
+
+        public string TypeFilter
+        {
+            get { return _typeFilter; }
+
+            set { SetProperty(ref _typeFilter, value); }
+        }
+
+        private string _channelFilter = "None";
+
+        public string ChannelFilter
+        {
+            get { return _channelFilter; }
+
+            set { SetProperty(ref _channelFilter, value); }
         }
 
         private HistoryModel _selectedHistoryItem;
@@ -30,20 +84,38 @@ namespace GetStoreApp.ViewModels.Pages
         {
             get { return _selectedHistoryItem; }
 
-            set { SetProperty(ref _selectedHistoryItem, value); }
+            set
+            {
+                value.IsSelected = !value.IsSelected;
+                SetProperty(ref _selectedHistoryItem, value);
+            }
         }
 
         public IAsyncRelayCommand LoadedCommand { get; set; }
 
-        public ICommand CopyCommand { get; set; }
-
         public IAsyncRelayCommand FillinCommand { get; set; }
 
-        public ICommand SelectCommand { get; set; }
+        public IAsyncRelayCommand CopyCommand { get; set; }
 
-        public ICommand DeleteCommand { get; set; }
+        public IAsyncRelayCommand SelectCommand { get; set; }
 
-        public ICommand CancelCommand { get; set; }
+        public IAsyncRelayCommand TimeSortCommand { get; set; }
+
+        public IAsyncRelayCommand TypeFilterCommand { get; set; }
+
+        public IAsyncRelayCommand ChannelFilterCommand { get; set; }
+
+        public IAsyncRelayCommand RefreshCommand { get; set; }
+
+        public IAsyncRelayCommand SelectAllCommand { get; set; }
+
+        public IAsyncRelayCommand SelectNoneCommand { get; set; }
+
+        public IAsyncRelayCommand CopySelectedCommand { get; set; }
+
+        public IAsyncRelayCommand DeleteCommand { get; set; }
+
+        public IAsyncRelayCommand CancelCommand { get; set; }
 
         public List<GetAppTypeModel> TypeList { get; } = new List<GetAppTypeModel>
         {
@@ -61,46 +133,124 @@ namespace GetStoreApp.ViewModels.Pages
             new GetAppChannelModel{ DisplayName=LanguageService.GetResources("Retail"),InternalName="Retail" }
         };
 
-        public ObservableCollection<HistoryModel> HistoryList = new ObservableCollection<HistoryModel>();
+        public ObservableCollection<HistoryModel> HistoryDataList { get; set; } = new ObservableCollection<HistoryModel>();
 
-        public HistoryViewModel()
+        public HistoryViewModel(INavigationService navigationService)
         {
-            // List列表初始化，可以从数据库获得的列表中加载
-            LoadedCommand = new AsyncRelayCommand(UpdateHistoryListAsync);
+            _navigationService = navigationService;
 
-            CopyCommand = new AsyncRelayCommand(CopyAsync);
+            // List列表初始化，可以从数据库获得的列表中加载
+            LoadedCommand = new AsyncRelayCommand(GetHistoryDataListAsync);
 
             FillinCommand = new AsyncRelayCommand(FillinAsync);
 
-            SelectCommand = new RelayCommand(() => { IsEditMode = true; });
+            CopyCommand = new AsyncRelayCommand(CopyAsync);
 
-            DeleteCommand = new RelayCommand(() => { IsEditMode = false; });
+            SelectCommand = new AsyncRelayCommand(async () =>
+            {
+                await SelectNoneAsync();
+                IsSelectMode = true;
+            });
 
-            CancelCommand = new RelayCommand(() => { IsEditMode = false; });
+            TimeSortCommand = new AsyncRelayCommand<string>(async (param) =>
+            {
+                TimeSortOrder = Convert.ToBoolean(param);
+                await GetHistoryDataListAsync();
+            });
+
+            TypeFilterCommand = new AsyncRelayCommand<string>(async (param) =>
+            {
+                TypeFilter = param;
+                await GetHistoryDataListAsync();
+            });
+
+            ChannelFilterCommand = new AsyncRelayCommand<string>(async (param) =>
+            {
+                ChannelFilter = param;
+                await GetHistoryDataListAsync();
+            });
+
+            RefreshCommand = new AsyncRelayCommand(GetHistoryDataListAsync);
+
+            SelectAllCommand = new AsyncRelayCommand(async () =>
+            {
+                foreach (var item in HistoryDataList) item.IsSelected = true;
+                await Task.CompletedTask;
+            });
+
+            SelectNoneCommand = new AsyncRelayCommand(SelectNoneAsync);
+
+            CopySelectedCommand = new AsyncRelayCommand(CopySelectedAsync);
+
+            DeleteCommand = new AsyncRelayCommand(DeleteAsync);
+
+            CancelCommand = new AsyncRelayCommand(async () =>
+            {
+                IsSelectMode = false;
+                await Task.CompletedTask;
+            });
+
+            Messenger.Register<HistoryViewModel, HistoryMessage>(this, async (historyItemViewModel, historyMessage) =>
+            {
+                if (historyMessage.Value) await GetHistoryDataListAsync();
+            });
         }
 
         /// <summary>
-        /// UI加载完成时/或者是数据库数据发生变化时，从数据库中异步加载数据
+        /// 多选模式下删除选中的条目
         /// </summary>
-        private async Task UpdateHistoryListAsync()
+        private async Task DeleteAsync()
         {
+            IsSelectMode = false;
+
+            List<HistoryModel> SelectedHistoryDataList = HistoryDataList.Where(item => item.IsSelected == true).ToList();
+
+            await HistoryDataService.DeleteHistoryDataAsync(SelectedHistoryDataList);
+
+            await GetHistoryDataListAsync();
+
+            Messenger.Send(new HistoryMessage(true));
+        }
+
+        /// <summary>
+        /// 从数据库中加载数据
+        /// </summary>
+        private async Task GetHistoryDataListAsync()
+        {
+            Tuple<List<HistoryModel>, bool, bool> QueryHistoryAllData = await HistoryDataService.QueryAllHistoryDataAsync(TimeSortOrder, TypeFilter, ChannelFilter);
+
             // 获取数据库的原始记录数据
-            List<HistoryModel> HistoryRawList = await HistoryDataService.QueryAllHistoryDataAsync();
+            List<HistoryModel> HistoryRawList = QueryHistoryAllData.Item1;
 
-            // 更新UI上面的数据
-            UpdateList(HistoryRawList);
+            // 数据库中的历史记录表是否为空
+            IsHistoryEmpty = QueryHistoryAllData.Item2;
+
+            // 经过筛选后历史记录是否为空
+            IsHistoryEmptyAfterFilter = QueryHistoryAllData.Item3;
+
+            //Todo: need to debug why observablecollection clear cause object reference not set to an instance of an object.
+            try
+            {
+                // 更新UI上面的数据
+                ConvertRawListToDisplayList(HistoryRawList);
+            }
+            catch (Exception)
+            {
+                ConvertRawListToDisplayList(HistoryRawList);
+            }
         }
 
         /// <summary>
-        /// 更新UI上面的数据
+        /// 将原始数据转换为在UI界面上呈现出来的数据
         /// </summary>
-        private void UpdateList(List<HistoryModel> historyRawList)
+        private void ConvertRawListToDisplayList(List<HistoryModel> historyRawList)
         {
-            HistoryList.Clear();
+            HistoryDataList.Clear();
 
             foreach (HistoryModel historyRawData in historyRawList)
             {
-                HistoryList.Add(historyRawData);
+                historyRawData.IsSelected = false;
+                HistoryDataList.Add(historyRawData);
             }
         }
 
@@ -112,9 +262,22 @@ namespace GetStoreApp.ViewModels.Pages
             if (SelectedHistoryItem == null) return;
 
             Messenger.Send(new FillinMessage(SelectedHistoryItem));
+            _navigationService.NavigateTo(typeof(HomeViewModel).FullName, null, new DrillInNavigationTransitionInfo());
             await Task.CompletedTask;
         }
 
+        /// <summary>
+        /// 点击全部不选按钮时，让复选框的历史记录全部不选
+        /// </summary>
+        private async Task SelectNoneAsync()
+        {
+            foreach (var item in HistoryDataList) item.IsSelected = false;
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// 单选模式下复制选中的条目
+        /// </summary>
         private async Task CopyAsync()
         {
             string CopyContent = string.Format("{0}\t{1}\t{2}",
@@ -122,6 +285,28 @@ namespace GetStoreApp.ViewModels.Pages
                 ChannelList.Find(item => item.InternalName.Equals(SelectedHistoryItem.HistoryChannel)).DisplayName,
                 SelectedHistoryItem.HistoryLink);
             CopyPasteService.CopyStringToClicpBoard(CopyContent);
+
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// 多选模式下复制选中的条目
+        /// </summary>
+        private async Task CopySelectedAsync()
+        {
+            List<HistoryModel> SelectedHistoryDataList = HistoryDataList.Where(item => item.IsSelected == true).ToList();
+
+            StringBuilder stringBuilder = new StringBuilder();
+
+            foreach (var item in SelectedHistoryDataList)
+            {
+                stringBuilder.Append(string.Format("{0}\t{1}\t{2}\n",
+                    TypeList.Find(i => i.InternalName.Equals(item.HistoryType)).DisplayName,
+                    ChannelList.Find(i => i.InternalName.Equals(item.HistoryChannel)).DisplayName,
+                    item.HistoryLink));
+            }
+
+            CopyPasteService.CopyStringToClicpBoard(stringBuilder.ToString());
 
             await Task.CompletedTask;
         }

@@ -138,6 +138,9 @@
   <data name="CopyLink" xml:space="preserve">
     <value>Copy Link</value>
   </data>
+  <data name="DoubleTapToInput" xml:space="preserve">
+    <value>Double-click the row to fill in the information</value>
+  </data>
   <data name="Download" xml:space="preserve">
     <value>Download</value>
   </data>
@@ -184,7 +187,7 @@
     <value>No results have been searched, please check the link you entered and try again</value>
   </data>
   <data name="Select" xml:space="preserve">
-    <value>Multi-select mode</value>
+    <value>Select</value>
   </data>
   <data name="SerialNumber" xml:space="preserve">
     <value>S/N</value>

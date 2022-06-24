@@ -132,17 +132,29 @@
   <data name="CopyLink" xml:space="preserve">
     <value>复制链接</value>
   </data>
-  <data name="DataTime" xml:space="preserve">
+  <data name="CopySelected" xml:space="preserve">
+    <value>复制选中的项目</value>
+  </data>
+  <data name="DateTime" xml:space="preserve">
     <value>时间</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>删除</value>
   </data>
+  <data name="DoubleTapToInput" xml:space="preserve">
+    <value>双击该行填入信息</value>
+  </data>
   <data name="Fillin" xml:space="preserve">
     <value>填入</value>
   </data>
+  <data name="FillinDescription" xml:space="preserve">
+    <value>点击"填入"按钮后会在上面的文本输入框中填入链接，点击“获取链接”即可获取具体内容</value>
+  </data>
   <data name="Filter" xml:space="preserve">
     <value>过滤</value>
+  </data>
+  <data name="HistoryCountInfo" xml:space="preserve">
+    <value>共有{0}条记录</value>
   </data>
   <data name="HistoryEmpty" xml:space="preserve">
     <value>没有任何历史记录</value>
@@ -150,8 +162,14 @@
   <data name="HistoryEmptyDescription" xml:space="preserve">
     <value>快去获取想要下载的应用吧，您输入过的链接将会显示在此处</value>
   </data>
+  <data name="HistoryFilterEmptyDescription" xml:space="preserve">
+    <value>没有符合该条件下的历史记录，请修改筛选条件后重试</value>
+  </data>
   <data name="Link" xml:space="preserve">
     <value>链接</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>无</value>
   </data>
   <data name="Operation" xml:space="preserve">
     <value>操作</value>
@@ -163,10 +181,25 @@
     <value>搜索历史记录</value>
   </data>
   <data name="Select" xml:space="preserve">
-    <value>多选模式</value>
+    <value>选择</value>
   </data>
-  <data name="SelectedItemValue" xml:space="preserve">
+  <data name="SelectAll" xml:space="preserve">
+    <value>全选</value>
+  </data>
+  <data name="SelectedHistoryCountInfo" xml:space="preserve">
     <value>已选中{0}项</value>
+  </data>
+  <data name="SelectNone" xml:space="preserve">
+    <value>全部不选</value>
+  </data>
+  <data name="Sort" xml:space="preserve">
+    <value>排序</value>
+  </data>
+  <data name="TimeDecreaseSort" xml:space="preserve">
+    <value>时间递减排序</value>
+  </data>
+  <data name="TimeIncreaseSort" xml:space="preserve">
+    <value>时间递增排序</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>历史记录</value>

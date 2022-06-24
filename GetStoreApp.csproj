@@ -23,7 +23,7 @@
     <ImplicitUsings>disable</ImplicitUsings>
     <FileVersion>0.1.8.0</FileVersion>
     <AssemblyVersion></AssemblyVersion>
-    <SupportedOSPlatformVersion>10.0.22000.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
     <Copyright>高怡飞</Copyright>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">

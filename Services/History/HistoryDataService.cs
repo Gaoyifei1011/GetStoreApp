@@ -1,6 +1,7 @@
 ﻿using GetStoreApp.Models;
 using GetStoreApp.Services.App;
 using Microsoft.Data.Sqlite;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -9,26 +10,30 @@ namespace GetStoreApp.Services.History
 {
     public static class HistoryDataService
     {
-        // 添加历史记录数据
-        public static async Task AddHistoryDataAsync(HistoryModel history)
+        /// <summary>
+        /// 判断历史记录表是否为空
+        /// </summary>
+        private static async Task<bool> IsHistoryTableEmptyAsync()
         {
-            // 文件不存在，取消操作
-            if (!File.Exists(DataBaseService.DBpath))
+            int HistoryTableCount = 0;
+
+            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
             {
-                return;
+                await db.OpenAsync();
+
+                SqliteCommand CountCommand = new SqliteCommand();
+                CountCommand.Connection = db;
+
+                CountCommand.CommandText = string.Format("SELECT COUNT(*) FROM {0}", DataBaseService.HistoryTableName);
+
+                SqliteDataReader Query = await CountCommand.ExecuteReaderAsync();
+
+                if (await Query.ReadAsync()) HistoryTableCount = Query.GetInt32(0);
+
+                await db.CloseAsync();
             }
 
-            bool CheckResult = await CheckDuplicatedDataAsync(history.HistoryKey);
-
-            // 如果存在相同的行数据，只更新TimeStamp值，没有，添加数据
-            if (CheckResult)
-            {
-                await UpdateDataAsync(history);
-            }
-            else
-            {
-                await AddDataAsync(history);
-            }
+            return Convert.ToBoolean(HistoryTableCount == 0);
         }
 
         /// <summary>
@@ -47,14 +52,29 @@ namespace GetStoreApp.Services.History
 
                 SearchCommand.CommandText = string.Format("SELECT * FROM {0} WHERE HISTORYKEY LIKE '{1}'", DataBaseService.HistoryTableName, historyKey);
 
-                SqliteDataReader Query = SearchCommand.ExecuteReader();
+                SqliteDataReader Query = await SearchCommand.ExecuteReaderAsync();
 
-                if (Query.Read()) IsExists = true;
+                if (await Query.ReadAsync()) IsExists = true;
 
                 await db.CloseAsync();
             }
 
             return IsExists;
+        }
+
+        /// <summary>
+        /// 添加历史记录数据
+        /// </summary>
+        public static async void AddHistoryDataAsync(HistoryModel history)
+        {
+            // 文件不存在，取消操作
+            if (!File.Exists(DataBaseService.DBpath)) return;
+
+            bool CheckResult = await CheckDuplicatedDataAsync(history.HistoryKey);
+
+            // 如果存在相同的行数据，只更新TimeStamp值，没有，添加数据
+            if (CheckResult) await UpdateDataAsync(history);
+            else await AddDataAsync(history);
         }
 
         /// <summary>
@@ -71,7 +91,7 @@ namespace GetStoreApp.Services.History
 
                 InsertCommand.CommandText = string.Format("INSERT INTO {0} VALUES ({1},'{2}','{3}','{4}','{5}')", DataBaseService.HistoryTableName, history.CurrentTimeStamp, history.HistoryKey, history.HistoryType, history.HistoryChannel, history.HistoryLink);
 
-                InsertCommand.ExecuteReader();
+                await InsertCommand.ExecuteNonQueryAsync();
 
                 await db.CloseAsync();
             }
@@ -91,7 +111,7 @@ namespace GetStoreApp.Services.History
 
                 UpdateCommand.CommandText = string.Format("UPDATE {0} SET TIMESTAMP = {1} WHERE HISTORYKEY = '{2}'", DataBaseService.HistoryTableName, history.CurrentTimeStamp, history.HistoryKey);
 
-                UpdateCommand.ExecuteReader();
+                await UpdateCommand.ExecuteNonQueryAsync();
 
                 await db.CloseAsync();
             }
@@ -100,10 +120,20 @@ namespace GetStoreApp.Services.History
         /// <summary>
         /// 获取所有的历史记录数据
         /// </summary>
-        public static async Task<List<HistoryModel>> QueryAllHistoryDataAsync()
+        /// <param name="timeSortOrder">时间戳顺序，True为递增排序，False为递减排序</param>
+        /// <param name="typeFilter"></param>
+        /// <param name="channelFilter"></param>
+        /// <returns>返回历史记录列表，并在原函数修改对应的参数值</returns>
+        public static async Task<Tuple<List<HistoryModel>, bool, bool>> QueryAllHistoryDataAsync(bool timeSortOrder = false, string typeFilter = "None", string channelFilter = "None")
         {
             List<HistoryModel> HistoryRawList = new List<HistoryModel>();
 
+            //调用之前先判断历史记录表是否为空
+            bool IsHistoryEmpty = await IsHistoryTableEmptyAsync();
+
+            if (IsHistoryEmpty) return Tuple.Create(HistoryRawList, IsHistoryEmpty, true);
+
+            // 从数据库中获取数据
             using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
             {
                 await db.OpenAsync();
@@ -111,11 +141,11 @@ namespace GetStoreApp.Services.History
                 SqliteCommand SelectCommand = new SqliteCommand();
                 SelectCommand.Connection = db;
 
-                SelectCommand.CommandText = string.Format("SELECT * FROM {0} ORDER BY TIMESTAMP DESC", DataBaseService.HistoryTableName);
+                SelectCommand.CommandText = GenerateSelectSQL(timeSortOrder, typeFilter, channelFilter);
 
-                SqliteDataReader Query = SelectCommand.ExecuteReader();
+                SqliteDataReader Query = await SelectCommand.ExecuteReaderAsync();
 
-                while (Query.Read())
+                while (await Query.ReadAsync())
                 {
                     HistoryModel historyRawModel = new HistoryModel
                     {
@@ -132,7 +162,32 @@ namespace GetStoreApp.Services.History
                 await db.CloseAsync();
             }
 
-            return HistoryRawList;
+            // 判断经过过滤后历史记录表是否为空
+            bool IsHistoryEmptyAfterFilter = HistoryRawList.Count == 0;
+
+            return Tuple.Create(HistoryRawList, IsHistoryEmpty, IsHistoryEmptyAfterFilter);
+        }
+
+        /// <summary>
+        /// 根据选定的条件生成相应的SQL语句
+        /// </summary>
+        private static string GenerateSelectSQL(bool timeSortOrder, string typeFilter, string channelFilter)
+        {
+            string SQL = string.Empty;
+
+            if (typeFilter == "None" && channelFilter == "None")
+                SQL = string.Format("SELECT * FROM {0} ORDER BY TIMESTAMP", DataBaseService.HistoryTableName);
+            else if (typeFilter != "None" && channelFilter != "None")
+                SQL = string.Format("SELECT * FROM {0} WHERE TYPE = '{1}' AND CHANNEL = '{2}' ORDER BY TIMESTAMP", DataBaseService.HistoryTableName, typeFilter, channelFilter);
+            else if (typeFilter != "None")
+                SQL = string.Format("SELECT * FROM {0} WHERE TYPE = '{1}' ORDER BY TIMESTAMP", DataBaseService.HistoryTableName, typeFilter, channelFilter);
+            else if (channelFilter != "None")
+                SQL = string.Format("SELECT * FROM {0} WHERE CHANNEL = '{1}' ORDER BY TIMESTAMP", DataBaseService.HistoryTableName, channelFilter, channelFilter);
+
+            if (!timeSortOrder)
+                SQL = string.Format("{0} {1}", SQL, "DESC");
+
+            return SQL;
         }
 
         /// <summary>
@@ -151,9 +206,9 @@ namespace GetStoreApp.Services.History
 
                 SelectCommand.CommandText = string.Format("SELECT * FROM {0} ORDER BY TIMESTAMP DESC LIMIT {1}", DataBaseService.HistoryTableName, value);
 
-                SqliteDataReader Query = SelectCommand.ExecuteReader();
+                SqliteDataReader Query = await SelectCommand.ExecuteReaderAsync();
 
-                while (Query.Read())
+                while (await Query.ReadAsync())
                 {
                     HistoryModel historyRawModel = new HistoryModel
                     {
@@ -176,19 +231,34 @@ namespace GetStoreApp.Services.History
         /// <summary>
         /// 删除历史记录数据
         /// </summary>
-        public static async Task DeleteHistoryDataAsync(string historyKey)
+        public static async Task DeleteHistoryDataAsync(List<HistoryModel> selectedHistoryDataList)
         {
             using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
             {
                 await db.OpenAsync();
 
-                SqliteCommand DeleteCommand = new SqliteCommand();
-                DeleteCommand.Connection = db;
+                using (SqliteTransaction transaction = db.BeginTransaction())
+                {
+                    using (SqliteCommand DeleteCommand = new SqliteCommand())
+                    {
+                        DeleteCommand.Connection = db;
+                        DeleteCommand.Transaction = transaction;
 
-                DeleteCommand.CommandText = string.Format("DELETE FROM {0} WHERE HISTORYKEY = '{1}'", DataBaseService.HistoryTableName, historyKey);
-
-                DeleteCommand.ExecuteReader();
-
+                        try
+                        {
+                            foreach (var item in selectedHistoryDataList)
+                            {
+                                DeleteCommand.CommandText = string.Format("DELETE FROM {0} WHERE HISTORYKEY = '{1}'", DataBaseService.HistoryTableName, item.HistoryKey);
+                                await DeleteCommand.ExecuteNonQueryAsync();
+                            }
+                            await transaction.CommitAsync();
+                        }
+                        catch (Exception)
+                        {
+                            await transaction.RollbackAsync();
+                        }
+                    }
+                }
                 await db.CloseAsync();
             }
         }
@@ -208,7 +278,7 @@ namespace GetStoreApp.Services.History
                 // 删除表中记录的同时修改他的自增列
                 DeleteCommand.CommandText = string.Format("DELETE FROM {0};Update sqlite_sequence SET seq=0 WHERE name = '{0}'", DataBaseService.HistoryTableName);
 
-                DeleteCommand.ExecuteReader();
+                await DeleteCommand.ExecuteReaderAsync();
 
                 await db.CloseAsync();
             }

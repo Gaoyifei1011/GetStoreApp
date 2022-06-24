@@ -138,6 +138,9 @@
   <data name="CopyLink" xml:space="preserve">
     <value>复制链接</value>
   </data>
+  <data name="DoubleTapToInput" xml:space="preserve">
+    <value>双击该行填入信息</value>
+  </data>
   <data name="Download" xml:space="preserve">
     <value>下载</value>
   </data>
@@ -154,7 +157,7 @@
     <value>填入</value>
   </data>
   <data name="FillinDescription" xml:space="preserve">
-    <value>点击填入按钮后会在上面的文本输入框中填入链接，点击“获取链接”即可获取具体内容</value>
+    <value>点击"填入"按钮后会在上面的文本输入框中填入链接，点击“获取链接”即可获取具体内容</value>
   </data>
   <data name="GetLinks" xml:space="preserve">
     <value>获取链接</value>
@@ -184,7 +187,7 @@
     <value>没有搜索到任何结果，请检查您输入的链接后重试</value>
   </data>
   <data name="Select" xml:space="preserve">
-    <value>多选模式</value>
+    <value>选择</value>
   </data>
   <data name="SerialNumber" xml:space="preserve">
     <value>序号</value>
