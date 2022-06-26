@@ -4,7 +4,6 @@ using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Messages;
 using GetStoreApp.Services.Settings;
 using System;
-using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
 {
@@ -38,25 +37,14 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             }
         }
 
-        public IAsyncRelayCommand StartsWithECommand { get; set; }
-
-        public IAsyncRelayCommand BlockMapCommand { get; set; }
-
-        public LinkFilterViewModel()
-        {
-            StartsWithECommand = new AsyncRelayCommand(LaunchStartsWithEDescriptionAsync);
-
-            BlockMapCommand = new AsyncRelayCommand(LaunchBlockMapDescriptionAsync);
-        }
-
-        private async Task LaunchStartsWithEDescriptionAsync()
+        public IAsyncRelayCommand StartsWithECommand { get; set; } = new AsyncRelayCommand(async () =>
         {
             await Windows.System.Launcher.LaunchUriAsync(new Uri("https://datatypes.net/open-eappx-files#:~:text=EAPPX%20file%20is%20a%20Microsoft%20Windows%20Encrypted%20App,applications%20may%20also%20use%20the%20.eappx%20file%20extension."));
-        }
+        });
 
-        private async Task LaunchBlockMapDescriptionAsync()
+        public IAsyncRelayCommand BlockMapCommand { get; set; } = new AsyncRelayCommand(async () =>
         {
             await Windows.System.Launcher.LaunchUriAsync(new Uri("https://docs.microsoft.com/en-us/uwp/schemas/blockmapschema/app-package-block-map"));
-        }
+        });
     }
 }

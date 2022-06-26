@@ -31,6 +31,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
+
             <TextBlock
                 Grid.Column="0"
                 FontSize="{StaticResource TitleFontSize}"
@@ -39,11 +40,31 @@
             <!--  未完成  -->
             <AutoSuggestBox
                 Grid.Column="1"
-                MinWidth="230"
+                MinWidth="{x:Bind ViewModel.ASBMinWidth,Mode=OneWay}"
                 MaxWidth="400"
+                MaxSuggestionListHeight="206"
+                ItemsSource="{x:Bind ViewModel.HistoryQueryDataList,Mode=OneWay}"
+                Text="{x:Bind ViewModel.SearchHistoryText,Mode=TwoWay}"
                 VerticalAlignment="Center"
                 PlaceholderText="{x:Bind service:LanguageService.GetResources('/History/SearchHistoryPHText')}"
-                QueryIcon="Find" />
+                QueryIcon="Find" >
+                
+                <i:Interaction.Behaviors>
+                    <ic:EventTriggerBehavior EventName="GotFocus">
+                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.PointerPressedCommand}" />
+                    </ic:EventTriggerBehavior>
+                    <ic:EventTriggerBehavior EventName="LostFocus">
+                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.PointerReleasedCommand}" />
+                    </ic:EventTriggerBehavior>
+                    <ic:EventTriggerBehavior EventName="TextChanged">
+                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.ASBTextChangedCommand}" />
+                    </ic:EventTriggerBehavior>
+                    <ic:EventTriggerBehavior EventName="QuerySubmitted">
+                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.ASBQuerySubmittedCommand}" />
+                    </ic:EventTriggerBehavior>
+                </i:Interaction.Behaviors>
+
+            </AutoSuggestBox>
         </Grid>
 
         <Grid
@@ -84,14 +105,12 @@
                 <AppBarButton
                     Command="{x:Bind ViewModel.FillinCommand}"
                     Icon="Up"
-                    IsEnabled="{x:Bind ViewModel.SelectedHistoryItem, Converter={StaticResource NullCheckConverter}, Mode=OneWay}"
                     Label="{x:Bind service:LanguageService.GetResources('/History/Fillin')}"
                     ToolTipService.ToolTip="{x:Bind service:LanguageService.GetResources('/History/FillinDescription')}" />
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.CopyCommand}"
                     Icon="Copy"
-                    IsEnabled="{x:Bind ViewModel.SelectedHistoryItem, Converter={StaticResource NullCheckConverter}, Mode=OneWay}"
                     Label="{x:Bind service:LanguageService.GetResources('/History/Copy')}" />
 
                 <AppBarButton Command="{x:Bind ViewModel.SelectCommand}" Label="{x:Bind service:LanguageService.GetResources('/History/Select')}">
@@ -239,7 +258,6 @@
                     Icon="Copy"
                     Label="{x:Bind service:LanguageService.GetResources('/History/CopySelected')}" />
 
-                <!--  未完成  -->
                 <AppBarButton
                     Command="{x:Bind ViewModel.DeleteCommand}"
                     Icon="Delete"
@@ -293,14 +311,26 @@
                 </i:Interaction.Behaviors>
 
                 <ctWinUI:DataGrid.Columns>
-                    <ctWinUI:DataGridCheckBoxColumn
-                        Width="100"
-                        Binding="{Binding IsSelected, Mode=TwoWay}"
+
+                    <ctWinUI:DataGridTemplateColumn
+                        Width="80"
                         Header="{x:Bind service:LanguageService.GetResources('/History/Select')}"
                         HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
                         IsReadOnly="False"
-                        IsThreeState="False"
-                        Visibility="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
+                        Visibility="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+
+                        <ctWinUI:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox
+                                    Margin="12,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                    IsThreeState="False" />
+                            </DataTemplate>
+                        </ctWinUI:DataGridTemplateColumn.CellTemplate>
+                    </ctWinUI:DataGridTemplateColumn>
+
                     <ctWinUI:DataGridTextColumn
                         Width="1.5*"
                         Binding="{Binding CurrentTimeStamp, Converter={StaticResource TimeStampFormatConverter}}"
@@ -308,6 +338,7 @@
                         HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
                         IsReadOnly="True"
                         ToolTipService.ToolTip="{x:Bind service:LanguageService.GetResources('/History/DoubleTapToInput')}" />
+
                     <ctWinUI:DataGridTextColumn
                         Width="*"
                         Binding="{Binding HistoryType, Converter={StaticResource TypeNameFormatConverter}}"
@@ -315,6 +346,7 @@
                         HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
                         IsReadOnly="True"
                         ToolTipService.ToolTip="{x:Bind service:LanguageService.GetResources('/History/DoubleTapToInput')}" />
+
                     <ctWinUI:DataGridTextColumn
                         Width="*"
                         Binding="{Binding HistoryChannel, Converter={StaticResource ChannelNameFormatConverter}}"
@@ -322,6 +354,7 @@
                         HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
                         IsReadOnly="True"
                         ToolTipService.ToolTip="{x:Bind service:LanguageService.GetResources('/History/DoubleTapToInput')}" />
+
                     <ctWinUI:DataGridTextColumn
                         Width="3*"
                         Binding="{Binding HistoryLink}"
@@ -329,25 +362,8 @@
                         HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
                         IsReadOnly="True"
                         ToolTipService.ToolTip="{x:Bind service:LanguageService.GetResources('/History/DoubleTapToInput')}" />
-                </ctWinUI:DataGrid.Columns>
 
-                <ctWinUI:DataGrid.ContextFlyout>
-                    <MenuFlyout>
-                        <MenuFlyoutItem IsEnabled="{x:Bind ViewModel.SelectedHistoryItem, Converter={StaticResource NullCheckConverter}, Mode=OneWay}" Text="{x:Bind service:LanguageService.GetResources('/History/Fillin')}">
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon
-                                    Grid.Column="0"
-                                    FontFamily="Segoe Fluent Icons"
-                                    Glyph="&#xE74a;" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
-                        <MenuFlyoutItem
-                            Command="{x:Bind ViewModel.CopyCommand}"
-                            Icon="Copy"
-                            IsEnabled="{x:Bind ViewModel.SelectedHistoryItem, Converter={StaticResource NullCheckConverter}, Mode=OneWay}"
-                            Text="{x:Bind service:LanguageService.GetResources('/History/Copy')}" />
-                    </MenuFlyout>
-                </ctWinUI:DataGrid.ContextFlyout>
+                </ctWinUI:DataGrid.Columns>
             </ctWinUI:DataGrid>
         </Grid>
     </Grid>

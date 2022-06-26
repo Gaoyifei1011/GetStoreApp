@@ -12,6 +12,9 @@
     <PackageCertificateThumbprint>7F64DB0B0770C29C61E5F8DC60430B3DC390D99F</PackageCertificateThumbprint>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <UseWPF>False</UseWPF>
+    <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
+    <SelfContained>true</SelfContained>
+    <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
     <UseWindowsForms>False</UseWindowsForms>
     <StartupObject></StartupObject>
     <ApplicationIcon>Assets\Logo\GetStoreApp.ico</ApplicationIcon>
@@ -66,6 +69,8 @@
     <None Remove="UI\Controls\Settings\BackdropControl.xaml" />
     <None Remove="UI\Controls\Settings\HistoryItemValueControl.xaml" />
     <None Remove="UI\Controls\Settings\LinkFilterControl.xaml" />
+    <None Remove="UI\Dialogs\DeletePromptDialog.xaml" />
+    <None Remove="UI\Dialogs\SelectEmptyPromptDialog.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -88,6 +93,12 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="UI\Dialogs\DeletePromptDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Dialogs\SelectEmptyPromptDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="UI\Controls\Settings\BackdropControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -134,11 +145,6 @@
 
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnablePreviewMsixTooling)'=='true'">
     <ProjectCapability Include="Msix" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="UI\Controls\General\" />
-    <Folder Include="UI\Dialogs\" />
   </ItemGroup>
 
   <ItemGroup>

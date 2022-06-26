@@ -6,7 +6,6 @@
     xmlns:format="using:GetStoreApp.Converters.Formats">
 
     <check:FilterValueCheckConverter x:Name="FilterValueCheckConverter" />
-    <check:NullCheckConverter x:Name="NullCheckConverter" />
     <check:TimeSortValueCheckConverter x:Name="TimeSortValueCheckConverter" />
 
     <convert:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
@@ -15,6 +14,7 @@
     <convert:IntToVisibilityConverter x:Name="IntToVisibilityConverter" />
     <convert:IntToReverseVisibilityConverter x:Name="IntToReverseVisibilityConverter" />
 
+    <format:CategoryIDInfoFormatConverter x:Name="CategoryIDInfoFormatConverter" />
     <format:ChannelNameFormatConverter x:Name="ChannelNameFormatConverter" />
     <format:GMTFormatConverter x:Name="GMTFormatConverter" />
     <format:HistoryCountInfoFormatConverter x:Name="HistoryCountInfoFormatConverter" />

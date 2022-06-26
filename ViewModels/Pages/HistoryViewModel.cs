@@ -7,10 +7,13 @@ using GetStoreApp.Models;
 using GetStoreApp.Services.App;
 using GetStoreApp.Services.History;
 using GetStoreApp.Services.Settings;
+using GetStoreApp.UI.Dialogs;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -60,6 +63,24 @@ namespace GetStoreApp.ViewModels.Pages
             set { SetProperty(ref _timeSortOrder, value); }
         }
 
+        private int _aSBMinWidth = 230;
+
+        public int ASBMinWidth
+        {
+            get { return _aSBMinWidth; }
+
+            set { SetProperty(ref _aSBMinWidth,value); }
+        }
+
+        private string _searchHistoryText = string.Empty;
+
+        public string SearchHistoryText
+        {
+            get { return _searchHistoryText; }
+
+            set { SetProperty(ref _searchHistoryText, value); }
+        }
+
         private string _typeFilter = "None";
 
         public string TypeFilter
@@ -84,14 +105,20 @@ namespace GetStoreApp.ViewModels.Pages
         {
             get { return _selectedHistoryItem; }
 
-            set
-            {
-                value.IsSelected = !value.IsSelected;
-                SetProperty(ref _selectedHistoryItem, value);
-            }
+            set { SetProperty(ref _selectedHistoryItem, value); }
         }
 
         public IAsyncRelayCommand LoadedCommand { get; set; }
+
+        public IAsyncRelayCommand PointerPressedCommand { get; set; }
+
+        public IAsyncRelayCommand PointerReleasedCommand { get; set; }
+
+        public IAsyncRelayCommand ASBTextChangedCommand { get; set; }
+
+        public IAsyncRelayCommand ASBSuggestionChosenCommand { get; set; }
+
+        public IAsyncRelayCommand ASBQuerySubmittedCommand { get; set; }
 
         public IAsyncRelayCommand FillinCommand { get; set; }
 
@@ -135,12 +162,26 @@ namespace GetStoreApp.ViewModels.Pages
 
         public ObservableCollection<HistoryModel> HistoryDataList { get; set; } = new ObservableCollection<HistoryModel>();
 
+        public ObservableCollection<string> HistoryASBDataList { get; set; } = new ObservableCollection<string>();
+
+        public ObservableCollection<string> HistoryQueryDataList { get; set; } = new ObservableCollection<string>();
+
         public HistoryViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
 
             // List列表初始化，可以从数据库获得的列表中加载
             LoadedCommand = new AsyncRelayCommand(GetHistoryDataListAsync);
+
+            PointerPressedCommand = new AsyncRelayCommand(async () => { ASBMinWidth = 400; await Task.CompletedTask; });
+
+            PointerReleasedCommand = new AsyncRelayCommand(async () => { ASBMinWidth = 230; await Task.CompletedTask; });
+
+            ASBTextChangedCommand = new AsyncRelayCommand<AutoSuggestBoxTextChangedEventArgs>(ASBTextChangedAsync);
+
+            //ASBSuggestionChosenCommand = new AsyncRelayCommand<AutoSuggestBoxSuggestionChosenEventArgs>(ASBSuggestionChosenAsync);
+
+            ASBQuerySubmittedCommand = new AsyncRelayCommand(ASBQuerySubmittedAsync);
 
             FillinCommand = new AsyncRelayCommand(FillinAsync);
 
@@ -196,20 +237,63 @@ namespace GetStoreApp.ViewModels.Pages
             });
         }
 
+        private async Task ASBTextChangedAsync(AutoSuggestBoxTextChangedEventArgs args)
+        {
+            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+            {
+                HistoryQueryDataList.Clear();
+
+                string[] SearchText = SearchHistoryText.ToLower().Split(" ");
+
+                foreach (var item in HistoryASBDataList)
+                {
+                    bool found = SearchHistoryText.All((key) =>
+                    {
+                        return item.ToLower().Contains(key);
+                    });
+                    if (found)
+                    {
+                        HistoryQueryDataList.Add(item);
+                    }
+                }
+                if (HistoryQueryDataList.Count == 0) HistoryQueryDataList.Add("没有找到任何结果");
+            }
+            await Task.CompletedTask;
+        }
+
+        private async Task ASBQuerySubmittedAsync()
+        {
+            Debug.WriteLine(SearchHistoryText);
+            await Task.CompletedTask;
+        }
+
         /// <summary>
         /// 多选模式下删除选中的条目
         /// </summary>
         private async Task DeleteAsync()
         {
-            IsSelectMode = false;
-
             List<HistoryModel> SelectedHistoryDataList = HistoryDataList.Where(item => item.IsSelected == true).ToList();
 
-            await HistoryDataService.DeleteHistoryDataAsync(SelectedHistoryDataList);
+            // 内容为空时显示空提示对话框
+            if (SelectedHistoryDataList.Count == 0)
+            {
+                await ShowSelectEmptyPromptDialogAsync();
+                return;
+            };
 
-            await GetHistoryDataListAsync();
+            // 删除时显示删除确认对话框
+            ContentDialogResult result = await ShowDeletePromptDialogAsync();
 
-            Messenger.Send(new HistoryMessage(true));
+            if(result == ContentDialogResult.Primary)
+            {
+                IsSelectMode = false;
+
+                await HistoryDataService.DeleteHistoryDataAsync(SelectedHistoryDataList);
+
+                await GetHistoryDataListAsync();
+
+                Messenger.Send(new HistoryMessage(true));
+            }
         }
 
         /// <summary>
@@ -232,18 +316,22 @@ namespace GetStoreApp.ViewModels.Pages
             try
             {
                 // 更新UI上面的数据
-                ConvertRawListToDisplayList(HistoryRawList);
+                ConvertRawListToDisplayList(ref HistoryRawList);
+
+                // 更新建议列表中的数据
+                UpdateASBDataList(ref HistoryRawList);
             }
             catch (Exception)
             {
-                ConvertRawListToDisplayList(HistoryRawList);
+                ConvertRawListToDisplayList(ref HistoryRawList);
+                UpdateASBDataList(ref HistoryRawList);
             }
         }
 
         /// <summary>
         /// 将原始数据转换为在UI界面上呈现出来的数据
         /// </summary>
-        private void ConvertRawListToDisplayList(List<HistoryModel> historyRawList)
+        private void ConvertRawListToDisplayList(ref List<HistoryModel> historyRawList)
         {
             HistoryDataList.Clear();
 
@@ -255,11 +343,26 @@ namespace GetStoreApp.ViewModels.Pages
         }
 
         /// <summary>
+        /// 更新建议列表中的数据
+        /// </summary>
+        private void UpdateASBDataList(ref List<HistoryModel> historyRawList)
+        {
+            // 更新建议列表
+            HistoryASBDataList.Clear();
+
+            foreach (var item in historyRawList) HistoryASBDataList.Add(item.HistoryLink);
+        }
+
+        /// <summary>
         /// 将选中的历史记录条目填入到选择控件中，然后点击“获取链接”即可获取
         /// </summary>
         private async Task FillinAsync()
         {
-            if (SelectedHistoryItem == null) return;
+            if (SelectedHistoryItem == null)
+            {
+                await ShowSelectEmptyPromptDialogAsync();
+                return;
+            };
 
             Messenger.Send(new FillinMessage(SelectedHistoryItem));
             _navigationService.NavigateTo(typeof(HomeViewModel).FullName, null, new DrillInNavigationTransitionInfo());
@@ -280,6 +383,12 @@ namespace GetStoreApp.ViewModels.Pages
         /// </summary>
         private async Task CopyAsync()
         {
+            if (SelectedHistoryItem == null)
+            {
+                await ShowSelectEmptyPromptDialogAsync();
+                return;
+            };
+
             string CopyContent = string.Format("{0}\t{1}\t{2}",
                 TypeList.Find(item => item.InternalName.Equals(SelectedHistoryItem.HistoryType)).DisplayName,
                 ChannelList.Find(item => item.InternalName.Equals(SelectedHistoryItem.HistoryChannel)).DisplayName,
@@ -296,6 +405,12 @@ namespace GetStoreApp.ViewModels.Pages
         {
             List<HistoryModel> SelectedHistoryDataList = HistoryDataList.Where(item => item.IsSelected == true).ToList();
 
+            if (SelectedHistoryDataList.Count == 0)
+            {
+                await ShowSelectEmptyPromptDialogAsync();
+                return;
+            };
+
             StringBuilder stringBuilder = new StringBuilder();
 
             foreach (var item in SelectedHistoryDataList)
@@ -307,8 +422,24 @@ namespace GetStoreApp.ViewModels.Pages
             }
 
             CopyPasteService.CopyStringToClicpBoard(stringBuilder.ToString());
-
             await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// 选中内容为空时，显示提示对话框
+        /// </summary>
+        private async Task ShowSelectEmptyPromptDialogAsync()
+        {
+            SelectEmptyPromptDialog dialog = new SelectEmptyPromptDialog();
+            dialog.XamlRoot = App.MainWindow.Content.XamlRoot;
+            await dialog.ShowAsync();
+        }
+
+        private async Task<ContentDialogResult> ShowDeletePromptDialogAsync()
+        {
+            DeletePromptDialog dialog = new DeletePromptDialog();
+            dialog.XamlRoot = App.MainWindow.Content.XamlRoot;
+            return await dialog.ShowAsync();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using GetStoreApp.Activation;
 using GetStoreApp.Contracts.Services;
 using GetStoreApp.Services.App;
+using GetStoreApp.Services.Settings;
 using GetStoreApp.Services.Shell;
 using GetStoreApp.Services.Web;
 using GetStoreApp.UI.Controls.General;
@@ -99,7 +100,7 @@ namespace GetStoreApp
             return _host.Services.GetService(typeof(T)) as T;
         }
 
-        public static Window MainWindow { get; set; } = new Window();
+        public static Window MainWindow { get; set; } = new Window() { Title = LanguageService.GetResources("AppDisplayName") };
 
         public App()
         {

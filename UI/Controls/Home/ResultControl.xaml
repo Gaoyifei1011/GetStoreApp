@@ -6,13 +6,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ctWinUI="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:service="using:GetStoreApp.Services.Settings"
-    xmlns:viewModel="using:GetStoreApp.ViewModels.Controls.Home"
     x:Name="ResultControlTest"
     mc:Ignorable="d">
-
-    <UserControl.Resources>
-        <viewModel:ResultViewModel x:Name="viewModel" />
-    </UserControl.Resources>
 
     <Grid
         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
@@ -37,37 +32,50 @@
                 FontFamily="Segoe Fluent Icons"
                 Glyph="&#xE71e;"
                 Style="{StaticResource FontIconStyle}" />
+
             <TextBlock
                 Grid.Column="1"
                 VerticalAlignment="Center"
                 Text="{x:Bind service:LanguageService.GetResources('/Home/SearchResult')}" />
+
             <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
+
             <StackPanel
                 Grid.Column="3"
                 VerticalAlignment="Center"
                 Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
-                <TextBlock Text="{x:Bind ViewModel.CategoryId, Mode=OneWay}" />
+                <TextBlock Text="{x:Bind ViewModel.CategoryId, Converter={StaticResource CategoryIDInfoFormatConverter}, Mode=OneWay}" />
                 <TextBlock Text="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource ResultCountInfoFormatConverter}, Mode=OneWay}" />
             </StackPanel>
+
             <TextBlock
                 Grid.Column="3"
                 VerticalAlignment="Center"
                 Text="{x:Bind service:LanguageService.GetResources('/Home/SearchResultEmpty')}"
                 Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToReverseVisibilityConverter}, Mode=OneWay}" />
+
             <CommandBar
                 Grid.Column="4"
                 VerticalAlignment="Center"
                 Background="Transparent"
-                DefaultLabelPosition="Right">
+                DefaultLabelPosition="Right"
+                Visibility="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToReverseVisibilityConverter}, Mode=OneWay}">
+
+                <AppBarButton Icon="Copy" Label="{x:Bind service:LanguageService.GetResources('/Home/Copy')}">
+                    <AppBarButton.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutItem Command="{x:Bind ViewModel.CopyCategoryIDCommand}" Text="{x:Bind service:LanguageService.GetResources('/Home/CopyCategoryID')}" />
+                            <MenuFlyoutItem Command="{x:Bind ViewModel.CopySingleCommand}" Text="{x:Bind service:LanguageService.GetResources('/Home/CopySingle')}" />
+                        </MenuFlyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
+
                 <AppBarButton
-                    Icon="Copy"
-                    Label="{x:Bind service:LanguageService.GetResources('/Home/CopyCategoryID')}"
-                    ToolTipService.ToolTip="{x:Bind service:LanguageService.GetResources('/Home/CopyCategoryID')}"
-                    Visibility="{x:Bind ViewModel.IsSelectionMode, Converter={StaticResource BooleanToReverseVisibilityConverter}, Mode=OneWay}" />
-                <AppBarButton
-                    Command="{x:Bind ViewModel.SelectCommand}"
-                    Label="{x:Bind service:LanguageService.GetResources('/Home/Select')}"
-                    Visibility="{x:Bind ViewModel.IsSelectionMode, Converter={StaticResource BooleanToReverseVisibilityConverter}, Mode=OneWay}">
+                    Icon="Download"
+                    IsEnabled="False"
+                    Label="{x:Bind service:LanguageService.GetResources('/Home/Download')}" />
+
+                <AppBarButton Command="{x:Bind ViewModel.SelectCommand}" Label="{x:Bind service:LanguageService.GetResources('/Home/Select')}">
                     <AppBarButton.Icon>
                         <FontIcon
                             Grid.Column="0"
@@ -75,19 +83,39 @@
                             Glyph="&#xE762;" />
                     </AppBarButton.Icon>
                 </AppBarButton>
+            </CommandBar>
+
+            <CommandBar
+                Grid.Column="4"
+                VerticalAlignment="Center"
+                Background="Transparent"
+                DefaultLabelPosition="Right"
+                Visibility="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+
                 <AppBarButton
+                    Command="{x:Bind ViewModel.SelectAllCommand}"
+                    Icon="SelectAll"
+                    Label="{x:Bind service:LanguageService.GetResources('/Home/SelectAll')}" />
+
+                <AppBarButton
+                    Command="{x:Bind ViewModel.SelectNoneCommand}"
+                    Icon="ClearSelection"
+                    Label="{x:Bind service:LanguageService.GetResources('/Home/SelectNone')}" />
+
+                <AppBarButton
+                    Command="{x:Bind ViewModel.CopySelectedCommand}"
                     Icon="Copy"
-                    Label="{x:Bind service:LanguageService.GetResources('/Home/Copy')}"
-                    Visibility="{x:Bind ViewModel.IsSelectionMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
+                    Label="{x:Bind service:LanguageService.GetResources('/Home/CopySelected')}" />
+
                 <AppBarButton
                     Icon="Download"
-                    Label="{x:Bind service:LanguageService.GetResources('/Home/Download')}"
-                    Visibility="{x:Bind ViewModel.IsSelectionMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
+                    IsEnabled="False"
+                    Label="{x:Bind service:LanguageService.GetResources('/Home/DownloadSelected')}" />
+
                 <AppBarButton
                     Command="{x:Bind ViewModel.CancelCommand}"
                     Icon="Cancel"
-                    Label="{x:Bind service:LanguageService.GetResources('/Home/Cancel')}"
-                    Visibility="{x:Bind ViewModel.IsSelectionMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
+                    Label="{x:Bind service:LanguageService.GetResources('/Home/Cancel')}" />
             </CommandBar>
         </Grid>
 
@@ -96,21 +124,36 @@
             Grid.Row="1"
             ItemsSource="{x:Bind ViewModel.ResultDataList, Mode=OneWay}"
             RowStyle="{StaticResource DataGridRowStyle}"
+            SelectedItem="{x:Bind ViewModel.SelectedResultItem, Mode=TwoWay}"
             Style="{StaticResource DataGridResultStyle}"
             Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
 
             <ctWinUI:DataGrid.Columns>
 
-                <ctWinUI:DataGridTextColumn
-                    Width="Auto"
-                    Binding="{Binding SerialNumber}"
-                    Header="{x:Bind service:LanguageService.GetResources('/Home/SerialNumber')}"
-                    HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" />
+                <ctWinUI:DataGridTemplateColumn
+                    Width="100"
+                    Header="{x:Bind service:LanguageService.GetResources('/Home/Select')}"
+                    HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
+                    IsReadOnly="False"
+                    Visibility="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+
+                    <ctWinUI:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox
+                                Margin="12,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                IsThreeState="False" />
+                        </DataTemplate>
+                    </ctWinUI:DataGridTemplateColumn.CellTemplate>
+                </ctWinUI:DataGridTemplateColumn>
 
                 <ctWinUI:DataGridTemplateColumn
                     Width="4*"
                     Header="{x:Bind service:LanguageService.GetResources('/Home/FileName')}"
-                    HeaderStyle="{StaticResource DataGridColumnHeaderStyle}">
+                    HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
+                    IsReadOnly="True">
                     <ctWinUI:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <HyperlinkButton
@@ -126,19 +169,22 @@
                     Width="Auto"
                     Binding="{Binding FileLinkExpireTime, Converter={StaticResource GMTFormatConverter}}"
                     Header="{x:Bind service:LanguageService.GetResources('/Home/LinkExpireTime')}"
-                    HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" />
+                    HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
+                    IsReadOnly="True" />
 
                 <ctWinUI:DataGridTextColumn
                     Width="3*"
                     Binding="{Binding FileSHA1}"
                     Header="{x:Bind service:LanguageService.GetResources('/Home/FileSHA1')}"
-                    HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" />
+                    HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
+                    IsReadOnly="True" />
 
                 <ctWinUI:DataGridTextColumn
                     Width="Auto"
                     Binding="{Binding FileSize}"
                     Header="{x:Bind service:LanguageService.GetResources('/Home/FileSize')}"
-                    HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" />
+                    HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
+                    IsReadOnly="True" />
             </ctWinUI:DataGrid.Columns>
         </ctWinUI:DataGrid>
     </Grid>
