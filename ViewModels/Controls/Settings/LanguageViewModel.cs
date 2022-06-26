@@ -4,8 +4,6 @@ using GetStoreApp.Models;
 using GetStoreApp.Services.Settings;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
 {
@@ -26,18 +24,11 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             }
         }
 
-        public ICommand LaunchSettingsInstalledAppsCommand { get; set; }
-
-        public IReadOnlyList<LanguageModel> LanguageList { get; } = LanguageService.LanguageList;
-
-        public LanguageViewModel()
-        {
-            LaunchSettingsInstalledAppsCommand = new RelayCommand(async () => { await LaunchSettingsInstalledAppsClickedAsync(); });
-        }
-
-        private static async Task LaunchSettingsInstalledAppsClickedAsync()
+        public IAsyncRelayCommand LaunchSettingsInstalledAppsCommand { get; set; } = new AsyncRelayCommand(async () =>
         {
             await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
-        }
+        });
+
+        public IReadOnlyList<LanguageModel> LanguageList { get; } = LanguageService.LanguageList;
     }
 }

@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using GetStoreApp.Helpers;
 using GetStoreApp.Services.Settings;
 using Microsoft.UI.Xaml;
+using System;
 using System.Windows.Input;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
@@ -44,5 +45,10 @@ namespace GetStoreApp.ViewModels.Controls.Settings
                 return _switchThemeCommand;
             }
         }
+
+        public IAsyncRelayCommand SettingsColorCommand { get; set; } = new AsyncRelayCommand(async () =>
+        {
+            await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:colors"));
+        });
     }
 }

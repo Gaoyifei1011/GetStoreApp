@@ -117,43 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppDescription" xml:space="preserve">
-    <value>GetStoreApp (Dev)</value>
-    <comment>Application description</comment>
+  <data name="DeleteCancel" xml:space="preserve">
+    <value>Cancel</value>
   </data>
-  <data name="AppDisplayName" xml:space="preserve">
-    <value>GetStoreApp (Dev)</value>
-    <comment>Application display name</comment>
+  <data name="DeleteContent" xml:space="preserve">
+    <value>The selected record is permanently deleted, and the action is irrevocable.</value>
   </data>
-  <data name="PackageDisplayName" xml:space="preserve">
-    <value>GetStoreApp (Dev)</value>
-    <comment>Application package display name</comment>
+  <data name="DeleteContinue" xml:space="preserve">
+    <value>Continue</value>
   </data>
-  <data name="AppShortDisplayName" xml:space="preserve">
-    <value>GetStoreApp</value>
+  <data name="DeleteTitle" xml:space="preserve">
+    <value>Delete record</value>
   </data>
-  <data name="CategoryID" xml:space="preserve">
-    <value>CategoryID</value>
+  <data name="SelectEmptyContent" xml:space="preserve">
+    <value>You have not selected anything, please select it before proceeding</value>
   </data>
-  <data name="Fast" xml:space="preserve">
-    <value>Fast</value>
+  <data name="SelectEmptySure" xml:space="preserve">
+    <value>OK</value>
   </data>
-  <data name="PackageFamilyName" xml:space="preserve">
-    <value>PackageFamilyName</value>
-  </data>
-  <data name="ProductID" xml:space="preserve">
-    <value>ProductID</value>
-  </data>
-  <data name="Retail" xml:space="preserve">
-    <value>Retail</value>
-  </data>
-  <data name="RP" xml:space="preserve">
-    <value>Release Preview</value>
-  </data>
-  <data name="Slow" xml:space="preserve">
-    <value>Slow</value>
-  </data>
-  <data name="URL" xml:space="preserve">
-    <value>URL(Link)</value>
+  <data name="SelectEmptyTitle" xml:space="preserve">
+    <value>Item selection prompts</value>
   </data>
 </root>

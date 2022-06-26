@@ -44,13 +44,20 @@
                     VerticalAlignment="Center"
                     Background="Transparent"
                     DefaultLabelPosition="Right">
+
                     <AppBarButton
                         Command="{x:Bind ViewModel.FillinCommand}"
                         Icon="Up"
-                        IsEnabled="{x:Bind ViewModel.SelectedHistoryItem, Converter={StaticResource NullCheckConverter}, Mode=OneWay}"
                         Label="{x:Bind service:LanguageService.GetResources('/Home/Fillin')}"
                         ToolTipService.ToolTip="{x:Bind service:LanguageService.GetResources('/Home/FillinDescription')}"
                         Visibility="{x:Bind ViewModel.HistoryItemDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}" />
+
+                    <AppBarButton
+                        Command="{x:Bind ViewModel.CopyCommand}"
+                        Icon="Copy"
+                        Label="{x:Bind service:LanguageService.GetResources('/Home/Copy')}"
+                        Visibility="{x:Bind ViewModel.HistoryItemDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}" />
+
                     <AppBarButton
                         Command="{x:Bind ViewModel.ViewAllCommand}"
                         Icon="ViewAll"
@@ -82,18 +89,21 @@
                     </i:Interaction.Behaviors>
 
                     <ctWinUI:DataGrid.Columns>
+
                         <ctWinUI:DataGridTextColumn
                             Width="*"
                             Binding="{Binding HistoryType, Converter={StaticResource TypeNameFormatConverter}}"
                             Header="{x:Bind service:LanguageService.GetResources('/Home/Type')}"
                             HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
                             ToolTipService.ToolTip="{x:Bind service:LanguageService.GetResources('/Home/DoubleTapToInput')}" />
+
                         <ctWinUI:DataGridTextColumn
                             Width="*"
                             Binding="{Binding HistoryChannel, Converter={StaticResource ChannelNameFormatConverter}}"
                             Header="{x:Bind service:LanguageService.GetResources('/Home/Channel')}"
                             HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
                             ToolTipService.ToolTip="{x:Bind service:LanguageService.GetResources('/Home/DoubleTapToInput')}" />
+
                         <ctWinUI:DataGridTextColumn
                             Width="3*"
                             Binding="{Binding HistoryLink}"
@@ -101,33 +111,6 @@
                             HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
                             ToolTipService.ToolTip="{x:Bind service:LanguageService.GetResources('/Home/DoubleTapToInput')}" />
                     </ctWinUI:DataGrid.Columns>
-
-                    <ctWinUI:DataGrid.ContextFlyout>
-                        <MenuFlyout>
-                            <MenuFlyoutItem
-                                Command="{x:Bind ViewModel.FillinCommand}"
-                                IsEnabled="{x:Bind ViewModel.SelectedHistoryItem, Converter={StaticResource NullCheckConverter}, Mode=OneWay}"
-                                Text="{x:Bind service:LanguageService.GetResources('/Home/Fillin')}">
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon
-                                        Grid.Column="0"
-                                        FontFamily="Segoe Fluent Icons"
-                                        Glyph="&#xE74a;" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
-                            <MenuFlyoutItem
-                                Command="{x:Bind ViewModel.CopyCommand}"
-                                CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
-                                Icon="Copy"
-                                IsEnabled="{x:Bind ViewModel.SelectedHistoryItem, Converter={StaticResource NullCheckConverter}, Mode=OneWay}"
-                                Text="{x:Bind service:LanguageService.GetResources('/Home/Copy')}" />
-                            <MenuFlyoutItem
-                                Command="{x:Bind ViewModel.ViewAllCommand}"
-                                Icon="ViewAll"
-                                IsEnabled="{x:Bind ViewModel.SelectedHistoryItem, Converter={StaticResource NullCheckConverter}, Mode=OneWay}"
-                                Text="{x:Bind service:LanguageService.GetResources('/Home/ViewAll')}" />
-                        </MenuFlyout>
-                    </ctWinUI:DataGrid.ContextFlyout>
                 </ctWinUI:DataGrid>
             </Grid>
         </Expander.Content>

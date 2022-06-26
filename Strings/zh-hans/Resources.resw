@@ -131,10 +131,6 @@
   <data name="CategoryID" xml:space="preserve">
     <value>CategoryID</value>
   </data>
-  <data name="Download_Title.Text" xml:space="preserve">
-    <value>下载</value>
-    <comment>”下载“页面标题的名称</comment>
-  </data>
   <data name="Fast" xml:space="preserve">
     <value>快速</value>
   </data>

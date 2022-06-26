@@ -1,5 +1,4 @@
 ﻿using Microsoft.UI.Xaml;
-using System;
 using System.ComponentModel;
 
 namespace GetStoreApp.Models
@@ -7,7 +6,7 @@ namespace GetStoreApp.Models
     /// <summary>
     /// 该类用来存放数据库原始数据
     /// </summary>
-    public class HistoryModel : DependencyObject, INotifyPropertyChanged, IComparable<HistoryModel>
+    public class HistoryModel : DependencyObject, INotifyPropertyChanged
     {
         /// <summary>
         /// 在多选模式下，该行历史记录是否被选择的标志

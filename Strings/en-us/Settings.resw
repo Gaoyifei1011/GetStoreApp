@@ -249,4 +249,7 @@
   <data name="UseInstructionOnContent" xml:space="preserve">
     <value>Displayed</value>
   </data>
+  <data name="WindowsColorSettings" xml:space="preserve">
+    <value>Windows Color Settings</value>
+  </data>
 </root>

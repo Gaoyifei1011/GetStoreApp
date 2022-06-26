@@ -4,18 +4,21 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewModel="using:GetStoreApp.ViewModels.Pages"
+    xmlns:service="using:GetStoreApp.Services.Settings"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
-    <Page.DataContext>
-        <viewModel:DownloadViewModel x:Name="ViewModel" />
-    </Page.DataContext>
+    <Grid Margin="30,15,30,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-    <StackPanel Margin="{StaticResource PageMargin}" Spacing="{StaticResource PageSpacing}">
         <TextBlock
-            x:Uid="Download_Title"
+            Grid.Column="0"
             FontSize="{StaticResource TitleFontSize}"
-            Text="Download" />
-    </StackPanel>
+            Text="{x:Bind service:LanguageService.GetResources('/Download/Title')}" />
+    </Grid>
 </Page>

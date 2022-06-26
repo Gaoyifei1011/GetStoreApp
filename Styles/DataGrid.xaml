@@ -457,7 +457,7 @@
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" MinWidth="32" />
+                                <ColumnDefinition Width="Auto" MinWidth="0" />
                             </Grid.ColumnDefinitions>
 
                             <ContentPresenter

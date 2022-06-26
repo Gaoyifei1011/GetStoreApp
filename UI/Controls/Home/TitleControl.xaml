@@ -24,7 +24,6 @@
                 VerticalAlignment="Center"
                 Command="{x:Bind ViewModel.UseInstructionCommand}"
                 Content="{x:Bind service:LanguageService.GetResources('/Home/UseInstruction')}"
-                IsEnabled="False"
                 Visibility="{x:Bind ViewModel.UseInsVisValue, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
         </Grid>
 

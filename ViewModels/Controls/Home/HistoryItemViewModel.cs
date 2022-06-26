@@ -7,6 +7,7 @@ using GetStoreApp.Models;
 using GetStoreApp.Services.App;
 using GetStoreApp.Services.History;
 using GetStoreApp.Services.Settings;
+using GetStoreApp.UI.Dialogs;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
@@ -115,7 +116,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
         /// </summary>
         private async Task FillinAsync()
         {
-            if (SelectedHistoryItem == null) return;
+            if (SelectedHistoryItem == null)
+            {
+                await ShowSelectEmptyPromptDialogAsync();
+                return;
+            };
 
             Messenger.Send(new FillinMessage(SelectedHistoryItem));
             await Task.CompletedTask;
@@ -123,6 +128,12 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         private async Task CopyAsync()
         {
+            if (SelectedHistoryItem == null)
+            {
+                await ShowSelectEmptyPromptDialogAsync();
+                return;
+            };
+
             string CopyContent = string.Format("{0}\t{1}\t{2}",
                 TypeList.Find(item => item.InternalName.Equals(SelectedHistoryItem.HistoryType)).DisplayName,
                 ChannelList.Find(item => item.InternalName.Equals(SelectedHistoryItem.HistoryChannel)).DisplayName,
@@ -130,6 +141,16 @@ namespace GetStoreApp.ViewModels.Controls.Home
             CopyPasteService.CopyStringToClicpBoard(CopyContent);
 
             await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// 选中内容为空时，显示提示对话框
+        /// </summary>
+        private async Task ShowSelectEmptyPromptDialogAsync()
+        {
+            SelectEmptyPromptDialog dialog = new SelectEmptyPromptDialog();
+            dialog.XamlRoot = App.MainWindow.Content.XamlRoot;
+            await dialog.ShowAsync();
         }
     }
 }

@@ -1,18 +1,29 @@
 ﻿using Microsoft.UI.Xaml;
+using System.ComponentModel;
 
 namespace GetStoreApp.Models
 {
-    public class ResultModel : DependencyObject
+    public class ResultModel : DependencyObject, INotifyPropertyChanged
     {
-        public string SerialNumber
-        {
-            get { return (string)GetValue(SerialNumberProperty); }
-            set { SetValue(SerialNumberProperty, value); }
-        }
+        /// <summary>
+        /// 在多选模式下，该行信息是否被选择的标志
+        /// </summary>
+        private bool _isSelected;
 
-        // Using a DependencyProperty as the backing store for SerialNumber.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty SerialNumberProperty =
-            DependencyProperty.Register("SerialNumber", typeof(string), typeof(ResultModel), new PropertyMetadata(string.Empty));
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+
+            set
+            {
+                _isSelected = value;
+
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(nameof(IsSelected)));
+                }
+            }
+        }
 
         public string FileName
         {
@@ -63,5 +74,7 @@ namespace GetStoreApp.Models
         // Using a DependencyProperty as the backing store for FileSize.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FileSizeProperty =
             DependencyProperty.Register("FileSize", typeof(string), typeof(ResultModel), new PropertyMetadata(string.Empty));
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

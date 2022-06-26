@@ -138,11 +138,20 @@
   <data name="CopyLink" xml:space="preserve">
     <value>Copy Link</value>
   </data>
+  <data name="CopySelected" xml:space="preserve">
+    <value>Copy the selected item</value>
+  </data>
+  <data name="CopySingle" xml:space="preserve">
+    <value>Copy single-line information</value>
+  </data>
   <data name="DoubleTapToInput" xml:space="preserve">
     <value>Double-click the row to fill in the information</value>
   </data>
   <data name="Download" xml:space="preserve">
     <value>Download</value>
+  </data>
+  <data name="DownloadSelected" xml:space="preserve">
+    <value>Download the selected item</value>
   </data>
   <data name="FileName" xml:space="preserve">
     <value>File Name</value>
@@ -188,6 +197,12 @@
   </data>
   <data name="Select" xml:space="preserve">
     <value>Select</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Select all</value>
+  </data>
+  <data name="SelectNone" xml:space="preserve">
+    <value>Select none</value>
   </data>
   <data name="SerialNumber" xml:space="preserve">
     <value>S/N</value>

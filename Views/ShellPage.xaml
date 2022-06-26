@@ -2,6 +2,7 @@
     x:Class="GetStoreApp.Views.ShellPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:gc="using:GetStoreApp.UI.Controls.General"
     xmlns:helpers="using:GetStoreApp.Helpers"
     xmlns:service="using:GetStoreApp.Services.Settings"
     Loaded="OnLoaded">
@@ -68,10 +69,7 @@
             </NavigationView.MenuItems>
 
             <NavigationView.FooterMenuItems>
-                <NavigationViewItem
-                    helpers:NavigationHelper.NavigateTo="GetStoreApp.ViewModels.Pages.AboutViewModel"
-                    Content="{x:Bind service:LanguageService.GetResources('/Shell/About')}"
-                    IsEnabled="False">
+                <NavigationViewItem helpers:NavigationHelper.NavigateTo="GetStoreApp.ViewModels.Pages.AboutViewModel" Content="{x:Bind service:LanguageService.GetResources('/Shell/About')}">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE946;" />
                     </NavigationViewItem.Icon>
