@@ -156,6 +156,21 @@
   <data name="BlockMapOnContent" xml:space="preserve">
     <value>filter</value>
   </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="ClearFailed" xml:space="preserve">
+    <value>Cleanup failed</value>
+  </data>
+  <data name="ClearRecord" xml:space="preserve">
+    <value>Clear record</value>
+  </data>
+  <data name="ClearRecordDescription" xml:space="preserve">
+    <value>Clean up all local history record</value>
+  </data>
+  <data name="ClearSuccessfully" xml:space="preserve">
+    <value>Cleanup successfully</value>
+  </data>
   <data name="General" xml:space="preserve">
     <value>General Options</value>
   </data>
@@ -200,6 +215,9 @@
   </data>
   <data name="RegionDescription" xml:space="preserve">
     <value>If the app is available in a specific region, the region needs to be adjusted</value>
+  </data>
+  <data name="RestartApp" xml:space="preserve">
+    <value>Application restart</value>
   </data>
   <data name="StartsWithE" xml:space="preserve">
     <value>Files whose file extension begins with '.e' is not displayed</value>
@@ -250,6 +268,6 @@
     <value>Displayed</value>
   </data>
   <data name="WindowsColorSettings" xml:space="preserve">
-    <value>Windows Color Settings</value>
+    <value>Windows color settings</value>
   </data>
 </root>

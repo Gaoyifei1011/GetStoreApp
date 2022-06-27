@@ -3,6 +3,7 @@ using GetStoreApp.Services.App;
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -266,21 +267,40 @@ namespace GetStoreApp.Services.History
         /// <summary>
         /// 清空历史记录数据
         /// </summary>
-        public static async Task ClearHistoryDataAsync()
+        public static async Task<bool> ClearHistoryDataAsync()
         {
+            bool result = false;
+
             using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
             {
                 await db.OpenAsync();
-
-                SqliteCommand DeleteCommand = new SqliteCommand();
-                DeleteCommand.Connection = db;
-
-                // 删除表中记录的同时修改他的自增列
-                DeleteCommand.CommandText = string.Format("DELETE FROM {0};Update sqlite_sequence SET seq=0 WHERE name = '{0}'", DataBaseService.HistoryTableName);
-
-                await DeleteCommand.ExecuteReaderAsync();
-
+                Debug.WriteLine("01");
+                using (SqliteTransaction transaction = db.BeginTransaction())
+                {
+                    using(SqliteCommand ClearCommand = new SqliteCommand())
+                    {
+                        ClearCommand.Connection = db;
+                        ClearCommand.Transaction = transaction;
+                        Debug.WriteLine("02");
+                        try
+                        {
+                            ClearCommand.CommandText = string.Format("DELETE FROM {0}",DataBaseService.HistoryTableName);
+                            await ClearCommand.ExecuteNonQueryAsync();
+                            Debug.WriteLine("03");
+                            await transaction.CommitAsync();
+                            result = true;
+                            Debug.WriteLine("06");
+                        }
+                        catch (Exception)
+                        {
+                            await transaction.RollbackAsync();
+                            Debug.WriteLine("07");
+                        }
+                    }
+                }
                 await db.CloseAsync();
+                Debug.WriteLine("08");
+                return result;
             }
         }
     }

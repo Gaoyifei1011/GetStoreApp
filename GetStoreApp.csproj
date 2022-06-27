@@ -67,9 +67,11 @@
     <None Remove="UI\Controls\Home\ResultControl.xaml" />
     <None Remove="UI\Controls\Home\StatusBarControl.xaml" />
     <None Remove="UI\Controls\Settings\BackdropControl.xaml" />
+    <None Remove="UI\Controls\Settings\ClearRecordControl.xaml" />
     <None Remove="UI\Controls\Settings\HistoryItemValueControl.xaml" />
     <None Remove="UI\Controls\Settings\LinkFilterControl.xaml" />
     <None Remove="UI\Dialogs\DeletePromptDialog.xaml" />
+    <None Remove="UI\Dialogs\RestartPromptDialog.xaml" />
     <None Remove="UI\Dialogs\SelectEmptyPromptDialog.xaml" />
   </ItemGroup>
 
@@ -93,6 +95,12 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="UI\Dialogs\RestartPromptDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\Settings\ClearRecordControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="UI\Dialogs\DeletePromptDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

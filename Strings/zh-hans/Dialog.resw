@@ -129,6 +129,18 @@
   <data name="DeleteTitle" xml:space="preserve">
     <value>删除记录</value>
   </data>
+  <data name="Restart" xml:space="preserve">
+    <value>重启应用</value>
+  </data>
+  <data name="RestartCancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="RestartContent" xml:space="preserve">
+    <value>应用即将重启，重启后应用的数据将会丢失，请确保您的工作内容已经全部保存</value>
+  </data>
+  <data name="RestartSure" xml:space="preserve">
+    <value>确定</value>
+  </data>
   <data name="SelectEmptyContent" xml:space="preserve">
     <value>您没有选择任何内容，请选中后再进行操作</value>
   </data>

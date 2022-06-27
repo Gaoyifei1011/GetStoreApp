@@ -13,7 +13,6 @@ using Microsoft.UI.Xaml.Media.Animation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -63,24 +62,6 @@ namespace GetStoreApp.ViewModels.Pages
             set { SetProperty(ref _timeSortOrder, value); }
         }
 
-        private int _aSBMinWidth = 230;
-
-        public int ASBMinWidth
-        {
-            get { return _aSBMinWidth; }
-
-            set { SetProperty(ref _aSBMinWidth,value); }
-        }
-
-        private string _searchHistoryText = string.Empty;
-
-        public string SearchHistoryText
-        {
-            get { return _searchHistoryText; }
-
-            set { SetProperty(ref _searchHistoryText, value); }
-        }
-
         private string _typeFilter = "None";
 
         public string TypeFilter
@@ -109,16 +90,6 @@ namespace GetStoreApp.ViewModels.Pages
         }
 
         public IAsyncRelayCommand LoadedCommand { get; set; }
-
-        public IAsyncRelayCommand PointerPressedCommand { get; set; }
-
-        public IAsyncRelayCommand PointerReleasedCommand { get; set; }
-
-        public IAsyncRelayCommand ASBTextChangedCommand { get; set; }
-
-        public IAsyncRelayCommand ASBSuggestionChosenCommand { get; set; }
-
-        public IAsyncRelayCommand ASBQuerySubmittedCommand { get; set; }
 
         public IAsyncRelayCommand FillinCommand { get; set; }
 
@@ -162,26 +133,12 @@ namespace GetStoreApp.ViewModels.Pages
 
         public ObservableCollection<HistoryModel> HistoryDataList { get; set; } = new ObservableCollection<HistoryModel>();
 
-        public ObservableCollection<string> HistoryASBDataList { get; set; } = new ObservableCollection<string>();
-
-        public ObservableCollection<string> HistoryQueryDataList { get; set; } = new ObservableCollection<string>();
-
         public HistoryViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
 
             // List列表初始化，可以从数据库获得的列表中加载
             LoadedCommand = new AsyncRelayCommand(GetHistoryDataListAsync);
-
-            PointerPressedCommand = new AsyncRelayCommand(async () => { ASBMinWidth = 400; await Task.CompletedTask; });
-
-            PointerReleasedCommand = new AsyncRelayCommand(async () => { ASBMinWidth = 230; await Task.CompletedTask; });
-
-            ASBTextChangedCommand = new AsyncRelayCommand<AutoSuggestBoxTextChangedEventArgs>(ASBTextChangedAsync);
-
-            //ASBSuggestionChosenCommand = new AsyncRelayCommand<AutoSuggestBoxSuggestionChosenEventArgs>(ASBSuggestionChosenAsync);
-
-            ASBQuerySubmittedCommand = new AsyncRelayCommand(ASBQuerySubmittedAsync);
 
             FillinCommand = new AsyncRelayCommand(FillinAsync);
 
@@ -237,36 +194,6 @@ namespace GetStoreApp.ViewModels.Pages
             });
         }
 
-        private async Task ASBTextChangedAsync(AutoSuggestBoxTextChangedEventArgs args)
-        {
-            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
-            {
-                HistoryQueryDataList.Clear();
-
-                string[] SearchText = SearchHistoryText.ToLower().Split(" ");
-
-                foreach (var item in HistoryASBDataList)
-                {
-                    bool found = SearchHistoryText.All((key) =>
-                    {
-                        return item.ToLower().Contains(key);
-                    });
-                    if (found)
-                    {
-                        HistoryQueryDataList.Add(item);
-                    }
-                }
-                if (HistoryQueryDataList.Count == 0) HistoryQueryDataList.Add("没有找到任何结果");
-            }
-            await Task.CompletedTask;
-        }
-
-        private async Task ASBQuerySubmittedAsync()
-        {
-            Debug.WriteLine(SearchHistoryText);
-            await Task.CompletedTask;
-        }
-
         /// <summary>
         /// 多选模式下删除选中的条目
         /// </summary>
@@ -317,14 +244,10 @@ namespace GetStoreApp.ViewModels.Pages
             {
                 // 更新UI上面的数据
                 ConvertRawListToDisplayList(ref HistoryRawList);
-
-                // 更新建议列表中的数据
-                UpdateASBDataList(ref HistoryRawList);
             }
             catch (Exception)
             {
                 ConvertRawListToDisplayList(ref HistoryRawList);
-                UpdateASBDataList(ref HistoryRawList);
             }
         }
 
@@ -340,17 +263,6 @@ namespace GetStoreApp.ViewModels.Pages
                 historyRawData.IsSelected = false;
                 HistoryDataList.Add(historyRawData);
             }
-        }
-
-        /// <summary>
-        /// 更新建议列表中的数据
-        /// </summary>
-        private void UpdateASBDataList(ref List<HistoryModel> historyRawList)
-        {
-            // 更新建议列表
-            HistoryASBDataList.Clear();
-
-            foreach (var item in historyRawList) HistoryASBDataList.Add(item.HistoryLink);
         }
 
         /// <summary>

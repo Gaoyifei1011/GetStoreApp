@@ -26,50 +26,17 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Margin="0,0,0,10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-
-            <TextBlock
-                Grid.Column="0"
-                FontSize="{StaticResource TitleFontSize}"
-                Text="{x:Bind service:LanguageService.GetResources('/History/Title')}" />
-
-            <!--  未完成  -->
-            <AutoSuggestBox
-                Grid.Column="1"
-                MinWidth="{x:Bind ViewModel.ASBMinWidth,Mode=OneWay}"
-                MaxWidth="400"
-                MaxSuggestionListHeight="206"
-                ItemsSource="{x:Bind ViewModel.HistoryQueryDataList,Mode=OneWay}"
-                Text="{x:Bind ViewModel.SearchHistoryText,Mode=TwoWay}"
-                VerticalAlignment="Center"
-                PlaceholderText="{x:Bind service:LanguageService.GetResources('/History/SearchHistoryPHText')}"
-                QueryIcon="Find" >
-                
-                <i:Interaction.Behaviors>
-                    <ic:EventTriggerBehavior EventName="GotFocus">
-                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.PointerPressedCommand}" />
-                    </ic:EventTriggerBehavior>
-                    <ic:EventTriggerBehavior EventName="LostFocus">
-                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.PointerReleasedCommand}" />
-                    </ic:EventTriggerBehavior>
-                    <ic:EventTriggerBehavior EventName="TextChanged">
-                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.ASBTextChangedCommand}" />
-                    </ic:EventTriggerBehavior>
-                    <ic:EventTriggerBehavior EventName="QuerySubmitted">
-                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.ASBQuerySubmittedCommand}" />
-                    </ic:EventTriggerBehavior>
-                </i:Interaction.Behaviors>
-
-            </AutoSuggestBox>
-        </Grid>
+        <TextBlock
+            Grid.Row="0"
+            Margin="0,0,0,10"
+            FontSize="{StaticResource TitleFontSize}"
+            Text="{x:Bind service:LanguageService.GetResources('/History/Title')}" />
 
         <Grid
             Grid.Row="1"
             Margin="0,0,0,10"
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
             Style="{StaticResource DataGridDescriptionGridStyle}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
