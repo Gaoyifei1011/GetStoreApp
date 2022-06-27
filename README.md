@@ -10,16 +10,16 @@
 | 通过生成的链接下载文件         | 0%，计划中        |
 | 应用说明                     | 0%，预计7月初完成        |
 | 控制台应用程序                    | 0%，计划中      |
-| 设置内容                     | 40%，随着其他项目进度共同开发        |
+| 设置内容                     | 50%，随着其他项目进度共同开发        |
 
 | Project progress                    | Development progress |
 | --------------------------- | ----------- |
 | Main page functionality                    | 75% of the features completed (can be downloaded via web page)     |
-| History (records used links)  | 30%, expected to be completed in mid-June        |
+| History (records used links)  | Finished       |
 | Download the file from the generated link         | 0% is planned        |
 | Application Notes                   | 0%, expected to be completed in early July        |
 | Console applications                       | 0% is planned      |
-| Settings                     | 40%, co-developed with the progress of other projects |
+| Settings                     | 50%, co-developed with the progress of other projects |
 
 ### 该项目的功能
 #### 该项目主要包括以下功能：通过[Store](https://store.rg-adguard.net/)提供的API来生成带有文件链接
