@@ -10,9 +10,27 @@
     mc:Ignorable="d">
 
     <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
-        <StackPanel Margin="30,15,30,0" Spacing="10">
+        <StackPanel
+            Margin="30,15,30,0"
+            Padding="0,0,0,40"
+            Spacing="10">
 
-            <TextBlock FontSize="{StaticResource TitleFontSize}" Text="{x:Bind service:LanguageService.GetResources('/Settings/Title')}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock
+                    Grid.Column="0"
+                    FontSize="{StaticResource TitleFontSize}"
+                    Text="{x:Bind service:LanguageService.GetResources('/Settings/Title')}" />
+
+                <Button
+                    Grid.Column="1"
+                    Command="{x:Bind ViewModel.RestartCommand}"
+                    Content="{x:Bind service:LanguageService.GetResources('/Settings/RestartApp')}" />
+            </Grid>
 
             <TextBlock
                 FontSize="16"
@@ -41,8 +59,9 @@
             <TextBlock
                 FontSize="16"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="{x:Bind service:LanguageService.GetResources('/Settings/Advanced')}"
-                Visibility="Collapsed" />
+                Text="{x:Bind service:LanguageService.GetResources('/Settings/Advanced')}" />
+
+            <sc:ClearRecordControl />
         </StackPanel>
     </ScrollViewer>
 </Page>

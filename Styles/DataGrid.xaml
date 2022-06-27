@@ -147,7 +147,7 @@
 
     <Style x:Key="DataGridHistoryStyle" TargetType="ctWinUI:DataGrid">
         <Setter Property="AutoGenerateColumns" Value="False" />
-        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
         <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
         <Setter Property="BorderThickness" Value="1,1,1,0" />
         <Setter Property="CanUserReorderColumns" Value="True" />

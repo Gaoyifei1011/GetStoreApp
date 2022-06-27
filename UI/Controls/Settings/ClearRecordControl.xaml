@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="GetStoreApp.UI.Controls.Settings.BackdropControl"
+    x:Class="GetStoreApp.UI.Controls.Settings.ClearRecordControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -14,12 +14,13 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <FontIcon
                 Grid.Column="0"
                 FontFamily="Segoe Fluent Icons"
-                Glyph="&#xe771;"
+                Glyph="&#xe74d;"
                 Style="{StaticResource FontIconStyle}" />
 
             <StackPanel Grid.Column="1" Orientation="Vertical">
@@ -27,21 +28,27 @@
                 <TextBlock
                     VerticalAlignment="Center"
                     Style="{StaticResource BodyTextBlockStyle}"
-                    Text="{x:Bind service:LanguageService.GetResources('/Settings/Backdrop')}" />
+                    Text="{x:Bind service:LanguageService.GetResources('/Settings/ClearRecord')}" />
 
                 <TextBlock
                     VerticalAlignment="Center"
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Style="{StaticResource CaptionTextBlockStyle}"
-                    Text="{x:Bind service:LanguageService.GetResources('/Settings/BackdropDescription')}" />
+                    Text="{x:Bind service:LanguageService.GetResources('/Settings/ClearRecordDescription')}" />
             </StackPanel>
 
-            <ComboBox
+            <TextBlock
                 Grid.Column="2"
-                DisplayMemberPath="DisplayName"
-                ItemsSource="{x:Bind ViewModel.BackdropList}"
-                SelectedValue="{x:Bind ViewModel.SelectedBackdrop, Mode=TwoWay}"
-                SelectedValuePath="InternalName" />
+                Margin="0,0,15,0"
+                VerticalAlignment="Center"
+                Text="{x:Bind ViewModel.ClearState, Converter={StaticResource ClearStateInfoFormatConverter}, Mode=OneWay}"
+                Visibility="{x:Bind ViewModel.ClearTextVisValue, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
+
+            <Button
+                Grid.Column="3"
+                MinWidth="100"
+                Command="{x:Bind ViewModel.ClearRecordCommand}"
+                Content="{x:Bind service:LanguageService.GetResources('/Settings/Clear')}" />
         </Grid>
     </gc:CardControl>
 </UserControl>

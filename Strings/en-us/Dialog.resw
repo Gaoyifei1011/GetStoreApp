@@ -129,6 +129,18 @@
   <data name="DeleteTitle" xml:space="preserve">
     <value>Delete record</value>
   </data>
+  <data name="Restart" xml:space="preserve">
+    <value>Application restart</value>
+  </data>
+  <data name="RestartCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="RestartContent" xml:space="preserve">
+    <value>The app is about to restart, after the restart the app's data will be lost, make sure that your work has been saved in its entirety</value>
+  </data>
+  <data name="RestartSure" xml:space="preserve">
+    <value>OK</value>
+  </data>
   <data name="SelectEmptyContent" xml:space="preserve">
     <value>You have not selected anything, please select it before proceeding</value>
   </data>

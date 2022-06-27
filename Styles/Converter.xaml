@@ -16,6 +16,7 @@
 
     <format:CategoryIDInfoFormatConverter x:Name="CategoryIDInfoFormatConverter" />
     <format:ChannelNameFormatConverter x:Name="ChannelNameFormatConverter" />
+    <format:ClearStateInfoFormatConverter x:Name="ClearStateInfoFormatConverter" />
     <format:GMTFormatConverter x:Name="GMTFormatConverter" />
     <format:HistoryCountInfoFormatConverter x:Name="HistoryCountInfoFormatConverter" />
     <format:ResultCountInfoFormatConverter x:Name="ResultCountInfoFormatConverter" />

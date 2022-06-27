@@ -79,6 +79,8 @@ namespace GetStoreApp
 
                 services.AddTransient<BackdropControl>();
                 services.AddTransient<BackdropViewModel>();
+                services.AddTransient<ClearRecordControl>();
+                services.AddTransient<ClearRecordViewModel>();
                 services.AddTransient<HistoryItemValueControl>();
                 services.AddTransient<HistoryItemValueViewModel>();
                 services.AddTransient<LauguageControl>();
