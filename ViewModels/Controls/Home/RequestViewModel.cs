@@ -66,7 +66,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _linkText, value); }
         }
 
-        public IAsyncRelayCommand TypeSelectionChangedCommand { get; set; }
+        public IAsyncRelayCommand TypeSelectCommand { get; set; }
 
         public IAsyncRelayCommand GetLinksCommand { get; set; }
 
@@ -100,7 +100,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             LinkPlaceHolderText = SampleTitle + SampleLink;
 
-            TypeSelectionChangedCommand = new AsyncRelayCommand(SetPlaceHolderTextAsync);
+            TypeSelectCommand = new AsyncRelayCommand(SetPlaceHolderTextAsync);
 
             GetLinksCommand = new AsyncRelayCommand(GetLinksAsync);
 

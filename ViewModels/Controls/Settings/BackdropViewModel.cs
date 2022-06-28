@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using GetStoreApp.Helpers;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Settings;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
 {
@@ -12,26 +14,20 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
         public string SelectedBackdrop
         {
-            get
-            {
-                return _selectedBackdrop;
-            }
+            get { return _selectedBackdrop; }
 
-            set
-            {
-                SetProperty(ref _selectedBackdrop, value);
-
-                BackdropHelper.CurrentBackdrop = _selectedBackdrop;
-                BackdropHelper.SetBackdrop();
-                BackdropService.SetBackdrop(_selectedBackdrop);
-            }
+            set { SetProperty(ref _selectedBackdrop, value); }
         }
+
+        public IAsyncRelayCommand BackdropSelectCommand { get; set; }
 
         public List<BackdropModel> BackdropList { get; set; } = new List<BackdropModel>();
 
         public BackdropViewModel()
         {
             InitialIzeBackdropList();
+
+            BackdropSelectCommand = new AsyncRelayCommand(BackdropSelectAsync);
         }
 
         /// <summary>
@@ -50,6 +46,17 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
             BackdropList.Add(new BackdropModel { DisplayName = LanguageService.GetResources("/Settings/BackdropArylic"), InternalName = "Acrylic" });
             BackdropList.Add(new BackdropModel { DisplayName = LanguageService.GetResources("/Settings/BackdropDefault"), InternalName = "Default" });
+        }
+
+        /// <summary>
+        /// 设置背景色
+        /// </summary>
+        private async Task BackdropSelectAsync()
+        {
+            BackdropHelper.CurrentBackdrop = SelectedBackdrop;
+            BackdropHelper.SetBackdrop();
+            BackdropService.SetBackdrop(SelectedBackdrop);
+            await Task.CompletedTask;
         }
     }
 }

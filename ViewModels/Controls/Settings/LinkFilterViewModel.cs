@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Messages;
 using GetStoreApp.Services.Settings;
 using System;
+using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
 {
@@ -15,12 +16,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         {
             get { return _startsWithEFilterValue; }
 
-            set
-            {
-                SetProperty(ref _startsWithEFilterValue, value);
-                LinkFilterService.SetStartsWithEFilterValue(value);
-                Messenger.Send(new StartsWithEFilterMessage(value));
-            }
+            set { SetProperty(ref _startsWithEFilterValue, value); }
         }
 
         private bool _blockMapFilterValue = LinkFilterService.LinkFilterValue[1];
@@ -29,12 +25,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         {
             get { return _blockMapFilterValue; }
 
-            set
-            {
-                SetProperty(ref _blockMapFilterValue, value);
-                LinkFilterService.SetBlockMapFilterValue(value);
-                Messenger.Send(new BlockMapFilterMessage(value));
-            }
+            set { SetProperty(ref _blockMapFilterValue, value); }
         }
 
         public IAsyncRelayCommand StartsWithECommand { get; set; } = new AsyncRelayCommand(async () =>
@@ -46,5 +37,30 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         {
             await Windows.System.Launcher.LaunchUriAsync(new Uri("https://docs.microsoft.com/en-us/uwp/schemas/blockmapschema/app-package-block-map"));
         });
+
+        public IAsyncRelayCommand StartWithEFilterCommand { get; set; }
+
+        public IAsyncRelayCommand BlockMapFilterCommand { get; set; }
+
+        public LinkFilterViewModel()
+        {
+            StartWithEFilterCommand = new AsyncRelayCommand(StartWithEFilterAsync);
+
+            BlockMapFilterCommand = new AsyncRelayCommand(BlockMapFilterAsync);
+        }
+
+        public async Task StartWithEFilterAsync()
+        {
+            LinkFilterService.SetStartsWithEFilterValue(StartsWithEFilterValue);
+            Messenger.Send(new StartsWithEFilterMessage(StartsWithEFilterValue));
+            await Task.CompletedTask;
+        }
+
+        private async Task BlockMapFilterAsync()
+        {
+            LinkFilterService.SetBlockMapFilterValue(BlockMapFilterValue);
+            Messenger.Send(new BlockMapFilterMessage(BlockMapFilterValue));
+            await Task.CompletedTask;
+        }
     }
 }

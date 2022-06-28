@@ -25,7 +25,7 @@
             SelectedIndex="{x:Bind ViewModel.SelectedType, Mode=TwoWay}">
             <i:Interaction.Behaviors>
                 <ic:EventTriggerBehavior EventName="SelectionChanged">
-                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.TypeSelectionChangedCommand}" />
+                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.TypeSelectCommand}" />
                 </ic:EventTriggerBehavior>
             </i:Interaction.Behaviors>
         </ComboBox>

@@ -4,6 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:gc="using:GetStoreApp.UI.Controls.General"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:service="using:GetStoreApp.Services.Settings"
     mc:Ignorable="d">
@@ -42,7 +44,15 @@
                 DisplayMemberPath="FriendlyName"
                 ItemsSource="{x:Bind ViewModel.RegionList}"
                 SelectedValue="{x:Bind ViewModel.SelectedRegion, Mode=TwoWay}"
-                SelectedValuePath="ISO2" />
+                SelectedValuePath="ISO2">
+
+                <i:Interaction.Behaviors>
+                    <ic:EventTriggerBehavior EventName="SelectionChanged">
+                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.RegionSelectCommand}" />
+                    </ic:EventTriggerBehavior>
+                </i:Interaction.Behaviors>
+
+            </ComboBox>
         </Grid>
     </gc:CardControl>
 </UserControl>

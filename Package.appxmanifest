@@ -9,9 +9,9 @@
   IgnorableNamespaces="uap uap5 rescap genTemplate">
 
   <Identity
-    Name="F6A3B73F-72B3-4D85-B0C1-7E8E960B8F0B"
+    Name="Gaoyifei1011.GetStoreApp"
     Publisher="CN=高怡飞"
-    Version="0.1.8.0" />
+    Version="0.2.0.0" />
 
   <Properties>
     <DisplayName>ms-resource:PackageDisplayName</DisplayName>

@@ -70,7 +70,10 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public ResultViewModel()
         {
-            CopyCategoryIDCommand = new AsyncRelayCommand(async () => { CopyPasteService.CopyStringToClicpBoard(CategoryId); await Task.CompletedTask; });
+            CopyCategoryIDCommand = new AsyncRelayCommand(async () =>
+            {
+                CopyPasteService.CopyStringToClicpBoard(CategoryId); await Task.CompletedTask;
+            });
 
             CopySingleCommand = new AsyncRelayCommand(CopySingleAsync);
 
