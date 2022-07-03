@@ -4,9 +4,10 @@ using GetStoreApp.Services.App;
 using GetStoreApp.Services.Settings;
 using GetStoreApp.Services.Shell;
 using GetStoreApp.Services.Web;
-using GetStoreApp.UI.Controls.General;
+using GetStoreApp.UI.Controls.About;
 using GetStoreApp.UI.Controls.Home;
 using GetStoreApp.UI.Controls.Settings;
+using GetStoreApp.ViewModels.Controls.About;
 using GetStoreApp.ViewModels.Controls.Home;
 using GetStoreApp.ViewModels.Controls.Settings;
 using GetStoreApp.ViewModels.Pages;
@@ -64,7 +65,12 @@ namespace GetStoreApp
                 services.AddTransient<WebPage>();
 
                 // Controls and ViewModels
-                services.AddTransient<CardControl>();
+                services.AddTransient<HeaderControl>();
+                services.AddTransient<HeaderViewModel>();
+                services.AddTransient<PrecautionControl>();
+                services.AddTransient<PrecautionViewModel>();
+                services.AddTransient<ReferenceControl>();
+                services.AddTransient<ReferenceViewModel>();
 
                 services.AddTransient<HistoryItemControl>();
                 services.AddTransient<HistoryItemViewModel>();

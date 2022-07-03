@@ -3,12 +3,14 @@ using GetStoreApp.Services.App;
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.History
 {
+    /// <summary>
+    /// 历史记录数据库存储服务
+    /// </summary>
     public static class HistoryDataService
     {
         /// <summary>
@@ -87,13 +89,27 @@ namespace GetStoreApp.Services.History
             {
                 await db.OpenAsync();
 
-                SqliteCommand InsertCommand = new SqliteCommand();
-                InsertCommand.Connection = db;
+                using (SqliteTransaction transaction = db.BeginTransaction())
+                {
+                    using (SqliteCommand InsertCommand = new SqliteCommand())
+                    {
+                        InsertCommand.Connection = db;
+                        InsertCommand.Transaction = transaction;
 
-                InsertCommand.CommandText = string.Format("INSERT INTO {0} VALUES ({1},'{2}','{3}','{4}','{5}')", DataBaseService.HistoryTableName, history.CurrentTimeStamp, history.HistoryKey, history.HistoryType, history.HistoryChannel, history.HistoryLink);
+                        try
+                        {
+                            InsertCommand.CommandText = string.Format("INSERT INTO {0} VALUES ({1},'{2}','{3}','{4}','{5}')", DataBaseService.HistoryTableName, history.CurrentTimeStamp, history.HistoryKey, history.HistoryType, history.HistoryChannel, history.HistoryLink);
 
-                await InsertCommand.ExecuteNonQueryAsync();
+                            await InsertCommand.ExecuteNonQueryAsync();
 
+                            await transaction.CommitAsync();
+                        }
+                        catch (Exception)
+                        {
+                            await transaction.RollbackAsync();
+                        }
+                    }
+                }
                 await db.CloseAsync();
             }
         }
@@ -107,13 +123,27 @@ namespace GetStoreApp.Services.History
             {
                 await db.OpenAsync();
 
-                SqliteCommand UpdateCommand = new SqliteCommand();
-                UpdateCommand.Connection = db;
+                using (SqliteTransaction transaction = db.BeginTransaction())
+                {
+                    using (SqliteCommand UpdateCommand = new SqliteCommand())
+                    {
+                        UpdateCommand.Connection = db;
+                        UpdateCommand.Transaction = transaction;
 
-                UpdateCommand.CommandText = string.Format("UPDATE {0} SET TIMESTAMP = {1} WHERE HISTORYKEY = '{2}'", DataBaseService.HistoryTableName, history.CurrentTimeStamp, history.HistoryKey);
+                        try
+                        {
+                            UpdateCommand.CommandText = string.Format("UPDATE {0} SET TIMESTAMP = {1} WHERE HISTORYKEY = '{2}'", DataBaseService.HistoryTableName, history.CurrentTimeStamp, history.HistoryKey);
 
-                await UpdateCommand.ExecuteNonQueryAsync();
+                            await UpdateCommand.ExecuteNonQueryAsync();
 
+                            await transaction.CommitAsync();
+                        }
+                        catch (Exception)
+                        {
+                            await transaction.RollbackAsync();
+                        }
+                    }
+                }
                 await db.CloseAsync();
             }
         }
@@ -274,32 +304,29 @@ namespace GetStoreApp.Services.History
             using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
             {
                 await db.OpenAsync();
-                Debug.WriteLine("01");
+
                 using (SqliteTransaction transaction = db.BeginTransaction())
                 {
-                    using(SqliteCommand ClearCommand = new SqliteCommand())
+                    using (SqliteCommand ClearCommand = new SqliteCommand())
                     {
                         ClearCommand.Connection = db;
                         ClearCommand.Transaction = transaction;
-                        Debug.WriteLine("02");
+
                         try
                         {
-                            ClearCommand.CommandText = string.Format("DELETE FROM {0}",DataBaseService.HistoryTableName);
+                            ClearCommand.CommandText = string.Format("DELETE FROM {0}", DataBaseService.HistoryTableName);
                             await ClearCommand.ExecuteNonQueryAsync();
-                            Debug.WriteLine("03");
+
                             await transaction.CommitAsync();
                             result = true;
-                            Debug.WriteLine("06");
                         }
                         catch (Exception)
                         {
                             await transaction.RollbackAsync();
-                            Debug.WriteLine("07");
                         }
                     }
                 }
                 await db.CloseAsync();
-                Debug.WriteLine("08");
                 return result;
             }
         }

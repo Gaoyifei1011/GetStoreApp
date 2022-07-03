@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Messages;
 using GetStoreApp.Services.History;
-using CommunityToolkit.Mvvm.Messaging;
 using System;
 using System.Threading.Tasks;
 

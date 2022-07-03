@@ -120,7 +120,6 @@
                                     <ic:InvokeCommandAction Command="{x:Bind ViewModel.StartWithEFilterCommand}" />
                                 </ic:EventTriggerBehavior>
                             </i:Interaction.Behaviors>
-
                         </ToggleSwitch>
                     </Grid>
                 </StackPanel>
@@ -157,7 +156,6 @@
                                     <ic:InvokeCommandAction Command="{x:Bind ViewModel.BlockMapFilterCommand}" />
                                 </ic:EventTriggerBehavior>
                             </i:Interaction.Behaviors>
-
                         </ToggleSwitch>
                     </Grid>
                 </StackPanel>

@@ -6,11 +6,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:service="using:GetStoreApp.Services.Settings"
     Title="{x:Bind service:LanguageService.GetResources('/Dialog/Restart')}"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     CloseButtonText="{x:Bind service:LanguageService.GetResources('/Dialog/RestartCancel')}"
     Content="{x:Bind service:LanguageService.GetResources('/Dialog/RestartContent')}"
-    PrimaryButtonText="{x:Bind service:LanguageService.GetResources('/Dialog/RestartSure')}"
     PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
+    PrimaryButtonText="{x:Bind service:LanguageService.GetResources('/Dialog/RestartSure')}"
     Style="{ThemeResource DefaultContentDialogStyle}"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     mc:Ignorable="d" />
-

@@ -1,13 +1,21 @@
 ﻿<UserControl
     x:Class="GetStoreApp.UI.Controls.Home.ResultControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ctWinUI="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:service="using:GetStoreApp.Services.Settings"
     x:Name="ResultControlTest"
     mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///Styles/HyperlinkButton.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
 
     <Grid
         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
@@ -18,7 +26,10 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Style="{StaticResource DataGridDescriptionGridStyle}">
+        <Grid
+            Grid.Row="0"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            Style="{StaticResource DataGridDescriptionGridStyle}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
@@ -157,9 +168,11 @@
                     <ctWinUI:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <HyperlinkButton
+                                Margin="12,0,0,0"
                                 VerticalAlignment="Center"
                                 Content="{Binding FileName}"
                                 NavigateUri="{Binding FileLink}"
+                                Style="{StaticResource HyperlinkButtonStyle}"
                                 ToolTipService.ToolTip="{Binding FileName}" />
                         </DataTemplate>
                     </ctWinUI:DataGridTemplateColumn.CellTemplate>

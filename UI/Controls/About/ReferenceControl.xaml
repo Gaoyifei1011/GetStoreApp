@@ -1,0 +1,33 @@
+﻿<UserControl
+    x:Class="GetStoreApp.UI.Controls.About.ReferenceControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:service="using:GetStoreApp.Services.Settings"
+    mc:Ignorable="d">
+
+    <Expander>
+        <Expander.Header>
+            <TextBlock Style="{StaticResource ExpanderHeaderStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/Reference')}" />
+        </Expander.Header>
+        <Expander.Content>
+            <GridView
+                Margin="25,10,0,0"
+                ItemContainerStyle="{StaticResource GridViewItemStyle}"
+                ItemsSource="{x:Bind ViewModel.ReferenceDict}"
+                SelectionMode="None">
+                <GridView.ItemTemplate>
+                    <DataTemplate>
+                        <HyperlinkButton
+                            MinWidth="320"
+                            Padding="5,10,0,10"
+                            HorizontalContentAlignment="Left"
+                            Content="{Binding Key}"
+                            NavigateUri="{Binding Value}" />
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
+        </Expander.Content>
+    </Expander>
+</UserControl>

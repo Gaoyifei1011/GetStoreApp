@@ -211,7 +211,7 @@ namespace GetStoreApp.ViewModels.Pages
             // 删除时显示删除确认对话框
             ContentDialogResult result = await ShowDeletePromptDialogAsync();
 
-            if(result == ContentDialogResult.Primary)
+            if (result == ContentDialogResult.Primary)
             {
                 IsSelectMode = false;
 

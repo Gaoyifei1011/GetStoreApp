@@ -4,7 +4,6 @@ using GetStoreApp.UI.Dialogs;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Core;
 
 namespace GetStoreApp.ViewModels.Pages
 {
@@ -18,7 +17,7 @@ namespace GetStoreApp.ViewModels.Pages
             {
                 ContentDialogResult result = await ShowRestartPromptDialogAsync();
 
-                if(result == ContentDialogResult.Primary) Microsoft.Windows.AppLifecycle.AppInstance.Restart("");
+                if (result == ContentDialogResult.Primary) Microsoft.Windows.AppLifecycle.AppInstance.Restart("");
             });
         }
 
