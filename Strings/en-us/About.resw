@@ -117,7 +117,79 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppVersion" xml:space="preserve">
+    <value>Application Version: {0}</value>
+  </data>
+  <data name="BriefIntroduction" xml:space="preserve">
+    <value>App brief introduction</value>
+  </data>
+  <data name="CheckUpdate" xml:space="preserve">
+    <value>Check Update</value>
+  </data>
+  <data name="DesktopApps" xml:space="preserve">
+    <value>Traditional desktop apps</value>
+  </data>
+  <data name="DesktopAppsDescription" xml:space="preserve">
+    <value>Microsoft has allowed the release of traditional desktop apps in the latest Microsoft Store. The installation packages for these applications are typically in .EXE or .MSI format, rather than the . MSIX or . APPX format. This type of application cannot be crawled automatically through the app.</value>
+  </data>
+  <data name="Developer" xml:space="preserve">
+    <value>Developer:</value>
+  </data>
+  <data name="DeveloperHomePage" xml:space="preserve">
+    <value>https://github.com/Gaoyifei1011</value>
+  </data>
+  <data name="DeveloperName" xml:space="preserve">
+    <value>@高怡飞</value>
+  </data>
+  <data name="DevelopPurpose" xml:space="preserve">
+    <value>Purpose of development</value>
+  </data>
+  <data name="DevelopPurposeDescription" xml:space="preserve">
+    <value>The Microsoft Store provides a distribution, download, and update channel for apps that are already on the shelves. But in the latest Microsoft Store, Microsoft requires users to use an online account to download apps from the store. This has plagued some users who never use a Microsoft account and whose apps must rely on store downloads. The app uses the acquisition interface provided by store.rg-adguard.net, bypassing the official App Download Channel provided by the Microsoft Store. Users can download the required app installation packages offline for standalone deployment.</value>
+  </data>
+  <data name="HeaderDescription" xml:space="preserve">
+    <value>Welcome to download the GetStoreApp.Wish you a pleasant experience</value>
+  </data>
+  <data name="Maintenance" xml:space="preserve">
+    <value>Subsequent updates / maintenance</value>
+  </data>
+  <data name="MaintenanceDescription" xml:space="preserve">
+    <value>At present, the basic functions of the application have been implemented, and the download and offline installation of the application are also included in the future development plan. Subsequent updates are scheduled for an indefinite period of time.</value>
+  </data>
+  <data name="PaidApps" xml:space="preserve">
+    <value>Please download the paid app from the official channel</value>
+  </data>
+  <data name="PaidAppsDescription" xml:space="preserve">
+    <value>Microsoft has restricted the operation of paid apps in Windows systems, and paid apps that have not been purchased cannot function properly after installation through offline installation packages. If you have a paid app that you've already purchased, download it from the Microsoft Store.</value>
+  </data>
+  <data name="Precaution" xml:space="preserve">
+    <value>Precautions</value>
+  </data>
+  <data name="PrivacyandSecurity" xml:space="preserve">
+    <value>Privacy and Security</value>
+  </data>
+  <data name="PrivacyandSecurityDescription" xml:space="preserve">
+    <value>All of the app's code is open source on Github, and all code can be read on its own. The history involved in the app is stored in the app's cache folder and is not uploaded over the network. All content is also deleted when the app is uninstalled or reset. When downloading an app, make sure that you get the app from a reliable source, and the only address you currently specify is the Release page of the Github repository.</value>
+  </data>
+  <data name="ProjectHomePage" xml:space="preserve">
+    <value>Project home page</value>
+  </data>
+  <data name="RecognizeDesktopApps" xml:space="preserve">
+    <value>How to recognize traditional desktop apps?</value>
+  </data>
+  <data name="Reference" xml:space="preserve">
+    <value>Project references (Alphabetically sorted)</value>
+  </data>
+  <data name="SendFeedback" xml:space="preserve">
+    <value>Send feedback</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>About</value>
+  </data>
+  <data name="UpdatePath" xml:space="preserve">
+    <value>Update path</value>
+  </data>
+  <data name="UpdatePathDescription" xml:space="preserve">
+    <value>Apps listed on the Microsoft Store can only be downloaded or updated through the Microsoft Store and are not allowed to be downloaded and installed through other third-party channels. This practice ensures the reliability of the application source path. As a result, the app somehow violates the policies of the Microsoft Store and cannot be listed in the Microsoft Store. You can open the release page of the project by "Check for Updates", find the latest version of the app yourself, and download the installation package in MSIX format for the project to update.</value>
   </data>
 </root>

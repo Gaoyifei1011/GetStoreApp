@@ -117,7 +117,79 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppVersion" xml:space="preserve">
+    <value>应用版本：{0}</value>
+  </data>
+  <data name="BriefIntroduction" xml:space="preserve">
+    <value>应用简介</value>
+  </data>
+  <data name="CheckUpdate" xml:space="preserve">
+    <value>检查更新</value>
+  </data>
+  <data name="DesktopApps" xml:space="preserve">
+    <value>传统桌面应用不能获取</value>
+  </data>
+  <data name="DesktopAppsDescription" xml:space="preserve">
+    <value>微软已经允许在最新的 Microsoft Store 中发布传统桌面应用。这些应用程序的安装包通常为 .EXE 或 .MSI 格式，而非商店中的 .MSIX 或 .APPX 格式。这一类型的应用程序是不能通过该应用自动抓取的。</value>
+  </data>
+  <data name="Developer" xml:space="preserve">
+    <value>开发者：</value>
+  </data>
+  <data name="DeveloperHomePage" xml:space="preserve">
+    <value>https://github.com/Gaoyifei1011</value>
+  </data>
+  <data name="DeveloperName" xml:space="preserve">
+    <value>@高怡飞</value>
+  </data>
+  <data name="DevelopPurpose" xml:space="preserve">
+    <value>开发目的</value>
+  </data>
+  <data name="DevelopPurposeDescription" xml:space="preserve">
+    <value>Microsoft Store 提供了对已上架商店应用的分发，下载和更新通道。但是在最新的 Microsoft Store 中，微软要求用户下载商店的应用需要使用在线账户。这对一些从不使用微软账户且应用必须依赖商店下载的用户带来了困扰。该应用使用了 store.rg-adguard.net 提供的获取接口，绕开了 Microsoft Store 官方提供的应用下载渠道。用户可以离线下载所需的应用安装包，进行独立部署。</value>
+  </data>
+  <data name="HeaderDescription" xml:space="preserve">
+    <value>欢迎大家下载获取商店应用，祝您使用愉快</value>
+  </data>
+  <data name="Maintenance" xml:space="preserve">
+    <value>后续的更新 / 维护</value>
+  </data>
+  <data name="MaintenanceDescription" xml:space="preserve">
+    <value>目前应用的基本功能已经实现，在未来的开发计划中也包含了对应用的下载和离线安装。后续更新的计划不定，有时间更新。</value>
+  </data>
+  <data name="PaidApps" xml:space="preserve">
+    <value>付费应用请从官方渠道下载</value>
+  </data>
+  <data name="PaidAppsDescription" xml:space="preserve">
+    <value>微软在 Windows 系统中对付费应用的运行进行了限制，没有购买的付费应用是不能通过离线安装包安装后正常运行的。如果您有已经购买的付费应用，请从 Microsoft Store 中下载。</value>
+  </data>
+  <data name="Precaution" xml:space="preserve">
+    <value>注意事项</value>
+  </data>
+  <data name="PrivacyandSecurity" xml:space="preserve">
+    <value>隐私安全</value>
+  </data>
+  <data name="PrivacyandSecurityDescription" xml:space="preserve">
+    <value>应用的所有代码在 Github 上开源，所有代码都可以自行阅读。应用中涉及到的历史记录都存储在应用的缓存文件夹中，不会通过网络上传。应用在卸载或重置时所有的内容也会一并删除。在下载应用时请确保您获取应用的来源可靠，目前指定的唯一地址就是 Github 仓库的 Release 页面。</value>
+  </data>
+  <data name="ProjectHomePage" xml:space="preserve">
+    <value>项目主页</value>
+  </data>
+  <data name="RecognizeDesktopApps" xml:space="preserve">
+    <value>如何识别传统桌面应用?</value>
+  </data>
+  <data name="Reference" xml:space="preserve">
+    <value>项目引用（按英文字母排序）</value>
+  </data>
+  <data name="SendFeedback" xml:space="preserve">
+    <value>发送反馈</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>关于</value>
+  </data>
+  <data name="UpdatePath" xml:space="preserve">
+    <value>更新途径</value>
+  </data>
+  <data name="UpdatePathDescription" xml:space="preserve">
+    <value>Microsoft Store 上架的应用只能通过 Microsoft Store 进行下载或更新，不允许通过其他第三方渠道进行下载安装。这种做法保证了应用来源途径的可靠性。因此，该应用在某种程度上违背了 Microsoft Store 的政策，无法在 Microsoft Store 中上架。您可以通过“检查更新”打开项目的发布页面，自行查找应用的最新版本，下载该项目 MSIX 格式的安装包进行更新。</value>
   </data>
 </root>

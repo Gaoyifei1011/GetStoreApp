@@ -1,0 +1,34 @@
+﻿<UserControl
+    x:Class="GetStoreApp.UI.Controls.About.IntroductionControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:service="using:GetStoreApp.Services.Settings"
+    mc:Ignorable="d">
+
+    <Expander IsExpanded="True">
+        <Expander.Header>
+            <TextBlock Style="{StaticResource ExpanderHeaderStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/BriefIntroduction')}" />
+        </Expander.Header>
+
+        <Expander.Content>
+            <StackPanel Margin="30,12,25,12">
+                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/DevelopPurpose')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/DevelopPurposeDescription')}" />
+                <MenuFlyoutSeparator Margin="0,0,0,8" />
+
+                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/UpdatePath')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/UpdatePathDescription')}" />
+                <MenuFlyoutSeparator Margin="0,0,0,8" />
+
+                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/PrivacyandSecurity')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/PrivacyandSecurityDescription')}" />
+                <MenuFlyoutSeparator Margin="0,0,0,8" />
+
+                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/Maintenance')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/MaintenanceDescription')}" />
+            </StackPanel>
+        </Expander.Content>
+    </Expander>
+</UserControl>

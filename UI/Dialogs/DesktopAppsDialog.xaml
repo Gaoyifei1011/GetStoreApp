@@ -1,0 +1,33 @@
+﻿<ContentDialog
+    x:Class="GetStoreApp.UI.Dialogs.DesktopAppsDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:service="using:GetStoreApp.Services.Settings"
+    Title="{x:Bind service:LanguageService.GetResources('/Dialog/RecognizeDesktopApps')}"
+    CloseButtonText="{x:Bind service:LanguageService.GetResources('/Dialog/DesktopAppsSure')}"
+    Style="{StaticResource DefaultContentDialogStyle}"
+    mc:Ignorable="d">
+
+    <ContentDialog.Resources>
+        <x:Double x:Key="ContentDialogMaxWidth">560</x:Double>
+    </ContentDialog.Resources>
+
+    <ContentDialog.Content>
+        <StackPanel>
+            <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind service:LanguageService.GetResources('/Dialog/DesktopAppsContent1')}" />
+            <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind service:LanguageService.GetResources('/Dialog/DesktopAppsContent2')}" />
+
+            <Border
+                HorizontalAlignment="Left"
+                BorderBrush="{StaticResource CardStrokeColorDefaultBrush}"
+                BorderThickness="2">
+                <Image
+                    Width="463"
+                    Height="107"
+                    Source="/Assets/Images/DesktopApps.png" />
+            </Border>
+        </StackPanel>
+    </ContentDialog.Content>
+</ContentDialog>

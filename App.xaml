@@ -2,6 +2,7 @@
     x:Class="GetStoreApp.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -11,6 +12,8 @@
                 <ResourceDictionary Source="ms-appx:///Styles/DataGrid.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Expander.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/ExpanderThemeResources.xaml" />
+                <ResourceDictionary Source="ms-appx:///Styles/Grid.xaml" />
+                <ResourceDictionary Source="ms-appx:///Styles/GridView.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/FontIcon.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/FontSizes.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/TextBlock.xaml" />

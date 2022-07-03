@@ -1,58 +1,53 @@
 ﻿<UserControl
     x:Class="GetStoreApp.UI.Controls.Settings.RegionControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:gc="using:GetStoreApp.UI.Controls.General"
-    xmlns:i="using:Microsoft.Xaml.Interactivity"
-    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:service="using:GetStoreApp.Services.Settings"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
     mc:Ignorable="d">
 
-    <gc:CardControl>
-        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
+    <Grid Style="{StaticResource CardGridStyle}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
 
-            <FontIcon
-                Grid.Column="0"
-                FontFamily="Segoe Fluent Icons"
-                Glyph="&#xF49a;"
-                Style="{StaticResource FontIconStyle}" />
+        <FontIcon
+            Grid.Column="0"
+            FontFamily="Segoe Fluent Icons"
+            Glyph="&#xF49a;"
+            Style="{StaticResource FontIconStyle}" />
 
-            <StackPanel Grid.Column="1" Orientation="Vertical">
+        <StackPanel Grid.Column="1" Orientation="Vertical">
 
-                <TextBlock
-                    VerticalAlignment="Center"
-                    Style="{StaticResource BodyTextBlockStyle}"
-                    Text="{x:Bind service:LanguageService.GetResources('/Settings/Region')}" />
+            <TextBlock
+                VerticalAlignment="Center"
+                Style="{StaticResource BodyTextBlockStyle}"
+                Text="{x:Bind service:LanguageService.GetResources('/Settings/Region')}" />
 
-                <TextBlock
-                    VerticalAlignment="Center"
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    Style="{StaticResource CaptionTextBlockStyle}"
-                    Text="{x:Bind service:LanguageService.GetResources('/Settings/RegionDescription')}" />
+            <TextBlock
+                VerticalAlignment="Center"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                Style="{StaticResource CaptionTextBlockStyle}"
+                Text="{x:Bind service:LanguageService.GetResources('/Settings/RegionDescription')}" />
+        </StackPanel>
 
-            </StackPanel>
+        <ComboBox
+            Grid.Column="2"
+            DisplayMemberPath="FriendlyName"
+            ItemsSource="{x:Bind ViewModel.RegionList}"
+            SelectedValue="{x:Bind ViewModel.SelectedRegion, Mode=TwoWay}"
+            SelectedValuePath="ISO2">
 
-            <ComboBox
-                Grid.Column="2"
-                DisplayMemberPath="FriendlyName"
-                ItemsSource="{x:Bind ViewModel.RegionList}"
-                SelectedValue="{x:Bind ViewModel.SelectedRegion, Mode=TwoWay}"
-                SelectedValuePath="ISO2">
-
-                <i:Interaction.Behaviors>
-                    <ic:EventTriggerBehavior EventName="SelectionChanged">
-                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.RegionSelectCommand}" />
-                    </ic:EventTriggerBehavior>
-                </i:Interaction.Behaviors>
-
-            </ComboBox>
-        </Grid>
-    </gc:CardControl>
+            <i:Interaction.Behaviors>
+                <ic:EventTriggerBehavior EventName="SelectionChanged">
+                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.RegionSelectCommand}" />
+                </ic:EventTriggerBehavior>
+            </i:Interaction.Behaviors>
+        </ComboBox>
+    </Grid>
 </UserControl>

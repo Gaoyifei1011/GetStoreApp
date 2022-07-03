@@ -12,5 +12,10 @@ namespace GetStoreApp.Views
             ViewModel = App.GetService<AboutViewModel>();
             InitializeComponent();
         }
+
+        public double AboutExpandLeftPanelWidth(double width)
+        {
+            return width / 3;
+        }
     }
 }

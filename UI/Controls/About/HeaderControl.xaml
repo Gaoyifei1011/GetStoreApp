@@ -1,0 +1,86 @@
+﻿<UserControl
+    x:Class="GetStoreApp.UI.Controls.About.HeaderControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:service="using:GetStoreApp.Services.Settings"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///Styles/HyperlinkButton.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid
+        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+        BorderThickness="1"
+        CornerRadius="4">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <Image
+            Grid.Column="0"
+            Height="140"
+            Margin="15,0"
+            Source="/Assets/Logo/GetStoreApp.png" />
+
+        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+
+            <TextBlock
+                Margin="0,0,0,10"
+                FontSize="30"
+                Text="{x:Bind service:LanguageService.GetResources('AppDisplayName')}" />
+
+            <TextBlock
+                Margin="0,0,0,10"
+                FontSize="15"
+                Text="{x:Bind ViewModel.AppVersion, Converter={StaticResource AppVersionInfoFormatConverter}}" />
+
+            <StackPanel Orientation="Horizontal">
+
+                <TextBlock
+                    VerticalAlignment="Center"
+                    FontSize="15"
+                    Text="{x:Bind service:LanguageService.GetResources('/About/Developer')}" />
+
+                <HyperlinkButton
+                    VerticalAlignment="Center"
+                    Command="{x:Bind ViewModel.DeveloperDescriptionCommand}"
+                    Content="{x:Bind service:LanguageService.GetResources('/About/DeveloperName')}"
+                    Style="{StaticResource HyperlinkButtonStyle}" />
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel
+            Grid.Column="2"
+            Margin="0,0,25,0"
+            VerticalAlignment="Center"
+            Spacing="5">
+
+            <Button
+                MinWidth="150"
+                Command="{x:Bind ViewModel.ProjectDescriptionCommand}"
+                Content="{x:Bind service:LanguageService.GetResources('/About/ProjectHomePage')}"
+                Style="{StaticResource AccentButtonStyle}" />
+
+            <Button
+                MinWidth="150"
+                Command="{x:Bind ViewModel.SendFeedbackCommand}"
+                Content="{x:Bind service:LanguageService.GetResources('/About/SendFeedback')}" />
+
+            <Button
+                MinWidth="150"
+                Command="{x:Bind ViewModel.CheckUpdateCommand}"
+                Content="{x:Bind service:LanguageService.GetResources('/About/CheckUpdate')}" />
+        </StackPanel>
+    </Grid>
+</UserControl>

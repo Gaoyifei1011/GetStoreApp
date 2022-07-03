@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Activation;
 using GetStoreApp.Contracts.Services;
+using GetStoreApp.Helpers;
 using GetStoreApp.Services.Settings;
 using GetStoreApp.Views;
 using Microsoft.UI.Xaml;
@@ -64,6 +65,7 @@ namespace GetStoreApp.Services.App
             await ThemeSelectorService.InitializeAsync();
             await ThemeSelectorService.SetRequestedThemeAsync();
             await DataBaseService.InitializeDataBaseAsync();
+            await JsonHelper.InitializeJsonFileAsync();
         }
     }
 }

@@ -35,9 +35,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         /// </summary>
         private void InitialIzeBackdropList()
         {
-            SystemInfoHelper systemInfoHelper = new SystemInfoHelper();
-
-            ulong BuildNumber = systemInfoHelper.GetSystemVersion()["BuildNumber"];
+            ulong BuildNumber = InfoHelper.GetSystemVersion()["BuildNumber"];
 
             if (BuildNumber >= 22000)
             {

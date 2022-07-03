@@ -17,7 +17,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         {
             get { return _selectedRegion; }
 
-            set { SetProperty(ref _selectedRegion,value); }
+            set { SetProperty(ref _selectedRegion, value); }
         }
 
         public IAsyncRelayCommand RegionSelectCommand { get; set; }

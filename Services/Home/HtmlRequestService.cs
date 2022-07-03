@@ -64,18 +64,17 @@ namespace GetStoreApp.Services.Home
             }
 
             // 捕捉因访问超时引发的异常
-            catch(TaskCanceledException taskCanceledExpection)
+            catch (TaskCanceledException taskCanceledExpection)
             {
                 RequestId = 2;
                 RequestExpectionContent = taskCanceledExpection.Message;
             }
 
             // 其他未知异常
-            catch(Exception expection)
+            catch (Exception expection)
             {
                 RequestExpectionContent = expection.Message;
             }
-
             finally
             {
                 HttpRequestResult = new RequestModel

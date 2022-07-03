@@ -1,10 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows10.0.22000.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <RootNamespace>GetStoreApp</RootNamespace>
     <Platforms>x86;x64;arm64</Platforms>
+    <TargetFramework>net6.0-windows10.0.22000.0</TargetFramework>
+    <SelfContained>true</SelfContained>
+    <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
     <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
     <PublishProfile>Properties\PublishProfiles\win10-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
@@ -13,8 +15,6 @@
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <UseWPF>False</UseWPF>
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
-    <SelfContained>true</SelfContained>
-    <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
     <UseWindowsForms>False</UseWindowsForms>
     <StartupObject></StartupObject>
     <ApplicationIcon>Assets\Logo\GetStoreApp.ico</ApplicationIcon>
@@ -26,8 +26,14 @@
     <ImplicitUsings>disable</ImplicitUsings>
     <FileVersion>0.2.0.0</FileVersion>
     <AssemblyVersion></AssemblyVersion>
-    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
     <Copyright>高怡飞</Copyright>
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+    <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
+    <AppxBundle>Never</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
     <Optimize>True</Optimize>
@@ -51,17 +57,33 @@
     <DebugType>embedded</DebugType>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Assets\新文件夹\**" />
     <Compile Remove="UI\Dialogs\Home\**" />
+    <Content Remove="Assets\新文件夹\**" />
+    <EmbeddedResource Remove="Assets\新文件夹\**" />
     <EmbeddedResource Remove="UI\Dialogs\Home\**" />
+    <None Remove="Assets\新文件夹\**" />
     <None Remove="UI\Dialogs\Home\**" />
+    <Page Remove="Assets\新文件夹\**" />
     <Page Remove="UI\Dialogs\Home\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Assets\GetStoreApp.png" />
+    <None Remove="Assets\Logo\GetStoreApp.png" />
     <None Remove="Styles\Converter.xaml" />
     <None Remove="Styles\DataGrid.xaml" />
     <None Remove="Styles\Expander.xaml" />
     <None Remove="Styles\ExpanderThemeResources.xaml" />
     <None Remove="Styles\FontIcon.xaml" />
+    <None Remove="Styles\Grid.xaml" />
+    <None Remove="Styles\GridView.xaml" />
+    <None Remove="Styles\HyperlinkButton.xaml" />
+    <None Remove="UI\Controls\About\HeaderControl.xaml" />
+    <None Remove="UI\Controls\About\InstructionsControl.xaml" />
+    <None Remove="UI\Controls\About\IntroductionControl.xaml" />
+    <None Remove="UI\Controls\About\PrecautionControl.xaml" />
+    <None Remove="UI\Controls\About\ReferenceControl.xaml" />
+    <None Remove="UI\Controls\About\ThanksControl.xaml" />
     <None Remove="UI\Controls\Home\HistoryItemControl.xaml" />
     <None Remove="UI\Controls\Home\RequestControl.xaml" />
     <None Remove="UI\Controls\Home\ResultControl.xaml" />
@@ -71,6 +93,7 @@
     <None Remove="UI\Controls\Settings\HistoryItemValueControl.xaml" />
     <None Remove="UI\Controls\Settings\LinkFilterControl.xaml" />
     <None Remove="UI\Dialogs\DeletePromptDialog.xaml" />
+    <None Remove="UI\Dialogs\DesktopAppsDialog.xaml" />
     <None Remove="UI\Dialogs\RestartPromptDialog.xaml" />
     <None Remove="UI\Dialogs\SelectEmptyPromptDialog.xaml" />
   </ItemGroup>
@@ -86,7 +109,7 @@
     <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.6" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.1" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.1" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.2" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.8" />
     <PackageReference Include="NETStandard.Library" Version="2.0.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
@@ -95,6 +118,36 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="UI\Controls\About\InstructionsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Dialogs\DesktopAppsDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\GridView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\Grid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\HyperlinkButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\About\ThanksControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\About\PrecautionControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\About\ReferenceControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\About\IntroductionControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\About\HeaderControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="UI\Dialogs\RestartPromptDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -172,5 +225,13 @@
 
   <ItemGroup>
     <PRIResource Remove="UI\Dialogs\Home\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PRIResource Remove="Assets\新文件夹\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Assets\Images\" />
   </ItemGroup>
 </Project>

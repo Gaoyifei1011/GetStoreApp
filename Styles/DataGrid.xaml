@@ -105,13 +105,6 @@
     <SolidColorBrush x:Key="DataGridCellFocusVisualSecondaryBrush" Color="Transparent" />
     <StaticResource x:Key="DataGridCellInvalidBrush" ResourceKey="InvalidBrush" />
 
-    <Style x:Key="DataGridDescriptionGridStyle" TargetType="Grid">
-        <Setter Property="Padding" Value="16,8,2,8" />
-        <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
-        <Setter Property="BorderThickness" Value="1,1,1,1" />
-        <Setter Property="CornerRadius" Value="4,4,0,0" />
-    </Style>
-
     <Style x:Key="DataGridHistoryItemStyle" TargetType="ctWinUI:DataGrid">
         <Setter Property="AutoGenerateColumns" Value="False" />
         <Setter Property="Background" Value="Transparent" />
