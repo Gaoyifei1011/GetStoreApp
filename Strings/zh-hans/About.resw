@@ -120,8 +120,26 @@
   <data name="AppVersion" xml:space="preserve">
     <value>应用版本：{0}</value>
   </data>
+  <data name="BeginnerGuide" xml:space="preserve">
+    <value>新手指南</value>
+  </data>
+  <data name="BeginnerGuideDescription" xml:space="preserve">
+    <value>应用打开后，选择您要获取的链接类型和通道类型。选择完成后，输入您要获取的链接内容，输入完成后，点击‘获取链接’按钮即可获取到商店链接对应的应用安装包。在成功获取后，您的输入记录将被储存，下一次打开应用后就可以快速获取到商店链接对应的应用安装包。</value>
+  </data>
   <data name="BriefIntroduction" xml:space="preserve">
     <value>应用简介</value>
+  </data>
+  <data name="CheckNetwork" xml:space="preserve">
+    <value>检查网络</value>
+  </data>
+  <data name="CheckStep1" xml:space="preserve">
+    <value>1.如果是因为网路连接超时引起的错误，您可以尝试重新获取。</value>
+  </data>
+  <data name="CheckStep2" xml:space="preserve">
+    <value>2.只有正确的链接才能获取应用安装包，请检查您输入的链接是否正确。</value>
+  </data>
+  <data name="CheckStep3" xml:space="preserve">
+    <value>3.应用需要联网功能才能发送获取请求。请检查您设备的网络情况，待到您设备的网络连接正常后尝试重新获取。</value>
   </data>
   <data name="CheckUpdate" xml:space="preserve">
     <value>检查更新</value>
@@ -146,6 +164,12 @@
   </data>
   <data name="DevelopPurposeDescription" xml:space="preserve">
     <value>Microsoft Store 提供了对已上架商店应用的分发，下载和更新通道。但是在最新的 Microsoft Store 中，微软要求用户下载商店的应用需要使用在线账户。这对一些从不使用微软账户且应用必须依赖商店下载的用户带来了困扰。该应用使用了 store.rg-adguard.net 提供的获取接口，绕开了 Microsoft Store 官方提供的应用下载渠道。用户可以离线下载所需的应用安装包，进行独立部署。</value>
+  </data>
+  <data name="ErrorSolution" xml:space="preserve">
+    <value>获取失败解决方案</value>
+  </data>
+  <data name="ErrorSolutionDescription" xml:space="preserve">
+    <value>如果信息提示栏的背景变成红色，那么就说明您的本次请求发生了错误。您可以通过信息状态栏的“查看”按钮获取相关信息。在了解了具体的错误原因后，您可以进行以下操作。</value>
   </data>
   <data name="HeaderDescription" xml:space="preserve">
     <value>欢迎大家下载获取商店应用，祝您使用愉快</value>
@@ -186,10 +210,16 @@
   <data name="Title" xml:space="preserve">
     <value>关于</value>
   </data>
+  <data name="TroubleShoot" xml:space="preserve">
+    <value>疑难解答</value>
+  </data>
   <data name="UpdatePath" xml:space="preserve">
     <value>更新途径</value>
   </data>
   <data name="UpdatePathDescription" xml:space="preserve">
     <value>Microsoft Store 上架的应用只能通过 Microsoft Store 进行下载或更新，不允许通过其他第三方渠道进行下载安装。这种做法保证了应用来源途径的可靠性。因此，该应用在某种程度上违背了 Microsoft Store 的政策，无法在 Microsoft Store 中上架。您可以通过“检查更新”打开项目的发布页面，自行查找应用的最新版本，下载该项目 MSIX 格式的安装包进行更新。</value>
+  </data>
+  <data name="UseInstruction" xml:space="preserve">
+    <value>使用说明</value>
   </data>
 </root>

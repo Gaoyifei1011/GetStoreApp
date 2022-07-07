@@ -120,8 +120,26 @@
   <data name="AppVersion" xml:space="preserve">
     <value>Application Version: {0}</value>
   </data>
+  <data name="BeginnerGuide" xml:space="preserve">
+    <value>Beginner's guide</value>
+  </data>
+  <data name="BeginnerGuideDescription" xml:space="preserve">
+    <value>Once the app opens, select the type of link and channel you want to get. When the selection is complete, enter the link content you want to get, and when the input is complete, click the 'Get Link' button to get the app installation package corresponding to the store link. After successful acquisition, your input record will be stored, and the next time you open the app, you can quickly get the app installation package corresponding to the store link.</value>
+  </data>
   <data name="BriefIntroduction" xml:space="preserve">
     <value>App brief introduction</value>
+  </data>
+  <data name="CheckNetwork" xml:space="preserve">
+    <value>Check the network</value>
+  </data>
+  <data name="CheckStep1" xml:space="preserve">
+    <value>1. If the error is caused by the network connection timeout, you can try to get it again.</value>
+  </data>
+  <data name="CheckStep2" xml:space="preserve">
+    <value>2. Only the correct link will get the app installation package, please check if the link you entered is correct.</value>
+  </data>
+  <data name="CheckStep3" xml:space="preserve">
+    <value>3. The app needs networking to send a get request. Check your device's network condition and wait until your device's network connection is working properly to try to regain it.</value>
   </data>
   <data name="CheckUpdate" xml:space="preserve">
     <value>Check Update</value>
@@ -146,6 +164,12 @@
   </data>
   <data name="DevelopPurposeDescription" xml:space="preserve">
     <value>The Microsoft Store provides a distribution, download, and update channel for apps that are already on the shelves. But in the latest Microsoft Store, Microsoft requires users to use an online account to download apps from the store. This has plagued some users who never use a Microsoft account and whose apps must rely on store downloads. The app uses the acquisition interface provided by store.rg-adguard.net, bypassing the official App Download Channel provided by the Microsoft Store. Users can download the required app installation packages offline for standalone deployment.</value>
+  </data>
+  <data name="ErrorSolution" xml:space="preserve">
+    <value>Request failed solution</value>
+  </data>
+  <data name="ErrorSolutionDescription" xml:space="preserve">
+    <value>If the background of the message bar turns red, it means that an error has occurred in your request. You can get information through the "View" button in the information status bar. After you understand the specific cause of the error, you can do the following.</value>
   </data>
   <data name="HeaderDescription" xml:space="preserve">
     <value>Welcome to download the GetStoreApp.Wish you a pleasant experience</value>
@@ -186,10 +210,16 @@
   <data name="Title" xml:space="preserve">
     <value>About</value>
   </data>
+  <data name="TroubleShoot" xml:space="preserve">
+    <value>Trouble shoot</value>
+  </data>
   <data name="UpdatePath" xml:space="preserve">
     <value>Update path</value>
   </data>
   <data name="UpdatePathDescription" xml:space="preserve">
     <value>Apps listed on the Microsoft Store can only be downloaded or updated through the Microsoft Store and are not allowed to be downloaded and installed through other third-party channels. This practice ensures the reliability of the application source path. As a result, the app somehow violates the policies of the Microsoft Store and cannot be listed in the Microsoft Store. You can open the release page of the project by "Check for Updates", find the latest version of the app yourself, and download the installation package in MSIX format for the project to update.</value>
+  </data>
+  <data name="UseInstruction" xml:space="preserve">
+    <value>Direction for use</value>
   </data>
 </root>

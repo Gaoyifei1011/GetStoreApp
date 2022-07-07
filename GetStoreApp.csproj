@@ -70,6 +70,7 @@
   <ItemGroup>
     <None Remove="Assets\GetStoreApp.png" />
     <None Remove="Assets\Logo\GetStoreApp.png" />
+    <None Remove="Styles\Button.xaml" />
     <None Remove="Styles\Converter.xaml" />
     <None Remove="Styles\DataGrid.xaml" />
     <None Remove="Styles\Expander.xaml" />
@@ -118,6 +119,12 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Styles\Expander.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\Button.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="UI\Controls\About\InstructionsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -163,12 +170,6 @@
     <Page Update="UI\Controls\Settings\BackdropControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Styles\Button.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\ExpanderThemeResources.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Update="UI\Controls\Home\HistoryItemControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -191,9 +192,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Controls\Home\RequestControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Controls\Settings\LinkFilterControl.xaml">

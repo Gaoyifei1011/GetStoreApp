@@ -8,16 +8,23 @@
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
 
+                <ResourceDictionary Source="ms-appx:///Styles/Button.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Converter.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/DataGrid.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Expander.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/ExpanderThemeResources.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Grid.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/GridView.xaml" />
+                <ResourceDictionary Source="ms-appx:///Styles/HyperlinkButton.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/FontIcon.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/FontSizes.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/TextBlock.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/Thickness.xaml" />
+
+                <ResourceDictionary>
+                    <!--  导航视图控件中的内容窗口距离应用窗口上边界的距离  -->
+                    <Thickness x:Key="NavigationViewContentMargin">0,45,0,0</Thickness>
+                    <!--  状态栏通知状态下的背景色  -->
+                    <StaticResource x:Key="InfoBarInformationalSeverityBackgroundBrush" ResourceKey="CardBackgroundFillColorDefaultBrush" />
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

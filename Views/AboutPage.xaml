@@ -8,7 +8,7 @@
     xmlns:service="using:GetStoreApp.Services.Settings"
     mc:Ignorable="d">
 
-    <ScrollViewer>
+    <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
         <StackPanel
             Margin="30,15,30,0"
             Padding="0,0,0,40"

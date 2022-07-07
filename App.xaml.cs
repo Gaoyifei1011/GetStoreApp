@@ -67,6 +67,8 @@ namespace GetStoreApp
                 // Controls and ViewModels
                 services.AddTransient<HeaderControl>();
                 services.AddTransient<HeaderViewModel>();
+                services.AddTransient<InstructionsControl>();
+                services.AddTransient<InstructionsViewModel>();
                 services.AddTransient<PrecautionControl>();
                 services.AddTransient<PrecautionViewModel>();
                 services.AddTransient<ReferenceControl>();

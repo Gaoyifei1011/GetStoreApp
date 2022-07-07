@@ -6,12 +6,6 @@
     xmlns:service="using:GetStoreApp.Services.Settings"
     Loaded="OnLoaded">
 
-    <Page.Resources>
-        <ResourceDictionary>
-            <Thickness x:Key="NavigationViewContentMargin">0,45,0,0</Thickness>
-        </ResourceDictionary>
-    </Page.Resources>
-
     <Grid>
         <Grid
             x:Name="AppTitleBar"
