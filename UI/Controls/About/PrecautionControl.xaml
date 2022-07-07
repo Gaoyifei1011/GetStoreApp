@@ -7,13 +7,13 @@
     xmlns:service="using:GetStoreApp.Services.Settings"
     mc:Ignorable="d">
 
-    <Expander>
+    <Expander Style="{StaticResource ExpanderAboutStyle}">
         <Expander.Header>
             <TextBlock Style="{StaticResource ExpanderHeaderStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/Precaution')}" />
         </Expander.Header>
 
         <Expander.Content>
-            <StackPanel Margin="30,12,25,12">
+            <StackPanel Margin="14,0,10,0">
 
                 <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/PaidApps')}" />
                 <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/PaidAppsDescription')}" />

@@ -2,7 +2,7 @@
 using Microsoft.UI.Composition;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
-using WinRT; // required to support Window.As<ICompositionSupportsSystemBackdrop>()
+using WinRT;
 
 namespace GetStoreApp.Helpers
 {

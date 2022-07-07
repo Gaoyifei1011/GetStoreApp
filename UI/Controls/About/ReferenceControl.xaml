@@ -7,13 +7,13 @@
     xmlns:service="using:GetStoreApp.Services.Settings"
     mc:Ignorable="d">
 
-    <Expander>
+    <Expander Style="{StaticResource ExpanderAboutStyle}">
         <Expander.Header>
             <TextBlock Style="{StaticResource ExpanderHeaderStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/Reference')}" />
         </Expander.Header>
         <Expander.Content>
             <GridView
-                Margin="25,10,0,0"
+                Margin="9,0,0,0"
                 ItemContainerStyle="{StaticResource GridViewItemStyle}"
                 ItemsSource="{x:Bind ViewModel.ReferenceDict}"
                 SelectionMode="None">

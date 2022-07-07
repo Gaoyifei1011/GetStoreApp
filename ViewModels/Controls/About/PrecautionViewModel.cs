@@ -20,7 +20,7 @@ namespace GetStoreApp.ViewModels.Controls.About
         }
 
         /// <summary>
-        /// 应用重启时显示重启提示对话框
+        /// 传统桌面应用详细信息对话框
         /// </summary>
         public async Task<ContentDialogResult> ShowDesktopAppsDialogAsync()
         {

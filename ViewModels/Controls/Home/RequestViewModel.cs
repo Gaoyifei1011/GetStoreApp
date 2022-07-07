@@ -184,7 +184,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             // 成功状态下解析数据，并更新相应的历史记录
             if (state == 1)
             {
-                HtmlParseService htmlParseService = new(httpRequestData);
+                HtmlParseService htmlParseService = new HtmlParseService(httpRequestData);
 
                 CategoryId = htmlParseService.HtmlParseCID();
 

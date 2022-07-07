@@ -208,7 +208,7 @@
     <value>S/N</value>
   </data>
   <data name="StatusInfoError" xml:space="preserve">
-    <value>An error occurred to get data from the microsoft store server, please click the specific information button on the right for specific problems</value>
+    <value>An error occurred to get data from the microsoft store server, the solution please click on the "Instructions for use" button in the upper right corner of the window to understand</value>
   </data>
   <data name="StatusInfoGetting" xml:space="preserve">
     <value>Queries are being made from the servers in the Microsoft Store, please be patient...</value>
@@ -235,7 +235,7 @@
     <value>Type</value>
   </data>
   <data name="UseInstruction" xml:space="preserve">
-    <value>Direction for Use</value>
+    <value>Direction for use</value>
   </data>
   <data name="ViewAll" xml:space="preserve">
     <value>View all</value>

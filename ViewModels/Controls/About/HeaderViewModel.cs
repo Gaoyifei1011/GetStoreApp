@@ -13,6 +13,8 @@ namespace GetStoreApp.ViewModels.Controls.About
 
         private ushort BuildVersion = InfoHelper.GetAppVersion()["BuildVersion"];
 
+        private ushort RevisionVersion = InfoHelper.GetAppVersion()["RevisionVersion"];
+
         private string _appVersion;
 
         public string AppVersion
@@ -44,7 +46,7 @@ namespace GetStoreApp.ViewModels.Controls.About
 
         public HeaderViewModel()
         {
-            AppVersion = string.Format("{0}.{1}.{2}", MajorVersion, MinorVersion, BuildVersion);
+            AppVersion = string.Format("{0}.{1}.{2}.{3}", MajorVersion, MinorVersion, BuildVersion, RevisionVersion);
         }
     }
 }

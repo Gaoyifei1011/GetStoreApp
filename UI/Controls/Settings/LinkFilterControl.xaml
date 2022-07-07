@@ -9,7 +9,7 @@
     xmlns:service="using:GetStoreApp.Services.Settings"
     mc:Ignorable="d">
 
-    <Expander Style="{StaticResource DefaultExpanderStyle}">
+    <Expander Style="{StaticResource ExpanderSettingsStyle}">
         <Expander.Header>
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
@@ -89,8 +89,8 @@
         </Expander.Header>
 
         <Expander.Content>
-            <StackPanel Padding="43,0,18,0">
-                <StackPanel Margin="0,6,0,6">
+            <StackPanel Padding="27,0,0,0" HorizontalAlignment="Stretch">
+                <StackPanel>
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -124,9 +124,9 @@
                     </Grid>
                 </StackPanel>
 
-                <MenuFlyoutSeparator />
+                <MenuFlyoutSeparator Margin="0,6" />
 
-                <StackPanel Margin="0,6,0,6">
+                <StackPanel>
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
