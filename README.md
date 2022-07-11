@@ -5,21 +5,21 @@
 
 | 项目进度                     | 开发进展 |
 | --------------------------- | ----------- |
-| 主页面功能                   | 已完成75%的功能（可以通过网页下载）     |
+| 主页面功能                   | 已完成90%的功能（可以通过浏览器下载）     |
 | 历史记录（记录使用过的链接）   | 已完成        |
 | 通过生成的链接下载文件         | 0%，计划中        |
-| 应用说明                     | 0%，预计7月初完成        |
+| 应用说明                     | 已完成       |
 | 控制台应用程序                    | 0%，计划中      |
-| 设置内容                     | 50%，随着其他项目进度共同开发        |
 
 | Project progress                    | Development progress |
 | --------------------------- | ----------- |
-| Main page functionality                    | 75% of the features completed (can be downloaded via web page)     |
+| Main page functionality                    | 90% of the features completed (can be downloaded via browser)     |
 | History (records used links)  | Finished       |
 | Download the file from the generated link         | 0% is planned        |
-| Application Notes                   | 0%, expected to be completed in early July        |
+| Application Notes                   | Finished       |
 | Console applications                       | 0% is planned      |
-| Settings                     | 50%, co-developed with the progress of other projects |
+
+项目暂时停止开发，由于原API网页需要通过Cloudflare网页验证(添加了反爬虫验证)，需要解决这个问题后抽时间继续开发。
 
 ### 该项目的功能
 #### 该项目主要包括以下功能：通过[Store](https://store.rg-adguard.net/)提供的API来生成带有文件链接
