@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Contracts.Services;
+﻿using GetStoreApp.Contracts.Services.Web;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Web.WebView2.Core;
 using System;

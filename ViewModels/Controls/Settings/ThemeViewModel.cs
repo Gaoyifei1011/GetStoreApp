@@ -1,54 +1,45 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Helpers;
-using GetStoreApp.Services.Settings;
-using Microsoft.UI.Xaml;
+using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Models;
 using System;
-using System.Windows.Input;
+using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class ThemeViewModel : ObservableRecipient
     {
-        // 主题设置
-        private ElementTheme _elementTheme = ThemeSelectorService.Theme;
+        private readonly IThemeService _themeService;
 
-        public ElementTheme ElementTheme
+        private string _theme;
+
+        public string Theme
         {
-            get { return _elementTheme; }
+            get { return _theme; }
 
-            set { SetProperty(ref _elementTheme, value); }
+            set { SetProperty(ref _theme, value); }
         }
 
-        // 主题修改Command
-        private ICommand _switchThemeCommand;
+        public List<ThemeModel> ThemeList { get; set; }
 
-        public ICommand SwitchThemeCommand
-        {
-            get
-            {
-                if (_switchThemeCommand == null)
-                {
-                    _switchThemeCommand = new RelayCommand<ElementTheme>(
-                        async (param) =>
-                        {
-                            ElementTheme = param;
-
-                            BackdropHelper.CurrentTheme = ElementTheme;
-
-                            BackdropHelper.SetBackdrop();
-
-                            await ThemeSelectorService.SetThemeAsync(param);
-                        });
-                }
-
-                return _switchThemeCommand;
-            }
-        }
+        public IAsyncRelayCommand ThemeSelectCommand { get; set; }
 
         public IAsyncRelayCommand SettingsColorCommand { get; set; } = new AsyncRelayCommand(async () =>
         {
             await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:colors"));
         });
+
+        public ThemeViewModel(IThemeService themeService)
+        {
+            _themeService = themeService;
+
+            ThemeList = _themeService.ThemeList;
+            Theme = _themeService.AppTheme;
+
+            ThemeSelectCommand = new AsyncRelayCommand(async () =>
+            {
+                await _themeService.SetThemeAsync(Theme);
+            });
+        }        
     }
 }

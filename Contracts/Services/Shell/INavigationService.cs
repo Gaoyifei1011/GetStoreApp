@@ -2,7 +2,7 @@
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
 
-namespace GetStoreApp.Contracts.Services
+namespace GetStoreApp.Contracts.Services.Shell
 {
     public interface INavigationService
     {

@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using GetStoreApp.Contracts.Services;
+using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.ViewModels.Pages;
 using GetStoreApp.Views;
 using Microsoft.UI.Xaml.Controls;

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GetStoreApp.Contracts.Services
+namespace GetStoreApp.Contracts.Services.Shell
 {
     public interface IPageService
     {

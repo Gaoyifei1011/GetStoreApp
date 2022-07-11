@@ -1,16 +1,18 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Messages;
-using GetStoreApp.Services.Settings;
 using System;
-using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class LinkFilterViewModel : ObservableRecipient
     {
-        private bool _startsWithEFilterValue = LinkFilterService.LinkFilterValue[0];
+        private readonly ILinkFilterService _linkFilterService;
+
+        private bool _startsWithEFilterValue;
 
         public bool StartsWithEFilterValue
         {
@@ -19,7 +21,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             set { SetProperty(ref _startsWithEFilterValue, value); }
         }
 
-        private bool _blockMapFilterValue = LinkFilterService.LinkFilterValue[1];
+        private bool _blockMapFilterValue;
 
         public bool BlockMapFilterValue
         {
@@ -27,6 +29,10 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
             set { SetProperty(ref _blockMapFilterValue, value); }
         }
+
+        public IAsyncRelayCommand StartWithEFilterCommand { get; set; }
+
+        public IAsyncRelayCommand BlockMapFilterCommand { get; set; }
 
         public IAsyncRelayCommand StartsWithECommand { get; set; } = new AsyncRelayCommand(async () =>
         {
@@ -38,29 +44,26 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             await Windows.System.Launcher.LaunchUriAsync(new Uri("https://docs.microsoft.com/en-us/uwp/schemas/blockmapschema/app-package-block-map"));
         });
 
-        public IAsyncRelayCommand StartWithEFilterCommand { get; set; }
-
-        public IAsyncRelayCommand BlockMapFilterCommand { get; set; }
-
-        public LinkFilterViewModel()
+        public LinkFilterViewModel(ILinkFilterService linkFilterService)
         {
-            StartWithEFilterCommand = new AsyncRelayCommand(StartWithEFilterAsync);
+            _linkFilterService = linkFilterService;
 
-            BlockMapFilterCommand = new AsyncRelayCommand(BlockMapFilterAsync);
-        }
+            StartsWithEFilterValue = _linkFilterService.StartWithEFilterValue;
+            BlockMapFilterValue = _linkFilterService.BlockMapFilterValue;
 
-        public async Task StartWithEFilterAsync()
-        {
-            LinkFilterService.SetStartsWithEFilterValue(StartsWithEFilterValue);
-            Messenger.Send(new StartsWithEFilterMessage(StartsWithEFilterValue));
-            await Task.CompletedTask;
-        }
+            StartWithEFilterCommand = new AsyncRelayCommand<bool>(async (param) =>
+            {
+                await _linkFilterService.SetStartsWithEFilterValueAsync(param);
+                Messenger.Send(new StartsWithEFilterMessage(param));
+                StartsWithEFilterValue = param;
+            });
 
-        private async Task BlockMapFilterAsync()
-        {
-            LinkFilterService.SetBlockMapFilterValue(BlockMapFilterValue);
-            Messenger.Send(new BlockMapFilterMessage(BlockMapFilterValue));
-            await Task.CompletedTask;
+            BlockMapFilterCommand = new AsyncRelayCommand<bool>(async (param) =>
+            {
+                await _linkFilterService.SetBlockMapFilterValueAsync(param);
+                Messenger.Send(new BlockMapFilterMessage(param));
+                BlockMapFilterValue = param;
+            });
         }
     }
 }

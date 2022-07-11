@@ -1,91 +1,83 @@
-﻿using System;
+﻿using GetStoreApp.Contracts.Services.App;
+using GetStoreApp.Contracts.Services.Settings;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace GetStoreApp.Services.Settings
 {
-    public static class LinkFilterService
+    public class LinkFilterService : ILinkFilterService
     {
-        private static readonly IReadOnlyList<string> SettingsKey = new List<string> { "StartsWithEFilterValue", "BlockMapFilterValue" };
+        private readonly IConfigService _configService;
 
-        private static List<bool> DefaultValue { get; } = new List<bool> { true, true };
+        private const string StartWithESettingsKey = "StartsWithEFilterValue";
 
-        public static List<bool> LinkFilterValue { get; set; }
+        private const string BlockMapSettingsKey = "BlockMapFilterValue";
 
-        static LinkFilterService()
+        private bool DefaultLinkFilterValue { get; } = true;
+
+        public bool StartWithEFilterValue { get; set; }
+
+        public bool BlockMapFilterValue { get; set; }
+
+        public LinkFilterService(IConfigService configService)
         {
-            LinkFilterValue = new List<bool>();
-
-            LinkFilterValue.Add(GetStartsWithEFilterValue());
-            LinkFilterValue.Add(GetBlockMapFilterValue());
+            _configService = configService;
         }
 
         /// <summary>
-        /// 应用初始化时，系统关于该键值存储的信息为空，所以需要判断系统存储的键值是否为空
+        /// 应用在初始化前获取设置存储的链接过滤值
         /// </summary>
-        private static bool IsStartsWithEFilterValueNullOrEmpty()
+        public async Task InitializeLinkFilterValueAsnyc()
         {
-            return ApplicationData.Current.LocalSettings.Values[SettingsKey[0]] == null;
-        }
+            StartWithEFilterValue = await GetStartWithEFilterValueAsync();
 
-        private static bool IsBlockMapFilterValueNullOrEmpty()
-        {
-            return ApplicationData.Current.LocalSettings.Values[SettingsKey[1]] == null;
+            BlockMapFilterValue = await GetBlockMapFilterValueAsync();
         }
 
         /// <summary>
-        /// 设置默认值
+        /// 获取设置存储的以".e"开头的文件扩展名的过滤值，如果设置没有存储，使用默认值
         /// </summary>
-        private static void InitializeStartsWithEFilterValue()
+        private async Task<bool> GetStartWithEFilterValueAsync()
         {
-            ApplicationData.Current.LocalSettings.Values[SettingsKey[0]] = DefaultValue[0];
-        }
+            bool? startWithEFilterValue = await _configService.GetSettingBoolValueAsync(StartWithESettingsKey);
 
-        private static void InitializeBlockMapFilterValue()
-        {
-            ApplicationData.Current.LocalSettings.Values[SettingsKey[1]] = DefaultValue[1];
+            if (!startWithEFilterValue.HasValue) return DefaultLinkFilterValue;
+            
+            return Convert.ToBoolean(startWithEFilterValue);
         }
 
         /// <summary>
-        ///  获取当前设置存储的扩展名以“.e”开头的文件过滤状态布尔值
+        /// 获取设置存储的以".blockmap"的文件扩展名的过滤值，如果设置没有存储，使用默认值
         /// </summary>
-        private static bool GetStartsWithEFilterValue()
+        private async Task<bool> GetBlockMapFilterValueAsync()
         {
-            if (IsStartsWithEFilterValueNullOrEmpty())
-            {
-                InitializeStartsWithEFilterValue();
-            }
-            return Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsKey[0]]);
+            bool? blockMapFilterValue = await _configService.GetSettingBoolValueAsync(BlockMapSettingsKey);
+
+            if (!blockMapFilterValue.HasValue) return DefaultLinkFilterValue;
+
+            return Convert.ToBoolean(blockMapFilterValue);
         }
 
         /// <summary>
-        /// 获取当前设置存储的扩展名以“.blockmap”开头的文件过滤状态布尔值
+        /// 以".e"开头的文件扩展名的过滤值发生修改时修改设置存储的以".e"开头的文件扩展名的过滤值
         /// </summary>
-        private static bool GetBlockMapFilterValue()
+        public async Task SetStartsWithEFilterValueAsync(bool startWithEFilterValue)
         {
-            if (IsBlockMapFilterValueNullOrEmpty())
-            {
-                InitializeBlockMapFilterValue();
-            }
-            return Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsKey[1]]);
+            StartWithEFilterValue = startWithEFilterValue;
+
+            await _configService.SaveSettingBoolValueAsync(StartWithESettingsKey,startWithEFilterValue);
         }
 
         /// <summary>
-        /// 修改设置
+        /// 以".blockmap"的文件扩展名的过滤值发生修改时修改设置存储的以".blockmap"的文件扩展名的过滤值
         /// </summary>
-        /// <param name="startsWithEFilterValue"></param>
-        public static void SetStartsWithEFilterValue(bool startsWithEFilterValue)
+        public async Task SetBlockMapFilterValueAsync(bool blockMapFilterValue)
         {
-            LinkFilterValue[0] = startsWithEFilterValue;
+            BlockMapFilterValue = blockMapFilterValue;
 
-            ApplicationData.Current.LocalSettings.Values[SettingsKey[0]] = LinkFilterValue[0];
-        }
-
-        public static void SetBlockMapFilterValue(bool blockMapFilterValue)
-        {
-            LinkFilterValue[1] = blockMapFilterValue;
-
-            ApplicationData.Current.LocalSettings.Values[SettingsKey[1]] = LinkFilterValue[1];
+            await _configService.SaveSettingBoolValueAsync(BlockMapSettingsKey, blockMapFilterValue);
         }
     }
 }

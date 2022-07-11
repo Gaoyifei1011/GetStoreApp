@@ -1,57 +1,54 @@
-﻿using System;
-using Windows.Storage;
+﻿using GetStoreApp.Contracts.Services.App;
+using GetStoreApp.Contracts.Services.Settings;
+using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Settings
 {
-    public static class UseInstructionService
+    public class UseInstructionService : IUseInstructionService
     {
-        private const string SettingsKey = "UseInsVisibilityValue";
+        private readonly IConfigService _configService;
 
-        private static readonly bool DefaultValue = true;
+        private const string SettingsKey = "UseInsVisValue";
 
-        public static bool UseInsVisValue { get; set; }
+        private bool DefaultUseInsVisValue { get; } = true;
 
-        static UseInstructionService()
+        public bool UseInsVisValue { get; set; }
+
+        public UseInstructionService(IConfigService configService)
         {
-            UseInsVisValue = GetUseInsVisValue();
+            _configService = configService;
         }
 
         /// <summary>
-        /// 应用初始化时，系统关于该键值存储的信息为空，所以需要判断系统存储的键值是否为空
+        /// 应用在初始化前获取设置存储的使用说明按钮显示值
         /// </summary>
-        private static bool IsSettingsKeyNullOrEmpty()
+        public async Task InitializeUseInsVIsValueAsync()
         {
-            return ApplicationData.Current.LocalSettings.Values[SettingsKey] == null;
+            UseInsVisValue = await GetUseInsVisValueAsync();
         }
 
         /// <summary>
-        /// 设置默认值
+        /// 获取设置存储的使用说明按钮显示值，如果设置没有存储，使用默认值
         /// </summary>
-        private static void InitializeSettingsKey()
+        private async Task<bool> GetUseInsVisValueAsync()
         {
-            ApplicationData.Current.LocalSettings.Values[SettingsKey] = DefaultValue;
+            bool? useInsVisValue = await _configService.GetSettingBoolValueAsync(SettingsKey);
+
+            if (!useInsVisValue.HasValue) return DefaultUseInsVisValue;
+
+            return Convert.ToBoolean(useInsVisValue);
         }
 
         /// <summary>
-        /// 获取当前设置存储的“使用说明”显示状态布尔值
+        /// 使用说明按钮显示发生修改时修改设置存储的使用说明按钮显示值
         /// </summary>
-        private static bool GetUseInsVisValue()
-        {
-            if (IsSettingsKeyNullOrEmpty())
-            {
-                InitializeSettingsKey();
-            }
-            return Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsKey]);
-        }
-
-        /// <summary>
-        /// 修改设置
-        /// </summary>
-        public static void SetUseInsVisValue(bool useInsVisValue)
+        public async Task SetUseInsVisValueAsync(bool useInsVisValue)
         {
             UseInsVisValue = useInsVisValue;
 
-            ApplicationData.Current.LocalSettings.Values[SettingsKey] = useInsVisValue;
+            await _configService.SaveSettingBoolValueAsync(SettingsKey, useInsVisValue);
         }
     }
 }

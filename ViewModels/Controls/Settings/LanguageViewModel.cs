@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GetStoreApp.Models;
+using GetStoreApp.Services.App;
 using GetStoreApp.Services.Settings;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
         public IAsyncRelayCommand LanguageSelectCommand { get; set; }
 
-        public IReadOnlyList<LanguageModel> LanguageList { get; } = LanguageService.LanguageList;
+        public IReadOnlyList<LanguageModel> LanguageList { get; }
 
         public LanguageViewModel()
         {

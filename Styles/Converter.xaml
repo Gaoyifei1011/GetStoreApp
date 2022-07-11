@@ -10,7 +10,6 @@
 
     <convert:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
     <convert:BooleanToReverseVisibilityConverter x:Name="BooleanToReverseVisibilityConverter" />
-    <convert:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     <convert:IntToVisibilityConverter x:Name="IntToVisibilityConverter" />
     <convert:IntToReverseVisibilityConverter x:Name="IntToReverseVisibilityConverter" />
 

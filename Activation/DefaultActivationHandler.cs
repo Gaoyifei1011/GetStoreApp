@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Contracts.Services;
+﻿using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml;
 using System;
@@ -23,7 +23,6 @@ namespace GetStoreApp.Activation
 
         protected override bool CanHandleInternal(LaunchActivatedEventArgs args)
         {
-            // None of the ActivationHandlers has handled the app activation
             return _navigationService.Frame.Content == null;
         }
     }

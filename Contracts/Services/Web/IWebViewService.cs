@@ -2,7 +2,7 @@
 using Microsoft.Web.WebView2.Core;
 using System;
 
-namespace GetStoreApp.Contracts.Services
+namespace GetStoreApp.Contracts.Services.Web
 {
     public interface IWebViewService
     {

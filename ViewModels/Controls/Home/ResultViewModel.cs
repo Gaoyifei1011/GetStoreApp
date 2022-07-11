@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Messages;
 using GetStoreApp.Models;
 using GetStoreApp.Services.App;
@@ -16,6 +17,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
 {
     public class ResultViewModel : ObservableRecipient
     {
+        private readonly ICopyPasteService _copyPasteService;
+
         private bool _resultCotnrolVisable = false;
 
         public bool ResultControlVisable
@@ -68,11 +71,13 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public ObservableCollection<ResultModel> ResultDataList { get; set; } = new ObservableCollection<ResultModel>();
 
-        public ResultViewModel()
+        public ResultViewModel(ICopyPasteService copyPasteService)
         {
+            _copyPasteService = copyPasteService;
+
             CopyCategoryIDCommand = new AsyncRelayCommand(async () =>
             {
-                CopyPasteService.CopyStringToClicpBoard(CategoryId); await Task.CompletedTask;
+                _copyPasteService.CopyStringToClipBoard(CategoryId); await Task.CompletedTask;
             });
 
             CopySingleCommand = new AsyncRelayCommand(CopySingleAsync);
@@ -136,7 +141,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             string CopyContent = string.Format("[\n{0}\n{1}\n{2}\n{3}\n]\n", SelectedResultItem.FileName, SelectedResultItem.FileLink, SelectedResultItem.FileSHA1, SelectedResultItem.FileSize);
 
-            CopyPasteService.CopyStringToClicpBoard(CopyContent);
+            _copyPasteService.CopyStringToClipBoard(CopyContent);
             await Task.CompletedTask;
         }
 
@@ -167,7 +172,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 stringBuilder.Append(string.Format("[\n{0}\n{1}\n{2}\n{3}\n]\n", item.FileName, item.FileLink, item.FileSHA1, item.FileSize));
             }
 
-            CopyPasteService.CopyStringToClicpBoard(stringBuilder.ToString());
+            _copyPasteService.CopyStringToClipBoard(stringBuilder.ToString());
             await Task.CompletedTask;
         }
 

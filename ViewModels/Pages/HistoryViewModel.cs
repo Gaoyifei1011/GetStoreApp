@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Services;
+using GetStoreApp.Contracts.Services.App;
+using GetStoreApp.Contracts.Services.History;
+using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Messages;
 using GetStoreApp.Models;
 using GetStoreApp.Services.App;
@@ -22,6 +24,8 @@ namespace GetStoreApp.ViewModels.Pages
     public class HistoryViewModel : ObservableRecipient
     {
         private readonly INavigationService _navigationService;
+        private readonly IHistoryDataService _historyDataService;
+        private readonly ICopyPasteService _copyPasteService;
 
         private bool _isSelectMode = false;
 
@@ -133,9 +137,11 @@ namespace GetStoreApp.ViewModels.Pages
 
         public ObservableCollection<HistoryModel> HistoryDataList { get; set; } = new ObservableCollection<HistoryModel>();
 
-        public HistoryViewModel(INavigationService navigationService)
+        public HistoryViewModel(INavigationService navigationService,IHistoryDataService historyDataService,ICopyPasteService copyPasteService)
         {
             _navigationService = navigationService;
+            _historyDataService = historyDataService;
+            _copyPasteService = copyPasteService;
 
             // List列表初始化，可以从数据库获得的列表中加载
             LoadedCommand = new AsyncRelayCommand(GetHistoryDataListAsync);
@@ -215,7 +221,7 @@ namespace GetStoreApp.ViewModels.Pages
             {
                 IsSelectMode = false;
 
-                await HistoryDataService.DeleteHistoryDataAsync(SelectedHistoryDataList);
+                await _historyDataService.DeleteHistoryDataAsync(SelectedHistoryDataList);
 
                 await GetHistoryDataListAsync();
 
@@ -228,7 +234,7 @@ namespace GetStoreApp.ViewModels.Pages
         /// </summary>
         private async Task GetHistoryDataListAsync()
         {
-            Tuple<List<HistoryModel>, bool, bool> QueryHistoryAllData = await HistoryDataService.QueryAllHistoryDataAsync(TimeSortOrder, TypeFilter, ChannelFilter);
+            Tuple<List<HistoryModel>, bool, bool> QueryHistoryAllData = await _historyDataService.QueryAllHistoryDataAsync(TimeSortOrder, TypeFilter, ChannelFilter);
 
             // 获取数据库的原始记录数据
             List<HistoryModel> HistoryRawList = QueryHistoryAllData.Item1;
@@ -305,7 +311,7 @@ namespace GetStoreApp.ViewModels.Pages
                 TypeList.Find(item => item.InternalName.Equals(SelectedHistoryItem.HistoryType)).DisplayName,
                 ChannelList.Find(item => item.InternalName.Equals(SelectedHistoryItem.HistoryChannel)).DisplayName,
                 SelectedHistoryItem.HistoryLink);
-            CopyPasteService.CopyStringToClicpBoard(CopyContent);
+            _copyPasteService.CopyStringToClipBoard(CopyContent);
 
             await Task.CompletedTask;
         }
@@ -333,7 +339,7 @@ namespace GetStoreApp.ViewModels.Pages
                     item.HistoryLink));
             }
 
-            CopyPasteService.CopyStringToClicpBoard(stringBuilder.ToString());
+            _copyPasteService.CopyStringToClipBoard(stringBuilder.ToString());
             await Task.CompletedTask;
         }
 
