@@ -1,72 +1,65 @@
-﻿using GetStoreApp.Helpers;
+﻿using GetStoreApp.Contracts.Services.App;
+using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Helpers;
 using GetStoreApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Windows.Storage;
+using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Settings
 {
-    public static class RegionService
+    public class RegionService : IRegionService
     {
-        private const string SettingsKey = "AppSelectedRegion";
+        private readonly IConfigService _configService;
 
-        private static string CurrSysRegionCodeName = RegionInfo.CurrentRegion.TwoLetterISORegionName;
+        private const string SettingsKey = "AppRegion";
 
-        private static readonly string DefaultRegionCodeName;
+        private string DefaultAppRegion { get; }
 
-        public static string RegionCodeName { get; set; }
+        public string AppRegion { get; set; }
 
-        /// <summary>
-        /// Windows 系统中包含的区域信息
-        /// </summary>
-        public static List<GeographicalLocationModel> AppGlobalLocations = GeographicalLocationHelper.GetGeographicalLocations().OrderBy(item => item.FriendlyName).ToList();
+        public List<RegionModel> RegionList { get; set; } = GeographicalLocationHelper.GetGeographicalLocations().OrderBy(item => item.FriendlyName).ToList();
 
-        static RegionService()
+        public RegionService(IConfigService configService)
         {
-            DefaultRegionCodeName = AppGlobalLocations.Find(item => item.ISO2 == CurrSysRegionCodeName).ISO2;
+            _configService = configService;
 
-            // 获取设置中存储的区域编码
-            RegionCodeName = GetRegion();
+            DefaultAppRegion = RegionList.Find(item => item.ISO2 == RegionInfo.CurrentRegion.TwoLetterISORegionName).ISO2;
         }
 
         /// <summary>
-        /// 应用初始化时，系统关于该键值存储的信息为空，所以需要判断系统存储的键值是否为空
+        /// 应用在初始化前获取设置存储的区域值
         /// </summary>
-        private static bool IsSettingsKeyNullOrEmpty()
+        public async Task InitializeRegionAsync()
         {
-            return ApplicationData.Current.LocalSettings.Values[SettingsKey] == null;
+            AppRegion = await GetRegionAsync();
         }
 
         /// <summary>
-        /// 设置应用展示的区域值
+        /// 获取设置存储的区域值，如果设置没有存储，使用默认值
         /// </summary>
-        private static void InitializeSettingsKey(string regionCodeName)
+        private async Task<string> GetRegionAsync()
         {
-            SetRegion(regionCodeName);
-        }
+            string region = await _configService.GetSettingStringValueAsync(SettingsKey);
 
-        /// <summary>
-        /// 获取设置存储的区域编码
-        /// </summary>
-        private static string GetRegion()
-        {
-            // 检测存储的键值是否为空,如果不存在,设置默认值
-            if (IsSettingsKeyNullOrEmpty())
+            if (string.IsNullOrEmpty(region))
             {
-                InitializeSettingsKey(DefaultRegionCodeName);
+                return RegionList.Find(item => item.ISO2.Equals(DefaultAppRegion, StringComparison.OrdinalIgnoreCase)).ISO2;
             }
 
-            return ApplicationData.Current.LocalSettings.Values[SettingsKey].ToString();
+            return RegionList.Find(item => item.ISO2.Equals(region, StringComparison.OrdinalIgnoreCase)).ISO2;
         }
 
         /// <summary>
-        /// 修改设置
+        /// 应用区域发生修改时修改设置存储的主题值
         /// </summary>
-        public static void SetRegion(string regionCodeName)
+        public async Task SetRegionAsync(string region)
         {
-            RegionCodeName = regionCodeName;
-            ApplicationData.Current.LocalSettings.Values[SettingsKey] = regionCodeName;
+            AppRegion = region;
+
+            await _configService.SaveSettingStringValueAsync(SettingsKey, region);
         }
     }
 }

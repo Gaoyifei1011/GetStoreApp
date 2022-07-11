@@ -16,7 +16,8 @@ namespace GetStoreApp.ViewModels.Controls.About
             {"Microsoft.WindowsAppSDK","https://github.com/microsoft/windowsappsdk" },
             {"Microsoft.Xaml.Behaviors.WinUI.Managed","https://github.com/Microsoft/XamlBehaviors" },
             {"NETStandard.Library","https://dotnet.microsoft.com/zh-cn/" },
-            {"Newtonsoft.Json","https://www.newtonsoft.com/json" }
+            {"Newtonsoft.Json","https://www.newtonsoft.com/json" },
+            {"Template Studio","https://github.com/microsoft/TemplateStudio" }
         };
     }
 }

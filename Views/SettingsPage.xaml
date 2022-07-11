@@ -29,7 +29,8 @@
                 <Button
                     Grid.Column="1"
                     Command="{x:Bind ViewModel.RestartCommand}"
-                    Content="{x:Bind service:LanguageService.GetResources('/Settings/RestartApp')}" />
+                    Content="{x:Bind service:LanguageService.GetResources('/Settings/RestartApp')}"
+                    ToolTipService.ToolTip="{x:Bind service:LanguageService.GetResources('/Settings/RestartAppDescription')}" />
             </Grid>
 
             <TextBlock

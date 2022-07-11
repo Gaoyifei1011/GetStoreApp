@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Contracts.Services;
+using GetStoreApp.Contracts.Services.Web;
 using GetStoreApp.Contracts.ViewModels;
 using Microsoft.Web.WebView2.Core;
 using System;
@@ -8,15 +8,8 @@ using System.Windows.Input;
 
 namespace GetStoreApp.ViewModels.Pages
 {
-    // TODO: Review best practices and distribution guidelines for apps using WebView2.
-    // https://docs.microsoft.com/microsoft-edge/webview2/concepts/developer-guide
-    // https://docs.microsoft.com/microsoft-edge/webview2/concepts/distribution
-    //
-    // You can also read more about WebView2 control at
-    // https://docs.microsoft.com/microsoft-edge/webview2/get-started/winui.
     public class WebViewModel : ObservableRecipient, INavigationAware
     {
-        // TODO: Set the default URL to display.
         private const string DefaultUrl = "https://store.rg-adguard.net/";
 
         private Uri _source;

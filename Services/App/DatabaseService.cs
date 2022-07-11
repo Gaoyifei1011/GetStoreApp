@@ -1,25 +1,27 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using GetStoreApp.Contracts.Services.App;
+using Microsoft.Data.Sqlite;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace GetStoreApp.Services.App
 {
-    public static class DataBaseService
+    public class DataBaseService : IDataBaseService
     {
-        private static readonly string DBName = "GetStoreApp.db";
+        public string DBName { get; } = "GetStoreApp.db";
 
-        public static readonly string HistoryTableName = "HISTORY";
+        public string HistoryTableName { get; } = "HISTORY";
 
-        //private static readonly string DownloadTableName = "Download";
+        public string DownloadTableName { get; } = "Download";
 
-        public static readonly string DBpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "GetStoreApp.db");
+        public string DBpath { get; } = Path.Combine(ApplicationData.Current.LocalFolder.Path, "GetStoreApp.db");
 
         /// <summary>
         /// 历史记录表不存在时，自动创建历史记录表
         /// </summary>
-        public static async Task InitializeDataBaseAsync()
+        public async Task InitializeDataBaseAsync()
         {
             // 创建数据库文件
             await ApplicationData.Current.LocalFolder.CreateFileAsync(DBName, CreationCollisionOption.OpenIfExists);
@@ -34,7 +36,7 @@ namespace GetStoreApp.Services.App
         /// <summary>
         /// 初始化历史记录表
         /// </summary>
-        private static async Task InitializeHistoryTableAsync()
+        private async Task InitializeHistoryTableAsync()
         {
             // 文件不存在，取消操作
             if (!File.Exists(DBpath))
@@ -72,7 +74,7 @@ namespace GetStoreApp.Services.App
         /// <summary>
         /// 下载记录表不存在时，初始化下载记录表
         /// </summary>
-        private static async Task InitializeDownloadTableAsync()
+        private async Task InitializeDownloadTableAsync()
         {
             await Task.CompletedTask;
         }

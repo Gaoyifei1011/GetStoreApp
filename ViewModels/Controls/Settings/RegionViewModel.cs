@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Messages;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Settings;
@@ -11,29 +12,33 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class RegionViewModel : ObservableRecipient
     {
-        private string _selectedRegion = RegionService.RegionCodeName;
+        private readonly IRegionService _regionService;
 
-        public string SelectedRegion
+        private string _region;
+
+        public string Region
         {
-            get { return _selectedRegion; }
+            get { return _region; }
 
-            set { SetProperty(ref _selectedRegion, value); }
+            set { SetProperty(ref _region, value); }
         }
+
+        public List<RegionModel> RegionList { get; set; }
 
         public IAsyncRelayCommand RegionSelectCommand { get; set; }
 
-        public IReadOnlyList<GeographicalLocationModel> RegionList { get; } = RegionService.AppGlobalLocations;
-
-        public RegionViewModel()
+        public RegionViewModel(IRegionService regionService)
         {
-            RegionSelectCommand = new AsyncRelayCommand(RegionSelectAsync);
-        }
+            _regionService = regionService;
 
-        public async Task RegionSelectAsync()
-        {
-            RegionService.SetRegion(SelectedRegion);
-            Messenger.Send(new RegionMessage(SelectedRegion));
-            await Task.CompletedTask;
+            RegionList = _regionService.RegionList;
+            Region = _regionService.AppRegion;
+
+            RegionSelectCommand = new AsyncRelayCommand(async () =>
+            {
+                await _regionService.SetRegionAsync(Region);
+                Messenger.Send(new RegionMessage(Region));
+            });
         }
     }
 }

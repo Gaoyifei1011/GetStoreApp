@@ -2,9 +2,9 @@
 
 namespace GetStoreApp.Messages
 {
-    public class HistoryItemValueMessage : ValueChangedMessage<int>
+    public class HistoryItemValueMessage : ValueChangedMessage<string>
     {
-        public HistoryItemValueMessage(int value) : base(value)
+        public HistoryItemValueMessage(string value) : base(value)
         {
         }
     }

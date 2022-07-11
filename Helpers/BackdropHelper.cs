@@ -16,9 +16,9 @@ namespace GetStoreApp.Helpers
 
         private static SystemBackdropConfiguration BackdropConfigurationSource { get; set; } = null;
 
-        public static ElementTheme CurrentTheme { get; set; } = ThemeSelectorService.Theme;
+        public static ElementTheme CurrentTheme { get; set; } = ElementTheme.Default;
 
-        public static string CurrentBackdrop { get; set; } = BackdropService.ApplicationBackdrop;
+        public static string CurrentBackdrop { get; set; } = "Mica";
 
         static BackdropHelper()
         {
@@ -49,15 +49,6 @@ namespace GetStoreApp.Helpers
         /// </summary>
         private static void ResetBackdrop()
         {
-            // Reset to default color. If the requested type is supported, we'll update to that.
-            // Note: This sample completely removes any previous controller to reset to the default
-            //       state. This is done so this sample can show what is expected to be the most
-            //       common pattern of an app simply choosing one controller type which it sets at
-            //       startup. If an app wants to toggle between Mica and Acrylic it could simply
-            //       call RemoveSystemBackdropTarget() on the old controller and then setup the new
-            //       controller, reusing any existing m_configurationSource and Activated/Closed
-            //       event handlers.
-
             // 应用添加了设置后，如果发生更改，将之前的设置全部重置
             if (MicaController != null)
             {
@@ -112,7 +103,6 @@ namespace GetStoreApp.Helpers
         /// <summary>
         /// 设置亚克力背景色
         /// </summary>
-        /// <returns></returns>
         private static bool SetArylicBackdrop()
         {
             if (DesktopAcrylicController.IsSupported())

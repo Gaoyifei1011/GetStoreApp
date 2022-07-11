@@ -1,6 +1,8 @@
-﻿namespace GetStoreApp.Services.Download
+﻿using GetStoreApp.Contracts.Services.Download;
+
+namespace GetStoreApp.Services.Download
 {
-    public static class DownloadDataService
+    public class DownloadDataService : IDownloadDataService
     {
     }
 }

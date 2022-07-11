@@ -38,9 +38,10 @@
 
         <ComboBox
             Grid.Column="2"
+            VerticalAlignment="Center"
             DisplayMemberPath="DisplayName"
             ItemsSource="{x:Bind ViewModel.BackdropList}"
-            SelectedValue="{x:Bind ViewModel.SelectedBackdrop, Mode=TwoWay}"
+            SelectedValue="{x:Bind ViewModel.Backdrop, Mode=TwoWay}"
             SelectedValuePath="InternalName">
 
             <i:Interaction.Behaviors>

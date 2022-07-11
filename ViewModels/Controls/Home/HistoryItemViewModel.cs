@@ -1,7 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Services;
+using GetStoreApp.Contracts.Services.App;
+using GetStoreApp.Contracts.Services.History;
+using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Messages;
 using GetStoreApp.Models;
 using GetStoreApp.Services.App;
@@ -19,9 +22,12 @@ namespace GetStoreApp.ViewModels.Controls.Home
 {
     public class HistoryItemViewModel : ObservableRecipient
     {
+        private readonly ICopyPasteService _copyPasteService;
+        private readonly IHistoryDataService _historyDataService;
+        private readonly IHistoryItemValueService _historyItemValueService;
         private readonly INavigationService _navigationService;
 
-        private int HistoryItemValue { get; set; } = HistoryItemValueService.HistoryItemValue;
+        private string HistoryItemValue { get; set; }
 
         private HistoryModel _selectedHistoryItem;
 
@@ -58,9 +64,14 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public ObservableCollection<HistoryModel> HistoryItemDataList { get; set; } = new ObservableCollection<HistoryModel>();
 
-        public HistoryItemViewModel(INavigationService navigationService)
+        public HistoryItemViewModel(INavigationService navigationService,ICopyPasteService copyPasteService, IHistoryDataService historyDataService,IHistoryItemValueService historyItemValueService)
         {
+            _copyPasteService = copyPasteService;
+            _historyDataService = historyDataService;
+            _historyItemValueService = historyItemValueService;
             _navigationService = navigationService;
+
+            HistoryItemValue = _historyItemValueService.HistoryItemValue;
 
             // List列表初始化，可以从数据库获得的列表中加载
             LoadedCommand = new AsyncRelayCommand(GetHistoryItemDataListAsync);
@@ -89,7 +100,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
         private async Task GetHistoryItemDataListAsync()
         {
             // 获取数据库的原始记录数据
-            List<HistoryModel> HistoryRawList = await HistoryDataService.QueryHistoryDataAsync(HistoryItemValue);
+            List<HistoryModel> HistoryRawList = await _historyDataService.QueryHistoryDataAsync(HistoryItemValue);
 
             // 更新UI上面的数据
             UpdateList(HistoryRawList);
@@ -138,7 +149,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 TypeList.Find(item => item.InternalName.Equals(SelectedHistoryItem.HistoryType)).DisplayName,
                 ChannelList.Find(item => item.InternalName.Equals(SelectedHistoryItem.HistoryChannel)).DisplayName,
                 SelectedHistoryItem.HistoryLink);
-            CopyPasteService.CopyStringToClicpBoard(CopyContent);
+            _copyPasteService.CopyStringToClipBoard(CopyContent);
 
             await Task.CompletedTask;
         }

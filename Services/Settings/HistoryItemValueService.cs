@@ -1,62 +1,80 @@
-﻿using System;
+﻿using GetStoreApp.Contracts.Services.App;
+using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Models;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace GetStoreApp.Services.Settings
 {
-    public static class HistoryItemValueService
+    public class HistoryItemValueService : IHistoryItemValueService
     {
-        private const string SettingsKey = "HistoryItemNum";
+        private readonly IConfigService _configService;
 
-        private static readonly int DefaultHistoryItemValue = 3;
+        private const string SettingsKey = "HistoryItemValue";
 
-        /// <summary>
-        /// 主页面历史记录显示的条目数量
-        /// </summary>
-        public static int HistoryItemValue { get; set; }
+        private string DefaultHistoryItemValue { get; } = "3";
 
-        static HistoryItemValueService()
+        public string HistoryItemValue { get; set; }
+
+        public List<HistoryItemValueModel> HistoryItemValueList { get; set; } = new List<HistoryItemValueModel>();
+
+        public HistoryItemValueService(IConfigService configService)
         {
-            // 从设置存储中加载当前主页面历史记录显示的条目数量值
-            HistoryItemValue = GetHistoryItemValue();
+            _configService = configService;
+
+            InitializeHistoryItemValueList();
         }
 
         /// <summary>
-        /// 应用初始化时，系统关于该键值存储的信息为空，所以需要判断系统存储的键值是否为空
+        /// 初始化历史记录显示数量信息列表
         /// </summary>
-        private static bool IsSettingsKeyNullOrEmpty()
+        private void InitializeHistoryItemValueList()
         {
-            return ApplicationData.Current.LocalSettings.Values[SettingsKey] == null;
-        }
-
-        /// <summary>
-        /// 设置默认值
-        /// </summary>
-        private static void InitializeSettingsKey()
-        {
-            ApplicationData.Current.LocalSettings.Values[SettingsKey] = DefaultHistoryItemValue;
-        }
-
-        /// <summary>
-        /// 获取设置存储的主页面历史记录显示的条目数量值
-        /// </summary>
-        private static int GetHistoryItemValue()
-        {
-            if (IsSettingsKeyNullOrEmpty())
+            HistoryItemValueList.Add(new HistoryItemValueModel
             {
-                InitializeSettingsKey();
+                HistoryItemName = LanguageService.GetResources("/Settings/HistoryItemValueMin"),
+                HistoryItemValue = "3"
+            });
+            HistoryItemValueList.Add(new HistoryItemValueModel
+            {
+                HistoryItemName = LanguageService.GetResources("/Settings/HistoryItemValueMax"),
+                HistoryItemValue = "5"
+            });
+        }
+
+        /// <summary>
+        /// 应用在初始化前获取设置存储的历史记录显示数量值
+        /// </summary>
+        public async Task InitializeHistoryItemValueAsync()
+        {
+            HistoryItemValue = await GetHistoryItemValueAsync();
+        }
+
+        /// <summary>
+        /// 获取设置存储的主题值，如果设置没有存储，使用默认值
+        /// </summary>
+        private async Task<string> GetHistoryItemValueAsync()
+        {
+            string historyItemValue = await _configService.GetSettingStringValueAsync(SettingsKey);
+
+            if (string.IsNullOrEmpty(historyItemValue))
+            {
+                return HistoryItemValueList.Find(item => item.HistoryItemValue.Equals(DefaultHistoryItemValue, StringComparison.OrdinalIgnoreCase)).HistoryItemValue;
             }
 
-            return Convert.ToInt32(ApplicationData.Current.LocalSettings.Values[SettingsKey]);
+            return HistoryItemValueList.Find(item => item.HistoryItemValue.Equals(historyItemValue, StringComparison.OrdinalIgnoreCase)).HistoryItemValue;
         }
 
         /// <summary>
-        /// 修改设置
+        /// 历史记录显示数量发生修改时修改设置存储的历史记录显示数量值
         /// </summary>
-        public static void SetHistoryItemValue(int historyItemValue)
+        public async Task SetHistoryItemValueAsync(string historyItemValue)
         {
             HistoryItemValue = historyItemValue;
 
-            ApplicationData.Current.LocalSettings.Values[SettingsKey] = historyItemValue;
+            await _configService.SaveSettingStringValueAsync(SettingsKey, historyItemValue);
         }
     }
 }

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace GetStoreApp.Contracts.Services
+namespace GetStoreApp.Contracts.Services.Shell
 {
     public interface INavigationViewService
     {

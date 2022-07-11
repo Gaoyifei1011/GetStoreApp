@@ -1,13 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Services.History;
+using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Messages;
 using GetStoreApp.Models;
-using GetStoreApp.Services.History;
 using GetStoreApp.Services.Home;
 using GetStoreApp.Services.Settings;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,13 +18,17 @@ namespace GetStoreApp.ViewModels.Controls.Home
 {
     public class RequestViewModel : ObservableRecipient
     {
-        private bool BlockMapFilterValue { get; set; } = LinkFilterService.LinkFilterValue[1];
+        private readonly IHistoryDataService _historyDataService;
+        private readonly ILinkFilterService _linkFilterService;
+        private readonly IRegionService _regionService;
 
-        private bool StartsWithEFilterValue { get; set; } = LinkFilterService.LinkFilterValue[0];
+        private bool BlockMapFilterValue { get; set; }
+
+        private bool StartsWithEFilterValue { get; set; }
 
         public string CategoryId { get; } = LanguageService.GetResources("/Home/CategoryId");
 
-        private string RegionCodeName { get; set; } = RegionService.RegionCodeName;
+        private string Region { get; set; }
 
         public string ResultCountInfo { get; } = LanguageService.GetResources("/Home/ResultCountInfo");
 
@@ -94,8 +100,16 @@ namespace GetStoreApp.ViewModels.Controls.Home
             "d58c3a5f-ca63-4435-842c-7814b5ff91b7"
         };
 
-        public RequestViewModel()
+        public RequestViewModel(IHistoryDataService historyDataService,ILinkFilterService linkFilterService,IRegionService regionService)
         {
+            _historyDataService = historyDataService;
+            _linkFilterService = linkFilterService;
+            _regionService = regionService;
+
+            BlockMapFilterValue = _linkFilterService.BlockMapFilterValue;
+            StartsWithEFilterValue = _linkFilterService.StartWithEFilterValue;
+            Region = _regionService.AppRegion;
+
             SampleLink = SampleLinkList[0];
 
             LinkPlaceHolderText = SampleTitle + SampleLink;
@@ -106,7 +120,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             Messenger.Register<RequestViewModel, RegionMessage>(this, (requestViewModel, regionMessage) =>
             {
-                requestViewModel.RegionCodeName = regionMessage.Value;
+                requestViewModel.Region = regionMessage.Value;
             });
 
             Messenger.Register<RequestViewModel, StartsWithEFilterMessage>(this, (requestViewModel, startsWithEFilterMessage) =>
@@ -168,7 +182,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 TypeList[SelectedType].InternalName,
                 LinkText,
                 ChannelList[SelectedChannel].InternalName,
-                RegionCodeName);
+                Region);
+
+            Debug.WriteLine(content);
 
             // 获取网页反馈回的原始数据
             HtmlRequestService htmlRequestService = new HtmlRequestService();
@@ -221,7 +237,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             // 生成唯一的MD5值
             string UniqueKey = GenerateUniqueKey(Content);
 
-            HistoryDataService.AddHistoryDataAsync(new HistoryModel
+            await _historyDataService.AddHistoryDataAsync(new HistoryModel
             {
                 CurrentTimeStamp = TimeStamp,
                 HistoryKey = UniqueKey,
@@ -229,8 +245,6 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 HistoryChannel = ChannelList[currentChannel].InternalName,
                 HistoryLink = currentLink
             });
-
-            await Task.CompletedTask;
         }
 
         private long GenerateTimeStamp()

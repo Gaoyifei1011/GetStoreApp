@@ -1,61 +1,96 @@
-﻿using System;
+﻿using GetStoreApp.Contracts.Services.App;
+using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Helpers;
+using GetStoreApp.Models;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace GetStoreApp.Services.Settings
 {
-    public static class BackdropService
+    public class BackdropService : IBackdropService
     {
-        private const string SettingsKey = "ApplicationBackdrop";
+        private readonly IConfigService _configService;
 
-        private static readonly string DefaultBackdrop = "Default";
+        private const string SettingsKey = "AppBackdrop";
 
-        /// <summary>
-        /// 应用使用的背景色
-        /// </summary>
-        public static string ApplicationBackdrop { get; set; }
+        private static string DefaultAppBackdrop { get; } = "Default";
 
-        static BackdropService()
+        public string AppBackdrop { get; set; }
+
+        public List<BackdropModel> BackdropList { get; set; } = new List<BackdropModel>();
+
+        public BackdropService(IConfigService configService)
         {
-            // 从设置存储中加载应用设定的背景色
-            ApplicationBackdrop = GetBackdrop();
+            _configService = configService;
+
+            InitializeBackdropList();
         }
 
         /// <summary>
-        /// 应用初始化时，系统关于该键值存储的信息为空，所以需要判断系统存储的键值是否为空
+        /// 初始化应用背景色信息列表
         /// </summary>
-        private static bool IsSettingsKeyNullOrEmpty()
-        {
-            return ApplicationData.Current.LocalSettings.Values[SettingsKey] == null;
-        }
 
-        /// <summary>
-        /// 设置默认值
-        /// </summary>
-        private static void InitializeSettingsKey()
+        private void InitializeBackdropList()
         {
-            ApplicationData.Current.LocalSettings.Values[SettingsKey] = Convert.ToString(DefaultBackdrop);
-        }
+            ulong BuildNumber = InfoHelper.GetSystemVersion()["BuildNumber"];
 
-        /// <summary>
-        /// 获取设置存储的应用背景色值
-        /// </summary>
-        private static string GetBackdrop()
-        {
-            if (IsSettingsKeyNullOrEmpty())
+            BackdropList.Add(new BackdropModel { DisplayName = LanguageService.GetResources("/Settings/BackdropDefault"), InternalName = "Default" });
+
+            if (BuildNumber >= 22000)
             {
-                InitializeSettingsKey();
+                BackdropList.Add(new BackdropModel
+                {
+                    DisplayName = LanguageService.GetResources("/Settings/BackdropMica"),
+                    InternalName = "Mica"
+                });
             }
 
-            return Convert.ToString(ApplicationData.Current.LocalSettings.Values[SettingsKey]);
+            BackdropList.Add(new BackdropModel { DisplayName = LanguageService.GetResources("/Settings/BackdropArylic"), InternalName = "Acrylic" });
         }
 
         /// <summary>
-        /// 修改设置
+        /// 应用在初始化前获取设置存储的背景色值
         /// </summary>
-        public static void SetBackdrop(string backdropMode)
+        public async Task InitializeBackdropAsync()
         {
-            ApplicationBackdrop = backdropMode;
-            ApplicationData.Current.LocalSettings.Values[SettingsKey] = backdropMode;
+            AppBackdrop = await GetBackdropAsync();
+        }
+
+        /// <summary>
+        /// 获取设置存储的背景色值，如果设置没有存储，使用默认值
+        /// </summary>
+        private async Task<string> GetBackdropAsync()
+        {
+            string backdrop = await _configService.GetSettingStringValueAsync(SettingsKey);
+
+            if (string.IsNullOrEmpty(backdrop))
+            {
+                return BackdropList.Find(item => item.InternalName.Equals(DefaultAppBackdrop, StringComparison.OrdinalIgnoreCase)).InternalName;
+            }
+
+            return BackdropList.Find(item => item.InternalName.Equals(backdrop, StringComparison.OrdinalIgnoreCase)).InternalName;
+        }
+
+        /// <summary>
+        /// 应用背景色发生修改时修改设置存储的背景色值
+        /// </summary>
+        public async Task SetBackdropAsync(string backdrop)
+        {
+            AppBackdrop = backdrop;
+
+            await _configService.SaveSettingStringValueAsync(SettingsKey, backdrop);
+        }
+
+        /// <summary>
+        /// 设置应用显示的背景色
+        /// </summary>
+        public async Task SetAppBackdropAsync()
+        {
+            BackdropHelper.SetBackdrop();
+
+            await Task.CompletedTask;
         }
     }
 }

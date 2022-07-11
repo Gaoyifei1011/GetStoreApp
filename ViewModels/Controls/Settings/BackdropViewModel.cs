@@ -1,60 +1,41 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Helpers;
+using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Models;
-using GetStoreApp.Services.Settings;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class BackdropViewModel : ObservableRecipient
     {
-        private string _selectedBackdrop = BackdropService.ApplicationBackdrop;
+        private readonly IBackdropService _backdropService;
 
-        public string SelectedBackdrop
+        private string _backdrop;
+
+        public string Backdrop
         {
-            get { return _selectedBackdrop; }
+            get { return _backdrop; }
 
-            set { SetProperty(ref _selectedBackdrop, value); }
+            set { SetProperty(ref _backdrop, value); }
         }
+
+        public List<BackdropModel> BackdropList { get; set; }
+
 
         public IAsyncRelayCommand BackdropSelectCommand { get; set; }
 
-        public List<BackdropModel> BackdropList { get; set; } = new List<BackdropModel>();
 
-        public BackdropViewModel()
+        public BackdropViewModel(IBackdropService backdropService)
         {
-            InitialIzeBackdropList();
+            _backdropService = backdropService;
 
-            BackdropSelectCommand = new AsyncRelayCommand(BackdropSelectAsync);
-        }
+            BackdropList = _backdropService.BackdropList;
+            Backdrop = _backdropService.AppBackdrop;
 
-        /// <summary>
-        /// 系统版本号小于22000，不添加云母（Mica）
-        /// </summary>
-        private void InitialIzeBackdropList()
-        {
-            ulong BuildNumber = InfoHelper.GetSystemVersion()["BuildNumber"];
-
-            if (BuildNumber >= 22000)
+            BackdropSelectCommand = new AsyncRelayCommand(async () =>
             {
-                BackdropList.Add(new BackdropModel { DisplayName = LanguageService.GetResources("/Settings/BackdropMica"), InternalName = "Mica" });
-            }
-
-            BackdropList.Add(new BackdropModel { DisplayName = LanguageService.GetResources("/Settings/BackdropArylic"), InternalName = "Acrylic" });
-            BackdropList.Add(new BackdropModel { DisplayName = LanguageService.GetResources("/Settings/BackdropDefault"), InternalName = "Default" });
-        }
-
-        /// <summary>
-        /// 设置背景色
-        /// </summary>
-        private async Task BackdropSelectAsync()
-        {
-            BackdropHelper.CurrentBackdrop = SelectedBackdrop;
-            BackdropHelper.SetBackdrop();
-            BackdropService.SetBackdrop(SelectedBackdrop);
-            await Task.CompletedTask;
+                await _backdropService.SetBackdropAsync(Backdrop);
+            });
         }
     }
 }

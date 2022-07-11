@@ -3,13 +3,9 @@ using System.Text;
 
 namespace GetStoreApp.Helpers
 {
-    public class SystemGeographicalLocation
+    public class SystemGeographicalLocationHelper
     {
         public const int GEOCLASS_NATION = 0x10;
-
-        private SystemGeographicalLocation()
-        {
-        }
 
         public delegate bool EnumGeoInfoProc(int GeoId);
 

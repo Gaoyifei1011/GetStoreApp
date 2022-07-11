@@ -38,10 +38,11 @@
 
         <ComboBox
             Grid.Column="2"
+            VerticalAlignment="Center"
             DisplayMemberPath="HistoryItemName"
             ItemsSource="{x:Bind ViewModel.HistoryItemValueList}"
-            SelectedValue="{x:Bind ViewModel.SelectedHistoryItemValue, Mode=TwoWay}"
-            SelectedValuePath="HistoryItemNum">
+            SelectedValue="{x:Bind ViewModel.HistoryItemValue, Mode=TwoWay}"
+            SelectedValuePath="HistoryItemValue">
 
             <i:Interaction.Behaviors>
                 <ic:EventTriggerBehavior EventName="SelectionChanged">

@@ -1,15 +1,18 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Messages;
-using GetStoreApp.Services.Settings;
-using System.Threading.Tasks;
+using System;
+using System.Diagnostics;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class UseInstructionViewModel : ObservableRecipient
     {
-        private bool _useInsVisValue = UseInstructionService.UseInsVisValue;
+        private readonly IUseInstructionService _useInstructionService;
+
+        private bool _useInsVisValue;
 
         public bool UseInsVisValue
         {
@@ -20,16 +23,18 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
         public IAsyncRelayCommand UseInstructionCommand { get; set; }
 
-        public UseInstructionViewModel()
+        public UseInstructionViewModel(IUseInstructionService useInstructionService)
         {
-            UseInstructionCommand = new AsyncRelayCommand(UseInstructionAsync);
-        }
+            _useInstructionService = useInstructionService;
 
-        public async Task UseInstructionAsync()
-        {
-            UseInstructionService.SetUseInsVisValue(UseInsVisValue);
-            Messenger.Send(new UseInstructionMessage(UseInsVisValue));
-            await Task.CompletedTask;
+            UseInsVisValue = _useInstructionService.UseInsVisValue;
+
+            UseInstructionCommand = new AsyncRelayCommand<bool>(async (param) =>
+            {
+                await _useInstructionService.SetUseInsVisValueAsync(param);
+                Messenger.Send(new UseInstructionMessage(param));
+                UseInsVisValue = param;
+            });
         }
     }
 }

@@ -38,9 +38,10 @@
 
         <ComboBox
             Grid.Column="2"
+            VerticalAlignment="Center"
             DisplayMemberPath="FriendlyName"
             ItemsSource="{x:Bind ViewModel.RegionList}"
-            SelectedValue="{x:Bind ViewModel.SelectedRegion, Mode=TwoWay}"
+            SelectedValue="{x:Bind ViewModel.Region, Mode=TwoWay}"
             SelectedValuePath="ISO2">
 
             <i:Interaction.Behaviors>

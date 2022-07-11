@@ -1,6 +1,13 @@
 ﻿using GetStoreApp.Activation;
-using GetStoreApp.Contracts.Services;
+using GetStoreApp.Contracts.Services.App;
+using GetStoreApp.Contracts.Services.Download;
+using GetStoreApp.Contracts.Services.History;
+using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Contracts.Services.Web;
 using GetStoreApp.Services.App;
+using GetStoreApp.Services.Download;
+using GetStoreApp.Services.History;
 using GetStoreApp.Services.Settings;
 using GetStoreApp.Services.Shell;
 using GetStoreApp.Services.Web;
@@ -17,36 +24,39 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
 
-// To learn more about WinUI3, see: https://docs.microsoft.com/windows/apps/winui/winui3/.
 namespace GetStoreApp
 {
     public partial class App : Application
     {
-        // The .NET Generic Host provides dependency injection, configuration, logging, and other services.
-        // https://docs.microsoft.com/dotnet/core/extensions/generic-host
-        // https://docs.microsoft.com/dotnet/core/extensions/dependency-injection
-        // https://docs.microsoft.com/dotnet/core/extensions/configuration
-        // https://docs.microsoft.com/dotnet/core/extensions/logging
-
         private static IHost _host = Host
             .CreateDefaultBuilder()
             .ConfigureServices((context, services) =>
             {
+                // Services
+                services.AddSingleton<IActivationService, ActivationService>();
+                services.AddSingleton<IConfigService, ConfigService>();
+                services.AddTransient<ICopyPasteService, CopyPasteService>();
+                services.AddSingleton<IDataBaseService, DataBaseService>();
+
+                services.AddTransient<IDownloadDataService, DownloadDataService>();
+
+                services.AddTransient<IHistoryDataService, HistoryDataService>();
+
+                services.AddSingleton<IBackdropService, BackdropService>();
+                services.AddSingleton<IHistoryItemValueService, HistoryItemValueService>();
+                services.AddSingleton<ILinkFilterService, LinkFilterService>();
+                services.AddSingleton<IRegionService, RegionService>();
+                services.AddSingleton<IThemeService, ThemeService>();
+                services.AddSingleton<IUseInstructionService, UseInstructionService>();
+
+                services.AddSingleton<INavigationService, NavigationService>();
+                services.AddTransient<INavigationViewService, NavigationViewService>();
+                services.AddSingleton<IPageService, PageService>();
+
+                services.AddTransient<IWebViewService, WebViewService>();
+
                 // Default Activation Handler
                 services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
-
-                // Other Activation Handlers
-
-                // Services
-                services.AddTransient<IWebViewService, WebViewService>();
-                services.AddTransient<INavigationViewService, NavigationViewService>();
-
-                services.AddSingleton<IActivationService, ActivationService>();
-                services.AddSingleton<IPageService, PageService>();
-                services.AddSingleton<INavigationService, NavigationService>();
-
-                // Core Services
-                services.AddSingleton<IFileService, FileService>();
 
                 // Pages and ViewModels
                 services.AddTransient<AboutPage>();
@@ -61,8 +71,8 @@ namespace GetStoreApp
                 services.AddTransient<SettingsViewModel>();
                 services.AddTransient<ShellPage>();
                 services.AddTransient<ShellViewModel>();
-                services.AddTransient<WebViewModel>();
                 services.AddTransient<WebPage>();
+                services.AddTransient<WebViewModel>();
 
                 // Controls and ViewModels
                 services.AddTransient<HeaderControl>();
@@ -115,13 +125,6 @@ namespace GetStoreApp
         public App()
         {
             InitializeComponent();
-            UnhandledException += App_UnhandledException;
-        }
-
-        private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
-        {
-            // TODO: Log and handle exceptions as appropriate.
-            // For more details, see https://docs.microsoft.com/windows/winui/api/microsoft.ui.xaml.unhandledexceptioneventargs.
         }
 
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
