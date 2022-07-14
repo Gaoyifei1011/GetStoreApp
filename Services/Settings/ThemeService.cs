@@ -10,7 +10,8 @@ namespace GetStoreApp.Services.Settings
 {
     public class ThemeService : IThemeService
     {
-        private readonly IConfigService _configService;
+        private readonly IConfigService ConfigService;
+        private readonly IResourceService ResourceService;
 
         private const string SettingsKey = "AppTheme";
 
@@ -18,35 +19,14 @@ namespace GetStoreApp.Services.Settings
 
         public string AppTheme { get; set; }
 
-        public List<ThemeModel> ThemeList { get; set; } = new List<ThemeModel>();
+        public List<ThemeModel> ThemeList { get; set; }
 
-        public ThemeService(IConfigService configService)
+        public ThemeService(IConfigService configService, IResourceService resourceService)
         {
-            _configService = configService;
+            ConfigService = configService;
+            ResourceService = resourceService;
 
-            InitializeThemeList();
-        }
-
-        /// <summary>
-        /// 初始化应用主题信息列表
-        /// </summary>
-        private void InitializeThemeList()
-        {
-            ThemeList.Add(new ThemeModel
-            {
-                DisplayName = LanguageService.GetResources("/Settings/ThemeDefault"),
-                InternalName = Convert.ToString(ElementTheme.Default)
-            });
-            ThemeList.Add(new ThemeModel
-            {
-                DisplayName = LanguageService.GetResources("/Settings/ThemeLight"),
-                InternalName = Convert.ToString(ElementTheme.Light)
-            });
-            ThemeList.Add(new ThemeModel
-            {
-                DisplayName = LanguageService.GetResources("/Settings/ThemeDark"),
-                InternalName = Convert.ToString(ElementTheme.Dark)
-            });
+            ThemeList = ResourceService.ThemeList;
         }
 
         /// <summary>
@@ -62,7 +42,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private async Task<string> GetThemeAsync()
         {
-            string theme = await _configService.GetSettingStringValueAsync(SettingsKey);
+            string theme = await ConfigService.GetSettingStringValueAsync(SettingsKey);
 
             if (string.IsNullOrEmpty(theme))
             {
@@ -79,7 +59,7 @@ namespace GetStoreApp.Services.Settings
         {
             AppTheme = theme;
 
-            await _configService.SaveSettingStringValueAsync(SettingsKey, theme);
+            await ConfigService.SaveSettingStringValueAsync(SettingsKey, theme);
         }
 
         /// <summary>

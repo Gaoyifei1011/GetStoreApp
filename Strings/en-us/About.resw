@@ -133,7 +133,7 @@
     <value>Check the network</value>
   </data>
   <data name="CheckStep1" xml:space="preserve">
-    <value>1. If the error is caused by the network connection timeout, you can try to get it again.</value>
+    <value>1. Networks in different regions may have different conditions. If the error is caused by network connection timeout, you can try to retrieve it again.</value>
   </data>
   <data name="CheckStep2" xml:space="preserve">
     <value>2. Only the correct link will get the app installation package, please check if the link you entered is correct.</value>
@@ -206,6 +206,12 @@
   </data>
   <data name="SendFeedback" xml:space="preserve">
     <value>Send feedback</value>
+  </data>
+  <data name="ThemeSettingsDisable" xml:space="preserve">
+    <value>Application theme Settings are temporarily unavailable</value>
+  </data>
+  <data name="ThemeSettingsDisableDescription" xml:space="preserve">
+    <value>The background color of the navigation view control in the Windows App Sdk does not follow the app's accent color toggle. Currently, you can modify the applied theme by modifying the system app theme. Wait until Microsoft fixes the problem to open this feature again.</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>About</value>

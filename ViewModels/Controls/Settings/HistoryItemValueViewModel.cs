@@ -4,19 +4,17 @@ using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Messages;
 using GetStoreApp.Models;
-using GetStoreApp.Services.Settings;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class HistoryItemValueViewModel : ObservableRecipient
     {
-        private readonly IHistoryItemValueService _historyItemValueService;
+        private readonly IHistoryItemValueService HistoryItemValueService;
 
-        private string _historyItemValue;
+        private int _historyItemValue;
 
-        public string HistoryItemValue
+        public int HistoryItemValue
         {
             get { return _historyItemValue; }
 
@@ -29,14 +27,14 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
         public HistoryItemValueViewModel(IHistoryItemValueService historyItemValueService)
         {
-            _historyItemValueService = historyItemValueService;
+            HistoryItemValueService = historyItemValueService;
 
-            HistoryItemValueList = _historyItemValueService.HistoryItemValueList;
-            HistoryItemValue = _historyItemValueService.HistoryItemValue;
+            HistoryItemValueList = HistoryItemValueService.HistoryItemValueList;
+            HistoryItemValue = HistoryItemValueService.HistoryItemValue;
 
             HistoryItemSelectCommand = new AsyncRelayCommand(async () =>
             {
-                await _historyItemValueService.SetHistoryItemValueAsync(HistoryItemValue);
+                await HistoryItemValueService.SetHistoryItemValueAsync(HistoryItemValue);
                 Messenger.Send(new HistoryItemValueMessage(HistoryItemValue));
             });
         }

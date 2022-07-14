@@ -4,13 +4,12 @@ using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Messages;
 using System;
-using System.Diagnostics;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class LinkFilterViewModel : ObservableRecipient
     {
-        private readonly ILinkFilterService _linkFilterService;
+        private readonly ILinkFilterService LinkFilterService;
 
         private bool _startsWithEFilterValue;
 
@@ -46,21 +45,21 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
         public LinkFilterViewModel(ILinkFilterService linkFilterService)
         {
-            _linkFilterService = linkFilterService;
+            LinkFilterService = linkFilterService;
 
-            StartsWithEFilterValue = _linkFilterService.StartWithEFilterValue;
-            BlockMapFilterValue = _linkFilterService.BlockMapFilterValue;
+            StartsWithEFilterValue = LinkFilterService.StartWithEFilterValue;
+            BlockMapFilterValue = LinkFilterService.BlockMapFilterValue;
 
             StartWithEFilterCommand = new AsyncRelayCommand<bool>(async (param) =>
             {
-                await _linkFilterService.SetStartsWithEFilterValueAsync(param);
+                await LinkFilterService.SetStartsWithEFilterValueAsync(param);
                 Messenger.Send(new StartsWithEFilterMessage(param));
                 StartsWithEFilterValue = param;
             });
 
             BlockMapFilterCommand = new AsyncRelayCommand<bool>(async (param) =>
             {
-                await _linkFilterService.SetBlockMapFilterValueAsync(param);
+                await LinkFilterService.SetBlockMapFilterValueAsync(param);
                 Messenger.Send(new BlockMapFilterMessage(param));
                 BlockMapFilterValue = param;
             });

@@ -1,7 +1,7 @@
-﻿using GetStoreApp.Services.Settings;
-using Microsoft.UI.Composition;
+﻿using Microsoft.UI.Composition;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
+using System;
 using WinRT;
 
 namespace GetStoreApp.Helpers
@@ -16,9 +16,7 @@ namespace GetStoreApp.Helpers
 
         private static SystemBackdropConfiguration BackdropConfigurationSource { get; set; } = null;
 
-        public static ElementTheme CurrentTheme { get; set; } = ElementTheme.Default;
-
-        public static string CurrentBackdrop { get; set; } = "Mica";
+        private static string AppTheme;
 
         static BackdropHelper()
         {
@@ -28,17 +26,18 @@ namespace GetStoreApp.Helpers
         /// <summary>
         /// 设置背景色
         /// </summary>
-        public static void SetBackdrop()
+        public static void SetBackdrop(string appTheme, string appBackdrop)
         {
+            AppTheme = appTheme;
             ResetBackdrop();
 
             // 设置云母（Windows 11 22000以后的版本号支持）
-            if (CurrentBackdrop == "Mica")
+            if (appBackdrop == "Mica")
             {
                 SetMicaBackdrop();
             }
             // 设置亚克力，为不支持云母的系统（Windows 10）提供背景选项
-            else if (CurrentBackdrop == "Acrylic")
+            else if (appBackdrop == "Acrylic")
             {
                 SetArylicBackdrop();
             }
@@ -147,13 +146,13 @@ namespace GetStoreApp.Helpers
 
         private static void SetConfigurationSourceTheme()
         {
-            switch (CurrentTheme)
+            BackdropConfigurationSource.Theme = (ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme) switch
             {
-                case ElementTheme.Default: BackdropConfigurationSource.Theme = SystemBackdropTheme.Default; break;
-                case ElementTheme.Light: BackdropConfigurationSource.Theme = SystemBackdropTheme.Light; break;
-                case ElementTheme.Dark: BackdropConfigurationSource.Theme = SystemBackdropTheme.Dark; break;
-                default: BackdropConfigurationSource.Theme = SystemBackdropTheme.Default; break;
-            }
+                ElementTheme.Default => SystemBackdropTheme.Default,
+                ElementTheme.Light => SystemBackdropTheme.Light,
+                ElementTheme.Dark => SystemBackdropTheme.Dark,
+                _ => SystemBackdropTheme.Default,
+            };
         }
     }
 }

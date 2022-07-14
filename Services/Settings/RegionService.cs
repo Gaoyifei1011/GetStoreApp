@@ -12,7 +12,7 @@ namespace GetStoreApp.Services.Settings
 {
     public class RegionService : IRegionService
     {
-        private readonly IConfigService _configService;
+        private readonly IConfigService ConfigService;
 
         private const string SettingsKey = "AppRegion";
 
@@ -24,7 +24,7 @@ namespace GetStoreApp.Services.Settings
 
         public RegionService(IConfigService configService)
         {
-            _configService = configService;
+            ConfigService = configService;
 
             DefaultAppRegion = RegionList.Find(item => item.ISO2 == RegionInfo.CurrentRegion.TwoLetterISORegionName).ISO2;
         }
@@ -42,7 +42,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private async Task<string> GetRegionAsync()
         {
-            string region = await _configService.GetSettingStringValueAsync(SettingsKey);
+            string region = await ConfigService.GetSettingStringValueAsync(SettingsKey);
 
             if (string.IsNullOrEmpty(region))
             {
@@ -59,7 +59,7 @@ namespace GetStoreApp.Services.Settings
         {
             AppRegion = region;
 
-            await _configService.SaveSettingStringValueAsync(SettingsKey, region);
+            await ConfigService.SaveSettingStringValueAsync(SettingsKey, region);
         }
     }
 }

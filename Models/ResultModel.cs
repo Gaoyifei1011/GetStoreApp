@@ -18,10 +18,7 @@ namespace GetStoreApp.Models
             {
                 _isSelected = value;
 
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs(nameof(IsSelected)));
-                }
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelected)));
             }
         }
 

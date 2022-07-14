@@ -1,14 +1,13 @@
 ﻿using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Contracts.Services.Settings;
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Settings
 {
     public class UseInstructionService : IUseInstructionService
     {
-        private readonly IConfigService _configService;
+        private readonly IConfigService ConfigService;
 
         private const string SettingsKey = "UseInsVisValue";
 
@@ -18,7 +17,7 @@ namespace GetStoreApp.Services.Settings
 
         public UseInstructionService(IConfigService configService)
         {
-            _configService = configService;
+            ConfigService = configService;
         }
 
         /// <summary>
@@ -34,7 +33,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private async Task<bool> GetUseInsVisValueAsync()
         {
-            bool? useInsVisValue = await _configService.GetSettingBoolValueAsync(SettingsKey);
+            bool? useInsVisValue = await ConfigService.GetSettingBoolValueAsync(SettingsKey);
 
             if (!useInsVisValue.HasValue) return DefaultUseInsVisValue;
 
@@ -48,7 +47,7 @@ namespace GetStoreApp.Services.Settings
         {
             UseInsVisValue = useInsVisValue;
 
-            await _configService.SaveSettingBoolValueAsync(SettingsKey, useInsVisValue);
+            await ConfigService.SaveSettingBoolValueAsync(SettingsKey, useInsVisValue);
         }
     }
 }

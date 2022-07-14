@@ -4,11 +4,9 @@ using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Contracts.Services.History;
 using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.Models;
-using GetStoreApp.Services.App;
-using GetStoreApp.Services.History;
-using GetStoreApp.Services.Settings;
 using GetStoreApp.UI.Dialogs;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
@@ -23,9 +21,9 @@ namespace GetStoreApp.ViewModels.Pages
 {
     public class HistoryViewModel : ObservableRecipient
     {
-        private readonly INavigationService _navigationService;
-        private readonly IHistoryDataService _historyDataService;
-        private readonly ICopyPasteService _copyPasteService;
+        private readonly IResourceService ResourceService;
+        private readonly IHistoryDataService HistoryDataService;
+        private readonly INavigationService NavigationService;
 
         private bool _isSelectMode = false;
 
@@ -119,29 +117,20 @@ namespace GetStoreApp.ViewModels.Pages
 
         public IAsyncRelayCommand CancelCommand { get; set; }
 
-        public List<GetAppTypeModel> TypeList { get; } = new List<GetAppTypeModel>
-        {
-            new GetAppTypeModel{DisplayName=LanguageService.GetResources("URL"),InternalName="url"},
-            new GetAppTypeModel{DisplayName=LanguageService.GetResources("ProductID"),InternalName="ProductId"},
-            new GetAppTypeModel{DisplayName=LanguageService.GetResources("PackageFamilyName"),InternalName="PackageFamilyName"},
-            new GetAppTypeModel{DisplayName=LanguageService.GetResources("CategoryID"),InternalName="CategoryId"}
-        };
+        public List<GetAppTypeModel> TypeList { get; set; }
 
-        public List<GetAppChannelModel> ChannelList { get; } = new List<GetAppChannelModel>
-        {
-            new GetAppChannelModel{ DisplayName=LanguageService.GetResources("Fast"),InternalName="WIF" },
-            new GetAppChannelModel{ DisplayName=LanguageService.GetResources("Slow"),InternalName="WIS" },
-            new GetAppChannelModel{ DisplayName=LanguageService.GetResources("RP"),InternalName="RP" },
-            new GetAppChannelModel{ DisplayName=LanguageService.GetResources("Retail"),InternalName="Retail" }
-        };
+        public List<GetAppChannelModel> ChannelList { get; set; }
 
         public ObservableCollection<HistoryModel> HistoryDataList { get; set; } = new ObservableCollection<HistoryModel>();
 
-        public HistoryViewModel(INavigationService navigationService,IHistoryDataService historyDataService,ICopyPasteService copyPasteService)
+        public HistoryViewModel(IResourceService resourceService, IHistoryDataService historyDataService, INavigationService navigationService)
         {
-            _navigationService = navigationService;
-            _historyDataService = historyDataService;
-            _copyPasteService = copyPasteService;
+            ResourceService = resourceService;
+            HistoryDataService = historyDataService;
+            NavigationService = navigationService;
+
+            TypeList = ResourceService.TypeList;
+            ChannelList = ResourceService.ChannelList;
 
             // List列表初始化，可以从数据库获得的列表中加载
             LoadedCommand = new AsyncRelayCommand(GetHistoryDataListAsync);
@@ -221,7 +210,7 @@ namespace GetStoreApp.ViewModels.Pages
             {
                 IsSelectMode = false;
 
-                await _historyDataService.DeleteHistoryDataAsync(SelectedHistoryDataList);
+                await HistoryDataService.DeleteHistoryDataAsync(SelectedHistoryDataList);
 
                 await GetHistoryDataListAsync();
 
@@ -234,7 +223,7 @@ namespace GetStoreApp.ViewModels.Pages
         /// </summary>
         private async Task GetHistoryDataListAsync()
         {
-            Tuple<List<HistoryModel>, bool, bool> QueryHistoryAllData = await _historyDataService.QueryAllHistoryDataAsync(TimeSortOrder, TypeFilter, ChannelFilter);
+            Tuple<List<HistoryModel>, bool, bool> QueryHistoryAllData = await HistoryDataService.QueryAllHistoryDataAsync(TimeSortOrder, TypeFilter, ChannelFilter);
 
             // 获取数据库的原始记录数据
             List<HistoryModel> HistoryRawList = QueryHistoryAllData.Item1;
@@ -283,7 +272,7 @@ namespace GetStoreApp.ViewModels.Pages
             };
 
             Messenger.Send(new FillinMessage(SelectedHistoryItem));
-            _navigationService.NavigateTo(typeof(HomeViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+            NavigationService.NavigateTo(typeof(HomeViewModel).FullName, null, new DrillInNavigationTransitionInfo());
             await Task.CompletedTask;
         }
 
@@ -311,7 +300,7 @@ namespace GetStoreApp.ViewModels.Pages
                 TypeList.Find(item => item.InternalName.Equals(SelectedHistoryItem.HistoryType)).DisplayName,
                 ChannelList.Find(item => item.InternalName.Equals(SelectedHistoryItem.HistoryChannel)).DisplayName,
                 SelectedHistoryItem.HistoryLink);
-            _copyPasteService.CopyStringToClipBoard(CopyContent);
+            CopyPasteHelper.CopyToClipBoard(CopyContent);
 
             await Task.CompletedTask;
         }
@@ -339,7 +328,7 @@ namespace GetStoreApp.ViewModels.Pages
                     item.HistoryLink));
             }
 
-            _copyPasteService.CopyStringToClipBoard(stringBuilder.ToString());
+            CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
             await Task.CompletedTask;
         }
 

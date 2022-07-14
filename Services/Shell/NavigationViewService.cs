@@ -11,8 +11,8 @@ namespace GetStoreApp.Services.Shell
 {
     public class NavigationViewService : INavigationViewService
     {
-        private readonly INavigationService _navigationService;
-        private readonly IPageService _pageService;
+        private readonly INavigationService NavigationService;
+        private readonly IPageService PageService;
         private NavigationView _navigationView;
 
         public IList<object> MenuItems
@@ -26,8 +26,8 @@ namespace GetStoreApp.Services.Shell
 
         public NavigationViewService(INavigationService navigationService, IPageService pageService)
         {
-            _navigationService = navigationService;
-            _pageService = pageService;
+            NavigationService = navigationService;
+            PageService = pageService;
         }
 
         public void Initialize(NavigationView navigationView)
@@ -47,36 +47,35 @@ namespace GetStoreApp.Services.Shell
             => GetSelectedItem(MenuItems.Concat(FooterMenuItems), pageType);
 
         private void OnBackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
-            => _navigationService.GoBack();
+            => NavigationService.GoBack();
 
         private void OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
             if (args.IsSettingsInvoked)
             {
-                _navigationService.NavigateTo(typeof(SettingsViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+                NavigationService.NavigateTo(typeof(SettingsViewModel).FullName, null, new DrillInNavigationTransitionInfo());
             }
             else
             {
-                var selectedItem = args.InvokedItemContainer as NavigationViewItem;
-                var pageKey = selectedItem.GetValue(NavigationHelper.NavigateToProperty) as string;
+                NavigationViewItem selectedItem = args.InvokedItemContainer as NavigationViewItem;
 
-                if (pageKey != null)
+                if (selectedItem.GetValue(NavigationHelper.NavigateToProperty) is string pageKey)
                 {
-                    _navigationService.NavigateTo(pageKey, null, new DrillInNavigationTransitionInfo());
+                    NavigationService.NavigateTo(pageKey, null, new DrillInNavigationTransitionInfo());
                 }
             }
         }
 
         private NavigationViewItem GetSelectedItem(IEnumerable<object> menuItems, Type pageType)
         {
-            foreach (var item in menuItems.OfType<NavigationViewItem>())
+            foreach (NavigationViewItem item in menuItems.OfType<NavigationViewItem>())
             {
                 if (IsMenuItemForPageType(item, pageType))
                 {
                     return item;
                 }
 
-                var selectedChild = GetSelectedItem(item.MenuItems, pageType);
+                NavigationViewItem selectedChild = GetSelectedItem(item.MenuItems, pageType);
                 if (selectedChild != null)
                 {
                     return selectedChild;
@@ -88,10 +87,9 @@ namespace GetStoreApp.Services.Shell
 
         private bool IsMenuItemForPageType(NavigationViewItem menuItem, Type sourcePageType)
         {
-            var pageKey = menuItem.GetValue(NavigationHelper.NavigateToProperty) as string;
-            if (pageKey != null)
+            if (menuItem.GetValue(NavigationHelper.NavigateToProperty) is string pageKey)
             {
-                return _pageService.GetPageType(pageKey) == sourcePageType;
+                return PageService.GetPageType(pageKey) == sourcePageType;
             }
 
             return false;

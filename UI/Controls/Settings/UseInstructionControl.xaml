@@ -6,7 +6,6 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:service="using:GetStoreApp.Services.Settings"
     mc:Ignorable="d">
 
     <Grid Style="{StaticResource CardGridStyle}">
@@ -27,13 +26,13 @@
             <TextBlock
                 VerticalAlignment="Center"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="{x:Bind service:LanguageService.GetResources('/Settings/UseInstructionButton')}" />
+                Text="{x:Bind ResourceService.GetLocalized('/Settings/UseInstructionButton')}" />
 
             <TextBlock
                 VerticalAlignment="Center"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                 Style="{StaticResource CaptionTextBlockStyle}"
-                Text="{x:Bind service:LanguageService.GetResources('/Settings/UseInstructionButtonDescription')}" />
+                Text="{x:Bind ResourceService.GetLocalized('/Settings/UseInstructionButtonDescription')}" />
         </StackPanel>
 
         <ToggleSwitch
@@ -41,8 +40,8 @@
             Grid.Column="2"
             FlowDirection="RightToLeft"
             IsOn="{x:Bind ViewModel.UseInsVisValue, Mode=OneWay}"
-            OffContent="{x:Bind service:LanguageService.GetResources('/Settings/UseInstructionOffContent')}"
-            OnContent="{x:Bind service:LanguageService.GetResources('/Settings/UseInstructionOnContent')}">
+            OffContent="{x:Bind ResourceService.GetLocalized('/Settings/UseInstructionOffContent')}"
+            OnContent="{x:Bind ResourceService.GetLocalized('/Settings/UseInstructionOnContent')}">
 
             <i:Interaction.Behaviors>
                 <ic:EventTriggerBehavior EventName="Toggled">

@@ -14,14 +14,14 @@ namespace GetStoreApp.Models
         public static readonly DependencyProperty HistoryItemNameProperty =
             DependencyProperty.Register("HistoryItemName", typeof(string), typeof(HistoryItemValueModel), new PropertyMetadata(string.Empty));
 
-        public string HistoryItemValue
+        public int HistoryItemValue
         {
-            get { return (string)GetValue(HistoryItemNumProperty); }
+            get { return (int)GetValue(HistoryItemNumProperty); }
             set { SetValue(HistoryItemNumProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for HistoryItemValue.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty HistoryItemNumProperty =
-            DependencyProperty.Register("HistoryItemValue", typeof(string), typeof(HistoryItemValueModel), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register("HistoryItemValue", typeof(int), typeof(HistoryItemValueModel), new PropertyMetadata(0));
     }
 }

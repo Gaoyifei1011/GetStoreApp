@@ -1,24 +1,26 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Models;
-using GetStoreApp.Services.App;
-using GetStoreApp.Services.Settings;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class LanguageViewModel : ObservableRecipient
     {
-        private string _selectedLanguage = LanguageService.PriLangCodeName;
+        private readonly ILanguageService LanguageService;
 
-        public string SelectedLanguage
+        private string _language;
+
+        public string Language
         {
-            get { return _selectedLanguage; }
+            get { return _language; }
 
-            set { SetProperty(ref _selectedLanguage, value); }
+            set { SetProperty(ref _language, value); }
         }
+
+        public List<LanguageModel> LanguageList { get; }
 
         public IAsyncRelayCommand LaunchSettingsInstalledAppsCommand { get; set; } = new AsyncRelayCommand(async () =>
         {
@@ -27,20 +29,17 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
         public IAsyncRelayCommand LanguageSelectCommand { get; set; }
 
-        public IReadOnlyList<LanguageModel> LanguageList { get; }
-
-        public LanguageViewModel()
+        public LanguageViewModel(ILanguageService languageService)
         {
-            LanguageSelectCommand = new AsyncRelayCommand(LanguageSelectAsync);
-        }
+            LanguageService = languageService;
 
-        /// <summary>
-        /// 设置界面语言
-        /// </summary>
-        private async Task LanguageSelectAsync()
-        {
-            LanguageService.SetLanguage(SelectedLanguage);
-            await Task.CompletedTask;
+            Language = LanguageService.AppLanguage;
+            LanguageList = LanguageService.LanguageList;
+
+            LanguageSelectCommand = new AsyncRelayCommand(async () =>
+            {
+                await LanguageService.SetLanguageAsync(Language);
+            });
         }
     }
 }

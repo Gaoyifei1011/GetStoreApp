@@ -1,10 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Services.App;
+using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.Models;
-using GetStoreApp.Services.App;
 using GetStoreApp.UI.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -17,8 +16,6 @@ namespace GetStoreApp.ViewModels.Controls.Home
 {
     public class ResultViewModel : ObservableRecipient
     {
-        private readonly ICopyPasteService _copyPasteService;
-
         private bool _resultCotnrolVisable = false;
 
         public bool ResultControlVisable
@@ -71,13 +68,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public ObservableCollection<ResultModel> ResultDataList { get; set; } = new ObservableCollection<ResultModel>();
 
-        public ResultViewModel(ICopyPasteService copyPasteService)
+        public ResultViewModel()
         {
-            _copyPasteService = copyPasteService;
-
             CopyCategoryIDCommand = new AsyncRelayCommand(async () =>
             {
-                _copyPasteService.CopyStringToClipBoard(CategoryId); await Task.CompletedTask;
+                CopyPasteHelper.CopyToClipBoard(CategoryId); await Task.CompletedTask;
             });
 
             CopySingleCommand = new AsyncRelayCommand(CopySingleAsync);
@@ -141,7 +136,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             string CopyContent = string.Format("[\n{0}\n{1}\n{2}\n{3}\n]\n", SelectedResultItem.FileName, SelectedResultItem.FileLink, SelectedResultItem.FileSHA1, SelectedResultItem.FileSize);
 
-            _copyPasteService.CopyStringToClipBoard(CopyContent);
+            CopyPasteHelper.CopyToClipBoard(CopyContent);
             await Task.CompletedTask;
         }
 
@@ -172,7 +167,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 stringBuilder.Append(string.Format("[\n{0}\n{1}\n{2}\n{3}\n]\n", item.FileName, item.FileLink, item.FileSHA1, item.FileSize));
             }
 
-            _copyPasteService.CopyStringToClipBoard(stringBuilder.ToString());
+            CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
             await Task.CompletedTask;
         }
 
@@ -181,8 +176,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
         /// </summary>
         private async Task ShowSelectEmptyPromptDialogAsync()
         {
-            SelectEmptyPromptDialog dialog = new SelectEmptyPromptDialog();
-            dialog.XamlRoot = App.MainWindow.Content.XamlRoot;
+            SelectEmptyPromptDialog dialog = new SelectEmptyPromptDialog { XamlRoot = App.MainWindow.Content.XamlRoot };
             await dialog.ShowAsync();
         }
     }

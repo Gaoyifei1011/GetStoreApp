@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Messages;
 using GetStoreApp.Models;
-using GetStoreApp.Services.Settings;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,6 +11,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
 {
     public class StatusBarViewModel : ObservableRecipient
     {
+        private readonly IResourceService ResourceService;
+
         private InfoBarSeverity _infoSeverity = InfoBarSeverity.Informational;
 
         public InfoBarSeverity InfoBarSeverity
@@ -20,7 +22,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _infoSeverity, value); }
         }
 
-        private string _stateInfoText = LanguageService.GetResources("/Home/StatusInfoWelcome");
+        private string _stateInfoText;
 
         public string StateInfoText
         {
@@ -47,40 +49,16 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _statePrBarVisValue, value); }
         }
 
-        public static IReadOnlyList<StatusBarStateModel> StatusBarStateList { get; } = new List<StatusBarStateModel>()
-        {
-            new StatusBarStateModel
-            {
-                InfoBarSeverity=InfoBarSeverity.Informational,
-                StateInfoText=LanguageService.GetResources("/Home/StatusInfoGetting"),
-                StatePrRingActValue=true,
-                StatePrRingVisValue=true
-            },
-            new StatusBarStateModel
-            {
-                InfoBarSeverity=InfoBarSeverity.Success,
-                StateInfoText=LanguageService.GetResources("/Home/StatusInfoSuccess"),
-                StatePrRingActValue=false,
-                StatePrRingVisValue=false
-            },
-            new StatusBarStateModel
-            {
-                InfoBarSeverity=InfoBarSeverity.Warning,
-                StateInfoText=LanguageService.GetResources("/Home/StatusInfoWarning"),
-                StatePrRingActValue=false,
-                StatePrRingVisValue=false
-            },
-            new StatusBarStateModel
-            {
-                InfoBarSeverity=InfoBarSeverity.Error,
-                StateInfoText=LanguageService.GetResources("/Home/StatusInfoError"),
-                StatePrRingActValue=false,
-                StatePrRingVisValue=false
-            }
-        };
+        public List<StatusBarStateModel> StatusBarStateList { get; set; }
 
-        public StatusBarViewModel()
+        public StatusBarViewModel(IResourceService resourceService)
         {
+            ResourceService = resourceService;
+
+            StateInfoText = ResourceService.GetLocalized("/Home/StatusInfoWelcome");
+
+            StatusBarStateList = ResourceService.StatusBarStateList;
+
             Messenger.Register(this, (MessageHandler<StatusBarViewModel, StatusBarStateMessage>)(async (statusbarViewModel, statusBarStateMessage) =>
                         {
                             statusbarViewModel.InfoBarSeverity = StatusBarStateList[statusBarStateMessage.Value].InfoBarSeverity;

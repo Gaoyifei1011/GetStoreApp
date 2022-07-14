@@ -1,25 +1,24 @@
-﻿using GetStoreApp.Contracts.Services.Shell;
+﻿using GetStoreApp.Contracts.Services.App;
+using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Helpers;
 using GetStoreApp.ViewModels.Pages;
-using Microsoft.UI;
-using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
-using System;
-using System.IO;
-using Windows.ApplicationModel;
 using Windows.System;
 
 namespace GetStoreApp.Views
 {
     public sealed partial class ShellPage : Page
     {
+        public IResourceService ResourceService { get; }
+
         public ShellViewModel ViewModel { get; }
 
-        public ShellPage(ShellViewModel viewModel)
+        public ShellPage()
         {
-            ViewModel = viewModel;
+            ResourceService = App.GetService<IResourceService>();
+            ViewModel = App.GetService<ShellViewModel>();
             InitializeComponent();
 
             ViewModel.NavigationService.Frame = NavigationFrame;
@@ -27,8 +26,6 @@ namespace GetStoreApp.Views
 
             App.MainWindow.SetTitleBar(AppTitleBar);
         }
-
-
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {

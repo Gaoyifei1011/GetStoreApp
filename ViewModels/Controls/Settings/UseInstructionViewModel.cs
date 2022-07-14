@@ -4,13 +4,12 @@ using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Messages;
 using System;
-using System.Diagnostics;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class UseInstructionViewModel : ObservableRecipient
     {
-        private readonly IUseInstructionService _useInstructionService;
+        private readonly IUseInstructionService UseInstructionService;
 
         private bool _useInsVisValue;
 
@@ -25,13 +24,13 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
         public UseInstructionViewModel(IUseInstructionService useInstructionService)
         {
-            _useInstructionService = useInstructionService;
+            UseInstructionService = useInstructionService;
 
-            UseInsVisValue = _useInstructionService.UseInsVisValue;
+            UseInsVisValue = UseInstructionService.UseInsVisValue;
 
             UseInstructionCommand = new AsyncRelayCommand<bool>(async (param) =>
             {
-                await _useInstructionService.SetUseInsVisValueAsync(param);
+                await UseInstructionService.SetUseInsVisValueAsync(param);
                 Messenger.Send(new UseInstructionMessage(param));
                 UseInsVisValue = param;
             });

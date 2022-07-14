@@ -4,9 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:service="using:GetStoreApp.Services.Settings"
-    Title="{x:Bind service:LanguageService.GetResources('/Dialog/RecognizeDesktopApps')}"
-    CloseButtonText="{x:Bind service:LanguageService.GetResources('/Dialog/DesktopAppsSure')}"
+    Title="{x:Bind ResourceService.GetLocalized('/Dialog/RecognizeDesktopApps')}"
+    CloseButtonText="{x:Bind ResourceService.GetLocalized('/Dialog/DesktopAppsSure')}"
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d">
 
@@ -16,8 +15,8 @@
 
     <ContentDialog.Content>
         <StackPanel>
-            <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind service:LanguageService.GetResources('/Dialog/DesktopAppsContent1')}" />
-            <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind service:LanguageService.GetResources('/Dialog/DesktopAppsContent2')}" />
+            <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind ResourceService.GetLocalized('/Dialog/DesktopAppsContent1')}" />
+            <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind ResourceService.GetLocalized('/Dialog/DesktopAppsContent2')}" />
 
             <Border
                 HorizontalAlignment="Left"

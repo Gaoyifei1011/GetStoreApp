@@ -11,7 +11,7 @@ namespace GetStoreApp.Services.Shell
     // https://github.com/microsoft/TemplateStudio/blob/main/docs/WinUI/navigation.md
     public class NavigationService : INavigationService
     {
-        private readonly IPageService _pageService;
+        private readonly IPageService PageService;
         private object _lastParameterUsed;
         private Frame _frame;
 
@@ -42,7 +42,7 @@ namespace GetStoreApp.Services.Shell
 
         public NavigationService(IPageService pageService)
         {
-            _pageService = pageService;
+            PageService = pageService;
         }
 
         private void RegisterFrameEvents()
@@ -80,7 +80,7 @@ namespace GetStoreApp.Services.Shell
 
         public bool NavigateTo(string pageKey, object parameter = null, NavigationTransitionInfo infoOverride = null, bool clearNavigation = false)
         {
-            var pageType = _pageService.GetPageType(pageKey);
+            var pageType = PageService.GetPageType(pageKey);
 
             if (_frame.Content?.GetType() != pageType || parameter != null && !parameter.Equals(_lastParameterUsed))
             {

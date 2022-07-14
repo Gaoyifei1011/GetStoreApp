@@ -1,8 +1,5 @@
 ﻿using GetStoreApp.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.Contracts.Services.Settings
@@ -15,8 +12,8 @@ namespace GetStoreApp.Contracts.Services.Settings
 
         Task InitializeBackdropAsync();
 
-        Task SetBackdropAsync(string theme);
+        Task SetBackdropAsync(string backdrop);
 
-        Task SetAppBackdropAsync();
+        Task SetAppBackdropAsync(string appTheme, string appBackdrop);
     }
 }

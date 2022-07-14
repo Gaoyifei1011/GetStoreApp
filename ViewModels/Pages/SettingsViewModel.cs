@@ -26,8 +26,7 @@ namespace GetStoreApp.ViewModels.Pages
         /// </summary>
         public async Task<ContentDialogResult> ShowRestartPromptDialogAsync()
         {
-            RestartPromptDialog dialog = new RestartPromptDialog();
-            dialog.XamlRoot = App.MainWindow.Content.XamlRoot;
+            RestartPromptDialog dialog = new RestartPromptDialog { XamlRoot = App.MainWindow.Content.XamlRoot };
             return await dialog.ShowAsync();
         }
     }

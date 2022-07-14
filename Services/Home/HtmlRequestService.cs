@@ -34,9 +34,11 @@ namespace GetStoreApp.Services.Home
                 httpContent.Headers.ContentLength = ContentBytes.Length;
                 httpContent.Headers.ContentType.CharSet = "utf-8";
 
-                HttpClient httpClient = new HttpClient();
-                httpClient.BaseAddress = new Uri(API);
-                httpClient.Timeout = new TimeSpan(0, 0, 30);
+                HttpClient httpClient = new HttpClient
+                {
+                    BaseAddress = new Uri(API),
+                    Timeout = new TimeSpan(0, 0, 30)
+                };
 
                 HttpResponseMessage response = await httpClient.PostAsync(API, httpContent);
 

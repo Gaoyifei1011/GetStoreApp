@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Contracts.Services.App;
 using Microsoft.Data.Sqlite;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;

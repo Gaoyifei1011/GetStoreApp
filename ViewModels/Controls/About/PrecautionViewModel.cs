@@ -24,8 +24,7 @@ namespace GetStoreApp.ViewModels.Controls.About
         /// </summary>
         public async Task<ContentDialogResult> ShowDesktopAppsDialogAsync()
         {
-            DesktopAppsDialog dialog = new DesktopAppsDialog();
-            dialog.XamlRoot = App.MainWindow.Content.XamlRoot;
+            DesktopAppsDialog dialog = new DesktopAppsDialog { XamlRoot = App.MainWindow.Content.XamlRoot };
             return await dialog.ShowAsync();
         }
     }

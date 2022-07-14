@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:service="using:GetStoreApp.Services.Settings"
     mc:Ignorable="d">
 
     <Grid Style="{StaticResource CardGridStyle}">
@@ -26,26 +25,26 @@
             <TextBlock
                 VerticalAlignment="Center"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="{x:Bind service:LanguageService.GetResources('/Settings/ClearRecord')}" />
+                Text="{x:Bind ResourceService.GetLocalized('/Settings/ClearRecord')}" />
 
             <TextBlock
                 VerticalAlignment="Center"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                 Style="{StaticResource CaptionTextBlockStyle}"
-                Text="{x:Bind service:LanguageService.GetResources('/Settings/ClearRecordDescription')}" />
+                Text="{x:Bind ResourceService.GetLocalized('/Settings/ClearRecordDescription')}" />
         </StackPanel>
 
         <TextBlock
             Grid.Column="2"
             Margin="0,0,15,0"
             VerticalAlignment="Center"
-            Text="{x:Bind ViewModel.ClearState, Converter={StaticResource ClearStateInfoFormatConverter}, Mode=OneWay}"
+            Text="{x:Bind LocalizedClearState(ViewModel.ClearState), Mode=OneWay}"
             Visibility="{x:Bind ViewModel.ClearTextVisValue, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
 
         <Button
             Grid.Column="3"
             MinWidth="100"
             Command="{x:Bind ViewModel.ClearRecordCommand}"
-            Content="{x:Bind service:LanguageService.GetResources('/Settings/Clear')}" />
+            Content="{x:Bind ResourceService.GetLocalized('/Settings/Clear')}" />
     </Grid>
 </UserControl>

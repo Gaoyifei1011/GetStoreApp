@@ -2,7 +2,7 @@
 
 namespace GetStoreApp.Helpers
 {
-    internal class WindowsSystemDispatcherQueueHelper
+    public class WindowsSystemDispatcherQueueHelper
     {
         [StructLayout(LayoutKind.Sequential)]
         private struct DispatcherQueueOptions

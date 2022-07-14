@@ -4,30 +4,29 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:service="using:GetStoreApp.Services.Settings"
     mc:Ignorable="d">
 
     <Expander Style="{StaticResource ExpanderAboutStyle}">
         <Expander.Header>
-            <TextBlock Style="{StaticResource ExpanderHeaderStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/BriefIntroduction')}" />
+            <TextBlock Style="{StaticResource ExpanderHeaderStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/BriefIntroduction')}" />
         </Expander.Header>
 
         <Expander.Content>
             <StackPanel Margin="14,0,10,0">
-                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/DevelopPurpose')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/DevelopPurposeDescription')}" />
+                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/DevelopPurpose')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/DevelopPurposeDescription')}" />
                 <MenuFlyoutSeparator Margin="0,0,0,8" />
 
-                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/UpdatePath')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/UpdatePathDescription')}" />
+                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/UpdatePath')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/UpdatePathDescription')}" />
                 <MenuFlyoutSeparator Margin="0,0,0,8" />
 
-                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/PrivacyandSecurity')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/PrivacyandSecurityDescription')}" />
+                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/PrivacyandSecurity')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/PrivacyandSecurityDescription')}" />
                 <MenuFlyoutSeparator Margin="0,0,0,8" />
 
-                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/Maintenance')}" />
-                <TextBlock Style="{StaticResource ExpanderContentBottomDescriptionStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/MaintenanceDescription')}" />
+                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/Maintenance')}" />
+                <TextBlock Style="{StaticResource ExpanderContentBottomDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/MaintenanceDescription')}" />
             </StackPanel>
         </Expander.Content>
     </Expander>

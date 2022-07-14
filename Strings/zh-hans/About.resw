@@ -133,7 +133,7 @@
     <value>检查网络</value>
   </data>
   <data name="CheckStep1" xml:space="preserve">
-    <value>1.如果是因为网路连接超时引起的错误，您可以尝试重新获取。</value>
+    <value>1.不同地区的网络可能存在不同的状况。如果是因为网路连接超时引起的错误，您可以尝试重新获取。</value>
   </data>
   <data name="CheckStep2" xml:space="preserve">
     <value>2.只有正确的链接才能获取应用安装包，请检查您输入的链接是否正确。</value>
@@ -206,6 +206,12 @@
   </data>
   <data name="SendFeedback" xml:space="preserve">
     <value>发送反馈</value>
+  </data>
+  <data name="ThemeSettingsDisable" xml:space="preserve">
+    <value>应用主题设置暂不可用</value>
+  </data>
+  <data name="ThemeSettingsDisableDescription" xml:space="preserve">
+    <value>Windows App Sdk中的导航视图控件的背景色不会跟随应用的主题色切换。目前您可以通过修改系统应用主题来修改应用的主题。等微软修复了这个问题后再次开放这一功能。</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>关于</value>

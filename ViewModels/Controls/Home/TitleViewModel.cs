@@ -12,8 +12,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
 {
     public class TitleViewModel : ObservableRecipient
     {
-        private readonly IUseInstructionService _useInstructionService;
-        private readonly INavigationService _navigationService;
+        private readonly IUseInstructionService UseInstructionService;
+        private readonly INavigationService NavigationService;
 
         private bool _useInsVisValue;
 
@@ -28,18 +28,18 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public TitleViewModel(IUseInstructionService useInstructionService, INavigationService navigationService)
         {
-            _useInstructionService = useInstructionService;
-            _navigationService = navigationService;
+            UseInstructionService = useInstructionService;
+            NavigationService = navigationService;
 
-            UseInsVisValue = _useInstructionService.UseInsVisValue;
+            UseInsVisValue = UseInstructionService.UseInsVisValue;
 
             UseInstructionCommand = new AsyncRelayCommand(async () =>
             {
-                _navigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+                NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo());
                 await Task.CompletedTask;
             });
 
-            Messenger.Register<TitleViewModel, UseInstructionMessage>(this, (titleViewModel, useInstructionMessage) =>  titleViewModel.UseInsVisValue = useInstructionMessage.Value);
+            Messenger.Register<TitleViewModel, UseInstructionMessage>(this, (titleViewModel, useInstructionMessage) => titleViewModel.UseInsVisValue = useInstructionMessage.Value);
         }
     }
 }

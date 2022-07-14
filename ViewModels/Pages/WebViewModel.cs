@@ -34,19 +34,19 @@ namespace GetStoreApp.ViewModels.Pages
             set => SetProperty(ref _isLoading, value);
         }
 
-        public ICommand BrowserBackCommand => _browserBackCommand ?? (_browserBackCommand = new RelayCommand(
-            () => WebViewService?.GoBack(), () => WebViewService?.CanGoBack ?? false));
+        public ICommand BrowserBackCommand => _browserBackCommand ??= new RelayCommand(
+            () => WebViewService?.GoBack(), () => WebViewService?.CanGoBack ?? false);
 
-        public ICommand BrowserForwardCommand => _browserForwardCommand ?? (_browserForwardCommand = new RelayCommand(
-            () => WebViewService?.GoForward(), () => WebViewService?.CanGoForward ?? false));
+        public ICommand BrowserForwardCommand => _browserForwardCommand ??= new RelayCommand(
+            () => WebViewService?.GoForward(), () => WebViewService?.CanGoForward ?? false);
 
-        public ICommand RefreshCommand => _refreshCommand ?? (_refreshCommand = new RelayCommand(
-            () => WebViewService?.Reload()));
+        public ICommand RefreshCommand => _refreshCommand ??= new RelayCommand(
+            () => WebViewService?.Reload());
 
-        public ICommand RetryCommand => _retryCommand ?? (_retryCommand = new RelayCommand(OnRetry));
+        public ICommand RetryCommand => _retryCommand ??= new RelayCommand(OnRetry);
 
-        public ICommand OpenInBrowserCommand => _openInBrowserCommand ?? (_openInBrowserCommand = new RelayCommand(async
-            () => await Windows.System.Launcher.LaunchUriAsync(Source)));
+        public ICommand OpenInBrowserCommand => _openInBrowserCommand ??= new RelayCommand(async
+            () => await Windows.System.Launcher.LaunchUriAsync(Source));
 
         public WebViewModel(IWebViewService webViewService)
         {
