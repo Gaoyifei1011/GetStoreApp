@@ -7,6 +7,9 @@ using Windows.Storage;
 
 namespace GetStoreApp.Services.App
 {
+    /// <summary>
+    /// 数据库基础服务
+    /// </summary>
     public class DataBaseService : IDataBaseService
     {
         public string DBName { get; } = "GetStoreApp.db";

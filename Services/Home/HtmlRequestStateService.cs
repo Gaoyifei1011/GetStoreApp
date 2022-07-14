@@ -4,6 +4,9 @@ using System;
 
 namespace GetStoreApp.Services.Home
 {
+    /// <summary>
+    /// 网页请求状态解析服务
+    /// </summary>
     public class HtmlRequestStateService
     {
         private HtmlDocument HtmlDocument { get; set; }

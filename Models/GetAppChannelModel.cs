@@ -4,6 +4,9 @@ namespace GetStoreApp.Models
 {
     public class GetAppChannelModel : DependencyObject
     {
+        /// <summary>
+        /// 获取应用通道类型显示名称
+        /// </summary>
         public string DisplayName
         {
             get { return (string)GetValue(DisplayNameProperty); }
@@ -14,6 +17,9 @@ namespace GetStoreApp.Models
         public static readonly DependencyProperty DisplayNameProperty =
             DependencyProperty.Register("DisplayName", typeof(string), typeof(GetAppChannelModel), new PropertyMetadata(string.Empty));
 
+        /// <summary>
+        /// 获取应用通道类型内部名称
+        /// </summary>
         public string InternalName
         {
             get { return (string)GetValue(InternalNameProperty); }

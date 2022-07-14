@@ -2,7 +2,7 @@
 
 namespace GetStoreApp.Contracts.Services.App
 {
-    public interface IConfigService
+    public interface IConfigStorageService
     {
         Task<bool?> GetSettingBoolValueAsync(string key);
 

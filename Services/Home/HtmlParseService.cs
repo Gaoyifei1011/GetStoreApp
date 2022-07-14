@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace GetStoreApp.Services.Home
 {
+    /// <summary>
+    /// 网页解析服务
+    /// </summary>
     public class HtmlParseService
     {
         private HtmlDocument HtmlDocument { get; set; }

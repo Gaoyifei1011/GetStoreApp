@@ -4,6 +4,9 @@ using Windows.System.Profile;
 
 namespace GetStoreApp.Helpers
 {
+    /// <summary>
+    /// 系统版本和应用版本信息
+    /// </summary>
     public static class InfoHelper
     {
         private static readonly string SystemVersion = AnalyticsInfo.VersionInfo.DeviceFamilyVersion;

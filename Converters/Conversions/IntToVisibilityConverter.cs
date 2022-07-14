@@ -7,7 +7,7 @@ namespace GetStoreApp.Converters.Conversions
     public class IntToVisibilityConverter : IValueConverter
     {
         /// <summary>
-        /// 将整数值转换为Visability值
+        /// 整数值与控件显示值转换器
         /// </summary>
         public object Convert(object value, Type targetType, object parameter, string language)
         {

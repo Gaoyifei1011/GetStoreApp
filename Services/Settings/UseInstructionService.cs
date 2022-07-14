@@ -5,9 +5,12 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Settings
 {
+    /// <summary>
+    /// 使用说明按钮显示服务
+    /// </summary>
     public class UseInstructionService : IUseInstructionService
     {
-        private readonly IConfigService ConfigService;
+        private readonly IConfigStorageService ConfigStorageService;
 
         private const string SettingsKey = "UseInsVisValue";
 
@@ -15,9 +18,9 @@ namespace GetStoreApp.Services.Settings
 
         public bool UseInsVisValue { get; set; }
 
-        public UseInstructionService(IConfigService configService)
+        public UseInstructionService(IConfigStorageService configStorageService)
         {
-            ConfigService = configService;
+            ConfigStorageService = configStorageService;
         }
 
         /// <summary>
@@ -33,7 +36,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private async Task<bool> GetUseInsVisValueAsync()
         {
-            bool? useInsVisValue = await ConfigService.GetSettingBoolValueAsync(SettingsKey);
+            bool? useInsVisValue = await ConfigStorageService.GetSettingBoolValueAsync(SettingsKey);
 
             if (!useInsVisValue.HasValue) return DefaultUseInsVisValue;
 
@@ -47,7 +50,7 @@ namespace GetStoreApp.Services.Settings
         {
             UseInsVisValue = useInsVisValue;
 
-            await ConfigService.SaveSettingBoolValueAsync(SettingsKey, useInsVisValue);
+            await ConfigStorageService.SaveSettingBoolValueAsync(SettingsKey, useInsVisValue);
         }
     }
 }

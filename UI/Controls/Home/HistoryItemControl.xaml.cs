@@ -17,12 +17,5 @@ namespace GetStoreApp.UI.Controls.Home
             ViewModel = App.GetService<HistoryItemViewModel>();
             this.InitializeComponent();
         }
-
-        public string helloworld = "hello";
-
-        //public string LocalizedHistoryType(string historyType)
-        //{
-        //    return "010";
-        //}
     }
 }

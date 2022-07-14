@@ -4,6 +4,9 @@ namespace GetStoreApp.Models
 {
     public class ThemeModel : DependencyObject
     {
+        /// <summary>
+        /// 应用主题设置显示名称
+        /// </summary>
         public string DisplayName
         {
             get { return (string)GetValue(DisplayNameProperty); }
@@ -14,6 +17,9 @@ namespace GetStoreApp.Models
         public static readonly DependencyProperty DisplayNameProperty =
             DependencyProperty.Register("DisplayName", typeof(string), typeof(BackdropModel), new PropertyMetadata(string.Empty));
 
+        /// <summary>
+        /// 应用主题设置内部名称
+        /// </summary>
         public string InternalName
         {
             get { return (string)GetValue(InternalNameProperty); }

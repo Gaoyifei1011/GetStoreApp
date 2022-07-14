@@ -2,6 +2,9 @@
 
 namespace GetStoreApp.Helpers
 {
+    /// <summary>
+    /// 复制 / 粘贴剪贴板
+    /// </summary>
     public static class CopyPasteHelper
     {
         private static DataPackage DataPackage { get; } = new DataPackage();

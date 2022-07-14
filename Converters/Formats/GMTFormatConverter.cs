@@ -7,7 +7,7 @@ namespace GetStoreApp.Converters.Formats
     public class GMTFormatConverter : IValueConverter
     {
         /// <summary>
-        /// 将字符串中包含的时间转换为DataTime类型值
+        /// GMT时间与当地地区时间转换器
         /// </summary>
         public object Convert(object value, Type targetType, object parameter, string language)
         {

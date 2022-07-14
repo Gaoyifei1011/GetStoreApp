@@ -63,8 +63,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
                         {
                             statusbarViewModel.InfoBarSeverity = StatusBarStateList[statusBarStateMessage.Value].InfoBarSeverity;
                             statusbarViewModel.StateInfoText = StatusBarStateList[statusBarStateMessage.Value].StateInfoText;
-                            statusbarViewModel.StatePrBarVisValue = StatusBarStateList[statusBarStateMessage.Value].StatePrRingVisValue;
-                            statusbarViewModel.StatePrBarActValue = StatusBarStateList[statusBarStateMessage.Value].StatePrRingActValue;
+                            statusbarViewModel.StatePrBarVisValue = StatusBarStateList[statusBarStateMessage.Value].StatePrBarVisValue;
+                            statusbarViewModel.StatePrBarActValue = StatusBarStateList[statusBarStateMessage.Value].StatePrBarActValue;
                             await Task.CompletedTask;
                         }));
         }

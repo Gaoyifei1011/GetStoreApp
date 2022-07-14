@@ -2,12 +2,11 @@
 
 namespace GetStoreApp.Models
 {
-    /// <summary>
-    /// 网页数据请求内容数据模型
-    /// Web page data request content data model
-    /// </summary>
     public class RequestModel : DependencyObject
     {
+        /// <summary>
+        /// 网页请求返回的ID值
+        /// </summary>
         public int RequestId
         {
             get { return (int)GetValue(RequestIdProperty); }
@@ -18,6 +17,9 @@ namespace GetStoreApp.Models
         public static readonly DependencyProperty RequestIdProperty =
             DependencyProperty.Register("RequestId", typeof(int), typeof(RequestModel), new PropertyMetadata(0));
 
+        /// <summary>
+        /// 网页请求返回的状态码
+        /// </summary>
         public string RequestStatusCode
         {
             get { return (string)GetValue(RequestStatusCodeProperty); }
@@ -28,6 +30,9 @@ namespace GetStoreApp.Models
         public static readonly DependencyProperty RequestStatusCodeProperty =
             DependencyProperty.Register("RequestStatusCode", typeof(string), typeof(RequestModel), new PropertyMetadata(string.Empty));
 
+        /// <summary>
+        /// 正常网页请求返回的信息
+        /// </summary>
         public string RequestContent
         {
             get { return (string)GetValue(RequestContentProperty); }
@@ -38,6 +43,9 @@ namespace GetStoreApp.Models
         public static readonly DependencyProperty RequestContentProperty =
             DependencyProperty.Register("RequestContent", typeof(string), typeof(RequestModel), new PropertyMetadata(string.Empty));
 
+        /// <summary>
+        /// 异常网页请求返回的信息
+        /// </summary>
         public string RequestExpectionContent
         {
             get { return (string)GetValue(RequestExpectionContentProperty); }

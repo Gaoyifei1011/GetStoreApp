@@ -5,7 +5,10 @@ using Windows.Storage;
 
 namespace GetStoreApp.Services.App
 {
-    public class ConfigService : IConfigService
+    /// <summary>
+    /// 应用配置存储服务
+    /// </summary>
+    public class ConfigStorageService : IConfigStorageService
     {
         public async Task<bool?> GetSettingBoolValueAsync(string key)
         {

@@ -11,7 +11,7 @@ using Windows.ApplicationModel.Resources.Core;
 namespace GetStoreApp.Services.App
 {
     /// <summary>
-    /// 应用使用到的所有资源服务
+    /// 应用资源服务
     /// </summary>
     public class ResourceService : IResourceService
     {
@@ -143,29 +143,29 @@ namespace GetStoreApp.Services.App
             {
                 InfoBarSeverity = InfoBarSeverity.Informational,
                 StateInfoText = GetLocalized("/Home/StatusInfoGetting"),
-                StatePrRingActValue = true,
-                StatePrRingVisValue = true
+                StatePrBarActValue = true,
+                StatePrBarVisValue = true
             });
             StatusBarStateList.Add(new StatusBarStateModel
             {
                 InfoBarSeverity = InfoBarSeverity.Success,
                 StateInfoText = GetLocalized("/Home/StatusInfoSuccess"),
-                StatePrRingActValue = false,
-                StatePrRingVisValue = false
+                StatePrBarActValue = false,
+                StatePrBarVisValue = false
             });
             StatusBarStateList.Add(new StatusBarStateModel
             {
                 InfoBarSeverity = InfoBarSeverity.Warning,
                 StateInfoText = GetLocalized("/Home/StatusInfoWarning"),
-                StatePrRingActValue = false,
-                StatePrRingVisValue = false
+                StatePrBarActValue = false,
+                StatePrBarVisValue = false
             });
             StatusBarStateList.Add(new StatusBarStateModel
             {
                 InfoBarSeverity = InfoBarSeverity.Error,
                 StateInfoText = GetLocalized("/Home/StatusInfoError"),
-                StatePrRingActValue = false,
-                StatePrRingVisValue = false
+                StatePrBarActValue = false,
+                StatePrBarVisValue = false
             });
         }
 

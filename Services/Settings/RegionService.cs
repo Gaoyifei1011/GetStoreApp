@@ -10,9 +10,12 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Settings
 {
+    /// <summary>
+    /// 区域设置服务
+    /// </summary>
     public class RegionService : IRegionService
     {
-        private readonly IConfigService ConfigService;
+        private readonly IConfigStorageService ConfigStorageService;
 
         private const string SettingsKey = "AppRegion";
 
@@ -22,9 +25,9 @@ namespace GetStoreApp.Services.Settings
 
         public List<RegionModel> RegionList { get; set; } = GeographicalLocationHelper.GetGeographicalLocations().OrderBy(item => item.FriendlyName).ToList();
 
-        public RegionService(IConfigService configService)
+        public RegionService(IConfigStorageService configStorageService)
         {
-            ConfigService = configService;
+            ConfigStorageService = configStorageService;
 
             DefaultAppRegion = RegionList.Find(item => item.ISO2 == RegionInfo.CurrentRegion.TwoLetterISORegionName).ISO2;
         }
@@ -42,7 +45,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private async Task<string> GetRegionAsync()
         {
-            string region = await ConfigService.GetSettingStringValueAsync(SettingsKey);
+            string region = await ConfigStorageService.GetSettingStringValueAsync(SettingsKey);
 
             if (string.IsNullOrEmpty(region))
             {
@@ -59,7 +62,7 @@ namespace GetStoreApp.Services.Settings
         {
             AppRegion = region;
 
-            await ConfigService.SaveSettingStringValueAsync(SettingsKey, region);
+            await ConfigStorageService.SaveSettingStringValueAsync(SettingsKey, region);
         }
     }
 }
