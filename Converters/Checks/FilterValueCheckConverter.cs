@@ -4,6 +4,9 @@ using System;
 
 namespace GetStoreApp.Converters.Checks
 {
+    /// <summary>
+    /// 历史记录过滤单选框检查绑定转换器
+    /// </summary>
     public class FilterValueCheckConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)

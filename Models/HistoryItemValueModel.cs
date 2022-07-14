@@ -4,6 +4,9 @@ namespace GetStoreApp.Models
 {
     public class HistoryItemValueModel : DependencyObject
     {
+        /// <summary>
+        /// 主页面历史记录显示数量设置显示名称
+        /// </summary>
         public string HistoryItemName
         {
             get { return (string)GetValue(HistoryItemNameProperty); }
@@ -14,6 +17,9 @@ namespace GetStoreApp.Models
         public static readonly DependencyProperty HistoryItemNameProperty =
             DependencyProperty.Register("HistoryItemName", typeof(string), typeof(HistoryItemValueModel), new PropertyMetadata(string.Empty));
 
+        /// <summary>
+        /// 主页面历史记录显示数量设置内部名称
+        /// </summary>
         public int HistoryItemValue
         {
             get { return (int)GetValue(HistoryItemNumProperty); }

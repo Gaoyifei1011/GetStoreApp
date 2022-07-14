@@ -7,7 +7,7 @@ namespace GetStoreApp.Converters.Formats
     public class TimeStampFormatConverter : IValueConverter
     {
         /// <summary>
-        /// 将数据库存储的long类型的UTC标准时间戳转换为当地地区时间
+        /// UTC标准时间戳与当地地区时间转换器
         /// </summary>
         public object Convert(object value, Type targetType, object parameter, string language)
         {

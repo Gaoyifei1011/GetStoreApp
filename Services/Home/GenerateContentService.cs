@@ -4,7 +4,6 @@
     {
         /// <summary>
         /// 生成要请求的content内容
-        /// Generate the content to be requested
         /// </summary>
         public string GenerateContent(string type, string url, string ring, string region)
         {

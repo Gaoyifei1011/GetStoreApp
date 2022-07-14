@@ -15,6 +15,9 @@ using Windows.ApplicationModel;
 
 namespace GetStoreApp.Services.App
 {
+    /// <summary>
+    /// 应用激活服务
+    /// </summary>
     public class ActivationService : IActivationService
     {
         private readonly ActivationHandler<LaunchActivatedEventArgs> DefaultHandler;
@@ -47,23 +50,23 @@ namespace GetStoreApp.Services.App
 
         public async Task ActivateAsync(object activationArgs)
         {
-            // Execute tasks before activation.
+            // 在应用窗口激活前配置应用的设置
             await InitializeAsync();
 
+            // 新建导航视图的Frame窗口
             if (GetStoreApp.App.MainWindow.Content == null)
             {
                 _shell = GetStoreApp.App.GetService<ShellPage>();
                 GetStoreApp.App.MainWindow.Content = _shell ?? new Frame();
             }
 
-            // Depending on activationArgs one of ActivationHandlers or DefaultActivationHandler
-            // will navigate to the first page
+            // 根据activationArgs的ActivationHandlers或DefaultActivationHandler将导航到第一个页面
             await HandleActivationAsync(activationArgs);
 
-            // Ensure the current window is active
+            // 激活应用窗口
             GetStoreApp.App.MainWindow.Activate();
 
-            // Tasks after activation
+            // 窗口激活后配置其他设置
             await StartupAsync();
         }
 
@@ -89,6 +92,9 @@ namespace GetStoreApp.Services.App
             await UseInstructionService.InitializeUseInsVIsValueAsync();
         }
 
+        /// <summary>
+        /// 根据activationArgs的ActivationHandlers或DefaultActivationHandler将导航到第一个页面
+        /// </summary>
         private async Task HandleActivationAsync(object activationArgs)
         {
             var activationHandler = ActivationHandlers.FirstOrDefault(h => h.CanHandle(activationArgs));
@@ -105,7 +111,7 @@ namespace GetStoreApp.Services.App
         }
 
         /// <summary>
-        /// 应用启动时进行的操作
+        /// 窗口激活后配置其他设置
         /// </summary>
         private async Task StartupAsync()
         {

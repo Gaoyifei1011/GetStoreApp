@@ -3,6 +3,9 @@ using System.Text;
 
 namespace GetStoreApp.Helpers
 {
+    /// <summary>
+    /// Windows 支持的国家/地区列表
+    /// </summary>
     public class SystemGeographicalLocationHelper
     {
         public const int GEOCLASS_NATION = 0x10;

@@ -9,6 +9,9 @@ using System.Linq;
 
 namespace GetStoreApp.Services.Shell
 {
+    /// <summary>
+    /// 页面服务
+    /// </summary>
     public class PageService : IPageService
     {
         private readonly Dictionary<string, Type> _pages = new Dictionary<string, Type>();

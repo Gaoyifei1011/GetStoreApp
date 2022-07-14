@@ -7,6 +7,9 @@ using System.Collections.Generic;
 
 namespace GetStoreApp.Converters.Formats
 {
+    /// <summary>
+    /// UI字符串本地化（类型）转换器
+    /// </summary>
     public class TypeNameFormatConverter : IValueConverter
     {
         private readonly IResourceService resourceService;

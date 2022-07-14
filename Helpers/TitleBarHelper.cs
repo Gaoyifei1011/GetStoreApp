@@ -7,6 +7,9 @@ using Windows.UI;
 
 namespace GetStoreApp.Helpers
 {
+    /// <summary>
+    /// 标题栏颜色设置
+    /// </summary>
     public class TitleBarHelper
     {
         private const int WAINACTIVE = 0x00;

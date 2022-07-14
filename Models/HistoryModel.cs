@@ -3,9 +3,6 @@ using System.ComponentModel;
 
 namespace GetStoreApp.Models
 {
-    /// <summary>
-    /// 该类用来存放数据库原始数据
-    /// </summary>
     public class HistoryModel : DependencyObject, INotifyPropertyChanged
     {
         /// <summary>
@@ -95,7 +92,6 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 按时间升序排列
         /// </summary>
-        /// <param name="other"></param>
         public int CompareTo(HistoryModel other)
         {
             return this.CurrentTimeStamp.CompareTo(other.CurrentTimeStamp);

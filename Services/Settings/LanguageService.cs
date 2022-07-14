@@ -9,9 +9,12 @@ using Windows.Globalization;
 
 namespace GetStoreApp.Services.Settings
 {
+    /// <summary>
+    /// 应用语言设置服务
+    /// </summary>
     public class LanguageService : ILanguageService
     {
-        private readonly IConfigService ConfigService;
+        private readonly IConfigStorageService ConfigStorageService;
 
         private const string SettingsKey = "AppLanguage";
 
@@ -23,9 +26,9 @@ namespace GetStoreApp.Services.Settings
 
         public List<LanguageModel> LanguageList { get; set; } = new List<LanguageModel>();
 
-        public LanguageService(IConfigService configService)
+        public LanguageService(IConfigStorageService configStorageService)
         {
-            ConfigService = configService;
+            ConfigStorageService = configStorageService;
 
             InitializeLanguageList();
 
@@ -77,7 +80,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private async Task<string> GetLanguageAsync()
         {
-            string language = await ConfigService.GetSettingStringValueAsync(SettingsKey);
+            string language = await ConfigStorageService.GetSettingStringValueAsync(SettingsKey);
 
             // 当前系统的语言值
             string CurrentSystemLanguage = CultureInfo.CurrentCulture.Parent.Name;
@@ -109,7 +112,7 @@ namespace GetStoreApp.Services.Settings
         {
             AppLanguage = language;
 
-            await ConfigService.SaveSettingStringValueAsync(SettingsKey, language);
+            await ConfigStorageService.SaveSettingStringValueAsync(SettingsKey, language);
         }
 
         /// <summary>

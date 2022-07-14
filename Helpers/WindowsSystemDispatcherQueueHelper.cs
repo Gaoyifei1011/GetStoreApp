@@ -2,6 +2,9 @@
 
 namespace GetStoreApp.Helpers
 {
+    /// <summary>
+    /// 应用背景色设置
+    /// </summary>
     public class WindowsSystemDispatcherQueueHelper
     {
         [StructLayout(LayoutKind.Sequential)]

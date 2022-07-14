@@ -8,9 +8,12 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Settings
 {
+    /// <summary>
+    /// 应用背景色设置服务
+    /// </summary>
     public class BackdropService : IBackdropService
     {
-        private readonly IConfigService ConfigService;
+        private readonly IConfigStorageService ConfigStorageService;
         private readonly IResourceService ResourceService;
 
         private const string SettingsKey = "AppBackdrop";
@@ -21,9 +24,9 @@ namespace GetStoreApp.Services.Settings
 
         public List<BackdropModel> BackdropList { get; set; }
 
-        public BackdropService(IConfigService configService, IResourceService resourceService)
+        public BackdropService(IConfigStorageService configStorageService, IResourceService resourceService)
         {
-            ConfigService = configService;
+            ConfigStorageService = configStorageService;
             ResourceService = resourceService;
 
             BackdropList = ResourceService.BackdropList;
@@ -42,7 +45,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private async Task<string> GetBackdropAsync()
         {
-            string backdrop = await ConfigService.GetSettingStringValueAsync(SettingsKey);
+            string backdrop = await ConfigStorageService.GetSettingStringValueAsync(SettingsKey);
 
             if (string.IsNullOrEmpty(backdrop))
             {
@@ -59,7 +62,7 @@ namespace GetStoreApp.Services.Settings
         {
             AppBackdrop = backdrop;
 
-            await ConfigService.SaveSettingStringValueAsync(SettingsKey, backdrop);
+            await ConfigStorageService.SaveSettingStringValueAsync(SettingsKey, backdrop);
         }
 
         /// <summary>

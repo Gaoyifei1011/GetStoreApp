@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Home
 {
+    /// <summary>
+    /// 网页请求服务
+    /// </summary>
     public class HtmlRequestService
     {
         private const string API = "https://store.rg-adguard.net/api/GetFiles";

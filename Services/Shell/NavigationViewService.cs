@@ -9,6 +9,9 @@ using System.Linq;
 
 namespace GetStoreApp.Services.Shell
 {
+    /// <summary>
+    /// 导航视图服务
+    /// </summary>
     public class NavigationViewService : INavigationViewService
     {
         private readonly INavigationService NavigationService;

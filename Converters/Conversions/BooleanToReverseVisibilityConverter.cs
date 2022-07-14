@@ -7,7 +7,7 @@ namespace GetStoreApp.Converters.Conversions
     public class BooleanToReverseVisibilityConverter : IValueConverter
     {
         /// <summary>
-        /// 将布尔值转换为Visibility值
+        /// 布尔值与控件显示值（相反）转换器
         /// </summary>
         public object Convert(object value, Type targetType, object parameter, string language)
         {

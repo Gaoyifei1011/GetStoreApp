@@ -73,6 +73,8 @@ csharp_style_expression_bodied_local_functions = false:silent
 csharp_style_conditional_delegate_call = true:suggestion
 csharp_style_prefer_parameter_null_checking = true:suggestion
 csharp_space_around_binary_operators = before_and_after
+csharp_style_var_for_built_in_types = false:silent
+csharp_style_var_when_type_is_apparent = false:silent
 
 [*.vb]
 #### 命名样式 ####

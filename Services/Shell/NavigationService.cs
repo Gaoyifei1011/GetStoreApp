@@ -7,8 +7,9 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace GetStoreApp.Services.Shell
 {
-    // For more information on navigation between pages see
-    // https://github.com/microsoft/TemplateStudio/blob/main/docs/WinUI/navigation.md
+    /// <summary>
+    /// 导航服务
+    /// </summary>
     public class NavigationService : INavigationService
     {
         private readonly IPageService PageService;

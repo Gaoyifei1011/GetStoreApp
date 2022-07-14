@@ -8,9 +8,12 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Settings
 {
+    /// <summary>
+    /// 应用主题设置服务
+    /// </summary>
     public class ThemeService : IThemeService
     {
-        private readonly IConfigService ConfigService;
+        private readonly IConfigStorageService ConfigStorageService;
         private readonly IResourceService ResourceService;
 
         private const string SettingsKey = "AppTheme";
@@ -21,9 +24,9 @@ namespace GetStoreApp.Services.Settings
 
         public List<ThemeModel> ThemeList { get; set; }
 
-        public ThemeService(IConfigService configService, IResourceService resourceService)
+        public ThemeService(IConfigStorageService configStorageService, IResourceService resourceService)
         {
-            ConfigService = configService;
+            ConfigStorageService = configStorageService;
             ResourceService = resourceService;
 
             ThemeList = ResourceService.ThemeList;
@@ -42,7 +45,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private async Task<string> GetThemeAsync()
         {
-            string theme = await ConfigService.GetSettingStringValueAsync(SettingsKey);
+            string theme = await ConfigStorageService.GetSettingStringValueAsync(SettingsKey);
 
             if (string.IsNullOrEmpty(theme))
             {
@@ -59,7 +62,7 @@ namespace GetStoreApp.Services.Settings
         {
             AppTheme = theme;
 
-            await ConfigService.SaveSettingStringValueAsync(SettingsKey, theme);
+            await ConfigStorageService.SaveSettingStringValueAsync(SettingsKey, theme);
         }
 
         /// <summary>

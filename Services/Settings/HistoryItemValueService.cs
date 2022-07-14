@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Settings
 {
+    /// <summary>
+    /// 应用历史记录显示数量设置服务
+    /// </summary>
     public class HistoryItemValueService : IHistoryItemValueService
     {
-        private readonly IConfigService ConfigService;
+        private readonly IConfigStorageService ConfigStorageService;
         private readonly IResourceService ResourceService;
 
         private const string SettingsKey = "HistoryItemValue";
@@ -19,9 +22,9 @@ namespace GetStoreApp.Services.Settings
 
         public List<HistoryItemValueModel> HistoryItemValueList { get; set; }
 
-        public HistoryItemValueService(IConfigService configService, IResourceService resourceService)
+        public HistoryItemValueService(IConfigStorageService configStorageService, IResourceService resourceService)
         {
-            ConfigService = configService;
+            ConfigStorageService = configStorageService;
             ResourceService = resourceService;
 
             HistoryItemValueList = ResourceService.HistoryItemValueList;
@@ -40,7 +43,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private async Task<int> GetHistoryItemValueAsync()
         {
-            int? historyItemValue = await ConfigService.GetSettingIntValueAsync(SettingsKey);
+            int? historyItemValue = await ConfigStorageService.GetSettingIntValueAsync(SettingsKey);
 
             if (!historyItemValue.HasValue)
             {
@@ -57,7 +60,7 @@ namespace GetStoreApp.Services.Settings
         {
             HistoryItemValue = historyItemValue;
 
-            await ConfigService.SaveSettingIntValueAsync(SettingsKey, historyItemValue);
+            await ConfigStorageService.SaveSettingIntValueAsync(SettingsKey, historyItemValue);
         }
     }
 }

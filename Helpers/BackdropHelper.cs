@@ -6,6 +6,9 @@ using WinRT;
 
 namespace GetStoreApp.Helpers
 {
+    /// <summary>
+    /// 应用背景色设置
+    /// </summary>
     public static class BackdropHelper
     {
         private static readonly WindowsSystemDispatcherQueueHelper WindowsSystemDispatcherQueueHelper = new WindowsSystemDispatcherQueueHelper();

@@ -3,6 +3,9 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.Helpers
 {
+    /// <summary>
+    /// 应用导航切换
+    /// </summary>
     public class NavigationHelper
     {
         public static string GetNavigateTo(NavigationViewItem item)

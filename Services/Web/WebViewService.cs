@@ -5,6 +5,9 @@ using System;
 
 namespace GetStoreApp.Services.Web
 {
+    /// <summary>
+    /// 网页浏览服务
+    /// </summary>
     public class WebViewService : IWebViewService
     {
         private WebView2 _webView;

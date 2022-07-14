@@ -34,7 +34,7 @@ namespace GetStoreApp
             {
                 // Services
                 services.AddSingleton<IActivationService, ActivationService>();
-                services.AddSingleton<IConfigService, ConfigService>();
+                services.AddSingleton<IConfigStorageService, ConfigStorageService>();
                 services.AddSingleton<IDataBaseService, DataBaseService>();
                 services.AddSingleton<IResourceService, ResourceService>();
 
