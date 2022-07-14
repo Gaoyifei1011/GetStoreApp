@@ -12,7 +12,6 @@ namespace GetStoreApp.UI.Controls.Home
 
         public HistoryItemControl()
         {
-            DataContext = this;
             ResourceService = App.GetService<IResourceService>();
             ViewModel = App.GetService<HistoryItemViewModel>();
             this.InitializeComponent();
