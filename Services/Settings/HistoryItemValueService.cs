@@ -1,47 +1,30 @@
 ﻿using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Models;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Windows.Storage;
 
 namespace GetStoreApp.Services.Settings
 {
     public class HistoryItemValueService : IHistoryItemValueService
     {
-        private readonly IConfigService _configService;
+        private readonly IConfigService ConfigService;
+        private readonly IResourceService ResourceService;
 
         private const string SettingsKey = "HistoryItemValue";
 
-        private string DefaultHistoryItemValue { get; } = "3";
+        private int DefaultHistoryItemValue { get; } = 3;
 
-        public string HistoryItemValue { get; set; }
+        public int HistoryItemValue { get; set; }
 
-        public List<HistoryItemValueModel> HistoryItemValueList { get; set; } = new List<HistoryItemValueModel>();
+        public List<HistoryItemValueModel> HistoryItemValueList { get; set; }
 
-        public HistoryItemValueService(IConfigService configService)
+        public HistoryItemValueService(IConfigService configService, IResourceService resourceService)
         {
-            _configService = configService;
+            ConfigService = configService;
+            ResourceService = resourceService;
 
-            InitializeHistoryItemValueList();
-        }
-
-        /// <summary>
-        /// 初始化历史记录显示数量信息列表
-        /// </summary>
-        private void InitializeHistoryItemValueList()
-        {
-            HistoryItemValueList.Add(new HistoryItemValueModel
-            {
-                HistoryItemName = LanguageService.GetResources("/Settings/HistoryItemValueMin"),
-                HistoryItemValue = "3"
-            });
-            HistoryItemValueList.Add(new HistoryItemValueModel
-            {
-                HistoryItemName = LanguageService.GetResources("/Settings/HistoryItemValueMax"),
-                HistoryItemValue = "5"
-            });
+            HistoryItemValueList = ResourceService.HistoryItemValueList;
         }
 
         /// <summary>
@@ -55,26 +38,26 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 获取设置存储的主题值，如果设置没有存储，使用默认值
         /// </summary>
-        private async Task<string> GetHistoryItemValueAsync()
+        private async Task<int> GetHistoryItemValueAsync()
         {
-            string historyItemValue = await _configService.GetSettingStringValueAsync(SettingsKey);
+            int? historyItemValue = await ConfigService.GetSettingIntValueAsync(SettingsKey);
 
-            if (string.IsNullOrEmpty(historyItemValue))
+            if (!historyItemValue.HasValue)
             {
-                return HistoryItemValueList.Find(item => item.HistoryItemValue.Equals(DefaultHistoryItemValue, StringComparison.OrdinalIgnoreCase)).HistoryItemValue;
+                return HistoryItemValueList.Find(item => item.HistoryItemValue == DefaultHistoryItemValue).HistoryItemValue;
             }
 
-            return HistoryItemValueList.Find(item => item.HistoryItemValue.Equals(historyItemValue, StringComparison.OrdinalIgnoreCase)).HistoryItemValue;
+            return HistoryItemValueList.Find(item => item.HistoryItemValue == historyItemValue).HistoryItemValue;
         }
 
         /// <summary>
         /// 历史记录显示数量发生修改时修改设置存储的历史记录显示数量值
         /// </summary>
-        public async Task SetHistoryItemValueAsync(string historyItemValue)
+        public async Task SetHistoryItemValueAsync(int historyItemValue)
         {
             HistoryItemValue = historyItemValue;
 
-            await _configService.SaveSettingStringValueAsync(SettingsKey, historyItemValue);
+            await ConfigService.SaveSettingIntValueAsync(SettingsKey, historyItemValue);
         }
     }
 }

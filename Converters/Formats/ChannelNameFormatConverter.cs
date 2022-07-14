@@ -1,5 +1,5 @@
-﻿using GetStoreApp.Models;
-using GetStoreApp.Services.Settings;
+﻿using GetStoreApp.Contracts.Services.App;
+using GetStoreApp.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
 using System;
@@ -9,13 +9,16 @@ namespace GetStoreApp.Converters.Formats
 {
     public class ChannelNameFormatConverter : IValueConverter
     {
-        public List<GetAppChannelModel> ChannelList { get; } = new List<GetAppChannelModel>
+        private readonly IResourceService resourceService;
+
+        private List<GetAppChannelModel> ChannelList { get; set; }
+
+        public ChannelNameFormatConverter()
         {
-            new GetAppChannelModel{ DisplayName=LanguageService.GetResources("Fast"),InternalName="WIF" },
-            new GetAppChannelModel{ DisplayName=LanguageService.GetResources("Slow"),InternalName="WIS" },
-            new GetAppChannelModel{ DisplayName=LanguageService.GetResources("RP"),InternalName="RP" },
-            new GetAppChannelModel{ DisplayName=LanguageService.GetResources("Retail"),InternalName="Retail" }
-        };
+            resourceService = App.GetService<IResourceService>();
+
+            ChannelList = resourceService.ChannelList;
+        }
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {

@@ -6,7 +6,6 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:service="using:GetStoreApp.Services.Settings"
     mc:Ignorable="d">
 
     <Expander Style="{StaticResource ExpanderSettingsStyle}">
@@ -31,16 +30,16 @@
                     <TextBlock
                         VerticalAlignment="Center"
                         Style="{StaticResource BodyTextBlockStyle}"
-                        Text="{x:Bind service:LanguageService.GetResources('/Settings/LinkFilter')}" />
+                        Text="{x:Bind ResourceService.GetLocalized('/Settings/LinkFilter')}" />
 
                     <TextBlock
                         VerticalAlignment="Center"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind service:LanguageService.GetResources('/Settings/LinkFilterDescription')}" />
+                        Text="{x:Bind ResourceService.GetLocalized('/Settings/LinkFilterDescription')}" />
                 </StackPanel>
 
-                <Button Grid.Column="2" Content="{x:Bind service:LanguageService.GetResources('/Settings/LinkFilterInstruction')}">
+                <Button Grid.Column="2" Content="{x:Bind ResourceService.GetLocalized('/Settings/LinkFilterInstruction')}">
                     <Button.Flyout>
                         <Flyout>
                             <StackPanel Width="350">
@@ -53,13 +52,13 @@
                                         Grid.Column="0"
                                         FontSize="13"
                                         Style="{ThemeResource CaptionTextBlockStyle}"
-                                        Text="{x:Bind service:LanguageService.GetResources('/Settings/StartsWithEInstruction')}" />
+                                        Text="{x:Bind ResourceService.GetLocalized('/Settings/StartsWithEInstruction')}" />
                                     <Button
                                         Grid.Column="1"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Center"
                                         Command="{x:Bind ViewModel.StartsWithECommand}"
-                                        Content="{x:Bind service:LanguageService.GetResources('/Settings/StartsWithEButton')}" />
+                                        Content="{x:Bind ResourceService.GetLocalized('/Settings/StartsWithEButton')}" />
                                 </Grid>
 
                                 <MenuFlyoutSeparator />
@@ -73,13 +72,13 @@
                                         Grid.Column="0"
                                         FontSize="13"
                                         Style="{ThemeResource CaptionTextBlockStyle}"
-                                        Text="{x:Bind service:LanguageService.GetResources('/Settings/BlockMapInstruction')}" />
+                                        Text="{x:Bind ResourceService.GetLocalized('/Settings/BlockMapInstruction')}" />
                                     <Button
                                         Grid.Column="1"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Center"
                                         Command="{x:Bind ViewModel.BlockMapCommand}"
-                                        Content="{x:Bind service:LanguageService.GetResources('/Settings/BlockMapButton')}" />
+                                        Content="{x:Bind ResourceService.GetLocalized('/Settings/BlockMapButton')}" />
                                 </Grid>
                             </StackPanel>
                         </Flyout>
@@ -101,11 +100,11 @@
                             <TextBlock
                                 VerticalAlignment="Center"
                                 Style="{StaticResource BodyTextBlockStyle}"
-                                Text="{x:Bind service:LanguageService.GetResources('/Settings/StartsWithE')}" />
+                                Text="{x:Bind ResourceService.GetLocalized('/Settings/StartsWithE')}" />
                             <TextBlock
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
-                                Text="{x:Bind service:LanguageService.GetResources('/Settings/StartsWithEDescription')}" />
+                                Text="{x:Bind ResourceService.GetLocalized('/Settings/StartsWithEDescription')}" />
                         </StackPanel>
 
                         <ToggleSwitch
@@ -113,12 +112,12 @@
                             Grid.Column="1"
                             FlowDirection="RightToLeft"
                             IsOn="{x:Bind ViewModel.StartsWithEFilterValue, Mode=OneWay}"
-                            OffContent="{x:Bind service:LanguageService.GetResources('/Settings/StartsWithEOffContent')}"
-                            OnContent="{x:Bind service:LanguageService.GetResources('/Settings/StartsWithEOnContent')}">
+                            OffContent="{x:Bind ResourceService.GetLocalized('/Settings/StartsWithEOffContent')}"
+                            OnContent="{x:Bind ResourceService.GetLocalized('/Settings/StartsWithEOnContent')}">
 
                             <i:Interaction.Behaviors>
                                 <ic:EventTriggerBehavior EventName="Toggled">
-                                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.StartWithEFilterCommand}" CommandParameter="{Binding ElementName=StartsWithEToggleSwitch,Path=IsOn}" />
+                                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.StartWithEFilterCommand}" CommandParameter="{Binding ElementName=StartsWithEToggleSwitch, Path=IsOn}" />
                                 </ic:EventTriggerBehavior>
                             </i:Interaction.Behaviors>
                         </ToggleSwitch>
@@ -138,11 +137,11 @@
                             <TextBlock
                                 VerticalAlignment="Center"
                                 Style="{StaticResource BodyTextBlockStyle}"
-                                Text="{x:Bind service:LanguageService.GetResources('/Settings/BlockMap')}" />
+                                Text="{x:Bind ResourceService.GetLocalized('/Settings/BlockMap')}" />
                             <TextBlock
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
-                                Text="{x:Bind service:LanguageService.GetResources('/Settings/BlockMapDescription')}" />
+                                Text="{x:Bind ResourceService.GetLocalized('/Settings/BlockMapDescription')}" />
                         </StackPanel>
 
                         <ToggleSwitch
@@ -150,12 +149,12 @@
                             Grid.Column="1"
                             FlowDirection="RightToLeft"
                             IsOn="{x:Bind ViewModel.BlockMapFilterValue, Mode=OneWay}"
-                            OffContent="{x:Bind service:LanguageService.GetResources('/Settings/BlockMapOffContent')}"
-                            OnContent="{x:Bind service:LanguageService.GetResources('/Settings/BlockMapOnContent')}">
+                            OffContent="{x:Bind ResourceService.GetLocalized('/Settings/BlockMapOffContent')}"
+                            OnContent="{x:Bind ResourceService.GetLocalized('/Settings/BlockMapOnContent')}">
 
                             <i:Interaction.Behaviors>
                                 <ic:EventTriggerBehavior EventName="Toggled">
-                                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.BlockMapFilterCommand}" CommandParameter="{Binding ElementName=BlockMapToggleSwitch,Path=IsOn}" />
+                                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.BlockMapFilterCommand}" CommandParameter="{Binding ElementName=BlockMapToggleSwitch, Path=IsOn}" />
                                 </ic:EventTriggerBehavior>
                             </i:Interaction.Behaviors>
                         </ToggleSwitch>

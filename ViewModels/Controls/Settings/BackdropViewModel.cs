@@ -8,7 +8,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class BackdropViewModel : ObservableRecipient
     {
-        private readonly IBackdropService _backdropService;
+        private readonly IBackdropService BackdropService;
 
         private string _backdrop;
 
@@ -21,20 +21,18 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
         public List<BackdropModel> BackdropList { get; set; }
 
-
         public IAsyncRelayCommand BackdropSelectCommand { get; set; }
-
 
         public BackdropViewModel(IBackdropService backdropService)
         {
-            _backdropService = backdropService;
+            BackdropService = backdropService;
 
-            BackdropList = _backdropService.BackdropList;
-            Backdrop = _backdropService.AppBackdrop;
+            BackdropList = BackdropService.BackdropList;
+            Backdrop = BackdropService.AppBackdrop;
 
             BackdropSelectCommand = new AsyncRelayCommand(async () =>
             {
-                await _backdropService.SetBackdropAsync(Backdrop);
+                await BackdropService.SetBackdropAsync(Backdrop);
             });
         }
     }

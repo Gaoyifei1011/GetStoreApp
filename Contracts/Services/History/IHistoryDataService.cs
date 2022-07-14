@@ -1,8 +1,6 @@
 ﻿using GetStoreApp.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.Contracts.Services.History
@@ -13,7 +11,7 @@ namespace GetStoreApp.Contracts.Services.History
 
         Task<Tuple<List<HistoryModel>, bool, bool>> QueryAllHistoryDataAsync(bool timeSortOrder = false, string typeFilter = "None", string channelFilter = "None");
 
-        Task<List<HistoryModel>> QueryHistoryDataAsync(string value);
+        Task<List<HistoryModel>> QueryHistoryDataAsync(int value);
 
         Task DeleteHistoryDataAsync(List<HistoryModel> selectedHistoryDataList);
 

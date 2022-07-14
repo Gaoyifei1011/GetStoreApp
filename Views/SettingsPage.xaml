@@ -5,7 +5,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sc="using:GetStoreApp.UI.Controls.Settings"
-    xmlns:service="using:GetStoreApp.Services.Settings"
     NavigationCacheMode="Required"
     mc:Ignorable="d">
 
@@ -24,19 +23,19 @@
                 <TextBlock
                     Grid.Column="0"
                     FontSize="{StaticResource TitleFontSize}"
-                    Text="{x:Bind service:LanguageService.GetResources('/Settings/Title')}" />
+                    Text="{x:Bind ResourceService.GetLocalized('/Settings/Title')}" />
 
                 <Button
                     Grid.Column="1"
                     Command="{x:Bind ViewModel.RestartCommand}"
-                    Content="{x:Bind service:LanguageService.GetResources('/Settings/RestartApp')}"
-                    ToolTipService.ToolTip="{x:Bind service:LanguageService.GetResources('/Settings/RestartAppDescription')}" />
+                    Content="{x:Bind ResourceService.GetLocalized('/Settings/RestartApp')}"
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/RestartAppDescription')}" />
             </Grid>
 
             <TextBlock
                 FontSize="16"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="{x:Bind service:LanguageService.GetResources('/Settings/Appearance')}" />
+                Text="{x:Bind ResourceService.GetLocalized('/Settings/Appearance')}" />
 
             <sc:ThemeControl />
 
@@ -47,7 +46,7 @@
             <TextBlock
                 FontSize="16"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="{x:Bind service:LanguageService.GetResources('/Settings/General')}" />
+                Text="{x:Bind ResourceService.GetLocalized('/Settings/General')}" />
 
             <sc:UseInstructionControl />
 
@@ -60,7 +59,7 @@
             <TextBlock
                 FontSize="16"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="{x:Bind service:LanguageService.GetResources('/Settings/Advanced')}" />
+                Text="{x:Bind ResourceService.GetLocalized('/Settings/Advanced')}" />
 
             <sc:ClearRecordControl />
         </StackPanel>

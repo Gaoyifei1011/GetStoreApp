@@ -59,5 +59,4 @@
         <Setter Property="TextAlignment" Value="Justify" />
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
-
 </ResourceDictionary>

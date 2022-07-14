@@ -1,8 +1,6 @@
 ﻿using GetStoreApp.Activation;
 using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Contracts.Services.Settings;
-using GetStoreApp.Helpers;
-using GetStoreApp.Services.Settings;
 using GetStoreApp.Views;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
@@ -19,28 +17,32 @@ namespace GetStoreApp.Services.App
 {
     public class ActivationService : IActivationService
     {
-        private readonly ActivationHandler<LaunchActivatedEventArgs> _defaultHandler;
-        private readonly IEnumerable<IActivationHandler> _activationHandlers;
-        private readonly IDataBaseService _dataBaseService;
-        private readonly IBackdropService _backdropService;
-        private readonly IHistoryItemValueService _historyItemValueService;
-        private readonly ILinkFilterService _linkFilterService;
-        private readonly IRegionService _regionService;
-        private readonly IThemeService _themeService;
-        private readonly IUseInstructionService _useInstructionService;
+        private readonly ActivationHandler<LaunchActivatedEventArgs> DefaultHandler;
+        private readonly IEnumerable<IActivationHandler> ActivationHandlers;
+        private readonly IDataBaseService DataBaseService;
+        private readonly IResourceService ResourceService;
+        private readonly IBackdropService BackdropService;
+        private readonly IHistoryItemValueService HistoryItemValueService;
+        private readonly ILanguageService LanguageService;
+        private readonly ILinkFilterService LinkFilterService;
+        private readonly IRegionService RegionService;
+        private readonly IThemeService ThemeService;
+        private readonly IUseInstructionService UseInstructionService;
         private UIElement _shell = null;
 
-        public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers, IDataBaseService dataBaseService, IBackdropService backdropService,IHistoryItemValueService historyItemValueService,ILinkFilterService linkFilterService, IRegionService regionService, IThemeService themeService,IUseInstructionService useInstructionService)
+        public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers, IDataBaseService dataBaseService, IResourceService resourceService, IBackdropService backdropService, IHistoryItemValueService historyItemValueService, ILanguageService languageService, ILinkFilterService linkFilterService, IRegionService regionService, IThemeService themeService, IUseInstructionService useInstructionService)
         {
-            _defaultHandler = defaultHandler;
-            _activationHandlers = activationHandlers;
-            _dataBaseService = dataBaseService;
-            _backdropService = backdropService;
-            _historyItemValueService = historyItemValueService;
-            _linkFilterService = linkFilterService;
-            _regionService = regionService;
-            _themeService = themeService;
-            _useInstructionService = useInstructionService;
+            DefaultHandler = defaultHandler;
+            ActivationHandlers = activationHandlers;
+            DataBaseService = dataBaseService;
+            ResourceService = resourceService;
+            BackdropService = backdropService;
+            HistoryItemValueService = historyItemValueService;
+            LanguageService = languageService;
+            LinkFilterService = linkFilterService;
+            RegionService = regionService;
+            ThemeService = themeService;
+            UseInstructionService = useInstructionService;
         }
 
         public async Task ActivateAsync(object activationArgs)
@@ -70,28 +72,35 @@ namespace GetStoreApp.Services.App
         /// </summary>
         private async Task InitializeAsync()
         {
-            await _dataBaseService.InitializeDataBaseAsync();
+            // 初始化应用资源及应用使用的语言信息
+            await LanguageService.InitializeLanguageAsync();
+            await LanguageService.SetAppLanguageAsync();
+            await ResourceService.InitializeResourceAsync(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
 
-            await _backdropService.InitializeBackdropAsync();
-            await _historyItemValueService.InitializeHistoryItemValueAsync();
-            await _linkFilterService.InitializeLinkFilterValueAsnyc();
-            await _regionService.InitializeRegionAsync();
-            await _themeService.InitializeThemeAsync();
-            await _useInstructionService.InitializeUseInsVIsValueAsync();
+            // 初始化数据库信息
+            await DataBaseService.InitializeDataBaseAsync();
+
+            // 初始化应用配置信息
+            await BackdropService.InitializeBackdropAsync();
+            await HistoryItemValueService.InitializeHistoryItemValueAsync();
+            await LinkFilterService.InitializeLinkFilterValueAsnyc();
+            await RegionService.InitializeRegionAsync();
+            await ThemeService.InitializeThemeAsync();
+            await UseInstructionService.InitializeUseInsVIsValueAsync();
         }
 
         private async Task HandleActivationAsync(object activationArgs)
         {
-            var activationHandler = _activationHandlers.FirstOrDefault(h => h.CanHandle(activationArgs));
+            var activationHandler = ActivationHandlers.FirstOrDefault(h => h.CanHandle(activationArgs));
 
             if (activationHandler != null)
             {
                 await activationHandler.HandleAsync(activationArgs);
             }
 
-            if (_defaultHandler.CanHandle(activationArgs))
+            if (DefaultHandler.CanHandle(activationArgs))
             {
-                await _defaultHandler.HandleAsync(activationArgs);
+                await DefaultHandler.HandleAsync(activationArgs);
             }
         }
 
@@ -105,10 +114,10 @@ namespace GetStoreApp.Services.App
             await SetAppTitleBarIconAsync();
 
             // 设置应用主题
-            await _themeService.SetAppThemeAsync();
+            await ThemeService.SetAppThemeAsync();
 
             // 设置应用背景色
-            await _backdropService.SetAppBackdropAsync();
+            await BackdropService.SetAppBackdropAsync(ThemeService.AppTheme, BackdropService.AppBackdrop);
         }
 
         /// <summary>

@@ -8,22 +8,22 @@ namespace GetStoreApp.Activation
 {
     public class DefaultActivationHandler : ActivationHandler<LaunchActivatedEventArgs>
     {
-        private readonly INavigationService _navigationService;
+        private readonly INavigationService NavigationService;
 
         public DefaultActivationHandler(INavigationService navigationService)
         {
-            _navigationService = navigationService;
+            NavigationService = navigationService;
         }
 
         protected override async Task HandleInternalAsync(LaunchActivatedEventArgs args)
         {
-            _navigationService.NavigateTo(typeof(HomeViewModel).FullName, args.Arguments);
+            NavigationService.NavigateTo(typeof(HomeViewModel).FullName, args.Arguments);
             await Task.CompletedTask;
         }
 
         protected override bool CanHandleInternal(LaunchActivatedEventArgs args)
         {
-            return _navigationService.Frame.Content == null;
+            return NavigationService.Frame.Content == null;
         }
     }
 }

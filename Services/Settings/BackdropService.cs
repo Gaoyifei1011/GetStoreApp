@@ -5,13 +5,13 @@ using GetStoreApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Windows.Storage;
 
 namespace GetStoreApp.Services.Settings
 {
     public class BackdropService : IBackdropService
     {
-        private readonly IConfigService _configService;
+        private readonly IConfigService ConfigService;
+        private readonly IResourceService ResourceService;
 
         private const string SettingsKey = "AppBackdrop";
 
@@ -19,35 +19,14 @@ namespace GetStoreApp.Services.Settings
 
         public string AppBackdrop { get; set; }
 
-        public List<BackdropModel> BackdropList { get; set; } = new List<BackdropModel>();
+        public List<BackdropModel> BackdropList { get; set; }
 
-        public BackdropService(IConfigService configService)
+        public BackdropService(IConfigService configService, IResourceService resourceService)
         {
-            _configService = configService;
+            ConfigService = configService;
+            ResourceService = resourceService;
 
-            InitializeBackdropList();
-        }
-
-        /// <summary>
-        /// 初始化应用背景色信息列表
-        /// </summary>
-
-        private void InitializeBackdropList()
-        {
-            ulong BuildNumber = InfoHelper.GetSystemVersion()["BuildNumber"];
-
-            BackdropList.Add(new BackdropModel { DisplayName = LanguageService.GetResources("/Settings/BackdropDefault"), InternalName = "Default" });
-
-            if (BuildNumber >= 22000)
-            {
-                BackdropList.Add(new BackdropModel
-                {
-                    DisplayName = LanguageService.GetResources("/Settings/BackdropMica"),
-                    InternalName = "Mica"
-                });
-            }
-
-            BackdropList.Add(new BackdropModel { DisplayName = LanguageService.GetResources("/Settings/BackdropArylic"), InternalName = "Acrylic" });
+            BackdropList = ResourceService.BackdropList;
         }
 
         /// <summary>
@@ -63,7 +42,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private async Task<string> GetBackdropAsync()
         {
-            string backdrop = await _configService.GetSettingStringValueAsync(SettingsKey);
+            string backdrop = await ConfigService.GetSettingStringValueAsync(SettingsKey);
 
             if (string.IsNullOrEmpty(backdrop))
             {
@@ -80,15 +59,15 @@ namespace GetStoreApp.Services.Settings
         {
             AppBackdrop = backdrop;
 
-            await _configService.SaveSettingStringValueAsync(SettingsKey, backdrop);
+            await ConfigService.SaveSettingStringValueAsync(SettingsKey, backdrop);
         }
 
         /// <summary>
         /// 设置应用显示的背景色
         /// </summary>
-        public async Task SetAppBackdropAsync()
+        public async Task SetAppBackdropAsync(string appTheme, string appBackdrop)
         {
-            BackdropHelper.SetBackdrop();
+            BackdropHelper.SetBackdrop(appTheme, appBackdrop);
 
             await Task.CompletedTask;
         }

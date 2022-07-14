@@ -7,13 +7,13 @@ namespace GetStoreApp.ViewModels.Controls.About
 {
     public class HeaderViewModel : ObservableRecipient
     {
-        private ushort MajorVersion = InfoHelper.GetAppVersion()["MajorVersion"];
+        private readonly ushort MajorVersion = InfoHelper.GetAppVersion()["MajorVersion"];
 
-        private ushort MinorVersion = InfoHelper.GetAppVersion()["MinorVersion"];
+        private readonly ushort MinorVersion = InfoHelper.GetAppVersion()["MinorVersion"];
 
-        private ushort BuildVersion = InfoHelper.GetAppVersion()["BuildVersion"];
+        private readonly ushort BuildVersion = InfoHelper.GetAppVersion()["BuildVersion"];
 
-        private ushort RevisionVersion = InfoHelper.GetAppVersion()["RevisionVersion"];
+        private readonly ushort RevisionVersion = InfoHelper.GetAppVersion()["RevisionVersion"];
 
         private string _appVersion;
 

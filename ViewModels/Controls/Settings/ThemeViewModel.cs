@@ -9,7 +9,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class ThemeViewModel : ObservableRecipient
     {
-        private readonly IThemeService _themeService;
+        private readonly IThemeService ThemeService;
 
         private string _theme;
 
@@ -31,15 +31,15 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
         public ThemeViewModel(IThemeService themeService)
         {
-            _themeService = themeService;
+            ThemeService = themeService;
 
-            ThemeList = _themeService.ThemeList;
-            Theme = _themeService.AppTheme;
+            ThemeList = ThemeService.ThemeList;
+            Theme = ThemeService.AppTheme;
 
             ThemeSelectCommand = new AsyncRelayCommand(async () =>
             {
-                await _themeService.SetThemeAsync(Theme);
+                await ThemeService.SetThemeAsync(Theme);
             });
-        }        
+        }
     }
 }

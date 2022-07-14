@@ -4,15 +4,13 @@ using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Messages;
 using GetStoreApp.Models;
-using GetStoreApp.Services.Settings;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class RegionViewModel : ObservableRecipient
     {
-        private readonly IRegionService _regionService;
+        private readonly IRegionService RegionService;
 
         private string _region;
 
@@ -29,14 +27,14 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
         public RegionViewModel(IRegionService regionService)
         {
-            _regionService = regionService;
+            RegionService = regionService;
 
-            RegionList = _regionService.RegionList;
-            Region = _regionService.AppRegion;
+            RegionList = RegionService.RegionList;
+            Region = RegionService.AppRegion;
 
             RegionSelectCommand = new AsyncRelayCommand(async () =>
             {
-                await _regionService.SetRegionAsync(Region);
+                await RegionService.SetRegionAsync(Region);
                 Messenger.Send(new RegionMessage(Region));
             });
         }

@@ -4,37 +4,36 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:service="using:GetStoreApp.Services.Settings"
     mc:Ignorable="d">
 
     <Expander Style="{StaticResource ExpanderAboutStyle}">
         <Expander.Header>
-            <TextBlock Style="{StaticResource ExpanderHeaderStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/UseInstruction')}" />
+            <TextBlock Style="{StaticResource ExpanderHeaderStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/UseInstruction')}" />
         </Expander.Header>
 
         <Expander.Content>
             <StackPanel Margin="14,0,10,0">
-                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/BeginnerGuide')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/BeginnerGuideDescription')}" />
+                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/BeginnerGuide')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/BeginnerGuideDescription')}" />
                 <MenuFlyoutSeparator Margin="0,0,0,8" />
 
-                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/ErrorSolution')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/ErrorSolutionDescription')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/CheckStep1')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/CheckStep2')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind service:LanguageService.GetResources('/About/CheckStep3')}" />
+                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/ErrorSolution')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/ErrorSolutionDescription')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/CheckStep1')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/CheckStep2')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/CheckStep3')}" />
 
                 <StackPanel Orientation="Horizontal">
                     <HyperlinkButton
                         Margin="-5,0,10,0"
                         Padding="5"
                         Command="{x:Bind ViewModel.CheckNetWorkCommand}"
-                        Content="{x:Bind service:LanguageService.GetResources('/About/CheckNetwork')}" />
+                        Content="{x:Bind ResourceService.GetLocalized('/About/CheckNetwork')}" />
                     <HyperlinkButton
                         Margin="-5,0,0,0"
                         Padding="5"
                         Command="{x:Bind ViewModel.TroubleShootCommand}"
-                        Content="{x:Bind service:LanguageService.GetResources('/About/TroubleShoot')}" />
+                        Content="{x:Bind ResourceService.GetLocalized('/About/TroubleShoot')}" />
                 </StackPanel>
             </StackPanel>
         </Expander.Content>

@@ -6,7 +6,6 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:service="using:GetStoreApp.Services.Settings"
     mc:Ignorable="d">
 
     <Grid VerticalAlignment="Center" Style="{StaticResource CardGridStyle}">
@@ -28,13 +27,13 @@
             <TextBlock
                 VerticalAlignment="Center"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="{x:Bind service:LanguageService.GetResources('/Settings/Language')}" />
+                Text="{x:Bind ResourceService.GetLocalized('/Settings/Language')}" />
 
             <TextBlock
                 VerticalAlignment="Center"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                 Style="{StaticResource CaptionTextBlockStyle}"
-                Text="{x:Bind service:LanguageService.GetResources('/Settings/LanguageDescription')}" />
+                Text="{x:Bind ResourceService.GetLocalized('/Settings/LanguageDescription')}" />
         </StackPanel>
 
         <Button
@@ -42,7 +41,7 @@
             VerticalAlignment="Center"
             BorderThickness="0"
             Style="{StaticResource ButtonInfoStyle}"
-            ToolTipService.ToolTip="{x:Bind service:LanguageService.GetResources('/Settings/LanguageTip')}">
+            ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/LanguageTip')}">
             <Button.Content>
                 <FontIcon
                     FontFamily="Segoe Fluent Icons"
@@ -56,11 +55,11 @@
                             Margin="0,0,0,12"
                             FontSize="13"
                             Style="{ThemeResource CaptionTextBlockStyle}"
-                            Text="{x:Bind service:LanguageService.GetResources('/Settings/LanguageTipDescription')}" />
+                            Text="{x:Bind ResourceService.GetLocalized('/Settings/LanguageTipDescription')}" />
                         <Button
                             HorizontalAlignment="Right"
                             Command="{x:Bind ViewModel.LaunchSettingsInstalledAppsCommand}"
-                            Content="{x:Bind service:LanguageService.GetResources('/Settings/LaunchSettingsInstalledApps')}" />
+                            Content="{x:Bind ResourceService.GetLocalized('/Settings/LaunchSettingsInstalledApps')}" />
                     </StackPanel>
                 </Flyout>
             </Button.Flyout>
@@ -72,7 +71,7 @@
             VerticalAlignment="Center"
             DisplayMemberPath="DisplayName"
             ItemsSource="{x:Bind ViewModel.LanguageList}"
-            SelectedValue="{x:Bind ViewModel.SelectedLanguage, Mode=TwoWay}"
+            SelectedValue="{x:Bind ViewModel.Language, Mode=TwoWay}"
             SelectedValuePath="InternalName">
 
             <i:Interaction.Behaviors>

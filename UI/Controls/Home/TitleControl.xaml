@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:service="using:GetStoreApp.Services.Settings"
     mc:Ignorable="d">
 
     <StackPanel Margin="0,0,0,10">
@@ -17,25 +16,25 @@
             <TextBlock
                 Grid.Column="0"
                 FontSize="{StaticResource TitleFontSize}"
-                Text="{x:Bind service:LanguageService.GetResources('/Home/Title')}" />
+                Text="{x:Bind ResourceService.GetLocalized('/Home/Title')}" />
 
             <Button
                 Grid.Column="1"
                 VerticalAlignment="Center"
                 Command="{x:Bind ViewModel.UseInstructionCommand}"
-                Content="{x:Bind service:LanguageService.GetResources('/Home/UseInstruction')}"
+                Content="{x:Bind ResourceService.GetLocalized('/Home/UseInstruction')}"
                 Visibility="{x:Bind ViewModel.UseInsVisValue, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
         </Grid>
 
         <TextBlock
             Margin="0,0,0,5"
             Style="{StaticResource TitleDescriptionStyle}"
-            Text="{x:Bind service:LanguageService.GetResources('/Home/TitleDescription1')}"
+            Text="{x:Bind ResourceService.GetLocalized('/Home/TitleDescription1')}"
             TextAlignment="Center" />
 
         <TextBlock
             Style="{StaticResource TitleDescriptionStyle}"
-            Text="{x:Bind service:LanguageService.GetResources('/Home/TitleDescription2')}"
+            Text="{x:Bind ResourceService.GetLocalized('/Home/TitleDescription2')}"
             TextAlignment="Center" />
     </StackPanel>
 </UserControl>

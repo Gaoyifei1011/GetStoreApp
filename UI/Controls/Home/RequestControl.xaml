@@ -6,7 +6,6 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:service="using:GetStoreApp.Services.Settings"
     mc:Ignorable="d">
 
     <Grid Margin="0,0,0,10">
@@ -56,7 +55,7 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Bottom"
             Command="{x:Bind ViewModel.GetLinksCommand}"
-            Content="{x:Bind service:LanguageService.GetResources('/Home/GetLinks')}"
+            Content="{x:Bind ResourceService.GetLocalized('/Home/GetLinks')}"
             Style="{StaticResource AccentButtonStyle}" />
     </Grid>
 </UserControl>

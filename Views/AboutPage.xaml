@@ -5,7 +5,6 @@
     xmlns:ac="using:GetStoreApp.UI.Controls.About"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:service="using:GetStoreApp.Services.Settings"
     mc:Ignorable="d">
 
     <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
@@ -17,7 +16,7 @@
             <TextBlock
                 Grid.ColumnSpan="2"
                 FontSize="{StaticResource TitleFontSize}"
-                Text="{x:Bind service:LanguageService.GetResources('/About/Title')}" />
+                Text="{x:Bind ResourceService.GetLocalized('/About/Title')}" />
 
             <ac:HeaderControl />
 

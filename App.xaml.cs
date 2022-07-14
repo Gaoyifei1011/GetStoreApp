@@ -35,8 +35,8 @@ namespace GetStoreApp
                 // Services
                 services.AddSingleton<IActivationService, ActivationService>();
                 services.AddSingleton<IConfigService, ConfigService>();
-                services.AddTransient<ICopyPasteService, CopyPasteService>();
                 services.AddSingleton<IDataBaseService, DataBaseService>();
+                services.AddSingleton<IResourceService, ResourceService>();
 
                 services.AddTransient<IDownloadDataService, DownloadDataService>();
 
@@ -44,6 +44,7 @@ namespace GetStoreApp
 
                 services.AddSingleton<IBackdropService, BackdropService>();
                 services.AddSingleton<IHistoryItemValueService, HistoryItemValueService>();
+                services.AddSingleton<ILanguageService, LanguageService>();
                 services.AddSingleton<ILinkFilterService, LinkFilterService>();
                 services.AddSingleton<IRegionService, RegionService>();
                 services.AddSingleton<IThemeService, ThemeService>();
@@ -120,7 +121,7 @@ namespace GetStoreApp
             return _host.Services.GetService(typeof(T)) as T;
         }
 
-        public static Window MainWindow { get; set; } = new Window() { Title = LanguageService.GetResources("AppDisplayName") };
+        public static Window MainWindow { get; set; } = new Window();
 
         public App()
         {
@@ -130,8 +131,12 @@ namespace GetStoreApp
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
             base.OnLaunched(args);
-            var activationService = GetService<IActivationService>();
+
+            IActivationService activationService = GetService<IActivationService>();
+            IResourceService resourceService = GetService<IResourceService>();
+
             await activationService.ActivateAsync(args);
+            MainWindow.Title = resourceService.GetLocalized("AppDisplayName");
         }
     }
 }

@@ -6,7 +6,6 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:service="using:GetStoreApp.Services.Settings"
     mc:Ignorable="d">
 
     <Grid Style="{StaticResource CardGridStyle}">
@@ -28,25 +27,26 @@
             <TextBlock
                 VerticalAlignment="Center"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="{x:Bind service:LanguageService.GetResources('/Settings/Theme')}" />
+                Text="{x:Bind ResourceService.GetLocalized('/Settings/Theme')}" />
 
             <TextBlock
                 VerticalAlignment="Center"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                 Style="{StaticResource CaptionTextBlockStyle}"
-                Text="{x:Bind service:LanguageService.GetResources('/Settings/ThemeDescription')}" />
+                Text="{x:Bind ResourceService.GetLocalized('/Settings/ThemeDescription')}" />
         </StackPanel>
 
         <HyperlinkButton
             Grid.Column="2"
             VerticalAlignment="Center"
             Command="{x:Bind ViewModel.SettingsColorCommand}"
-            Content="{x:Bind service:LanguageService.GetResources('/Settings/WindowsColorSettings')}" />
+            Content="{x:Bind ResourceService.GetLocalized('/Settings/WindowsColorSettings')}" />
 
         <ComboBox
             Grid.Column="3"
             VerticalAlignment="Center"
             DisplayMemberPath="DisplayName"
+            IsEnabled="False"
             ItemsSource="{x:Bind ViewModel.ThemeList}"
             SelectedValue="{x:Bind ViewModel.Theme, Mode=TwoWay}"
             SelectedValuePath="InternalName">

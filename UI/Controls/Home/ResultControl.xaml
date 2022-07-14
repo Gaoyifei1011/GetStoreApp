@@ -5,7 +5,6 @@
     xmlns:ctWinUI="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:service="using:GetStoreApp.Services.Settings"
     x:Name="ResultControlTest"
     mc:Ignorable="d">
 
@@ -39,7 +38,7 @@
             <TextBlock
                 Grid.Column="1"
                 VerticalAlignment="Center"
-                Text="{x:Bind service:LanguageService.GetResources('/Home/SearchResult')}" />
+                Text="{x:Bind ResourceService.GetLocalized('/Home/SearchResult')}" />
 
             <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
 
@@ -47,14 +46,14 @@
                 Grid.Column="3"
                 VerticalAlignment="Center"
                 Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
-                <TextBlock Text="{x:Bind ViewModel.CategoryId, Converter={StaticResource CategoryIDInfoFormatConverter}, Mode=OneWay}" />
-                <TextBlock Text="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource ResultCountInfoFormatConverter}, Mode=OneWay}" />
+                <TextBlock Text="{x:Bind LocalizedCategoryId(ViewModel.CategoryId), Mode=OneWay}" />
+                <TextBlock Text="{x:Bind LocalizedResultCountInfo(ViewModel.ResultDataList.Count), Mode=OneWay}" />
             </StackPanel>
 
             <TextBlock
                 Grid.Column="3"
                 VerticalAlignment="Center"
-                Text="{x:Bind service:LanguageService.GetResources('/Home/SearchResultEmpty')}"
+                Text="{x:Bind ResourceService.GetLocalized('/Home/SearchResultEmpty')}"
                 Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToReverseVisibilityConverter}, Mode=OneWay}" />
 
             <CommandBar
@@ -64,11 +63,11 @@
                 DefaultLabelPosition="Right"
                 Visibility="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToReverseVisibilityConverter}, Mode=OneWay}">
 
-                <AppBarButton Icon="Copy" Label="{x:Bind service:LanguageService.GetResources('/Home/Copy')}">
+                <AppBarButton Icon="Copy" Label="{x:Bind ResourceService.GetLocalized('/Home/Copy')}">
                     <AppBarButton.Flyout>
                         <MenuFlyout Placement="Bottom">
-                            <MenuFlyoutItem Command="{x:Bind ViewModel.CopyCategoryIDCommand}" Text="{x:Bind service:LanguageService.GetResources('/Home/CopyCategoryID')}" />
-                            <MenuFlyoutItem Command="{x:Bind ViewModel.CopySingleCommand}" Text="{x:Bind service:LanguageService.GetResources('/Home/CopySingle')}" />
+                            <MenuFlyoutItem Command="{x:Bind ViewModel.CopyCategoryIDCommand}" Text="{x:Bind ResourceService.GetLocalized('/Home/CopyCategoryID')}" />
+                            <MenuFlyoutItem Command="{x:Bind ViewModel.CopySingleCommand}" Text="{x:Bind ResourceService.GetLocalized('/Home/CopySingle')}" />
                         </MenuFlyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
@@ -76,9 +75,9 @@
                 <AppBarButton
                     Icon="Download"
                     IsEnabled="False"
-                    Label="{x:Bind service:LanguageService.GetResources('/Home/Download')}" />
+                    Label="{x:Bind ResourceService.GetLocalized('/Home/Download')}" />
 
-                <AppBarButton Command="{x:Bind ViewModel.SelectCommand}" Label="{x:Bind service:LanguageService.GetResources('/Home/Select')}">
+                <AppBarButton Command="{x:Bind ViewModel.SelectCommand}" Label="{x:Bind ResourceService.GetLocalized('/Home/Select')}">
                     <AppBarButton.Icon>
                         <FontIcon
                             Grid.Column="0"
@@ -98,27 +97,27 @@
                 <AppBarButton
                     Command="{x:Bind ViewModel.SelectAllCommand}"
                     Icon="SelectAll"
-                    Label="{x:Bind service:LanguageService.GetResources('/Home/SelectAll')}" />
+                    Label="{x:Bind ResourceService.GetLocalized('/Home/SelectAll')}" />
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.SelectNoneCommand}"
                     Icon="ClearSelection"
-                    Label="{x:Bind service:LanguageService.GetResources('/Home/SelectNone')}" />
+                    Label="{x:Bind ResourceService.GetLocalized('/Home/SelectNone')}" />
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.CopySelectedCommand}"
                     Icon="Copy"
-                    Label="{x:Bind service:LanguageService.GetResources('/Home/CopySelected')}" />
+                    Label="{x:Bind ResourceService.GetLocalized('/Home/CopySelected')}" />
 
                 <AppBarButton
                     Icon="Download"
                     IsEnabled="False"
-                    Label="{x:Bind service:LanguageService.GetResources('/Home/DownloadSelected')}" />
+                    Label="{x:Bind ResourceService.GetLocalized('/Home/DownloadSelected')}" />
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.CancelCommand}"
                     Icon="Cancel"
-                    Label="{x:Bind service:LanguageService.GetResources('/Home/Cancel')}" />
+                    Label="{x:Bind ResourceService.GetLocalized('/Home/Cancel')}" />
             </CommandBar>
         </Grid>
 
@@ -135,7 +134,7 @@
 
                 <ctWinUI:DataGridTemplateColumn
                     Width="100"
-                    Header="{x:Bind service:LanguageService.GetResources('/Home/Select')}"
+                    Header="{x:Bind ResourceService.GetLocalized('/Home/Select')}"
                     HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
                     IsReadOnly="False"
                     Visibility="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
@@ -154,7 +153,7 @@
 
                 <ctWinUI:DataGridTemplateColumn
                     Width="4*"
-                    Header="{x:Bind service:LanguageService.GetResources('/Home/FileName')}"
+                    Header="{x:Bind ResourceService.GetLocalized('/Home/FileName')}"
                     HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
                     IsReadOnly="True">
                     <ctWinUI:DataGridTemplateColumn.CellTemplate>
@@ -173,21 +172,21 @@
                 <ctWinUI:DataGridTextColumn
                     Width="Auto"
                     Binding="{Binding FileLinkExpireTime, Converter={StaticResource GMTFormatConverter}}"
-                    Header="{x:Bind service:LanguageService.GetResources('/Home/LinkExpireTime')}"
+                    Header="{x:Bind ResourceService.GetLocalized('/Home/LinkExpireTime')}"
                     HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
                     IsReadOnly="True" />
 
                 <ctWinUI:DataGridTextColumn
                     Width="3*"
                     Binding="{Binding FileSHA1}"
-                    Header="{x:Bind service:LanguageService.GetResources('/Home/FileSHA1')}"
+                    Header="{x:Bind ResourceService.GetLocalized('/Home/FileSHA1')}"
                     HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
                     IsReadOnly="True" />
 
                 <ctWinUI:DataGridTextColumn
                     Width="Auto"
                     Binding="{Binding FileSize}"
-                    Header="{x:Bind service:LanguageService.GetResources('/Home/FileSize')}"
+                    Header="{x:Bind ResourceService.GetLocalized('/Home/FileSize')}"
                     HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
                     IsReadOnly="True" />
             </ctWinUI:DataGrid.Columns>

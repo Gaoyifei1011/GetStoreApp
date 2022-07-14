@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Contracts.Services.History;
 using GetStoreApp.Models;
-using GetStoreApp.Services.App;
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
@@ -21,6 +20,7 @@ namespace GetStoreApp.Services.History
         {
             _dataBaseService = dataBaseService;
         }
+
         /// <summary>
         /// 判断历史记录表是否为空
         /// </summary>
@@ -32,10 +32,12 @@ namespace GetStoreApp.Services.History
             {
                 await db.OpenAsync();
 
-                SqliteCommand CountCommand = new SqliteCommand();
-                CountCommand.Connection = db;
+                SqliteCommand CountCommand = new SqliteCommand
+                {
+                    Connection = db,
 
-                CountCommand.CommandText = string.Format("SELECT COUNT(*) FROM {0}", _dataBaseService.HistoryTableName);
+                    CommandText = string.Format("SELECT COUNT(*) FROM {0}", _dataBaseService.HistoryTableName)
+                };
 
                 SqliteDataReader Query = await CountCommand.ExecuteReaderAsync();
 
@@ -58,10 +60,12 @@ namespace GetStoreApp.Services.History
             {
                 await db.OpenAsync();
 
-                SqliteCommand SearchCommand = new SqliteCommand();
-                SearchCommand.Connection = db;
+                SqliteCommand SearchCommand = new SqliteCommand
+                {
+                    Connection = db,
 
-                SearchCommand.CommandText = string.Format("SELECT * FROM {0} WHERE HISTORYKEY LIKE '{1}'", _dataBaseService.HistoryTableName, historyKey);
+                    CommandText = string.Format("SELECT * FROM {0} WHERE HISTORYKEY LIKE '{1}'", _dataBaseService.HistoryTableName, historyKey)
+                };
 
                 SqliteDataReader Query = await SearchCommand.ExecuteReaderAsync();
 
@@ -177,10 +181,12 @@ namespace GetStoreApp.Services.History
             {
                 await db.OpenAsync();
 
-                SqliteCommand SelectCommand = new SqliteCommand();
-                SelectCommand.Connection = db;
+                SqliteCommand SelectCommand = new SqliteCommand
+                {
+                    Connection = db,
 
-                SelectCommand.CommandText = GenerateSelectSQL(timeSortOrder, typeFilter, channelFilter);
+                    CommandText = GenerateSelectSQL(timeSortOrder, typeFilter, channelFilter)
+                };
 
                 SqliteDataReader Query = await SelectCommand.ExecuteReaderAsync();
 
@@ -219,9 +225,9 @@ namespace GetStoreApp.Services.History
             else if (typeFilter != "None" && channelFilter != "None")
                 SQL = string.Format("SELECT * FROM {0} WHERE TYPE = '{1}' AND CHANNEL = '{2}' ORDER BY TIMESTAMP", _dataBaseService.HistoryTableName, typeFilter, channelFilter);
             else if (typeFilter != "None")
-                SQL = string.Format("SELECT * FROM {0} WHERE TYPE = '{1}' ORDER BY TIMESTAMP", _dataBaseService.HistoryTableName, typeFilter, channelFilter);
+                SQL = string.Format("SELECT * FROM {0} WHERE TYPE = '{1}' ORDER BY TIMESTAMP", _dataBaseService.HistoryTableName, typeFilter);
             else if (channelFilter != "None")
-                SQL = string.Format("SELECT * FROM {0} WHERE CHANNEL = '{1}' ORDER BY TIMESTAMP", _dataBaseService.HistoryTableName, channelFilter, channelFilter);
+                SQL = string.Format("SELECT * FROM {0} WHERE CHANNEL = '{1}' ORDER BY TIMESTAMP", _dataBaseService.HistoryTableName, channelFilter);
 
             if (!timeSortOrder)
                 SQL = string.Format("{0} {1}", SQL, "DESC");
@@ -232,7 +238,7 @@ namespace GetStoreApp.Services.History
         /// <summary>
         /// 获取一定数量的历史记录数据
         /// </summary>
-        public async Task<List<HistoryModel>> QueryHistoryDataAsync(string value)
+        public async Task<List<HistoryModel>> QueryHistoryDataAsync(int value)
         {
             List<HistoryModel> HistoryRawList = new List<HistoryModel>();
 
@@ -240,10 +246,12 @@ namespace GetStoreApp.Services.History
             {
                 await db.OpenAsync();
 
-                SqliteCommand SelectCommand = new SqliteCommand();
-                SelectCommand.Connection = db;
+                SqliteCommand SelectCommand = new SqliteCommand
+                {
+                    Connection = db,
 
-                SelectCommand.CommandText = string.Format("SELECT * FROM {0} ORDER BY TIMESTAMP DESC LIMIT {1}", _dataBaseService.HistoryTableName, Convert.ToInt32(value));
+                    CommandText = string.Format("SELECT * FROM {0} ORDER BY TIMESTAMP DESC LIMIT {1}", _dataBaseService.HistoryTableName, value)
+                };
 
                 SqliteDataReader Query = await SelectCommand.ExecuteReaderAsync();
 

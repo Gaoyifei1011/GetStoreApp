@@ -6,7 +6,6 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:service="using:GetStoreApp.Services.Settings"
     mc:Ignorable="d">
 
     <Grid Style="{StaticResource CardGridStyle}">
@@ -27,13 +26,13 @@
             <TextBlock
                 VerticalAlignment="Center"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="{x:Bind service:LanguageService.GetResources('/Settings/HistoryItem')}" />
+                Text="{x:Bind ResourceService.GetLocalized('/Settings/HistoryItem')}" />
 
             <TextBlock
                 VerticalAlignment="Center"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                 Style="{StaticResource CaptionTextBlockStyle}"
-                Text="{x:Bind service:LanguageService.GetResources('/Settings/HistoryItemDescription')}" />
+                Text="{x:Bind ResourceService.GetLocalized('/Settings/HistoryItemDescription')}" />
         </StackPanel>
 
         <ComboBox
