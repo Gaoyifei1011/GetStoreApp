@@ -149,13 +149,9 @@ namespace GetStoreApp.Helpers
 
         private static void SetConfigurationSourceTheme()
         {
-            BackdropConfigurationSource.Theme = (ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme) switch
-            {
-                ElementTheme.Default => SystemBackdropTheme.Default,
-                ElementTheme.Light => SystemBackdropTheme.Light,
-                ElementTheme.Dark => SystemBackdropTheme.Dark,
-                _ => SystemBackdropTheme.Default,
-            };
+            if (AppTheme == Convert.ToString(ElementTheme.Light)) BackdropConfigurationSource.Theme = SystemBackdropTheme.Light;
+            else if (AppTheme == Convert.ToString(ElementTheme.Dark)) BackdropConfigurationSource.Theme = SystemBackdropTheme.Dark;
+            else BackdropConfigurationSource.Theme = SystemBackdropTheme.Default;
         }
     }
 }

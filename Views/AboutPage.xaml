@@ -28,7 +28,7 @@
 
             <ac:PrecautionControl />
 
-            <ac:ThanksControl />
+            <!--<ac:ThanksControl />-->
         </StackPanel>
     </ScrollViewer>
 </Page>
