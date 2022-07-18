@@ -19,7 +19,7 @@
 | Application Notes                   | Finished       |
 | Console applications                       | 0% is planned      |
 
-项目暂时停止开发，由于原API网页需要通过Cloudflare网页验证(添加了反爬虫验证)，需要解决这个问题后抽时间继续开发。
+原API网页不知道在什么时候开启了Cloudflare 5秒金盾(添加了反爬虫验证)，也可能是网站暂时维护所以开启防止攻击。网站关闭5秒金盾后即可正常访问，目前正在着手解决这个问题中。
 
 ### 该项目的功能
 #### 该项目主要包括以下功能：通过[Store](https://store.rg-adguard.net/)提供的API来生成带有文件链接
