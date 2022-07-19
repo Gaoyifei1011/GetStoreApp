@@ -16,5 +16,11 @@ namespace GetStoreApp.Views
             ViewModel = App.GetService<DownloadViewModel>();
             InitializeComponent();
         }
+
+        public string LocalizedDownloadCountInfo(int count)
+        {
+            if (count == 0) return ResourceService.GetLocalized("/Download/HistoryEmpty");
+            else return string.Format(ResourceService.GetLocalized("/Download/DownloadCountInfo"), count);
+        }
     }
 }

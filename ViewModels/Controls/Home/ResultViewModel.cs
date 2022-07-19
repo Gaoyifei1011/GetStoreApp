@@ -52,6 +52,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _selectedResultItem, value); }
         }
 
+        public ObservableCollection<ResultModel> ResultDataList { get; set; } = new ObservableCollection<ResultModel>();
+
         public IAsyncRelayCommand CopyCategoryIDCommand { get; set; }
 
         public IAsyncRelayCommand CopySingleCommand { get; set; }
@@ -65,8 +67,6 @@ namespace GetStoreApp.ViewModels.Controls.Home
         public IAsyncRelayCommand SelectNoneCommand { get; set; }
 
         public IAsyncRelayCommand CopySelectedCommand { get; set; }
-
-        public ObservableCollection<ResultModel> ResultDataList { get; set; } = new ObservableCollection<ResultModel>();
 
         public ResultViewModel()
         {

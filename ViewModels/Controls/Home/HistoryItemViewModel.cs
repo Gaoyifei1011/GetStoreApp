@@ -36,6 +36,12 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _selectedHistoryItem, value); }
         }
 
+        public List<GetAppTypeModel> TypeList { get; set; }
+
+        public List<GetAppChannelModel> ChannelList { get; set; }
+
+        public ObservableCollection<HistoryModel> HistoryItemDataList { get; set; } = new ObservableCollection<HistoryModel>();
+
         public IAsyncRelayCommand LoadedCommand { get; set; }
 
         public IAsyncRelayCommand ViewAllCommand { get; set; }
@@ -43,12 +49,6 @@ namespace GetStoreApp.ViewModels.Controls.Home
         public IAsyncRelayCommand CopyCommand { get; set; }
 
         public IAsyncRelayCommand FillinCommand { get; set; }
-
-        public List<GetAppTypeModel> TypeList { get; set; }
-
-        public List<GetAppChannelModel> ChannelList { get; set; }
-
-        public ObservableCollection<HistoryModel> HistoryItemDataList { get; set; } = new ObservableCollection<HistoryModel>();
 
         public HistoryItemViewModel(IResourceService resourceService, IHistoryDataService historyDataService, IHistoryItemValueService historyItemValueService, INavigationService navigationService)
         {

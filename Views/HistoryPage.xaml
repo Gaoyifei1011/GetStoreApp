@@ -87,10 +87,7 @@
 
                 <AppBarButton Command="{x:Bind ViewModel.SelectCommand}" Label="{x:Bind ResourceService.GetLocalized('/History/Select')}">
                     <AppBarButton.Icon>
-                        <FontIcon
-                            Grid.Column="0"
-                            FontFamily="Segoe Fluent Icons"
-                            Glyph="&#xE762;" />
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE762;" />
                     </AppBarButton.Icon>
                 </AppBarButton>
 
@@ -104,10 +101,7 @@
                                 IsChecked="{x:Bind ViewModel.TimeSortOrder, Converter={StaticResource TimeSortValueCheckConverter}, ConverterParameter=true, Mode=OneWay}"
                                 Text="{x:Bind ResourceService.GetLocalized('/History/TimeIncreaseSort')}">
                                 <RadioMenuFlyoutItem.Icon>
-                                    <FontIcon
-                                        Grid.Column="0"
-                                        FontFamily="Segoe Fluent Icons"
-                                        Glyph="&#xE74a;" />
+                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE74a;" />
                                 </RadioMenuFlyoutItem.Icon>
                             </RadioMenuFlyoutItem>
 
@@ -117,10 +111,7 @@
                                 IsChecked="{x:Bind ViewModel.TimeSortOrder, Converter={StaticResource TimeSortValueCheckConverter}, ConverterParameter=false, Mode=OneWay}"
                                 Text="{x:Bind ResourceService.GetLocalized('/History/TimeDecreaseSort')}">
                                 <RadioMenuFlyoutItem.Icon>
-                                    <FontIcon
-                                        Grid.Column="0"
-                                        FontFamily="Segoe Fluent Icons"
-                                        Glyph="&#xE74b;" />
+                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE74b;" />
                                 </RadioMenuFlyoutItem.Icon>
                             </RadioMenuFlyoutItem>
                         </MenuFlyout>

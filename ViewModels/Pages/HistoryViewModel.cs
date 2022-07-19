@@ -91,6 +91,12 @@ namespace GetStoreApp.ViewModels.Pages
             set { SetProperty(ref _selectedHistoryItem, value); }
         }
 
+        public List<GetAppTypeModel> TypeList { get; set; }
+
+        public List<GetAppChannelModel> ChannelList { get; set; }
+
+        public ObservableCollection<HistoryModel> HistoryDataList { get; set; } = new ObservableCollection<HistoryModel>();
+
         public IAsyncRelayCommand LoadedCommand { get; set; }
 
         public IAsyncRelayCommand FillinCommand { get; set; }
@@ -116,12 +122,6 @@ namespace GetStoreApp.ViewModels.Pages
         public IAsyncRelayCommand DeleteCommand { get; set; }
 
         public IAsyncRelayCommand CancelCommand { get; set; }
-
-        public List<GetAppTypeModel> TypeList { get; set; }
-
-        public List<GetAppChannelModel> ChannelList { get; set; }
-
-        public ObservableCollection<HistoryModel> HistoryDataList { get; set; } = new ObservableCollection<HistoryModel>();
 
         public HistoryViewModel(IResourceService resourceService, IHistoryDataService historyDataService, INavigationService navigationService)
         {
