@@ -40,6 +40,7 @@
             Grid.Column="2"
             VerticalAlignment="Center"
             BorderThickness="0"
+            Command="{x:Bind ViewModel.LanguageTipCommand}"
             Style="{StaticResource ButtonInfoStyle}"
             ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/LanguageTip')}">
             <Button.Content>
@@ -48,21 +49,6 @@
                     FontSize="16"
                     Glyph="&#xE946;" />
             </Button.Content>
-            <Button.Flyout>
-                <Flyout>
-                    <StackPanel Width="350">
-                        <TextBlock
-                            Margin="0,0,0,12"
-                            FontSize="13"
-                            Style="{ThemeResource CaptionTextBlockStyle}"
-                            Text="{x:Bind ResourceService.GetLocalized('/Settings/LanguageTipDescription')}" />
-                        <Button
-                            HorizontalAlignment="Right"
-                            Command="{x:Bind ViewModel.LaunchSettingsInstalledAppsCommand}"
-                            Content="{x:Bind ResourceService.GetLocalized('/Settings/LaunchSettingsInstalledApps')}" />
-                    </StackPanel>
-                </Flyout>
-            </Button.Flyout>
         </Button>
 
         <ComboBox

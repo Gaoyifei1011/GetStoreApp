@@ -84,6 +84,8 @@ namespace GetStoreApp
                 services.AddTransient<PrecautionViewModel>();
                 services.AddTransient<ReferenceControl>();
                 services.AddTransient<ReferenceViewModel>();
+                services.AddTransient<SettingsHelpControl>();
+                services.AddTransient<SettingsHelpViewModel>();
 
                 services.AddTransient<HistoryItemControl>();
                 services.AddTransient<HistoryItemViewModel>();

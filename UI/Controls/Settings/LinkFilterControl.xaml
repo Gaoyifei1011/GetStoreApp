@@ -39,51 +39,7 @@
                         Text="{x:Bind ResourceService.GetLocalized('/Settings/LinkFilterDescription')}" />
                 </StackPanel>
 
-                <Button Grid.Column="2" Content="{x:Bind ResourceService.GetLocalized('/Settings/LinkFilterInstruction')}">
-                    <Button.Flyout>
-                        <Flyout>
-                            <StackPanel Width="350">
-                                <Grid Margin="0,0,0,12">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="75" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        FontSize="13"
-                                        Style="{ThemeResource CaptionTextBlockStyle}"
-                                        Text="{x:Bind ResourceService.GetLocalized('/Settings/StartsWithEInstruction')}" />
-                                    <Button
-                                        Grid.Column="1"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Center"
-                                        Command="{x:Bind ViewModel.StartsWithECommand}"
-                                        Content="{x:Bind ResourceService.GetLocalized('/Settings/StartsWithEButton')}" />
-                                </Grid>
-
-                                <MenuFlyoutSeparator />
-
-                                <Grid Margin="0,12,0,0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="75" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        FontSize="13"
-                                        Style="{ThemeResource CaptionTextBlockStyle}"
-                                        Text="{x:Bind ResourceService.GetLocalized('/Settings/BlockMapInstruction')}" />
-                                    <Button
-                                        Grid.Column="1"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Center"
-                                        Command="{x:Bind ViewModel.BlockMapCommand}"
-                                        Content="{x:Bind ResourceService.GetLocalized('/Settings/BlockMapButton')}" />
-                                </Grid>
-                            </StackPanel>
-                        </Flyout>
-                    </Button.Flyout>
-                </Button>
+                <Button Grid.Column="2" Content="{x:Bind ResourceService.GetLocalized('/Settings/LinkFilterInstruction')}" Command="{x:Bind ViewModel.LinkFilterInstructionCommand}"/>
             </Grid>
         </Expander.Header>
 
