@@ -126,6 +126,12 @@
   <data name="BeginnerGuideDescription" xml:space="preserve">
     <value>应用打开后，选择您要获取的链接类型和通道类型。选择完成后，输入您要获取的链接内容，输入完成后，点击‘获取链接’按钮即可获取到商店链接对应的应用安装包。在成功获取后，您的输入记录将被储存，下一次打开应用后就可以快速获取到商店链接对应的应用安装包。</value>
   </data>
+  <data name="BlockMapButton" xml:space="preserve">
+    <value>了解包块映射文件</value>
+  </data>
+  <data name="BlockMapInstruction" xml:space="preserve">
+    <value>包块映射文件是一个XML文档，其中包含应用的文件列表，以及存储在包中的每个数据块的索引和加密哈希</value>
+  </data>
   <data name="BriefIntroduction" xml:space="preserve">
     <value>应用简介</value>
   </data>
@@ -174,6 +180,18 @@
   <data name="HeaderDescription" xml:space="preserve">
     <value>欢迎大家下载获取商店应用，祝您使用愉快</value>
   </data>
+  <data name="Language" xml:space="preserve">
+    <value>界面语言选项</value>
+  </data>
+  <data name="LanguageDescription" xml:space="preserve">
+    <value>"开始"菜单应用的名称并不会跟随应用语言设置发生改变。请在设置中找到应用点击修复按钮，应用名称随即发生改变，这不会清除您应用的数据。</value>
+  </data>
+  <data name="LaunchSettingsInstalledApps" xml:space="preserve">
+    <value>打开“设置”</value>
+  </data>
+  <data name="LinkFilter" xml:space="preserve">
+    <value>链接过滤说明</value>
+  </data>
   <data name="Maintenance" xml:space="preserve">
     <value>后续的更新 / 维护</value>
   </data>
@@ -206,6 +224,15 @@
   </data>
   <data name="SendFeedback" xml:space="preserve">
     <value>发送反馈</value>
+  </data>
+  <data name="SettingsHelp" xml:space="preserve">
+    <value>设置选项说明</value>
+  </data>
+  <data name="StartsWithEButton" xml:space="preserve">
+    <value>了解以“.e”开头的文件</value>
+  </data>
+  <data name="StartsWithEInstruction" xml:space="preserve">
+    <value>以'.e'开头的文件包括'.eappx'、'.eappxbundle'、 '.emsix'、'.emsixbundle'这些格式的文件</value>
   </data>
   <data name="ThemeSettingsDisable" xml:space="preserve">
     <value>应用主题设置暂不可用</value>

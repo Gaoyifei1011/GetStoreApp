@@ -126,6 +126,12 @@
   <data name="BeginnerGuideDescription" xml:space="preserve">
     <value>Once the app opens, select the type of link and channel you want to get. When the selection is complete, enter the link content you want to get, and when the input is complete, click the 'Get Link' button to get the app installation package corresponding to the store link. After successful acquisition, your input record will be stored, and the next time you open the app, you can quickly get the app installation package corresponding to the store link.</value>
   </data>
+  <data name="BlockMapButton" xml:space="preserve">
+    <value>Learn about BlockMap files</value>
+  </data>
+  <data name="BlockMapInstruction" xml:space="preserve">
+    <value>The package block map file is an XML document that contains a list of the app’s files along with indexes and cryptographic hashes for each block of data that is stored in the package.</value>
+  </data>
   <data name="BriefIntroduction" xml:space="preserve">
     <value>App brief introduction</value>
   </data>
@@ -174,6 +180,18 @@
   <data name="HeaderDescription" xml:space="preserve">
     <value>Welcome to download the GetStoreApp.Wish you a pleasant experience</value>
   </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language options</value>
+  </data>
+  <data name="LanguageDescription" xml:space="preserve">
+    <value>The name of the Start menu app doesn't change with the app language setting. Find the app in settings and click the Repair button and the app name changes without clearing your app's data.</value>
+  </data>
+  <data name="LaunchSettingsInstalledApps" xml:space="preserve">
+    <value>Open settings</value>
+  </data>
+  <data name="LinkFilter" xml:space="preserve">
+    <value>Link filtering instructions</value>
+  </data>
   <data name="Maintenance" xml:space="preserve">
     <value>Subsequent updates / maintenance</value>
   </data>
@@ -206,6 +224,15 @@
   </data>
   <data name="SendFeedback" xml:space="preserve">
     <value>Send feedback</value>
+  </data>
+  <data name="SettingsHelp" xml:space="preserve">
+    <value>Setting options instructions</value>
+  </data>
+  <data name="StartsWithEButton" xml:space="preserve">
+    <value>Learn about files that begin with ".e"</value>
+  </data>
+  <data name="StartsWithEInstruction" xml:space="preserve">
+    <value>Files that begin with '.e' include files in the formats '.eappx', '.eappxbundle', '.emsix', '.emsixbundle'</value>
   </data>
   <data name="ThemeSettingsDisable" xml:space="preserve">
     <value>Application theme Settings are temporarily unavailable</value>

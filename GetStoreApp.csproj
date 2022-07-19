@@ -84,7 +84,7 @@
     <None Remove="UI\Controls\About\IntroductionControl.xaml" />
     <None Remove="UI\Controls\About\PrecautionControl.xaml" />
     <None Remove="UI\Controls\About\ReferenceControl.xaml" />
-    <None Remove="UI\Controls\About\ThanksControl.xaml" />
+    <None Remove="UI\Controls\About\SettingsHelpControl.xaml" />
     <None Remove="UI\Controls\Home\HistoryItemControl.xaml" />
     <None Remove="UI\Controls\Home\RequestControl.xaml" />
     <None Remove="UI\Controls\Home\ResultControl.xaml" />
@@ -136,7 +136,7 @@
     <Page Update="Styles\HyperlinkButton.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Controls\About\ThanksControl.xaml">
+    <Page Update="UI\Controls\About\SettingsHelpControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Controls\About\PrecautionControl.xaml">

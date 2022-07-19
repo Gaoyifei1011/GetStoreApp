@@ -141,14 +141,8 @@
   <data name="BlockMap" xml:space="preserve">
     <value>不显示文件扩展名称为BlockMap的文件</value>
   </data>
-  <data name="BlockMapButton" xml:space="preserve">
-    <value>了解</value>
-  </data>
   <data name="BlockMapDescription" xml:space="preserve">
     <value>BlockMap文件由makeappx.exe打包时自动创建</value>
-  </data>
-  <data name="BlockMapInstruction" xml:space="preserve">
-    <value>包块映射文件是一个XML文档，其中包含应用的文件列表，以及存储在包中的每个数据块的索引和加密哈希</value>
   </data>
   <data name="BlockMapOffContent" xml:space="preserve">
     <value>不过滤</value>
@@ -195,12 +189,6 @@
   <data name="LanguageTip" xml:space="preserve">
     <value>帮助</value>
   </data>
-  <data name="LanguageTipDescription" xml:space="preserve">
-    <value>"开始"菜单应用的名称并不会跟随应用语言设置发生改变。请在设置中找到应用点击修复按钮，应用名称随即发生改变，这不会清除您应用的数据。</value>
-  </data>
-  <data name="LaunchSettingsInstalledApps" xml:space="preserve">
-    <value>打开“设置”</value>
-  </data>
   <data name="LinkFilter" xml:space="preserve">
     <value>链接过滤</value>
   </data>
@@ -225,14 +213,8 @@
   <data name="StartsWithE" xml:space="preserve">
     <value>不显示文件扩展名称以'.e'开头的文件</value>
   </data>
-  <data name="StartsWithEButton" xml:space="preserve">
-    <value>了解</value>
-  </data>
   <data name="StartsWithEDescription" xml:space="preserve">
     <value>该类型文件是从Windows 8.1应用商店以来提供的加密的应用程序包</value>
-  </data>
-  <data name="StartsWithEInstruction" xml:space="preserve">
-    <value>以'.e'开头的文件包括'.eappx'、'.eappxbundle'、 '.emsix'、'.emsixbundle'这些格式的文件</value>
   </data>
   <data name="StartsWithEOffContent" xml:space="preserve">
     <value>不过滤</value>

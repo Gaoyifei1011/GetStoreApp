@@ -1,0 +1,43 @@
+﻿<UserControl
+    x:Class="GetStoreApp.UI.Controls.About.SettingsHelpControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Expander Style="{StaticResource ExpanderAboutStyle}">
+        <Expander.Header>
+            <TextBlock Style="{StaticResource ExpanderHeaderStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/SettingsHelp')}" />
+        </Expander.Header>
+        <Expander.Content>
+            <StackPanel Margin="14,0,10,0">
+                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/Language')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/LanguageDescription')}" />
+                <HyperlinkButton
+                    Margin="-5,0,10,0"
+                    Padding="5"
+                    Command="{x:Bind ViewModel.LaunchSettingsInstalledAppsCommand}"
+                    Content="{x:Bind ResourceService.GetLocalized('/About/LaunchSettingsInstalledApps')}" />
+                <MenuFlyoutSeparator Margin="0,0,0,8" />
+
+                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/LinkFilter')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/StartsWithEInstruction')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/BlockMapInstruction')}" />
+
+                <StackPanel Orientation="Horizontal">
+                    <HyperlinkButton
+                        Margin="-5,0,10,0"
+                        Padding="5"
+                        Command="{x:Bind ViewModel.StartsWithECommand}"
+                        Content="{x:Bind ResourceService.GetLocalized('/About/StartsWithEButton')}" />
+                    <HyperlinkButton
+                        Margin="-5,0,0,0"
+                        Padding="5"
+                        Command="{x:Bind ViewModel.BlockMapCommand}"
+                        Content="{x:Bind ResourceService.GetLocalized('/About/BlockMapButton')}" />
+                </StackPanel>
+            </StackPanel>
+        </Expander.Content>
+    </Expander>
+</UserControl>
