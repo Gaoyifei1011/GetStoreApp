@@ -16,8 +16,101 @@
         </Grid.RowDefinitions>
 
         <TextBlock
-            Grid.Column="0"
+            Grid.Row="0"
+            Margin="0,0,0,10"
             FontSize="{StaticResource TitleFontSize}"
             Text="{x:Bind ResourceService.GetLocalized('/Download/Title')}" />
+
+        <Grid
+            Grid.Row="1"
+            Margin="0,0,0,10"
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            Style="{StaticResource DataGridDescriptionGridStyle}">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <FontIcon
+                Grid.Column="0"
+                FontFamily="Segoe Fluent Icons"
+                Glyph="&#xE74C;"
+                Style="{StaticResource FontIconStyle}" />
+            <TextBlock
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                Text="{x:Bind ResourceService.GetLocalized('/Download/Operation')}" />
+            <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
+
+            <TextBlock
+                Grid.Column="3"
+                VerticalAlignment="Center"
+                Text="{x:Bind LocalizedDownloadCountInfo(ViewModel.DownloadDataList.Count), Mode=OneWay}" />
+
+            <CommandBar
+                Grid.Column="4"
+                VerticalAlignment="Center"
+                Background="Transparent"
+                DefaultLabelPosition="Right"
+                Visibility="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToReverseVisibilityConverter}, Mode=OneWay}">
+
+                <AppBarButton Command="{x:Bind ViewModel.OpenFolderCommand}" Label="{x:Bind ResourceService.GetLocalized('/Download/OpenFolder')}">
+                    <AppBarButton.Icon>
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8b7;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+
+                <AppBarButton Command="{x:Bind ViewModel.SelectCommand}" Label="{x:Bind ResourceService.GetLocalized('/Download/Select')}">
+                    <AppBarButton.Icon>
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE762;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+
+                <AppBarButton Icon="Sort" Label="{x:Bind ResourceService.GetLocalized('/Download/Sort')}" />
+
+                <AppBarButton
+                    Command="{x:Bind ViewModel.RefreshCommand}"
+                    Icon="Refresh"
+                    Label="{x:Bind ResourceService.GetLocalized('/Download/Refresh')}" />
+            </CommandBar>
+
+            <CommandBar
+                Grid.Column="4"
+                VerticalAlignment="Center"
+                Background="Transparent"
+                DefaultLabelPosition="Right"
+                Visibility="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+
+                <AppBarButton
+                    Command="{x:Bind ViewModel.SelectAllCommand}"
+                    Icon="SelectAll"
+                    Label="{x:Bind ResourceService.GetLocalized('/Download/SelectAll')}" />
+
+                <AppBarButton
+                    Command="{x:Bind ViewModel.SelectNoneCommand}"
+                    Icon="ClearSelection"
+                    Label="{x:Bind ResourceService.GetLocalized('/Download/SelectNone')}" />
+
+                <AppBarButton Icon="Delete" Label="{x:Bind ResourceService.GetLocalized('/Download/Delete')}">
+                    <AppBarButton.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutItem Command="{x:Bind ViewModel.DeleteCommand}" Text="{x:Bind ResourceService.GetLocalized('/Download/DeleteRecord')}" />
+                            <MenuFlyoutItem Command="{x:Bind ViewModel.DeleteWithFileCommand}" Text="{x:Bind ResourceService.GetLocalized('/Download/DeleteRecordWithFile')}" />
+                        </MenuFlyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
+
+                <AppBarButton
+                    Command="{x:Bind ViewModel.CancelCommand}"
+                    Icon="Cancel"
+                    Label="{x:Bind ResourceService.GetLocalized('/Download/Cancel')}" />
+            </CommandBar>
+        </Grid>
+
     </Grid>
 </Page>

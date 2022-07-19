@@ -68,10 +68,6 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _linkText, value); }
         }
 
-        public IAsyncRelayCommand TypeSelectCommand { get; set; }
-
-        public IAsyncRelayCommand GetLinksCommand { get; set; }
-
         public List<GetAppTypeModel> TypeList { get; set; }
 
         public List<GetAppChannelModel> ChannelList { get; set; }
@@ -83,6 +79,10 @@ namespace GetStoreApp.ViewModels.Controls.Home
             "Microsoft.WindowsStore_8wekyb3d8bbwe",
             "d58c3a5f-ca63-4435-842c-7814b5ff91b7"
         };
+
+        public IAsyncRelayCommand TypeSelectCommand { get; set; }
+
+        public IAsyncRelayCommand GetLinksCommand { get; set; }
 
         public RequestViewModel(IResourceService resourceService, IHistoryDataService historyDataService, ILinkFilterService linkFilterService, IRegionService regionService)
         {

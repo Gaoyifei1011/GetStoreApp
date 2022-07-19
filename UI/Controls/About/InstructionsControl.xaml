@@ -22,6 +22,7 @@
                 <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/CheckStep1')}" />
                 <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/CheckStep2')}" />
                 <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/CheckStep3')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/CheckStep4')}" />
 
                 <StackPanel Orientation="Horizontal">
                     <HyperlinkButton

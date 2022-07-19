@@ -151,10 +151,10 @@
     <value>点击"填入"按钮后会在上面的文本输入框中填入链接，点击“获取链接”即可获取具体内容</value>
   </data>
   <data name="Filter" xml:space="preserve">
-    <value>过滤</value>
+    <value>筛选</value>
   </data>
   <data name="HistoryCountInfo" xml:space="preserve">
-    <value>共有{0}条记录</value>
+    <value>共有{0}条历史记录</value>
   </data>
   <data name="HistoryEmpty" xml:space="preserve">
     <value>没有任何历史记录</value>

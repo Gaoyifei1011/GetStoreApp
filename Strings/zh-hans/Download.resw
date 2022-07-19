@@ -117,6 +117,45 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="DeleteRecord" xml:space="preserve">
+    <value>删除记录</value>
+  </data>
+  <data name="DeleteRecordWithFile" xml:space="preserve">
+    <value>删除记录（包括文件）</value>
+  </data>
+  <data name="DownloadCountInfo" xml:space="preserve">
+    <value>共有{0}条历史记录</value>
+  </data>
+  <data name="DownloadEmpty" xml:space="preserve">
+    <value>没有任何下载记录</value>
+  </data>
+  <data name="OpenFolder" xml:space="preserve">
+    <value>打开文件夹</value>
+  </data>
+  <data name="Operation" xml:space="preserve">
+    <value>操作</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>刷新</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>选择</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>全选</value>
+  </data>
+  <data name="SelectNone" xml:space="preserve">
+    <value>全部不选</value>
+  </data>
+  <data name="Sort" xml:space="preserve">
+    <value>排序</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>下载</value>
   </data>

@@ -79,10 +79,7 @@
 
                 <AppBarButton Command="{x:Bind ViewModel.SelectCommand}" Label="{x:Bind ResourceService.GetLocalized('/Home/Select')}">
                     <AppBarButton.Icon>
-                        <FontIcon
-                            Grid.Column="0"
-                            FontFamily="Segoe Fluent Icons"
-                            Glyph="&#xE762;" />
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE762;" />
                     </AppBarButton.Icon>
                 </AppBarButton>
             </CommandBar>

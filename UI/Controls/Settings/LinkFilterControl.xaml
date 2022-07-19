@@ -18,6 +18,7 @@
                 </Grid.ColumnDefinitions>
 
                 <FontIcon
+                    Grid.Column="0"
                     FontFamily="Segoe Fluent Icons"
                     Glyph="&#xE71c;"
                     Style="{StaticResource FontIconStyle}" />
@@ -39,7 +40,10 @@
                         Text="{x:Bind ResourceService.GetLocalized('/Settings/LinkFilterDescription')}" />
                 </StackPanel>
 
-                <Button Grid.Column="2" Content="{x:Bind ResourceService.GetLocalized('/Settings/LinkFilterInstruction')}" Command="{x:Bind ViewModel.LinkFilterInstructionCommand}"/>
+                <Button
+                    Grid.Column="2"
+                    Command="{x:Bind ViewModel.LinkFilterInstructionCommand}"
+                    Content="{x:Bind ResourceService.GetLocalized('/Settings/LinkFilterInstruction')}" />
             </Grid>
         </Expander.Header>
 

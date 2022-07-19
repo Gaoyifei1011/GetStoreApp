@@ -154,10 +154,10 @@
     <value>Filter</value>
   </data>
   <data name="HistoryCountInfo" xml:space="preserve">
-    <value>There are {0} records</value>
+    <value>There are {0} history records</value>
   </data>
   <data name="HistoryEmpty" xml:space="preserve">
-    <value>There is no history</value>
+    <value>There is no history record</value>
   </data>
   <data name="HistoryEmptyDescription" xml:space="preserve">
     <value>Go to the app you want to download, and the link you entered will appear here</value>

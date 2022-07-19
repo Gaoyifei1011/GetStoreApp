@@ -47,8 +47,7 @@
                 <NavigationViewItem
                     helpers:NavigationHelper.NavigateTo="GetStoreApp.ViewModels.Pages.DownloadViewModel"
                     Content="{x:Bind ResourceService.GetLocalized('/Shell/Download')}"
-                    Icon="Download"
-                    IsEnabled="False" />
+                    Icon="Download" />
                 <NavigationViewItem helpers:NavigationHelper.NavigateTo="GetStoreApp.ViewModels.Pages.HistoryViewModel" Content="{x:Bind ResourceService.GetLocalized('/Shell/History')}">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF738;" />
