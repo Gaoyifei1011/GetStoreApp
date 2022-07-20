@@ -135,6 +135,12 @@
   <data name="DownloadEmpty" xml:space="preserve">
     <value>There is no download record</value>
   </data>
+  <data name="DownloadEmptyDescription" xml:space="preserve">
+    <value>Go to the app you want to download, and the app you've downloaded will appear here</value>
+  </data>
+  <data name="DownloadOptions" xml:space="preserve">
+    <value>Download settings</value>
+  </data>
   <data name="OpenFolder" xml:space="preserve">
     <value>Open folder</value>
   </data>

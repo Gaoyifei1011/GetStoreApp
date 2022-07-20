@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Models;
+using Microsoft.UI.Xaml.Media.Animation;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -10,6 +12,8 @@ namespace GetStoreApp.ViewModels.Pages
 {
     public class DownloadViewModel : ObservableRecipient
     {
+        private readonly INavigationService NavigationService;
+
         private StorageFolder DownloadFolder = ApplicationData.Current.LocalCacheFolder;
 
         private bool _isSelectMode = false;
@@ -21,7 +25,18 @@ namespace GetStoreApp.ViewModels.Pages
             set { SetProperty(ref _isSelectMode, value); }
         }
 
+        private bool _isDownloadEmpty = true;
+
+        public bool IsDownloadEmpty
+        {
+            get { return _isDownloadEmpty; }
+
+            set { SetProperty(ref _isDownloadEmpty, value); }
+        }
+
         public ObservableCollection<DownloadModel> DownloadDataList { get; set; } = new ObservableCollection<DownloadModel>();
+
+        public IAsyncRelayCommand DownloadOptionsCommand { get; set; }
 
         public IAsyncRelayCommand OpenFolderCommand { get; set; }
 
@@ -39,8 +54,16 @@ namespace GetStoreApp.ViewModels.Pages
 
         public IAsyncRelayCommand CancelCommand { get; set; }
 
-        public DownloadViewModel()
+        public DownloadViewModel(INavigationService navigationService)
         {
+            NavigationService = navigationService;
+
+            DownloadOptionsCommand = new AsyncRelayCommand(async () =>
+            {
+                NavigationService.NavigateTo(typeof(SettingsViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+                await Task.CompletedTask;
+            });
+
             OpenFolderCommand = new AsyncRelayCommand(async () =>
             {
                 await Windows.System.Launcher.LaunchFolderAsync(DownloadFolder);

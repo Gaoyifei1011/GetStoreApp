@@ -31,10 +31,15 @@
                         Command="{x:Bind ViewModel.CheckNetWorkCommand}"
                         Content="{x:Bind ResourceService.GetLocalized('/About/CheckNetwork')}" />
                     <HyperlinkButton
-                        Margin="-5,0,0,0"
+                        Margin="-5,0,10,0"
                         Padding="5"
                         Command="{x:Bind ViewModel.TroubleShootCommand}"
                         Content="{x:Bind ResourceService.GetLocalized('/About/TroubleShoot')}" />
+                    <HyperlinkButton
+                        Margin="-5,0,0,0"
+                        Padding="5"
+                        Command="{x:Bind ViewModel.CloudflareValidationCommand}"
+                        Content="{x:Bind ResourceService.GetLocalized('/About/CloudflareValidation')}" />
                 </StackPanel>
             </StackPanel>
         </Expander.Content>

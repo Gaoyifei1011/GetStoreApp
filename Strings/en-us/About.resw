@@ -147,8 +147,17 @@
   <data name="CheckStep3" xml:space="preserve">
     <value>3. The app needs networking to send a get request. Check your device's network condition and wait until your device's network connection is working properly to try to regain it.</value>
   </data>
+  <data name="CheckStep4" xml:space="preserve">
+    <value>4. If the web page has Cloudflare 5 second validation (firewall) enabled, you are advised to use the Web version. The problem will be solved gradually in the future. (including but not limited to Using Selenium to simulate browser operation, web version function to connect to download interface, etc.)</value>
+  </data>
   <data name="CheckUpdate" xml:space="preserve">
     <value>Check Update</value>
+  </data>
+  <data name="CloudflareValidation" xml:space="preserve">
+    <value>What is Cloudflare 5 seconds validation?</value>
+  </data>
+  <data name="CloudflareValidationContent" xml:space="preserve">
+    <value>Cloudflare-protected sites wait for a 5 second verification on your first visit to check that you are properly accessing them through your browser. If it is not properly accessed through a browser, the server blocks all requests made by the user.</value>
   </data>
   <data name="DesktopApps" xml:space="preserve">
     <value>Traditional desktop apps</value>

@@ -147,8 +147,14 @@
   <data name="CheckStep3" xml:space="preserve">
     <value>3.应用需要联网功能才能发送获取请求。请检查您设备的网络情况，待到您设备的网络连接正常后尝试重新获取。</value>
   </data>
+  <data name="CheckStep4" xml:space="preserve">
+    <value>4.如果网页开启了Cloudflare 5秒验证（防火墙），建议您使用网页版。未来会逐步解决这一问题。（包括但不限于使用Selenium模拟浏览器操作，网页版功能对接下载接口等）</value>
+  </data>
   <data name="CheckUpdate" xml:space="preserve">
     <value>检查更新</value>
+  </data>
+  <data name="CloudflareValidation" xml:space="preserve">
+    <value>什么是Cloudflare 5秒验证？</value>
   </data>
   <data name="DesktopApps" xml:space="preserve">
     <value>传统桌面应用不能获取</value>

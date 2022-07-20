@@ -41,6 +41,7 @@
             Margin="0,0,0,10"
             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            CornerRadius="4"
             Style="{StaticResource DataGridDescriptionGridStyle}">
 
             <Grid.ColumnDefinitions>

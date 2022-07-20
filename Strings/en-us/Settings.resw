@@ -165,6 +165,12 @@
   <data name="ClearSuccessfully" xml:space="preserve">
     <value>Cleanup successfully</value>
   </data>
+  <data name="DownloadOptions" xml:space="preserve">
+    <value>Download directory</value>
+  </data>
+  <data name="DownloadOptionsDescription" xml:space="preserve">
+    <value>Select the directory where you want to save the downloaded file</value>
+  </data>
   <data name="General" xml:space="preserve">
     <value>General Options</value>
   </data>
