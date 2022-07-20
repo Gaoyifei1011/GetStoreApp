@@ -25,7 +25,7 @@
                 <Image
                     Width="463"
                     Height="107"
-                    Source="/Assets/Images/DesktopApps.png" />
+                    Source="ms-appx:///Assets/Images/DesktopApps.png" />
             </Border>
         </StackPanel>
     </ContentDialog.Content>

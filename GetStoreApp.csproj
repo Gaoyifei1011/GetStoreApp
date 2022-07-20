@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\GetStoreApp.png" />
+    <None Remove="Assets\Images\CloudflareValidation.png" />
     <None Remove="Assets\Logo\GetStoreApp.png" />
     <None Remove="Styles\Button.xaml" />
     <None Remove="Styles\Converter.xaml" />
@@ -91,8 +92,10 @@
     <None Remove="UI\Controls\Home\StatusBarControl.xaml" />
     <None Remove="UI\Controls\Settings\BackdropControl.xaml" />
     <None Remove="UI\Controls\Settings\ClearRecordControl.xaml" />
+    <None Remove="UI\Controls\Settings\DownloadOptionsControl.xaml" />
     <None Remove="UI\Controls\Settings\HistoryItemValueControl.xaml" />
     <None Remove="UI\Controls\Settings\LinkFilterControl.xaml" />
+    <None Remove="UI\Dialogs\CloudflareValidationDialog.xaml" />
     <None Remove="UI\Dialogs\DeletePromptDialog.xaml" />
     <None Remove="UI\Dialogs\DesktopAppsDialog.xaml" />
     <None Remove="UI\Dialogs\RestartPromptDialog.xaml" />
@@ -109,6 +112,7 @@
     <PackageReference Include="HtmlAgilityPack" Version="1.11.43" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.7" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="1.6.4" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.1" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.2" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.8" />
@@ -226,6 +230,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Assets\Images\" />
+    <Page Update="UI\Controls\Settings\DownloadOptionsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="UI\Dialogs\CloudflareValidationDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>

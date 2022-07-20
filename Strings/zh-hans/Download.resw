@@ -135,6 +135,12 @@
   <data name="DownloadEmpty" xml:space="preserve">
     <value>没有任何下载记录</value>
   </data>
+  <data name="DownloadEmptyDescription" xml:space="preserve">
+    <value>快去获取想要下载的应用吧，您下载过的应用将会显示在此处</value>
+  </data>
+  <data name="DownloadOptions" xml:space="preserve">
+    <value>下载设置</value>
+  </data>
   <data name="OpenFolder" xml:space="preserve">
     <value>打开文件夹</value>
   </data>

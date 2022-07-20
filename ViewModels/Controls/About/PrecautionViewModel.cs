@@ -15,17 +15,9 @@ namespace GetStoreApp.ViewModels.Controls.About
         {
             RecognizeCommand = new AsyncRelayCommand(async () =>
             {
-                await ShowDesktopAppsDialogAsync();
+                DesktopAppsDialog dialog = new DesktopAppsDialog { XamlRoot = App.MainWindow.Content.XamlRoot };
+                await dialog.ShowAsync();
             });
-        }
-
-        /// <summary>
-        /// 传统桌面应用详细信息对话框
-        /// </summary>
-        public async Task<ContentDialogResult> ShowDesktopAppsDialogAsync()
-        {
-            DesktopAppsDialog dialog = new DesktopAppsDialog { XamlRoot = App.MainWindow.Content.XamlRoot };
-            return await dialog.ShowAsync();
         }
     }
 }

@@ -12,20 +12,31 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <TextBlock
-            Grid.Row="0"
-            Margin="0,0,0,10"
-            FontSize="{StaticResource TitleFontSize}"
-            Text="{x:Bind ResourceService.GetLocalized('/Download/Title')}" />
+        <Grid Grid.Row="0" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+                Grid.Row="0"
+                FontSize="{StaticResource TitleFontSize}"
+                Text="{x:Bind ResourceService.GetLocalized('/Download/Title')}" />
+
+            <Button
+                Grid.Column="1"
+                Command="{x:Bind ViewModel.DownloadOptionsCommand}"
+                Content="{x:Bind ResourceService.GetLocalized('/Download/DownloadOptions')}" />
+        </Grid>
 
         <Grid
             Grid.Row="1"
             Margin="0,0,0,10"
             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            CornerRadius="4"
             Style="{StaticResource DataGridDescriptionGridStyle}">
 
             <Grid.ColumnDefinitions>
@@ -110,6 +121,18 @@
                     Icon="Cancel"
                     Label="{x:Bind ResourceService.GetLocalized('/Download/Cancel')}" />
             </CommandBar>
+        </Grid>
+
+        <Grid
+            Grid.Row="2"
+            Margin="0,0,0,10"
+            Style="{StaticResource CardGridStyle}"
+            Visibility="{x:Bind ViewModel.IsDownloadEmpty, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+            <TextBlock
+                Margin="0,10,0,10"
+                VerticalAlignment="Center"
+                Text="{x:Bind ResourceService.GetLocalized('/Download/DownloadEmptyDescription')}"
+                TextAlignment="Center" />
         </Grid>
 
     </Grid>

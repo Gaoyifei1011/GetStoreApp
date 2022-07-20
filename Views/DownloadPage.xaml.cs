@@ -19,7 +19,7 @@ namespace GetStoreApp.Views
 
         public string LocalizedDownloadCountInfo(int count)
         {
-            if (count == 0) return ResourceService.GetLocalized("/Download/HistoryEmpty");
+            if (count == 0) return ResourceService.GetLocalized("/Download/DownloadEmpty");
             else return string.Format(ResourceService.GetLocalized("/Download/DownloadCountInfo"), count);
         }
     }
