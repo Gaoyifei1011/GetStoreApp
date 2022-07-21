@@ -48,7 +48,7 @@
         </Expander.Header>
 
         <Expander.Content>
-            <StackPanel Padding="27,0,0,0" HorizontalAlignment="Stretch">
+            <StackPanel Padding="43,6,16,4" HorizontalAlignment="Stretch">
                 <StackPanel>
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
                         <Grid.ColumnDefinitions>
@@ -84,7 +84,7 @@
                     </Grid>
                 </StackPanel>
 
-                <MenuFlyoutSeparator Margin="0,6" />
+                <MenuFlyoutSeparator Margin="0,0,0,4" />
 
                 <StackPanel>
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">

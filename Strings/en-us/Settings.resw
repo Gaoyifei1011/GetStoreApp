@@ -150,6 +150,9 @@
   <data name="BlockMapOnContent" xml:space="preserve">
     <value>filter</value>
   </data>
+  <data name="ChangeFolder" xml:space="preserve">
+    <value>Change directory</value>
+  </data>
   <data name="Clear" xml:space="preserve">
     <value>Clear</value>
   </data>
@@ -165,11 +168,26 @@
   <data name="ClearSuccessfully" xml:space="preserve">
     <value>Cleanup successfully</value>
   </data>
+  <data name="DownloadFolder" xml:space="preserve">
+    <value>File storage path</value>
+  </data>
+  <data name="DownloadItem" xml:space="preserve">
+    <value>The number of simultaneous download tasks</value>
+  </data>
+  <data name="DownloadItemDescription" xml:space="preserve">
+    <value>Sets the number of files that are downloaded at the same time</value>
+  </data>
+  <data name="DownloadNotification" xml:space="preserve">
+    <value>Download tips</value>
+  </data>
+  <data name="DownloadNotificationDescription" xml:space="preserve">
+    <value>Set whether you want to turn on download notifications</value>
+  </data>
   <data name="DownloadOptions" xml:space="preserve">
-    <value>Download directory</value>
+    <value>Download management</value>
   </data>
   <data name="DownloadOptionsDescription" xml:space="preserve">
-    <value>Select the directory where you want to save the downloaded file</value>
+    <value>Application download file settings</value>
   </data>
   <data name="General" xml:space="preserve">
     <value>General Options</value>
@@ -203,6 +221,12 @@
   </data>
   <data name="LinkFilterInstruction" xml:space="preserve">
     <value>Link filtering instructions</value>
+  </data>
+  <data name="NotifiactionOffContent" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="NotifiactionOnContent" xml:space="preserve">
+    <value>Opening</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>The app is in the corresponding area of the Store</value>

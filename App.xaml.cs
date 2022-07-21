@@ -43,6 +43,7 @@ namespace GetStoreApp
                 services.AddTransient<IHistoryDataService, HistoryDataService>();
 
                 services.AddSingleton<IBackdropService, BackdropService>();
+                services.AddSingleton<IDownloadOptionsService, DownloadOptionsService>();
                 services.AddSingleton<IHistoryItemValueService, HistoryItemValueService>();
                 services.AddSingleton<ILanguageService, LanguageService>();
                 services.AddSingleton<ILinkFilterService, LinkFilterService>();
@@ -102,6 +103,8 @@ namespace GetStoreApp
                 services.AddTransient<BackdropViewModel>();
                 services.AddTransient<ClearRecordControl>();
                 services.AddTransient<ClearRecordViewModel>();
+                services.AddTransient<DownloadOptionsControl>();
+                services.AddTransient<DownloadOptionsViewModel>();
                 services.AddTransient<HistoryItemValueControl>();
                 services.AddTransient<HistoryItemValueViewModel>();
                 services.AddTransient<LauguageControl>();
