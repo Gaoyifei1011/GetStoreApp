@@ -150,6 +150,9 @@
   <data name="BlockMapOnContent" xml:space="preserve">
     <value>过滤</value>
   </data>
+  <data name="ChangeFolder" xml:space="preserve">
+    <value>更改目录</value>
+  </data>
   <data name="Clear" xml:space="preserve">
     <value>清除</value>
   </data>
@@ -165,11 +168,26 @@
   <data name="ClearSuccessfully" xml:space="preserve">
     <value>清理成功</value>
   </data>
+  <data name="DownloadFolder" xml:space="preserve">
+    <value>文件存放路径</value>
+  </data>
+  <data name="DownloadItem" xml:space="preserve">
+    <value>同时下载任务数</value>
+  </data>
+  <data name="DownloadItemDescription" xml:space="preserve">
+    <value>设置同时下载的文件数目</value>
+  </data>
+  <data name="DownloadNotification" xml:space="preserve">
+    <value>下载提示</value>
+  </data>
+  <data name="DownloadNotificationDescription" xml:space="preserve">
+    <value>设置是否要开启下载通知</value>
+  </data>
   <data name="DownloadOptions" xml:space="preserve">
-    <value>下载目录</value>
+    <value>下载管理</value>
   </data>
   <data name="DownloadOptionsDescription" xml:space="preserve">
-    <value>选择您要保存下载文件的目录</value>
+    <value>应用程序下载文件设置</value>
   </data>
   <data name="General" xml:space="preserve">
     <value>常规选项</value>
@@ -203,6 +221,12 @@
   </data>
   <data name="LinkFilterInstruction" xml:space="preserve">
     <value>链接过滤说明</value>
+  </data>
+  <data name="NotifiactionOffContent" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="NotifiactionOnContent" xml:space="preserve">
+    <value>开启</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>应用在应用商店对应的区域</value>
