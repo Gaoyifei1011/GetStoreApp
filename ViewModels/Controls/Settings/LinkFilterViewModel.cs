@@ -40,7 +40,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
         public IAsyncRelayCommand BlockMapFilterCommand { get; set; }
 
-        public LinkFilterViewModel(ILinkFilterService linkFilterService,INavigationService navigationService)
+        public LinkFilterViewModel(ILinkFilterService linkFilterService, INavigationService navigationService)
         {
             LinkFilterService = linkFilterService;
             NavigationService = navigationService;

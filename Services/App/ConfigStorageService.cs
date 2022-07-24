@@ -31,6 +31,13 @@ namespace GetStoreApp.Services.App
             return await Task.FromResult(Convert.ToString(ApplicationData.Current.LocalSettings.Values[key]));
         }
 
+        public async Task<StorageFolder> GetSettingStorageFolderValueAsync(string key)
+        {
+            if (ApplicationData.Current.LocalSettings.Values[key] == null) return null;
+
+            return await StorageFolder.GetFolderFromPathAsync(Convert.ToString(ApplicationData.Current.LocalSettings.Values[key]));
+        }
+
         public async Task SaveSettingBoolValueAsync(string key, bool value)
         {
             ApplicationData.Current.LocalSettings.Values[key] = await Task.FromResult(value);
@@ -44,6 +51,11 @@ namespace GetStoreApp.Services.App
         public async Task SaveSettingStringValueAsync(string key, string value)
         {
             ApplicationData.Current.LocalSettings.Values[key] = await Task.FromResult(value);
+        }
+
+        public async Task SaveSettingStorageFolderValueAsync(string key, StorageFolder value)
+        {
+            ApplicationData.Current.LocalSettings.Values[key] = await Task.FromResult(value.Path);
         }
     }
 }

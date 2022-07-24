@@ -18,7 +18,7 @@ namespace GetStoreApp.Services.Settings
 
         private const string SettingsKey = "AppBackdrop";
 
-        private static string DefaultAppBackdrop { get; } = "Default";
+        private string DefaultAppBackdrop { get; } = "Default";
 
         public string AppBackdrop { get; set; }
 
