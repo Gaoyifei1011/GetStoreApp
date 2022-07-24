@@ -59,7 +59,7 @@
                                 Text="{x:Bind ResourceService.GetLocalized('/Settings/DownloadFolder')}" />
                             <HyperlinkButton
                                 Command="{x:Bind ViewModel.OpenFolderCommand}"
-                                Content="{x:Bind DownloadFolderPath(ViewModel.DownloadFolder),Mode=OneWay}"
+                                Content="{x:Bind DownloadFolderPath(ViewModel.DownloadFolder), Mode=OneWay}"
                                 Style="{StaticResource HyperlinkButtonStyle}" />
                         </StackPanel>
 
@@ -94,7 +94,14 @@
                             Grid.Column="1"
                             VerticalAlignment="Center"
                             ItemsSource="{x:Bind ViewModel.DownloadItemList}"
-                            SelectedItem="{x:Bind ViewModel.DownloadItem, Mode=OneWay}" />
+                            SelectedItem="{x:Bind ViewModel.DownloadItem, Mode=TwoWay}">
+
+                            <i:Interaction.Behaviors>
+                                <ic:EventTriggerBehavior EventName="SelectionChanged">
+                                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.DownloadItemCommand}" />
+                                </ic:EventTriggerBehavior>
+                            </i:Interaction.Behaviors>
+                        </ComboBox>
                     </Grid>
                 </StackPanel>
 
@@ -122,9 +129,9 @@
                             x:Name="NotificationToggleSwitch"
                             Grid.Column="1"
                             FlowDirection="RightToLeft"
-                            IsOn="{x:Bind ViewModel.IsNotificationOpened, Mode=OneWay}"
+                            IsOn="{x:Bind ViewModel.DownloadNotification, Mode=OneWay}"
                             OffContent="{x:Bind ResourceService.GetLocalized('/Settings/NotifiactionOffContent')}"
-                            OnContent="{x:Bind ResourceService.GetLocalized('/Settings/NotifiactionOnContent')}" >
+                            OnContent="{x:Bind ResourceService.GetLocalized('/Settings/NotifiactionOnContent')}">
 
                             <i:Interaction.Behaviors>
                                 <ic:EventTriggerBehavior EventName="Toggled">

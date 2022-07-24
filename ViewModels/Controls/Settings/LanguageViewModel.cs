@@ -30,7 +30,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
         public IAsyncRelayCommand LanguageSelectCommand { get; set; }
 
-        public LanguageViewModel(ILanguageService languageService,INavigationService navigationService)
+        public LanguageViewModel(ILanguageService languageService, INavigationService navigationService)
         {
             LanguageService = languageService;
             NavigationService = navigationService;

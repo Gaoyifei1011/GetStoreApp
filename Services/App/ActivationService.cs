@@ -25,6 +25,7 @@ namespace GetStoreApp.Services.App
         private readonly IDataBaseService DataBaseService;
         private readonly IResourceService ResourceService;
         private readonly IBackdropService BackdropService;
+        private readonly IDownloadOptionsService DownloadOptionsService;
         private readonly IHistoryItemValueService HistoryItemValueService;
         private readonly ILanguageService LanguageService;
         private readonly ILinkFilterService LinkFilterService;
@@ -33,13 +34,14 @@ namespace GetStoreApp.Services.App
         private readonly IUseInstructionService UseInstructionService;
         private UIElement _shell = null;
 
-        public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers, IDataBaseService dataBaseService, IResourceService resourceService, IBackdropService backdropService, IHistoryItemValueService historyItemValueService, ILanguageService languageService, ILinkFilterService linkFilterService, IRegionService regionService, IThemeService themeService, IUseInstructionService useInstructionService)
+        public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers, IDataBaseService dataBaseService, IResourceService resourceService, IBackdropService backdropService, IDownloadOptionsService downloadOptionsService, IHistoryItemValueService historyItemValueService, ILanguageService languageService, ILinkFilterService linkFilterService, IRegionService regionService, IThemeService themeService, IUseInstructionService useInstructionService)
         {
             DefaultHandler = defaultHandler;
             ActivationHandlers = activationHandlers;
             DataBaseService = dataBaseService;
             ResourceService = resourceService;
             BackdropService = backdropService;
+            DownloadOptionsService = downloadOptionsService;
             HistoryItemValueService = historyItemValueService;
             LanguageService = languageService;
             LinkFilterService = linkFilterService;
@@ -85,6 +87,7 @@ namespace GetStoreApp.Services.App
 
             // 初始化应用配置信息
             await BackdropService.InitializeBackdropAsync();
+            await DownloadOptionsService.InitializeAsync();
             await HistoryItemValueService.InitializeHistoryItemValueAsync();
             await LinkFilterService.InitializeLinkFilterValueAsnyc();
             await RegionService.InitializeRegionAsync();

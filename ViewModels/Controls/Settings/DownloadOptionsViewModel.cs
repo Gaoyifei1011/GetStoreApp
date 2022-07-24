@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using GetStoreApp.Contracts.Services.Settings;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -11,7 +11,9 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class DownloadOptionsViewModel : ObservableRecipient
     {
-        private StorageFolder _downloadFolder = ApplicationData.Current.LocalCacheFolder;
+        private readonly IDownloadOptionsService DownloadOptionsService;
+
+        private StorageFolder _downloadFolder;
 
         public StorageFolder DownloadFolder
         {
@@ -20,7 +22,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             set { SetProperty(ref _downloadFolder, value); }
         }
 
-        private int _downloadItem = 1;
+        private int _downloadItem;
 
         public int DownloadItem
         {
@@ -29,31 +31,54 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             set { SetProperty(ref _downloadItem, value); }
         }
 
-        private bool _isnotificationOpened = true;
+        private bool _downloadNotification;
 
-        public bool IsNotificationOpened
+        public bool DownloadNotification
         {
-            get { return _isnotificationOpened; }
+            get { return _downloadNotification; }
 
-            set { SetProperty(ref _isnotificationOpened, value); }
+            set { SetProperty(ref _downloadNotification, value); }
         }
 
-        public List<int> DownloadItemList { get; set; } = new List<int>() { 1, 2, 3 };
+        public List<int> DownloadItemList { get; set; }
 
         public IAsyncRelayCommand OpenFolderCommand { get; set; }
 
         public IAsyncRelayCommand ChangeFolderCommand { get; set; }
 
+        public IAsyncRelayCommand DownloadItemCommand { get; set; }
+
         public IAsyncRelayCommand NotificationStateCommand { get; set; }
 
-        public DownloadOptionsViewModel()
+        public DownloadOptionsViewModel(IDownloadOptionsService downloadOptionsService)
         {
+            DownloadOptionsService = downloadOptionsService;
+
+            DownloadItemList = DownloadOptionsService.DownloadItemList;
+
+            DownloadFolder = DownloadOptionsService.DownloadFolder;
+
+            DownloadItem = DownloadOptionsService.DownloadItem;
+
+            DownloadNotification = DownloadOptionsService.DownloadNotification;
+
             OpenFolderCommand = new AsyncRelayCommand(async () =>
             {
                 await Windows.System.Launcher.LaunchFolderAsync(DownloadFolder);
             });
 
             ChangeFolderCommand = new AsyncRelayCommand(ChangeFolderAsync);
+
+            DownloadItemCommand = new AsyncRelayCommand(async () =>
+            {
+                await DownloadOptionsService.SetItemValueAsync(DownloadItem);
+            });
+
+            NotificationStateCommand = new AsyncRelayCommand<bool>(async (param) =>
+            {
+                DownloadNotification = param;
+                await DownloadOptionsService.SetNotificationAsync(param);
+            });
         }
 
         /// <summary>
@@ -73,6 +98,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             if (Folder != null)
             {
                 DownloadFolder = Folder;
+                await DownloadOptionsService.SetFolderAsync(DownloadFolder);
             }
         }
     }
