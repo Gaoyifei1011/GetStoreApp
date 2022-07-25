@@ -110,7 +110,7 @@ namespace GetStoreApp.Services.History
 
                         try
                         {
-                            InsertCommand.CommandText = string.Format("INSERT INTO {0} VALUES ({1},'{2}','{3}','{4}','{5}')", _dataBaseService.HistoryTableName, history.CurrentTimeStamp, history.HistoryKey, history.HistoryType, history.HistoryChannel, history.HistoryLink);
+                            InsertCommand.CommandText = string.Format("INSERT INTO {0} VALUES ({1},'{2}','{3}','{4}','{5}')", _dataBaseService.HistoryTableName, history.CreateTimeStamp, history.HistoryKey, history.HistoryType, history.HistoryChannel, history.HistoryLink);
 
                             await InsertCommand.ExecuteNonQueryAsync();
 
@@ -144,7 +144,7 @@ namespace GetStoreApp.Services.History
 
                         try
                         {
-                            UpdateCommand.CommandText = string.Format("UPDATE {0} SET TIMESTAMP = {1} WHERE HISTORYKEY = '{2}'", _dataBaseService.HistoryTableName, history.CurrentTimeStamp, history.HistoryKey);
+                            UpdateCommand.CommandText = string.Format("UPDATE {0} SET TIMESTAMP = {1} WHERE HISTORYKEY = '{2}'", _dataBaseService.HistoryTableName, history.CreateTimeStamp, history.HistoryKey);
 
                             await UpdateCommand.ExecuteNonQueryAsync();
 
@@ -194,7 +194,7 @@ namespace GetStoreApp.Services.History
                 {
                     HistoryModel historyRawModel = new HistoryModel
                     {
-                        CurrentTimeStamp = Query.GetInt64(0),
+                        CreateTimeStamp = Query.GetInt64(0),
                         HistoryKey = Query.GetString(1),
                         HistoryType = Query.GetString(2),
                         HistoryChannel = Query.GetString(3),
@@ -259,7 +259,7 @@ namespace GetStoreApp.Services.History
                 {
                     HistoryModel historyRawModel = new HistoryModel
                     {
-                        CurrentTimeStamp = Query.GetInt64(0),
+                        CreateTimeStamp = Query.GetInt64(0),
                         HistoryKey = Query.GetString(1),
                         HistoryType = Query.GetString(2),
                         HistoryChannel = Query.GetString(3),

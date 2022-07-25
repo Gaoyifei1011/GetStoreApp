@@ -135,5 +135,10 @@
                 TextAlignment="Center" />
         </Grid>
 
+        <ListView
+            Grid.Row="2"
+            SelectionMode="None"
+            Visibility="{x:Bind ViewModel.IsDownloadEmpty, Converter={StaticResource BooleanToReverseVisibilityConverter}, Mode=OneWay}" />
+
     </Grid>
 </Page>

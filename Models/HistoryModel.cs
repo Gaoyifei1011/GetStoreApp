@@ -25,15 +25,15 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 历史记录生成时对应的时间戳，本地存储时使用的是格林尼治标准时间（GMT+0）
         /// </summary>
-        public long CurrentTimeStamp
+        public long CreateTimeStamp
         {
             get { return (long)GetValue(CurrentTimeStampProperty); }
             set { SetValue(CurrentTimeStampProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for CurrentTimeStamp.  This enables animation, styling, binding, etc...
+        // Using a DependencyProperty as the backing store for CreateTimeStamp.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CurrentTimeStampProperty =
-            DependencyProperty.Register("CurrentTimeStamp", typeof(string), typeof(HistoryModel), new PropertyMetadata(0));
+            DependencyProperty.Register("CreateTimeStamp", typeof(string), typeof(HistoryModel), new PropertyMetadata(0));
 
         /// <summary>
         /// 历史记录的索引键值
@@ -94,7 +94,7 @@ namespace GetStoreApp.Models
         /// </summary>
         public int CompareTo(HistoryModel other)
         {
-            return this.CurrentTimeStamp.CompareTo(other.CurrentTimeStamp);
+            return this.CreateTimeStamp.CompareTo(other.CreateTimeStamp);
         }
     }
 }
