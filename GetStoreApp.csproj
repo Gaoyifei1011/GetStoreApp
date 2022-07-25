@@ -68,6 +68,8 @@
     <Page Remove="UI\Dialogs\Home\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Aira2\X64\aria2c.exe" />
+    <None Remove="Aira2\X86\aria2c.exe" />
     <None Remove="Assets\GetStoreApp.png" />
     <None Remove="Assets\Images\CloudflareValidation.png" />
     <None Remove="Assets\Logo\GetStoreApp.png" />
@@ -226,6 +228,15 @@
 
   <ItemGroup>
     <PRIResource Remove="Assets\新文件夹\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Aira2\X64\aria2c.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Aira2\X86\aria2c.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

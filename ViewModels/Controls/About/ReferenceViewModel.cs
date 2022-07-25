@@ -7,6 +7,7 @@ namespace GetStoreApp.ViewModels.Controls.About
     {
         public Dictionary<string, string> ReferenceDict { get; } = new Dictionary<string, string>
         {
+            {"Aira2","https://aria2.github.io/" },
             {"CommunityToolkit.Mvvm","https://github.com/CommunityToolkit/WindowsCommunityToolkit" },
             {"CommunityToolkit.WinUI.UI.Controls.DataGrid" ,"https://docs.microsoft.com/en-us/windows/communitytoolkit/controls/datagrid"},
             {"HtmlAgilityPack","http://html-agility-pack.net/" },

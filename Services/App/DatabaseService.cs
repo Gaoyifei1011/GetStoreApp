@@ -16,7 +16,7 @@ namespace GetStoreApp.Services.App
 
         public string HistoryTableName { get; } = "HISTORY";
 
-        public string DownloadTableName { get; } = "Download";
+        public string DownloadTableName { get; } = "DOWNLOAD";
 
         public string DBpath { get; } = Path.Combine(ApplicationData.Current.LocalFolder.Path, "GetStoreApp.db");
 
@@ -41,10 +41,7 @@ namespace GetStoreApp.Services.App
         private async Task InitializeHistoryTableAsync()
         {
             // 文件不存在，取消操作
-            if (!File.Exists(DBpath))
-            {
-                return;
-            }
+            if (!File.Exists(DBpath)) return;
 
             // 创建历史记录表
             using (SqliteConnection db = new SqliteConnection($"Filename={DBpath}"))
@@ -53,7 +50,7 @@ namespace GetStoreApp.Services.App
 
                 string CreateTableString = "CREATE TABLE IF NOT EXISTS";
 
-                string CurrentTimeStampKey = "TIMESTAMP INTEGER NOT NULL UNIQUE";
+                string CreateTimeStamp = "TIMESTAMP INTEGER NOT NULL UNIQUE";
 
                 string HistoryKey = "HISTORYKEY CHAR(32) NOT NULL UNIQUE";
 
@@ -63,7 +60,7 @@ namespace GetStoreApp.Services.App
 
                 string HistoryLink = "LINK TEXT";
 
-                string HistoryTableCommand = string.Format("{0} {1} ({2},{3},{4},{5},{6})", CreateTableString, HistoryTableName, CurrentTimeStampKey, HistoryKey, HistoryType, HistoryChannel, HistoryLink);
+                string HistoryTableCommand = string.Format("{0} {1} ({2},{3},{4},{5},{6})", CreateTableString, HistoryTableName, CreateTimeStamp, HistoryKey, HistoryType, HistoryChannel, HistoryLink);
 
                 SqliteCommand CreateTable = new SqliteCommand(HistoryTableCommand, db);
 
@@ -78,7 +75,40 @@ namespace GetStoreApp.Services.App
         /// </summary>
         private async Task InitializeDownloadTableAsync()
         {
-            await Task.CompletedTask;
+            // 文件不存在，取消操作
+            if (!File.Exists(DBpath)) return;
+
+            // 创建下载记录表
+            using (SqliteConnection db = new SqliteConnection($"Filename={DBpath}"))
+            {
+                await db.OpenAsync();
+
+                string CreateTableString = "CREATE TABLE IF NOT EXISTS";
+
+                string CreateTimeStamp = "TIMESTAMP INTEGER NOT NULL UNIQUE";
+
+                string DownloadKey = "DOWNLOADKEY CHAR(32) NOT NULL UNIQUE";
+
+                string FileName = "FILENAME VARCHAR(100) NOT NULL UNIQUE";
+
+                string FileLink = "FILELINK VARCHAR(300) NOT NULL";
+
+                string FilePath = "FILEPATH VARCHAR(300) NOT NULL";
+
+                string FileSHA1 = "FILESHA1 VARCHAR(32) NOT NULL UNIQUE";
+
+                string FileSize = "FILESIZE VARCHAR(10) NOT NULL";
+
+                string DownloadFlag = "DOWNLOADFLAG INTEGER NOT NULL";
+
+                string DownloadTableCommand = string.Format("{0} {1} ({2},{3},{4},{5},{6},{7},{8},{9})", CreateTableString, DownloadTableName, CreateTimeStamp, DownloadKey, FileName, FileLink,FilePath ,FileSHA1, FileSize,DownloadFlag);
+
+                SqliteCommand CreateTable = new SqliteCommand(DownloadTableCommand, db);
+
+                CreateTable.ExecuteReader();
+
+                await db.CloseAsync();
+            }
         }
     }
 }

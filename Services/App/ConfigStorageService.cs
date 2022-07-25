@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Contracts.Services.App;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
 
@@ -35,7 +36,11 @@ namespace GetStoreApp.Services.App
         {
             if (ApplicationData.Current.LocalSettings.Values[key] == null) return null;
 
-            return await StorageFolder.GetFolderFromPathAsync(Convert.ToString(ApplicationData.Current.LocalSettings.Values[key]));
+            string FolderPath = Convert.ToString(ApplicationData.Current.LocalSettings.Values[key]);
+
+            if (!Directory.Exists(FolderPath)) return null;
+
+            return await StorageFolder.GetFolderFromPathAsync(FolderPath);
         }
 
         public async Task SaveSettingBoolValueAsync(string key, bool value)

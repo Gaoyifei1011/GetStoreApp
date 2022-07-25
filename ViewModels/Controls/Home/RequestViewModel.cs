@@ -226,7 +226,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             await HistoryDataService.AddHistoryDataAsync(new HistoryModel
             {
-                CurrentTimeStamp = TimeStamp,
+                CreateTimeStamp = TimeStamp,
                 HistoryKey = UniqueKey,
                 HistoryType = TypeList[currentType].InternalName,
                 HistoryChannel = ChannelList[currentChannel].InternalName,

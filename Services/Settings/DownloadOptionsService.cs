@@ -58,7 +58,11 @@ namespace GetStoreApp.Services.Settings
         {
             StorageFolder folder = await ConfigStorageService.GetSettingStorageFolderValueAsync(FolderSettingsKey);
 
-            if (folder == null) return DefaultFolder;
+            if (folder == null)
+            {
+                await SetFolderAsync(DefaultFolder);
+                return DefaultFolder;
+            }
 
             return folder;
         }
