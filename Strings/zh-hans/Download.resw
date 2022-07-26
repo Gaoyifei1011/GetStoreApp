@@ -124,13 +124,13 @@
     <value>删除</value>
   </data>
   <data name="DeleteRecord" xml:space="preserve">
-    <value>删除记录</value>
+    <value>仅删除记录</value>
   </data>
   <data name="DeleteRecordWithFile" xml:space="preserve">
     <value>删除记录（包括文件）</value>
   </data>
   <data name="DownloadCountInfo" xml:space="preserve">
-    <value>共有{0}条历史记录</value>
+    <value>共有{0}条下载记录</value>
   </data>
   <data name="DownloadEmpty" xml:space="preserve">
     <value>没有任何下载记录</value>

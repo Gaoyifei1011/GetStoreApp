@@ -124,7 +124,7 @@
     <value>Delete</value>
   </data>
   <data name="DeleteRecord" xml:space="preserve">
-    <value>Delete records</value>
+    <value>Only delete records</value>
   </data>
   <data name="DeleteRecordWithFile" xml:space="preserve">
     <value>Delete records (including files)</value>

@@ -111,7 +111,7 @@ namespace GetStoreApp.Models
             DependencyProperty.Register("FileSize", typeof(string), typeof(DownloadModel), new PropertyMetadata(""));
 
         /// <summary>
-        /// 文件下载标志：0为下载失败，1为正在下载中，2为下载暂停，3为下载失败
+        /// 文件下载标志：0为下载失败，1为正在下载中，2为下载暂停，3为下载成功
         /// </summary>
         private int _downloadFlag;
 
@@ -124,6 +124,23 @@ namespace GetStoreApp.Models
                 _downloadFlag = value;
 
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadFlag)));
+            }
+        }
+
+        /// <summary>
+        /// 已完成下载的文件大小
+        /// </summary>
+        private int _downloadFinishedSize;
+
+        public int DownloadedFinishedSize
+        {
+            get { return _downloadFinishedSize; }
+
+            set
+            {
+                _downloadFinishedSize = value;
+
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadedFinishedSize)));
             }
         }
 
@@ -147,9 +164,9 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 文件下载速度
         /// </summary>
-        private bool _downloadSpeed;
+        private int _downloadSpeed;
 
-        public bool DownloadSpeed
+        public int DownloadSpeed
         {
             get { return _downloadSpeed; }
 

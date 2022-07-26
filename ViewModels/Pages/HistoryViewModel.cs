@@ -132,7 +132,7 @@ namespace GetStoreApp.ViewModels.Pages
             TypeList = ResourceService.TypeList;
             ChannelList = ResourceService.ChannelList;
 
-            // List列表初始化，可以从数据库获得的列表中加载
+            // 历史记录数据列表初始化，从数据库中存储的列表中加载
             LoadedCommand = new AsyncRelayCommand(GetHistoryDataListAsync);
 
             FillinCommand = new AsyncRelayCommand(FillinAsync);
@@ -196,7 +196,7 @@ namespace GetStoreApp.ViewModels.Pages
         {
             List<HistoryModel> SelectedHistoryDataList = HistoryDataList.Where(item => item.IsSelected == true).ToList();
 
-            // 内容为空时显示空提示对话框
+            // 没有选中任何内容时显示空提示对话框
             if (SelectedHistoryDataList.Count == 0)
             {
                 await ShowSelectEmptyPromptDialogAsync();
@@ -342,6 +342,10 @@ namespace GetStoreApp.ViewModels.Pages
             await dialog.ShowAsync();
         }
 
+        /// <summary>
+        /// 删除选中的条目时，显示删除提示对话框
+        /// </summary>
+        /// <returns></returns>
         private async Task<ContentDialogResult> ShowDeletePromptDialogAsync()
         {
             DeletePromptDialog dialog = new DeletePromptDialog();
