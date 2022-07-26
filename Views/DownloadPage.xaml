@@ -2,10 +2,21 @@
     x:Class="GetStoreApp.Views.DownloadPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="using:GetStoreApp.Converters.Checks"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:GetStoreApp.Models"
+    x:Name="DownloadModule"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <converter:CancelDownloadCheckConverter x:Name="CancelDownloadCheckConverter" />
+        <converter:ContinueDownloadCheckConverter x:Name="ContinueDownloadCheckConverter" />
+        <converter:DeleteDownloadCheckConverter x:Name="DeleteDownloadCheckConverter" />
+        <converter:OpenFolderCheckConverter x:Name="OpenFolderCheckConverter" />
+        <converter:PauseDownloadCheckConverter x:Name="PauseDownloadCheckConverter" />
+    </Page.Resources>
 
     <Grid Margin="30,15,30,0">
         <Grid.RowDefinitions>
@@ -137,8 +148,118 @@
 
         <ListView
             Grid.Row="2"
+            ItemsSource="{x:Bind ViewModel.DownloadDataList, Mode=OneWay}"
             SelectionMode="None"
-            Visibility="{x:Bind ViewModel.IsDownloadEmpty, Converter={StaticResource BooleanToReverseVisibilityConverter}, Mode=OneWay}" />
+            Visibility="{x:Bind ViewModel.IsDownloadEmpty, Converter={StaticResource BooleanToReverseVisibilityConverter}, Mode=OneWay}">
 
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Padding" Value="0,0,0,5" />
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="models:DownloadModel">
+                    <Grid Style="{StaticResource CardGridStyle}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <CheckBox
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
+                            IsThreeState="False"
+                            Style="{StaticResource CheckBoxStyle}"
+                            Visibility="{Binding ElementName=DownloadModule, Path=ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+                        <Grid
+                            Grid.Column="1"
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Column="0" Padding="0,0,0,5">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Margin="0,0,10,0"
+                                    Text="{x:Bind FileName}"
+                                    ToolTipService.ToolTip="{x:Bind FileName}" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Margin="0,0,10,0"
+                                    Text="{x:Bind DownloadedFinishedSize, Mode=OneWay}"
+                                    ToolTipService.ToolTip="{x:Bind DownloadedFinishedSize, Mode=OneWay}" />
+                                <TextBlock
+                                    Grid.Column="2"
+                                    Text="{x:Bind DownloadSpeed, Mode=OneWay}"
+                                    ToolTipService.ToolTip="{x:Bind DownloadSpeed, Mode=OneWay}" />
+                            </Grid>
+
+                            <ProgressBar
+                                Grid.Row="1"
+                                ToolTipService.ToolTip="{x:Bind DownloadProgress, Mode=OneWay}"
+                                Value="{x:Bind DownloadProgress, Mode=OneWay}" />
+                        </Grid>
+
+                        <StackPanel
+                            Grid.Column="2"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+
+                            <Button
+                                Margin="5,0,0,0"
+                                Content="&#xE8b7;"
+                                Style="{StaticResource ButtonDownloadStyle}"
+                                ToolTipService.ToolTip="打开文件夹"
+                                Visibility="{x:Bind DownloadFlag, Converter={StaticResource OpenFolderCheckConverter}, Mode=OneWay}" />
+
+                            <Button
+                                Margin="5,0,0,0"
+                                Content="&#xE768;"
+                                Style="{StaticResource ButtonDownloadStyle}"
+                                ToolTipService.ToolTip="继续下载"
+                                Visibility="{x:Bind DownloadFlag, Converter={StaticResource ContinueDownloadCheckConverter}, Mode=OneWay}" />
+
+                            <Button
+                                Margin="5,0,0,0"
+                                Content="&#xE769;"
+                                Style="{StaticResource ButtonDownloadStyle}"
+                                ToolTipService.ToolTip="暂停下载"
+                                Visibility="{x:Bind DownloadFlag, Converter={StaticResource PauseDownloadCheckConverter}, Mode=OneWay}" />
+
+                            <Button
+                                Margin="5,0,0,0"
+                                Content="&#xE711;"
+                                Style="{StaticResource ButtonDownloadStyle}"
+                                ToolTipService.ToolTip="取消下载"
+                                Visibility="{x:Bind DownloadFlag, Converter={StaticResource CancelDownloadCheckConverter}, Mode=OneWay}" />
+
+                            <Button
+                                Margin="5,0,0,0"
+                                Content="&#xE74d;"
+                                Style="{StaticResource ButtonDownloadStyle}"
+                                ToolTipService.ToolTip="删除下载任务"
+                                Visibility="{x:Bind DownloadFlag, Converter={StaticResource DeleteDownloadCheckConverter}, Mode=OneWay}" />
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>

@@ -281,7 +281,7 @@
                 <ctWinUI:DataGrid.Columns>
 
                     <ctWinUI:DataGridTemplateColumn
-                        Width="80"
+                        Width="Auto"
                         Header="{x:Bind ResourceService.GetLocalized('/History/Select')}"
                         HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
                         IsReadOnly="False"
@@ -294,14 +294,15 @@
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     IsChecked="{Binding IsSelected, Mode=TwoWay}"
-                                    IsThreeState="False" />
+                                    IsThreeState="False"
+                                    Style="{StaticResource CheckBoxStyle}" />
                             </DataTemplate>
                         </ctWinUI:DataGridTemplateColumn.CellTemplate>
                     </ctWinUI:DataGridTemplateColumn>
 
                     <ctWinUI:DataGridTextColumn
                         Width="1.5*"
-                        Binding="{Binding CurrentTimeStamp, Converter={StaticResource TimeStampFormatConverter}}"
+                        Binding="{Binding CreateTimeStamp, Converter={StaticResource TimeStampFormatConverter}}"
                         Header="{x:Bind ResourceService.GetLocalized('/History/DateTime')}"
                         HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
                         IsReadOnly="True"

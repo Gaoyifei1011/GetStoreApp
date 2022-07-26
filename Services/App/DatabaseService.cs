@@ -89,11 +89,11 @@ namespace GetStoreApp.Services.App
 
                 string DownloadKey = "DOWNLOADKEY CHAR(32) NOT NULL UNIQUE";
 
-                string FileName = "FILENAME VARCHAR(100) NOT NULL UNIQUE";
+                string FileName = "FILENAME VARCHAR(100) NOT NULL";
 
                 string FileLink = "FILELINK VARCHAR(300) NOT NULL";
 
-                string FilePath = "FILEPATH VARCHAR(300) NOT NULL";
+                string FilePath = "FILEPATH VARCHAR(300) NOT NULL UNIQUE";
 
                 string FileSHA1 = "FILESHA1 VARCHAR(32) NOT NULL UNIQUE";
 
@@ -101,7 +101,7 @@ namespace GetStoreApp.Services.App
 
                 string DownloadFlag = "DOWNLOADFLAG INTEGER NOT NULL";
 
-                string DownloadTableCommand = string.Format("{0} {1} ({2},{3},{4},{5},{6},{7},{8},{9})", CreateTableString, DownloadTableName, CreateTimeStamp, DownloadKey, FileName, FileLink,FilePath ,FileSHA1, FileSize,DownloadFlag);
+                string DownloadTableCommand = string.Format("{0} {1} ({2},{3},{4},{5},{6},{7},{8},{9})", CreateTableString, DownloadTableName, CreateTimeStamp, DownloadKey, FileName, FileLink, FilePath, FileSHA1, FileSize, DownloadFlag);
 
                 SqliteCommand CreateTable = new SqliteCommand(DownloadTableCommand, db);
 
