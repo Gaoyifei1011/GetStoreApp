@@ -433,7 +433,6 @@
                                         Glyph="{StaticResource CheckBoxCheckedGlyph}" />
                                 </AnimatedIcon.FallbackIconSource>
                             </AnimatedIcon>
-
                         </Grid>
                         <ContentPresenter
                             x:Name="ContentPresenter"
@@ -820,15 +819,11 @@
                                         <Setter Target="CheckGlyph.Margin" Value="0" />
                                     </VisualState.Setters>
                                 </VisualState>
-
                             </VisualStateGroup>
-
                         </VisualStateManager.VisualStateGroups>
                     </Grid>
-
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-
 </ResourceDictionary>

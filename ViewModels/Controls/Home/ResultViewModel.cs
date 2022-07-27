@@ -56,7 +56,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public IAsyncRelayCommand CopyCategoryIDCommand { get; set; }
 
-        public IAsyncRelayCommand CopySingleCommand { get; set; }
+        public IAsyncRelayCommand CopyContentCommand { get; set; }
+
+        public IAsyncRelayCommand CopyLinkCommand { get; set; }
+
+        public IAsyncRelayCommand DownloadCommand { get; set; }
 
         public IAsyncRelayCommand SelectCommand { get; set; }
 
@@ -68,6 +72,12 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public IAsyncRelayCommand CopySelectedCommand { get; set; }
 
+        public IAsyncRelayCommand CopySelectedLinkCommand { get; set; }
+
+        public IAsyncRelayCommand DownloadSelectedCommand { get; set; }
+
+        public IAsyncRelayCommand FileOperationCommand { get; set; }
+
         public ResultViewModel()
         {
             CopyCategoryIDCommand = new AsyncRelayCommand(async () =>
@@ -75,7 +85,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 CopyPasteHelper.CopyToClipBoard(CategoryId); await Task.CompletedTask;
             });
 
-            CopySingleCommand = new AsyncRelayCommand(CopySingleAsync);
+            CopyContentCommand = new AsyncRelayCommand(CopyContentAsync);
+
+            CopyLinkCommand = new AsyncRelayCommand(CopyLinkAsync);
 
             SelectCommand = new AsyncRelayCommand(async () =>
             {
@@ -98,6 +110,13 @@ namespace GetStoreApp.ViewModels.Controls.Home
             SelectNoneCommand = new AsyncRelayCommand(SelectNoneAsync);
 
             CopySelectedCommand = new AsyncRelayCommand(CopySelectedAsync);
+
+            CopySelectedLinkCommand = new AsyncRelayCommand(CopySelectedLinkAsync);
+
+            FileOperationCommand = new AsyncRelayCommand<string>(async (param) =>
+            {
+                await FileOperationAsync(param);
+            });
 
             Messenger.Register<ResultViewModel, ResultControlVisableMessage>(this, (resultViewModel, resultControlVisableMessage) =>
             {
@@ -124,9 +143,24 @@ namespace GetStoreApp.ViewModels.Controls.Home
         }
 
         /// <summary>
-        /// 单行单选模式下复制选中的条目
+        /// 单选模式下复制选中行的链接
         /// <summary>
-        private async Task CopySingleAsync()
+        private async Task CopyLinkAsync()
+        {
+            if (SelectedResultItem == null)
+            {
+                await ShowSelectEmptyPromptDialogAsync();
+                return;
+            };
+
+            CopyPasteHelper.CopyToClipBoard(SelectedResultItem.FileLink);
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// 单选模式下复制选中行的信息
+        /// <summary>
+        private async Task CopyContentAsync()
         {
             if (SelectedResultItem == null)
             {
@@ -147,7 +181,32 @@ namespace GetStoreApp.ViewModels.Controls.Home
         }
 
         /// <summary>
-        /// 多选模式下复制选中的条目
+        /// 多选模式下复制选中行的链接
+        /// </summary>
+        private async Task CopySelectedLinkAsync()
+        {
+            List<ResultModel> SelectedResultDataList = ResultDataList.Where(item => item.IsSelected == true).ToList();
+
+            // 内容为空时显示空提示对话框
+            if (SelectedResultDataList.Count == 0)
+            {
+                await ShowSelectEmptyPromptDialogAsync();
+                return;
+            };
+
+            StringBuilder stringBuilder = new StringBuilder();
+
+            foreach (var item in SelectedResultDataList)
+            {
+                stringBuilder.Append(string.Format("[\n{0}\n]\n", item.FileLink));
+            }
+
+            CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// 多选模式下复制选中行的信息
         /// </summary>
         private async Task CopySelectedAsync()
         {
@@ -169,6 +228,14 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
             await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// 根据获取到的链接选择相应的操作
+        /// </summary>
+        private async Task FileOperationAsync(string fileLink)
+        {
+            await Windows.System.Launcher.LaunchUriAsync(new Uri(fileLink));
         }
 
         /// <summary>

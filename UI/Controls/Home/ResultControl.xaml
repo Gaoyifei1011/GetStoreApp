@@ -5,7 +5,6 @@
     xmlns:ctWinUI="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    x:Name="ResultControlTest"
     mc:Ignorable="d">
 
     <Grid
@@ -67,15 +66,20 @@
                     <AppBarButton.Flyout>
                         <MenuFlyout Placement="Bottom">
                             <MenuFlyoutItem Command="{x:Bind ViewModel.CopyCategoryIDCommand}" Text="{x:Bind ResourceService.GetLocalized('/Home/CopyCategoryID')}" />
-                            <MenuFlyoutItem Command="{x:Bind ViewModel.CopySingleCommand}" Text="{x:Bind ResourceService.GetLocalized('/Home/CopySingle')}" />
+                            <MenuFlyoutItem Command="{x:Bind ViewModel.CopyLinkCommand}" Text="{x:Bind ResourceService.GetLocalized('/Home/CopyLink')}" />
+                            <MenuFlyoutItem Command="{x:Bind ViewModel.CopyContentCommand}" Text="{x:Bind ResourceService.GetLocalized('/Home/CopyContent')}" />
                         </MenuFlyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
 
                 <AppBarButton
-                    Icon="Download"
+                    Command="{x:Bind ViewModel.DownloadCommand}"
                     IsEnabled="False"
-                    Label="{x:Bind ResourceService.GetLocalized('/Home/Download')}" />
+                    Label="{x:Bind ResourceService.GetLocalized('/Home/Download')}">
+                    <AppBarButton.Icon>
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE74b;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
                 <AppBarButton Command="{x:Bind ViewModel.SelectCommand}" Label="{x:Bind ResourceService.GetLocalized('/Home/Select')}">
                     <AppBarButton.Icon>
@@ -101,15 +105,23 @@
                     Icon="ClearSelection"
                     Label="{x:Bind ResourceService.GetLocalized('/Home/SelectNone')}" />
 
-                <AppBarButton
-                    Command="{x:Bind ViewModel.CopySelectedCommand}"
-                    Icon="Copy"
-                    Label="{x:Bind ResourceService.GetLocalized('/Home/CopySelected')}" />
+                <AppBarButton Icon="Copy" Label="{x:Bind ResourceService.GetLocalized('/Home/CopySelected')}">
+                    <AppBarButton.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutItem Command="{x:Bind ViewModel.CopySelectedLinkCommand}" Text="{x:Bind ResourceService.GetLocalized('/Home/CopySelectedLink')}" />
+                            <MenuFlyoutItem Command="{x:Bind ViewModel.CopySelectedCommand}" Text="{x:Bind ResourceService.GetLocalized('/Home/CopySelectedContent')}" />
+                        </MenuFlyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
 
                 <AppBarButton
-                    Icon="Download"
+                    Command="{x:Bind ViewModel.DownloadSelectedCommand}"
                     IsEnabled="False"
-                    Label="{x:Bind ResourceService.GetLocalized('/Home/DownloadSelected')}" />
+                    Label="{x:Bind ResourceService.GetLocalized('/Home/DownloadSelected')}">
+                    <AppBarButton.Icon>
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE74b;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.CancelCommand}"
@@ -119,7 +131,6 @@
         </Grid>
 
         <ctWinUI:DataGrid
-            x:Name="ResultDataGrid"
             Grid.Row="1"
             ItemsSource="{x:Bind ViewModel.ResultDataList, Mode=OneWay}"
             RowStyle="{StaticResource DataGridRowStyle}"
@@ -130,7 +141,7 @@
             <ctWinUI:DataGrid.Columns>
 
                 <ctWinUI:DataGridTemplateColumn
-                    Width="100"
+                    Width="Auto"
                     Header="{x:Bind ResourceService.GetLocalized('/Home/Select')}"
                     HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
                     IsReadOnly="False"
@@ -143,7 +154,8 @@
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 IsChecked="{Binding IsSelected, Mode=TwoWay}"
-                                IsThreeState="False" />
+                                IsThreeState="False"
+                                Style="{StaticResource CheckBoxStyle}" />
                         </DataTemplate>
                     </ctWinUI:DataGridTemplateColumn.CellTemplate>
                 </ctWinUI:DataGridTemplateColumn>
@@ -158,8 +170,9 @@
                             <HyperlinkButton
                                 Margin="12,0,0,0"
                                 VerticalAlignment="Center"
+                                Command="{Binding FileOperationCommand}"
+                                CommandParameter="{Binding FileLink}"
                                 Content="{Binding FileName}"
-                                NavigateUri="{Binding FileLink}"
                                 Style="{StaticResource HyperlinkButtonStyle}"
                                 ToolTipService.ToolTip="{Binding FileName}" />
                         </DataTemplate>

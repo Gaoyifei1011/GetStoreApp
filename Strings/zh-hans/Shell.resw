@@ -124,7 +124,7 @@
     <value>获取商店应用 (Dev)</value>
   </data>
   <data name="Download" xml:space="preserve">
-    <value>下载</value>
+    <value>下载管理</value>
   </data>
   <data name="History" xml:space="preserve">
     <value>历史记录</value>

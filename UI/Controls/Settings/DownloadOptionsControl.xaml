@@ -39,7 +39,6 @@
                         Style="{StaticResource CaptionTextBlockStyle}"
                         Text="{x:Bind ResourceService.GetLocalized('/Settings/DownloadOptionsDescription')}" />
                 </StackPanel>
-
             </Grid>
         </Expander.Header>
 
@@ -138,7 +137,6 @@
                                     <ic:InvokeCommandAction Command="{x:Bind ViewModel.NotificationStateCommand}" CommandParameter="{Binding ElementName=NotificationToggleSwitch, Path=IsOn}" />
                                 </ic:EventTriggerBehavior>
                             </i:Interaction.Behaviors>
-
                         </ToggleSwitch>
                     </Grid>
                 </StackPanel>

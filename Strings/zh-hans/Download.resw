@@ -120,6 +120,12 @@
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
+  <data name="Continue" xml:space="preserve">
+    <value>继续下载</value>
+  </data>
+  <data name="ContinueAll" xml:space="preserve">
+    <value>下载全部</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>删除</value>
   </data>
@@ -128,6 +134,9 @@
   </data>
   <data name="DeleteRecordWithFile" xml:space="preserve">
     <value>删除记录（包括文件）</value>
+  </data>
+  <data name="DeleteTask" xml:space="preserve">
+    <value>删除任务</value>
   </data>
   <data name="DownloadCountInfo" xml:space="preserve">
     <value>共有{0}条下载记录</value>
@@ -147,6 +156,12 @@
   <data name="Operation" xml:space="preserve">
     <value>操作</value>
   </data>
+  <data name="Pause" xml:space="preserve">
+    <value>暂停下载</value>
+  </data>
+  <data name="PauseAll" xml:space="preserve">
+    <value>暂停全部</value>
+  </data>
   <data name="Refresh" xml:space="preserve">
     <value>刷新</value>
   </data>
@@ -163,6 +178,6 @@
     <value>排序</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>下载</value>
+    <value>下载管理</value>
   </data>
 </root>

@@ -10,10 +10,24 @@ namespace GetStoreApp.Views
 
         public DownloadViewModel ViewModel { get; set; }
 
+        public string OpenFolder { get; set; }
+
+        public string ContinueDownload { get; set; }
+
+        public string PauseDownload { get; set; }
+
+        public string DeleteTask { get; set; }
+
         public DownloadPage()
         {
             ResourceService = App.GetService<IResourceService>();
             ViewModel = App.GetService<DownloadViewModel>();
+
+            OpenFolder = ResourceService.GetLocalized("/Download/OpenFolder");
+            ContinueDownload = ResourceService.GetLocalized("/Download/Continue");
+            PauseDownload = ResourceService.GetLocalized("/Download/Pause");
+            DeleteTask = ResourceService.GetLocalized("/Download/DeleteTask");
+
             InitializeComponent();
         }
 
@@ -22,5 +36,7 @@ namespace GetStoreApp.Views
             if (count == 0) return ResourceService.GetLocalized("/Download/DownloadEmpty");
             else return string.Format(ResourceService.GetLocalized("/Download/DownloadCountInfo"), count);
         }
+
+
     }
 }

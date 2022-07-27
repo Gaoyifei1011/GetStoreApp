@@ -124,7 +124,7 @@
     <value>GetStoreApp (Dev)</value>
   </data>
   <data name="Download" xml:space="preserve">
-    <value>Download</value>
+    <value>Download Management</value>
   </data>
   <data name="History" xml:space="preserve">
     <value>History Record</value>
@@ -133,6 +133,6 @@
     <value>Home</value>
   </data>
   <data name="Web" xml:space="preserve">
-    <value>Open Webpage</value>
+    <value>Access Webpage</value>
   </data>
 </root>
