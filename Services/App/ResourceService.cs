@@ -171,6 +171,7 @@ namespace GetStoreApp.Services.App
 
         /// <summary>
         /// UI字符串本地化
+        /// </summary>
         public string GetLocalized(string resource)
         {
             try

@@ -6,14 +6,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:GetStoreApp.Models"
-    x:Name="DownloadModule"
+    x:Name="DownloadRoot"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
     <Page.Resources>
-        <converter:CancelDownloadCheckConverter x:Name="CancelDownloadCheckConverter" />
         <converter:ContinueDownloadCheckConverter x:Name="ContinueDownloadCheckConverter" />
-        <converter:DeleteDownloadCheckConverter x:Name="DeleteDownloadCheckConverter" />
         <converter:OpenFolderCheckConverter x:Name="OpenFolderCheckConverter" />
         <converter:PauseDownloadCheckConverter x:Name="PauseDownloadCheckConverter" />
     </Page.Resources>
@@ -23,6 +21,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Margin="0,0,0,10">
@@ -81,9 +80,24 @@
                 DefaultLabelPosition="Right"
                 Visibility="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToReverseVisibilityConverter}, Mode=OneWay}">
 
-                <AppBarButton Command="{x:Bind ViewModel.OpenFolderCommand}" Label="{x:Bind ResourceService.GetLocalized('/Download/OpenFolder')}">
+                <AppBarButton
+                    Command="{x:Bind ViewModel.OpenFolderCommand}"
+                    CommandParameter="{x:Null}"
+                    Label="{x:Bind ResourceService.GetLocalized('/Download/OpenFolder')}">
                     <AppBarButton.Icon>
                         <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8b7;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+
+                <AppBarButton Command="{x:Bind ViewModel.ContinueAllCommand}" Label="{x:Bind ResourceService.GetLocalized('/Download/ContinueAll')}">
+                    <AppBarButton.Icon>
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE74b;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+
+                <AppBarButton Command="{x:Bind ViewModel.PauseAllCommand}" Label="{x:Bind ResourceService.GetLocalized('/Download/PauseAll')}">
+                    <AppBarButton.Icon>
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE769;" />
                     </AppBarButton.Icon>
                 </AppBarButton>
 
@@ -147,8 +161,10 @@
         </Grid>
 
         <ListView
-            Grid.Row="2"
+            Grid.Row="3"
             ItemsSource="{x:Bind ViewModel.DownloadDataList, Mode=OneWay}"
+            ScrollViewer.VerticalScrollBarVisibility="Auto"
+            ScrollViewer.VerticalScrollMode="Enabled"
             SelectionMode="None"
             Visibility="{x:Bind ViewModel.IsDownloadEmpty, Converter={StaticResource BooleanToReverseVisibilityConverter}, Mode=OneWay}">
 
@@ -175,7 +191,7 @@
                             IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
                             IsThreeState="False"
                             Style="{StaticResource CheckBoxStyle}"
-                            Visibility="{Binding ElementName=DownloadModule, Path=ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            Visibility="{Binding ElementName=DownloadRoot, Path=ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                         <Grid
                             Grid.Column="1"
@@ -197,7 +213,7 @@
                                 <TextBlock
                                     Grid.Column="0"
                                     Margin="0,0,10,0"
-                                    Text="{x:Bind FileName}"
+                                    Text="{Binding FileName}"
                                     ToolTipService.ToolTip="{x:Bind FileName}" />
                                 <TextBlock
                                     Grid.Column="1"
@@ -224,38 +240,35 @@
 
                             <Button
                                 Margin="5,0,0,0"
+                                Command="{Binding ElementName=DownloadRoot, Path=ViewModel.OpenFolderCommand}"
+                                CommandParameter="{Binding FilePath}"
                                 Content="&#xE8b7;"
                                 Style="{StaticResource ButtonDownloadStyle}"
-                                ToolTipService.ToolTip="打开文件夹"
+                                ToolTipService.ToolTip="{Binding ElementName=DownloadRoot, Path=OpenFolder}"
                                 Visibility="{x:Bind DownloadFlag, Converter={StaticResource OpenFolderCheckConverter}, Mode=OneWay}" />
 
                             <Button
                                 Margin="5,0,0,0"
-                                Content="&#xE768;"
+                                Command="{Binding ElementName=DownloadRoot, Path=ViewModel.ContinueDownloadCommand}"
+                                Content="&#xE74b;"
                                 Style="{StaticResource ButtonDownloadStyle}"
-                                ToolTipService.ToolTip="继续下载"
+                                ToolTipService.ToolTip="{Binding ElementName=DownloadRoot, Path=ContinueDownload}"
                                 Visibility="{x:Bind DownloadFlag, Converter={StaticResource ContinueDownloadCheckConverter}, Mode=OneWay}" />
 
                             <Button
                                 Margin="5,0,0,0"
+                                Command="{Binding ElementName=DownloadRoot, Path=ViewModel.PauseDownloadCommand}"
                                 Content="&#xE769;"
                                 Style="{StaticResource ButtonDownloadStyle}"
-                                ToolTipService.ToolTip="暂停下载"
+                                ToolTipService.ToolTip="{Binding ElementName=DownloadRoot, Path=PauseDownload}"
                                 Visibility="{x:Bind DownloadFlag, Converter={StaticResource PauseDownloadCheckConverter}, Mode=OneWay}" />
 
                             <Button
                                 Margin="5,0,0,0"
+                                Command="{Binding ElementName=DownloadRoot, Path=ViewModel.DeleteTaskCommand}"
                                 Content="&#xE711;"
                                 Style="{StaticResource ButtonDownloadStyle}"
-                                ToolTipService.ToolTip="取消下载"
-                                Visibility="{x:Bind DownloadFlag, Converter={StaticResource CancelDownloadCheckConverter}, Mode=OneWay}" />
-
-                            <Button
-                                Margin="5,0,0,0"
-                                Content="&#xE74d;"
-                                Style="{StaticResource ButtonDownloadStyle}"
-                                ToolTipService.ToolTip="删除下载任务"
-                                Visibility="{x:Bind DownloadFlag, Converter={StaticResource DeleteDownloadCheckConverter}, Mode=OneWay}" />
+                                ToolTipService.ToolTip="{Binding ElementName=DownloadRoot, Path=DeleteTask}" />
                         </StackPanel>
                     </Grid>
                 </DataTemplate>

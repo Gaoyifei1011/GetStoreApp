@@ -135,14 +135,20 @@
   <data name="CopyCategoryID" xml:space="preserve">
     <value>Copy CategoryID</value>
   </data>
+  <data name="CopyContent" xml:space="preserve">
+    <value>Copy content</value>
+  </data>
   <data name="CopyLink" xml:space="preserve">
-    <value>Copy Link</value>
+    <value>Copy link</value>
   </data>
   <data name="CopySelected" xml:space="preserve">
     <value>Copy the selected item</value>
   </data>
-  <data name="CopySingle" xml:space="preserve">
-    <value>Copy single-line information</value>
+  <data name="CopySelectedContent" xml:space="preserve">
+    <value>Copy the selected row content</value>
+  </data>
+  <data name="CopySelectedLink" xml:space="preserve">
+    <value>Copy the selected row download link</value>
   </data>
   <data name="DoubleTapToInput" xml:space="preserve">
     <value>Double-click the row to fill in the information</value>

@@ -135,14 +135,20 @@
   <data name="CopyCategoryID" xml:space="preserve">
     <value>复制CategoryID</value>
   </data>
+  <data name="CopyContent" xml:space="preserve">
+    <value>复制内容</value>
+  </data>
   <data name="CopyLink" xml:space="preserve">
-    <value>复制链接</value>
+    <value>复制下载链接</value>
   </data>
   <data name="CopySelected" xml:space="preserve">
     <value>复制选中的项目</value>
   </data>
-  <data name="CopySingle" xml:space="preserve">
-    <value>复制单行信息</value>
+  <data name="CopySelectedContent" xml:space="preserve">
+    <value>复制选中行内容</value>
+  </data>
+  <data name="CopySelectedLink" xml:space="preserve">
+    <value>复制选中行下载链接</value>
   </data>
   <data name="DoubleTapToInput" xml:space="preserve">
     <value>双击该行填入信息</value>

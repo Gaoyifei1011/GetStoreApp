@@ -120,6 +120,12 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Continue download</value>
+  </data>
+  <data name="ContinueAll" xml:space="preserve">
+    <value>Download all</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
@@ -128,6 +134,9 @@
   </data>
   <data name="DeleteRecordWithFile" xml:space="preserve">
     <value>Delete records (including files)</value>
+  </data>
+  <data name="DeleteTask" xml:space="preserve">
+    <value>Delete task</value>
   </data>
   <data name="DownloadCountInfo" xml:space="preserve">
     <value>There are {0} download records</value>
@@ -147,6 +156,12 @@
   <data name="Operation" xml:space="preserve">
     <value>Operation</value>
   </data>
+  <data name="Pause" xml:space="preserve">
+    <value>Pause download</value>
+  </data>
+  <data name="PauseAll" xml:space="preserve">
+    <value>Pause all</value>
+  </data>
   <data name="Refresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
@@ -163,6 +178,6 @@
     <value>Sort</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Download</value>
+    <value>Download Management</value>
   </data>
 </root>

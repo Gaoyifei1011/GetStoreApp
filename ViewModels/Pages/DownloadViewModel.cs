@@ -50,6 +50,10 @@ namespace GetStoreApp.ViewModels.Pages
 
         public IAsyncRelayCommand OpenFolderCommand { get; set; }
 
+        public IAsyncRelayCommand ContinueAllCommand { get; set; }
+
+        public IAsyncRelayCommand PauseAllCommand { get; set; }
+
         public IAsyncRelayCommand SelectCommand { get; set; }
 
         public IAsyncRelayCommand RefreshCommand { get; set; }
@@ -64,7 +68,13 @@ namespace GetStoreApp.ViewModels.Pages
 
         public IAsyncRelayCommand CancelCommand { get; set; }
 
-        public DownloadViewModel(IDownloadOptionsService downloadOptionsService,INavigationService navigationService)
+        public IAsyncRelayCommand ContinueDownloadCommand { get; set; }
+
+        public IAsyncRelayCommand PauseDownloadCommand { get; set; }
+
+        public IAsyncRelayCommand DeleteTaskCommand { get; set; }
+
+        public DownloadViewModel(IDownloadOptionsService downloadOptionsService, INavigationService navigationService)
         {
             DownloadOptionsService = downloadOptionsService;
             NavigationService = navigationService;
@@ -82,9 +92,11 @@ namespace GetStoreApp.ViewModels.Pages
                 await Task.CompletedTask;
             });
 
-            OpenFolderCommand = new AsyncRelayCommand(async () =>
+            OpenFolderCommand = new AsyncRelayCommand<string>(async (param) =>
             {
-                await Windows.System.Launcher.LaunchFolderAsync(DownloadFolder);
+                if (param == null) await Windows.System.Launcher.LaunchFolderAsync(DownloadFolder); 
+
+                else await Windows.System.Launcher.LaunchFolderAsync(await StorageFolder.GetFolderFromPathAsync(param)); 
             });
 
             SelectCommand = new AsyncRelayCommand(async () =>
