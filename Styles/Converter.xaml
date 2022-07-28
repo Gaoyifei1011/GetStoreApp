@@ -7,12 +7,17 @@
 
     <check:FilterValueCheckConverter x:Name="FilterValueCheckConverter" />
     <check:TimeSortValueCheckConverter x:Name="TimeSortValueCheckConverter" />
+    <check:ContinueDownloadCheckConverter x:Name="ContinueDownloadCheckConverter" />
+    <check:OpenFolderCheckConverter x:Name="OpenFolderCheckConverter" />
+    <check:PauseDownloadCheckConverter x:Name="PauseDownloadCheckConverter" />
 
     <convert:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
     <convert:BooleanToReverseVisibilityConverter x:Name="BooleanToReverseVisibilityConverter" />
     <convert:IntToVisibilityConverter x:Name="IntToVisibilityConverter" />
     <convert:IntToReverseVisibilityConverter x:Name="IntToReverseVisibilityConverter" />
 
+    <format:DownloadSizeFormatConverter x:Name="DownloadSizeFormatConverter" />
+    <format:DownloadSpeedFormatConverter x:Name="DownloadSpeedFormatConverter" />
     <format:GMTFormatConverter x:Name="GMTFormatConverter" />
     <format:TimeStampFormatConverter x:Name="TimeStampFormatConverter" />
 </ResourceDictionary>

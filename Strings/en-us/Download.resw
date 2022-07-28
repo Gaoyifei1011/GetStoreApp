@@ -150,6 +150,9 @@
   <data name="DownloadOptions" xml:space="preserve">
     <value>Download settings</value>
   </data>
+  <data name="DownloadProgress" xml:space="preserve">
+    <value>Downloaded {0}% completed</value>
+  </data>
   <data name="OpenFolder" xml:space="preserve">
     <value>Open folder</value>
   </data>

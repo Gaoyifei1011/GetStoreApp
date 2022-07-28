@@ -8,6 +8,7 @@ using GetStoreApp.UI.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -115,6 +116,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             FileOperationCommand = new AsyncRelayCommand<string>(async (param) =>
             {
+                Debug.WriteLine("hello");
                 await FileOperationAsync(param);
             });
 

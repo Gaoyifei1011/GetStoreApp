@@ -2,7 +2,7 @@
     x:Class="GetStoreApp.Views.DownloadPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converter="using:GetStoreApp.Converters.Checks"
+    xmlns:converter="using:GetStoreApp.Converters.Formats"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:GetStoreApp.Models"
@@ -11,9 +11,7 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <converter:ContinueDownloadCheckConverter x:Name="ContinueDownloadCheckConverter" />
-        <converter:OpenFolderCheckConverter x:Name="OpenFolderCheckConverter" />
-        <converter:PauseDownloadCheckConverter x:Name="PauseDownloadCheckConverter" />
+        <converter:DownloadProgressFormatConverter x:Name="DownloadProgressFormatConverter" />
     </Page.Resources>
 
     <Grid Margin="30,15,30,0">
@@ -208,27 +206,31 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock
                                     Grid.Column="0"
                                     Margin="0,0,10,0"
                                     Text="{Binding FileName}"
+                                    TextAlignment="Left"
                                     ToolTipService.ToolTip="{x:Bind FileName}" />
                                 <TextBlock
                                     Grid.Column="1"
                                     Margin="0,0,10,0"
-                                    Text="{x:Bind DownloadedFinishedSize, Mode=OneWay}"
-                                    ToolTipService.ToolTip="{x:Bind DownloadedFinishedSize, Mode=OneWay}" />
+                                    Text="{x:Bind DownloadedFinishedSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}"
+                                    TextAlignment="Left"
+                                    ToolTipService.ToolTip="{x:Bind DownloadedFinishedSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}" />
                                 <TextBlock
                                     Grid.Column="2"
-                                    Text="{x:Bind DownloadSpeed, Mode=OneWay}"
-                                    ToolTipService.ToolTip="{x:Bind DownloadSpeed, Mode=OneWay}" />
+                                    Text="{x:Bind DownloadSpeed, Mode=OneWay, Converter={StaticResource DownloadSpeedFormatConverter}}"
+                                    TextAlignment="Left"
+                                    ToolTipService.ToolTip="{x:Bind DownloadSpeed, Mode=OneWay, Converter={StaticResource DownloadSpeedFormatConverter}}" />
                             </Grid>
 
                             <ProgressBar
                                 Grid.Row="1"
-                                ToolTipService.ToolTip="{x:Bind DownloadProgress, Mode=OneWay}"
+                                ToolTipService.ToolTip="{x:Bind DownloadProgress, Mode=OneWay, Converter={StaticResource DownloadProgressFormatConverter}}"
                                 Value="{x:Bind DownloadProgress, Mode=OneWay}" />
                         </Grid>
 
