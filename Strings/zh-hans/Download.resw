@@ -150,6 +150,9 @@
   <data name="DownloadOptions" xml:space="preserve">
     <value>下载设置</value>
   </data>
+  <data name="DownloadProgress" xml:space="preserve">
+    <value>已下载完成{0}%</value>
+  </data>
   <data name="OpenFolder" xml:space="preserve">
     <value>打开文件夹</value>
   </data>

@@ -145,6 +145,18 @@ namespace GetStoreApp.Models
         }
 
         /// <summary>
+        /// 下载文件的总大小
+        /// </summary>
+        private int _downloadTotalSize;
+
+        public int DownloadTotalSize
+        {
+            get { return _downloadTotalSize; }
+
+            set { _downloadTotalSize = value; }
+        }
+
+        /// <summary>
         /// 文件下载进度
         /// </summary>
         private int _downloadProgress;
