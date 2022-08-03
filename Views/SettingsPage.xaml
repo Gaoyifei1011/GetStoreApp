@@ -56,7 +56,7 @@
 
             <sc:LinkFilterControl />
 
-            <sc:DownloadOptionsControl Visibility="Collapsed"/>
+            <sc:DownloadOptionsControl Visibility="Collapsed" />
 
             <TextBlock
                 FontSize="16"

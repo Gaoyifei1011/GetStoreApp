@@ -86,11 +86,10 @@
                     Icon="Copy"
                     Label="{x:Bind ResourceService.GetLocalized('/History/Copy')}" />
 
-                <AppBarButton Command="{x:Bind ViewModel.SelectCommand}" Label="{x:Bind ResourceService.GetLocalized('/History/Select')}">
-                    <AppBarButton.Icon>
-                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE762;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
+                <AppBarButton
+                    Command="{x:Bind ViewModel.SelectCommand}"
+                    Icon="Bullets"
+                    Label="{x:Bind ResourceService.GetLocalized('/History/Select')}" />
 
                 <AppBarButton Icon="Sort" Label="{x:Bind ResourceService.GetLocalized('/History/Sort')}">
                     <AppBarButton.Flyout>
@@ -99,12 +98,9 @@
                             <RadioMenuFlyoutItem
                                 Command="{x:Bind ViewModel.TimeSortCommand}"
                                 CommandParameter="true"
+                                Icon="Up"
                                 IsChecked="{x:Bind ViewModel.TimeSortOrder, Converter={StaticResource TimeSortValueCheckConverter}, ConverterParameter=true, Mode=OneWay}"
-                                Text="{x:Bind ResourceService.GetLocalized('/History/TimeIncreaseSort')}">
-                                <RadioMenuFlyoutItem.Icon>
-                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE74a;" />
-                                </RadioMenuFlyoutItem.Icon>
-                            </RadioMenuFlyoutItem>
+                                Text="{x:Bind ResourceService.GetLocalized('/History/TimeIncreaseSort')}" />
 
                             <RadioMenuFlyoutItem
                                 Command="{x:Bind ViewModel.TimeSortCommand}"
