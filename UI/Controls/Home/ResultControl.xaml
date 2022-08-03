@@ -81,11 +81,10 @@
                     </AppBarButton.Icon>
                 </AppBarButton>
 
-                <AppBarButton Command="{x:Bind ViewModel.SelectCommand}" Label="{x:Bind ResourceService.GetLocalized('/Home/Select')}">
-                    <AppBarButton.Icon>
-                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE762;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
+                <AppBarButton
+                    Command="{x:Bind ViewModel.SelectCommand}"
+                    Icon="Bullets"
+                    Label="{x:Bind ResourceService.GetLocalized('/Home/Select')}" />
             </CommandBar>
 
             <CommandBar
@@ -172,7 +171,7 @@
                             <HyperlinkButton
                                 Margin="12,0,0,0"
                                 VerticalAlignment="Center"
-                                Command="{Binding ElementName=ResultDataGrid, Path=ViewModel.FileOperationCommand}"
+                                Command="{Binding FileOperationCommand}"
                                 CommandParameter="{Binding FileLink}"
                                 Content="{Binding FileName}"
                                 Style="{StaticResource HyperlinkButtonStyle}"

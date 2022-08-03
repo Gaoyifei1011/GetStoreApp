@@ -93,17 +93,15 @@
                     </AppBarButton.Icon>
                 </AppBarButton>
 
-                <AppBarButton Command="{x:Bind ViewModel.PauseAllCommand}" Label="{x:Bind ResourceService.GetLocalized('/Download/PauseAll')}">
-                    <AppBarButton.Icon>
-                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE769;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
+                <AppBarButton
+                    Command="{x:Bind ViewModel.PauseAllCommand}"
+                    Icon="Pause"
+                    Label="{x:Bind ResourceService.GetLocalized('/Download/PauseAll')}" />
 
-                <AppBarButton Command="{x:Bind ViewModel.SelectCommand}" Label="{x:Bind ResourceService.GetLocalized('/Download/Select')}">
-                    <AppBarButton.Icon>
-                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE762;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
+                <AppBarButton
+                    Command="{x:Bind ViewModel.SelectCommand}"
+                    Icon="Bullets"
+                    Label="{x:Bind ResourceService.GetLocalized('/Download/Select')}" />
 
                 <AppBarButton Icon="Sort" Label="{x:Bind ResourceService.GetLocalized('/Download/Sort')}" />
 

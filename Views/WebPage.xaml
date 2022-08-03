@@ -74,12 +74,9 @@
                     DefaultLabelPosition="Right">
                     <AppBarButton
                         Command="{x:Bind ViewModel.OpenInBrowserCommand}"
+                        Icon="Globe"
                         Label="{x:Bind ResourceService.GetLocalized('/Web/OpenWithBrowser')}"
-                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/OpenWithBrowser')}">
-                        <AppBarButton.Icon>
-                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE774;" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
+                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/OpenWithBrowser')}" />
                 </CommandBar>
             </Grid>
         </Grid>

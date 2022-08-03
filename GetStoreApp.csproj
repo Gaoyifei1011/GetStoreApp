@@ -21,10 +21,10 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <SignAssembly>True</SignAssembly>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>0.3.2.0</Version>
+    <Version>0.3.3.0</Version>
     <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
     <ImplicitUsings>disable</ImplicitUsings>
-    <FileVersion>0.3.2.0</FileVersion>
+    <FileVersion>0.3.3.0</FileVersion>
     <AssemblyVersion></AssemblyVersion>
     <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
     <Copyright>高怡飞</Copyright>
