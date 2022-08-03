@@ -39,6 +39,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             ThemeSelectCommand = new AsyncRelayCommand(async () =>
             {
                 await ThemeService.SetThemeAsync(Theme);
+                await ThemeService.SetAppThemeAsync();
             });
         }
     }

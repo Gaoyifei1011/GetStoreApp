@@ -240,12 +240,6 @@
   <data name="StartsWithEInstruction" xml:space="preserve">
     <value>以'.e'开头的文件包括'.eappx'、'.eappxbundle'、 '.emsix'、'.emsixbundle'这些格式的文件</value>
   </data>
-  <data name="ThemeSettingsDisable" xml:space="preserve">
-    <value>应用主题设置暂不可用</value>
-  </data>
-  <data name="ThemeSettingsDisableDescription" xml:space="preserve">
-    <value>Windows App Sdk中的导航视图控件的背景色不会跟随应用的主题色切换。目前您可以通过修改系统应用主题来修改应用的主题。等微软修复了这个问题后再次开放这一功能。</value>
-  </data>
   <data name="Title" xml:space="preserve">
     <value>关于</value>
   </data>

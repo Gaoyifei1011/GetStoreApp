@@ -18,10 +18,6 @@
                 <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/PaidAppsDescription')}" />
                 <MenuFlyoutSeparator Margin="0,0,0,8" />
 
-                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/ThemeSettingsDisable')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/ThemeSettingsDisableDescription')}" />
-                <MenuFlyoutSeparator Margin="0,0,0,8" />
-
                 <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/DesktopApps')}" />
                 <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/DesktopAppsDescription')}" />
 

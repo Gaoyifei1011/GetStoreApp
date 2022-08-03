@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Helpers;
 using GetStoreApp.Models;
 using Microsoft.UI.Xaml;
 using System;
@@ -73,6 +74,7 @@ namespace GetStoreApp.Services.Settings
             if (GetStoreApp.App.MainWindow.Content is FrameworkElement frameworkElement)
             {
                 frameworkElement.RequestedTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme);
+                TitleBarHelper.UpdateTitleBar((ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme));
             }
             await Task.CompletedTask;
         }

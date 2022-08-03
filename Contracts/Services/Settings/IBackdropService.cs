@@ -14,6 +14,6 @@ namespace GetStoreApp.Contracts.Services.Settings
 
         Task SetBackdropAsync(string backdrop);
 
-        Task SetAppBackdropAsync(string appTheme, string appBackdrop);
+        Task SetAppBackdropAsync();
     }
 }

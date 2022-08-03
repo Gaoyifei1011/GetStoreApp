@@ -23,14 +23,36 @@ using GetStoreApp.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
+using System;
+using WinUIEx;
 
 namespace GetStoreApp
 {
     public partial class App : Application
     {
-        private static IHost _host = Host
-            .CreateDefaultBuilder()
-            .ConfigureServices((context, services) =>
+        public IHost Host { get; }
+
+        public static T GetService<T>()
+            where T : class
+        {
+            if ((Current as App)!.Host.Services.GetService(typeof(T)) is not T service)
+            {
+                throw new ArgumentException($"{typeof(T)} 需要在App.xaml.cs中的ConfigureServices中注册。");
+            }
+
+            return service;
+        }
+
+        public static WindowEx MainWindow { get; } = new MainWindow();
+
+        public App()
+        {
+            InitializeComponent();
+
+            Host = Microsoft.Extensions.Hosting.Host.
+            CreateDefaultBuilder().
+            UseContentRoot(AppContext.BaseDirectory).
+            ConfigureServices((context, services) =>
             {
                 // Services
                 services.AddSingleton<IActivationService, ActivationService>();
@@ -119,18 +141,6 @@ namespace GetStoreApp
                 services.AddTransient<UseInstructionViewModel>();
             })
             .Build();
-
-        public static T GetService<T>()
-            where T : class
-        {
-            return _host.Services.GetService(typeof(T)) as T;
-        }
-
-        public static Window MainWindow { get; set; } = new Window();
-
-        public App()
-        {
-            InitializeComponent();
         }
 
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
@@ -138,10 +148,8 @@ namespace GetStoreApp
             base.OnLaunched(args);
 
             IActivationService activationService = GetService<IActivationService>();
-            IResourceService resourceService = GetService<IResourceService>();
 
             await activationService.ActivateAsync(args);
-            MainWindow.Title = resourceService.GetLocalized("AppDisplayName");
         }
     }
 }

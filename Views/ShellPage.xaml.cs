@@ -29,8 +29,6 @@ namespace GetStoreApp.Views
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            TitleBarHelper.UpdateTitleBar(RequestedTheme);
-
             KeyboardAccelerators.Add(BuildKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu));
             KeyboardAccelerators.Add(BuildKeyboardAccelerator(VirtualKey.GoBack));
         }

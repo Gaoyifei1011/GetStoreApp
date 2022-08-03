@@ -2,16 +2,11 @@
 using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Views;
-using Microsoft.UI;
-using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.ApplicationModel;
 
 namespace GetStoreApp.Services.App
 {
@@ -34,20 +29,21 @@ namespace GetStoreApp.Services.App
         private readonly IUseInstructionService UseInstructionService;
         private UIElement _shell = null;
 
-        public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers, IDataBaseService dataBaseService, IResourceService resourceService, IBackdropService backdropService, IDownloadOptionsService downloadOptionsService, IHistoryItemValueService historyItemValueService, ILanguageService languageService, ILinkFilterService linkFilterService, IRegionService regionService, IThemeService themeService, IUseInstructionService useInstructionService)
+        public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers)
         {
             DefaultHandler = defaultHandler;
             ActivationHandlers = activationHandlers;
-            DataBaseService = dataBaseService;
-            ResourceService = resourceService;
-            BackdropService = backdropService;
-            DownloadOptionsService = downloadOptionsService;
-            HistoryItemValueService = historyItemValueService;
-            LanguageService = languageService;
-            LinkFilterService = linkFilterService;
-            RegionService = regionService;
-            ThemeService = themeService;
-            UseInstructionService = useInstructionService;
+
+            DataBaseService = GetStoreApp.App.GetService<IDataBaseService>();
+            ResourceService = GetStoreApp.App.GetService<IResourceService>();
+            BackdropService = GetStoreApp.App.GetService<IBackdropService>();
+            DownloadOptionsService = GetStoreApp.App.GetService<IDownloadOptionsService>();
+            HistoryItemValueService = GetStoreApp.App.GetService<IHistoryItemValueService>();
+            LanguageService = GetStoreApp.App.GetService<ILanguageService>();
+            LinkFilterService = GetStoreApp.App.GetService<ILinkFilterService>();
+            RegionService = GetStoreApp.App.GetService<IRegionService>();
+            ThemeService = GetStoreApp.App.GetService<IThemeService>();
+            UseInstructionService = GetStoreApp.App.GetService<IUseInstructionService>();
         }
 
         public async Task ActivateAsync(object activationArgs)
@@ -102,15 +98,9 @@ namespace GetStoreApp.Services.App
         {
             var activationHandler = ActivationHandlers.FirstOrDefault(h => h.CanHandle(activationArgs));
 
-            if (activationHandler != null)
-            {
-                await activationHandler.HandleAsync(activationArgs);
-            }
+            if (activationHandler != null) await activationHandler.HandleAsync(activationArgs);
 
-            if (DefaultHandler.CanHandle(activationArgs))
-            {
-                await DefaultHandler.HandleAsync(activationArgs);
-            }
+            if (DefaultHandler.CanHandle(activationArgs)) await DefaultHandler.HandleAsync(activationArgs);
         }
 
         /// <summary>
@@ -120,27 +110,14 @@ namespace GetStoreApp.Services.App
         {
             GetStoreApp.App.MainWindow.ExtendsContentIntoTitleBar = true;
 
-            await SetAppTitleBarIconAsync();
-
             // 设置应用主题
             await ThemeService.SetAppThemeAsync();
 
             // 设置应用背景色
-            await BackdropService.SetAppBackdropAsync(ThemeService.AppTheme, BackdropService.AppBackdrop);
-        }
+            await BackdropService.SetAppBackdropAsync();
 
-        /// <summary>
-        /// 修改标题栏的应用名称
-        /// </summary>
-        private async Task SetAppTitleBarIconAsync()
-        {
-            IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(GetStoreApp.App.MainWindow);
-            WindowId myWndId = Win32Interop.GetWindowIdFromWindow(hWnd);
-            var appWindow = AppWindow.GetFromWindowId(myWndId);
-
-            appWindow.SetIcon(Path.Combine(Package.Current.InstalledLocation.Path, "Assets/Logo/GetStoreApp.ico"));
-
-            await Task.CompletedTask;
+            // 设置应用标题名称
+            GetStoreApp.App.MainWindow.Title = ResourceService.GetLocalized("AppDisplayName");
         }
     }
 }
