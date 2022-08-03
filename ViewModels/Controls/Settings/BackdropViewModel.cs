@@ -33,6 +33,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             BackdropSelectCommand = new AsyncRelayCommand(async () =>
             {
                 await BackdropService.SetBackdropAsync(Backdrop);
+                await BackdropService.SetAppBackdropAsync();
             });
         }
     }

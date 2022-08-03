@@ -15,15 +15,15 @@ namespace GetStoreApp.Activation
             NavigationService = navigationService;
         }
 
+        protected override bool CanHandleInternal(LaunchActivatedEventArgs args)
+        {
+            return NavigationService.Frame?.Content == null;
+        }
+
         protected override async Task HandleInternalAsync(LaunchActivatedEventArgs args)
         {
             NavigationService.NavigateTo(typeof(HomeViewModel).FullName, args.Arguments);
             await Task.CompletedTask;
-        }
-
-        protected override bool CanHandleInternal(LaunchActivatedEventArgs args)
-        {
-            return NavigationService.Frame.Content == null;
         }
     }
 }

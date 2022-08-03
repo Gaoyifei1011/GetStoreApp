@@ -24,7 +24,7 @@
                     <!--  导航视图控件中的内容窗口距离应用窗口上边界的距离  -->
                     <Thickness x:Key="NavigationViewContentMargin">0,45,0,0</Thickness>
                     <!--  状态栏通知状态下的背景色  -->
-                    <StaticResource x:Key="InfoBarInformationalSeverityBackgroundBrush" ResourceKey="CardBackgroundFillColorDefaultBrush" />
+                    <ThemeResource x:Key="InfoBarInformationalSeverityBackgroundBrush" ResourceKey="CardBackgroundFillColorDefaultBrush" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

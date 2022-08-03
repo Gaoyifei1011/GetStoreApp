@@ -145,7 +145,7 @@
                             contract7Present:BackgroundSizing="{TemplateBinding BackgroundSizing}"
                             contract7Present:CornerRadius="{TemplateBinding CornerRadius}"
                             AutomationProperties.AutomationId="ExpanderToggleButton"
-                            Background="{StaticResource CardBackgroundFillColorDefaultBrush}"
+                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                             BorderBrush="{ThemeResource ExpanderHeaderBorderBrush}"
                             BorderThickness="{ThemeResource ExpanderHeaderBorderThickness}"
                             Content="{TemplateBinding Header}"
@@ -164,7 +164,7 @@
                                 VerticalAlignment="Stretch"
                                 contract7Present:BackgroundSizing="{TemplateBinding BackgroundSizing}"
                                 contract7Present:CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BottomCornerRadiusFilterConverter}}"
-                                Background="{StaticResource CardBackgroundFillColorDefaultBrush}"
+                                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{StaticResource ExpanderContentDownBorderThickness}"
                                 Visibility="Collapsed">

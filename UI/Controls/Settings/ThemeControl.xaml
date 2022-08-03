@@ -46,7 +46,6 @@
             Grid.Column="3"
             VerticalAlignment="Center"
             DisplayMemberPath="DisplayName"
-            IsEnabled="False"
             ItemsSource="{x:Bind ViewModel.ThemeList}"
             SelectedValue="{x:Bind ViewModel.Theme, Mode=TwoWay}"
             SelectedValuePath="InternalName">

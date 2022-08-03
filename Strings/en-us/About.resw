@@ -243,12 +243,6 @@
   <data name="StartsWithEInstruction" xml:space="preserve">
     <value>Files that begin with '.e' include files in the formats '.eappx', '.eappxbundle', '.emsix', '.emsixbundle'</value>
   </data>
-  <data name="ThemeSettingsDisable" xml:space="preserve">
-    <value>Application theme Settings are temporarily unavailable</value>
-  </data>
-  <data name="ThemeSettingsDisableDescription" xml:space="preserve">
-    <value>The background color of the navigation view control in the Windows App Sdk does not follow the app's accent color toggle. Currently, you can modify the applied theme by modifying the system app theme. Wait until Microsoft fixes the problem to open this feature again.</value>
-  </data>
   <data name="Title" xml:space="preserve">
     <value>About</value>
   </data>

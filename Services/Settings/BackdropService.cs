@@ -1,10 +1,10 @@
 ﻿using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Contracts.Services.Settings;
-using GetStoreApp.Helpers;
 using GetStoreApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WinUIEx;
 
 namespace GetStoreApp.Services.Settings
 {
@@ -68,9 +68,13 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 设置应用显示的背景色
         /// </summary>
-        public async Task SetAppBackdropAsync(string appTheme, string appBackdrop)
+        public async Task SetAppBackdropAsync()
         {
-            BackdropHelper.SetBackdrop(appTheme, appBackdrop);
+            if (AppBackdrop == "Mica") GetStoreApp.App.MainWindow.Backdrop = new MicaSystemBackdrop();
+
+            else if (AppBackdrop == "Acrylic") GetStoreApp.App.MainWindow.Backdrop = new AcrylicSystemBackdrop();
+
+            else GetStoreApp.App.MainWindow.Backdrop = null;
 
             await Task.CompletedTask;
         }
