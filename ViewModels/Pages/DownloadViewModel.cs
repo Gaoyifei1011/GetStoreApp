@@ -17,12 +17,13 @@ namespace GetStoreApp.ViewModels.Pages
 {
     public class DownloadViewModel : ObservableRecipient
     {
-        private readonly IDownloadOptionsService DownloadOptionsService;
-        private readonly INavigationService NavigationService;
-
         private StorageFolder DownloadFolder;
         private int DownloadItem;
         private bool DownloadNotification;
+
+        private IDownloadOptionsService DownloadOptionsService { get; } = App.GetService<IDownloadOptionsService>();
+
+        private INavigationService NavigationService { get; } = App.GetService<INavigationService>();
 
         private bool _isSelectMode = false;
 
@@ -74,11 +75,8 @@ namespace GetStoreApp.ViewModels.Pages
 
         public IAsyncRelayCommand DeleteTaskCommand { get; set; }
 
-        public DownloadViewModel(IDownloadOptionsService downloadOptionsService, INavigationService navigationService)
+        public DownloadViewModel()
         {
-            DownloadOptionsService = downloadOptionsService;
-            NavigationService = navigationService;
-
             DownloadFolder = DownloadOptionsService.DownloadFolder;
             DownloadItem = DownloadOptionsService.DownloadItem;
             DownloadNotification = DownloadOptionsService.DownloadNotification;
@@ -94,9 +92,8 @@ namespace GetStoreApp.ViewModels.Pages
 
             OpenFolderCommand = new AsyncRelayCommand<string>(async (param) =>
             {
-                if (param == null) await Windows.System.Launcher.LaunchFolderAsync(DownloadFolder); 
-
-                else await Windows.System.Launcher.LaunchFolderAsync(await StorageFolder.GetFolderFromPathAsync(param)); 
+                if (param == null) await Windows.System.Launcher.LaunchFolderAsync(DownloadFolder);
+                else await Windows.System.Launcher.LaunchFolderAsync(await StorageFolder.GetFolderFromPathAsync(param));
             });
 
             SelectCommand = new AsyncRelayCommand(async () =>

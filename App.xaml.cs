@@ -19,7 +19,6 @@ using GetStoreApp.ViewModels.Controls.Home;
 using GetStoreApp.ViewModels.Controls.Settings;
 using GetStoreApp.ViewModels.Pages;
 using GetStoreApp.Views;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
@@ -32,6 +31,10 @@ namespace GetStoreApp
     {
         public IHost Host { get; }
 
+        private IActivationService ActivationService { get; }
+
+        public static WindowEx MainWindow { get; } = new MainWindow();
+
         public static T GetService<T>()
             where T : class
         {
@@ -42,8 +45,6 @@ namespace GetStoreApp
 
             return service;
         }
-
-        public static WindowEx MainWindow { get; } = new MainWindow();
 
         public App()
         {
@@ -141,15 +142,15 @@ namespace GetStoreApp
                 services.AddTransient<UseInstructionViewModel>();
             })
             .Build();
+
+            ActivationService = GetService<IActivationService>();
         }
 
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
             base.OnLaunched(args);
 
-            IActivationService activationService = GetService<IActivationService>();
-
-            await activationService.ActivateAsync(args);
+            await ActivationService.ActivateAsync(args);
         }
     }
 }

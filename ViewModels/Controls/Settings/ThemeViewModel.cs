@@ -9,11 +9,11 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class ThemeViewModel : ObservableRecipient
     {
-        private readonly IThemeService ThemeService;
+        private IThemeService ThemeService { get; } = App.GetService<IThemeService>();
 
-        private string _theme;
+        private ThemeModel _theme;
 
-        public string Theme
+        public ThemeModel Theme
         {
             get { return _theme; }
 
@@ -29,10 +29,8 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:colors"));
         });
 
-        public ThemeViewModel(IThemeService themeService)
+        public ThemeViewModel()
         {
-            ThemeService = themeService;
-
             ThemeList = ThemeService.ThemeList;
             Theme = ThemeService.AppTheme;
 

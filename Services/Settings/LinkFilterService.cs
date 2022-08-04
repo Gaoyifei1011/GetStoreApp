@@ -10,11 +10,9 @@ namespace GetStoreApp.Services.Settings
     /// </summary>
     public class LinkFilterService : ILinkFilterService
     {
-        private readonly IConfigStorageService ConfigStorageService;
+        private string StartWithESettingsKey { get; init; } = "StartsWithEFilterValue";
 
-        private const string StartWithESettingsKey = "StartsWithEFilterValue";
-
-        private const string BlockMapSettingsKey = "BlockMapFilterValue";
+        private string BlockMapSettingsKey { get; init; } = "BlockMapFilterValue";
 
         private bool DefaultLinkFilterValue { get; } = true;
 
@@ -22,10 +20,7 @@ namespace GetStoreApp.Services.Settings
 
         public bool BlockMapFilterValue { get; set; }
 
-        public LinkFilterService(IConfigStorageService configStorageService)
-        {
-            ConfigStorageService = configStorageService;
-        }
+        private IConfigStorageService ConfigStorageService { get; set; } = GetStoreApp.App.GetService<IConfigStorageService>();
 
         /// <summary>
         /// 应用在初始化前获取设置存储的链接过滤值

@@ -20,10 +20,6 @@ namespace GetStoreApp.Services.Web
 
         public event EventHandler<CoreWebView2WebErrorStatus> NavigationCompleted;
 
-        public WebViewService()
-        {
-        }
-
         public void Initialize(WebView2 webView)
         {
             _webView = webView;

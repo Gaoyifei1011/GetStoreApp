@@ -6,15 +6,15 @@ namespace GetStoreApp.Contracts.Services.Settings
 {
     public interface ILanguageService
     {
-        string DefaultAppLanguage { get; }
+        LanguageModel DefaultAppLanguage { get; }
 
-        string AppLanguage { get; set; }
+        LanguageModel AppLanguage { get; set; }
 
         List<LanguageModel> LanguageList { get; set; }
 
         Task InitializeLanguageAsync();
 
-        Task SetLanguageAsync(string language);
+        Task SetLanguageAsync(LanguageModel language);
 
         Task SetAppLanguageAsync();
     }

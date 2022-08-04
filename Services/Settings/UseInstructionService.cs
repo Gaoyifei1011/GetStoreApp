@@ -10,23 +10,18 @@ namespace GetStoreApp.Services.Settings
     /// </summary>
     public class UseInstructionService : IUseInstructionService
     {
-        private readonly IConfigStorageService ConfigStorageService;
+        private string SettingsKey { get; init; } = "UseInsVisValue";
 
-        private const string SettingsKey = "UseInsVisValue";
+        private IConfigStorageService ConfigStorageService { get; } = GetStoreApp.App.GetService<IConfigStorageService>();
 
         private bool DefaultUseInsVisValue { get; } = true;
 
         public bool UseInsVisValue { get; set; }
 
-        public UseInstructionService(IConfigStorageService configStorageService)
-        {
-            ConfigStorageService = configStorageService;
-        }
-
         /// <summary>
         /// 应用在初始化前获取设置存储的使用说明按钮显示值
         /// </summary>
-        public async Task InitializeUseInsVIsValueAsync()
+        public async Task InitializeUseInsVisValueAsync()
         {
             UseInsVisValue = await GetUseInsVisValueAsync();
         }

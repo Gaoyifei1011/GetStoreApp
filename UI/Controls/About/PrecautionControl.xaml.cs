@@ -14,7 +14,7 @@ namespace GetStoreApp.UI.Controls.About
         {
             ResourceService = App.GetService<IResourceService>();
             ViewModel = App.GetService<PrecautionViewModel>();
-            this.InitializeComponent();
+            InitializeComponent();
         }
     }
 }

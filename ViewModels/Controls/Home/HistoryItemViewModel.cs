@@ -20,12 +20,15 @@ namespace GetStoreApp.ViewModels.Controls.Home
 {
     public class HistoryItemViewModel : ObservableRecipient
     {
-        private readonly IResourceService ResourceService;
-        private readonly IHistoryDataService HistoryDataService;
-        private readonly IHistoryItemValueService HistoryItemValueService;
-        private readonly INavigationService NavigationService;
+        private HistoryItemValueModel HistoryItem { get; set; }
 
-        private int HistoryItemValue { get; set; }
+        private IResourceService ResourceService { get; } = App.GetService<IResourceService>();
+
+        private IHistoryDataService HistoryDataService { get; } = App.GetService<IHistoryDataService>();
+
+        private IHistoryItemValueService HistoryItemValueService { get; } = App.GetService<IHistoryItemValueService>();
+
+        private INavigationService NavigationService { get; } = App.GetService<INavigationService>();
 
         private HistoryModel _selectedHistoryItem;
 
@@ -50,17 +53,12 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public IAsyncRelayCommand FillinCommand { get; set; }
 
-        public HistoryItemViewModel(IResourceService resourceService, IHistoryDataService historyDataService, IHistoryItemValueService historyItemValueService, INavigationService navigationService)
+        public HistoryItemViewModel()
         {
-            ResourceService = resourceService;
-            HistoryDataService = historyDataService;
-            HistoryItemValueService = historyItemValueService;
-            NavigationService = navigationService;
-
             TypeList = ResourceService.TypeList;
             ChannelList = ResourceService.ChannelList;
 
-            HistoryItemValue = HistoryItemValueService.HistoryItemValue;
+            HistoryItem = HistoryItemValueService.HistoryItem;
 
             // List列表初始化，可以从数据库获得的列表中加载
             LoadedCommand = new AsyncRelayCommand(GetHistoryItemDataListAsync);
@@ -78,7 +76,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             Messenger.Register<HistoryItemViewModel, HistoryItemValueMessage>(this, async (historyItemViewModel, historyItemValueMessage) =>
             {
-                HistoryItemValue = historyItemValueMessage.Value;
+                HistoryItem = historyItemValueMessage.Value;
                 await GetHistoryItemDataListAsync();
             });
         }
@@ -89,7 +87,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
         private async Task GetHistoryItemDataListAsync()
         {
             // 获取数据库的原始记录数据
-            List<HistoryModel> HistoryRawList = await HistoryDataService.QueryHistoryDataAsync(HistoryItemValue);
+            List<HistoryModel> HistoryRawList = await HistoryDataService.QueryHistoryDataAsync(HistoryItem.HistoryItemValue);
 
             // 更新UI上面的数据
             UpdateList(HistoryRawList);

@@ -14,7 +14,7 @@ namespace GetStoreApp.UI.Controls.Home
         {
             ResourceService = App.GetService<IResourceService>();
             ViewModel = App.GetService<HistoryItemViewModel>();
-            this.InitializeComponent();
+            InitializeComponent();
         }
     }
 }

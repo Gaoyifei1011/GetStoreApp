@@ -6,13 +6,13 @@ namespace GetStoreApp.Contracts.Services.Settings
 {
     public interface IThemeService
     {
-        string AppTheme { get; set; }
+        ThemeModel AppTheme { get; set; }
 
         List<ThemeModel> ThemeList { get; set; }
 
         Task InitializeThemeAsync();
 
-        Task SetThemeAsync(string theme);
+        Task SetThemeAsync(ThemeModel theme);
 
         Task SetAppThemeAsync();
     }

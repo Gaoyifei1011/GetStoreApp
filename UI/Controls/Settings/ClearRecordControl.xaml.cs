@@ -14,7 +14,7 @@ namespace GetStoreApp.UI.Controls.Settings
         {
             ResourceService = App.GetService<IResourceService>();
             ViewModel = App.GetService<ClearRecordViewModel>();
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         public string LocalizedClearState(bool clearState)

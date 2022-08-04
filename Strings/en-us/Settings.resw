@@ -228,6 +228,9 @@
   <data name="NotifiactionOnContent" xml:space="preserve">
     <value>Opening</value>
   </data>
+  <data name="OpenFolderDescription" xml:space="preserve">
+    <value>Click to access the folder</value>
+  </data>
   <data name="Region" xml:space="preserve">
     <value>The app is in the corresponding area of the Store</value>
   </data>

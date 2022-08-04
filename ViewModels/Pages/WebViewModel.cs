@@ -20,7 +20,7 @@ namespace GetStoreApp.ViewModels.Pages
         private ICommand _refreshCommand;
         private ICommand _retryCommand;
 
-        public IWebViewService WebViewService { get; }
+        public IWebViewService WebViewService { get; } = App.GetService<IWebViewService>();
 
         public Uri Source
         {
@@ -47,11 +47,6 @@ namespace GetStoreApp.ViewModels.Pages
 
         public ICommand OpenInBrowserCommand => _openInBrowserCommand ??= new RelayCommand(async
             () => await Windows.System.Launcher.LaunchUriAsync(Source));
-
-        public WebViewModel(IWebViewService webViewService)
-        {
-            WebViewService = webViewService;
-        }
 
         public void OnNavigatedTo(object parameter)
         {

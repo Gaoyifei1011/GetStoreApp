@@ -1,13 +1,13 @@
 ﻿<UserControl
     x:Class="GetStoreApp.UI.Controls.Home.HistoryItemControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converter="using:GetStoreApp.Converters.Formats"
-    xmlns:ctWinUI="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:i="using:Microsoft.Xaml.Interactivity"
-    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ctWinUI="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:converter="using:GetStoreApp.Converters.Formats"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
     mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -43,6 +43,7 @@
                     Grid.Column="1"
                     VerticalAlignment="Center"
                     Text="{x:Bind ResourceService.GetLocalized('/Home/Recent')}" />
+
                 <CommandBar
                     Grid.Column="2"
                     Margin="0,0,-15,0"
@@ -61,12 +62,14 @@
                         Command="{x:Bind ViewModel.CopyCommand}"
                         Icon="Copy"
                         Label="{x:Bind ResourceService.GetLocalized('/Home/Copy')}"
+                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/Copy')}"
                         Visibility="{x:Bind ViewModel.HistoryItemDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}" />
 
                     <AppBarButton
                         Command="{x:Bind ViewModel.ViewAllCommand}"
                         Icon="ViewAll"
-                        Label="{x:Bind ResourceService.GetLocalized('/Home/ViewAll')}" />
+                        Label="{x:Bind ResourceService.GetLocalized('/Home/ViewAll')}"
+                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/ViewAll')}" />
                 </CommandBar>
             </Grid>
         </Expander.Header>

@@ -1,10 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.Messaging.Messages;
+using GetStoreApp.Models;
 
 namespace GetStoreApp.Messages
 {
-    public sealed class RegionMessage : ValueChangedMessage<string>
+    public sealed class RegionMessage : ValueChangedMessage<RegionModel>
     {
-        public RegionMessage(string value) : base(value)
+        public RegionMessage(RegionModel value) : base(value)
         {
         }
     }

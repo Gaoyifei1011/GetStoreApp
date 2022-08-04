@@ -10,7 +10,7 @@ namespace GetStoreApp.UI.Controls.Home
         public StatusBarControl()
         {
             ViewModel = App.GetService<StatusBarViewModel>();
-            this.InitializeComponent();
+            InitializeComponent();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Contracts.Services.App;
+using GetStoreApp.Models;
 using GetStoreApp.ViewModels.Controls.Settings;
 using Microsoft.UI.Xaml.Controls;
 
@@ -14,7 +15,12 @@ namespace GetStoreApp.UI.Controls.Settings
         {
             ResourceService = App.GetService<IResourceService>();
             ViewModel = App.GetService<RegionViewModel>();
-            this.InitializeComponent();
+            InitializeComponent();
+        }
+
+        public string GetSelectedRegionName(RegionModel region)
+        {
+            return region.FriendlyName;
         }
     }
 }

@@ -10,11 +10,15 @@ namespace GetStoreApp.UI.Controls.About
 
         public ReferenceViewModel ViewModel { get; }
 
+        public string ReferenceDescription { get; set; }
+
         public ReferenceControl()
         {
             ResourceService = App.GetService<IResourceService>();
             ViewModel = App.GetService<ReferenceViewModel>();
-            this.InitializeComponent();
+
+            ReferenceDescription = ResourceService.GetLocalized("/About/ReferenceDescription");
+            InitializeComponent();
         }
     }
 }

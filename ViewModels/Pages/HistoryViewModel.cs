@@ -21,9 +21,11 @@ namespace GetStoreApp.ViewModels.Pages
 {
     public class HistoryViewModel : ObservableRecipient
     {
-        private readonly IResourceService ResourceService;
-        private readonly IHistoryDataService HistoryDataService;
-        private readonly INavigationService NavigationService;
+        private IResourceService ResourceService { get; } = App.GetService<IResourceService>();
+
+        private IHistoryDataService HistoryDataService { get; } = App.GetService<IHistoryDataService>();
+
+        private INavigationService NavigationService { get; } = App.GetService<INavigationService>();
 
         private bool _isSelectMode = false;
 
@@ -123,12 +125,8 @@ namespace GetStoreApp.ViewModels.Pages
 
         public IAsyncRelayCommand CancelCommand { get; set; }
 
-        public HistoryViewModel(IResourceService resourceService, IHistoryDataService historyDataService, INavigationService navigationService)
+        public HistoryViewModel()
         {
-            ResourceService = resourceService;
-            HistoryDataService = historyDataService;
-            NavigationService = navigationService;
-
             TypeList = ResourceService.TypeList;
             ChannelList = ResourceService.ChannelList;
 

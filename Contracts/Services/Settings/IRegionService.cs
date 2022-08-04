@@ -6,12 +6,12 @@ namespace GetStoreApp.Contracts.Services.Settings
 {
     public interface IRegionService
     {
-        string AppRegion { get; set; }
+        RegionModel AppRegion { get; set; }
 
         List<RegionModel> RegionList { get; set; }
 
         Task InitializeRegionAsync();
 
-        Task SetRegionAsync(string region);
+        Task SetRegionAsync(RegionModel region);
     }
 }

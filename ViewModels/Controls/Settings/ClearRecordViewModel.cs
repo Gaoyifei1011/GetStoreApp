@@ -10,7 +10,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class ClearRecordViewModel : ObservableRecipient
     {
-        private readonly IHistoryDataService HistoryDataService;
+        private IHistoryDataService HistoryDataService { get; } = App.GetService<IHistoryDataService>();
 
         private bool _clearState = false;
 
@@ -32,10 +32,8 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
         public IAsyncRelayCommand ClearRecordCommand { get; set; }
 
-        public ClearRecordViewModel(IHistoryDataService historyDataService)
+        public ClearRecordViewModel()
         {
-            HistoryDataService = historyDataService;
-
             ClearRecordCommand = new AsyncRelayCommand(ClearRecordAsync);
         }
 

@@ -5,6 +5,7 @@ using GetStoreApp.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,36 +16,31 @@ namespace GetStoreApp.Services.App
     /// </summary>
     public class ActivationService : IActivationService
     {
-        private readonly ActivationHandler<LaunchActivatedEventArgs> DefaultHandler;
-        private readonly IEnumerable<IActivationHandler> ActivationHandlers;
-        private readonly IDataBaseService DataBaseService;
-        private readonly IResourceService ResourceService;
-        private readonly IBackdropService BackdropService;
-        private readonly IDownloadOptionsService DownloadOptionsService;
-        private readonly IHistoryItemValueService HistoryItemValueService;
-        private readonly ILanguageService LanguageService;
-        private readonly ILinkFilterService LinkFilterService;
-        private readonly IRegionService RegionService;
-        private readonly IThemeService ThemeService;
-        private readonly IUseInstructionService UseInstructionService;
         private UIElement _shell = null;
 
-        public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers)
-        {
-            DefaultHandler = defaultHandler;
-            ActivationHandlers = activationHandlers;
+        private ActivationHandler<LaunchActivatedEventArgs> DefaultHandler { get; } = GetStoreApp.App.GetService<ActivationHandler<LaunchActivatedEventArgs>>();
 
-            DataBaseService = GetStoreApp.App.GetService<IDataBaseService>();
-            ResourceService = GetStoreApp.App.GetService<IResourceService>();
-            BackdropService = GetStoreApp.App.GetService<IBackdropService>();
-            DownloadOptionsService = GetStoreApp.App.GetService<IDownloadOptionsService>();
-            HistoryItemValueService = GetStoreApp.App.GetService<IHistoryItemValueService>();
-            LanguageService = GetStoreApp.App.GetService<ILanguageService>();
-            LinkFilterService = GetStoreApp.App.GetService<ILinkFilterService>();
-            RegionService = GetStoreApp.App.GetService<IRegionService>();
-            ThemeService = GetStoreApp.App.GetService<IThemeService>();
-            UseInstructionService = GetStoreApp.App.GetService<IUseInstructionService>();
-        }
+        private IEnumerable<IActivationHandler> ActivationHandlers { get; } = GetStoreApp.App.GetService<IEnumerable<IActivationHandler>>();
+
+        private IDataBaseService DataBaseService { get; } = GetStoreApp.App.GetService<IDataBaseService>();
+
+        private IResourceService ResourceService { get; } = GetStoreApp.App.GetService<IResourceService>();
+
+        private IBackdropService BackdropService { get; } = GetStoreApp.App.GetService<IBackdropService>();
+
+        private IDownloadOptionsService DownloadOptionsService { get; } = GetStoreApp.App.GetService<IDownloadOptionsService>();
+
+        private IHistoryItemValueService HistoryItemValueService { get; } = GetStoreApp.App.GetService<IHistoryItemValueService>();
+
+        private ILanguageService LanguageService { get; } = GetStoreApp.App.GetService<ILanguageService>();
+
+        private ILinkFilterService LinkFilterService { get; } = GetStoreApp.App.GetService<ILinkFilterService>();
+
+        private IRegionService RegionService { get; } = GetStoreApp.App.GetService<IRegionService>();
+
+        private IThemeService ThemeService { get; } = GetStoreApp.App.GetService<IThemeService>();
+
+        private IUseInstructionService UseInstructionService { get; } = GetStoreApp.App.GetService<IUseInstructionService>();
 
         public async Task ActivateAsync(object activationArgs)
         {
@@ -83,12 +79,19 @@ namespace GetStoreApp.Services.App
 
             // 初始化应用配置信息
             await BackdropService.InitializeBackdropAsync();
+            Debug.WriteLine("04");
             await DownloadOptionsService.InitializeAsync();
+            Debug.WriteLine("05");
             await HistoryItemValueService.InitializeHistoryItemValueAsync();
+            Debug.WriteLine("06");
             await LinkFilterService.InitializeLinkFilterValueAsnyc();
+            Debug.WriteLine("07");
             await RegionService.InitializeRegionAsync();
+            Debug.WriteLine("08");
             await ThemeService.InitializeThemeAsync();
-            await UseInstructionService.InitializeUseInsVIsValueAsync();
+            Debug.WriteLine("09");
+            await UseInstructionService.InitializeUseInsVisValueAsync();
+            Debug.WriteLine("03");
         }
 
         /// <summary>

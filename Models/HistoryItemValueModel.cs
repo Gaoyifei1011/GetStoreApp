@@ -26,8 +26,8 @@ namespace GetStoreApp.Models
             set { SetValue(HistoryItemNumProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for HistoryItemValue.  This enables animation, styling, binding, etc...
+        // Using a DependencyProperty as the backing store for HistoryItem.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty HistoryItemNumProperty =
-            DependencyProperty.Register("HistoryItemValue", typeof(int), typeof(HistoryItemValueModel), new PropertyMetadata(0));
+            DependencyProperty.Register("HistoryItem", typeof(int), typeof(HistoryItemValueModel), new PropertyMetadata(0));
     }
 }

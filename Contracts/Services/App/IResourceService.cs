@@ -18,7 +18,7 @@ namespace GetStoreApp.Contracts.Services.App
 
         List<StatusBarStateModel> StatusBarStateList { get; set; }
 
-        Task InitializeResourceAsync(string defaultAppLanguage, string currentAppLanguage);
+        Task InitializeResourceAsync(LanguageModel defaultAppLanguage, LanguageModel currentAppLanguage);
 
         string GetLocalized(string resource);
     }

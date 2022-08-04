@@ -14,26 +14,17 @@ namespace GetStoreApp.Services.Settings
     /// </summary>
     public class LanguageService : ILanguageService
     {
-        private readonly IConfigStorageService ConfigStorageService;
+        private string SettingsKey { get; init; } = "AppLanguage";
 
-        private const string SettingsKey = "AppLanguage";
+        private IConfigStorageService ConfigStorageService { get; } = GetStoreApp.App.GetService<IConfigStorageService>();
 
-        public string DefaultAppLanguage { get; }
+        public LanguageModel DefaultAppLanguage { get; set; }
 
-        public string AppLanguage { get; set; }
+        public LanguageModel AppLanguage { get; set; }
 
         private static readonly IReadOnlyList<string> AppLanguages = ApplicationLanguages.ManifestLanguages;
 
         public List<LanguageModel> LanguageList { get; set; } = new List<LanguageModel>();
-
-        public LanguageService(IConfigStorageService configStorageService)
-        {
-            ConfigStorageService = configStorageService;
-
-            InitializeLanguageList();
-
-            DefaultAppLanguage = LanguageList.Find(item => item.InternalName.Equals("en-US")).InternalName;
-        }
 
         /// <summary>
         /// 初始化应用语言信息列表
@@ -72,13 +63,17 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         public async Task InitializeLanguageAsync()
         {
+            InitializeLanguageList();
+
+            DefaultAppLanguage = LanguageList.Find(item => item.InternalName.Equals("en-US"));
+
             AppLanguage = await GetLanguageAsync();
         }
 
         /// <summary>
         /// 获取设置存储的语言值，如果设置没有存储，使用默认值
         /// </summary>
-        private async Task<string> GetLanguageAsync()
+        private async Task<LanguageModel> GetLanguageAsync()
         {
             string language = await ConfigStorageService.GetSettingStringValueAsync(SettingsKey);
 
@@ -93,26 +88,26 @@ namespace GetStoreApp.Services.Settings
                 // 如果存在，设置存储值和应用初次设置的语言为当前系统的语言
                 if (result)
                 {
-                    return LanguageList.Find(item => item.InternalName.Equals(CurrentSystemLanguage, StringComparison.OrdinalIgnoreCase)).InternalName;
+                    return LanguageList.Find(item => item.InternalName.Equals(CurrentSystemLanguage, StringComparison.OrdinalIgnoreCase));
                 }
                 // 不存在，设置存储值和应用初次设置的语言为默认语言：English(United States)
                 else
                 {
-                    return LanguageList.Find(item => item.InternalName.Equals(DefaultAppLanguage, StringComparison.OrdinalIgnoreCase)).InternalName;
+                    return LanguageList.Find(item => item.InternalName.Equals(DefaultAppLanguage.InternalName, StringComparison.OrdinalIgnoreCase));
                 }
             }
 
-            return LanguageList.Find(item => item.InternalName.Equals(language, StringComparison.OrdinalIgnoreCase)).InternalName;
+            return LanguageList.Find(item => item.InternalName.Equals(language, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
         /// 应语言发生修改时修改设置存储的语言值
         /// </summary>
-        public async Task SetLanguageAsync(string language)
+        public async Task SetLanguageAsync(LanguageModel language)
         {
             AppLanguage = language;
 
-            await ConfigStorageService.SaveSettingStringValueAsync(SettingsKey, language);
+            await ConfigStorageService.SaveSettingStringValueAsync(SettingsKey, language.InternalName);
         }
 
         /// <summary>
@@ -120,7 +115,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         public async Task SetAppLanguageAsync()
         {
-            ApplicationLanguages.PrimaryLanguageOverride = AppLanguage;
+            ApplicationLanguages.PrimaryLanguageOverride = AppLanguage.InternalName;
             await Task.CompletedTask;
         }
     }
