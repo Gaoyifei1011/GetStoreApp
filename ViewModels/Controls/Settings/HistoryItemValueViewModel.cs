@@ -10,32 +10,30 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class HistoryItemValueViewModel : ObservableRecipient
     {
-        private readonly IHistoryItemValueService HistoryItemValueService;
+        private IHistoryItemValueService HistoryItemValueService { get; } = App.GetService<IHistoryItemValueService>();
 
-        private int _historyItemValue;
+        private HistoryItemValueModel _historyItem;
 
-        public int HistoryItemValue
+        public HistoryItemValueModel HistoryItem
         {
-            get { return _historyItemValue; }
+            get { return _historyItem; }
 
-            set { SetProperty(ref _historyItemValue, value); }
+            set { SetProperty(ref _historyItem, value); }
         }
 
         public List<HistoryItemValueModel> HistoryItemValueList { get; set; }
 
         public IAsyncRelayCommand HistoryItemSelectCommand { get; set; }
 
-        public HistoryItemValueViewModel(IHistoryItemValueService historyItemValueService)
+        public HistoryItemValueViewModel()
         {
-            HistoryItemValueService = historyItemValueService;
-
             HistoryItemValueList = HistoryItemValueService.HistoryItemValueList;
-            HistoryItemValue = HistoryItemValueService.HistoryItemValue;
+            HistoryItem = HistoryItemValueService.HistoryItem;
 
             HistoryItemSelectCommand = new AsyncRelayCommand(async () =>
             {
-                await HistoryItemValueService.SetHistoryItemValueAsync(HistoryItemValue);
-                Messenger.Send(new HistoryItemValueMessage(HistoryItemValue));
+                await HistoryItemValueService.SetHistoryItemValueAsync(HistoryItem);
+                Messenger.Send(new HistoryItemValueMessage(HistoryItem));
             });
         }
     }

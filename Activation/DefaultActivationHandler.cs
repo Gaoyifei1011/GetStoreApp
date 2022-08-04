@@ -8,11 +8,11 @@ namespace GetStoreApp.Activation
 {
     public class DefaultActivationHandler : ActivationHandler<LaunchActivatedEventArgs>
     {
-        private readonly INavigationService NavigationService;
+        private INavigationService NavigationService { get; }
 
-        public DefaultActivationHandler(INavigationService navigationService)
+        public DefaultActivationHandler()
         {
-            NavigationService = navigationService;
+            NavigationService = App.GetService<INavigationService>();
         }
 
         protected override bool CanHandleInternal(LaunchActivatedEventArgs args)

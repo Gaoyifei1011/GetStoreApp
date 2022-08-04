@@ -15,54 +15,49 @@ namespace GetStoreApp.Services.Settings
     /// </summary>
     public class RegionService : IRegionService
     {
-        private readonly IConfigStorageService ConfigStorageService;
+        private string SettingsKey { get; init; } = "AppRegion";
 
-        private const string SettingsKey = "AppRegion";
+        private RegionModel DefaultAppRegion { get; set; }
 
-        private string DefaultAppRegion { get; }
+        public RegionModel AppRegion { get; set; }
 
-        public string AppRegion { get; set; }
+        private IConfigStorageService ConfigStorageService { get; set; } = GetStoreApp.App.GetService<IConfigStorageService>();
 
         public List<RegionModel> RegionList { get; set; } = GeographicalLocationHelper.GetGeographicalLocations().OrderBy(item => item.FriendlyName).ToList();
-
-        public RegionService(IConfigStorageService configStorageService)
-        {
-            ConfigStorageService = configStorageService;
-
-            DefaultAppRegion = RegionList.Find(item => item.ISO2 == RegionInfo.CurrentRegion.TwoLetterISORegionName).ISO2;
-        }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的区域值
         /// </summary>
         public async Task InitializeRegionAsync()
         {
+            DefaultAppRegion = RegionList.Find(item => item.ISO2 == RegionInfo.CurrentRegion.TwoLetterISORegionName);
+
             AppRegion = await GetRegionAsync();
         }
 
         /// <summary>
         /// 获取设置存储的区域值，如果设置没有存储，使用默认值
         /// </summary>
-        private async Task<string> GetRegionAsync()
+        private async Task<RegionModel> GetRegionAsync()
         {
             string region = await ConfigStorageService.GetSettingStringValueAsync(SettingsKey);
 
             if (string.IsNullOrEmpty(region))
             {
-                return RegionList.Find(item => item.ISO2.Equals(DefaultAppRegion, StringComparison.OrdinalIgnoreCase)).ISO2;
+                return RegionList.Find(item => item.ISO2.Equals(DefaultAppRegion.ISO2, StringComparison.OrdinalIgnoreCase));
             }
 
-            return RegionList.Find(item => item.ISO2.Equals(region, StringComparison.OrdinalIgnoreCase)).ISO2;
+            return RegionList.Find(item => item.ISO2.Equals(region, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
         /// 应用区域发生修改时修改设置存储的主题值
         /// </summary>
-        public async Task SetRegionAsync(string region)
+        public async Task SetRegionAsync(RegionModel region)
         {
             AppRegion = region;
 
-            await ConfigStorageService.SaveSettingStringValueAsync(SettingsKey, region);
+            await ConfigStorageService.SaveSettingStringValueAsync(SettingsKey, region.ISO2);
         }
     }
 }

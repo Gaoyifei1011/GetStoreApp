@@ -6,13 +6,13 @@ namespace GetStoreApp.Contracts.Services.Settings
 {
     public interface IBackdropService
     {
-        string AppBackdrop { get; set; }
+        BackdropModel AppBackdrop { get; set; }
 
         List<BackdropModel> BackdropList { get; set; }
 
         Task InitializeBackdropAsync();
 
-        Task SetBackdropAsync(string backdrop);
+        Task SetBackdropAsync(BackdropModel backdrop);
 
         Task SetAppBackdropAsync();
     }

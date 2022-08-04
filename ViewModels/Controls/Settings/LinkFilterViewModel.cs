@@ -13,8 +13,9 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class LinkFilterViewModel : ObservableRecipient
     {
-        private readonly ILinkFilterService LinkFilterService;
-        private readonly INavigationService NavigationService;
+        private ILinkFilterService LinkFilterService { get; } = App.GetService<ILinkFilterService>();
+
+        private INavigationService NavigationService { get; } = App.GetService<INavigationService>();
 
         private bool _startsWithEFilterValue;
 
@@ -40,11 +41,8 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
         public IAsyncRelayCommand BlockMapFilterCommand { get; set; }
 
-        public LinkFilterViewModel(ILinkFilterService linkFilterService, INavigationService navigationService)
+        public LinkFilterViewModel()
         {
-            LinkFilterService = linkFilterService;
-            NavigationService = navigationService;
-
             StartsWithEFilterValue = LinkFilterService.StartWithEFilterValue;
             BlockMapFilterValue = LinkFilterService.BlockMapFilterValue;
 

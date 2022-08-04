@@ -7,7 +7,7 @@ namespace GetStoreApp.Converters.Formats
 {
     public class DownloadSpeedFormatConverter : IValueConverter
     {
-        public List<string> SpeedUnitsList = new List<string>() { "Byte/s","KB/s", "MB/s" };
+        public List<string> SpeedUnitsList = new List<string>() { "Byte/s", "KB/s", "MB/s" };
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {

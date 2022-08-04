@@ -44,16 +44,18 @@
                     helpers:NavigationHelper.NavigateTo="GetStoreApp.ViewModels.Pages.HomeViewModel"
                     Content="{x:Bind ResourceService.GetLocalized('/Shell/Home')}"
                     Icon="Home" />
+
                 <NavigationViewItem helpers:NavigationHelper.NavigateTo="GetStoreApp.ViewModels.Pages.HistoryViewModel" Content="{x:Bind ResourceService.GetLocalized('/Shell/History')}">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF738;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
+
                 <NavigationViewItem
                     helpers:NavigationHelper.NavigateTo="GetStoreApp.ViewModels.Pages.DownloadViewModel"
                     Content="{x:Bind ResourceService.GetLocalized('/Shell/Download')}"
-                    Icon="Download"
-                    IsEnabled="False" />
+                    Icon="Download" />
+
                 <NavigationViewItem
                     helpers:NavigationHelper.NavigateTo="GetStoreApp.ViewModels.Pages.WebViewModel"
                     Content="{x:Bind ResourceService.GetLocalized('/Shell/Web')}"

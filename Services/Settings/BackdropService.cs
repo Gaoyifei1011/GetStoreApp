@@ -13,56 +13,53 @@ namespace GetStoreApp.Services.Settings
     /// </summary>
     public class BackdropService : IBackdropService
     {
-        private readonly IConfigStorageService ConfigStorageService;
-        private readonly IResourceService ResourceService;
+        private string SettingsKey { get; init; } = "AppBackdrop";
 
-        private const string SettingsKey = "AppBackdrop";
+        private IConfigStorageService ConfigStorageService { get; } = GetStoreApp.App.GetService<IConfigStorageService>();
 
-        private string DefaultAppBackdrop { get; } = "Default";
+        private IResourceService ResourceService { get; } = GetStoreApp.App.GetService<IResourceService>();
 
-        public string AppBackdrop { get; set; }
+        private BackdropModel DefaultAppBackdrop { get; set; }
+
+        public BackdropModel AppBackdrop { get; set; }
 
         public List<BackdropModel> BackdropList { get; set; }
-
-        public BackdropService(IConfigStorageService configStorageService, IResourceService resourceService)
-        {
-            ConfigStorageService = configStorageService;
-            ResourceService = resourceService;
-
-            BackdropList = ResourceService.BackdropList;
-        }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的背景色值
         /// </summary>
         public async Task InitializeBackdropAsync()
         {
+            BackdropList = ResourceService.BackdropList;
+
+            DefaultAppBackdrop = BackdropList.Find(item => item.InternalName.Equals("Default", StringComparison.OrdinalIgnoreCase));
+
             AppBackdrop = await GetBackdropAsync();
         }
 
         /// <summary>
         /// 获取设置存储的背景色值，如果设置没有存储，使用默认值
         /// </summary>
-        private async Task<string> GetBackdropAsync()
+        private async Task<BackdropModel> GetBackdropAsync()
         {
             string backdrop = await ConfigStorageService.GetSettingStringValueAsync(SettingsKey);
 
             if (string.IsNullOrEmpty(backdrop))
             {
-                return BackdropList.Find(item => item.InternalName.Equals(DefaultAppBackdrop, StringComparison.OrdinalIgnoreCase)).InternalName;
+                return BackdropList.Find(item => item.InternalName.Equals(DefaultAppBackdrop.InternalName, StringComparison.OrdinalIgnoreCase));
             }
 
-            return BackdropList.Find(item => item.InternalName.Equals(backdrop, StringComparison.OrdinalIgnoreCase)).InternalName;
+            return BackdropList.Find(item => item.InternalName.Equals(backdrop, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
         /// 应用背景色发生修改时修改设置存储的背景色值
         /// </summary>
-        public async Task SetBackdropAsync(string backdrop)
+        public async Task SetBackdropAsync(BackdropModel backdrop)
         {
             AppBackdrop = backdrop;
 
-            await ConfigStorageService.SaveSettingStringValueAsync(SettingsKey, backdrop);
+            await ConfigStorageService.SaveSettingStringValueAsync(SettingsKey, backdrop.InternalName);
         }
 
         /// <summary>
@@ -70,10 +67,8 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         public async Task SetAppBackdropAsync()
         {
-            if (AppBackdrop == "Mica") GetStoreApp.App.MainWindow.Backdrop = new MicaSystemBackdrop();
-
-            else if (AppBackdrop == "Acrylic") GetStoreApp.App.MainWindow.Backdrop = new AcrylicSystemBackdrop();
-
+            if (AppBackdrop.InternalName == "Mica") GetStoreApp.App.MainWindow.Backdrop = new MicaSystemBackdrop();
+            else if (AppBackdrop.InternalName == "Acrylic") GetStoreApp.App.MainWindow.Backdrop = new AcrylicSystemBackdrop();
             else GetStoreApp.App.MainWindow.Backdrop = null;
 
             await Task.CompletedTask;

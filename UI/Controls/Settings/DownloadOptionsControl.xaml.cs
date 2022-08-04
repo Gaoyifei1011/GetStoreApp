@@ -15,7 +15,7 @@ namespace GetStoreApp.UI.Controls.Settings
         {
             ResourceService = App.GetService<IResourceService>();
             ViewModel = App.GetService<DownloadOptionsViewModel>();
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         public string DownloadFolderPath(StorageFolder folder)

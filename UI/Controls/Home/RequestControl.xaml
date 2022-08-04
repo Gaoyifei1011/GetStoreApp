@@ -1,11 +1,11 @@
 ﻿<UserControl
     x:Class="GetStoreApp.UI.Controls.Home.RequestControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:i="using:Microsoft.Xaml.Interactivity"
-    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
     mc:Ignorable="d">
 
     <Grid Margin="0,0,0,10">
@@ -21,7 +21,8 @@
             Margin="0,0,2,0"
             DisplayMemberPath="DisplayName"
             ItemsSource="{x:Bind ViewModel.TypeList}"
-            SelectedIndex="{x:Bind ViewModel.SelectedType, Mode=TwoWay}">
+            SelectedIndex="{x:Bind ViewModel.SelectedType, Mode=TwoWay}"
+            ToolTipService.ToolTip="{x:Bind GetSelectedTypeName(ViewModel.SelectedType), Mode=OneWay}">
             <i:Interaction.Behaviors>
                 <ic:EventTriggerBehavior EventName="SelectionChanged">
                     <ic:InvokeCommandAction Command="{x:Bind ViewModel.TypeSelectCommand}" />
@@ -34,7 +35,8 @@
             Margin="2,0,2,0"
             DisplayMemberPath="DisplayName"
             ItemsSource="{x:Bind ViewModel.ChannelList}"
-            SelectedIndex="{x:Bind ViewModel.SelectedChannel, Mode=TwoWay}" />
+            SelectedIndex="{x:Bind ViewModel.SelectedChannel, Mode=TwoWay}"
+            ToolTipService.ToolTip="{x:Bind GetSelectedChannelName(ViewModel.SelectedChannel), Mode=OneWay}" />
 
         <AutoSuggestBox
             Grid.Column="2"
@@ -56,6 +58,7 @@
             VerticalAlignment="Bottom"
             Command="{x:Bind ViewModel.GetLinksCommand}"
             Content="{x:Bind ResourceService.GetLocalized('/Home/GetLinks')}"
-            Style="{StaticResource AccentButtonStyle}" />
+            Style="{StaticResource AccentButtonStyle}"
+            ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/GetLinks')}" />
     </Grid>
 </UserControl>

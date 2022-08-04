@@ -12,13 +12,13 @@ namespace GetStoreApp.Services.Settings
     /// </summary>
     public class DownloadOptionsService : IDownloadOptionsService
     {
-        private readonly IConfigStorageService ConfigStorageService;
+        private string FolderSettingsKey { get; init; } = "DownloadFolder";
 
-        private const string FolderSettingsKey = "DownloadFolder";
+        private string DownloadItemSettingsKey { get; init; } = "DownloadItemValue";
 
-        private const string DownloadItemSettingsKey = "DownloadItemValue";
+        private string NotificationSettingsKey { get; init; } = "DownloadNotification";
 
-        private const string NotificationSettingsKey = "DownloadNotification";
+        private IConfigStorageService ConfigStorageService { get; } = GetStoreApp.App.GetService<IConfigStorageService>();
 
         private StorageFolder DefaultFolder { get; } = ApplicationData.Current.LocalCacheFolder;
 
@@ -33,11 +33,6 @@ namespace GetStoreApp.Services.Settings
         public bool DownloadNotification { get; set; }
 
         public List<int> DownloadItemList { get; set; } = new List<int>() { 1, 2, 3 };
-
-        public DownloadOptionsService(IConfigStorageService configStorageService)
-        {
-            ConfigStorageService = configStorageService;
-        }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的下载相关内容设置值

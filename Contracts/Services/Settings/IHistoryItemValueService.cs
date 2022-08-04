@@ -6,12 +6,12 @@ namespace GetStoreApp.Contracts.Services.Settings
 {
     public interface IHistoryItemValueService
     {
-        int HistoryItemValue { get; set; }
+        HistoryItemValueModel HistoryItem { get; set; }
 
         List<HistoryItemValueModel> HistoryItemValueList { get; set; }
 
         Task InitializeHistoryItemValueAsync();
 
-        Task SetHistoryItemValueAsync(int historyItemValue);
+        Task SetHistoryItemValueAsync(HistoryItemValueModel historyItemValue);
     }
 }

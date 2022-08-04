@@ -11,7 +11,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class DownloadOptionsViewModel : ObservableRecipient
     {
-        private readonly IDownloadOptionsService DownloadOptionsService;
+        private IDownloadOptionsService DownloadOptionsService { get; } = App.GetService<IDownloadOptionsService>();
 
         private StorageFolder _downloadFolder;
 
@@ -50,10 +50,8 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
         public IAsyncRelayCommand NotificationStateCommand { get; set; }
 
-        public DownloadOptionsViewModel(IDownloadOptionsService downloadOptionsService)
+        public DownloadOptionsViewModel()
         {
-            DownloadOptionsService = downloadOptionsService;
-
             DownloadItemList = DownloadOptionsService.DownloadItemList;
 
             DownloadFolder = DownloadOptionsService.DownloadFolder;

@@ -13,7 +13,7 @@ namespace GetStoreApp.UI.Dialogs
         public CloudflareValidationDialog()
         {
             ResourceService = App.GetService<IResourceService>();
-            this.InitializeComponent();
+            InitializeComponent();
         }
     }
 }

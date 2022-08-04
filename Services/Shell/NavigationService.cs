@@ -12,9 +12,10 @@ namespace GetStoreApp.Services.Shell
     /// </summary>
     public class NavigationService : INavigationService
     {
-        private readonly IPageService PageService;
         private object _lastParameterUsed;
         private Frame _frame;
+
+        private IPageService PageService { get; } = GetStoreApp.App.GetService<IPageService>();
 
         public event NavigatedEventHandler Navigated;
 
@@ -40,11 +41,6 @@ namespace GetStoreApp.Services.Shell
         }
 
         public bool CanGoBack => Frame.CanGoBack;
-
-        public NavigationService(IPageService pageService)
-        {
-            PageService = pageService;
-        }
 
         private void RegisterFrameEvents()
         {

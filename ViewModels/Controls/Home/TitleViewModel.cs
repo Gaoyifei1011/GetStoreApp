@@ -12,8 +12,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
 {
     public class TitleViewModel : ObservableRecipient
     {
-        private readonly IUseInstructionService UseInstructionService;
-        private readonly INavigationService NavigationService;
+        private IUseInstructionService UseInstructionService { get; } = App.GetService<IUseInstructionService>();
+
+        private INavigationService NavigationService { get; } = App.GetService<INavigationService>();
 
         private bool _useInsVisValue;
 
@@ -26,11 +27,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public IAsyncRelayCommand UseInstructionCommand { get; set; }
 
-        public TitleViewModel(IUseInstructionService useInstructionService, INavigationService navigationService)
+        public TitleViewModel()
         {
-            UseInstructionService = useInstructionService;
-            NavigationService = navigationService;
-
             UseInsVisValue = UseInstructionService.UseInsVisValue;
 
             UseInstructionCommand = new AsyncRelayCommand(async () =>

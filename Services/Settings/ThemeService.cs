@@ -14,56 +14,53 @@ namespace GetStoreApp.Services.Settings
     /// </summary>
     public class ThemeService : IThemeService
     {
-        private readonly IConfigStorageService ConfigStorageService;
-        private readonly IResourceService ResourceService;
+        private string SettingsKey { get; init; } = "AppTheme";
 
-        private const string SettingsKey = "AppTheme";
+        private ThemeModel DefaultAppTheme { get; set; }
 
-        private string DefaultAppTheme { get; } = Convert.ToString(ElementTheme.Default);
+        public ThemeModel AppTheme { get; set; }
 
-        public string AppTheme { get; set; }
+        private IConfigStorageService ConfigStorageService { get; set; } = GetStoreApp.App.GetService<IConfigStorageService>();
+
+        private IResourceService ResourceService { get; set; } = GetStoreApp.App.GetService<IResourceService>();
 
         public List<ThemeModel> ThemeList { get; set; }
-
-        public ThemeService(IConfigStorageService configStorageService, IResourceService resourceService)
-        {
-            ConfigStorageService = configStorageService;
-            ResourceService = resourceService;
-
-            ThemeList = ResourceService.ThemeList;
-        }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的主题值
         /// </summary>
         public async Task InitializeThemeAsync()
         {
+            ThemeList = ResourceService.ThemeList;
+
+            DefaultAppTheme = ThemeList.Find(item => item.InternalName == Convert.ToString(ElementTheme.Default));
+
             AppTheme = await GetThemeAsync();
         }
 
         /// <summary>
         /// 获取设置存储的主题值，如果设置没有存储，使用默认值
         /// </summary>
-        private async Task<string> GetThemeAsync()
+        private async Task<ThemeModel> GetThemeAsync()
         {
             string theme = await ConfigStorageService.GetSettingStringValueAsync(SettingsKey);
 
             if (string.IsNullOrEmpty(theme))
             {
-                return ThemeList.Find(item => item.InternalName.Equals(DefaultAppTheme, StringComparison.OrdinalIgnoreCase)).InternalName;
+                return ThemeList.Find(item => item.InternalName.Equals(DefaultAppTheme.InternalName, StringComparison.OrdinalIgnoreCase));
             }
 
-            return ThemeList.Find(item => item.InternalName.Equals(theme, StringComparison.OrdinalIgnoreCase)).InternalName;
+            return ThemeList.Find(item => item.InternalName.Equals(theme, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
         /// 应用主题发生修改时修改设置存储的主题值
         /// </summary>
-        public async Task SetThemeAsync(string theme)
+        public async Task SetThemeAsync(ThemeModel theme)
         {
             AppTheme = theme;
 
-            await ConfigStorageService.SaveSettingStringValueAsync(SettingsKey, theme);
+            await ConfigStorageService.SaveSettingStringValueAsync(SettingsKey, theme.InternalName);
         }
 
         /// <summary>
@@ -73,8 +70,8 @@ namespace GetStoreApp.Services.Settings
         {
             if (GetStoreApp.App.MainWindow.Content is FrameworkElement frameworkElement)
             {
-                frameworkElement.RequestedTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme);
-                TitleBarHelper.UpdateTitleBar((ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme));
+                frameworkElement.RequestedTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme.InternalName);
+                TitleBarHelper.UpdateTitleBar((ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme.InternalName));
             }
             await Task.CompletedTask;
         }

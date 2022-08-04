@@ -6,7 +6,7 @@ namespace GetStoreApp.Contracts.Services.Settings
     {
         bool UseInsVisValue { get; set; }
 
-        Task InitializeUseInsVIsValueAsync();
+        Task InitializeUseInsVisValueAsync();
 
         Task SetUseInsVisValueAsync(bool useInsVisValue);
     }

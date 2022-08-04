@@ -11,7 +11,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 {
     public class StatusBarViewModel : ObservableRecipient
     {
-        private readonly IResourceService ResourceService;
+        private IResourceService ResourceService { get; } = App.GetService<IResourceService>();
 
         private InfoBarSeverity _infoSeverity = InfoBarSeverity.Informational;
 
@@ -51,10 +51,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public List<StatusBarStateModel> StatusBarStateList { get; set; }
 
-        public StatusBarViewModel(IResourceService resourceService)
+        public StatusBarViewModel()
         {
-            ResourceService = resourceService;
-
             StateInfoText = ResourceService.GetLocalized("/Home/StatusInfoWelcome");
 
             StatusBarStateList = ResourceService.StatusBarStateList;

@@ -12,29 +12,27 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class LanguageViewModel : ObservableRecipient
     {
-        private readonly ILanguageService LanguageService;
-        private readonly INavigationService NavigationService;
+        private ILanguageService LanguageService { get; } = App.GetService<ILanguageService>();
 
-        private string _language;
+        private INavigationService NavigationService { get; } = App.GetService<INavigationService>();
 
-        public string Language
+        private LanguageModel _language;
+
+        public LanguageModel Language
         {
             get { return _language; }
 
             set { SetProperty(ref _language, value); }
         }
 
-        public List<LanguageModel> LanguageList { get; }
+        public List<LanguageModel> LanguageList { get; set; }
 
         public IAsyncRelayCommand LanguageTipCommand { get; set; }
 
         public IAsyncRelayCommand LanguageSelectCommand { get; set; }
 
-        public LanguageViewModel(ILanguageService languageService, INavigationService navigationService)
+        public LanguageViewModel()
         {
-            LanguageService = languageService;
-            NavigationService = navigationService;
-
             Language = LanguageService.AppLanguage;
             LanguageList = LanguageService.LanguageList;
 

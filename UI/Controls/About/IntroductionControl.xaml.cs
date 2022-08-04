@@ -10,7 +10,7 @@ namespace GetStoreApp.UI.Controls.About
         public IntroductionControl()
         {
             ResourceService = App.GetService<IResourceService>();
-            this.InitializeComponent();
+            InitializeComponent();
         }
     }
 }

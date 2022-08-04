@@ -17,16 +17,19 @@ namespace GetStoreApp.ViewModels.Controls.Home
 {
     public class RequestViewModel : ObservableRecipient
     {
-        private readonly IResourceService ResourceService;
-        private readonly IHistoryDataService HistoryDataService;
-        private readonly ILinkFilterService LinkFilterService;
-        private readonly IRegionService RegionService;
+        private IRegionService RegionService { get; } = App.GetService<IRegionService>();
+
+        private IResourceService ResourceService { get; } = App.GetService<IResourceService>();
+
+        private IHistoryDataService HistoryDataService { get; } = App.GetService<IHistoryDataService>();
+
+        private ILinkFilterService LinkFilterService { get; } = App.GetService<ILinkFilterService>();
 
         private bool BlockMapFilterValue { get; set; }
 
         private bool StartsWithEFilterValue { get; set; }
 
-        private string Region { get; set; }
+        private RegionModel Region { get; set; }
 
         private string SampleTitle { get; set; }
 
@@ -84,13 +87,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public IAsyncRelayCommand GetLinksCommand { get; set; }
 
-        public RequestViewModel(IResourceService resourceService, IHistoryDataService historyDataService, ILinkFilterService linkFilterService, IRegionService regionService)
+        public RequestViewModel()
         {
-            ResourceService = resourceService;
-            HistoryDataService = historyDataService;
-            LinkFilterService = linkFilterService;
-            RegionService = regionService;
-
             BlockMapFilterValue = LinkFilterService.BlockMapFilterValue;
             StartsWithEFilterValue = LinkFilterService.StartWithEFilterValue;
             Region = RegionService.AppRegion;
@@ -171,7 +169,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 TypeList[SelectedType].InternalName,
                 LinkText,
                 ChannelList[SelectedChannel].InternalName,
-                Region);
+                Region.ISO2);
 
             // 获取网页反馈回的原始数据
             HtmlRequestService htmlRequestService = new HtmlRequestService();

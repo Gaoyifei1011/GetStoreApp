@@ -10,11 +10,11 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class RegionViewModel : ObservableRecipient
     {
-        private readonly IRegionService RegionService;
+        private IRegionService RegionService { get; } = App.GetService<IRegionService>();
 
-        private string _region;
+        private RegionModel _region;
 
-        public string Region
+        public RegionModel Region
         {
             get { return _region; }
 
@@ -25,10 +25,8 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
         public IAsyncRelayCommand RegionSelectCommand { get; set; }
 
-        public RegionViewModel(IRegionService regionService)
+        public RegionViewModel()
         {
-            RegionService = regionService;
-
             RegionList = RegionService.RegionList;
             Region = RegionService.AppRegion;
 

@@ -14,9 +14,10 @@ namespace GetStoreApp.Services.Shell
     /// </summary>
     public class NavigationViewService : INavigationViewService
     {
-        private readonly INavigationService NavigationService;
-        private readonly IPageService PageService;
         private NavigationView _navigationView;
+
+        private INavigationService NavigationService { get; } = GetStoreApp.App.GetService<INavigationService>();
+        private IPageService PageService { get; } = GetStoreApp.App.GetService<IPageService>();
 
         public IList<object> MenuItems
             => _navigationView.MenuItems;
@@ -26,12 +27,6 @@ namespace GetStoreApp.Services.Shell
 
         public object SettingsItem
             => _navigationView.SettingsItem;
-
-        public NavigationViewService(INavigationService navigationService, IPageService pageService)
-        {
-            NavigationService = navigationService;
-            PageService = pageService;
-        }
 
         public void Initialize(NavigationView navigationView)
         {

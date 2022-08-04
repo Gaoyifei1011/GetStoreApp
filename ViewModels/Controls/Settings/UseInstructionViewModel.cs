@@ -9,7 +9,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class UseInstructionViewModel : ObservableRecipient
     {
-        private readonly IUseInstructionService UseInstructionService;
+        private IUseInstructionService UseInstructionService { get; } = App.GetService<IUseInstructionService>();
 
         private bool _useInsVisValue;
 
@@ -22,10 +22,8 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
         public IAsyncRelayCommand UseInstructionCommand { get; set; }
 
-        public UseInstructionViewModel(IUseInstructionService useInstructionService)
+        public UseInstructionViewModel()
         {
-            UseInstructionService = useInstructionService;
-
             UseInsVisValue = UseInstructionService.UseInsVisValue;
 
             UseInstructionCommand = new AsyncRelayCommand<bool>(async (param) =>

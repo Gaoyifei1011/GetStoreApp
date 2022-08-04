@@ -1,10 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.Messaging.Messages;
+using GetStoreApp.Models;
 
 namespace GetStoreApp.Messages
 {
-    public class HistoryItemValueMessage : ValueChangedMessage<int>
+    public class HistoryItemValueMessage : ValueChangedMessage<HistoryItemValueModel>
     {
-        public HistoryItemValueMessage(int value) : base(value)
+        public HistoryItemValueMessage(HistoryItemValueModel value) : base(value)
         {
         }
     }

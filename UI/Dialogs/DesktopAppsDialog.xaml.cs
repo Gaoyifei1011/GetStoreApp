@@ -10,7 +10,7 @@ namespace GetStoreApp.UI.Dialogs
         public DesktopAppsDialog()
         {
             ResourceService = App.GetService<IResourceService>();
-            this.InitializeComponent();
+            InitializeComponent();
         }
     }
 }

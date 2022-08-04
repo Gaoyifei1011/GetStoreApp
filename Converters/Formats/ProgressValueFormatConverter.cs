@@ -10,12 +10,7 @@ namespace GetStoreApp.Converters.Formats
     /// </summary>
     public class DownloadProgressFormatConverter : IValueConverter
     {
-        private readonly IResourceService ResourceService;
-
-        public DownloadProgressFormatConverter()
-        {
-            ResourceService = App.GetService<IResourceService>();
-        }
+        private IResourceService ResourceService { get; } = App.GetService<IResourceService>();
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {

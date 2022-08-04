@@ -15,9 +15,9 @@ namespace GetStoreApp.Services.App
     /// </summary>
     public class ResourceService : IResourceService
     {
-        private string DefaultAppLanguage { get; set; }
+        private LanguageModel DefaultAppLanguage { get; set; }
 
-        private string CurrentAppLanguage { get; set; }
+        private LanguageModel CurrentAppLanguage { get; set; }
 
         private ResourceContext DefaultResourceContext { get; set; } = new ResourceContext();
 
@@ -37,13 +37,13 @@ namespace GetStoreApp.Services.App
 
         public List<StatusBarStateModel> StatusBarStateList { get; set; } = new List<StatusBarStateModel>();
 
-        public async Task InitializeResourceAsync(string defaultAppLanguage, string currentAppLanguage)
+        public async Task InitializeResourceAsync(LanguageModel defaultAppLanguage, LanguageModel currentAppLanguage)
         {
             DefaultAppLanguage = defaultAppLanguage;
             CurrentAppLanguage = currentAppLanguage;
 
-            DefaultResourceContext.QualifierValues["Language"] = DefaultAppLanguage;
-            CurrentResourceContext.QualifierValues["Language"] = CurrentAppLanguage;
+            DefaultResourceContext.QualifierValues["Language"] = DefaultAppLanguage.InternalName;
+            CurrentResourceContext.QualifierValues["Language"] = CurrentAppLanguage.InternalName;
 
             InitializeThemeList();
             InitializeBackdropList();

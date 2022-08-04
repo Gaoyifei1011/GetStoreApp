@@ -1,9 +1,7 @@
 ﻿using GetStoreApp.Contracts.Services.App;
-using GetStoreApp.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
 using System;
-using System.Collections.Generic;
 
 namespace GetStoreApp.Converters.Formats
 {
@@ -12,16 +10,7 @@ namespace GetStoreApp.Converters.Formats
     /// </summary>
     public class ChannelNameFormatConverter : IValueConverter
     {
-        private readonly IResourceService resourceService;
-
-        private List<GetAppChannelModel> ChannelList { get; set; }
-
-        public ChannelNameFormatConverter()
-        {
-            resourceService = App.GetService<IResourceService>();
-
-            ChannelList = resourceService.ChannelList;
-        }
+        private IResourceService ResourceService { get; } = App.GetService<IResourceService>();
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {
@@ -30,7 +19,7 @@ namespace GetStoreApp.Converters.Formats
 
             string result = value as string;
 
-            return ChannelList.Find(item => item.InternalName.Equals(result)).DisplayName;
+            return ResourceService.ChannelList.Find(item => item.InternalName.Equals(result)).DisplayName;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

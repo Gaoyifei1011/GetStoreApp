@@ -10,9 +10,9 @@ namespace GetStoreApp.ViewModels.Pages
         private bool _isBackEnabled;
         private object _selected;
 
-        public INavigationService NavigationService { get; }
+        public INavigationService NavigationService { get; } = App.GetService<INavigationService>();
 
-        public INavigationViewService NavigationViewService { get; }
+        public INavigationViewService NavigationViewService { get; } = App.GetService<INavigationViewService>();
 
         public bool IsBackEnabled
         {
@@ -26,11 +26,9 @@ namespace GetStoreApp.ViewModels.Pages
             set { SetProperty(ref _selected, value); }
         }
 
-        public ShellViewModel(INavigationService navigationService, INavigationViewService navigationViewService)
+        public ShellViewModel()
         {
-            NavigationService = navigationService;
             NavigationService.Navigated += OnNavigated;
-            NavigationViewService = navigationViewService;
         }
 
         private void OnNavigated(object sender, NavigationEventArgs e)

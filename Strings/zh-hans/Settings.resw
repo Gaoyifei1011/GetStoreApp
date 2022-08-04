@@ -228,6 +228,9 @@
   <data name="NotifiactionOnContent" xml:space="preserve">
     <value>开启</value>
   </data>
+  <data name="OpenFolderDescription" xml:space="preserve">
+    <value>单击访问该文件夹</value>
+  </data>
   <data name="Region" xml:space="preserve">
     <value>应用在应用商店对应的区域</value>
   </data>

@@ -10,7 +10,7 @@ namespace GetStoreApp.UI.Dialogs
         public DeletePromptDialog()
         {
             ResourceService = App.GetService<IResourceService>();
-            this.InitializeComponent();
+            InitializeComponent();
         }
     }
 }
