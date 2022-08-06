@@ -57,19 +57,13 @@
     <DebugType>embedded</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Assets\新文件夹\**" />
     <Compile Remove="UI\Dialogs\Home\**" />
-    <Content Remove="Assets\新文件夹\**" />
-    <EmbeddedResource Remove="Assets\新文件夹\**" />
     <EmbeddedResource Remove="UI\Dialogs\Home\**" />
-    <None Remove="Assets\新文件夹\**" />
     <None Remove="UI\Dialogs\Home\**" />
-    <Page Remove="Assets\新文件夹\**" />
     <Page Remove="UI\Dialogs\Home\**" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="Aira2\X64\aria2c.exe" />
-    <None Remove="Aira2\X86\aria2c.exe" />
+    <None Remove="Aria2\Config\aria2.conf" />
     <None Remove="Assets\GetStoreApp.png" />
     <None Remove="Assets\Images\CloudflareValidation.png" />
     <None Remove="Assets\Logo\GetStoreApp.png" />
@@ -111,7 +105,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="7.1.2" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.DataGrid" Version="7.1.2" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.43" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.7" />
@@ -120,67 +114,19 @@
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.3" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.8" />
     <PackageReference Include="NETStandard.Library" Version="2.0.3" />
+    <PackageReference Include="System.Management" Version="6.0.0" />
     <PackageReference Include="WinUIEx" Version="1.8.0" />
   </ItemGroup>
+  
   <ItemGroup>
-    <Page Update="Styles\Expander.xaml">
+    <Page Update="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    
     <Page Update="Styles\Button.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Controls\About\InstructionsControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Dialogs\DesktopAppsDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\GridView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\Grid.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\HyperlinkButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\About\SettingsHelpControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\About\PrecautionControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\About\ReferenceControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\About\IntroductionControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\About\HeaderControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Dialogs\RestartPromptDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\Settings\ClearRecordControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Dialogs\DeletePromptDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Dialogs\SelectEmptyPromptDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\Settings\BackdropControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\Home\HistoryItemControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\Expander.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\FontIcon.xaml">
+    <Page Update="Styles\Checkbox.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Styles\Converter.xaml">
@@ -189,19 +135,83 @@
     <Page Update="Styles\DataGrid.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Update="Styles\Expander.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\FontIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\Grid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\GridView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\HyperlinkButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\About\InstructionsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+
+    <Page Update="UI\Controls\About\HeaderControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\About\IntroductionControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\About\PrecautionControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>    
+    <Page Update="UI\Controls\About\ReferenceControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\About\SettingsHelpControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page> 
+    
+    <Page Update="UI\Controls\Home\HistoryItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\Home\RequestControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="UI\Controls\Home\ResultControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Controls\Home\StatusBarControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Controls\Home\RequestControl.xaml">
+
+    <Page Update="UI\Controls\Settings\BackdropControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Controls\Settings\LinkFilterControl.xaml">
+    <Page Update="UI\Controls\Settings\ClearRecordControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\Settings\DownloadOptionsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Controls\Settings\HistoryItemValueControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>       
+    <Page Update="UI\Controls\Settings\LinkFilterControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    
+    <Page Update="UI\Dialogs\CloudflareValidationDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>    
+    <Page Update="UI\Dialogs\DeletePromptDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Dialogs\DesktopAppsDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Dialogs\RestartPromptDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Dialogs\SelectEmptyPromptDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
@@ -230,39 +240,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PRIResource Remove="Assets\新文件夹\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Aira2\X64\aria2c.exe">
+    <Content Include="Aria2\aria2c.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DeploymentContent>true</DeploymentContent>
+      <Link>Aria2\aria2c.exe</Link>
     </Content>
-    <Content Include="Aira2\X86\aria2c.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Styles\Checkbox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="UI\Controls\Settings\DownloadOptionsControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="UI\Dialogs\CloudflareValidationDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Content Include="Aria2\Config\aria2.conf" />
   </ItemGroup>
 </Project>

@@ -1,11 +1,11 @@
 ﻿using GetStoreApp.Activation;
 using GetStoreApp.Contracts.Services.App;
+using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,6 +25,8 @@ namespace GetStoreApp.Services.App
         private IDataBaseService DataBaseService { get; } = GetStoreApp.App.GetService<IDataBaseService>();
 
         private IResourceService ResourceService { get; } = GetStoreApp.App.GetService<IResourceService>();
+
+        private IAria2Service Aria2Service { get; } = GetStoreApp.App.GetService<IAria2Service>();
 
         private IBackdropService BackdropService { get; } = GetStoreApp.App.GetService<IBackdropService>();
 
@@ -79,19 +81,12 @@ namespace GetStoreApp.Services.App
 
             // 初始化应用配置信息
             await BackdropService.InitializeBackdropAsync();
-            Debug.WriteLine("04");
             await DownloadOptionsService.InitializeAsync();
-            Debug.WriteLine("05");
             await HistoryItemValueService.InitializeHistoryItemValueAsync();
-            Debug.WriteLine("06");
             await LinkFilterService.InitializeLinkFilterValueAsnyc();
-            Debug.WriteLine("07");
             await RegionService.InitializeRegionAsync();
-            Debug.WriteLine("08");
             await ThemeService.InitializeThemeAsync();
-            Debug.WriteLine("09");
             await UseInstructionService.InitializeUseInsVisValueAsync();
-            Debug.WriteLine("03");
         }
 
         /// <summary>
@@ -121,6 +116,9 @@ namespace GetStoreApp.Services.App
 
             // 设置应用标题名称
             GetStoreApp.App.MainWindow.Title = ResourceService.GetLocalized("AppDisplayName");
+
+            // 启动Aria2下载服务
+            await Aria2Service.InitializeAria2Async();
         }
     }
 }

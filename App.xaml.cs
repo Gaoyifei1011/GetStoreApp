@@ -18,11 +18,14 @@ using GetStoreApp.ViewModels.Controls.About;
 using GetStoreApp.ViewModels.Controls.Home;
 using GetStoreApp.ViewModels.Controls.Settings;
 using GetStoreApp.ViewModels.Pages;
+using GetStoreApp.ViewModels.Window;
 using GetStoreApp.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
 using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using WinUIEx;
 
 namespace GetStoreApp
@@ -61,9 +64,10 @@ namespace GetStoreApp
                 services.AddSingleton<IDataBaseService, DataBaseService>();
                 services.AddSingleton<IResourceService, ResourceService>();
 
-                services.AddTransient<IDownloadDataService, DownloadDataService>();
+                services.AddSingleton<IAria2Service, Aria2Service>();
+                services.AddSingleton<IDownloadDataService, DownloadDataService>();
 
-                services.AddTransient<IHistoryDataService, HistoryDataService>();
+                services.AddSingleton<IHistoryDataService, HistoryDataService>();
 
                 services.AddSingleton<IBackdropService, BackdropService>();
                 services.AddSingleton<IDownloadOptionsService, DownloadOptionsService>();
@@ -82,6 +86,10 @@ namespace GetStoreApp
 
                 // Default Activation Handler
                 services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
+
+                // Window
+                services.AddTransient<MainWindow>();
+                services.AddTransient<MainWindowViewModel>();
 
                 // Pages and ViewModels
                 services.AddTransient<AboutPage>();
@@ -150,7 +158,32 @@ namespace GetStoreApp
         {
             base.OnLaunched(args);
 
+            await RunSingleInstanceApp();
+
             await ActivationService.ActivateAsync(args);
+        }
+
+        /// <summary>
+        /// 应用程序只运行单个实例
+        /// </summary>
+        private async Task RunSingleInstanceApp()
+        {
+            // Get the activation args
+            var appArgs = Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().GetActivatedEventArgs();
+
+            // Get or register the main instance
+            var mainInstance = Microsoft.Windows.AppLifecycle.AppInstance.FindOrRegisterForKey("main");
+
+            // If the main instance isn't this current instance
+            if (!mainInstance.IsCurrent)
+            {
+                // Redirect activation to that instance
+                await mainInstance.RedirectActivationToAsync(appArgs);
+
+                // And exit our instance and stop
+                Process.GetCurrentProcess().Kill();
+                return;
+            }
         }
     }
 }
