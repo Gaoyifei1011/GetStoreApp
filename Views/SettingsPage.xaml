@@ -56,7 +56,7 @@
 
             <sc:LinkFilterControl />
 
-            <sc:DownloadOptionsControl />
+            <!--<sc:DownloadOptionsControl />-->
 
             <TextBlock
                 FontSize="16"

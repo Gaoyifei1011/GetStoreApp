@@ -60,10 +60,8 @@ namespace GetStoreApp.Helpers
             ManagementObjectSearcher searcher = new ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" + processID);
             ManagementObjectCollection moc = searcher.Get();
 
-            foreach (ManagementObject mo in moc)
-            {
-                KillProcessAndChildren(Convert.ToInt32(mo["ProcessID"]));
-            }
+            foreach (ManagementObject mo in moc) KillProcessAndChildren(Convert.ToInt32(mo["ProcessID"]));
+
             try
             {
                 Process process = Process.GetProcessById(processID);

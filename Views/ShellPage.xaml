@@ -54,6 +54,7 @@
                 <NavigationViewItem
                     helpers:NavigationHelper.NavigateTo="GetStoreApp.ViewModels.Pages.DownloadViewModel"
                     Content="{x:Bind ResourceService.GetLocalized('/Shell/Download')}"
+                    IsEnabled="False"
                     Icon="Download" />
 
                 <NavigationViewItem
