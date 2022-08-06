@@ -32,7 +32,7 @@ namespace GetStoreApp.Services.App
             await InitializeHistoryTableAsync();
 
             // 初始化下载记录表
-            await InitializeDownloadTableAsync();
+            //await InitializeDownloadTableAsync();
         }
 
         /// <summary>

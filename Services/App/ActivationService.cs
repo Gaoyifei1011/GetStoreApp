@@ -118,7 +118,7 @@ namespace GetStoreApp.Services.App
             GetStoreApp.App.MainWindow.Title = ResourceService.GetLocalized("AppDisplayName");
 
             // 启动Aria2下载服务
-            await Aria2Service.InitializeAria2Async();
+            //await Aria2Service.InitializeAria2Async();
         }
     }
 }

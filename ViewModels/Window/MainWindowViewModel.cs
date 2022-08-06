@@ -8,9 +8,10 @@ namespace GetStoreApp.ViewModels.Window
     {
         public IAria2Service Aria2Service { get; } = App.GetService<IAria2Service>();
 
-        public async Task WindowClosed()
+        public async void WindowClosed()
         {
-            await Aria2Service.CloseAria2Async();
+            //await Aria2Service.CloseAria2Async();
+            await Task.CompletedTask;
         }
     }
 }
