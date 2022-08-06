@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Windows.ApplicationModel;
 using Windows.System.Profile;
 
@@ -64,6 +65,14 @@ namespace GetStoreApp.Helpers
         public static Dictionary<string, ushort> GetAppVersion()
         {
             return AppVersionDict;
+        }
+
+        /// <summary>
+        /// 获取系统处理器架构
+        /// </summary>
+        public static string GetProcessorArchitecture()
+        {
+            return RuntimeInformation.ProcessArchitecture.ToString();
         }
     }
 }
