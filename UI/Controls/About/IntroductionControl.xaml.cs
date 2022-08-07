@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Contracts.Services.App;
+using GetStoreApp.Helpers;
 using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.UI.Controls.About
@@ -9,7 +10,7 @@ namespace GetStoreApp.UI.Controls.About
 
         public IntroductionControl()
         {
-            ResourceService = App.GetService<IResourceService>();
+            ResourceService = IOCHelper.GetService<IResourceService>();
             InitializeComponent();
         }
     }

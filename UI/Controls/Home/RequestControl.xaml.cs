@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Contracts.Services.App;
+using GetStoreApp.Helpers;
 using GetStoreApp.Models;
 using GetStoreApp.ViewModels.Controls.Home;
 using Microsoft.UI.Xaml.Controls;
@@ -12,14 +13,14 @@ namespace GetStoreApp.UI.Controls.Home
 
         public RequestViewModel ViewModel { get; }
 
-        public List<GetAppTypeModel> TypeList { get; set; }
+        public List<GetAppTypeModel> TypeList { get; }
 
-        public List<GetAppChannelModel> ChannelList { get; set; }
+        public List<GetAppChannelModel> ChannelList { get; }
 
         public RequestControl()
         {
-            ResourceService = App.GetService<IResourceService>();
-            ViewModel = App.GetService<RequestViewModel>();
+            ResourceService = IOCHelper.GetService<IResourceService>();
+            ViewModel = IOCHelper.GetService<RequestViewModel>();
 
             TypeList = ResourceService.TypeList;
             ChannelList = ResourceService.ChannelList;

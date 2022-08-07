@@ -1,4 +1,5 @@
-﻿using GetStoreApp.ViewModels.Controls.Home;
+﻿using GetStoreApp.Helpers;
+using GetStoreApp.ViewModels.Controls.Home;
 using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.UI.Controls.Home
@@ -9,7 +10,7 @@ namespace GetStoreApp.UI.Controls.Home
 
         public StatusBarControl()
         {
-            ViewModel = App.GetService<StatusBarViewModel>();
+            ViewModel = IOCHelper.GetService<StatusBarViewModel>();
             InitializeComponent();
         }
     }

@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Helpers;
 using GetStoreApp.Models;
 using GetStoreApp.UI.Dialogs;
 using Microsoft.UI.Xaml.Controls;
@@ -21,9 +22,9 @@ namespace GetStoreApp.ViewModels.Pages
         private int DownloadItem;
         private bool DownloadNotification;
 
-        private IDownloadOptionsService DownloadOptionsService { get; } = App.GetService<IDownloadOptionsService>();
+        private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
 
-        private INavigationService NavigationService { get; } = App.GetService<INavigationService>();
+        private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
 
         private bool _isSelectMode = false;
 
@@ -175,7 +176,6 @@ namespace GetStoreApp.ViewModels.Pages
         /// <summary>
         /// 删除选中的条目时，显示删除提示对话框
         /// </summary>
-        /// <returns></returns>
         private async Task<ContentDialogResult> ShowDeletePromptDialogAsync()
         {
             DeletePromptDialog dialog = new DeletePromptDialog();

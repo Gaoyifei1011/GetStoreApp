@@ -20,9 +20,9 @@ namespace GetStoreApp.Services.Settings
 
         public ThemeModel AppTheme { get; set; }
 
-        private IConfigStorageService ConfigStorageService { get; set; } = GetStoreApp.App.GetService<IConfigStorageService>();
+        private IConfigStorageService ConfigStorageService { get; set; } = IOCHelper.GetService<IConfigStorageService>();
 
-        private IResourceService ResourceService { get; set; } = GetStoreApp.App.GetService<IResourceService>();
+        private IResourceService ResourceService { get; set; } = IOCHelper.GetService<IResourceService>();
 
         public List<ThemeModel> ThemeList { get; set; }
 

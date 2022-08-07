@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml.Media.Animation;
@@ -12,9 +13,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
 {
     public class TitleViewModel : ObservableRecipient
     {
-        private IUseInstructionService UseInstructionService { get; } = App.GetService<IUseInstructionService>();
+        private IUseInstructionService UseInstructionService { get; } = IOCHelper.GetService<IUseInstructionService>();
 
-        private INavigationService NavigationService { get; } = App.GetService<INavigationService>();
+        private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
 
         private bool _useInsVisValue;
 

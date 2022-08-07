@@ -21,7 +21,7 @@ namespace GetStoreApp.Services.Settings
 
         public RegionModel AppRegion { get; set; }
 
-        private IConfigStorageService ConfigStorageService { get; set; } = GetStoreApp.App.GetService<IConfigStorageService>();
+        private IConfigStorageService ConfigStorageService { get; set; } = IOCHelper.GetService<IConfigStorageService>();
 
         public List<RegionModel> RegionList { get; set; } = GeographicalLocationHelper.GetGeographicalLocations().OrderBy(item => item.FriendlyName).ToList();
 

@@ -1,4 +1,5 @@
-﻿using GetStoreApp.ViewModels.Pages;
+﻿using GetStoreApp.Helpers;
+using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.Views
@@ -9,7 +10,7 @@ namespace GetStoreApp.Views
 
         public HomePage()
         {
-            ViewModel = App.GetService<HomeViewModel>();
+            ViewModel = IOCHelper.GetService<HomeViewModel>();
             InitializeComponent();
         }
     }

@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Helpers;
 using System;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace GetStoreApp.Services.Settings
     {
         private string SettingsKey { get; init; } = "UseInsVisValue";
 
-        private IConfigStorageService ConfigStorageService { get; } = GetStoreApp.App.GetService<IConfigStorageService>();
+        private IConfigStorageService ConfigStorageService { get; } = IOCHelper.GetService<IConfigStorageService>();
 
         private bool DefaultUseInsVisValue { get; } = true;
 

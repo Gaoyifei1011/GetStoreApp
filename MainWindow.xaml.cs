@@ -1,4 +1,5 @@
-﻿using GetStoreApp.ViewModels.Window;
+﻿using GetStoreApp.Helpers;
+using GetStoreApp.ViewModels.Window;
 using System;
 using System.IO;
 using WinUIEx;
@@ -11,7 +12,7 @@ namespace GetStoreApp
 
         public MainWindow()
         {
-            ViewModel = App.GetService<MainWindowViewModel>();
+            ViewModel = IOCHelper.GetService<MainWindowViewModel>();
             InitializeComponent();
 
             AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/Logo/GetStoreApp.ico"));

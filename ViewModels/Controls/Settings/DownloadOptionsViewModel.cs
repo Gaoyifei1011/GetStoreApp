@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class DownloadOptionsViewModel : ObservableRecipient
     {
-        private IDownloadOptionsService DownloadOptionsService { get; } = App.GetService<IDownloadOptionsService>();
+        private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
 
         private StorageFolder _downloadFolder;
 

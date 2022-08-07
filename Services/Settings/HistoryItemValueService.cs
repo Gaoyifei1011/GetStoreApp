@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Helpers;
 using GetStoreApp.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,9 +14,9 @@ namespace GetStoreApp.Services.Settings
     {
         private string SettingsKey { get; init; } = "HistoryItem";
 
-        private IConfigStorageService ConfigStorageService { get; } = GetStoreApp.App.GetService<IConfigStorageService>();
+        private IConfigStorageService ConfigStorageService { get; } = IOCHelper.GetService<IConfigStorageService>();
 
-        private IResourceService ResourceService { get; } = GetStoreApp.App.GetService<IResourceService>();
+        private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
         private HistoryItemValueModel DefaultHistoryItem { get; set; }
 

@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.History;
+using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using System;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class ClearRecordViewModel : ObservableRecipient
     {
-        private IHistoryDataService HistoryDataService { get; } = App.GetService<IHistoryDataService>();
+        private IHistoryDataService HistoryDataService { get; } = IOCHelper.GetService<IHistoryDataService>();
 
         private bool _clearState = false;
 

@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Helpers;
 using GetStoreApp.Models;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace GetStoreApp.Services.Settings
     {
         private string SettingsKey { get; init; } = "AppLanguage";
 
-        private IConfigStorageService ConfigStorageService { get; } = GetStoreApp.App.GetService<IConfigStorageService>();
+        private IConfigStorageService ConfigStorageService { get; } = IOCHelper.GetService<IConfigStorageService>();
 
         public LanguageModel DefaultAppLanguage { get; set; }
 

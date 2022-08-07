@@ -21,11 +21,11 @@ namespace GetStoreApp.ViewModels.Pages
 {
     public class HistoryViewModel : ObservableRecipient
     {
-        private IResourceService ResourceService { get; } = App.GetService<IResourceService>();
+        private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        private IHistoryDataService HistoryDataService { get; } = App.GetService<IHistoryDataService>();
+        private IHistoryDataService HistoryDataService { get; } = IOCHelper.GetService<IHistoryDataService>();
 
-        private INavigationService NavigationService { get; } = App.GetService<INavigationService>();
+        private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
 
         private bool _isSelectMode = false;
 
@@ -343,7 +343,6 @@ namespace GetStoreApp.ViewModels.Pages
         /// <summary>
         /// 删除选中的条目时，显示删除提示对话框
         /// </summary>
-        /// <returns></returns>
         private async Task<ContentDialogResult> ShowDeletePromptDialogAsync()
         {
             DeletePromptDialog dialog = new DeletePromptDialog();

@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.App;
+using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.Models;
 using Microsoft.UI.Xaml.Controls;
@@ -11,7 +12,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 {
     public class StatusBarViewModel : ObservableRecipient
     {
-        private IResourceService ResourceService { get; } = App.GetService<IResourceService>();
+        private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
         private InfoBarSeverity _infoSeverity = InfoBarSeverity.Informational;
 

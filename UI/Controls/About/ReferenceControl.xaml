@@ -14,13 +14,16 @@
         <Expander.Content>
             <GridView
                 Margin="9,0,0,0"
-                ItemContainerStyle="{StaticResource GridViewItemStyle}"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                ItemsPanel="{StaticResource GridViewTemplate}"
                 ItemsSource="{x:Bind ViewModel.ReferenceDict}"
                 SelectionMode="None">
+
                 <GridView.ItemTemplate>
                     <DataTemplate>
                         <HyperlinkButton
-                            MinWidth="320"
+                            MinWidth="300"
                             Padding="5,10,0,10"
                             HorizontalContentAlignment="Left"
                             Content="{Binding Key}"

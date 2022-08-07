@@ -2,6 +2,7 @@
 using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Helpers;
 using GetStoreApp.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -18,31 +19,31 @@ namespace GetStoreApp.Services.App
     {
         private UIElement _shell = null;
 
-        private ActivationHandler<LaunchActivatedEventArgs> DefaultHandler { get; } = GetStoreApp.App.GetService<ActivationHandler<LaunchActivatedEventArgs>>();
+        private ActivationHandler<LaunchActivatedEventArgs> DefaultHandler { get; } = IOCHelper.GetService<ActivationHandler<LaunchActivatedEventArgs>>();
 
-        private IEnumerable<IActivationHandler> ActivationHandlers { get; } = GetStoreApp.App.GetService<IEnumerable<IActivationHandler>>();
+        private IEnumerable<IActivationHandler> ActivationHandlers { get; } = IOCHelper.GetService<IEnumerable<IActivationHandler>>();
 
-        private IDataBaseService DataBaseService { get; } = GetStoreApp.App.GetService<IDataBaseService>();
+        private IDataBaseService DataBaseService { get; } = IOCHelper.GetService<IDataBaseService>();
 
-        private IResourceService ResourceService { get; } = GetStoreApp.App.GetService<IResourceService>();
+        private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        private IAria2Service Aria2Service { get; } = GetStoreApp.App.GetService<IAria2Service>();
+        private IAria2Service Aria2Service { get; } = IOCHelper.GetService<IAria2Service>();
 
-        private IBackdropService BackdropService { get; } = GetStoreApp.App.GetService<IBackdropService>();
+        private IBackdropService BackdropService { get; } = IOCHelper.GetService<IBackdropService>();
 
-        private IDownloadOptionsService DownloadOptionsService { get; } = GetStoreApp.App.GetService<IDownloadOptionsService>();
+        private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
 
-        private IHistoryItemValueService HistoryItemValueService { get; } = GetStoreApp.App.GetService<IHistoryItemValueService>();
+        private IHistoryItemValueService HistoryItemValueService { get; } = IOCHelper.GetService<IHistoryItemValueService>();
 
-        private ILanguageService LanguageService { get; } = GetStoreApp.App.GetService<ILanguageService>();
+        private ILanguageService LanguageService { get; } = IOCHelper.GetService<ILanguageService>();
 
-        private ILinkFilterService LinkFilterService { get; } = GetStoreApp.App.GetService<ILinkFilterService>();
+        private ILinkFilterService LinkFilterService { get; } = IOCHelper.GetService<ILinkFilterService>();
 
-        private IRegionService RegionService { get; } = GetStoreApp.App.GetService<IRegionService>();
+        private IRegionService RegionService { get; } = IOCHelper.GetService<IRegionService>();
 
-        private IThemeService ThemeService { get; } = GetStoreApp.App.GetService<IThemeService>();
+        private IThemeService ThemeService { get; } = IOCHelper.GetService<IThemeService>();
 
-        private IUseInstructionService UseInstructionService { get; } = GetStoreApp.App.GetService<IUseInstructionService>();
+        private IUseInstructionService UseInstructionService { get; } = IOCHelper.GetService<IUseInstructionService>();
 
         public async Task ActivateAsync(object activationArgs)
         {
@@ -52,7 +53,7 @@ namespace GetStoreApp.Services.App
             // 新建导航视图的Frame窗口
             if (GetStoreApp.App.MainWindow.Content == null)
             {
-                _shell = GetStoreApp.App.GetService<ShellPage>();
+                _shell = IOCHelper.GetService<ShellPage>();
                 GetStoreApp.App.MainWindow.Content = _shell ?? new Frame();
             }
 
@@ -118,7 +119,7 @@ namespace GetStoreApp.Services.App
             GetStoreApp.App.MainWindow.Title = ResourceService.GetLocalized("AppDisplayName");
 
             // 启动Aria2下载服务
-            //await Aria2Service.InitializeAria2Async();
+            await Aria2Service.InitializeAria2Async();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Contracts.Services.App;
+using GetStoreApp.Helpers;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml.Controls;
 
@@ -8,20 +9,20 @@ namespace GetStoreApp.Views
     {
         public IResourceService ResourceService { get; }
 
-        public DownloadViewModel ViewModel { get; set; }
+        public DownloadViewModel ViewModel { get; }
 
-        public string OpenFolder { get; set; }
+        public string OpenFolder { get;}
 
-        public string ContinueDownload { get; set; }
+        public string ContinueDownload { get;}
 
-        public string PauseDownload { get; set; }
+        public string PauseDownload { get; }
 
-        public string DeleteTask { get; set; }
+        public string DeleteTask { get;}
 
         public DownloadPage()
         {
-            ResourceService = App.GetService<IResourceService>();
-            ViewModel = App.GetService<DownloadViewModel>();
+            ResourceService = IOCHelper.GetService<IResourceService>();
+            ViewModel = IOCHelper.GetService<DownloadViewModel>();
 
             OpenFolder = ResourceService.GetLocalized("/Download/OpenFolder");
             ContinueDownload = ResourceService.GetLocalized("/Download/Continue");

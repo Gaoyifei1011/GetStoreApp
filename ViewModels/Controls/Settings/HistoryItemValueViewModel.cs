@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.Models;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class HistoryItemValueViewModel : ObservableRecipient
     {
-        private IHistoryItemValueService HistoryItemValueService { get; } = App.GetService<IHistoryItemValueService>();
+        private IHistoryItemValueService HistoryItemValueService { get; } = IOCHelper.GetService<IHistoryItemValueService>();
 
         private HistoryItemValueModel _historyItem;
 

@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml.Media.Animation;
@@ -13,9 +14,9 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class LinkFilterViewModel : ObservableRecipient
     {
-        private ILinkFilterService LinkFilterService { get; } = App.GetService<ILinkFilterService>();
+        private ILinkFilterService LinkFilterService { get; } = IOCHelper.GetService<ILinkFilterService>();
 
-        private INavigationService NavigationService { get; } = App.GetService<INavigationService>();
+        private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
 
         private bool _startsWithEFilterValue;
 

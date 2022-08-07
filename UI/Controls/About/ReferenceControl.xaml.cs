@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Contracts.Services.App;
+using GetStoreApp.Helpers;
 using GetStoreApp.ViewModels.Controls.About;
 using Microsoft.UI.Xaml.Controls;
 
@@ -10,12 +11,12 @@ namespace GetStoreApp.UI.Controls.About
 
         public ReferenceViewModel ViewModel { get; }
 
-        public string ReferenceDescription { get; set; }
+        public string ReferenceDescription { get; }
 
         public ReferenceControl()
         {
-            ResourceService = App.GetService<IResourceService>();
-            ViewModel = App.GetService<ReferenceViewModel>();
+            ResourceService = IOCHelper.GetService<IResourceService>();
+            ViewModel = IOCHelper.GetService<ReferenceViewModel>();
 
             ReferenceDescription = ResourceService.GetLocalized("/About/ReferenceDescription");
             InitializeComponent();

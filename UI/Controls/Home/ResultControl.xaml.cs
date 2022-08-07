@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Contracts.Services.App;
+using GetStoreApp.Helpers;
 using GetStoreApp.ViewModels.Controls.Home;
 using Microsoft.UI.Xaml.Controls;
 
@@ -8,15 +9,13 @@ namespace GetStoreApp.UI.Controls.Home
     {
         public IResourceService ResourceService { get; }
 
-        public ResultViewModel ViewModel { get; set; }
-
-        public string Test { get; set; } = "testtsring";
+        public ResultViewModel ViewModel { get; }
 
         public ResultControl()
         {
-            ResourceService = App.GetService<IResourceService>();
-            ViewModel = App.GetService<ResultViewModel>();
-            this.DataContext = ViewModel;
+            ResourceService = IOCHelper.GetService<IResourceService>();
+            ViewModel = IOCHelper.GetService<ResultViewModel>();
+
             InitializeComponent();
         }
 

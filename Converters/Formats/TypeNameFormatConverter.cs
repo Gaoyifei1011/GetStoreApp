@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Contracts.Services.App;
+using GetStoreApp.Helpers;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
 using System;
@@ -10,7 +11,7 @@ namespace GetStoreApp.Converters.Formats
     /// </summary>
     public class TypeNameFormatConverter : IValueConverter
     {
-        private IResourceService ResourceService { get; } = App.GetService<IResourceService>();
+        private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {

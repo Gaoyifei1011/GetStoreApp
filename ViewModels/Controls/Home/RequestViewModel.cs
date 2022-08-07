@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Contracts.Services.History;
 using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.Models;
 using GetStoreApp.Services.Home;
@@ -17,13 +18,13 @@ namespace GetStoreApp.ViewModels.Controls.Home
 {
     public class RequestViewModel : ObservableRecipient
     {
-        private IRegionService RegionService { get; } = App.GetService<IRegionService>();
+        private IRegionService RegionService { get; } = IOCHelper.GetService<IRegionService>();
 
-        private IResourceService ResourceService { get; } = App.GetService<IResourceService>();
+        private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        private IHistoryDataService HistoryDataService { get; } = App.GetService<IHistoryDataService>();
+        private IHistoryDataService HistoryDataService { get; } = IOCHelper.GetService<IHistoryDataService>();
 
-        private ILinkFilterService LinkFilterService { get; } = App.GetService<ILinkFilterService>();
+        private ILinkFilterService LinkFilterService { get; } = IOCHelper.GetService<ILinkFilterService>();
 
         private bool BlockMapFilterValue { get; set; }
 

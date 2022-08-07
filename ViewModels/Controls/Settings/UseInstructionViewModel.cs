@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using System;
 
@@ -9,7 +10,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class UseInstructionViewModel : ObservableRecipient
     {
-        private IUseInstructionService UseInstructionService { get; } = App.GetService<IUseInstructionService>();
+        private IUseInstructionService UseInstructionService { get; } = IOCHelper.GetService<IUseInstructionService>();
 
         private bool _useInsVisValue;
 
