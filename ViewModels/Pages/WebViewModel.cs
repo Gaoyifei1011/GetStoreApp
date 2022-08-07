@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using GetStoreApp.Contracts.Services.Web;
 using GetStoreApp.Contracts.ViewModels;
+using GetStoreApp.Helpers;
 using Microsoft.Web.WebView2.Core;
 using System;
 using System.Windows.Input;
@@ -20,7 +21,7 @@ namespace GetStoreApp.ViewModels.Pages
         private ICommand _refreshCommand;
         private ICommand _retryCommand;
 
-        public IWebViewService WebViewService { get; } = App.GetService<IWebViewService>();
+        public IWebViewService WebViewService { get; } = IOCHelper.GetService<IWebViewService>();
 
         public Uri Source
         {

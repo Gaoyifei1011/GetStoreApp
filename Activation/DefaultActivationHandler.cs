@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Helpers;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml;
 using System;
@@ -12,7 +13,7 @@ namespace GetStoreApp.Activation
 
         public DefaultActivationHandler()
         {
-            NavigationService = App.GetService<INavigationService>();
+            NavigationService = IOCHelper.GetService<INavigationService>();
         }
 
         protected override bool CanHandleInternal(LaunchActivatedEventArgs args)

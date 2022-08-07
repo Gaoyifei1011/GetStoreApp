@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Helpers;
 using GetStoreApp.Models;
 using System;
 using System.Collections.Generic;
@@ -15,9 +16,9 @@ namespace GetStoreApp.Services.Settings
     {
         private string SettingsKey { get; init; } = "AppBackdrop";
 
-        private IConfigStorageService ConfigStorageService { get; } = GetStoreApp.App.GetService<IConfigStorageService>();
+        private IConfigStorageService ConfigStorageService { get; } = IOCHelper.GetService<IConfigStorageService>();
 
-        private IResourceService ResourceService { get; } = GetStoreApp.App.GetService<IResourceService>();
+        private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
         private BackdropModel DefaultAppBackdrop { get; set; }
 

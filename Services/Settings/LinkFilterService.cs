@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Helpers;
 using System;
 using System.Threading.Tasks;
 
@@ -20,7 +21,7 @@ namespace GetStoreApp.Services.Settings
 
         public bool BlockMapFilterValue { get; set; }
 
-        private IConfigStorageService ConfigStorageService { get; set; } = GetStoreApp.App.GetService<IConfigStorageService>();
+        private IConfigStorageService ConfigStorageService { get; set; } = IOCHelper.GetService<IConfigStorageService>();
 
         /// <summary>
         /// 应用在初始化前获取设置存储的链接过滤值

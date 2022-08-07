@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Helpers;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -16,8 +17,8 @@ namespace GetStoreApp.Views
 
         public ShellPage()
         {
-            ResourceService = App.GetService<IResourceService>();
-            ViewModel = App.GetService<ShellViewModel>();
+            ResourceService = IOCHelper.GetService<IResourceService>();
+            ViewModel = IOCHelper.GetService<ShellViewModel>();
             InitializeComponent();
 
             ViewModel.NavigationService.Frame = NavigationFrame;
@@ -59,7 +60,7 @@ namespace GetStoreApp.Views
 
         private void OnKeyboardAcceleratorInvoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
         {
-            var navigationService = App.GetService<INavigationService>();
+            var navigationService = IOCHelper.GetService<INavigationService>();
 
             var result = navigationService.GoBack();
 

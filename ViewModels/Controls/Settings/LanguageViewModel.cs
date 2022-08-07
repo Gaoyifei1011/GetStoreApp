@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Helpers;
 using GetStoreApp.Models;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml.Media.Animation;
@@ -12,9 +13,9 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class LanguageViewModel : ObservableRecipient
     {
-        private ILanguageService LanguageService { get; } = App.GetService<ILanguageService>();
+        private ILanguageService LanguageService { get; } = IOCHelper.GetService<ILanguageService>();
 
-        private INavigationService NavigationService { get; } = App.GetService<INavigationService>();
+        private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
 
         private LanguageModel _language;
 

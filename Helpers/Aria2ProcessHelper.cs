@@ -12,12 +12,11 @@ namespace GetStoreApp.Helpers
     /// </summary>
     public static class Aria2ProcessHelper
     {
-        private static Process process = new Process();
+        private static Process process { get; } = new Process();
 
         /// <summary>
         /// 获取当前进程的PID信息
         /// </summary>
-        /// <returns></returns>
         public static int GetProcessID()
         {
             return process.Id;

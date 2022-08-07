@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Helpers;
 using GetStoreApp.Views;
 using Microsoft.UI.Xaml.Navigation;
 
@@ -10,9 +11,9 @@ namespace GetStoreApp.ViewModels.Pages
         private bool _isBackEnabled;
         private object _selected;
 
-        public INavigationService NavigationService { get; } = App.GetService<INavigationService>();
+        public INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
 
-        public INavigationViewService NavigationViewService { get; } = App.GetService<INavigationViewService>();
+        public INavigationViewService NavigationViewService { get; } = IOCHelper.GetService<INavigationViewService>();
 
         public bool IsBackEnabled
         {

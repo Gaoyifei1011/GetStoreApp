@@ -4,36 +4,25 @@
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <RootNamespace>GetStoreApp</RootNamespace>
     <Platforms>x86;x64;arm64</Platforms>
-    <TargetFramework>net6.0-windows10.0.22000.0</TargetFramework>
-    <SelfContained>true</SelfContained>
-    <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+    <TargetFramework>net6.0-windows10.0.22621.0</TargetFramework>
     <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
     <PublishProfile>Properties\PublishProfiles\win10-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
     <EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
     <PackageCertificateThumbprint>7F64DB0B0770C29C61E5F8DC60430B3DC390D99F</PackageCertificateThumbprint>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
-    <UseWPF>False</UseWPF>
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
-    <UseWindowsForms>False</UseWindowsForms>
-    <StartupObject></StartupObject>
     <ApplicationIcon>Assets\Logo\GetStoreApp.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <SignAssembly>True</SignAssembly>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Version>0.3.3.0</Version>
-    <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
-    <ImplicitUsings>disable</ImplicitUsings>
     <FileVersion>0.3.3.0</FileVersion>
-    <AssemblyVersion></AssemblyVersion>
     <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
     <Copyright>高怡飞</Copyright>
-    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
-    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
-    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
-    <AppxBundle>Never</AppxBundle>
+    <StartupObject>GetStoreApp.Program</StartupObject>
+    <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
     <Optimize>True</Optimize>
@@ -106,6 +95,7 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+    <PackageReference Include="CommunityToolkit.WinUI.Notifications" Version="7.1.2" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.DataGrid" Version="7.1.2" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.43" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.7" />

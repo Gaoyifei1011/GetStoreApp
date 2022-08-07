@@ -22,13 +22,13 @@ namespace GetStoreApp.ViewModels.Controls.Home
     {
         private HistoryItemValueModel HistoryItem { get; set; }
 
-        private IResourceService ResourceService { get; } = App.GetService<IResourceService>();
+        private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        private IHistoryDataService HistoryDataService { get; } = App.GetService<IHistoryDataService>();
+        private IHistoryDataService HistoryDataService { get; } = IOCHelper.GetService<IHistoryDataService>();
 
-        private IHistoryItemValueService HistoryItemValueService { get; } = App.GetService<IHistoryItemValueService>();
+        private IHistoryItemValueService HistoryItemValueService { get; } = IOCHelper.GetService<IHistoryItemValueService>();
 
-        private INavigationService NavigationService { get; } = App.GetService<INavigationService>();
+        private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
 
         private HistoryModel _selectedHistoryItem;
 

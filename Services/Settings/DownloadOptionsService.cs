@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace GetStoreApp.Services.Settings
 
         private string NotificationSettingsKey { get; init; } = "DownloadNotification";
 
-        private IConfigStorageService ConfigStorageService { get; } = GetStoreApp.App.GetService<IConfigStorageService>();
+        private IConfigStorageService ConfigStorageService { get; } = IOCHelper.GetService<IConfigStorageService>();
 
         private StorageFolder DefaultFolder { get; } = ApplicationData.Current.LocalCacheFolder;
 

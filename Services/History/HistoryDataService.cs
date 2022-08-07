@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Contracts.Services.History;
+using GetStoreApp.Helpers;
 using GetStoreApp.Models;
 using Microsoft.Data.Sqlite;
 using System;
@@ -14,7 +15,7 @@ namespace GetStoreApp.Services.History
     /// </summary>
     public class HistoryDataService : IHistoryDataService
     {
-        private IDataBaseService DataBaseService { get; } = GetStoreApp.App.GetService<IDataBaseService>();
+        private IDataBaseService DataBaseService { get; } = IOCHelper.GetService<IDataBaseService>();
 
         /// <summary>
         /// 判断历史记录表是否为空

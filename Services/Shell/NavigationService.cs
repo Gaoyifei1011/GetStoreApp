@@ -15,7 +15,7 @@ namespace GetStoreApp.Services.Shell
         private object _lastParameterUsed;
         private Frame _frame;
 
-        private IPageService PageService { get; } = GetStoreApp.App.GetService<IPageService>();
+        private IPageService PageService { get; } = IOCHelper.GetService<IPageService>();
 
         public event NavigatedEventHandler Navigated;
 

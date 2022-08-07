@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Contracts.Services.App;
+using GetStoreApp.Helpers;
 using GetStoreApp.ViewModels.Controls.Home;
 using Microsoft.UI.Xaml.Controls;
 
@@ -12,8 +13,8 @@ namespace GetStoreApp.UI.Controls.Home
 
         public TitleControl()
         {
-            ResourceService = App.GetService<IResourceService>();
-            ViewModel = App.GetService<TitleViewModel>();
+            ResourceService = IOCHelper.GetService<IResourceService>();
+            ViewModel = IOCHelper.GetService<TitleViewModel>();
             InitializeComponent();
         }
     }
