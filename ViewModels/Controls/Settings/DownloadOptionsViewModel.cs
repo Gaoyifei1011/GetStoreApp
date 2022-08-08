@@ -63,7 +63,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
             OpenFolderCommand = new AsyncRelayCommand(async () =>
             {
-                await Windows.System.Launcher.LaunchFolderAsync(DownloadFolder);
+                await DownloadOptionsService.OpenFolderAsync(DownloadFolder);
             });
 
             ChangeFolderCommand = new AsyncRelayCommand(ChangeFolderAsync);
