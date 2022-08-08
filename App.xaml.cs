@@ -27,7 +27,6 @@ namespace GetStoreApp
             Aria2Service = IOCHelper.GetService<IAria2Service>();
 
             UnhandledException += OnUnhandledException;
-            
         }
 
         protected override async void OnLaunched(LaunchActivatedEventArgs args)

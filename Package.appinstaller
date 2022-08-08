@@ -8,10 +8,9 @@
   <MainBundle Name="{Name}"
               Version="{Version}"
               Publisher="{Publisher}"
-              Uri="{MainPackageUri}"/>
+              Uri="{MainPackageUri}" />
 
   <UpdateSettings>
     <OnLaunch HoursBetweenUpdateChecks="0" />
   </UpdateSettings>
-
 </AppInstaller>

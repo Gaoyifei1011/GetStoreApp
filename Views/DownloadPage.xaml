@@ -82,7 +82,6 @@
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.OpenFolderCommand}"
-                    CommandParameter="{x:Null}"
                     Label="{x:Bind ResourceService.GetLocalized('/Download/OpenFolder')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/OpenFolder')}">
                     <AppBarButton.Icon>
@@ -266,7 +265,7 @@
 
                             <Button
                                 Margin="5,0,0,0"
-                                Command="{Binding ElementName=DownloadRoot, Path=ViewModel.OpenFolderCommand}"
+                                Command="{Binding ElementName=DownloadRoot, Path=ViewModel.OpenItemFolderCommand}"
                                 CommandParameter="{Binding FilePath}"
                                 Content="&#xE8b7;"
                                 Style="{StaticResource ButtonDownloadStyle}"

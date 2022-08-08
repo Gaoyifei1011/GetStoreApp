@@ -18,7 +18,7 @@ namespace GetStoreApp.Services.App
 
         public string DownloadTableName { get; } = "DOWNLOAD";
 
-        public string DBpath { get; } = Path.Combine(ApplicationData.Current.LocalFolder.Path, "GetStoreApp.db");
+        public string DBpath { get; } = Path.Combine(ApplicationData.Current.LocalFolder.Path, "GetStoreApp.db"); 
 
         /// <summary>
         /// 历史记录表不存在时，自动创建历史记录表

@@ -3,6 +3,7 @@ using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
 
@@ -21,7 +22,7 @@ namespace GetStoreApp.Services.Settings
 
         private IConfigStorageService ConfigStorageService { get; } = IOCHelper.GetService<IConfigStorageService>();
 
-        private StorageFolder DefaultFolder { get; } = ApplicationData.Current.LocalCacheFolder;
+        private StorageFolder DefaultFolder { get; set; }
 
         private int DefaultItem { get; } = 1;
 
@@ -36,10 +37,14 @@ namespace GetStoreApp.Services.Settings
         public List<int> DownloadItemList { get; set; } = new List<int>() { 1, 2, 3 };
 
         /// <summary>
-        /// 应用在初始化前获取设置存储的下载相关内容设置值
+        /// 应用在初始化前获取设置存储的下载相关内容设置值，并创建默认下载目录
         /// </summary>
         public async Task InitializeAsync()
         {
+            await CreateFolderAsync(Path.Combine(ApplicationData.Current.LocalCacheFolder.Path, "Downloads"));
+
+            DefaultFolder = await StorageFolder.GetFolderFromPathAsync(Path.Combine(ApplicationData.Current.LocalCacheFolder.Path, "Downloads"));
+
             DownloadFolder = await GetFolderAsync();
 
             DownloadItem = await GetItemValueAsync();
@@ -48,7 +53,7 @@ namespace GetStoreApp.Services.Settings
         }
 
         /// <summary>
-        /// 获取设置存储的下载位置值，如果设置没有存储，使用默认值
+        /// 获取设置存储的下载位置值，然后检查目录的读写权限。如果不能读取，使用默认的目录
         /// </summary>
         private async Task<StorageFolder> GetFolderAsync()
         {
@@ -61,6 +66,25 @@ namespace GetStoreApp.Services.Settings
             }
 
             return folder;
+        }
+
+        /// <summary>
+        /// 安全访问目录（当目录不存在的时候直接创建目录）
+        /// </summary>
+        public async Task OpenFolderAsync(StorageFolder folder)
+        {
+            if (!Directory.Exists(folder.Path)) await CreateFolderAsync(folder.Path);
+
+            await Windows.System.Launcher.LaunchFolderAsync(folder);
+        }
+
+        /// <summary>
+        /// 创建目录
+        /// </summary>
+        private async Task CreateFolderAsync(string folderPath)
+        {
+            Directory.CreateDirectory(folderPath);
+            await Task.CompletedTask;
         }
 
         /// <summary>

@@ -11,13 +11,13 @@ namespace GetStoreApp.Views
 
         public DownloadViewModel ViewModel { get; }
 
-        public string OpenFolder { get;}
+        public string OpenFolder { get; }
 
-        public string ContinueDownload { get;}
+        public string ContinueDownload { get; }
 
         public string PauseDownload { get; }
 
-        public string DeleteTask { get;}
+        public string DeleteTask { get; }
 
         public DownloadPage()
         {
