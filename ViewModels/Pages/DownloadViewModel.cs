@@ -58,8 +58,6 @@ namespace GetStoreApp.ViewModels.Pages
 
         public IAsyncRelayCommand SelectCommand { get; set; }
 
-        public IAsyncRelayCommand RefreshCommand { get; set; }
-
         public IAsyncRelayCommand SelectAllCommand { get; set; }
 
         public IAsyncRelayCommand SelectNoneCommand { get; set; }
@@ -103,8 +101,6 @@ namespace GetStoreApp.ViewModels.Pages
                 await SelectNoneAsync();
                 IsSelectMode = true;
             });
-
-            RefreshCommand = new AsyncRelayCommand(GetDownloadDataListAsync);
 
             SelectAllCommand = new AsyncRelayCommand(async () =>
             {

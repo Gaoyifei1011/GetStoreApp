@@ -39,6 +39,7 @@
         <HyperlinkButton
             Grid.Column="2"
             VerticalAlignment="Center"
+            Margin="0,0,6,0"
             Command="{x:Bind ViewModel.SettingsColorCommand}"
             Content="{x:Bind ResourceService.GetLocalized('/Settings/WindowsColorSettings')}"
             ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/WindowsColorSettings')}" />

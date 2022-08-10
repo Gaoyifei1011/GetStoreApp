@@ -6,6 +6,8 @@ namespace GetStoreApp.Contracts.Services.Settings
 {
     public interface IDownloadOptionsService
     {
+        StorageFolder DefaultFolder { get; }
+
         StorageFolder DownloadFolder { get; set; }
 
         int DownloadItem { get; set; }
@@ -17,6 +19,8 @@ namespace GetStoreApp.Contracts.Services.Settings
         Task InitializeAsync();
 
         Task OpenFolderAsync(StorageFolder folder);
+
+        Task CreateFolderAsync(string folderPath);
 
         Task SetFolderAsync(StorageFolder folder);
 

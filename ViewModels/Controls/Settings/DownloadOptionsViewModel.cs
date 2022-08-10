@@ -45,6 +45,8 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
         public IAsyncRelayCommand OpenFolderCommand { get; set; }
 
+        public IAsyncRelayCommand UseDefaultFolderCommand { get; set; }
+
         public IAsyncRelayCommand ChangeFolderCommand { get; set; }
 
         public IAsyncRelayCommand DownloadItemCommand { get; set; }
@@ -66,6 +68,8 @@ namespace GetStoreApp.ViewModels.Controls.Settings
                 await DownloadOptionsService.OpenFolderAsync(DownloadFolder);
             });
 
+            UseDefaultFolderCommand = new AsyncRelayCommand(UseDefaultFolderAsync);
+
             ChangeFolderCommand = new AsyncRelayCommand(ChangeFolderAsync);
 
             DownloadItemCommand = new AsyncRelayCommand(async () =>
@@ -81,16 +85,27 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         }
 
         /// <summary>
+        /// 使用默认目录
+        /// </summary>
+        private async Task UseDefaultFolderAsync()
+        {
+            DownloadFolder = DownloadOptionsService.DefaultFolder;
+            await DownloadOptionsService.SetFolderAsync(DownloadOptionsService.DefaultFolder);
+        }
+
+        /// <summary>
         /// 更改下载文件目录
         /// </summary>
         private async Task ChangeFolderAsync()
         {
+            await DownloadOptionsService.CreateFolderAsync(DownloadOptionsService.DefaultFolder.Path);
+
             FolderPicker folderPicker = new FolderPicker();
 
             IntPtr hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
             WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, hwnd);
 
-            folderPicker.SuggestedStartLocation = PickerLocationId.Desktop;
+            folderPicker.SuggestedStartLocation = PickerLocationId.Downloads;
 
             StorageFolder Folder = await folderPicker.PickSingleFolderAsync();
 
