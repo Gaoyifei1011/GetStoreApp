@@ -22,7 +22,7 @@ namespace GetStoreApp.Services.Settings
 
         private IConfigStorageService ConfigStorageService { get; } = IOCHelper.GetService<IConfigStorageService>();
 
-        private StorageFolder DefaultFolder { get; set; }
+        public StorageFolder DefaultFolder { get; private set; }
 
         private int DefaultItem { get; } = 1;
 
@@ -81,7 +81,7 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 创建目录
         /// </summary>
-        private async Task CreateFolderAsync(string folderPath)
+        public async Task CreateFolderAsync(string folderPath)
         {
             Directory.CreateDirectory(folderPath);
             await Task.CompletedTask;

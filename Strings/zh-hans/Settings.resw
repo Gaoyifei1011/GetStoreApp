@@ -273,6 +273,9 @@
   <data name="Title" xml:space="preserve">
     <value>设置</value>
   </data>
+  <data name="UseDefaultFolder" xml:space="preserve">
+    <value>使用默认目录</value>
+  </data>
   <data name="UseInstructionButton" xml:space="preserve">
     <value>“使用说明”按钮</value>
   </data>

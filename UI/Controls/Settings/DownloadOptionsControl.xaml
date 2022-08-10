@@ -49,6 +49,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Grid.Column="0" Orientation="Vertical">
@@ -66,6 +67,13 @@
 
                         <Button
                             Grid.Column="1"
+                            Command="{x:Bind ViewModel.UseDefaultFolderCommand}"
+                            Margin="0,0,6,0"
+                            Content="{x:Bind ResourceService.GetLocalized('/Settings/UseDefaultFolder')}"
+                            ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/UseDefaultFolder')}" />
+                        
+                        <Button
+                            Grid.Column="2"
                             Command="{x:Bind ViewModel.ChangeFolderCommand}"
                             Content="{x:Bind ResourceService.GetLocalized('/Settings/ChangeFolder')}"
                             ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/ChangeFolder')}" />

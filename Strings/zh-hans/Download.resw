@@ -124,7 +124,7 @@
     <value>继续下载</value>
   </data>
   <data name="ContinueAll" xml:space="preserve">
-    <value>下载全部</value>
+    <value>全部开始</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>删除</value>
@@ -163,10 +163,7 @@
     <value>暂停下载</value>
   </data>
   <data name="PauseAll" xml:space="preserve">
-    <value>暂停全部</value>
-  </data>
-  <data name="Refresh" xml:space="preserve">
-    <value>刷新</value>
+    <value>全部暂停</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>选择</value>
