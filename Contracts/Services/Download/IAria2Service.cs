@@ -11,16 +11,18 @@ namespace GetStoreApp.Contracts.Services.Download
 
         Task<string> AddTaskAsync(string downloadLink,string folderPath ,string fileName);
 
-        Task ContinueAllAsync(List<string> GIDList);
+        Task<bool> ContinueAllAsync();
 
-        Task PauseAllAsync(List<string> GIDList);
+        Task<bool> PauseAllAsync();
 
-        Task DeleteAsync(List<string> GIDList);
+        Task<bool> DeleteSelectedAsync(List<string> GIDList);
 
-        Task<bool> ContinueDownloadAsync(string GID);
+        Task<bool> ContinueAsync(string GID);
 
-        Task<bool> PauseDownloadAsync(string GID);
+        Task<bool> PauseAsync(string GID);
 
-        Task<bool> DeleteTaskAsync(string GID);
+        Task<bool> DeleteAsync(string GID);
+
+        Task TellStatusAsync();
     }
 }
