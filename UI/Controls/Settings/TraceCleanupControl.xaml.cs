@@ -5,16 +5,16 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.UI.Controls.Settings
 {
-    public sealed partial class ClearRecordControl : UserControl
+    public sealed partial class TraceCleanupControl : UserControl
     {
         public IResourceService ResourceService { get; }
 
-        public ClearRecordViewModel ViewModel { get; }
+        public TraceCleanupViewModel ViewModel { get; }
 
-        public ClearRecordControl()
+        public TraceCleanupControl()
         {
             ResourceService = IOCHelper.GetService<IResourceService>();
-            ViewModel = IOCHelper.GetService<ClearRecordViewModel>();
+            ViewModel = IOCHelper.GetService<TraceCleanupViewModel>();
             InitializeComponent();
         }
 

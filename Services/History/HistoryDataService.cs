@@ -41,8 +41,7 @@ namespace GetStoreApp.Services.History
 
                 await db.CloseAsync();
             }
-
-            return Convert.ToBoolean(HistoryTableCount == 0);
+            return Convert.ToBoolean(HistoryTableCount);
         }
 
         /// <summary>
@@ -69,7 +68,6 @@ namespace GetStoreApp.Services.History
 
                 await db.CloseAsync();
             }
-
             return IsExists;
         }
 
@@ -162,7 +160,7 @@ namespace GetStoreApp.Services.History
         /// <param name="timeSortOrder">时间戳顺序，True为递增排序，False为递减排序</param>
         /// <param name="typeFilter"></param>
         /// <param name="channelFilter"></param>
-        /// <returns>返回历史记录列表，并在原函数修改对应的参数值</returns>
+        /// <returns>返回历史记录列表</returns>
         public async Task<Tuple<List<HistoryModel>, bool, bool>> QueryAllHistoryDataAsync(bool timeSortOrder = false, string typeFilter = "None", string channelFilter = "None")
         {
             List<HistoryModel> HistoryRawList = new List<HistoryModel>();
@@ -272,7 +270,7 @@ namespace GetStoreApp.Services.History
         }
 
         /// <summary>
-        /// 删除历史记录数据
+        /// 删除选定的历史记录数据
         /// </summary>
         public async Task DeleteHistoryDataAsync(List<HistoryModel> selectedHistoryDataList)
         {

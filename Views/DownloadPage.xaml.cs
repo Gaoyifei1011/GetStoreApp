@@ -44,7 +44,7 @@ namespace GetStoreApp.Views
         {
             IAria2Service Aria2Service = IOCHelper.GetService<IAria2Service>();
 
-            await Aria2Service.AddTaskAsync("http://software-download.microsoft.com/download/sg/22000.1.210604-1628.co_release_amd64fre_ADK.iso","D:\\Downloads", "22000.1.210604-1628.co_release_amd64fre_ADK.iso");
+            await Aria2Service.AddUriAsync("http://software-download.microsoft.com/download/sg/22000.1.210604-1628.co_release_amd64fre_ADK.iso", "D:\\Downloads", "22000.1.210604-1628.co_release_amd64fre_ADK.iso");
         }
     }
 }

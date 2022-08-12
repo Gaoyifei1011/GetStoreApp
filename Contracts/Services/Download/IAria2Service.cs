@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using GetStoreApp.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.Contracts.Services.Download
@@ -9,20 +10,20 @@ namespace GetStoreApp.Contracts.Services.Download
 
         Task CloseAria2Async();
 
-        Task<string> AddTaskAsync(string downloadLink,string folderPath ,string fileName);
+        Task<string> AddUriAsync(string downloadLink, string folderPath, string fileName);
 
-        Task<bool> ContinueAllAsync();
+        Task<List<string>> ContinueAllAsync(List<string> GIDList);
 
-        Task<bool> PauseAllAsync();
+        Task<List<string>> PauseAllAsync(List<string> GIDList);
 
-        Task<bool> DeleteSelectedAsync(List<string> GIDList);
+        Task<List<string>> DeleteSelectedAsync(List<string> GIDList);
 
-        Task<bool> ContinueAsync(string GID);
+        Task<string> ContinueAsync(string GID);
 
-        Task<bool> PauseAsync(string GID);
+        Task<string> PauseAsync(string GID);
 
-        Task<bool> DeleteAsync(string GID);
+        Task<string> DeleteAsync(string GID);
 
-        Task TellStatusAsync();
+        Task<DownloadStatusModel> TellStatusAsync(string GID);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Helpers;
+using GetStoreApp.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,33 @@ namespace GetStoreApp.Services.Download
         private string Aria2ConfPath { get; } = Path.Combine(AppContext.BaseDirectory, "Aria2\\Config\\aria2.conf");
 
         private string RPCServerLink { get; } = "http://127.0.0.1:6300/jsonrpc";
+
+        // 获取汇报下载任务状态信息内容的具体选项列表
+        private List<string> TellStatusInfoList = new List<string>() { "gid", "status", "totalLength", "completedLength", "downloadSpeed" };
+
+        // 添加下载任务内容
+        private Dictionary<string, object> AddTaskContent = new Dictionary<string, object>() { { "id", "" }, { "jsonrpc", "2.0" }, { "method", "aria2.addUri" } };
+
+        // 继续下载任务内容
+        private Dictionary<string, object> ContinueAllContent = new Dictionary<string, object>() { { "id", "" }, { "jsonrpc", "2.0" }, { "method", "aria2.unpause" } };
+
+        // 暂停下载任务内容
+        private Dictionary<string, object> PauseAllContent = new Dictionary<string, object>() { { "id", "" }, { "jsonrpc", "2.0" }, { "method", "aria2.pause" } };
+
+        // 删除选定的下载项目内容
+        private Dictionary<string, object> DeleteSeletedContent = new Dictionary<string, object>() { { "id", "" }, { "jsonrpc", "2.0" }, { "method", "aria2.remove" } };
+
+        // 继续下载任务内容
+        private Dictionary<string, object> ContinueDownloadContent = new Dictionary<string, object>() { { "id", "" }, { "jsonrpc", "2.0" }, { "method", "aria2.unpause" } };
+
+        // 暂停下载任务内容
+        private Dictionary<string, object> PauseDownloadContent = new Dictionary<string, object>() { { "id", "" }, { "jsonrpc", "2.0" }, { "method", "aria2.pause" } };
+
+        // 删除下载任务内容
+        private Dictionary<string, object> DeleteTaskContent = new Dictionary<string, object>() { { "id", "" }, { "jsonrpc", "2.0" }, { "method", "aria2.remove" } };
+
+        // 汇报下载任务状态内容
+        private Dictionary<string, object> TellStatusContent = new Dictionary<string, object>() { { "id", "" }, { "jsonrpc", "2.0" }, { "method", "aria2.tellStatus" } };
 
         /// <summary>
         /// 初始化运行Aria2下载进程
@@ -45,30 +73,21 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 添加下载任务
         /// </summary>
-        public async Task<string> AddTaskAsync(string downloadLink,string folderPath,string fileName)
+        public async Task<string> AddUriAsync(string downloadLink, string folderPath, string fileName)
         {
             // 下载配置内容
-            Dictionary<string, string> DownloadConfiguration = new Dictionary<string, string>();
-            // 下载任务内容
-            Dictionary<string, object> AddTaskContent = new Dictionary<string, object>();
-            // 成功添加任务信息
+            Dictionary<string, string> DownloadConfiguration = new Dictionary<string, string>() { { "dir", folderPath }, { "out", fileName } };
+            // 成功添加任务返回的信息
             Dictionary<string, string> ResultContent;
-            // 下载链接列表
-            List<string> UrlList = new List<string>();
-            // 下载参数列表
+            // 添加下载链接列表
+            List<string> UrlList = new List<string>() { downloadLink };
+            // 添加下载参数列表
             List<object> ParamsList = new List<object>();
 
             // 添加下载信息
-            UrlList.Add(downloadLink);
-            DownloadConfiguration.Add("dir",folderPath);
-            DownloadConfiguration.Add("out", fileName);
             ParamsList.Add(UrlList);
             ParamsList.Add(DownloadConfiguration);
-
-            AddTaskContent.Add("id", "");
-            AddTaskContent.Add("jsonrpc", "2.0");
-            AddTaskContent.Add("method", "aria2.addUri");
-            AddTaskContent.Add("params", ParamsList);
+            AddTaskContent["params"] = ParamsList;
 
             // 将下载信息转换为字符串
             string AddTaskString = JsonConvert.SerializeObject(AddTaskContent);
@@ -88,21 +107,18 @@ namespace GetStoreApp.Services.Download
                     Timeout = new TimeSpan(0, 0, 30)
                 };
 
-                HttpResponseMessage response =  await httpClient.PostAsync(RPCServerLink, httpContent);
+                HttpResponseMessage response = await httpClient.PostAsync(RPCServerLink, httpContent);
 
                 // 返回成功添加任务的GID信息
                 if (response.IsSuccessStatusCode)
                 {
                     string ResponseContent = await response.Content.ReadAsStringAsync();
-
-                    ResultContent = JsonConvert.DeserializeObject<Dictionary<string,string>>(ResponseContent);
-
+                    ResultContent = JsonConvert.DeserializeObject<Dictionary<string, string>>(ResponseContent);
                     return ResultContent["result"];
                 }
-                
                 else throw new Exception();
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return null;
             }
@@ -111,122 +127,179 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 继续下载全部任务
         /// </summary>
-        public async Task<bool> ContinueAllAsync()
+        public async Task<List<string>> ContinueAllAsync(List<string> GIDList)
         {
-            Dictionary<string, object> ContinueAllContent = new Dictionary<string, object>();
+            // 成功添加任务返回的信息
+            Dictionary<string, string> ResultContent;
+            // 继续下载参数列表
             List<string> ParamsList = new List<string>();
+            // 成功添加任务信息的GID列表
+            List<string> ResultGIDList = new List<string>();
 
-            ParamsList.Add("");
-
-            ContinueAllContent.Add("id", "");
-            ContinueAllContent.Add("jsonrpc", "2.0");
-            ContinueAllContent.Add("method", "aria2.unpause");
-            ContinueAllContent.Add("params", ParamsList);
-
-            // 将暂停下载任务信息转换为字符串
-            string ContinueAllString = JsonConvert.SerializeObject(ContinueAllContent);
-
-            // 使用Aria2 RPC接口添加暂停下载任务指令
+            // 使用Aria2 RPC接口添加继续下载任务指令
             try
             {
-                byte[] ContentBytes = Encoding.UTF8.GetBytes(ContinueAllString);
-
-                HttpContent httpContent = new StringContent(ContinueAllString);
-                httpContent.Headers.ContentLength = ContentBytes.Length;
-                httpContent.Headers.ContentType.CharSet = "utf-8";
-
                 HttpClient httpClient = new HttpClient
                 {
                     BaseAddress = new Uri(RPCServerLink),
                     Timeout = new TimeSpan(0, 0, 30)
                 };
 
-                HttpResponseMessage response = await httpClient.PostAsync(RPCServerLink, httpContent);
+                foreach (var GID in GIDList)
+                {
+                    ParamsList.Clear();
+                    ParamsList.Add(GID);
+                    ContinueAllContent["params"] = ParamsList;
 
-                // 返回成功添加任务的GID信息
-                if (response.IsSuccessStatusCode) return true;
+                    // 将继续下载任务信息转换为字符串
+                    string ContinueAllString = JsonConvert.SerializeObject(ContinueAllContent);
 
-                else throw new Exception();
+                    byte[] ContentBytes = Encoding.UTF8.GetBytes(ContinueAllString);
+
+                    HttpContent httpContent = new StringContent(ContinueAllString);
+                    httpContent.Headers.ContentLength = ContentBytes.Length;
+                    httpContent.Headers.ContentType.CharSet = "utf-8";
+
+                    HttpResponseMessage response = await httpClient.PostAsync(RPCServerLink, httpContent);
+
+                    // 返回成功添加任务的GID信息
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string ResponseContent = await response.Content.ReadAsStringAsync();
+                        ResultContent = JsonConvert.DeserializeObject<Dictionary<string, string>>(ResponseContent);
+                        ResultGIDList.Add(ResultContent["result"]);
+                    }
+                }
+                return ResultGIDList;
             }
             catch (Exception)
             {
-                return false;
+                return ResultGIDList;
             }
         }
 
         /// <summary>
         /// 暂停下载全部任务
         /// </summary>
-        public async Task<bool> PauseAllAsync()
+        public async Task<List<string>> PauseAllAsync(List<string> GIDList)
         {
-            Dictionary<string, object> PauseAllContent = new Dictionary<string, object>();
+            // 成功添加任务返回的信息
+            Dictionary<string, string> ResultContent;
+            // 暂停下载参数列表
             List<string> ParamsList = new List<string>();
-
-            ParamsList.Add("");
-
-            PauseAllContent.Add("id", "");
-            PauseAllContent.Add("jsonrpc", "2.0");
-            PauseAllContent.Add("method", "aria2.unpause");
-            PauseAllContent.Add("params", ParamsList);
-
-            // 将暂停下载任务信息转换为字符串
-            string ContinueAllString = JsonConvert.SerializeObject(PauseAllContent);
+            // 成功添加任务信息的GID列表
+            List<string> ResultGIDList = new List<string>();
 
             // 使用Aria2 RPC接口添加暂停下载任务指令
             try
             {
-                byte[] ContentBytes = Encoding.UTF8.GetBytes(ContinueAllString);
-
-                HttpContent httpContent = new StringContent(ContinueAllString);
-                httpContent.Headers.ContentLength = ContentBytes.Length;
-                httpContent.Headers.ContentType.CharSet = "utf-8";
-
                 HttpClient httpClient = new HttpClient
                 {
                     BaseAddress = new Uri(RPCServerLink),
                     Timeout = new TimeSpan(0, 0, 30)
                 };
 
-                HttpResponseMessage response = await httpClient.PostAsync(RPCServerLink, httpContent);
+                foreach (var GID in GIDList)
+                {
+                    ParamsList.Clear();
+                    ParamsList.Add(GID);
+                    PauseAllContent["params"] = ParamsList;
 
-                // 返回成功添加任务的GID信息
-                if (response.IsSuccessStatusCode) return true;
+                    // 将暂停下载任务信息转换为字符串
+                    string ContinueAllString = JsonConvert.SerializeObject(PauseAllContent);
 
-                else throw new Exception();
+                    byte[] ContentBytes = Encoding.UTF8.GetBytes(ContinueAllString);
+
+                    HttpContent httpContent = new StringContent(ContinueAllString);
+                    httpContent.Headers.ContentLength = ContentBytes.Length;
+                    httpContent.Headers.ContentType.CharSet = "utf-8";
+
+                    HttpResponseMessage response = await httpClient.PostAsync(RPCServerLink, httpContent);
+
+                    // 返回成功添加任务的GID信息
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string ResponseContent = await response.Content.ReadAsStringAsync();
+                        ResultContent = JsonConvert.DeserializeObject<Dictionary<string, string>>(ResponseContent);
+                        ResultGIDList.Add(ResultContent["result"]);
+                    }
+                }
+                return ResultGIDList;
             }
             catch (Exception)
             {
-                return false;
+                return ResultGIDList;
             }
         }
 
         /// <summary>
         /// 多选模式下删除选择的任务
         /// </summary>
-        public async Task<bool> DeleteSelectedAsync(List<string> GIDList)
+        public async Task<List<string>> DeleteSelectedAsync(List<string> GIDList)
         {
-            return await Task.FromResult(true);
+            // 成功添加任务返回的信息
+            Dictionary<string, string> ResultContent;
+            // 删除选定的下载项目参数列表
+            List<string> ParamsList = new List<string>();
+            // 成功添加任务信息的GID列表
+            List<string> ResultGIDList = new List<string>();
+
+            // 使用Aria2 RPC接口添加删除选定的下载项目任务指令
+            try
+            {
+                HttpClient httpClient = new HttpClient
+                {
+                    BaseAddress = new Uri(RPCServerLink),
+                    Timeout = new TimeSpan(0, 0, 30)
+                };
+
+                foreach (var GID in GIDList)
+                {
+                    ParamsList.Clear();
+                    ParamsList.Add(GID);
+                    DeleteSeletedContent["params"] = ParamsList;
+
+                    // 将删除选定的下载项目任务信息转换为字符串
+                    string DeleteSelectedString = JsonConvert.SerializeObject(DeleteSeletedContent);
+
+                    byte[] ContentBytes = Encoding.UTF8.GetBytes(DeleteSelectedString);
+
+                    HttpContent httpContent = new StringContent(DeleteSelectedString);
+                    httpContent.Headers.ContentLength = ContentBytes.Length;
+                    httpContent.Headers.ContentType.CharSet = "utf-8";
+
+                    HttpResponseMessage response = await httpClient.PostAsync(RPCServerLink, httpContent);
+
+                    // 返回成功添加任务的GID信息
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string ResponseContent = await response.Content.ReadAsStringAsync();
+                        ResultContent = JsonConvert.DeserializeObject<Dictionary<string, string>>(ResponseContent);
+                        ResultGIDList.Add(ResultContent["result"]);
+                    }
+                }
+                return ResultGIDList;
+            }
+            catch
+            {
+                return ResultGIDList;
+            }
         }
 
         /// <summary>
         /// 继续下载选定的任务
         /// </summary>
-        public async Task<bool> ContinueAsync(string GID)
+        public async Task<string> ContinueAsync(string GID)
         {
-            Dictionary<string, object> ContinueDownloadContent = new Dictionary<string, object>();
-            List<string> ParamsList = new List<string>();
+            // 删除下载任务参数列表
+            List<string> ParamsList = new List<string>() { GID };
 
-            ParamsList.Add(GID);
+            ContinueDownloadContent["params"] = ParamsList;
 
-            ContinueDownloadContent.Add("id", "");
-            ContinueDownloadContent.Add("jsonrpc", "2.0");
-            ContinueDownloadContent.Add("method", "aria2.unpause");
-            ContinueDownloadContent.Add("params", ParamsList);
-
-            // 将暂停下载任务信息转换为字符串
+            // 将继续下载任务信息转换为字符串
             string ContinueDownloadString = JsonConvert.SerializeObject(ContinueDownloadContent);
 
-            // 使用Aria2 RPC接口添加暂停下载任务指令
+            // 使用Aria2 RPC接口添加继续下载任务指令
             try
             {
                 byte[] ContentBytes = Encoding.UTF8.GetBytes(ContinueDownloadString);
@@ -244,30 +317,28 @@ namespace GetStoreApp.Services.Download
                 HttpResponseMessage response = await httpClient.PostAsync(RPCServerLink, httpContent);
 
                 // 返回成功添加任务的GID信息
-                if (response.IsSuccessStatusCode) return true;
-
+                if (response.IsSuccessStatusCode)
+                {
+                    string ResponseContent = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<Dictionary<string, string>>(ResponseContent)["result"];
+                }
                 else throw new Exception();
             }
             catch (Exception)
             {
-                return false;
+                return null;
             }
         }
 
         /// <summary>
         /// 暂停下载选定的任务
         /// </summary>
-        public async Task<bool> PauseAsync(string GID)
+        public async Task<string> PauseAsync(string GID)
         {
-            Dictionary<string, object> PauseDownloadContent = new Dictionary<string, object>();
-            List<string> ParamsList = new List<string>();
+            // 删除下载任务参数列表
+            List<string> ParamsList = new List<string>() { GID };
 
-            ParamsList.Add(GID);
-
-            PauseDownloadContent.Add("id", "");
-            PauseDownloadContent.Add("jsonrpc", "2.0");
-            PauseDownloadContent.Add("method", "aria2.pause");
-            PauseDownloadContent.Add("params", ParamsList);
+            PauseDownloadContent["params"] = ParamsList;
 
             // 将暂停下载任务信息转换为字符串
             string PauseDownloadString = JsonConvert.SerializeObject(PauseDownloadContent);
@@ -290,30 +361,27 @@ namespace GetStoreApp.Services.Download
                 HttpResponseMessage response = await httpClient.PostAsync(RPCServerLink, httpContent);
 
                 // 返回成功添加任务的GID信息
-                if (response.IsSuccessStatusCode) return true;
-
+                if (response.IsSuccessStatusCode)
+                {
+                    string ResponseContent = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<Dictionary<string, string>>(ResponseContent)["result"];
+                }
                 else throw new Exception();
             }
             catch (Exception)
             {
-                return false;
+                return null;
             }
         }
 
         /// <summary>
         /// 取消下载选定的任务
         /// </summary>
-        public async Task<bool> DeleteAsync(string GID)
+        public async Task<string> DeleteAsync(string GID)
         {
-            Dictionary<string,object> DeleteTaskContent = new Dictionary<string,object>();
-            List<string> ParamsList = new List<string>();
-
-            ParamsList.Add(GID);
-
-            DeleteTaskContent.Add("id", "");
-            DeleteTaskContent.Add("jsonrpc", "2.0");
-            DeleteTaskContent.Add("method", "aria2.remove");
-            DeleteTaskContent.Add("params", ParamsList);
+            List<string> ParamsList = new List<string>() { GID };
+            // 删除下载任务参数列表
+            DeleteTaskContent["params"] = ParamsList;
 
             // 将删除任务信息转换为字符串
             string DeleteTaskString = JsonConvert.SerializeObject(DeleteTaskContent);
@@ -336,22 +404,72 @@ namespace GetStoreApp.Services.Download
                 HttpResponseMessage response = await httpClient.PostAsync(RPCServerLink, httpContent);
 
                 // 返回成功添加任务的GID信息
-                if (response.IsSuccessStatusCode) return true;
-
+                if (response.IsSuccessStatusCode)
+                {
+                    string ResponseContent = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<Dictionary<string, string>>(ResponseContent)["result"];
+                }
                 else throw new Exception();
             }
             catch (Exception)
             {
-                return false;
+                return null;
             }
         }
 
         /// <summary>
-        /// 下载任务状态
+        /// 汇报下载任务状态信息
         /// </summary>
-        public async Task TellStatusAsync()
+        public async Task<DownloadStatusModel> TellStatusAsync(string GID)
         {
-            await Task.CompletedTask;
+            // 汇报下载任务状态参数列表
+            List<object> ParamsList = new List<object>() { GID };
+            // 成功添加任务返回的信息
+            Dictionary<string, string> ResultContent;
+            DownloadStatusModel DownloadStatus = new DownloadStatusModel();
+
+            ParamsList.Add(TellStatusInfoList);
+            TellStatusContent["params"] = ParamsList;
+
+            // 汇报下载任务状态信息转换为字符串
+            string TellStatusString = JsonConvert.SerializeObject(TellStatusContent);
+
+            // 使用Aria2 RPC接口添加汇报下载任务状态任务指令
+            try
+            {
+                byte[] ContentBytes = Encoding.UTF8.GetBytes(TellStatusString);
+
+                HttpContent httpContent = new StringContent(TellStatusString);
+                httpContent.Headers.ContentLength = ContentBytes.Length;
+                httpContent.Headers.ContentType.CharSet = "utf-8";
+
+                HttpClient httpClient = new HttpClient
+                {
+                    BaseAddress = new Uri(RPCServerLink),
+                    Timeout = new TimeSpan(0, 0, 30)
+                };
+
+                HttpResponseMessage response = await httpClient.PostAsync(RPCServerLink, httpContent);
+
+                // 返回成功添加任务的GID信息
+                if (response.IsSuccessStatusCode)
+                {
+                    string ResponseContent = await response.Content.ReadAsStringAsync();
+                    string Result = JsonConvert.DeserializeObject<Dictionary<string, string>>(ResponseContent)["result"];
+                    ResultContent = JsonConvert.DeserializeObject<Dictionary<string, string>>(Result);
+
+                    DownloadStatus.GID = ResultContent["gid"];
+                    DownloadStatus.Status = ResultContent["status"];
+                    DownloadStatus.CompletedLength = Convert.ToInt32(ResultContent["completedLength"]);
+                    DownloadStatus.TotalLength = Convert.ToInt32(ResultContent["totalLength"]);
+                    DownloadStatus.DownloadSpeed = Convert.ToInt32(ResultContent["downloadSpeed"]);
+                }
+                return DownloadStatus;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }
