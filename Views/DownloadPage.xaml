@@ -118,11 +118,6 @@
                     Icon="Bullets"
                     Label="{x:Bind ResourceService.GetLocalized('/Download/Select')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/Select')}" />
-
-                <AppBarButton
-                    Icon="Sort"
-                    Label="{x:Bind ResourceService.GetLocalized('/Download/Sort')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/Sort')}" />
             </CommandBar>
 
             <CommandBar

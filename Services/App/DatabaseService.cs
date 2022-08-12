@@ -18,7 +18,7 @@ namespace GetStoreApp.Services.App
 
         public string DownloadTableName { get; } = "DOWNLOAD";
 
-        public string DBpath { get; } = Path.Combine(ApplicationData.Current.LocalFolder.Path, "GetStoreApp.db"); 
+        public string DBpath { get; } = Path.Combine(ApplicationData.Current.LocalFolder.Path, "GetStoreApp.db");
 
         /// <summary>
         /// 历史记录表不存在时，自动创建历史记录表
@@ -32,7 +32,7 @@ namespace GetStoreApp.Services.App
             await InitializeHistoryTableAsync();
 
             // 初始化下载记录表
-            //await InitializeDownloadTableAsync();
+            await InitializeDownloadTableAsync();
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace GetStoreApp.Services.App
 
                 string FileLink = "FILELINK VARCHAR(300) NOT NULL";
 
-                string FilePath = "FILEPATH VARCHAR(300) NOT NULL UNIQUE";
+                string FilePath = "FILEPATH VARCHAR(500) NOT NULL UNIQUE";
 
                 string FileSHA1 = "FILESHA1 VARCHAR(32) NOT NULL UNIQUE";
 

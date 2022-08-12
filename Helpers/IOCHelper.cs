@@ -123,8 +123,8 @@ namespace GetStoreApp.Helpers
 
                 services.AddTransient<BackdropControl>();
                 services.AddTransient<BackdropViewModel>();
-                services.AddTransient<ClearRecordControl>();
-                services.AddTransient<ClearRecordViewModel>();
+                services.AddTransient<TraceCleanupControl>();
+                services.AddTransient<TraceCleanupViewModel>();
                 services.AddTransient<DownloadOptionsControl>();
                 services.AddTransient<DownloadOptionsViewModel>();
                 services.AddTransient<HistoryItemValueControl>();
