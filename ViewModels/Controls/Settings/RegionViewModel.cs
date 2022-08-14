@@ -24,7 +24,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
         public List<RegionModel> RegionList { get; set; }
 
-        public IAsyncRelayCommand RegionSelectCommand { get; set; }
+        public IAsyncRelayCommand RegionSelectCommand { get; }
 
         public RegionViewModel()
         {

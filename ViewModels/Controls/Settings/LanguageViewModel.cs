@@ -28,9 +28,9 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
         public List<LanguageModel> LanguageList { get; set; }
 
-        public IAsyncRelayCommand LanguageTipCommand { get; set; }
+        public IAsyncRelayCommand LanguageTipCommand { get; }
 
-        public IAsyncRelayCommand LanguageSelectCommand { get; set; }
+        public IAsyncRelayCommand LanguageSelectCommand { get; }
 
         public LanguageViewModel()
         {

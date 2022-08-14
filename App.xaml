@@ -10,6 +10,7 @@
 
                 <ResourceDictionary Source="ms-appx:///Styles/Button.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Checkbox.xaml" />
+                <ResourceDictionary Source="ms-appx:///Styles/ContentDialog.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Converter.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/DataGrid.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Expander.xaml" />

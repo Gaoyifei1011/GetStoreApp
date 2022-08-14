@@ -36,11 +36,11 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             set { SetProperty(ref _blockMapFilterValue, value); }
         }
 
-        public IAsyncRelayCommand LinkFilterInstructionCommand { get; set; }
+        public IAsyncRelayCommand LinkFilterInstructionCommand { get; }
 
-        public IAsyncRelayCommand StartWithEFilterCommand { get; set; }
+        public IAsyncRelayCommand StartWithEFilterCommand { get; }
 
-        public IAsyncRelayCommand BlockMapFilterCommand { get; set; }
+        public IAsyncRelayCommand BlockMapFilterCommand { get; }
 
         public LinkFilterViewModel()
         {

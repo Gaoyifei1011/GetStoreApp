@@ -4,11 +4,11 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.UI.Dialogs
 {
-    public sealed partial class RestartPromptDialog : ContentDialog
+    public sealed partial class RestartAppsDialog : ContentDialog
     {
         public IResourceService ResourceService { get; }
 
-        public RestartPromptDialog()
+        public RestartAppsDialog()
         {
             ResourceService = IOCHelper.GetService<IResourceService>();
             InitializeComponent();

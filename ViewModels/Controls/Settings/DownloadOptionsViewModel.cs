@@ -43,15 +43,15 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
         public List<int> DownloadItemList { get; set; }
 
-        public IAsyncRelayCommand OpenFolderCommand { get; set; }
+        public IAsyncRelayCommand OpenFolderCommand { get; }
 
-        public IAsyncRelayCommand UseDefaultFolderCommand { get; set; }
+        public IAsyncRelayCommand UseDefaultFolderCommand { get; }
 
-        public IAsyncRelayCommand ChangeFolderCommand { get; set; }
+        public IAsyncRelayCommand ChangeFolderCommand { get; }
 
-        public IAsyncRelayCommand DownloadItemCommand { get; set; }
+        public IAsyncRelayCommand DownloadItemCommand { get; }
 
-        public IAsyncRelayCommand NotificationStateCommand { get; set; }
+        public IAsyncRelayCommand NotificationStateCommand { get; }
 
         public DownloadOptionsViewModel()
         {
