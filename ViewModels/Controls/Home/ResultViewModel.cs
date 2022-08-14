@@ -54,29 +54,29 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public ObservableCollection<ResultModel> ResultDataList { get; set; } = new ObservableCollection<ResultModel>();
 
-        public IAsyncRelayCommand CopyCategoryIDCommand { get; set; }
+        public IAsyncRelayCommand CopyCategoryIDCommand { get; }
 
-        public IAsyncRelayCommand CopyContentCommand { get; set; }
+        public IAsyncRelayCommand CopyContentCommand { get; }
 
-        public IAsyncRelayCommand CopyLinkCommand { get; set; }
+        public IAsyncRelayCommand CopyLinkCommand { get; }
 
-        public IAsyncRelayCommand DownloadCommand { get; set; }
+        public IAsyncRelayCommand DownloadCommand { get; }
 
-        public IAsyncRelayCommand SelectCommand { get; set; }
+        public IAsyncRelayCommand SelectCommand { get; }
 
-        public IAsyncRelayCommand CancelCommand { get; set; }
+        public IAsyncRelayCommand CancelCommand { get; }
 
-        public IAsyncRelayCommand SelectAllCommand { get; set; }
+        public IAsyncRelayCommand SelectAllCommand { get; }
 
-        public IAsyncRelayCommand SelectNoneCommand { get; set; }
+        public IAsyncRelayCommand SelectNoneCommand { get; }
 
-        public IAsyncRelayCommand CopySelectedCommand { get; set; }
+        public IAsyncRelayCommand CopySelectedCommand { get; }
 
-        public IAsyncRelayCommand CopySelectedLinkCommand { get; set; }
+        public IAsyncRelayCommand CopySelectedLinkCommand { get; }
 
-        public IAsyncRelayCommand DownloadSelectedCommand { get; set; }
+        public IAsyncRelayCommand DownloadSelectedCommand { get; }
 
-        public IAsyncRelayCommand FileOperationCommand { get; set; }
+        public IAsyncRelayCommand FileOperationCommand { get; }
 
         public ResultViewModel()
         {

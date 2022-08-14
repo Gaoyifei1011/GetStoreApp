@@ -23,9 +23,9 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
         public List<ThemeModel> ThemeList { get; set; }
 
-        public IAsyncRelayCommand ThemeSelectCommand { get; set; }
+        public IAsyncRelayCommand ThemeSelectCommand { get; }
 
-        public IAsyncRelayCommand SettingsColorCommand { get; set; } = new AsyncRelayCommand(async () =>
+        public IAsyncRelayCommand SettingsColorCommand { get; } = new AsyncRelayCommand(async () =>
         {
             await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:colors"));
         });

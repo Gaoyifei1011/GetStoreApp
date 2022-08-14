@@ -24,7 +24,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
         public List<HistoryItemValueModel> HistoryItemValueList { get; set; }
 
-        public IAsyncRelayCommand HistoryItemSelectCommand { get; set; }
+        public IAsyncRelayCommand HistoryItemSelectCommand { get; }
 
         public HistoryItemValueViewModel()
         {

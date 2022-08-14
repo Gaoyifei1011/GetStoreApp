@@ -157,7 +157,7 @@
     <value>取消</value>
   </data>
   <data name="RestartContent" xml:space="preserve">
-    <value>应用即将重启，重启后应用的数据将会丢失，请确保您的工作内容已经全部保存</value>
+    <value>应用即将重启，重启后应用的数据将会丢失，请确保您的工作内容已经全部保存。</value>
   </data>
   <data name="RestartSure" xml:space="preserve">
     <value>确定</value>
@@ -170,5 +170,17 @@
   </data>
   <data name="SelectEmptyTitle" xml:space="preserve">
     <value>项目选择提示</value>
+  </data>
+  <data name="TraceCleanupCancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="TraceCleanupContent" xml:space="preserve">
+    <value>痕迹清理包括历史记录、下载记录和应用下载时在本地创建的文件。请选择您要清理的项目。</value>
+  </data>
+  <data name="TraceCleanupSure" xml:space="preserve">
+    <value>立即清理</value>
+  </data>
+  <data name="TraceCleanupTitle" xml:space="preserve">
+    <value>痕迹清理</value>
   </data>
 </root>

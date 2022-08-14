@@ -22,7 +22,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
         public List<BackdropModel> BackdropList { get; set; }
 
-        public IAsyncRelayCommand BackdropSelectCommand { get; set; }
+        public IAsyncRelayCommand BackdropSelectCommand { get; }
 
         public BackdropViewModel()
         {

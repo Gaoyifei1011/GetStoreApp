@@ -170,8 +170,7 @@ namespace GetStoreApp.ViewModels.Pages
         /// </summary>
         private async Task ShowSelectEmptyPromptDialogAsync()
         {
-            SelectEmptyPromptDialog dialog = new SelectEmptyPromptDialog();
-            dialog.XamlRoot = App.MainWindow.Content.XamlRoot;
+            SelectEmptyPromptDialog dialog = new SelectEmptyPromptDialog() { XamlRoot = App.MainWindow.Content.XamlRoot };
             await dialog.ShowAsync();
         }
 
@@ -180,8 +179,7 @@ namespace GetStoreApp.ViewModels.Pages
         /// </summary>
         private async Task<ContentDialogResult> ShowDeletePromptDialogAsync()
         {
-            DeletePromptDialog dialog = new DeletePromptDialog();
-            dialog.XamlRoot = App.MainWindow.Content.XamlRoot;
+            DeletePromptDialog dialog = new DeletePromptDialog() { XamlRoot = App.MainWindow.Content.XamlRoot };
             return await dialog.ShowAsync();
         }
 

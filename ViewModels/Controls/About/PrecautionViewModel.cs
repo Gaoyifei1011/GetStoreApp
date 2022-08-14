@@ -7,7 +7,7 @@ namespace GetStoreApp.ViewModels.Controls.About
 {
     public class PrecautionViewModel : ObservableRecipient
     {
-        public IAsyncRelayCommand RecognizeCommand { get; set; }
+        public IAsyncRelayCommand RecognizeCommand { get; }
 
         public PrecautionViewModel()
         {

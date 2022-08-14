@@ -171,4 +171,16 @@
   <data name="SelectEmptyTitle" xml:space="preserve">
     <value>Item selection prompts</value>
   </data>
+  <data name="TraceCleanupCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="TraceCleanupContent" xml:space="preserve">
+    <value>Trace clearing includes history records, download records, and files created locally when an application is downloaded. Select the items you want to clean.</value>
+  </data>
+  <data name="TraceCleanupSure" xml:space="preserve">
+    <value>Cleanup now</value>
+  </data>
+  <data name="TraceCleanupTitle" xml:space="preserve">
+    <value>File cleaning prompts</value>
+  </data>
 </root>

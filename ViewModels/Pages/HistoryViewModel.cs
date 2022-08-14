@@ -221,16 +221,15 @@ namespace GetStoreApp.ViewModels.Pages
         /// </summary>
         private async Task GetHistoryDataListAsync()
         {
-            Tuple<List<HistoryModel>, bool, bool> QueryHistoryAllData = await HistoryDataService.QueryAllHistoryDataAsync(TimeSortOrder, TypeFilter, ChannelFilter);
+            Tuple<List<HistoryModel>, bool, bool> HistoryAllData = await HistoryDataService.QueryAllHistoryDataAsync(TimeSortOrder, TypeFilter, ChannelFilter);
 
             // 获取数据库的原始记录数据
-            List<HistoryModel> HistoryRawList = QueryHistoryAllData.Item1;
-
+            List<HistoryModel> HistoryRawList = HistoryAllData.Item1;
             // 数据库中的历史记录表是否为空
-            IsHistoryEmpty = QueryHistoryAllData.Item2;
+            IsHistoryEmpty = HistoryAllData.Item2;
 
             // 经过筛选后历史记录是否为空
-            IsHistoryEmptyAfterFilter = QueryHistoryAllData.Item3;
+            IsHistoryEmptyAfterFilter = HistoryAllData.Item3;
 
             //Todo: need to debug why observablecollection clear cause object reference not set to an instance of an object.
             try
@@ -335,8 +334,7 @@ namespace GetStoreApp.ViewModels.Pages
         /// </summary>
         private async Task ShowSelectEmptyPromptDialogAsync()
         {
-            SelectEmptyPromptDialog dialog = new SelectEmptyPromptDialog();
-            dialog.XamlRoot = App.MainWindow.Content.XamlRoot;
+            SelectEmptyPromptDialog dialog = new SelectEmptyPromptDialog() { XamlRoot = App.MainWindow.Content.XamlRoot };
             await dialog.ShowAsync();
         }
 
@@ -345,8 +343,7 @@ namespace GetStoreApp.ViewModels.Pages
         /// </summary>
         private async Task<ContentDialogResult> ShowDeletePromptDialogAsync()
         {
-            DeletePromptDialog dialog = new DeletePromptDialog();
-            dialog.XamlRoot = App.MainWindow.Content.XamlRoot;
+            DeletePromptDialog dialog = new DeletePromptDialog() { XamlRoot = App.MainWindow.Content.XamlRoot };
             return await dialog.ShowAsync();
         }
     }

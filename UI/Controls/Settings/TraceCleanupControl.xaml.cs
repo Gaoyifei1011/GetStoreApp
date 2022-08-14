@@ -17,11 +17,5 @@ namespace GetStoreApp.UI.Controls.Settings
             ViewModel = IOCHelper.GetService<TraceCleanupViewModel>();
             InitializeComponent();
         }
-
-        public string LocalizedClearState(bool clearState)
-        {
-            if (clearState) return ResourceService.GetLocalized("/Settings/ClearSuccessfully");
-            else return ResourceService.GetLocalized("/Settings/ClearFailed");
-        }
     }
 }

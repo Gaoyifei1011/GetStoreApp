@@ -14,9 +14,11 @@ using GetStoreApp.Services.Web;
 using GetStoreApp.UI.Controls.About;
 using GetStoreApp.UI.Controls.Home;
 using GetStoreApp.UI.Controls.Settings;
+using GetStoreApp.UI.Dialogs;
 using GetStoreApp.ViewModels.Controls.About;
 using GetStoreApp.ViewModels.Controls.Home;
 using GetStoreApp.ViewModels.Controls.Settings;
+using GetStoreApp.ViewModels.Dialogs;
 using GetStoreApp.ViewModels.Pages;
 using GetStoreApp.ViewModels.Window;
 using GetStoreApp.Views;
@@ -78,11 +80,11 @@ namespace GetStoreApp.Helpers
                 // Default Activation Handler
                 services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
 
-                // Window
+                // 应用窗口（MVVM）
                 services.AddTransient<MainWindow>();
                 services.AddTransient<MainWindowViewModel>();
 
-                // Pages and ViewModels
+                // 页面（MVVM）
                 services.AddTransient<AboutPage>();
                 services.AddTransient<AboutViewModel>();
                 services.AddTransient<DownloadPage>();
@@ -98,7 +100,7 @@ namespace GetStoreApp.Helpers
                 services.AddTransient<WebPage>();
                 services.AddTransient<WebViewModel>();
 
-                // Controls and ViewModels
+                // 控件（MVVM）
                 services.AddTransient<HeaderControl>();
                 services.AddTransient<HeaderViewModel>();
                 services.AddTransient<InstructionsControl>();
@@ -139,6 +141,10 @@ namespace GetStoreApp.Helpers
                 services.AddTransient<ThemeViewModel>();
                 services.AddTransient<UseInstructionControl>();
                 services.AddTransient<UseInstructionViewModel>();
+
+                // 对话框（MVVM）
+                services.AddTransient<TraceCleanupPromptDialog>();
+                services.AddTransient<TraceCleanupPromptViewModel>();
             })
             .Build();
         }

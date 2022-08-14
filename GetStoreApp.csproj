@@ -59,6 +59,7 @@
     <None Remove="MainWindow.xaml" />
     <None Remove="Styles\Button.xaml" />
     <None Remove="Styles\Checkbox.xaml" />
+    <None Remove="Styles\ContentDialog.xaml" />
     <None Remove="Styles\Converter.xaml" />
     <None Remove="Styles\DataGrid.xaml" />
     <None Remove="Styles\Expander.xaml" />
@@ -85,8 +86,9 @@
     <None Remove="UI\Dialogs\CloudflareValidationDialog.xaml" />
     <None Remove="UI\Dialogs\DeletePromptDialog.xaml" />
     <None Remove="UI\Dialogs\DesktopAppsDialog.xaml" />
-    <None Remove="UI\Dialogs\RestartPromptDialog.xaml" />
+    <None Remove="UI\Dialogs\RestartAppsDialog.xaml" />
     <None Remove="UI\Dialogs\SelectEmptyPromptDialog.xaml" />
+    <None Remove="UI\Dialogs\TraceCleanupPromptDialog.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -118,6 +120,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Styles\Checkbox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\ContentDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Styles\Converter.xaml">
@@ -199,10 +204,13 @@
     <Page Update="UI\Dialogs\DesktopAppsDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Dialogs\RestartPromptDialog.xaml">
+    <Page Update="UI\Dialogs\RestartAppsDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Dialogs\SelectEmptyPromptDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Dialogs\TraceCleanupPromptDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

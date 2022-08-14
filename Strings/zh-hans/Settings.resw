@@ -153,21 +153,6 @@
   <data name="ChangeFolder" xml:space="preserve">
     <value>更改目录</value>
   </data>
-  <data name="Clear" xml:space="preserve">
-    <value>清除</value>
-  </data>
-  <data name="ClearFailed" xml:space="preserve">
-    <value>清理失败</value>
-  </data>
-  <data name="ClearRecord" xml:space="preserve">
-    <value>清除记录</value>
-  </data>
-  <data name="ClearRecordDescription" xml:space="preserve">
-    <value>清理本地所有的历史记录</value>
-  </data>
-  <data name="ClearSuccessfully" xml:space="preserve">
-    <value>清理成功</value>
-  </data>
   <data name="DownloadFolder" xml:space="preserve">
     <value>文件存放路径</value>
   </data>
@@ -272,6 +257,15 @@
   </data>
   <data name="Title" xml:space="preserve">
     <value>设置</value>
+  </data>
+  <data name="TraceCleanup" xml:space="preserve">
+    <value>痕迹清理</value>
+  </data>
+  <data name="TraceCleanupDescription" xml:space="preserve">
+    <value>清理应用内使用过的所有痕迹</value>
+  </data>
+  <data name="TraceClear" xml:space="preserve">
+    <value>选择要清理的内容</value>
   </data>
   <data name="UseDefaultFolder" xml:space="preserve">
     <value>使用默认目录</value>
