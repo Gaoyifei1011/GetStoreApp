@@ -149,7 +149,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
         {
             if (SelectedResultItem == null)
             {
-                await ShowSelectEmptyPromptDialogAsync();
+                await new SelectEmptyPromptDialog().ShowAsync();
                 return;
             };
 
@@ -164,7 +164,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
         {
             if (SelectedResultItem == null)
             {
-                await ShowSelectEmptyPromptDialogAsync();
+                await new SelectEmptyPromptDialog().ShowAsync();
                 return;
             };
 
@@ -190,7 +190,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             // 内容为空时显示空提示对话框
             if (SelectedResultDataList.Count == 0)
             {
-                await ShowSelectEmptyPromptDialogAsync();
+                await new SelectEmptyPromptDialog().ShowAsync();
                 return;
             };
 
@@ -215,7 +215,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             // 内容为空时显示空提示对话框
             if (SelectedResultDataList.Count == 0)
             {
-                await ShowSelectEmptyPromptDialogAsync();
+                await new SelectEmptyPromptDialog().ShowAsync();
                 return;
             };
 
@@ -236,15 +236,6 @@ namespace GetStoreApp.ViewModels.Controls.Home
         private async Task FileOperationAsync(string fileLink)
         {
             await Windows.System.Launcher.LaunchUriAsync(new Uri(fileLink));
-        }
-
-        /// <summary>
-        /// 选中内容为空时，显示提示对话框
-        /// </summary>
-        private async Task ShowSelectEmptyPromptDialogAsync()
-        {
-            SelectEmptyPromptDialog dialog = new SelectEmptyPromptDialog { XamlRoot = App.MainWindow.Content.XamlRoot };
-            await dialog.ShowAsync();
         }
     }
 }

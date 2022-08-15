@@ -8,14 +8,12 @@ namespace GetStoreApp.UI.Controls.Settings
 {
     public sealed partial class BackdropControl : UserControl
     {
-        public IResourceService ResourceService { get; }
+        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        public BackdropViewModel ViewModel { get; }
+        public BackdropViewModel ViewModel { get; } = IOCHelper.GetService<BackdropViewModel>();
 
         public BackdropControl()
         {
-            ResourceService = IOCHelper.GetService<IResourceService>();
-            ViewModel = IOCHelper.GetService<BackdropViewModel>();
             InitializeComponent();
         }
 

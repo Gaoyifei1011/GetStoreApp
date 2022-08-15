@@ -9,11 +9,11 @@ namespace GetStoreApp.UI.Dialogs
 {
     public sealed partial class CloudflareValidationDialog : ContentDialog
     {
-        public IResourceService ResourceService { get; }
+        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
         public CloudflareValidationDialog()
         {
-            ResourceService = IOCHelper.GetService<IResourceService>();
+            XamlRoot = App.MainWindow.Content.XamlRoot;
             InitializeComponent();
         }
     }

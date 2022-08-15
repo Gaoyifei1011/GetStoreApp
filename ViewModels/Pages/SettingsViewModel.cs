@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using GetStoreApp.UI.Dialogs;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Pages
 {
@@ -13,21 +12,12 @@ namespace GetStoreApp.ViewModels.Pages
 
         public SettingsViewModel()
         {
-            RestartCommand = new AsyncRelayCommand(async async =>
+            RestartCommand = new AsyncRelayCommand(async() =>
             {
-                ContentDialogResult result = await ShowRestartPromptDialogAsync();
+                ContentDialogResult result = await new RestartAppsDialog().ShowAsync();
 
                 if (result == ContentDialogResult.Primary) Microsoft.Windows.AppLifecycle.AppInstance.Restart("");
             });
-        }
-
-        /// <summary>
-        /// 应用重启时显示重启提示对话框
-        /// </summary>
-        public async Task<ContentDialogResult> ShowRestartPromptDialogAsync()
-        {
-            RestartAppsDialog dialog = new RestartAppsDialog { XamlRoot = App.MainWindow.Content.XamlRoot };
-            return await dialog.ShowAsync();
         }
     }
 }

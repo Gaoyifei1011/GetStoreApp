@@ -7,14 +7,12 @@ namespace GetStoreApp.UI.Controls.About
 {
     public sealed partial class PrecautionControl : UserControl
     {
-        public IResourceService ResourceService { get; }
+        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        public PrecautionViewModel ViewModel { get; }
+        public PrecautionViewModel ViewModel { get; } = IOCHelper.GetService<PrecautionViewModel>();
 
         public PrecautionControl()
         {
-            ResourceService = IOCHelper.GetService<IResourceService>();
-            ViewModel = IOCHelper.GetService<PrecautionViewModel>();
             InitializeComponent();
         }
     }

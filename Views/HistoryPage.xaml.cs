@@ -7,14 +7,12 @@ namespace GetStoreApp.Views
 {
     public sealed partial class HistoryPage : Page
     {
-        public IResourceService ResourceService { get; }
+        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        public HistoryViewModel ViewModel { get; }
+        public HistoryViewModel ViewModel { get; } = IOCHelper.GetService<HistoryViewModel>();
 
         public HistoryPage()
         {
-            ResourceService = IOCHelper.GetService<IResourceService>();
-            ViewModel = IOCHelper.GetService<HistoryViewModel>();
             InitializeComponent();
         }
 

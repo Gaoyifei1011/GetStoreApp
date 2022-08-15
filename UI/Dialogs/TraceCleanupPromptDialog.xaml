@@ -1,8 +1,8 @@
 ﻿<ContentDialog
     x:Class="GetStoreApp.UI.Dialogs.TraceCleanupPromptDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Name="TraceCleanupRoot"
     Style="{StaticResource ContentDialogStyle}"
@@ -21,24 +21,40 @@
                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                 BorderThickness="{ThemeResource ContentDialogBorderWidth}">
                 <TextBlock Style="{StaticResource ContentDialogTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/Dialog/TraceCleanupTitle')}" />
-                <TextBlock
-                    Margin="0,0,0,5"
-                    Style="{StaticResource ContentDialogContentStyle}"
-                    Text="{x:Bind ResourceService.GetLocalized('/Dialog/TraceCleanupContent')}" />
+                <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind ResourceService.GetLocalized('/Dialog/TraceCleanupContent')}" />
 
-                <CheckBox Content="历史记录" />
-                <CheckBox Content="下载记录" />
-                <CheckBox Content="本地创建的文件" />
+                <CheckBox Content="{x:Bind ResourceService.GetLocalized('/Dialog/HistoryRecord')}" IsChecked="{x:Bind ViewModel.IsHistoryClean, Mode=TwoWay}" />
+                <CheckBox Content="{x:Bind ResourceService.GetLocalized('/Dialog/DownloadRecord')}" IsChecked="{x:Bind ViewModel.IsDownloadClean, Mode=TwoWay}" />
+                <CheckBox Content="{x:Bind ResourceService.GetLocalized('/Dialog/LocalFile')}" IsChecked="{x:Bind ViewModel.IsLocalFileClean, Mode=TwoWay}" />
 
                 <StackPanel
-                    Margin="0,10,0,0"
+                    Margin="0,5,0,0"
                     Orientation="Horizontal"
-                    Visibility="Visible">
+                    Spacing="8"
+                    Visibility="{x:Bind ViewModel.ClearState, Mode=OneWay}">
                     <ProgressRing
                         Width="20"
                         Height="20"
-                        Margin="0,0,5,0" />
-                    <TextBlock VerticalAlignment="Center" Text="清理完成" />
+                        Visibility="{x:Bind ViewModel.ClearStateRing, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
+                    <TextBlock VerticalAlignment="Center" Text="{x:Bind ViewModel.ClearStateText, Mode=OneWay}" />
+                </StackPanel>
+
+                <StackPanel
+                    Margin="0,5,0,0"
+                    Spacing="5"
+                    Visibility="{x:Bind ViewModel.ClearErrorVisable}">
+                    <TextBlock
+                        Foreground="{ThemeResource SystemErrorTextColor}"
+                        Text="{x:Bind ResourceService.GetLocalized('/Dialog/HistoryCleanError')}"
+                        Visibility="{x:Bind ViewModel.HistoryCleanErrorVisable, Mode=OneWay}" />
+                    <TextBlock
+                        Foreground="{ThemeResource SystemErrorTextColor}"
+                        Text="{x:Bind ResourceService.GetLocalized('/Dialog/DownloadCleanError')}"
+                        Visibility="{x:Bind ViewModel.DownloadCleanErrorVisable, Mode=OneWay}" />
+                    <TextBlock
+                        Foreground="{ThemeResource SystemErrorTextColor}"
+                        Text="{x:Bind ResourceService.GetLocalized('/Dialog/LocalFileCleanError')}"
+                        Visibility="{x:Bind ViewModel.LocalFileCleanErrorVisable, Mode=OneWay}" />
                 </StackPanel>
             </StackPanel>
 
@@ -63,7 +79,7 @@
                     HorizontalAlignment="Stretch"
                     Command="{x:Bind ViewModel.TraceCleanupCancelCommand}"
                     CommandParameter="{Binding ElementName=TraceCleanupRoot}"
-                    Content="{x:Bind ResourceService.GetLocalized('/Dialog/TraceCleanupCancel')}" />
+                    Content="{x:Bind ResourceService.GetLocalized('/Dialog/TraceCleanupClose')}" />
             </Grid>
         </Grid>
     </ContentDialog.Content>

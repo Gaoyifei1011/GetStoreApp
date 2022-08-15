@@ -29,6 +29,9 @@ using System;
 
 namespace GetStoreApp.Helpers
 {
+    /// <summary>
+    /// 控制翻转/依赖注入
+    /// </summary>
     public static class IOCHelper
     {
         public static IHost Host { get; set; }
@@ -37,7 +40,7 @@ namespace GetStoreApp.Helpers
         {
             if (Host.Services.GetService(typeof(T)) is not T service)
             {
-                throw new ArgumentException($"{typeof(T)} 需要在App.xaml.cs中的ConfigureServices中注册。");
+                throw new ArgumentException($"{typeof(T)} 需要在IOCHelper.cs中的ConfigureServices中注册。");
             }
 
             return service;

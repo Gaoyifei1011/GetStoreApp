@@ -11,14 +11,12 @@ namespace GetStoreApp.Views
 {
     public sealed partial class ShellPage : Page
     {
-        public IResourceService ResourceService { get; }
+        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        public ShellViewModel ViewModel { get; }
+        public ShellViewModel ViewModel { get; } = IOCHelper.GetService<ShellViewModel>();
 
         public ShellPage()
         {
-            ResourceService = IOCHelper.GetService<IResourceService>();
-            ViewModel = IOCHelper.GetService<ShellViewModel>();
             InitializeComponent();
 
             ViewModel.NavigationService.Frame = NavigationFrame;

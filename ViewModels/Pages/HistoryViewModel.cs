@@ -197,12 +197,12 @@ namespace GetStoreApp.ViewModels.Pages
             // 没有选中任何内容时显示空提示对话框
             if (SelectedHistoryDataList.Count == 0)
             {
-                await ShowSelectEmptyPromptDialogAsync();
+                await new SelectEmptyPromptDialog().ShowAsync();
                 return;
             };
 
             // 删除时显示删除确认对话框
-            ContentDialogResult result = await ShowDeletePromptDialogAsync();
+            ContentDialogResult result = await new DeletePromptDialog().ShowAsync();
 
             if (result == ContentDialogResult.Primary)
             {
@@ -264,7 +264,7 @@ namespace GetStoreApp.ViewModels.Pages
         {
             if (SelectedHistoryItem == null)
             {
-                await ShowSelectEmptyPromptDialogAsync();
+                await new SelectEmptyPromptDialog().ShowAsync();
                 return;
             };
 
@@ -289,7 +289,7 @@ namespace GetStoreApp.ViewModels.Pages
         {
             if (SelectedHistoryItem == null)
             {
-                await ShowSelectEmptyPromptDialogAsync();
+                await new SelectEmptyPromptDialog().ShowAsync();
                 return;
             };
 
@@ -311,7 +311,7 @@ namespace GetStoreApp.ViewModels.Pages
 
             if (SelectedHistoryDataList.Count == 0)
             {
-                await ShowSelectEmptyPromptDialogAsync();
+                await new SelectEmptyPromptDialog().ShowAsync();
                 return;
             };
 
@@ -327,24 +327,6 @@ namespace GetStoreApp.ViewModels.Pages
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
             await Task.CompletedTask;
-        }
-
-        /// <summary>
-        /// 选中内容为空时，显示提示对话框
-        /// </summary>
-        private async Task ShowSelectEmptyPromptDialogAsync()
-        {
-            SelectEmptyPromptDialog dialog = new SelectEmptyPromptDialog() { XamlRoot = App.MainWindow.Content.XamlRoot };
-            await dialog.ShowAsync();
-        }
-
-        /// <summary>
-        /// 删除选中的条目时，显示删除提示对话框
-        /// </summary>
-        private async Task<ContentDialogResult> ShowDeletePromptDialogAsync()
-        {
-            DeletePromptDialog dialog = new DeletePromptDialog() { XamlRoot = App.MainWindow.Content.XamlRoot };
-            return await dialog.ShowAsync();
         }
     }
 }

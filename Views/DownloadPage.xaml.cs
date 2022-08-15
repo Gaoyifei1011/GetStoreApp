@@ -9,9 +9,9 @@ namespace GetStoreApp.Views
 {
     public sealed partial class DownloadPage : Page
     {
-        public IResourceService ResourceService { get; }
+        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        public DownloadViewModel ViewModel { get; }
+        public DownloadViewModel ViewModel { get; } = IOCHelper.GetService<DownloadViewModel>();
 
         public string OpenFolder { get; }
 
@@ -23,9 +23,6 @@ namespace GetStoreApp.Views
 
         public DownloadPage()
         {
-            ResourceService = IOCHelper.GetService<IResourceService>();
-            ViewModel = IOCHelper.GetService<DownloadViewModel>();
-
             OpenFolder = ResourceService.GetLocalized("/Download/OpenFolder");
             ContinueDownload = ResourceService.GetLocalized("/Download/Continue");
             PauseDownload = ResourceService.GetLocalized("/Download/Pause");

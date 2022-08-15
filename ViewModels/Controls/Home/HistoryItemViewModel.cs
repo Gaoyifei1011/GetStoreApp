@@ -116,7 +116,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
         {
             if (SelectedHistoryItem == null)
             {
-                await ShowSelectEmptyPromptDialogAsync();
+                await new SelectEmptyPromptDialog().ShowAsync();
                 return;
             };
 
@@ -128,7 +128,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
         {
             if (SelectedHistoryItem == null)
             {
-                await ShowSelectEmptyPromptDialogAsync();
+                await new SelectEmptyPromptDialog().ShowAsync();
                 return;
             };
 
@@ -139,15 +139,6 @@ namespace GetStoreApp.ViewModels.Controls.Home
             CopyPasteHelper.CopyToClipBoard(CopyContent);
 
             await Task.CompletedTask;
-        }
-
-        /// <summary>
-        /// 选中内容为空时，显示提示对话框
-        /// </summary>
-        private async Task ShowSelectEmptyPromptDialogAsync()
-        {
-            SelectEmptyPromptDialog dialog = new SelectEmptyPromptDialog { XamlRoot = App.MainWindow.Content.XamlRoot };
-            await dialog.ShowAsync();
         }
     }
 }

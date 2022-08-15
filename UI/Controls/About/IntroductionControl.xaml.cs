@@ -6,11 +6,10 @@ namespace GetStoreApp.UI.Controls.About
 {
     public sealed partial class IntroductionControl : UserControl
     {
-        public IResourceService ResourceService { get; }
+        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
         public IntroductionControl()
         {
-            ResourceService = IOCHelper.GetService<IResourceService>();
             InitializeComponent();
         }
     }

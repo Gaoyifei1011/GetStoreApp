@@ -7,14 +7,13 @@ namespace GetStoreApp.UI.Dialogs
 {
     public sealed partial class TraceCleanupPromptDialog : ContentDialog
     {
-        public IResourceService ResourceService { get; }
+        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        public TraceCleanupPromptViewModel ViewModel { get; }
+        public TraceCleanupPromptViewModel ViewModel { get; } = IOCHelper.GetService<TraceCleanupPromptViewModel>();
 
         public TraceCleanupPromptDialog()
         {
-            ResourceService = IOCHelper.GetService<IResourceService>();
-            ViewModel = IOCHelper.GetService<TraceCleanupPromptViewModel>();
+            XamlRoot = App.MainWindow.Content.XamlRoot;
             InitializeComponent();
         }
     }

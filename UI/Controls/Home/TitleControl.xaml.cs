@@ -7,14 +7,12 @@ namespace GetStoreApp.UI.Controls.Home
 {
     public sealed partial class TitleControl : UserControl
     {
-        public IResourceService ResourceService { get; }
+        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        public TitleViewModel ViewModel { get; }
+        public TitleViewModel ViewModel { get; } = IOCHelper.GetService<TitleViewModel>();
 
         public TitleControl()
         {
-            ResourceService = IOCHelper.GetService<IResourceService>();
-            ViewModel = IOCHelper.GetService<TitleViewModel>();
             InitializeComponent();
         }
     }
