@@ -9,9 +9,9 @@ namespace GetStoreApp.UI.Controls.Home
 {
     public sealed partial class RequestControl : UserControl
     {
-        public IResourceService ResourceService { get; }
+        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        public RequestViewModel ViewModel { get; }
+        public RequestViewModel ViewModel { get; } = IOCHelper.GetService<RequestViewModel>();
 
         public List<GetAppTypeModel> TypeList { get; }
 
@@ -19,9 +19,6 @@ namespace GetStoreApp.UI.Controls.Home
 
         public RequestControl()
         {
-            ResourceService = IOCHelper.GetService<IResourceService>();
-            ViewModel = IOCHelper.GetService<RequestViewModel>();
-
             TypeList = ResourceService.TypeList;
             ChannelList = ResourceService.ChannelList;
 

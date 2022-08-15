@@ -7,14 +7,12 @@ namespace GetStoreApp.Views
 {
     public sealed partial class AboutPage : Page
     {
-        public IResourceService ResourceService { get; }
+        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        public AboutViewModel ViewModel { get; }
+        public AboutViewModel ViewModel { get; } = IOCHelper.GetService<AboutViewModel>();
 
         public AboutPage()
         {
-            ResourceService = IOCHelper.GetService<IResourceService>();
-            ViewModel = IOCHelper.GetService<AboutViewModel>();
             InitializeComponent();
         }
     }

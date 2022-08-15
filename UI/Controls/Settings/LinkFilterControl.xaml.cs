@@ -7,14 +7,12 @@ namespace GetStoreApp.UI.Controls.Settings
 {
     public sealed partial class LinkFilterControl : UserControl
     {
-        public IResourceService ResourceService { get; }
+        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        public LinkFilterViewModel ViewModel { get; }
+        public LinkFilterViewModel ViewModel { get; } = IOCHelper.GetService<LinkFilterViewModel>();
 
         public LinkFilterControl()
         {
-            ResourceService = IOCHelper.GetService<IResourceService>();
-            ViewModel = IOCHelper.GetService<LinkFilterViewModel>();
             InitializeComponent();
         }
     }

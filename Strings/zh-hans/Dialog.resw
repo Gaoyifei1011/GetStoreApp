@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CleanFailed" xml:space="preserve">
+    <value>清理文件时发生了错误，请检查</value>
+  </data>
+  <data name="CleaningNow" xml:space="preserve">
+    <value>正在清理中，请稍侯...</value>
+  </data>
+  <data name="CleanSuccessfully" xml:space="preserve">
+    <value>成功清理所有项目</value>
+  </data>
   <data name="CloudflareValidation" xml:space="preserve">
     <value>什么是Cloudflare 5秒验证？</value>
   </data>
@@ -147,6 +156,24 @@
   <data name="DesktopAppsSure" xml:space="preserve">
     <value>确定</value>
   </data>
+  <data name="DownloadCleanError" xml:space="preserve">
+    <value>下载记录在清理的过程中发生了错误，请检查下载记录访问权限。</value>
+  </data>
+  <data name="DownloadRecord" xml:space="preserve">
+    <value>下载记录</value>
+  </data>
+  <data name="HistoryCleanError" xml:space="preserve">
+    <value>历史记录在清理的过程中发生了错误，请检查历史记录访问权限。</value>
+  </data>
+  <data name="HistoryRecord" xml:space="preserve">
+    <value>历史记录</value>
+  </data>
+  <data name="LocalFile" xml:space="preserve">
+    <value>本地创建的文件</value>
+  </data>
+  <data name="LocalFileCleanError" xml:space="preserve">
+    <value>本地创建的文件在清理的过程中发生了错误，请检查本地创建的文件的访问权限。</value>
+  </data>
   <data name="RecognizeDesktopApps" xml:space="preserve">
     <value>如何识别传统桌面应用?</value>
   </data>
@@ -171,8 +198,8 @@
   <data name="SelectEmptyTitle" xml:space="preserve">
     <value>项目选择提示</value>
   </data>
-  <data name="TraceCleanupCancel" xml:space="preserve">
-    <value>取消</value>
+  <data name="TraceCleanupClose" xml:space="preserve">
+    <value>关闭窗口</value>
   </data>
   <data name="TraceCleanupContent" xml:space="preserve">
     <value>痕迹清理包括历史记录、下载记录和应用下载时在本地创建的文件。请选择您要清理的项目。</value>

@@ -8,14 +8,12 @@ namespace GetStoreApp.UI.Controls.Settings
 {
     public sealed partial class RegionControl : UserControl
     {
-        public IResourceService ResourceService { get; }
+        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        public RegionViewModel ViewModel { get; }
+        public RegionViewModel ViewModel { get; } = IOCHelper.GetService<RegionViewModel>();
 
         public RegionControl()
         {
-            ResourceService = IOCHelper.GetService<IResourceService>();
-            ViewModel = IOCHelper.GetService<RegionViewModel>();
             InitializeComponent();
         }
 

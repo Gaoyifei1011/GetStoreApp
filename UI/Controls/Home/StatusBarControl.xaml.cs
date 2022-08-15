@@ -6,11 +6,10 @@ namespace GetStoreApp.UI.Controls.Home
 {
     public sealed partial class StatusBarControl : UserControl
     {
-        public StatusBarViewModel ViewModel { get; }
+        public StatusBarViewModel ViewModel { get; } = IOCHelper.GetService<StatusBarViewModel>();
 
         public StatusBarControl()
         {
-            ViewModel = IOCHelper.GetService<StatusBarViewModel>();
             InitializeComponent();
         }
     }

@@ -8,14 +8,12 @@ namespace GetStoreApp.UI.Controls.Settings
 {
     public sealed partial class LauguageControl : UserControl
     {
-        public IResourceService ResourceService { get; }
+        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        public LanguageViewModel ViewModel { get; }
+        public LanguageViewModel ViewModel { get; } = IOCHelper.GetService<LanguageViewModel>();
 
         public LauguageControl()
         {
-            ResourceService = IOCHelper.GetService<IResourceService>();
-            ViewModel = IOCHelper.GetService<LanguageViewModel>();
             InitializeComponent();
         }
 

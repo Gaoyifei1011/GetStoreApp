@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using GetStoreApp.Helpers;
 using GetStoreApp.UI.Dialogs;
 using System;
 
@@ -19,8 +20,7 @@ namespace GetStoreApp.ViewModels.Controls.About
 
         public IAsyncRelayCommand CloudflareValidationCommand { get; } = new AsyncRelayCommand(async () =>
         {
-            CloudflareValidationDialog dialog = new CloudflareValidationDialog { XamlRoot = App.MainWindow.Content.XamlRoot };
-            await dialog.ShowAsync();
+            await new CloudflareValidationDialog().ShowAsync();
         });
     }
 }

@@ -8,14 +8,12 @@ namespace GetStoreApp.UI.Controls.Settings
 {
     public sealed partial class ThemeControl : UserControl
     {
-        public IResourceService ResourceService { get; }
+        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        public ThemeViewModel ViewModel { get; }
+        public ThemeViewModel ViewModel { get; } = IOCHelper.GetService<ThemeViewModel>();
 
         public ThemeControl()
         {
-            ResourceService = IOCHelper.GetService<IResourceService>();
-            ViewModel = IOCHelper.GetService<ThemeViewModel>();
             InitializeComponent();
         }
 

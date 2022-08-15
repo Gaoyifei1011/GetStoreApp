@@ -7,14 +7,12 @@ namespace GetStoreApp.UI.Controls.Settings
 {
     public sealed partial class TraceCleanupControl : UserControl
     {
-        public IResourceService ResourceService { get; }
+        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        public TraceCleanupViewModel ViewModel { get; }
+        public TraceCleanupViewModel ViewModel { get; } = IOCHelper.GetService<TraceCleanupViewModel>();
 
         public TraceCleanupControl()
         {
-            ResourceService = IOCHelper.GetService<IResourceService>();
-            ViewModel = IOCHelper.GetService<TraceCleanupViewModel>();
             InitializeComponent();
         }
     }

@@ -1,10 +1,7 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-
-    <x:Double x:Key="TitleDescriptionFontSize">15</x:Double>
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="TitleDescriptionStyle" TargetType="TextBlock">
-        <Setter Property="FontSize" Value="{StaticResource TitleDescriptionFontSize}" />
+        <Setter Property="FontSize" Value="15" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="TextAlignment" Value="Center" />
         <Setter Property="TextWrapping" Value="Wrap" />

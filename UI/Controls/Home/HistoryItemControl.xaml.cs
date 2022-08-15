@@ -7,14 +7,12 @@ namespace GetStoreApp.UI.Controls.Home
 {
     public sealed partial class HistoryItemControl : UserControl
     {
-        public IResourceService ResourceService { get; }
+        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        public HistoryItemViewModel ViewModel { get; }
+        public HistoryItemViewModel ViewModel { get; } = IOCHelper.GetService<HistoryItemViewModel>();
 
         public HistoryItemControl()
         {
-            ResourceService = IOCHelper.GetService<IResourceService>();
-            ViewModel = IOCHelper.GetService<HistoryItemViewModel>();
             InitializeComponent();
         }
     }

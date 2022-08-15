@@ -8,14 +8,12 @@ namespace GetStoreApp.UI.Controls.Settings
 {
     public sealed partial class DownloadOptionsControl : UserControl
     {
-        public IResourceService ResourceService { get; }
+        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        public DownloadOptionsViewModel ViewModel { get; }
+        public DownloadOptionsViewModel ViewModel { get; } = IOCHelper.GetService<DownloadOptionsViewModel>();
 
         public DownloadOptionsControl()
         {
-            ResourceService = IOCHelper.GetService<IResourceService>();
-            ViewModel = IOCHelper.GetService<DownloadOptionsViewModel>();
             InitializeComponent();
         }
 

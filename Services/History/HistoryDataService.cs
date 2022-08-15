@@ -5,7 +5,6 @@ using GetStoreApp.Models;
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -198,7 +197,6 @@ namespace GetStoreApp.Services.History
 
                     HistoryRawList.Add(historyRawModel);
                 }
-                Debug.WriteLine(HistoryRawList.Count);
                 await db.CloseAsync();
             }
 
@@ -263,7 +261,6 @@ namespace GetStoreApp.Services.History
 
                     HistoryRawList.Add(historyRawModel);
                 }
-                Debug.WriteLine(HistoryRawList.Count);
                 await db.CloseAsync();
             }
 

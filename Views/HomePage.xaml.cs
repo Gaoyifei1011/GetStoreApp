@@ -6,11 +6,10 @@ namespace GetStoreApp.Views
 {
     public sealed partial class HomePage : Page
     {
-        public HomeViewModel ViewModel { get; }
+        public HomeViewModel ViewModel { get; } = IOCHelper.GetService<HomeViewModel>();
 
         public HomePage()
         {
-            ViewModel = IOCHelper.GetService<HomeViewModel>();
             InitializeComponent();
         }
     }

@@ -6,11 +6,11 @@ namespace GetStoreApp.UI.Dialogs
 {
     public sealed partial class DesktopAppsDialog : ContentDialog
     {
-        public IResourceService ResourceService { get; }
+        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
         public DesktopAppsDialog()
         {
-            ResourceService = IOCHelper.GetService<IResourceService>();
+            XamlRoot = App.MainWindow.Content.XamlRoot;
             InitializeComponent();
         }
     }

@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CleanFailed" xml:space="preserve">
+    <value>Clean failed</value>
+  </data>
+  <data name="CleaningNow" xml:space="preserve">
+    <value>Cleaning up, please wait...</value>
+  </data>
+  <data name="CleanSuccessfully" xml:space="preserve">
+    <value>Cleanup completed</value>
+  </data>
   <data name="CloudflareValidation" xml:space="preserve">
     <value>What is Cloudflare 5 seconds validation?</value>
   </data>
@@ -147,6 +156,24 @@
   <data name="DesktopAppsSure" xml:space="preserve">
     <value>OK</value>
   </data>
+  <data name="DownloadCleanError" xml:space="preserve">
+    <value>An error occurred during the download record cleanup. Please check the download record access rights.</value>
+  </data>
+  <data name="DownloadRecord" xml:space="preserve">
+    <value>Download records</value>
+  </data>
+  <data name="HistoryCleanError" xml:space="preserve">
+    <value>An error occurred during the history cleaning process. Please check the history access permissions.</value>
+  </data>
+  <data name="HistoryRecord" xml:space="preserve">
+    <value>History records</value>
+  </data>
+  <data name="LocalFile" xml:space="preserve">
+    <value>Locally created files</value>
+  </data>
+  <data name="LocalFileCleanError" xml:space="preserve">
+    <value>An error occurred during the clearing of the locally created file. Check the access permission of the locally created file.</value>
+  </data>
   <data name="RecognizeDesktopApps" xml:space="preserve">
     <value>How to recognize traditional desktop apps?</value>
   </data>
@@ -171,8 +198,8 @@
   <data name="SelectEmptyTitle" xml:space="preserve">
     <value>Item selection prompts</value>
   </data>
-  <data name="TraceCleanupCancel" xml:space="preserve">
-    <value>Cancel</value>
+  <data name="TraceCleanupClose" xml:space="preserve">
+    <value>Close the window</value>
   </data>
   <data name="TraceCleanupContent" xml:space="preserve">
     <value>Trace clearing includes history records, download records, and files created locally when an application is downloaded. Select the items you want to clean.</value>
