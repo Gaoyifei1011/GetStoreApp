@@ -126,6 +126,18 @@
   <data name="CleanSuccessfully" xml:space="preserve">
     <value>成功清理所有项目</value>
   </data>
+  <data name="ClosingWindowCancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="ClosingWindowContent" xml:space="preserve">
+    <value>您目前还有尚未完成下载的任务，是否要保存下载状态并强制退出应用？</value>
+  </data>
+  <data name="ClosingWindowSure" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="ClosingWindowTitle" xml:space="preserve">
+    <value>获取商店应用</value>
+  </data>
   <data name="CloudflareValidation" xml:space="preserve">
     <value>什么是Cloudflare 5秒验证？</value>
   </data>
@@ -173,6 +185,9 @@
   </data>
   <data name="LocalFileCleanError" xml:space="preserve">
     <value>本地创建的文件在清理的过程中发生了错误，请检查本地创建的文件的访问权限。</value>
+  </data>
+  <data name="OpenDownloadPage" xml:space="preserve">
+    <value>打开下载页面</value>
   </data>
   <data name="RecognizeDesktopApps" xml:space="preserve">
     <value>如何识别传统桌面应用?</value>

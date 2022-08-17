@@ -126,6 +126,18 @@
   <data name="CleanSuccessfully" xml:space="preserve">
     <value>Cleanup completed</value>
   </data>
+  <data name="ClosingWindowCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ClosingWindowContent" xml:space="preserve">
+    <value>You still have a task that you haven't completed downloading, do you want to save the download state and force quit the app?</value>
+  </data>
+  <data name="ClosingWindowSure" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="ClosingWindowTitle" xml:space="preserve">
+    <value>GetStoreApp</value>
+  </data>
   <data name="CloudflareValidation" xml:space="preserve">
     <value>What is Cloudflare 5 seconds validation?</value>
   </data>
@@ -173,6 +185,9 @@
   </data>
   <data name="LocalFileCleanError" xml:space="preserve">
     <value>An error occurred during the clearing of the locally created file. Check the access permission of the locally created file.</value>
+  </data>
+  <data name="OpenDownloadPage" xml:space="preserve">
+    <value>Open download page</value>
   </data>
   <data name="RecognizeDesktopApps" xml:space="preserve">
     <value>How to recognize traditional desktop apps?</value>

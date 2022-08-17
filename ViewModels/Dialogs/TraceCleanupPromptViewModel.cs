@@ -1,11 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.History;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
-using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Models;
 using Microsoft.UI.Xaml.Controls;
 using System;

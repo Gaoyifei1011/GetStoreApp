@@ -12,7 +12,7 @@ namespace GetStoreApp.ViewModels.Pages
 
         public SettingsViewModel()
         {
-            RestartCommand = new AsyncRelayCommand(async() =>
+            RestartCommand = new AsyncRelayCommand(async () =>
             {
                 ContentDialogResult result = await new RestartAppsDialog().ShowAsync();
 
