@@ -1,12 +1,12 @@
 ﻿using GetStoreApp.Helpers;
 using GetStoreApp.ViewModels.Window;
+using GetStoreApp.WindowExtensions;
 using System;
 using System.IO;
-using WinUIEx;
 
 namespace GetStoreApp
 {
-    public sealed partial class MainWindow : WindowEx
+    public sealed partial class MainWindow : DesktopWindow
     {
         public MainWindowViewModel ViewModel { get; }
 

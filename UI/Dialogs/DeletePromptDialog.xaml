@@ -7,7 +7,7 @@
     Title="{x:Bind ResourceService.GetLocalized('/Dialog/DeleteTitle')}"
     CloseButtonText="{x:Bind ResourceService.GetLocalized('/Dialog/DeleteCancel')}"
     Content="{x:Bind ResourceService.GetLocalized('/Dialog/DeleteContent')}"
-    PrimaryButtonText="{x:Bind ResourceService.GetLocalized('/Dialog/DeleteContinue')}"
     DefaultButton="Primary"
+    PrimaryButtonText="{x:Bind ResourceService.GetLocalized('/Dialog/DeleteContinue')}"
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d" />

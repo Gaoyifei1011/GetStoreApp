@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Helpers;
 using GetStoreApp.UI.Dialogs;
 using System;
 

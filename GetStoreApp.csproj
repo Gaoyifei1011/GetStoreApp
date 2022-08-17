@@ -83,6 +83,7 @@
     <None Remove="UI\Controls\Settings\HistoryItemValueControl.xaml" />
     <None Remove="UI\Controls\Settings\LinkFilterControl.xaml" />
     <None Remove="UI\Controls\Settings\TraceCleanupControl.xaml" />
+    <None Remove="UI\Dialogs\ClosingWindowDialog.xaml" />
     <None Remove="UI\Dialogs\CloudflareValidationDialog.xaml" />
     <None Remove="UI\Dialogs\DeletePromptDialog.xaml" />
     <None Remove="UI\Dialogs\DesktopAppsDialog.xaml" />
@@ -107,6 +108,7 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.8" />
     <PackageReference Include="NETStandard.Library" Version="2.0.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="PInvoke.SHCore" Version="0.7.124" />
     <PackageReference Include="System.Management" Version="6.0.0" />
     <PackageReference Include="WinUIEx" Version="1.8.0" />
   </ItemGroup>
@@ -245,5 +247,11 @@
       <Link>Aria2\aria2c.exe</Link>
     </Content>
     <Content Include="Aria2\Config\aria2.conf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="UI\Dialogs\ClosingWindowDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>
