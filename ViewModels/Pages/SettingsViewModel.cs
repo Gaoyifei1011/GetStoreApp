@@ -14,9 +14,7 @@ namespace GetStoreApp.ViewModels.Pages
         {
             RestartCommand = new AsyncRelayCommand(async () =>
             {
-                ContentDialogResult result = await new RestartAppsDialog().ShowAsync();
-
-                if (result == ContentDialogResult.Primary) Microsoft.Windows.AppLifecycle.AppInstance.Restart("");
+                await new RestartAppsDialog().ShowAsync();
             });
         }
     }

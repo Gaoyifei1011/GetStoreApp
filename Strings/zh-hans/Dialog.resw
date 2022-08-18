@@ -213,7 +213,7 @@
   <data name="SelectEmptyTitle" xml:space="preserve">
     <value>项目选择提示</value>
   </data>
-  <data name="TraceCleanupClose" xml:space="preserve">
+  <data name="TraceCleanupCancel" xml:space="preserve">
     <value>关闭窗口</value>
   </data>
   <data name="TraceCleanupContent" xml:space="preserve">

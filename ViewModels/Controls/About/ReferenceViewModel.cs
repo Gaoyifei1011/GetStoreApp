@@ -19,6 +19,7 @@ namespace GetStoreApp.ViewModels.Controls.About
             {"Microsoft.Xaml.Behaviors.WinUI.Managed","https://www.nuget.org/packages/Microsoft.Xaml.Behaviors.WinUI.Managed/" },
             {"NETStandard.Library","https://www.nuget.org/packages/NETStandard.Library" },
             {"Newtonsoft.Json" ,"https://www.newtonsoft.com/json"},
+            {"PInvoke.SHCore","https://github.com/dotnet/pinvoke" },
             {"System.Management","https://www.nuget.org/packages/System.Management" },
             {"Template Studio","https://github.com/microsoft/TemplateStudio" },
             {"WinUIEx","https://dotmorten.github.io/WinUIEx" }

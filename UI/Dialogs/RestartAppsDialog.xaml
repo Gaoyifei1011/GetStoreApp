@@ -4,11 +4,49 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="{x:Bind ResourceService.GetLocalized('/Dialog/Restart')}"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    CloseButtonText="{x:Bind ResourceService.GetLocalized('/Dialog/RestartCancel')}"
-    Content="{x:Bind ResourceService.GetLocalized('/Dialog/RestartContent')}"
-    PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
-    PrimaryButtonText="{x:Bind ResourceService.GetLocalized('/Dialog/RestartSure')}"
-    Style="{ThemeResource DefaultContentDialogStyle}"
-    mc:Ignorable="d" />
+    x:Name="RestartAppsRoot"
+    Style="{StaticResource ContentDialogStyle}"
+    mc:Ignorable="d">
+    <ContentDialog.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <StackPanel
+                Grid.Row="0"
+                Padding="24"
+                Background="{ThemeResource ContentDialogTopOverlay}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="{ThemeResource ContentDialogBorderWidth}">
+                <TextBlock Style="{StaticResource ContentDialogTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/Dialog/Restart')}" />
+                <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind ResourceService.GetLocalized('/Dialog/RestartContent')}" />
+            </StackPanel>
+
+            <Grid
+                Grid.Row="1"
+                Padding="24"
+                ColumnSpacing="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button
+                    Grid.Column="0"
+                    HorizontalAlignment="Stretch"
+                    Command="{x:Bind ViewModel.RestartAppsSureCommand}"
+                    CommandParameter="{Binding ElementName=RestartAppsRoot}"
+                    Content="{x:Bind ResourceService.GetLocalized('/Dialog/RestartSure')}"
+                    Style="{ThemeResource AccentButtonStyle}" />
+                <Button
+                    Grid.Column="1"
+                    HorizontalAlignment="Stretch"
+                    Command="{x:Bind ViewModel.RestartAppsCancelCommand}"
+                    CommandParameter="{Binding ElementName=RestartAppsRoot}"
+                    Content="{x:Bind ResourceService.GetLocalized('/Dialog/RestartCancel')}" />
+            </Grid>
+        </Grid>
+    </ContentDialog.Content>
+</ContentDialog>
