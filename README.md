@@ -1,77 +1,83 @@
-# GetStoreApp
+# <p align="center">欢迎访问 获取商店应用</p>
 
-### 通过访问Microsoft Store服务器下载离线的应用商店安装包。<br>Download offline app store installation packages by visiting the Microsoft Store server.
-### 该项目使用的是[Store](https://store.rg-adguard.net/)提供的API来生成的链接。<br>The project uses the API provided by the [Store] (https://store.rg-adguard.net/) to generate links.
+### 语言选择
 
-| 项目进度                     | 开发进展 |
-| --------------------------- | ----------- |
-| 主页面功能                   | 已完成90%的功能（可以通过浏览器下载）     |
-| 历史记录（记录使用过的链接）   | 已完成        |
-| 通过生成的链接下载文件         | 0%，计划中        |
-| 应用说明                     | 已完成       |
-| 控制台应用程序                    | 0%，计划中      |
+------
 
-| Project progress                    | Development progress |
-| --------------------------- | ----------- |
-| Main page functionality                    | 90% of the features completed (can be downloaded via browser)     |
-| History (records used links)  | Finished       |
-| Download the file from the generated link         | 0% is planned        |
-| Application Notes                   | Finished       |
-| Console applications                       | 0% is planned      |
+### 应用简介
 
-原API网页不知道在什么时候开启了Cloudflare 5秒金盾(添加了反爬虫验证)，也可能是网站暂时维护所以开启防止攻击。网站关闭5秒金盾后即可正常访问，目前正在着手解决这个问题中。
+微软商店提供了对已上架商店应用的分发，下载和更新通道。但是在最新的微软商店中，微软要求用户下载商店的应用需要使用在线账户。这对一些从不使用微软账户且应用必须依赖商店下载的用户带来了困扰。因此我开发了这一款获取商店应用的APP，该应用使用了 store.rg-adguard.net 提供的获取接口，绕开了微软商店官方提供的应用下载渠道。用户可以离线下载所需的应用安装包，进行独立部署。
 
-### 该项目的功能
-#### 该项目主要包括以下功能：通过[Store](https://store.rg-adguard.net/)提供的API来生成带有文件链接
-#### 记录已经成功生成内容的链接和选择的选项，方便下次使用
-#### 在应用内下载已经下载完成的安装包，并可以自行安装（使用App Installer或Powershell）
+------
 
-### Features of the project
-#### The project mainly includes the following features: generating with file links through the API provided by the [Store] (https://store.rg-adguard.net/).
-#### Record the link to the content that has been successfully generated and the options selected for easy use next time
-#### Download the downloaded install package in-app and install it yourself (using App Installer or Powershell)
+### 该应用的基础功能
 
-### 使用参考的库或项目
-#### [Html Agility Pack](https://github.com/zzzprojects/html-agility-pack)
-#### [microsoft-ui-xaml](https://github.com/microsoft/microsoft-ui-xaml)
-#### [MVVM Toolkit](https://docs.microsoft.com/zh-cn/dotnet/communitytoolkit/mvvm/introduction) 
+> * 绕开微软商店下载并离线部署 Microsoft Store 应用
+> * 访问已经成功获取的历史链接和添加的下载任务
+> * 访问网页版（接口出现问题时），并使用应用内置的下载工具下载
 
-### Use a reference library or project
-#### [Html Agility Pack](https://github.com/zzzprojects/html-agility-pack)
-#### [microsoft-ui-xaml](https://github.com/microsoft/microsoft-ui-xaml)
-#### [MVVM Toolkit](https://docs.microsoft.com/zh-cn/dotnet/communitytoolkit/mvvm/introduction)
+注意：该应用不能绕过微软商店的付费渠道，如果您要获取的应用是付费应用，请从微软商店购买后下载。
 
-### 应用运行图（中文（简体））
-#### 应用初次打开界面
-![image](https://user-images.githubusercontent.com/49179966/173263943-27d72513-4b0e-4cb6-a933-85e029e36cad.png)
-#### 应用成功获取界面
+### 应用截图
+
+#### <p align="center">应用成功获取界面</p>
 ![image](https://user-images.githubusercontent.com/49179966/173263928-e6b3dfd0-13f8-4893-91f5-aaf4a045e19f.png)
+#### <p align="center">历史记录</p>
+![image](https://user-images.githubusercontent.com/49179966/185366265-31fa41cb-a0e8-46ee-a313-3ff8806fb139.png)
+#### <p align="center">网页界面</p>
+![image](https://user-images.githubusercontent.com/49179966/185366384-67831dd0-df0d-44bc-a513-ccf5e43ef204.png)
+#### <p align="center">应用说明</p>
+![image](https://user-images.githubusercontent.com/49179966/185366557-105ca474-6e47-45fe-9dce-c7748cab3509.png)
+------
 
-### Application Operation Diagram (English(United States))
-#### The app opens the interface for the first time
-![image](https://user-images.githubusercontent.com/49179966/173263973-b921e7cd-7374-412d-a0fd-3bd08e8553f8.png)
-#### The app successfully gets the interface
-![image](https://user-images.githubusercontent.com/49179966/173263993-b3301a71-b349-4f99-af66-e651e9e8cad1.png)
+### 项目开发进展
 
-### 为项目作出贡献
-#### 多语言翻译
-##### 该应用已经支持多语言功能，您只需要以下几步就能完成。
-##### 第一步：Fork该项目并下载代码到本地
-##### 第二步：打开Visual Studio 2022
-##### 第三步：在GetStoreApp项目中打开Strings文件夹，并创建您使用的语言，比如（English(United States)）文件夹名称为en-us，具体可以参考表示语言(文化)代码与国家地区对照表
-##### 第四步：进行翻译
-##### 第五步：编译运行代码并测试您的语言，应用在初次打开的时候如果没有您使用的语言默认显示English(United States)
-##### 第六步：创建PR，然后将修改的内容提交到本项目，等待合并即可
+| 项目进度                        | 开发进展                                          |
+| --------------------------------| --------------------------------------------------|
+| 主页面功能                      | 已完成，下载接口正在实现中，实现完成后即可对接    |
+| 历史记录（记录使用过的链接）    | 已完成                                            |
+| 通过生成的链接下载文件          | 开发中，已完成50%                                 |
+| 下载完成后离线部署应用          | 尚未开发                                          |
+| 控制台应用程序（快速下载并部署）| 计划中                                            |
+| 访问网页版对接下载接口          | 计划中                                            |
+| 程序性能优化                    | 尚未开发                                          |
 
+目前该应用处于开发阶段，有部分功能尚未实现，目前仅提供基础的功能。此外我是c#的初学者，且本人时间较为紧张，只能利用自己的闲余时间开发，开发进度较为缓慢，请谅解。
 
-### Contribute to the project
-#### Multilingual translation
-##### The app already supports multilingual features, and you only need the following few steps to complete.
-##### Step 1: Fork the project and download the code locally
-##### Step 2: Open Visual Studio 2022
-##### Step 3: Open the Strings folder in the GetStoreApp project and create the language you are using, such as (English (United States)) folder name en-us, you can refer to the table of language (culture) codes and countries
-##### Step 4: Translate
-##### Step 5: Compile and run the code and test your language, english (United States) is displayed by default if the application is not in the language you are using when it is first opened
-##### Step 6: Create a PR, then submit the modified content to this project and wait for the merge
+------
 
-##### 目前该应用处于开发阶段，有大量功能尚未实现，目前仅提供基础的功能，由于我是c#的初学者，且本人时间较为紧张，只能利用自己的闲余时间开发，开发进度较为缓慢，请谅解<br>At present, the application is in the development stage, there are a large number of functions have not yet been implemented, currently only provide basic functions, because I am a beginner in C#, and I am more time-critical, can only use their spare time to develop, the development progress is relatively slow, please understand
+### 下载与安装注意事项
+
+> * 该程序使用的是Windows 应用 SDK构建的，建议您的系统版本为Windows 11（代号 21H2 / 内部版本号 22000）或更高版本，最低版本为Windows 10（代号1709 / 内部版本号17763）或更高版本。
+> * 如果您的系统是Windows 10，应用功能存在一些限制：
+    暂不支持设置云母/亚克力背景色
+    应用部分图标使用的是Segoe Fluent  Icons图标，这一类型图标并没有内置到Windows图标，所以初次打开应用时会存在图标异常的问题。需要您亲自下载相应的[图标文件](https://docs.microsoft.com/zh-cn/windows/apps/design/downloads/#fonts)，点击右键菜单安装该字体图标文件，重启应用图标才能正常显示。
+> * [Release](https://github.com/Gaoyifei1011/GetStoreApp/releases)页面的二进制安装文件已经打包成压缩包。请解压压缩包并使用Powershell管理员模式（必要情况下）运行install.ps1文件方可实现快速安装。
+> * 自行下载项目源代码并编译。（请仔细阅读下面的项目编译步骤）
+
+------
+
+### 项目编译步骤
+
+#### <p align="center">必须安装的工具</p>
+
+> * [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com/) 
+> * .NET桌面开发（Visual Studio Installer中安装，.NET SDK 版本 6.0）
+> * 单打包项目工具（[Single-project MSIX Packaging Tools for VS2022](https://docs.microsoft.com/en-us/windows/apps/windows-app-sdk/single-project-msix?tabs=csharp)）
+
+#### <p align="center">编译步骤</p>
+
+> * 克隆项目并下载代码到本地
+> * 使用Visual Studio 2022打开GetStoreApp.sln文件，如果解决方案提示部分工具没有安装，请完成安装步骤后再次打开该解决方案。
+> * 右键项目解决方案，生成该解决方案后点击部署解决方案。
+> * 部署完成后打开“开始”菜单即可运行应用。
+
+#### <p align="center">应用本地化</p>
+<p align="center">项目在最初仅提供简体中文和英文两种语言格式，如果您想将应用翻译到您熟悉的语言，请参考下面的步骤。</p>
+
+> * 完成上面所述的编译步骤，确保所有步骤能够顺利运行。
+> * 打开项目的Strings文件夹，并创建您使用的语言，比如（English(United States)）文件夹名称为en-us，具体可以参考表示语言(文化)代码与国家地区对照表）
+> * 打开子文件夹下的resw文件，对每一个名称进行翻译。
+> * 编译运行代码并测试您的语言，应用在初次打开的时候如果没有您使用的语言默认显示English(United States)，需要在设置中动态调整。
+> * 完成上述步骤后创建PR，然后将修改的内容提交到本项目，等待合并即可。
+
