@@ -146,6 +146,8 @@ namespace GetStoreApp.Helpers
                 services.AddTransient<UseInstructionViewModel>();
 
                 // 对话框（MVVM）
+                services.AddTransient<RestartAppsDialog>();
+                services.AddTransient<RestartAppsViewModel>();
                 services.AddTransient<TraceCleanupPromptDialog>();
                 services.AddTransient<TraceCleanupPromptViewModel>();
             })

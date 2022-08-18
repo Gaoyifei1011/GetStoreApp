@@ -61,7 +61,6 @@
             <Grid
                 Grid.Row="1"
                 Padding="24"
-                Background="Transparent"
                 ColumnSpacing="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -79,7 +78,7 @@
                     HorizontalAlignment="Stretch"
                     Command="{x:Bind ViewModel.TraceCleanupCancelCommand}"
                     CommandParameter="{Binding ElementName=TraceCleanupRoot}"
-                    Content="{x:Bind ResourceService.GetLocalized('/Dialog/TraceCleanupClose')}" />
+                    Content="{x:Bind ResourceService.GetLocalized('/Dialog/TraceCleanupCancel')}" />
             </Grid>
         </Grid>
     </ContentDialog.Content>

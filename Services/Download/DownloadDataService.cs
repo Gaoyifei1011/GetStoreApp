@@ -14,6 +14,9 @@ namespace GetStoreApp.Services.Download
     /// </summary>
     public class DownloadDataService : IDownloadDataService
     {
+        private readonly object DownloadTaskItemLock = new object();
+        private int DownloadTaskItem;
+
         private IDataBaseService DataBaseService { get; } = IOCHelper.GetService<IDataBaseService>();
 
         /// <summary>
