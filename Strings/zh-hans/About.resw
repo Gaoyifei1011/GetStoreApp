@@ -229,7 +229,7 @@
     <value>如何识别传统桌面应用?</value>
   </data>
   <data name="Reference" xml:space="preserve">
-    <value>项目引用（按英文字母排序）</value>
+    <value>项目引用（按英文首字母排序）</value>
   </data>
   <data name="ReferenceDescription" xml:space="preserve">
     <value>单击了解被引用开源项目的信息</value>

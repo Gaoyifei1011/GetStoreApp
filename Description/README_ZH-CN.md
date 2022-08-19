@@ -1,12 +1,5 @@
 # <p align="center">欢迎访问 获取商店应用</p>
 
-### 语言选择（Language selection）
-
-[简体中文](https://github.com/Gaoyifei1011/GetStoreApp/blob/master/Description/README_ZH-CN.md)&emsp;
-[English](https://github.com/Gaoyifei1011/GetStoreApp/blob/master/Description/README_EN-US.md)&emsp;
-
-------
-
 ### 应用简介
 
 微软商店提供了对已上架商店应用的分发，下载和更新通道。但是在最新的微软商店中，微软要求用户下载商店的应用需要使用在线账户。这对一些从不使用微软账户且应用必须依赖商店下载的用户带来了困扰。因此我开发了这一款获取商店应用的APP，该应用使用了 store.rg-adguard.net 提供的获取接口，绕开了微软商店官方提供的应用下载渠道。用户可以离线下载所需的应用安装包，进行独立部署。
@@ -99,7 +92,7 @@
 > * 部署完成后打开“开始”菜单即可运行应用。
 
 #### <p align="center">应用本地化</p>
-<p align="center">项目在最初仅提供简体中文和英文两种语言格式，如果您想将应用翻译到您熟悉的语言或纠正已完成翻译的内容中存在的错误，请参考下面的步骤</p>
+<p align="center">项目在最初仅提供简体中文和英文两种语言格式，如果您想将应用翻译到您熟悉的语言或纠正已完成翻译的内容中存在的错误，请参考下面的步骤。</p>
 
 > * 在Description文件夹中寻找Readme模板文件，例如英文版的是README_EN-US.md文件，将其重命名为README_(对应的语言).md文件。
 > * 打开重命名后的文件，翻译所有的语句后并保存。翻译完成后请您认真检查一下。
