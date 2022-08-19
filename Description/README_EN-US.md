@@ -78,7 +78,7 @@ At present, the application is in the development stage, some functions have not
 
 ------
 
-### Project compilation steps
+### Project compilation steps and app localization
 
 #### <p align="center">Tools that must be installed</p>
 
