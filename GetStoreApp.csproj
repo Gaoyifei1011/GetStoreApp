@@ -200,7 +200,11 @@
     <Page Update="UI\Controls\Settings\LinkFilterControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    
+
+
+    <Page Update="UI\Dialogs\ClosingWindowDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="UI\Dialogs\CloudflareValidationDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>    
@@ -251,11 +255,5 @@
       <Link>Aria2\aria2c.exe</Link>
     </Content>
     <Content Include="Aria2\Config\aria2.conf" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="UI\Dialogs\ClosingWindowDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
 </Project>

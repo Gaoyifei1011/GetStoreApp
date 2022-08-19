@@ -13,7 +13,7 @@
             Padding="0,0,0,40"
             Spacing="10">
 
-            <TextBlock FontSize="{StaticResource TitleFontSize}" Text="{x:Bind ResourceService.GetLocalized('/About/Title')}" />
+            <TextBlock FontSize="26" Text="{x:Bind ResourceService.GetLocalized('/About/Title')}" />
 
             <ac:HeaderControl />
 
