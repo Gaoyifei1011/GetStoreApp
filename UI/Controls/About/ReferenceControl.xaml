@@ -16,6 +16,7 @@
                 Margin="9,0,0,0"
                 HorizontalAlignment="Stretch"
                 HorizontalContentAlignment="Stretch"
+                ItemContainerStyle="{StaticResource GridViewItemStyle}"
                 ItemsSource="{x:Bind ViewModel.ReferenceDict}"
                 SelectionMode="None">
 

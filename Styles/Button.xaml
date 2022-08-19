@@ -57,6 +57,7 @@
     <Style x:Key="ButtonInfoStyle" TargetType="Button">
         <Setter Property="Width" Value="30" />
         <Setter Property="Height" Value="30" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Background" Value="{ThemeResource ButtonInfoBackground}" />
         <Setter Property="Foreground" Value="{ThemeResource ButtonInfoForeground}" />
         <Setter Property="BorderBrush" Value="{ThemeResource ButtonInfoBorderBrush}" />

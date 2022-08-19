@@ -15,7 +15,7 @@
 
             <TextBlock
                 Grid.Column="0"
-                FontSize="{StaticResource TitleFontSize}"
+                FontSize="26"
                 Text="{x:Bind ResourceService.GetLocalized('/Home/Title')}" />
 
             <Button

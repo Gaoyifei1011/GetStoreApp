@@ -39,7 +39,6 @@
         <Button
             Grid.Column="2"
             VerticalAlignment="Center"
-            BorderThickness="0"
             Command="{x:Bind ViewModel.LanguageTipCommand}"
             Style="{StaticResource ButtonInfoStyle}"
             ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/LanguageTip')}">

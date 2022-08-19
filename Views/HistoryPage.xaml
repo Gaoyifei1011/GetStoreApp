@@ -33,7 +33,7 @@
         <TextBlock
             Grid.Row="0"
             Margin="0,0,0,10"
-            FontSize="{StaticResource TitleFontSize}"
+            FontSize="26"
             Text="{x:Bind ResourceService.GetLocalized('/History/Title')}" />
 
         <Grid

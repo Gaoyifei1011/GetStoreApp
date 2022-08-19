@@ -214,7 +214,7 @@
     <value>序号</value>
   </data>
   <data name="StatusInfoError" xml:space="preserve">
-    <value>从微软商店的服务器中获取数据发生了错误，解决方案请点击窗口右上角的“使用说明”按钮进行了解</value>
+    <value>从微软商店的服务器中获取数据发生了错误，点击右上角的”使用说明“按钮或跳转到”关于“页面寻找相应的解决方案</value>
   </data>
   <data name="StatusInfoGetting" xml:space="preserve">
     <value>正在从微软商店的服务器中进行查询，请耐心等待......</value>

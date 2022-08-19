@@ -39,7 +39,7 @@
 
             <TextBlock
                 Grid.Row="0"
-                FontSize="{StaticResource TitleFontSize}"
+                FontSize="26"
                 Text="{x:Bind ResourceService.GetLocalized('/Download/Title')}" />
 
             <Button
