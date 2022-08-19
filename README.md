@@ -21,13 +21,13 @@
 ### 应用截图
 
 #### <p align="center">应用成功获取界面</p>
-![image](https://user-images.githubusercontent.com/49179966/173263928-e6b3dfd0-13f8-4893-91f5-aaf4a045e19f.png)
+![image](https://user-images.githubusercontent.com/49179966/185371877-e5f2da19-e273-43eb-b845-08eb3fe2ab3f.png)
 #### <p align="center">历史记录</p>
-![image](https://user-images.githubusercontent.com/49179966/185366265-31fa41cb-a0e8-46ee-a313-3ff8806fb139.png)
+![image](https://user-images.githubusercontent.com/49179966/185371452-ff1e6c83-0e60-40e4-97c2-e5ca78c03b51.png)
 #### <p align="center">网页界面</p>
-![image](https://user-images.githubusercontent.com/49179966/185366384-67831dd0-df0d-44bc-a513-ccf5e43ef204.png)
+![image](https://user-images.githubusercontent.com/49179966/185371942-8f82b5c7-84cb-4810-b77d-a0d8c2f74d26.png)
 #### <p align="center">应用说明</p>
-![image](https://user-images.githubusercontent.com/49179966/185366557-105ca474-6e47-45fe-9dce-c7748cab3509.png)
+![image](https://user-images.githubusercontent.com/49179966/185371766-424e3349-1758-45a8-a6ce-ffa8f238d73c.png)
 ------
 
 ### 项目开发进展
