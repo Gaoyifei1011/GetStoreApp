@@ -14,6 +14,8 @@ The Microsoft Store provides a distribution, download, and update channel for ap
 
 Note: The app can't bypass the Microsoft Store's billing channels, and if the app you're getting is a paid app, download it after purchasing it from the Microsoft Store.
 
+------
+
 ### Screenshot of the app
 
 #### <p align="center">The app successfully gets the interface</p>
@@ -92,7 +94,7 @@ At present, the application is in the development stage, some functions have not
 > * Open the Start menu after the deployment is complete to run the app.
 
 #### <p align="center">App localization</p>
-<p align="center">The project was initially available in both Chinese Simplified and English formats, and if you want to translate your app into a language you are familiar with or correct errors in content that has been translated, please refer to the steps below.</p>
+##### The project was initially available in both Chinese Simplified and English formats, and if you want to translate your app into a language you are familiar with or correct errors in content that has been translated, please refer to the steps below.
 
 > * Look for readme template files in the DeScription folder, for example, the English version is a README_EN-US.md file, rename it to README_(corresponding language).md file.
 > * Open the renamed file, translate all the statements and save them. Please check it carefully after the translation is completed.
