@@ -22,7 +22,7 @@
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <StartupObject>GetStoreApp.Program</StartupObject>
-    <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
     <Optimize>True</Optimize>
@@ -103,6 +103,10 @@
     <PackageReference Include="HtmlAgilityPack" Version="1.11.43" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.8" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.10-beta">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.1" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.4" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.8" />

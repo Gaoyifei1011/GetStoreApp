@@ -29,7 +29,7 @@ namespace GetStoreApp.Helpers
             {
                 SystemGeographicalLocationHelper.EnumSystemGeoID(SystemGeographicalLocationHelper.GEOCLASS_NATION, 0, _callback);
 
-                foreach (var geoId in _geoIds)
+                foreach (int geoId in _geoIds)
                 {
                     RegionModel location = new RegionModel
                     {
@@ -55,7 +55,7 @@ namespace GetStoreApp.Helpers
 
         private static string GetGeoInfoA(int location, SystemGeographicalLocationHelper.SYSGEOTYPE geoType, int langId)
         {
-            var geoDataBuilder = new StringBuilder();
+            StringBuilder geoDataBuilder = new StringBuilder();
 
             int bufferSize = SystemGeographicalLocationHelper.GetGeoInfo(location, geoType, geoDataBuilder, 0, langId);
 

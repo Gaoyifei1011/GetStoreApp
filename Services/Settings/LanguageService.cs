@@ -32,7 +32,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private void InitializeLanguageList()
         {
-            foreach (var item in AppLanguages)
+            foreach (string item in AppLanguages)
             {
                 CultureInfo culture = CultureInfo.GetCultureInfo(item);
 

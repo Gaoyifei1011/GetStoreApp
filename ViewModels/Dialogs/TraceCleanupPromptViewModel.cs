@@ -23,6 +23,16 @@ namespace GetStoreApp.ViewModels.Dialogs
 
         private IDownloadDataService DownloadDataService { get; } = IOCHelper.GetService<IDownloadDataService>();
 
+        // 立即清理按钮的可用状态
+        private bool _isButtonEnabled = true;
+
+        public bool IsButtonEnabled
+        {
+            get { return _isButtonEnabled; }
+
+            set { SetProperty(ref _isButtonEnabled, value); }
+        }
+
         // 是否要清理历史记录
         private bool _isHistoryClean = false;
 
@@ -144,6 +154,7 @@ namespace GetStoreApp.ViewModels.Dialogs
         private async Task TraceCleanupAsync()
         {
             // 显示正在清理中的状态信息
+            IsButtonEnabled = false;
             ClearState = true;
             ClearStateRing = true;
             ClearStateText = ResourceService.GetLocalized("/Dialog/CleaningNow");
@@ -157,6 +168,7 @@ namespace GetStoreApp.ViewModels.Dialogs
 
             // 清理完成，显示清理完成的结果
             ClearStateRing = false;
+            IsButtonEnabled = true;
 
             // 成功清理
             if (CleanResult.Item1 && CleanResult.Item2 && CleanResult.Item3)
@@ -214,7 +226,7 @@ namespace GetStoreApp.ViewModels.Dialogs
             try
             {
                 // 文件存在时尝试删除文件
-                foreach (var item in downloadDataList)
+                foreach (DownloadModel item in downloadDataList)
                 {
                     if (File.Exists(item.FilePath)) File.Delete(item.FilePath);
                 }

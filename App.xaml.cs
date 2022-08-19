@@ -2,9 +2,11 @@
 using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Helpers;
 using Microsoft.UI.Xaml;
+using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Windows.Win32.Foundation;
 using WinUIEx;
 
 namespace GetStoreApp
@@ -53,22 +55,37 @@ namespace GetStoreApp
         /// </summary>
         private async Task RunSingleInstanceApp()
         {
-            // Get the activation args
-            var appArgs = Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().GetActivatedEventArgs();
+            // 获取已经激活的参数
+            AppActivationArguments appArgs = AppInstance.GetCurrent().GetActivatedEventArgs();
 
-            // Get or register the main instance
-            var mainInstance = Microsoft.Windows.AppLifecycle.AppInstance.FindOrRegisterForKey("main");
+            // 获取或注册主实例
+            AppInstance mainInstance = AppInstance.FindOrRegisterForKey("Main");
 
-            // If the main instance isn't this current instance
+            // 如果主实例不是此当前实例
             if (!mainInstance.IsCurrent)
             {
-                // Redirect activation to that instance
+                // 将激活重定向到该实例
                 await mainInstance.RedirectActivationToAsync(appArgs);
 
-                // And exit our instance and stop
+                // 然后退出实例并停止
                 Process.GetCurrentProcess().Kill();
                 return;
             }
+
+            // 否则将注册激活重定向
+            AppInstance.GetCurrent().Activated += App_Activated;
+        }
+
+        private void App_Activated(object sender, AppActivationArguments e)
+        {
+            // 将窗口置于前台前首先获取窗口句柄
+            HWND hwnd = (HWND)WinRT.Interop.WindowNative.GetWindowHandle(MainWindow);
+
+            // 还原窗口（如果最小化）时，需要 Microsoft.Windows.CsWin32 NuGet 包和一个带有 ShowWindow() 方法的 NativeMethods.txt 文件
+            Windows.Win32.PInvoke.ShowWindow(hwnd, Windows.Win32.UI.WindowsAndMessaging.SHOW_WINDOW_CMD.SW_RESTORE);
+
+            // 将指定窗口的线程设置到前台时，需要 Microsoft.Windows.CsWin32 NuGet 包和一个具有 SetForegroundWindow() 方法的 NativeMethods.txt 文件
+            Windows.Win32.PInvoke.SetForegroundWindow(hwnd);
         }
     }
 }

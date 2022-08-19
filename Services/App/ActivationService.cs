@@ -95,7 +95,7 @@ namespace GetStoreApp.Services.App
         /// </summary>
         private async Task HandleActivationAsync(object activationArgs)
         {
-            var activationHandler = ActivationHandlers.FirstOrDefault(h => h.CanHandle(activationArgs));
+            IActivationHandler activationHandler = ActivationHandlers.FirstOrDefault(h => h.CanHandle(activationArgs));
 
             if (activationHandler != null) await activationHandler.HandleAsync(activationArgs);
 

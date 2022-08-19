@@ -44,7 +44,7 @@ namespace GetStoreApp.Views
 
         private KeyboardAccelerator BuildKeyboardAccelerator(VirtualKey key, VirtualKeyModifiers? modifiers = null)
         {
-            var keyboardAccelerator = new KeyboardAccelerator() { Key = key };
+            KeyboardAccelerator keyboardAccelerator = new KeyboardAccelerator() { Key = key };
 
             if (modifiers.HasValue)
             {
@@ -58,9 +58,9 @@ namespace GetStoreApp.Views
 
         private void OnKeyboardAcceleratorInvoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
         {
-            var navigationService = IOCHelper.GetService<INavigationService>();
+            INavigationService navigationService = IOCHelper.GetService<INavigationService>();
 
-            var result = navigationService.GoBack();
+            bool result = navigationService.GoBack();
 
             args.Handled = result;
         }

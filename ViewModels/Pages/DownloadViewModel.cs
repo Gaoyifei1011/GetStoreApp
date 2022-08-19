@@ -106,7 +106,7 @@ namespace GetStoreApp.ViewModels.Pages
 
             SelectAllCommand = new AsyncRelayCommand(async () =>
             {
-                foreach (var item in DownloadDataList) item.IsSelected = true;
+                foreach (DownloadModel item in DownloadDataList) item.IsSelected = true;
                 await Task.CompletedTask;
             });
 
@@ -163,7 +163,7 @@ namespace GetStoreApp.ViewModels.Pages
         /// </summary>
         private async Task SelectNoneAsync()
         {
-            foreach (var item in DownloadDataList) item.IsSelected = false;
+            foreach (DownloadModel item in DownloadDataList) item.IsSelected = false;
             await Task.CompletedTask;
         }
 

@@ -285,7 +285,7 @@ namespace GetStoreApp.Services.History
 
                         try
                         {
-                            foreach (var item in selectedHistoryDataList)
+                            foreach (HistoryModel item in selectedHistoryDataList)
                             {
                                 DeleteCommand.CommandText = string.Format("DELETE FROM {0} WHERE HISTORYKEY = '{1}'", DataBaseService.HistoryTableName, item.HistoryKey);
                                 await DeleteCommand.ExecuteNonQueryAsync();

@@ -27,7 +27,7 @@ namespace GetStoreApp.ViewModels.Window
             ClosingWindowDialog contentDialog = new ClosingWindowDialog();
             ContentDialogResult result = await contentDialog.ShowAsync();
 
-            if(result == ContentDialogResult.Primary) { args.TryCloseWindow(); }
+            if (result == ContentDialogResult.Primary) { args.TryCloseWindow(); }
             else if (result == ContentDialogResult.Secondary)
             {
                 NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo());

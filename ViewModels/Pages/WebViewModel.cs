@@ -5,7 +5,7 @@ using GetStoreApp.Contracts.ViewModels;
 using GetStoreApp.Helpers;
 using Microsoft.Web.WebView2.Core;
 using System;
-using System.Windows.Input;
+using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Pages
 {
@@ -13,41 +13,57 @@ namespace GetStoreApp.ViewModels.Pages
     {
         private const string DefaultUrl = "https://store.rg-adguard.net/";
 
-        private Uri _source;
-        private bool _isLoading = true;
-        private ICommand _browserBackCommand;
-        private ICommand _browserForwardCommand;
-        private ICommand _openInBrowserCommand;
-        private ICommand _refreshCommand;
-        private ICommand _retryCommand;
-
         public IWebViewService WebViewService { get; } = IOCHelper.GetService<IWebViewService>();
+
+        private Uri _source;
 
         public Uri Source
         {
             get { return _source; }
+
             set { SetProperty(ref _source, value); }
         }
 
+        private bool _isLoading = true;
+
         public bool IsLoading
         {
-            get => _isLoading;
-            set => SetProperty(ref _isLoading, value);
+            get { return _isLoading; }
+
+            set { SetProperty(ref _isLoading, value); }
         }
 
-        public ICommand BrowserBackCommand => _browserBackCommand ??= new RelayCommand(
-            () => WebViewService?.GoBack(), () => WebViewService?.CanGoBack ?? false);
+        public IAsyncRelayCommand BrowserBackCommand { get; }
 
-        public ICommand BrowserForwardCommand => _browserForwardCommand ??= new RelayCommand(
-            () => WebViewService?.GoForward(), () => WebViewService?.CanGoForward ?? false);
+        public IAsyncRelayCommand BrowserForwardCommand { get; }
 
-        public ICommand RefreshCommand => _refreshCommand ??= new RelayCommand(
-            () => WebViewService?.Reload());
+        public IAsyncRelayCommand RefreshCommand { get; }
 
-        public ICommand RetryCommand => _retryCommand ??= new RelayCommand(OnRetry);
+        public IAsyncRelayCommand OpenInBrowserCommand { get; }
 
-        public ICommand OpenInBrowserCommand => _openInBrowserCommand ??= new RelayCommand(async
-            () => await Windows.System.Launcher.LaunchUriAsync(Source));
+        public WebViewModel()
+        {
+            BrowserBackCommand = new AsyncRelayCommand(async () =>
+            {
+                WebViewService.GoBack(); await Task.CompletedTask;
+            }, () => WebViewService.CanGoBack);
+
+            BrowserForwardCommand = new AsyncRelayCommand(async () =>
+            {
+                WebViewService.GoForward(); await Task.CompletedTask;
+            }, () => WebViewService.CanGoForward);
+
+            RefreshCommand = new AsyncRelayCommand(async () =>
+            {
+                WebViewService.Reload();
+                await Task.CompletedTask;
+            });
+
+            OpenInBrowserCommand = new AsyncRelayCommand(async () =>
+            {
+                await Windows.System.Launcher.LaunchUriAsync(Source);
+            });
+        }
 
         public void OnNavigatedTo(object parameter)
         {
@@ -66,12 +82,6 @@ namespace GetStoreApp.ViewModels.Pages
             IsLoading = false;
             OnPropertyChanged(nameof(BrowserBackCommand));
             OnPropertyChanged(nameof(BrowserForwardCommand));
-        }
-
-        private void OnRetry()
-        {
-            IsLoading = true;
-            WebViewService?.Reload();
         }
     }
 }

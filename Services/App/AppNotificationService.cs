@@ -46,7 +46,7 @@ namespace GetStoreApp.Services.App
 
         public bool Show(string payload)
         {
-            var appNotification = new AppNotification(payload);
+            AppNotification appNotification = new AppNotification(payload);
 
             AppNotificationManager.Default.Show(appNotification);
 
