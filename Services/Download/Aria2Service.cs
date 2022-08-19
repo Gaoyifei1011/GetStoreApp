@@ -145,7 +145,7 @@ namespace GetStoreApp.Services.Download
                     Timeout = new TimeSpan(0, 0, 30)
                 };
 
-                foreach (var GID in GIDList)
+                foreach (string GID in GIDList)
                 {
                     ParamsList.Clear();
                     ParamsList.Add(GID);
@@ -199,7 +199,7 @@ namespace GetStoreApp.Services.Download
                     Timeout = new TimeSpan(0, 0, 30)
                 };
 
-                foreach (var GID in GIDList)
+                foreach (string GID in GIDList)
                 {
                     ParamsList.Clear();
                     ParamsList.Add(GID);
@@ -253,7 +253,7 @@ namespace GetStoreApp.Services.Download
                     Timeout = new TimeSpan(0, 0, 30)
                 };
 
-                foreach (var GID in GIDList)
+                foreach (string GID in GIDList)
                 {
                     ParamsList.Clear();
                     ParamsList.Add(GID);

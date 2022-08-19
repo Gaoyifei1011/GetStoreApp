@@ -1,9 +1,9 @@
 ﻿using GetStoreApp.Contracts.Services.App;
+using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Helpers;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+using System;
 
 namespace GetStoreApp.UI.Dialogs
 {
@@ -11,9 +11,12 @@ namespace GetStoreApp.UI.Dialogs
     {
         public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
+        public IThemeService ThemeService { get; } = IOCHelper.GetService<IThemeService>();
+
         public CloudflareValidationDialog()
         {
             XamlRoot = App.MainWindow.Content.XamlRoot;
+            RequestedTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
             InitializeComponent();
         }
     }

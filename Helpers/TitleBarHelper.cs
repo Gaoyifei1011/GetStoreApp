@@ -74,7 +74,7 @@ namespace GetStoreApp.Helpers
                 Application.Current.Resources["WindowCaptionBackground"] = new SolidColorBrush(Colors.Transparent);
                 Application.Current.Resources["WindowCaptionBackgroundDisabled"] = new SolidColorBrush(Colors.Transparent);
 
-                var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
+                IntPtr hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
                 if (hwnd == GetActiveWindow())
                 {
                     SendMessage(hwnd, WMACTIVATE, WAINACTIVE, IntPtr.Zero);

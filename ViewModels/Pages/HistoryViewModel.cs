@@ -165,7 +165,7 @@ namespace GetStoreApp.ViewModels.Pages
 
             SelectAllCommand = new AsyncRelayCommand(async () =>
             {
-                foreach (var item in HistoryDataList) item.IsSelected = true;
+                foreach (HistoryModel item in HistoryDataList) item.IsSelected = true;
                 await Task.CompletedTask;
             });
 
@@ -278,7 +278,7 @@ namespace GetStoreApp.ViewModels.Pages
         /// </summary>
         private async Task SelectNoneAsync()
         {
-            foreach (var item in HistoryDataList) item.IsSelected = false;
+            foreach (HistoryModel item in HistoryDataList) item.IsSelected = false;
             await Task.CompletedTask;
         }
 
@@ -317,7 +317,7 @@ namespace GetStoreApp.ViewModels.Pages
 
             StringBuilder stringBuilder = new StringBuilder();
 
-            foreach (var item in SelectedHistoryDataList)
+            foreach (HistoryModel item in SelectedHistoryDataList)
             {
                 stringBuilder.Append(string.Format("{0}\t{1}\t{2}\n",
                     TypeList.Find(i => i.InternalName.Equals(item.HistoryType)).DisplayName,

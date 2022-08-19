@@ -47,7 +47,7 @@ namespace GetStoreApp.Services.Home
                  .Descendants("tr")
                  .Where(x => x.Attributes.Contains("style"));
 
-            foreach (var item in RequestLinkNodeList)
+            foreach (HtmlNode item in RequestLinkNodeList)
             {
                 HtmlNodeCollection TdNodeList = item.ChildNodes;
 

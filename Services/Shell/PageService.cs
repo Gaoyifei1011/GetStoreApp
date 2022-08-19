@@ -46,13 +46,13 @@ namespace GetStoreApp.Services.Shell
         {
             lock (Pages)
             {
-                var key = typeof(VM).FullName;
+                string key = typeof(VM).FullName;
                 if (Pages.ContainsKey(key))
                 {
                     throw new ArgumentException($"The key {key} is already configured in PageService");
                 }
 
-                var type = typeof(V);
+                Type type = typeof(V);
                 if (Pages.Any(p => p.Value == type))
                 {
                     throw new ArgumentException($"This type is already configured with key {Pages.First(p => p.Value == type).Key}");

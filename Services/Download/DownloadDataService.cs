@@ -212,7 +212,7 @@ namespace GetStoreApp.Services.Download
 
                         try
                         {
-                            foreach (var item in selectedDownloadDataList)
+                            foreach (DownloadModel item in selectedDownloadDataList)
                             {
                                 DeleteCommand.CommandText = string.Format("DELETE FROM {0} WHERE DOWNLOADKEY = '{1}'", DataBaseService.DownloadTableName, item.DownloadKey);
                                 await DeleteCommand.ExecuteNonQueryAsync();

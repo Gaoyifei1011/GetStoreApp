@@ -10,25 +10,25 @@ namespace GetStoreApp.Services.Web
     /// </summary>
     public class WebViewService : IWebViewService
     {
-        private WebView2 _webView;
+        private WebView2 WebView { get; set; }
 
-        public bool CanGoBack
-            => _webView.CanGoBack;
+        public bool CanGoBack { get; set; }
 
-        public bool CanGoForward
-            => _webView.CanGoForward;
+        public bool CanGoForward { get; set; }
 
         public event EventHandler<CoreWebView2WebErrorStatus> NavigationCompleted;
 
         public void Initialize(WebView2 webView)
         {
-            _webView = webView;
-            _webView.NavigationCompleted += OnWebViewNavigationCompleted;
+            WebView = webView;
+            CanGoBack = WebView.CanGoBack;
+            CanGoForward = WebView.CanGoForward;
+            WebView.NavigationCompleted += OnWebViewNavigationCompleted;
         }
 
         public void UnregisterEvents()
         {
-            _webView.NavigationCompleted -= OnWebViewNavigationCompleted;
+            WebView.NavigationCompleted -= OnWebViewNavigationCompleted;
         }
 
         private void OnWebViewNavigationCompleted(WebView2 sender, CoreWebView2NavigationCompletedEventArgs args)
@@ -37,12 +37,18 @@ namespace GetStoreApp.Services.Web
         }
 
         public void GoBack()
-            => _webView.GoBack();
+        {
+            WebView.GoBack();
+        }
 
         public void GoForward()
-            => _webView.GoForward();
+        {
+            WebView.GoForward();
+        }
 
         public void Reload()
-            => _webView.Reload();
+        {
+            WebView.Reload();
+        }
     }
 }

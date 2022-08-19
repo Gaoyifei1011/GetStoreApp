@@ -4,6 +4,7 @@ using GetStoreApp.Helpers;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
+using System;
 
 namespace GetStoreApp.Services.Shell
 {
@@ -62,7 +63,7 @@ namespace GetStoreApp.Services.Shell
         {
             if (CanGoBack)
             {
-                var vmBeforeNavigation = _frame.GetPageViewModel();
+                object vmBeforeNavigation = _frame.GetPageViewModel();
                 _frame.GoBack();
                 if (vmBeforeNavigation is INavigationAware navigationAware)
                 {
@@ -77,13 +78,13 @@ namespace GetStoreApp.Services.Shell
 
         public bool NavigateTo(string pageKey, object parameter = null, NavigationTransitionInfo infoOverride = null, bool clearNavigation = false)
         {
-            var pageType = PageService.GetPageType(pageKey);
+            Type pageType = PageService.GetPageType(pageKey);
 
             if (_frame.Content?.GetType() != pageType || parameter != null && !parameter.Equals(_lastParameterUsed))
             {
                 _frame.Tag = clearNavigation;
-                var vmBeforeNavigation = _frame.GetPageViewModel();
-                var navigated = _frame.Navigate(pageType, parameter, infoOverride);
+                object vmBeforeNavigation = _frame.GetPageViewModel();
+                bool navigated = _frame.Navigate(pageType, parameter, infoOverride);
                 if (navigated)
                 {
                     _lastParameterUsed = parameter;

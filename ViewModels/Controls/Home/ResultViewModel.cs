@@ -103,7 +103,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             SelectAllCommand = new AsyncRelayCommand(async () =>
             {
-                foreach (var item in ResultDataList) item.IsSelected = true;
+                foreach (ResultModel item in ResultDataList) item.IsSelected = true;
                 await Task.CompletedTask;
             });
 
@@ -132,7 +132,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             {
                 resultViewModel.ResultDataList.Clear();
 
-                foreach (var item in resultDataListMessage.Value)
+                foreach (ResultModel item in resultDataListMessage.Value)
                 {
                     item.IsSelected = false;
                     resultViewModel.ResultDataList.Add(item);
@@ -176,7 +176,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         private async Task SelectNoneAsync()
         {
-            foreach (var item in ResultDataList) item.IsSelected = false;
+            foreach (ResultModel item in ResultDataList) item.IsSelected = false;
             await Task.CompletedTask;
         }
 
@@ -196,7 +196,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             StringBuilder stringBuilder = new StringBuilder();
 
-            foreach (var item in SelectedResultDataList)
+            foreach (ResultModel item in SelectedResultDataList)
             {
                 stringBuilder.Append(string.Format("[\n{0}\n]\n", item.FileLink));
             }
@@ -221,7 +221,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             StringBuilder stringBuilder = new StringBuilder();
 
-            foreach (var item in SelectedResultDataList)
+            foreach (ResultModel item in SelectedResultDataList)
             {
                 stringBuilder.Append(string.Format("[\n{0}\n{1}\n{2}\n{3}\n]\n", item.FileName, item.FileLink, item.FileSHA1, item.FileSize));
             }
