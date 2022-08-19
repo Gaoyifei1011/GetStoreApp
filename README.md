@@ -2,8 +2,8 @@
 
 ### 语言选择（Language selection）
 
-[简体中文](https://github.com/Gaoyifei1011/GetStoreApp/blob/master/Description/README_ZH-CN.md)&emsp;
-[English](https://github.com/Gaoyifei1011/GetStoreApp/blob/master/Description/README_EN-US.md)&emsp;
+> * [简体中文](https://github.com/Gaoyifei1011/GetStoreApp/blob/master/Description/README_ZH-CN.md)&emsp;
+> * [English](https://github.com/Gaoyifei1011/GetStoreApp/blob/master/Description/README_EN-US.md)&emsp;
 
 ------
 
@@ -52,23 +52,23 @@
 
 ### 项目引用（按英文首字母排序）
 
-[Aira2](https://aria2.github.io)&emsp;
-[CommunityToolkit.Mvvm](https://github.com/CommunityToolkit/WindowsCommunityToolkit)&emsp;
-[CommunityToolkit.WinUI.UI.Controls.DataGrid](https://docs.microsoft.com/en-us/windows/communitytoolkit/controls/datagrid)&emsp;
-[CommunityToolkit.WinUI.Notifications](https://www.nuget.org/packages/CommunityToolkit.WinUI.Notifications)&emsp;
-[HtmlAgilityPack](http://html-agility-pack.net)&emsp;
-[Microsoft.Data.Sqlite](https://docs.microsoft.com/dotnet/standard/data/sqlite)&emsp;
-[Microsoft.Extensions.Hosting](https://www.nuget.org/packages/Microsoft.Extensions.Hosting)&emsp;
-[Microsoft.Windows.CsWin32](https://github.com/Microsoft/CsWin32)&emsp;
-[Microsoft.Windows.SDK.BuildTools](https://www.nuget.org/packages/Microsoft.Windows.SDK.BuildTools)&emsp;
-[Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
-[Microsoft.Xaml.Behaviors.WinUI.Managed](https://www.nuget.org/packages/Microsoft.Xaml.Behaviors.WinUI.Managed)&emsp;
-[NETStandard.Library](https://www.nuget.org/packages/NETStandard.Library)&emsp;
-[Newtonsoft.Json](https://www.newtonsoft.com/json)&emsp;
-[PInvoke.SHCore](https://github.com/dotnet/pinvoke)&emsp;
-[System.Management](https://www.nuget.org/packages/System.Management)&emsp;
-[Template Studio](https://github.com/microsoft/TemplateStudio)&emsp;
-[WinUIEx](https://dotmorten.github.io/WinUIEx)&emsp;
+> * [Aira2](https://aria2.github.io)&emsp;
+> * [CommunityToolkit.Mvvm](https://github.com/CommunityToolkit/WindowsCommunityToolkit)&emsp;
+> * [CommunityToolkit.WinUI.UI.Controls.DataGrid](https://docs.microsoft.com/en-us/windows/communitytoolkit/controls/datagrid)&emsp;
+> * [CommunityToolkit.WinUI.Notifications](https://www.nuget.org/packages/CommunityToolkit.WinUI.Notifications)&emsp;
+> * [HtmlAgilityPack](http://html-agility-pack.net)&emsp;
+> * [Microsoft.Data.Sqlite](https://docs.microsoft.com/dotnet/standard/data/sqlite)&emsp;
+> * [Microsoft.Extensions.Hosting](https://www.nuget.org/packages/Microsoft.Extensions.Hosting)&emsp;
+> * [Microsoft.Windows.CsWin32](https://github.com/Microsoft/CsWin32)&emsp;
+> * [Microsoft.Windows.SDK.BuildTools](https://www.nuget.org/packages/Microsoft.Windows.SDK.BuildTools)&emsp;
+> * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
+> * [Microsoft.Xaml.Behaviors.WinUI.Managed](https://www.nuget.org/packages/Microsoft.Xaml.Behaviors.WinUI.Managed)&emsp;
+> * [NETStandard.Library](https://www.nuget.org/packages/NETStandard.Library)&emsp;
+> * [Newtonsoft.Json](https://www.newtonsoft.com/json)&emsp;
+> * [PInvoke.SHCore](https://github.com/dotnet/pinvoke)&emsp;
+> * [System.Management](https://www.nuget.org/packages/System.Management)&emsp;
+> * [Template Studio](https://github.com/microsoft/TemplateStudio)&emsp;
+> * [WinUIEx](https://dotmorten.github.io/WinUIEx)&emsp;
 
 ------
 
