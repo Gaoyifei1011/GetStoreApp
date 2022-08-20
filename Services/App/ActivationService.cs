@@ -7,6 +7,7 @@ using GetStoreApp.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -43,20 +44,23 @@ namespace GetStoreApp.Services.App
 
         private IThemeService ThemeService { get; } = IOCHelper.GetService<IThemeService>();
 
+        private ITopMostService TopMostService { get; } = IOCHelper.GetService<ITopMostService>();
+
         private IUseInstructionService UseInstructionService { get; } = IOCHelper.GetService<IUseInstructionService>();
 
         public async Task ActivateAsync(object activationArgs)
         {
+            Debug.WriteLine("14");
             // 在应用窗口激活前配置应用的设置
             await InitializeAsync();
-
+            Debug.WriteLine("12");
             // 新建导航视图的Frame窗口
             if (GetStoreApp.App.MainWindow.Content == null)
             {
                 _shell = IOCHelper.GetService<ShellPage>();
                 GetStoreApp.App.MainWindow.Content = _shell ?? new Frame();
             }
-
+            Debug.WriteLine("13");
             // 根据activationArgs的ActivationHandlers或DefaultActivationHandler将导航到第一个页面
             await HandleActivationAsync(activationArgs);
 
@@ -87,6 +91,9 @@ namespace GetStoreApp.Services.App
             await LinkFilterService.InitializeLinkFilterValueAsnyc();
             await RegionService.InitializeRegionAsync();
             await ThemeService.InitializeThemeAsync();
+            Debug.WriteLine("01");
+            await TopMostService.InitializeTopMostValueAsync();
+            Debug.WriteLine("02");
             await UseInstructionService.InitializeUseInsVisValueAsync();
         }
 
@@ -114,6 +121,8 @@ namespace GetStoreApp.Services.App
 
             // 设置应用背景色
             await BackdropService.SetAppBackdropAsync();
+
+            await TopMostService.SetAppTopMostAsync();
 
             // 设置应用标题名称
             GetStoreApp.App.MainWindow.Title = ResourceService.GetLocalized("AppDisplayName");

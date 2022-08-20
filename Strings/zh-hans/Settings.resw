@@ -258,6 +258,18 @@
   <data name="Title" xml:space="preserve">
     <value>设置</value>
   </data>
+  <data name="TopMost" xml:space="preserve">
+    <value>窗口置顶</value>
+  </data>
+  <data name="TopMostDescription" xml:space="preserve">
+    <value>将当前应用的窗口置于最顶端</value>
+  </data>
+  <data name="TopMostOffContent" xml:space="preserve">
+    <value>未置顶</value>
+  </data>
+  <data name="TopMostOnContent" xml:space="preserve">
+    <value>置顶</value>
+  </data>
   <data name="TraceCleanup" xml:space="preserve">
     <value>痕迹清理</value>
   </data>
@@ -270,10 +282,10 @@
   <data name="UseDefaultFolder" xml:space="preserve">
     <value>使用默认目录</value>
   </data>
-  <data name="UseInstructionButton" xml:space="preserve">
+  <data name="UseInstruction" xml:space="preserve">
     <value>“使用说明”按钮</value>
   </data>
-  <data name="UseInstructionButtonDescription" xml:space="preserve">
+  <data name="UseInstructionDescription" xml:space="preserve">
     <value>应用启动后在主页面打开时显示“使用说明”按钮</value>
   </data>
   <data name="UseInstructionOffContent" xml:space="preserve">
