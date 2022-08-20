@@ -82,6 +82,7 @@
     <None Remove="UI\Controls\Settings\DownloadOptionsControl.xaml" />
     <None Remove="UI\Controls\Settings\HistoryItemValueControl.xaml" />
     <None Remove="UI\Controls\Settings\LinkFilterControl.xaml" />
+    <None Remove="UI\Controls\Settings\TopMostControl.xaml" />
     <None Remove="UI\Controls\Settings\TraceCleanupControl.xaml" />
     <None Remove="UI\Dialogs\ClosingWindowDialog.xaml" />
     <None Remove="UI\Dialogs\CloudflareValidationDialog.xaml" />
@@ -255,5 +256,11 @@
       <Link>Aria2\aria2c.exe</Link>
     </Content>
     <Content Include="Aria2\Config\aria2.conf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="UI\Controls\Settings\TopMostControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>

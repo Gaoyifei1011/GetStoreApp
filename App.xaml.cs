@@ -39,8 +39,8 @@ namespace GetStoreApp
         {
             base.OnLaunched(args);
 
-            await RunSingleInstanceApp();
-
+            await RunSingleInstanceAppAsync();
+            Debug.WriteLine("11");
             await ActivationService.ActivateAsync(args);
         }
 
@@ -57,7 +57,7 @@ namespace GetStoreApp
         /// <summary>
         /// 应用程序只运行单个实例
         /// </summary>
-        private async Task RunSingleInstanceApp()
+        private async Task RunSingleInstanceAppAsync()
         {
             // 获取已经激活的参数
             AppActivationArguments appArgs = AppInstance.GetCurrent().GetActivatedEventArgs();

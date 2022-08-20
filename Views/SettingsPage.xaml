@@ -43,6 +43,8 @@
 
             <sc:LauguageControl />
 
+            <sc:TopMostControl />
+
             <TextBlock
                 FontSize="16"
                 Style="{StaticResource BodyTextBlockStyle}"

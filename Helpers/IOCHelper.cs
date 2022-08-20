@@ -72,6 +72,7 @@ namespace GetStoreApp.Helpers
                 services.AddSingleton<ILinkFilterService, LinkFilterService>();
                 services.AddSingleton<IRegionService, RegionService>();
                 services.AddSingleton<IThemeService, ThemeService>();
+                services.AddSingleton<ITopMostService, TopMostService>();
                 services.AddSingleton<IUseInstructionService, UseInstructionService>();
 
                 services.AddSingleton<INavigationService, NavigationService>();
@@ -128,8 +129,6 @@ namespace GetStoreApp.Helpers
 
                 services.AddTransient<BackdropControl>();
                 services.AddTransient<BackdropViewModel>();
-                services.AddTransient<TraceCleanupControl>();
-                services.AddTransient<TraceCleanupViewModel>();
                 services.AddTransient<DownloadOptionsControl>();
                 services.AddTransient<DownloadOptionsViewModel>();
                 services.AddTransient<HistoryItemValueControl>();
@@ -142,6 +141,10 @@ namespace GetStoreApp.Helpers
                 services.AddTransient<RegionViewModel>();
                 services.AddTransient<ThemeControl>();
                 services.AddTransient<ThemeViewModel>();
+                services.AddTransient<TopMostControl>();
+                services.AddTransient<TopMostViewModel>();
+                services.AddTransient<TraceCleanupControl>();
+                services.AddTransient<TraceCleanupViewModel>();
                 services.AddTransient<UseInstructionControl>();
                 services.AddTransient<UseInstructionViewModel>();
 

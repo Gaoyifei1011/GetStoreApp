@@ -146,7 +146,7 @@
                         x:Name="ContentRoot"
                         VerticalAlignment="Top"
                         contract7Present:CornerRadius="{TemplateBinding CornerRadius}"
-                        Background="{ThemeResource InfoBarInformationalSeverityBackgroundBrush}"
+                        Background="Transparent"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
                         <!--  Background is used here so that it overrides the severity status color if set.  -->
