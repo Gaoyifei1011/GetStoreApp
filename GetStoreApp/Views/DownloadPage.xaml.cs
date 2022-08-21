@@ -37,7 +37,7 @@ namespace GetStoreApp.Views
             else return string.Format(ResourceService.GetLocalized("/Download/DownloadCountInfo"), count);
         }
 
-        public async Task TestDownload()
+        public async void TestDownload()
         {
             IAria2Service Aria2Service = IOCHelper.GetService<IAria2Service>();
 

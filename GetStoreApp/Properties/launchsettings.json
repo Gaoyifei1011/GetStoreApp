@@ -1,0 +1,8 @@
+﻿{
+  "profiles": {
+    "GetStoreApp (Single-Project MSIX(Depricated))": {
+      "commandName": "MsixPackage",
+      "nativeDebugging": true
+    }
+  }
+}
