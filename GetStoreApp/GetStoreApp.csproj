@@ -1,20 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <RootNamespace>GetStoreApp</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
     <Platforms>x86;x64;arm64</Platforms>
-    <TargetFramework>net6.0-windows10.0.22621.0</TargetFramework>
     <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
     <PublishProfile>Properties\PublishProfiles\win10-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
-    <EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
     <PackageCertificateThumbprint>7F64DB0B0770C29C61E5F8DC60430B3DC390D99F</PackageCertificateThumbprint>
-    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
     <ApplicationIcon>Assets\Logo\GetStoreApp.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Version>0.3.3.0</Version>
     <FileVersion>0.3.3.0</FileVersion>
     <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
@@ -23,35 +21,17 @@
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <StartupObject>GetStoreApp.Program</StartupObject>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <CsWinRTIncludes>Contoso</CsWinRTIncludes>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
-    <Optimize>True</Optimize>
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <Optimize>True</Optimize>
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm64'">
-    <Optimize>True</Optimize>
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|arm64'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="UI\Dialogs\Home\**" />
     <EmbeddedResource Remove="UI\Dialogs\Home\**" />
     <None Remove="UI\Dialogs\Home\**" />
     <Page Remove="UI\Dialogs\Home\**" />
-  </ItemGroup>
-  <ItemGroup>
+
+    <Manifest Include="$(ApplicationManifest)" />
+
     <None Remove="Aria2\Config\aria2.conf" />
     <None Remove="Assets\GetStoreApp.png" />
     <None Remove="Assets\Images\CloudflareValidation.png" />
@@ -91,13 +71,7 @@
     <None Remove="UI\Dialogs\RestartAppsDialog.xaml" />
     <None Remove="UI\Dialogs\SelectEmptyPromptDialog.xaml" />
     <None Remove="UI\Dialogs\TraceCleanupPromptDialog.xaml" />
-  </ItemGroup>
 
-  <ItemGroup>
-    <Manifest Include="$(ApplicationManifest)" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
     <PackageReference Include="CommunityToolkit.WinUI.Notifications" Version="7.1.2" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.DataGrid" Version="7.1.2" />
@@ -108,6 +82,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.0" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.1" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.4" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.8" />
@@ -116,13 +91,11 @@
     <PackageReference Include="PInvoke.SHCore" Version="0.7.124" />
     <PackageReference Include="System.Management" Version="6.0.0" />
     <PackageReference Include="WinUIEx" Version="1.8.0" />
-  </ItemGroup>
-  
-  <ItemGroup>
+
     <Page Update="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    
+
     <Page Update="Styles\Button.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -165,14 +138,14 @@
     </Page>
     <Page Update="UI\Controls\About\PrecautionControl.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </Page>    
+    </Page>
     <Page Update="UI\Controls\About\ReferenceControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Controls\About\SettingsHelpControl.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </Page> 
-    
+    </Page>
+
     <Page Update="UI\Controls\Home\HistoryItemControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -189,26 +162,28 @@
     <Page Update="UI\Controls\Settings\BackdropControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Controls\Settings\TraceCleanupControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Update="UI\Controls\Settings\DownloadOptionsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Controls\Settings\HistoryItemValueControl.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </Page>       
+    </Page>
     <Page Update="UI\Controls\Settings\LinkFilterControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-
+    <Page Update="UI\Controls\Settings\TraceCleanupControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\Settings\TopMostControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
 
     <Page Update="UI\Dialogs\ClosingWindowDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Dialogs\CloudflareValidationDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </Page>    
+    </Page>
     <Page Update="UI\Dialogs\DeletePromptDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -224,43 +199,31 @@
     <Page Update="UI\Dialogs\TraceCleanupPromptDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
 
-  <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnablePreviewMsixTooling)'=='true'">
-    <ProjectCapability Include="Msix" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-  </ItemGroup>
 
-  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
 
-  <ItemGroup>
     <PRIResource Remove="UI\Dialogs\Home\**" />
-  </ItemGroup>
 
-  <ItemGroup>
     <Content Include="Aria2\aria2c.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DeploymentContent>true</DeploymentContent>
       <Link>Aria2\aria2c.exe</Link>
     </Content>
     <Content Include="Aria2\Config\aria2.conf" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="UI\Controls\Settings\TopMostControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
 </Project>

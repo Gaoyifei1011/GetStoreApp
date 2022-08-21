@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "GetStoreApp (Single-Project MSIX)": {
-      "commandName": "MsixPackage",
-      "nativeDebugging": true
-    }
-  }
-}
