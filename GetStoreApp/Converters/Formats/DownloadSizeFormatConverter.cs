@@ -10,12 +10,19 @@ namespace GetStoreApp.Converters.Formats
     /// </summary>
     public class DownloadSizeFormatConverter : IValueConverter
     {
-        public List<string> SizeUnitsList = new List<string>() { "KB", "MB", "GB" };
+        public List<string> SizeUnitsList = new List<string>()
+        {
+            "KB",
+            "MB",
+            "GB"
+        };
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value == null)
+            {
                 return DependencyProperty.UnsetValue;
+            }
 
             int? result = value as int?;
 

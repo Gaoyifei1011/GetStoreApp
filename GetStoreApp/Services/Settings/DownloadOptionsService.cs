@@ -14,27 +14,27 @@ namespace GetStoreApp.Services.Settings
     /// </summary>
     public class DownloadOptionsService : IDownloadOptionsService
     {
+        private IConfigStorageService ConfigStorageService { get; } = IOCHelper.GetService<IConfigStorageService>();
+
         private string FolderSettingsKey { get; init; } = "DownloadFolder";
 
         private string DownloadItemSettingsKey { get; init; } = "DownloadItemValue";
 
         private string NotificationSettingsKey { get; init; } = "DownloadNotification";
 
-        private IConfigStorageService ConfigStorageService { get; } = IOCHelper.GetService<IConfigStorageService>();
+        public List<int> DownloadItemList => new List<int>() { 1, 2, 3 };
 
         public StorageFolder DefaultFolder { get; private set; }
 
-        private int DefaultItem { get; } = 1;
+        private int DefaultItem => 1;
 
-        private bool DefaultNotification { get; } = true;
+        private bool DefaultNotification => true;
 
         public StorageFolder DownloadFolder { get; set; }
 
         public int DownloadItem { get; set; }
 
         public bool DownloadNotification { get; set; }
-
-        public List<int> DownloadItemList { get; set; } = new List<int>() { 1, 2, 3 };
 
         /// <summary>
         /// 应用在初始化前获取设置存储的下载相关内容设置值，并创建默认下载目录
@@ -73,7 +73,10 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         public async Task OpenFolderAsync(StorageFolder folder)
         {
-            if (!Directory.Exists(folder.Path)) await CreateFolderAsync(folder.Path);
+            if (!Directory.Exists(folder.Path))
+            {
+                await CreateFolderAsync(folder.Path);
+            }
 
             await Windows.System.Launcher.LaunchFolderAsync(folder);
         }
@@ -94,7 +97,10 @@ namespace GetStoreApp.Services.Settings
         {
             int? downloadItemValue = await ConfigStorageService.GetSettingIntValueAsync(DownloadItemSettingsKey);
 
-            if (!downloadItemValue.HasValue) return DefaultItem;
+            if (!downloadItemValue.HasValue)
+            {
+                return DefaultItem;
+            }
 
             return Convert.ToInt32(downloadItemValue);
         }
@@ -106,7 +112,10 @@ namespace GetStoreApp.Services.Settings
         {
             bool? downloadNotification = await ConfigStorageService.GetSettingBoolValueAsync(NotificationSettingsKey);
 
-            if (!downloadNotification.HasValue) return DefaultNotification;
+            if (!downloadNotification.HasValue)
+            {
+                return DefaultNotification;
+            }
 
             return Convert.ToBoolean(downloadNotification);
         }

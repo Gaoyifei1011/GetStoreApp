@@ -18,12 +18,14 @@ namespace GetStoreApp.ViewModels.Pages
         public bool IsBackEnabled
         {
             get { return _isBackEnabled; }
+
             set { SetProperty(ref _isBackEnabled, value); }
         }
 
         public object Selected
         {
             get { return _selected; }
+
             set { SetProperty(ref _selected, value); }
         }
 
@@ -35,6 +37,7 @@ namespace GetStoreApp.ViewModels.Pages
         private void OnNavigated(object sender, NavigationEventArgs e)
         {
             IsBackEnabled = NavigationService.CanGoBack;
+
             if (e.SourcePageType == typeof(SettingsPage))
             {
                 Selected = NavigationViewService.SettingsItem;

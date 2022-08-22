@@ -12,14 +12,14 @@ namespace GetStoreApp.Helpers
     /// </summary>
     public static class Aria2ProcessHelper
     {
-        private static Process process { get; } = new Process();
+        private static Process Aria2Process { get; } = new Process();
 
         /// <summary>
         /// 获取当前进程的PID信息
         /// </summary>
         public static int GetProcessID()
         {
-            return process.Id;
+            return Aria2Process.Id;
         }
 
         /// <summary>
@@ -27,13 +27,13 @@ namespace GetStoreApp.Helpers
         /// </summary>
         public static async Task RunCmdAsync()
         {
-            process.StartInfo.FileName = "cmd.exe";
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardInput = true;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardError = true;
-            process.StartInfo.CreateNoWindow = true;
-            process.Start();
+            Aria2Process.StartInfo.FileName = "cmd.exe";
+            Aria2Process.StartInfo.UseShellExecute = false;
+            Aria2Process.StartInfo.RedirectStandardInput = true;
+            Aria2Process.StartInfo.RedirectStandardOutput = true;
+            Aria2Process.StartInfo.RedirectStandardError = true;
+            Aria2Process.StartInfo.CreateNoWindow = true;
+            Aria2Process.Start();
 
             await Task.CompletedTask;
         }
@@ -43,12 +43,12 @@ namespace GetStoreApp.Helpers
         /// </summary>
         public static async Task ExecuteCmdAsync(string executeCmd)
         {
-            StreamWriter ConhostWriter = process.StandardInput;
-            process.BeginOutputReadLine();
+            StreamWriter ConhostWriter = Aria2Process.StandardInput;
+            Aria2Process.BeginOutputReadLine();
             if (!string.IsNullOrEmpty(executeCmd)) ConhostWriter.WriteLine(executeCmd);
             ConhostWriter.Close();
 
-            await process.WaitForExitAsync();
+            await Aria2Process.WaitForExitAsync();
         }
 
         /// <summary>
@@ -59,7 +59,10 @@ namespace GetStoreApp.Helpers
             ManagementObjectSearcher searcher = new ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" + processID);
             ManagementObjectCollection moc = searcher.Get();
 
-            foreach (ManagementObject mo in moc) KillProcessAndChildren(Convert.ToInt32(mo["ProcessID"]));
+            foreach (ManagementObject mo in moc)
+            {
+                KillProcessAndChildren(Convert.ToInt32(mo["ProcessID"]));
+            }
 
             try
             {

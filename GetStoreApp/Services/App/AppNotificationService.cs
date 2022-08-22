@@ -1,15 +1,16 @@
 ﻿using GetStoreApp.Contracts.Services.App;
-using GetStoreApp.Contracts.Services.Shell;
-using GetStoreApp.Helpers;
 using Microsoft.Windows.AppNotifications;
 using System.Collections.Specialized;
 using System.Web;
 
 namespace GetStoreApp.Services.App
 {
+    /// <summary>
+    /// 应用通知服务
+    /// </summary>
     public class AppNotificationService : IAppNotificationService
     {
-        private readonly INavigationService NavigationService = IOCHelper.GetService<INavigationService>();
+        //private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
 
         ~AppNotificationService()
         {

@@ -12,13 +12,13 @@ namespace GetStoreApp.Services.App
     /// </summary>
     public class DataBaseService : IDataBaseService
     {
-        public string DBName { get; } = "GetStoreApp.db";
+        public string DBName => "GetStoreApp.db";
 
-        public string HistoryTableName { get; } = "HISTORY";
+        public string HistoryTableName => "HISTORY";
 
-        public string DownloadTableName { get; } = "DOWNLOAD";
+        public string DownloadTableName => "DOWNLOAD";
 
-        public string DBpath { get; } = Path.Combine(ApplicationData.Current.LocalFolder.Path, "GetStoreApp.db");
+        public string DBpath => Path.Combine(ApplicationData.Current.LocalFolder.Path, "GetStoreApp.db");
 
         /// <summary>
         /// 历史记录表不存在时，自动创建历史记录表
@@ -41,7 +41,10 @@ namespace GetStoreApp.Services.App
         private async Task InitializeHistoryTableAsync()
         {
             // 文件不存在，取消操作
-            if (!File.Exists(DBpath)) return;
+            if (!File.Exists(DBpath))
+            {
+                return;
+            }
 
             // 创建历史记录表
             using (SqliteConnection db = new SqliteConnection($"Filename={DBpath}"))
@@ -76,7 +79,10 @@ namespace GetStoreApp.Services.App
         private async Task InitializeDownloadTableAsync()
         {
             // 文件不存在，取消操作
-            if (!File.Exists(DBpath)) return;
+            if (!File.Exists(DBpath))
+            {
+                return;
+            }
 
             // 创建下载记录表
             using (SqliteConnection db = new SqliteConnection($"Filename={DBpath}"))

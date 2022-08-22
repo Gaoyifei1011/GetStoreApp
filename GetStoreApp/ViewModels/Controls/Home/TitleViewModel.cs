@@ -26,17 +26,15 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _useInsVisValue, value); }
         }
 
-        public IAsyncRelayCommand UseInstructionCommand { get; }
+        public IAsyncRelayCommand UseInstructionCommand => new AsyncRelayCommand(async () =>
+        {
+            NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+            await Task.CompletedTask;
+        });
 
         public TitleViewModel()
         {
             UseInsVisValue = UseInstructionService.UseInsVisValue;
-
-            UseInstructionCommand = new AsyncRelayCommand(async () =>
-            {
-                NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo());
-                await Task.CompletedTask;
-            });
 
             Messenger.Register<TitleViewModel, UseInstructionMessage>(this, (titleViewModel, useInstructionMessage) => titleViewModel.UseInsVisValue = useInstructionMessage.Value);
         }

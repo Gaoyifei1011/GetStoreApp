@@ -13,21 +13,32 @@ namespace GetStoreApp.ViewModels.Window
 {
     public class MainWindowViewModel : ObservableRecipient
     {
-        public IAria2Service Aria2Service { get; } = IOCHelper.GetService<IAria2Service>();
+        private IAria2Service Aria2Service { get; } = IOCHelper.GetService<IAria2Service>();
+
+        private IDownloadMonitorService DownloadMonitorService { get; } = IOCHelper.GetService<IDownloadMonitorService>();
 
         private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
 
+        /// <summary>
+        /// 关闭窗口之后关闭其他任务
+        /// </summary>
         public async void WindowClosed()
         {
             await Aria2Service.CloseAria2Async();
+            await DownloadMonitorService.CloseDownloadMonitorAsync();
         }
 
+        /// <summary>
+        /// 关闭窗口时，如果还有正在下载的任务，弹出对话框询问
+        /// </summary>
         public async void WindowClosing(object sender, WindowClosingEventArgs args)
         {
-            ClosingWindowDialog contentDialog = new ClosingWindowDialog();
-            ContentDialogResult result = await contentDialog.ShowAsync();
+            ContentDialogResult result = await new ClosingWindowDialog().ShowAsync();
 
-            if (result == ContentDialogResult.Primary) { args.TryCloseWindow(); }
+            if (result == ContentDialogResult.Primary)
+            {
+                args.TryCloseWindow();
+            }
             else if (result == ContentDialogResult.Secondary)
             {
                 NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo());

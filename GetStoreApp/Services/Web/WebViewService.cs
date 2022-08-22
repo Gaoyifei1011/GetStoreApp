@@ -12,17 +12,15 @@ namespace GetStoreApp.Services.Web
     {
         private WebView2 WebView { get; set; }
 
-        public bool CanGoBack { get; set; }
+        public bool CanGoBack => WebView.CanGoBack;
 
-        public bool CanGoForward { get; set; }
+        public bool CanGoForward => WebView.CanGoForward;
 
         public event EventHandler<CoreWebView2WebErrorStatus> NavigationCompleted;
 
         public void Initialize(WebView2 webView)
         {
             WebView = webView;
-            CanGoBack = WebView.CanGoBack;
-            CanGoForward = WebView.CanGoForward;
             WebView.NavigationCompleted += OnWebViewNavigationCompleted;
         }
 

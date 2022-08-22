@@ -14,6 +14,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
     {
         private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
+        public List<StatusBarStateModel> StatusBarStateList => ResourceService.StatusBarStateList;
+
         private InfoBarSeverity _infoSeverity = InfoBarSeverity.Informational;
 
         public InfoBarSeverity InfoBarSeverity
@@ -50,13 +52,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _statePrBarVisValue, value); }
         }
 
-        public List<StatusBarStateModel> StatusBarStateList { get; set; }
-
         public StatusBarViewModel()
         {
             StateInfoText = ResourceService.GetLocalized("/Home/StatusInfoWelcome");
-
-            StatusBarStateList = ResourceService.StatusBarStateList;
 
             Messenger.Register(this, (MessageHandler<StatusBarViewModel, StatusBarStateMessage>)(async (statusbarViewModel, statusBarStateMessage) =>
                         {

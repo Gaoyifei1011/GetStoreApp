@@ -22,6 +22,16 @@ namespace GetStoreApp.Models
             }
         }
 
+        public string GID
+        {
+            get { return (string)GetValue(GIDProperty); }
+            set { SetValue(GIDProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for GID.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty GIDProperty =
+            DependencyProperty.Register("GID", typeof(string), typeof(DownloadModel), new PropertyMetadata(string.Empty));
+
         /// <summary>
         /// 下载文件创建时对应的时间戳，本地存储时使用的是格林尼治标准时间（GMT+0）
         /// </summary>
@@ -43,7 +53,7 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for DownloadKey.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DownloadKeyProperty =
-            DependencyProperty.Register("DownloadKey", typeof(string), typeof(DownloadModel), new PropertyMetadata(""));
+            DependencyProperty.Register("DownloadKey", typeof(string), typeof(DownloadModel), new PropertyMetadata(string.Empty));
 
         /// <summary>
         /// 下载文件名称
@@ -56,7 +66,7 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for FileName.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FileNameProperty =
-            DependencyProperty.Register("FileName", typeof(string), typeof(DownloadModel), new PropertyMetadata(""));
+            DependencyProperty.Register("FileName", typeof(string), typeof(DownloadModel), new PropertyMetadata(string.Empty));
 
         /// <summary>
         /// 文件下载链接
@@ -69,7 +79,7 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for FileLink.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FileLinkProperty =
-            DependencyProperty.Register("FileLink", typeof(string), typeof(DownloadModel), new PropertyMetadata(""));
+            DependencyProperty.Register("FileLink", typeof(string), typeof(DownloadModel), new PropertyMetadata(string.Empty));
 
         /// <summary>
         /// 文件下载保存的路径
@@ -82,7 +92,7 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for FilePath.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FilePathProperty =
-            DependencyProperty.Register("FilePath", typeof(string), typeof(DownloadModel), new PropertyMetadata(""));
+            DependencyProperty.Register("FilePath", typeof(string), typeof(DownloadModel), new PropertyMetadata(string.Empty));
 
         /// <summary>
         /// 文件SHA1值
@@ -95,7 +105,7 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for FileSHA1.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FileSHA1Property =
-            DependencyProperty.Register("FileSHA1", typeof(string), typeof(DownloadModel), new PropertyMetadata(""));
+            DependencyProperty.Register("FileSHA1", typeof(string), typeof(DownloadModel), new PropertyMetadata(string.Empty));
 
         /// <summary>
         /// 文件大小
@@ -108,10 +118,10 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for FileSize.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FileSizeProperty =
-            DependencyProperty.Register("FileSize", typeof(string), typeof(DownloadModel), new PropertyMetadata(""));
+            DependencyProperty.Register("FileSize", typeof(string), typeof(DownloadModel), new PropertyMetadata(string.Empty));
 
         /// <summary>
-        /// 文件下载标志：0为下载失败，1为正在下载中，2为下载暂停，3为下载成功
+        /// 文件下载标志：0为下载失败，1为等待下载，2为下载暂停，3为下载正在下载中，4为下载成功
         /// </summary>
         private int _downloadFlag;
 

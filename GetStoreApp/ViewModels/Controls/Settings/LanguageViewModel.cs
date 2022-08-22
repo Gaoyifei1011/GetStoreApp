@@ -17,6 +17,8 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
         private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
 
+        public List<LanguageModel> LanguageList => LanguageService.LanguageList;
+
         private LanguageModel _language;
 
         public LanguageModel Language
@@ -26,27 +28,20 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             set { SetProperty(ref _language, value); }
         }
 
-        public List<LanguageModel> LanguageList { get; set; }
+        public IAsyncRelayCommand LanguageTipCommand => new AsyncRelayCommand(async () =>
+        {
+            NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+            await Task.CompletedTask;
+        });
 
-        public IAsyncRelayCommand LanguageTipCommand { get; }
-
-        public IAsyncRelayCommand LanguageSelectCommand { get; }
+        public IAsyncRelayCommand LanguageSelectCommand => new AsyncRelayCommand(async () =>
+        {
+            await LanguageService.SetLanguageAsync(Language);
+        });
 
         public LanguageViewModel()
         {
             Language = LanguageService.AppLanguage;
-            LanguageList = LanguageService.LanguageList;
-
-            LanguageTipCommand = new AsyncRelayCommand(async () =>
-            {
-                NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo());
-                await Task.CompletedTask;
-            });
-
-            LanguageSelectCommand = new AsyncRelayCommand(async () =>
-            {
-                await LanguageService.SetLanguageAsync(Language);
-            });
         }
     }
 }

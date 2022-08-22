@@ -3,7 +3,6 @@ using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Helpers;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml.Controls;
-using System.Threading.Tasks;
 
 namespace GetStoreApp.Views
 {
@@ -13,28 +12,29 @@ namespace GetStoreApp.Views
 
         public DownloadViewModel ViewModel { get; } = IOCHelper.GetService<DownloadViewModel>();
 
-        public string OpenFolder { get; }
+        public string OpenFolder => ResourceService.GetLocalized("/Download/OpenFolder");
 
-        public string ContinueDownload { get; }
+        public string ContinueDownload => ResourceService.GetLocalized("/Download/Continue");
 
-        public string PauseDownload { get; }
+        public string PauseDownload => ResourceService.GetLocalized("/Download/Pause");
 
-        public string DeleteTask { get; }
+        public string DeleteTask => ResourceService.GetLocalized("/Download/DeleteTask");
 
         public DownloadPage()
         {
-            OpenFolder = ResourceService.GetLocalized("/Download/OpenFolder");
-            ContinueDownload = ResourceService.GetLocalized("/Download/Continue");
-            PauseDownload = ResourceService.GetLocalized("/Download/Pause");
-            DeleteTask = ResourceService.GetLocalized("/Download/DeleteTask");
-
             InitializeComponent();
         }
 
         public string LocalizedDownloadCountInfo(int count)
         {
-            if (count == 0) return ResourceService.GetLocalized("/Download/DownloadEmpty");
-            else return string.Format(ResourceService.GetLocalized("/Download/DownloadCountInfo"), count);
+            if (count == 0)
+            {
+                return ResourceService.GetLocalized("/Download/DownloadEmpty");
+            }
+            else
+            {
+                return string.Format(ResourceService.GetLocalized("/Download/DownloadCountInfo"), count);
+            }
         }
 
         public async void TestDownload()

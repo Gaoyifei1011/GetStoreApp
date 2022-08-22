@@ -11,11 +11,11 @@ namespace GetStoreApp.Services.Settings
     /// </summary>
     public class UseInstructionService : IUseInstructionService
     {
-        private string SettingsKey { get; init; } = "UseInsVisValue";
-
         private IConfigStorageService ConfigStorageService { get; } = IOCHelper.GetService<IConfigStorageService>();
 
-        private bool DefaultUseInsVisValue { get; } = true;
+        private string SettingsKey { get; init; } = "UseInsVisValue";
+
+        private bool DefaultUseInsVisValue => true;
 
         public bool UseInsVisValue { get; set; }
 
@@ -34,7 +34,10 @@ namespace GetStoreApp.Services.Settings
         {
             bool? useInsVisValue = await ConfigStorageService.GetSettingBoolValueAsync(SettingsKey);
 
-            if (!useInsVisValue.HasValue) return DefaultUseInsVisValue;
+            if (!useInsVisValue.HasValue)
+            {
+                return DefaultUseInsVisValue;
+            }
 
             return Convert.ToBoolean(useInsVisValue);
         }

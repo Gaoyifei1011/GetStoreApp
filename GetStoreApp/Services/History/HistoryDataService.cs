@@ -37,7 +37,10 @@ namespace GetStoreApp.Services.History
 
                 SqliteDataReader Query = await CountCommand.ExecuteReaderAsync();
 
-                if (await Query.ReadAsync()) HistoryTableCount = Query.GetInt32(0);
+                if (await Query.ReadAsync())
+                {
+                    HistoryTableCount = Query.GetInt32(0);
+                }
 
                 await db.CloseAsync();
             }
@@ -59,12 +62,18 @@ namespace GetStoreApp.Services.History
                 {
                     Connection = db,
 
-                    CommandText = string.Format("SELECT * FROM {0} WHERE HISTORYKEY LIKE '{1}'", DataBaseService.HistoryTableName, historyKey)
+                    CommandText = string.Format("SELECT * FROM {0} WHERE HISTORYKEY LIKE '{1}'",
+                        DataBaseService.HistoryTableName,
+                        historyKey
+                        )
                 };
 
                 SqliteDataReader Query = await SearchCommand.ExecuteReaderAsync();
 
-                if (await Query.ReadAsync()) IsExists = true;
+                if (await Query.ReadAsync())
+                {
+                    IsExists = true;
+                }
 
                 await db.CloseAsync();
             }
@@ -82,8 +91,14 @@ namespace GetStoreApp.Services.History
             bool CheckResult = await CheckDuplicatedDataAsync(history.HistoryKey);
 
             // 如果存在相同的行数据，只更新TimeStamp值，没有，添加数据
-            if (CheckResult) await UpdateDataAsync(history);
-            else await AddDataAsync(history);
+            if (CheckResult)
+            {
+                await UpdateDataAsync(history);
+            }
+            else
+            {
+                await AddDataAsync(history);
+            }
         }
 
         /// <summary>
@@ -104,7 +119,14 @@ namespace GetStoreApp.Services.History
 
                         try
                         {
-                            InsertCommand.CommandText = string.Format("INSERT INTO {0} VALUES ({1},'{2}','{3}','{4}','{5}')", DataBaseService.HistoryTableName, history.CreateTimeStamp, history.HistoryKey, history.HistoryType, history.HistoryChannel, history.HistoryLink);
+                            InsertCommand.CommandText = string.Format("INSERT INTO {0} VALUES ({1},'{2}','{3}','{4}','{5}')",
+                                DataBaseService.HistoryTableName,
+                                history.CreateTimeStamp,
+                                history.HistoryKey,
+                                history.HistoryType,
+                                history.HistoryChannel,
+                                history.HistoryLink
+                                );
 
                             await InsertCommand.ExecuteNonQueryAsync();
 
@@ -121,7 +143,7 @@ namespace GetStoreApp.Services.History
         }
 
         /// <summary>
-        /// 存在重复的数据，只更新该记录的TimeStamp
+        /// 存在重复的数据，只更新该记录的时间戳
         /// </summary>
         private async Task UpdateDataAsync(HistoryModel history)
         {
@@ -138,7 +160,11 @@ namespace GetStoreApp.Services.History
 
                         try
                         {
-                            UpdateCommand.CommandText = string.Format("UPDATE {0} SET TIMESTAMP = {1} WHERE HISTORYKEY = '{2}'", DataBaseService.HistoryTableName, history.CreateTimeStamp, history.HistoryKey);
+                            UpdateCommand.CommandText = string.Format("UPDATE {0} SET TIMESTAMP = {1} WHERE HISTORYKEY = '{2}'",
+                                DataBaseService.HistoryTableName,
+                                history.CreateTimeStamp,
+                                history.HistoryKey
+                                );
 
                             await UpdateCommand.ExecuteNonQueryAsync();
 
@@ -214,16 +240,36 @@ namespace GetStoreApp.Services.History
             string SQL = string.Empty;
 
             if (typeFilter == "None" && channelFilter == "None")
+            {
                 SQL = string.Format("SELECT * FROM {0} ORDER BY TIMESTAMP", DataBaseService.HistoryTableName);
+            }
             else if (typeFilter != "None" && channelFilter != "None")
-                SQL = string.Format("SELECT * FROM {0} WHERE TYPE = '{1}' AND CHANNEL = '{2}' ORDER BY TIMESTAMP", DataBaseService.HistoryTableName, typeFilter, channelFilter);
+            {
+                SQL = string.Format("SELECT * FROM {0} WHERE TYPE = '{1}' AND CHANNEL = '{2}' ORDER BY TIMESTAMP",
+                    DataBaseService.HistoryTableName,
+                    typeFilter,
+                    channelFilter
+                    );
+            }
             else if (typeFilter != "None")
-                SQL = string.Format("SELECT * FROM {0} WHERE TYPE = '{1}' ORDER BY TIMESTAMP", DataBaseService.HistoryTableName, typeFilter);
+            {
+                SQL = string.Format("SELECT * FROM {0} WHERE TYPE = '{1}' ORDER BY TIMESTAMP",
+                    DataBaseService.HistoryTableName,
+                    typeFilter
+                    );
+            }
             else if (channelFilter != "None")
-                SQL = string.Format("SELECT * FROM {0} WHERE CHANNEL = '{1}' ORDER BY TIMESTAMP", DataBaseService.HistoryTableName, channelFilter);
+            {
+                SQL = string.Format("SELECT * FROM {0} WHERE CHANNEL = '{1}' ORDER BY TIMESTAMP",
+                    DataBaseService.HistoryTableName,
+                    channelFilter
+                    );
+            }
 
             if (!timeSortOrder)
+            {
                 SQL = string.Format("{0} {1}", SQL, "DESC");
+            }
 
             return SQL;
         }
@@ -243,7 +289,10 @@ namespace GetStoreApp.Services.History
                 {
                     Connection = db,
 
-                    CommandText = string.Format("SELECT * FROM {0} ORDER BY TIMESTAMP DESC LIMIT {1}", DataBaseService.HistoryTableName, value)
+                    CommandText = string.Format("SELECT * FROM {0} ORDER BY TIMESTAMP DESC LIMIT {1}",
+                        DataBaseService.HistoryTableName,
+                        value
+                        )
                 };
 
                 SqliteDataReader Query = await SelectCommand.ExecuteReaderAsync();
@@ -285,9 +334,13 @@ namespace GetStoreApp.Services.History
 
                         try
                         {
-                            foreach (HistoryModel item in selectedHistoryDataList)
+                            foreach (HistoryModel historyItem in selectedHistoryDataList)
                             {
-                                DeleteCommand.CommandText = string.Format("DELETE FROM {0} WHERE HISTORYKEY = '{1}'", DataBaseService.HistoryTableName, item.HistoryKey);
+                                DeleteCommand.CommandText = string.Format("DELETE FROM {0} WHERE HISTORYKEY = '{1}'",
+                                    DataBaseService.HistoryTableName,
+                                    historyItem.HistoryKey
+                                    );
+
                                 await DeleteCommand.ExecuteNonQueryAsync();
                             }
                             await transaction.CommitAsync();

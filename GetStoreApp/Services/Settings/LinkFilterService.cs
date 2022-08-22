@@ -11,17 +11,17 @@ namespace GetStoreApp.Services.Settings
     /// </summary>
     public class LinkFilterService : ILinkFilterService
     {
+        private IConfigStorageService ConfigStorageService { get; } = IOCHelper.GetService<IConfigStorageService>();
+
         private string StartWithESettingsKey { get; init; } = "StartsWithEFilterValue";
 
         private string BlockMapSettingsKey { get; init; } = "BlockMapFilterValue";
 
-        private bool DefaultLinkFilterValue { get; } = true;
+        private bool DefaultLinkFilterValue => true;
 
         public bool StartWithEFilterValue { get; set; }
 
         public bool BlockMapFilterValue { get; set; }
-
-        private IConfigStorageService ConfigStorageService { get; set; } = IOCHelper.GetService<IConfigStorageService>();
 
         /// <summary>
         /// 应用在初始化前获取设置存储的链接过滤值
@@ -40,7 +40,10 @@ namespace GetStoreApp.Services.Settings
         {
             bool? startWithEFilterValue = await ConfigStorageService.GetSettingBoolValueAsync(StartWithESettingsKey);
 
-            if (!startWithEFilterValue.HasValue) return DefaultLinkFilterValue;
+            if (!startWithEFilterValue.HasValue)
+            {
+                return DefaultLinkFilterValue;
+            }
 
             return Convert.ToBoolean(startWithEFilterValue);
         }
@@ -52,7 +55,10 @@ namespace GetStoreApp.Services.Settings
         {
             bool? blockMapFilterValue = await ConfigStorageService.GetSettingBoolValueAsync(BlockMapSettingsKey);
 
-            if (!blockMapFilterValue.HasValue) return DefaultLinkFilterValue;
+            if (!blockMapFilterValue.HasValue)
+            {
+                return DefaultLinkFilterValue;
+            }
 
             return Convert.ToBoolean(blockMapFilterValue);
         }

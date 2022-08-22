@@ -246,7 +246,6 @@
                                         </Style>
                                     </ContentPresenter.Resources>
                                 </ContentPresenter>
-
                             </primitives:InfoBarPanel>
 
                             <ContentPresenter
@@ -408,12 +407,10 @@
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>
-
                         </VisualStateManager.VisualStateGroups>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-
 </ResourceDictionary>

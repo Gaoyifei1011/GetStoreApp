@@ -7,5 +7,6 @@
     Title="{x:Bind ResourceService.GetLocalized('/Dialog/SelectEmptyTitle')}"
     CloseButtonText="{x:Bind ResourceService.GetLocalized('/Dialog/SelectEmptySure')}"
     Content="{x:Bind ResourceService.GetLocalized('/Dialog/SelectEmptyContent')}"
+    RequestedTheme="{x:Bind DialogTheme}"
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d" />

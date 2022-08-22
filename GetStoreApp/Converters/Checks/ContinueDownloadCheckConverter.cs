@@ -12,7 +12,9 @@ namespace GetStoreApp.Converters.Checks
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value == null)
+            {
                 return DependencyProperty.UnsetValue;
+            }
 
             int? result = value as int?;
 

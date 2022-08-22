@@ -9,7 +9,7 @@ namespace GetStoreApp.Contracts.Services.Download
     {
         Task<bool> CheckDuplicatedDataAsync(string downloadKey);
 
-        Task AddDataAsync(DownloadModel download);
+        Task<bool> AddDataAsync(DownloadModel download);
 
         Task UpdateDataAsync(DownloadModel download);
 

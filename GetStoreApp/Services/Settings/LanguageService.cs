@@ -4,6 +4,7 @@ using GetStoreApp.Helpers;
 using GetStoreApp.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Threading.Tasks;
 using Windows.Globalization;
@@ -15,15 +16,15 @@ namespace GetStoreApp.Services.Settings
     /// </summary>
     public class LanguageService : ILanguageService
     {
-        private string SettingsKey { get; init; } = "AppLanguage";
-
         private IConfigStorageService ConfigStorageService { get; } = IOCHelper.GetService<IConfigStorageService>();
+
+        private string SettingsKey { get; init; } = "AppLanguage";
 
         public LanguageModel DefaultAppLanguage { get; set; }
 
         public LanguageModel AppLanguage { get; set; }
 
-        private static readonly IReadOnlyList<string> AppLanguages = ApplicationLanguages.ManifestLanguages;
+        private readonly IReadOnlyList<string> AppLanguages = ApplicationLanguages.ManifestLanguages;
 
         public List<LanguageModel> LanguageList { get; set; } = new List<LanguageModel>();
 
@@ -32,9 +33,10 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private void InitializeLanguageList()
         {
-            foreach (string item in AppLanguages)
+            foreach (string applanguage in AppLanguages)
             {
-                CultureInfo culture = CultureInfo.GetCultureInfo(item);
+                Debug.WriteLine(applanguage);
+                CultureInfo culture = CultureInfo.GetCultureInfo(applanguage);
 
                 LanguageList.Add(new LanguageModel()
                 {
@@ -49,9 +51,9 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private bool IsExistsInLanguageList(string currentSystemLanguage)
         {
-            foreach (LanguageModel item in LanguageList)
+            foreach (LanguageModel languageItem in LanguageList)
             {
-                if (item.InternalName == currentSystemLanguage)
+                if (languageItem.InternalName == currentSystemLanguage)
                 {
                     return true;
                 }
@@ -91,6 +93,7 @@ namespace GetStoreApp.Services.Settings
                 {
                     return LanguageList.Find(item => item.InternalName.Equals(CurrentSystemLanguage, StringComparison.OrdinalIgnoreCase));
                 }
+
                 // 不存在，设置存储值和应用初次设置的语言为默认语言：English(United States)
                 else
                 {

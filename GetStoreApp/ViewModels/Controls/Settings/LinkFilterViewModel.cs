@@ -36,36 +36,30 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             set { SetProperty(ref _blockMapFilterValue, value); }
         }
 
-        public IAsyncRelayCommand LinkFilterInstructionCommand { get; }
+        public IAsyncRelayCommand LinkFilterInstructionCommand => new AsyncRelayCommand(async () =>
+        {
+            NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+            await Task.CompletedTask;
+        });
 
-        public IAsyncRelayCommand StartWithEFilterCommand { get; }
+        public IAsyncRelayCommand StartWithEFilterCommand => new AsyncRelayCommand<bool>(async (param) =>
+        {
+            await LinkFilterService.SetStartsWithEFilterValueAsync(param);
+            Messenger.Send(new StartsWithEFilterMessage(param));
+            StartsWithEFilterValue = param;
+        });
 
-        public IAsyncRelayCommand BlockMapFilterCommand { get; }
+        public IAsyncRelayCommand BlockMapFilterCommand => new AsyncRelayCommand<bool>(async (param) =>
+        {
+            await LinkFilterService.SetBlockMapFilterValueAsync(param);
+            Messenger.Send(new BlockMapFilterMessage(param));
+            BlockMapFilterValue = param;
+        });
 
         public LinkFilterViewModel()
         {
             StartsWithEFilterValue = LinkFilterService.StartWithEFilterValue;
             BlockMapFilterValue = LinkFilterService.BlockMapFilterValue;
-
-            LinkFilterInstructionCommand = new AsyncRelayCommand(async () =>
-            {
-                NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo());
-                await Task.CompletedTask;
-            });
-
-            StartWithEFilterCommand = new AsyncRelayCommand<bool>(async (param) =>
-            {
-                await LinkFilterService.SetStartsWithEFilterValueAsync(param);
-                Messenger.Send(new StartsWithEFilterMessage(param));
-                StartsWithEFilterValue = param;
-            });
-
-            BlockMapFilterCommand = new AsyncRelayCommand<bool>(async (param) =>
-            {
-                await LinkFilterService.SetBlockMapFilterValueAsync(param);
-                Messenger.Send(new BlockMapFilterMessage(param));
-                BlockMapFilterValue = param;
-            });
         }
     }
 }

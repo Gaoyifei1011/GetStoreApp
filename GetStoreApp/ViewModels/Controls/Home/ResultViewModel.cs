@@ -16,6 +16,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
 {
     public class ResultViewModel : ObservableRecipient
     {
+        public ObservableCollection<ResultModel> ResultDataList { get; } = new ObservableCollection<ResultModel>();
+
         private bool _resultCotnrolVisable = false;
 
         public bool ResultControlVisable
@@ -25,7 +27,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _resultCotnrolVisable, value); }
         }
 
-        private string _categoryId = string.Empty;
+        private string _categoryId;
 
         public string CategoryId
         {
@@ -52,72 +54,55 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _selectedResultItem, value); }
         }
 
-        public ObservableCollection<ResultModel> ResultDataList { get; set; } = new ObservableCollection<ResultModel>();
+        public IAsyncRelayCommand CopyCategoryIDCommand => new AsyncRelayCommand(async () =>
+        {
+            CopyPasteHelper.CopyToClipBoard(CategoryId);
+            await Task.CompletedTask;
+        });
 
-        public IAsyncRelayCommand CopyCategoryIDCommand { get; }
+        public IAsyncRelayCommand CopyContentCommand => new AsyncRelayCommand(CopyContentAsync);
 
-        public IAsyncRelayCommand CopyContentCommand { get; }
-
-        public IAsyncRelayCommand CopyLinkCommand { get; }
+        public IAsyncRelayCommand CopyLinkCommand => new AsyncRelayCommand(CopyLinkAsync);
 
         public IAsyncRelayCommand DownloadCommand { get; }
 
-        public IAsyncRelayCommand SelectCommand { get; }
+        public IAsyncRelayCommand SelectCommand => new AsyncRelayCommand(async () =>
+        {
+            await SelectNoneAsync();
+            IsSelectMode = true;
+        });
 
-        public IAsyncRelayCommand CancelCommand { get; }
+        public IAsyncRelayCommand CancelCommand => new AsyncRelayCommand(async () =>
+        {
+            IsSelectMode = false;
+            await Task.CompletedTask;
+        });
 
-        public IAsyncRelayCommand SelectAllCommand { get; }
+        public IAsyncRelayCommand SelectAllCommand => new AsyncRelayCommand(async () =>
+        {
+            foreach (ResultModel resultItem in ResultDataList)
+            {
+                resultItem.IsSelected = true;
+            }
 
-        public IAsyncRelayCommand SelectNoneCommand { get; }
+            await Task.CompletedTask;
+        });
 
-        public IAsyncRelayCommand CopySelectedCommand { get; }
+        public IAsyncRelayCommand SelectNoneCommand => new AsyncRelayCommand(SelectNoneAsync);
 
-        public IAsyncRelayCommand CopySelectedLinkCommand { get; }
+        public IAsyncRelayCommand CopySelectedCommand => new AsyncRelayCommand(CopySelectedAsync);
+
+        public IAsyncRelayCommand CopySelectedLinkCommand => new AsyncRelayCommand(CopySelectedLinkAsync);
 
         public IAsyncRelayCommand DownloadSelectedCommand { get; }
 
-        public IAsyncRelayCommand FileOperationCommand { get; }
+        public IAsyncRelayCommand FileOperationCommand => new AsyncRelayCommand<string>(async (param) =>
+        {
+            await FileOperationAsync(param);
+        });
 
         public ResultViewModel()
         {
-            CopyCategoryIDCommand = new AsyncRelayCommand(async () =>
-            {
-                CopyPasteHelper.CopyToClipBoard(CategoryId); await Task.CompletedTask;
-            });
-
-            CopyContentCommand = new AsyncRelayCommand(CopyContentAsync);
-
-            CopyLinkCommand = new AsyncRelayCommand(CopyLinkAsync);
-
-            SelectCommand = new AsyncRelayCommand(async () =>
-            {
-                await SelectNoneAsync();
-                IsSelectMode = true;
-            });
-
-            CancelCommand = new AsyncRelayCommand(async () =>
-            {
-                IsSelectMode = false;
-                await Task.CompletedTask;
-            });
-
-            SelectAllCommand = new AsyncRelayCommand(async () =>
-            {
-                foreach (ResultModel item in ResultDataList) item.IsSelected = true;
-                await Task.CompletedTask;
-            });
-
-            SelectNoneCommand = new AsyncRelayCommand(SelectNoneAsync);
-
-            CopySelectedCommand = new AsyncRelayCommand(CopySelectedAsync);
-
-            CopySelectedLinkCommand = new AsyncRelayCommand(CopySelectedLinkAsync);
-
-            FileOperationCommand = new AsyncRelayCommand<string>(async (param) =>
-            {
-                await FileOperationAsync(param);
-            });
-
             Messenger.Register<ResultViewModel, ResultControlVisableMessage>(this, (resultViewModel, resultControlVisableMessage) =>
             {
                 resultViewModel.ResultControlVisable = resultControlVisableMessage.Value;
@@ -132,10 +117,10 @@ namespace GetStoreApp.ViewModels.Controls.Home
             {
                 resultViewModel.ResultDataList.Clear();
 
-                foreach (ResultModel item in resultDataListMessage.Value)
+                foreach (ResultModel resultItem in resultDataListMessage.Value)
                 {
-                    item.IsSelected = false;
-                    resultViewModel.ResultDataList.Add(item);
+                    resultItem.IsSelected = false;
+                    resultViewModel.ResultDataList.Add(resultItem);
                 }
 
                 await Task.CompletedTask;
@@ -168,7 +153,12 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 return;
             };
 
-            string CopyContent = string.Format("[\n{0}\n{1}\n{2}\n{3}\n]\n", SelectedResultItem.FileName, SelectedResultItem.FileLink, SelectedResultItem.FileSHA1, SelectedResultItem.FileSize);
+            string CopyContent = string.Format("[\n{0}\n{1}\n{2}\n{3}\n]\n",
+                SelectedResultItem.FileName,
+                SelectedResultItem.FileLink,
+                SelectedResultItem.FileSHA1,
+                SelectedResultItem.FileSize
+                );
 
             CopyPasteHelper.CopyToClipBoard(CopyContent);
             await Task.CompletedTask;
@@ -176,7 +166,10 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         private async Task SelectNoneAsync()
         {
-            foreach (ResultModel item in ResultDataList) item.IsSelected = false;
+            foreach (ResultModel resultItem in ResultDataList)
+            {
+                resultItem.IsSelected = false;
+            }
             await Task.CompletedTask;
         }
 
@@ -196,9 +189,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             StringBuilder stringBuilder = new StringBuilder();
 
-            foreach (ResultModel item in SelectedResultDataList)
+            foreach (ResultModel resultItem in SelectedResultDataList)
             {
-                stringBuilder.Append(string.Format("[\n{0}\n]\n", item.FileLink));
+                stringBuilder.Append(string.Format("[\n{0}\n]\n", resultItem.FileLink));
             }
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
@@ -221,9 +214,14 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             StringBuilder stringBuilder = new StringBuilder();
 
-            foreach (ResultModel item in SelectedResultDataList)
+            foreach (ResultModel resultItem in SelectedResultDataList)
             {
-                stringBuilder.Append(string.Format("[\n{0}\n{1}\n{2}\n{3}\n]\n", item.FileName, item.FileLink, item.FileSHA1, item.FileSize));
+                stringBuilder.Append(string.Format("[\n{0}\n{1}\n{2}\n{3}\n]\n",
+                    resultItem.FileName,
+                    resultItem.FileLink,
+                    resultItem.FileSHA1,
+                    resultItem.FileSize)
+                    );
             }
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());

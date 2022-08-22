@@ -14,12 +14,13 @@ namespace GetStoreApp.UI.Dialogs
 
         public IThemeService ThemeService { get; } = IOCHelper.GetService<IThemeService>();
 
+        public ElementTheme DialogTheme => (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
+
         public RestartAppsViewModel ViewModel { get; } = IOCHelper.GetService<RestartAppsViewModel>();
 
         public RestartAppsDialog()
         {
             XamlRoot = App.MainWindow.Content.XamlRoot;
-            RequestedTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
             InitializeComponent();
         }
     }

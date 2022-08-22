@@ -9,12 +9,7 @@ namespace GetStoreApp.Activation
 {
     public class DefaultActivationHandler : ActivationHandler<LaunchActivatedEventArgs>
     {
-        private INavigationService NavigationService { get; }
-
-        public DefaultActivationHandler()
-        {
-            NavigationService = IOCHelper.GetService<INavigationService>();
-        }
+        private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
 
         protected override bool CanHandleInternal(LaunchActivatedEventArgs args)
         {

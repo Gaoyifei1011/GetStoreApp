@@ -9,11 +9,11 @@ namespace GetStoreApp.Services.Settings
 {
     public class TopMostService : ITopMostService
     {
-        private string SettingsKey { get; init; } = "TopMostValue";
-
         private IConfigStorageService ConfigStorageService { get; } = IOCHelper.GetService<IConfigStorageService>();
 
-        private bool DefaultTopMostValue { get; } = false;
+        private string SettingsKey { get; init; } = "TopMostValue";
+
+        private bool DefaultTopMostValue => false;
 
         public bool TopMostValue { get; set; }
 
@@ -30,11 +30,14 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private async Task<bool> GetTopMostValueAsync()
         {
-            bool? useInsVisValue = await ConfigStorageService.GetSettingBoolValueAsync(SettingsKey);
+            bool? topMostValue = await ConfigStorageService.GetSettingBoolValueAsync(SettingsKey);
 
-            if (!useInsVisValue.HasValue) return DefaultTopMostValue;
+            if (!topMostValue.HasValue)
+            {
+                return DefaultTopMostValue;
+            }
 
-            return Convert.ToBoolean(useInsVisValue);
+            return Convert.ToBoolean(topMostValue);
         }
 
         /// <summary>

@@ -7,14 +7,9 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class TraceCleanupViewModel : ObservableRecipient
     {
-        public IAsyncRelayCommand TraceCleanupCommand { get; }
-
-        public TraceCleanupViewModel()
+        public IAsyncRelayCommand TraceCleanupCommand = new AsyncRelayCommand(async () =>
         {
-            TraceCleanupCommand = new AsyncRelayCommand(async () =>
-            {
-                await new TraceCleanupPromptDialog().ShowAsync();
-            });
-        }
+            await new TraceCleanupPromptDialog().ShowAsync();
+        });
     }
 }

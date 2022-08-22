@@ -7,14 +7,9 @@ namespace GetStoreApp.ViewModels.Pages
 {
     public class SettingsViewModel : ObservableRecipient
     {
-        public IAsyncRelayCommand RestartCommand { get; set; }
-
-        public SettingsViewModel()
+        public IAsyncRelayCommand RestartCommand = new AsyncRelayCommand(async () =>
         {
-            RestartCommand = new AsyncRelayCommand(async () =>
-            {
-                await new RestartAppsDialog().ShowAsync();
-            });
-        }
+            await new RestartAppsDialog().ShowAsync();
+        });
     }
 }

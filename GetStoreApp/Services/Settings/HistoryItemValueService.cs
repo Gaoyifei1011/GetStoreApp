@@ -12,9 +12,9 @@ namespace GetStoreApp.Services.Settings
     /// </summary>
     public class HistoryItemValueService : IHistoryItemValueService
     {
-        private string SettingsKey { get; init; } = "HistoryItem";
-
         private IConfigStorageService ConfigStorageService { get; } = IOCHelper.GetService<IConfigStorageService>();
+
+        private string SettingsKey { get; init; } = "HistoryItem";
 
         private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
