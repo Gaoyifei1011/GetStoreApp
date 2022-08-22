@@ -17,7 +17,7 @@ namespace GetStoreApp.ViewModels.Dialogs
 {
     public class TraceCleanupPromptViewModel : ObservableRecipient
     {
-        public IResourceService ResourceService = IOCHelper.GetService<IResourceService>();
+        private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
         private IHistoryDataService HistoryDataService { get; } = IOCHelper.GetService<IHistoryDataService>();
 
@@ -133,20 +133,13 @@ namespace GetStoreApp.ViewModels.Dialogs
             set { SetProperty(ref _localFileCleanErrorVisable, value); }
         }
 
-        public IAsyncRelayCommand TraceCleanupSureCommand { get; }
+        public IAsyncRelayCommand TraceCleanupSureCommand => new AsyncRelayCommand(TraceCleanupAsync);
 
-        public IAsyncRelayCommand TraceCleanupCancelCommand { get; }
-
-        public TraceCleanupPromptViewModel()
+        public IAsyncRelayCommand TraceCleanupCancelCommand => new AsyncRelayCommand<ContentDialog>(async (param) =>
         {
-            TraceCleanupSureCommand = new AsyncRelayCommand(TraceCleanupAsync);
-
-            TraceCleanupCancelCommand = new AsyncRelayCommand<ContentDialog>(async (param) =>
-            {
-                param.Hide();
-                await Task.CompletedTask;
-            });
-        }
+            param.Hide();
+            await Task.CompletedTask;
+        });
 
         /// <summary>
         /// 痕迹清理
@@ -226,9 +219,9 @@ namespace GetStoreApp.ViewModels.Dialogs
             try
             {
                 // 文件存在时尝试删除文件
-                foreach (DownloadModel item in downloadDataList)
+                foreach (DownloadModel downloadItem in downloadDataList)
                 {
-                    if (File.Exists(item.FilePath)) File.Delete(item.FilePath);
+                    if (File.Exists(downloadItem.FilePath)) File.Delete(downloadItem.FilePath);
                 }
                 return true;
             }

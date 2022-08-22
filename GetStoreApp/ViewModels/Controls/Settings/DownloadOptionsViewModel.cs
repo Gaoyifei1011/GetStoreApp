@@ -14,6 +14,8 @@ namespace GetStoreApp.ViewModels.Controls.Settings
     {
         private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
 
+        public List<int> DownloadItemList => DownloadOptionsService.DownloadItemList;
+
         private StorageFolder _downloadFolder;
 
         public StorageFolder DownloadFolder
@@ -41,56 +43,38 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             set { SetProperty(ref _downloadNotification, value); }
         }
 
-        public List<int> DownloadItemList { get; set; }
+        public IAsyncRelayCommand OpenFolderCommand => new AsyncRelayCommand(async () =>
+        {
+            await DownloadOptionsService.OpenFolderAsync(DownloadFolder);
+        });
 
-        public IAsyncRelayCommand OpenFolderCommand { get; }
+        // 使用默认目录
+        public IAsyncRelayCommand UseDefaultFolderCommand => new AsyncRelayCommand(async () =>
+        {
+            DownloadFolder = DownloadOptionsService.DefaultFolder;
+            await DownloadOptionsService.SetFolderAsync(DownloadOptionsService.DefaultFolder);
+        });
 
-        public IAsyncRelayCommand UseDefaultFolderCommand { get; }
+        public IAsyncRelayCommand ChangeFolderCommand => new AsyncRelayCommand(ChangeFolderAsync);
 
-        public IAsyncRelayCommand ChangeFolderCommand { get; }
+        public IAsyncRelayCommand DownloadItemCommand => new AsyncRelayCommand(async () =>
+        {
+            await DownloadOptionsService.SetItemValueAsync(DownloadItem);
+        });
 
-        public IAsyncRelayCommand DownloadItemCommand { get; }
-
-        public IAsyncRelayCommand NotificationStateCommand { get; }
+        public IAsyncRelayCommand NotificationStateCommand => new AsyncRelayCommand<bool>(async (param) =>
+        {
+            DownloadNotification = param;
+            await DownloadOptionsService.SetNotificationAsync(param);
+        });
 
         public DownloadOptionsViewModel()
         {
-            DownloadItemList = DownloadOptionsService.DownloadItemList;
-
             DownloadFolder = DownloadOptionsService.DownloadFolder;
 
             DownloadItem = DownloadOptionsService.DownloadItem;
 
             DownloadNotification = DownloadOptionsService.DownloadNotification;
-
-            OpenFolderCommand = new AsyncRelayCommand(async () =>
-            {
-                await DownloadOptionsService.OpenFolderAsync(DownloadFolder);
-            });
-
-            UseDefaultFolderCommand = new AsyncRelayCommand(UseDefaultFolderAsync);
-
-            ChangeFolderCommand = new AsyncRelayCommand(ChangeFolderAsync);
-
-            DownloadItemCommand = new AsyncRelayCommand(async () =>
-            {
-                await DownloadOptionsService.SetItemValueAsync(DownloadItem);
-            });
-
-            NotificationStateCommand = new AsyncRelayCommand<bool>(async (param) =>
-            {
-                DownloadNotification = param;
-                await DownloadOptionsService.SetNotificationAsync(param);
-            });
-        }
-
-        /// <summary>
-        /// 使用默认目录
-        /// </summary>
-        private async Task UseDefaultFolderAsync()
-        {
-            DownloadFolder = DownloadOptionsService.DefaultFolder;
-            await DownloadOptionsService.SetFolderAsync(DownloadOptionsService.DefaultFolder);
         }
 
         /// <summary>

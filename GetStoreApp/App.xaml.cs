@@ -40,7 +40,7 @@ namespace GetStoreApp
             base.OnLaunched(args);
 
             await RunSingleInstanceAppAsync();
-            Debug.WriteLine("11");
+
             await ActivationService.ActivateAsync(args);
         }
 

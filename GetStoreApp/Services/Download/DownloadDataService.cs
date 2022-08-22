@@ -14,9 +14,6 @@ namespace GetStoreApp.Services.Download
     /// </summary>
     public class DownloadDataService : IDownloadDataService
     {
-        //private readonly object DownloadTaskItemLock = new object();
-        //private int DownloadTaskItem;
-
         private IDataBaseService DataBaseService { get; } = IOCHelper.GetService<IDataBaseService>();
 
         /// <summary>
@@ -39,12 +36,15 @@ namespace GetStoreApp.Services.Download
 
                 SqliteDataReader Query = await CountCommand.ExecuteReaderAsync();
 
-                if (await Query.ReadAsync()) DownloadTableCount = Query.GetInt32(0);
+                if (await Query.ReadAsync())
+                {
+                    DownloadTableCount = Query.GetInt32(0);
+                }
 
                 await db.CloseAsync();
             }
 
-            return Convert.ToBoolean(DownloadTableCount);
+            return Convert.ToBoolean(DownloadTableCount == 0);
         }
 
         /// <summary>
@@ -62,12 +62,18 @@ namespace GetStoreApp.Services.Download
                 {
                     Connection = db,
 
-                    CommandText = string.Format("SELECT * FROM {0} WHERE DOWNLOADKEY LIKE '{1}'", DataBaseService.DownloadTableName, downloadKey)
+                    CommandText = string.Format("SELECT * FROM {0} WHERE DOWNLOADKEY LIKE '{1}'",
+                        DataBaseService.DownloadTableName,
+                        downloadKey
+                        )
                 };
 
                 SqliteDataReader Query = await SearchCommand.ExecuteReaderAsync();
 
-                if (await Query.ReadAsync()) IsExists = true;
+                if (await Query.ReadAsync())
+                {
+                    IsExists = true;
+                }
 
                 await db.CloseAsync();
             }
@@ -75,10 +81,12 @@ namespace GetStoreApp.Services.Download
         }
 
         /// <summary>
-        /// 直接添加下载记录数据
+        /// 直接添加下载记录数据，并返回下载记录添加是否成功的结果
         /// </summary>
-        public async Task AddDataAsync(DownloadModel download)
+        public async Task<bool> AddDataAsync(DownloadModel download)
         {
+            bool IsAddSuccessfully = false;
+
             using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
             {
                 await db.OpenAsync();
@@ -92,11 +100,22 @@ namespace GetStoreApp.Services.Download
 
                         try
                         {
-                            InsertCommand.CommandText = string.Format("INSERT INTO {0} VALUES ({1},'{2}','{3}','{4}','{5}','{6}','{7}')", DataBaseService.DownloadTableName, download.CreateTimeStamp, download.DownloadKey, download.FileName, download.FileLink, download.FilePath, download.FileSize, download.DownloadFlag);
+                            InsertCommand.CommandText = string.Format("INSERT INTO {0} VALUES ({1},'{2}','{3}','{4}','{5}','{6}','{7}')",
+                                DataBaseService.DownloadTableName,
+                                download.CreateTimeStamp,
+                                download.DownloadKey,
+                                download.FileName,
+                                download.FileLink,
+                                download.FilePath,
+                                download.FileSize,
+                                download.DownloadFlag
+                                );
 
                             await InsertCommand.ExecuteNonQueryAsync();
 
                             await transaction.CommitAsync();
+
+                            IsAddSuccessfully = true;
                         }
                         catch (Exception)
                         {
@@ -106,6 +125,7 @@ namespace GetStoreApp.Services.Download
                 }
                 await db.CloseAsync();
             }
+            return IsAddSuccessfully;
         }
 
         /// <summary>
@@ -126,7 +146,12 @@ namespace GetStoreApp.Services.Download
 
                         try
                         {
-                            UpdateCommand.CommandText = string.Format("UPDATE {0} SET TIMESTAMP = {1} WHERE DOWNLOADKEY = '{2}'", DataBaseService.DownloadTableName, download.CreateTimeStamp, download.DownloadKey);
+                            UpdateCommand.CommandText = string.Format("UPDATE {0} SET TIMESTAMP = {1}, DOWNLOADFLAG ={2} WHERE DOWNLOADKEY = '{3}'",
+                                DataBaseService.DownloadTableName,
+                                download.CreateTimeStamp,
+                                download.DownloadFlag,
+                                download.DownloadKey
+                                );
 
                             await UpdateCommand.ExecuteNonQueryAsync();
 
@@ -212,9 +237,13 @@ namespace GetStoreApp.Services.Download
 
                         try
                         {
-                            foreach (DownloadModel item in selectedDownloadDataList)
+                            foreach (DownloadModel downloadItem in selectedDownloadDataList)
                             {
-                                DeleteCommand.CommandText = string.Format("DELETE FROM {0} WHERE DOWNLOADKEY = '{1}'", DataBaseService.DownloadTableName, item.DownloadKey);
+                                DeleteCommand.CommandText = string.Format("DELETE FROM {0} WHERE DOWNLOADKEY = '{1}'",
+                                    DataBaseService.DownloadTableName,
+                                    downloadItem.DownloadKey
+                                    );
+
                                 await DeleteCommand.ExecuteNonQueryAsync();
                             }
                             await transaction.CommitAsync();

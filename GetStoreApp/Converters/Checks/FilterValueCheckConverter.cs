@@ -12,7 +12,9 @@ namespace GetStoreApp.Converters.Checks
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value == null || parameter == null)
+            {
                 return DependencyProperty.UnsetValue;
+            }
 
             return System.Convert.ToString(value) == System.Convert.ToString(parameter);
         }

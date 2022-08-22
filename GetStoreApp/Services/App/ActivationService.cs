@@ -7,7 +7,6 @@ using GetStoreApp.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,7 +17,7 @@ namespace GetStoreApp.Services.App
     /// </summary>
     public class ActivationService : IActivationService
     {
-        private UIElement _shell = null;
+        private UIElement Shell = null;
 
         private ActivationHandler<LaunchActivatedEventArgs> DefaultHandler { get; } = IOCHelper.GetService<ActivationHandler<LaunchActivatedEventArgs>>();
 
@@ -29,6 +28,8 @@ namespace GetStoreApp.Services.App
         private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
         private IAria2Service Aria2Service { get; } = IOCHelper.GetService<IAria2Service>();
+
+        private IDownloadMonitorService DownloadMonitorService { get; } = IOCHelper.GetService<IDownloadMonitorService>();
 
         private IBackdropService BackdropService { get; } = IOCHelper.GetService<IBackdropService>();
 
@@ -50,17 +51,16 @@ namespace GetStoreApp.Services.App
 
         public async Task ActivateAsync(object activationArgs)
         {
-            Debug.WriteLine("14");
             // 在应用窗口激活前配置应用的设置
             await InitializeAsync();
-            Debug.WriteLine("12");
+
             // 新建导航视图的Frame窗口
             if (GetStoreApp.App.MainWindow.Content == null)
             {
-                _shell = IOCHelper.GetService<ShellPage>();
-                GetStoreApp.App.MainWindow.Content = _shell ?? new Frame();
+                Shell = IOCHelper.GetService<ShellPage>();
+                GetStoreApp.App.MainWindow.Content = Shell ?? new Frame();
             }
-            Debug.WriteLine("13");
+
             // 根据activationArgs的ActivationHandlers或DefaultActivationHandler将导航到第一个页面
             await HandleActivationAsync(activationArgs);
 
@@ -91,9 +91,7 @@ namespace GetStoreApp.Services.App
             await LinkFilterService.InitializeLinkFilterValueAsnyc();
             await RegionService.InitializeRegionAsync();
             await ThemeService.InitializeThemeAsync();
-            Debug.WriteLine("01");
             await TopMostService.InitializeTopMostValueAsync();
-            Debug.WriteLine("02");
             await UseInstructionService.InitializeUseInsVisValueAsync();
         }
 
@@ -104,9 +102,15 @@ namespace GetStoreApp.Services.App
         {
             IActivationHandler activationHandler = ActivationHandlers.FirstOrDefault(h => h.CanHandle(activationArgs));
 
-            if (activationHandler != null) await activationHandler.HandleAsync(activationArgs);
+            if (activationHandler != null)
+            {
+                await activationHandler.HandleAsync(activationArgs);
+            }
 
-            if (DefaultHandler.CanHandle(activationArgs)) await DefaultHandler.HandleAsync(activationArgs);
+            if (DefaultHandler.CanHandle(activationArgs))
+            {
+                await DefaultHandler.HandleAsync(activationArgs);
+            }
         }
 
         /// <summary>
@@ -122,12 +126,16 @@ namespace GetStoreApp.Services.App
             // 设置应用背景色
             await BackdropService.SetAppBackdropAsync();
 
+            // 设置应用置顶状态
             await TopMostService.SetAppTopMostAsync();
 
             // 设置应用标题名称
             GetStoreApp.App.MainWindow.Title = ResourceService.GetLocalized("AppDisplayName");
 
-            // 启动Aria2下载服务
+            // 开启下载监控服务
+            await DownloadMonitorService.InitializeDownloadMonitorAsync();
+
+            // 启动Aria2下载服务（该服务会在后台长时间运行）
             await Aria2Service.InitializeAria2Async();
         }
     }

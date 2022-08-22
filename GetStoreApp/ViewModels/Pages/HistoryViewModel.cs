@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Contracts.Services.History;
 using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Contracts.ViewModels;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.Models;
@@ -19,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Pages
 {
-    public class HistoryViewModel : ObservableRecipient
+    public class HistoryViewModel : ObservableRecipient, INavigationAware
     {
         private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
@@ -93,99 +94,82 @@ namespace GetStoreApp.ViewModels.Pages
             set { SetProperty(ref _selectedHistoryItem, value); }
         }
 
-        public List<GetAppTypeModel> TypeList { get; set; }
+        public List<GetAppTypeModel> TypeList => ResourceService.TypeList;
 
-        public List<GetAppChannelModel> ChannelList { get; set; }
+        public List<GetAppChannelModel> ChannelList => ResourceService.ChannelList;
 
-        public ObservableCollection<HistoryModel> HistoryDataList { get; set; } = new ObservableCollection<HistoryModel>();
+        public ObservableCollection<HistoryModel> HistoryDataList { get; } = new ObservableCollection<HistoryModel>();
 
-        public IAsyncRelayCommand LoadedCommand { get; set; }
+        public IAsyncRelayCommand FillinCommand => new AsyncRelayCommand(FillinAsync);
 
-        public IAsyncRelayCommand FillinCommand { get; set; }
+        public IAsyncRelayCommand CopyCommand => new AsyncRelayCommand(CopyAsync);
 
-        public IAsyncRelayCommand CopyCommand { get; set; }
+        public IAsyncRelayCommand SelectCommand => new AsyncRelayCommand(async () =>
+        {
+            await SelectNoneAsync();
+            IsSelectMode = true;
+        });
 
-        public IAsyncRelayCommand SelectCommand { get; set; }
+        public IAsyncRelayCommand TimeSortCommand => new AsyncRelayCommand<string>(async (param) =>
+        {
+            TimeSortOrder = Convert.ToBoolean(param);
+            await GetHistoryDataListAsync();
+        });
 
-        public IAsyncRelayCommand TimeSortCommand { get; set; }
+        public IAsyncRelayCommand TypeFilterCommand => new AsyncRelayCommand<string>(async (param) =>
+        {
+            TypeFilter = param;
+            await GetHistoryDataListAsync();
+        });
 
-        public IAsyncRelayCommand TypeFilterCommand { get; set; }
+        public IAsyncRelayCommand ChannelFilterCommand => new AsyncRelayCommand<string>(async (param) =>
+        {
+            ChannelFilter = param;
+            await GetHistoryDataListAsync();
+        });
 
-        public IAsyncRelayCommand ChannelFilterCommand { get; set; }
+        public IAsyncRelayCommand RefreshCommand => new AsyncRelayCommand(GetHistoryDataListAsync);
 
-        public IAsyncRelayCommand RefreshCommand { get; set; }
+        public IAsyncRelayCommand SelectAllCommand => new AsyncRelayCommand(async () =>
+        {
+            foreach (HistoryModel historyItem in HistoryDataList)
+            {
+                historyItem.IsSelected = true;
+            }
+            await Task.CompletedTask;
+        });
 
-        public IAsyncRelayCommand SelectAllCommand { get; set; }
+        public IAsyncRelayCommand SelectNoneCommand => new AsyncRelayCommand(SelectNoneAsync);
 
-        public IAsyncRelayCommand SelectNoneCommand { get; set; }
+        public IAsyncRelayCommand CopySelectedCommand => new AsyncRelayCommand(CopySelectedAsync);
 
-        public IAsyncRelayCommand CopySelectedCommand { get; set; }
+        public IAsyncRelayCommand DeleteCommand => new AsyncRelayCommand(DeleteAsync);
 
-        public IAsyncRelayCommand DeleteCommand { get; set; }
-
-        public IAsyncRelayCommand CancelCommand { get; set; }
+        public IAsyncRelayCommand CancelCommand => new AsyncRelayCommand(async () =>
+        {
+            IsSelectMode = false;
+            await Task.CompletedTask;
+        });
 
         public HistoryViewModel()
         {
-            TypeList = ResourceService.TypeList;
-            ChannelList = ResourceService.ChannelList;
-
-            // 历史记录数据列表初始化，从数据库中存储的列表中加载
-            LoadedCommand = new AsyncRelayCommand(GetHistoryDataListAsync);
-
-            FillinCommand = new AsyncRelayCommand(FillinAsync);
-
-            CopyCommand = new AsyncRelayCommand(CopyAsync);
-
-            SelectCommand = new AsyncRelayCommand(async () =>
-            {
-                await SelectNoneAsync();
-                IsSelectMode = true;
-            });
-
-            TimeSortCommand = new AsyncRelayCommand<string>(async (param) =>
-            {
-                TimeSortOrder = Convert.ToBoolean(param);
-                await GetHistoryDataListAsync();
-            });
-
-            TypeFilterCommand = new AsyncRelayCommand<string>(async (param) =>
-            {
-                TypeFilter = param;
-                await GetHistoryDataListAsync();
-            });
-
-            ChannelFilterCommand = new AsyncRelayCommand<string>(async (param) =>
-            {
-                ChannelFilter = param;
-                await GetHistoryDataListAsync();
-            });
-
-            RefreshCommand = new AsyncRelayCommand(GetHistoryDataListAsync);
-
-            SelectAllCommand = new AsyncRelayCommand(async () =>
-            {
-                foreach (HistoryModel item in HistoryDataList) item.IsSelected = true;
-                await Task.CompletedTask;
-            });
-
-            SelectNoneCommand = new AsyncRelayCommand(SelectNoneAsync);
-
-            CopySelectedCommand = new AsyncRelayCommand(CopySelectedAsync);
-
-            DeleteCommand = new AsyncRelayCommand(DeleteAsync);
-
-            CancelCommand = new AsyncRelayCommand(async () =>
-            {
-                IsSelectMode = false;
-                await Task.CompletedTask;
-            });
-
             Messenger.Register<HistoryViewModel, HistoryMessage>(this, async (historyItemViewModel, historyMessage) =>
             {
-                if (historyMessage.Value) await GetHistoryDataListAsync();
+                if (historyMessage.Value)
+                {
+                    await GetHistoryDataListAsync();
+                }
             });
         }
+
+        // 导航到历史记录页面时，历史记录数据列表初始化，从数据库中存储的列表中加载
+        public async void OnNavigatedTo(object parameter)
+        {
+            await GetHistoryDataListAsync();
+        }
+
+        public void OnNavigatedFrom()
+        { }
 
         /// <summary>
         /// 多选模式下删除选中的条目
@@ -252,7 +236,6 @@ namespace GetStoreApp.ViewModels.Pages
 
             foreach (HistoryModel historyRawData in historyRawList)
             {
-                historyRawData.IsSelected = false;
                 HistoryDataList.Add(historyRawData);
             }
         }
@@ -278,7 +261,10 @@ namespace GetStoreApp.ViewModels.Pages
         /// </summary>
         private async Task SelectNoneAsync()
         {
-            foreach (HistoryModel item in HistoryDataList) item.IsSelected = false;
+            foreach (HistoryModel historyItem in HistoryDataList)
+            {
+                historyItem.IsSelected = false;
+            }
             await Task.CompletedTask;
         }
 
@@ -317,12 +303,12 @@ namespace GetStoreApp.ViewModels.Pages
 
             StringBuilder stringBuilder = new StringBuilder();
 
-            foreach (HistoryModel item in SelectedHistoryDataList)
+            foreach (HistoryModel selectedHistoryData in SelectedHistoryDataList)
             {
                 stringBuilder.Append(string.Format("{0}\t{1}\t{2}\n",
-                    TypeList.Find(i => i.InternalName.Equals(item.HistoryType)).DisplayName,
-                    ChannelList.Find(i => i.InternalName.Equals(item.HistoryChannel)).DisplayName,
-                    item.HistoryLink));
+                    TypeList.Find(i => i.InternalName.Equals(selectedHistoryData.HistoryType)).DisplayName,
+                    ChannelList.Find(i => i.InternalName.Equals(selectedHistoryData.HistoryChannel)).DisplayName,
+                    selectedHistoryData.HistoryLink));
             }
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());

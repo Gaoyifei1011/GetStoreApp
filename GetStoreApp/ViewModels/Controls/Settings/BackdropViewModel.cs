@@ -7,9 +7,11 @@ using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
 {
-    public class BackdropViewModel : ObservableRecipient
+    public partial class BackdropViewModel : ObservableRecipient
     {
         private IBackdropService BackdropService { get; } = IOCHelper.GetService<IBackdropService>();
+
+        public List<BackdropModel> BackdropList => BackdropService.BackdropList;
 
         private BackdropModel _backdrop;
 
@@ -20,20 +22,15 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             set { SetProperty(ref _backdrop, value); }
         }
 
-        public List<BackdropModel> BackdropList { get; set; }
-
-        public IAsyncRelayCommand BackdropSelectCommand { get; }
+        public IAsyncRelayCommand BackdropSelectCommand => new AsyncRelayCommand(async () =>
+        {
+            await BackdropService.SetBackdropAsync(Backdrop);
+            await BackdropService.SetAppBackdropAsync();
+        });
 
         public BackdropViewModel()
         {
-            BackdropList = BackdropService.BackdropList;
             Backdrop = BackdropService.AppBackdrop;
-
-            BackdropSelectCommand = new AsyncRelayCommand(async () =>
-            {
-                await BackdropService.SetBackdropAsync(Backdrop);
-                await BackdropService.SetAppBackdropAsync();
-            });
         }
     }
 }

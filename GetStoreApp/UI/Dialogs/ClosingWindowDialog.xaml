@@ -9,6 +9,7 @@
     Content="{x:Bind ResourceService.GetLocalized('/Dialog/ClosingWindowContent')}"
     PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
     PrimaryButtonText="{x:Bind ResourceService.GetLocalized('/Dialog/ClosingWindowSure')}"
+    RequestedTheme="{x:Bind DialogTheme}"
     SecondaryButtonText="{x:Bind ResourceService.GetLocalized('/Dialog/OpenDownloadPage')}"
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d" />

@@ -33,37 +33,34 @@ namespace GetStoreApp.ViewModels.Pages
             set { SetProperty(ref _isLoading, value); }
         }
 
-        public IAsyncRelayCommand BrowserBackCommand { get; }
-
-        public IAsyncRelayCommand BrowserForwardCommand { get; }
-
-        public IAsyncRelayCommand RefreshCommand { get; }
-
-        public IAsyncRelayCommand OpenInBrowserCommand { get; }
-
-        public WebViewModel()
-        {
-            BrowserBackCommand = new AsyncRelayCommand(async () =>
+        public IAsyncRelayCommand BrowserBackCommand => new AsyncRelayCommand(
+            async () =>
             {
-                WebViewService.GoBack(); await Task.CompletedTask;
-            }, () => WebViewService.CanGoBack);
-
-            BrowserForwardCommand = new AsyncRelayCommand(async () =>
-            {
-                WebViewService.GoForward(); await Task.CompletedTask;
-            }, () => WebViewService.CanGoForward);
-
-            RefreshCommand = new AsyncRelayCommand(async () =>
-            {
-                WebViewService.Reload();
+                WebViewService.GoBack();
                 await Task.CompletedTask;
-            });
+            },
+            () => WebViewService.CanGoBack
+            );
 
-            OpenInBrowserCommand = new AsyncRelayCommand(async () =>
+        public IAsyncRelayCommand BrowserForwardCommand => new AsyncRelayCommand(
+            async () =>
             {
-                await Windows.System.Launcher.LaunchUriAsync(Source);
-            });
-        }
+                WebViewService.GoForward();
+                await Task.CompletedTask;
+            },
+            () => WebViewService.CanGoForward
+            );
+
+        public IAsyncRelayCommand RefreshCommand => new AsyncRelayCommand(async () =>
+        {
+            WebViewService.Reload();
+            await Task.CompletedTask;
+        });
+
+        public IAsyncRelayCommand OpenInBrowserCommand => new AsyncRelayCommand(async () =>
+        {
+            await Windows.System.Launcher.LaunchUriAsync(Source);
+        });
 
         public void OnNavigatedTo(object parameter)
         {

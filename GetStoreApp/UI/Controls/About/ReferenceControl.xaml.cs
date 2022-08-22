@@ -11,11 +11,10 @@ namespace GetStoreApp.UI.Controls.About
 
         public ReferenceViewModel ViewModel { get; } = IOCHelper.GetService<ReferenceViewModel>();
 
-        public string ReferenceDescription { get; }
+        public string ReferenceDescription => ResourceService.GetLocalized("/About/ReferenceDescription");
 
         public ReferenceControl()
         {
-            ReferenceDescription = ResourceService.GetLocalized("/About/ReferenceDescription");
             InitializeComponent();
         }
     }

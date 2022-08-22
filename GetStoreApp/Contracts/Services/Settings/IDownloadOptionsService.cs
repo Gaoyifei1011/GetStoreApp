@@ -14,7 +14,7 @@ namespace GetStoreApp.Contracts.Services.Settings
 
         bool DownloadNotification { get; set; }
 
-        List<int> DownloadItemList { get; set; }
+        List<int> DownloadItemList { get; }
 
         Task InitializeAsync();
 

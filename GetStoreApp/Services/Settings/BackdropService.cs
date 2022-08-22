@@ -14,11 +14,11 @@ namespace GetStoreApp.Services.Settings
     /// </summary>
     public class BackdropService : IBackdropService
     {
-        private string SettingsKey { get; init; } = "AppBackdrop";
-
         private IConfigStorageService ConfigStorageService { get; } = IOCHelper.GetService<IConfigStorageService>();
 
         private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+
+        private string SettingsKey { get; init; } = "AppBackdrop";
 
         private BackdropModel DefaultAppBackdrop { get; set; }
 
@@ -68,9 +68,18 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         public async Task SetAppBackdropAsync()
         {
-            if (AppBackdrop.InternalName == "Mica") GetStoreApp.App.MainWindow.Backdrop = new MicaSystemBackdrop();
-            else if (AppBackdrop.InternalName == "Acrylic") GetStoreApp.App.MainWindow.Backdrop = new AcrylicSystemBackdrop();
-            else GetStoreApp.App.MainWindow.Backdrop = null;
+            if (AppBackdrop.InternalName == "Mica")
+            {
+                GetStoreApp.App.MainWindow.Backdrop = new MicaSystemBackdrop();
+            }
+            else if (AppBackdrop.InternalName == "Acrylic")
+            {
+                GetStoreApp.App.MainWindow.Backdrop = new AcrylicSystemBackdrop();
+            }
+            else
+            {
+                GetStoreApp.App.MainWindow.Backdrop = null;
+            }
 
             await Task.CompletedTask;
         }

@@ -18,19 +18,17 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             set { SetProperty(ref _topMostValue, value); }
         }
 
-        public IAsyncRelayCommand TopMostCommand { get; }
+        public IAsyncRelayCommand TopMostCommand => new AsyncRelayCommand<bool>(async
+                (param) =>
+        {
+            await TopMostService.SetTopMostValueAsync(param);
+            await TopMostService.SetAppTopMostAsync();
+            TopMostValue = param;
+        });
 
         public TopMostViewModel()
         {
             TopMostValue = TopMostService.TopMostValue;
-
-            TopMostCommand = new AsyncRelayCommand<bool>(async
-                (param) =>
-            {
-                await TopMostService.SetTopMostValueAsync(param);
-                await TopMostService.SetAppTopMostAsync();
-                TopMostValue = param;
-            });
         }
     }
 }

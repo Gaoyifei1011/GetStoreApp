@@ -15,15 +15,15 @@ namespace GetStoreApp.Services.Settings
     /// </summary>
     public class RegionService : IRegionService
     {
+        private IConfigStorageService ConfigStorageService { get; set; } = IOCHelper.GetService<IConfigStorageService>();
+
         private string SettingsKey { get; init; } = "AppRegion";
+
+        public List<RegionModel> RegionList => GeographicalLocationHelper.GetGeographicalLocations().OrderBy(item => item.FriendlyName).ToList();
 
         private RegionModel DefaultAppRegion { get; set; }
 
         public RegionModel AppRegion { get; set; }
-
-        private IConfigStorageService ConfigStorageService { get; set; } = IOCHelper.GetService<IConfigStorageService>();
-
-        public List<RegionModel> RegionList { get; set; } = GeographicalLocationHelper.GetGeographicalLocations().OrderBy(item => item.FriendlyName).ToList();
 
         /// <summary>
         /// 应用在初始化前获取设置存储的区域值

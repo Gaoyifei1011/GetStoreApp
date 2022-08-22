@@ -64,11 +64,11 @@ namespace GetStoreApp.WindowExtensions
         {
             switch (Msg)
             {
-                case PInvoke.User32.WindowMessage.WM_CLOSE:
+                case WindowMessage.WM_CLOSE:
 
                     //If there is a Closing event handler and the close message wasn't send via
                     //this event (that set IsClosing=true), the message is ignored.
-                    if (this.Closing is not null)
+                    if (Closing is not null)
                     {
                         if (IsClosing == false)
                         {

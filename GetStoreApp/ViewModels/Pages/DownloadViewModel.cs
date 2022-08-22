@@ -1,10 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Contracts.ViewModels;
 using GetStoreApp.Helpers;
 using GetStoreApp.Models;
 using GetStoreApp.UI.Dialogs;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
@@ -16,13 +19,19 @@ using Windows.Storage;
 
 namespace GetStoreApp.ViewModels.Pages
 {
-    public class DownloadViewModel : ObservableRecipient
+    public class DownloadViewModel : ObservableRecipient, INavigationAware
     {
         private StorageFolder DownloadFolder { get; }
 
         private int DownloadItem { get; }
 
         private bool DownloadNotification { get; }
+
+        private DispatcherTimer DownloadInfoTimer { get; } = new DispatcherTimer();
+
+        private IAria2Service Aria2Service { get; } = IOCHelper.GetService<IAria2Service>();
+
+        private IDownloadDataService DownloadDataService { get; } = IOCHelper.GetService<IDownloadDataService>();
 
         private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
 
@@ -46,91 +55,100 @@ namespace GetStoreApp.ViewModels.Pages
             set { SetProperty(ref _isDownloadEmpty, value); }
         }
 
-        public ObservableCollection<DownloadModel> DownloadDataList { get; set; } = new ObservableCollection<DownloadModel>();
+        public ObservableCollection<DownloadModel> DownloadDataList { get; } = new ObservableCollection<DownloadModel>();
 
-        public IAsyncRelayCommand LoadCommand { get; set; }
+        public IAsyncRelayCommand DownloadOptionsCommand => new AsyncRelayCommand(async () =>
+        {
+            NavigationService.NavigateTo(typeof(SettingsViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+            await Task.CompletedTask;
+        });
 
-        public IAsyncRelayCommand DownloadOptionsCommand { get; set; }
+        public IAsyncRelayCommand OpenFolderCommand => new AsyncRelayCommand(async () =>
+        {
+            await DownloadOptionsService.OpenFolderAsync(DownloadFolder);
+        });
 
-        public IAsyncRelayCommand OpenFolderCommand { get; set; }
+        public IAsyncRelayCommand ContinueAllCommand { get; }
 
-        public IAsyncRelayCommand ContinueAllCommand { get; set; }
+        public IAsyncRelayCommand PauseAllCommand { get; }
 
-        public IAsyncRelayCommand PauseAllCommand { get; set; }
+        public IAsyncRelayCommand SelectCommand => new AsyncRelayCommand(async () =>
+        {
+            await SelectNoneAsync();
+            IsSelectMode = true;
+        });
 
-        public IAsyncRelayCommand SelectCommand { get; set; }
+        public IAsyncRelayCommand SelectAllCommand => new AsyncRelayCommand(async () =>
+        {
+            foreach (DownloadModel downloadItem in DownloadDataList)
+            {
+                downloadItem.IsSelected = true;
+            }
+            await Task.CompletedTask;
+        });
 
-        public IAsyncRelayCommand SelectAllCommand { get; set; }
+        public IAsyncRelayCommand SelectNoneCommand => new AsyncRelayCommand(SelectNoneAsync);
 
-        public IAsyncRelayCommand SelectNoneCommand { get; set; }
+        public IAsyncRelayCommand DeleteCommand => new AsyncRelayCommand(DeleteAsync);
 
-        public IAsyncRelayCommand DeleteCommand { get; set; }
+        public IAsyncRelayCommand DeleteWithFileCommand { get; }
 
-        public IAsyncRelayCommand DeleteWithFileCommand { get; set; }
+        public IAsyncRelayCommand CancelCommand => new AsyncRelayCommand(async () =>
+        {
+            IsSelectMode = false;
+            await Task.CompletedTask;
+        });
 
-        public IAsyncRelayCommand CancelCommand { get; set; }
+        public IAsyncRelayCommand ContinueDownloadCommand { get; }
 
-        public IAsyncRelayCommand ContinueDownloadCommand { get; set; }
+        public IAsyncRelayCommand OpenItemFolderCommand => new AsyncRelayCommand<string>(async (param) =>
+        {
+            await DownloadOptionsService.OpenFolderAsync(await StorageFolder.GetFolderFromPathAsync(param));
+        });
 
-        public IAsyncRelayCommand OpenItemFolderCommand { get; set; }
+        public IAsyncRelayCommand PauseDownloadCommand { get; }
 
-        public IAsyncRelayCommand PauseDownloadCommand { get; set; }
-
-        public IAsyncRelayCommand DeleteTaskCommand { get; set; }
+        public IAsyncRelayCommand DeleteTaskCommand { get; }
 
         public DownloadViewModel()
         {
             DownloadFolder = DownloadOptionsService.DownloadFolder;
             DownloadItem = DownloadOptionsService.DownloadItem;
             DownloadNotification = DownloadOptionsService.DownloadNotification;
+        }
 
-            // 下载记录数据列表初始化，从数据库中存储的列表中加载
-            LoadCommand = new AsyncRelayCommand(GetDownloadDataListAsync);
+        // 导航到下载记录页面时，下载记录数据列表初始化，从数据库中存储的列表中加载，并获取Aria2下载状态信息
+        public async void OnNavigatedTo(object parameter)
+        {
+            // Tick 超过计时器间隔时发生
+            DownloadInfoTimer.Tick += DownloadInfoTimerTick;
+            // Interval 获取或设置计时器刻度之间的时间段
+            DownloadInfoTimer.Interval = new TimeSpan(0, 0, 1);
 
-            DownloadOptionsCommand = new AsyncRelayCommand(async () =>
-            {
-                NavigationService.NavigateTo(typeof(SettingsViewModel).FullName, null, new DrillInNavigationTransitionInfo());
-                await Task.CompletedTask;
-            });
+            // 从数据库中获取所有下载记录
+            await GetDownloadDataListAsync();
 
-            OpenFolderCommand = new AsyncRelayCommand(async () =>
-            {
-                await DownloadOptionsService.OpenFolderAsync(DownloadFolder);
-            });
+            DownloadInfoTimer.Start();
+        }
 
-            SelectCommand = new AsyncRelayCommand(async () =>
-            {
-                await SelectNoneAsync();
-                IsSelectMode = true;
-            });
+        /// <summary>
+        /// 计时器：获取正在下载中的文件信息
+        /// </summary>
+        private void DownloadInfoTimerTick(object sender, object e)
+        {
+        }
 
-            SelectAllCommand = new AsyncRelayCommand(async () =>
-            {
-                foreach (DownloadModel item in DownloadDataList) item.IsSelected = true;
-                await Task.CompletedTask;
-            });
-
-            SelectNoneCommand = new AsyncRelayCommand(SelectNoneAsync);
-
-            DeleteCommand = new AsyncRelayCommand(DeleteAsync);
-
-            CancelCommand = new AsyncRelayCommand(async () =>
-            {
-                IsSelectMode = false;
-                await Task.CompletedTask;
-            });
-
-            OpenItemFolderCommand = new AsyncRelayCommand<string>(async (param) =>
-            {
-                await DownloadOptionsService.OpenFolderAsync(await StorageFolder.GetFolderFromPathAsync(param));
-            });
-
-            TestListView();
+        public void OnNavigatedFrom()
+        {
+            DownloadInfoTimer.Stop();
+            DownloadInfoTimer.Tick -= DownloadInfoTimerTick;
         }
 
         private async Task DeleteAsync()
         {
             List<DownloadModel> SelectedDownloadDataList = DownloadDataList.Where(item => item.IsSelected == true).ToList();
+
+            List<DownloadModel> DownloadingList = SelectedDownloadDataList.Where(item => item.DownloadFlag == 1).ToList();
 
             // 没有选中任何内容时显示空提示对话框
             if (SelectedDownloadDataList.Count == 0)
@@ -146,6 +164,16 @@ namespace GetStoreApp.ViewModels.Pages
             {
                 IsSelectMode = false;
 
+                await DownloadDataService.DeleteDownloadDataAsync(SelectedDownloadDataList);
+
+                // 如果有正在下载的服务，从下载列表中删除
+                if (DownloadingList.Any())
+                {
+                    foreach (DownloadModel downloadItem in DownloadingList)
+                    {
+                        //Aria2Service.DeleteSelectedAsync();
+                    }
+                }
                 await GetDownloadDataListAsync();
             }
         }
@@ -155,7 +183,34 @@ namespace GetStoreApp.ViewModels.Pages
         /// </summary>
         private async Task GetDownloadDataListAsync()
         {
-            await Task.CompletedTask;
+            Tuple<List<DownloadModel>, bool> DownloadData = await DownloadDataService.QueryAllDownloadDataAsync();
+
+            List<DownloadModel> DownloadRawList = DownloadData.Item1;
+
+            IsDownloadEmpty = DownloadData.Item2;
+
+            try
+            {
+                ConvertRawListToDisplayList(ref DownloadRawList);
+            }
+            catch (Exception)
+            {
+                ConvertRawListToDisplayList(ref DownloadRawList);
+            }
+        }
+
+        /// <summary>
+        /// 将原始数据转换为在UI界面上呈现出来的数据
+        /// </summary>
+        private void ConvertRawListToDisplayList(ref List<DownloadModel> downloadRawList)
+        {
+            DownloadDataList.Clear();
+
+            foreach (DownloadModel downloadRawData in downloadRawList)
+            {
+                downloadRawData.IsSelected = false;
+                DownloadDataList.Add(downloadRawData);
+            }
         }
 
         /// <summary>
@@ -163,78 +218,12 @@ namespace GetStoreApp.ViewModels.Pages
         /// </summary>
         private async Task SelectNoneAsync()
         {
-            foreach (DownloadModel item in DownloadDataList) item.IsSelected = false;
+            foreach (DownloadModel downloadItem in DownloadDataList)
+            {
+                downloadItem.IsSelected = false;
+            }
+
             await Task.CompletedTask;
-        }
-
-        // 测试下载列表
-        private void TestListView()
-        {
-            IsDownloadEmpty = false;
-
-            DownloadDataList.Add(new DownloadModel()
-            {
-                IsSelected = false,
-                CreateTimeStamp = 01,
-                DownloadKey = "DownloadKey",
-                FileName = "00.AppxBundle",
-                FileLink = "https://01.url",
-                FilePath = ApplicationData.Current.LocalCacheFolder.Path,
-                FileSHA1 = "0123456789",
-                FileSize = "100MB",
-                DownloadFlag = 0,
-                DownloadedFinishedSize = 30,
-                DownloadProgress = 10,
-                DownloadSpeed = 3
-            });
-
-            DownloadDataList.Add(new DownloadModel()
-            {
-                IsSelected = false,
-                CreateTimeStamp = 01,
-                DownloadKey = "DownloadKey",
-                FileName = "01.AppxBundle",
-                FileLink = "https://01.url",
-                FilePath = ApplicationData.Current.LocalCacheFolder.Path,
-                FileSHA1 = "0123456789",
-                FileSize = "200MB",
-                DownloadFlag = 1,
-                DownloadedFinishedSize = 120,
-                DownloadProgress = 60,
-                DownloadSpeed = 3
-            });
-
-            DownloadDataList.Add(new DownloadModel()
-            {
-                IsSelected = false,
-                CreateTimeStamp = 01,
-                DownloadKey = "DownloadKey",
-                FileName = "02.AppxBundle",
-                FileLink = "https://01.url",
-                FilePath = ApplicationData.Current.LocalCacheFolder.Path,
-                FileSHA1 = "0123456789",
-                FileSize = "300MB",
-                DownloadFlag = 2,
-                DownloadedFinishedSize = 150,
-                DownloadProgress = 50,
-                DownloadSpeed = 1
-            });
-
-            DownloadDataList.Add(new DownloadModel()
-            {
-                IsSelected = false,
-                CreateTimeStamp = 01,
-                DownloadKey = "DownloadKey",
-                FileName = "03.AppxBundle",
-                FileLink = "https://01.url",
-                FilePath = ApplicationData.Current.LocalCacheFolder.Path,
-                FileSHA1 = "0123456789",
-                FileSize = "400MB",
-                DownloadFlag = 3,
-                DownloadedFinishedSize = 240,
-                DownloadProgress = 60,
-                DownloadSpeed = 2
-            });
         }
     }
 }

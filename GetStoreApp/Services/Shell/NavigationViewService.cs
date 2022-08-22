@@ -19,14 +19,15 @@ namespace GetStoreApp.Services.Shell
         private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
         private IPageService PageService { get; } = IOCHelper.GetService<IPageService>();
 
-        public IList<object> MenuItems
-            => _navigationView.MenuItems;
+        public IList<object> MenuItems => _navigationView.MenuItems;
 
-        public IList<object> FooterMenuItems
-            => _navigationView.FooterMenuItems;
+        public IList<object> FooterMenuItems => _navigationView.FooterMenuItems;
 
-        public object SettingsItem
-            => _navigationView.SettingsItem;
+        public object SettingsItem => _navigationView.SettingsItem;
+
+        public NavigationViewItem GetSelectedItem(Type pageType) => GetSelectedItem(MenuItems.Concat(FooterMenuItems), pageType);
+
+        private void OnBackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args) => NavigationService.GoBack();
 
         public void Initialize(NavigationView navigationView)
         {
@@ -40,12 +41,6 @@ namespace GetStoreApp.Services.Shell
             _navigationView.BackRequested -= OnBackRequested;
             _navigationView.ItemInvoked -= OnItemInvoked;
         }
-
-        public NavigationViewItem GetSelectedItem(Type pageType)
-            => GetSelectedItem(MenuItems.Concat(FooterMenuItems), pageType);
-
-        private void OnBackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
-            => NavigationService.GoBack();
 
         private void OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
@@ -66,14 +61,14 @@ namespace GetStoreApp.Services.Shell
 
         private NavigationViewItem GetSelectedItem(IEnumerable<object> menuItems, Type pageType)
         {
-            foreach (NavigationViewItem item in menuItems.OfType<NavigationViewItem>())
+            foreach (NavigationViewItem navigationViewItem in menuItems.OfType<NavigationViewItem>())
             {
-                if (IsMenuItemForPageType(item, pageType))
+                if (IsMenuItemForPageType(navigationViewItem, pageType))
                 {
-                    return item;
+                    return navigationViewItem;
                 }
 
-                NavigationViewItem selectedChild = GetSelectedItem(item.MenuItems, pageType);
+                NavigationViewItem selectedChild = GetSelectedItem(navigationViewItem.MenuItems, pageType);
                 if (selectedChild != null)
                 {
                     return selectedChild;

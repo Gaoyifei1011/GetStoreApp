@@ -30,9 +30,19 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         private bool StartsWithEFilterValue { get; set; }
 
-        private RegionModel Region { get; set; }
+        public List<GetAppTypeModel> TypeList => ResourceService.TypeList;
 
-        private string SampleTitle { get; set; }
+        public List<GetAppChannelModel> ChannelList => ResourceService.ChannelList;
+
+        public static IReadOnlyList<string> SampleLinkList { get; } = new List<string>
+        {
+            "https://www.microsoft.com/store/productId/9NSWSBXN8K03",
+            "9NKSQGP7F2NH",
+            "Microsoft.WindowsStore_8wekyb3d8bbwe",
+            "d58c3a5f-ca63-4435-842c-7814b5ff91b7"
+        };
+
+        private string SampleTitle => ResourceService.GetLocalized("/Home/SampleTitle");
 
         private string SampleLink { get; set; }
 
@@ -72,44 +82,18 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _linkText, value); }
         }
 
-        public List<GetAppTypeModel> TypeList { get; set; }
+        public IAsyncRelayCommand TypeSelectCommand => new AsyncRelayCommand(SetPlaceHolderTextAsync);
 
-        public List<GetAppChannelModel> ChannelList { get; set; }
-
-        public static IReadOnlyList<string> SampleLinkList { get; } = new List<string>
-        {
-            "https://www.microsoft.com/store/productId/9NSWSBXN8K03",
-            "9NKSQGP7F2NH",
-            "Microsoft.WindowsStore_8wekyb3d8bbwe",
-            "d58c3a5f-ca63-4435-842c-7814b5ff91b7"
-        };
-
-        public IAsyncRelayCommand TypeSelectCommand { get; set; }
-
-        public IAsyncRelayCommand GetLinksCommand { get; set; }
+        public IAsyncRelayCommand GetLinksCommand => new AsyncRelayCommand(GetLinksAsync);
 
         public RequestViewModel()
         {
             BlockMapFilterValue = LinkFilterService.BlockMapFilterValue;
             StartsWithEFilterValue = LinkFilterService.StartWithEFilterValue;
-            Region = RegionService.AppRegion;
-            SampleTitle = ResourceService.GetLocalized("/Home/SampleTitle");
-
-            TypeList = ResourceService.TypeList;
-            ChannelList = ResourceService.ChannelList;
 
             SampleLink = SampleLinkList[0];
 
             LinkPlaceHolderText = SampleTitle + SampleLink;
-
-            TypeSelectCommand = new AsyncRelayCommand(SetPlaceHolderTextAsync);
-
-            GetLinksCommand = new AsyncRelayCommand(GetLinksAsync);
-
-            Messenger.Register<RequestViewModel, RegionMessage>(this, (requestViewModel, regionMessage) =>
-            {
-                requestViewModel.Region = regionMessage.Value;
-            });
 
             Messenger.Register<RequestViewModel, StartsWithEFilterMessage>(this, (requestViewModel, startsWithEFilterMessage) =>
             {
@@ -170,7 +154,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 TypeList[SelectedType].InternalName,
                 LinkText,
                 ChannelList[SelectedChannel].InternalName,
-                Region.ISO2);
+                RegionService.AppRegion.ISO2);
 
             // 获取网页反馈回的原始数据
             HtmlRequestService htmlRequestService = new HtmlRequestService();

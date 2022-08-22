@@ -13,6 +13,8 @@ namespace GetStoreApp.ViewModels.Controls.Settings
     {
         private IHistoryItemValueService HistoryItemValueService { get; } = IOCHelper.GetService<IHistoryItemValueService>();
 
+        public List<HistoryItemValueModel> HistoryItemValueList => HistoryItemValueService.HistoryItemValueList;
+
         private HistoryItemValueModel _historyItem;
 
         public HistoryItemValueModel HistoryItem
@@ -22,20 +24,15 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             set { SetProperty(ref _historyItem, value); }
         }
 
-        public List<HistoryItemValueModel> HistoryItemValueList { get; set; }
-
-        public IAsyncRelayCommand HistoryItemSelectCommand { get; }
+        public IAsyncRelayCommand HistoryItemSelectCommand => new AsyncRelayCommand(async () =>
+        {
+            await HistoryItemValueService.SetHistoryItemValueAsync(HistoryItem);
+            Messenger.Send(new HistoryItemValueMessage(HistoryItem));
+        });
 
         public HistoryItemValueViewModel()
         {
-            HistoryItemValueList = HistoryItemValueService.HistoryItemValueList;
             HistoryItem = HistoryItemValueService.HistoryItem;
-
-            HistoryItemSelectCommand = new AsyncRelayCommand(async () =>
-            {
-                await HistoryItemValueService.SetHistoryItemValueAsync(HistoryItem);
-                Messenger.Send(new HistoryItemValueMessage(HistoryItem));
-            });
         }
     }
 }

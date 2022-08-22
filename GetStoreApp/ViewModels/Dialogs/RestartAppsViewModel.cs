@@ -11,25 +11,20 @@ namespace GetStoreApp.ViewModels.Dialogs
 {
     public class RestartAppsViewModel : ObservableRecipient
     {
-        public IAria2Service Aria2Service { get; } = IOCHelper.GetService<IAria2Service>();
+        private IAria2Service Aria2Service { get; } = IOCHelper.GetService<IAria2Service>();
 
-        public IAsyncRelayCommand RestartAppsSureCommand { get; }
+        private IDownloadMonitorService DownloadMonitorService { get; } = IOCHelper.GetService<IDownloadMonitorService>();
 
-        public IAsyncRelayCommand RestartAppsCancelCommand { get; }
-
-        public RestartAppsViewModel()
+        public IAsyncRelayCommand RestartAppsSureCommand => new AsyncRelayCommand<ContentDialog>(async (param) =>
         {
-            RestartAppsSureCommand = new AsyncRelayCommand<ContentDialog>(async (param) =>
-            {
-                await RestartAppsAsync(param);
-            });
+            await RestartAppsAsync(param);
+        });
 
-            RestartAppsCancelCommand = new AsyncRelayCommand<ContentDialog>(async (param) =>
-            {
-                param.Hide();
-                await Task.CompletedTask;
-            });
-        }
+        public IAsyncRelayCommand RestartAppsCancelCommand => new AsyncRelayCommand<ContentDialog>(async (param) =>
+        {
+            param.Hide();
+            await Task.CompletedTask;
+        });
 
         /// <summary>
         /// 重启应用，并关闭Aria2下载服务
@@ -38,8 +33,8 @@ namespace GetStoreApp.ViewModels.Dialogs
         {
             dialog.Hide();
 
-            // 关闭Aria2下载服务
             await Aria2Service.CloseAria2Async();
+            await DownloadMonitorService.CloseDownloadMonitorAsync();
 
             // 重启应用
             AppInstance.Restart("");

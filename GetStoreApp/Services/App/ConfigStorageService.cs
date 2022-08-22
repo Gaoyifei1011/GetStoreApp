@@ -13,32 +13,47 @@ namespace GetStoreApp.Services.App
     {
         public async Task<bool?> GetSettingBoolValueAsync(string key)
         {
-            if (ApplicationData.Current.LocalSettings.Values[key] == null) return null;
+            if (ApplicationData.Current.LocalSettings.Values[key] == null)
+            {
+                return null;
+            }
 
             return await Task.FromResult(Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[key]));
         }
 
         public async Task<int?> GetSettingIntValueAsync(string key)
         {
-            if (ApplicationData.Current.LocalSettings.Values[key] == null) return null;
+            if (ApplicationData.Current.LocalSettings.Values[key] == null)
+            {
+                return null;
+            }
 
             return await Task.FromResult(Convert.ToInt32(ApplicationData.Current.LocalSettings.Values[key]));
         }
 
         public async Task<string> GetSettingStringValueAsync(string key)
         {
-            if (ApplicationData.Current.LocalSettings.Values[key] == null) return null;
+            if (ApplicationData.Current.LocalSettings.Values[key] == null)
+            {
+                return null;
+            }
 
             return await Task.FromResult(Convert.ToString(ApplicationData.Current.LocalSettings.Values[key]));
         }
 
         public async Task<StorageFolder> GetSettingStorageFolderValueAsync(string key)
         {
-            if (ApplicationData.Current.LocalSettings.Values[key] == null) return null;
+            if (ApplicationData.Current.LocalSettings.Values[key] == null)
+            {
+                return null;
+            }
 
             string FolderPath = Convert.ToString(ApplicationData.Current.LocalSettings.Values[key]);
 
-            if (!Directory.Exists(FolderPath)) return null;
+            if (!Directory.Exists(FolderPath))
+            {
+                return null;
+            }
 
             return await StorageFolder.GetFolderFromPathAsync(FolderPath);
         }

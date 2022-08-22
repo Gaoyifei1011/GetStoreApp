@@ -18,8 +18,14 @@ namespace GetStoreApp.Views
 
         public string LocalizedHistoryCountInfo(int count)
         {
-            if (count == 0) return ResourceService.GetLocalized("/History/HistoryEmpty");
-            else return string.Format(ResourceService.GetLocalized("/History/HistoryCountInfo"), count);
+            if (count == 0)
+            {
+                return ResourceService.GetLocalized("/History/HistoryEmpty");
+            }
+            else
+            {
+                return string.Format(ResourceService.GetLocalized("/History/HistoryCountInfo"), count);
+            }
         }
     }
 }

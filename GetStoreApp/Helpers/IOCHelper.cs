@@ -62,6 +62,7 @@ namespace GetStoreApp.Helpers
 
                 services.AddSingleton<IAria2Service, Aria2Service>();
                 services.AddSingleton<IDownloadDataService, DownloadDataService>();
+                services.AddSingleton<IDownloadMonitorService, DownloadMonitorService>();
 
                 services.AddSingleton<IHistoryDataService, HistoryDataService>();
 

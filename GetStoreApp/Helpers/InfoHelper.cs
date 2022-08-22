@@ -12,9 +12,9 @@ namespace GetStoreApp.Helpers
     {
         private static readonly string SystemVersion = AnalyticsInfo.VersionInfo.DeviceFamilyVersion;
 
-        private static Dictionary<string, ulong> SystemVersionDict { get; set; } = new Dictionary<string, ulong>();
+        private static Dictionary<string, ulong> SystemVersionDict { get; } = new Dictionary<string, ulong>();
 
-        private static Dictionary<string, ushort> AppVersionDict { get; set; } = new Dictionary<string, ushort>();
+        private static Dictionary<string, ushort> AppVersionDict { get; } = new Dictionary<string, ushort>();
 
         static InfoHelper()
         {

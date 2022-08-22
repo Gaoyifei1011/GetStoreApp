@@ -16,38 +16,85 @@ namespace GetStoreApp.Services.Download
     /// </summary>
     public class Aria2Service : IAria2Service
     {
-        private string Aria2Path { get; } = Path.Combine(AppContext.BaseDirectory, "Aria2\\aria2c.exe");
+        private string Aria2Path => Path.Combine(AppContext.BaseDirectory, "Aria2\\aria2c.exe");
 
-        private string Aria2ConfPath { get; } = Path.Combine(AppContext.BaseDirectory, "Aria2\\Config\\aria2.conf");
+        private string Aria2ConfPath => Path.Combine(AppContext.BaseDirectory, "Aria2\\Config\\aria2.conf");
 
-        private string RPCServerLink { get; } = "http://127.0.0.1:6300/jsonrpc";
+        private string RPCServerLink => "http://127.0.0.1:6300/jsonrpc";
 
         // 获取汇报下载任务状态信息内容的具体选项列表
-        private List<string> TellStatusInfoList = new List<string>() { "gid", "status", "totalLength", "completedLength", "downloadSpeed" };
+        private List<string> TellStatusInfoList = new List<string>()
+        {
+            "gid",
+            "status",
+            "totalLength",
+            "completedLength",
+            "downloadSpeed"
+        };
 
         // 添加下载任务内容
-        private Dictionary<string, object> AddTaskContent = new Dictionary<string, object>() { { "id", "" }, { "jsonrpc", "2.0" }, { "method", "aria2.addUri" } };
+        private Dictionary<string, object> AddTaskContent = new Dictionary<string, object>()
+        {
+            { "id", string.Empty },
+            { "jsonrpc", "2.0" },
+            { "method", "aria2.addUri" }
+        };
 
         // 继续下载任务内容
-        private Dictionary<string, object> ContinueAllContent = new Dictionary<string, object>() { { "id", "" }, { "jsonrpc", "2.0" }, { "method", "aria2.unpause" } };
+        private Dictionary<string, object> ContinueAllContent = new Dictionary<string, object>()
+        {
+            { "id", string.Empty },
+            { "jsonrpc", "2.0" },
+            { "method", "aria2.unpause" }
+        };
 
         // 暂停下载任务内容
-        private Dictionary<string, object> PauseAllContent = new Dictionary<string, object>() { { "id", "" }, { "jsonrpc", "2.0" }, { "method", "aria2.pause" } };
+        private Dictionary<string, object> PauseAllContent = new Dictionary<string, object>()
+        {
+            { "id", string.Empty },
+            { "jsonrpc", "2.0" },
+            { "method", "aria2.pause" }
+        };
 
         // 删除选定的下载项目内容
-        private Dictionary<string, object> DeleteSeletedContent = new Dictionary<string, object>() { { "id", "" }, { "jsonrpc", "2.0" }, { "method", "aria2.remove" } };
+        private Dictionary<string, object> DeleteSeletedContent = new Dictionary<string, object>()
+        {
+            { "id", string.Empty },
+            { "jsonrpc", "2.0" },
+            { "method", "aria2.remove" }
+        };
 
         // 继续下载任务内容
-        private Dictionary<string, object> ContinueDownloadContent = new Dictionary<string, object>() { { "id", "" }, { "jsonrpc", "2.0" }, { "method", "aria2.unpause" } };
+        private Dictionary<string, object> ContinueDownloadContent = new Dictionary<string, object>()
+        {
+            { "id", string.Empty },
+            { "jsonrpc", "2.0" },
+            { "method", "aria2.unpause" }
+        };
 
         // 暂停下载任务内容
-        private Dictionary<string, object> PauseDownloadContent = new Dictionary<string, object>() { { "id", "" }, { "jsonrpc", "2.0" }, { "method", "aria2.pause" } };
+        private Dictionary<string, object> PauseDownloadContent = new Dictionary<string, object>()
+        {
+            { "id", string.Empty },
+            { "jsonrpc", "2.0" },
+            { "method", "aria2.pause" }
+        };
 
         // 删除下载任务内容
-        private Dictionary<string, object> DeleteTaskContent = new Dictionary<string, object>() { { "id", "" }, { "jsonrpc", "2.0" }, { "method", "aria2.remove" } };
+        private Dictionary<string, object> DeleteTaskContent = new Dictionary<string, object>()
+        {
+            { "id", string.Empty },
+            { "jsonrpc", "2.0" },
+            { "method", "aria2.remove" }
+        };
 
         // 汇报下载任务状态内容
-        private Dictionary<string, object> TellStatusContent = new Dictionary<string, object>() { { "id", "" }, { "jsonrpc", "2.0" }, { "method", "aria2.tellStatus" } };
+        private Dictionary<string, object> TellStatusContent = new Dictionary<string, object>()
+        {
+            { "id", string.Empty },
+            { "jsonrpc", "2.0" },
+            { "method", "aria2.tellStatus" }
+        };
 
         /// <summary>
         /// 初始化运行Aria2下载进程
@@ -76,7 +123,12 @@ namespace GetStoreApp.Services.Download
         public async Task<string> AddUriAsync(string downloadLink, string folderPath, string fileName)
         {
             // 下载配置内容
-            Dictionary<string, string> DownloadConfiguration = new Dictionary<string, string>() { { "dir", folderPath }, { "out", fileName } };
+            Dictionary<string, string> DownloadConfiguration = new Dictionary<string, string>()
+            {
+                { "dir", folderPath },
+                { "out", fileName }
+            };
+
             // 成功添加任务返回的信息
             Dictionary<string, string> ResultContent;
             // 添加下载链接列表
@@ -116,7 +168,10 @@ namespace GetStoreApp.Services.Download
                     ResultContent = JsonConvert.DeserializeObject<Dictionary<string, string>>(ResponseContent);
                     return ResultContent["result"];
                 }
-                else throw new Exception();
+                else
+                {
+                    throw new Exception();
+                }
             }
             catch (Exception)
             {
@@ -168,6 +223,10 @@ namespace GetStoreApp.Services.Download
                         string ResponseContent = await response.Content.ReadAsStringAsync();
                         ResultContent = JsonConvert.DeserializeObject<Dictionary<string, string>>(ResponseContent);
                         ResultGIDList.Add(ResultContent["result"]);
+                    }
+                    else
+                    {
+                        throw new Exception();
                     }
                 }
                 return ResultGIDList;
@@ -223,6 +282,10 @@ namespace GetStoreApp.Services.Download
                         ResultContent = JsonConvert.DeserializeObject<Dictionary<string, string>>(ResponseContent);
                         ResultGIDList.Add(ResultContent["result"]);
                     }
+                    else
+                    {
+                        throw new Exception();
+                    }
                 }
                 return ResultGIDList;
             }
@@ -277,10 +340,14 @@ namespace GetStoreApp.Services.Download
                         ResultContent = JsonConvert.DeserializeObject<Dictionary<string, string>>(ResponseContent);
                         ResultGIDList.Add(ResultContent["result"]);
                     }
+                    else
+                    {
+                        throw new Exception();
+                    }
                 }
                 return ResultGIDList;
             }
-            catch
+            catch (Exception)
             {
                 return ResultGIDList;
             }
@@ -322,7 +389,10 @@ namespace GetStoreApp.Services.Download
                     string ResponseContent = await response.Content.ReadAsStringAsync();
                     return JsonConvert.DeserializeObject<Dictionary<string, string>>(ResponseContent)["result"];
                 }
-                else throw new Exception();
+                else
+                {
+                    throw new Exception();
+                }
             }
             catch (Exception)
             {
@@ -409,7 +479,10 @@ namespace GetStoreApp.Services.Download
                     string ResponseContent = await response.Content.ReadAsStringAsync();
                     return JsonConvert.DeserializeObject<Dictionary<string, string>>(ResponseContent)["result"];
                 }
-                else throw new Exception();
+                else
+                {
+                    throw new Exception();
+                }
             }
             catch (Exception)
             {
@@ -464,6 +537,11 @@ namespace GetStoreApp.Services.Download
                     DownloadStatus.TotalLength = Convert.ToInt32(ResultContent["totalLength"]);
                     DownloadStatus.DownloadSpeed = Convert.ToInt32(ResultContent["downloadSpeed"]);
                 }
+                else
+                {
+                    throw new Exception();
+                }
+
                 return DownloadStatus;
             }
             catch (Exception)

@@ -1,7 +1,9 @@
 ﻿using GetStoreApp.Models;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Runtime.InteropServices;
 using System.Text;
+using static GetStoreApp.Helpers.SystemGeographicalLocationHelper;
 
 namespace GetStoreApp.Helpers
 {
@@ -12,8 +14,14 @@ namespace GetStoreApp.Helpers
     {
         private static readonly List<RegionModel> _geographicalLocations;
         private static readonly List<int> _geoIds;
-        private static readonly SystemGeographicalLocationHelper.EnumGeoInfoProc _callback;
+        private static readonly EnumGeoInfoProc _callback;
         private static readonly int _lcid;
+
+        [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        private static extern int GetGeoInfo(int location, SYSGEOTYPE geoType, StringBuilder lpGeoData, int cchData, int langId);
+
+        [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        private static extern int EnumSystemGeoID(int geoClass, int parentGeoId, EnumGeoInfoProc lpGeoEnumProc);
 
         static GeographicalLocationHelper()
         {
@@ -27,23 +35,23 @@ namespace GetStoreApp.Helpers
         {
             if (_geographicalLocations.Count == 0)
             {
-                SystemGeographicalLocationHelper.EnumSystemGeoID(SystemGeographicalLocationHelper.GEOCLASS_NATION, 0, _callback);
+                EnumSystemGeoID(GEOCLASS_NATION, 0, _callback);
 
                 foreach (int geoId in _geoIds)
                 {
                     RegionModel location = new RegionModel
                     {
-                        Nation = GetGeoInfoA(geoId, SystemGeographicalLocationHelper.SYSGEOTYPE.GEO_NATION, _lcid),
-                        Latitude = GetGeoInfoA(geoId, SystemGeographicalLocationHelper.SYSGEOTYPE.GEO_LATITUDE, _lcid),
-                        Longitude = GetGeoInfoA(geoId, SystemGeographicalLocationHelper.SYSGEOTYPE.GEO_LONGITUDE, _lcid),
-                        ISO2 = GetGeoInfoA(geoId, SystemGeographicalLocationHelper.SYSGEOTYPE.GEO_ISO2, _lcid),
-                        ISO3 = GetGeoInfoA(geoId, SystemGeographicalLocationHelper.SYSGEOTYPE.GEO_ISO3, _lcid),
-                        Rfc1766 = GetGeoInfoA(geoId, SystemGeographicalLocationHelper.SYSGEOTYPE.GEO_RFC1766, _lcid),
-                        Lcid = GetGeoInfoA(geoId, SystemGeographicalLocationHelper.SYSGEOTYPE.GEO_LCID, _lcid),
-                        FriendlyName = GetGeoInfoA(geoId, SystemGeographicalLocationHelper.SYSGEOTYPE.GEO_FRIENDLYNAME, _lcid),
-                        OfficialName = GetGeoInfoA(geoId, SystemGeographicalLocationHelper.SYSGEOTYPE.GEO_OFFICIALNAME, _lcid),
-                        TimeZones = GetGeoInfoA(geoId, SystemGeographicalLocationHelper.SYSGEOTYPE.GEO_TIMEZONES, _lcid),
-                        OfficialLanguages = GetGeoInfoA(geoId, SystemGeographicalLocationHelper.SYSGEOTYPE.GEO_OFFICIALLANGUAGES, _lcid)
+                        Nation = GetGeoInfoA(geoId, SYSGEOTYPE.GEO_NATION, _lcid),
+                        Latitude = GetGeoInfoA(geoId, SYSGEOTYPE.GEO_LATITUDE, _lcid),
+                        Longitude = GetGeoInfoA(geoId, SYSGEOTYPE.GEO_LONGITUDE, _lcid),
+                        ISO2 = GetGeoInfoA(geoId, SYSGEOTYPE.GEO_ISO2, _lcid),
+                        ISO3 = GetGeoInfoA(geoId, SYSGEOTYPE.GEO_ISO3, _lcid),
+                        Rfc1766 = GetGeoInfoA(geoId, SYSGEOTYPE.GEO_RFC1766, _lcid),
+                        Lcid = GetGeoInfoA(geoId, SYSGEOTYPE.GEO_LCID, _lcid),
+                        FriendlyName = GetGeoInfoA(geoId, SYSGEOTYPE.GEO_FRIENDLYNAME, _lcid),
+                        OfficialName = GetGeoInfoA(geoId, SYSGEOTYPE.GEO_OFFICIALNAME, _lcid),
+                        TimeZones = GetGeoInfoA(geoId, SYSGEOTYPE.GEO_TIMEZONES, _lcid),
+                        OfficialLanguages = GetGeoInfoA(geoId, SYSGEOTYPE.GEO_OFFICIALLANGUAGES, _lcid)
                     };
 
                     _geographicalLocations.Add(location);
@@ -53,16 +61,16 @@ namespace GetStoreApp.Helpers
             return _geographicalLocations;
         }
 
-        private static string GetGeoInfoA(int location, SystemGeographicalLocationHelper.SYSGEOTYPE geoType, int langId)
+        private static string GetGeoInfoA(int location, SYSGEOTYPE geoType, int langId)
         {
             StringBuilder geoDataBuilder = new StringBuilder();
 
-            int bufferSize = SystemGeographicalLocationHelper.GetGeoInfo(location, geoType, geoDataBuilder, 0, langId);
+            int bufferSize = GetGeoInfo(location, geoType, geoDataBuilder, 0, langId);
 
             if (bufferSize > 0)
             {
                 geoDataBuilder.Capacity = bufferSize;
-                SystemGeographicalLocationHelper.GetGeoInfo(location, geoType, geoDataBuilder, bufferSize, langId);
+                GetGeoInfo(location, geoType, geoDataBuilder, bufferSize, langId);
             }
 
             return geoDataBuilder.ToString();

@@ -8,19 +8,12 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
     <Page.Resources>
         <converter:TypeNameFormatConverter x:Name="TypeNameFormatConverter" />
         <converter:ChannelNameFormatConverter x:Name="ChannelNameFormatConverter" />
     </Page.Resources>
-
-    <i:Interaction.Behaviors>
-        <ic:EventTriggerBehavior EventName="Loaded">
-            <ic:InvokeCommandAction Command="{x:Bind ViewModel.LoadedCommand}" />
-        </ic:EventTriggerBehavior>
-    </i:Interaction.Behaviors>
 
     <Grid Margin="30,15,30,0">
         <Grid.RowDefinitions>

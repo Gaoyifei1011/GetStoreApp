@@ -11,7 +11,10 @@ namespace GetStoreApp.Converters.Formats
         /// </summary>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value == null) return DependencyProperty.UnsetValue;
+            if (value == null)
+            {
+                return DependencyProperty.UnsetValue;
+            }
 
             long RawDataTime = System.Convert.ToInt64(value);
 

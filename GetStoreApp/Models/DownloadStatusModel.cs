@@ -13,7 +13,7 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for GID.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty GIDProperty =
-            DependencyProperty.Register("GID", typeof(string), typeof(DownloadStatusModel), new PropertyMetadata(""));
+            DependencyProperty.Register("GID", typeof(string), typeof(DownloadStatusModel), new PropertyMetadata(string.Empty));
 
         /// <summary>
         /// 下载任务状态信息
@@ -26,7 +26,7 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for Status.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty StatusProperty =
-            DependencyProperty.Register("Status", typeof(string), typeof(DownloadStatusModel), new PropertyMetadata(""));
+            DependencyProperty.Register("Status", typeof(string), typeof(DownloadStatusModel), new PropertyMetadata(string.Empty));
 
         /// <summary>
         /// 下载任务项目的总长度

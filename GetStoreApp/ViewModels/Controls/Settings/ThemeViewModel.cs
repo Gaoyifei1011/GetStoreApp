@@ -12,6 +12,8 @@ namespace GetStoreApp.ViewModels.Controls.Settings
     {
         private IThemeService ThemeService { get; } = IOCHelper.GetService<IThemeService>();
 
+        public List<ThemeModel> ThemeList => ThemeService.ThemeList;
+
         private ThemeModel _theme;
 
         public ThemeModel Theme
@@ -21,25 +23,20 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             set { SetProperty(ref _theme, value); }
         }
 
-        public List<ThemeModel> ThemeList { get; set; }
+        public IAsyncRelayCommand ThemeSelectCommand => new AsyncRelayCommand(async () =>
+            {
+                await ThemeService.SetThemeAsync(Theme);
+                await ThemeService.SetAppThemeAsync();
+            });
 
-        public IAsyncRelayCommand ThemeSelectCommand { get; }
-
-        public IAsyncRelayCommand SettingsColorCommand { get; } = new AsyncRelayCommand(async () =>
+        public IAsyncRelayCommand SettingsColorCommand => new AsyncRelayCommand(async () =>
         {
             await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:colors"));
         });
 
         public ThemeViewModel()
         {
-            ThemeList = ThemeService.ThemeList;
             Theme = ThemeService.AppTheme;
-
-            ThemeSelectCommand = new AsyncRelayCommand(async () =>
-            {
-                await ThemeService.SetThemeAsync(Theme);
-                await ThemeService.SetAppThemeAsync();
-            });
         }
     }
 }

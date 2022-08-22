@@ -30,6 +30,12 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
 
+        public List<GetAppTypeModel> TypeList => ResourceService.TypeList;
+
+        public List<GetAppChannelModel> ChannelList => ResourceService.ChannelList;
+
+        public ObservableCollection<HistoryModel> HistoryItemDataList { get; } = new ObservableCollection<HistoryModel>();
+
         private HistoryModel _selectedHistoryItem;
 
         public HistoryModel SelectedHistoryItem
@@ -39,39 +45,29 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _selectedHistoryItem, value); }
         }
 
-        public List<GetAppTypeModel> TypeList { get; }
+        // List列表初始化，可以从数据库获得的列表中加载
+        public IAsyncRelayCommand LoadedCommand => new AsyncRelayCommand(GetHistoryItemDataListAsync);
 
-        public List<GetAppChannelModel> ChannelList { get; }
+        public IAsyncRelayCommand ViewAllCommand => new AsyncRelayCommand(async () =>
+        {
+            NavigationService.NavigateTo(typeof(HistoryViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+            await Task.CompletedTask;
+        });
 
-        public ObservableCollection<HistoryModel> HistoryItemDataList { get; } = new ObservableCollection<HistoryModel>();
+        public IAsyncRelayCommand CopyCommand => new AsyncRelayCommand(CopyAsync);
 
-        public IAsyncRelayCommand LoadedCommand { get; }
-
-        public IAsyncRelayCommand ViewAllCommand { get; }
-
-        public IAsyncRelayCommand CopyCommand { get; }
-
-        public IAsyncRelayCommand FillinCommand { get; }
+        public IAsyncRelayCommand FillinCommand => new AsyncRelayCommand(FillinAsync);
 
         public HistoryItemViewModel()
         {
-            TypeList = ResourceService.TypeList;
-            ChannelList = ResourceService.ChannelList;
-
             HistoryItem = HistoryItemValueService.HistoryItem;
-
-            // List列表初始化，可以从数据库获得的列表中加载
-            LoadedCommand = new AsyncRelayCommand(GetHistoryItemDataListAsync);
-
-            ViewAllCommand = new AsyncRelayCommand(ViewAllAsync);
-
-            FillinCommand = new AsyncRelayCommand(FillinAsync);
-
-            CopyCommand = new AsyncRelayCommand(CopyAsync);
 
             Messenger.Register<HistoryItemViewModel, HistoryMessage>(this, async (historyItemViewModel, historyMessage) =>
             {
-                if (historyMessage.Value) await GetHistoryItemDataListAsync();
+                if (historyMessage.Value)
+                {
+                    await GetHistoryItemDataListAsync();
+                }
             });
 
             Messenger.Register<HistoryItemViewModel, HistoryItemValueMessage>(this, async (historyItemViewModel, historyItemValueMessage) =>
@@ -100,13 +96,10 @@ namespace GetStoreApp.ViewModels.Controls.Home
         {
             HistoryItemDataList.Clear();
 
-            foreach (HistoryModel historyRawData in historyRawList) HistoryItemDataList.Add(historyRawData);
-        }
-
-        private async Task ViewAllAsync()
-        {
-            NavigationService.NavigateTo(typeof(HistoryViewModel).FullName, null, new DrillInNavigationTransitionInfo());
-            await Task.CompletedTask;
+            foreach (HistoryModel historyRawData in historyRawList)
+            {
+                HistoryItemDataList.Add(historyRawData);
+            }
         }
 
         /// <summary>
@@ -124,6 +117,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
             await Task.CompletedTask;
         }
 
+        /// <summary>
+        /// 复制到剪贴板
+        /// </summary>
         private async Task CopyAsync()
         {
             if (SelectedHistoryItem == null)

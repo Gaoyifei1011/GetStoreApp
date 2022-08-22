@@ -1,7 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using System.Text;
-
-namespace GetStoreApp.Helpers
+﻿namespace GetStoreApp.Helpers
 {
     /// <summary>
     /// Windows 支持的国家/地区列表
@@ -26,11 +23,5 @@ namespace GetStoreApp.Helpers
             GEO_TIMEZONES = 0x000A,
             GEO_OFFICIALLANGUAGES = 0x000B
         }
-
-        [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
-        public static extern int GetGeoInfo(int location, SYSGEOTYPE geoType, StringBuilder lpGeoData, int cchData, int langId);
-
-        [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
-        public static extern int EnumSystemGeoID(int geoClass, int parentGeoId, EnumGeoInfoProc lpGeoEnumProc);
     }
 }

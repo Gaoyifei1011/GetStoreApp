@@ -8,7 +8,7 @@ namespace GetStoreApp.Contracts.Services.Settings
     {
         RegionModel AppRegion { get; set; }
 
-        List<RegionModel> RegionList { get; set; }
+        List<RegionModel> RegionList { get; }
 
         Task InitializeRegionAsync();
 

@@ -6,17 +6,17 @@ namespace GetStoreApp.Contracts.Services.App
 {
     public interface IResourceService
     {
-        List<ThemeModel> ThemeList { get; set; }
+        List<ThemeModel> ThemeList { get; }
 
-        List<BackdropModel> BackdropList { get; set; }
+        List<BackdropModel> BackdropList { get; }
 
-        List<HistoryItemValueModel> HistoryItemValueList { get; set; }
+        List<HistoryItemValueModel> HistoryItemValueList { get; }
 
-        List<GetAppTypeModel> TypeList { get; set; }
+        List<GetAppTypeModel> TypeList { get; }
 
-        List<GetAppChannelModel> ChannelList { get; set; }
+        List<GetAppChannelModel> ChannelList { get; }
 
-        List<StatusBarStateModel> StatusBarStateList { get; set; }
+        List<StatusBarStateModel> StatusBarStateList { get; }
 
         Task InitializeResourceAsync(LanguageModel defaultAppLanguage, LanguageModel currentAppLanguage);
 
