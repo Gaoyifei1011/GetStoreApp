@@ -48,12 +48,15 @@
     <None Remove="Styles\Grid.xaml" />
     <None Remove="Styles\GridView.xaml" />
     <None Remove="Styles\HyperlinkButton.xaml" />
+    <None Remove="Styles\Pivot.xaml" />
     <None Remove="UI\Controls\About\HeaderControl.xaml" />
     <None Remove="UI\Controls\About\InstructionsControl.xaml" />
     <None Remove="UI\Controls\About\IntroductionControl.xaml" />
     <None Remove="UI\Controls\About\PrecautionControl.xaml" />
     <None Remove="UI\Controls\About\ReferenceControl.xaml" />
     <None Remove="UI\Controls\About\SettingsHelpControl.xaml" />
+    <None Remove="UI\Controls\Download\CompletedControl.xaml" />
+    <None Remove="UI\Controls\Download\DownloadingControl.xaml" />
     <None Remove="UI\Controls\Home\HistoryItemControl.xaml" />
     <None Remove="UI\Controls\Home\RequestControl.xaml" />
     <None Remove="UI\Controls\Home\ResultControl.xaml" />
@@ -126,11 +129,14 @@
     <Page Update="Styles\HyperlinkButton.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Controls\About\InstructionsControl.xaml">
+    <Page Update="Styles\Pivot.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-
+    
     <Page Update="UI\Controls\About\HeaderControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\About\InstructionsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Controls\About\IntroductionControl.xaml">
@@ -146,6 +152,13 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
+    <Page Update="UI\Controls\Download\CompletedControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\Download\DownloadingControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    
     <Page Update="UI\Controls\Home\HistoryItemControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

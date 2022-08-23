@@ -120,6 +120,18 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Download completed</value>
+  </data>
+  <data name="CompletedEmpty" xml:space="preserve">
+    <value>There are no records that have been downloaded</value>
+  </data>
+  <data name="CompletedEmptyDescription" xml:space="preserve">
+    <value>Go to the app you want to download, and the file you downloaded will appear here</value>
+  </data>
+  <data name="CompletedEmptyInfo" xml:space="preserve">
+    <value>There are {0} records that have been downloaded</value>
+  </data>
   <data name="Continue" xml:space="preserve">
     <value>Continue download</value>
   </data>
@@ -138,14 +150,17 @@
   <data name="DeleteTask" xml:space="preserve">
     <value>Delete task</value>
   </data>
-  <data name="DownloadCountInfo" xml:space="preserve">
-    <value>There are {0} download records</value>
+  <data name="Downloading" xml:space="preserve">
+    <value>Downloading</value>
   </data>
-  <data name="DownloadEmpty" xml:space="preserve">
-    <value>There is no download record</value>
+  <data name="DownloadingCountInfo" xml:space="preserve">
+    <value>There are {0} records in the process of being downloaded</value>
   </data>
-  <data name="DownloadEmptyDescription" xml:space="preserve">
-    <value>Go to the app you want to download, and the app you've downloaded will appear here</value>
+  <data name="DownloadingEmpty" xml:space="preserve">
+    <value>There are no records in the process of being downloaded</value>
+  </data>
+  <data name="DownloadingEmptyDescription" xml:space="preserve">
+    <value>Go to the app you want to download, the file you're downloading will appear here</value>
   </data>
   <data name="DownloadOptions" xml:space="preserve">
     <value>Download settings</value>

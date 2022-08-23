@@ -29,6 +29,8 @@ namespace GetStoreApp.Services.App
 
         private IAria2Service Aria2Service { get; } = IOCHelper.GetService<IAria2Service>();
 
+        private IDownloadDataService DownloadDatatService { get; } = IOCHelper.GetService<IDownloadDataService>();
+
         private IDownloadMonitorService DownloadMonitorService { get; } = IOCHelper.GetService<IDownloadMonitorService>();
 
         private IBackdropService BackdropService { get; } = IOCHelper.GetService<IBackdropService>();
@@ -83,6 +85,7 @@ namespace GetStoreApp.Services.App
 
             // 初始化数据库信息
             await DataBaseService.InitializeDataBaseAsync();
+            await DownloadDatatService.InitializeDownloadDataAsync();
 
             // 初始化应用配置信息
             await BackdropService.InitializeBackdropAsync();
@@ -132,7 +135,7 @@ namespace GetStoreApp.Services.App
             // 设置应用标题名称
             GetStoreApp.App.MainWindow.Title = ResourceService.GetLocalized("AppDisplayName");
 
-            // 开启下载监控服务
+            // 初始化下载监控服务
             await DownloadMonitorService.InitializeDownloadMonitorAsync();
 
             // 启动Aria2下载服务（该服务会在后台长时间运行）

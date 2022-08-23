@@ -12,10 +12,12 @@ using GetStoreApp.Services.Settings;
 using GetStoreApp.Services.Shell;
 using GetStoreApp.Services.Web;
 using GetStoreApp.UI.Controls.About;
+using GetStoreApp.UI.Controls.Download;
 using GetStoreApp.UI.Controls.Home;
 using GetStoreApp.UI.Controls.Settings;
 using GetStoreApp.UI.Dialogs;
 using GetStoreApp.ViewModels.Controls.About;
+using GetStoreApp.ViewModels.Controls.Download;
 using GetStoreApp.ViewModels.Controls.Home;
 using GetStoreApp.ViewModels.Controls.Settings;
 using GetStoreApp.ViewModels.Dialogs;
@@ -116,6 +118,11 @@ namespace GetStoreApp.Helpers
                 services.AddTransient<ReferenceViewModel>();
                 services.AddTransient<SettingsHelpControl>();
                 services.AddTransient<SettingsHelpViewModel>();
+
+                services.AddTransient<DownloadingControl>();
+                services.AddTransient<DownloadingViewModel>();
+                services.AddTransient<CompletedControl>();
+                services.AddTransient<CompletedViewModel>();
 
                 services.AddTransient<HistoryItemControl>();
                 services.AddTransient<HistoryItemViewModel>();
