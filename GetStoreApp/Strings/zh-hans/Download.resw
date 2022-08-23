@@ -120,6 +120,18 @@
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
+  <data name="Completed" xml:space="preserve">
+    <value>已完成</value>
+  </data>
+  <data name="CompletedEmpty" xml:space="preserve">
+    <value>没有任何已下载完成的记录</value>
+  </data>
+  <data name="CompletedEmptyDescription" xml:space="preserve">
+    <value>快去获取想要下载的应用吧，您下载完成的文件将会显示在此处</value>
+  </data>
+  <data name="CompletedEmptyInfo" xml:space="preserve">
+    <value>共有{0}条已下载完成的的记录</value>
+  </data>
   <data name="Continue" xml:space="preserve">
     <value>继续下载</value>
   </data>
@@ -138,14 +150,17 @@
   <data name="DeleteTask" xml:space="preserve">
     <value>删除任务</value>
   </data>
-  <data name="DownloadCountInfo" xml:space="preserve">
-    <value>共有{0}条下载记录</value>
+  <data name="Downloading" xml:space="preserve">
+    <value>下载中</value>
   </data>
-  <data name="DownloadEmpty" xml:space="preserve">
-    <value>没有任何下载记录</value>
+  <data name="DownloadingCountInfo" xml:space="preserve">
+    <value>共有{0}条正在下载中的记录</value>
   </data>
-  <data name="DownloadEmptyDescription" xml:space="preserve">
-    <value>快去获取想要下载的应用吧，您下载过的应用将会显示在此处</value>
+  <data name="DownloadingEmpty" xml:space="preserve">
+    <value>没有任何正在下载中的记录</value>
+  </data>
+  <data name="DownloadingEmptyDescription" xml:space="preserve">
+    <value>快去获取想要下载的应用吧，您正在下载的文件将会显示在此处</value>
   </data>
   <data name="DownloadOptions" xml:space="preserve">
     <value>下载设置</value>

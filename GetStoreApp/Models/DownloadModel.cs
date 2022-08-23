@@ -110,18 +110,18 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 文件大小
         /// </summary>
-        public string FileSize
+        public int FileSize
         {
-            get { return (string)GetValue(FileSizeProperty); }
+            get { return (int)GetValue(FileSizeProperty); }
             set { SetValue(FileSizeProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for FileSize.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FileSizeProperty =
-            DependencyProperty.Register("FileSize", typeof(string), typeof(DownloadModel), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register("FileSize", typeof(int), typeof(DownloadModel), new PropertyMetadata(0));
 
         /// <summary>
-        /// 文件下载标志：0为下载失败，1为等待下载，2为下载暂停，3为下载正在下载中，4为下载成功
+        /// 文件下载标志：0为下载失败，1为等待下载，2为暂停下载，3为下载正在下载，4为成功下载
         /// </summary>
         private int _downloadFlag;
 

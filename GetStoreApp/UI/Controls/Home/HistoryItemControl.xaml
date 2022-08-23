@@ -102,8 +102,7 @@
                             Width="*"
                             Binding="{Binding HistoryType, Converter={StaticResource TypeNameFormatConverter}}"
                             Header="{x:Bind ResourceService.GetLocalized('/Home/Type')}"
-                            HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
-                            ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/DoubleTapToInput')}" />
+                            HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" />
 
                         <ctWinUI:DataGridTextColumn
                             Width="*"

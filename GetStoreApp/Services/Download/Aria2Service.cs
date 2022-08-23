@@ -473,7 +473,7 @@ namespace GetStoreApp.Services.Download
 
                 HttpResponseMessage response = await httpClient.PostAsync(RPCServerLink, httpContent);
 
-                // 返回成功添加任务的GID信息
+                // 返回成功删除任务的GID信息
                 if (response.IsSuccessStatusCode)
                 {
                     string ResponseContent = await response.Content.ReadAsStringAsync();

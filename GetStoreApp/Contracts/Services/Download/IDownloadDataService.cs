@@ -7,15 +7,17 @@ namespace GetStoreApp.Contracts.Services.Download
 {
     public interface IDownloadDataService
     {
+        Task InitializeDownloadDataAsync();
+
         Task<bool> CheckDuplicatedDataAsync(string downloadKey);
 
-        Task<bool> AddDataAsync(DownloadModel download);
+        Task<bool> AddDataAsync(DownloadModel downloadItem);
 
-        Task UpdateDataAsync(DownloadModel download);
+        Task UpdateDataAsync(DownloadModel downloadItem);
 
         Task<Tuple<List<DownloadModel>, bool>> QueryAllDownloadDataAsync();
 
-        Task DeleteDownloadDataAsync(List<DownloadModel> selectedDownloadDataList);
+        Task DeleteDownloadDataAsync(DownloadModel downloadItem);
 
         Task<bool> ClearDownloadDataAsync();
     }
