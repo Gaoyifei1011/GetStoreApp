@@ -24,7 +24,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        private IHistoryDataService HistoryDataService { get; } = IOCHelper.GetService<IHistoryDataService>();
+        private IHistoryDBService HistoryDBService { get; } = IOCHelper.GetService<IHistoryDBService>();
 
         private IHistoryItemValueService HistoryItemValueService { get; } = IOCHelper.GetService<IHistoryItemValueService>();
 
@@ -83,7 +83,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
         private async Task GetHistoryItemDataListAsync()
         {
             // 获取数据库的原始记录数据
-            List<HistoryModel> HistoryRawList = await HistoryDataService.QueryHistoryDataAsync(HistoryItem.HistoryItemValue);
+            List<HistoryModel> HistoryRawList = await HistoryDBService.QueryHistoryDataAsync(HistoryItem.HistoryItemValue);
 
             // 更新UI上面的数据
             UpdateList(HistoryRawList);

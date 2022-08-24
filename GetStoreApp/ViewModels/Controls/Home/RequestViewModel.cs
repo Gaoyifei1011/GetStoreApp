@@ -22,7 +22,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        private IHistoryDataService HistoryDataService { get; } = IOCHelper.GetService<IHistoryDataService>();
+        private IHistoryDBService HistoryDBService { get; } = IOCHelper.GetService<IHistoryDBService>();
 
         private ILinkFilterService LinkFilterService { get; } = IOCHelper.GetService<ILinkFilterService>();
 
@@ -207,7 +207,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             // 生成唯一的MD5值
             string UniqueKey = GenerateUniqueKey(Content);
 
-            await HistoryDataService.AddHistoryDataAsync(new HistoryModel
+            await HistoryDBService.AddHistoryDataAsync(new HistoryModel
             {
                 CreateTimeStamp = TimeStamp,
                 HistoryKey = UniqueKey,

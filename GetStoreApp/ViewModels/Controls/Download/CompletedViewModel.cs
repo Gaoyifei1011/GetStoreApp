@@ -19,7 +19,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
 {
     public class CompletedViewModel : ObservableRecipient
     {
-        private IDownloadDataService DownloadDataService { get; } = IOCHelper.GetService<IDownloadDataService>();
+        private IDownloadDBService DownloadDBService { get; } = IOCHelper.GetService<IDownloadDBService>();
 
         private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
 
@@ -86,7 +86,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             Messenger.Register<CompletedViewModel, PivotSelectionMessage>(this, async (completedViewModel, pivotSelectionMessage) =>
             {
                 // 切换到已完成页面时，更新当前页面的数据
-                if (pivotSelectionMessage.Value == 1)
+                if (pivotSelectionMessage.Value == 2)
                 {
                 }
 
@@ -120,7 +120,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 IsSelectMode = false;
 
-                //await DownloadDataService.DeleteDownloadDataAsync(SelectedCompletedDataList);
+                //await IDownloadDBService.DeleteDownloadDataAsync(SelectedCompletedDataList);
 
                 // 如果有正在下载的服务，从下载列表中删除
                 //if (DownloadingList.Any())
@@ -139,7 +139,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// </summary>
         private async Task GetDownloadDataListAsync()
         {
-            Tuple<List<DownloadModel>, bool> DownloadData = await DownloadDataService.QueryAllDownloadDataAsync();
+            Tuple<List<DownloadModel>, bool> DownloadData = await DownloadDBService.QueryDownloadDataAsync(4);
 
             List<DownloadModel> DownloadRawList = DownloadData.Item1;
 

@@ -48,6 +48,7 @@
     <None Remove="Styles\Grid.xaml" />
     <None Remove="Styles\GridView.xaml" />
     <None Remove="Styles\HyperlinkButton.xaml" />
+    <None Remove="Styles\ListView.xaml" />
     <None Remove="Styles\Pivot.xaml" />
     <None Remove="UI\Controls\About\HeaderControl.xaml" />
     <None Remove="UI\Controls\About\InstructionsControl.xaml" />
@@ -57,6 +58,7 @@
     <None Remove="UI\Controls\About\SettingsHelpControl.xaml" />
     <None Remove="UI\Controls\Download\CompletedControl.xaml" />
     <None Remove="UI\Controls\Download\DownloadingControl.xaml" />
+    <None Remove="UI\Controls\Download\UnfinishedControl.xaml" />
     <None Remove="UI\Controls\Home\HistoryItemControl.xaml" />
     <None Remove="UI\Controls\Home\RequestControl.xaml" />
     <None Remove="UI\Controls\Home\ResultControl.xaml" />
@@ -238,5 +240,17 @@
       <Link>Aria2\aria2c.exe</Link>
     </Content>
     <Content Include="Aria2\Config\aria2.conf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="UI\Controls\Download\UnfinishedControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Styles\ListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>

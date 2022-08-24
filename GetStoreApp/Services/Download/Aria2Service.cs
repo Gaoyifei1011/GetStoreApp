@@ -493,13 +493,12 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 汇报下载任务状态信息
         /// </summary>
-        public async Task<DownloadStatusModel> TellStatusAsync(string GID)
+        public async Task<Tuple<string, string, int, int, int>> TellStatusAsync(string GID)
         {
             // 汇报下载任务状态参数列表
             List<object> ParamsList = new List<object>() { GID };
             // 成功添加任务返回的信息
             Dictionary<string, string> ResultContent;
-            DownloadStatusModel DownloadStatus = new DownloadStatusModel();
 
             ParamsList.Add(TellStatusInfoList);
             TellStatusContent["params"] = ParamsList;
@@ -531,18 +530,19 @@ namespace GetStoreApp.Services.Download
                     string Result = JsonConvert.DeserializeObject<Dictionary<string, string>>(ResponseContent)["result"];
                     ResultContent = JsonConvert.DeserializeObject<Dictionary<string, string>>(Result);
 
-                    DownloadStatus.GID = ResultContent["gid"];
-                    DownloadStatus.Status = ResultContent["status"];
-                    DownloadStatus.CompletedLength = Convert.ToInt32(ResultContent["completedLength"]);
-                    DownloadStatus.TotalLength = Convert.ToInt32(ResultContent["totalLength"]);
-                    DownloadStatus.DownloadSpeed = Convert.ToInt32(ResultContent["downloadSpeed"]);
+                    return Tuple.Create(
+                        ResultContent["gid"],
+                        ResultContent["status"],
+                        Convert.ToInt32(ResultContent["completedLength"]),
+                        Convert.ToInt32(ResultContent["totalLength"]),
+                        Convert.ToInt32(ResultContent["downloadSpeed"])
+                        );
                 }
+
                 else
                 {
                     throw new Exception();
                 }
-
-                return DownloadStatus;
             }
             catch (Exception)
             {

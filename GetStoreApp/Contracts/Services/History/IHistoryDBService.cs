@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.Contracts.Services.History
 {
-    public interface IHistoryDataService
+    public interface IHistoryDBService
     {
         Task AddHistoryDataAsync(HistoryModel history);
 

@@ -19,9 +19,9 @@ namespace GetStoreApp.ViewModels.Dialogs
     {
         private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        private IHistoryDataService HistoryDataService { get; } = IOCHelper.GetService<IHistoryDataService>();
+        private IHistoryDBService HistoryDBService { get; } = IOCHelper.GetService<IHistoryDBService>();
 
-        private IDownloadDataService DownloadDataService { get; } = IOCHelper.GetService<IDownloadDataService>();
+        private IDownloadDBService DownloadDBService { get; } = IOCHelper.GetService<IDownloadDBService>();
 
         // 立即清理按钮的可用状态
         private bool _isButtonEnabled = true;
@@ -198,15 +198,15 @@ namespace GetStoreApp.ViewModels.Dialogs
             // 清理本地创建的文件
             if (IsLocalFileClean)
             {
-                List<DownloadModel> LocalFileData = (await DownloadDataService.QueryAllDownloadDataAsync()).Item1;
+                List<DownloadModel> LocalFileData = (await DownloadDBService.QueryDownloadDataAsync(4)).Item1;
                 LocalCleanResult = DeleteFiles(ref LocalFileData);
             }
 
             // 清理历史记录
-            if (IsHistoryClean) HistoryCleanResult = await HistoryDataService.ClearHistoryDataAsync();
+            if (IsHistoryClean) HistoryCleanResult = await HistoryDBService.ClearHistoryDataAsync();
 
             // 清理下载记录
-            if (IsDownloadClean) DownloadCleanResult = await DownloadDataService.ClearDownloadDataAsync();
+            if (IsDownloadClean) DownloadCleanResult = await DownloadDBService.ClearDownloadDataAsync();
 
             return Tuple.Create(LocalCleanResult, HistoryCleanResult, DownloadCleanResult);
         }

@@ -12,27 +12,35 @@ namespace GetStoreApp.Services.Download
     /// <summary>
     /// 下载记录数据库存储服务
     /// </summary>
-    public class DownloadDataService : IDownloadDataService
+    public class DownloadDBService : IDownloadDBService
     {
         private IDataBaseService DataBaseService { get; } = IOCHelper.GetService<IDataBaseService>();
 
         /// <summary>
         /// 检查是否有下载异常的记录，并将对应的下载状态值复原
         /// </summary>
-        public async Task InitializeDownloadDataAsync()
+        public async Task InitializeDownloadDBAsync()
         {
-            Tuple<List<DownloadModel>, bool> DownloadRawInfo = await QueryAllDownloadDataAsync();
+            // 将处于等待下载状态的任务调整为暂停下载状态
+            Tuple<List<DownloadModel>, bool> DownloadWaitingData = await QueryDownloadDataAsync(1);
 
-            List<DownloadModel> DownloadRawList = DownloadRawInfo.Item1;
+            List<DownloadModel> DownloadWaitingList = DownloadWaitingData.Item1;
 
-            // 遍历下载记录，如果发现下载记录中有等待下载和正在下载的记录，将其更新为暂停下载
-            foreach (DownloadModel downloadItem in DownloadRawList)
+            foreach (DownloadModel downloadItem in DownloadWaitingList)
             {
-                if (downloadItem.DownloadFlag == 1 || downloadItem.DownloadFlag == 3)
-                {
-                    downloadItem.DownloadFlag = 2;
-                    await UpdateDataAsync(downloadItem);
-                }
+                downloadItem.DownloadFlag = 2;
+                await UpdateFlagAsync(downloadItem);
+            }
+
+            // 将正在下载状态的任务调整为暂停下载状态
+            Tuple<List<DownloadModel>, bool> DownloadingData = await QueryDownloadDataAsync(3);
+
+            List<DownloadModel> DownloadingList = DownloadingData.Item1;
+
+            foreach (DownloadModel downloadItem in DownloadingList)
+            {
+                downloadItem.DownloadFlag = 2;
+                await UpdateFlagAsync(downloadItem);
             }
 
             await Task.CompletedTask;
@@ -70,39 +78,6 @@ namespace GetStoreApp.Services.Download
         }
 
         /// <summary>
-        /// 检查是否有相同键值的数据
-        /// </summary>
-        public async Task<bool> CheckDuplicatedDataAsync(string downloadKey)
-        {
-            bool IsExists = false;
-
-            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
-            {
-                await db.OpenAsync();
-
-                SqliteCommand SearchCommand = new SqliteCommand
-                {
-                    Connection = db,
-
-                    CommandText = string.Format("SELECT * FROM {0} WHERE DOWNLOADKEY LIKE '{1}'",
-                        DataBaseService.DownloadTableName,
-                        downloadKey
-                        )
-                };
-
-                SqliteDataReader Query = await SearchCommand.ExecuteReaderAsync();
-
-                if (await Query.ReadAsync())
-                {
-                    IsExists = true;
-                }
-
-                await db.CloseAsync();
-            }
-            return IsExists;
-        }
-
-        /// <summary>
         /// 直接添加下载记录数据，并返回下载记录添加是否成功的结果
         /// </summary>
         public async Task<bool> AddDataAsync(DownloadModel downloadItem)
@@ -122,14 +97,13 @@ namespace GetStoreApp.Services.Download
 
                         try
                         {
-                            InsertCommand.CommandText = string.Format("INSERT INTO {0} VALUES ({1},'{2}','{3}','{4}','{5}','{6}','{7}')",
+                            InsertCommand.CommandText = string.Format("INSERT INTO {0} VALUES ({1},'{2}','{3}','{4}','{5}','{6}')",
                                 DataBaseService.DownloadTableName,
-                                downloadItem.CreateTimeStamp,
                                 downloadItem.DownloadKey,
                                 downloadItem.FileName,
                                 downloadItem.FileLink,
                                 downloadItem.FilePath,
-                                downloadItem.FileSize,
+                                downloadItem.DownloadTotalSize,
                                 downloadItem.DownloadFlag
                                 );
 
@@ -151,10 +125,12 @@ namespace GetStoreApp.Services.Download
         }
 
         /// <summary>
-        /// 存在重复的数据，只更新该记录的TimeStamp（相当于执行重新下载步骤）
+        /// 存在重复的数据，只更新该记录的DownloadFlag（相当于执行重新下载步骤）
         /// </summary>
-        public async Task UpdateDataAsync(DownloadModel downloadItem)
+        public async Task<bool> UpdateFlagAsync(DownloadModel downloadItem)
         {
+            bool IsUpdateSuccessfully = false;
+
             using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
             {
                 await db.OpenAsync();
@@ -168,9 +144,8 @@ namespace GetStoreApp.Services.Download
 
                         try
                         {
-                            UpdateCommand.CommandText = string.Format("UPDATE {0} SET TIMESTAMP = {1}, DOWNLOADFLAG ={2} WHERE DOWNLOADKEY = '{3}'",
+                            UpdateCommand.CommandText = string.Format("UPDATE {0} SET DOWNLOADFLAG ={1} WHERE DOWNLOADKEY = '{2}'",
                                 DataBaseService.DownloadTableName,
-                                downloadItem.CreateTimeStamp,
                                 downloadItem.DownloadFlag,
                                 downloadItem.DownloadKey
                                 );
@@ -187,16 +162,16 @@ namespace GetStoreApp.Services.Download
                 }
                 await db.CloseAsync();
             }
+
+            return IsUpdateSuccessfully;
         }
 
         /// <summary>
-        /// 获取所有的下载记录数据
+        /// 获取指定下载标志的下载记录数据
         /// </summary>
-        /// <param name="timeSortOrder">时间戳顺序，True为递增排序，False为递减排序</param>
-        /// <param name="typeFilter"></param>
-        /// <param name="channelFilter"></param>
-        /// <returns>返回下载记录列表</returns>
-        public async Task<Tuple<List<DownloadModel>, bool>> QueryAllDownloadDataAsync()
+        /// <param name="downloadFlag">文件下载标志：0为下载失败，1为等待下载，2为暂停下载，3为正在下载，4为成功下载</param>
+        /// <returns>返回指定下载标志记录列表</returns>
+        public async Task<Tuple<List<DownloadModel>, bool>> QueryDownloadDataAsync(int downloadFlag)
         {
             List<DownloadModel> DownloRawList = new List<DownloadModel>();
 
@@ -214,7 +189,10 @@ namespace GetStoreApp.Services.Download
                 {
                     Connection = db,
 
-                    CommandText = string.Format("SELECT * FROM {0} ORDER BY TIMESTAMP DESC", DataBaseService.DownloadTableName)
+                    CommandText = string.Format("SELECT * FROM {0} WHERE DOWNLOADFLAG = '{1}'",
+                        DataBaseService.DownloadTableName,
+                        downloadFlag
+                        )
                 };
 
                 SqliteDataReader Query = await SelectCommand.ExecuteReaderAsync();
@@ -223,13 +201,12 @@ namespace GetStoreApp.Services.Download
                 {
                     DownloadModel downloadRawModel = new DownloadModel
                     {
-                        CreateTimeStamp = Query.GetInt64(0),
-                        DownloadKey = Query.GetString(1),
-                        FileName = Query.GetString(2),
-                        FileLink = Query.GetString(3),
-                        FilePath = Query.GetString(4),
-                        FileSHA1 = Query.GetString(5),
-                        FileSize = Convert.ToInt32(Query.GetString(6)),
+                        DownloadKey = Query.GetString(0),
+                        FileName = Query.GetString(1),
+                        FileLink = Query.GetString(2),
+                        FilePath = Query.GetString(3),
+                        FileSHA1 = Query.GetString(4),
+                        DownloadTotalSize = Convert.ToInt32(Query.GetString(5)),
                         DownloadFlag = Convert.ToInt32(Query.GetString(7))
                     };
 
@@ -279,7 +256,7 @@ namespace GetStoreApp.Services.Download
         }
 
         /// <summary>
-        /// 清空下载记录数据
+        /// 清空下载记录数据（不清除正在下载和等待下载的数据）
         /// </summary>
         public async Task<bool> ClearDownloadDataAsync()
         {
@@ -298,7 +275,7 @@ namespace GetStoreApp.Services.Download
 
                         try
                         {
-                            ClearCommand.CommandText = string.Format("DELETE FROM {0}", DataBaseService.DownloadTableName);
+                            ClearCommand.CommandText = string.Format("DELETE FROM {0} WHERE DOWNLOADFLAG NOT IN (1,3)", DataBaseService.DownloadTableName);
                             await ClearCommand.ExecuteNonQueryAsync();
 
                             await transaction.CommitAsync();

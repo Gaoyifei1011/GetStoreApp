@@ -15,7 +15,7 @@ namespace GetStoreApp.ViewModels.Window
     {
         private IAria2Service Aria2Service { get; } = IOCHelper.GetService<IAria2Service>();
 
-        private IDownloadMonitorService DownloadMonitorService { get; } = IOCHelper.GetService<IDownloadMonitorService>();
+        private IDownloadSchedulerService DownloadSchedulerService { get; } = IOCHelper.GetService<IDownloadSchedulerService>();
 
         private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
 
@@ -25,7 +25,7 @@ namespace GetStoreApp.ViewModels.Window
         public async void WindowClosed()
         {
             await Aria2Service.CloseAria2Async();
-            await DownloadMonitorService.CloseDownloadMonitorAsync();
+            await DownloadSchedulerService.CloseDownloadMonitorAsync();
         }
 
         /// <summary>

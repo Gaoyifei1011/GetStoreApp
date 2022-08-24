@@ -9,7 +9,7 @@ namespace GetStoreApp.Converters.Formats
     /// <summary>
     /// 下载进度文字显示转换器
     /// </summary>
-    public class DownloadProgressFormatConverter : IValueConverter
+    public class ProgressFormatConverter : IValueConverter
     {
         private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
@@ -20,7 +20,7 @@ namespace GetStoreApp.Converters.Formats
                 return DependencyProperty.UnsetValue;
             }
 
-            int? result = value as int?;
+            double? result = value as double?;
 
             return string.Format(ResourceService.GetLocalized("/Download/DownloadProgress"), result);
         }

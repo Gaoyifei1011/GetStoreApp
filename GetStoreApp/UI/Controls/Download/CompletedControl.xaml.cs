@@ -24,7 +24,7 @@ namespace GetStoreApp.UI.Controls.Download
             }
             else
             {
-                return string.Format(ResourceService.GetLocalized("/Download/CompletedEmptyInfo"), count);
+                return string.Format(ResourceService.GetLocalized("/Download/CompletedCountInfo"), count);
             }
         }
     }

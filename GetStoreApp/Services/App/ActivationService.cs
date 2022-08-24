@@ -29,9 +29,9 @@ namespace GetStoreApp.Services.App
 
         private IAria2Service Aria2Service { get; } = IOCHelper.GetService<IAria2Service>();
 
-        private IDownloadDataService DownloadDatatService { get; } = IOCHelper.GetService<IDownloadDataService>();
+        private IDownloadDBService DownloadDatatService { get; } = IOCHelper.GetService<IDownloadDBService>();
 
-        private IDownloadMonitorService DownloadMonitorService { get; } = IOCHelper.GetService<IDownloadMonitorService>();
+        private IDownloadSchedulerService DownloadSchedulerService { get; } = IOCHelper.GetService<IDownloadSchedulerService>();
 
         private IBackdropService BackdropService { get; } = IOCHelper.GetService<IBackdropService>();
 
@@ -85,7 +85,7 @@ namespace GetStoreApp.Services.App
 
             // 初始化数据库信息
             await DataBaseService.InitializeDataBaseAsync();
-            await DownloadDatatService.InitializeDownloadDataAsync();
+            await DownloadDatatService.InitializeDownloadDBAsync();
 
             // 初始化应用配置信息
             await BackdropService.InitializeBackdropAsync();
@@ -136,7 +136,7 @@ namespace GetStoreApp.Services.App
             GetStoreApp.App.MainWindow.Title = ResourceService.GetLocalized("AppDisplayName");
 
             // 初始化下载监控服务
-            await DownloadMonitorService.InitializeDownloadMonitorAsync();
+            await DownloadSchedulerService.InitializeDownloadMonitorAsync();
 
             // 启动Aria2下载服务（该服务会在后台长时间运行）
             await Aria2Service.InitializeAria2Async();
