@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -24,6 +25,6 @@ namespace GetStoreApp.Contracts.Services.Download
 
         Task<string> DeleteAsync(string GID);
 
-        Task<DownloadStatusModel> TellStatusAsync(string GID);
+        Task<Tuple<string, string, int, int, int>> TellStatusAsync(string GID);
     }
 }

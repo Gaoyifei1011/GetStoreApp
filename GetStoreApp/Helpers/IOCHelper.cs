@@ -53,7 +53,7 @@ namespace GetStoreApp.Helpers
             Host = Microsoft.Extensions.Hosting.Host.
             CreateDefaultBuilder().
             UseContentRoot(AppContext.BaseDirectory).
-            ConfigureServices((context, services) =>
+            ConfigureServices((Action<HostBuilderContext, IServiceCollection>)((context, services) =>
             {
                 // Services
                 services.AddSingleton<IActivationService, ActivationService>();
@@ -63,10 +63,10 @@ namespace GetStoreApp.Helpers
                 services.AddSingleton<IResourceService, ResourceService>();
 
                 services.AddSingleton<IAria2Service, Aria2Service>();
-                services.AddSingleton<IDownloadDataService, DownloadDataService>();
-                services.AddSingleton<IDownloadMonitorService, DownloadMonitorService>();
+                ServiceCollectionServiceExtensions.AddSingleton<Contracts.Services.Download.IDownloadDBService, Services.Download.DownloadDBService>(services);
+                services.AddSingleton<IDownloadSchedulerService, DownloadSchedulerService>();
 
-                services.AddSingleton<IHistoryDataService, HistoryDataService>();
+                services.AddSingleton<IHistoryDBService, HistoryDBService>();
 
                 services.AddSingleton<IBackdropService, BackdropService>();
                 services.AddSingleton<IDownloadOptionsService, DownloadOptionsService>();
@@ -107,7 +107,7 @@ namespace GetStoreApp.Helpers
                 services.AddTransient<WebPage>();
                 services.AddTransient<WebViewModel>();
 
-                // 控件（MVVM）
+                // 关于页面的控件（MVVM）
                 services.AddTransient<HeaderControl>();
                 services.AddTransient<HeaderViewModel>();
                 services.AddTransient<InstructionsControl>();
@@ -119,11 +119,15 @@ namespace GetStoreApp.Helpers
                 services.AddTransient<SettingsHelpControl>();
                 services.AddTransient<SettingsHelpViewModel>();
 
+                // 下载页面的控件（MVVM）
                 services.AddTransient<DownloadingControl>();
                 services.AddTransient<DownloadingViewModel>();
                 services.AddTransient<CompletedControl>();
                 services.AddTransient<CompletedViewModel>();
+                services.AddTransient<UnfinishedControl>();
+                services.AddTransient<UnfinishedViewModel>();
 
+                // 历史记录页面的控件（MVVM）
                 services.AddTransient<HistoryItemControl>();
                 services.AddTransient<HistoryItemViewModel>();
                 services.AddTransient<RequestControl>();
@@ -135,6 +139,7 @@ namespace GetStoreApp.Helpers
                 services.AddTransient<TitleControl>();
                 services.AddTransient<TitleViewModel>();
 
+                // 设置页面的控件（MVVM）
                 services.AddTransient<BackdropControl>();
                 services.AddTransient<BackdropViewModel>();
                 services.AddTransient<DownloadOptionsControl>();
@@ -161,7 +166,7 @@ namespace GetStoreApp.Helpers
                 services.AddTransient<RestartAppsViewModel>();
                 services.AddTransient<TraceCleanupPromptDialog>();
                 services.AddTransient<TraceCleanupPromptViewModel>();
-            })
+            }))
             .Build();
         }
     }

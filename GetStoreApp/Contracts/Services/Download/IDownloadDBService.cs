@@ -5,17 +5,15 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.Contracts.Services.Download
 {
-    public interface IDownloadDataService
+    public interface IDownloadDBService
     {
-        Task InitializeDownloadDataAsync();
-
-        Task<bool> CheckDuplicatedDataAsync(string downloadKey);
+        Task InitializeDownloadDBAsync();
 
         Task<bool> AddDataAsync(DownloadModel downloadItem);
 
-        Task UpdateDataAsync(DownloadModel downloadItem);
+        Task<bool> UpdateFlagAsync(DownloadModel downloadItem);
 
-        Task<Tuple<List<DownloadModel>, bool>> QueryAllDownloadDataAsync();
+        Task<Tuple<List<DownloadModel>, bool>> QueryDownloadDataAsync(int downloadFlag);
 
         Task DeleteDownloadDataAsync(DownloadModel downloadItem);
 

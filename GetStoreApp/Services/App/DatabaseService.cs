@@ -63,7 +63,15 @@ namespace GetStoreApp.Services.App
 
                 string HistoryLink = "LINK TEXT";
 
-                string HistoryTableCommand = string.Format("{0} {1} ({2},{3},{4},{5},{6})", CreateTableString, HistoryTableName, CreateTimeStamp, HistoryKey, HistoryType, HistoryChannel, HistoryLink);
+                string HistoryTableCommand = string.Format("{0} {1} ({2},{3},{4},{5},{6})",
+                    CreateTableString,
+                    HistoryTableName,
+                    CreateTimeStamp,
+                    HistoryKey,
+                    HistoryType,
+                    HistoryChannel,
+                    HistoryLink
+                    );
 
                 SqliteCommand CreateTable = new SqliteCommand(HistoryTableCommand, db);
 
@@ -91,8 +99,6 @@ namespace GetStoreApp.Services.App
 
                 string CreateTableString = "CREATE TABLE IF NOT EXISTS";
 
-                string CreateTimeStamp = "TIMESTAMP INTEGER NOT NULL UNIQUE";
-
                 string DownloadKey = "DOWNLOADKEY CHAR(32) NOT NULL UNIQUE";
 
                 string FileName = "FILENAME VARCHAR(100) NOT NULL";
@@ -107,7 +113,17 @@ namespace GetStoreApp.Services.App
 
                 string DownloadFlag = "DOWNLOADFLAG INTEGER NOT NULL";
 
-                string DownloadTableCommand = string.Format("{0} {1} ({2},{3},{4},{5},{6},{7},{8},{9})", CreateTableString, DownloadTableName, CreateTimeStamp, DownloadKey, FileName, FileLink, FilePath, FileSHA1, FileSize, DownloadFlag);
+                string DownloadTableCommand = string.Format("{0} {1} ({2},{3},{4},{5},{6},{7},{8})",
+                    CreateTableString,
+                    DownloadTableName,
+                    DownloadKey,
+                    FileName,
+                    FileLink,
+                    FilePath,
+                    FileSHA1,
+                    FileSize,
+                    DownloadFlag
+                    );
 
                 SqliteCommand CreateTable = new SqliteCommand(DownloadTableCommand, db);
 

@@ -22,11 +22,20 @@ namespace GetStoreApp.ViewModels.Pages
 {
     public class HistoryViewModel : ObservableRecipient, INavigationAware
     {
+        // 临界区资源访问互斥锁
+        private readonly object HistoryDataListLock = new object();
+
         private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        private IHistoryDataService HistoryDataService { get; } = IOCHelper.GetService<IHistoryDataService>();
+        private IHistoryDBService HistoryDBService { get; } = IOCHelper.GetService<IHistoryDBService>();
 
         private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
+
+        public List<GetAppTypeModel> TypeList => ResourceService.TypeList;
+
+        public List<GetAppChannelModel> ChannelList => ResourceService.ChannelList;
+
+        public ObservableCollection<HistoryModel> HistoryDataList { get; } = new ObservableCollection<HistoryModel>();
 
         private bool _isSelectMode = false;
 
@@ -94,12 +103,6 @@ namespace GetStoreApp.ViewModels.Pages
             set { SetProperty(ref _selectedHistoryItem, value); }
         }
 
-        public List<GetAppTypeModel> TypeList => ResourceService.TypeList;
-
-        public List<GetAppChannelModel> ChannelList => ResourceService.ChannelList;
-
-        public ObservableCollection<HistoryModel> HistoryDataList { get; } = new ObservableCollection<HistoryModel>();
-
         public IAsyncRelayCommand FillinCommand => new AsyncRelayCommand(FillinAsync);
 
         public IAsyncRelayCommand CopyCommand => new AsyncRelayCommand(CopyAsync);
@@ -132,10 +135,15 @@ namespace GetStoreApp.ViewModels.Pages
 
         public IAsyncRelayCommand SelectAllCommand => new AsyncRelayCommand(async () =>
         {
-            foreach (HistoryModel historyItem in HistoryDataList)
+            // 保证线程安全
+            lock (HistoryDataListLock)
             {
-                historyItem.IsSelected = true;
+                foreach (HistoryModel historyItem in HistoryDataList)
+                {
+                    historyItem.IsSelected = true;
+                }
             }
+
             await Task.CompletedTask;
         });
 
@@ -151,25 +159,14 @@ namespace GetStoreApp.ViewModels.Pages
             await Task.CompletedTask;
         });
 
-        public HistoryViewModel()
-        {
-            Messenger.Register<HistoryViewModel, HistoryMessage>(this, async (historyItemViewModel, historyMessage) =>
-            {
-                if (historyMessage.Value)
-                {
-                    await GetHistoryDataListAsync();
-                }
-            });
-        }
-
         // 导航到历史记录页面时，历史记录数据列表初始化，从数据库中存储的列表中加载
         public async void OnNavigatedTo(object parameter)
         {
             await GetHistoryDataListAsync();
         }
 
-        public void OnNavigatedFrom()
-        { }
+        public void OnNavigatedFrom() { }
+
 
         /// <summary>
         /// 多选模式下删除选中的条目
@@ -192,7 +189,7 @@ namespace GetStoreApp.ViewModels.Pages
             {
                 IsSelectMode = false;
 
-                await HistoryDataService.DeleteHistoryDataAsync(SelectedHistoryDataList);
+                await HistoryDBService.DeleteHistoryDataAsync(SelectedHistoryDataList);
 
                 await GetHistoryDataListAsync();
 
@@ -205,7 +202,7 @@ namespace GetStoreApp.ViewModels.Pages
         /// </summary>
         private async Task GetHistoryDataListAsync()
         {
-            Tuple<List<HistoryModel>, bool, bool> HistoryAllData = await HistoryDataService.QueryAllHistoryDataAsync(TimeSortOrder, TypeFilter, ChannelFilter);
+            Tuple<List<HistoryModel>, bool, bool> HistoryAllData = await HistoryDBService.QueryAllHistoryDataAsync(TimeSortOrder, TypeFilter, ChannelFilter);
 
             // 获取数据库的原始记录数据
             List<HistoryModel> HistoryRawList = HistoryAllData.Item1;
@@ -216,15 +213,8 @@ namespace GetStoreApp.ViewModels.Pages
             IsHistoryEmptyAfterFilter = HistoryAllData.Item3;
 
             //Todo: need to debug why observablecollection clear cause object reference not set to an instance of an object.
-            try
-            {
-                // 更新UI上面的数据
-                ConvertRawListToDisplayList(ref HistoryRawList);
-            }
-            catch (Exception)
-            {
-                ConvertRawListToDisplayList(ref HistoryRawList);
-            }
+            // 更新UI上面的数据
+            ConvertRawListToDisplayList(ref HistoryRawList);
         }
 
         /// <summary>
@@ -232,11 +222,19 @@ namespace GetStoreApp.ViewModels.Pages
         /// </summary>
         private void ConvertRawListToDisplayList(ref List<HistoryModel> historyRawList)
         {
-            HistoryDataList.Clear();
-
-            foreach (HistoryModel historyRawData in historyRawList)
+            // 保证线程安全
+            lock (HistoryDataListLock)
             {
-                HistoryDataList.Add(historyRawData);
+                HistoryDataList.Clear();
+            }
+
+            // 保证线程安全
+            lock (HistoryDataListLock)
+            {
+                foreach (HistoryModel historyRawData in historyRawList)
+                {
+                    HistoryDataList.Add(historyRawData);
+                }
             }
         }
 
@@ -261,9 +259,13 @@ namespace GetStoreApp.ViewModels.Pages
         /// </summary>
         private async Task SelectNoneAsync()
         {
-            foreach (HistoryModel historyItem in HistoryDataList)
+            // 保证线程安全
+            lock (HistoryDataListLock)
             {
-                historyItem.IsSelected = false;
+                foreach (HistoryModel historyItem in HistoryDataList)
+                {
+                    historyItem.IsSelected = false;
+                }
             }
             await Task.CompletedTask;
         }

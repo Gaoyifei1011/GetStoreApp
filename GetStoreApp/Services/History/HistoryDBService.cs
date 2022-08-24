@@ -13,7 +13,7 @@ namespace GetStoreApp.Services.History
     /// <summary>
     /// 历史记录数据库存储服务
     /// </summary>
-    public class HistoryDataService : IHistoryDataService
+    public class HistoryDBService : IHistoryDBService
     {
         private IDataBaseService DataBaseService { get; } = IOCHelper.GetService<IDataBaseService>();
 

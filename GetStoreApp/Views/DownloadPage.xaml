@@ -23,9 +23,15 @@
         <PivotItem Header="{x:Bind ResourceService.GetLocalized('/Download/Downloading')}" Style="{StaticResource PivotItemStyle}">
             <dc:DownloadingControl />
         </PivotItem>
+
+        <PivotItem Header="{x:Bind ResourceService.GetLocalized('/Download/Unfinished')}" Style="{StaticResource PivotItemStyle}">
+            <dc:UnfinishedControl />
+        </PivotItem>
+
         <PivotItem Header="{x:Bind ResourceService.GetLocalized('/Download/Completed')}" Style="{StaticResource PivotItemStyle}">
             <dc:CompletedControl />
         </PivotItem>
+
         <Pivot.RightHeader>
             <Button
                 VerticalAlignment="Top"

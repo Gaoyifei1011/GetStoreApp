@@ -13,7 +13,7 @@ namespace GetStoreApp.ViewModels.Dialogs
     {
         private IAria2Service Aria2Service { get; } = IOCHelper.GetService<IAria2Service>();
 
-        private IDownloadMonitorService DownloadMonitorService { get; } = IOCHelper.GetService<IDownloadMonitorService>();
+        private IDownloadSchedulerService DownloadSchedulerService { get; } = IOCHelper.GetService<IDownloadSchedulerService>();
 
         public IAsyncRelayCommand RestartAppsSureCommand => new AsyncRelayCommand<ContentDialog>(async (param) =>
         {
@@ -34,7 +34,7 @@ namespace GetStoreApp.ViewModels.Dialogs
             dialog.Hide();
 
             await Aria2Service.CloseAria2Async();
-            await DownloadMonitorService.CloseDownloadMonitorAsync();
+            await DownloadSchedulerService.CloseDownloadMonitorAsync();
 
             // 重启应用
             AppInstance.Restart("");

@@ -19,7 +19,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
 {
     public class DownloadingViewModel : ObservableRecipient
     {
-        private IDownloadDataService DownloadDataService { get; } = IOCHelper.GetService<IDownloadDataService>();
+        private IDownloadDBService DownloadDBService { get; } = IOCHelper.GetService<IDownloadDBService>();
 
         private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
 
@@ -95,14 +95,8 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     DownloadingTimer.Start();
                 }
 
-                // 切换到已完成页面时，关闭监控
-                else if (pivotSelectionMessage.Value == 1)
-                {
-                    DownloadingTimer.Stop();
-                }
-
                 // 从下载页面离开时，关闭所有事件。并注销所有消息服务
-                else if (pivotSelectionMessage.Value == 2)
+                else if (pivotSelectionMessage.Value == -1)
                 {
                     if (DownloadingTimer.IsEnabled)
                     {
@@ -111,6 +105,13 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     DownloadingTimer.Tick -= DownloadInfoTimerTick;
                     Messenger.UnregisterAll(this);
                 }
+
+                // 切换到其他页面时，关闭监控
+                else
+                {
+                    DownloadingTimer.Stop();
+                }
+
                 await Task.CompletedTask;
             });
         }
@@ -143,7 +144,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 IsSelectMode = false;
 
-                //await DownloadDataService.DeleteDownloadDataAsync(SelectedDownloadomgDataList);
+                //await IDownloadDBService.DeleteDownloadDataAsync(SelectedDownloadomgDataList);
 
                 //// 如果有正在下载的服务，从下载列表中删除
                 //if (DownloadingList.Any())
@@ -162,7 +163,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// </summary>
         private async Task GetDownloadDataListAsync()
         {
-            //Tuple<List<DownloadModel>, bool> DownloadData = await DownloadDataService.QueryAllDownloadDataAsync();
+            //Tuple<List<DownloadModel>, bool> DownloadData = await IDownloadDBService.QueryDownloadDataAsync();
 
             //List<DownloadModel> DownloadRawList = DownloadData.Item1;
 

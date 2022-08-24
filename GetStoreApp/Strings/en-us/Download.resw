@@ -123,14 +123,14 @@
   <data name="Completed" xml:space="preserve">
     <value>Download completed</value>
   </data>
+  <data name="CompletedCountInfo" xml:space="preserve">
+    <value>There are {0} records that have been downloaded</value>
+  </data>
   <data name="CompletedEmpty" xml:space="preserve">
     <value>There are no records that have been downloaded</value>
   </data>
   <data name="CompletedEmptyDescription" xml:space="preserve">
     <value>Go to the app you want to download, and the file you downloaded will appear here</value>
-  </data>
-  <data name="CompletedEmptyInfo" xml:space="preserve">
-    <value>There are {0} records that have been downloaded</value>
   </data>
   <data name="Continue" xml:space="preserve">
     <value>Continue download</value>
@@ -191,5 +191,17 @@
   </data>
   <data name="Title" xml:space="preserve">
     <value>Download Management</value>
+  </data>
+  <data name="Unfinished" xml:space="preserve">
+    <value>Unfinished</value>
+  </data>
+  <data name="UnfinishedCountInfo" xml:space="preserve">
+    <value>There are {0} records that have not been downloaded</value>
+  </data>
+  <data name="UnfinishedEmpty" xml:space="preserve">
+    <value>There are no records of unfinished downloads</value>
+  </data>
+  <data name="UnfinishedEmptyDescription" xml:space="preserve">
+    <value>When a download task is forced to terminate the download due to an error, the file that you did not complete the download will be displayed here</value>
   </data>
 </root>

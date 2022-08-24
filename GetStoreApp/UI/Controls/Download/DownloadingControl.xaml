@@ -10,7 +10,7 @@
     mc:Ignorable="d">
 
     <UserControl.Resources>
-        <converter:DownloadProgressFormatConverter x:Name="DownloadProgressFormatConverter" />
+        <converter:ProgressFormatConverter x:Name="ProgressFormatConverter" />
     </UserControl.Resources>
 
     <Grid>
@@ -129,18 +129,12 @@
 
         <ListView
             Grid.Row="2"
+            ItemContainerStyle="{StaticResource ListPickerFlyoutPresenterItemStyle}"
             ItemsSource="{x:Bind ViewModel.DownloadingDataList, Mode=OneWay}"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
             ScrollViewer.VerticalScrollMode="Enabled"
             SelectionMode="None"
             Visibility="{x:Bind ViewModel.IsDownloadingEmpty, Converter={StaticResource BooleanToReverseVisibilityConverter}, Mode=OneWay}">
-
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    <Setter Property="Padding" Value="0,0,0,5" />
-                </Style>
-            </ListView.ItemContainerStyle>
 
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:DownloadModel">
@@ -198,8 +192,8 @@
 
                             <ProgressBar
                                 Grid.Row="1"
-                                ToolTipService.ToolTip="{x:Bind DownloadProgress, Mode=OneWay, Converter={StaticResource DownloadProgressFormatConverter}}"
-                                Value="{x:Bind DownloadProgress, Mode=OneWay}" />
+                                ToolTipService.ToolTip="{x:Bind CalculateDownloadProgress(DownloadedFinishedSize, DownloadTotalSize), Mode=OneWay}"
+                                Value="{x:Bind CalculateDownloadProgress(DownloadedFinishedSize, DownloadTotalSize), Mode=OneWay}" />
                         </Grid>
 
                         <StackPanel

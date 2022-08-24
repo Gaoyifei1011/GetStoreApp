@@ -133,18 +133,12 @@
 
         <ListView
             Grid.Row="2"
+            ItemContainerStyle="{StaticResource ListPickerFlyoutPresenterItemStyle}"
             ItemsSource="{x:Bind ViewModel.CompletedDataList, Mode=OneWay}"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
             ScrollViewer.VerticalScrollMode="Enabled"
             SelectionMode="None"
             Visibility="{x:Bind ViewModel.IsCompletedEmpty, Converter={StaticResource BooleanToReverseVisibilityConverter}, Mode=OneWay}">
-
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    <Setter Property="Padding" Value="0,0,0,5" />
-                </Style>
-            </ListView.ItemContainerStyle>
 
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:DownloadModel">
@@ -188,9 +182,9 @@
                                     ToolTipService.ToolTip="{x:Bind FileName}" />
                                 <TextBlock
                                     Grid.Column="1"
-                                    Text="{x:Bind FileSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}"
+                                    Text="{x:Bind DownloadTotalSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}"
                                     TextAlignment="Left"
-                                    ToolTipService.ToolTip="{x:Bind FileSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}" />
+                                    ToolTipService.ToolTip="{x:Bind DownloadTotalSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}" />
                             </Grid>
 
                             <!--  更换为文件是否存在  -->

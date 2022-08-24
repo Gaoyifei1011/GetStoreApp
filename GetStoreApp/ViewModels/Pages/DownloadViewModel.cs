@@ -37,7 +37,7 @@ namespace GetStoreApp.ViewModels.Pages
         // 离开该页面时，关闭所有事件，并通知注销所有事件（防止内存泄露）
         public void OnNavigatedFrom()
         {
-            Messenger.Send(new PivotSelectionMessage(2));
+            Messenger.Send(new PivotSelectionMessage(-1));
         }
     }
 }

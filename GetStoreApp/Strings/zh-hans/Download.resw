@@ -123,14 +123,14 @@
   <data name="Completed" xml:space="preserve">
     <value>已完成</value>
   </data>
+  <data name="CompletedCountInfo" xml:space="preserve">
+    <value>共有{0}条已下载完成的的记录</value>
+  </data>
   <data name="CompletedEmpty" xml:space="preserve">
     <value>没有任何已下载完成的记录</value>
   </data>
   <data name="CompletedEmptyDescription" xml:space="preserve">
     <value>快去获取想要下载的应用吧，您下载完成的文件将会显示在此处</value>
-  </data>
-  <data name="CompletedEmptyInfo" xml:space="preserve">
-    <value>共有{0}条已下载完成的的记录</value>
   </data>
   <data name="Continue" xml:space="preserve">
     <value>继续下载</value>
@@ -151,7 +151,7 @@
     <value>删除任务</value>
   </data>
   <data name="Downloading" xml:space="preserve">
-    <value>下载中</value>
+    <value>正在下载</value>
   </data>
   <data name="DownloadingCountInfo" xml:space="preserve">
     <value>共有{0}条正在下载中的记录</value>
@@ -191,5 +191,17 @@
   </data>
   <data name="Title" xml:space="preserve">
     <value>下载管理</value>
+  </data>
+  <data name="Unfinished" xml:space="preserve">
+    <value>未完成</value>
+  </data>
+  <data name="UnfinishedCountInfo" xml:space="preserve">
+    <value>共有{0}条未下载完成的记录</value>
+  </data>
+  <data name="UnfinishedEmpty" xml:space="preserve">
+    <value>没有任何未下载完成的记录</value>
+  </data>
+  <data name="UnfinishedEmptyDescription" xml:space="preserve">
+    <value>下载任务因错误被迫终止下载时，您未完成下载的文件将会显示在此处</value>
   </data>
 </root>
