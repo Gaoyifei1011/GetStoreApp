@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Helpers;
-using GetStoreApp.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -538,7 +537,6 @@ namespace GetStoreApp.Services.Download
                         Convert.ToInt32(ResultContent["downloadSpeed"])
                         );
                 }
-
                 else
                 {
                     throw new Exception();

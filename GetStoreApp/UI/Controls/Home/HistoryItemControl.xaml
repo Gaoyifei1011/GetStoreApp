@@ -62,7 +62,7 @@
                         Command="{x:Bind ViewModel.CopyCommand}"
                         Icon="Copy"
                         Label="{x:Bind ResourceService.GetLocalized('/Home/Copy')}"
-                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/Copy')}"
+                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/CopyDescription')}"
                         Visibility="{x:Bind ViewModel.HistoryItemDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}" />
 
                     <AppBarButton
@@ -81,7 +81,7 @@
                     VerticalAlignment="Center"
                     Text="{x:Bind ResourceService.GetLocalized('/Home/HistoryItemEmpty')}"
                     TextAlignment="Center"
-                    Visibility="{x:Bind ViewModel.HistoryItemDataList.Count, Converter={StaticResource IntToReverseVisibilityConverter}, Mode=OneWay}" />
+                    Visibility="{x:Bind ViewModel.HistoryItemDataList.Count, Converter={StaticResource IntToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}" />
 
                 <ctWinUI:DataGrid
                     ItemsSource="{x:Bind ViewModel.HistoryItemDataList, Mode=OneWay}"
@@ -108,15 +108,13 @@
                             Width="*"
                             Binding="{Binding HistoryChannel, Converter={StaticResource ChannelNameFormatConverter}}"
                             Header="{x:Bind ResourceService.GetLocalized('/Home/Channel')}"
-                            HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
-                            ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/DoubleTapToInput')}" />
+                            HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" />
 
                         <ctWinUI:DataGridTextColumn
                             Width="3*"
                             Binding="{Binding HistoryLink}"
                             Header="{x:Bind ResourceService.GetLocalized('/Home/Link')}"
-                            HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
-                            ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/DoubleTapToInput')}" />
+                            HeaderStyle="{StaticResource DataGridColumnHeaderStyle}" />
                     </ctWinUI:DataGrid.Columns>
                 </ctWinUI:DataGrid>
             </Grid>

@@ -120,6 +120,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="CancelDescription" xml:space="preserve">
+    <value>Exit multi-select mode</value>
+  </data>
   <data name="Channel" xml:space="preserve">
     <value>Channel</value>
   </data>
@@ -129,17 +132,26 @@
   <data name="CopyAll" xml:space="preserve">
     <value>Copy all</value>
   </data>
+  <data name="CopyDescription" xml:space="preserve">
+    <value>Copy the selected content to the clipboard</value>
+  </data>
   <data name="CopyLink" xml:space="preserve">
     <value>Copy link</value>
   </data>
   <data name="CopySelected" xml:space="preserve">
     <value>Copy the selected item</value>
   </data>
+  <data name="CopySelectedDescription" xml:space="preserve">
+    <value>Copy the contents of the selected row to the clipboard</value>
+  </data>
   <data name="DateTime" xml:space="preserve">
     <value>Time</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
+  </data>
+  <data name="DeleteDescription" xml:space="preserve">
+    <value>Deletes the record for the selected row</value>
   </data>
   <data name="DoubleTapToInput" xml:space="preserve">
     <value>Double-click the row to fill in the information</value>
@@ -152,6 +164,9 @@
   </data>
   <data name="Filter" xml:space="preserve">
     <value>Filter</value>
+  </data>
+  <data name="FilterDescription" xml:space="preserve">
+    <value>Filters out data that meets the specified criteria</value>
   </data>
   <data name="HistoryCountInfo" xml:space="preserve">
     <value>There are {0} history records</value>
@@ -183,6 +198,12 @@
   <data name="SelectAll" xml:space="preserve">
     <value>Select all</value>
   </data>
+  <data name="SelectDescription" xml:space="preserve">
+    <value>Enter multi-select mode</value>
+  </data>
+  <data name="SelectedDescription" xml:space="preserve">
+    <value>Selected</value>
+  </data>
   <data name="SelectedHistoryCountInfo" xml:space="preserve">
     <value>The {0} item is selected</value>
   </data>
@@ -192,16 +213,28 @@
   <data name="Sort" xml:space="preserve">
     <value>Sort</value>
   </data>
+  <data name="SortDescription" xml:space="preserve">
+    <value>Sort by when records were created</value>
+  </data>
   <data name="TimeDecreaseSort" xml:space="preserve">
     <value>Time decrement sorting</value>
   </data>
+  <data name="TimeDecreaseSortDescription" xml:space="preserve">
+    <value>Sort by decreasing time records were created</value>
+  </data>
   <data name="TimeIncreaseSort" xml:space="preserve">
     <value>Time increment sorting</value>
+  </data>
+  <data name="TimeIncreaseSortDescription" xml:space="preserve">
+    <value>Sort by the time the record was created</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>History Record</value>
   </data>
   <data name="Type" xml:space="preserve">
     <value>Type</value>
+  </data>
+  <data name="UnselectedDescription" xml:space="preserve">
+    <value>Not selected</value>
   </data>
 </root>

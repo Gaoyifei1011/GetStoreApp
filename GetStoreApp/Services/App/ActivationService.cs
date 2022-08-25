@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Activation;
+using GetStoreApp.Contracts.Activation;
 using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.Settings;

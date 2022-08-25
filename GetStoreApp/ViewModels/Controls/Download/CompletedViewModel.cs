@@ -13,7 +13,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.Storage;
 
 namespace GetStoreApp.ViewModels.Controls.Download
 {
@@ -22,8 +21,6 @@ namespace GetStoreApp.ViewModels.Controls.Download
         private IDownloadDBService DownloadDBService { get; } = IOCHelper.GetService<IDownloadDBService>();
 
         private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
-
-        private StorageFolder DownloadFolder { get; }
 
         public ObservableCollection<DownloadModel> CompletedDataList { get; } = new ObservableCollection<DownloadModel>();
 
@@ -36,18 +33,9 @@ namespace GetStoreApp.ViewModels.Controls.Download
             set { SetProperty(ref _isSelectMode, value); }
         }
 
-        private bool _isCompletedEmpty = true;
-
-        public bool IsCompletedEmpty
-        {
-            get { return _isCompletedEmpty; }
-
-            set { SetProperty(ref _isCompletedEmpty, value); }
-        }
-
         public IAsyncRelayCommand OpenFolderCommand => new AsyncRelayCommand(async () =>
         {
-            await DownloadOptionsService.OpenFolderAsync(DownloadFolder);
+            await DownloadOptionsService.OpenFolderAsync(DownloadOptionsService.DownloadFolder);
         });
 
         public IAsyncRelayCommand SelectCommand => new AsyncRelayCommand(async () =>
@@ -81,8 +69,6 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
         public CompletedViewModel()
         {
-            DownloadFolder = DownloadOptionsService.DownloadFolder;
-
             Messenger.Register<CompletedViewModel, PivotSelectionMessage>(this, async (completedViewModel, pivotSelectionMessage) =>
             {
                 // 切换到已完成页面时，更新当前页面的数据
@@ -139,30 +125,11 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// </summary>
         private async Task GetDownloadDataListAsync()
         {
-            Tuple<List<DownloadModel>, bool> DownloadData = await DownloadDBService.QueryDownloadDataAsync(4);
+            List<DownloadModel> DownloadRawList = await DownloadDBService.QueryDownloadDataAsync(4);
 
-            List<DownloadModel> DownloadRawList = DownloadData.Item1;
-
-            IsCompletedEmpty = DownloadData.Item2;
-
-            try
-            {
-                ConvertRawListToDisplayList(ref DownloadRawList);
-            }
-            catch (Exception)
-            {
-                ConvertRawListToDisplayList(ref DownloadRawList);
-            }
-        }
-
-        /// <summary>
-        /// 将原始数据转换为在UI界面上呈现出来的数据
-        /// </summary>
-        private void ConvertRawListToDisplayList(ref List<DownloadModel> downloadRawList)
-        {
             CompletedDataList.Clear();
 
-            foreach (DownloadModel downloadRawData in downloadRawList)
+            foreach (DownloadModel downloadRawData in DownloadRawList)
             {
                 CompletedDataList.Add(downloadRawData);
             }

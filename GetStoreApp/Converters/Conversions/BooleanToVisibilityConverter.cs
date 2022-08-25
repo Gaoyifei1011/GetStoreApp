@@ -17,7 +17,17 @@ namespace GetStoreApp.Converters.Conversions
             }
 
             bool? result = value as bool?;
-            return result == true ? Visibility.Visible : Visibility.Collapsed;
+            string param = parameter as string;
+
+            if(!string.IsNullOrEmpty(param) && param == "Reverse")
+            {
+                return result == false ? Visibility.Visible : Visibility.Collapsed;
+            }
+
+            else
+            {
+                return result == true ? Visibility.Visible : Visibility.Collapsed;
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

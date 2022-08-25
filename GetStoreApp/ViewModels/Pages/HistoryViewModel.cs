@@ -165,8 +165,8 @@ namespace GetStoreApp.ViewModels.Pages
             await GetHistoryDataListAsync();
         }
 
-        public void OnNavigatedFrom() { }
-
+        public void OnNavigatedFrom()
+        { }
 
         /// <summary>
         /// 多选模式下删除选中的条目
@@ -212,7 +212,6 @@ namespace GetStoreApp.ViewModels.Pages
             // 经过筛选后历史记录是否为空
             IsHistoryEmptyAfterFilter = HistoryAllData.Item3;
 
-            //Todo: need to debug why observablecollection clear cause object reference not set to an instance of an object.
             // 更新UI上面的数据
             ConvertRawListToDisplayList(ref HistoryRawList);
         }

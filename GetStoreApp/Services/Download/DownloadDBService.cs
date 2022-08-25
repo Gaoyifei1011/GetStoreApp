@@ -22,9 +22,7 @@ namespace GetStoreApp.Services.Download
         public async Task InitializeDownloadDBAsync()
         {
             // 将处于等待下载状态的任务调整为暂停下载状态
-            Tuple<List<DownloadModel>, bool> DownloadWaitingData = await QueryDownloadDataAsync(1);
-
-            List<DownloadModel> DownloadWaitingList = DownloadWaitingData.Item1;
+            List<DownloadModel> DownloadWaitingList = await QueryDownloadDataAsync(1);
 
             foreach (DownloadModel downloadItem in DownloadWaitingList)
             {
@@ -33,9 +31,7 @@ namespace GetStoreApp.Services.Download
             }
 
             // 将正在下载状态的任务调整为暂停下载状态
-            Tuple<List<DownloadModel>, bool> DownloadingData = await QueryDownloadDataAsync(3);
-
-            List<DownloadModel> DownloadingList = DownloadingData.Item1;
+            List<DownloadModel> DownloadingList = await QueryDownloadDataAsync(3);
 
             foreach (DownloadModel downloadItem in DownloadingList)
             {
@@ -103,7 +99,7 @@ namespace GetStoreApp.Services.Download
                                 downloadItem.FileName,
                                 downloadItem.FileLink,
                                 downloadItem.FilePath,
-                                downloadItem.DownloadTotalSize,
+                                downloadItem.TotalSize,
                                 downloadItem.DownloadFlag
                                 );
 
@@ -171,14 +167,17 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         /// <param name="downloadFlag">文件下载标志：0为下载失败，1为等待下载，2为暂停下载，3为正在下载，4为成功下载</param>
         /// <returns>返回指定下载标志记录列表</returns>
-        public async Task<Tuple<List<DownloadModel>, bool>> QueryDownloadDataAsync(int downloadFlag)
+        public async Task<List<DownloadModel>> QueryDownloadDataAsync(int downloadFlag)
         {
-            List<DownloadModel> DownloRawList = new List<DownloadModel>();
+            List<DownloadModel> DownloadRawList = new List<DownloadModel>();
 
             //调用之前先判断历史记录表是否为空
             bool IsDownloadEmpty = await IsDownloadTableEmptyAsync();
 
-            if (IsDownloadEmpty) return Tuple.Create(DownloRawList, IsDownloadEmpty);
+            if (IsDownloadEmpty)
+            {
+                return DownloadRawList;
+            }
 
             // 从数据库中获取数据
             using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
@@ -206,16 +205,16 @@ namespace GetStoreApp.Services.Download
                         FileLink = Query.GetString(2),
                         FilePath = Query.GetString(3),
                         FileSHA1 = Query.GetString(4),
-                        DownloadTotalSize = Convert.ToInt32(Query.GetString(5)),
+                        TotalSize = Convert.ToInt32(Query.GetString(5)),
                         DownloadFlag = Convert.ToInt32(Query.GetString(7))
                     };
 
-                    DownloRawList.Add(downloadRawModel);
+                    DownloadRawList.Add(downloadRawModel);
                 }
 
                 await db.CloseAsync();
             }
-            return Tuple.Create(DownloRawList, IsDownloadEmpty);
+            return DownloadRawList;
         }
 
         /// <summary>
