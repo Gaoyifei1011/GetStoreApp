@@ -12,9 +12,7 @@
     <check:PauseDownloadCheckConverter x:Name="PauseDownloadCheckConverter" />
 
     <convert:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
-    <convert:BooleanToReverseVisibilityConverter x:Name="BooleanToReverseVisibilityConverter" />
     <convert:IntToVisibilityConverter x:Name="IntToVisibilityConverter" />
-    <convert:IntToReverseVisibilityConverter x:Name="IntToReverseVisibilityConverter" />
 
     <format:DownloadSizeFormatConverter x:Name="DownloadSizeFormatConverter" />
     <format:DownloadSpeedFormatConverter x:Name="DownloadSpeedFormatConverter" />

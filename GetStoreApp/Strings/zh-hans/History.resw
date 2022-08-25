@@ -120,6 +120,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
+  <data name="CancelDescription" xml:space="preserve">
+    <value>退出多选模式</value>
+  </data>
   <data name="Channel" xml:space="preserve">
     <value>通道</value>
   </data>
@@ -129,17 +132,26 @@
   <data name="CopyAll" xml:space="preserve">
     <value>复制全部</value>
   </data>
+  <data name="CopyDescription" xml:space="preserve">
+    <value>复制选中的内容到剪贴板</value>
+  </data>
   <data name="CopyLink" xml:space="preserve">
     <value>复制链接</value>
   </data>
   <data name="CopySelected" xml:space="preserve">
     <value>复制选中的项目</value>
   </data>
+  <data name="CopySelectedDescription" xml:space="preserve">
+    <value>复制选中行的内容到剪贴板</value>
+  </data>
   <data name="DateTime" xml:space="preserve">
     <value>时间</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>删除</value>
+  </data>
+  <data name="DeleteDescription" xml:space="preserve">
+    <value>删除选中行的记录</value>
   </data>
   <data name="DoubleTapToInput" xml:space="preserve">
     <value>双击该行填入信息</value>
@@ -152,6 +164,9 @@
   </data>
   <data name="Filter" xml:space="preserve">
     <value>筛选</value>
+  </data>
+  <data name="FilterDescription" xml:space="preserve">
+    <value>筛选出符合指定条件的数据</value>
   </data>
   <data name="HistoryCountInfo" xml:space="preserve">
     <value>共有{0}条历史记录</value>
@@ -183,6 +198,12 @@
   <data name="SelectAll" xml:space="preserve">
     <value>全选</value>
   </data>
+  <data name="SelectDescription" xml:space="preserve">
+    <value>进入多选模式</value>
+  </data>
+  <data name="SelectedDescription" xml:space="preserve">
+    <value>已选择</value>
+  </data>
   <data name="SelectedHistoryCountInfo" xml:space="preserve">
     <value>已选中{0}项</value>
   </data>
@@ -192,16 +213,28 @@
   <data name="Sort" xml:space="preserve">
     <value>排序</value>
   </data>
+  <data name="SortDescription" xml:space="preserve">
+    <value>按照记录创建的时间进行排序</value>
+  </data>
   <data name="TimeDecreaseSort" xml:space="preserve">
     <value>时间递减排序</value>
   </data>
+  <data name="TimeDecreaseSortDescription" xml:space="preserve">
+    <value>按照记录创建的时间递减进行排序</value>
+  </data>
   <data name="TimeIncreaseSort" xml:space="preserve">
     <value>时间递增排序</value>
+  </data>
+  <data name="TimeIncreaseSortDescription" xml:space="preserve">
+    <value>按照记录创建的时间递增进行排序</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>历史记录</value>
   </data>
   <data name="Type" xml:space="preserve">
     <value>类型</value>
+  </data>
+  <data name="UnselectedDescription" xml:space="preserve">
+    <value>未选择</value>
   </data>
 </root>

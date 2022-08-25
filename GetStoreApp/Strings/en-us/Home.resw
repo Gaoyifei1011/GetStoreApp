@@ -123,6 +123,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="CancelDescription" xml:space="preserve">
+    <value>Exit multi-select mode</value>
+  </data>
   <data name="CategoryId" xml:space="preserve">
     <value>CategoryID:{0}</value>
   </data>
@@ -135,26 +138,50 @@
   <data name="CopyCategoryID" xml:space="preserve">
     <value>Copy CategoryID</value>
   </data>
+  <data name="CopyCategoryIDDescription" xml:space="preserve">
+    <value>Copy the CategoryID to the clipboard</value>
+  </data>
   <data name="CopyContent" xml:space="preserve">
     <value>Copy content</value>
+  </data>
+  <data name="CopyContentDescription" xml:space="preserve">
+    <value>Copy the contents to the clipboard</value>
+  </data>
+  <data name="CopyDescription" xml:space="preserve">
+    <value>Copy the selected content to the clipboard</value>
   </data>
   <data name="CopyLink" xml:space="preserve">
     <value>Copy link</value>
   </data>
-  <data name="CopySelected" xml:space="preserve">
-    <value>Copy the selected item</value>
+  <data name="CopyLinkDescription" xml:space="preserve">
+    <value>Copy the download link to the clipboard</value>
+  </data>
+  <data name="CopyOptions" xml:space="preserve">
+    <value>Copy options</value>
+  </data>
+  <data name="CopyOptionsDescription" xml:space="preserve">
+    <value>Click Show Replication Options</value>
   </data>
   <data name="CopySelectedContent" xml:space="preserve">
     <value>Copy the selected row content</value>
   </data>
+  <data name="CopySelectedContentDescription" xml:space="preserve">
+    <value>Copy the contents of the selected row to the clipboard</value>
+  </data>
   <data name="CopySelectedLink" xml:space="preserve">
     <value>Copy the selected row download link</value>
+  </data>
+  <data name="CopySelectedLinkDescription" xml:space="preserve">
+    <value>Copy the download link for the selected row to the clipboard</value>
   </data>
   <data name="DoubleTapToInput" xml:space="preserve">
     <value>Double-click the row to fill in the information</value>
   </data>
   <data name="Download" xml:space="preserve">
     <value>Download</value>
+  </data>
+  <data name="DownloadDescription" xml:space="preserve">
+    <value>Download the selected item</value>
   </data>
   <data name="DownloadSelected" xml:space="preserve">
     <value>Download the selected item</value>
@@ -207,6 +234,12 @@
   <data name="SelectAll" xml:space="preserve">
     <value>Select all</value>
   </data>
+  <data name="SelectDescription" xml:space="preserve">
+    <value>Enter multi-select mode</value>
+  </data>
+  <data name="SelectedDescription" xml:space="preserve">
+    <value>Selected</value>
+  </data>
   <data name="SelectNone" xml:space="preserve">
     <value>Select none</value>
   </data>
@@ -242,6 +275,9 @@
   </data>
   <data name="Type" xml:space="preserve">
     <value>Type</value>
+  </data>
+  <data name="UnselectedDescription" xml:space="preserve">
+    <value>Not selected</value>
   </data>
   <data name="UseInstruction" xml:space="preserve">
     <value>Direction for use</value>

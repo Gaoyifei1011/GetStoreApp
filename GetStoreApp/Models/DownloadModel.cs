@@ -5,7 +5,6 @@ namespace GetStoreApp.Models
 {
     public class DownloadModel : DependencyObject, INotifyPropertyChanged
     {
-
         /*
         1.下载的通用信息
         */
@@ -113,7 +112,6 @@ namespace GetStoreApp.Models
         public static readonly DependencyProperty FileSizeProperty =
             DependencyProperty.Register("FileSize", typeof(int), typeof(DownloadModel), new PropertyMetadata(0));
 
-
         /*
         3.下载文件的状态信息
         */
@@ -138,55 +136,55 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 下载文件的总大小
         /// </summary>
-        private int _downloadTotalSize;
+        private int _totalSize;
 
-        public int DownloadTotalSize
+        public int TotalSize
         {
-            get { return _downloadTotalSize; }
+            get { return _totalSize; }
 
-            set { _downloadTotalSize = value; }
+            set { _totalSize = value; }
         }
 
         /// <summary>
         /// 下载文件已完成的进度
         /// </summary>
-        private int _downloadFinishedSize;
+        private int _finishedSize;
 
-        public int DownloadedFinishedSize
+        public int FinishedSize
         {
-            get { return _downloadFinishedSize; }
+            get { return _finishedSize; }
 
             set
             {
-                _downloadFinishedSize = value;
+                _finishedSize = value;
 
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadedFinishedSize)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FinishedSize)));
             }
         }
 
         /// <summary>
         /// 文件下载速度
         /// </summary>
-        private int _downloadSpeed;
+        private int _currentSpeed;
 
-        public int DownloadSpeed
+        public int CurrentSpeed
         {
-            get { return _downloadSpeed; }
+            get { return _currentSpeed; }
 
             set
             {
-                _downloadSpeed = value;
+                _currentSpeed = value;
 
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadSpeed)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentSpeed)));
             }
         }
 
         /// <summary>
         /// 计算当前文件的下载进度
         /// </summary>
-        public double CalculateDownloadProgress(int downloadFinishedSize,int downloadTotalSize)
+        public double CalculateDownloadProgress(int finishedSize, int totalSize)
         {
-            return downloadFinishedSize / downloadTotalSize;
+            return finishedSize / totalSize;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

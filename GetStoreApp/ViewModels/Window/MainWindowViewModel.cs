@@ -33,15 +33,23 @@ namespace GetStoreApp.ViewModels.Window
         /// </summary>
         public async void WindowClosing(object sender, WindowClosingEventArgs args)
         {
-            ContentDialogResult result = await new ClosingWindowDialog().ShowAsync();
+            if (DownloadSchedulerService.GetDownloadingList().Count > 0 || DownloadSchedulerService.GetWaitingList().Count > 0)
+            {
+                ContentDialogResult result = await new ClosingWindowDialog().ShowAsync();
 
-            if (result == ContentDialogResult.Primary)
+                if (result == ContentDialogResult.Primary)
+                {
+                    args.TryCloseWindow();
+                }
+                else if (result == ContentDialogResult.Secondary)
+                {
+                    NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+                }
+            }
+
+            else
             {
                 args.TryCloseWindow();
-            }
-            else if (result == ContentDialogResult.Secondary)
-            {
-                NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo());
             }
         }
     }

@@ -11,8 +11,9 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <converter:TypeNameFormatConverter x:Name="TypeNameFormatConverter" />
         <converter:ChannelNameFormatConverter x:Name="ChannelNameFormatConverter" />
+        <converter:CheckBoxToolTipFormatConverter x:Name="CheckBoxToolTipFormatConverter" />
+        <converter:TypeNameFormatConverter x:Name="TypeNameFormatConverter" />
     </Page.Resources>
 
     <Grid Margin="30,15,30,0">
@@ -67,7 +68,7 @@
                 VerticalAlignment="Center"
                 Background="Transparent"
                 DefaultLabelPosition="Right"
-                Visibility="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToReverseVisibilityConverter}, Mode=OneWay}">
+                Visibility="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}">
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.FillinCommand}"
@@ -79,18 +80,18 @@
                     Command="{x:Bind ViewModel.CopyCommand}"
                     Icon="Copy"
                     Label="{x:Bind ResourceService.GetLocalized('/History/Copy')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/Copy')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/CopyDescription')}" />
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.SelectCommand}"
                     Icon="Bullets"
                     Label="{x:Bind ResourceService.GetLocalized('/History/Select')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/Select')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/SelectDescription')}" />
 
                 <AppBarButton
                     Icon="Sort"
                     Label="{x:Bind ResourceService.GetLocalized('/History/Sort')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/Sort')}">
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/SortDescription')}">
                     <AppBarButton.Flyout>
                         <MenuFlyout Placement="Bottom">
 
@@ -100,14 +101,14 @@
                                 Icon="Up"
                                 IsChecked="{x:Bind ViewModel.TimeSortOrder, Converter={StaticResource TimeSortValueCheckConverter}, ConverterParameter=true, Mode=OneWay}"
                                 Text="{x:Bind ResourceService.GetLocalized('/History/TimeIncreaseSort')}"
-                                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/TimeIncreaseSort')}" />
+                                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/TimeIncreaseSortDescription')}" />
 
                             <RadioMenuFlyoutItem
                                 Command="{x:Bind ViewModel.TimeSortCommand}"
                                 CommandParameter="false"
                                 IsChecked="{x:Bind ViewModel.TimeSortOrder, Converter={StaticResource TimeSortValueCheckConverter}, ConverterParameter=false, Mode=OneWay}"
                                 Text="{x:Bind ResourceService.GetLocalized('/History/TimeDecreaseSort')}"
-                                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/TimeDecreaseSort')}">
+                                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/TimeDecreaseSortDescription')}">
                                 <RadioMenuFlyoutItem.Icon>
                                     <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE74b;" />
                                 </RadioMenuFlyoutItem.Icon>
@@ -119,7 +120,7 @@
                 <AppBarButton
                     Icon="Filter"
                     Label="{x:Bind ResourceService.GetLocalized('/History/Filter')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/Filter')}">
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/FilterDescription')}">
                     <AppBarButton.Flyout>
 
                         <MenuFlyout Placement="Bottom">
@@ -244,19 +245,19 @@
                     Command="{x:Bind ViewModel.CopySelectedCommand}"
                     Icon="Copy"
                     Label="{x:Bind ResourceService.GetLocalized('/History/CopySelected')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/CopySelected')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/CopySelectedDescription')}" />
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.DeleteCommand}"
                     Icon="Delete"
                     Label="{x:Bind ResourceService.GetLocalized('/History/Delete')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/Delete')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/DeleteDescription')}" />
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.CancelCommand}"
                     Icon="Cancel"
                     Label="{x:Bind ResourceService.GetLocalized('/History/Cancel')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/Cancel')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/CancelDescription')}" />
             </CommandBar>
         </Grid>
 
@@ -272,7 +273,7 @@
                 TextAlignment="Center" />
         </Grid>
 
-        <Grid Grid.Row="3" Visibility="{x:Bind ViewModel.IsHistoryEmpty, Converter={StaticResource BooleanToReverseVisibilityConverter}, Mode=OneWay}">
+        <Grid Grid.Row="3" Visibility="{x:Bind ViewModel.IsHistoryEmpty, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -296,7 +297,7 @@
                 RowStyle="{StaticResource DataGridRowStyle}"
                 SelectedItem="{x:Bind ViewModel.SelectedHistoryItem, Mode=TwoWay}"
                 Style="{StaticResource DataGridHistoryStyle}"
-                Visibility="{x:Bind ViewModel.IsHistoryEmptyAfterFilter, Converter={StaticResource BooleanToReverseVisibilityConverter}, Mode=OneWay}">
+                Visibility="{x:Bind ViewModel.IsHistoryEmptyAfterFilter, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}">
 
                 <i:Interaction.Behaviors>
                     <ic:EventTriggerBehavior EventName="DoubleTapped">
@@ -310,7 +311,7 @@
                         Width="Auto"
                         Header="{x:Bind ResourceService.GetLocalized('/History/Select')}"
                         HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
-                        IsReadOnly="False"
+                        IsReadOnly="True"
                         Visibility="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
 
                         <ctWinUI:DataGridTemplateColumn.CellTemplate>
@@ -321,7 +322,8 @@
                                     VerticalAlignment="Center"
                                     IsChecked="{Binding IsSelected, Mode=TwoWay}"
                                     IsThreeState="False"
-                                    Style="{StaticResource CheckBoxStyle}" />
+                                    Style="{StaticResource CheckBoxStyle}"
+                                    ToolTipService.ToolTip="{Binding IsSelected, Converter={StaticResource CheckBoxToolTipFormatConverter}, ConverterParameter=History, Mode=OneWay}" />
                             </DataTemplate>
                         </ctWinUI:DataGridTemplateColumn.CellTemplate>
                     </ctWinUI:DataGridTemplateColumn>
@@ -331,32 +333,28 @@
                         Binding="{Binding CreateTimeStamp, Converter={StaticResource TimeStampFormatConverter}}"
                         Header="{x:Bind ResourceService.GetLocalized('/History/DateTime')}"
                         HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
-                        IsReadOnly="True"
-                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/DoubleTapToInput')}" />
+                        IsReadOnly="True" />
 
                     <ctWinUI:DataGridTextColumn
                         Width="*"
                         Binding="{Binding HistoryType, Converter={StaticResource TypeNameFormatConverter}}"
                         Header="{x:Bind ResourceService.GetLocalized('/History/Type')}"
                         HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
-                        IsReadOnly="True"
-                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/DoubleTapToInput')}" />
+                        IsReadOnly="True" />
 
                     <ctWinUI:DataGridTextColumn
                         Width="*"
                         Binding="{Binding HistoryChannel, Converter={StaticResource ChannelNameFormatConverter}}"
                         Header="{x:Bind ResourceService.GetLocalized('/History/Channel')}"
                         HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
-                        IsReadOnly="True"
-                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/DoubleTapToInput')}" />
+                        IsReadOnly="True" />
 
                     <ctWinUI:DataGridTextColumn
                         Width="3*"
                         Binding="{Binding HistoryLink}"
                         Header="{x:Bind ResourceService.GetLocalized('/History/Link')}"
                         HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
-                        IsReadOnly="True"
-                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/DoubleTapToInput')}" />
+                        IsReadOnly="True" />
                 </ctWinUI:DataGrid.Columns>
             </ctWinUI:DataGrid>
         </Grid>

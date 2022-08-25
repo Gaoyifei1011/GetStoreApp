@@ -12,12 +12,10 @@
         IsOpen="True"
         Message="{x:Bind ViewModel.StateInfoText, Mode=OneWay}"
         Severity="{x:Bind ViewModel.InfoBarSeverity, Mode=OneWay}"
-        Style="{StaticResource InfoBarStyle}">
+        Style="{StaticResource InfoBarStyle}"
+        ToolTipService.ToolTip="{x:Bind ViewModel.StateInfoText, Mode=OneWay}">
         <InfoBar.Content>
-            <ProgressBar
-                Margin="-45,0,0,0"
-                IsIndeterminate="{x:Bind ViewModel.StatePrBarActValue, Mode=OneWay}"
-                Visibility="{x:Bind ViewModel.StatePrBarVisValue, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
+            <ProgressBar IsIndeterminate="{x:Bind ViewModel.StatePrBarActValue, Mode=OneWay}" Visibility="{x:Bind ViewModel.StatePrBarVisValue, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
         </InfoBar.Content>
     </InfoBar>
 </UserControl>

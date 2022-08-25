@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace GetStoreApp.Activation
+namespace GetStoreApp.Contracts.Activation
 {
     public interface IActivationHandler
     {

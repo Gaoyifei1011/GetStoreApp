@@ -2,11 +2,16 @@
     x:Class="GetStoreApp.UI.Controls.Download.CompletedControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="using:GetStoreApp.Converters.Formats"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:GetStoreApp.Models"
     x:Name="CompletedRoot"
     mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <converter:CheckBoxToolTipFormatConverter x:Name="CheckBoxToolTipFormatConverter" />
+    </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -54,7 +59,7 @@
                 VerticalAlignment="Center"
                 Background="Transparent"
                 DefaultLabelPosition="Right"
-                Visibility="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToReverseVisibilityConverter}, Mode=OneWay}">
+                Visibility="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}">
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.OpenFolderCommand}"
@@ -69,7 +74,7 @@
                     Command="{x:Bind ViewModel.SelectCommand}"
                     Icon="Bullets"
                     Label="{x:Bind ResourceService.GetLocalized('/Download/Select')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/Select')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SelectDescription')}" />
             </CommandBar>
 
             <CommandBar
@@ -93,8 +98,8 @@
 
                 <AppBarButton
                     Icon="Delete"
-                    Label="{x:Bind ResourceService.GetLocalized('/Download/Delete')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/Delete')}">
+                    Label="{x:Bind ResourceService.GetLocalized('/Download/DeleteOptions')}"
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/DeleteOptionsDescription')}">
 
                     <AppBarButton.Flyout>
                         <MenuFlyout Placement="Bottom">
@@ -115,7 +120,7 @@
                     Command="{x:Bind ViewModel.CancelCommand}"
                     Icon="Cancel"
                     Label="{x:Bind ResourceService.GetLocalized('/Download/Cancel')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/Cancel')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/CancelDescription')}" />
             </CommandBar>
         </Grid>
 
@@ -123,12 +128,13 @@
             Grid.Row="1"
             Margin="0,0,0,10"
             Style="{StaticResource CardGridStyle}"
-            Visibility="{x:Bind ViewModel.IsCompletedEmpty, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+            Visibility="{x:Bind ViewModel.CompletedDataList.Count, Converter={StaticResource IntToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}">
             <TextBlock
                 Margin="0,10,0,10"
                 VerticalAlignment="Center"
                 Text="{x:Bind ResourceService.GetLocalized('/Download/CompletedEmptyDescription')}"
-                TextAlignment="Center" />
+                TextAlignment="Center"
+                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/CompletedEmptyDescription')}" />
         </Grid>
 
         <ListView
@@ -138,7 +144,7 @@
             ScrollViewer.VerticalScrollBarVisibility="Auto"
             ScrollViewer.VerticalScrollMode="Enabled"
             SelectionMode="None"
-            Visibility="{x:Bind ViewModel.IsCompletedEmpty, Converter={StaticResource BooleanToReverseVisibilityConverter}, Mode=OneWay}">
+            Visibility="{x:Bind ViewModel.CompletedDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
 
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:DownloadModel">
@@ -156,6 +162,7 @@
                             IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
                             IsThreeState="False"
                             Style="{StaticResource CheckBoxStyle}"
+                            ToolTipService.ToolTip="{x:Bind IsSelected, Converter={StaticResource CheckBoxToolTipFormatConverter}, ConverterParameter=Download, Mode=OneWay}"
                             Visibility="{Binding ElementName=CompletedRoot, Path=ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                         <Grid
@@ -182,9 +189,9 @@
                                     ToolTipService.ToolTip="{x:Bind FileName}" />
                                 <TextBlock
                                     Grid.Column="1"
-                                    Text="{x:Bind DownloadTotalSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}"
+                                    Text="{x:Bind TotalSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}"
                                     TextAlignment="Left"
-                                    ToolTipService.ToolTip="{x:Bind DownloadTotalSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}" />
+                                    ToolTipService.ToolTip="{x:Bind TotalSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}" />
                             </Grid>
 
                             <!--  更换为文件是否存在  -->
@@ -202,8 +209,7 @@
                                 CommandParameter="{Binding FilePath}"
                                 Content="&#xE8b7;"
                                 Style="{StaticResource ButtonDownloadStyle}"
-                                ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=OpenFolder}"
-                                Visibility="{x:Bind DownloadFlag, Converter={StaticResource OpenFolderCheckConverter}, Mode=OneWay}" />
+                                ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=OpenFolder}" />
 
                             <Button
                                 Margin="5,0,0,0"

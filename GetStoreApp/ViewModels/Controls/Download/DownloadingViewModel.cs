@@ -36,16 +36,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
             set { SetProperty(ref _isSelectMode, value); }
         }
 
-        private bool _isDownloadingEmpty = true;
-
-        public bool IsDownloadingEmpty
+        public IAsyncRelayCommand OpenFolderCommand => new AsyncRelayCommand(async () =>
         {
-            get { return _isDownloadingEmpty; }
-
-            set { SetProperty(ref _isDownloadingEmpty, value); }
-        }
-
-        public IAsyncRelayCommand ContinueAllCommand { get; }
+            await DownloadOptionsService.OpenFolderAsync(DownloadOptionsService.DownloadFolder);
+        });
 
         public IAsyncRelayCommand PauseAllCommand { get; }
 

@@ -13,7 +13,7 @@ namespace GetStoreApp.Contracts.Services.Download
 
         Task<bool> UpdateFlagAsync(DownloadModel downloadItem);
 
-        Task<Tuple<List<DownloadModel>, bool>> QueryDownloadDataAsync(int downloadFlag);
+        Task<List<DownloadModel>> QueryDownloadDataAsync(int downloadFlag);
 
         Task DeleteDownloadDataAsync(DownloadModel downloadItem);
 

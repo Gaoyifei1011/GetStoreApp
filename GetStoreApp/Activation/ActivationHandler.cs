@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using GetStoreApp.Contracts.Activation;
+using System.Threading.Tasks;
 
 namespace GetStoreApp.Activation
 {
