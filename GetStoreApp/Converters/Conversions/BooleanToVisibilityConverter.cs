@@ -19,11 +19,10 @@ namespace GetStoreApp.Converters.Conversions
             bool? result = value as bool?;
             string param = parameter as string;
 
-            if(!string.IsNullOrEmpty(param) && param == "Reverse")
+            if (!string.IsNullOrEmpty(param) && param == "Reverse")
             {
                 return result == false ? Visibility.Visible : Visibility.Collapsed;
             }
-
             else
             {
                 return result == true ? Visibility.Visible : Visibility.Collapsed;

@@ -46,7 +46,6 @@ namespace GetStoreApp.ViewModels.Window
                     NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo());
                 }
             }
-
             else
             {
                 args.TryCloseWindow();
