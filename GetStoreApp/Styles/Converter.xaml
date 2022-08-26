@@ -11,6 +11,7 @@
     <check:OpenFolderCheckConverter x:Name="OpenFolderCheckConverter" />
     <check:PauseDownloadCheckConverter x:Name="PauseDownloadCheckConverter" />
 
+    <convert:BooleanToOppositeValueConverter x:Name="BooleanToOppositeValueConverter" />
     <convert:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
     <convert:IntToVisibilityConverter x:Name="IntToVisibilityConverter" />
 

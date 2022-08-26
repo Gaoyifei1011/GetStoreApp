@@ -8,7 +8,6 @@ using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.Models;
-using GetStoreApp.UI.Dialogs;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
@@ -54,9 +53,15 @@ namespace GetStoreApp.ViewModels.Controls.Home
             await Task.CompletedTask;
         });
 
-        public IAsyncRelayCommand CopyCommand => new AsyncRelayCommand(CopyAsync);
+        public IAsyncRelayCommand CopyCommand => new AsyncRelayCommand<HistoryModel>(async (param) =>
+        {
+            await CopyAsync(param);
+        });
 
-        public IAsyncRelayCommand FillinCommand => new AsyncRelayCommand(FillinAsync);
+        public IAsyncRelayCommand FillinCommand => new AsyncRelayCommand<HistoryModel>(async (param) =>
+        {
+            await FillinAsync(param);
+        });
 
         public HistoryItemViewModel()
         {
@@ -105,33 +110,21 @@ namespace GetStoreApp.ViewModels.Controls.Home
         /// <summary>
         /// 将选中的历史记录条目填入到选择控件中，然后点击“获取链接”即可获取
         /// </summary>
-        private async Task FillinAsync()
+        private async Task FillinAsync(HistoryModel historyItem)
         {
-            if (SelectedHistoryItem == null)
-            {
-                await new SelectEmptyPromptDialog().ShowAsync();
-                return;
-            };
-
-            Messenger.Send(new FillinMessage(SelectedHistoryItem));
+            Messenger.Send(new FillinMessage(historyItem));
             await Task.CompletedTask;
         }
 
         /// <summary>
         /// 复制到剪贴板
         /// </summary>
-        private async Task CopyAsync()
+        private async Task CopyAsync(HistoryModel historyItem)
         {
-            if (SelectedHistoryItem == null)
-            {
-                await new SelectEmptyPromptDialog().ShowAsync();
-                return;
-            };
-
             string CopyContent = string.Format("{0}\t{1}\t{2}",
-                TypeList.Find(item => item.InternalName.Equals(SelectedHistoryItem.HistoryType)).DisplayName,
-                ChannelList.Find(item => item.InternalName.Equals(SelectedHistoryItem.HistoryChannel)).DisplayName,
-                SelectedHistoryItem.HistoryLink);
+                TypeList.Find(item => item.InternalName.Equals(historyItem.HistoryType)).DisplayName,
+                ChannelList.Find(item => item.InternalName.Equals(historyItem.HistoryChannel)).DisplayName,
+                historyItem.HistoryLink);
             CopyPasteHelper.CopyToClipBoard(CopyContent);
 
             await Task.CompletedTask;

@@ -166,9 +166,9 @@
         </Grid>
 
         <ctWinUI:DataGrid
-            x:Name="ResultDataGrid"
             Grid.Row="1"
             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
             DataContext="{x:Bind ViewModel}"
             ItemsSource="{x:Bind ViewModel.ResultDataList, Mode=OneWay}"
             RowStyle="{StaticResource DataGridRowStyle}"

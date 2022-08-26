@@ -120,7 +120,7 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="CancelDescription" xml:space="preserve">
+  <data name="CancelToolTip" xml:space="preserve">
     <value>Exit multi-select mode</value>
   </data>
   <data name="Channel" xml:space="preserve">
@@ -132,17 +132,17 @@
   <data name="CopyAll" xml:space="preserve">
     <value>Copy all</value>
   </data>
-  <data name="CopyDescription" xml:space="preserve">
-    <value>Copy the selected content to the clipboard</value>
-  </data>
   <data name="CopyLink" xml:space="preserve">
     <value>Copy link</value>
   </data>
   <data name="CopySelected" xml:space="preserve">
     <value>Copy the selected item</value>
   </data>
-  <data name="CopySelectedDescription" xml:space="preserve">
+  <data name="CopySelectedToolTip" xml:space="preserve">
     <value>Copy the contents of the selected row to the clipboard</value>
+  </data>
+  <data name="CopyToolTip" xml:space="preserve">
+    <value>Copy the selected content to the clipboard</value>
   </data>
   <data name="DateTime" xml:space="preserve">
     <value>Time</value>
@@ -150,22 +150,19 @@
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
-  <data name="DeleteDescription" xml:space="preserve">
+  <data name="DeleteToolTip" xml:space="preserve">
     <value>Deletes the record for the selected row</value>
-  </data>
-  <data name="DoubleTapToInput" xml:space="preserve">
-    <value>Double-click the row to fill in the information</value>
   </data>
   <data name="Fillin" xml:space="preserve">
     <value>Fill in</value>
   </data>
-  <data name="FillinDescription" xml:space="preserve">
-    <value>Clicking the Fill button will fill in the link in the text input box above, and click "Get Links" to get the specific content</value>
+  <data name="FillinToolTip" xml:space="preserve">
+    <value>Clicking on the "Fill in" button will fill in the link in the text input box on the home page, and click "Get Link" to get the specific content</value>
   </data>
   <data name="Filter" xml:space="preserve">
     <value>Filter</value>
   </data>
-  <data name="FilterDescription" xml:space="preserve">
+  <data name="FilterToolTip" xml:space="preserve">
     <value>Filters out data that meets the specified criteria</value>
   </data>
   <data name="HistoryCountInfo" xml:space="preserve">
@@ -189,8 +186,17 @@
   <data name="Operation" xml:space="preserve">
     <value>Operation</value>
   </data>
+  <data name="OperationMode" xml:space="preserve">
+    <value>Operation mode</value>
+  </data>
+  <data name="OperationModeToolTip" xml:space="preserve">
+    <value>Select the operation mode you want to use</value>
+  </data>
   <data name="Refresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="RefreshToolTip" xml:space="preserve">
+    <value>Refresh history data</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>Select</value>
@@ -198,34 +204,34 @@
   <data name="SelectAll" xml:space="preserve">
     <value>Select all</value>
   </data>
-  <data name="SelectDescription" xml:space="preserve">
-    <value>Enter multi-select mode</value>
-  </data>
-  <data name="SelectedDescription" xml:space="preserve">
-    <value>Selected</value>
-  </data>
   <data name="SelectedHistoryCountInfo" xml:space="preserve">
     <value>The {0} item is selected</value>
+  </data>
+  <data name="SelectedToolTip" xml:space="preserve">
+    <value>Selected</value>
   </data>
   <data name="SelectNone" xml:space="preserve">
     <value>Select none</value>
   </data>
+  <data name="SelectToolTip" xml:space="preserve">
+    <value>Enter multi-select mode</value>
+  </data>
   <data name="Sort" xml:space="preserve">
     <value>Sort</value>
   </data>
-  <data name="SortDescription" xml:space="preserve">
+  <data name="SortToolTip" xml:space="preserve">
     <value>Sort by when records were created</value>
   </data>
   <data name="TimeDecreaseSort" xml:space="preserve">
     <value>Time decrement sorting</value>
   </data>
-  <data name="TimeDecreaseSortDescription" xml:space="preserve">
+  <data name="TimeDecreaseSortToolTip" xml:space="preserve">
     <value>Sort by decreasing time records were created</value>
   </data>
   <data name="TimeIncreaseSort" xml:space="preserve">
     <value>Time increment sorting</value>
   </data>
-  <data name="TimeIncreaseSortDescription" xml:space="preserve">
+  <data name="TimeIncreaseSortToolTip" xml:space="preserve">
     <value>Sort by the time the record was created</value>
   </data>
   <data name="Title" xml:space="preserve">
@@ -234,7 +240,7 @@
   <data name="Type" xml:space="preserve">
     <value>Type</value>
   </data>
-  <data name="UnselectedDescription" xml:space="preserve">
+  <data name="UnselectedToolTip" xml:space="preserve">
     <value>Not selected</value>
   </data>
 </root>

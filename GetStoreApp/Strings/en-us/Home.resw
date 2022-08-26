@@ -174,8 +174,8 @@
   <data name="CopySelectedLinkDescription" xml:space="preserve">
     <value>Copy the download link for the selected row to the clipboard</value>
   </data>
-  <data name="DoubleTapToInput" xml:space="preserve">
-    <value>Double-click the row to fill in the information</value>
+  <data name="CopyToolTip" xml:space="preserve">
+    <value>Copy the selected content to the clipboard</value>
   </data>
   <data name="Download" xml:space="preserve">
     <value>Download</value>
@@ -198,7 +198,7 @@
   <data name="FillIn" xml:space="preserve">
     <value>Fill in</value>
   </data>
-  <data name="FillinDescription" xml:space="preserve">
+  <data name="FillinToolTip" xml:space="preserve">
     <value>Clicking the Fill button will fill in the link in the text input box above, and click "Get Links" to get the specific content</value>
   </data>
   <data name="GetLinks" xml:space="preserve">
@@ -212,6 +212,12 @@
   </data>
   <data name="LinkExpireTime" xml:space="preserve">
     <value>Link Expire Time</value>
+  </data>
+  <data name="Operation" xml:space="preserve">
+    <value>Operation</value>
+  </data>
+  <data name="OperationMode" xml:space="preserve">
+    <value>Operation mode</value>
   </data>
   <data name="Recent" xml:space="preserve">
     <value>Recently used items</value>

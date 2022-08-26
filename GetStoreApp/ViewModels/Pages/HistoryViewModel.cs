@@ -94,19 +94,6 @@ namespace GetStoreApp.ViewModels.Pages
             set { SetProperty(ref _channelFilter, value); }
         }
 
-        private HistoryModel _selectedHistoryItem;
-
-        public HistoryModel SelectedHistoryItem
-        {
-            get { return _selectedHistoryItem; }
-
-            set { SetProperty(ref _selectedHistoryItem, value); }
-        }
-
-        public IAsyncRelayCommand FillinCommand => new AsyncRelayCommand(FillinAsync);
-
-        public IAsyncRelayCommand CopyCommand => new AsyncRelayCommand(CopyAsync);
-
         public IAsyncRelayCommand SelectCommand => new AsyncRelayCommand(async () =>
         {
             await SelectNoneAsync();
@@ -157,6 +144,29 @@ namespace GetStoreApp.ViewModels.Pages
         {
             IsSelectMode = false;
             await Task.CompletedTask;
+        });
+
+        public IAsyncRelayCommand ItemClickCommand => new AsyncRelayCommand<ItemClickEventArgs>(async (param) =>
+        {
+            HistoryModel historyItem = (HistoryModel)param.ClickedItem;
+            int ClickedIndex = HistoryDataList.IndexOf(historyItem);
+
+            lock (HistoryDataListLock)
+            {
+                HistoryDataList[ClickedIndex].IsSelected = !HistoryDataList[ClickedIndex].IsSelected;
+            }
+
+            await Task.CompletedTask;
+        });
+
+        public IAsyncRelayCommand FillinCommand => new AsyncRelayCommand<HistoryModel>(async (param) =>
+        {
+            await FillinAsync(param);
+        });
+
+        public IAsyncRelayCommand CopyCommand => new AsyncRelayCommand<HistoryModel>(async (param) =>
+        {
+            await CopyAsync(param);
         });
 
         // 导航到历史记录页面时，历史记录数据列表初始化，从数据库中存储的列表中加载
@@ -240,15 +250,9 @@ namespace GetStoreApp.ViewModels.Pages
         /// <summary>
         /// 将选中的历史记录条目填入到选择控件中，然后点击“获取链接”即可获取
         /// </summary>
-        private async Task FillinAsync()
+        private async Task FillinAsync(HistoryModel historyItem)
         {
-            if (SelectedHistoryItem == null)
-            {
-                await new SelectEmptyPromptDialog().ShowAsync();
-                return;
-            };
-
-            Messenger.Send(new FillinMessage(SelectedHistoryItem));
+            Messenger.Send(new FillinMessage(historyItem));
             NavigationService.NavigateTo(typeof(HomeViewModel).FullName, null, new DrillInNavigationTransitionInfo());
             await Task.CompletedTask;
         }
@@ -272,18 +276,12 @@ namespace GetStoreApp.ViewModels.Pages
         /// <summary>
         /// 单选模式下复制选中的条目
         /// </summary>
-        private async Task CopyAsync()
+        private async Task CopyAsync(HistoryModel historyItem)
         {
-            if (SelectedHistoryItem == null)
-            {
-                await new SelectEmptyPromptDialog().ShowAsync();
-                return;
-            };
-
             string CopyContent = string.Format("{0}\t{1}\t{2}",
-                TypeList.Find(item => item.InternalName.Equals(SelectedHistoryItem.HistoryType)).DisplayName,
-                ChannelList.Find(item => item.InternalName.Equals(SelectedHistoryItem.HistoryChannel)).DisplayName,
-                SelectedHistoryItem.HistoryLink);
+                TypeList.Find(item => item.InternalName.Equals(historyItem.HistoryType)).DisplayName,
+                ChannelList.Find(item => item.InternalName.Equals(historyItem.HistoryChannel)).DisplayName,
+                historyItem.HistoryLink);
             CopyPasteHelper.CopyToClipBoard(CopyContent);
 
             await Task.CompletedTask;

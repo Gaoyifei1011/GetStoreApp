@@ -120,7 +120,7 @@
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
-  <data name="CancelDescription" xml:space="preserve">
+  <data name="CancelToolTip" xml:space="preserve">
     <value>退出多选模式</value>
   </data>
   <data name="Channel" xml:space="preserve">
@@ -132,17 +132,17 @@
   <data name="CopyAll" xml:space="preserve">
     <value>复制全部</value>
   </data>
-  <data name="CopyDescription" xml:space="preserve">
-    <value>复制选中的内容到剪贴板</value>
-  </data>
   <data name="CopyLink" xml:space="preserve">
     <value>复制链接</value>
   </data>
   <data name="CopySelected" xml:space="preserve">
     <value>复制选中的项目</value>
   </data>
-  <data name="CopySelectedDescription" xml:space="preserve">
+  <data name="CopySelectedToolTip" xml:space="preserve">
     <value>复制选中行的内容到剪贴板</value>
+  </data>
+  <data name="CopyToolTip" xml:space="preserve">
+    <value>复制选中的内容到剪贴板</value>
   </data>
   <data name="DateTime" xml:space="preserve">
     <value>时间</value>
@@ -150,22 +150,19 @@
   <data name="Delete" xml:space="preserve">
     <value>删除</value>
   </data>
-  <data name="DeleteDescription" xml:space="preserve">
+  <data name="DeleteToolTip" xml:space="preserve">
     <value>删除选中行的记录</value>
-  </data>
-  <data name="DoubleTapToInput" xml:space="preserve">
-    <value>双击该行填入信息</value>
   </data>
   <data name="Fillin" xml:space="preserve">
     <value>填入</value>
   </data>
-  <data name="FillinDescription" xml:space="preserve">
-    <value>点击"填入"按钮后会在上面的文本输入框中填入链接，点击“获取链接”即可获取具体内容</value>
+  <data name="FillinToolTip" xml:space="preserve">
+    <value>点击"填入"按钮后会在主页的文本输入框中填入链接，点击“获取链接”即可获取具体内容</value>
   </data>
   <data name="Filter" xml:space="preserve">
     <value>筛选</value>
   </data>
-  <data name="FilterDescription" xml:space="preserve">
+  <data name="FilterToolTip" xml:space="preserve">
     <value>筛选出符合指定条件的数据</value>
   </data>
   <data name="HistoryCountInfo" xml:space="preserve">
@@ -189,8 +186,17 @@
   <data name="Operation" xml:space="preserve">
     <value>操作</value>
   </data>
+  <data name="OperationMode" xml:space="preserve">
+    <value>操作方式</value>
+  </data>
+  <data name="OperationModeToolTip" xml:space="preserve">
+    <value>选择您要使用的操作方式</value>
+  </data>
   <data name="Refresh" xml:space="preserve">
     <value>刷新</value>
+  </data>
+  <data name="RefreshToolTip" xml:space="preserve">
+    <value>刷新历史记录数据</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>选择</value>
@@ -198,34 +204,34 @@
   <data name="SelectAll" xml:space="preserve">
     <value>全选</value>
   </data>
-  <data name="SelectDescription" xml:space="preserve">
-    <value>进入多选模式</value>
-  </data>
-  <data name="SelectedDescription" xml:space="preserve">
-    <value>已选择</value>
-  </data>
   <data name="SelectedHistoryCountInfo" xml:space="preserve">
     <value>已选中{0}项</value>
+  </data>
+  <data name="SelectedToolTip" xml:space="preserve">
+    <value>已选择</value>
   </data>
   <data name="SelectNone" xml:space="preserve">
     <value>全部不选</value>
   </data>
+  <data name="SelectToolTip" xml:space="preserve">
+    <value>进入多选模式</value>
+  </data>
   <data name="Sort" xml:space="preserve">
     <value>排序</value>
   </data>
-  <data name="SortDescription" xml:space="preserve">
+  <data name="SortToolTip" xml:space="preserve">
     <value>按照记录创建的时间进行排序</value>
   </data>
   <data name="TimeDecreaseSort" xml:space="preserve">
     <value>时间递减排序</value>
   </data>
-  <data name="TimeDecreaseSortDescription" xml:space="preserve">
+  <data name="TimeDecreaseSortToolTip" xml:space="preserve">
     <value>按照记录创建的时间递减进行排序</value>
   </data>
   <data name="TimeIncreaseSort" xml:space="preserve">
     <value>时间递增排序</value>
   </data>
-  <data name="TimeIncreaseSortDescription" xml:space="preserve">
+  <data name="TimeIncreaseSortToolTip" xml:space="preserve">
     <value>按照记录创建的时间递增进行排序</value>
   </data>
   <data name="Title" xml:space="preserve">
@@ -234,7 +240,7 @@
   <data name="Type" xml:space="preserve">
     <value>类型</value>
   </data>
-  <data name="UnselectedDescription" xml:space="preserve">
+  <data name="UnselectedToolTip" xml:space="preserve">
     <value>未选择</value>
   </data>
 </root>

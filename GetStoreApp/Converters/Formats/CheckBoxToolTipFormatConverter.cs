@@ -25,11 +25,11 @@ namespace GetStoreApp.Converters.Formats
 
             if (result)
             {
-                return ResourceService.GetLocalized(string.Format("/{0}/SelectedDescription", param));
+                return ResourceService.GetLocalized(string.Format("/{0}/SelectedToolTip", param));
             }
             else
             {
-                return ResourceService.GetLocalized(string.Format("/{0}/UnselectedDescription", param));
+                return ResourceService.GetLocalized(string.Format("/{0}/UnselectedToolTip", param));
             }
         }
 
