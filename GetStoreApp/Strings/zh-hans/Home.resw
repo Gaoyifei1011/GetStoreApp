@@ -174,8 +174,8 @@
   <data name="CopySelectedLinkDescription" xml:space="preserve">
     <value>复制选中行的下载链接到剪贴板</value>
   </data>
-  <data name="DoubleTapToInput" xml:space="preserve">
-    <value>双击该行填入信息</value>
+  <data name="CopyToolTip" xml:space="preserve">
+    <value>复制选中的内容到剪贴板</value>
   </data>
   <data name="Download" xml:space="preserve">
     <value>下载</value>
@@ -198,7 +198,7 @@
   <data name="FillIn" xml:space="preserve">
     <value>填入</value>
   </data>
-  <data name="FillinDescription" xml:space="preserve">
+  <data name="FillinToolTip" xml:space="preserve">
     <value>点击"填入"按钮后会在上面的文本输入框中填入链接，点击“获取链接”即可获取具体内容</value>
   </data>
   <data name="GetLinks" xml:space="preserve">
@@ -212,6 +212,12 @@
   </data>
   <data name="LinkExpireTime" xml:space="preserve">
     <value>链接过期时间</value>
+  </data>
+  <data name="Operation" xml:space="preserve">
+    <value>操作</value>
+  </data>
+  <data name="OperationMode" xml:space="preserve">
+    <value>操作方式</value>
   </data>
   <data name="Recent" xml:space="preserve">
     <value>最近使用的项目</value>

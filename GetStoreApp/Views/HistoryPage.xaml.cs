@@ -11,6 +11,14 @@ namespace GetStoreApp.Views
 
         public HistoryViewModel ViewModel { get; } = IOCHelper.GetService<HistoryViewModel>();
 
+        public string Fillin => ResourceService.GetLocalized("/History/Fillin");
+
+        public string FillinToolTip => ResourceService.GetLocalized("/History/FillinToolTip");
+
+        public string Copy => ResourceService.GetLocalized("/History/Copy");
+
+        public string CopyToolTip => ResourceService.GetLocalized("/History/CopyToolTip");
+
         public HistoryPage()
         {
             InitializeComponent();

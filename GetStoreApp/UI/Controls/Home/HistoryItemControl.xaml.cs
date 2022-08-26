@@ -11,6 +11,14 @@ namespace GetStoreApp.UI.Controls.Home
 
         public HistoryItemViewModel ViewModel { get; } = IOCHelper.GetService<HistoryItemViewModel>();
 
+        public string Fillin => ResourceService.GetLocalized("/Home/Fillin");
+
+        public string FillinToolTip => ResourceService.GetLocalized("/Home/FillinToolTip");
+
+        public string Copy => ResourceService.GetLocalized("/Home/Copy");
+
+        public string CopyToolTip => ResourceService.GetLocalized("/Home/CopyToolTip");
+
         public HistoryItemControl()
         {
             InitializeComponent();
