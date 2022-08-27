@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="GetStoreApp.UI.Controls.Home.HistoryItemControl"
+    x:Class="GetStoreApp.UI.Controls.Home.HistoryLiteControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="using:GetStoreApp.Converters.Formats"
@@ -8,7 +8,7 @@
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:GetStoreApp.Models"
-    x:Name="HistoryItemRoot"
+    x:Name="HistoryLiteRoot"
     mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -26,7 +26,7 @@
         Margin="0,0,0,10"
         HorizontalContentAlignment="Stretch"
         IsExpanded="True"
-        Style="{StaticResource ExpanderHistoryItemStyle}">
+        Style="{StaticResource HistoryLiteExpanderStyle}">
 
         <Expander.Header>
             <Grid>
@@ -67,15 +67,15 @@
                 <TextBlock
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Center"
-                    Text="{x:Bind ResourceService.GetLocalized('/Home/HistoryItemEmpty')}"
+                    Text="{x:Bind ResourceService.GetLocalized('/Home/HistoryLiteEmpty')}"
                     TextAlignment="Center"
-                    Visibility="{x:Bind ViewModel.HistoryItemDataList.Count, Converter={StaticResource IntToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}" />
+                    Visibility="{x:Bind ViewModel.HistoryLiteDataList.Count, Converter={StaticResource IntToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}" />
 
                 <ListView
                     ItemContainerStyle="{StaticResource ListViewItemStyle}"
-                    ItemsSource="{x:Bind ViewModel.HistoryItemDataList, Mode=OneWay}"
+                    ItemsSource="{x:Bind ViewModel.HistoryLiteDataList, Mode=OneWay}"
                     SelectionMode="None"
-                    Visibility="{x:Bind ViewModel.HistoryItemDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
+                    Visibility="{x:Bind ViewModel.HistoryLiteDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
 
                     <ListView.Header>
                         <Grid Height="35" Padding="6,0,0,0">
@@ -152,16 +152,16 @@
                                     Grid.Column="3"
                                     Margin="10,0,0,0"
                                     Padding="0"
-                                    Command="{Binding ElementName=HistoryItemRoot, Path=ViewModel.FillinCommand}"
+                                    Command="{Binding ElementName=HistoryLiteRoot, Path=ViewModel.FillinCommand}"
                                     CommandParameter="{Binding}"
-                                    Content="{Binding ElementName=HistoryItemRoot, Path=Fillin}"
+                                    Content="{Binding ElementName=HistoryLiteRoot, Path=Fillin}"
                                     ToolTipService.ToolTip="{Binding ElementName=HistoryItemRoot, Path=FillinToolTip}" />
                                 <HyperlinkButton
                                     Grid.Column="4"
                                     Padding="0"
-                                    Command="{Binding ElementName=HistoryItemRoot, Path=ViewModel.CopyCommand}"
+                                    Command="{Binding ElementName=HistoryLiteRoot, Path=ViewModel.CopyCommand}"
                                     CommandParameter="{Binding}"
-                                    Content="{Binding ElementName=HistoryItemRoot, Path=Copy}"
+                                    Content="{Binding ElementName=HistoryLiteRoot, Path=Copy}"
                                     ToolTipService.ToolTip="{Binding ElementName=HistoryItemRoot, Path=CopyToolTip}" />
                             </Grid>
                         </DataTemplate>

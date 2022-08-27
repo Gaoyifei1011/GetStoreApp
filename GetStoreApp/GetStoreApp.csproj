@@ -41,7 +41,7 @@
     <None Remove="Styles\Checkbox.xaml" />
     <None Remove="Styles\ContentDialog.xaml" />
     <None Remove="Styles\Converter.xaml" />
-    <None Remove="Styles\DataGrid.xaml" />
+    <None Remove="Styles\DropDownButton.xaml" />
     <None Remove="Styles\Expander.xaml" />
     <None Remove="Styles\ExpanderThemeResources.xaml" />
     <None Remove="Styles\FontIcon.xaml" />
@@ -59,7 +59,7 @@
     <None Remove="UI\Controls\Download\CompletedControl.xaml" />
     <None Remove="UI\Controls\Download\DownloadingControl.xaml" />
     <None Remove="UI\Controls\Download\UnfinishedControl.xaml" />
-    <None Remove="UI\Controls\Home\HistoryItemControl.xaml" />
+    <None Remove="UI\Controls\Home\HistoryLiteControl.xaml" />
     <None Remove="UI\Controls\Home\RequestControl.xaml" />
     <None Remove="UI\Controls\Home\ResultControl.xaml" />
     <None Remove="UI\Controls\Home\StatusBarControl.xaml" />
@@ -78,8 +78,9 @@
     <None Remove="UI\Dialogs\TraceCleanupPromptDialog.xaml" />
 
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
-    <PackageReference Include="CommunityToolkit.WinUI.Notifications" Version="7.1.2" />
-    <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.DataGrid" Version="7.1.2" />
+    <PackageReference Include="CommunityToolkit.WinUI.Notifications" Version="7.1.2">
+      <TreatAsUsed>true</TreatAsUsed>
+    </PackageReference>
     <PackageReference Include="HtmlAgilityPack" Version="1.11.45" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.8" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
@@ -111,9 +112,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Styles\Converter.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\DataGrid.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Styles\Expander.xaml">
@@ -161,7 +159,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     
-    <Page Update="UI\Controls\Home\HistoryItemControl.xaml">
+    <Page Update="UI\Controls\Home\HistoryLiteControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Controls\Home\RequestControl.xaml">
@@ -240,6 +238,12 @@
       <Link>Aria2\aria2c.exe</Link>
     </Content>
     <Content Include="Aria2\Config\aria2.conf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Styles\DropDownButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <ItemGroup>

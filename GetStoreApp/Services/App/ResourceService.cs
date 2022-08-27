@@ -29,7 +29,7 @@ namespace GetStoreApp.Services.App
 
         public List<BackdropModel> BackdropList { get; } = new List<BackdropModel>();
 
-        public List<HistoryItemValueModel> HistoryItemValueList { get; } = new List<HistoryItemValueModel>();
+        public List<HistoryLiteNumModel> HistoryLiteNumList { get; } = new List<HistoryLiteNumModel>();
 
         public List<GetAppTypeModel> TypeList { get; } = new List<GetAppTypeModel>();
 
@@ -112,15 +112,15 @@ namespace GetStoreApp.Services.App
         /// </summary>
         private void InitializeHistoryItemValueList()
         {
-            HistoryItemValueList.Add(new HistoryItemValueModel
+            HistoryLiteNumList.Add(new HistoryLiteNumModel
             {
-                HistoryItemName = GetLocalized("/Settings/HistoryItemValueMin"),
-                HistoryItemValue = 3
+                HistoryLiteNumName = GetLocalized("/Settings/HistoryItemValueMin"),
+                HistoryLiteNumValue = 3
             });
-            HistoryItemValueList.Add(new HistoryItemValueModel
+            HistoryLiteNumList.Add(new HistoryLiteNumModel
             {
-                HistoryItemName = GetLocalized("/Settings/HistoryItemValueMax"),
-                HistoryItemValue = 5
+                HistoryLiteNumName = GetLocalized("/Settings/HistoryItemValueMax"),
+                HistoryLiteNumValue = 5
             });
         }
 

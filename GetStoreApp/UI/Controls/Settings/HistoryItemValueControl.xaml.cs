@@ -17,9 +17,9 @@ namespace GetStoreApp.UI.Controls.Settings
             InitializeComponent();
         }
 
-        public string GetSelectedHistoryItemName(HistoryItemValueModel historyItem)
+        public string GetSelectedHistoryItemName(HistoryLiteNumModel historyItem)
         {
-            return historyItem.HistoryItemName;
+            return historyItem.HistoryLiteNumName;
         }
     }
 }

@@ -1,8 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using Microsoft.UI.Xaml;
-using System;
+﻿using Microsoft.UI.Xaml;
 using System.ComponentModel;
-using System.Windows.Input;
 
 namespace GetStoreApp.Models
 {
@@ -91,18 +88,5 @@ namespace GetStoreApp.Models
             DependencyProperty.Register("FileSize", typeof(string), typeof(ResultModel), new PropertyMetadata(string.Empty));
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// 根据设置存储的文件链接操作方式操作获取到的文件链接
-        /// </summary>
-        public ICommand FileOperationCommand { get; set; }
-
-        public ResultModel()
-        {
-            FileOperationCommand = new RelayCommand<string>(async (param) =>
-            {
-                await Windows.System.Launcher.LaunchUriAsync(new Uri(param));
-            });
-        }
     }
 }

@@ -17,15 +17,15 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Controls.Home
 {
-    public class HistoryItemViewModel : ObservableRecipient
+    public class HistoryLiteViewModel : ObservableRecipient
     {
-        private HistoryItemValueModel HistoryItem { get; set; }
+        private HistoryLiteNumModel HistoryLiteItem { get; set; }
 
         private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
         private IHistoryDBService HistoryDBService { get; } = IOCHelper.GetService<IHistoryDBService>();
 
-        private IHistoryItemValueService HistoryItemValueService { get; } = IOCHelper.GetService<IHistoryItemValueService>();
+        private IHistoryLiteNumService HistoryLiteNumService { get; } = IOCHelper.GetService<IHistoryLiteNumService>();
 
         private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
 
@@ -33,19 +33,10 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public List<GetAppChannelModel> ChannelList => ResourceService.ChannelList;
 
-        public ObservableCollection<HistoryModel> HistoryItemDataList { get; } = new ObservableCollection<HistoryModel>();
-
-        private HistoryModel _selectedHistoryItem;
-
-        public HistoryModel SelectedHistoryItem
-        {
-            get { return _selectedHistoryItem; }
-
-            set { SetProperty(ref _selectedHistoryItem, value); }
-        }
+        public ObservableCollection<HistoryModel> HistoryLiteDataList { get; } = new ObservableCollection<HistoryModel>();
 
         // List列表初始化，可以从数据库获得的列表中加载
-        public IAsyncRelayCommand LoadedCommand => new AsyncRelayCommand(GetHistoryItemDataListAsync);
+        public IAsyncRelayCommand LoadedCommand => new AsyncRelayCommand(GetHistoryLiteDataListAsync);
 
         public IAsyncRelayCommand ViewAllCommand => new AsyncRelayCommand(async () =>
         {
@@ -63,32 +54,32 @@ namespace GetStoreApp.ViewModels.Controls.Home
             await FillinAsync(param);
         });
 
-        public HistoryItemViewModel()
+        public HistoryLiteViewModel()
         {
-            HistoryItem = HistoryItemValueService.HistoryItem;
+            HistoryLiteItem = HistoryLiteNumService.HistoryLiteNum;
 
-            Messenger.Register<HistoryItemViewModel, HistoryMessage>(this, async (historyItemViewModel, historyMessage) =>
+            Messenger.Register<HistoryLiteViewModel, HistoryMessage>(this, async (historyItemViewModel, historyMessage) =>
             {
                 if (historyMessage.Value)
                 {
-                    await GetHistoryItemDataListAsync();
+                    await GetHistoryLiteDataListAsync();
                 }
             });
 
-            Messenger.Register<HistoryItemViewModel, HistoryItemValueMessage>(this, async (historyItemViewModel, historyItemValueMessage) =>
+            Messenger.Register<HistoryLiteViewModel, HistoryItemValueMessage>(this, async (historyItemViewModel, historyItemValueMessage) =>
             {
-                HistoryItem = historyItemValueMessage.Value;
-                await GetHistoryItemDataListAsync();
+                HistoryLiteItem = historyItemValueMessage.Value;
+                await GetHistoryLiteDataListAsync();
             });
         }
 
         /// <summary>
         /// UI加载完成时/或者是数据库数据发生变化时，从数据库中异步加载数据
         /// </summary>
-        private async Task GetHistoryItemDataListAsync()
+        private async Task GetHistoryLiteDataListAsync()
         {
             // 获取数据库的原始记录数据
-            List<HistoryModel> HistoryRawList = await HistoryDBService.QueryHistoryDataAsync(HistoryItem.HistoryItemValue);
+            List<HistoryModel> HistoryRawList = await HistoryDBService.QueryHistoryDataAsync(HistoryLiteItem.HistoryLiteNumValue);
 
             // 更新UI上面的数据
             UpdateList(HistoryRawList);
@@ -99,11 +90,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
         /// </summary>
         private void UpdateList(List<HistoryModel> historyRawList)
         {
-            HistoryItemDataList.Clear();
+            HistoryLiteDataList.Clear();
 
             foreach (HistoryModel historyRawData in historyRawList)
             {
-                HistoryItemDataList.Add(historyRawData);
+                HistoryLiteDataList.Add(historyRawData);
             }
         }
 

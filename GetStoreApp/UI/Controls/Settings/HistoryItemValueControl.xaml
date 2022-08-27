@@ -38,7 +38,7 @@
         <ComboBox
             Grid.Column="2"
             VerticalAlignment="Center"
-            DisplayMemberPath="HistoryItemName"
+            DisplayMemberPath="HistoryLiteNumName"
             ItemsSource="{x:Bind ViewModel.HistoryItemValueList}"
             SelectedItem="{x:Bind ViewModel.HistoryItem, Mode=TwoWay}"
             ToolTipService.ToolTip="{x:Bind GetSelectedHistoryItemName(ViewModel.HistoryItem), Mode=OneWay}">
