@@ -70,7 +70,7 @@ namespace GetStoreApp.Helpers
 
                 services.AddSingleton<IBackdropService, BackdropService>();
                 services.AddSingleton<IDownloadOptionsService, DownloadOptionsService>();
-                services.AddSingleton<IHistoryItemValueService, HistoryItemValueService>();
+                services.AddSingleton<IHistoryLiteNumService, HistoryLiteNumService>();
                 services.AddSingleton<ILanguageService, LanguageService>();
                 services.AddSingleton<ILinkFilterService, LinkFilterService>();
                 services.AddSingleton<IRegionService, RegionService>();
@@ -128,8 +128,8 @@ namespace GetStoreApp.Helpers
                 services.AddTransient<UnfinishedViewModel>();
 
                 // 历史记录页面的控件（MVVM）
-                services.AddTransient<HistoryItemControl>();
-                services.AddTransient<HistoryItemViewModel>();
+                services.AddTransient<HistoryLiteControl>();
+                services.AddTransient<HistoryLiteViewModel>();
                 services.AddTransient<RequestControl>();
                 services.AddTransient<RequestViewModel>();
                 services.AddTransient<ResultControl>();

@@ -3,10 +3,13 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="using:GetStoreApp.Converters.Formats"
-    xmlns:ctWinUI="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:GetStoreApp.Models"
     xmlns:system="using:System"
+    x:Name="ResultRoot"
     mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -67,29 +70,11 @@
                 Visibility="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}">
 
                 <AppBarButton
+                    Command="{x:Bind ViewModel.CopyIDCommand}"
                     Icon="Copy"
                     IsEnabled="{x:Bind system:Convert.ToBoolean(ViewModel.ResultDataList.Count), Mode=OneWay}"
-                    Label="{x:Bind ResourceService.GetLocalized('/Home/CopyOptions')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/CopyOptionsDescription')}">
-
-                    <AppBarButton.Flyout>
-
-                        <MenuFlyout Placement="Bottom">
-                            <MenuFlyoutItem
-                                Command="{x:Bind ViewModel.CopyCategoryIDCommand}"
-                                Text="{x:Bind ResourceService.GetLocalized('/Home/CopyCategoryID')}"
-                                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/CopyCategoryIDDescription')}" />
-                            <MenuFlyoutItem
-                                Command="{x:Bind ViewModel.CopyLinkCommand}"
-                                Text="{x:Bind ResourceService.GetLocalized('/Home/CopyLink')}"
-                                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/CopyLinkDescription')}" />
-                            <MenuFlyoutItem
-                                Command="{x:Bind ViewModel.CopyContentCommand}"
-                                Text="{x:Bind ResourceService.GetLocalized('/Home/CopyContent')}"
-                                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/CopyContentDescription')}" />
-                        </MenuFlyout>
-                    </AppBarButton.Flyout>
-                </AppBarButton>
+                    Label="{x:Bind ResourceService.GetLocalized('/Home/CopyID')}"
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/CopyIDToolTip')}" />
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.DownloadCommand}"
@@ -106,7 +91,7 @@
                     Icon="Bullets"
                     IsEnabled="{x:Bind system:Convert.ToBoolean(ViewModel.ResultDataList.Count), Mode=OneWay}"
                     Label="{x:Bind ResourceService.GetLocalized('/Home/Select')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/SelectDescription')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/SelectToolTip')}" />
             </CommandBar>
 
             <CommandBar
@@ -131,18 +116,18 @@
                 <AppBarButton
                     Icon="Copy"
                     Label="{x:Bind ResourceService.GetLocalized('/Home/CopyOptions')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/CopyOptionsDescription')}">
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/CopyOptionsToolTip')}">
 
                     <AppBarButton.Flyout>
                         <MenuFlyout Placement="Bottom">
                             <MenuFlyoutItem
                                 Command="{x:Bind ViewModel.CopySelectedLinkCommand}"
                                 Text="{x:Bind ResourceService.GetLocalized('/Home/CopySelectedLink')}"
-                                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/CopySelectedLinkDescription')}" />
+                                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/CopySelectedLinkToolTip')}" />
                             <MenuFlyoutItem
                                 Command="{x:Bind ViewModel.CopySelectedCommand}"
                                 Text="{x:Bind ResourceService.GetLocalized('/Home/CopySelectedContent')}"
-                                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/CopySelectedContentDescription')}" />
+                                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/CopySelectedContentToolTip')}" />
                         </MenuFlyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
@@ -161,84 +146,166 @@
                     Command="{x:Bind ViewModel.CancelCommand}"
                     Icon="Cancel"
                     Label="{x:Bind ResourceService.GetLocalized('/Home/Cancel')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/CancelDescription')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/CancelToolTip')}" />
             </CommandBar>
         </Grid>
 
-        <ctWinUI:DataGrid
+        <ListView
             Grid.Row="1"
-            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-            ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
-            DataContext="{x:Bind ViewModel}"
+            IsItemClickEnabled="{x:Bind ViewModel.IsSelectMode, Mode=OneWay}"
+            ItemContainerStyle="{StaticResource ListViewItemStyle}"
             ItemsSource="{x:Bind ViewModel.ResultDataList, Mode=OneWay}"
-            RowStyle="{StaticResource DataGridRowStyle}"
-            SelectedItem="{x:Bind ViewModel.SelectedResultItem, Mode=TwoWay}"
-            Style="{StaticResource DataGridResultStyle}"
+            ScrollViewer.VerticalScrollBarVisibility="Auto"
+            ScrollViewer.VerticalScrollMode="Enabled"
+            SelectionMode="None"
             Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
 
-            <ctWinUI:DataGrid.Columns>
+            <i:Interaction.Behaviors>
+                <ic:EventTriggerBehavior EventName="ItemClick">
+                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.ItemClickCommand}" />
+                </ic:EventTriggerBehavior>
+            </i:Interaction.Behaviors>
 
-                <ctWinUI:DataGridTemplateColumn
-                    Width="Auto"
-                    Header="{x:Bind ResourceService.GetLocalized('/Home/Select')}"
-                    HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
-                    IsReadOnly="True"
-                    Visibility="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+            <ListView.Header>
+                <Grid
+                    Height="35"
+                    Padding="6,0,0,0"
+                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1,0,1,1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="4*" />
+                        <ColumnDefinition Width="1.2*" />
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="80" />
+                    </Grid.ColumnDefinitions>
 
-                    <ctWinUI:DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <CheckBox
-                                Margin="12,0,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                IsChecked="{Binding IsSelected, Mode=TwoWay}"
-                                IsThreeState="False"
-                                Style="{StaticResource CheckBoxStyle}"
-                                ToolTipService.ToolTip="{Binding IsSelected, Converter={StaticResource CheckBoxToolTipFormatConverter}, ConverterParameter=Home, Mode=OneWay}" />
-                        </DataTemplate>
-                    </ctWinUI:DataGridTemplateColumn.CellTemplate>
-                </ctWinUI:DataGridTemplateColumn>
+                    <TextBlock
+                        Grid.Column="0"
+                        Width="50"
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{x:Bind ResourceService.GetLocalized('/Home/Select')}"
+                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/Select')}"
+                        Visibility="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
+                    <TextBlock
+                        Grid.Column="1"
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{x:Bind ResourceService.GetLocalized('/Home/FileName')}"
+                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/FileName')}" />
+                    <TextBlock
+                        Grid.Column="2"
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{x:Bind ResourceService.GetLocalized('/Home/LinkExpireTime')}"
+                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/LinkExpireTime')}" />
+                    <TextBlock
+                        Grid.Column="3"
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{x:Bind ResourceService.GetLocalized('/Home/FileSHA1')}"
+                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/FileSHA1')}" />
+                    <TextBlock
+                        Grid.Column="4"
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{x:Bind ResourceService.GetLocalized('/Home/FileSize')}"
+                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/FileSize')}" />
+                    <TextBlock
+                        Grid.Column="5"
+                        Grid.ColumnSpan="2"
+                        Margin="10,0,0,0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        Text="{x:Bind ResourceService.GetLocalized('/History/OperationMode')}"
+                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/OperationModeToolTip')}" />
+                </Grid>
+            </ListView.Header>
 
-                <ctWinUI:DataGridTemplateColumn
-                    Width="4*"
-                    Header="{x:Bind ResourceService.GetLocalized('/Home/FileName')}"
-                    HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
-                    IsReadOnly="True">
-                    <ctWinUI:DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <HyperlinkButton
-                                Margin="12,0,0,0"
-                                VerticalAlignment="Center"
-                                Command="{Binding FileOperationCommand}"
-                                CommandParameter="{Binding FileLink}"
-                                Content="{Binding FileName}"
-                                Style="{StaticResource HyperlinkButtonStyle}"
-                                ToolTipService.ToolTip="{Binding FileName}" />
-                        </DataTemplate>
-                    </ctWinUI:DataGridTemplateColumn.CellTemplate>
-                </ctWinUI:DataGridTemplateColumn>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="models:ResultModel">
+                    <Grid
+                        Height="35"
+                        Padding="6,0,0,0"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1,0,1,1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="4*" />
+                            <ColumnDefinition Width="1.2*" />
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="80" />
+                        </Grid.ColumnDefinitions>
 
-                <ctWinUI:DataGridTextColumn
-                    Width="Auto"
-                    Binding="{Binding FileLinkExpireTime, Converter={StaticResource GMTFormatConverter}}"
-                    Header="{x:Bind ResourceService.GetLocalized('/Home/LinkExpireTime')}"
-                    HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
-                    IsReadOnly="True" />
+                        <CheckBox
+                            Grid.Column="0"
+                            Width="50"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
+                            IsThreeState="False"
+                            Style="{StaticResource CheckBoxStyle}"
+                            ToolTipService.ToolTip="{Binding IsSelected, Converter={StaticResource CheckBoxToolTipFormatConverter}, ConverterParameter=History, Mode=OneWay}"
+                            Visibility="{Binding ElementName=ResultRoot, Path=ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
+                        <HyperlinkButton
+                            Grid.Column="1"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            Command="{Binding ElementName=ResultRoot, Path=ViewModel.FileOperationCommand}"
+                            CommandParameter="{x:Bind FileLink}"
+                            Content="{x:Bind FileName}"
+                            Style="{StaticResource HyperlinkButtonStyle}"
+                            ToolTipService.ToolTip="{x:Bind FileName}" />
+                        <TextBlock
+                            Grid.Column="2"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="{x:Bind FileLinkExpireTime, Converter={StaticResource GMTFormatConverter}}"
+                            ToolTipService.ToolTip="{x:Bind FileLinkExpireTime, Converter={StaticResource GMTFormatConverter}}" />
+                        <TextBlock
+                            Grid.Column="3"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="{x:Bind FileSHA1}"
+                            ToolTipService.ToolTip="{x:Bind FileSHA1}" />
+                        <TextBlock
+                            Grid.Column="4"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="{x:Bind FileSize}"
+                            ToolTipService.ToolTip="{x:Bind FileSize}" />
+                        <DropDownButton
+                            Grid.Column="5"
+                            Margin="10,0,0,0"
+                            Content="{Binding ElementName=ResultRoot, Path=Copy}"
+                            IsEnabled="{Binding ElementName=ResultRoot, Path=ViewModel.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
+                            Style="{StaticResource DropDownButtonStyle}"
+                            ToolTipService.ToolTip="{Binding ElementName=ResultRoot, Path=CopyOptionsToolTip}">
 
-                <ctWinUI:DataGridTextColumn
-                    Width="3*"
-                    Binding="{Binding FileSHA1}"
-                    Header="{x:Bind ResourceService.GetLocalized('/Home/FileSHA1')}"
-                    HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
-                    IsReadOnly="True" />
-
-                <ctWinUI:DataGridTextColumn
-                    Width="Auto"
-                    Binding="{Binding FileSize}"
-                    Header="{x:Bind ResourceService.GetLocalized('/Home/FileSize')}"
-                    HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
-                    IsReadOnly="True" />
-            </ctWinUI:DataGrid.Columns>
-        </ctWinUI:DataGrid>
+                            <DropDownButton.Flyout>
+                                <MenuFlyout Placement="Bottom">
+                                    <MenuFlyoutItem
+                                        Command="{Binding ElementName=ResultRoot, Path=ViewModel.CopyLinkCommand}"
+                                        CommandParameter="{x:Bind FileLink}"
+                                        Text="{Binding ElementName=ResultRoot, Path=CopyLink}"
+                                        ToolTipService.ToolTip="{Binding ElementName=ResultRoot, Path=CopyLinkToolTip}" />
+                                    <MenuFlyoutItem
+                                        Command="{Binding ElementName=ResultRoot, Path=ViewModel.CopyContentCommand}"
+                                        CommandParameter="{Binding}"
+                                        Text="{Binding ElementName=ResultRoot, Path=CopyContent}"
+                                        ToolTipService.ToolTip="{Binding ElementName=ResultRoot, Path=CopyContentToolTip}" />
+                                </MenuFlyout>
+                            </DropDownButton.Flyout>
+                        </DropDownButton>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </UserControl>

@@ -123,7 +123,7 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="CancelDescription" xml:space="preserve">
+  <data name="CancelToolTip" xml:space="preserve">
     <value>Exit multi-select mode</value>
   </data>
   <data name="CategoryId" xml:space="preserve">
@@ -135,43 +135,40 @@
   <data name="Copy" xml:space="preserve">
     <value>Copy</value>
   </data>
-  <data name="CopyCategoryID" xml:space="preserve">
-    <value>Copy CategoryID</value>
-  </data>
-  <data name="CopyCategoryIDDescription" xml:space="preserve">
-    <value>Copy the CategoryID to the clipboard</value>
-  </data>
   <data name="CopyContent" xml:space="preserve">
     <value>Copy content</value>
   </data>
-  <data name="CopyContentDescription" xml:space="preserve">
+  <data name="CopyContentToolTip" xml:space="preserve">
     <value>Copy the contents to the clipboard</value>
   </data>
-  <data name="CopyDescription" xml:space="preserve">
-    <value>Copy the selected content to the clipboard</value>
+  <data name="CopyID" xml:space="preserve">
+    <value>Copy ID</value>
+  </data>
+  <data name="CopyIDToolTip" xml:space="preserve">
+    <value>Copy the CategoryID to the clipboard</value>
   </data>
   <data name="CopyLink" xml:space="preserve">
     <value>Copy link</value>
   </data>
-  <data name="CopyLinkDescription" xml:space="preserve">
+  <data name="CopyLinkToolTip" xml:space="preserve">
     <value>Copy the download link to the clipboard</value>
   </data>
   <data name="CopyOptions" xml:space="preserve">
     <value>Copy options</value>
   </data>
-  <data name="CopyOptionsDescription" xml:space="preserve">
+  <data name="CopyOptionsToolTip" xml:space="preserve">
     <value>Click Show Replication Options</value>
   </data>
   <data name="CopySelectedContent" xml:space="preserve">
     <value>Copy the selected row content</value>
   </data>
-  <data name="CopySelectedContentDescription" xml:space="preserve">
+  <data name="CopySelectedContentToolTip" xml:space="preserve">
     <value>Copy the contents of the selected row to the clipboard</value>
   </data>
   <data name="CopySelectedLink" xml:space="preserve">
     <value>Copy the selected row download link</value>
   </data>
-  <data name="CopySelectedLinkDescription" xml:space="preserve">
+  <data name="CopySelectedLinkToolTip" xml:space="preserve">
     <value>Copy the download link for the selected row to the clipboard</value>
   </data>
   <data name="CopyToolTip" xml:space="preserve">
@@ -204,7 +201,7 @@
   <data name="GetLinks" xml:space="preserve">
     <value>Get Links</value>
   </data>
-  <data name="HistoryItemEmpty" xml:space="preserve">
+  <data name="HistoryLiteEmpty" xml:space="preserve">
     <value>The history is empty</value>
   </data>
   <data name="Link" xml:space="preserve">
@@ -218,6 +215,9 @@
   </data>
   <data name="OperationMode" xml:space="preserve">
     <value>Operation mode</value>
+  </data>
+  <data name="OperationModeToolTip" xml:space="preserve">
+    <value>Select the operation mode you want to use</value>
   </data>
   <data name="Recent" xml:space="preserve">
     <value>Recently used items</value>
@@ -240,14 +240,14 @@
   <data name="SelectAll" xml:space="preserve">
     <value>Select all</value>
   </data>
-  <data name="SelectDescription" xml:space="preserve">
-    <value>Enter multi-select mode</value>
-  </data>
   <data name="SelectedDescription" xml:space="preserve">
     <value>Selected</value>
   </data>
   <data name="SelectNone" xml:space="preserve">
     <value>Select none</value>
+  </data>
+  <data name="SelectToolTip" xml:space="preserve">
+    <value>Enter multi-select mode</value>
   </data>
   <data name="SerialNumber" xml:space="preserve">
     <value>S/N</value>

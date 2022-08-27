@@ -24,7 +24,7 @@
 
         <hc:StatusBarControl Grid.Row="2" />
 
-        <hc:HistoryItemControl Grid.Row="3" />
+        <hc:HistoryLiteControl Grid.Row="3" />
 
         <hc:ResultControl Grid.Row="4" />
     </Grid>

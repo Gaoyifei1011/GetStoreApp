@@ -300,7 +300,7 @@
                 <ListView.Header>
                     <Grid
                         Height="35"
-                        Padding="0"
+                        Padding="6,0,0,0"
                         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                         BorderThickness="1">
@@ -360,7 +360,7 @@
                     <DataTemplate x:DataType="models:HistoryModel">
                         <Grid
                             Height="35"
-                            Padding="0"
+                            Padding="6,0,0,0"
                             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                             BorderThickness="1,0,1,1">

@@ -10,7 +10,7 @@ namespace GetStoreApp.Contracts.Services.App
 
         List<BackdropModel> BackdropList { get; }
 
-        List<HistoryItemValueModel> HistoryItemValueList { get; }
+        List<HistoryLiteNumModel> HistoryLiteNumList { get; }
 
         List<GetAppTypeModel> TypeList { get; }
 

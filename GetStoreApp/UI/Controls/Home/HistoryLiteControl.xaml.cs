@@ -5,11 +5,11 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.UI.Controls.Home
 {
-    public sealed partial class HistoryItemControl : UserControl
+    public sealed partial class HistoryLiteControl : UserControl
     {
         public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        public HistoryItemViewModel ViewModel { get; } = IOCHelper.GetService<HistoryItemViewModel>();
+        public HistoryLiteViewModel ViewModel { get; } = IOCHelper.GetService<HistoryLiteViewModel>();
 
         public string Fillin => ResourceService.GetLocalized("/Home/Fillin");
 
@@ -19,7 +19,7 @@ namespace GetStoreApp.UI.Controls.Home
 
         public string CopyToolTip => ResourceService.GetLocalized("/Home/CopyToolTip");
 
-        public HistoryItemControl()
+        public HistoryLiteControl()
         {
             InitializeComponent();
         }

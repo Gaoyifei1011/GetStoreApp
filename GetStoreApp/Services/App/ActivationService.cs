@@ -38,7 +38,7 @@ namespace GetStoreApp.Services.App
 
         private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
 
-        private IHistoryItemValueService HistoryItemValueService { get; } = IOCHelper.GetService<IHistoryItemValueService>();
+        private IHistoryLiteNumService HistoryItemValueService { get; } = IOCHelper.GetService<IHistoryLiteNumService>();
 
         private ILanguageService LanguageService { get; } = IOCHelper.GetService<ILanguageService>();
 

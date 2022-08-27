@@ -3,9 +3,9 @@ using GetStoreApp.Models;
 
 namespace GetStoreApp.Messages
 {
-    public class HistoryItemValueMessage : ValueChangedMessage<HistoryItemValueModel>
+    public class HistoryItemValueMessage : ValueChangedMessage<HistoryLiteNumModel>
     {
-        public HistoryItemValueMessage(HistoryItemValueModel value) : base(value)
+        public HistoryItemValueMessage(HistoryLiteNumModel value) : base(value)
         {
         }
     }

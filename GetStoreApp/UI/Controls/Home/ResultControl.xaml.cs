@@ -11,6 +11,17 @@ namespace GetStoreApp.UI.Controls.Home
 
         public ResultViewModel ViewModel { get; } = IOCHelper.GetService<ResultViewModel>();
 
+        public string Copy => ResourceService.GetLocalized("/Home/Copy");
+
+        public string CopyOptionsToolTip => ResourceService.GetLocalized("/Home/CopyOptionsToolTip");
+
+        public string CopyLink => ResourceService.GetLocalized("/Home/CopyLink");
+        public string CopyLinkToolTip => ResourceService.GetLocalized("/Home/CopyLinkToolTip");
+
+        public string CopyContent => ResourceService.GetLocalized("/Home/CopyContent");
+
+        public string CopyContentToolTip => ResourceService.GetLocalized("/Home/CopyContentToolTip");
+
         public ResultControl()
         {
             InitializeComponent();

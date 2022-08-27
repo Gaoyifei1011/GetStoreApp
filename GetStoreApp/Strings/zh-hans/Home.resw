@@ -123,7 +123,7 @@
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
-  <data name="CancelDescription" xml:space="preserve">
+  <data name="CancelToolTip" xml:space="preserve">
     <value>退出多选模式</value>
   </data>
   <data name="CategoryId" xml:space="preserve">
@@ -135,43 +135,40 @@
   <data name="Copy" xml:space="preserve">
     <value>复制</value>
   </data>
-  <data name="CopyCategoryID" xml:space="preserve">
-    <value>复制CategoryID</value>
-  </data>
-  <data name="CopyCategoryIDDescription" xml:space="preserve">
-    <value>复制CategoryID到剪贴板</value>
-  </data>
   <data name="CopyContent" xml:space="preserve">
     <value>复制内容</value>
   </data>
-  <data name="CopyContentDescription" xml:space="preserve">
+  <data name="CopyContentToolTip" xml:space="preserve">
     <value>复制内容到剪贴板</value>
   </data>
-  <data name="CopyDescription" xml:space="preserve">
-    <value>复制选中的内容到剪贴板</value>
+  <data name="CopyID" xml:space="preserve">
+    <value>复制ID</value>
+  </data>
+  <data name="CopyIDToolTip" xml:space="preserve">
+    <value>复制CategoryID到剪贴板</value>
   </data>
   <data name="CopyLink" xml:space="preserve">
     <value>复制下载链接</value>
   </data>
-  <data name="CopyLinkDescription" xml:space="preserve">
+  <data name="CopyLinkToolTip" xml:space="preserve">
     <value>复制下载链接到剪贴板</value>
   </data>
   <data name="CopyOptions" xml:space="preserve">
     <value>复制选项</value>
   </data>
-  <data name="CopyOptionsDescription" xml:space="preserve">
+  <data name="CopyOptionsToolTip" xml:space="preserve">
     <value>单击显示复制选项</value>
   </data>
   <data name="CopySelectedContent" xml:space="preserve">
     <value>复制选中行内容</value>
   </data>
-  <data name="CopySelectedContentDescription" xml:space="preserve">
+  <data name="CopySelectedContentToolTip" xml:space="preserve">
     <value>复制选中行的内容到剪贴板</value>
   </data>
   <data name="CopySelectedLink" xml:space="preserve">
     <value>复制选中行下载链接</value>
   </data>
-  <data name="CopySelectedLinkDescription" xml:space="preserve">
+  <data name="CopySelectedLinkToolTip" xml:space="preserve">
     <value>复制选中行的下载链接到剪贴板</value>
   </data>
   <data name="CopyToolTip" xml:space="preserve">
@@ -204,7 +201,7 @@
   <data name="GetLinks" xml:space="preserve">
     <value>获取链接</value>
   </data>
-  <data name="HistoryItemEmpty" xml:space="preserve">
+  <data name="HistoryLiteEmpty" xml:space="preserve">
     <value>历史记录空空如也</value>
   </data>
   <data name="Link" xml:space="preserve">
@@ -218,6 +215,9 @@
   </data>
   <data name="OperationMode" xml:space="preserve">
     <value>操作方式</value>
+  </data>
+  <data name="OperationModeToolTip" xml:space="preserve">
+    <value>选择您要使用的操作方式</value>
   </data>
   <data name="Recent" xml:space="preserve">
     <value>最近使用的项目</value>
@@ -240,14 +240,14 @@
   <data name="SelectAll" xml:space="preserve">
     <value>全选</value>
   </data>
-  <data name="SelectDescription" xml:space="preserve">
-    <value>进入多选模式</value>
-  </data>
   <data name="SelectedDescription" xml:space="preserve">
     <value>已选择</value>
   </data>
   <data name="SelectNone" xml:space="preserve">
     <value>全部不选</value>
+  </data>
+  <data name="SelectToolTip" xml:space="preserve">
+    <value>进入多选模式</value>
   </data>
   <data name="SerialNumber" xml:space="preserve">
     <value>序号</value>

@@ -5,6 +5,7 @@ using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.Models;
 using GetStoreApp.UI.Dialogs;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -45,24 +46,21 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _isSelectMode, value); }
         }
 
-        private ResultModel _selectedResultItem;
-
-        public ResultModel SelectedResultItem
-        {
-            get { return _selectedResultItem; }
-
-            set { SetProperty(ref _selectedResultItem, value); }
-        }
-
-        public IAsyncRelayCommand CopyCategoryIDCommand => new AsyncRelayCommand(async () =>
+        public IAsyncRelayCommand CopyIDCommand => new AsyncRelayCommand(async () =>
         {
             CopyPasteHelper.CopyToClipBoard(CategoryId);
             await Task.CompletedTask;
         });
 
-        public IAsyncRelayCommand CopyContentCommand => new AsyncRelayCommand(CopyContentAsync);
+        public IAsyncRelayCommand CopyContentCommand => new AsyncRelayCommand<ResultModel>(async (param) =>
+        {
+            await CopyContentAsync(param);
+        });
 
-        public IAsyncRelayCommand CopyLinkCommand => new AsyncRelayCommand(CopyLinkAsync);
+        public IAsyncRelayCommand CopyLinkCommand => new AsyncRelayCommand<string>(async (param) =>
+        {
+            await CopyLinkAsync(param);
+        });
 
         public IAsyncRelayCommand DownloadCommand { get; }
 
@@ -96,9 +94,22 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public IAsyncRelayCommand DownloadSelectedCommand { get; }
 
+        public IAsyncRelayCommand ItemClickCommand => new AsyncRelayCommand<ItemClickEventArgs>(async (param) =>
+        {
+            ResultModel resultItem = (ResultModel)param.ClickedItem;
+            int ClickedIndex = ResultDataList.IndexOf(resultItem);
+
+            ResultDataList[ClickedIndex].IsSelected = !ResultDataList[ClickedIndex].IsSelected;
+
+            await Task.CompletedTask;
+        });
+
+        /// <summary>
+        /// 根据设置存储的文件链接操作方式操作获取到的文件链接
+        /// </summary>
         public IAsyncRelayCommand FileOperationCommand => new AsyncRelayCommand<string>(async (param) =>
         {
-            await FileOperationAsync(param);
+            await Windows.System.Launcher.LaunchUriAsync(new Uri(param));
         });
 
         public ResultViewModel()
@@ -130,34 +141,22 @@ namespace GetStoreApp.ViewModels.Controls.Home
         /// <summary>
         /// 单选模式下复制选中行的链接
         /// <summary>
-        private async Task CopyLinkAsync()
+        private async Task CopyLinkAsync(string fileLink)
         {
-            if (SelectedResultItem == null)
-            {
-                await new SelectEmptyPromptDialog().ShowAsync();
-                return;
-            };
-
-            CopyPasteHelper.CopyToClipBoard(SelectedResultItem.FileLink);
+            CopyPasteHelper.CopyToClipBoard(fileLink);
             await Task.CompletedTask;
         }
 
         /// <summary>
         /// 单选模式下复制选中行的信息
         /// <summary>
-        private async Task CopyContentAsync()
+        private async Task CopyContentAsync(ResultModel resultItem)
         {
-            if (SelectedResultItem == null)
-            {
-                await new SelectEmptyPromptDialog().ShowAsync();
-                return;
-            };
-
             string CopyContent = string.Format("[\n{0}\n{1}\n{2}\n{3}\n]\n",
-                SelectedResultItem.FileName,
-                SelectedResultItem.FileLink,
-                SelectedResultItem.FileSHA1,
-                SelectedResultItem.FileSize
+                resultItem.FileName,
+                resultItem.FileLink,
+                resultItem.FileSHA1,
+                resultItem.FileSize
                 );
 
             CopyPasteHelper.CopyToClipBoard(CopyContent);
@@ -191,7 +190,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             foreach (ResultModel resultItem in SelectedResultDataList)
             {
-                stringBuilder.Append(string.Format("[\n{0}\n]\n", resultItem.FileLink));
+                stringBuilder.Append(string.Format("{0}\n", resultItem.FileLink));
             }
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
@@ -226,14 +225,6 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
             await Task.CompletedTask;
-        }
-
-        /// <summary>
-        /// 根据获取到的链接选择相应的操作
-        /// </summary>
-        private async Task FileOperationAsync(string fileLink)
-        {
-            await Windows.System.Launcher.LaunchUriAsync(new Uri(fileLink));
         }
     }
 }

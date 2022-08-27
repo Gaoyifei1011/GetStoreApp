@@ -12,7 +12,7 @@
                 <ResourceDictionary Source="ms-appx:///Styles/Checkbox.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/ContentDialog.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Converter.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/DataGrid.xaml" />
+                <ResourceDictionary Source="ms-appx:///Styles/DropDownButton.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Expander.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/FontIcon.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Grid.xaml" />
