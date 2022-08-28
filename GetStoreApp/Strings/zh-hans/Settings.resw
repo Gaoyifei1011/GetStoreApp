@@ -177,16 +177,16 @@
   <data name="General" xml:space="preserve">
     <value>常规选项</value>
   </data>
-  <data name="HistoryItem" xml:space="preserve">
+  <data name="HistoryLiteConfig" xml:space="preserve">
     <value>主页面“历史记录”显示数目</value>
   </data>
-  <data name="HistoryItemDescription" xml:space="preserve">
+  <data name="HistoryLiteConfigDescription" xml:space="preserve">
     <value>应用启动后在主页面打开时最多显示的“历史记录”条目数量</value>
   </data>
-  <data name="HistoryItemValueMax" xml:space="preserve">
+  <data name="HistoryLiteNumMax" xml:space="preserve">
     <value>5条</value>
   </data>
-  <data name="HistoryItemValueMin" xml:space="preserve">
+  <data name="HistoryLiteNumMin" xml:space="preserve">
     <value>3条</value>
   </data>
   <data name="Language" xml:space="preserve">
@@ -195,7 +195,7 @@
   <data name="LanguageDescription" xml:space="preserve">
     <value>修改应用界面显示的语言</value>
   </data>
-  <data name="LanguageTip" xml:space="preserve">
+  <data name="LanguageToolTip" xml:space="preserve">
     <value>帮助</value>
   </data>
   <data name="LinkFilter" xml:space="preserve">
@@ -213,7 +213,7 @@
   <data name="NotifiactionOnContent" xml:space="preserve">
     <value>开启</value>
   </data>
-  <data name="OpenFolderDescription" xml:space="preserve">
+  <data name="OpenFolderToolTip" xml:space="preserve">
     <value>单击访问该文件夹</value>
   </data>
   <data name="Region" xml:space="preserve">
@@ -225,7 +225,7 @@
   <data name="RestartApp" xml:space="preserve">
     <value>重启应用</value>
   </data>
-  <data name="RestartAppDescription" xml:space="preserve">
+  <data name="RestartAppToolTip" xml:space="preserve">
     <value>应用设置发生修改后，部分选项需要重启后生效</value>
   </data>
   <data name="StartsWithE" xml:space="preserve">

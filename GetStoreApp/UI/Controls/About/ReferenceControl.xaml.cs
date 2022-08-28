@@ -11,7 +11,7 @@ namespace GetStoreApp.UI.Controls.About
 
         public ReferenceViewModel ViewModel { get; } = IOCHelper.GetService<ReferenceViewModel>();
 
-        public string ReferenceDescription => ResourceService.GetLocalized("/About/ReferenceDescription");
+        public string ReferenceToolTip => ResourceService.GetLocalized("/About/ReferenceToolTip");
 
         public ReferenceControl()
         {

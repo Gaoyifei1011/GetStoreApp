@@ -27,7 +27,7 @@ namespace GetStoreApp.Services.Settings
         /// <summary>
         /// 应用在初始化前获取设置存储的历史记录显示数量值
         /// </summary>
-        public async Task InitializeHistoryItemValueAsync()
+        public async Task InitializeHistoryLiteNumAsync()
         {
             HistoryLiteNumList = ResourceService.HistoryLiteNumList;
 

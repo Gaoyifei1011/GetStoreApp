@@ -41,7 +41,7 @@
             VerticalAlignment="Center"
             Command="{x:Bind ViewModel.LanguageTipCommand}"
             Style="{StaticResource ButtonInfoStyle}"
-            ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/LanguageTip')}">
+            ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/LanguageToolTip')}">
             <Button.Content>
                 <FontIcon
                     FontFamily="Segoe Fluent Icons"

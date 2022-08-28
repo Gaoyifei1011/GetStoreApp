@@ -28,7 +28,7 @@
                             HorizontalContentAlignment="Left"
                             Content="{Binding Key}"
                             NavigateUri="{Binding Value}"
-                            ToolTipService.ToolTip="{Binding ElementName=ReferenceRoot, Path=ReferenceDescription}" />
+                            ToolTipService.ToolTip="{Binding ElementName=ReferenceRoot, Path=ReferenceToolTip}" />
                     </DataTemplate>
                 </GridView.ItemTemplate>
             </GridView>

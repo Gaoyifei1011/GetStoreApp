@@ -171,7 +171,7 @@
   <data name="DeveloperName" xml:space="preserve">
     <value>@高怡飞</value>
   </data>
-  <data name="DeveloperNameDescription" xml:space="preserve">
+  <data name="DeveloperNameToolTip" xml:space="preserve">
     <value>单击访问开发者主页</value>
   </data>
   <data name="DevelopPurpose" xml:space="preserve">
@@ -231,7 +231,7 @@
   <data name="Reference" xml:space="preserve">
     <value>项目引用（按英文首字母排序）</value>
   </data>
-  <data name="ReferenceDescription" xml:space="preserve">
+  <data name="ReferenceToolTip" xml:space="preserve">
     <value>单击了解被引用开源项目的信息</value>
   </data>
   <data name="SendFeedback" xml:space="preserve">

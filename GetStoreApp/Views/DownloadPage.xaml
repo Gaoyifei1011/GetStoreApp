@@ -36,8 +36,8 @@
             <Button
                 VerticalAlignment="Top"
                 Command="{x:Bind ViewModel.DownloadOptionsCommand}"
-                Content="{x:Bind ResourceService.GetLocalized('/Download/DownloadOptions')}"
-                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/DownloadOptions')}" />
+                Content="{x:Bind ResourceService.GetLocalized('/Download/Settings')}"
+                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SettingsToolTip')}" />
         </Pivot.RightHeader>
     </Pivot>
 </Page>

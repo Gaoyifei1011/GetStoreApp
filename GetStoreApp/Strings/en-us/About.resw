@@ -174,7 +174,7 @@
   <data name="DeveloperName" xml:space="preserve">
     <value>@高怡飞</value>
   </data>
-  <data name="DeveloperNameDescription" xml:space="preserve">
+  <data name="DeveloperNameToolTip" xml:space="preserve">
     <value>Click to visit the Developer home page</value>
   </data>
   <data name="DevelopPurpose" xml:space="preserve">
@@ -234,7 +234,7 @@
   <data name="Reference" xml:space="preserve">
     <value>Project references (Sort by alphabetical order)</value>
   </data>
-  <data name="ReferenceDescription" xml:space="preserve">
+  <data name="ReferenceToolTip" xml:space="preserve">
     <value>Click to learn about the referenced open source project</value>
   </data>
   <data name="SendFeedback" xml:space="preserve">

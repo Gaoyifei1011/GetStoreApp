@@ -70,13 +70,13 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 添加下载任务
         /// </summary>
-        public async Task AddTaskAsync(DownloadModel downloadItem)
+        public async Task<bool> AddTaskAsync(DownloadModel downloadItem)
         {
             // 将新添加的下载任务状态标记为等待下载状态
             downloadItem.DownloadFlag = 1;
 
             // 在数据库中添加下载信息，并获取添加成功的结果
-            bool AddResult = await DownloadDBService.AddDataAsync(downloadItem);
+            bool AddResult = await DownloadDBService.AddDownloadDataAsync(downloadItem);
 
             // 数据库添加成功后添加等待下载任务
             if (AddResult)
@@ -87,12 +87,14 @@ namespace GetStoreApp.Services.Download
                     WaitingList.Add(downloadItem);
                 }
             }
+
+            return AddResult;
         }
 
         /// <summary>
         /// 继续下载任务
         /// </summary>
-        public async Task ContinueTaskAsync(DownloadModel downloadItem)
+        public async Task<bool> ContinueTaskAsync(DownloadModel downloadItem)
         {
             // 将继续下载的任务状态标记为等待下载状态
             downloadItem.DownloadFlag = 1;
@@ -108,20 +110,24 @@ namespace GetStoreApp.Services.Download
                     WaitingList.Add(downloadItem);
                 }
             }
+
+            return UpdateResult;
         }
 
         /// <summary>
         /// 暂停下载任务
         /// </summary>
-        public async Task PauseTaskAsync(DownloadModel downloadItem)
+        public async Task<bool> PauseTaskAsync(DownloadModel downloadItem)
         {
+            int DownloadFlag = downloadItem.DownloadFlag;
+
             // 处于等待下载状态时，从等待下载列表中移除
             if (downloadItem.DownloadFlag == 1)
             {
                 // 保证线程安全
                 lock (WaitingListLock)
                 {
-                    WaitingList.RemoveAll(item => item.DownloadKey == downloadItem.DownloadKey);
+                    WaitingList.Remove(WaitingList.Find(item => item.DownloadKey == downloadItem.DownloadKey));
                 }
             }
 
@@ -136,20 +142,20 @@ namespace GetStoreApp.Services.Download
                     // 保证线程安全
                     lock (DownloadingListLock)
                     {
-                        DownloadingList.RemoveAll(item => item.DownloadKey == downloadItem.DownloadKey);
+                        DownloadingList.Remove(WaitingList.Find(item => item.DownloadKey == downloadItem.DownloadKey));
                     }
                 }
             }
 
             // 修改数据库下载任务状态为暂停状态
             downloadItem.DownloadFlag = 2;
-            await DownloadDBService.UpdateFlagAsync(downloadItem);
+            return await DownloadDBService.UpdateFlagAsync(downloadItem);
         }
 
         /// <summary>
         /// 删除下载任务
         /// </summary>
-        public async Task DeleteTaskAsync(DownloadModel downloadItem)
+        public async Task<bool> DeleteTaskAsync(DownloadModel downloadItem)
         {
             // 处于等待下载状态时，从等待下载列表中移除
             if (downloadItem.DownloadFlag == 1)
@@ -178,40 +184,7 @@ namespace GetStoreApp.Services.Download
             }
 
             // 从数据库中删除任务
-            await DownloadDBService.DeleteDownloadDataAsync(downloadItem);
-        }
-
-        /// <summary>
-        /// 继续下载全部任务
-        /// </summary>
-        public async Task ContinueAllTaskAsync(List<DownloadModel> downloadItemList)
-        {
-            foreach (DownloadModel downloadItem in downloadItemList)
-            {
-                await AddTaskAsync(downloadItem);
-            }
-        }
-
-        /// <summary>
-        /// 暂停下载全部任务
-        /// </summary>
-        public async Task PauseAllTaskAsync(List<DownloadModel> downloadItemList)
-        {
-            foreach (DownloadModel downloadItem in downloadItemList)
-            {
-                await PauseTaskAsync(downloadItem);
-            }
-        }
-
-        /// <summary>
-        /// 删除选定项目的任务
-        /// </summary>
-        public async Task DeleteSelectedTaskAsync(List<DownloadModel> downloadItemList)
-        {
-            foreach (DownloadModel downloadItem in downloadItemList)
-            {
-                await DeleteTaskAsync(downloadItem);
-            }
+            return await DownloadDBService.DeleteDownloadDataAsync(downloadItem);
         }
 
         /// <summary>
@@ -235,7 +208,7 @@ namespace GetStoreApp.Services.Download
                 // 获取列表中的第一个元素
                 DownloadModel DownloadItem = WaitingList.First();
 
-                bool AddDataResult = await DownloadDBService.AddDataAsync(DownloadItem);
+                bool AddDataResult = await DownloadDBService.AddDownloadDataAsync(DownloadItem);
 
                 string TaskGID = await Aria2Service.AddUriAsync(DownloadItem.FileLink, DownloadOptionsService.DownloadFolder.Path, DownloadItem.FileName);
 

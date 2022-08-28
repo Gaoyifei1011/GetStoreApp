@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BatchOperation" xml:space="preserve">
-    <value>Batch Operation</value>
-  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
@@ -177,9 +174,6 @@
   <data name="Download" xml:space="preserve">
     <value>Download</value>
   </data>
-  <data name="DownloadDescription" xml:space="preserve">
-    <value>Download the selected item</value>
-  </data>
   <data name="DownloadSelected" xml:space="preserve">
     <value>Download the selected item</value>
   </data>
@@ -210,9 +204,6 @@
   <data name="LinkExpireTime" xml:space="preserve">
     <value>Link Expire Time</value>
   </data>
-  <data name="Operation" xml:space="preserve">
-    <value>Operation</value>
-  </data>
   <data name="OperationMode" xml:space="preserve">
     <value>Operation mode</value>
   </data>
@@ -240,7 +231,7 @@
   <data name="SelectAll" xml:space="preserve">
     <value>Select all</value>
   </data>
-  <data name="SelectedDescription" xml:space="preserve">
+  <data name="SelectedToolTip" xml:space="preserve">
     <value>Selected</value>
   </data>
   <data name="SelectNone" xml:space="preserve">
@@ -248,9 +239,6 @@
   </data>
   <data name="SelectToolTip" xml:space="preserve">
     <value>Enter multi-select mode</value>
-  </data>
-  <data name="SerialNumber" xml:space="preserve">
-    <value>S/N</value>
   </data>
   <data name="StatusInfoError" xml:space="preserve">
     <value>An error occurred to get data from the servers in the Microsoft Store, click on the "Instructions for Use" button in the upper right corner or jump to the “About page” to find the appropriate solution</value>
@@ -270,9 +258,6 @@
   <data name="Title" xml:space="preserve">
     <value>Main</value>
   </data>
-  <data name="TitleDescription" xml:space="preserve">
-    <value>Online link generator for Microsoft Store\nEnter the link from the Microsoft Store and click on the checkbox - to get all available links</value>
-  </data>
   <data name="TitleDescription1" xml:space="preserve">
     <value>Online link generator for Microsoft Store</value>
   </data>
@@ -282,13 +267,19 @@
   <data name="Type" xml:space="preserve">
     <value>Type</value>
   </data>
-  <data name="UnselectedDescription" xml:space="preserve">
+  <data name="UnselectedToolTip" xml:space="preserve">
     <value>Not selected</value>
   </data>
   <data name="UseInstruction" xml:space="preserve">
     <value>Direction for use</value>
   </data>
+  <data name="UseInstructionToolTip" xml:space="preserve">
+    <value>Click to learn how to use the app</value>
+  </data>
   <data name="ViewAll" xml:space="preserve">
     <value>View all</value>
+  </data>
+  <data name="ViewAllToolTip" xml:space="preserve">
+    <value>View all history records</value>
   </data>
 </root>

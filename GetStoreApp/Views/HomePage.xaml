@@ -18,7 +18,34 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <hc:TitleControl Grid.Row="0" />
+        <StackPanel Grid.Row="0" Margin="0,0,0,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock
+                    Grid.Column="0"
+                    FontSize="26"
+                    Text="{x:Bind ResourceService.GetLocalized('/Home/Title')}" />
+
+                <Button
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Command="{x:Bind ViewModel.UseInstructionCommand}"
+                    Content="{x:Bind ResourceService.GetLocalized('/Home/UseInstruction')}"
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/UseInstructionToolTip')}"
+                    Visibility="{x:Bind ViewModel.UseInsVisValue, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            </Grid>
+
+            <TextBlock
+                Margin="0,0,0,5"
+                Style="{StaticResource TitleDescriptionStyle}"
+                Text="{x:Bind ResourceService.GetLocalized('/Home/TitleDescription1')}" />
+
+            <TextBlock Style="{StaticResource TitleDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/Home/TitleDescription2')}" />
+        </StackPanel>
 
         <hc:RequestControl Grid.Row="1" />
 

@@ -60,7 +60,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
         public IAsyncRelayCommand SelectNoneCommand => new AsyncRelayCommand(SelectNoneAsync);
 
-        public IAsyncRelayCommand DeleteCommand => new AsyncRelayCommand(DeleteAsync);
+        public IAsyncRelayCommand DeleteSelectedCommand => new AsyncRelayCommand(DeleteSelected);
 
         public IAsyncRelayCommand CancelCommand => new AsyncRelayCommand(async () =>
         {
@@ -68,11 +68,9 @@ namespace GetStoreApp.ViewModels.Controls.Download
             await Task.CompletedTask;
         });
 
-        public IAsyncRelayCommand ContinueDownloadCommand { get; }
+        public IAsyncRelayCommand PauseCommand { get; }
 
-        public IAsyncRelayCommand PauseDownloadCommand { get; }
-
-        public IAsyncRelayCommand DeleteTaskCommand { get; }
+        public IAsyncRelayCommand DeleteCommand { get; }
 
         public DownloadingViewModel()
         {
@@ -118,9 +116,9 @@ namespace GetStoreApp.ViewModels.Controls.Download
         }
 
         /// <summary>
-        /// 删除下载任务
+        /// 删除选中的下载任务
         /// </summary>
-        private async Task DeleteAsync()
+        private async Task DeleteSelected()
         {
             List<DownloadModel> SelectedDownloadomgDataList = DownloadingDataList.Where(item => item.IsSelected == true).ToList();
 

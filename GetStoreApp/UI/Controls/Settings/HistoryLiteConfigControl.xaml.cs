@@ -6,20 +6,20 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.UI.Controls.Settings
 {
-    public sealed partial class HistoryItemValueControl : UserControl
+    public sealed partial class HistoryLiteConfigControl : UserControl
     {
         public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        public HistoryItemValueViewModel ViewModel { get; } = IOCHelper.GetService<HistoryItemValueViewModel>();
+        public HistoryLiteConfigViewModel ViewModel { get; } = IOCHelper.GetService<HistoryLiteConfigViewModel>();
 
-        public HistoryItemValueControl()
+        public HistoryLiteConfigControl()
         {
             InitializeComponent();
         }
 
-        public string GetSelectedHistoryItemName(HistoryLiteNumModel historyItem)
+        public string GetSelectedHistoryLiteNumName(HistoryLiteNumModel historyLiteItem)
         {
-            return historyItem.HistoryLiteNumName;
+            return historyLiteItem.HistoryLiteNumName;
         }
     }
 }

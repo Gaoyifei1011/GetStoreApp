@@ -14,18 +14,12 @@ namespace GetStoreApp.Contracts.Services.Download
 
         Task CloseDownloadMonitorAsync();
 
-        Task AddTaskAsync(DownloadModel downloadItem);
+        Task<bool> AddTaskAsync(DownloadModel downloadItem);
 
-        Task ContinueTaskAsync(DownloadModel downloadItem);
+        Task<bool> ContinueTaskAsync(DownloadModel downloadItem);
 
-        Task PauseTaskAsync(DownloadModel downloadItem);
+        Task<bool> PauseTaskAsync(DownloadModel downloadItem);
 
-        Task DeleteTaskAsync(DownloadModel downloadItem);
-
-        Task ContinueAllTaskAsync(List<DownloadModel> downloadItemList);
-
-        Task PauseAllTaskAsync(List<DownloadModel> downloadItemList);
-
-        Task DeleteSelectedTaskAsync(List<DownloadModel> downloadItemList);
+        Task<bool> DeleteTaskAsync(DownloadModel downloadItem);
     }
 }

@@ -136,16 +136,14 @@ namespace GetStoreApp.Helpers
                 services.AddTransient<ResultViewModel>();
                 services.AddTransient<StatusBarControl>();
                 services.AddTransient<StatusBarViewModel>();
-                services.AddTransient<TitleControl>();
-                services.AddTransient<TitleViewModel>();
 
                 // 设置页面的控件（MVVM）
                 services.AddTransient<BackdropControl>();
                 services.AddTransient<BackdropViewModel>();
                 services.AddTransient<DownloadOptionsControl>();
                 services.AddTransient<DownloadOptionsViewModel>();
-                services.AddTransient<HistoryItemValueControl>();
-                services.AddTransient<HistoryItemValueViewModel>();
+                services.AddTransient<HistoryLiteConfigControl>();
+                services.AddTransient<HistoryLiteConfigViewModel>();
                 services.AddTransient<LauguageControl>();
                 services.AddTransient<LanguageViewModel>();
                 services.AddTransient<LinkFilterControl>();

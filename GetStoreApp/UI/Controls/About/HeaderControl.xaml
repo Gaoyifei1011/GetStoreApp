@@ -48,7 +48,7 @@
                     Command="{x:Bind ViewModel.DeveloperDescriptionCommand}"
                     Content="{x:Bind ResourceService.GetLocalized('/About/DeveloperName')}"
                     Style="{StaticResource HyperlinkButtonStyle}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/About/DeveloperNameDescription')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/About/DeveloperNameToolTip')}" />
             </StackPanel>
         </StackPanel>
 
@@ -69,7 +69,7 @@
                 MinWidth="150"
                 Command="{x:Bind ViewModel.SendFeedbackCommand}"
                 Content="{x:Bind ResourceService.GetLocalized('/About/SendFeedback')}"
-                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/About/SendFeedback')}" />
+                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/About/SendFeedbackToolTip')}" />
 
             <Button
                 MinWidth="150"

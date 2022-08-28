@@ -94,32 +94,47 @@ namespace GetStoreApp.ViewModels.Pages
             set { SetProperty(ref _channelFilter, value); }
         }
 
+        // 进入多选模式
         public IAsyncRelayCommand SelectCommand => new AsyncRelayCommand(async () =>
         {
-            await SelectNoneAsync();
+            // 保证线程安全
+            lock (HistoryDataListLock)
+            {
+                foreach (HistoryModel historyItem in HistoryDataList)
+                {
+                    historyItem.IsSelected = false;
+                }
+            }
+
             IsSelectMode = true;
+            await Task.CompletedTask;
         });
 
+        // 按时间进行排序
         public IAsyncRelayCommand TimeSortCommand => new AsyncRelayCommand<string>(async (param) =>
         {
             TimeSortOrder = Convert.ToBoolean(param);
             await GetHistoryDataListAsync();
         });
 
+        // 按类型进行过滤
         public IAsyncRelayCommand TypeFilterCommand => new AsyncRelayCommand<string>(async (param) =>
         {
             TypeFilter = param;
             await GetHistoryDataListAsync();
         });
 
+        // 按通道进行过滤
         public IAsyncRelayCommand ChannelFilterCommand => new AsyncRelayCommand<string>(async (param) =>
         {
             ChannelFilter = param;
             await GetHistoryDataListAsync();
         });
 
+        // 刷新数据
         public IAsyncRelayCommand RefreshCommand => new AsyncRelayCommand(GetHistoryDataListAsync);
 
+        // 全选
         public IAsyncRelayCommand SelectAllCommand => new AsyncRelayCommand(async () =>
         {
             // 保证线程安全
@@ -134,133 +149,8 @@ namespace GetStoreApp.ViewModels.Pages
             await Task.CompletedTask;
         });
 
-        public IAsyncRelayCommand SelectNoneCommand => new AsyncRelayCommand(SelectNoneAsync);
-
-        public IAsyncRelayCommand CopySelectedCommand => new AsyncRelayCommand(CopySelectedAsync);
-
-        public IAsyncRelayCommand DeleteCommand => new AsyncRelayCommand(DeleteAsync);
-
-        public IAsyncRelayCommand CancelCommand => new AsyncRelayCommand(async () =>
-        {
-            IsSelectMode = false;
-            await Task.CompletedTask;
-        });
-
-        public IAsyncRelayCommand ItemClickCommand => new AsyncRelayCommand<ItemClickEventArgs>(async (param) =>
-        {
-            HistoryModel historyItem = (HistoryModel)param.ClickedItem;
-            int ClickedIndex = HistoryDataList.IndexOf(historyItem);
-
-            lock (HistoryDataListLock)
-            {
-                HistoryDataList[ClickedIndex].IsSelected = !HistoryDataList[ClickedIndex].IsSelected;
-            }
-
-            await Task.CompletedTask;
-        });
-
-        public IAsyncRelayCommand FillinCommand => new AsyncRelayCommand<HistoryModel>(async (param) =>
-        {
-            await FillinAsync(param);
-        });
-
-        public IAsyncRelayCommand CopyCommand => new AsyncRelayCommand<HistoryModel>(async (param) =>
-        {
-            await CopyAsync(param);
-        });
-
-        // 导航到历史记录页面时，历史记录数据列表初始化，从数据库中存储的列表中加载
-        public async void OnNavigatedTo(object parameter)
-        {
-            await GetHistoryDataListAsync();
-        }
-
-        public void OnNavigatedFrom()
-        { }
-
-        /// <summary>
-        /// 多选模式下删除选中的条目
-        /// </summary>
-        private async Task DeleteAsync()
-        {
-            List<HistoryModel> SelectedHistoryDataList = HistoryDataList.Where(item => item.IsSelected == true).ToList();
-
-            // 没有选中任何内容时显示空提示对话框
-            if (SelectedHistoryDataList.Count == 0)
-            {
-                await new SelectEmptyPromptDialog().ShowAsync();
-                return;
-            };
-
-            // 删除时显示删除确认对话框
-            ContentDialogResult result = await new DeletePromptDialog().ShowAsync();
-
-            if (result == ContentDialogResult.Primary)
-            {
-                IsSelectMode = false;
-
-                await HistoryDBService.DeleteHistoryDataAsync(SelectedHistoryDataList);
-
-                await GetHistoryDataListAsync();
-
-                Messenger.Send(new HistoryMessage(true));
-            }
-        }
-
-        /// <summary>
-        /// 从数据库中加载数据
-        /// </summary>
-        private async Task GetHistoryDataListAsync()
-        {
-            Tuple<List<HistoryModel>, bool, bool> HistoryAllData = await HistoryDBService.QueryAllHistoryDataAsync(TimeSortOrder, TypeFilter, ChannelFilter);
-
-            // 获取数据库的原始记录数据
-            List<HistoryModel> HistoryRawList = HistoryAllData.Item1;
-            // 数据库中的历史记录表是否为空
-            IsHistoryEmpty = HistoryAllData.Item2;
-
-            // 经过筛选后历史记录是否为空
-            IsHistoryEmptyAfterFilter = HistoryAllData.Item3;
-
-            // 更新UI上面的数据
-            ConvertRawListToDisplayList(ref HistoryRawList);
-        }
-
-        /// <summary>
-        /// 将原始数据转换为在UI界面上呈现出来的数据
-        /// </summary>
-        private void ConvertRawListToDisplayList(ref List<HistoryModel> historyRawList)
-        {
-            // 保证线程安全
-            lock (HistoryDataListLock)
-            {
-                HistoryDataList.Clear();
-            }
-
-            // 保证线程安全
-            lock (HistoryDataListLock)
-            {
-                foreach (HistoryModel historyRawData in historyRawList)
-                {
-                    HistoryDataList.Add(historyRawData);
-                }
-            }
-        }
-
-        /// <summary>
-        /// 将选中的历史记录条目填入到选择控件中，然后点击“获取链接”即可获取
-        /// </summary>
-        private async Task FillinAsync(HistoryModel historyItem)
-        {
-            Messenger.Send(new FillinMessage(historyItem));
-            NavigationService.NavigateTo(typeof(HomeViewModel).FullName, null, new DrillInNavigationTransitionInfo());
-            await Task.CompletedTask;
-        }
-
-        /// <summary>
-        /// 点击全部不选按钮时，让复选框的历史记录全部不选
-        /// </summary>
-        private async Task SelectNoneAsync()
+        // 全部不选
+        public IAsyncRelayCommand SelectNoneCommand => new AsyncRelayCommand(async () =>
         {
             // 保证线程安全
             lock (HistoryDataListLock)
@@ -270,27 +160,12 @@ namespace GetStoreApp.ViewModels.Pages
                     historyItem.IsSelected = false;
                 }
             }
-            await Task.CompletedTask;
-        }
-
-        /// <summary>
-        /// 单选模式下复制选中的条目
-        /// </summary>
-        private async Task CopyAsync(HistoryModel historyItem)
-        {
-            string CopyContent = string.Format("{0}\t{1}\t{2}",
-                TypeList.Find(item => item.InternalName.Equals(historyItem.HistoryType)).DisplayName,
-                ChannelList.Find(item => item.InternalName.Equals(historyItem.HistoryChannel)).DisplayName,
-                historyItem.HistoryLink);
-            CopyPasteHelper.CopyToClipBoard(CopyContent);
 
             await Task.CompletedTask;
-        }
+        });
 
-        /// <summary>
-        /// 多选模式下复制选中的条目
-        /// </summary>
-        private async Task CopySelectedAsync()
+        // 复制选定项目的内容
+        public IAsyncRelayCommand CopySelectedCommand => new AsyncRelayCommand(async () =>
         {
             List<HistoryModel> SelectedHistoryDataList = HistoryDataList.Where(item => item.IsSelected == true).ToList();
 
@@ -312,6 +187,135 @@ namespace GetStoreApp.ViewModels.Pages
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
             await Task.CompletedTask;
+        });
+
+        // 删除选定的项目
+        public IAsyncRelayCommand DeleteCommand => new AsyncRelayCommand(async () =>
+        {
+            List<HistoryModel> SelectedHistoryDataList = HistoryDataList.Where(item => item.IsSelected == true).ToList();
+
+            // 没有选中任何内容时显示空提示对话框
+            if (SelectedHistoryDataList.Count == 0)
+            {
+                await new SelectEmptyPromptDialog().ShowAsync();
+                return;
+            };
+
+            // 删除时显示删除确认对话框
+            ContentDialogResult result = await new DeletePromptDialog().ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                IsSelectMode = false;
+
+                bool DeleteResult = await HistoryDBService.DeleteHistoryDataAsync(SelectedHistoryDataList);
+
+                if (DeleteResult)
+                {
+                    // 确保线程安全
+                    lock (HistoryDataListLock)
+                    {
+                        foreach (HistoryModel historyItem in SelectedHistoryDataList)
+                        {
+                            HistoryDataList.Remove(historyItem);
+                        }
+                    }
+                }
+
+                if (TypeFilter == "None" || ChannelFilter == "None")
+                {
+                    IsHistoryEmpty = true;
+                    IsHistoryEmptyAfterFilter = false;
+                }
+                else
+                {
+                    IsHistoryEmpty = false;
+                    IsHistoryEmptyAfterFilter = true;
+                }
+
+                Messenger.Send(new HistoryMessage(true));
+            }
+        });
+
+        // 退出多选模式
+        public IAsyncRelayCommand CancelCommand => new AsyncRelayCommand(async () =>
+        {
+            IsSelectMode = false;
+            await Task.CompletedTask;
+        });
+
+        // 在多选模式下点击项目选择相应的条目
+        public IAsyncRelayCommand ItemClickCommand => new AsyncRelayCommand<ItemClickEventArgs>(async (param) =>
+        {
+            HistoryModel historyItem = (HistoryModel)param.ClickedItem;
+            int ClickedIndex = HistoryDataList.IndexOf(historyItem);
+
+            lock (HistoryDataListLock)
+            {
+                HistoryDataList[ClickedIndex].IsSelected = !HistoryDataList[ClickedIndex].IsSelected;
+            }
+
+            await Task.CompletedTask;
+        });
+
+        // 填入指定项目的内容
+        public IAsyncRelayCommand FillinCommand => new AsyncRelayCommand<HistoryModel>(async (param) =>
+        {
+            Messenger.Send(new FillinMessage(param));
+            NavigationService.NavigateTo(typeof(HomeViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+            await Task.CompletedTask;
+        });
+
+        // 复制指定项目的内容
+        public IAsyncRelayCommand CopyCommand => new AsyncRelayCommand<HistoryModel>(async (param) =>
+        {
+            string CopyContent = string.Format("{0}\t{1}\t{2}",
+                TypeList.Find(item => item.InternalName.Equals(param.HistoryType)).DisplayName,
+                ChannelList.Find(item => item.InternalName.Equals(param.HistoryChannel)).DisplayName,
+                param.HistoryLink);
+            CopyPasteHelper.CopyToClipBoard(CopyContent);
+
+            await Task.CompletedTask;
+        });
+
+        // 导航到历史记录页面时，历史记录数据列表初始化，从数据库中存储的列表中加载
+        public async void OnNavigatedTo(object parameter)
+        {
+            await GetHistoryDataListAsync();
+        }
+
+        public void OnNavigatedFrom()
+        { }
+
+        /// <summary>
+        /// 从数据库中加载数据
+        /// </summary>
+        private async Task GetHistoryDataListAsync()
+        {
+            Tuple<List<HistoryModel>, bool, bool> HistoryAllData = await HistoryDBService.QueryAllHistoryDataAsync(TimeSortOrder, TypeFilter, ChannelFilter);
+
+            // 获取数据库的原始记录数据
+            List<HistoryModel> HistoryRawList = HistoryAllData.Item1;
+            // 数据库中的历史记录表是否为空
+            IsHistoryEmpty = HistoryAllData.Item2;
+
+            // 经过筛选后历史记录是否为空
+            IsHistoryEmptyAfterFilter = HistoryAllData.Item3;
+
+            // 保证线程安全
+            lock (HistoryDataListLock)
+            {
+                HistoryDataList.Clear();
+            }
+
+            // 保证线程安全
+            lock (HistoryDataListLock)
+            {
+                foreach (HistoryModel historyRawData in HistoryRawList)
+                {
+                    HistoryDataList.Add(historyRawData);
+                }
+            }
         }
     }
 }

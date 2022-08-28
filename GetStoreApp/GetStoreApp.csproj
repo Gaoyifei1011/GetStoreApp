@@ -65,7 +65,7 @@
     <None Remove="UI\Controls\Home\StatusBarControl.xaml" />
     <None Remove="UI\Controls\Settings\BackdropControl.xaml" />
     <None Remove="UI\Controls\Settings\DownloadOptionsControl.xaml" />
-    <None Remove="UI\Controls\Settings\HistoryItemValueControl.xaml" />
+    <None Remove="UI\Controls\Settings\HistoryLiteConfigControl.xaml" />
     <None Remove="UI\Controls\Settings\LinkFilterControl.xaml" />
     <None Remove="UI\Controls\Settings\TopMostControl.xaml" />
     <None Remove="UI\Controls\Settings\TraceCleanupControl.xaml" />
@@ -178,7 +178,7 @@
     <Page Update="UI\Controls\Settings\DownloadOptionsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Controls\Settings\HistoryItemValueControl.xaml">
+    <Page Update="UI\Controls\Settings\HistoryLiteConfigControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Controls\Settings\LinkFilterControl.xaml">

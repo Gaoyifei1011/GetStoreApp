@@ -13,7 +13,7 @@ namespace GetStoreApp.Contracts.Services.History
 
         Task<List<HistoryModel>> QueryHistoryDataAsync(int value);
 
-        Task DeleteHistoryDataAsync(List<HistoryModel> selectedHistoryDataList);
+        Task<bool> DeleteHistoryDataAsync(List<HistoryModel> selectedHistoryDataList);
 
         Task<bool> ClearHistoryDataAsync();
     }

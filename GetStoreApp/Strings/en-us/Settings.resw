@@ -177,16 +177,16 @@
   <data name="General" xml:space="preserve">
     <value>General Options</value>
   </data>
-  <data name="HistoryItem" xml:space="preserve">
+  <data name="HistoryLiteConfig" xml:space="preserve">
     <value>The number of main page history item displays</value>
   </data>
-  <data name="HistoryItemDescription" xml:space="preserve">
+  <data name="HistoryLiteConfigDescription" xml:space="preserve">
     <value>The maximum number of history entries that will appear when the main page opens after the app launches</value>
   </data>
-  <data name="HistoryItemValueMax" xml:space="preserve">
+  <data name="HistoryLiteNumMax" xml:space="preserve">
     <value>5 items</value>
   </data>
-  <data name="HistoryItemValueMin" xml:space="preserve">
+  <data name="HistoryLiteNumMin" xml:space="preserve">
     <value>3 items</value>
   </data>
   <data name="Language" xml:space="preserve">
@@ -195,7 +195,7 @@
   <data name="LanguageDescription" xml:space="preserve">
     <value>Modify the language displayed in the app interface</value>
   </data>
-  <data name="LanguageTip" xml:space="preserve">
+  <data name="LanguageToolTip" xml:space="preserve">
     <value>Help</value>
   </data>
   <data name="LinkFilter" xml:space="preserve">
@@ -213,7 +213,7 @@
   <data name="NotifiactionOnContent" xml:space="preserve">
     <value>Opening</value>
   </data>
-  <data name="OpenFolderDescription" xml:space="preserve">
+  <data name="OpenFolderToolTip" xml:space="preserve">
     <value>Click to access the folder</value>
   </data>
   <data name="Region" xml:space="preserve">
@@ -225,7 +225,7 @@
   <data name="RestartApp" xml:space="preserve">
     <value>Application restart</value>
   </data>
-  <data name="RestartAppDescription" xml:space="preserve">
+  <data name="RestartAppToolTip" xml:space="preserve">
     <value>After the app settings are modified, some options need to be restarted to take effect</value>
   </data>
   <data name="StartsWithE" xml:space="preserve">

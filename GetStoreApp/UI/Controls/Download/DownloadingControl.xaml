@@ -21,13 +21,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid
-            Grid.Row="0"
-            Margin="0,0,0,10"
-            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-            CornerRadius="4"
-            Style="{StaticResource DataGridDescriptionGridStyle}">
+        <Grid Grid.Row="0" Style="{StaticResource ListViewHeaderGridStyle}">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -64,7 +58,7 @@
                 <AppBarButton
                     Command="{x:Bind ViewModel.OpenFolderCommand}"
                     Label="{x:Bind ResourceService.GetLocalized('/Download/OpenFolder')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/OpenFolder')}">
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/OpenFolderToolTip')}">
                     <AppBarButton.Icon>
                         <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8b7;" />
                     </AppBarButton.Icon>
@@ -74,13 +68,13 @@
                     Command="{x:Bind ViewModel.PauseAllCommand}"
                     Icon="Pause"
                     Label="{x:Bind ResourceService.GetLocalized('/Download/PauseAll')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/PauseAllDescription')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/PauseAllToolTip')}" />
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.SelectCommand}"
                     Icon="Bullets"
                     Label="{x:Bind ResourceService.GetLocalized('/Download/Select')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SelectDescription')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SelectToolTip')}" />
             </CommandBar>
 
             <CommandBar
@@ -103,16 +97,16 @@
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SelectNone')}" />
 
                 <AppBarButton
-                    Command="{x:Bind ViewModel.DeleteCommand}"
+                    Command="{x:Bind ViewModel.DeleteSelectedCommand}"
                     Icon="Delete"
-                    Label="{x:Bind ResourceService.GetLocalized('/Download/Delete')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/DeleteDescription')}" />
+                    Label="{x:Bind ResourceService.GetLocalized('/Download/DeleteSelected')}"
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/DeleteSelectedToolTip')}" />
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.CancelCommand}"
                     Icon="Cancel"
                     Label="{x:Bind ResourceService.GetLocalized('/Download/Cancel')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/CancelDescription')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/CancelToolTip')}" />
             </CommandBar>
         </Grid>
 
@@ -207,17 +201,17 @@
 
                             <Button
                                 Margin="5,0,0,0"
-                                Command="{Binding ElementName=DownloadingRoot, Path=ViewModel.PauseDownloadCommand}"
+                                Command="{Binding ElementName=DownloadingRoot, Path=ViewModel.PauseCommand}"
                                 Content="&#xE769;"
                                 Style="{StaticResource ButtonDownloadStyle}"
-                                ToolTipService.ToolTip="{Binding ElementName=DownloadingRoot, Path=PauseDownload}" />
+                                ToolTipService.ToolTip="{Binding ElementName=DownloadingRoot, Path=PauseToolTip}" />
 
                             <Button
                                 Margin="5,0,0,0"
-                                Command="{Binding ElementName=DownloadingRoot, Path=ViewModel.DeleteTaskCommand}"
+                                Command="{Binding ElementName=DownloadingRoot, Path=ViewModel.DeleteCommand}"
                                 Content="&#xE711;"
                                 Style="{StaticResource ButtonDownloadStyle}"
-                                ToolTipService.ToolTip="{Binding ElementName=DownloadingRoot, Path=DeleteTask}" />
+                                ToolTipService.ToolTip="{Binding ElementName=DownloadingRoot, Path=DeleteToolTip}" />
                         </StackPanel>
                     </Grid>
                 </DataTemplate>

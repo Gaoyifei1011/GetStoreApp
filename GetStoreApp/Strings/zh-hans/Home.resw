@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BatchOperation" xml:space="preserve">
-    <value>批量操作</value>
-  </data>
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
@@ -177,9 +174,6 @@
   <data name="Download" xml:space="preserve">
     <value>下载</value>
   </data>
-  <data name="DownloadDescription" xml:space="preserve">
-    <value>下载选中的项目</value>
-  </data>
   <data name="DownloadSelected" xml:space="preserve">
     <value>下载选中的项目</value>
   </data>
@@ -210,9 +204,6 @@
   <data name="LinkExpireTime" xml:space="preserve">
     <value>链接过期时间</value>
   </data>
-  <data name="Operation" xml:space="preserve">
-    <value>操作</value>
-  </data>
   <data name="OperationMode" xml:space="preserve">
     <value>操作方式</value>
   </data>
@@ -240,7 +231,7 @@
   <data name="SelectAll" xml:space="preserve">
     <value>全选</value>
   </data>
-  <data name="SelectedDescription" xml:space="preserve">
+  <data name="SelectedToolTip" xml:space="preserve">
     <value>已选择</value>
   </data>
   <data name="SelectNone" xml:space="preserve">
@@ -248,9 +239,6 @@
   </data>
   <data name="SelectToolTip" xml:space="preserve">
     <value>进入多选模式</value>
-  </data>
-  <data name="SerialNumber" xml:space="preserve">
-    <value>序号</value>
   </data>
   <data name="StatusInfoError" xml:space="preserve">
     <value>从微软商店的服务器中获取数据发生了错误，点击右上角的”使用说明“按钮或跳转到”关于“页面寻找相应的解决方案</value>
@@ -270,9 +258,6 @@
   <data name="Title" xml:space="preserve">
     <value>主页</value>
   </data>
-  <data name="TitleDescription" xml:space="preserve">
-    <value>微软商店在线链接生成器\n输入从微软商店获取到的链接，然后单击复选框——以获得所有可用的链接</value>
-  </data>
   <data name="TitleDescription1" xml:space="preserve">
     <value>微软商店在线链接生成器</value>
   </data>
@@ -282,13 +267,19 @@
   <data name="Type" xml:space="preserve">
     <value>类型</value>
   </data>
-  <data name="UnselectedDescription" xml:space="preserve">
+  <data name="UnselectedToolTip" xml:space="preserve">
     <value>未选择</value>
   </data>
   <data name="UseInstruction" xml:space="preserve">
     <value>使用说明</value>
   </data>
+  <data name="UseInstructionToolTip" xml:space="preserve">
+    <value>点击了解应用的具体使用方法</value>
+  </data>
   <data name="ViewAll" xml:space="preserve">
     <value>查看全部</value>
+  </data>
+  <data name="ViewAllToolTip" xml:space="preserve">
+    <value>查看所有的历史记录</value>
   </data>
 </root>

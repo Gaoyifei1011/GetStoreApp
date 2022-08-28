@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="GetStoreApp.UI.Controls.Settings.HistoryItemValueControl"
+    x:Class="GetStoreApp.UI.Controls.Settings.HistoryLiteConfigControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -26,26 +26,26 @@
             <TextBlock
                 VerticalAlignment="Center"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="{x:Bind ResourceService.GetLocalized('/Settings/HistoryItem')}" />
+                Text="{x:Bind ResourceService.GetLocalized('/Settings/HistoryLiteConfig')}" />
 
             <TextBlock
                 VerticalAlignment="Center"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                 Style="{StaticResource CaptionTextBlockStyle}"
-                Text="{x:Bind ResourceService.GetLocalized('/Settings/HistoryItemDescription')}" />
+                Text="{x:Bind ResourceService.GetLocalized('/Settings/HistoryLiteConfigDescription')}" />
         </StackPanel>
 
         <ComboBox
             Grid.Column="2"
             VerticalAlignment="Center"
             DisplayMemberPath="HistoryLiteNumName"
-            ItemsSource="{x:Bind ViewModel.HistoryItemValueList}"
-            SelectedItem="{x:Bind ViewModel.HistoryItem, Mode=TwoWay}"
-            ToolTipService.ToolTip="{x:Bind GetSelectedHistoryItemName(ViewModel.HistoryItem), Mode=OneWay}">
+            ItemsSource="{x:Bind ViewModel.HistoryLiteNumList}"
+            SelectedItem="{x:Bind ViewModel.HistoryLiteItem, Mode=TwoWay}"
+            ToolTipService.ToolTip="{x:Bind GetSelectedHistoryLiteNumName(ViewModel.HistoryLiteItem), Mode=OneWay}">
 
             <i:Interaction.Behaviors>
                 <ic:EventTriggerBehavior EventName="SelectionChanged">
-                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.HistoryItemSelectCommand}" />
+                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.HistoryLiteItemSelectCommand}" />
                 </ic:EventTriggerBehavior>
             </i:Interaction.Behaviors>
         </ComboBox>
