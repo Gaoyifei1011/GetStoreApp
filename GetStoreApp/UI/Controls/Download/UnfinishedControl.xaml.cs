@@ -11,6 +11,10 @@ namespace GetStoreApp.UI.Controls.Download
 
         public UnfinishedViewModel ViewModel { get; } = IOCHelper.GetService<UnfinishedViewModel>();
 
+        public string ContinueToolTip => ResourceService.GetLocalized("/Download/ContinueToolTip");
+
+        public string DeleteToolTip => ResourceService.GetLocalized("/Download/DeleteToolTip");
+
         public UnfinishedControl()
         {
             InitializeComponent();

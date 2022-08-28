@@ -21,13 +21,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Grid
-            Grid.Row="0"
-            Margin="0,0,0,10"
-            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-            CornerRadius="4"
-            Style="{StaticResource DataGridDescriptionGridStyle}">
+        <Grid Grid.Row="0" Style="{StaticResource ListViewHeaderGridStyle}">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -64,7 +58,7 @@
                 <AppBarButton
                     Command="{x:Bind ViewModel.OpenFolderCommand}"
                     Label="{x:Bind ResourceService.GetLocalized('/Download/OpenFolder')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/OpenFolder')}">
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/OpenFolderToolTip')}">
                     <AppBarButton.Icon>
                         <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8b7;" />
                     </AppBarButton.Icon>
@@ -74,7 +68,7 @@
                     Command="{x:Bind ViewModel.SelectCommand}"
                     Icon="Bullets"
                     Label="{x:Bind ResourceService.GetLocalized('/Download/Select')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SelectDescription')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SelectToolTip')}" />
             </CommandBar>
 
             <CommandBar
@@ -99,19 +93,19 @@
                 <AppBarButton
                     Icon="Delete"
                     Label="{x:Bind ResourceService.GetLocalized('/Download/DeleteOptions')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/DeleteOptionsDescription')}">
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/DeleteOptionsToolTip')}">
 
                     <AppBarButton.Flyout>
                         <MenuFlyout Placement="Bottom">
                             <MenuFlyoutItem
-                                Command="{x:Bind ViewModel.DeleteCommand}"
+                                Command="{x:Bind ViewModel.DeleteRecordCommand}"
                                 Text="{x:Bind ResourceService.GetLocalized('/Download/DeleteRecord')}"
-                                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/DeleteRecord')}" />
+                                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/DeleteRecordToolTip')}" />
 
                             <MenuFlyoutItem
-                                Command="{x:Bind ViewModel.DeleteWithFileCommand}"
+                                Command="{x:Bind ViewModel.DeleteRecordWithFileCommand}"
                                 Text="{x:Bind ResourceService.GetLocalized('/Download/DeleteRecordWithFile')}"
-                                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/DeleteRecordWithFile')}" />
+                                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/DeleteRecordWithFileToolTip')}" />
                         </MenuFlyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
@@ -120,7 +114,7 @@
                     Command="{x:Bind ViewModel.CancelCommand}"
                     Icon="Cancel"
                     Label="{x:Bind ResourceService.GetLocalized('/Download/Cancel')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/CancelDescription')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/CancelToolTip')}" />
             </CommandBar>
         </Grid>
 
@@ -209,14 +203,15 @@
                                 CommandParameter="{Binding FilePath}"
                                 Content="&#xE8b7;"
                                 Style="{StaticResource ButtonDownloadStyle}"
-                                ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=OpenFolder}" />
+                                ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=OpenItemFolderToolTip}" />
 
                             <Button
                                 Margin="5,0,0,0"
-                                Command="{Binding ElementName=CompletedRoot, Path=ViewModel.DeleteTaskCommand}"
+                                Command="{Binding ElementName=CompletedRoot, Path=ViewModel.DeleteCommand}"
                                 Content="&#xE711;"
+                                CommandParameter="{Binding}"
                                 Style="{StaticResource ButtonDownloadStyle}"
-                                ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=DeleteTask}" />
+                                ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=DeleteToolTip}" />
                         </StackPanel>
                     </Grid>
                 </DataTemplate>

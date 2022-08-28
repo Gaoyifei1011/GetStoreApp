@@ -319,8 +319,10 @@ namespace GetStoreApp.Services.History
         /// <summary>
         /// 删除选定的历史记录数据
         /// </summary>
-        public async Task DeleteHistoryDataAsync(List<HistoryModel> selectedHistoryDataList)
+        public async Task<bool> DeleteHistoryDataAsync(List<HistoryModel> selectedHistoryDataList)
         {
+            bool IsDeleteSuccessfully = true;
+
             using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
             {
                 await db.OpenAsync();
@@ -348,11 +350,13 @@ namespace GetStoreApp.Services.History
                         catch (Exception)
                         {
                             await transaction.RollbackAsync();
+                            IsDeleteSuccessfully = false;
                         }
                     }
                 }
                 await db.CloseAsync();
             }
+            return IsDeleteSuccessfully;
         }
 
         /// <summary>
@@ -360,7 +364,7 @@ namespace GetStoreApp.Services.History
         /// </summary>
         public async Task<bool> ClearHistoryDataAsync()
         {
-            bool result = false;
+            bool IsClearSuccessfully = false;
 
             using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
             {
@@ -379,7 +383,7 @@ namespace GetStoreApp.Services.History
                             await ClearCommand.ExecuteNonQueryAsync();
 
                             await transaction.CommitAsync();
-                            result = true;
+                            IsClearSuccessfully = true;
                         }
                         catch (Exception)
                         {
@@ -388,8 +392,8 @@ namespace GetStoreApp.Services.History
                     }
                 }
                 await db.CloseAsync();
-                return result;
             }
+            return IsClearSuccessfully;
         }
     }
 }

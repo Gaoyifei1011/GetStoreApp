@@ -11,13 +11,9 @@ namespace GetStoreApp.UI.Controls.Download
 
         public DownloadingViewModel ViewModel { get; } = IOCHelper.GetService<DownloadingViewModel>();
 
-        public string OpenFolder => ResourceService.GetLocalized("/Download/OpenFolder");
+        public string PauseToolTip => ResourceService.GetLocalized("/Download/PauseToolTip");
 
-        public string ContinueDownload => ResourceService.GetLocalized("/Download/Continue");
-
-        public string PauseDownload => ResourceService.GetLocalized("/Download/Pause");
-
-        public string DeleteTask => ResourceService.GetLocalized("/Download/DeleteTask");
+        public string DeleteToolTip => ResourceService.GetLocalized("/Download/DeleteToolTip");
 
         public DownloadingControl()
         {

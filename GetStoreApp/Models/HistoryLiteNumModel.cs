@@ -9,12 +9,12 @@ namespace GetStoreApp.Models
         /// </summary>
         public string HistoryLiteNumName
         {
-            get { return (string)GetValue(HistoryItemNameProperty); }
-            set { SetValue(HistoryItemNameProperty, value); }
+            get { return (string)GetValue(HistoryLiteNumNameProperty); }
+            set { SetValue(HistoryLiteNumNameProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for HistoryLiteNumName.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty HistoryItemNameProperty =
+        public static readonly DependencyProperty HistoryLiteNumNameProperty =
             DependencyProperty.Register("HistoryLiteNumName", typeof(string), typeof(HistoryLiteNumModel), new PropertyMetadata(string.Empty));
 
         /// <summary>
@@ -22,12 +22,12 @@ namespace GetStoreApp.Models
         /// </summary>
         public int HistoryLiteNumValue
         {
-            get { return (int)GetValue(HistoryItemNumProperty); }
-            set { SetValue(HistoryItemNumProperty, value); }
+            get { return (int)GetValue(HistoryLiteNumValueProperty); }
+            set { SetValue(HistoryLiteNumValueProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for HistoryLiteNumValue.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty HistoryItemNumProperty =
+        public static readonly DependencyProperty HistoryLiteNumValueProperty =
             DependencyProperty.Register("HistoryLiteNum", typeof(int), typeof(HistoryLiteNumModel), new PropertyMetadata(0));
     }
 }

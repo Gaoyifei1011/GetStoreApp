@@ -153,7 +153,7 @@
                             ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
                             IsChecked="{Binding Path=IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                             IsEnabled="{TemplateBinding IsEnabled}"
-                            Style="{StaticResource ExpanderHeaderHistoryItemDownStyle}" />
+                            Style="{StaticResource ExpanderHeaderHistoryLiteDownStyle}" />
                         <!--  The clip is a composition clip applied in code  -->
                         <Border x:Name="ExpanderContentClip" Grid.Row="1">
                             <Border
@@ -256,7 +256,7 @@
                                 <VisualState x:Name="Down" />
                                 <VisualState x:Name="Up">
                                     <VisualState.Setters>
-                                        <Setter Target="ExpanderHeader.Style" Value="{StaticResource ExpanderHeaderHistoryItemUpStyle}" />
+                                        <Setter Target="ExpanderHeader.Style" Value="{StaticResource ExpanderHeaderHistoryLiteUpStyle}" />
                                         <Setter Target="ExpanderContent.BorderThickness" Value="{StaticResource ExpanderContentUpBorderThickness}" />
                                         <contract7Present:Setter Target="ExpanderContent.CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TopCornerRadiusFilterConverter}}" />
                                         <Setter Target="ExpanderHeader.(Grid.Row)" Value="1" />
@@ -286,7 +286,7 @@
         <Setter Property="Padding" Value="0" />
     </Style>
 
-    <Style x:Key="ExpanderHeaderHistoryItemDownStyle" TargetType="ToggleButton">
+    <Style x:Key="ExpanderHeaderHistoryLiteDownStyle" TargetType="ToggleButton">
         <Setter Property="Padding" Value="{StaticResource ExpanderHeaderPadding}" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="Template">
@@ -559,8 +559,8 @@
     </Style>
 
     <Style
-        x:Key="ExpanderHeaderHistoryItemUpStyle"
-        BasedOn="{StaticResource ExpanderHeaderHistoryItemDownStyle}"
+        x:Key="ExpanderHeaderHistoryLiteUpStyle"
+        BasedOn="{StaticResource ExpanderHeaderHistoryLiteDownStyle}"
         TargetType="ToggleButton">
         <Setter Property="Padding" Value="{StaticResource ExpanderHeaderPadding}" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />

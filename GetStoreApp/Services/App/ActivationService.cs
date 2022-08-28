@@ -38,7 +38,7 @@ namespace GetStoreApp.Services.App
 
         private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
 
-        private IHistoryLiteNumService HistoryItemValueService { get; } = IOCHelper.GetService<IHistoryLiteNumService>();
+        private IHistoryLiteNumService HistoryLiteNumService { get; } = IOCHelper.GetService<IHistoryLiteNumService>();
 
         private ILanguageService LanguageService { get; } = IOCHelper.GetService<ILanguageService>();
 
@@ -91,7 +91,7 @@ namespace GetStoreApp.Services.App
             // 初始化应用配置信息
             await BackdropService.InitializeBackdropAsync();
             await DownloadOptionsService.InitializeAsync();
-            await HistoryItemValueService.InitializeHistoryItemValueAsync();
+            await HistoryLiteNumService.InitializeHistoryLiteNumAsync();
             await LinkFilterService.InitializeLinkFilterValueAsnyc();
             await RegionService.InitializeRegionAsync();
             await ThemeService.InitializeThemeAsync();

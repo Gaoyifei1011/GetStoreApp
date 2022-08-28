@@ -57,7 +57,7 @@
                         Command="{x:Bind ViewModel.ViewAllCommand}"
                         Icon="ViewAll"
                         Label="{x:Bind ResourceService.GetLocalized('/Home/ViewAll')}"
-                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/ViewAll')}" />
+                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/ViewAllToolTip')}" />
                 </CommandBar>
             </Grid>
         </Expander.Header>
@@ -151,18 +151,18 @@
                                 <HyperlinkButton
                                     Grid.Column="3"
                                     Margin="10,0,0,0"
-                                    Padding="0"
                                     Command="{Binding ElementName=HistoryLiteRoot, Path=ViewModel.FillinCommand}"
                                     CommandParameter="{Binding}"
                                     Content="{Binding ElementName=HistoryLiteRoot, Path=Fillin}"
-                                    ToolTipService.ToolTip="{Binding ElementName=HistoryItemRoot, Path=FillinToolTip}" />
+                                    Style="{StaticResource HyperlinkButtonStyle}"
+                                    ToolTipService.ToolTip="{Binding ElementName=HistoryLiteRoot, Path=FillinToolTip}" />
                                 <HyperlinkButton
                                     Grid.Column="4"
-                                    Padding="0"
                                     Command="{Binding ElementName=HistoryLiteRoot, Path=ViewModel.CopyCommand}"
                                     CommandParameter="{Binding}"
                                     Content="{Binding ElementName=HistoryLiteRoot, Path=Copy}"
-                                    ToolTipService.ToolTip="{Binding ElementName=HistoryItemRoot, Path=CopyToolTip}" />
+                                    Style="{StaticResource HyperlinkButtonStyle}"
+                                    ToolTipService.ToolTip="{Binding ElementName=HistoryLiteRoot, Path=CopyToolTip}" />
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

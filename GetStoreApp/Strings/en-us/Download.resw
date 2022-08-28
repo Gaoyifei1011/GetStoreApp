@@ -120,7 +120,7 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="CancelDescription" xml:space="preserve">
+  <data name="CancelToolTip" xml:space="preserve">
     <value>Exit multi-select mode</value>
   </data>
   <data name="Completed" xml:space="preserve">
@@ -141,35 +141,38 @@
   <data name="ContinueAll" xml:space="preserve">
     <value>Download all</value>
   </data>
-  <data name="ContinueAllDescription" xml:space="preserve">
+  <data name="ContinueAllToolTip" xml:space="preserve">
     <value>Resume downloading the task that is paused</value>
   </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="DeleteDescription" xml:space="preserve">
-    <value>Deletes the selected task</value>
+  <data name="ContinueToolTip" xml:space="preserve">
+    <value>Continue downloading the current task</value>
   </data>
   <data name="DeleteOptions" xml:space="preserve">
     <value>Delete options</value>
   </data>
-  <data name="DeleteOptionsDescription" xml:space="preserve">
+  <data name="DeleteOptionsToolTip" xml:space="preserve">
     <value>Click Show Delete Options</value>
   </data>
   <data name="DeleteRecord" xml:space="preserve">
     <value>Only delete records</value>
   </data>
-  <data name="DeleteRecordDescription" xml:space="preserve">
+  <data name="DeleteRecordToolTip" xml:space="preserve">
     <value>Delete only completed downloads</value>
   </data>
   <data name="DeleteRecordWithFile" xml:space="preserve">
     <value>Delete records (including files)</value>
   </data>
-  <data name="DeleteRecordWithFileDescription" xml:space="preserve">
+  <data name="DeleteRecordWithFileToolTip" xml:space="preserve">
     <value>Delete the completed download history and the corresponding files</value>
   </data>
-  <data name="DeleteTask" xml:space="preserve">
-    <value>Delete task</value>
+  <data name="DeleteSelected" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DeleteSelectedToolTip" xml:space="preserve">
+    <value>Deletes the current task</value>
+  </data>
+  <data name="DeleteToolTip" xml:space="preserve">
+    <value>Deletes the current task</value>
   </data>
   <data name="Downloading" xml:space="preserve">
     <value>Downloading</value>
@@ -183,26 +186,29 @@
   <data name="DownloadingEmptyDescription" xml:space="preserve">
     <value>Go to the app you want to download, the file you're downloading will appear here</value>
   </data>
-  <data name="DownloadOptions" xml:space="preserve">
-    <value>Download settings</value>
-  </data>
   <data name="DownloadProgress" xml:space="preserve">
     <value>Downloaded {0}% completed</value>
   </data>
   <data name="OpenFolder" xml:space="preserve">
     <value>Open folder</value>
   </data>
+  <data name="OpenFolderToolTip" xml:space="preserve">
+    <value>Open the folder for default downloads</value>
+  </data>
+  <data name="OpenItemFolderToolTip" xml:space="preserve">
+    <value>Open the folder where the current task was saved after the download was completed</value>
+  </data>
   <data name="Operation" xml:space="preserve">
     <value>Operation</value>
-  </data>
-  <data name="Pause" xml:space="preserve">
-    <value>Pause download</value>
   </data>
   <data name="PauseAll" xml:space="preserve">
     <value>Pause all</value>
   </data>
-  <data name="PauseAllDescription" xml:space="preserve">
+  <data name="PauseAllToolTip" xml:space="preserve">
     <value>Pauses all tasks that are in the process of being downloaded or waiting to be downloaded</value>
+  </data>
+  <data name="PauseToolTip" xml:space="preserve">
+    <value>Pause downloading the current task</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>Select</value>
@@ -210,14 +216,20 @@
   <data name="SelectAll" xml:space="preserve">
     <value>Select all</value>
   </data>
-  <data name="SelectDescription" xml:space="preserve">
-    <value>Enter multi-select mode</value>
-  </data>
-  <data name="SelectedDescription" xml:space="preserve">
+  <data name="SelectedToolTip" xml:space="preserve">
     <value>Selected</value>
   </data>
   <data name="SelectNone" xml:space="preserve">
     <value>Select none</value>
+  </data>
+  <data name="SelectToolTip" xml:space="preserve">
+    <value>Enter multi-select mode</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Download settings</value>
+  </data>
+  <data name="SettingsToolTip" xml:space="preserve">
+    <value>Modify the configuration content about the download</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Download Management</value>
@@ -234,7 +246,7 @@
   <data name="UnfinishedEmptyDescription" xml:space="preserve">
     <value>When a download task is forced to terminate the download due to an error, the file that you did not complete the download will be displayed here</value>
   </data>
-  <data name="UnselectedDescription" xml:space="preserve">
+  <data name="UnselectedToolTip" xml:space="preserve">
     <value>Not selected</value>
   </data>
 </root>

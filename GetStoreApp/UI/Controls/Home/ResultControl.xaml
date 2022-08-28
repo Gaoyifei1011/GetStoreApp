@@ -22,11 +22,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid
-            Grid.Row="0"
-            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-            Style="{StaticResource DataGridDescriptionGridStyle}">
+        <Grid Grid.Row="0" Style="{StaticResource ResultHeaderGridStyle}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
@@ -75,16 +71,6 @@
                     IsEnabled="{x:Bind system:Convert.ToBoolean(ViewModel.ResultDataList.Count), Mode=OneWay}"
                     Label="{x:Bind ResourceService.GetLocalized('/Home/CopyID')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/CopyIDToolTip')}" />
-
-                <AppBarButton
-                    Command="{x:Bind ViewModel.DownloadCommand}"
-                    IsEnabled="False"
-                    Label="{x:Bind ResourceService.GetLocalized('/Home/Download')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/Download')}">
-                    <AppBarButton.Icon>
-                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE74b;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.SelectCommand}"
@@ -251,7 +237,7 @@
                             IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
                             IsThreeState="False"
                             Style="{StaticResource CheckBoxStyle}"
-                            ToolTipService.ToolTip="{Binding IsSelected, Converter={StaticResource CheckBoxToolTipFormatConverter}, ConverterParameter=History, Mode=OneWay}"
+                            ToolTipService.ToolTip="{Binding IsSelected, Converter={StaticResource CheckBoxToolTipFormatConverter}, ConverterParameter=Home, Mode=OneWay}"
                             Visibility="{Binding ElementName=ResultRoot, Path=ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
                         <HyperlinkButton
                             Grid.Column="1"
@@ -283,6 +269,7 @@
                         <DropDownButton
                             Grid.Column="5"
                             Margin="10,0,0,0"
+                            VerticalAlignment="Center"
                             Content="{Binding ElementName=ResultRoot, Path=Copy}"
                             IsEnabled="{Binding ElementName=ResultRoot, Path=ViewModel.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
                             Style="{StaticResource DropDownButtonStyle}"

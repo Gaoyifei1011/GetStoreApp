@@ -62,7 +62,7 @@
                                 Command="{x:Bind ViewModel.OpenFolderCommand}"
                                 Content="{x:Bind DownloadFolderPath(ViewModel.DownloadFolder), Mode=OneWay}"
                                 Style="{StaticResource HyperlinkButtonStyle}"
-                                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/OpenFolderDescription')}" />
+                                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/OpenFolderToolTip')}" />
                         </StackPanel>
 
                         <Button

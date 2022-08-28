@@ -43,40 +43,9 @@ namespace GetStoreApp.Services.Download
         }
 
         /// <summary>
-        /// 判断下载记录表是否为空
-        /// </summary>
-        private async Task<bool> IsDownloadTableEmptyAsync()
-        {
-            int DownloadTableCount = 0;
-
-            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
-            {
-                await db.OpenAsync();
-
-                SqliteCommand CountCommand = new SqliteCommand
-                {
-                    Connection = db,
-
-                    CommandText = string.Format("SELECT COUNT(*) FROM {0}", DataBaseService.DownloadTableName)
-                };
-
-                SqliteDataReader Query = await CountCommand.ExecuteReaderAsync();
-
-                if (await Query.ReadAsync())
-                {
-                    DownloadTableCount = Query.GetInt32(0);
-                }
-
-                await db.CloseAsync();
-            }
-
-            return Convert.ToBoolean(DownloadTableCount == 0);
-        }
-
-        /// <summary>
         /// 直接添加下载记录数据，并返回下载记录添加是否成功的结果
         /// </summary>
-        public async Task<bool> AddDataAsync(DownloadModel downloadItem)
+        public async Task<bool> AddDownloadDataAsync(DownloadModel downloadItem)
         {
             bool IsAddSuccessfully = false;
 
@@ -158,7 +127,6 @@ namespace GetStoreApp.Services.Download
                 }
                 await db.CloseAsync();
             }
-
             return IsUpdateSuccessfully;
         }
 
@@ -170,14 +138,6 @@ namespace GetStoreApp.Services.Download
         public async Task<List<DownloadModel>> QueryDownloadDataAsync(int downloadFlag)
         {
             List<DownloadModel> DownloadRawList = new List<DownloadModel>();
-
-            //调用之前先判断历史记录表是否为空
-            bool IsDownloadEmpty = await IsDownloadTableEmptyAsync();
-
-            if (IsDownloadEmpty)
-            {
-                return DownloadRawList;
-            }
 
             // 从数据库中获取数据
             using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
@@ -220,8 +180,10 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 删除下载记录数据
         /// </summary>
-        public async Task DeleteDownloadDataAsync(DownloadModel downloadItem)
+        public async Task<bool> DeleteDownloadDataAsync(DownloadModel downloadItem)
         {
+            bool IsDeleteSuccessfully = true;
+
             using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
             {
                 await db.OpenAsync();
@@ -247,11 +209,13 @@ namespace GetStoreApp.Services.Download
                         catch (Exception)
                         {
                             await transaction.RollbackAsync();
+                            IsDeleteSuccessfully = false;
                         }
                     }
                 }
                 await db.CloseAsync();
             }
+            return IsDeleteSuccessfully;
         }
 
         /// <summary>
@@ -259,7 +223,7 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         public async Task<bool> ClearDownloadDataAsync()
         {
-            bool result = false;
+            bool IsClearSuccessfully = true;
 
             using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
             {
@@ -278,17 +242,17 @@ namespace GetStoreApp.Services.Download
                             await ClearCommand.ExecuteNonQueryAsync();
 
                             await transaction.CommitAsync();
-                            result = true;
                         }
                         catch (Exception)
                         {
                             await transaction.RollbackAsync();
+                            IsClearSuccessfully = false;
                         }
                     }
                 }
                 await db.CloseAsync();
-                return result;
             }
+            return IsClearSuccessfully;
         }
     }
 }

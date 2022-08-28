@@ -47,7 +47,7 @@ namespace GetStoreApp.Services.App
 
             InitializeThemeList();
             InitializeBackdropList();
-            InitializeHistoryItemValueList();
+            InitializeHistoryLiteNumList();
             InitializeTypeList();
             InitializeChannelList();
             InitializeStatusBarStateList();
@@ -110,16 +110,16 @@ namespace GetStoreApp.Services.App
         /// <summary>
         /// 初始化历史记录显示数量信息列表
         /// </summary>
-        private void InitializeHistoryItemValueList()
+        private void InitializeHistoryLiteNumList()
         {
             HistoryLiteNumList.Add(new HistoryLiteNumModel
             {
-                HistoryLiteNumName = GetLocalized("/Settings/HistoryItemValueMin"),
+                HistoryLiteNumName = GetLocalized("/Settings/HistoryLiteNumMin"),
                 HistoryLiteNumValue = 3
             });
             HistoryLiteNumList.Add(new HistoryLiteNumModel
             {
-                HistoryLiteNumName = GetLocalized("/Settings/HistoryItemValueMax"),
+                HistoryLiteNumName = GetLocalized("/Settings/HistoryLiteNumMax"),
                 HistoryLiteNumValue = 5
             });
         }

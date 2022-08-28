@@ -8,6 +8,7 @@
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:GetStoreApp.Models"
+    xmlns:sys="using:System"
     x:Name="HistoryRoot"
     mc:Ignorable="d">
 
@@ -31,13 +32,7 @@
             FontSize="26"
             Text="{x:Bind ResourceService.GetLocalized('/History/Title')}" />
 
-        <Grid
-            Grid.Row="1"
-            Margin="0,0,0,10"
-            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-            CornerRadius="4"
-            Style="{StaticResource DataGridDescriptionGridStyle}">
+        <Grid Grid.Row="1" Style="{StaticResource ListViewHeaderGridStyle}">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -86,7 +81,7 @@
 
                             <RadioMenuFlyoutItem
                                 Command="{x:Bind ViewModel.TimeSortCommand}"
-                                CommandParameter="true"
+                                CommandParameter="True"
                                 Icon="Up"
                                 IsChecked="{x:Bind ViewModel.TimeSortOrder, Converter={StaticResource TimeSortValueCheckConverter}, ConverterParameter=true, Mode=OneWay}"
                                 Text="{x:Bind ResourceService.GetLocalized('/History/TimeIncreaseSort')}"
@@ -94,7 +89,7 @@
 
                             <RadioMenuFlyoutItem
                                 Command="{x:Bind ViewModel.TimeSortCommand}"
-                                CommandParameter="false"
+                                CommandParameter="False"
                                 IsChecked="{x:Bind ViewModel.TimeSortOrder, Converter={StaticResource TimeSortValueCheckConverter}, ConverterParameter=false, Mode=OneWay}"
                                 Text="{x:Bind ResourceService.GetLocalized('/History/TimeDecreaseSort')}"
                                 ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/TimeDecreaseSortToolTip')}">
@@ -412,19 +407,19 @@
                             <HyperlinkButton
                                 Grid.Column="5"
                                 Margin="10,0,0,0"
-                                Padding="0"
                                 Command="{Binding ElementName=HistoryRoot, Path=ViewModel.FillinCommand}"
                                 CommandParameter="{Binding}"
                                 Content="{Binding ElementName=HistoryRoot, Path=Fillin}"
                                 IsEnabled="{Binding ElementName=HistoryRoot, Path=ViewModel.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
+                                Style="{StaticResource HyperlinkButtonStyle}"
                                 ToolTipService.ToolTip="{Binding ElementName=HistoryRoot, Path=FillinToolTip}" />
                             <HyperlinkButton
                                 Grid.Column="6"
-                                Padding="0"
                                 Command="{Binding ElementName=HistoryRoot, Path=ViewModel.CopyCommand}"
                                 CommandParameter="{Binding}"
                                 Content="{Binding ElementName=HistoryRoot, Path=Copy}"
                                 IsEnabled="{Binding ElementName=HistoryRoot, Path=ViewModel.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
+                                Style="{StaticResource HyperlinkButtonStyle}"
                                 ToolTipService.ToolTip="{Binding ElementName=HistoryRoot, Path=CopyToolTip}" />
                         </Grid>
                     </DataTemplate>

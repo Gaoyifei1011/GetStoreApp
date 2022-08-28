@@ -1,10 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Helpers;
-using GetStoreApp.Messages;
-using System;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
 {
@@ -24,7 +21,6 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         public IAsyncRelayCommand UseInstructionCommand => new AsyncRelayCommand<bool>(async (param) =>
         {
             await UseInstructionService.SetUseInsVisValueAsync(param);
-            Messenger.Send(new UseInstructionMessage(param));
             UseInsVisValue = param;
         });
 

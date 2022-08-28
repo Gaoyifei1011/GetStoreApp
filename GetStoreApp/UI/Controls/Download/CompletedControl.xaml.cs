@@ -11,6 +11,10 @@ namespace GetStoreApp.UI.Controls.Download
 
         public CompletedViewModel ViewModel { get; } = IOCHelper.GetService<CompletedViewModel>();
 
+        public string OpenItemFolderToolTip => ResourceService.GetLocalized("/Download/OpenItemFolderToolTip");
+
+        public string DeleteToolTip => ResourceService.GetLocalized("Download/DeleteToolTip");
+
         public CompletedControl()
         {
             InitializeComponent();

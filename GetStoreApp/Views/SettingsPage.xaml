@@ -29,7 +29,7 @@
                     Grid.Column="1"
                     Command="{x:Bind ViewModel.RestartCommand}"
                     Content="{x:Bind ResourceService.GetLocalized('/Settings/RestartApp')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/RestartAppDescription')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/RestartAppToolTip')}" />
             </Grid>
 
             <TextBlock
@@ -52,7 +52,7 @@
 
             <sc:UseInstructionControl />
 
-            <sc:HistoryItemValueControl />
+            <sc:HistoryLiteConfigControl />
 
             <sc:RegionControl />
 

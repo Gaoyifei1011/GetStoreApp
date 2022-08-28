@@ -10,8 +10,8 @@ namespace GetStoreApp.Contracts.Services.Settings
 
         List<HistoryLiteNumModel> HistoryLiteNumList { get; set; }
 
-        Task InitializeHistoryItemValueAsync();
+        Task InitializeHistoryLiteNumAsync();
 
-        Task SetHistoryLiteNumAsync(HistoryLiteNumModel historyItemValue);
+        Task SetHistoryLiteNumAsync(HistoryLiteNumModel historyLiteNum);
     }
 }
