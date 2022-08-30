@@ -15,7 +15,7 @@
         Style="{StaticResource InfoBarStyle}"
         ToolTipService.ToolTip="{x:Bind ViewModel.StateInfoText, Mode=OneWay}">
         <InfoBar.Content>
-            <ProgressBar IsIndeterminate="{x:Bind ViewModel.StatePrBarActValue, Mode=OneWay}" Visibility="{x:Bind ViewModel.StatePrBarVisValue, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
+            <ProgressRing IsIndeterminate="{x:Bind ViewModel.StatePrRingActValue, Mode=OneWay}" Visibility="{x:Bind ViewModel.StatePrRingVisValue, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
         </InfoBar.Content>
     </InfoBar>
 </UserControl>

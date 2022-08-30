@@ -26,6 +26,7 @@ namespace GetStoreApp.ViewModels.Pages
 
         public IAsyncRelayCommand UseInstructionCommand => new AsyncRelayCommand(async () =>
         {
+            App.NavigationArgs = "Instructions";
             NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo());
             await Task.CompletedTask;
         });

@@ -5,9 +5,13 @@
     xmlns:ac="using:GetStoreApp.UI.Controls.About"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Loaded="{x:Bind AboutLoaded}"
     mc:Ignorable="d">
 
-    <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
+    <ScrollViewer
+        x:Name="AboutScroll"
+        HorizontalScrollMode="Disabled"
+        VerticalScrollBarVisibility="Auto">
         <StackPanel
             Margin="30,15,30,0"
             Padding="0,0,0,40"
@@ -17,15 +21,15 @@
 
             <ac:HeaderControl />
 
-            <ac:IntroductionControl />
+            <ac:IntroductionControl x:Name="Introduction" />
 
             <ac:ReferenceControl />
 
-            <ac:InstructionsControl />
+            <ac:InstructionsControl x:Name="Instructions" />
 
             <ac:PrecautionControl />
 
-            <ac:SettingsHelpControl />
+            <ac:SettingsHelpControl x:Name="SettingsHelp" />
         </StackPanel>
     </ScrollViewer>
 </Page>

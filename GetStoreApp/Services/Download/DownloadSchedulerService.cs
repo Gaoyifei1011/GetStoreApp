@@ -76,7 +76,7 @@ namespace GetStoreApp.Services.Download
             downloadItem.DownloadFlag = 1;
 
             // 在数据库中添加下载信息，并获取添加成功的结果
-            bool AddResult = await DownloadDBService.AddDownloadDataAsync(downloadItem);
+            bool AddResult = await DownloadDBService.AddAsync(downloadItem);
 
             // 数据库添加成功后添加等待下载任务
             if (AddResult)
@@ -184,7 +184,7 @@ namespace GetStoreApp.Services.Download
             }
 
             // 从数据库中删除任务
-            return await DownloadDBService.DeleteDownloadDataAsync(downloadItem);
+            return await DownloadDBService.DeleteAsync(downloadItem);
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace GetStoreApp.Services.Download
                 // 获取列表中的第一个元素
                 DownloadModel DownloadItem = WaitingList.First();
 
-                bool AddDataResult = await DownloadDBService.AddDownloadDataAsync(DownloadItem);
+                bool AddDataResult = await DownloadDBService.AddAsync(DownloadItem);
 
                 string TaskGID = await Aria2Service.AddUriAsync(DownloadItem.FileLink, DownloadOptionsService.DownloadFolder.Path, DownloadItem.FileName);
 

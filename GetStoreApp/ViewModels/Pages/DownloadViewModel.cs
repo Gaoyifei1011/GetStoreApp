@@ -15,6 +15,15 @@ namespace GetStoreApp.ViewModels.Pages
     {
         private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
 
+        private bool _pauseVisValue = false;
+
+        public bool PauseVisValue
+        {
+            get { return _pauseVisValue; }
+
+            set { SetProperty(ref _pauseVisValue, value); }
+        }
+
         public IAsyncRelayCommand DownloadOptionsCommand => new AsyncRelayCommand(async () =>
         {
             NavigationService.NavigateTo(typeof(SettingsViewModel).FullName, null, new DrillInNavigationTransitionInfo());
@@ -25,6 +34,15 @@ namespace GetStoreApp.ViewModels.Pages
         public IAsyncRelayCommand DownloadContentCommand => new AsyncRelayCommand<int>(async (param) =>
         {
             Messenger.Send(new PivotSelectionMessage(param));
+
+            if (param == 1)
+            {
+                PauseVisValue = true;
+            }
+            else
+            {
+                PauseVisValue = false;
+            }
             await Task.CompletedTask;
         });
 

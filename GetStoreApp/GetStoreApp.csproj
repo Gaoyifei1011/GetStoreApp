@@ -114,6 +114,9 @@
     <Page Update="Styles\Converter.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Update="Styles\DropDownButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Styles\Expander.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -127,6 +130,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Styles\HyperlinkButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\ListView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Styles\Pivot.xaml">
@@ -156,6 +162,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Controls\Download\DownloadingControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\Download\UnfinishedControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     
@@ -238,23 +247,5 @@
       <Link>Aria2\aria2c.exe</Link>
     </Content>
     <Content Include="Aria2\Config\aria2.conf" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Styles\DropDownButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="UI\Controls\Download\UnfinishedControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Styles\ListView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
 </Project>

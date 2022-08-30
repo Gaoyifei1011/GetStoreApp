@@ -9,6 +9,20 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <TeachingTip
+            x:Name="PuaseTeachingTip"
+            Title="{x:Bind ResourceService.GetLocalized('/Download/PauseExplain')}"
+            IsLightDismissEnabled="True"
+            PreferredPlacement="Bottom"
+            Subtitle="{x:Bind ResourceService.GetLocalized('/Download/PauseExplainTeachingTip')}"
+            Target="{x:Bind PauseButton}">
+            <TeachingTip.IconSource>
+                <SymbolIconSource Symbol="Important" />
+            </TeachingTip.IconSource>
+        </TeachingTip>
+    </Page.Resources>
+
     <Pivot
         x:Name="DownloadPivot"
         Margin="30,15,30,0"
@@ -33,11 +47,21 @@
         </PivotItem>
 
         <Pivot.RightHeader>
-            <Button
-                VerticalAlignment="Top"
-                Command="{x:Bind ViewModel.DownloadOptionsCommand}"
-                Content="{x:Bind ResourceService.GetLocalized('/Download/Settings')}"
-                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SettingsToolTip')}" />
+            <StackPanel VerticalAlignment="Top" Orientation="Horizontal">
+                <Button
+                    x:Name="PauseButton"
+                    Margin="0,0,6,0"
+                    Click="{x:Bind PauseClick}"
+                    Content="{x:Bind ResourceService.GetLocalized('/Download/PauseExplain')}"
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/PauseExplain')}"
+                    Visibility="{x:Bind ViewModel.PauseVisValue, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
+                <Button
+                    Command="{x:Bind ViewModel.DownloadOptionsCommand}"
+                    Content="{x:Bind ResourceService.GetLocalized('/Download/Settings')}"
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SettingsToolTip')}">
+                    <Button.Resources />
+                </Button>
+            </StackPanel>
         </Pivot.RightHeader>
     </Pivot>
 </Page>

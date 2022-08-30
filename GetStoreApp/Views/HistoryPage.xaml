@@ -8,7 +8,6 @@
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:GetStoreApp.Models"
-    xmlns:sys="using:System"
     x:Name="HistoryRoot"
     mc:Ignorable="d">
 
@@ -346,8 +345,8 @@
                             Margin="10,0,0,0"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Center"
-                            Text="{x:Bind ResourceService.GetLocalized('/History/OperationMode')}"
-                            ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/OperationModeToolTip')}" />
+                            Text="{x:Bind ResourceService.GetLocalized('/History/Options')}"
+                            ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/OptionsToolTip')}" />
                     </Grid>
                 </ListView.Header>
 

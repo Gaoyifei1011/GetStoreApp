@@ -208,8 +208,8 @@
                             <Button
                                 Margin="5,0,0,0"
                                 Command="{Binding ElementName=CompletedRoot, Path=ViewModel.DeleteCommand}"
-                                Content="&#xE711;"
                                 CommandParameter="{Binding}"
+                                Content="&#xE711;"
                                 Style="{StaticResource ButtonDownloadStyle}"
                                 ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=DeleteToolTip}" />
                         </StackPanel>

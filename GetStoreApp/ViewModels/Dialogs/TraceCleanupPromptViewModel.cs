@@ -198,15 +198,15 @@ namespace GetStoreApp.ViewModels.Dialogs
             // 清理本地创建的文件
             if (IsLocalFileClean)
             {
-                List<DownloadModel> LocalFileData = (await DownloadDBService.QueryDownloadDataAsync(4));
+                List<DownloadModel> LocalFileData = (await DownloadDBService.QueryAsync(4));
                 LocalCleanResult = DeleteFiles(ref LocalFileData);
             }
 
             // 清理历史记录
-            if (IsHistoryClean) HistoryCleanResult = await HistoryDBService.ClearHistoryDataAsync();
+            if (IsHistoryClean) HistoryCleanResult = await HistoryDBService.ClearAsync();
 
             // 清理下载记录
-            if (IsDownloadClean) DownloadCleanResult = await DownloadDBService.ClearDownloadDataAsync();
+            if (IsDownloadClean) DownloadCleanResult = await DownloadDBService.ClearAsync();
 
             return Tuple.Create(LocalCleanResult, HistoryCleanResult, DownloadCleanResult);
         }

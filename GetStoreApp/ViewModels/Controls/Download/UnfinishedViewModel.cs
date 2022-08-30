@@ -7,10 +7,10 @@ using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.Models;
 using GetStoreApp.UI.Dialogs;
-using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -62,7 +62,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 }
                 else
                 {
-                    break;
+                    continue;
                 }
             }
         });
@@ -122,30 +122,48 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 return;
             }
 
-            // 删除时显示删除确认对话框
-            ContentDialogResult result = await new DeletePromptDialog().ShowAsync();
+            IsSelectMode = false;
 
-            if (result == ContentDialogResult.Primary)
+            foreach (DownloadModel downloadItem in SelectedUnfinishedDataList)
             {
-                IsSelectMode = false;
-
-                foreach (DownloadModel downloadItem in SelectedUnfinishedDataList)
+                // 删除文件
+                try
                 {
-                    bool DeleteResult = await DownloadDBService.DeleteDownloadDataAsync(downloadItem);
+                    string tempFilePath = downloadItem.FilePath;
+                    string tempFileAria2Path = string.Format("{0}.{1}", downloadItem.FilePath, "Aria2");
 
-                    if (DeleteResult)
+                    if (File.Exists(tempFilePath))
+                    {
+                        File.Delete(tempFilePath);
+                    }
+
+                    if (File.Exists(tempFileAria2Path))
+                    {
+                        File.Delete(tempFileAria2Path);
+                    }
+                }
+                catch (Exception)
+                {
+                    continue;
+                }
+
+                bool DeleteResult = await DownloadDBService.DeleteAsync(downloadItem);
+
+                if (DeleteResult)
+                {
+                    lock (UnfinishedDataListLock)
                     {
                         UnfinishedDataList.Remove(downloadItem);
                     }
-                    else
-                    {
-                        break;
-                    }
+                }
+                else
+                {
+                    continue;
                 }
             }
         });
 
-        // 取消下载当前任务
+        // 退出多选模式
         public IAsyncRelayCommand CancelCommand => new AsyncRelayCommand(async () =>
         {
             IsSelectMode = false;
@@ -172,7 +190,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         // 删除当前任务
         public IAsyncRelayCommand DeleteCommand => new AsyncRelayCommand<DownloadModel>(async (param) =>
         {
-            bool DeleteResult = await DownloadDBService.DeleteDownloadDataAsync(param);
+            bool DeleteResult = await DownloadDBService.DeleteAsync(param);
 
             if (DeleteResult)
             {
@@ -208,9 +226,9 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// </summary>
         private async Task GetDownloadDataListAsync()
         {
-            List<DownloadModel> FailureDownloadRawList = await DownloadDBService.QueryDownloadDataAsync(0);
+            List<DownloadModel> FailureDownloadRawList = await DownloadDBService.QueryAsync(0);
 
-            List<DownloadModel> PauseDownloadRawList = await DownloadDBService.QueryDownloadDataAsync(2);
+            List<DownloadModel> PauseDownloadRawList = await DownloadDBService.QueryAsync(2);
 
             lock (UnfinishedDataListLock)
             {

@@ -193,29 +193,29 @@ namespace GetStoreApp.Services.App
             {
                 InfoBarSeverity = InfoBarSeverity.Informational,
                 StateInfoText = GetLocalized("/Home/StatusInfoGetting"),
-                StatePrBarActValue = true,
-                StatePrBarVisValue = true
+                StatePrRingActValue = true,
+                StatePrRingVisValue = true
             });
             StatusBarStateList.Add(new StatusBarStateModel
             {
                 InfoBarSeverity = InfoBarSeverity.Success,
                 StateInfoText = GetLocalized("/Home/StatusInfoSuccess"),
-                StatePrBarActValue = false,
-                StatePrBarVisValue = false
+                StatePrRingActValue = false,
+                StatePrRingVisValue = false
             });
             StatusBarStateList.Add(new StatusBarStateModel
             {
                 InfoBarSeverity = InfoBarSeverity.Warning,
                 StateInfoText = GetLocalized("/Home/StatusInfoWarning"),
-                StatePrBarActValue = false,
-                StatePrBarVisValue = false
+                StatePrRingActValue = false,
+                StatePrRingVisValue = false
             });
             StatusBarStateList.Add(new StatusBarStateModel
             {
                 InfoBarSeverity = InfoBarSeverity.Error,
                 StateInfoText = GetLocalized("/Home/StatusInfoError"),
-                StatePrBarActValue = false,
-                StatePrBarVisValue = false
+                StatePrRingActValue = false,
+                StatePrRingVisValue = false
             });
         }
 

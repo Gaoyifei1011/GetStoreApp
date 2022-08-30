@@ -34,22 +34,22 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _stateInfoText, value); }
         }
 
-        private bool _statePrBarActValue = false;
+        private bool _statePrRingActValue = false;
 
-        public bool StatePrBarActValue
+        public bool StatePrRingActValue
         {
-            get { return _statePrBarActValue; }
+            get { return _statePrRingActValue; }
 
-            set { SetProperty(ref _statePrBarActValue, value); }
+            set { SetProperty(ref _statePrRingActValue, value); }
         }
 
-        private bool _statePrBarVisValue = false;
+        private bool _statePrRingVisValue = false;
 
-        public bool StatePrBarVisValue
+        public bool StatePrRingVisValue
         {
-            get { return _statePrBarVisValue; }
+            get { return _statePrRingVisValue; }
 
-            set { SetProperty(ref _statePrBarVisValue, value); }
+            set { SetProperty(ref _statePrRingVisValue, value); }
         }
 
         public StatusBarViewModel()
@@ -60,8 +60,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
                         {
                             statusbarViewModel.InfoBarSeverity = StatusBarStateList[statusBarStateMessage.Value].InfoBarSeverity;
                             statusbarViewModel.StateInfoText = StatusBarStateList[statusBarStateMessage.Value].StateInfoText;
-                            statusbarViewModel.StatePrBarVisValue = StatusBarStateList[statusBarStateMessage.Value].StatePrBarVisValue;
-                            statusbarViewModel.StatePrBarActValue = StatusBarStateList[statusBarStateMessage.Value].StatePrBarActValue;
+                            statusbarViewModel.StatePrRingVisValue = StatusBarStateList[statusBarStateMessage.Value].StatePrRingVisValue;
+                            statusbarViewModel.StatePrRingActValue = StatusBarStateList[statusBarStateMessage.Value].StatePrRingActValue;
                             await Task.CompletedTask;
                         }));
         }

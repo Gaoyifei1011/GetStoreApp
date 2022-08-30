@@ -186,11 +186,11 @@
   <data name="Operation" xml:space="preserve">
     <value>操作</value>
   </data>
-  <data name="OperationMode" xml:space="preserve">
-    <value>操作方式</value>
+  <data name="Options" xml:space="preserve">
+    <value>选项</value>
   </data>
-  <data name="OperationModeToolTip" xml:space="preserve">
-    <value>选择您要使用的操作方式</value>
+  <data name="OptionsToolTip" xml:space="preserve">
+    <value>选择您要使用的选项</value>
   </data>
   <data name="Refresh" xml:space="preserve">
     <value>刷新</value>

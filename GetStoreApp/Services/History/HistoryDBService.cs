@@ -20,7 +20,7 @@ namespace GetStoreApp.Services.History
         /// <summary>
         /// 判断历史记录表是否为空
         /// </summary>
-        private async Task<bool> IsHistoryTableEmptyAsync()
+        private async Task<bool> IsTableEmptyAsync()
         {
             int HistoryTableCount = 0;
 
@@ -50,7 +50,7 @@ namespace GetStoreApp.Services.History
         /// <summary>
         /// 检查是否有相同键值的数据
         /// </summary>
-        private async Task<bool> CheckDuplicatedDataAsync(string historyKey)
+        private async Task<bool> CheckDuplicatedAsync(string historyKey)
         {
             bool IsExists = false;
 
@@ -83,28 +83,28 @@ namespace GetStoreApp.Services.History
         /// <summary>
         /// 添加历史记录数据
         /// </summary>
-        public async Task AddHistoryDataAsync(HistoryModel history)
+        public async Task AddAsync(HistoryModel historyItem)
         {
             // 文件不存在，取消操作
             if (!File.Exists(DataBaseService.DBpath)) return;
 
-            bool CheckResult = await CheckDuplicatedDataAsync(history.HistoryKey);
+            bool CheckResult = await CheckDuplicatedAsync(historyItem.HistoryKey);
 
             // 如果存在相同的行数据，只更新TimeStamp值，没有，添加数据
             if (CheckResult)
             {
-                await UpdateDataAsync(history);
+                await UpdateDataAsync(historyItem);
             }
             else
             {
-                await AddDataAsync(history);
+                await AddDataAsync(historyItem);
             }
         }
 
         /// <summary>
         /// 没有重复的数据，直接添加
         /// </summary>
-        private async Task AddDataAsync(HistoryModel history)
+        private async Task AddDataAsync(HistoryModel historyItem)
         {
             using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
             {
@@ -121,11 +121,11 @@ namespace GetStoreApp.Services.History
                         {
                             InsertCommand.CommandText = string.Format("INSERT INTO {0} VALUES ({1},'{2}','{3}','{4}','{5}')",
                                 DataBaseService.HistoryTableName,
-                                history.CreateTimeStamp,
-                                history.HistoryKey,
-                                history.HistoryType,
-                                history.HistoryChannel,
-                                history.HistoryLink
+                                historyItem.CreateTimeStamp,
+                                historyItem.HistoryKey,
+                                historyItem.HistoryType,
+                                historyItem.HistoryChannel,
+                                historyItem.HistoryLink
                                 );
 
                             await InsertCommand.ExecuteNonQueryAsync();
@@ -145,7 +145,7 @@ namespace GetStoreApp.Services.History
         /// <summary>
         /// 存在重复的数据，只更新该记录的时间戳
         /// </summary>
-        private async Task UpdateDataAsync(HistoryModel history)
+        private async Task UpdateDataAsync(HistoryModel historyItem)
         {
             using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
             {
@@ -162,8 +162,8 @@ namespace GetStoreApp.Services.History
                         {
                             UpdateCommand.CommandText = string.Format("UPDATE {0} SET TIMESTAMP = {1} WHERE HISTORYKEY = '{2}'",
                                 DataBaseService.HistoryTableName,
-                                history.CreateTimeStamp,
-                                history.HistoryKey
+                                historyItem.CreateTimeStamp,
+                                historyItem.HistoryKey
                                 );
 
                             await UpdateCommand.ExecuteNonQueryAsync();
@@ -187,12 +187,12 @@ namespace GetStoreApp.Services.History
         /// <param name="typeFilter"></param>
         /// <param name="channelFilter"></param>
         /// <returns>返回历史记录列表</returns>
-        public async Task<Tuple<List<HistoryModel>, bool, bool>> QueryAllHistoryDataAsync(bool timeSortOrder = false, string typeFilter = "None", string channelFilter = "None")
+        public async Task<Tuple<List<HistoryModel>, bool, bool>> QueryAllAsync(bool timeSortOrder = false, string typeFilter = "None", string channelFilter = "None")
         {
             List<HistoryModel> HistoryRawList = new List<HistoryModel>();
 
             //调用之前先判断历史记录表是否为空
-            bool IsHistoryEmpty = await IsHistoryTableEmptyAsync();
+            bool IsHistoryEmpty = await IsTableEmptyAsync();
 
             if (IsHistoryEmpty) return Tuple.Create(HistoryRawList, IsHistoryEmpty, true);
 
@@ -277,7 +277,7 @@ namespace GetStoreApp.Services.History
         /// <summary>
         /// 获取一定数量的历史记录数据
         /// </summary>
-        public async Task<List<HistoryModel>> QueryHistoryDataAsync(int value)
+        public async Task<List<HistoryModel>> QueryAsync(int value)
         {
             List<HistoryModel> HistoryRawList = new List<HistoryModel>();
 
@@ -319,7 +319,7 @@ namespace GetStoreApp.Services.History
         /// <summary>
         /// 删除选定的历史记录数据
         /// </summary>
-        public async Task<bool> DeleteHistoryDataAsync(List<HistoryModel> selectedHistoryDataList)
+        public async Task<bool> DeleteAsync(List<HistoryModel> selectedHistoryDataList)
         {
             bool IsDeleteSuccessfully = true;
 
@@ -362,7 +362,7 @@ namespace GetStoreApp.Services.History
         /// <summary>
         /// 清空历史记录数据
         /// </summary>
-        public async Task<bool> ClearHistoryDataAsync()
+        public async Task<bool> ClearAsync()
         {
             bool IsClearSuccessfully = false;
 
