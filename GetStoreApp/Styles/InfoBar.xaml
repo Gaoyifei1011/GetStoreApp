@@ -163,6 +163,7 @@
                                 <ColumnDefinition Width="*" />
                                 <!--  Title, message, and action  -->
                                 <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
                                 <!--  Close button  -->
                             </Grid.ColumnDefinitions>
 
@@ -252,15 +253,16 @@
                             </primitives:InfoBarPanel>
 
                             <ContentPresenter
-                                Grid.Row="1"
-                                Grid.Column="0"
-                                Grid.ColumnSpan="2"
+                                Grid.Column="2"
+                                Margin="0,0,10,0"
+                                VerticalAlignment="Center"
                                 Content="{TemplateBinding Content}"
                                 ContentTemplate="{TemplateBinding ContentTemplate}" />
 
                             <Button
                                 Name="CloseButton"
-                                Grid.Column="2"
+                                Grid.Column="3"
+                                Margin="0,0,10,0"
                                 Command="{TemplateBinding CloseButtonCommand}"
                                 CommandParameter="{TemplateBinding CloseButtonCommandParameter}"
                                 Style="{TemplateBinding CloseButtonStyle}">

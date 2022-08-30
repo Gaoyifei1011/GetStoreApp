@@ -20,6 +20,9 @@ namespace GetStoreApp
 
         public static WindowEx MainWindow { get; } = new MainWindow();
 
+        // 导航页面后使用到的参数
+        public static string NavigationArgs { get; set; } = string.Empty;
+
         [DllImport("user32.dll")]
         private static extern bool IsZoomed(IntPtr hWnd);
 

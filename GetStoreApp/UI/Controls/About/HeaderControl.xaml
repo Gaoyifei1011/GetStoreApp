@@ -69,7 +69,7 @@
                 MinWidth="150"
                 Command="{x:Bind ViewModel.SendFeedbackCommand}"
                 Content="{x:Bind ResourceService.GetLocalized('/About/SendFeedback')}"
-                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/About/SendFeedbackToolTip')}" />
+                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/About/SendFeedback')}" />
 
             <Button
                 MinWidth="150"

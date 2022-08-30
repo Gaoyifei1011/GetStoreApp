@@ -207,6 +207,12 @@
   <data name="PauseAllToolTip" xml:space="preserve">
     <value>Pauses all tasks that are in the process of being downloaded or waiting to be downloaded</value>
   </data>
+  <data name="PauseExplain" xml:space="preserve">
+    <value>Pause download explaination</value>
+  </data>
+  <data name="PauseExplainTeachingTip" xml:space="preserve">
+    <value>Due to the timeliness of the download link, resuming downloads for apps that fail to download is not supported at this time. Please re-obtain the link and download it</value>
+  </data>
   <data name="PauseToolTip" xml:space="preserve">
     <value>Pause downloading the current task</value>
   </data>

@@ -32,29 +32,29 @@ namespace GetStoreApp.Models
             DependencyProperty.Register("StateInfoText", typeof(string), typeof(StatusBarStateModel), new PropertyMetadata(""));
 
         /// <summary>
-        /// 信息状态栏进度栏显示值
+        /// 信息状态栏进度环显示值
         /// </summary>
-        public bool StatePrBarVisValue
+        public bool StatePrRingVisValue
         {
             get { return (bool)GetValue(StatePrRingVisValueProperty); }
             set { SetValue(StatePrRingVisValueProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for StatePrBarVisValue.  This enables animation, styling, binding, etc...
+        // Using a DependencyProperty as the backing store for StatePrRingVisValue.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty StatePrRingVisValueProperty =
-            DependencyProperty.Register("StatePrBarVisValue", typeof(bool), typeof(StatusBarStateModel), new PropertyMetadata(false));
+            DependencyProperty.Register("StatePrRingVisValue", typeof(bool), typeof(StatusBarStateModel), new PropertyMetadata(false));
 
         /// <summary>
-        /// 信息状态栏进度栏激活值
+        /// 信息状态栏进度环激活值
         /// </summary>
-        public bool StatePrBarActValue
+        public bool StatePrRingActValue
         {
             get { return (bool)GetValue(StatePrRingActValueProperty); }
             set { SetValue(StatePrRingActValueProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for StatePrBarActValue.  This enables animation, styling, binding, etc...
+        // Using a DependencyProperty as the backing store for StatePrRingActValue.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty StatePrRingActValueProperty =
-            DependencyProperty.Register("StatePrBarActValue", typeof(bool), typeof(StatusBarStateModel), new PropertyMetadata(false));
+            DependencyProperty.Register("StatePrRingActValue", typeof(bool), typeof(StatusBarStateModel), new PropertyMetadata(false));
     }
 }

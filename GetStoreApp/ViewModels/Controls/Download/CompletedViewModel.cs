@@ -106,20 +106,13 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 IsSelectMode = false;
 
-                foreach (DownloadModel downloadItem in SelectedCompletedDataList)
-                {
-                    bool DeleteResult = await DownloadDBService.DeleteDownloadDataAsync(downloadItem);
+                bool DeleteSelectedResult = await DownloadDBService.DeleteSelectedAsync(SelectedCompletedDataList);
 
-                    if (DeleteResult)
+                lock (CompletedDataListLock)
+                {
+                    foreach (DownloadModel downloadItem in SelectedCompletedDataList)
                     {
-                        lock (CompletedDataListLock)
-                        {
-                            CompletedDataList.Remove(downloadItem);
-                        }
-                    }
-                    else
-                    {
-                        break;
+                        CompletedDataList.Remove(downloadItem);
                     }
                 }
             }
@@ -155,11 +148,11 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     }
                     catch (Exception)
                     {
-                        return;
+                        continue;
                     }
 
                     // 删除记录
-                    bool DeleteResult = await DownloadDBService.DeleteDownloadDataAsync(downloadItem);
+                    bool DeleteResult = await DownloadDBService.DeleteAsync(downloadItem);
 
                     if (DeleteResult)
                     {
@@ -170,13 +163,13 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     }
                     else
                     {
-                        break;
+                        continue;
                     }
                 }
             }
         });
 
-        // 取消下载当前任务
+        // 退出多选模式
         public IAsyncRelayCommand CancelCommand => new AsyncRelayCommand(async () =>
         {
             IsSelectMode = false;
@@ -196,7 +189,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         {
             if (param is not null)
             {
-                bool DeleteResult = await DownloadDBService.DeleteDownloadDataAsync(param);
+                bool DeleteResult = await DownloadDBService.DeleteAsync(param);
 
                 if (DeleteResult)
                 {
@@ -232,7 +225,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// </summary>
         private async Task GetDownloadDataListAsync()
         {
-            List<DownloadModel> DownloadRawList = await DownloadDBService.QueryDownloadDataAsync(4);
+            List<DownloadModel> DownloadRawList = await DownloadDBService.QueryAsync(4);
 
             lock (CompletedDataListLock)
             {

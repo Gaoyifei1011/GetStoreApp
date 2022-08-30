@@ -207,7 +207,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             // 生成唯一的MD5值
             string UniqueKey = GenerateUniqueKey(Content);
 
-            await HistoryDBService.AddHistoryDataAsync(new HistoryModel
+            await HistoryDBService.AddAsync(new HistoryModel
             {
                 CreateTimeStamp = TimeStamp,
                 HistoryKey = UniqueKey,

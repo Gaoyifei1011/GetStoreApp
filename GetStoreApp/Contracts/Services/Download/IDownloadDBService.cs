@@ -8,14 +8,16 @@ namespace GetStoreApp.Contracts.Services.Download
     {
         Task InitializeDownloadDBAsync();
 
-        Task<bool> AddDownloadDataAsync(DownloadModel downloadItem);
+        Task<bool> AddAsync(DownloadModel downloadItem);
 
         Task<bool> UpdateFlagAsync(DownloadModel downloadItem);
 
-        Task<List<DownloadModel>> QueryDownloadDataAsync(int downloadFlag);
+        Task<List<DownloadModel>> QueryAsync(int downloadFlag);
 
-        Task<bool> DeleteDownloadDataAsync(DownloadModel downloadItem);
+        Task<bool> DeleteAsync(DownloadModel downloadItem);
 
-        Task<bool> ClearDownloadDataAsync();
+        Task<bool> DeleteSelectedAsync(List<DownloadModel> selectedDownloadDataList);
+
+        Task<bool> ClearAsync();
     }
 }

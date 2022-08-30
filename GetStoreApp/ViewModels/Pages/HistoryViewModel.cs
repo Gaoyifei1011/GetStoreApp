@@ -208,7 +208,7 @@ namespace GetStoreApp.ViewModels.Pages
             {
                 IsSelectMode = false;
 
-                bool DeleteResult = await HistoryDBService.DeleteHistoryDataAsync(SelectedHistoryDataList);
+                bool DeleteResult = await HistoryDBService.DeleteAsync(SelectedHistoryDataList);
 
                 if (DeleteResult)
                 {
@@ -222,15 +222,18 @@ namespace GetStoreApp.ViewModels.Pages
                     }
                 }
 
-                if (TypeFilter == "None" || ChannelFilter == "None")
+                if (HistoryDataList.Count == 0)
                 {
-                    IsHistoryEmpty = true;
-                    IsHistoryEmptyAfterFilter = false;
-                }
-                else
-                {
-                    IsHistoryEmpty = false;
-                    IsHistoryEmptyAfterFilter = true;
+                    if (TypeFilter == "None" || ChannelFilter == "None")
+                    {
+                        IsHistoryEmpty = true;
+                        IsHistoryEmptyAfterFilter = false;
+                    }
+                    else
+                    {
+                        IsHistoryEmpty = false;
+                        IsHistoryEmptyAfterFilter = true;
+                    }
                 }
 
                 Messenger.Send(new HistoryMessage(true));
@@ -292,7 +295,7 @@ namespace GetStoreApp.ViewModels.Pages
         /// </summary>
         private async Task GetHistoryDataListAsync()
         {
-            Tuple<List<HistoryModel>, bool, bool> HistoryAllData = await HistoryDBService.QueryAllHistoryDataAsync(TimeSortOrder, TypeFilter, ChannelFilter);
+            Tuple<List<HistoryModel>, bool, bool> HistoryAllData = await HistoryDBService.QueryAllAsync(TimeSortOrder, TypeFilter, ChannelFilter);
 
             // 获取数据库的原始记录数据
             List<HistoryModel> HistoryRawList = HistoryAllData.Item1;

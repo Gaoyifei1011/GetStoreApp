@@ -207,6 +207,12 @@
   <data name="PauseAllToolTip" xml:space="preserve">
     <value>暂停所有处于正在下载或等待下载的任务</value>
   </data>
+  <data name="PauseExplain" xml:space="preserve">
+    <value>暂停下载说明</value>
+  </data>
+  <data name="PauseExplainTeachingTip" xml:space="preserve">
+    <value>由于下载链接具有时效性，暂不支持下载失败的应用恢复下载。请您重新获取链接后进行下载</value>
+  </data>
   <data name="PauseToolTip" xml:space="preserve">
     <value>暂停下载当前任务</value>
   </data>

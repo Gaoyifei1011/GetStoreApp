@@ -22,7 +22,7 @@ namespace GetStoreApp.Services.Download
         public async Task InitializeDownloadDBAsync()
         {
             // 将处于等待下载状态的任务调整为暂停下载状态
-            List<DownloadModel> DownloadWaitingList = await QueryDownloadDataAsync(1);
+            List<DownloadModel> DownloadWaitingList = await QueryAsync(1);
 
             foreach (DownloadModel downloadItem in DownloadWaitingList)
             {
@@ -31,7 +31,7 @@ namespace GetStoreApp.Services.Download
             }
 
             // 将正在下载状态的任务调整为暂停下载状态
-            List<DownloadModel> DownloadingList = await QueryDownloadDataAsync(3);
+            List<DownloadModel> DownloadingList = await QueryAsync(3);
 
             foreach (DownloadModel downloadItem in DownloadingList)
             {
@@ -45,7 +45,7 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 直接添加下载记录数据，并返回下载记录添加是否成功的结果
         /// </summary>
-        public async Task<bool> AddDownloadDataAsync(DownloadModel downloadItem)
+        public async Task<bool> AddAsync(DownloadModel downloadItem)
         {
             bool IsAddSuccessfully = false;
 
@@ -135,7 +135,7 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         /// <param name="downloadFlag">文件下载标志：0为下载失败，1为等待下载，2为暂停下载，3为正在下载，4为成功下载</param>
         /// <returns>返回指定下载标志记录列表</returns>
-        public async Task<List<DownloadModel>> QueryDownloadDataAsync(int downloadFlag)
+        public async Task<List<DownloadModel>> QueryAsync(int downloadFlag)
         {
             List<DownloadModel> DownloadRawList = new List<DownloadModel>();
 
@@ -180,7 +180,7 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 删除下载记录数据
         /// </summary>
-        public async Task<bool> DeleteDownloadDataAsync(DownloadModel downloadItem)
+        public async Task<bool> DeleteAsync(DownloadModel downloadItem)
         {
             bool IsDeleteSuccessfully = true;
 
@@ -219,9 +219,51 @@ namespace GetStoreApp.Services.Download
         }
 
         /// <summary>
+        /// 删除选定的下载记录数据
+        /// </summary>
+        public async Task<bool> DeleteSelectedAsync(List<DownloadModel> selectedDownloadDataList)
+        {
+            bool IsDeleteSuccessfully = true;
+
+            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
+            {
+                await db.OpenAsync();
+
+                using (SqliteTransaction transaction = db.BeginTransaction())
+                {
+                    using (SqliteCommand DeleteCommand = new SqliteCommand())
+                    {
+                        DeleteCommand.Connection = db;
+                        DeleteCommand.Transaction = transaction;
+
+                        try
+                        {
+                            foreach (DownloadModel downloadItem in selectedDownloadDataList)
+                            {
+                                DeleteCommand.CommandText = string.Format("DELETE FROM {0} WHERE DOWNLOADKEY = '{1}'",
+                                    DataBaseService.DownloadTableName,
+                                    downloadItem.DownloadKey
+                                    );
+                                await DeleteCommand.ExecuteNonQueryAsync();
+                            }
+                            await transaction.CommitAsync();
+                        }
+                        catch (Exception)
+                        {
+                            await transaction.RollbackAsync();
+                            IsDeleteSuccessfully = false;
+                        }
+                    }
+                }
+                await db.CloseAsync();
+            }
+            return IsDeleteSuccessfully;
+        }
+
+        /// <summary>
         /// 清空下载记录数据（不清除正在下载和等待下载的数据）
         /// </summary>
-        public async Task<bool> ClearDownloadDataAsync()
+        public async Task<bool> ClearAsync()
         {
             bool IsClearSuccessfully = true;
 

@@ -25,7 +25,7 @@ namespace GetStoreApp.Views
             App.MainWindow.SetTitleBar(AppTitleBar);
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
+        private void ShellLoaded(object sender, RoutedEventArgs e)
         {
             KeyboardAccelerators.Add(BuildKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu));
             KeyboardAccelerators.Add(BuildKeyboardAccelerator(VirtualKey.GoBack));

@@ -186,11 +186,11 @@
   <data name="Operation" xml:space="preserve">
     <value>Operation</value>
   </data>
-  <data name="OperationMode" xml:space="preserve">
-    <value>Operation mode</value>
+  <data name="Options" xml:space="preserve">
+    <value>Options</value>
   </data>
-  <data name="OperationModeToolTip" xml:space="preserve">
-    <value>Select the operation mode you want to use</value>
+  <data name="OptionsToolTip" xml:space="preserve">
+    <value>Select the options you want to use</value>
   </data>
   <data name="Refresh" xml:space="preserve">
     <value>Refresh</value>

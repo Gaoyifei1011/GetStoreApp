@@ -8,7 +8,6 @@ using GetStoreApp.Messages;
 using GetStoreApp.Models;
 using GetStoreApp.UI.Dialogs;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,7 +18,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
 {
     public class DownloadingViewModel : ObservableRecipient
     {
-        private IDownloadDBService DownloadDBService { get; } = IOCHelper.GetService<IDownloadDBService>();
+        // 临界区资源访问互斥锁
+        private readonly object DownloadingDataListLock = new object();
+
+        private IDownloadSchedulerService DownloadSchedulerService { get; } = IOCHelper.GetService<IDownloadSchedulerService>();
 
         private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
 
@@ -36,41 +38,144 @@ namespace GetStoreApp.ViewModels.Controls.Download
             set { SetProperty(ref _isSelectMode, value); }
         }
 
+        // 打开默认保存的文件夹
         public IAsyncRelayCommand OpenFolderCommand => new AsyncRelayCommand(async () =>
         {
             await DownloadOptionsService.OpenFolderAsync(DownloadOptionsService.DownloadFolder);
         });
 
-        public IAsyncRelayCommand PauseAllCommand { get; }
-
-        public IAsyncRelayCommand SelectCommand => new AsyncRelayCommand(async () =>
+        // 暂停下载全部任务
+        public IAsyncRelayCommand PauseAllCommand => new AsyncRelayCommand(async () =>
         {
-            await SelectNoneAsync();
-            IsSelectMode = true;
+            List<DownloadModel> SelectedDownloadingDataList = DownloadingDataList.Where(item => item.IsSelected == true).ToList();
+
+            foreach (DownloadModel downloadItem in SelectedDownloadingDataList)
+            {
+                bool PauseResult = await DownloadSchedulerService.PauseTaskAsync(downloadItem);
+
+                if (PauseResult)
+                {
+                    lock (DownloadingDataListLock)
+                    {
+                        DownloadingDataList.Remove(DownloadingDataList.First(item => item.DownloadKey == downloadItem.DownloadKey));
+                    }
+                }
+                else
+                {
+                    continue;
+                }
+            }
         });
 
-        public IAsyncRelayCommand SelectAllCommand => new AsyncRelayCommand(async () =>
+        // 进入多选模式
+        public IAsyncRelayCommand SelectCommand => new AsyncRelayCommand(async () =>
         {
-            foreach (DownloadModel downloadItem in DownloadingDataList)
+            lock (DownloadingDataListLock)
             {
-                downloadItem.IsSelected = true;
+                foreach (DownloadModel downloadItem in DownloadingDataList)
+                {
+                    downloadItem.IsSelected = false;
+                }
             }
+
+            IsSelectMode = true;
             await Task.CompletedTask;
         });
 
-        public IAsyncRelayCommand SelectNoneCommand => new AsyncRelayCommand(SelectNoneAsync);
+        // 全部选择
+        public IAsyncRelayCommand SelectAllCommand => new AsyncRelayCommand(async () =>
+        {
+            lock (DownloadingDataListLock)
+            {
+                foreach (DownloadModel downloadItem in DownloadingDataList)
+                {
+                    downloadItem.IsSelected = true;
+                }
+            }
 
-        public IAsyncRelayCommand DeleteSelectedCommand => new AsyncRelayCommand(DeleteSelected);
+            await Task.CompletedTask;
+        });
 
+        // 全部不选
+        public IAsyncRelayCommand SelectNoneCommand => new AsyncRelayCommand(async () =>
+        {
+            lock (DownloadingDataListLock)
+            {
+                foreach (DownloadModel downloadItem in DownloadingDataList)
+                {
+                    downloadItem.IsSelected = false;
+                }
+            }
+
+            await Task.CompletedTask;
+        });
+
+        // 删除选中的任务
+        public IAsyncRelayCommand DeleteSelectedCommand => new AsyncRelayCommand(async () =>
+        {
+            List<DownloadModel> SelectedDownloadingDataList = DownloadingDataList.Where(item => item.IsSelected == true).ToList();
+
+            // 没有选中任何内容时显示空提示对话框
+            if (SelectedDownloadingDataList.Count == 0)
+            {
+                await new SelectEmptyPromptDialog().ShowAsync();
+                return;
+            }
+
+            IsSelectMode = false;
+
+            foreach (DownloadModel downloadItem in SelectedDownloadingDataList)
+            {
+                bool DeleteResult = await DownloadSchedulerService.DeleteTaskAsync(downloadItem);
+
+                if (DeleteResult)
+                {
+                    lock (DownloadingDataListLock)
+                    {
+                        DownloadingDataList.Remove(DownloadingDataList.First(item => item.DownloadKey == downloadItem.DownloadKey));
+                    }
+                }
+                else
+                {
+                    continue;
+                }
+            }
+        });
+
+        // 退出多选模式
         public IAsyncRelayCommand CancelCommand => new AsyncRelayCommand(async () =>
         {
             IsSelectMode = false;
             await Task.CompletedTask;
         });
 
-        public IAsyncRelayCommand PauseCommand { get; }
+        // 暂停下载当前任务
+        public IAsyncRelayCommand PauseCommand => new AsyncRelayCommand<DownloadModel>(async (param) =>
+        {
+            bool PauseResult = await DownloadSchedulerService.PauseTaskAsync(param);
 
-        public IAsyncRelayCommand DeleteCommand { get; }
+            if (PauseResult)
+            {
+                lock (DownloadingDataListLock)
+                {
+                    DownloadingDataList.Remove(DownloadingDataList.First(item => item.DownloadKey == param.DownloadKey));
+                }
+            }
+        });
+
+        // 删除当前任务
+        public IAsyncRelayCommand DeleteCommand => new AsyncRelayCommand<DownloadModel>(async (param) =>
+        {
+            bool DeleteResult = await DownloadSchedulerService.DeleteTaskAsync(param);
+
+            if (DeleteResult)
+            {
+                lock (DownloadingDataListLock)
+                {
+                    DownloadingDataList.Remove(DownloadingDataList.First(item => item.DownloadKey == param.DownloadKey));
+                }
+            }
+        });
 
         public DownloadingViewModel()
         {
@@ -84,6 +189,26 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 // 切换到下载中页面时，开启监控。并更新当前页面的数据
                 if (pivotSelectionMessage.Value == 0)
                 {
+                    lock (DownloadingDataListLock)
+                    {
+                        DownloadingDataList.Clear();
+                    }
+
+                    List<DownloadModel> DownloadingList = DownloadSchedulerService.GetDownloadingList();
+                    List<DownloadModel> WaitingList = DownloadSchedulerService.GetWaitingList();
+
+                    lock (DownloadingDataListLock)
+                    {
+                        foreach (DownloadModel downloadItem in DownloadingList)
+                        {
+                            DownloadingDataList.Add(downloadItem);
+                        }
+                        foreach (DownloadModel downloadItem in WaitingList)
+                        {
+                            DownloadingDataList.Add(downloadItem);
+                        }
+                    }
+
                     DownloadingTimer.Start();
                 }
 
@@ -113,89 +238,6 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// </summary>
         private void DownloadInfoTimerTick(object sender, object e)
         {
-        }
-
-        /// <summary>
-        /// 删除选中的下载任务
-        /// </summary>
-        private async Task DeleteSelected()
-        {
-            List<DownloadModel> SelectedDownloadomgDataList = DownloadingDataList.Where(item => item.IsSelected == true).ToList();
-
-            // 没有选中任何内容时显示空提示对话框
-            if (SelectedDownloadomgDataList.Count == 0)
-            {
-                await new SelectEmptyPromptDialog().ShowAsync();
-                return;
-            }
-
-            // 删除时显示删除确认对话框
-            ContentDialogResult result = await new DeletePromptDialog().ShowAsync();
-
-            if (result == ContentDialogResult.Primary)
-            {
-                IsSelectMode = false;
-
-                //await IDownloadDBService.DeleteDownloadDataAsync(SelectedDownloadomgDataList);
-
-                //// 如果有正在下载的服务，从下载列表中删除
-                //if (DownloadingList.Any())
-                //{
-                //    foreach (DownloadModel downloadItem in DownloadingList)
-                //    {
-                //        //Aria2Service.DeleteSelectedAsync();
-                //    }
-                //}
-                await GetDownloadDataListAsync();
-            }
-        }
-
-        /// <summary>
-        /// 从数据库中加载还未下载完成的数据
-        /// </summary>
-        private async Task GetDownloadDataListAsync()
-        {
-            //Tuple<List<DownloadModel>, bool> DownloadData = await IDownloadDBService.QueryDownloadDataAsync();
-
-            //List<DownloadModel> DownloadRawList = DownloadData.Item1;
-
-            //IsDownloadingEmpty = DownloadData.Item2;
-
-            //try
-            //{
-            //    ConvertRawListToDisplayList(ref DownloadRawList);
-            //}
-            //catch (Exception)
-            //{
-            //    ConvertRawListToDisplayList(ref DownloadRawList);
-            //}
-            await Task.CompletedTask;
-        }
-
-        /// <summary>
-        /// 将原始数据转换为在UI界面上呈现出来的数据
-        /// </summary>
-        private void ConvertRawListToDisplayList(ref List<DownloadModel> downloadRawList)
-        {
-            DownloadingDataList.Clear();
-
-            foreach (DownloadModel downloadRawData in downloadRawList)
-            {
-                DownloadingDataList.Add(downloadRawData);
-            }
-        }
-
-        /// <summary>
-        /// 点击全部不选按钮时，让复选框的下载记录全部不选
-        /// </summary>
-        private async Task SelectNoneAsync()
-        {
-            foreach (DownloadModel downloadItem in DownloadingDataList)
-            {
-                downloadItem.IsSelected = false;
-            }
-
-            await Task.CompletedTask;
         }
     }
 }

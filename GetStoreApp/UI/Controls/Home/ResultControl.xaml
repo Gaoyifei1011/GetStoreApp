@@ -206,8 +206,8 @@
                         Margin="10,0,0,0"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
-                        Text="{x:Bind ResourceService.GetLocalized('/History/OperationMode')}"
-                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/OperationModeToolTip')}" />
+                        Text="{x:Bind ResourceService.GetLocalized('/History/Options')}"
+                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/OptionsToolTip')}" />
                 </Grid>
             </ListView.Header>
 
