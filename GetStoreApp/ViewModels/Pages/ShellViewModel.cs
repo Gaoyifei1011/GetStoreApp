@@ -34,17 +34,17 @@ namespace GetStoreApp.ViewModels.Pages
             NavigationService.Navigated += OnNavigated;
         }
 
-        private void OnNavigated(object sender, NavigationEventArgs e)
+        private void OnNavigated(object sender, NavigationEventArgs args)
         {
             IsBackEnabled = NavigationService.CanGoBack;
 
-            if (e.SourcePageType == typeof(SettingsPage))
+            if (args.SourcePageType == typeof(SettingsPage))
             {
                 Selected = NavigationViewService.SettingsItem;
                 return;
             }
 
-            var selectedItem = NavigationViewService.GetSelectedItem(e.SourcePageType);
+            var selectedItem = NavigationViewService.GetSelectedItem(args.SourcePageType);
             if (selectedItem != null)
             {
                 Selected = selectedItem;

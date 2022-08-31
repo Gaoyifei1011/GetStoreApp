@@ -114,17 +114,17 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public ResultViewModel()
         {
-            Messenger.Register<ResultViewModel, ResultControlVisableMessage>(this, (resultViewModel, resultControlVisableMessage) =>
+            WeakReferenceMessenger.Default.Register<ResultViewModel, ResultControlVisableMessage>(this, (resultViewModel, resultControlVisableMessage) =>
             {
                 resultViewModel.ResultControlVisable = resultControlVisableMessage.Value;
             });
 
-            Messenger.Register<ResultViewModel, ResultCategoryIdMessage>(this, (resultViewModel, resultCategoryIdMessage) =>
+            WeakReferenceMessenger.Default.Register<ResultViewModel, ResultCategoryIdMessage>(this, (resultViewModel, resultCategoryIdMessage) =>
             {
                 resultViewModel.CategoryId = resultCategoryIdMessage.Value;
             });
 
-            Messenger.Register<ResultViewModel, ResultDataListMessage>(this, async (resultViewModel, resultDataListMessage) =>
+            WeakReferenceMessenger.Default.Register<ResultViewModel, ResultDataListMessage>(this, async (resultViewModel, resultDataListMessage) =>
             {
                 resultViewModel.ResultDataList.Clear();
 

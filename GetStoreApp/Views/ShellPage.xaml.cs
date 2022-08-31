@@ -1,10 +1,14 @@
-﻿using GetStoreApp.Contracts.Services.App;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Helpers;
+using GetStoreApp.Messages;
+using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using System.Threading.Tasks;
 using Windows.System;
 
 namespace GetStoreApp.Views
@@ -23,15 +27,17 @@ namespace GetStoreApp.Views
             ViewModel.NavigationViewService.Initialize(NavigationViewControl);
 
             App.MainWindow.SetTitleBar(AppTitleBar);
+
+            ShowInAppNotification();
         }
 
-        private void ShellLoaded(object sender, RoutedEventArgs e)
+        private void ShellLoaded(object sender, RoutedEventArgs args)
         {
             KeyboardAccelerators.Add(BuildKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu));
             KeyboardAccelerators.Add(BuildKeyboardAccelerator(VirtualKey.GoBack));
         }
 
-        private void NavigationViewControl_DisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)
+        private void NavigationViewDisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)
         {
             AppTitleBar.Margin = new Thickness()
             {
@@ -44,7 +50,10 @@ namespace GetStoreApp.Views
 
         private KeyboardAccelerator BuildKeyboardAccelerator(VirtualKey key, VirtualKeyModifiers? modifiers = null)
         {
-            KeyboardAccelerator keyboardAccelerator = new KeyboardAccelerator() { Key = key };
+            KeyboardAccelerator keyboardAccelerator = new KeyboardAccelerator()
+            {
+                Key = key
+            };
 
             if (modifiers.HasValue)
             {
@@ -63,6 +72,30 @@ namespace GetStoreApp.Views
             bool result = navigationService.GoBack();
 
             args.Handled = result;
+        }
+
+        private void ShowInAppNotification()
+        {
+            int NotificationDuration = 2500;
+
+            WeakReferenceMessenger.Default.Register<ShellPage, InAppNotificationMessage>(this, async (shellPage, inAppNotificationMessage) =>
+            {
+                string NotificationContent = inAppNotificationMessage.Value;
+                if (NotificationContent == "HistoryCopySuccessfully")
+                {
+                    ShellNotification.Show(new HistoryCopyNotification(), NotificationDuration);
+                }
+                else if (NotificationContent == "ResultCopySuccessfully")
+                {
+
+                }
+                else if (NotificationContent == "LanguageChangeSuccessfully")
+                {
+                    ShellNotification.Show(new LanguageChangeNotification(), NotificationDuration);
+                }
+
+                await Task.CompletedTask;
+            });
         }
     }
 }

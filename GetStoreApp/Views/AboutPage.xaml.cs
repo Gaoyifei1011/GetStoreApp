@@ -21,11 +21,11 @@ namespace GetStoreApp.Views
         // 页面加载完成后如果有具体的要求，将页面滚动到指定位置
         public void AboutLoaded(object sender, RoutedEventArgs args)
         {
+            double CurrentScrollPosition = AboutScroll.VerticalOffset;
+            Point CurrentPoint = new Point(0, (int)CurrentScrollPosition);
+
             if (App.NavigationArgs == Instructions.Name)
             {
-                double CurrentScrollPosition = AboutScroll.VerticalOffset;
-                Point CurrentPoint = new Point(0, (int)CurrentScrollPosition);
-
                 Point TargetPosition = Instructions.TransformToVisual(AboutScroll).TransformPoint(CurrentPoint);
                 AboutScroll.ChangeView(null, TargetPosition.Y, null);
 
@@ -33,9 +33,6 @@ namespace GetStoreApp.Views
             }
             else if (App.NavigationArgs == SettingsHelp.Name)
             {
-                double CurrentScrollPosition = AboutScroll.VerticalOffset;
-                Point CurrentPoint = new Point(0, (int)CurrentScrollPosition);
-
                 Point TargetPosition = SettingsHelp.TransformToVisual(AboutScroll).TransformPoint(CurrentPoint);
                 AboutScroll.ChangeView(null, TargetPosition.Y, null);
 

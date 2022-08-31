@@ -236,7 +236,7 @@ namespace GetStoreApp.ViewModels.Pages
                     }
                 }
 
-                Messenger.Send(new HistoryMessage(true));
+                WeakReferenceMessenger.Default.Send(new HistoryMessage(true));
             }
         });
 
@@ -264,7 +264,7 @@ namespace GetStoreApp.ViewModels.Pages
         // 填入指定项目的内容
         public IAsyncRelayCommand FillinCommand => new AsyncRelayCommand<HistoryModel>(async (param) =>
         {
-            Messenger.Send(new FillinMessage(param));
+            WeakReferenceMessenger.Default.Send(new FillinMessage(param));
             NavigationService.NavigateTo(typeof(HomeViewModel).FullName, null, new DrillInNavigationTransitionInfo());
             await Task.CompletedTask;
         });
@@ -278,6 +278,7 @@ namespace GetStoreApp.ViewModels.Pages
                 param.HistoryLink);
             CopyPasteHelper.CopyToClipBoard(CopyContent);
 
+            WeakReferenceMessenger.Default.Send(new InAppNotificationMessage("HistoryCopySuccessfully"));
             await Task.CompletedTask;
         });
 

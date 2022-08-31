@@ -56,7 +56,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
         {
             StateInfoText = ResourceService.GetLocalized("/Home/StatusInfoWelcome");
 
-            Messenger.Register(this, (MessageHandler<StatusBarViewModel, StatusBarStateMessage>)(async (statusbarViewModel, statusBarStateMessage) =>
+            WeakReferenceMessenger.Default.Register(this, (MessageHandler<StatusBarViewModel, StatusBarStateMessage>)(async (statusbarViewModel, statusBarStateMessage) =>
                         {
                             statusbarViewModel.InfoBarSeverity = StatusBarStateList[statusBarStateMessage.Value].InfoBarSeverity;
                             statusbarViewModel.StateInfoText = StatusBarStateList[statusBarStateMessage.Value].StateInfoText;

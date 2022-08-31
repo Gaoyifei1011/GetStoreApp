@@ -190,7 +190,7 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 定时计划添加下载任务，更新下载任务信息
         /// </summary>
-        private async void DownloadMonitorTimerElapsed(object sender, ElapsedEventArgs e)
+        private async void DownloadMonitorTimerElapsed(object sender, ElapsedEventArgs args)
         {
             await ScheduledUpdateStatusAsync();
 

@@ -46,14 +46,14 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         public IAsyncRelayCommand StartWithEFilterCommand => new AsyncRelayCommand<bool>(async (param) =>
         {
             await LinkFilterService.SetStartsWithEFilterValueAsync(param);
-            Messenger.Send(new StartsWithEFilterMessage(param));
+            WeakReferenceMessenger.Default.Send(new StartsWithEFilterMessage(param));
             StartsWithEFilterValue = param;
         });
 
         public IAsyncRelayCommand BlockMapFilterCommand => new AsyncRelayCommand<bool>(async (param) =>
         {
             await LinkFilterService.SetBlockMapFilterValueAsync(param);
-            Messenger.Send(new BlockMapFilterMessage(param));
+            WeakReferenceMessenger.Default.Send(new BlockMapFilterMessage(param));
             BlockMapFilterValue = param;
         });
 

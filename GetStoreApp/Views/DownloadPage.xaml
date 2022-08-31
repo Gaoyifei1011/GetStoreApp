@@ -11,15 +11,24 @@
 
     <Page.Resources>
         <TeachingTip
-            x:Name="PuaseTeachingTip"
-            Title="{x:Bind ResourceService.GetLocalized('/Download/PauseExplain')}"
-            IsLightDismissEnabled="True"
-            PreferredPlacement="Bottom"
-            Subtitle="{x:Bind ResourceService.GetLocalized('/Download/PauseExplainTeachingTip')}"
-            Target="{x:Bind PauseButton}">
+            x:Name="DownloadTeachingTip"
+            Title="{x:Bind ResourceService.GetLocalized('/Download/ExplainTitle')}"
+            Style="{StaticResource TeachingTipStyle}"
+            Target="{x:Bind TeachingTipButton}">
             <TeachingTip.IconSource>
                 <SymbolIconSource Symbol="Important" />
             </TeachingTip.IconSource>
+            <TeachingTip.Content>
+                <StackPanel Spacing="5">
+                    <TextBlock Text="{x:Bind ResourceService.GetLocalized('/Download/ExplanContent1')}" TextWrapping="WrapWholeWords" />
+                    <TextBlock Text="{x:Bind ResourceService.GetLocalized('/Download/ExplanContent2')}" TextWrapping="WrapWholeWords" />
+                    <Button
+                        HorizontalAlignment="Right"
+                        Command="{x:Bind ViewModel.DownloadSettingsCommand}"
+                        CommandParameter="{Binding ElementName=DownloadTeachingTip}"
+                        Content="{x:Bind ResourceService.GetLocalized('/Download/OpenSettings')}" />
+                </StackPanel>
+            </TeachingTip.Content>
         </TeachingTip>
     </Page.Resources>
 
@@ -49,18 +58,11 @@
         <Pivot.RightHeader>
             <StackPanel VerticalAlignment="Top" Orientation="Horizontal">
                 <Button
-                    x:Name="PauseButton"
+                    x:Name="TeachingTipButton"
                     Margin="0,0,6,0"
-                    Click="{x:Bind PauseClick}"
-                    Content="{x:Bind ResourceService.GetLocalized('/Download/PauseExplain')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/PauseExplain')}"
-                    Visibility="{x:Bind ViewModel.PauseVisValue, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
-                <Button
-                    Command="{x:Bind ViewModel.DownloadOptionsCommand}"
-                    Content="{x:Bind ResourceService.GetLocalized('/Download/Settings')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SettingsToolTip')}">
-                    <Button.Resources />
-                </Button>
+                    Click="{x:Bind TeachingTipClick}"
+                    Content="{x:Bind ResourceService.GetLocalized('/Download/DownloadDescription')}"
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/DownloadDescription')}" />
             </StackPanel>
         </Pivot.RightHeader>
     </Pivot>

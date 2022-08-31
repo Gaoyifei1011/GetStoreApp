@@ -2,6 +2,7 @@
     x:Class="GetStoreApp.Views.ShellPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:helpers="using:GetStoreApp.Helpers"
     Loaded="{x:Bind ShellLoaded}">
 
@@ -29,7 +30,7 @@
             x:Name="NavigationViewControl"
             Canvas.ZIndex="0"
             CompactModeThresholdWidth="640"
-            DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
+            DisplayModeChanged="{x:Bind NavigationViewDisplayModeChanged}"
             ExpandedModeThresholdWidth="1080"
             IsBackButtonVisible="Visible"
             IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
@@ -72,5 +73,6 @@
 
             <Frame x:Name="NavigationFrame" />
         </NavigationView>
+        <controls:InAppNotification x:Name="ShellNotification" Style="{StaticResource InAppNotificationsStyle}" />
     </Grid>
 </Page>

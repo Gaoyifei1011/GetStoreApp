@@ -5,6 +5,7 @@ using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Contracts.ViewModels;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
 using System.Threading.Tasks;
@@ -15,17 +16,10 @@ namespace GetStoreApp.ViewModels.Pages
     {
         private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
 
-        private bool _pauseVisValue = false;
-
-        public bool PauseVisValue
+        public IAsyncRelayCommand DownloadSettingsCommand => new AsyncRelayCommand<TeachingTip>(async (param) =>
         {
-            get { return _pauseVisValue; }
-
-            set { SetProperty(ref _pauseVisValue, value); }
-        }
-
-        public IAsyncRelayCommand DownloadOptionsCommand => new AsyncRelayCommand(async () =>
-        {
+            App.NavigationArgs = "DownloadOptions";
+            param.IsOpen = false;
             NavigationService.NavigateTo(typeof(SettingsViewModel).FullName, null, new DrillInNavigationTransitionInfo());
             await Task.CompletedTask;
         });
@@ -33,29 +27,20 @@ namespace GetStoreApp.ViewModels.Pages
         // DownloadPivot选中项发生变化时，关闭离开页面的事件，开启要导航到的页面的事件，并更新新页面的数据
         public IAsyncRelayCommand DownloadContentCommand => new AsyncRelayCommand<int>(async (param) =>
         {
-            Messenger.Send(new PivotSelectionMessage(param));
-
-            if (param == 1)
-            {
-                PauseVisValue = true;
-            }
-            else
-            {
-                PauseVisValue = false;
-            }
+            WeakReferenceMessenger.Default.Send(new PivotSelectionMessage(param));
             await Task.CompletedTask;
         });
 
         // 初次加载页面时，开启下载中页面的所有事件，加载下载中页面的数据
         public void OnNavigatedTo(object parameter)
         {
-            Messenger.Send(new PivotSelectionMessage(0));
+            WeakReferenceMessenger.Default.Send(new PivotSelectionMessage(0));
         }
 
         // 离开该页面时，关闭所有事件，并通知注销所有事件（防止内存泄露）
         public void OnNavigatedFrom()
         {
-            Messenger.Send(new PivotSelectionMessage(-1));
+            WeakReferenceMessenger.Default.Send(new PivotSelectionMessage(-1));
         }
     }
 }

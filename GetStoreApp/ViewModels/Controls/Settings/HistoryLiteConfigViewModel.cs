@@ -27,7 +27,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         public IAsyncRelayCommand HistoryLiteItemSelectCommand => new AsyncRelayCommand(async () =>
         {
             await HistoryLiteNumService.SetHistoryLiteNumAsync(HistoryLiteItem);
-            Messenger.Send(new HistoryLiteNumMessage(HistoryLiteItem));
+            WeakReferenceMessenger.Default.Send(new HistoryLiteNumMessage(HistoryLiteItem));
         });
 
         public HistoryLiteConfigViewModel()
