@@ -95,17 +95,17 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             LinkPlaceHolderText = SampleTitle + SampleLink;
 
-            Messenger.Register<RequestViewModel, StartsWithEFilterMessage>(this, (requestViewModel, startsWithEFilterMessage) =>
+            WeakReferenceMessenger.Default.Register<RequestViewModel, StartsWithEFilterMessage>(this, (requestViewModel, startsWithEFilterMessage) =>
             {
                 requestViewModel.StartsWithEFilterValue = startsWithEFilterMessage.Value;
             });
 
-            Messenger.Register<RequestViewModel, BlockMapFilterMessage>(this, (requestViewModel, blockMapFilterService) =>
+            WeakReferenceMessenger.Default.Register<RequestViewModel, BlockMapFilterMessage>(this, (requestViewModel, blockMapFilterService) =>
             {
                 requestViewModel.BlockMapFilterValue = blockMapFilterService.Value;
             });
 
-            Messenger.Register<RequestViewModel, FillinMessage>(this, (requestViewModel, fillinMessage) =>
+            WeakReferenceMessenger.Default.Register<RequestViewModel, FillinMessage>(this, (requestViewModel, fillinMessage) =>
             {
                 requestViewModel.SelectedType = TypeList.FindIndex(item => item.InternalName.Equals(fillinMessage.Value.HistoryType));
                 requestViewModel.SelectedChannel = ChannelList.FindIndex(item => item.InternalName.Equals(fillinMessage.Value.HistoryChannel));
@@ -146,7 +146,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             string CurrentLink = LinkText;
 
             // 设置获取数据时的相关控件状态
-            Messenger.Send(new StatusBarStateMessage(0));
+            WeakReferenceMessenger.Default.Send(new StatusBarStateMessage(0));
 
             // 生成请求的内容
             GenerateContentService generateContentService = new GenerateContentService();
@@ -180,17 +180,17 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
                 await UpdateHistoryAsync(CurrentType, CurrentChannel, CurrentLink);
 
-                Messenger.Send(new HistoryMessage(true));
+                WeakReferenceMessenger.Default.Send(new HistoryMessage(true));
             }
 
             // 发送消息
-            Messenger.Send(new StatusBarStateMessage(state));
+            WeakReferenceMessenger.Default.Send(new StatusBarStateMessage(state));
 
-            Messenger.Send(new ResultControlVisableMessage(ResultControlVisable));
+            WeakReferenceMessenger.Default.Send(new ResultControlVisableMessage(ResultControlVisable));
 
-            Messenger.Send(new ResultCategoryIdMessage(CategoryId));
+            WeakReferenceMessenger.Default.Send(new ResultCategoryIdMessage(CategoryId));
 
-            Messenger.Send(new ResultDataListMessage(ResultDataList));
+            WeakReferenceMessenger.Default.Send(new ResultDataListMessage(ResultDataList));
         }
 
         /// <summary>

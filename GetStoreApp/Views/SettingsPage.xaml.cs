@@ -1,7 +1,9 @@
 ﻿using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Helpers;
 using GetStoreApp.ViewModels.Pages;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Windows.Foundation;
 
 namespace GetStoreApp.Views
 {
@@ -14,6 +16,21 @@ namespace GetStoreApp.Views
         public SettingsPage()
         {
             InitializeComponent();
+        }
+
+        // 页面加载完成后如果有具体的要求，将页面滚动到指定位置
+        public void SettingsLoaded(object sender, RoutedEventArgs args)
+        {
+            double CurrentScrollPosition = SettingsScroll.VerticalOffset;
+            Point CurrentPoint = new Point(0, (int)CurrentScrollPosition);
+
+            if (App.NavigationArgs == DownloadOptions.Name)
+            {
+                Point TargetPosition = DownloadOptions.TransformToVisual(SettingsScroll).TransformPoint(CurrentPoint);
+                SettingsScroll.ChangeView(null, TargetPosition.Y, null);
+
+                App.NavigationArgs = string.Empty;
+            }
         }
     }
 }

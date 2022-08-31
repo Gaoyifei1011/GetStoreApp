@@ -103,7 +103,7 @@ namespace GetStoreApp.Services.Shell
         public void CleanNavigation()
             => _frame.BackStack.Clear();
 
-        private void OnNavigated(object sender, NavigationEventArgs e)
+        private void OnNavigated(object sender, NavigationEventArgs args)
         {
             if (sender is Frame frame)
             {
@@ -115,10 +115,10 @@ namespace GetStoreApp.Services.Shell
 
                 if (frame.GetPageViewModel() is INavigationAware navigationAware)
                 {
-                    navigationAware.OnNavigatedTo(e.Parameter);
+                    navigationAware.OnNavigatedTo(args.Parameter);
                 }
 
-                Navigated?.Invoke(sender, e);
+                Navigated?.Invoke(sender, args);
             }
         }
     }

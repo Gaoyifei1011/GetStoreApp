@@ -17,9 +17,9 @@ namespace GetStoreApp.Views
             InitializeComponent();
         }
 
-        public void PauseClick(object sender, RoutedEventArgs e)
+        public void TeachingTipClick(object sender, RoutedEventArgs args)
         {
-            PuaseTeachingTip.IsOpen = true;
+            DownloadTeachingTip.IsOpen = true;
         }
     }
 }

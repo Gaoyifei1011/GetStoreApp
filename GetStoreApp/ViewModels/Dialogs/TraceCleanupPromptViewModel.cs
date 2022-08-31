@@ -169,7 +169,7 @@ namespace GetStoreApp.ViewModels.Dialogs
                 ClearStateText = ResourceService.GetLocalized("/Dialog/CleanSuccessfully");
 
                 // 发送消息，更新UI界面
-                Messenger.Send(new HistoryMessage(true));
+                WeakReferenceMessenger.Default.Send(new HistoryMessage(true));
             }
 
             // 清理失败，显示清理异常错误信息
@@ -179,7 +179,7 @@ namespace GetStoreApp.ViewModels.Dialogs
 
                 LocalFileCleanErrorVisable = CleanResult.Item1 == false;
 
-                if (CleanResult.Item2) Messenger.Send(new HistoryMessage(true));
+                if (CleanResult.Item2) WeakReferenceMessenger.Default.Send(new HistoryMessage(true));
                 else HistoryCleanErrorVisable = true;
 
                 DownloadCleanErrorVisable = CleanResult.Item3 == false;

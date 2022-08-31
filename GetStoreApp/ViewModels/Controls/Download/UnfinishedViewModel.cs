@@ -203,7 +203,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
         public UnfinishedViewModel()
         {
-            Messenger.Register<UnfinishedViewModel, PivotSelectionMessage>(this, async (unfinishedViewModel, pivotSelectionMessage) =>
+            WeakReferenceMessenger.Default.Register<UnfinishedViewModel, PivotSelectionMessage>(this, async (unfinishedViewModel, pivotSelectionMessage) =>
             {
                 // 切换到已完成页面时，更新当前页面的数据
                 if (pivotSelectionMessage.Value == 1)

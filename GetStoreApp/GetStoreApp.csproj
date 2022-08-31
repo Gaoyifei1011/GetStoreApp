@@ -48,8 +48,10 @@
     <None Remove="Styles\Grid.xaml" />
     <None Remove="Styles\GridView.xaml" />
     <None Remove="Styles\HyperlinkButton.xaml" />
+    <None Remove="Styles\InAppNotification.xaml" />
     <None Remove="Styles\ListView.xaml" />
     <None Remove="Styles\Pivot.xaml" />
+    <None Remove="Styles\TeachingTip.xaml" />
     <None Remove="UI\Controls\About\HeaderControl.xaml" />
     <None Remove="UI\Controls\About\InstructionsControl.xaml" />
     <None Remove="UI\Controls\About\IntroductionControl.xaml" />
@@ -76,11 +78,15 @@
     <None Remove="UI\Dialogs\RestartAppsDialog.xaml" />
     <None Remove="UI\Dialogs\SelectEmptyPromptDialog.xaml" />
     <None Remove="UI\Dialogs\TraceCleanupPromptDialog.xaml" />
+    <None Remove="UI\Notifications\HistoryCopyNotification.xaml" />
+    <None Remove="UI\Notifications\LanguageChangeNotification.xaml" />
+    <None Remove="UI\Notifications\ResultCopyNotification.xaml" />
 
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
     <PackageReference Include="CommunityToolkit.WinUI.Notifications" Version="7.1.2">
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
+    <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.45" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.8" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
@@ -130,6 +136,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Styles\HyperlinkButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\InAppNotification.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Styles\ListView.xaml">
@@ -222,6 +231,13 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
+    <Page Update="UI\Notifications\LanguageChangeNotification.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Notifications\HistoryCopyNotification.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -247,5 +263,17 @@
       <Link>Aria2\aria2c.exe</Link>
     </Content>
     <Content Include="Aria2\Config\aria2.conf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="UI\Notifications\ResultCopyNotification.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Styles\TeachingTip.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>

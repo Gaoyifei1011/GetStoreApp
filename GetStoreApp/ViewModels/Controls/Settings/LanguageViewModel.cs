@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Helpers;
+using GetStoreApp.Messages;
 using GetStoreApp.Models;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml.Media.Animation;
@@ -38,6 +40,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         public IAsyncRelayCommand LanguageSelectCommand => new AsyncRelayCommand(async () =>
         {
             await LanguageService.SetLanguageAsync(Language);
+            WeakReferenceMessenger.Default.Send(new InAppNotificationMessage("LanguageChangeSuccessfully"));
         });
 
         public LanguageViewModel()

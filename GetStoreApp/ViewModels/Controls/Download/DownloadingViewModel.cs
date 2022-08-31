@@ -184,7 +184,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             // Interval 获取或设置计时器刻度之间的时间段
             DownloadingTimer.Interval = new TimeSpan(0, 0, 1);
 
-            Messenger.Register<DownloadingViewModel, PivotSelectionMessage>(this, async (downloadingViewModel, pivotSelectionMessage) =>
+            WeakReferenceMessenger.Default.Register<DownloadingViewModel, PivotSelectionMessage>(this, async (downloadingViewModel, pivotSelectionMessage) =>
             {
                 // 切换到下载中页面时，开启监控。并更新当前页面的数据
                 if (pivotSelectionMessage.Value == 0)

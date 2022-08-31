@@ -55,12 +55,13 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 param.HistoryLink);
             CopyPasteHelper.CopyToClipBoard(CopyContent);
 
+            WeakReferenceMessenger.Default.Send(new InAppNotificationMessage("HistoryCopySuccessfully"));
             await Task.CompletedTask;
         });
 
         public IAsyncRelayCommand FillinCommand => new AsyncRelayCommand<HistoryModel>(async (param) =>
         {
-            Messenger.Send(new FillinMessage(param));
+            WeakReferenceMessenger.Default.Send(new FillinMessage(param));
             await Task.CompletedTask;
         });
 
@@ -68,7 +69,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
         {
             HistoryLiteItem = HistoryLiteNumService.HistoryLiteNum;
 
-            Messenger.Register<HistoryLiteViewModel, HistoryMessage>(this, async (historyLiteViewModel, historyMessage) =>
+            WeakReferenceMessenger.Default.Register<HistoryLiteViewModel, HistoryMessage>(this, async (historyLiteViewModel, historyMessage) =>
             {
                 if (historyMessage.Value)
                 {
@@ -76,7 +77,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 }
             });
 
-            Messenger.Register<HistoryLiteViewModel, HistoryLiteNumMessage>(this, async (historyLiteViewModel, historyLiteNumMessage) =>
+            WeakReferenceMessenger.Default.Register<HistoryLiteViewModel, HistoryLiteNumMessage>(this, async (historyLiteViewModel, historyLiteNumMessage) =>
             {
                 HistoryLiteItem = historyLiteNumMessage.Value;
                 await GetHistoryLiteDataListAsync();

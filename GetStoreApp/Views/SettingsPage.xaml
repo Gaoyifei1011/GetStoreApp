@@ -5,10 +5,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sc="using:GetStoreApp.UI.Controls.Settings"
+    Loaded="{x:Bind SettingsLoaded}"
     NavigationCacheMode="Required"
     mc:Ignorable="d">
 
-    <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
+    <ScrollViewer
+        x:Name="SettingsScroll"
+        HorizontalScrollMode="Disabled"
+        VerticalScrollBarVisibility="Auto">
         <StackPanel
             Margin="30,15,30,0"
             Padding="0,0,0,40"
@@ -58,7 +62,7 @@
 
             <sc:LinkFilterControl />
 
-            <sc:DownloadOptionsControl />
+            <sc:DownloadOptionsControl x:Name="DownloadOptions" />
 
             <TextBlock
                 FontSize="16"
