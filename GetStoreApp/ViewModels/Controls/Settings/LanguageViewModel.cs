@@ -40,7 +40,11 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         public IAsyncRelayCommand LanguageSelectCommand => new AsyncRelayCommand(async () =>
         {
             await LanguageService.SetLanguageAsync(Language);
-            WeakReferenceMessenger.Default.Send(new InAppNotificationMessage("LanguageChangeSuccessfully"));
+            WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
+            {
+                NotificationContent = "LanguageSettings",
+                NotificationValue = new object[] { true }
+            }));
         });
 
         public LanguageViewModel()

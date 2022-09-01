@@ -24,22 +24,22 @@ namespace GetStoreApp.ViewModels.Controls.About
             set { SetProperty(ref _appVersion, value); }
         }
 
-        public IAsyncRelayCommand DeveloperDescriptionCommand { get; } = new AsyncRelayCommand(async () =>
+        public IAsyncRelayCommand DeveloperDescriptionCommand => new AsyncRelayCommand(async () =>
         {
             await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011"));
         });
 
-        public IAsyncRelayCommand ProjectDescriptionCommand { get; } = new AsyncRelayCommand(async () =>
+        public IAsyncRelayCommand ProjectDescriptionCommand => new AsyncRelayCommand(async () =>
         {
             await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp"));
         });
 
-        public IAsyncRelayCommand SendFeedbackCommand { get; } = new AsyncRelayCommand(async () =>
+        public IAsyncRelayCommand SendFeedbackCommand => new AsyncRelayCommand(async () =>
         {
             await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/issues"));
         });
 
-        public IAsyncRelayCommand CheckUpdateCommand { get; } = new AsyncRelayCommand(async () =>
+        public IAsyncRelayCommand CheckUpdateCommand => new AsyncRelayCommand(async () =>
         {
             await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/releases"));
         });

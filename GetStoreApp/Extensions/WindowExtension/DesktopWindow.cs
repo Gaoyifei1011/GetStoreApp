@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using WinUIEx;
 using static PInvoke.User32;
 
-namespace GetStoreApp.WindowExtensions
+namespace GetStoreApp.Extensions.WindowExtension
 {
     /// <summary>
     /// 扩展Windows 应用 SDK的Window类和WinUIEx类，在Desktop类中添加Closing事件，实现关闭应用时能够弹出对话框
@@ -27,10 +27,10 @@ namespace GetStoreApp.WindowExtensions
         public event EventHandler<WindowClosingEventArgs> Closing;
 
         [DllImport("user32.dll", EntryPoint = "SetWindowLong")]
-        private static extern IntPtr SetWindowLongPtr32(IntPtr hWnd, PInvoke.User32.WindowLongIndexFlags nIndex, WinProc newProc);
+        private static extern IntPtr SetWindowLongPtr32(IntPtr hWnd, WindowLongIndexFlags nIndex, WinProc newProc);
 
         [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr")]
-        private static extern IntPtr SetWindowLongPtr64(IntPtr hWnd, PInvoke.User32.WindowLongIndexFlags nIndex, WinProc newProc);
+        private static extern IntPtr SetWindowLongPtr64(IntPtr hWnd, WindowLongIndexFlags nIndex, WinProc newProc);
 
         [DllImport("user32.dll")]
         private static extern IntPtr CallWindowProc(IntPtr lpPrevWndFunc, IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam);
@@ -40,7 +40,7 @@ namespace GetStoreApp.WindowExtensions
             SubClassingWin32();
         }
 
-        private static IntPtr SetWindowLongPtr(IntPtr hWnd, PInvoke.User32.WindowLongIndexFlags nIndex, WinProc newProc)
+        private static IntPtr SetWindowLongPtr(IntPtr hWnd, WindowLongIndexFlags nIndex, WinProc newProc)
         {
             if (IntPtr.Size == 8)
                 return SetWindowLongPtr64(hWnd, nIndex, newProc);
@@ -60,7 +60,7 @@ namespace GetStoreApp.WindowExtensions
             oldWndProc = SetWindowLongPtr(_hwnd, WindowLongIndexFlags.GWL_WNDPROC, newWndProc);
         }
 
-        private IntPtr NewWindowProc(IntPtr hWnd, PInvoke.User32.WindowMessage Msg, IntPtr wParam, IntPtr lParam)
+        private IntPtr NewWindowProc(IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam)
         {
             switch (Msg)
             {

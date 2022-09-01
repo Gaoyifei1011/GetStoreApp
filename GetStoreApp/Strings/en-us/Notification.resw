@@ -117,10 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="HistoryCopyFailed" xml:space="preserve">
+    <value>The history record copy failed, check the access rights of the clipboard</value>
+  </data>
   <data name="HistoryCopySuccessfully" xml:space="preserve">
-    <value>The history was successfully copied to the clipboard</value>
+    <value>The history record was successfully copied to the clipboard</value>
+  </data>
+  <data name="HistorySelectedCopyFailed" xml:space="preserve">
+    <value>{0} history records copy failed, check the access rights of the clipboard</value>
+  </data>
+  <data name="HistorySelectedCopySuccessfully" xml:space="preserve">
+    <value>{0} history records has been successfully copied to the clipboard</value>
+  </data>
+  <data name="LanguageChangeFailed" xml:space="preserve">
+    <value>Language setting modification failed, please try again</value>
   </data>
   <data name="LanguageChangeSuccessfully" xml:space="preserve">
     <value>The language setting is modified successfully and takes effect after restarting the application</value>
+  </data>
+  <data name="ResultContentCopyFailed" xml:space="preserve">
+    <value>The download record copy failed, check the access rights of the clipboard</value>
+  </data>
+  <data name="ResultContentCopySuccessfully" xml:space="preserve">
+    <value>The download record was successfully copied to the clipboard</value>
+  </data>
+  <data name="ResultContentSelectedCopyFailed" xml:space="preserve">
+    <value>{0} download records copy failed, check the access rights of the clipboard</value>
+  </data>
+  <data name="ResultContentSelectedCopySuccessfully" xml:space="preserve">
+    <value>{0} download records has been successfully copied to the clipboard</value>
+  </data>
+  <data name="ResultLinkCopyFailed" xml:space="preserve">
+    <value>The download link copy failed, check the access rights of the clipboard</value>
+  </data>
+  <data name="ResultLinkCopySuccessfully" xml:space="preserve">
+    <value>The download link was successfully copied to the clipboard</value>
+  </data>
+  <data name="ResultLinkSelectedCopyFailed" xml:space="preserve">
+    <value>{0} download links copy failed, check the access rights of the clipboard</value>
+  </data>
+  <data name="ResultLinkSelectedCopySuccessfully" xml:space="preserve">
+    <value>{0} download links has been successfully copied to the clipboard</value>
   </data>
 </root>

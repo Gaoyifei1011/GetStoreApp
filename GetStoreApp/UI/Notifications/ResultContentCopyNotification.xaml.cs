@@ -7,15 +7,15 @@ using System;
 
 namespace GetStoreApp.UI.Notifications
 {
-    public sealed partial class HistoryCopyNotification : UserControl
+    public sealed partial class ResultContentCopyNotification : UserControl
     {
         public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        public HistoryCopyViewModel ViewModel { get; } = IOCHelper.GetService<HistoryCopyViewModel>();
+        public ResultContentCopyViewModel ViewModel { get; } = IOCHelper.GetService<ResultContentCopyViewModel>();
 
         public object[] Notification { get; }
 
-        public HistoryCopyNotification(object[] notification)
+        public ResultContentCopyNotification(object[] notification)
         {
             Notification = notification;
             InitializeComponent();
@@ -26,7 +26,7 @@ namespace GetStoreApp.UI.Notifications
         {
             if (Notification.Length > 2)
             {
-                CopySelectedSuccess.Text = string.Format(ResourceService.GetLocalized("/Notification/HistorySelectedCopySuccessfully"), Notification[2]);
+                CopySelectedSuccess.Text = string.Format(ResourceService.GetLocalized("/Notification/ResultContentSelectedCopySuccessfully"), Notification[2]);
             }
         }
 
@@ -34,13 +34,13 @@ namespace GetStoreApp.UI.Notifications
         {
             if (Notification.Length > 2)
             {
-                CopySelectedFailed.Text = string.Format(ResourceService.GetLocalized("/Notification/HistorySelectedCopyFailed"), Notification[2]);
+                CopySelectedFailed.Text = string.Format(ResourceService.GetLocalized("/Notification/ResultContentSelectedCopyFailed"), Notification[2]);
             }
         }
 
         public bool ControlLoad(bool copyState, bool isMultiSelected, int visibilityFlag)
         {
-            if (visibilityFlag == 1 && copyState && !isMultiSelected)
+            if (visibilityFlag == 1 && (copyState && !isMultiSelected))
             {
                 return true;
             }

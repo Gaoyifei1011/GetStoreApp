@@ -26,10 +26,6 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         private ILinkFilterService LinkFilterService { get; } = IOCHelper.GetService<ILinkFilterService>();
 
-        private bool BlockMapFilterValue { get; set; }
-
-        private bool StartsWithEFilterValue { get; set; }
-
         public List<GetAppTypeModel> TypeList => ResourceService.TypeList;
 
         public List<GetAppChannelModel> ChannelList => ResourceService.ChannelList;
@@ -82,28 +78,22 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _linkText, value); }
         }
 
-        public IAsyncRelayCommand TypeSelectCommand => new AsyncRelayCommand(SetPlaceHolderTextAsync);
+        public IAsyncRelayCommand TypeSelectCommand => new AsyncRelayCommand(async () =>
+        {
+            SampleLink = SampleLinkList[SelectedType];
+            LinkPlaceHolderText = SampleTitle + SampleLink;
+
+            LinkText = string.Empty;
+            await Task.CompletedTask;
+        });
 
         public IAsyncRelayCommand GetLinksCommand => new AsyncRelayCommand(GetLinksAsync);
 
         public RequestViewModel()
         {
-            BlockMapFilterValue = LinkFilterService.BlockMapFilterValue;
-            StartsWithEFilterValue = LinkFilterService.StartWithEFilterValue;
-
             SampleLink = SampleLinkList[0];
 
             LinkPlaceHolderText = SampleTitle + SampleLink;
-
-            WeakReferenceMessenger.Default.Register<RequestViewModel, StartsWithEFilterMessage>(this, (requestViewModel, startsWithEFilterMessage) =>
-            {
-                requestViewModel.StartsWithEFilterValue = startsWithEFilterMessage.Value;
-            });
-
-            WeakReferenceMessenger.Default.Register<RequestViewModel, BlockMapFilterMessage>(this, (requestViewModel, blockMapFilterService) =>
-            {
-                requestViewModel.BlockMapFilterValue = blockMapFilterService.Value;
-            });
 
             WeakReferenceMessenger.Default.Register<RequestViewModel, FillinMessage>(this, (requestViewModel, fillinMessage) =>
             {
@@ -111,15 +101,6 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 requestViewModel.SelectedChannel = ChannelList.FindIndex(item => item.InternalName.Equals(fillinMessage.Value.HistoryChannel));
                 requestViewModel.LinkText = fillinMessage.Value.HistoryLink;
             });
-        }
-
-        private async Task SetPlaceHolderTextAsync()
-        {
-            SampleLink = SampleLinkList[SelectedType];
-            LinkPlaceHolderText = SampleTitle + SampleLink;
-
-            LinkText = string.Empty;
-            await Task.CompletedTask;
         }
 
         /// <summary>
@@ -243,7 +224,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
         private void ResultListFilter(ref List<ResultModel> resultDataList)
         {
             // 按要求过滤列表内容
-            if (StartsWithEFilterValue)
+            if (LinkFilterService.StartWithEFilterValue)
             {
                 resultDataList.RemoveAll(item =>
                 item.FileName.EndsWith(".eappx", StringComparison.OrdinalIgnoreCase) ||
@@ -253,7 +234,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 );
             }
 
-            if (BlockMapFilterValue)
+            if (LinkFilterService.BlockMapFilterValue)
             {
                 resultDataList.RemoveAll(item => item.FileName.EndsWith("blockmap", StringComparison.OrdinalIgnoreCase));
             }

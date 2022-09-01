@@ -1,14 +1,9 @@
-﻿using ABI.System;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Helpers;
-using GetStoreApp.Messages;
-using GetStoreApp.ViewModels.Controls.Home;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using System.Threading.Tasks;
 
 namespace GetStoreApp.Views
 {

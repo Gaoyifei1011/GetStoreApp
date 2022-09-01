@@ -55,7 +55,12 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 param.HistoryLink);
             CopyPasteHelper.CopyToClipBoard(CopyContent);
 
-            WeakReferenceMessenger.Default.Send(new InAppNotificationMessage("HistoryCopySuccessfully"));
+            WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
+            {
+                NotificationContent = "HistoryCopy",
+                NotificationValue = new object[] { true, false }
+            }));
+
             await Task.CompletedTask;
         });
 

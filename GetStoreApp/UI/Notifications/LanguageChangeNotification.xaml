@@ -3,9 +3,19 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="using:GetStoreApp.UI.Notifications"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <TextBlock Text="{x:Bind ResourceService.GetLocalized('/Notification/LanguageChangeSuccessfully')}" />
+    <StackPanel>
+        <TextBlock
+            x:Name="LanguageChangeSuccess"
+            x:Load="{x:Bind ViewModel.SetResult, Mode=OneWay}"
+            Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
+            Text="{x:Bind ResourceService.GetLocalized('/Notification/LanguageChangeSuccessfully')}" />
+        <TextBlock
+            x:Name="LanguageChangeFailed"
+            x:Load="{x:Bind ViewModel.SetResult, Mode=OneWay}"
+            Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
+            Text="{x:Bind ResourceService.GetLocalized('/Notification/LanguageChangeFailed')}" />
+    </StackPanel>
 </UserControl>

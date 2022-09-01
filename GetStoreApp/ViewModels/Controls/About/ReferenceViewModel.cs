@@ -5,7 +5,7 @@ namespace GetStoreApp.ViewModels.Controls.About
 {
     public class ReferenceViewModel : ObservableRecipient
     {
-        public Dictionary<string, string> ReferenceDict { get; } = new Dictionary<string, string>
+        public Dictionary<string, string> ReferenceDict => new Dictionary<string, string>
         {
             {"Aira2","https://aria2.github.io" },
             {"CommunityToolkit.Mvvm","https://github.com/CommunityToolkit/WindowsCommunityToolkit" },

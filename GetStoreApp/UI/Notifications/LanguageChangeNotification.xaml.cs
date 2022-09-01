@@ -1,6 +1,8 @@
 ﻿using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Helpers;
+using GetStoreApp.ViewModels.Notifications;
 using Microsoft.UI.Xaml.Controls;
+using System;
 
 namespace GetStoreApp.UI.Notifications
 {
@@ -8,9 +10,12 @@ namespace GetStoreApp.UI.Notifications
     {
         public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        public LanguageChangeNotification()
+        public LanguageChangeViewModel ViewModel { get; } = IOCHelper.GetService<LanguageChangeViewModel>();
+
+        public LanguageChangeNotification(object[] notification)
         {
-            this.InitializeComponent();
+            InitializeComponent();
+            ViewModel.Initialize(Convert.ToBoolean(notification[0]));
         }
     }
 }

@@ -80,18 +80,25 @@ namespace GetStoreApp.Views
 
             WeakReferenceMessenger.Default.Register<ShellPage, InAppNotificationMessage>(this, async (shellPage, inAppNotificationMessage) =>
             {
-                string NotificationContent = inAppNotificationMessage.Value;
-                if (NotificationContent == "HistoryCopySuccessfully")
+                string NotificationContent = inAppNotificationMessage.Value.NotificationContent;
+                if (NotificationContent == "HistoryCopy")
                 {
-                    ShellNotification.Show(new HistoryCopyNotification(), NotificationDuration);
+                    ShellNotification.Show(new HistoryCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration);
                 }
-                else if (NotificationContent == "ResultCopySuccessfully")
+                else if (NotificationContent == "ResultLinkCopy")
                 {
-
+                    ShellNotification.Show(new ResultLinkCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration);
                 }
-                else if (NotificationContent == "LanguageChangeSuccessfully")
+                else if (NotificationContent == "ResultIDCopy")
                 {
-                    ShellNotification.Show(new LanguageChangeNotification(), NotificationDuration);
+                }
+                else if (NotificationContent == "ResultContentCopy")
+                {
+                    ShellNotification.Show(new ResultContentCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration);
+                }
+                else if (NotificationContent == "LanguageSettings")
+                {
+                    ShellNotification.Show(new LanguageChangeNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration);
                 }
 
                 await Task.CompletedTask;
