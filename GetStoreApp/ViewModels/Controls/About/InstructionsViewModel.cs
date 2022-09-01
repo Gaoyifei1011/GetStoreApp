@@ -7,17 +7,17 @@ namespace GetStoreApp.ViewModels.Controls.About
 {
     public class InstructionsViewModel : ObservableRecipient
     {
-        public IAsyncRelayCommand CheckNetWorkCommand { get; } = new AsyncRelayCommand(async () =>
+        public IAsyncRelayCommand CheckNetWorkCommand => new AsyncRelayCommand(async () =>
         {
             await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
         });
 
-        public IAsyncRelayCommand TroubleShootCommand { get; } = new AsyncRelayCommand(async () =>
+        public IAsyncRelayCommand TroubleShootCommand => new AsyncRelayCommand(async () =>
         {
             await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:troubleshoot"));
         });
 
-        public IAsyncRelayCommand CloudflareValidationCommand { get; } = new AsyncRelayCommand(async () =>
+        public IAsyncRelayCommand CloudflareValidationCommand => new AsyncRelayCommand(async () =>
         {
             await new CloudflareValidationDialog().ShowAsync();
         });

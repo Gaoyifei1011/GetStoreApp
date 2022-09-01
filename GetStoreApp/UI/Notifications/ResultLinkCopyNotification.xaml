@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="GetStoreApp.UI.Notifications.HistoryCopyNotification"
+    x:Class="GetStoreApp.UI.Notifications.ResultLinkCopyNotification"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -11,12 +11,12 @@
             x:Name="CopySuccess"
             x:Load="{x:Bind ControlLoad(ViewModel.CopyState, ViewModel.IsMultiSelected, 1), Mode=OneWay}"
             Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
-            Text="{x:Bind ResourceService.GetLocalized('/Notification/HistoryCopySuccessfully')}" />
+            Text="{x:Bind ResourceService.GetLocalized('/Notification/ResultLinkCopySuccessfully')}" />
         <TextBlock
             x:Name="CopyFailed"
             x:Load="{x:Bind ControlLoad(ViewModel.CopyState, ViewModel.IsMultiSelected, 2), Mode=OneWay}"
             Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
-            Text="{x:Bind ResourceService.GetLocalized('/Notification/HistoryCopyFailed')}" />
+            Text="{x:Bind ResourceService.GetLocalized('/Notification/ResultLinkCopyFailed')}" />
         <TextBlock
             x:Name="CopySelectedSuccess"
             x:Load="{x:Bind ControlLoad(ViewModel.CopyState, ViewModel.IsMultiSelected, 3), Mode=OneWay}"

@@ -16,11 +16,13 @@ using GetStoreApp.UI.Controls.Download;
 using GetStoreApp.UI.Controls.Home;
 using GetStoreApp.UI.Controls.Settings;
 using GetStoreApp.UI.Dialogs;
+using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Controls.About;
 using GetStoreApp.ViewModels.Controls.Download;
 using GetStoreApp.ViewModels.Controls.Home;
 using GetStoreApp.ViewModels.Controls.Settings;
 using GetStoreApp.ViewModels.Dialogs;
+using GetStoreApp.ViewModels.Notifications;
 using GetStoreApp.ViewModels.Pages;
 using GetStoreApp.ViewModels.Window;
 using GetStoreApp.Views;
@@ -164,6 +166,20 @@ namespace GetStoreApp.Helpers
                 services.AddTransient<RestartAppsViewModel>();
                 services.AddTransient<TraceCleanupPromptDialog>();
                 services.AddTransient<TraceCleanupPromptViewModel>();
+
+                // 应用内消息通知框（MVVM）
+                services.AddTransient<DownloadCreateNotification>();
+                services.AddTransient<DownloadCreateViewModel>();
+                services.AddTransient<HistoryCopyNotification>();
+                services.AddTransient<HistoryCopyViewModel>();
+                services.AddTransient<LanguageChangeNotification>();
+                services.AddTransient<LanguageChangeViewModel>();
+                services.AddTransient<ResultContentCopyNotification>();
+                services.AddTransient<ResultContentCopyViewModel>();
+                services.AddTransient<ResultIDCopyNotification>();
+                services.AddTransient<ResultIDCopyViewModel>();
+                services.AddTransient<ResultLinkCopyNotification>();
+                services.AddTransient<ResultLinkCopyViewModel>();
             }))
             .Build();
         }

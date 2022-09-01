@@ -117,10 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="HistoryCopyFailed" xml:space="preserve">
+    <value>该条历史记录复制失败，请检查的剪贴板的访问权限</value>
+  </data>
   <data name="HistoryCopySuccessfully" xml:space="preserve">
     <value>该条历史记录已成功复制到剪贴板</value>
   </data>
+  <data name="HistorySelectedCopyFailed" xml:space="preserve">
+    <value>{0}条历史记录复制失败，请检查的剪贴板的访问权限</value>
+  </data>
+  <data name="HistorySelectedCopySuccessfully" xml:space="preserve">
+    <value>{0}条历史记录已经成功复制到剪贴板</value>
+  </data>
+  <data name="LanguageChangeFailed" xml:space="preserve">
+    <value>语言设置修改失败，请重试</value>
+  </data>
   <data name="LanguageChangeSuccessfully" xml:space="preserve">
     <value>语言设置修改成功，重启应用后生效</value>
+  </data>
+  <data name="ResultContentCopyFailed" xml:space="preserve">
+    <value>该条下载记录复制失败，请检查的剪贴板的访问权限</value>
+  </data>
+  <data name="ResultContentCopySuccessfully" xml:space="preserve">
+    <value>该条下载记录已成功复制到剪贴板</value>
+  </data>
+  <data name="ResultContentSelectedCopyFailed" xml:space="preserve">
+    <value>{0}条下载记录复制失败，请检查的剪贴板的访问权限</value>
+  </data>
+  <data name="ResultContentSelectedCopySuccessfully" xml:space="preserve">
+    <value>{0}条下载记录已经成功复制到剪贴板</value>
+  </data>
+  <data name="ResultLinkCopyFailed" xml:space="preserve">
+    <value>该条下载链接复制失败，请检查的剪贴板的访问权限</value>
+  </data>
+  <data name="ResultLinkCopySuccessfully" xml:space="preserve">
+    <value>该条下载链接已成功复制到剪贴板</value>
+  </data>
+  <data name="ResultLinkSelectedCopyFailed" xml:space="preserve">
+    <value>{0}条下载链接复制失败，请检查的剪贴板的访问权限</value>
+  </data>
+  <data name="ResultLinkSelectedCopySuccessfully" xml:space="preserve">
+    <value>{0}条下载链接已经成功复制到剪贴板</value>
   </data>
 </root>

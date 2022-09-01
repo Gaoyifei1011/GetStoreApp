@@ -1,4 +1,4 @@
-﻿using GetStoreApp.WindowExtensions;
+﻿using GetStoreApp.Extensions.WindowExtension;
 using System;
 
 namespace GetStoreApp.Events

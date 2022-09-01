@@ -185,6 +185,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
         });
 
+        // 删除当前任务
         public IAsyncRelayCommand DeleteCommand => new AsyncRelayCommand<DownloadModel>(async (param) =>
         {
             if (param is not null)

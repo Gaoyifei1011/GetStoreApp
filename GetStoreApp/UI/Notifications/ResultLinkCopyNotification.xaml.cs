@@ -4,18 +4,19 @@ using GetStoreApp.ViewModels.Notifications;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Diagnostics;
 
 namespace GetStoreApp.UI.Notifications
 {
-    public sealed partial class HistoryCopyNotification : UserControl
+    public sealed partial class ResultLinkCopyNotification : UserControl
     {
         public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        public HistoryCopyViewModel ViewModel { get; } = IOCHelper.GetService<HistoryCopyViewModel>();
+        public ResultLinkCopyViewModel ViewModel { get; } = IOCHelper.GetService<ResultLinkCopyViewModel>();
 
         public object[] Notification { get; }
 
-        public HistoryCopyNotification(object[] notification)
+        public ResultLinkCopyNotification(object[] notification)
         {
             Notification = notification;
             InitializeComponent();
@@ -26,7 +27,8 @@ namespace GetStoreApp.UI.Notifications
         {
             if (Notification.Length > 2)
             {
-                CopySelectedSuccess.Text = string.Format(ResourceService.GetLocalized("/Notification/HistorySelectedCopySuccessfully"), Notification[2]);
+                Debug.WriteLine(ResourceService.GetLocalized("/Notification/ResultLinkSelectedCopySuccessfully"));
+                CopySelectedSuccess.Text = string.Format(ResourceService.GetLocalized("/Notification/ResultLinkSelectedCopySuccessfully"), Notification[2]);
             }
         }
 
@@ -34,13 +36,13 @@ namespace GetStoreApp.UI.Notifications
         {
             if (Notification.Length > 2)
             {
-                CopySelectedFailed.Text = string.Format(ResourceService.GetLocalized("/Notification/HistorySelectedCopyFailed"), Notification[2]);
+                CopySelectedFailed.Text = string.Format(ResourceService.GetLocalized("/Notification/ResultLinkSelectedCopyFailed"), Notification[2]);
             }
         }
 
         public bool ControlLoad(bool copyState, bool isMultiSelected, int visibilityFlag)
         {
-            if (visibilityFlag == 1 && copyState && !isMultiSelected)
+            if (visibilityFlag == 1 && (copyState && !isMultiSelected))
             {
                 return true;
             }

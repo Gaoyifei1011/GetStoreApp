@@ -1,6 +1,6 @@
-﻿using GetStoreApp.Helpers;
+﻿using GetStoreApp.Extensions.WindowExtension;
+using GetStoreApp.Helpers;
 using GetStoreApp.ViewModels.Window;
-using GetStoreApp.WindowExtensions;
 using System;
 using System.IO;
 

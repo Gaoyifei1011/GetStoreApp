@@ -84,7 +84,7 @@ namespace GetStoreApp.ViewModels.Dialogs
         }
 
         // 清理状态文字信息
-        private string _clearStateText = "";
+        private string _clearStateText = string.Empty;
 
         public string ClearStateText
         {

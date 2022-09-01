@@ -78,9 +78,12 @@
     <None Remove="UI\Dialogs\RestartAppsDialog.xaml" />
     <None Remove="UI\Dialogs\SelectEmptyPromptDialog.xaml" />
     <None Remove="UI\Dialogs\TraceCleanupPromptDialog.xaml" />
+    <None Remove="UI\Notifications\DownloadCreateNotification.xaml" />
     <None Remove="UI\Notifications\HistoryCopyNotification.xaml" />
     <None Remove="UI\Notifications\LanguageChangeNotification.xaml" />
-    <None Remove="UI\Notifications\ResultCopyNotification.xaml" />
+    <None Remove="UI\Notifications\ResultContentCopyNotification.xaml" />
+    <None Remove="UI\Notifications\ResultIDCopyNotification.xaml" />
+    <None Remove="UI\Notifications\ResultLinkCopyNotification.xaml" />
 
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
     <PackageReference Include="CommunityToolkit.WinUI.Notifications" Version="7.1.2">
@@ -145,6 +148,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Styles\Pivot.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\TeachingTip.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     
@@ -231,10 +237,13 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
+    <Page Update="UI\Notifications\HistoryCopyNotification.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="UI\Notifications\LanguageChangeNotification.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Notifications\HistoryCopyNotification.xaml">
+    <Page Update="UI\Notifications\ResultContentCopyNotification.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
@@ -266,13 +275,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="UI\Notifications\ResultCopyNotification.xaml">
+    <Page Update="UI\Notifications\DownloadCreateNotification.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Styles\TeachingTip.xaml">
+    <Page Update="UI\Notifications\ResultIDCopyNotification.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="UI\Notifications\ResultLinkCopyNotification.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

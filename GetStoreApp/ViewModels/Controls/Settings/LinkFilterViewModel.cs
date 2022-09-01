@@ -1,10 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Helpers;
-using GetStoreApp.Messages;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
@@ -46,14 +44,12 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         public IAsyncRelayCommand StartWithEFilterCommand => new AsyncRelayCommand<bool>(async (param) =>
         {
             await LinkFilterService.SetStartsWithEFilterValueAsync(param);
-            WeakReferenceMessenger.Default.Send(new StartsWithEFilterMessage(param));
             StartsWithEFilterValue = param;
         });
 
         public IAsyncRelayCommand BlockMapFilterCommand => new AsyncRelayCommand<bool>(async (param) =>
         {
             await LinkFilterService.SetBlockMapFilterValueAsync(param);
-            WeakReferenceMessenger.Default.Send(new BlockMapFilterMessage(param));
             BlockMapFilterValue = param;
         });
 
