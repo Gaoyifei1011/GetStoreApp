@@ -162,12 +162,6 @@
   <data name="DownloadItemDescription" xml:space="preserve">
     <value>Sets the number of files that are downloaded at the same time</value>
   </data>
-  <data name="DownloadNotification" xml:space="preserve">
-    <value>Download tips</value>
-  </data>
-  <data name="DownloadNotificationDescription" xml:space="preserve">
-    <value>Set whether you want to turn on download notifications</value>
-  </data>
   <data name="DownloadOptions" xml:space="preserve">
     <value>Download management</value>
   </data>
@@ -207,10 +201,16 @@
   <data name="LinkFilterInstruction" xml:space="preserve">
     <value>Link filtering instructions</value>
   </data>
-  <data name="NotifiactionOffContent" xml:space="preserve">
+  <data name="Notification" xml:space="preserve">
+    <value>App notifications</value>
+  </data>
+  <data name="NotificationDescription" xml:space="preserve">
+    <value>Displays message notifications from the app</value>
+  </data>
+  <data name="NotificationOffContent" xml:space="preserve">
     <value>Closed</value>
   </data>
-  <data name="NotifiactionOnContent" xml:space="preserve">
+  <data name="NotificationOnContent" xml:space="preserve">
     <value>Opening</value>
   </data>
   <data name="OpenFolderToolTip" xml:space="preserve">

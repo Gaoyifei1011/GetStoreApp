@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.App;
+using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
@@ -16,6 +17,8 @@ namespace GetStoreApp.Views
     public sealed partial class ShellPage : Page
     {
         public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+
+        public INotificationService NotificationService { get; } = IOCHelper.GetService<INotificationService>();
 
         public ShellViewModel ViewModel { get; } = IOCHelper.GetService<ShellViewModel>();
 
@@ -80,25 +83,17 @@ namespace GetStoreApp.Views
 
             WeakReferenceMessenger.Default.Register<ShellPage, InAppNotificationMessage>(this, async (shellPage, inAppNotificationMessage) =>
             {
-                string NotificationContent = inAppNotificationMessage.Value.NotificationContent;
-                if (NotificationContent == "HistoryCopy")
+                if (NotificationService.AppNotification)
                 {
-                    ShellNotification.Show(new HistoryCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration);
-                }
-                else if (NotificationContent == "ResultLinkCopy")
-                {
-                    ShellNotification.Show(new ResultLinkCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration);
-                }
-                else if (NotificationContent == "ResultIDCopy")
-                {
-                }
-                else if (NotificationContent == "ResultContentCopy")
-                {
-                    ShellNotification.Show(new ResultContentCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration);
-                }
-                else if (NotificationContent == "LanguageSettings")
-                {
-                    ShellNotification.Show(new LanguageChangeNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration);
+                    switch (inAppNotificationMessage.Value.NotificationContent)
+                    {
+                        case "HistoryCopy": ShellNotification.Show(new HistoryCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
+                        case "ResultLinkCopy": ShellNotification.Show(new ResultLinkCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
+                        case "ResultIDCopy": ShellNotification.Show(new ResultIDCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
+                        case "ResultContentCopy": ShellNotification.Show(new ResultContentCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
+                        case "LanguageSettings": ShellNotification.Show(new LanguageChangeNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
+                        default: break;
+                    };
                 }
 
                 await Task.CompletedTask;

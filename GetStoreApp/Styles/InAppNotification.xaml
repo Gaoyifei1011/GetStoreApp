@@ -31,7 +31,7 @@
     <Thickness x:Key="SystemControlMSEdgeNotificationButtonBorderThickness">2</Thickness>
 
     <Style x:Key="DismissTextBlockButtonStyle" TargetType="ButtonBase">
-        <Setter Property="Background" Value="{ThemeResource HyperlinkButtonBackground}" />
+        <Setter Property="Background" Value="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" />
         <Setter Property="Foreground" Value="{ThemeResource ApplicationForegroundThemeBrush}" />
         <Setter Property="Width" Value="{StaticResource SystemControlMSEdgeNotificationDismissButtonSize}" />
         <Setter Property="Height" Value="{StaticResource SystemControlMSEdgeNotificationDismissButtonSize}" />

@@ -68,18 +68,12 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         public async Task SetAppBackdropAsync()
         {
-            if (AppBackdrop.InternalName == "Mica")
+            GetStoreApp.App.MainWindow.Backdrop = AppBackdrop.InternalName switch
             {
-                GetStoreApp.App.MainWindow.Backdrop = new MicaSystemBackdrop();
-            }
-            else if (AppBackdrop.InternalName == "Acrylic")
-            {
-                GetStoreApp.App.MainWindow.Backdrop = new AcrylicSystemBackdrop();
-            }
-            else
-            {
-                GetStoreApp.App.MainWindow.Backdrop = null;
-            }
+                "Mica" => new MicaSystemBackdrop(),
+                "Acrylic" => new AcrylicSystemBackdrop(),
+                _ => null
+            };
 
             await Task.CompletedTask;
         }

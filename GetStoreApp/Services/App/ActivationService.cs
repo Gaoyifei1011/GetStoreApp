@@ -44,6 +44,8 @@ namespace GetStoreApp.Services.App
 
         private ILinkFilterService LinkFilterService { get; } = IOCHelper.GetService<ILinkFilterService>();
 
+        private INotificationService NotificationService { get; } = IOCHelper.GetService<INotificationService>();
+
         private IRegionService RegionService { get; } = IOCHelper.GetService<IRegionService>();
 
         private IThemeService ThemeService { get; } = IOCHelper.GetService<IThemeService>();
@@ -93,6 +95,7 @@ namespace GetStoreApp.Services.App
             await DownloadOptionsService.InitializeAsync();
             await HistoryLiteNumService.InitializeHistoryLiteNumAsync();
             await LinkFilterService.InitializeLinkFilterValueAsnyc();
+            await NotificationService.InitializeNotificationAsync();
             await RegionService.InitializeRegionAsync();
             await ThemeService.InitializeThemeAsync();
             await TopMostService.InitializeTopMostValueAsync();

@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DownloadCreateFailed" xml:space="preserve">
+    <value>下载链接创建失败，无法下载</value>
+  </data>
+  <data name="DownloadCreateSuccessfully" xml:space="preserve">
+    <value>成功创建下载链接</value>
+  </data>
+  <data name="DownloadSelectedCreateFailed" xml:space="preserve">
+    <value>{0}个下载链接创建失败，无法下载</value>
+  </data>
+  <data name="DownloadSelectedCreateSuccessfully" xml:space="preserve">
+    <value>成功创建{0}个下载链接</value>
+  </data>
   <data name="HistoryCopyFailed" xml:space="preserve">
     <value>该条历史记录复制失败，请检查的剪贴板的访问权限</value>
   </data>
@@ -146,6 +158,12 @@
   </data>
   <data name="ResultContentSelectedCopySuccessfully" xml:space="preserve">
     <value>{0}条下载记录已经成功复制到剪贴板</value>
+  </data>
+  <data name="ResultIDCopyFailed" xml:space="preserve">
+    <value>该CategoryID复制失败，请检查的剪贴板的访问权限</value>
+  </data>
+  <data name="ResultIDCopySuccessfully" xml:space="preserve">
+    <value>该CategoryID已成功复制到剪贴板</value>
   </data>
   <data name="ResultLinkCopyFailed" xml:space="preserve">
     <value>该条下载链接复制失败，请检查的剪贴板的访问权限</value>

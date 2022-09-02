@@ -1,28 +1,21 @@
-﻿using Microsoft.UI.Xaml;
+﻿using GetStoreApp.Contracts.Services.App;
+using GetStoreApp.Helpers;
+using GetStoreApp.ViewModels.Notifications;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace GetStoreApp.UI.Notifications
 {
     public sealed partial class ResultIDCopyNotification : UserControl
     {
-        public ResultIDCopyNotification()
+        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+
+        public ResultIDCopyViewModel ViewModel { get; } = IOCHelper.GetService<ResultIDCopyViewModel>();
+
+        public ResultIDCopyNotification(object[] notification)
         {
-            this.InitializeComponent();
+            InitializeComponent();
+            ViewModel.Initialize(Convert.ToBoolean(notification[0]));
         }
     }
 }

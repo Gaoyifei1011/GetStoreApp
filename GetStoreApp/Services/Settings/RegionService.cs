@@ -15,7 +15,7 @@ namespace GetStoreApp.Services.Settings
     /// </summary>
     public class RegionService : IRegionService
     {
-        private IConfigStorageService ConfigStorageService { get; set; } = IOCHelper.GetService<IConfigStorageService>();
+        private IConfigStorageService ConfigStorageService { get; } = IOCHelper.GetService<IConfigStorageService>();
 
         private string SettingsKey { get; init; } = "AppRegion";
 

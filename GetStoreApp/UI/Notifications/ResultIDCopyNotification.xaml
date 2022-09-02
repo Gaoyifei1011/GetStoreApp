@@ -6,5 +6,16 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel />
+    <StackPanel>
+        <TextBlock
+            x:Name="CopySuccess"
+            x:Load="{x:Bind ViewModel.CopyState, Mode=OneWay}"
+            Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
+            Text="{x:Bind ResourceService.GetLocalized('/Notification/ResultIDCopySuccessfully')}" />
+        <TextBlock
+            x:Name="CopyFailed"
+            x:Load="{x:Bind ViewModel.CopyState, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
+            Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
+            Text="{x:Bind ResourceService.GetLocalized('/Notification/ResultIDCopyFailed')}" />
+    </StackPanel>
 </UserControl>

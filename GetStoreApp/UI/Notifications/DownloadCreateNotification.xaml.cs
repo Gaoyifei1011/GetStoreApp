@@ -1,28 +1,65 @@
-﻿using Microsoft.UI.Xaml;
+﻿using GetStoreApp.Contracts.Services.App;
+using GetStoreApp.Helpers;
+using GetStoreApp.ViewModels.Notifications;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace GetStoreApp.UI.Notifications
 {
     public sealed partial class DownloadCreateNotification : UserControl
     {
-        public DownloadCreateNotification()
+        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+
+        public DownloadCreateViewModel ViewModel { get; } = IOCHelper.GetService<DownloadCreateViewModel>();
+
+        public object[] Notification { get; }
+
+        public DownloadCreateNotification(object[] notification)
         {
-            this.InitializeComponent();
+            Notification = notification;
+            InitializeComponent();
+            ViewModel.Initialize(Convert.ToBoolean(notification[0]), Convert.ToBoolean(notification[1]));
+        }
+
+        public void CreateSelectedSuccessLoaded(object sender, RoutedEventArgs args)
+        {
+            if (Notification.Length > 2)
+            {
+                CreateSelectedSuccess.Text = string.Format(ResourceService.GetLocalized("/Notification/DownloadSelectedCreateSuccessfully"), Notification[2]);
+            }
+        }
+
+        public void CreateSelectedFailedLoaded(object sender, RoutedEventArgs args)
+        {
+            if (Notification.Length > 2)
+            {
+                CreateSelectedFailed.Text = string.Format(ResourceService.GetLocalized("/Notification/DownloadSelectedCreateFailed"), Notification[2]);
+            }
+        }
+
+        public bool ControlLoad(bool createState, bool isMultiSelected, int visibilityFlag)
+        {
+            if (visibilityFlag == 1 && createState && !isMultiSelected)
+            {
+                return true;
+            }
+            else if (visibilityFlag == 2 && (!createState && !isMultiSelected))
+            {
+                return true;
+            }
+            else if (visibilityFlag == 3 && (createState && isMultiSelected))
+            {
+                return true;
+            }
+            else if (visibilityFlag == 4 && (!createState && isMultiSelected))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

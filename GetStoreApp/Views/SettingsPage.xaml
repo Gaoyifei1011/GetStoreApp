@@ -54,6 +54,8 @@
                 Style="{StaticResource BodyTextBlockStyle}"
                 Text="{x:Bind ResourceService.GetLocalized('/Settings/General')}" />
 
+            <sc:NotificationControl />
+
             <sc:UseInstructionControl />
 
             <sc:HistoryLiteConfigControl />

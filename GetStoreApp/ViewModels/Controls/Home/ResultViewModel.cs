@@ -53,6 +53,12 @@ namespace GetStoreApp.ViewModels.Controls.Home
         public IAsyncRelayCommand CopyIDCommand => new AsyncRelayCommand(async () =>
         {
             CopyPasteHelper.CopyToClipBoard(CategoryId);
+            WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
+            {
+                NotificationContent = "ResultIDCopy",
+                NotificationValue = new object[] { true }
+            }));
+
             await Task.CompletedTask;
         });
 
