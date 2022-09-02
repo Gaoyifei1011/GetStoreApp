@@ -132,28 +132,4 @@
   <data name="AppShortDisplayName" xml:space="preserve">
     <value>GetStoreApp</value>
   </data>
-  <data name="CategoryID" xml:space="preserve">
-    <value>CategoryID</value>
-  </data>
-  <data name="Fast" xml:space="preserve">
-    <value>Fast</value>
-  </data>
-  <data name="PackageFamilyName" xml:space="preserve">
-    <value>PackageFamilyName</value>
-  </data>
-  <data name="ProductID" xml:space="preserve">
-    <value>ProductID</value>
-  </data>
-  <data name="Retail" xml:space="preserve">
-    <value>Retail</value>
-  </data>
-  <data name="RP" xml:space="preserve">
-    <value>Release Preview</value>
-  </data>
-  <data name="Slow" xml:space="preserve">
-    <value>Slow</value>
-  </data>
-  <data name="URL" xml:space="preserve">
-    <value>URL(Link)</value>
-  </data>
 </root>

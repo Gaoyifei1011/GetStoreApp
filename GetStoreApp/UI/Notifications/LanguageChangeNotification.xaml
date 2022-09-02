@@ -14,7 +14,7 @@
             Text="{x:Bind ResourceService.GetLocalized('/Notification/LanguageChangeSuccessfully')}" />
         <TextBlock
             x:Name="LanguageChangeFailed"
-            x:Load="{x:Bind ViewModel.SetResult, Mode=OneWay}"
+            x:Load="{x:Bind ViewModel.SetResult, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
             Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
             Text="{x:Bind ResourceService.GetLocalized('/Notification/LanguageChangeFailed')}" />
     </StackPanel>

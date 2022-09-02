@@ -34,15 +34,6 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             set { SetProperty(ref _downloadItem, value); }
         }
 
-        private bool _downloadNotification;
-
-        public bool DownloadNotification
-        {
-            get { return _downloadNotification; }
-
-            set { SetProperty(ref _downloadNotification, value); }
-        }
-
         public IAsyncRelayCommand OpenFolderCommand => new AsyncRelayCommand(async () =>
         {
             await DownloadOptionsService.OpenFolderAsync(DownloadFolder);
@@ -62,19 +53,11 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             await DownloadOptionsService.SetItemValueAsync(DownloadItem);
         });
 
-        public IAsyncRelayCommand NotificationStateCommand => new AsyncRelayCommand<bool>(async (param) =>
-        {
-            DownloadNotification = param;
-            await DownloadOptionsService.SetNotificationAsync(param);
-        });
-
         public DownloadOptionsViewModel()
         {
             DownloadFolder = DownloadOptionsService.DownloadFolder;
 
             DownloadItem = DownloadOptionsService.DownloadItem;
-
-            DownloadNotification = DownloadOptionsService.DownloadNotification;
         }
 
         /// <summary>

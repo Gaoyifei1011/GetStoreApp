@@ -55,9 +55,9 @@ namespace GetStoreApp.Helpers
             Host = Microsoft.Extensions.Hosting.Host.
             CreateDefaultBuilder().
             UseContentRoot(AppContext.BaseDirectory).
-            ConfigureServices((Action<HostBuilderContext, IServiceCollection>)((context, services) =>
+            ConfigureServices((context, services) =>
             {
-                // Services
+                // 应用服务
                 services.AddSingleton<IActivationService, ActivationService>();
                 services.AddSingleton<IAppNotificationService, AppNotificationService>();
                 services.AddSingleton<IConfigStorageService, ConfigStorageService>();
@@ -65,7 +65,7 @@ namespace GetStoreApp.Helpers
                 services.AddSingleton<IResourceService, ResourceService>();
 
                 services.AddSingleton<IAria2Service, Aria2Service>();
-                ServiceCollectionServiceExtensions.AddSingleton<Contracts.Services.Download.IDownloadDBService, Services.Download.DownloadDBService>(services);
+                services.AddSingleton<IDownloadDBService, DownloadDBService>();
                 services.AddSingleton<IDownloadSchedulerService, DownloadSchedulerService>();
 
                 services.AddSingleton<IHistoryDBService, HistoryDBService>();
@@ -75,6 +75,7 @@ namespace GetStoreApp.Helpers
                 services.AddSingleton<IHistoryLiteNumService, HistoryLiteNumService>();
                 services.AddSingleton<ILanguageService, LanguageService>();
                 services.AddSingleton<ILinkFilterService, LinkFilterService>();
+                services.AddSingleton<INotificationService, NotificatonService>();
                 services.AddSingleton<IRegionService, RegionService>();
                 services.AddSingleton<IThemeService, ThemeService>();
                 services.AddSingleton<ITopMostService, TopMostService>();
@@ -150,6 +151,8 @@ namespace GetStoreApp.Helpers
                 services.AddTransient<LanguageViewModel>();
                 services.AddTransient<LinkFilterControl>();
                 services.AddTransient<LinkFilterViewModel>();
+                services.AddTransient<NotificationControl>();
+                services.AddTransient<NotificationViewModel>();
                 services.AddTransient<RegionControl>();
                 services.AddTransient<RegionViewModel>();
                 services.AddTransient<ThemeControl>();
@@ -180,7 +183,7 @@ namespace GetStoreApp.Helpers
                 services.AddTransient<ResultIDCopyViewModel>();
                 services.AddTransient<ResultLinkCopyNotification>();
                 services.AddTransient<ResultLinkCopyViewModel>();
-            }))
+            })
             .Build();
         }
     }

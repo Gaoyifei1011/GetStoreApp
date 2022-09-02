@@ -4,7 +4,6 @@ using GetStoreApp.Helpers;
 using GetStoreApp.Models;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Threading.Tasks;
 using Windows.Globalization;
@@ -35,7 +34,6 @@ namespace GetStoreApp.Services.Settings
         {
             foreach (string applanguage in AppLanguages)
             {
-                Debug.WriteLine(applanguage);
                 CultureInfo culture = CultureInfo.GetCultureInfo(applanguage);
 
                 LanguageList.Add(new LanguageModel()

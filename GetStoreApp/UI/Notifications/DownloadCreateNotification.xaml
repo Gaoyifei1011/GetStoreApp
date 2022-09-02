@@ -6,5 +6,26 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel />
+    <StackPanel>
+        <TextBlock
+            x:Name="CreateSuccess"
+            x:Load="{x:Bind ControlLoad(ViewModel.CreateState, ViewModel.IsMultiSelected, 1), Mode=OneWay}"
+            Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
+            Text="{x:Bind ResourceService.GetLocalized('/Notification/DownloadCreateSuccessfully')}" />
+        <TextBlock
+            x:Name="CreateFailed"
+            x:Load="{x:Bind ControlLoad(ViewModel.CreateState, ViewModel.IsMultiSelected, 2), Mode=OneWay}"
+            Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
+            Text="{x:Bind ResourceService.GetLocalized('/Notification/DownloadCreateFailed')}" />
+        <TextBlock
+            x:Name="CreateSelectedSuccess"
+            x:Load="{x:Bind ControlLoad(ViewModel.CreateState, ViewModel.IsMultiSelected, 3), Mode=OneWay}"
+            Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
+            Loaded="{x:Bind CreateSelectedSuccessLoaded}" />
+        <TextBlock
+            x:Name="CreateSelectedFailed"
+            x:Load="{x:Bind ControlLoad(ViewModel.CreateState, ViewModel.IsMultiSelected, 4), Mode=OneWay}"
+            Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
+            Loaded="{x:Bind CreateSelectedFailedLoaded}" />
+    </StackPanel>
 </UserControl>

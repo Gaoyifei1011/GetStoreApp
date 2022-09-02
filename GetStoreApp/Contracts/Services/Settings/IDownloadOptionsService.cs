@@ -12,8 +12,6 @@ namespace GetStoreApp.Contracts.Services.Settings
 
         int DownloadItem { get; set; }
 
-        bool DownloadNotification { get; set; }
-
         List<int> DownloadItemList { get; }
 
         Task InitializeAsync();
@@ -25,7 +23,5 @@ namespace GetStoreApp.Contracts.Services.Settings
         Task SetFolderAsync(StorageFolder folder);
 
         Task SetItemValueAsync(int itemValue);
-
-        Task SetNotificationAsync(bool notification);
     }
 }

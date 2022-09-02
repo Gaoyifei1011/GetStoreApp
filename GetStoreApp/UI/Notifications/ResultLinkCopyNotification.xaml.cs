@@ -4,7 +4,6 @@ using GetStoreApp.ViewModels.Notifications;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Diagnostics;
 
 namespace GetStoreApp.UI.Notifications
 {
@@ -27,7 +26,6 @@ namespace GetStoreApp.UI.Notifications
         {
             if (Notification.Length > 2)
             {
-                Debug.WriteLine(ResourceService.GetLocalized("/Notification/ResultLinkSelectedCopySuccessfully"));
                 CopySelectedSuccess.Text = string.Format(ResourceService.GetLocalized("/Notification/ResultLinkSelectedCopySuccessfully"), Notification[2]);
             }
         }
@@ -42,19 +40,19 @@ namespace GetStoreApp.UI.Notifications
 
         public bool ControlLoad(bool copyState, bool isMultiSelected, int visibilityFlag)
         {
-            if (visibilityFlag == 1 && (copyState && !isMultiSelected))
+            if (visibilityFlag == 1 && copyState && !isMultiSelected)
             {
                 return true;
             }
-            else if (visibilityFlag == 2 && (!copyState && !isMultiSelected))
+            else if (visibilityFlag == 2 && !copyState && !isMultiSelected)
             {
                 return true;
             }
-            else if (visibilityFlag == 3 && (copyState && isMultiSelected))
+            else if (visibilityFlag == 3 && copyState && isMultiSelected)
             {
                 return true;
             }
-            else if (visibilityFlag == 4 && (!copyState && isMultiSelected))
+            else if (visibilityFlag == 4 && !copyState && isMultiSelected)
             {
                 return true;
             }
