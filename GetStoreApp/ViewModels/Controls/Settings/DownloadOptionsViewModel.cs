@@ -2,9 +2,9 @@
 using CommunityToolkit.Mvvm.Input;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Helpers;
+using GetStoreApp.Models;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 
@@ -15,6 +15,8 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
 
         public List<int> DownloadItemList => DownloadOptionsService.DownloadItemList;
+
+        public List<DownloadModeModel> DownloadModeList => DownloadOptionsService.DownloadModeList;
 
         private StorageFolder _downloadFolder;
 
@@ -34,6 +36,15 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             set { SetProperty(ref _downloadItem, value); }
         }
 
+        private DownloadModeModel _downloadMode;
+
+        public DownloadModeModel DownloadMode
+        {
+            get { return _downloadMode; }
+
+            set { SetProperty(ref _downloadMode, value); }
+        }
+
         public IAsyncRelayCommand OpenFolderCommand => new AsyncRelayCommand(async () =>
         {
             await DownloadOptionsService.OpenFolderAsync(DownloadFolder);
@@ -46,24 +57,8 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             await DownloadOptionsService.SetFolderAsync(DownloadOptionsService.DefaultFolder);
         });
 
-        public IAsyncRelayCommand ChangeFolderCommand => new AsyncRelayCommand(ChangeFolderAsync);
-
-        public IAsyncRelayCommand DownloadItemCommand => new AsyncRelayCommand(async () =>
-        {
-            await DownloadOptionsService.SetItemValueAsync(DownloadItem);
-        });
-
-        public DownloadOptionsViewModel()
-        {
-            DownloadFolder = DownloadOptionsService.DownloadFolder;
-
-            DownloadItem = DownloadOptionsService.DownloadItem;
-        }
-
-        /// <summary>
-        /// 更改下载文件目录
-        /// </summary>
-        private async Task ChangeFolderAsync()
+        // 修改下载目录
+        public IAsyncRelayCommand ChangeFolderCommand => new AsyncRelayCommand(async () =>
         {
             await DownloadOptionsService.CreateFolderAsync(DownloadOptionsService.DefaultFolder.Path);
 
@@ -81,6 +76,27 @@ namespace GetStoreApp.ViewModels.Controls.Settings
                 DownloadFolder = Folder;
                 await DownloadOptionsService.SetFolderAsync(DownloadFolder);
             }
+        });
+
+        // 修改同时下载文件数
+        public IAsyncRelayCommand DownloadItemCommand => new AsyncRelayCommand(async () =>
+        {
+            await DownloadOptionsService.SetItemAsync(DownloadItem);
+        });
+
+        // 修改下载文件的方式
+        public IAsyncRelayCommand DownloadModeCommand => new AsyncRelayCommand(async () =>
+        {
+            await DownloadOptionsService.SetModeAsync(DownloadMode);
+        });
+
+        public DownloadOptionsViewModel()
+        {
+            DownloadFolder = DownloadOptionsService.DownloadFolder;
+
+            DownloadItem = DownloadOptionsService.DownloadItem;
+
+            DownloadMode = DownloadOptionsService.DownloadMode;
         }
     }
 }

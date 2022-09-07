@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Contracts.Services.App;
-using GetStoreApp.Helpers;
+﻿using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -8,7 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources.Core;
 
-namespace GetStoreApp.Services.App
+namespace GetStoreApp.Services.Root
 {
     /// <summary>
     /// 应用资源服务
@@ -25,17 +24,19 @@ namespace GetStoreApp.Services.App
 
         private ResourceMap ResourceMap { get; } = ResourceManager.Current.MainResourceMap.GetSubtree("Resources");
 
-        public List<ThemeModel> ThemeList { get; } = new List<ThemeModel>();
-
-        public List<BackdropModel> BackdropList { get; } = new List<BackdropModel>();
-
-        public List<HistoryLiteNumModel> HistoryLiteNumList { get; } = new List<HistoryLiteNumModel>();
-
         public List<GetAppTypeModel> TypeList { get; } = new List<GetAppTypeModel>();
 
         public List<GetAppChannelModel> ChannelList { get; } = new List<GetAppChannelModel>();
 
         public List<StatusBarStateModel> StatusBarStateList { get; } = new List<StatusBarStateModel>();
+
+        public List<BackdropModel> BackdropList { get; } = new List<BackdropModel>();
+
+        public List<DownloadModeModel> DownloadModeList { get; } = new List<DownloadModeModel>();
+
+        public List<HistoryLiteNumModel> HistoryLiteNumList { get; } = new List<HistoryLiteNumModel>();
+
+        public List<ThemeModel> ThemeList { get; } = new List<ThemeModel>();
 
         public async Task InitializeResourceAsync(LanguageModel defaultAppLanguage, LanguageModel currentAppLanguage)
         {
@@ -45,83 +46,14 @@ namespace GetStoreApp.Services.App
             DefaultResourceContext.QualifierValues["Language"] = DefaultAppLanguage.InternalName;
             CurrentResourceContext.QualifierValues["Language"] = CurrentAppLanguage.InternalName;
 
-            InitializeThemeList();
-            InitializeBackdropList();
-            InitializeHistoryLiteNumList();
             InitializeTypeList();
             InitializeChannelList();
             InitializeStatusBarStateList();
-
+            InitializeBackdropList();
+            InitializeDownloadModeList();
+            InitializeHistoryLiteNumList();
+            InitializeThemeList();
             await Task.CompletedTask;
-        }
-
-        /// <summary>
-        /// 初始化应用主题信息列表
-        /// </summary>
-        private void InitializeThemeList()
-        {
-            ThemeList.Add(new ThemeModel
-            {
-                DisplayName = GetLocalized("/Settings/ThemeDefault"),
-                InternalName = Convert.ToString(ElementTheme.Default)
-            });
-            ThemeList.Add(new ThemeModel
-            {
-                DisplayName = GetLocalized("/Settings/ThemeLight"),
-                InternalName = Convert.ToString(ElementTheme.Light)
-            });
-            ThemeList.Add(new ThemeModel
-            {
-                DisplayName = GetLocalized("/Settings/ThemeDark"),
-                InternalName = Convert.ToString(ElementTheme.Dark)
-            });
-        }
-
-        /// <summary>
-        /// 初始化应用背景色信息列表
-        /// </summary>
-
-        private void InitializeBackdropList()
-        {
-            ulong BuildNumber = InfoHelper.GetSystemVersion()["BuildNumber"];
-
-            BackdropList.Add(new BackdropModel
-            {
-                DisplayName = GetLocalized("/Settings/BackdropDefault"),
-                InternalName = "Default"
-            });
-
-            if (BuildNumber >= 22000)
-            {
-                BackdropList.Add(new BackdropModel
-                {
-                    DisplayName = GetLocalized("/Settings/BackdropMica"),
-                    InternalName = "Mica"
-                });
-            }
-
-            BackdropList.Add(new BackdropModel
-            {
-                DisplayName = GetLocalized("/Settings/BackdropArylic"),
-                InternalName = "Acrylic"
-            });
-        }
-
-        /// <summary>
-        /// 初始化历史记录显示数量信息列表
-        /// </summary>
-        private void InitializeHistoryLiteNumList()
-        {
-            HistoryLiteNumList.Add(new HistoryLiteNumModel
-            {
-                HistoryLiteNumName = GetLocalized("/Settings/HistoryLiteNumMin"),
-                HistoryLiteNumValue = 3
-            });
-            HistoryLiteNumList.Add(new HistoryLiteNumModel
-            {
-                HistoryLiteNumName = GetLocalized("/Settings/HistoryLiteNumMax"),
-                HistoryLiteNumValue = 5
-            });
         }
 
         /// <summary>
@@ -216,6 +148,86 @@ namespace GetStoreApp.Services.App
                 StateInfoText = GetLocalized("/Home/StatusInfoError"),
                 StatePrRingActValue = false,
                 StatePrRingVisValue = false
+            });
+        }
+
+        /// <summary>
+        /// 初始化应用背景色信息列表
+        /// </summary>
+        private void InitializeBackdropList()
+        {
+            BackdropList.Add(new BackdropModel
+            {
+                DisplayName = GetLocalized("/Settings/BackdropDefault"),
+                InternalName = "Default"
+            });
+
+            BackdropList.Add(new BackdropModel
+            {
+                DisplayName = GetLocalized("/Settings/BackdropMica"),
+                InternalName = "Mica"
+            });
+
+            BackdropList.Add(new BackdropModel
+            {
+                DisplayName = GetLocalized("/Settings/BackdropArylic"),
+                InternalName = "Acrylic"
+            });
+        }
+
+        /// <summary>
+        /// 初始化应用下载方式列表
+        /// </summary>
+        private void InitializeDownloadModeList()
+        {
+            DownloadModeList.Add(new DownloadModeModel
+            {
+                DisplayName = GetLocalized("/Settings/DownloadInApp"),
+                InternalName = "DownloadInApp"
+            });
+            DownloadModeList.Add(new DownloadModeModel
+            {
+                DisplayName = GetLocalized("/Settings/DownloadWithBrowser"),
+                InternalName = "DownloadWithBrowser"
+            });
+        }
+
+        /// <summary>
+        /// 初始化历史记录显示数量信息列表
+        /// </summary>
+        private void InitializeHistoryLiteNumList()
+        {
+            HistoryLiteNumList.Add(new HistoryLiteNumModel
+            {
+                HistoryLiteNumName = GetLocalized("/Settings/HistoryLiteNumMin"),
+                HistoryLiteNumValue = 3
+            });
+            HistoryLiteNumList.Add(new HistoryLiteNumModel
+            {
+                HistoryLiteNumName = GetLocalized("/Settings/HistoryLiteNumMax"),
+                HistoryLiteNumValue = 5
+            });
+        }
+
+        /// <summary>
+        /// 初始化应用主题信息列表
+        /// </summary>
+        private void InitializeThemeList()
+        {
+            ThemeList.Add(new ThemeModel
+            {
+                DisplayName = GetLocalized("/Settings/ThemeDefault"),
+                InternalName = Convert.ToString(ElementTheme.Default)
+            });
+            ThemeList.Add(new ThemeModel
+            {
+                DisplayName = GetLocalized("/Settings/ThemeLight"),
+                InternalName = Convert.ToString(ElementTheme.Light)
+            });
+            ThemeList.Add(new ThemeModel
+            {
+                DisplayName = GetLocalized("/Settings/ThemeDark"),
+                InternalName = Convert.ToString(ElementTheme.Dark)
             });
         }
 

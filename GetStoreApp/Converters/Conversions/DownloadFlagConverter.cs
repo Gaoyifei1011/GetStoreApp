@@ -2,12 +2,12 @@
 using Microsoft.UI.Xaml.Data;
 using System;
 
-namespace GetStoreApp.Converters.Checks
+namespace GetStoreApp.Converters.Conversions
 {
     /// <summary>
-    /// 打开文件夹按钮显示值转换器
+    /// 下载状态值显示对应内容转换器
     /// </summary>
-    public class OpenFolderCheckConverter : IValueConverter
+    public class DownloadFlagConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
@@ -17,8 +17,16 @@ namespace GetStoreApp.Converters.Checks
             }
 
             int? result = value as int?;
+            string param = parameter as string;
 
-            return (result == 0 || result == 3) ? Visibility.Visible : Visibility.Collapsed;
+            if (!string.IsNullOrEmpty(param) && result == System.Convert.ToInt32(param))
+            {
+                return Visibility.Visible;
+            }
+            else
+            {
+                return Visibility.Collapsed;
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

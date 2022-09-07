@@ -115,6 +115,43 @@
                         </ComboBox>
                     </Grid>
                 </StackPanel>
+
+                <MenuFlyoutSeparator Margin="0,4,0,4" />
+
+                <StackPanel>
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Orientation="Vertical">
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Style="{StaticResource BodyTextBlockStyle}"
+                                Text="{x:Bind ResourceService.GetLocalized('/Settings/DownloadMode')}" />
+                            <TextBlock
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="{x:Bind ResourceService.GetLocalized('/Settings/DownloadModeDescription')}" />
+                        </StackPanel>
+
+                        <ComboBox
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            DisplayMemberPath="DisplayName"
+                            ItemsSource="{x:Bind ViewModel.DownloadModeList}"
+                            SelectedItem="{x:Bind ViewModel.DownloadMode, Mode=TwoWay}"
+                            ToolTipService.ToolTip="{x:Bind ViewModel.DownloadMode, Mode=TwoWay}">
+
+                            <i:Interaction.Behaviors>
+                                <ic:EventTriggerBehavior EventName="SelectionChanged">
+                                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.DownloadModeCommand}" />
+                                </ic:EventTriggerBehavior>
+                            </i:Interaction.Behaviors>
+                        </ComboBox>
+                    </Grid>
+                </StackPanel>
             </StackPanel>
         </Expander.Content>
     </Expander>

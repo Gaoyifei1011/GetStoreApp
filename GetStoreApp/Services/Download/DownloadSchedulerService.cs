@@ -5,6 +5,8 @@ using GetStoreApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 
@@ -30,20 +32,10 @@ namespace GetStoreApp.Services.Download
         private Timer DownloadSchedulerTimer { get; } = new Timer(1000);
 
         // 下载中任务列表
-        private List<DownloadModel> DownloadingList { get; } = new List<DownloadModel>();
+        public List<DownloadModel> DownloadingList { get; } = new List<DownloadModel>();
 
         // 等待下载任务列表
-        private List<DownloadModel> WaitingList { get; } = new List<DownloadModel>();
-
-        public List<DownloadModel> GetDownloadingList()
-        {
-            return DownloadingList;
-        }
-
-        public List<DownloadModel> GetWaitingList()
-        {
-            return WaitingList;
-        }
+        public List<DownloadModel> WaitingList { get; } = new List<DownloadModel>();
 
         /// <summary>
         /// 初始化下载监控任务
@@ -70,25 +62,48 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 添加下载任务
         /// </summary>
-        public async Task<bool> AddTaskAsync(DownloadModel downloadItem)
+        public async Task<int> AddTaskAsync(string fileName, string fileLink, string fileSHA1)
         {
+            DownloadModel downloadItem = new DownloadModel();
+
+            // 下载唯一标识码
+            downloadItem.DownloadKey = GenerateUniqueKey(fileName, fileLink, fileSHA1);
+            downloadItem.FileName = fileName;
+            downloadItem.FileLink = fileLink;
+            downloadItem.FilePath = string.Format("{0}\\{1}", DownloadOptionsService.DownloadFolder.Path, downloadItem.FileName);
+            downloadItem.FileSHA1 = fileSHA1;
             // 将新添加的下载任务状态标记为等待下载状态
             downloadItem.DownloadFlag = 1;
 
-            // 在数据库中添加下载信息，并获取添加成功的结果
-            bool AddResult = await DownloadDBService.AddAsync(downloadItem);
+            // 检查是否存在相同的任务记录
+            bool SearchResult = await DownloadDBService.CheckDuplicatedAsync(downloadItem.DownloadKey);
 
-            // 数据库添加成功后添加等待下载任务
-            if (AddResult)
+            if (!SearchResult)
             {
-                // 保证线程安全
-                lock (WaitingListLock)
+                // 在数据库中添加下载信息，并获取添加成功的结果
+                bool AddResult = await DownloadDBService.AddAsync(downloadItem);
+
+                // 数据库添加成功后添加等待下载任务
+                if (AddResult)
                 {
-                    WaitingList.Add(downloadItem);
+                    // 保证线程安全
+                    lock (WaitingListLock)
+                    {
+                        WaitingList.Add(downloadItem);
+                    }
+                    return 0;
+                }
+                // 下载记录添加发生异常
+                else
+                {
+                    return 1;
                 }
             }
-
-            return AddResult;
+            // 存在重复的下载记录
+            else
+            {
+                return 2;
+            }
         }
 
         /// <summary>
@@ -208,7 +223,8 @@ namespace GetStoreApp.Services.Download
                 // 获取列表中的第一个元素
                 DownloadModel DownloadItem = WaitingList.First();
 
-                bool AddDataResult = await DownloadDBService.AddAsync(DownloadItem);
+                DownloadItem.DownloadFlag = 3;
+                bool AddDataResult = await DownloadDBService.UpdateFlagAsync(DownloadItem);
 
                 string TaskGID = await Aria2Service.AddUriAsync(DownloadItem.FileLink, DownloadOptionsService.DownloadFolder.Path, DownloadItem.FileName);
 
@@ -291,6 +307,28 @@ namespace GetStoreApp.Services.Download
                     DownloadingList.RemoveAll(item => item.DownloadFlag != 3);
                 }
             }
+        }
+
+        /// <summary>
+        /// 生成唯一的下载键值
+        /// </summary>
+        private string GenerateUniqueKey(string fileName, string fileLink, string fileSHA1)
+        {
+            string Content = string.Format("{0} {1} {2}", fileName, fileLink, fileSHA1);
+
+            MD5 md5Hash = MD5.Create();
+
+            // 将输入字符串转换为字节数组并计算哈希数据
+            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(Content));
+
+            // 创建一个 Stringbuilder 来收集字节并创建字符串
+            StringBuilder str = new StringBuilder();
+
+            // 循环遍历哈希数据的每一个字节并格式化为十六进制字符串
+            for (int i = 0; i < data.Length; i++) str.Append(data[i].ToString("x2"));//加密结果"x2"结果为32位,"x3"结果为48位,"x4"结果为64位
+
+            // 返回十六进制字符串
+            return str.ToString();
         }
     }
 }

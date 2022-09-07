@@ -1,11 +1,11 @@
-﻿using GetStoreApp.Contracts.Services.App;
+﻿using GetStoreApp.Contracts.Services.Root;
 using Microsoft.Data.Sqlite;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace GetStoreApp.Services.App
+namespace GetStoreApp.Services.Root
 {
     /// <summary>
     /// 数据库基础服务

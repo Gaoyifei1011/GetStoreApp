@@ -33,7 +33,7 @@ namespace GetStoreApp.ViewModels.Window
         /// </summary>
         public async void WindowClosing(object sender, WindowClosingEventArgs args)
         {
-            if (DownloadSchedulerService.GetDownloadingList().Count > 0 || DownloadSchedulerService.GetWaitingList().Count > 0)
+            if (DownloadSchedulerService.DownloadingList.Count > 0 || DownloadSchedulerService.WaitingList.Count > 0)
             {
                 ContentDialogResult result = await new ClosingWindowDialog().ShowAsync();
 

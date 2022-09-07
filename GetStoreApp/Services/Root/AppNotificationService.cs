@@ -1,9 +1,9 @@
-﻿using GetStoreApp.Contracts.Services.App;
+﻿using GetStoreApp.Contracts.Services.Root;
 using Microsoft.Windows.AppNotifications;
 using System.Collections.Specialized;
 using System.Web;
 
-namespace GetStoreApp.Services.App
+namespace GetStoreApp.Services.Root
 {
     /// <summary>
     /// 应用通知服务
@@ -37,11 +37,11 @@ namespace GetStoreApp.Services.App
             //    });
             // }
 
-            GetStoreApp.App.MainWindow.DispatcherQueue.TryEnqueue(() =>
+            App.MainWindow.DispatcherQueue.TryEnqueue(() =>
             {
-                GetStoreApp.App.MainWindow.ShowMessageDialogAsync("TODO: Handle notification invocations when your app is already running.", "Notification Invoked");
+                App.MainWindow.ShowMessageDialogAsync("TODO: Handle notification invocations when your app is already running.", "Notification Invoked");
 
-                GetStoreApp.App.MainWindow.BringToFront();
+                App.MainWindow.BringToFront();
             });
         }
 

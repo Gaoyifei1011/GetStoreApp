@@ -138,6 +138,9 @@
   <data name="BackdropMica" xml:space="preserve">
     <value>云母</value>
   </data>
+  <data name="BackdropToolTip" xml:space="preserve">
+    <value>帮助</value>
+  </data>
   <data name="BlockMap" xml:space="preserve">
     <value>不显示文件扩展名称为BlockMap的文件</value>
   </data>
@@ -156,17 +159,29 @@
   <data name="DownloadFolder" xml:space="preserve">
     <value>文件存放路径</value>
   </data>
+  <data name="DownloadInApp" xml:space="preserve">
+    <value>使用应用内下载管理器下载（BETA）</value>
+  </data>
   <data name="DownloadItem" xml:space="preserve">
     <value>同时下载任务数</value>
   </data>
   <data name="DownloadItemDescription" xml:space="preserve">
     <value>设置同时下载的文件数目</value>
   </data>
+  <data name="DownloadMode" xml:space="preserve">
+    <value>下载方式</value>
+  </data>
+  <data name="DownloadModeDescription" xml:space="preserve">
+    <value>选择您要使用下载文件的方式</value>
+  </data>
   <data name="DownloadOptions" xml:space="preserve">
     <value>下载管理</value>
   </data>
   <data name="DownloadOptionsDescription" xml:space="preserve">
     <value>应用程序下载文件设置</value>
+  </data>
+  <data name="DownloadWithBrowser" xml:space="preserve">
+    <value>使用浏览器下载</value>
   </data>
   <data name="General" xml:space="preserve">
     <value>常规选项</value>

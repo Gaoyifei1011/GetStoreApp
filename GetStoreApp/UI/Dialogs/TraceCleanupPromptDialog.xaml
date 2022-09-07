@@ -73,7 +73,7 @@
                     HorizontalAlignment="Stretch"
                     Command="{x:Bind ViewModel.TraceCleanupSureCommand}"
                     Content="{x:Bind ResourceService.GetLocalized('/Dialog/TraceCleanupSure')}"
-                    IsEnabled="{x:Bind ViewModel.IsButtonEnabled, Mode=OneWay}"
+                    IsEnabled="{x:Bind TraceCleanupSureIsEnabled( ViewModel.IsCleaning, ViewModel.IsHistoryClean, ViewModel.IsDownloadClean, ViewModel.IsLocalFileClean), Mode=OneWay}"
                     Style="{ThemeResource AccentButtonStyle}" />
                 <Button
                     Grid.Column="1"

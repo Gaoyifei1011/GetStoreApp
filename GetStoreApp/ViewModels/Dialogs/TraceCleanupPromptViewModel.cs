@@ -1,9 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.History;
+using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.Models;
@@ -23,14 +23,14 @@ namespace GetStoreApp.ViewModels.Dialogs
 
         private IDownloadDBService DownloadDBService { get; } = IOCHelper.GetService<IDownloadDBService>();
 
-        // 立即清理按钮的可用状态
-        private bool _isButtonEnabled = true;
+        // 是否处于正在清理状态
+        private bool _isCleaning = true;
 
-        public bool IsButtonEnabled
+        public bool IsCleaning
         {
-            get { return _isButtonEnabled; }
+            get { return _isCleaning; }
 
-            set { SetProperty(ref _isButtonEnabled, value); }
+            set { SetProperty(ref _isCleaning, value); }
         }
 
         // 是否要清理历史记录
@@ -147,7 +147,7 @@ namespace GetStoreApp.ViewModels.Dialogs
         private async Task TraceCleanupAsync()
         {
             // 显示正在清理中的状态信息
-            IsButtonEnabled = false;
+            IsCleaning = false;
             ClearState = true;
             ClearStateRing = true;
             ClearStateText = ResourceService.GetLocalized("/Dialog/CleaningNow");
@@ -161,7 +161,7 @@ namespace GetStoreApp.ViewModels.Dialogs
 
             // 清理完成，显示清理完成的结果
             ClearStateRing = false;
-            IsButtonEnabled = true;
+            IsCleaning = true;
 
             // 成功清理
             if (CleanResult.Item1 && CleanResult.Item2 && CleanResult.Item3)

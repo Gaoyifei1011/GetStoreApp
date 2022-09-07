@@ -1,5 +1,5 @@
-﻿using GetStoreApp.Contracts.Services.App;
-using GetStoreApp.Contracts.Services.Download;
+﻿using GetStoreApp.Contracts.Services.Download;
+using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;

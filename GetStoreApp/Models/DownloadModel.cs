@@ -1,5 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
 using System.ComponentModel;
+using System.IO;
 
 namespace GetStoreApp.Models
 {
@@ -91,9 +92,9 @@ namespace GetStoreApp.Models
             set { SetValue(FilePathProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for FilePath.  This enables animation, styling, binding, etc...
+        // Using a DependencyProperty as the backing store for filePath.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FilePathProperty =
-            DependencyProperty.Register("FilePath", typeof(string), typeof(DownloadModel), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register("filePath", typeof(string), typeof(DownloadModel), new PropertyMetadata(string.Empty));
 
         /// <summary>
         /// 文件SHA1值，用来校验文件是否正确下载
@@ -182,9 +183,24 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 计算当前文件的下载进度
         /// </summary>
-        public double CalculateDownloadProgress(int finishedSize, int totalSize)
+        public double DownloadProgress(int finishedSize, int totalSize)
         {
             return finishedSize / totalSize;
+        }
+
+        /// <summary>
+        /// 判断已下载完成的文件是否存在
+        /// </summary>
+        public Visibility IsFileExists(string filePath)
+        {
+            if (File.Exists(filePath))
+            {
+                return Visibility.Collapsed;
+            }
+            else
+            {
+                return Visibility.Visible;
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

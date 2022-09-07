@@ -162,11 +162,10 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <Grid Grid.Column="0" Padding="0,0,0,5">
+                            <Grid Grid.Row="0">
 
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
 
@@ -182,17 +181,18 @@
                                     Text="{x:Bind FinishedSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}"
                                     TextAlignment="Left"
                                     ToolTipService.ToolTip="{x:Bind FinishedSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}" />
-                                <TextBlock
-                                    Grid.Column="2"
-                                    Text="{x:Bind CurrentSpeed, Mode=OneWay, Converter={StaticResource DownloadSpeedFormatConverter}}"
-                                    TextAlignment="Left"
-                                    ToolTipService.ToolTip="{x:Bind CurrentSpeed, Mode=OneWay, Converter={StaticResource DownloadSpeedFormatConverter}}" />
                             </Grid>
 
-                            <ProgressBar
+                            <TextBlock
                                 Grid.Row="1"
-                                ToolTipService.ToolTip="{x:Bind CalculateDownloadProgress(FinishedSize, TotalSize), Mode=OneWay}"
-                                Value="{x:Bind CalculateDownloadProgress(FinishedSize, TotalSize), Mode=OneWay}" />
+                                Padding="0,5,0,0"
+                                Text="{Binding ElementName=UnfinishedRoot, Path=PauseDownload}"
+                                Visibility="{x:Bind DownloadFlag, Converter={StaticResource DownloadFlagConverter}, ConverterParameter=2}" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Padding="0,5,0,0"
+                                Text="{Binding ElementName=UnfinishedRoot, Path=InvalidLink}"
+                                Visibility="{x:Bind DownloadFlag, Converter={StaticResource DownloadFlagConverter}, ConverterParameter=0}" />
                         </Grid>
 
                         <StackPanel
@@ -208,7 +208,7 @@
                                 Content="&#xE74b;"
                                 IsEnabled="{x:Bind DownloadFlag, Converter={StaticResource ContinueDownloadCheckConverter}}"
                                 Style="{StaticResource ButtonDownloadStyle}"
-                                ToolTipService.ToolTip="{Binding ElementName=DownloadingRoot, Path=ContinueToolTip}" />
+                                ToolTipService.ToolTip="{Binding ElementName=UnfinishedRoot, Path=ContinueToolTip}" />
 
                             <Button
                                 Margin="5,0,0,0"
@@ -216,7 +216,7 @@
                                 CommandParameter="{Binding}"
                                 Content="&#xE711;"
                                 Style="{StaticResource ButtonDownloadStyle}"
-                                ToolTipService.ToolTip="{Binding ElementName=DownloadingRoot, Path=DeleteToolTip}" />
+                                ToolTipService.ToolTip="{Binding ElementName=UnfinishedRoot, Path=DeleteToolTip}" />
                         </StackPanel>
                     </Grid>
                 </DataTemplate>

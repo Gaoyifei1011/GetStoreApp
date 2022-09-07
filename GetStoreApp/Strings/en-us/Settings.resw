@@ -138,6 +138,9 @@
   <data name="BackdropMica" xml:space="preserve">
     <value>Mica</value>
   </data>
+  <data name="BackdropToolTip" xml:space="preserve">
+    <value>Help</value>
+  </data>
   <data name="BlockMap" xml:space="preserve">
     <value>Files with file name extensions called BlockMap are not displayed</value>
   </data>
@@ -154,7 +157,10 @@
     <value>Change directory</value>
   </data>
   <data name="DownloadFolder" xml:space="preserve">
-    <value>File storage path</value>
+    <value>File storage path(BETA)</value>
+  </data>
+  <data name="DownloadInApp" xml:space="preserve">
+    <value>Use the in-app download manager to download</value>
   </data>
   <data name="DownloadItem" xml:space="preserve">
     <value>The number of simultaneous download tasks</value>
@@ -162,11 +168,20 @@
   <data name="DownloadItemDescription" xml:space="preserve">
     <value>Sets the number of files that are downloaded at the same time</value>
   </data>
+  <data name="DownloadMode" xml:space="preserve">
+    <value>Download mode</value>
+  </data>
+  <data name="DownloadModeDescription" xml:space="preserve">
+    <value>Select the method you want to use to download the file</value>
+  </data>
   <data name="DownloadOptions" xml:space="preserve">
     <value>Download management</value>
   </data>
   <data name="DownloadOptionsDescription" xml:space="preserve">
     <value>Application download file settings</value>
+  </data>
+  <data name="DownloadWithBrowser" xml:space="preserve">
+    <value>Download using the browser</value>
   </data>
   <data name="General" xml:space="preserve">
     <value>General Options</value>

@@ -279,11 +279,15 @@
 
     <PRIResource Remove="UI\Dialogs\Home\**" />
 
-    <Content Include="Aria2\aria2c.exe">
+    <Content Include="Aria2\GetStoreAppAria2.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DeploymentContent>true</DeploymentContent>
-      <Link>Aria2\aria2c.exe</Link>
+      <Link>Aria2\GetStoreAppAria2.exe</Link>
     </Content>
     <Content Include="Aria2\Config\aria2.conf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Extensions\CollectionExtension\" />
   </ItemGroup>
 </Project>

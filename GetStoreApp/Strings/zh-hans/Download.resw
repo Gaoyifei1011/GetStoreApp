@@ -201,6 +201,12 @@
   <data name="ExplanContent2" xml:space="preserve">
     <value>下载链接具有时效性，一段时间过后就不能访问该链接了。所以该应用暂不支持下载失败的应用恢复下载。如果您有这一方面的需求，请您重新获取链接后进行下载。</value>
   </data>
+  <data name="FileNotExist" xml:space="preserve">
+    <value>已下载完成的文件可能已经被移除</value>
+  </data>
+  <data name="InstallToolTip" xml:space="preserve">
+    <value>安装该应用</value>
+  </data>
   <data name="OpenFolder" xml:space="preserve">
     <value>打开文件夹</value>
   </data>
@@ -224,6 +230,9 @@
   </data>
   <data name="PauseToolTip" xml:space="preserve">
     <value>暂停下载当前任务</value>
+  </data>
+  <data name="Progress" xml:space="preserve">
+    <value>已下载完成{0}%</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>选择</value>

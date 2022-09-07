@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Contracts.Services.App;
+﻿using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Helpers;
 using GetStoreApp.Models;
@@ -68,7 +68,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         public async Task SetAppBackdropAsync()
         {
-            GetStoreApp.App.MainWindow.Backdrop = AppBackdrop.InternalName switch
+            App.MainWindow.Backdrop = AppBackdrop.InternalName switch
             {
                 "Mica" => new MicaSystemBackdrop(),
                 "Acrylic" => new AcrylicSystemBackdrop(),

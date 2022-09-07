@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace GetStoreApp.Contracts.Services.App
+namespace GetStoreApp.Contracts.Services.Root
 {
     public interface IDataBaseService
     {

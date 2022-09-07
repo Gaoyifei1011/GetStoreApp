@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Contracts.Services.History;
+using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Contracts.ViewModels;
 using GetStoreApp.Helpers;

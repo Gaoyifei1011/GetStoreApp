@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using GetStoreApp.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.Storage;
 
@@ -12,7 +13,11 @@ namespace GetStoreApp.Contracts.Services.Settings
 
         int DownloadItem { get; set; }
 
+        DownloadModeModel DownloadMode { get; set; }
+
         List<int> DownloadItemList { get; }
+
+        List<DownloadModeModel> DownloadModeList { get; }
 
         Task InitializeAsync();
 
@@ -22,6 +27,8 @@ namespace GetStoreApp.Contracts.Services.Settings
 
         Task SetFolderAsync(StorageFolder folder);
 
-        Task SetItemValueAsync(int itemValue);
+        Task SetItemAsync(int itemValue);
+
+        Task SetModeAsync(DownloadModeModel downloadMode);
     }
 }

@@ -201,6 +201,12 @@
   <data name="ExplanContent2" xml:space="preserve">
     <value>The download link is time-sensitive and cannot be accessed after a certain period of time. Therefore, the application does not support resuming downloads for applications that fail to download. If you have a need for this, please re-obtain the link and download it.</value>
   </data>
+  <data name="FileNotExist" xml:space="preserve">
+    <value>The downloaded file may have been removed</value>
+  </data>
+  <data name="InstallToolTip" xml:space="preserve">
+    <value>Install the app</value>
+  </data>
   <data name="OpenFolder" xml:space="preserve">
     <value>Open folder</value>
   </data>
@@ -224,6 +230,9 @@
   </data>
   <data name="PauseToolTip" xml:space="preserve">
     <value>Pause downloading the current task</value>
+  </data>
+  <data name="Progress" xml:space="preserve">
+    <value>Download completed {0}%</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>Select</value>

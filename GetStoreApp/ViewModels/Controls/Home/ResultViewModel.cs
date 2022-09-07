@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.Models;
@@ -19,6 +20,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
     {
         // 临界区资源访问互斥锁
         private readonly object ResultDataListLock = new object();
+
+        private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
 
         public ObservableCollection<ResultModel> ResultDataList { get; } = new ObservableCollection<ResultModel>();
 
@@ -200,7 +203,13 @@ namespace GetStoreApp.ViewModels.Controls.Home
         // 根据设置存储的文件链接操作方式操作获取到的文件链接
         public IAsyncRelayCommand FileOperationCommand => new AsyncRelayCommand<string>(async (param) =>
         {
-            await Windows.System.Launcher.LaunchUriAsync(new Uri(param));
+            if (DownloadOptionsService.DownloadMode == DownloadOptionsService.DownloadModeList[0])
+            {
+            }
+            else if (DownloadOptionsService.DownloadMode == DownloadOptionsService.DownloadModeList[1])
+            {
+                await Windows.System.Launcher.LaunchUriAsync(new Uri(param));
+            }
         });
 
         // 复制指定项目的链接

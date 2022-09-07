@@ -168,7 +168,7 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <Grid Grid.Column="0" Padding="0,0,0,5">
+                            <Grid Grid.Row="0">
 
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -188,7 +188,12 @@
                                     ToolTipService.ToolTip="{x:Bind TotalSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}" />
                             </Grid>
 
-                            <!--  更换为文件是否存在  -->
+                            <TextBlock
+                                Grid.Row="1"
+                                Padding="0,5,0,0"
+                                Foreground="{StaticResource SystemErrorTextColor}"
+                                Text="{Binding ElementName=CompletedRoot, Path=FileNotExists}"
+                                Visibility="{x:Bind IsFileExists(FilePath), Mode=OneWay}" />
                         </Grid>
 
                         <StackPanel
@@ -199,8 +204,16 @@
 
                             <Button
                                 Margin="5,0,0,0"
+                                Command="{Binding ElementName=CompletedRoot, Path=ViewModel.InstallCommand}"
+                                CommandParameter="{x:Bind FilePath}"
+                                Content="&#xE8b7;"
+                                Style="{StaticResource ButtonDownloadStyle}"
+                                ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=InstallToolTip}" />
+
+                            <Button
+                                Margin="5,0,0,0"
                                 Command="{Binding ElementName=CompletedRoot, Path=ViewModel.OpenItemFolderCommand}"
-                                CommandParameter="{Binding FilePath}"
+                                CommandParameter="{x:Bind FilePath}"
                                 Content="&#xE8b7;"
                                 Style="{StaticResource ButtonDownloadStyle}"
                                 ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=OpenItemFolderToolTip}" />

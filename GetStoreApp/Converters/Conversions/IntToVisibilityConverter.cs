@@ -4,11 +4,11 @@ using System;
 
 namespace GetStoreApp.Converters.Conversions
 {
+    /// <summary>
+    /// 整数值与控件显示值转换器
+    /// </summary>
     public class IntToVisibilityConverter : IValueConverter
     {
-        /// <summary>
-        /// 整数值与控件显示值转换器
-        /// </summary>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value == null)

@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Contracts.Services.App;
+﻿using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Helpers;
 using GetStoreApp.ViewModels.Dialogs;
@@ -22,6 +22,28 @@ namespace GetStoreApp.UI.Dialogs
         {
             XamlRoot = App.MainWindow.Content.XamlRoot;
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// 确定清理按钮的可用状态
+        /// </summary>
+        public bool TraceCleanupSureIsEnabled(bool isCleaning, bool isHistoryClean, bool isDownloadClean, bool isLocalFileClean)
+        {
+            if (isCleaning)
+            {
+                if (isHistoryClean || isDownloadClean || isLocalFileClean)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

@@ -15,7 +15,7 @@ namespace GetStoreApp.Services.Download
     /// </summary>
     public class Aria2Service : IAria2Service
     {
-        private string Aria2Path => Path.Combine(AppContext.BaseDirectory, "Aria2\\aria2c.exe");
+        private string Aria2Path => Path.Combine(AppContext.BaseDirectory, "Aria2\\GetStoreAppAria2.exe");
 
         private string Aria2ConfPath => Path.Combine(AppContext.BaseDirectory, "Aria2\\Config\\aria2.conf");
 

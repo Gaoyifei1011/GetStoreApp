@@ -1,10 +1,10 @@
-﻿using GetStoreApp.Contracts.Services.App;
+﻿using GetStoreApp.Contracts.Services.Root;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace GetStoreApp.Services.App
+namespace GetStoreApp.Services.Root
 {
     /// <summary>
     /// 应用配置存储服务
