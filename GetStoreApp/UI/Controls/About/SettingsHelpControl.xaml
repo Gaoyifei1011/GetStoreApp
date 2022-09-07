@@ -12,15 +12,26 @@
         </Expander.Header>
         <Expander.Content>
             <StackPanel Margin="14,0,10,0">
+                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/Backdrop')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/BackdropDescription')}" />
+
+                <HyperlinkButton
+                    Margin="-5,0,10,0"
+                    Padding="5"
+                    Command="{x:Bind ViewModel.SystemInformationCommand}"
+                    Content="{x:Bind ResourceService.GetLocalized('/About/SystemInformation')}"
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/About/SystemInformation')}" />
+                <MenuFlyoutSeparator Margin="0,0,0,8" />
+
                 <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/Language')}" />
                 <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/LanguageDescription')}" />
 
                 <HyperlinkButton
                     Margin="-5,0,10,0"
                     Padding="5"
-                    Command="{x:Bind ViewModel.LaunchSettingsInstalledAppsCommand}"
-                    Content="{x:Bind ResourceService.GetLocalized('/About/LaunchSettingsInstalledApps')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/About/LaunchSettingsInstalledApps')}" />
+                    Command="{x:Bind ViewModel.AppInformationCommand}"
+                    Content="{x:Bind ResourceService.GetLocalized('/About/AppInformation')}"
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/About/AppInformation')}" />
                 <MenuFlyoutSeparator Margin="0,0,0,8" />
 
                 <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/LinkFilter')}" />

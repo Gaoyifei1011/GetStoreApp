@@ -1,13 +1,13 @@
 ﻿using GetStoreApp.Activation;
-using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.History;
+using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Contracts.Services.Web;
-using GetStoreApp.Services.App;
 using GetStoreApp.Services.Download;
 using GetStoreApp.Services.History;
+using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
 using GetStoreApp.Services.Shell;
 using GetStoreApp.Services.Web;

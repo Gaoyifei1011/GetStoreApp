@@ -118,6 +118,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
         });
 
+        // 删除选中的任务（包括文件）
         public IAsyncRelayCommand DeleteRecordWithFileCommand => new AsyncRelayCommand(async () =>
         {
             List<DownloadModel> SelectedCompletedDataList = CompletedDataList.Where(item => item.IsSelected == true).ToList();
@@ -176,12 +177,22 @@ namespace GetStoreApp.ViewModels.Controls.Download
             await Task.CompletedTask;
         });
 
-        // 打开当前项目保存的文件夹
+        // 安装应用
+        public IAsyncRelayCommand InstallCommand => new AsyncRelayCommand<string>(async (param) =>
+        {
+            if (param is not null)
+            {
+                // TODO:添加安装操作
+                await Task.CompletedTask;
+            }
+        });
+
+        // 打开当前项目存储的文件夹
         public IAsyncRelayCommand OpenItemFolderCommand => new AsyncRelayCommand<string>(async (param) =>
         {
             if (param is not null)
             {
-                await DownloadOptionsService.OpenFolderAsync(await StorageFolder.GetFolderFromPathAsync(param));
+                await DownloadOptionsService.OpenFolderAsync(await StorageFolder.GetFolderFromPathAsync(Path.GetDirectoryName(param)));
             }
         });
 

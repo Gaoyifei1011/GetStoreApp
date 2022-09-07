@@ -3,7 +3,7 @@
 namespace GetStoreApp.Helpers
 {
     /// <summary>
-    /// 复制 / 粘贴剪贴板
+    /// 复制到剪贴板 / 从剪贴板中粘贴
     /// </summary>
     public static class CopyPasteHelper
     {

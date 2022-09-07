@@ -13,6 +13,7 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
         <FontIcon
@@ -35,10 +36,26 @@
                 Text="{x:Bind ResourceService.GetLocalized('/Settings/BackdropDescription')}" />
         </StackPanel>
 
-        <ComboBox
+        <Button
             Grid.Column="2"
             VerticalAlignment="Center"
+            Command="{x:Bind ViewModel.BackdropTipCommand}"
+            Style="{StaticResource ButtonInfoStyle}"
+            ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/BackdropToolTip')}"
+            Visibility="{x:Bind ViewModel.BackdropIsEnabled, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Reverse}">
+            <Button.Content>
+                <FontIcon
+                    FontFamily="Segoe Fluent Icons"
+                    FontSize="16"
+                    Glyph="&#xE946;" />
+            </Button.Content>
+        </Button>
+
+        <ComboBox
+            Grid.Column="3"
+            VerticalAlignment="Center"
             DisplayMemberPath="DisplayName"
+            IsEnabled="{x:Bind ViewModel.BackdropIsEnabled}"
             ItemsSource="{x:Bind ViewModel.BackdropList}"
             SelectedItem="{x:Bind ViewModel.Backdrop, Mode=TwoWay}"
             ToolTipService.ToolTip="{x:Bind GetSelectedBackdropName(ViewModel.Backdrop), Mode=OneWay}">

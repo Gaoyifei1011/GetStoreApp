@@ -11,7 +11,7 @@
 
     <UserControl.Resources>
         <converter:CheckBoxToolTipFormatConverter x:Name="CheckBoxToolTipFormatConverter" />
-        <converter:ProgressFormatConverter x:Name="ProgressFormatConverter" />
+        <converter:DownloadProgressFormatConverter x:Name="DownloadProgressFormatConverter" />
     </UserControl.Resources>
 
     <Grid>
@@ -160,7 +160,7 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <Grid Grid.Column="0" Padding="0,0,0,5">
+                            <Grid Grid.Row="0">
 
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -189,8 +189,9 @@
 
                             <ProgressBar
                                 Grid.Row="1"
-                                ToolTipService.ToolTip="{x:Bind CalculateDownloadProgress(FinishedSize, TotalSize), Mode=OneWay}"
-                                Value="{x:Bind CalculateDownloadProgress(FinishedSize, TotalSize), Mode=OneWay}" />
+                                Padding="0,5,0,0"
+                                ToolTipService.ToolTip="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Value, Converter={StaticResource DownloadProgressFormatConverter}, Mode=OneWay}"
+                                Value="{x:Bind DownloadProgress(FinishedSize, TotalSize), Mode=OneWay}" />
                         </Grid>
 
                         <StackPanel

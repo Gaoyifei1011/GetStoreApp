@@ -1,5 +1,5 @@
-﻿using GetStoreApp.Contracts.Services.App;
-using GetStoreApp.Contracts.Services.History;
+﻿using GetStoreApp.Contracts.Services.History;
+using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers;
 using GetStoreApp.Models;
 using Microsoft.Data.Sqlite;
@@ -86,7 +86,10 @@ namespace GetStoreApp.Services.History
         public async Task AddAsync(HistoryModel historyItem)
         {
             // 文件不存在，取消操作
-            if (!File.Exists(DataBaseService.DBpath)) return;
+            if (!File.Exists(DataBaseService.DBpath))
+            {
+                return;
+            }
 
             bool CheckResult = await CheckDuplicatedAsync(historyItem.HistoryKey);
 
@@ -194,7 +197,10 @@ namespace GetStoreApp.Services.History
             //调用之前先判断历史记录表是否为空
             bool IsHistoryEmpty = await IsTableEmptyAsync();
 
-            if (IsHistoryEmpty) return Tuple.Create(HistoryRawList, IsHistoryEmpty, true);
+            if (IsHistoryEmpty)
+            {
+                return Tuple.Create(HistoryRawList, IsHistoryEmpty, true);
+            }
 
             // 从数据库中获取数据
             using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))

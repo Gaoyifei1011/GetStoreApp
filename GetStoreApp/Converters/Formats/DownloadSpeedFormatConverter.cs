@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace GetStoreApp.Converters.Formats
 {
+    /// <summary>
+    /// 下载速度文字显示转换器
+    /// </summary>
     public class DownloadSpeedFormatConverter : IValueConverter
     {
         public List<string> SpeedUnitsList = new List<string>()

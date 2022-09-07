@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppInformation" xml:space="preserve">
+    <value>View app information</value>
+  </data>
   <data name="AppVersion" xml:space="preserve">
     <value>Application Version: {0}</value>
+  </data>
+  <data name="Backdrop" xml:space="preserve">
+    <value>Backdrop settings instructions</value>
+  </data>
+  <data name="BackdropDescription" xml:space="preserve">
+    <value>Windows 10 (earlier than 22000) does not support setting the in-app backdrop</value>
   </data>
   <data name="BeginnerGuide" xml:space="preserve">
     <value>Beginner's guide</value>
@@ -193,13 +202,10 @@
     <value>Welcome to download the GetStoreApp.Wish you a pleasant experience</value>
   </data>
   <data name="Language" xml:space="preserve">
-    <value>Language options</value>
+    <value>Language setting insturctions</value>
   </data>
   <data name="LanguageDescription" xml:space="preserve">
     <value>The name of the Start menu app doesn't change with the app language setting. Find the app in settings and click the Repair button and the app name changes without clearing your app's data.</value>
-  </data>
-  <data name="LaunchSettingsInstalledApps" xml:space="preserve">
-    <value>Open settings</value>
   </data>
   <data name="LinkFilter" xml:space="preserve">
     <value>Link filtering instructions</value>
@@ -248,6 +254,9 @@
   </data>
   <data name="StartsWithEInstruction" xml:space="preserve">
     <value>Files that begin with '.e' include files in the formats '.eappx', '.eappxbundle', '.emsix', '.emsixbundle'</value>
+  </data>
+  <data name="SystemInformation" xml:space="preserve">
+    <value>View system information</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>About</value>

@@ -6,6 +6,7 @@ using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.Models;
+using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs;
 using Microsoft.UI.Xaml;
 using System;
@@ -194,16 +195,13 @@ namespace GetStoreApp.ViewModels.Controls.Download
                         DownloadingDataList.Clear();
                     }
 
-                    List<DownloadModel> DownloadingList = DownloadSchedulerService.GetDownloadingList();
-                    List<DownloadModel> WaitingList = DownloadSchedulerService.GetWaitingList();
-
                     lock (DownloadingDataListLock)
                     {
-                        foreach (DownloadModel downloadItem in DownloadingList)
+                        foreach (DownloadModel downloadItem in DownloadSchedulerService.DownloadingList)
                         {
                             DownloadingDataList.Add(downloadItem);
                         }
-                        foreach (DownloadModel downloadItem in WaitingList)
+                        foreach (DownloadModel downloadItem in DownloadSchedulerService.WaitingList)
                         {
                             DownloadingDataList.Add(downloadItem);
                         }
@@ -234,10 +232,22 @@ namespace GetStoreApp.ViewModels.Controls.Download
         }
 
         /// <summary>
-        /// 计时器：获取正在下载中的文件信息
+        /// 计时器：获取正在下载中文件的下载进度
         /// </summary>
         private void DownloadInfoTimerTick(object sender, object e)
         {
+            List<DownloadModel> DownloadingList = DownloadSchedulerService.DownloadingList;
+
+            lock (DownloadingDataListLock)
+            {
+                for (int i = 0; i < DownloadingList.Count; i++)
+                {
+                    if (DownloadingDataList[i].DownloadKey == DownloadingList[i].DownloadKey)
+                    {
+                        DownloadingDataList[i].FinishedSize = DownloadingList[i].FinishedSize;
+                    }
+                }
+            }
         }
     }
 }

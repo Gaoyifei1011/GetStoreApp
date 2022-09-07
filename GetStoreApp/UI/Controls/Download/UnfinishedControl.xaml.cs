@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Contracts.Services.App;
+﻿using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers;
 using GetStoreApp.ViewModels.Controls.Download;
 using Microsoft.UI.Xaml.Controls;
@@ -10,6 +10,10 @@ namespace GetStoreApp.UI.Controls.Download
         public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
         public UnfinishedViewModel ViewModel { get; } = IOCHelper.GetService<UnfinishedViewModel>();
+
+        public string PauseDownload => ResourceService.GetLocalized("/Download/PauseDownload");
+
+        public string InvalidLink => ResourceService.GetLocalized("/Download/InvalidLink");
 
         public string ContinueToolTip => ResourceService.GetLocalized("/Download/ContinueToolTip");
 

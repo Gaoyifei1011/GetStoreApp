@@ -1,5 +1,5 @@
-﻿using GetStoreApp.Contracts.Services.App;
-using GetStoreApp.Contracts.Services.Download;
+﻿using GetStoreApp.Contracts.Services.Download;
+using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers;
 using GetStoreApp.Models;
 using Microsoft.Data.Sqlite;
@@ -118,6 +118,8 @@ namespace GetStoreApp.Services.Download
                             await UpdateCommand.ExecuteNonQueryAsync();
 
                             await transaction.CommitAsync();
+
+                            IsUpdateSuccessfully = true;
                         }
                         catch (Exception)
                         {
@@ -175,6 +177,41 @@ namespace GetStoreApp.Services.Download
                 await db.CloseAsync();
             }
             return DownloadRawList;
+        }
+
+        /// <summary>
+        /// 检查是否存在相同键值的数据
+        /// </summary>
+        public async Task<bool> CheckDuplicatedAsync(string downloadKey)
+        {
+            bool IsExists = false;
+
+            // 从数据库中获取数据
+            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
+            {
+                await db.OpenAsync();
+
+                SqliteCommand SearchCommand = new SqliteCommand
+                {
+                    Connection = db,
+
+                    CommandText = string.Format("SELECT * FROM {0} WHERE HISTORYKEY LIKE '{1}'",
+                        DataBaseService.DownloadTableName,
+                        downloadKey
+                        )
+                };
+
+                SqliteDataReader Query = await SearchCommand.ExecuteReaderAsync();
+
+                if (await Query.ReadAsync())
+                {
+                    IsExists = true;
+                }
+
+                await db.CloseAsync();
+            }
+
+            return IsExists;
         }
 
         /// <summary>

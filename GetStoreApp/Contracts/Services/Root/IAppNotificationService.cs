@@ -1,6 +1,6 @@
 ﻿using System.Collections.Specialized;
 
-namespace GetStoreApp.Contracts.Services.App
+namespace GetStoreApp.Contracts.Services.Root
 {
     public interface IAppNotificationService
     {

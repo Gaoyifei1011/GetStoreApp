@@ -6,15 +6,15 @@ namespace GetStoreApp.Contracts.Services.Download
 {
     public interface IDownloadSchedulerService
     {
-        List<DownloadModel> GetDownloadingList();
+        List<DownloadModel> DownloadingList { get; }
 
-        List<DownloadModel> GetWaitingList();
+        List<DownloadModel> WaitingList { get; }
 
         Task InitializeDownloadMonitorAsync();
 
         Task CloseDownloadMonitorAsync();
 
-        Task<bool> AddTaskAsync(DownloadModel downloadItem);
+        Task<int> AddTaskAsync(string fileName, string fileLink, string fileSHA1);
 
         Task<bool> ContinueTaskAsync(DownloadModel downloadItem);
 

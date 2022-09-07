@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Contracts.Services.App;
+﻿using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Helpers;
 using GetStoreApp.Models;
@@ -68,7 +68,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         public async Task SetAppThemeAsync()
         {
-            if (GetStoreApp.App.MainWindow.Content is FrameworkElement frameworkElement)
+            if (App.MainWindow.Content is FrameworkElement frameworkElement)
             {
                 frameworkElement.RequestedTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme.InternalName);
                 TitleBarHelper.UpdateTitleBar((ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme.InternalName));

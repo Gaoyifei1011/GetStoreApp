@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppInformation" xml:space="preserve">
+    <value>查看应用信息</value>
+  </data>
   <data name="AppVersion" xml:space="preserve">
     <value>应用版本：{0}</value>
+  </data>
+  <data name="Backdrop" xml:space="preserve">
+    <value>背景色设置说明</value>
+  </data>
+  <data name="BackdropDescription" xml:space="preserve">
+    <value>Windows 10系统（版本号低于22000）暂不支持设置应用内背景色</value>
   </data>
   <data name="BeginnerGuide" xml:space="preserve">
     <value>新手指南</value>
@@ -190,13 +199,10 @@
     <value>欢迎大家下载获取商店应用，祝您使用愉快</value>
   </data>
   <data name="Language" xml:space="preserve">
-    <value>界面语言选项</value>
+    <value>界面语言设置说明</value>
   </data>
   <data name="LanguageDescription" xml:space="preserve">
     <value>"开始"菜单应用的名称并不会跟随应用语言设置发生改变。请在设置中找到应用点击修复按钮，应用名称随即发生改变，这不会清除您应用的数据。</value>
-  </data>
-  <data name="LaunchSettingsInstalledApps" xml:space="preserve">
-    <value>打开“设置”</value>
   </data>
   <data name="LinkFilter" xml:space="preserve">
     <value>链接过滤说明</value>
@@ -245,6 +251,9 @@
   </data>
   <data name="StartsWithEInstruction" xml:space="preserve">
     <value>以'.e'开头的文件包括'.eappx'、'.eappxbundle'、 '.emsix'、'.emsixbundle'这些格式的文件</value>
+  </data>
+  <data name="SystemInformation" xml:space="preserve">
+    <value>查看系统信息</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>关于</value>

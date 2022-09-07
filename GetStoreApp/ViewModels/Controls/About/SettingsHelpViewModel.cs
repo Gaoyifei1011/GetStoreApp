@@ -6,7 +6,12 @@ namespace GetStoreApp.ViewModels.Controls.About
 {
     public class SettingsHelpViewModel : ObservableRecipient
     {
-        public IAsyncRelayCommand LaunchSettingsInstalledAppsCommand => new AsyncRelayCommand(async () =>
+        public IAsyncRelayCommand SystemInformationCommand => new AsyncRelayCommand(async () =>
+        {
+            await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:about"));
+        });
+
+        public IAsyncRelayCommand AppInformationCommand => new AsyncRelayCommand(async () =>
         {
             await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
         });

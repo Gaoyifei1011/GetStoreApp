@@ -1,7 +1,7 @@
 ﻿using GetStoreApp.Activation;
 using GetStoreApp.Contracts.Activation;
-using GetStoreApp.Contracts.Services.App;
 using GetStoreApp.Contracts.Services.Download;
+using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Helpers;
 using GetStoreApp.Views;
@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GetStoreApp.Services.App
+namespace GetStoreApp.Services.Root
 {
     /// <summary>
     /// 应用激活服务
@@ -60,17 +60,17 @@ namespace GetStoreApp.Services.App
             await InitializeAsync();
 
             // 新建导航视图的Frame窗口
-            if (GetStoreApp.App.MainWindow.Content == null)
+            if (App.MainWindow.Content == null)
             {
                 Shell = IOCHelper.GetService<ShellPage>();
-                GetStoreApp.App.MainWindow.Content = Shell ?? new Frame();
+                App.MainWindow.Content = Shell ?? new Frame();
             }
 
             // 根据activationArgs的ActivationHandlers或DefaultActivationHandler将导航到第一个页面
             await HandleActivationAsync(activationArgs);
 
             // 激活应用窗口
-            GetStoreApp.App.MainWindow.Activate();
+            App.MainWindow.Activate();
 
             // 窗口激活后配置其他设置
             await StartupAsync();
@@ -125,7 +125,7 @@ namespace GetStoreApp.Services.App
         /// </summary>
         private async Task StartupAsync()
         {
-            GetStoreApp.App.MainWindow.ExtendsContentIntoTitleBar = true;
+            App.MainWindow.ExtendsContentIntoTitleBar = true;
 
             // 设置应用主题
             await ThemeService.SetAppThemeAsync();
@@ -137,7 +137,7 @@ namespace GetStoreApp.Services.App
             await TopMostService.SetAppTopMostAsync();
 
             // 设置应用标题名称
-            GetStoreApp.App.MainWindow.Title = ResourceService.GetLocalized("AppDisplayName");
+            App.MainWindow.Title = ResourceService.GetLocalized("AppDisplayName");
 
             // 初始化下载监控服务
             await DownloadSchedulerService.InitializeDownloadMonitorAsync();

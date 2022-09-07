@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Contracts.Services.App;
+﻿using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Helpers;
 using System;
@@ -56,7 +56,7 @@ namespace GetStoreApp.Services.Settings
         public async Task SetAppTopMostAsync()
         {
             // 将窗口置顶前首先获取窗口句柄
-            HWND hwnd = (HWND)WinRT.Interop.WindowNative.GetWindowHandle(GetStoreApp.App.MainWindow);
+            HWND hwnd = (HWND)WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
 
             if (TopMostValue)
             {

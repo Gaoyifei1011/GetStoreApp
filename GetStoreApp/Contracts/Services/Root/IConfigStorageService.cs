@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace GetStoreApp.Contracts.Services.App
+namespace GetStoreApp.Contracts.Services.Root
 {
     public interface IConfigStorageService
     {

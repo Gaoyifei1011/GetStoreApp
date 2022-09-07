@@ -4,7 +4,7 @@ using System;
 namespace GetStoreApp.Events
 {
     /// <summary>
-    /// 自定义Window 应用 Sdk（Winui3）窗口关闭事件
+    /// 自定义Window 应用 Sdk（Winui3）窗口正在关闭事件
     /// </summary>
     public class WindowClosingEventArgs : EventArgs
     {

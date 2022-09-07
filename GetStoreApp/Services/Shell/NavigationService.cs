@@ -26,7 +26,7 @@ namespace GetStoreApp.Services.Shell
             {
                 if (_frame == null)
                 {
-                    _frame = GetStoreApp.App.MainWindow.Content as Frame;
+                    _frame = App.MainWindow.Content as Frame;
                     RegisterFrameEvents();
                 }
 

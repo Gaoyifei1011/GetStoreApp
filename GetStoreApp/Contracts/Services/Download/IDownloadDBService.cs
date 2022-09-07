@@ -14,6 +14,8 @@ namespace GetStoreApp.Contracts.Services.Download
 
         Task<List<DownloadModel>> QueryAsync(int downloadFlag);
 
+        Task<bool> CheckDuplicatedAsync(string downloadKey);
+
         Task<bool> DeleteAsync(DownloadModel downloadItem);
 
         Task<bool> DeleteSelectedAsync(List<DownloadModel> selectedDownloadDataList);
