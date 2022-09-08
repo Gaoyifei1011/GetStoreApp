@@ -57,7 +57,7 @@
             DisplayMemberPath="DisplayName"
             ItemsSource="{x:Bind ViewModel.LanguageList}"
             SelectedItem="{x:Bind ViewModel.Language, Mode=TwoWay}"
-            ToolTipService.ToolTip="{x:Bind GetSelectedLanguageName(ViewModel.Language), Mode=OneWay}">
+            ToolTipService.ToolTip="{x:Bind ViewModel.Language.DisplayName, Mode=OneWay}">
 
             <i:Interaction.Behaviors>
                 <ic:EventTriggerBehavior EventName="SelectionChanged">

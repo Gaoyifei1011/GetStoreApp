@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.Shell;
-using GetStoreApp.Events;
+using GetStoreApp.Extensions.Delegate;
 using GetStoreApp.Helpers;
 using GetStoreApp.UI.Dialogs;
 using GetStoreApp.ViewModels.Pages;

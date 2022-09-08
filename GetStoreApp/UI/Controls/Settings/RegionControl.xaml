@@ -41,7 +41,7 @@
             DisplayMemberPath="FriendlyName"
             ItemsSource="{x:Bind ViewModel.RegionList}"
             SelectedItem="{x:Bind ViewModel.Region, Mode=TwoWay}"
-            ToolTipService.ToolTip="{x:Bind GetSelectedRegionName(ViewModel.Region), Mode=OneWay}">
+            ToolTipService.ToolTip="{x:Bind ViewModel.Region.FriendlyName, Mode=OneWay}">
 
             <i:Interaction.Behaviors>
                 <ic:EventTriggerBehavior EventName="SelectionChanged">

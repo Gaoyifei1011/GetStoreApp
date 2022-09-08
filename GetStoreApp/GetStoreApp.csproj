@@ -286,8 +286,4 @@
     </Content>
     <Content Include="Aria2\Config\aria2.conf" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Extensions\CollectionExtension\" />
-  </ItemGroup>
 </Project>

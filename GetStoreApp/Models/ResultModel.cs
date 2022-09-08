@@ -1,9 +1,9 @@
-﻿using Microsoft.UI.Xaml;
-using System.ComponentModel;
+﻿using GetStoreApp.Models.Base;
+using Microsoft.UI.Xaml;
 
 namespace GetStoreApp.Models
 {
-    public class ResultModel : DependencyObject, INotifyPropertyChanged
+    public class ResultModel : ModelBase
     {
         /// <summary>
         /// 在多选模式下，该行信息是否被选择的标志
@@ -17,8 +17,7 @@ namespace GetStoreApp.Models
             set
             {
                 _isSelected = value;
-
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelected)));
+                OnPropertyChanged();
             }
         }
 
@@ -86,7 +85,5 @@ namespace GetStoreApp.Models
         // Using a DependencyProperty as the backing store for FileSize.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FileSizeProperty =
             DependencyProperty.Register("FileSize", typeof(string), typeof(ResultModel), new PropertyMetadata(string.Empty));
-
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

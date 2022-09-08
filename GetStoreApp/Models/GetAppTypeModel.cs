@@ -1,8 +1,9 @@
-﻿using Microsoft.UI.Xaml;
+﻿using GetStoreApp.Models.Base;
+using Microsoft.UI.Xaml;
 
 namespace GetStoreApp.Models
 {
-    public class GetAppTypeModel : DependencyObject
+    public class GetAppTypeModel : ModelBase
     {
         /// <summary>
         /// 获取应用类型显示名称

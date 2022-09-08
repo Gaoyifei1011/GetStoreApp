@@ -1,9 +1,10 @@
-﻿using Microsoft.UI.Xaml;
+﻿using GetStoreApp.Models.Base;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.Models
 {
-    public class StatusBarStateModel : DependencyObject
+    public class StatusBarStateModel : ModelBase
     {
         /// <summary>
         /// 信息状态栏严重程度值

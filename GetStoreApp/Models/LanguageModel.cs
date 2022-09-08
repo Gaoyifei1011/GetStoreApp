@@ -1,8 +1,9 @@
-﻿using Microsoft.UI.Xaml;
+﻿using GetStoreApp.Models.Base;
+using Microsoft.UI.Xaml;
 
 namespace GetStoreApp.Models
 {
-    public class LanguageModel : DependencyObject
+    public class LanguageModel : ModelBase
     {
         /// <summary>
         /// 应用语言设置显示名称

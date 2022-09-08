@@ -1,10 +1,10 @@
-﻿using Microsoft.UI.Xaml;
-using System.ComponentModel;
+﻿using GetStoreApp.Models.Base;
+using Microsoft.UI.Xaml;
 using System.IO;
 
 namespace GetStoreApp.Models
 {
-    public class DownloadModel : DependencyObject, INotifyPropertyChanged
+    public class DownloadModel : ModelBase
     {
         /*
         1.下载的通用信息
@@ -22,36 +22,31 @@ namespace GetStoreApp.Models
             set
             {
                 _isSelected = value;
-
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelected)));
+                OnPropertyChanged();
             }
         }
 
         /// <summary>
         /// 任务在下载状态时，获取的GID码。该值唯一
         /// </summary>
+        private string _gID;
+
         public string GID
         {
-            get { return (string)GetValue(GIDProperty); }
-            set { SetValue(GIDProperty, value); }
+            get { return _gID; }
+            set { _gID = value; }
         }
-
-        // Using a DependencyProperty as the backing store for GID.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty GIDProperty =
-            DependencyProperty.Register("GID", typeof(string), typeof(DownloadModel), new PropertyMetadata(string.Empty));
 
         /// <summary>
         /// 下载任务的唯一标识码，该值唯一
         /// </summary>
+        private string _downloadKey;
+
         public string DownloadKey
         {
-            get { return (string)GetValue(DownloadKeyProperty); }
-            set { SetValue(DownloadKeyProperty, value); }
+            get { return _downloadKey; }
+            set { _downloadKey = value; }
         }
-
-        // Using a DependencyProperty as the backing store for DownloadKey.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty DownloadKeyProperty =
-            DependencyProperty.Register("DownloadKey", typeof(string), typeof(DownloadModel), new PropertyMetadata(string.Empty));
 
         /*
         2.下载文件的基础信息
@@ -60,58 +55,46 @@ namespace GetStoreApp.Models
         /// <summary>
         /// 下载文件名称
         /// </summary>
+        private string _fileName;
+
         public string FileName
         {
-            get { return (string)GetValue(FileNameProperty); }
-            set { SetValue(FileNameProperty, value); }
+            get { return _fileName; }
+            set { _fileName = value; }
         }
-
-        // Using a DependencyProperty as the backing store for FileName.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty FileNameProperty =
-            DependencyProperty.Register("FileName", typeof(string), typeof(DownloadModel), new PropertyMetadata(string.Empty));
 
         /// <summary>
         /// 文件下载链接
         /// </summary>
+        private string _fileLink;
+
         public string FileLink
         {
-            get { return (string)GetValue(FileLinkProperty); }
-            set { SetValue(FileLinkProperty, value); }
+            get { return _fileLink; }
+            set { _fileLink = value; }
         }
-
-        // Using a DependencyProperty as the backing store for FileLink.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty FileLinkProperty =
-            DependencyProperty.Register("FileLink", typeof(string), typeof(DownloadModel), new PropertyMetadata(string.Empty));
 
         /// <summary>
         /// 文件下载保存的路径
         /// </summary>
+        private string _filePath;
+
         public string FilePath
         {
-            get { return (string)GetValue(FilePathProperty); }
-            set { SetValue(FilePathProperty, value); }
+            get { return _filePath; }
+            set { _filePath = value; }
         }
-
-        // Using a DependencyProperty as the backing store for filePath.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty FilePathProperty =
-            DependencyProperty.Register("filePath", typeof(string), typeof(DownloadModel), new PropertyMetadata(string.Empty));
 
         /// <summary>
         /// 文件SHA1值，用来校验文件是否正确下载
         /// </summary>
+        private string _fileSHA1;
+
         public string FileSHA1
         {
-            get { return (string)GetValue(FileSHA1Property); }
-            set { SetValue(FileSHA1Property, value); }
+            get { return _fileSHA1; }
+            set { _fileSHA1 = value; }
         }
-
-        // Using a DependencyProperty as the backing store for FileSHA1.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty FileSHA1Property =
-            DependencyProperty.Register("FileSHA1", typeof(string), typeof(DownloadModel), new PropertyMetadata(string.Empty));
-
-        // Using a DependencyProperty as the backing store for FileSize.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty FileSizeProperty =
-            DependencyProperty.Register("FileSize", typeof(int), typeof(DownloadModel), new PropertyMetadata(0));
 
         /*
         3.下载文件的状态信息
@@ -129,8 +112,7 @@ namespace GetStoreApp.Models
             set
             {
                 _downloadFlag = value;
-
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadFlag)));
+                OnPropertyChanged();
             }
         }
 
@@ -158,8 +140,7 @@ namespace GetStoreApp.Models
             set
             {
                 _finishedSize = value;
-
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FinishedSize)));
+                OnPropertyChanged();
             }
         }
 
@@ -175,8 +156,7 @@ namespace GetStoreApp.Models
             set
             {
                 _currentSpeed = value;
-
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentSpeed)));
+                OnPropertyChanged();
             }
         }
 
@@ -185,6 +165,11 @@ namespace GetStoreApp.Models
         /// </summary>
         public double DownloadProgress(int finishedSize, int totalSize)
         {
+            if(totalSize == 0)
+            {
+                return 0.0;
+            }
+
             return finishedSize / totalSize;
         }
 
@@ -202,7 +187,5 @@ namespace GetStoreApp.Models
                 return Visibility.Visible;
             }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

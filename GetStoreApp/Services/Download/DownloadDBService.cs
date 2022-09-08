@@ -62,12 +62,13 @@ namespace GetStoreApp.Services.Download
 
                         try
                         {
-                            InsertCommand.CommandText = string.Format("INSERT INTO {0} VALUES ({1},'{2}','{3}','{4}','{5}','{6}')",
+                            InsertCommand.CommandText = string.Format("INSERT INTO {0} VALUES ('{1}','{2}','{3}','{4}','{5}',{6},{7})",
                                 DataBaseService.DownloadTableName,
                                 downloadItem.DownloadKey,
                                 downloadItem.FileName,
                                 downloadItem.FileLink,
                                 downloadItem.FilePath,
+                                downloadItem.FileSHA1,
                                 downloadItem.TotalSize,
                                 downloadItem.DownloadFlag
                                 );
@@ -150,7 +151,7 @@ namespace GetStoreApp.Services.Download
                 {
                     Connection = db,
 
-                    CommandText = string.Format("SELECT * FROM {0} WHERE DOWNLOADFLAG = '{1}'",
+                    CommandText = string.Format("SELECT * FROM {0} WHERE DOWNLOADFLAG = {1}",
                         DataBaseService.DownloadTableName,
                         downloadFlag
                         )
@@ -168,7 +169,7 @@ namespace GetStoreApp.Services.Download
                         FilePath = Query.GetString(3),
                         FileSHA1 = Query.GetString(4),
                         TotalSize = Convert.ToInt32(Query.GetString(5)),
-                        DownloadFlag = Convert.ToInt32(Query.GetString(7))
+                        DownloadFlag = Convert.ToInt32(Query.GetString(6))
                     };
 
                     DownloadRawList.Add(downloadRawModel);
@@ -195,7 +196,7 @@ namespace GetStoreApp.Services.Download
                 {
                     Connection = db,
 
-                    CommandText = string.Format("SELECT * FROM {0} WHERE HISTORYKEY LIKE '{1}'",
+                    CommandText = string.Format("SELECT * FROM {0} WHERE DOWNLOADKEY LIKE '{1}'",
                         DataBaseService.DownloadTableName,
                         downloadKey
                         )

@@ -170,7 +170,7 @@ namespace GetStoreApp.Services.Root
 
             BackdropList.Add(new BackdropModel
             {
-                DisplayName = GetLocalized("/Settings/BackdropArylic"),
+                DisplayName = GetLocalized("/Settings/BackdropAcrylic"),
                 InternalName = "Acrylic"
             });
         }

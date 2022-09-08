@@ -6,7 +6,6 @@ using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.Models;
-using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs;
 using Microsoft.UI.Xaml;
 using System;
@@ -185,6 +184,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
             // Interval 获取或设置计时器刻度之间的时间段
             DownloadingTimer.Interval = new TimeSpan(0, 0, 1);
 
+            // 订阅事件
+            DownloadSchedulerService.DownloadingList.ItemsChanged += DownloadingListItemsChanged;
+            DownloadSchedulerService.WaitingList.ItemsChanged += WaitingListItemsChanged;
+
             WeakReferenceMessenger.Default.Register<DownloadingViewModel, PivotSelectionMessage>(this, async (downloadingViewModel, pivotSelectionMessage) =>
             {
                 // 切换到下载中页面时，开启监控。并更新当前页面的数据
@@ -210,14 +213,21 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     DownloadingTimer.Start();
                 }
 
-                // 从下载页面离开时，关闭所有事件。并注销所有消息服务
+                // 从下载页面离开时，取消订阅所有事件。并注销所有消息服务
                 else if (pivotSelectionMessage.Value == -1)
                 {
                     if (DownloadingTimer.IsEnabled)
                     {
                         DownloadingTimer.Stop();
                     }
+
+                    // 取消订阅所有事件
                     DownloadingTimer.Tick -= DownloadInfoTimerTick;
+
+                    DownloadSchedulerService.DownloadingList.ItemsChanged -= DownloadingListItemsChanged;
+                    DownloadSchedulerService.WaitingList.ItemsChanged -= WaitingListItemsChanged;
+
+                    // 关闭消息服务
                     Messenger.UnregisterAll(this);
                 }
 
@@ -229,6 +239,60 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
                 await Task.CompletedTask;
             });
+        }
+
+        /// <summary>
+        /// 订阅事件，下载中列表内容发生改变时通知UI更改
+        /// </summary>
+        private void WaitingListItemsChanged(object sender, Extensions.Event.ItemsChangedEventArgs<DownloadModel> args)
+        {
+            // 等待列表添加项目时，更新UI
+            if (args.AddedItems.Count > 0)
+            {
+                foreach (DownloadModel downloadItem in args.AddedItems)
+                {
+                    DownloadingDataList.Add(downloadItem);
+                }
+            }
+
+            // 等待列表删除项目时，更新UI
+            if (args.RemovedItems.Count > 0)
+            {
+                foreach (DownloadModel downloadItem in args.RemovedItems)
+                {
+                    DownloadingDataList.Remove(DownloadingDataList.First(item => item.DownloadKey == downloadItem.DownloadKey));
+                }
+            }
+        }
+
+        /// <summary>
+        /// 订阅事件，等待列表内容发生改变时通知UI更改
+        /// </summary>
+        private void DownloadingListItemsChanged(object sender, Extensions.Event.ItemsChangedEventArgs<DownloadModel> args)
+        {
+            // 下载中列表添加项目时，更新UI
+            if (args.AddedItems.Count > 0)
+            {
+                lock (DownloadingDataListLock)
+                {
+                    foreach (DownloadModel downloadItem in args.AddedItems)
+                    {
+                        DownloadingDataList.Insert(DownloadingDataList.Count(item => item.DownloadFlag == 3), downloadItem);
+                    }
+                }
+            }
+
+            // 下载中列表删除项目时，更新UI
+            if (args.RemovedItems.Count > 0)
+            {
+                lock (DownloadingDataListLock)
+                {
+                    foreach (DownloadModel downloadItem in args.RemovedItems)
+                    {
+                        DownloadingDataList.Remove(DownloadingDataList.First(item => item.DownloadKey == downloadItem.DownloadKey));
+                    }
+                }
+            }
         }
 
         /// <summary>

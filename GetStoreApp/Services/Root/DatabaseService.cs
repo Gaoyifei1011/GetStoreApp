@@ -109,7 +109,7 @@ namespace GetStoreApp.Services.Root
 
                 string FileSHA1 = "FILESHA1 VARCHAR(32) NOT NULL UNIQUE";
 
-                string FileSize = "FILESIZE VARCHAR(10) NOT NULL";
+                string FileSize = "FILESIZE INTEGER NOT NULL";
 
                 string DownloadFlag = "DOWNLOADFLAG INTEGER NOT NULL";
 

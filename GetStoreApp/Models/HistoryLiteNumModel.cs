@@ -1,8 +1,9 @@
-﻿using Microsoft.UI.Xaml;
+﻿using GetStoreApp.Models.Base;
+using Microsoft.UI.Xaml;
 
 namespace GetStoreApp.Models
 {
-    public class HistoryLiteNumModel : DependencyObject
+    public class HistoryLiteNumModel : ModelBase
     {
         /// <summary>
         /// 主页面历史记录显示数量设置显示名称

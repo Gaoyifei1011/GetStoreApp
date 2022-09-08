@@ -41,7 +41,7 @@
             DisplayMemberPath="HistoryLiteNumName"
             ItemsSource="{x:Bind ViewModel.HistoryLiteNumList}"
             SelectedItem="{x:Bind ViewModel.HistoryLiteItem, Mode=TwoWay}"
-            ToolTipService.ToolTip="{x:Bind GetSelectedHistoryLiteNumName(ViewModel.HistoryLiteItem), Mode=OneWay}">
+            ToolTipService.ToolTip="{x:Bind ViewModel.HistoryLiteItem.HistoryLiteNumName, Mode=OneWay}">
 
             <i:Interaction.Behaviors>
                 <ic:EventTriggerBehavior EventName="SelectionChanged">

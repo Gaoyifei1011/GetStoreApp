@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Extensions.WindowExtension;
+﻿using GetStoreApp.Extensions.Window;
 using GetStoreApp.Helpers;
 using GetStoreApp.ViewModels.Window;
 using System;

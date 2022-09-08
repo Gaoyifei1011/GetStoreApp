@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers;
-using GetStoreApp.Models;
 using GetStoreApp.ViewModels.Controls.Settings;
 using Microsoft.UI.Xaml.Controls;
 
@@ -15,11 +14,6 @@ namespace GetStoreApp.UI.Controls.Settings
         public HistoryLiteConfigControl()
         {
             InitializeComponent();
-        }
-
-        public string GetSelectedHistoryLiteNumName(HistoryLiteNumModel historyLiteItem)
-        {
-            return historyLiteItem.HistoryLiteNumName;
         }
     }
 }

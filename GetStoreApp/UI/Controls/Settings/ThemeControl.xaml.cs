@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers;
-using GetStoreApp.Models;
 using GetStoreApp.ViewModels.Controls.Settings;
 using Microsoft.UI.Xaml.Controls;
 
@@ -15,11 +14,6 @@ namespace GetStoreApp.UI.Controls.Settings
         public ThemeControl()
         {
             InitializeComponent();
-        }
-
-        public string GetSelectedThemeName(ThemeModel theme)
-        {
-            return theme.DisplayName;
         }
     }
 }
