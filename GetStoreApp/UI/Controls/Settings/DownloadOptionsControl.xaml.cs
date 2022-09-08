@@ -2,7 +2,6 @@
 using GetStoreApp.Helpers;
 using GetStoreApp.ViewModels.Controls.Settings;
 using Microsoft.UI.Xaml.Controls;
-using Windows.Storage;
 
 namespace GetStoreApp.UI.Controls.Settings
 {
@@ -15,11 +14,6 @@ namespace GetStoreApp.UI.Controls.Settings
         public DownloadOptionsControl()
         {
             InitializeComponent();
-        }
-
-        public string DownloadFolderPath(StorageFolder folder)
-        {
-            return folder.Path;
         }
     }
 }

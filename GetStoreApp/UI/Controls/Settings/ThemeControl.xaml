@@ -50,7 +50,7 @@
             DisplayMemberPath="DisplayName"
             ItemsSource="{x:Bind ViewModel.ThemeList}"
             SelectedItem="{x:Bind ViewModel.Theme, Mode=TwoWay}"
-            ToolTipService.ToolTip="{x:Bind GetSelectedThemeName(ViewModel.Theme), Mode=OneWay}">
+            ToolTipService.ToolTip="{x:Bind ViewModel.Theme.DisplayName, Mode=OneWay}">
 
             <i:Interaction.Behaviors>
                 <ic:EventTriggerBehavior EventName="SelectionChanged">

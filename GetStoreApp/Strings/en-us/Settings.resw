@@ -126,8 +126,8 @@
   <data name="Backdrop" xml:space="preserve">
     <value>Backdrop Color</value>
   </data>
-  <data name="BackdropArylic" xml:space="preserve">
-    <value>Arylic</value>
+  <data name="BackdropAcrylic" xml:space="preserve">
+    <value>Acrylic</value>
   </data>
   <data name="BackdropDefault" xml:space="preserve">
     <value>None</value>
@@ -157,10 +157,10 @@
     <value>Change directory</value>
   </data>
   <data name="DownloadFolder" xml:space="preserve">
-    <value>File storage path(BETA)</value>
+    <value>File storage path</value>
   </data>
   <data name="DownloadInApp" xml:space="preserve">
-    <value>Use the in-app download manager to download</value>
+    <value>Use the in-app download manager to download(BETA)</value>
   </data>
   <data name="DownloadItem" xml:space="preserve">
     <value>The number of simultaneous download tasks</value>

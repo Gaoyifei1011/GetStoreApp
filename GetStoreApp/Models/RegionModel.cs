@@ -1,8 +1,9 @@
-﻿using Microsoft.UI.Xaml;
+﻿using GetStoreApp.Models.Base;
+using Microsoft.UI.Xaml;
 
 namespace GetStoreApp.Models
 {
-    public class RegionModel : DependencyObject
+    public class RegionModel : ModelBase
     {
         public string Nation
         {

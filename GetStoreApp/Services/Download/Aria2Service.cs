@@ -1,8 +1,10 @@
 ﻿using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Helpers;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Text;
@@ -496,8 +498,6 @@ namespace GetStoreApp.Services.Download
         {
             // 汇报下载任务状态参数列表
             List<object> ParamsList = new List<object>() { GID };
-            // 成功添加任务返回的信息
-            Dictionary<string, string> ResultContent;
 
             ParamsList.Add(TellStatusInfoList);
             TellStatusContent["params"] = ParamsList;
@@ -522,16 +522,24 @@ namespace GetStoreApp.Services.Download
 
                 HttpResponseMessage response = await httpClient.PostAsync(RPCServerLink, httpContent);
 
+                Debug.WriteLine(response.StatusCode);
                 // 返回成功添加任务的GID信息
                 if (response.IsSuccessStatusCode)
                 {
+                    Debug.WriteLine("121");
                     string ResponseContent = await response.Content.ReadAsStringAsync();
-                    string Result = JsonConvert.DeserializeObject<Dictionary<string, string>>(ResponseContent)["result"];
-                    ResultContent = JsonConvert.DeserializeObject<Dictionary<string, string>>(Result);
+                    Debug.WriteLine("ResponseContent");
+                    Debug.WriteLine(ResponseContent);
+
+                    string Result = ((JObject)JsonConvert.DeserializeObject(ResponseContent))["result"].ToString();
+                    Debug.WriteLine("Result");
+                    Debug.WriteLine(Result);
+
+                    JObject ResultContent = (JObject)JsonConvert.DeserializeObject(Result);
 
                     return Tuple.Create(
-                        ResultContent["gid"],
-                        ResultContent["status"],
+                        Convert.ToString(ResultContent["gid"]),
+                        Convert.ToString(ResultContent["status"]),
                         Convert.ToInt32(ResultContent["completedLength"]),
                         Convert.ToInt32(ResultContent["totalLength"]),
                         Convert.ToInt32(ResultContent["downloadSpeed"])
@@ -539,11 +547,13 @@ namespace GetStoreApp.Services.Download
                 }
                 else
                 {
+                    Debug.WriteLine("121Error");
                     throw new Exception();
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Debug.WriteLine(e.Message);
                 return null;
             }
         }

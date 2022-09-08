@@ -1,14 +1,14 @@
-﻿using GetStoreApp.Models;
-using System.Collections.Generic;
+﻿using GetStoreApp.Extensions.Collection;
+using GetStoreApp.Models;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.Contracts.Services.Download
 {
     public interface IDownloadSchedulerService
     {
-        List<DownloadModel> DownloadingList { get; }
+        NotifyList<DownloadModel> DownloadingList { get; }
 
-        List<DownloadModel> WaitingList { get; }
+        NotifyList<DownloadModel> WaitingList { get; }
 
         Task InitializeDownloadMonitorAsync();
 

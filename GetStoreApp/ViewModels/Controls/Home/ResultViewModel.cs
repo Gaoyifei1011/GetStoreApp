@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
@@ -10,6 +11,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +24,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
         private readonly object ResultDataListLock = new object();
 
         private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
+
+        private IDownloadSchedulerService DownloadSchedulerService { get; } = IOCHelper.GetService<IDownloadSchedulerService>();
 
         public ObservableCollection<ResultModel> ResultDataList { get; } = new ObservableCollection<ResultModel>();
 
@@ -177,7 +181,35 @@ namespace GetStoreApp.ViewModels.Controls.Home
         });
 
         // 下载选定项目
-        public IAsyncRelayCommand DownloadSelectedCommand { get; }
+        public IAsyncRelayCommand DownloadSelectedCommand => new AsyncRelayCommand(async () =>
+        {
+            List<ResultModel> SelectedResultDataList = ResultDataList.Where(item => item.IsSelected == true).ToList();
+
+            // 内容为空时显示空提示对话框
+            if (SelectedResultDataList.Count == 0)
+            {
+                await new SelectEmptyPromptDialog().ShowAsync();
+                return;
+            };
+
+            // 使用应用内提供的下载方式
+            if (DownloadOptionsService.DownloadMode.InternalName == DownloadOptionsService.DownloadModeList[0].InternalName)
+            {
+                foreach (ResultModel resultItem in SelectedResultDataList)
+                {
+                    await DownloadSchedulerService.AddTaskAsync(resultItem.FileName, resultItem.FileLink, resultItem.FileSHA1);
+                }
+            }
+
+            // 使用浏览器下载
+            else if (DownloadOptionsService.DownloadMode == DownloadOptionsService.DownloadModeList[1])
+            {
+                foreach (ResultModel resultItem in SelectedResultDataList)
+                {
+                    await Windows.System.Launcher.LaunchUriAsync(new Uri(resultItem.FileLink));
+                }
+            }
+        });
 
         // 退出多选模式
         public IAsyncRelayCommand CancelCommand => new AsyncRelayCommand(async () =>
@@ -201,14 +233,18 @@ namespace GetStoreApp.ViewModels.Controls.Home
         });
 
         // 根据设置存储的文件链接操作方式操作获取到的文件链接
-        public IAsyncRelayCommand FileOperationCommand => new AsyncRelayCommand<string>(async (param) =>
+        public IAsyncRelayCommand DownloadCommand => new AsyncRelayCommand<ResultModel>(async (param) =>
         {
-            if (DownloadOptionsService.DownloadMode == DownloadOptionsService.DownloadModeList[0])
+            // 使用应用内提供的下载方式
+            if (DownloadOptionsService.DownloadMode.InternalName == DownloadOptionsService.DownloadModeList[0].InternalName)
             {
+                await DownloadSchedulerService.AddTaskAsync(param.FileName, param.FileLink, param.FileSHA1);
             }
+
+            // 使用浏览器下载
             else if (DownloadOptionsService.DownloadMode == DownloadOptionsService.DownloadModeList[1])
             {
-                await Windows.System.Launcher.LaunchUriAsync(new Uri(param));
+                await Windows.System.Launcher.LaunchUriAsync(new Uri(param.FileLink));
             }
         });
 
@@ -276,6 +312,47 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 }
 
                 await Task.CompletedTask;
+            });
+
+            TestResultViewModel();
+        }
+
+
+        private void TestResultViewModel()
+        {
+            ResultControlVisable = true;
+
+            ResultDataList.Add(new ResultModel()
+            {
+                FileName = "22000.1.210604-1628.co_release_amd64fre_ADK.iso",
+                FileLinkExpireTime = "2022-09-08 08:14:56 GMT",
+                FileSHA1 = "980821",
+                FileSize = "111.91 MB",
+                FileLink = "http://software-download.microsoft.com/download/sg/22000.1.210604-1628.co_release_amd64fre_ADK.iso"
+            }); ;
+            ResultDataList.Add(new ResultModel()
+            {
+                FileName = "22000.1.210604-1628.co_release_amd64fre_adkwinpeaddons.iso",
+                FileLinkExpireTime= "2022-09-08 08:20:56 GMT",
+                FileSHA1 = "123456789",
+                FileSize = "101.91 MB",
+                FileLink = "http://software-download.microsoft.com/download/sg/22000.1.210604-1628.co_release_amd64fre_adkwinpeaddons.iso"
+            });
+            ResultDataList.Add(new ResultModel()
+            {
+                FileName = "22000.1.210604-1628.co_release_amd64fre_HLK.iso",
+                FileLinkExpireTime = "2022-09-09 08:14:56 GMT",
+                FileSHA1 = "980821456789",
+                FileSize = "80.91 MB",
+                FileLink = "http://software-download.microsoft.com/download/sg/22000.1.210604-1628.co_release_amd64fre_HLK.iso"
+            });
+            ResultDataList.Add(new ResultModel()
+            {
+                FileName = "WINDOWS_SYSTEM_KIT_co_release_22000_210604-1628.iso",
+                FileLinkExpireTime = "2022-09-10 08:14:56 GMT",
+                FileSHA1 = "980821MSIX",
+                FileSize = "51.91 MB",
+                FileLink = "https://software-download.microsoft.com/download/sg/WINDOWS_SYSTEM_KIT_co_release_22000_210604-1628.iso"
             });
         }
     }

@@ -60,7 +60,7 @@
 
                             <HyperlinkButton
                                 Command="{x:Bind ViewModel.OpenFolderCommand}"
-                                Content="{x:Bind DownloadFolderPath(ViewModel.DownloadFolder), Mode=OneWay}"
+                                Content="{x:Bind ViewModel.DownloadFolder.Path, Mode=OneWay}"
                                 Style="{StaticResource HyperlinkButtonStyle}"
                                 ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/OpenFolderToolTip')}" />
                         </StackPanel>
@@ -142,7 +142,7 @@
                             DisplayMemberPath="DisplayName"
                             ItemsSource="{x:Bind ViewModel.DownloadModeList}"
                             SelectedItem="{x:Bind ViewModel.DownloadMode, Mode=TwoWay}"
-                            ToolTipService.ToolTip="{x:Bind ViewModel.DownloadMode, Mode=TwoWay}">
+                            ToolTipService.ToolTip="{x:Bind ViewModel.DownloadMode.DisplayName, Mode=TwoWay}">
 
                             <i:Interaction.Behaviors>
                                 <ic:EventTriggerBehavior EventName="SelectionChanged">

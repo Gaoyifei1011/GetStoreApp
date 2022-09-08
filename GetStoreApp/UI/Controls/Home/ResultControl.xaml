@@ -120,7 +120,6 @@
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.DownloadSelectedCommand}"
-                    IsEnabled="False"
                     Label="{x:Bind ResourceService.GetLocalized('/Home/DownloadSelected')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/DownloadSelected')}">
                     <AppBarButton.Icon>
@@ -243,8 +242,8 @@
                             Grid.Column="1"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
-                            Command="{Binding ElementName=ResultRoot, Path=ViewModel.FileOperationCommand}"
-                            CommandParameter="{x:Bind FileLink}"
+                            Command="{Binding ElementName=ResultRoot, Path=ViewModel.DownloadCommand}"
+                            CommandParameter="{Binding}"
                             Content="{x:Bind FileName}"
                             Style="{StaticResource HyperlinkButtonStyle}"
                             ToolTipService.ToolTip="{x:Bind FileName}" />

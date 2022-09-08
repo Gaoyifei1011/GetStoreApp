@@ -1,10 +1,10 @@
-﻿using GetStoreApp.Events;
+﻿using GetStoreApp.Extensions.Delegate;
 using System;
 using System.Runtime.InteropServices;
 using WinUIEx;
 using static PInvoke.User32;
 
-namespace GetStoreApp.Extensions.WindowExtension
+namespace GetStoreApp.Extensions.Window
 {
     /// <summary>
     /// 扩展Windows 应用 SDK的Window类和WinUIEx类，在Desktop类中添加Closing事件，实现关闭应用时能够弹出对话框

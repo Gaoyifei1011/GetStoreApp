@@ -1,9 +1,9 @@
 ﻿using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Extensions.Collection;
 using GetStoreApp.Helpers;
 using GetStoreApp.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -29,13 +29,13 @@ namespace GetStoreApp.Services.Download
         private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
 
         // 下载调度器
-        private Timer DownloadSchedulerTimer { get; } = new Timer(1000);
+        private Timer DownloadSchedulerTimer { get; } = new Timer(2000);
 
-        // 下载中任务列表
-        public List<DownloadModel> DownloadingList { get; } = new List<DownloadModel>();
+        // 下载中任务列表（带通知）
+        public NotifyList<DownloadModel> DownloadingList { get; } = new NotifyList<DownloadModel>();
 
-        // 等待下载任务列表
-        public List<DownloadModel> WaitingList { get; } = new List<DownloadModel>();
+        // 等待下载任务列表（带通知）
+        public NotifyList<DownloadModel> WaitingList { get; } = new NotifyList<DownloadModel>();
 
         /// <summary>
         /// 初始化下载监控任务
@@ -64,16 +64,16 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         public async Task<int> AddTaskAsync(string fileName, string fileLink, string fileSHA1)
         {
-            DownloadModel downloadItem = new DownloadModel();
-
-            // 下载唯一标识码
-            downloadItem.DownloadKey = GenerateUniqueKey(fileName, fileLink, fileSHA1);
-            downloadItem.FileName = fileName;
-            downloadItem.FileLink = fileLink;
-            downloadItem.FilePath = string.Format("{0}\\{1}", DownloadOptionsService.DownloadFolder.Path, downloadItem.FileName);
-            downloadItem.FileSHA1 = fileSHA1;
-            // 将新添加的下载任务状态标记为等待下载状态
-            downloadItem.DownloadFlag = 1;
+            DownloadModel downloadItem = new DownloadModel
+            {
+                DownloadKey = GenerateUniqueKey(fileName, fileLink, fileSHA1),
+                FileName = fileName,
+                FileLink = fileLink,
+                FilePath = string.Format("{0}\\{1}", DownloadOptionsService.DownloadFolder.Path, fileName),
+                TotalSize = 0,
+                FileSHA1 = fileSHA1,
+                DownloadFlag = 1
+            };
 
             // 检查是否存在相同的任务记录
             bool SearchResult = await DownloadDBService.CheckDuplicatedAsync(downloadItem.DownloadKey);
@@ -217,21 +217,21 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         private async Task ScheduledAddTaskAsync()
         {
+            // 在添加任务时先暂停计时器操作
+            DownloadSchedulerTimer.Enabled = false;
+
             // 如果仍然存在等待下载的任务，并且当前正在下载的数量并未到达阈值时，开始下载
-            while (WaitingList.Count > 0 && DownloadingList.Count < DownloadOptionsService.DownloadItem)
+            while (WaitingList.Count > 0 && (DownloadingList.Count < DownloadOptionsService.DownloadItem))
             {
                 // 获取列表中的第一个元素
                 DownloadModel DownloadItem = WaitingList.First();
-
                 DownloadItem.DownloadFlag = 3;
                 bool AddDataResult = await DownloadDBService.UpdateFlagAsync(DownloadItem);
-
                 string TaskGID = await Aria2Service.AddUriAsync(DownloadItem.FileLink, DownloadOptionsService.DownloadFolder.Path, DownloadItem.FileName);
-
                 // 添加下载任务时确保线程安全
                 if (AddDataResult && !string.IsNullOrEmpty(TaskGID))
                 {
-                    lock (DownloadingList)
+                    lock (DownloadingListLock)
                     {
                         // 将当前任务的下载状态标记为正在下载状态
                         DownloadItem.DownloadFlag = 3;
@@ -240,9 +240,15 @@ namespace GetStoreApp.Services.Download
                     }
 
                     // 等待列表中移除已经成功添加的项目
-                    WaitingList.RemoveAt(0);
+                    lock (WaitingListLock)
+                    {
+                        WaitingList.Remove(WaitingList.First());
+                    }
                 }
             }
+
+            // 添加完成后，再打开计时器
+            DownloadSchedulerTimer.Enabled = true;
         }
 
         /// <summary>
@@ -250,6 +256,9 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         private async Task ScheduledUpdateStatusAsync()
         {
+            // 在更新任务信息时先暂停计时器操作
+            DownloadSchedulerTimer.Enabled = false;
+
             // 当下载队列中仍然还存在下载任务时，更新正在下载的任务信息
             if (DownloadingList.Count > 0)
             {
@@ -259,9 +268,14 @@ namespace GetStoreApp.Services.Download
                     Tuple<string, string, int, int, int> DownloadStatus = await Aria2Service.TellStatusAsync(downloadItem.GID);
 
                     // 当下载任务处于活动状态时，更新下载任务信息
+                    if(DownloadStatus != null)
+                    {
+
+                    }
+                   
                     if (DownloadStatus.Item2 == "active")
                     {
-                        lock (DownloadingList)
+                        lock (DownloadingListLock)
                         {
                             downloadItem.TotalSize = DownloadStatus.Item3;
                             downloadItem.FinishedSize = DownloadStatus.Item4;
@@ -272,7 +286,7 @@ namespace GetStoreApp.Services.Download
                     // 当下载任务处于完成状态时，将当前任务标记为完成状态
                     else if (DownloadStatus.Item2 == "completed")
                     {
-                        lock (DownloadingList)
+                        lock (DownloadingListLock)
                         {
                             downloadItem.DownloadFlag = 4;
                             downloadItem.GID = string.Empty;
@@ -287,7 +301,7 @@ namespace GetStoreApp.Services.Download
                     // 当下载任务处于错误状态时，将当前任务标记为错误状态
                     else if (DownloadStatus.Item2 == "error")
                     {
-                        lock (DownloadingList)
+                        lock (DownloadingListLock)
                         {
                             downloadItem.DownloadFlag = 0;
                             downloadItem.GID = string.Empty;
@@ -307,6 +321,8 @@ namespace GetStoreApp.Services.Download
                     DownloadingList.RemoveAll(item => item.DownloadFlag != 3);
                 }
             }
+
+            DownloadSchedulerTimer.Enabled = true;
         }
 
         /// <summary>

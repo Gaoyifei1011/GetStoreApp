@@ -1,9 +1,9 @@
-﻿using Microsoft.UI.Xaml;
-using System.ComponentModel;
+﻿using GetStoreApp.Models.Base;
+using Microsoft.UI.Xaml;
 
 namespace GetStoreApp.Models
 {
-    public class HistoryModel : DependencyObject, INotifyPropertyChanged
+    public class HistoryModel : ModelBase
     {
         /// <summary>
         /// 在多选模式下，该行历史记录是否被选择的标志
@@ -17,8 +17,7 @@ namespace GetStoreApp.Models
             set
             {
                 _isSelected = value;
-
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelected)));
+                OnPropertyChanged();
             }
         }
 
@@ -86,8 +85,6 @@ namespace GetStoreApp.Models
         // Using a DependencyProperty as the backing store for HistoryLink.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty HistoryLinkProperty =
             DependencyProperty.Register("HistoryLink", typeof(string), typeof(HistoryModel), new PropertyMetadata(string.Empty));
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// 按时间升序排列

@@ -58,7 +58,7 @@
             IsEnabled="{x:Bind ViewModel.BackdropIsEnabled}"
             ItemsSource="{x:Bind ViewModel.BackdropList}"
             SelectedItem="{x:Bind ViewModel.Backdrop, Mode=TwoWay}"
-            ToolTipService.ToolTip="{x:Bind GetSelectedBackdropName(ViewModel.Backdrop), Mode=OneWay}">
+            ToolTipService.ToolTip="{x:Bind ViewModel.Backdrop.DisplayName, Mode=OneWay}">
 
             <i:Interaction.Behaviors>
                 <ic:EventTriggerBehavior EventName="SelectionChanged">

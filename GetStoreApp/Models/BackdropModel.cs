@@ -1,8 +1,9 @@
-﻿using Microsoft.UI.Xaml;
+﻿using GetStoreApp.Models.Base;
+using Microsoft.UI.Xaml;
 
 namespace GetStoreApp.Models
 {
-    public class BackdropModel : DependencyObject
+    public class BackdropModel : ModelBase
     {
         /// <summary>
         /// 应用背景色设置显示名称

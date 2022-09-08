@@ -1,8 +1,9 @@
-﻿using Microsoft.UI.Xaml;
+﻿using GetStoreApp.Models.Base;
+using Microsoft.UI.Xaml;
 
 namespace GetStoreApp.Models
 {
-    public class DownloadModeModel : DependencyObject
+    public class DownloadModeModel : ModelBase
     {
         public string DisplayName
         {

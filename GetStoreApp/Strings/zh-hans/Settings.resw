@@ -126,7 +126,7 @@
   <data name="Backdrop" xml:space="preserve">
     <value>背景色</value>
   </data>
-  <data name="BackdropArylic" xml:space="preserve">
+  <data name="BackdropAcrylic" xml:space="preserve">
     <value>亚克力</value>
   </data>
   <data name="BackdropDefault" xml:space="preserve">
