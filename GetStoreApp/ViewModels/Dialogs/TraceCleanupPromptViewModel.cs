@@ -6,7 +6,7 @@ using GetStoreApp.Contracts.Services.History;
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
-using GetStoreApp.Models;
+using GetStoreApp.Models.Download;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -198,7 +198,7 @@ namespace GetStoreApp.ViewModels.Dialogs
             // 清理本地创建的文件
             if (IsLocalFileClean)
             {
-                List<DownloadModel> LocalFileData = (await DownloadDBService.QueryAsync(4));
+                List<BackgroundModel> LocalFileData = (await DownloadDBService.QueryAsync(4));
                 LocalCleanResult = DeleteFiles(ref LocalFileData);
             }
 
@@ -214,12 +214,12 @@ namespace GetStoreApp.ViewModels.Dialogs
         /// <summary>
         /// 删除所有文件
         /// </summary>
-        private bool DeleteFiles(ref List<DownloadModel> downloadDataList)
+        private bool DeleteFiles(ref List<BackgroundModel> downloadDataList)
         {
             try
             {
                 // 文件存在时尝试删除文件
-                foreach (DownloadModel downloadItem in downloadDataList)
+                foreach (BackgroundModel downloadItem in downloadDataList)
                 {
                     if (File.Exists(downloadItem.FilePath))
                     {

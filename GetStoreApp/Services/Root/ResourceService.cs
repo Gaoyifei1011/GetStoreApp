@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Models;
+using GetStoreApp.Models.Home;
+using GetStoreApp.Models.Settings;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;

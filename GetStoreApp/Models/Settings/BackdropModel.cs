@@ -1,12 +1,12 @@
 ﻿using GetStoreApp.Models.Base;
 using Microsoft.UI.Xaml;
 
-namespace GetStoreApp.Models
+namespace GetStoreApp.Models.Settings
 {
-    public class ThemeModel : ModelBase
+    public class BackdropModel : ModelBase
     {
         /// <summary>
-        /// 应用主题设置显示名称
+        /// 应用背景色设置显示名称
         /// </summary>
         public string DisplayName
         {
@@ -19,7 +19,7 @@ namespace GetStoreApp.Models
             DependencyProperty.Register("DisplayName", typeof(string), typeof(BackdropModel), new PropertyMetadata(string.Empty));
 
         /// <summary>
-        /// 应用主题设置内部名称
+        /// 应用背景色设置内部名称
         /// </summary>
         public string InternalName
         {

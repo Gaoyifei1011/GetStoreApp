@@ -2,7 +2,7 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
-namespace GetStoreApp.Models
+namespace GetStoreApp.Models.Home
 {
     public class StatusBarStateModel : ModelBase
     {
@@ -30,7 +30,7 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for StateInfoText.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty StateInfoTextProperty =
-            DependencyProperty.Register("StateInfoText", typeof(string), typeof(StatusBarStateModel), new PropertyMetadata(""));
+            DependencyProperty.Register("StateInfoText", typeof(string), typeof(StatusBarStateModel), new PropertyMetadata(string.Empty));
 
         /// <summary>
         /// 信息状态栏进度环显示值
@@ -43,7 +43,7 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for StatePrRingVisValue.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty StatePrRingVisValueProperty =
-            DependencyProperty.Register("StatePrRingVisValue", typeof(bool), typeof(StatusBarStateModel), new PropertyMetadata(false));
+            DependencyProperty.Register("StatePrRingVisValue", typeof(bool), typeof(StatusBarStateModel), new PropertyMetadata(default(bool)));
 
         /// <summary>
         /// 信息状态栏进度环激活值
@@ -56,6 +56,6 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for StatePrRingActValue.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty StatePrRingActValueProperty =
-            DependencyProperty.Register("StatePrRingActValue", typeof(bool), typeof(StatusBarStateModel), new PropertyMetadata(false));
+            DependencyProperty.Register("StatePrRingActValue", typeof(bool), typeof(StatusBarStateModel), new PropertyMetadata(default(bool)));
     }
 }

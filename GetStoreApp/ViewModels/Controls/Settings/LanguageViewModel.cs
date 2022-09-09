@@ -5,7 +5,7 @@ using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
-using GetStoreApp.Models;
+using GetStoreApp.Models.Settings;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml.Media.Animation;
 using System.Collections.Generic;

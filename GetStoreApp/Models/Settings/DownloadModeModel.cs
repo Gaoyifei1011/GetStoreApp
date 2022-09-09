@@ -1,13 +1,10 @@
 ﻿using GetStoreApp.Models.Base;
 using Microsoft.UI.Xaml;
 
-namespace GetStoreApp.Models
+namespace GetStoreApp.Models.Settings
 {
-    public class GetAppChannelModel : ModelBase
+    public class DownloadModeModel : ModelBase
     {
-        /// <summary>
-        /// 获取应用通道类型显示名称
-        /// </summary>
         public string DisplayName
         {
             get { return (string)GetValue(DisplayNameProperty); }
@@ -16,11 +13,8 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for DisplayName.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DisplayNameProperty =
-            DependencyProperty.Register("DisplayName", typeof(string), typeof(GetAppChannelModel), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register("DisplayName", typeof(string), typeof(DownloadModeModel), new PropertyMetadata(string.Empty));
 
-        /// <summary>
-        /// 获取应用通道类型内部名称
-        /// </summary>
         public string InternalName
         {
             get { return (string)GetValue(InternalNameProperty); }
@@ -29,6 +23,6 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for InternalName.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty InternalNameProperty =
-            DependencyProperty.Register("InternalName", typeof(string), typeof(GetAppChannelModel), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register("InternalName", typeof(string), typeof(DownloadModeModel), new PropertyMetadata(string.Empty));
     }
 }

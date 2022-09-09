@@ -5,7 +5,7 @@ using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
-using GetStoreApp.Models;
+using GetStoreApp.Models.Download;
 using GetStoreApp.UI.Dialogs;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -27,7 +27,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
         private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
 
-        public ObservableCollection<DownloadModel> CompletedDataList { get; } = new ObservableCollection<DownloadModel>();
+        public ObservableCollection<CompletedModel> CompletedDataList { get; } = new ObservableCollection<CompletedModel>();
 
         private bool _isSelectMode = false;
 
@@ -49,9 +49,9 @@ namespace GetStoreApp.ViewModels.Controls.Download
         {
             lock (CompletedDataListLock)
             {
-                foreach (DownloadModel downloadItem in CompletedDataList)
+                foreach (CompletedModel completedItem in CompletedDataList)
                 {
-                    downloadItem.IsSelected = false;
+                    completedItem.IsSelected = false;
                 }
             }
 
@@ -64,9 +64,9 @@ namespace GetStoreApp.ViewModels.Controls.Download
         {
             lock (CompletedDataListLock)
             {
-                foreach (DownloadModel downloadItem in CompletedDataList)
+                foreach (CompletedModel completedItem in CompletedDataList)
                 {
-                    downloadItem.IsSelected = true;
+                    completedItem.IsSelected = true;
                 }
             }
 
@@ -78,9 +78,9 @@ namespace GetStoreApp.ViewModels.Controls.Download
         {
             lock (CompletedDataListLock)
             {
-                foreach (DownloadModel downloadItem in CompletedDataList)
+                foreach (CompletedModel completedItem in CompletedDataList)
                 {
-                    downloadItem.IsSelected = false;
+                    completedItem.IsSelected = false;
                 }
             }
 
@@ -90,10 +90,15 @@ namespace GetStoreApp.ViewModels.Controls.Download
         // 删除选中的任务
         public IAsyncRelayCommand DeleteRecordCommand => new AsyncRelayCommand(async () =>
         {
-            List<DownloadModel> SelectedCompletedDataList = CompletedDataList.Where(item => item.IsSelected == true).ToList();
+            List<string> SelectedDownloadKeyList = new List<string>();
+
+            foreach (CompletedModel completedItem in CompletedDataList.Where(item => item.IsSelected == true))
+            {
+                SelectedDownloadKeyList.Add(completedItem.DownloadKey);
+            }
 
             // 没有选中任何内容时显示空提示对话框
-            if (SelectedCompletedDataList.Count == 0)
+            if (SelectedDownloadKeyList.Count == 0)
             {
                 await new SelectEmptyPromptDialog().ShowAsync();
                 return;
@@ -106,13 +111,13 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 IsSelectMode = false;
 
-                bool DeleteSelectedResult = await DownloadDBService.DeleteSelectedAsync(SelectedCompletedDataList);
+                bool DeleteSelectedResult = await DownloadDBService.DeleteSelectedAsync(SelectedDownloadKeyList);
 
                 lock (CompletedDataListLock)
                 {
-                    foreach (DownloadModel downloadItem in SelectedCompletedDataList)
+                    foreach (string downloadKey in SelectedDownloadKeyList)
                     {
-                        CompletedDataList.Remove(downloadItem);
+                        CompletedDataList.Remove(CompletedDataList.First(item => item.DownloadKey == downloadKey));
                     }
                 }
             }
@@ -121,7 +126,16 @@ namespace GetStoreApp.ViewModels.Controls.Download
         // 删除选中的任务（包括文件）
         public IAsyncRelayCommand DeleteRecordWithFileCommand => new AsyncRelayCommand(async () =>
         {
-            List<DownloadModel> SelectedCompletedDataList = CompletedDataList.Where(item => item.IsSelected == true).ToList();
+            List<BackgroundModel> SelectedCompletedDataList = new List<BackgroundModel>();
+
+            foreach (CompletedModel completedItem in CompletedDataList.Where(item => item.IsSelected == true))
+            {
+                SelectedCompletedDataList.Add(new BackgroundModel
+                {
+                    DownloadKey = completedItem.DownloadKey,
+                    FilePath = completedItem.FilePath
+                });
+            }
 
             // 没有选中任何内容时显示空提示对话框
             if (SelectedCompletedDataList.Count == 0)
@@ -137,14 +151,14 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 IsSelectMode = false;
 
-                foreach (DownloadModel downloadItem in SelectedCompletedDataList)
+                foreach (BackgroundModel item in SelectedCompletedDataList)
                 {
                     // 删除文件
                     try
                     {
-                        if (File.Exists(downloadItem.FilePath))
+                        if (File.Exists(item.FilePath))
                         {
-                            File.Delete(downloadItem.FilePath);
+                            File.Delete(item.FilePath);
                         }
                     }
                     catch (Exception)
@@ -153,13 +167,13 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     }
 
                     // 删除记录
-                    bool DeleteResult = await DownloadDBService.DeleteAsync(downloadItem);
+                    bool DeleteResult = await DownloadDBService.DeleteAsync(item.DownloadKey);
 
                     if (DeleteResult)
                     {
                         lock (CompletedDataListLock)
                         {
-                            CompletedDataList.Remove(downloadItem);
+                            CompletedDataList.Remove(CompletedDataList.First(item => item.DownloadKey == item.DownloadKey));
                         }
                     }
                     else
@@ -197,11 +211,11 @@ namespace GetStoreApp.ViewModels.Controls.Download
         });
 
         // 删除当前任务
-        public IAsyncRelayCommand DeleteCommand => new AsyncRelayCommand<DownloadModel>(async (param) =>
+        public IAsyncRelayCommand DeleteCommand => new AsyncRelayCommand<CompletedModel>(async (param) =>
         {
             if (param is not null)
             {
-                bool DeleteResult = await DownloadDBService.DeleteAsync(param);
+                bool DeleteResult = await DownloadDBService.DeleteAsync(param.DownloadKey);
 
                 if (DeleteResult)
                 {
@@ -237,7 +251,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// </summary>
         private async Task GetDownloadDataListAsync()
         {
-            List<DownloadModel> DownloadRawList = await DownloadDBService.QueryAsync(4);
+            List<BackgroundModel> DownloadRawList = await DownloadDBService.QueryAsync(4);
 
             lock (CompletedDataListLock)
             {
@@ -246,9 +260,17 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
             lock (CompletedDataListLock)
             {
-                foreach (DownloadModel downloadRawData in DownloadRawList)
+                foreach (BackgroundModel downloadRawData in DownloadRawList)
                 {
-                    CompletedDataList.Add(downloadRawData);
+                    CompletedDataList.Add(new CompletedModel
+                    {
+                        DownloadKey = downloadRawData.DownloadKey,
+                        FileName = downloadRawData.FileName,
+                        FilePath = downloadRawData.FilePath,
+                        FileSHA1 = downloadRawData.FileSHA1,
+                        TotalSize = downloadRawData.TotalSize,
+                        DownloadFlag = downloadRawData.DownloadFlag
+                    });
                 }
             }
         }

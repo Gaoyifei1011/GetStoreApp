@@ -1,7 +1,7 @@
 ﻿using GetStoreApp.Models.Base;
 using Microsoft.UI.Xaml;
 
-namespace GetStoreApp.Models
+namespace GetStoreApp.Models.Notification
 {
     public class InAppNotificationModel : ModelBase
     {
@@ -23,6 +23,6 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for NotificationValue.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty NotificationValueProperty =
-            DependencyProperty.Register("NotificationValue", typeof(object[]), typeof(InAppNotificationModel), new PropertyMetadata(null));
+            DependencyProperty.Register("NotificationValue", typeof(object[]), typeof(InAppNotificationModel), new PropertyMetadata(new object()));
     }
 }

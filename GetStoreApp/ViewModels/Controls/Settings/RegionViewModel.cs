@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Helpers;
-using GetStoreApp.Models;
+using GetStoreApp.Models.Settings;
 using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Settings

@@ -1,7 +1,7 @@
 ﻿using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Helpers;
-using GetStoreApp.Models;
+using GetStoreApp.Models.Settings;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;

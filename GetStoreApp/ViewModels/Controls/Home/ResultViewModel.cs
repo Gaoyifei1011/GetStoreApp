@@ -5,13 +5,12 @@ using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
-using GetStoreApp.Models;
+using GetStoreApp.Models.Home;
 using GetStoreApp.UI.Dialogs;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -317,7 +316,6 @@ namespace GetStoreApp.ViewModels.Controls.Home
             TestResultViewModel();
         }
 
-
         private void TestResultViewModel()
         {
             ResultControlVisable = true;
@@ -333,7 +331,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             ResultDataList.Add(new ResultModel()
             {
                 FileName = "22000.1.210604-1628.co_release_amd64fre_adkwinpeaddons.iso",
-                FileLinkExpireTime= "2022-09-08 08:20:56 GMT",
+                FileLinkExpireTime = "2022-09-08 08:20:56 GMT",
                 FileSHA1 = "123456789",
                 FileSize = "101.91 MB",
                 FileLink = "http://software-download.microsoft.com/download/sg/22000.1.210604-1628.co_release_amd64fre_adkwinpeaddons.iso"

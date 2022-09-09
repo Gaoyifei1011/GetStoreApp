@@ -67,4 +67,10 @@
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="IsTabStop" Value="False" />
     </Style>
+
+    <Style x:Key="DownloadItemTextStyle" TargetType="TextBlock">
+        <Setter Property="MinWidth" Value="50" />
+        <Setter Property="TextAlignment" Value="Left" />
+        <Setter Property="FontSize" Value="16" />
+    </Style>
 </ResourceDictionary>

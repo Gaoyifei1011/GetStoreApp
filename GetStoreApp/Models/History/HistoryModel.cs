@@ -1,7 +1,7 @@
 ﻿using GetStoreApp.Models.Base;
 using Microsoft.UI.Xaml;
 
-namespace GetStoreApp.Models
+namespace GetStoreApp.Models.History
 {
     public class HistoryModel : ModelBase
     {
@@ -32,7 +32,7 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for CreateTimeStamp.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CurrentTimeStampProperty =
-            DependencyProperty.Register("CreateTimeStamp", typeof(string), typeof(HistoryModel), new PropertyMetadata(0));
+            DependencyProperty.Register("CreateTimeStamp", typeof(string), typeof(HistoryModel), new PropertyMetadata(default(int)));
 
         /// <summary>
         /// 历史记录的索引键值
@@ -91,7 +91,7 @@ namespace GetStoreApp.Models
         /// </summary>
         public int CompareTo(HistoryModel other)
         {
-            return this.CreateTimeStamp.CompareTo(other.CreateTimeStamp);
+            return CreateTimeStamp.CompareTo(other.CreateTimeStamp);
         }
     }
 }

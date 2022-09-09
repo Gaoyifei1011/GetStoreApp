@@ -5,7 +5,7 @@
     xmlns:converter="using:GetStoreApp.Converters.Formats"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:GetStoreApp.Models"
+    xmlns:models="using:GetStoreApp.Models.Download"
     x:Name="CompletedRoot"
     mc:Ignorable="d">
 
@@ -141,7 +141,7 @@
             Visibility="{x:Bind ViewModel.CompletedDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
 
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="models:DownloadModel">
+                <DataTemplate x:DataType="models:CompletedModel">
                     <Grid Style="{StaticResource CardGridStyle}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -164,11 +164,11 @@
                             Margin="0,0,10,0"
                             VerticalAlignment="Center">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <Grid Grid.Row="0">
+                            <Grid Grid.Row="0" ColumnSpacing="10">
 
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -177,21 +177,20 @@
 
                                 <TextBlock
                                     Grid.Column="0"
-                                    Margin="0,0,10,0"
-                                    Text="{Binding FileName}"
-                                    TextAlignment="Left"
+                                    Style="{StaticResource DownloadItemTextStyle}"
+                                    Text="{x:Bind FileName}"
                                     ToolTipService.ToolTip="{x:Bind FileName}" />
                                 <TextBlock
                                     Grid.Column="1"
+                                    Style="{StaticResource DownloadItemTextStyle}"
                                     Text="{x:Bind TotalSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}"
-                                    TextAlignment="Left"
                                     ToolTipService.ToolTip="{x:Bind TotalSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}" />
                             </Grid>
 
                             <TextBlock
                                 Grid.Row="1"
-                                Padding="0,5,0,0"
                                 Foreground="{StaticResource SystemErrorTextColor}"
+                                Style="{StaticResource DownloadItemTextStyle}"
                                 Text="{Binding ElementName=CompletedRoot, Path=FileNotExists}"
                                 Visibility="{x:Bind IsFileExists(FilePath), Mode=OneWay}" />
                         </Grid>
@@ -203,7 +202,6 @@
                             Orientation="Horizontal">
 
                             <Button
-                                Margin="5,0,0,0"
                                 Command="{Binding ElementName=CompletedRoot, Path=ViewModel.InstallCommand}"
                                 CommandParameter="{x:Bind FilePath}"
                                 Content="&#xE8b7;"
@@ -211,7 +209,6 @@
                                 ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=InstallToolTip}" />
 
                             <Button
-                                Margin="5,0,0,0"
                                 Command="{Binding ElementName=CompletedRoot, Path=ViewModel.OpenItemFolderCommand}"
                                 CommandParameter="{x:Bind FilePath}"
                                 Content="&#xE8b7;"
@@ -219,7 +216,6 @@
                                 ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=OpenItemFolderToolTip}" />
 
                             <Button
-                                Margin="5,0,0,0"
                                 Command="{Binding ElementName=CompletedRoot, Path=ViewModel.DeleteCommand}"
                                 CommandParameter="{Binding}"
                                 Content="&#xE711;"

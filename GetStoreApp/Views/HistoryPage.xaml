@@ -7,7 +7,7 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:GetStoreApp.Models"
+    xmlns:models="using:GetStoreApp.Models.History"
     x:Name="HistoryRoot"
     Unloaded="{x:Bind HistoryUnloaded}"
     mc:Ignorable="d">

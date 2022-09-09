@@ -4,7 +4,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
-using GetStoreApp.Models;
+using GetStoreApp.Models.Settings;
 using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
