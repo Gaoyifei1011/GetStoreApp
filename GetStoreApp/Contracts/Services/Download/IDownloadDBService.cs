@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Models;
+﻿using GetStoreApp.Models.Download;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,17 +8,17 @@ namespace GetStoreApp.Contracts.Services.Download
     {
         Task InitializeDownloadDBAsync();
 
-        Task<bool> AddAsync(DownloadModel downloadItem);
+        Task<bool> AddAsync(BackgroundModel downloadItem);
 
-        Task<bool> UpdateFlagAsync(DownloadModel downloadItem);
+        Task<bool> UpdateFlagAsync(BackgroundModel downloadItem);
 
-        Task<List<DownloadModel>> QueryAsync(int downloadFlag);
+        Task<List<BackgroundModel>> QueryAsync(int downloadFlag);
 
         Task<bool> CheckDuplicatedAsync(string downloadKey);
 
-        Task<bool> DeleteAsync(DownloadModel downloadItem);
+        Task<bool> DeleteAsync(string downloadKey);
 
-        Task<bool> DeleteSelectedAsync(List<DownloadModel> selectedDownloadDataList);
+        Task<bool> DeleteSelectedAsync(List<string> selectedDownloadKeyList);
 
         Task<bool> ClearAsync();
     }

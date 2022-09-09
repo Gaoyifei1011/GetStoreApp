@@ -526,16 +526,18 @@ namespace GetStoreApp.Services.Download
                 // 返回成功添加任务的GID信息
                 if (response.IsSuccessStatusCode)
                 {
-                    Debug.WriteLine("121");
                     string ResponseContent = await response.Content.ReadAsStringAsync();
-                    Debug.WriteLine("ResponseContent");
-                    Debug.WriteLine(ResponseContent);
 
                     string Result = ((JObject)JsonConvert.DeserializeObject(ResponseContent))["result"].ToString();
-                    Debug.WriteLine("Result");
-                    Debug.WriteLine(Result);
 
                     JObject ResultContent = (JObject)JsonConvert.DeserializeObject(Result);
+
+                    Debug.WriteLine(Convert.ToString(ResultContent["gid"]));
+                    Debug.WriteLine(Convert.ToString(ResultContent["status"]));
+                    Debug.WriteLine(Convert.ToInt32(ResultContent["completedLength"]));
+                    Debug.WriteLine(Convert.ToInt32(ResultContent["totalLength"]));
+                    Debug.WriteLine(Convert.ToInt32(ResultContent["downloadSpeed"]));
+                    Debug.WriteLine("============");
 
                     return Tuple.Create(
                         Convert.ToString(ResultContent["gid"]),
@@ -547,7 +549,6 @@ namespace GetStoreApp.Services.Download
                 }
                 else
                 {
-                    Debug.WriteLine("121Error");
                     throw new Exception();
                 }
             }

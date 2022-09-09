@@ -5,7 +5,7 @@ using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
-using GetStoreApp.Models;
+using GetStoreApp.Models.Download;
 using GetStoreApp.UI.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -27,7 +27,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
         private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
 
-        public ObservableCollection<DownloadModel> UnfinishedDataList { get; } = new ObservableCollection<DownloadModel>();
+        public ObservableCollection<UnfinishedModel> UnfinishedDataList { get; } = new ObservableCollection<UnfinishedModel>();
 
         private bool _isSelectMode = false;
 
@@ -47,17 +47,31 @@ namespace GetStoreApp.ViewModels.Controls.Download
         // 继续下载全部任务
         public IAsyncRelayCommand ContinueAllCommand => new AsyncRelayCommand(async () =>
         {
-            List<DownloadModel> PauseList = UnfinishedDataList.Where(item => item.DownloadFlag == 2).ToList();
+            List<BackgroundModel> PauseList = new List<BackgroundModel>();
 
-            foreach (DownloadModel downloadItem in PauseList)
+            foreach (UnfinishedModel unfinishedItem in UnfinishedDataList.Where(item => item.DownloadFlag == 2))
             {
-                bool ContinueResult = await DownloadSchedulerService.ContinueTaskAsync(downloadItem);
+                PauseList.Add(new BackgroundModel
+                {
+                    DownloadKey = unfinishedItem.DownloadKey,
+                    FileName = unfinishedItem.FileName,
+                    FileLink = unfinishedItem.FileLink,
+                    FilePath = unfinishedItem.FilePath,
+                    FileSHA1 = unfinishedItem.FileSHA1,
+                    DownloadFlag = unfinishedItem.DownloadFlag,
+                    TotalSize = unfinishedItem.TotalSize,
+                });
+            }
+
+            foreach (BackgroundModel item in PauseList)
+            {
+                bool ContinueResult = await DownloadSchedulerService.ContinueTaskAsync(item);
 
                 if (ContinueResult)
                 {
                     lock (UnfinishedDataListLock)
                     {
-                        UnfinishedDataList.Remove(downloadItem);
+                        UnfinishedDataList.Remove(UnfinishedDataList.First(item => item.DownloadKey == item.DownloadKey));
                     }
                 }
                 else
@@ -72,9 +86,9 @@ namespace GetStoreApp.ViewModels.Controls.Download
         {
             lock (UnfinishedDataListLock)
             {
-                foreach (DownloadModel downloadItem in UnfinishedDataList)
+                foreach (UnfinishedModel unfinishedItem in UnfinishedDataList)
                 {
-                    downloadItem.IsSelected = false;
+                    unfinishedItem.IsSelected = false;
                 }
             }
 
@@ -87,9 +101,9 @@ namespace GetStoreApp.ViewModels.Controls.Download
         {
             lock (UnfinishedDataListLock)
             {
-                foreach (DownloadModel downloadItem in UnfinishedDataList)
+                foreach (UnfinishedModel unfinishedItem in UnfinishedDataList)
                 {
-                    downloadItem.IsSelected = true;
+                    unfinishedItem.IsSelected = true;
                 }
             }
 
@@ -101,9 +115,9 @@ namespace GetStoreApp.ViewModels.Controls.Download
         {
             lock (UnfinishedDataListLock)
             {
-                foreach (DownloadModel downloadItem in UnfinishedDataList)
+                foreach (UnfinishedModel unfinishedItem in UnfinishedDataList)
                 {
-                    downloadItem.IsSelected = false;
+                    unfinishedItem.IsSelected = false;
                 }
             }
 
@@ -113,7 +127,16 @@ namespace GetStoreApp.ViewModels.Controls.Download
         // 删除选中的任务
         public IAsyncRelayCommand DeleteSelectedCommand => new AsyncRelayCommand(async () =>
         {
-            List<DownloadModel> SelectedUnfinishedDataList = UnfinishedDataList.Where(item => item.IsSelected == true).ToList();
+            List<BackgroundModel> SelectedUnfinishedDataList = new List<BackgroundModel>();
+
+            foreach (UnfinishedModel unfinishedItem in UnfinishedDataList.Where(item => item.IsSelected == true))
+            {
+                SelectedUnfinishedDataList.Add(new BackgroundModel
+                {
+                    DownloadKey = unfinishedItem.DownloadKey,
+                    FilePath = unfinishedItem.FilePath
+                });
+            }
 
             // 没有选中任何内容时显示空提示对话框
             if (SelectedUnfinishedDataList.Count == 0)
@@ -124,13 +147,13 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
             IsSelectMode = false;
 
-            foreach (DownloadModel downloadItem in SelectedUnfinishedDataList)
+            foreach (BackgroundModel item in SelectedUnfinishedDataList)
             {
                 // 删除文件
                 try
                 {
-                    string tempFilePath = downloadItem.FilePath;
-                    string tempFileAria2Path = string.Format("{0}.{1}", downloadItem.FilePath, "Aria2");
+                    string tempFilePath = item.FilePath;
+                    string tempFileAria2Path = string.Format("{0}.{1}", item.FilePath, "Aria2");
 
                     if (File.Exists(tempFilePath))
                     {
@@ -147,13 +170,14 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     continue;
                 }
 
-                bool DeleteResult = await DownloadDBService.DeleteAsync(downloadItem);
+                // 删除记录
+                bool DeleteResult = await DownloadDBService.DeleteAsync(item.DownloadKey);
 
                 if (DeleteResult)
                 {
                     lock (UnfinishedDataListLock)
                     {
-                        UnfinishedDataList.Remove(downloadItem);
+                        UnfinishedDataList.Remove(UnfinishedDataList.First(item => item.DownloadKey == item.DownloadKey));
                     }
                 }
                 else
@@ -171,11 +195,19 @@ namespace GetStoreApp.ViewModels.Controls.Download
         });
 
         // 继续下载当前任务
-        public IAsyncRelayCommand ContinueCommand => new AsyncRelayCommand<DownloadModel>(async (param) =>
+        public IAsyncRelayCommand ContinueCommand => new AsyncRelayCommand<UnfinishedModel>(async (param) =>
         {
             if (param.DownloadFlag == 2)
             {
-                bool ContinueResult = await DownloadSchedulerService.ContinueTaskAsync(param);
+                bool ContinueResult = await DownloadSchedulerService.ContinueTaskAsync(new BackgroundModel
+                {
+                    DownloadKey = param.DownloadKey,
+                    FileName = param.FileName,
+                    FileLink = param.FileLink,
+                    FilePath = param.FilePath,
+                    FileSHA1 = param.FileSHA1,
+                    TotalSize = param.TotalSize
+                });
 
                 if (ContinueResult)
                 {
@@ -188,9 +220,9 @@ namespace GetStoreApp.ViewModels.Controls.Download
         });
 
         // 删除当前任务
-        public IAsyncRelayCommand DeleteCommand => new AsyncRelayCommand<DownloadModel>(async (param) =>
+        public IAsyncRelayCommand DeleteCommand => new AsyncRelayCommand<UnfinishedModel>(async (param) =>
         {
-            bool DeleteResult = await DownloadDBService.DeleteAsync(param);
+            bool DeleteResult = await DownloadDBService.DeleteAsync(param.DownloadKey);
 
             if (DeleteResult)
             {
@@ -226,9 +258,9 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// </summary>
         private async Task GetDownloadDataListAsync()
         {
-            List<DownloadModel> FailureDownloadRawList = await DownloadDBService.QueryAsync(0);
+            List<BackgroundModel> FailureDownloadRawList = await DownloadDBService.QueryAsync(0);
 
-            List<DownloadModel> PauseDownloadRawList = await DownloadDBService.QueryAsync(2);
+            List<BackgroundModel> PauseDownloadRawList = await DownloadDBService.QueryAsync(2);
 
             lock (UnfinishedDataListLock)
             {
@@ -237,14 +269,32 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
             lock (UnfinishedDataListLock)
             {
-                foreach (DownloadModel downloadItem in PauseDownloadRawList)
+                foreach (BackgroundModel downloadItem in PauseDownloadRawList)
                 {
-                    UnfinishedDataList.Add(downloadItem);
+                    UnfinishedDataList.Add(new UnfinishedModel
+                    {
+                        DownloadKey = downloadItem.DownloadKey,
+                        FileName = downloadItem.FileName,
+                        FileLink = downloadItem.FileLink,
+                        FilePath = downloadItem.FilePath,
+                        FileSHA1 = downloadItem.FileSHA1,
+                        TotalSize = downloadItem.TotalSize,
+                        DownloadFlag = downloadItem.DownloadFlag
+                    });
                 }
 
-                foreach (DownloadModel downloadItem in FailureDownloadRawList)
+                foreach (BackgroundModel downloadItem in FailureDownloadRawList)
                 {
-                    UnfinishedDataList.Add(downloadItem);
+                    UnfinishedDataList.Add(new UnfinishedModel
+                    {
+                        DownloadKey = downloadItem.DownloadKey,
+                        FileName = downloadItem.FileName,
+                        FileLink = downloadItem.FileLink,
+                        FilePath = downloadItem.FilePath,
+                        FileSHA1 = downloadItem.FileSHA1,
+                        TotalSize = downloadItem.TotalSize,
+                        DownloadFlag = downloadItem.DownloadFlag
+                    });
                 }
             }
         }

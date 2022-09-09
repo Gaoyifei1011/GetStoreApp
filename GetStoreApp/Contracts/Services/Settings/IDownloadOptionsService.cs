@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Models;
+﻿using GetStoreApp.Models.Settings;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.Storage;

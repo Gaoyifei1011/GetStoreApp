@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
-using GetStoreApp.Models;
+using GetStoreApp.Models.Home;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
 using System.Threading.Tasks;

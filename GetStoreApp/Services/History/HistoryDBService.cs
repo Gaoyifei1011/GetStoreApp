@@ -1,7 +1,7 @@
 ﻿using GetStoreApp.Contracts.Services.History;
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers;
-using GetStoreApp.Models;
+using GetStoreApp.Models.History;
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;

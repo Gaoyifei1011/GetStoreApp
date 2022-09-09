@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Models;
+﻿using GetStoreApp.Models.History;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

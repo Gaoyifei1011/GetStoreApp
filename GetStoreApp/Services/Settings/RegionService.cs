@@ -1,7 +1,7 @@
 ﻿using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Helpers;
-using GetStoreApp.Models;
+using GetStoreApp.Models.Settings;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

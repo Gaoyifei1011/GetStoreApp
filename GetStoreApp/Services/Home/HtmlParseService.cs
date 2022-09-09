@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Models;
+﻿using GetStoreApp.Models.Home;
 using HtmlAgilityPack;
 using System.Collections.Generic;
 using System.Linq;

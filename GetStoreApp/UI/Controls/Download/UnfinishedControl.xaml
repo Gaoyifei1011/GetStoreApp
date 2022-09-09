@@ -5,7 +5,7 @@
     xmlns:converter="using:GetStoreApp.Converters.Formats"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:GetStoreApp.Models"
+    xmlns:models="using:GetStoreApp.Models.Download"
     x:Name="UnfinishedRoot"
     mc:Ignorable="d">
 
@@ -135,7 +135,7 @@
             Visibility="{x:Bind ViewModel.UnfinishedDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
 
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="models:DownloadModel">
+                <DataTemplate x:DataType="models:UnfinishedModel">
                     <Grid Style="{StaticResource CardGridStyle}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -156,13 +156,14 @@
                         <Grid
                             Grid.Column="1"
                             Margin="0,0,10,0"
-                            VerticalAlignment="Center">
+                            VerticalAlignment="Center"
+                            RowSpacing="10">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <Grid Grid.Row="0">
+                            <Grid Grid.Row="0" ColumnSpacing="10">
 
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -171,26 +172,24 @@
 
                                 <TextBlock
                                     Grid.Column="0"
-                                    Margin="0,0,10,0"
-                                    Text="{Binding FileName}"
-                                    TextAlignment="Left"
+                                    Style="{StaticResource DownloadItemTextStyle}"
+                                    Text="{x:Bind FileName}"
                                     ToolTipService.ToolTip="{x:Bind FileName}" />
                                 <TextBlock
                                     Grid.Column="1"
-                                    Margin="0,0,10,0"
+                                    Style="{StaticResource DownloadItemTextStyle}"
                                     Text="{x:Bind FinishedSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}"
-                                    TextAlignment="Left"
                                     ToolTipService.ToolTip="{x:Bind FinishedSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}" />
                             </Grid>
 
                             <TextBlock
                                 Grid.Row="1"
-                                Padding="0,5,0,0"
+                                Style="{StaticResource DownloadItemTextStyle}"
                                 Text="{Binding ElementName=UnfinishedRoot, Path=PauseDownload}"
                                 Visibility="{x:Bind DownloadFlag, Converter={StaticResource DownloadFlagConverter}, ConverterParameter=2}" />
                             <TextBlock
                                 Grid.Row="1"
-                                Padding="0,5,0,0"
+                                Style="{StaticResource DownloadItemTextStyle}"
                                 Text="{Binding ElementName=UnfinishedRoot, Path=InvalidLink}"
                                 Visibility="{x:Bind DownloadFlag, Converter={StaticResource DownloadFlagConverter}, ConverterParameter=0}" />
                         </Grid>
@@ -202,7 +201,6 @@
                             Orientation="Horizontal">
 
                             <Button
-                                Margin="5,0,0,0"
                                 Command="{Binding ElementName=UnfinishedRoot, Path=ViewModel.ContinueCommand}"
                                 CommandParameter="{Binding}"
                                 Content="&#xE74b;"
@@ -211,7 +209,6 @@
                                 ToolTipService.ToolTip="{Binding ElementName=UnfinishedRoot, Path=ContinueToolTip}" />
 
                             <Button
-                                Margin="5,0,0,0"
                                 Command="{Binding ElementName=UnfinishedRoot, Path=ViewModel.DeleteCommand}"
                                 CommandParameter="{Binding}"
                                 Content="&#xE711;"

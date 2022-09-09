@@ -5,7 +5,7 @@
     xmlns:converter="using:GetStoreApp.Converters.Formats"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:GetStoreApp.Models"
+    xmlns:models="using:GetStoreApp.Models.Download"
     x:Name="DownloadingRoot"
     mc:Ignorable="d">
 
@@ -133,7 +133,7 @@
             Visibility="{x:Bind ViewModel.DownloadingDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
 
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="models:DownloadModel">
+                <DataTemplate x:DataType="models:DownloadingModel">
                     <Grid Style="{StaticResource CardGridStyle}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -154,13 +154,14 @@
                         <Grid
                             Grid.Column="1"
                             Margin="0,0,10,0"
-                            VerticalAlignment="Center">
+                            VerticalAlignment="Center"
+                            RowSpacing="8">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <Grid Grid.Row="0">
+                            <Grid Grid.Row="0" ColumnSpacing="10">
 
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -170,27 +171,24 @@
 
                                 <TextBlock
                                     Grid.Column="0"
-                                    Margin="0,0,10,0"
-                                    Text="{Binding FileName}"
-                                    TextAlignment="Left"
+                                    Style="{StaticResource DownloadItemTextStyle}"
+                                    Text="{x:Bind FileName}"
                                     ToolTipService.ToolTip="{x:Bind FileName}" />
                                 <TextBlock
                                     Grid.Column="1"
-                                    Margin="0,0,10,0"
+                                    Style="{StaticResource DownloadItemTextStyle}"
                                     Text="{x:Bind FinishedSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}"
-                                    TextAlignment="Left"
                                     ToolTipService.ToolTip="{x:Bind FinishedSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}" />
                                 <TextBlock
                                     Grid.Column="2"
+                                    Style="{StaticResource DownloadItemTextStyle}"
                                     Text="{x:Bind CurrentSpeed, Mode=OneWay, Converter={StaticResource DownloadSpeedFormatConverter}}"
-                                    TextAlignment="Left"
                                     ToolTipService.ToolTip="{x:Bind CurrentSpeed, Mode=OneWay, Converter={StaticResource DownloadSpeedFormatConverter}}" />
                             </Grid>
 
                             <ProgressBar
                                 Grid.Row="1"
-                                Padding="0,5,0,0"
-                                ToolTipService.ToolTip="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Value, Converter={StaticResource DownloadProgressFormatConverter}, Mode=OneWay}"
+                                ToolTipService.ToolTip="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Value}"
                                 Value="{x:Bind DownloadProgress(FinishedSize, TotalSize), Mode=OneWay}" />
                         </Grid>
 
@@ -201,15 +199,15 @@
                             Orientation="Horizontal">
 
                             <Button
-                                Margin="5,0,0,0"
                                 Command="{Binding ElementName=DownloadingRoot, Path=ViewModel.PauseCommand}"
+                                CommandParameter="{Binding}"
                                 Content="&#xE769;"
                                 Style="{StaticResource ButtonDownloadStyle}"
                                 ToolTipService.ToolTip="{Binding ElementName=DownloadingRoot, Path=PauseToolTip}" />
 
                             <Button
-                                Margin="5,0,0,0"
                                 Command="{Binding ElementName=DownloadingRoot, Path=ViewModel.DeleteCommand}"
+                                CommandParameter="{Binding}"
                                 Content="&#xE711;"
                                 Style="{StaticResource ButtonDownloadStyle}"
                                 ToolTipService.ToolTip="{Binding ElementName=DownloadingRoot, Path=DeleteToolTip}" />

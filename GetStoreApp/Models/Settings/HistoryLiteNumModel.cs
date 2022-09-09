@@ -1,7 +1,7 @@
 ﻿using GetStoreApp.Models.Base;
 using Microsoft.UI.Xaml;
 
-namespace GetStoreApp.Models
+namespace GetStoreApp.Models.Settings
 {
     public class HistoryLiteNumModel : ModelBase
     {
@@ -29,6 +29,6 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for HistoryLiteNumValue.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty HistoryLiteNumValueProperty =
-            DependencyProperty.Register("HistoryLiteNum", typeof(int), typeof(HistoryLiteNumModel), new PropertyMetadata(0));
+            DependencyProperty.Register("HistoryLiteNum", typeof(int), typeof(HistoryLiteNumModel), new PropertyMetadata(default(int)));
     }
 }

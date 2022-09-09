@@ -1,7 +1,7 @@
 ﻿using GetStoreApp.Models.Base;
 using Microsoft.UI.Xaml;
 
-namespace GetStoreApp.Models
+namespace GetStoreApp.Models.Settings
 {
     public class RegionModel : ModelBase
     {

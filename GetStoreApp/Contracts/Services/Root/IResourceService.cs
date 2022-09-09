@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Models;
+﻿using GetStoreApp.Models.Home;
+using GetStoreApp.Models.Settings;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

@@ -1,7 +1,7 @@
 ﻿using GetStoreApp.Models.Base;
 using Microsoft.UI.Xaml;
 
-namespace GetStoreApp.Models
+namespace GetStoreApp.Models.Home
 {
     public class RequestModel : ModelBase
     {
@@ -16,7 +16,7 @@ namespace GetStoreApp.Models
 
         // Using a DependencyProperty as the backing store for RequestId.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty RequestIdProperty =
-            DependencyProperty.Register("RequestId", typeof(int), typeof(RequestModel), new PropertyMetadata(0));
+            DependencyProperty.Register("RequestId", typeof(int), typeof(RequestModel), new PropertyMetadata(default(int)));
 
         /// <summary>
         /// 网页请求返回的状态码
