@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Models.Base;
 using Microsoft.UI.Xaml;
+using System;
 
 namespace GetStoreApp.Models.Download
 {
@@ -196,7 +197,7 @@ namespace GetStoreApp.Models.Download
         /// </summary>
         public double DownloadProgress(double finishedSize, double totalSize)
         {
-            if (totalSize == default)
+            if (totalSize == default(double))
             {
                 IsFileDownloading = false;
                 return default;
@@ -204,7 +205,7 @@ namespace GetStoreApp.Models.Download
             else
             {
                 IsFileDownloading = true;
-                return finishedSize / totalSize;
+                return Math.Round(finishedSize / totalSize, 4) * 100;
             }
         }
     }

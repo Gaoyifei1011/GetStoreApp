@@ -9,6 +9,7 @@ using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.History;
 using GetStoreApp.Models.Home;
+using GetStoreApp.Models.Notification;
 using GetStoreApp.UI.Dialogs;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;

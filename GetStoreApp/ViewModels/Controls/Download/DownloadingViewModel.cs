@@ -11,6 +11,7 @@ using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -298,39 +299,6 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// <summary>
         /// 订阅事件，下载中列表内容发生改变时通知UI更改
         /// </summary>
-        private void WaitingListItemsChanged(object sender, Extensions.Event.ItemsChangedEventArgs<BackgroundModel> args)
-        {
-            // 等待列表添加项目时，更新UI
-            if (args.AddedItems.Count > 0)
-            {
-                foreach (BackgroundModel item in args.AddedItems)
-                {
-                    DownloadingDataList.Add(new DownloadingModel
-                    {
-                        DownloadKey = item.DownloadKey,
-                        FileName = item.FileName,
-                        FileLink = item.FileLink,
-                        FilePath = item.FilePath,
-                        FileSHA1 = item.FileSHA1,
-                        TotalSize = item.TotalSize,
-                        DownloadFlag = item.DownloadFlag
-                    });
-                }
-            }
-
-            // 等待列表删除项目时，更新UI
-            if (args.RemovedItems.Count > 0)
-            {
-                foreach (BackgroundModel downloadItem in args.RemovedItems)
-                {
-                    DownloadingDataList.Remove(DownloadingDataList.First(item => item.DownloadKey == downloadItem.DownloadKey));
-                }
-            }
-        }
-
-        /// <summary>
-        /// 订阅事件，等待列表内容发生改变时通知UI更改
-        /// </summary>
         private void DownloadingListItemsChanged(object sender, Extensions.Event.ItemsChangedEventArgs<BackgroundModel> args)
         {
             // 下载中列表添加项目时，更新UI
@@ -340,16 +308,17 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 {
                     foreach (BackgroundModel downloadItem in args.AddedItems)
                     {
-                        DownloadingDataList.Insert(DownloadingDataList.Count(item => item.DownloadFlag == 3), new DownloadingModel
-                        {
-                            DownloadKey = downloadItem.DownloadKey,
-                            FileName = downloadItem.FileName,
-                            FileLink = downloadItem.FileLink,
-                            FilePath = downloadItem.FilePath,
-                            FileSHA1 = downloadItem.FileSHA1,
-                            TotalSize = downloadItem.TotalSize,
-                            DownloadFlag = downloadItem.DownloadFlag
-                        });
+                        DownloadingDataList.Insert(DownloadingDataList.Count(item => item.DownloadFlag == 3),
+                            new DownloadingModel
+                            {
+                                DownloadKey = downloadItem.DownloadKey,
+                                FileName = downloadItem.FileName,
+                                FileLink = downloadItem.FileLink,
+                                FilePath = downloadItem.FilePath,
+                                FileSHA1 = downloadItem.FileSHA1,
+                                TotalSize = downloadItem.TotalSize,
+                                DownloadFlag = downloadItem.DownloadFlag
+                            });
                     }
                 }
             }
@@ -359,10 +328,46 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 lock (DownloadingDataListLock)
                 {
-                    foreach (BackgroundModel item in args.RemovedItems)
+                    foreach (BackgroundModel backgroundItem in args.RemovedItems)
                     {
-                        DownloadingDataList.Remove(DownloadingDataList.First(item => item.DownloadKey == item.DownloadKey));
+                        DownloadingDataList.Remove(DownloadingDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey));
                     }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 订阅事件，等待列表内容发生改变时通知UI更改
+        /// </summary>
+        private void WaitingListItemsChanged(object sender, Extensions.Event.ItemsChangedEventArgs<BackgroundModel> args)
+        {
+            // 等待列表添加项目时，更新UI
+            if (args.AddedItems.Count > 0)
+            {
+                foreach (BackgroundModel item in args.AddedItems)
+                {
+                    lock (DownloadingDataListLock)
+                    {
+                        DownloadingDataList.Add(new DownloadingModel
+                        {
+                            DownloadKey = item.DownloadKey,
+                            FileName = item.FileName,
+                            FileLink = item.FileLink,
+                            FilePath = item.FilePath,
+                            FileSHA1 = item.FileSHA1,
+                            TotalSize = item.TotalSize,
+                            DownloadFlag = item.DownloadFlag
+                        });
+                    }
+                }
+            }
+
+            // 等待列表删除项目时，更新UI
+            if (args.RemovedItems.Count > 0)
+            {
+                foreach (BackgroundModel backgroundItem in args.RemovedItems)
+                {
+                    DownloadingDataList.Remove(DownloadingDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey));
                 }
             }
         }
@@ -376,12 +381,12 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
             lock (DownloadingDataListLock)
             {
-                for (int i = 0; i < DownloadingList.Count; i++)
+                foreach (BackgroundModel backgroundItem in DownloadingList)
                 {
-                    if (DownloadingDataList[i].DownloadKey == DownloadingList[i].DownloadKey)
-                    {
-                        DownloadingDataList[i].FinishedSize = DownloadingList[i].FinishedSize;
-                    }
+                    int index = DownloadingDataList.IndexOf(DownloadingDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey));
+                    DownloadingDataList[index].FinishedSize = backgroundItem.FinishedSize;
+                    DownloadingDataList[index].TotalSize = backgroundItem.TotalSize;
+                    DownloadingDataList[index].CurrentSpeed = backgroundItem.CurrentSpeed;
                 }
             }
         }

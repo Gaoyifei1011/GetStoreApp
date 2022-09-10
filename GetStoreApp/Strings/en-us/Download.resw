@@ -207,6 +207,9 @@
   <data name="InstallToolTip" xml:space="preserve">
     <value>Install the app</value>
   </data>
+  <data name="InvalidLink" xml:space="preserve">
+    <value>The link has been expired</value>
+  </data>
   <data name="OpenFolder" xml:space="preserve">
     <value>Open folder</value>
   </data>
@@ -227,6 +230,9 @@
   </data>
   <data name="PauseAllToolTip" xml:space="preserve">
     <value>Pauses all tasks that are in the process of being downloaded or waiting to be downloaded</value>
+  </data>
+  <data name="PauseDownload" xml:space="preserve">
+    <value>Download suspended</value>
   </data>
   <data name="PauseToolTip" xml:space="preserve">
     <value>Pause downloading the current task</value>
@@ -266,5 +272,8 @@
   </data>
   <data name="UnselectedToolTip" xml:space="preserve">
     <value>Not selected</value>
+  </data>
+  <data name="WaitDownload" xml:space="preserve">
+    <value>Waiting for download</value>
   </data>
 </root>

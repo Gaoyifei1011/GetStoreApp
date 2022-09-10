@@ -16,9 +16,7 @@ namespace GetStoreApp.Converters.Conversions
                 return DependencyProperty.UnsetValue;
             }
 
-            bool? result = value as bool?;
-
-            return !result;
+            return !System.Convert.ToBoolean(value);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

@@ -16,8 +16,8 @@ namespace GetStoreApp.Converters.Conversions
                 return DependencyProperty.UnsetValue;
             }
 
-            int? result = value as int?;
-            string param = parameter as string;
+            int result = System.Convert.ToInt32(value);
+            string param = System.Convert.ToString(parameter);
 
             if (!string.IsNullOrEmpty(param) && param == "Reverse")
             {

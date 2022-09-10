@@ -16,9 +16,9 @@ namespace GetStoreApp.Converters.Checks
                 return DependencyProperty.UnsetValue;
             }
 
-            int? result = value as int?;
+            int result = System.Convert.ToInt32(value);
 
-            return result == 2 ? Visibility.Visible : Visibility.Collapsed;
+            return result == 2 ? true : false;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

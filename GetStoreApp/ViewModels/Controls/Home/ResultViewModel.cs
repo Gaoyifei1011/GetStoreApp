@@ -6,6 +6,7 @@ using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Home;
+using GetStoreApp.Models.Notification;
 using GetStoreApp.UI.Dialogs;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -319,7 +320,14 @@ namespace GetStoreApp.ViewModels.Controls.Home
         private void TestResultViewModel()
         {
             ResultControlVisable = true;
-
+            ResultDataList.Add(new ResultModel()
+            {
+                FileName = "WPS_Setup_12358.exe",
+                FileLinkExpireTime = "2022-09-08 08:14:56 GMT",
+                FileSHA1 = "1234567",
+                FileSize = "150.91 MB",
+                FileLink = "https://official-package.wpscdn.cn/wps/download/WPS_Setup_12358.exe"
+            });
             ResultDataList.Add(new ResultModel()
             {
                 FileName = "22000.1.210604-1628.co_release_amd64fre_ADK.iso",
@@ -327,7 +335,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 FileSHA1 = "980821",
                 FileSize = "111.91 MB",
                 FileLink = "http://software-download.microsoft.com/download/sg/22000.1.210604-1628.co_release_amd64fre_ADK.iso"
-            }); ;
+            });
             ResultDataList.Add(new ResultModel()
             {
                 FileName = "22000.1.210604-1628.co_release_amd64fre_adkwinpeaddons.iso",

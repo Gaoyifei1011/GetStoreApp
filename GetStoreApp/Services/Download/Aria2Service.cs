@@ -522,7 +522,6 @@ namespace GetStoreApp.Services.Download
 
                 HttpResponseMessage response = await httpClient.PostAsync(RPCServerLink, httpContent);
 
-                Debug.WriteLine(response.StatusCode);
                 // 返回成功添加任务的GID信息
                 if (response.IsSuccessStatusCode)
                 {
@@ -531,13 +530,6 @@ namespace GetStoreApp.Services.Download
                     string Result = ((JObject)JsonConvert.DeserializeObject(ResponseContent))["result"].ToString();
 
                     JObject ResultContent = (JObject)JsonConvert.DeserializeObject(Result);
-
-                    Debug.WriteLine(Convert.ToString(ResultContent["gid"]));
-                    Debug.WriteLine(Convert.ToString(ResultContent["status"]));
-                    Debug.WriteLine(Convert.ToInt32(ResultContent["completedLength"]));
-                    Debug.WriteLine(Convert.ToInt32(ResultContent["totalLength"]));
-                    Debug.WriteLine(Convert.ToInt32(ResultContent["downloadSpeed"]));
-                    Debug.WriteLine("============");
 
                     return Tuple.Create(
                         Convert.ToString(ResultContent["gid"]),
@@ -552,9 +544,8 @@ namespace GetStoreApp.Services.Download
                     throw new Exception();
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Debug.WriteLine(e.Message);
                 return null;
             }
         }

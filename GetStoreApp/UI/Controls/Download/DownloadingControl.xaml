@@ -167,6 +167,7 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock
@@ -182,14 +183,25 @@
                                 <TextBlock
                                     Grid.Column="2"
                                     Style="{StaticResource DownloadItemTextStyle}"
+                                    Text="{x:Bind TotalSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}"
+                                    ToolTipService.ToolTip="{x:Bind TotalSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}" />
+                                <TextBlock
+                                    Grid.Column="3"
+                                    Style="{StaticResource DownloadItemTextStyle}"
                                     Text="{x:Bind CurrentSpeed, Mode=OneWay, Converter={StaticResource DownloadSpeedFormatConverter}}"
                                     ToolTipService.ToolTip="{x:Bind CurrentSpeed, Mode=OneWay, Converter={StaticResource DownloadSpeedFormatConverter}}" />
                             </Grid>
 
                             <ProgressBar
                                 Grid.Row="1"
-                                ToolTipService.ToolTip="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Value}"
+                                IsIndeterminate="{x:Bind IsFileDownloading, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
+                                Visibility="{x:Bind DownloadFlag, Converter={StaticResource DownloadFlagConverter}, ConverterParameter=3}"
                                 Value="{x:Bind DownloadProgress(FinishedSize, TotalSize), Mode=OneWay}" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Style="{StaticResource SubDownloadItemTextStyle}"
+                                Text="{Binding ElementName=DownloadingRoot, Path=WaitDownload}"
+                                Visibility="{x:Bind DownloadFlag, Converter={StaticResource DownloadFlagConverter}, ConverterParameter=1}" />
                         </Grid>
 
                         <StackPanel
