@@ -16,10 +16,10 @@ namespace GetStoreApp.Converters.Conversions
                 return DependencyProperty.UnsetValue;
             }
 
-            int? result = value as int?;
-            string param = parameter as string;
+            int result = System.Convert.ToInt32(value);
+            int param = System.Convert.ToInt32(parameter);
 
-            if (!string.IsNullOrEmpty(param) && result == System.Convert.ToInt32(param))
+            if (result == param)
             {
                 return Visibility.Visible;
             }

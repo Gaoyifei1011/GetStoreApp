@@ -20,7 +20,7 @@ namespace GetStoreApp.Converters.Formats
                 return DependencyProperty.UnsetValue;
             }
 
-            string result = value as string;
+            string result = System.Convert.ToString(value);
 
             return ResourceService.ChannelList.Find(item => item.InternalName.Equals(result)).DisplayName;
         }

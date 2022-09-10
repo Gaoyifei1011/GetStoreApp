@@ -6,6 +6,7 @@ using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
+using GetStoreApp.Models.History;
 using GetStoreApp.Models.Home;
 using GetStoreApp.Services.Home;
 using System;

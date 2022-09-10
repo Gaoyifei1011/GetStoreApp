@@ -207,6 +207,9 @@
   <data name="InstallToolTip" xml:space="preserve">
     <value>安装该应用</value>
   </data>
+  <data name="InvalidLink" xml:space="preserve">
+    <value>该链接已失效</value>
+  </data>
   <data name="OpenFolder" xml:space="preserve">
     <value>打开文件夹</value>
   </data>
@@ -227,6 +230,9 @@
   </data>
   <data name="PauseAllToolTip" xml:space="preserve">
     <value>暂停所有处于正在下载或等待下载的任务</value>
+  </data>
+  <data name="PauseDownload" xml:space="preserve">
+    <value>已暂停下载</value>
   </data>
   <data name="PauseToolTip" xml:space="preserve">
     <value>暂停下载当前任务</value>
@@ -266,5 +272,8 @@
   </data>
   <data name="UnselectedToolTip" xml:space="preserve">
     <value>未选择</value>
+  </data>
+  <data name="WaitDownload" xml:space="preserve">
+    <value>等待下载</value>
   </data>
 </root>

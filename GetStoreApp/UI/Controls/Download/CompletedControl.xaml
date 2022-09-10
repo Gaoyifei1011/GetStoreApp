@@ -162,7 +162,8 @@
                         <Grid
                             Grid.Column="1"
                             Margin="0,0,10,0"
-                            VerticalAlignment="Center">
+                            VerticalAlignment="Center"
+                            RowSpacing="8">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="Auto" />
@@ -190,7 +191,7 @@
                             <TextBlock
                                 Grid.Row="1"
                                 Foreground="{StaticResource SystemErrorTextColor}"
-                                Style="{StaticResource DownloadItemTextStyle}"
+                                Style="{StaticResource SubDownloadItemTextStyle}"
                                 Text="{Binding ElementName=CompletedRoot, Path=FileNotExists}"
                                 Visibility="{x:Bind IsFileExists(FilePath), Mode=OneWay}" />
                         </Grid>

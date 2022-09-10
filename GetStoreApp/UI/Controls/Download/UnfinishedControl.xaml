@@ -151,46 +151,36 @@
                             IsThreeState="False"
                             Style="{StaticResource CheckBoxStyle}"
                             ToolTipService.ToolTip="{x:Bind IsSelected, Converter={StaticResource CheckBoxToolTipFormatConverter}, ConverterParameter=Download, Mode=OneWay}"
-                            Visibility="{Binding ElementName=DownloadingRoot, Path=ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            Visibility="{Binding ElementName=UnfinishedRoot, Path=ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                         <Grid
                             Grid.Column="1"
                             Margin="0,0,10,0"
                             VerticalAlignment="Center"
-                            RowSpacing="10">
+                            RowSpacing="5">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <Grid Grid.Row="0" ColumnSpacing="10">
-
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-
-                                <TextBlock
-                                    Grid.Column="0"
-                                    Style="{StaticResource DownloadItemTextStyle}"
-                                    Text="{x:Bind FileName}"
-                                    ToolTipService.ToolTip="{x:Bind FileName}" />
-                                <TextBlock
-                                    Grid.Column="1"
-                                    Style="{StaticResource DownloadItemTextStyle}"
-                                    Text="{x:Bind FinishedSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}"
-                                    ToolTipService.ToolTip="{x:Bind FinishedSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}" />
-                            </Grid>
+                            <TextBlock
+                                Grid.Row="0"
+                                Style="{StaticResource DownloadItemTextStyle}"
+                                Text="{x:Bind FileName}"
+                                ToolTipService.ToolTip="{x:Bind FileName}" />
 
                             <TextBlock
                                 Grid.Row="1"
-                                Style="{StaticResource DownloadItemTextStyle}"
+                                Style="{StaticResource SubDownloadItemTextStyle}"
                                 Text="{Binding ElementName=UnfinishedRoot, Path=PauseDownload}"
+                                ToolTipService.ToolTip="{Binding ElementName=UnfinishedRoot, Path=PauseDownload}"
                                 Visibility="{x:Bind DownloadFlag, Converter={StaticResource DownloadFlagConverter}, ConverterParameter=2}" />
                             <TextBlock
                                 Grid.Row="1"
-                                Style="{StaticResource DownloadItemTextStyle}"
+                                Foreground="{StaticResource SystemErrorTextColor}"
+                                Style="{StaticResource SubDownloadItemTextStyle}"
                                 Text="{Binding ElementName=UnfinishedRoot, Path=InvalidLink}"
+                                ToolTipService.ToolTip="{Binding ElementName=UnfinishedRoot, Path=InvalidLink}"
                                 Visibility="{x:Bind DownloadFlag, Converter={StaticResource DownloadFlagConverter}, ConverterParameter=0}" />
                         </Grid>
 

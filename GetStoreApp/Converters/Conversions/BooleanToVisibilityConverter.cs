@@ -16,8 +16,8 @@ namespace GetStoreApp.Converters.Conversions
                 return DependencyProperty.UnsetValue;
             }
 
-            bool? result = value as bool?;
-            string param = parameter as string;
+            bool result = System.Convert.ToBoolean(value);
+            string param = System.Convert.ToString(parameter);
 
             if (!string.IsNullOrEmpty(param) && param == "Reverse")
             {

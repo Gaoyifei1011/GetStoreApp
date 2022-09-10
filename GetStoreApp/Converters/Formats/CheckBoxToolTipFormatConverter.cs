@@ -21,15 +21,14 @@ namespace GetStoreApp.Converters.Formats
             }
 
             bool result = System.Convert.ToBoolean(value);
-            string param = parameter as string;
 
             if (result)
             {
-                return ResourceService.GetLocalized(string.Format("/{0}/SelectedToolTip", param));
+                return ResourceService.GetLocalized(string.Format("/{0}/SelectedToolTip", parameter));
             }
             else
             {
-                return ResourceService.GetLocalized(string.Format("/{0}/UnselectedToolTip", param));
+                return ResourceService.GetLocalized(string.Format("/{0}/UnselectedToolTip", parameter));
             }
         }
 

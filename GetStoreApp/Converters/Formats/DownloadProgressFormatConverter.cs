@@ -20,9 +20,7 @@ namespace GetStoreApp.Converters.Formats
                 return DependencyProperty.UnsetValue;
             }
 
-            int result = System.Convert.ToInt32(value);
-
-            return string.Format("{0}{1}", ResourceService.GetLocalized("/Download/Progress"), result);
+            return string.Format("{0}{1}", ResourceService.GetLocalized("/Download/Progress"), value);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

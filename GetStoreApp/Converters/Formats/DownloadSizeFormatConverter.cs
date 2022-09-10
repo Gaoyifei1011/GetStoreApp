@@ -10,11 +10,11 @@ namespace GetStoreApp.Converters.Formats
     /// </summary>
     public class DownloadSizeFormatConverter : IValueConverter
     {
-        public List<string> SizeUnitsList = new List<string>()
+        public Dictionary<string, int> SizeDict = new Dictionary<string, int>()
         {
-            "KB",
-            "MB",
-            "GB"
+            { "GB",1024*1024*1024 },
+            { "MB",1024*1024 },
+            { "KB",1024 }
         };
 
         public object Convert(object value, Type targetType, object parameter, string language)
@@ -24,9 +24,24 @@ namespace GetStoreApp.Converters.Formats
                 return DependencyProperty.UnsetValue;
             }
 
-            int? result = value as int?;
+            double result = System.Convert.ToDouble(value);
 
-            return string.Format("{0}{1}", result, SizeUnitsList[1]);
+            if (result / SizeDict["GB"] >= 1)
+            {
+                return string.Format("{0}{1}", Math.Round(System.Convert.ToDouble(result) / SizeDict["GB"], 2), "GB");
+            }
+            else if (result / SizeDict["MB"] >= 1)
+            {
+                return string.Format("{0}{1}", Math.Round(System.Convert.ToDouble(result) / SizeDict["MB"], 2), "MB");
+            }
+            else if (result / SizeDict["KB"] >= 1)
+            {
+                return string.Format("{0}{1}", Math.Round(System.Convert.ToDouble(result) / SizeDict["KB"], 2), "KB");
+            }
+            else
+            {
+                return string.Format("{0}{1}", result, "B");
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

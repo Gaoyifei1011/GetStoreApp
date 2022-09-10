@@ -24,19 +24,19 @@ namespace GetStoreApp.Services.Download
             // 将处于等待下载状态的任务调整为暂停下载状态
             List<BackgroundModel> DownloadWaitingList = await QueryAsync(1);
 
-            foreach (BackgroundModel downloadItem in DownloadWaitingList)
+            foreach (BackgroundModel backgroundItem in DownloadWaitingList)
             {
-                downloadItem.DownloadFlag = 2;
-                await UpdateFlagAsync(downloadItem);
+                backgroundItem.DownloadFlag = 2;
+                await UpdateFlagAsync(backgroundItem);
             }
 
             // 将正在下载状态的任务调整为暂停下载状态
             List<BackgroundModel> DownloadingList = await QueryAsync(3);
 
-            foreach (BackgroundModel downloadItem in DownloadingList)
+            foreach (BackgroundModel backgroundItem in DownloadingList)
             {
-                downloadItem.DownloadFlag = 2;
-                await UpdateFlagAsync(downloadItem);
+                backgroundItem.DownloadFlag = 2;
+                await UpdateFlagAsync(backgroundItem);
             }
 
             await Task.CompletedTask;
@@ -45,7 +45,7 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 直接添加下载记录数据，并返回下载记录添加是否成功的结果
         /// </summary>
-        public async Task<bool> AddAsync(BackgroundModel downloadItem)
+        public async Task<bool> AddAsync(BackgroundModel backgroundItem)
         {
             bool IsAddSuccessfully = false;
 
@@ -64,13 +64,13 @@ namespace GetStoreApp.Services.Download
                         {
                             InsertCommand.CommandText = string.Format("INSERT INTO {0} VALUES ('{1}','{2}','{3}','{4}','{5}',{6},{7})",
                                 DataBaseService.DownloadTableName,
-                                downloadItem.DownloadKey,
-                                downloadItem.FileName,
-                                downloadItem.FileLink,
-                                downloadItem.FilePath,
-                                downloadItem.FileSHA1,
-                                downloadItem.TotalSize,
-                                downloadItem.DownloadFlag
+                                backgroundItem.DownloadKey,
+                                backgroundItem.FileName,
+                                backgroundItem.FileLink,
+                                backgroundItem.FilePath,
+                                backgroundItem.FileSHA1,
+                                backgroundItem.TotalSize,
+                                backgroundItem.DownloadFlag
                                 );
 
                             await InsertCommand.ExecuteNonQueryAsync();
@@ -93,7 +93,7 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 存在重复的数据，只更新该记录的DownloadFlag（相当于执行重新下载步骤）
         /// </summary>
-        public async Task<bool> UpdateFlagAsync(BackgroundModel downloadItem)
+        public async Task<bool> UpdateFlagAsync(BackgroundModel backgroundItem)
         {
             bool IsUpdateSuccessfully = false;
 
@@ -112,8 +112,8 @@ namespace GetStoreApp.Services.Download
                         {
                             UpdateCommand.CommandText = string.Format("UPDATE {0} SET DOWNLOADFLAG ={1} WHERE DOWNLOADKEY = '{2}'",
                                 DataBaseService.DownloadTableName,
-                                downloadItem.DownloadFlag,
-                                downloadItem.DownloadKey
+                                backgroundItem.DownloadFlag,
+                                backgroundItem.DownloadKey
                                 );
 
                             await UpdateCommand.ExecuteNonQueryAsync();
@@ -276,11 +276,11 @@ namespace GetStoreApp.Services.Download
 
                         try
                         {
-                            foreach (string downloadItem in selectedDownloadKeyList)
+                            foreach (string downloadKey in selectedDownloadKeyList)
                             {
                                 DeleteCommand.CommandText = string.Format("DELETE FROM {0} WHERE DOWNLOADKEY = '{1}'",
                                     DataBaseService.DownloadTableName,
-                                    downloadItem
+                                    downloadKey
                                     );
                                 await DeleteCommand.ExecuteNonQueryAsync();
                             }

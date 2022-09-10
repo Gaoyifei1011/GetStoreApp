@@ -16,7 +16,7 @@ namespace GetStoreApp.Converters.Formats
                 return DependencyProperty.UnsetValue;
             }
 
-            string RawDataTime = value.ToString();
+            string RawDataTime = System.Convert.ToString(value);
 
             DateTime dt = System.Convert.ToDateTime(RawDataTime).ToLocalTime();
 
