@@ -162,6 +162,9 @@
   <data name="DownloadInApp" xml:space="preserve">
     <value>Use the in-app download manager to download(BETA)</value>
   </data>
+  <data name="DownloadInstruction" xml:space="preserve">
+    <value>Download management instructions</value>
+  </data>
   <data name="DownloadItem" xml:space="preserve">
     <value>The number of simultaneous download tasks</value>
   </data>

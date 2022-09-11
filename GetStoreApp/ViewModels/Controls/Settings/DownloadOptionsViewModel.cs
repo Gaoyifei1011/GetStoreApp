@@ -1,10 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Helpers;
 using GetStoreApp.Models.Settings;
+using GetStoreApp.ViewModels.Pages;
+using Microsoft.UI.Xaml.Media.Animation;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 
@@ -13,6 +17,8 @@ namespace GetStoreApp.ViewModels.Controls.Settings
     public class DownloadOptionsViewModel : ObservableRecipient
     {
         private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
+
+        private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
 
         public List<int> DownloadItemList => DownloadOptionsService.DownloadItemList;
 
@@ -44,6 +50,13 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
             set { SetProperty(ref _downloadMode, value); }
         }
+
+        public IAsyncRelayCommand DownloadInstructionCommand => new AsyncRelayCommand(async () =>
+        {
+            App.NavigationArgs = "SettingsHelp";
+            NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+            await Task.CompletedTask;
+        });
 
         public IAsyncRelayCommand OpenFolderCommand => new AsyncRelayCommand(async () =>
         {

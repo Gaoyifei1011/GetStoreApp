@@ -39,6 +39,12 @@
                         Style="{StaticResource CaptionTextBlockStyle}"
                         Text="{x:Bind ResourceService.GetLocalized('/Settings/DownloadOptionsDescription')}" />
                 </StackPanel>
+
+                <Button
+                    Grid.Column="2"
+                    Command="{x:Bind ViewModel.DownloadInstructionCommand}"
+                    Content="{x:Bind ResourceService.GetLocalized('/Settings/DownloadInstruction')}"
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/DownloadInstruction')}" />
             </Grid>
         </Expander.Header>
 

@@ -192,6 +192,15 @@
   <data name="DevelopPurposeDescription" xml:space="preserve">
     <value>The Microsoft Store provides a distribution, download, and update channel for apps that are already on the shelves. But in the latest Microsoft Store, Microsoft requires users to use an online account to download apps from the store. This has plagued some users who never use a Microsoft account and whose apps must rely on store downloads. The app uses the acquisition interface provided by store.rg-adguard.net, bypassing the official App Download Channel provided by the Microsoft Store. Users can download the required app installation packages offline for standalone deployment.</value>
   </data>
+  <data name="Download" xml:space="preserve">
+    <value>Download management instructions</value>
+  </data>
+  <data name="DownloadDescription1" xml:space="preserve">
+    <value>The built-in download function of the app is still in beta, if you have an error during use, please switch the download option to "Download using the browser" in the settings, and call the professional download tool through the browser to meet your personal needs.</value>
+  </data>
+  <data name="DownloadDescription2" xml:space="preserve">
+    <value>The tool used for the built-in download is Aria2, which requires the creation of a local temporary file to fill the data at the beginning of the download, and there may be a disk usage of 100% during this time, so don't worry. The length of time that a temporary file is created depends on the read and write speed of the disk and the size of the file to be downloaded. If you want to speed up the creation of local temporary files, we recommend that you save the download files in your SSD.</value>
+  </data>
   <data name="ErrorSolution" xml:space="preserve">
     <value>Request failed solution</value>
   </data>

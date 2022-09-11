@@ -179,17 +179,20 @@
                                     Grid.Column="1"
                                     Style="{StaticResource DownloadItemTextStyle}"
                                     Text="{x:Bind FinishedSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}"
-                                    ToolTipService.ToolTip="{x:Bind FinishedSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}" />
+                                    ToolTipService.ToolTip="{x:Bind FinishedSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}"
+                                    Visibility="{x:Bind DownloadFlag, Converter={StaticResource DownloadFlagConverter}, ConverterParameter=3, Mode=OneWay}" />
                                 <TextBlock
                                     Grid.Column="2"
                                     Style="{StaticResource DownloadItemTextStyle}"
                                     Text="{x:Bind TotalSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}"
-                                    ToolTipService.ToolTip="{x:Bind TotalSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}" />
+                                    ToolTipService.ToolTip="{x:Bind TotalSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}"
+                                    Visibility="{x:Bind DownloadFlag, Converter={StaticResource DownloadFlagConverter}, ConverterParameter=3, Mode=OneWay}" />
                                 <TextBlock
                                     Grid.Column="3"
                                     Style="{StaticResource DownloadItemTextStyle}"
                                     Text="{x:Bind CurrentSpeed, Mode=OneWay, Converter={StaticResource DownloadSpeedFormatConverter}}"
-                                    ToolTipService.ToolTip="{x:Bind CurrentSpeed, Mode=OneWay, Converter={StaticResource DownloadSpeedFormatConverter}}" />
+                                    ToolTipService.ToolTip="{x:Bind CurrentSpeed, Mode=OneWay, Converter={StaticResource DownloadSpeedFormatConverter}}"
+                                    Visibility="{x:Bind DownloadFlag, Converter={StaticResource DownloadFlagConverter}, ConverterParameter=3, Mode=OneWay}" />
                             </Grid>
 
                             <ProgressBar

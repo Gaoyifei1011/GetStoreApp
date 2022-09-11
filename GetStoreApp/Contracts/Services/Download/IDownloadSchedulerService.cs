@@ -18,8 +18,8 @@ namespace GetStoreApp.Contracts.Services.Download
 
         Task<bool> ContinueTaskAsync(BackgroundModel downloadItem);
 
-        Task<bool> PauseTaskAsync(BackgroundModel downloadItem);
+        Task<bool> PauseTaskAsync(string downloadKey, string gID, int downloadFlag);
 
-        Task<bool> DeleteTaskAsync(BackgroundModel downloadItem);
+        Task<bool> DeleteTaskAsync(string downloadKey, string gID, int downloadFlag);
     }
 }

@@ -53,6 +53,12 @@
                         Content="{x:Bind ResourceService.GetLocalized('/About/BlockMapButton')}"
                         ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/About/BlockMapButton')}" />
                 </StackPanel>
+
+                <MenuFlyoutSeparator Margin="0,0,0,8" />
+
+                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/Download')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/DownloadDescription1')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/DownloadDescription2')}" />
             </StackPanel>
         </Expander.Content>
     </Expander>
