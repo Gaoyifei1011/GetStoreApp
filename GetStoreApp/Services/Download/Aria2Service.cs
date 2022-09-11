@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Text;
@@ -31,6 +30,12 @@ namespace GetStoreApp.Services.Download
             "totalLength",
             "completedLength",
             "downloadSpeed"
+        };
+
+        // 获取下载文件大小信息内容的具体选项列表
+        private List<string> GetFileSizeInfoList = new List<string>()
+        {
+            "totalLength"
         };
 
         // 添加下载任务内容
@@ -91,6 +96,13 @@ namespace GetStoreApp.Services.Download
 
         // 汇报下载任务状态内容
         private Dictionary<string, object> TellStatusContent = new Dictionary<string, object>()
+        {
+            { "id", string.Empty },
+            { "jsonrpc", "2.0" },
+            { "method", "aria2.tellStatus" }
+        };
+
+        private Dictionary<string, object> GetFileSizeContent = new Dictionary<string, object>()
         {
             { "id", string.Empty },
             { "jsonrpc", "2.0" },
@@ -397,7 +409,7 @@ namespace GetStoreApp.Services.Download
             }
             catch (Exception)
             {
-                return null;
+                return default(string);
             }
         }
 
@@ -408,7 +420,6 @@ namespace GetStoreApp.Services.Download
         {
             // 删除下载任务参数列表
             List<string> ParamsList = new List<string>() { GID };
-
             PauseDownloadContent["params"] = ParamsList;
 
             // 将暂停下载任务信息转换为字符串
@@ -435,13 +446,16 @@ namespace GetStoreApp.Services.Download
                 if (response.IsSuccessStatusCode)
                 {
                     string ResponseContent = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<Dictionary<string, string>>(ResponseContent)["result"];
+                    return ((JObject)JsonConvert.DeserializeObject(ResponseContent))["result"].ToString();
                 }
-                else throw new Exception();
+                else
+                {
+                    throw new Exception();
+                }
             }
             catch (Exception)
             {
-                return null;
+                return default(string);
             }
         }
 
@@ -451,7 +465,6 @@ namespace GetStoreApp.Services.Download
         public async Task<string> DeleteAsync(string GID)
         {
             List<string> ParamsList = new List<string>() { GID };
-            // 删除下载任务参数列表
             DeleteTaskContent["params"] = ParamsList;
 
             // 将删除任务信息转换为字符串
@@ -478,7 +491,7 @@ namespace GetStoreApp.Services.Download
                 if (response.IsSuccessStatusCode)
                 {
                     string ResponseContent = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<Dictionary<string, string>>(ResponseContent)["result"];
+                    return ((JObject)JsonConvert.DeserializeObject(ResponseContent))["result"].ToString();
                 }
                 else
                 {
@@ -487,14 +500,14 @@ namespace GetStoreApp.Services.Download
             }
             catch (Exception)
             {
-                return null;
+                return default(string);
             }
         }
 
         /// <summary>
         /// 汇报下载任务状态信息
         /// </summary>
-        public async Task<Tuple<string, string, int, int, int>> TellStatusAsync(string GID)
+        public async Task<Tuple<string, string, ulong, ulong, uint>> TellStatusAsync(string GID)
         {
             // 汇报下载任务状态参数列表
             List<object> ParamsList = new List<object>() { GID };
@@ -534,9 +547,9 @@ namespace GetStoreApp.Services.Download
                     return Tuple.Create(
                         Convert.ToString(ResultContent["gid"]),
                         Convert.ToString(ResultContent["status"]),
-                        Convert.ToInt32(ResultContent["completedLength"]),
-                        Convert.ToInt32(ResultContent["totalLength"]),
-                        Convert.ToInt32(ResultContent["downloadSpeed"])
+                        Convert.ToUInt64(ResultContent["completedLength"]),
+                        Convert.ToUInt64(ResultContent["totalLength"]),
+                        Convert.ToUInt32(ResultContent["downloadSpeed"])
                         );
                 }
                 else
@@ -547,6 +560,59 @@ namespace GetStoreApp.Services.Download
             catch (Exception)
             {
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// 获取下载文件大小信息
+        /// </summary>
+        public async Task<ulong> GetFileSizeAsync(string GID)
+        {
+            // 获取下载文件大小参数列表
+            List<object> ParamsList = new List<object>() { GID };
+
+            ParamsList.Add(GetFileSizeInfoList);
+            GetFileSizeContent["params"] = ParamsList;
+
+            // 汇报下载任务状态信息转换为字符串
+            string GetFileSizeString = JsonConvert.SerializeObject(TellStatusContent);
+
+            // 使用Aria2 RPC接口添加汇报下载任务状态任务指令
+            try
+            {
+                byte[] ContentBytes = Encoding.UTF8.GetBytes(GetFileSizeString);
+
+                HttpContent httpContent = new StringContent(GetFileSizeString);
+                httpContent.Headers.ContentLength = ContentBytes.Length;
+                httpContent.Headers.ContentType.CharSet = "utf-8";
+
+                HttpClient httpClient = new HttpClient
+                {
+                    BaseAddress = new Uri(RPCServerLink),
+                    Timeout = new TimeSpan(0, 0, 30)
+                };
+
+                HttpResponseMessage response = await httpClient.PostAsync(RPCServerLink, httpContent);
+
+                // 返回成功添加任务的GID信息
+                if (response.IsSuccessStatusCode)
+                {
+                    string ResponseContent = await response.Content.ReadAsStringAsync();
+
+                    string Result = ((JObject)JsonConvert.DeserializeObject(ResponseContent))["result"].ToString();
+
+                    JObject ResultContent = (JObject)JsonConvert.DeserializeObject(Result);
+
+                    return Convert.ToUInt64(ResultContent["totalLength"]);
+                }
+                else
+                {
+                    throw new Exception();
+                }
+            }
+            catch (Exception)
+            {
+                return default(ulong);
             }
         }
     }

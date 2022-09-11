@@ -76,6 +76,7 @@ namespace GetStoreApp.Services.Download
             lock (IsUpdatingNowLock)
             {
                 IsUpdatingNow = true;
+                DownloadSchedulerTimer.Enabled = false;
             }
 
             int Result = 0;
@@ -120,6 +121,7 @@ namespace GetStoreApp.Services.Download
             lock (IsUpdatingNowLock)
             {
                 IsUpdatingNow = false;
+                DownloadSchedulerTimer.Enabled = true;
             }
 
             return Result;
@@ -141,12 +143,11 @@ namespace GetStoreApp.Services.Download
             lock (IsUpdatingNowLock)
             {
                 IsUpdatingNow = true;
+                DownloadSchedulerTimer.Enabled = false;
             }
 
             // 将继续下载的任务状态标记为等待下载状态
-            downloadItem.DownloadFlag = 1;
-
-            bool UpdateResult = await DownloadDBService.UpdateFlagAsync(downloadItem);
+            bool UpdateResult = await DownloadDBService.UpdateFlagAsync(1, downloadItem.DownloadKey);
 
             // 数据库添加成功后添加等待下载任务
             if (UpdateResult)
@@ -158,6 +159,7 @@ namespace GetStoreApp.Services.Download
             lock (IsUpdatingNowLock)
             {
                 IsUpdatingNow = false;
+                DownloadSchedulerTimer.Enabled = true;
             }
 
             return UpdateResult;
@@ -166,7 +168,7 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 暂停下载任务
         /// </summary>
-        public async Task<bool> PauseTaskAsync(BackgroundModel downloadItem)
+        public async Task<bool> PauseTaskAsync(string downloadKey, string gID, int downloadFlag)
         {
             // 有信息在更新时，等待操作
             while (IsUpdatingNow)
@@ -179,37 +181,37 @@ namespace GetStoreApp.Services.Download
             lock (IsUpdatingNowLock)
             {
                 IsUpdatingNow = true;
+                DownloadSchedulerTimer.Enabled = false;
             }
 
-            int DownloadFlag = downloadItem.DownloadFlag;
             bool Result = true;
 
             // 处于等待下载状态时，从等待下载列表中移除
-            if (downloadItem.DownloadFlag == 1)
+            if (downloadFlag == 1)
             {
-                WaitingList.Remove(WaitingList.Find(item => item.DownloadKey == downloadItem.DownloadKey));
+                WaitingList.Remove(WaitingList.Find(item => item.DownloadKey == downloadKey));
             }
 
             // 处于正在下载状态时，从正在下载列表中移除
-            else if (downloadItem.DownloadFlag == 3)
+            else if (downloadFlag == 3)
             {
                 // 从下载进程中移除正在下载的任务
-                string DeleteResult = await Aria2Service.DeleteAsync(downloadItem.GID);
+                string DeleteResult = await Aria2Service.PauseAsync(gID);
 
                 if (!string.IsNullOrEmpty(DeleteResult))
                 {
-                    DownloadingList.Remove(WaitingList.Find(item => item.DownloadKey == downloadItem.DownloadKey));
+                    DownloadingList.Remove(DownloadingList.Find(item => item.DownloadKey == downloadKey));
                 }
             }
 
             // 修改数据库下载任务状态为暂停状态
-            downloadItem.DownloadFlag = 2;
-            Result = await DownloadDBService.UpdateFlagAsync(downloadItem);
+            Result = await DownloadDBService.UpdateFlagAsync(2, downloadKey);
 
             // 信息更新完毕时，允许其他操作开始执行
             lock (IsUpdatingNowLock)
             {
                 IsUpdatingNow = false;
+                DownloadSchedulerTimer.Enabled = true;
             }
 
             return Result;
@@ -218,7 +220,7 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 删除下载任务
         /// </summary>
-        public async Task<bool> DeleteTaskAsync(BackgroundModel downloadItem)
+        public async Task<bool> DeleteTaskAsync(string downloadKey, string gID, int downloadFlag)
         {
             // 有信息在更新时，等待操作
             while (IsUpdatingNow)
@@ -231,35 +233,37 @@ namespace GetStoreApp.Services.Download
             lock (IsUpdatingNowLock)
             {
                 IsUpdatingNow = true;
+                DownloadSchedulerTimer.Enabled = false;
             }
 
             bool Result = true;
 
             // 处于等待下载状态时，从等待下载列表中移除
-            if (downloadItem.DownloadFlag == 1)
+            if (downloadFlag == 1)
             {
-                WaitingList.RemoveAll(item => item.DownloadKey == downloadItem.DownloadKey);
+                WaitingList.RemoveAll(item => item.DownloadKey == downloadKey);
             }
 
             // 处于正在下载状态时，从正在下载列表中移除
-            else if (downloadItem.DownloadFlag == 3)
+            else if (downloadFlag == 3)
             {
                 // 从下载进程中移除正在下载的任务
-                string DeleteResult = await Aria2Service.DeleteAsync(downloadItem.GID);
+                string DeleteResult = await Aria2Service.DeleteAsync(gID);
 
                 if (!string.IsNullOrEmpty(DeleteResult))
                 {
-                    DownloadingList.RemoveAll(item => item.DownloadKey == downloadItem.DownloadKey);
+                    DownloadingList.RemoveAll(item => item.DownloadKey == downloadKey);
                 }
             }
 
             // 从数据库中删除任务
-            Result = await DownloadDBService.DeleteAsync(downloadItem.DownloadKey);
+            Result = await DownloadDBService.DeleteAsync(downloadKey);
 
             // 信息更新完毕时，允许其他操作开始执行
             lock (IsUpdatingNowLock)
             {
                 IsUpdatingNow = false;
+                DownloadSchedulerTimer.Enabled = true;
             }
 
             return Result;
@@ -270,8 +274,8 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         private async void DownloadMonitorTimerElapsed(object sender, ElapsedEventArgs args)
         {
-            // 有信息在更新时，不再操作，等待下一秒尝试更新内容信
-            while (IsUpdatingNow)
+            // 有信息在更新时，不再操作，等待下一秒尝试更新内容
+            if (IsUpdatingNow)
             {
                 return;
             }
@@ -305,19 +309,17 @@ namespace GetStoreApp.Services.Download
                 BackgroundModel DownloadItem = WaitingList.First();
 
                 string TaskGID = await Aria2Service.AddUriAsync(DownloadItem.FileLink, DownloadOptionsService.DownloadFolder.Path, DownloadItem.FileName);
-                // 添加下载任务时确保线程安全
+
                 if (!string.IsNullOrEmpty(TaskGID))
                 {
                     // 将当前任务的下载状态标记为正在下载状态
                     DownloadItem.DownloadFlag = 3;
                     DownloadItem.GID = TaskGID;
+                    DownloadItem.TotalSize = await Aria2Service.GetFileSizeAsync(TaskGID);
+                    WaitingList.Remove(WaitingList.First());
                     DownloadingList.Add(DownloadItem);
+                    await DownloadDBService.UpdateFlagAsync(DownloadItem.DownloadFlag, DownloadItem.DownloadKey);
                 }
-
-                // 等待列表中移除已经成功添加的项目
-                WaitingList.Remove(WaitingList.First());
-
-                await DownloadDBService.UpdateFlagAsync(DownloadItem);
             }
         }
 
@@ -332,7 +334,7 @@ namespace GetStoreApp.Services.Download
                 // 先更新下载的任务信息
                 foreach (BackgroundModel downloadItem in DownloadingList)
                 {
-                    Tuple<string, string, int, int, int> DownloadStatus = await Aria2Service.TellStatusAsync(downloadItem.GID);
+                    Tuple<string, string, ulong, ulong, uint> DownloadStatus = await Aria2Service.TellStatusAsync(downloadItem.GID);
 
                     if (DownloadStatus is null)
                     {
@@ -356,7 +358,7 @@ namespace GetStoreApp.Services.Download
                         downloadItem.TotalSize = DownloadStatus.Item4;
                         downloadItem.CurrentSpeed = DownloadStatus.Item5;
 
-                        await DownloadDBService.UpdateFlagAsync(downloadItem);
+                        await DownloadDBService.UpdateFlagAsync(downloadItem.DownloadFlag, downloadItem.DownloadKey);
                     }
 
                     // 当下载任务处于错误状态时，将当前任务标记为错误状态
@@ -368,16 +370,13 @@ namespace GetStoreApp.Services.Download
                         downloadItem.TotalSize = DownloadStatus.Item4;
                         downloadItem.CurrentSpeed = DownloadStatus.Item5;
 
-                        await DownloadDBService.UpdateFlagAsync(downloadItem);
+                        await DownloadDBService.UpdateFlagAsync(downloadItem.DownloadFlag, downloadItem.DownloadKey);
                     }
                 }
 
                 // 正在下载列表中删除掉不是处于下载状态的任务
                 DownloadingList.RemoveAll(item => item.DownloadFlag != 3);
             }
-
-            // 任务信息更新完成时继续开始计时
-            DownloadSchedulerTimer.Enabled = true;
         }
 
         /// <summary>

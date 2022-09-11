@@ -26,8 +26,7 @@ namespace GetStoreApp.Services.Download
 
             foreach (BackgroundModel backgroundItem in DownloadWaitingList)
             {
-                backgroundItem.DownloadFlag = 2;
-                await UpdateFlagAsync(backgroundItem);
+                await UpdateFlagAsync(2,backgroundItem.DownloadKey);
             }
 
             // 将正在下载状态的任务调整为暂停下载状态
@@ -35,8 +34,7 @@ namespace GetStoreApp.Services.Download
 
             foreach (BackgroundModel backgroundItem in DownloadingList)
             {
-                backgroundItem.DownloadFlag = 2;
-                await UpdateFlagAsync(backgroundItem);
+                await UpdateFlagAsync(2,backgroundItem.DownloadKey);
             }
 
             await Task.CompletedTask;
@@ -93,7 +91,7 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 存在重复的数据，只更新该记录的DownloadFlag（相当于执行重新下载步骤）
         /// </summary>
-        public async Task<bool> UpdateFlagAsync(BackgroundModel backgroundItem)
+        public async Task<bool> UpdateFlagAsync(int downloadFlag, string downloadKey)
         {
             bool IsUpdateSuccessfully = false;
 
@@ -112,8 +110,8 @@ namespace GetStoreApp.Services.Download
                         {
                             UpdateCommand.CommandText = string.Format("UPDATE {0} SET DOWNLOADFLAG ={1} WHERE DOWNLOADKEY = '{2}'",
                                 DataBaseService.DownloadTableName,
-                                backgroundItem.DownloadFlag,
-                                backgroundItem.DownloadKey
+                                downloadFlag,
+                                downloadKey
                                 );
 
                             await UpdateCommand.ExecuteNonQueryAsync();

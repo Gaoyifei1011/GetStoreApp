@@ -24,6 +24,8 @@ namespace GetStoreApp.Contracts.Services.Download
 
         Task<string> DeleteAsync(string GID);
 
-        Task<Tuple<string, string, int, int, int>> TellStatusAsync(string GID);
+        Task<Tuple<string, string, ulong, ulong, uint>> TellStatusAsync(string GID);
+
+        Task<ulong> GetFileSizeAsync(string GID);
     }
 }

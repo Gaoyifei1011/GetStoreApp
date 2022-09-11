@@ -189,6 +189,15 @@
   <data name="DevelopPurposeDescription" xml:space="preserve">
     <value>Microsoft Store 提供了对已上架商店应用的分发，下载和更新通道。但是在最新的 Microsoft Store 中，微软要求用户下载商店的应用需要使用在线账户。这对一些从不使用微软账户且应用必须依赖商店下载的用户带来了困扰。该应用使用了 store.rg-adguard.net 提供的获取接口，绕开了 Microsoft Store 官方提供的应用下载渠道。用户可以离线下载所需的应用安装包，进行独立部署。</value>
   </data>
+  <data name="Download" xml:space="preserve">
+    <value>下载管理说明</value>
+  </data>
+  <data name="DownloadDescription1" xml:space="preserve">
+    <value>应用内置的下载功能目前还在处于测试阶段，如果您在使用过程中发生了错误，请在设置中将下载选项切换为“使用浏览器下载“，通过浏览器调用专业的下载工具来满足您的个人需求。</value>
+  </data>
+  <data name="DownloadDescription2" xml:space="preserve">
+    <value>应用内置下载使用的工具是Aria2，在下载初期时需要创建本地临时文件用来填充数据，在这一段时间内可能会出现磁盘使用率为100%的情况，请不要担心。临时文件创建的时长取决于磁盘的读写速度和要下载文件的大小。如果您想要提升本地临时文件的创建速度，建议您将下载文件保存在固态硬盘中。</value>
+  </data>
   <data name="ErrorSolution" xml:space="preserve">
     <value>获取失败解决方案</value>
   </data>

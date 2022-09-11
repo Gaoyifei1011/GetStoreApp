@@ -162,6 +162,9 @@
   <data name="DownloadInApp" xml:space="preserve">
     <value>使用应用内下载管理器下载（BETA）</value>
   </data>
+  <data name="DownloadInstruction" xml:space="preserve">
+    <value>下载管理说明</value>
+  </data>
   <data name="DownloadItem" xml:space="preserve">
     <value>同时下载任务数</value>
   </data>
