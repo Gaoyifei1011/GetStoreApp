@@ -62,11 +62,12 @@
                     ToolTipService.ToolTip="{x:Bind LocalizedHistoryCountInfo(ViewModel.HistoryDataList.Count), Mode=OneWay}" />
 
                 <CommandBar
+                    x:Name="NormalMode"
                     Grid.Column="4"
                     VerticalAlignment="Center"
+                    x:Load="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
                     Background="Transparent"
-                    DefaultLabelPosition="Right"
-                    Visibility="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}">
+                    DefaultLabelPosition="Right">
 
                     <AppBarButton
                         Command="{x:Bind ViewModel.SelectCommand}"
@@ -209,11 +210,12 @@
                 </CommandBar>
 
                 <CommandBar
+                    x:Name="SelectMode"
                     Grid.Column="4"
                     VerticalAlignment="Center"
+                    x:Load="{x:Bind ViewModel.IsSelectMode, Mode=OneWay}"
                     Background="Transparent"
-                    DefaultLabelPosition="Right"
-                    Visibility="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                    DefaultLabelPosition="Right">
 
                     <AppBarButton
                         Command="{x:Bind ViewModel.SelectAllCommand}"

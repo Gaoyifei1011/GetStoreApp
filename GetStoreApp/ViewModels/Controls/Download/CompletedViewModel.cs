@@ -191,6 +191,17 @@ namespace GetStoreApp.ViewModels.Controls.Download
             await Task.CompletedTask;
         });
 
+        // 在多选模式下点击项目选择相应的条目
+        public IAsyncRelayCommand ItemClickCommand => new AsyncRelayCommand<ItemClickEventArgs>(async (param) =>
+        {
+            CompletedModel completedItem = (CompletedModel)param.ClickedItem;
+            int ClickedIndex = CompletedDataList.IndexOf(completedItem);
+
+            CompletedDataList[ClickedIndex].IsSelected = !CompletedDataList[ClickedIndex].IsSelected;
+
+            await Task.CompletedTask;
+        });
+
         // 安装应用
         public IAsyncRelayCommand InstallCommand => new AsyncRelayCommand<string>(async (param) =>
         {

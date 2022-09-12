@@ -10,6 +10,7 @@ using GetStoreApp.Models.Download;
 using GetStoreApp.UI.Dialogs;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -129,7 +130,6 @@ namespace GetStoreApp.ViewModels.Controls.Download
             lock (IsUpdatingNowLock)
             {
                 IsUpdatingNow = true;
-                DownloadingTimer.Stop();
             }
 
             List<DownloadingModel> SelectedDownloadingDataList = DownloadingDataList.Where(item => item.IsSelected == true).ToList();
@@ -152,7 +152,6 @@ namespace GetStoreApp.ViewModels.Controls.Download
             lock (IsUpdatingNowLock)
             {
                 IsUpdatingNow = false;
-                DownloadingTimer.Start();
             }
         });
 
@@ -160,6 +159,17 @@ namespace GetStoreApp.ViewModels.Controls.Download
         public IAsyncRelayCommand CancelCommand => new AsyncRelayCommand(async () =>
         {
             IsSelectMode = false;
+            await Task.CompletedTask;
+        });
+
+        // 在多选模式下点击项目选择相应的条目
+        public IAsyncRelayCommand ItemClickCommand => new AsyncRelayCommand<ItemClickEventArgs>(async (param) =>
+        {
+            DownloadingModel downloadingItem = (DownloadingModel)param.ClickedItem;
+            int ClickedIndex = DownloadingDataList.IndexOf(downloadingItem);
+
+            DownloadingDataList[ClickedIndex].IsSelected = !DownloadingDataList[ClickedIndex].IsSelected;
+
             await Task.CompletedTask;
         });
 
@@ -177,7 +187,6 @@ namespace GetStoreApp.ViewModels.Controls.Download
             lock (IsUpdatingNowLock)
             {
                 IsUpdatingNow = true;
-                DownloadingTimer.Stop();
             }
 
             bool PauseResult = await DownloadSchedulerService.PauseTaskAsync(param.DownloadKey, param.GID, param.DownloadFlag);
@@ -186,7 +195,6 @@ namespace GetStoreApp.ViewModels.Controls.Download
             lock (IsUpdatingNowLock)
             {
                 IsUpdatingNow = false;
-                DownloadingTimer.Start();
             }
         });
 
@@ -204,7 +212,6 @@ namespace GetStoreApp.ViewModels.Controls.Download
             lock (IsUpdatingNowLock)
             {
                 IsUpdatingNow = true;
-                DownloadingTimer.Stop();
             }
 
             bool DeleteResult = await DownloadSchedulerService.DeleteTaskAsync(param.DownloadKey, param.GID, param.DownloadFlag);
@@ -213,7 +220,6 @@ namespace GetStoreApp.ViewModels.Controls.Download
             lock (IsUpdatingNowLock)
             {
                 IsUpdatingNow = false;
-                DownloadingTimer.Start();
             }
         });
 
@@ -230,9 +236,15 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
             WeakReferenceMessenger.Default.Register<DownloadingViewModel, PivotSelectionMessage>(this, async (downloadingViewModel, pivotSelectionMessage) =>
             {
+
                 // 切换到下载中页面时，开启监控。并更新当前页面的数据
                 if (pivotSelectionMessage.Value == 0)
                 {
+                    lock (IsUpdatingNowLock)
+                    {
+                        IsUpdatingNow = true;
+                    }
+
                     DownloadingDataList.Clear();
 
                     foreach (BackgroundModel item in DownloadSchedulerService.DownloadingList)
@@ -260,6 +272,11 @@ namespace GetStoreApp.ViewModels.Controls.Download
                             TotalSize = downloadItem.TotalSize,
                             DownloadFlag = downloadItem.DownloadFlag
                         });
+                    }
+
+                    lock (IsUpdatingNowLock)
+                    {
+                        IsUpdatingNow = false;
                     }
 
                     DownloadingTimer.Start();
