@@ -135,6 +135,9 @@
   <data name="CompletedEmptyDescription" xml:space="preserve">
     <value>Go to the app you want to download, and the file you downloaded will appear here</value>
   </data>
+  <data name="CompleteDownload" xml:space="preserve">
+    <value>Downloaded completed</value>
+  </data>
   <data name="Continue" xml:space="preserve">
     <value>Continue download</value>
   </data>
@@ -203,6 +206,9 @@
   </data>
   <data name="FileNotExist" xml:space="preserve">
     <value>The downloaded file may have been removed</value>
+  </data>
+  <data name="FileNotExists" xml:space="preserve">
+    <value>The file does not exist</value>
   </data>
   <data name="InstallToolTip" xml:space="preserve">
     <value>Install the app</value>

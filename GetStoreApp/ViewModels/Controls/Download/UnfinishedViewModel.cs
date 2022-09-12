@@ -7,6 +7,7 @@ using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Download;
 using GetStoreApp.UI.Dialogs;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -191,6 +192,17 @@ namespace GetStoreApp.ViewModels.Controls.Download
         public IAsyncRelayCommand CancelCommand => new AsyncRelayCommand(async () =>
         {
             IsSelectMode = false;
+            await Task.CompletedTask;
+        });
+
+        // 在多选模式下点击项目选择相应的条目
+        public IAsyncRelayCommand ItemClickCommand => new AsyncRelayCommand<ItemClickEventArgs>(async (param) =>
+        {
+            UnfinishedModel resultItem = (UnfinishedModel)param.ClickedItem;
+            int ClickedIndex = UnfinishedDataList.IndexOf(resultItem);
+
+            UnfinishedDataList[ClickedIndex].IsSelected = !UnfinishedDataList[ClickedIndex].IsSelected;
+
             await Task.CompletedTask;
         });
 

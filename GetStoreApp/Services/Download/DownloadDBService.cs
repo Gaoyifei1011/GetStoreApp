@@ -26,7 +26,7 @@ namespace GetStoreApp.Services.Download
 
             foreach (BackgroundModel backgroundItem in DownloadWaitingList)
             {
-                await UpdateFlagAsync(2,backgroundItem.DownloadKey);
+                await UpdateFlagAsync(backgroundItem.DownloadKey, 2);
             }
 
             // 将正在下载状态的任务调整为暂停下载状态
@@ -34,7 +34,7 @@ namespace GetStoreApp.Services.Download
 
             foreach (BackgroundModel backgroundItem in DownloadingList)
             {
-                await UpdateFlagAsync(2,backgroundItem.DownloadKey);
+                await UpdateFlagAsync(backgroundItem.DownloadKey, 2);
             }
 
             await Task.CompletedTask;
@@ -91,7 +91,7 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 存在重复的数据，只更新该记录的DownloadFlag（相当于执行重新下载步骤）
         /// </summary>
-        public async Task<bool> UpdateFlagAsync(int downloadFlag, string downloadKey)
+        public async Task<bool> UpdateFlagAsync(string downloadKey, int downloadFlag)
         {
             bool IsUpdateSuccessfully = false;
 
@@ -111,6 +111,49 @@ namespace GetStoreApp.Services.Download
                             UpdateCommand.CommandText = string.Format("UPDATE {0} SET DOWNLOADFLAG ={1} WHERE DOWNLOADKEY = '{2}'",
                                 DataBaseService.DownloadTableName,
                                 downloadFlag,
+                                downloadKey
+                                );
+
+                            await UpdateCommand.ExecuteNonQueryAsync();
+
+                            await transaction.CommitAsync();
+
+                            IsUpdateSuccessfully = true;
+                        }
+                        catch (Exception)
+                        {
+                            await transaction.RollbackAsync();
+                        }
+                    }
+                }
+                await db.CloseAsync();
+            }
+            return IsUpdateSuccessfully;
+        }
+
+        /// <summary>
+        /// 更新该记录对应的文件大小
+        /// </summary>
+        public async Task<bool> UpdateFileSizeAsync(string downloadKey, double fileSize)
+        {
+            bool IsUpdateSuccessfully = false;
+
+            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
+            {
+                await db.OpenAsync();
+
+                using (SqliteTransaction transaction = db.BeginTransaction())
+                {
+                    using (SqliteCommand UpdateCommand = new SqliteCommand())
+                    {
+                        UpdateCommand.Connection = db;
+                        UpdateCommand.Transaction = transaction;
+
+                        try
+                        {
+                            UpdateCommand.CommandText = string.Format("UPDATE {0} SET FILESIZE ={1} WHERE DOWNLOADKEY = '{2}'",
+                                DataBaseService.DownloadTableName,
+                                fileSize,
                                 downloadKey
                                 );
 

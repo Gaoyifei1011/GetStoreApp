@@ -10,7 +10,9 @@ namespace GetStoreApp.Contracts.Services.Download
 
         Task<bool> AddAsync(BackgroundModel downloadItem);
 
-        Task<bool> UpdateFlagAsync(int downloadFlag,string downloadKey);
+        Task<bool> UpdateFlagAsync(string downloadKey, int downloadFlag);
+
+        Task<bool> UpdateFileSizeAsync(string downloadKey, double fileSize);
 
         Task<List<BackgroundModel>> QueryAsync(int downloadFlag);
 

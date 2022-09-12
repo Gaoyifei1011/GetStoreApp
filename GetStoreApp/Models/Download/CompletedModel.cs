@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Models.Base;
 using Microsoft.UI.Xaml;
-using System.IO;
 
 namespace GetStoreApp.Models.Download
 {
@@ -125,20 +124,5 @@ namespace GetStoreApp.Models.Download
         // Using a DependencyProperty as the backing store for TotalSize.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TotalSizeProperty =
             DependencyProperty.Register("TotalSize", typeof(double), typeof(DownloadingModel), new PropertyMetadata(default(double)));
-
-        /// <summary>
-        /// 判断已下载完成的文件是否存在
-        /// </summary>
-        public Visibility IsFileExists(string filePath)
-        {
-            if (File.Exists(filePath))
-            {
-                return Visibility.Collapsed;
-            }
-            else
-            {
-                return Visibility.Visible;
-            }
-        }
     }
 }

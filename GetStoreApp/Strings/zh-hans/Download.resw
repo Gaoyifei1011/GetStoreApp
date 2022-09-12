@@ -135,6 +135,9 @@
   <data name="CompletedEmptyDescription" xml:space="preserve">
     <value>快去获取想要下载的应用吧，您下载完成的文件将会显示在此处</value>
   </data>
+  <data name="CompleteDownload" xml:space="preserve">
+    <value>已下载完成</value>
+  </data>
   <data name="Continue" xml:space="preserve">
     <value>继续下载</value>
   </data>
@@ -203,6 +206,9 @@
   </data>
   <data name="FileNotExist" xml:space="preserve">
     <value>已下载完成的文件可能已经被移除</value>
+  </data>
+  <data name="FileNotExists" xml:space="preserve">
+    <value>文件不存在</value>
   </data>
   <data name="InstallToolTip" xml:space="preserve">
     <value>安装该应用</value>
