@@ -190,7 +190,7 @@ namespace GetStoreApp.Services.History
         /// <param name="typeFilter"></param>
         /// <param name="channelFilter"></param>
         /// <returns>返回历史记录列表</returns>
-        public async Task<Tuple<List<HistoryModel>, bool, bool>> QueryAllAsync(bool timeSortOrder = false, string typeFilter = "None", string channelFilter = "None")
+        public async Task<(List<HistoryModel>, bool, bool)> QueryAllAsync(bool timeSortOrder = false, string typeFilter = "None", string channelFilter = "None")
         {
             List<HistoryModel> HistoryRawList = new List<HistoryModel>();
 
@@ -199,7 +199,7 @@ namespace GetStoreApp.Services.History
 
             if (IsHistoryEmpty)
             {
-                return Tuple.Create(HistoryRawList, IsHistoryEmpty, true);
+                return (HistoryRawList, IsHistoryEmpty, true);
             }
 
             // 从数据库中获取数据
@@ -235,7 +235,7 @@ namespace GetStoreApp.Services.History
             // 判断经过过滤后历史记录表是否为空
             bool IsHistoryEmptyAfterFilter = HistoryRawList.Count == 0;
 
-            return Tuple.Create(HistoryRawList, IsHistoryEmpty, IsHistoryEmptyAfterFilter);
+            return (HistoryRawList, IsHistoryEmpty, IsHistoryEmptyAfterFilter);
         }
 
         /// <summary>

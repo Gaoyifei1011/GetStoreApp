@@ -23,6 +23,8 @@ namespace GetStoreApp.Contracts.Services.Settings
 
         Task OpenFolderAsync(StorageFolder folder);
 
+        Task OpenItemFolderAsync(string filePath);
+
         Task CreateFolderAsync(string folderPath);
 
         Task SetFolderAsync(StorageFolder folder);

@@ -11,10 +11,10 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.Storage;
 
 namespace GetStoreApp.ViewModels.Controls.Download
 {
@@ -117,7 +117,14 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 {
                     foreach (string downloadKey in SelectedDownloadKeyList)
                     {
-                        CompletedDataList.Remove(CompletedDataList.First(item => item.DownloadKey == downloadKey));
+                        try
+                        {
+                            CompletedDataList.Remove(CompletedDataList.First(item => item.DownloadKey == downloadKey));
+                        }
+                        catch (Exception)
+                        {
+                            continue;
+                        }
                     }
                 }
             }
@@ -160,23 +167,19 @@ namespace GetStoreApp.ViewModels.Controls.Download
                         {
                             File.Delete(item.FilePath);
                         }
-                    }
-                    catch (Exception)
-                    {
-                        continue;
-                    }
 
-                    // 删除记录
-                    bool DeleteResult = await DownloadDBService.DeleteAsync(item.DownloadKey);
+                        // 删除记录
+                        bool DeleteResult = await DownloadDBService.DeleteAsync(item.DownloadKey);
 
-                    if (DeleteResult)
-                    {
-                        lock (CompletedDataListLock)
+                        if (DeleteResult)
                         {
-                            CompletedDataList.Remove(CompletedDataList.First(item => item.DownloadKey == item.DownloadKey));
+                            lock (CompletedDataListLock)
+                            {
+                                CompletedDataList.Remove(CompletedDataList.First(item => item.DownloadKey == item.DownloadKey));
+                            }
                         }
                     }
-                    else
+                    catch (Exception)
                     {
                         continue;
                     }
@@ -217,7 +220,8 @@ namespace GetStoreApp.ViewModels.Controls.Download
         {
             if (param is not null)
             {
-                await DownloadOptionsService.OpenFolderAsync(await StorageFolder.GetFolderFromPathAsync(Path.GetDirectoryName(param)));
+                Debug.WriteLine(param.Replace(@"\\", @"\"));
+                await DownloadOptionsService.OpenItemFolderAsync(param);
             }
         });
 

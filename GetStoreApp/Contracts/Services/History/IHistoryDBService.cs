@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Models.History;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,7 +8,7 @@ namespace GetStoreApp.Contracts.Services.History
     {
         Task AddAsync(HistoryModel history);
 
-        Task<Tuple<List<HistoryModel>, bool, bool>> QueryAllAsync(bool timeSortOrder = false, string typeFilter = "None", string channelFilter = "None");
+        Task<(List<HistoryModel>, bool, bool)> QueryAllAsync(bool timeSortOrder = false, string typeFilter = "None", string channelFilter = "None");
 
         Task<List<HistoryModel>> QueryAsync(int value);
 

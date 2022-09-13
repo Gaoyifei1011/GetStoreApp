@@ -15,6 +15,8 @@ namespace GetStoreApp.ViewModels.Pages
 
         public IWebViewService WebViewService { get; } = IOCHelper.GetService<IWebViewService>();
 
+        public int WebView2ProcessID;
+
         private Uri _source;
 
         public Uri Source
@@ -61,6 +63,11 @@ namespace GetStoreApp.ViewModels.Pages
         {
             await Windows.System.Launcher.LaunchUriAsync(Source);
         });
+
+        public void InitializeWebView2(int processid)
+        {
+            WebView2ProcessID = processid;
+        }
 
         public void OnNavigatedTo(object parameter)
         {

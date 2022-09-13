@@ -184,9 +184,15 @@ namespace GetStoreApp.Services.Download
             // 处于等待下载状态时，从等待下载列表中移除
             if (downloadFlag == 1)
             {
-                WaitingList.Remove(WaitingList.Find(item => item.DownloadKey == downloadKey));
-
-                Result = await DownloadDBService.UpdateFlagAsync(downloadKey, 2);
+                try
+                {
+                    WaitingList.Remove(WaitingList.Find(item => item.DownloadKey == downloadKey));
+                    Result = await DownloadDBService.UpdateFlagAsync(downloadKey, 2);
+                }
+                catch (Exception)
+                {
+                    Result = false;
+                }
             }
 
             // 处于正在下载状态时，从正在下载列表中移除
@@ -197,9 +203,19 @@ namespace GetStoreApp.Services.Download
 
                 if (DeleteResult.Item1)
                 {
-                    DownloadingList.Remove(DownloadingList.Find(item => item.DownloadKey == downloadKey));
-
-                    Result = await DownloadDBService.UpdateFlagAsync(downloadKey, 2);
+                    try
+                    {
+                        DownloadingList.Remove(DownloadingList.Find(item => item.DownloadKey == downloadKey));
+                        Result = await DownloadDBService.UpdateFlagAsync(downloadKey, 2);
+                    }
+                    catch (Exception)
+                    {
+                        Result = false;
+                    }
+                }
+                else
+                {
+                    Result = false;
                 }
             }
 
@@ -235,9 +251,15 @@ namespace GetStoreApp.Services.Download
             // 处于等待下载状态时，从等待下载列表中移除
             if (downloadFlag == 1)
             {
-                WaitingList.RemoveAll(item => item.DownloadKey == downloadKey);
-
-                Result = await DownloadDBService.DeleteAsync(downloadKey);
+                try
+                {
+                    WaitingList.RemoveAll(item => item.DownloadKey == downloadKey);
+                    Result = await DownloadDBService.DeleteAsync(downloadKey);
+                }
+                catch (Exception)
+                {
+                    Result = false;
+                }
             }
 
             // 处于正在下载状态时，从正在下载列表中移除
@@ -248,9 +270,20 @@ namespace GetStoreApp.Services.Download
 
                 if (DeleteResult.Item1)
                 {
-                    DownloadingList.RemoveAll(item => item.DownloadKey == downloadKey);
+                    try
+                    {
+                        DownloadingList.RemoveAll(item => item.DownloadKey == downloadKey);
 
-                    Result = await DownloadDBService.DeleteAsync(downloadKey);
+                        Result = await DownloadDBService.DeleteAsync(downloadKey);
+                    }
+                    catch (Exception)
+                    {
+                        Result = false;
+                    }
+                }
+                else
+                {
+                    Result = false;
                 }
             }
 
@@ -300,27 +333,27 @@ namespace GetStoreApp.Services.Download
             while (WaitingList.Count > 0 && (DownloadingList.Count < DownloadOptionsService.DownloadItem))
             {
                 // 获取列表中的第一个元素
-                BackgroundModel DownloadItem = WaitingList.First();
+                BackgroundModel DownloadItem = WaitingList.FirstOrDefault();
 
                 (bool, string) AddResult = await Aria2Service.AddUriAsync(DownloadItem.FileLink, DownloadOptionsService.DownloadFolder.Path);
 
-                if (AddResult.Item1)
+                if (AddResult.Item1 && DownloadItem is not null)
                 {
                     // 将当前任务的下载状态标记为正在下载状态
                     DownloadItem.DownloadFlag = 3;
                     DownloadItem.GID = AddResult.Item2;
 
-                    (bool, long) GetFileSizeResult = await Aria2Service.GetFileSizeAsync(AddResult.Item2);
-
-                    if (GetFileSizeResult.Item1)
+                    try
                     {
-                        DownloadItem.TotalSize = GetFileSizeResult.Item2;
+                        WaitingList.RemoveAll(item => item.DownloadKey == DownloadItem.DownloadKey);
+                        DownloadingList.Add(DownloadItem);
+
+                        await DownloadDBService.UpdateFlagAsync(DownloadItem.DownloadKey, DownloadItem.DownloadFlag);
                     }
-
-                    WaitingList.Remove(WaitingList.First());
-                    DownloadingList.Add(DownloadItem);
-
-                    await DownloadDBService.UpdateFlagAsync(DownloadItem.DownloadKey, DownloadItem.DownloadFlag);
+                    catch (Exception)
+                    {
+                        continue;
+                    }
                 }
             }
         }
@@ -373,6 +406,14 @@ namespace GetStoreApp.Services.Download
                             await DownloadDBService.UpdateFlagAsync(downloadItem.DownloadKey, downloadItem.DownloadFlag);
                             await DownloadDBService.UpdateFileSizeAsync(downloadItem.DownloadKey, downloadItem.TotalSize);
                         }
+                    }
+                    else
+                    {
+                        downloadItem.DownloadFlag = 2;
+                        downloadItem.GID = string.Empty;
+
+                        await DownloadDBService.UpdateFlagAsync(downloadItem.DownloadKey, downloadItem.DownloadFlag);
+                        await DownloadDBService.UpdateFileSizeAsync(downloadItem.DownloadKey, downloadItem.TotalSize);
                     }
                 }
 

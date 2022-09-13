@@ -5,6 +5,7 @@ using GetStoreApp.Models.Settings;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Storage;
 
@@ -40,6 +41,15 @@ namespace GetStoreApp.Services.Settings
         public int DownloadItem { get; set; }
 
         public DownloadModeModel DownloadMode { get; set; }
+
+        [DllImport("shell32.dll", ExactSpelling = true)]
+        private static extern void ILFree(IntPtr pidlList);
+
+        [DllImport("shell32.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
+        private static extern IntPtr ILCreateFromPathW(string pszPath);
+
+        [DllImport("shell32.dll", ExactSpelling = true)]
+        private static extern int SHOpenFolderAndSelectItems(IntPtr pidlList, uint cild, IntPtr children, uint dwFlags);
 
         /// <summary>
         /// 应用在初始化前获取设置存储的下载相关内容设置值，并创建默认下载目录
@@ -88,6 +98,29 @@ namespace GetStoreApp.Services.Settings
             }
 
             await Windows.System.Launcher.LaunchFolderAsync(folder);
+        }
+
+        /// <summary>
+        /// 在资源管理器中打开文件对应的目录，并选中该文件
+        /// </summary>
+        public async Task OpenItemFolderAsync(string filePath)
+        {
+            if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
+            {
+                IntPtr pidlList = ILCreateFromPathW(filePath.Replace(@"\\", @"\"));
+                if (pidlList != IntPtr.Zero)
+                {
+                    try
+                    {
+                        Marshal.ThrowExceptionForHR(SHOpenFolderAndSelectItems(pidlList, 0, IntPtr.Zero, 0));
+                        await Task.CompletedTask;
+                    }
+                    finally
+                    {
+                        ILFree(pidlList);
+                    }
+                }
+            }
         }
 
         /// <summary>

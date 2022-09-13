@@ -20,14 +20,6 @@ namespace GetStoreApp.Helpers
         private static List<int> Aria2ProcessList { get; } = new List<int>();
 
         /// <summary>
-        /// 获取当前进程的PID信息
-        /// </summary>
-        public static int GetProcessID()
-        {
-            return Aria2Process.Id;
-        }
-
-        /// <summary>
         /// 启动命令提示符进程
         /// </summary>
         public static async Task RunCmdAsync()
@@ -56,9 +48,8 @@ namespace GetStoreApp.Helpers
             }
             ConhostWriter.Close();
 
-            int Aria2ProcessID = GetProcessID();
-            Aria2ProcessList.Add(Aria2ProcessID);
-            FindProcessTreeID(Aria2ProcessID);
+            Aria2ProcessList.Add(Aria2Process.Id);
+            FindProcessTreeID(Aria2Process.Id);
 
             await Aria2Process.WaitForExitAsync();
         }
@@ -76,33 +67,46 @@ namespace GetStoreApp.Helpers
         }
 
         /// <summary>
-        /// 应用程序关闭时，需要终止相应的Aria2进程树（暂未实现日志记录，异常捕捉用于记录日志）
+        /// 应用程序关闭时，需要终止相应的Aria2进程树
         /// </summary>
         public static void KillProcessAndChildren()
         {
             foreach (int id in Aria2ProcessList)
             {
-                Process process = null;
-
                 // 如果进程存活，杀掉相应的进程
-                if (IsProcessRunning(id, ref process))
+                if (IsProcessRunning(id))
                 {
-                    process.Kill();
+                    Process.GetProcessById(id).Kill();
                 }
             }
 
-            // 清理掉当前保存的进程信息
+            // 清理掉当前保存的进程信息列表
             Aria2ProcessList.Clear();
+        }
+
+        /// <summary>
+        /// 判断Aria2进程是否存活
+        /// </summary>
+        public static bool IsAria2ProcessExisted()
+        {
+            foreach (int processId in Aria2ProcessList)
+            {
+                if (!IsProcessRunning(processId))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         /// <summary>
         /// 检测进程是否正在运行
         /// </summary>
-        public static bool IsProcessRunning(int id, ref Process process)
+        private static bool IsProcessRunning(int id)
         {
             try
             {
-                process = Process.GetProcessById(id);
+                Process.GetProcessById(id);
                 return true;
             }
             // 无法终止相关联的进程。
@@ -116,6 +120,7 @@ namespace GetStoreApp.Helpers
             {
                 return false;
             }
+
             // 没有与此 Process 对象关联的进程
             catch (InvalidOperationException)
             {

@@ -156,7 +156,7 @@ namespace GetStoreApp.ViewModels.Dialogs
             DownloadCleanErrorVisable = false;
 
             // 清理所有痕迹
-            Tuple<bool, bool, bool> CleanResult = await CleanAsync();
+            (bool, bool, bool) CleanResult = await CleanAsync();
             await Task.Delay(1000);
 
             // 清理完成，显示清理完成的结果
@@ -189,7 +189,7 @@ namespace GetStoreApp.ViewModels.Dialogs
         /// <summary>
         /// 清理记录
         /// </summary>
-        private async Task<Tuple<bool, bool, bool>> CleanAsync()
+        private async Task<(bool, bool, bool)> CleanAsync()
         {
             bool LocalCleanResult = true;
             bool HistoryCleanResult = true;
@@ -208,7 +208,7 @@ namespace GetStoreApp.ViewModels.Dialogs
             // 清理下载记录
             if (IsDownloadClean) DownloadCleanResult = await DownloadDBService.ClearAsync();
 
-            return Tuple.Create(LocalCleanResult, HistoryCleanResult, DownloadCleanResult);
+            return (LocalCleanResult, HistoryCleanResult, DownloadCleanResult);
         }
 
         /// <summary>
