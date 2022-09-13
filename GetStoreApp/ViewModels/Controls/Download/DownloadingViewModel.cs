@@ -27,13 +27,16 @@ namespace GetStoreApp.ViewModels.Controls.Download
         // 标志信息是否在更新中
         private bool IsUpdatingNow = false;
 
+        // 标志信息是否已经初始化完成
+        private bool IsInitializeFinished = false;
+
+        private DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+
         private IDownloadSchedulerService DownloadSchedulerService { get; } = IOCHelper.GetService<IDownloadSchedulerService>();
 
         private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
 
         private DispatcherTimer DownloadingTimer { get; } = new DispatcherTimer();
-
-        private DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
         public ObservableCollection<DownloadingModel> DownloadingDataList { get; } = new ObservableCollection<DownloadingModel>();
 
@@ -56,7 +59,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         public IAsyncRelayCommand PauseAllCommand => new AsyncRelayCommand(async () =>
         {
             // 有信息在更新时，等待操作
-            while (IsUpdatingNow)
+            while (IsUpdatingNow && IsInitializeFinished)
             {
                 await Task.Delay(300);
                 continue;
@@ -85,42 +88,85 @@ namespace GetStoreApp.ViewModels.Controls.Download
         // 进入多选模式
         public IAsyncRelayCommand SelectCommand => new AsyncRelayCommand(async () =>
         {
+            while (IsUpdatingNow && IsInitializeFinished)
+            {
+                await Task.Delay(300);
+                continue;
+            }
+
+            lock (IsUpdatingNowLock)
+            {
+                IsUpdatingNow = true;
+            }
+
             foreach (DownloadingModel downloadingItem in DownloadingDataList)
             {
                 downloadingItem.IsSelected = false;
             }
 
             IsSelectMode = true;
-            await Task.CompletedTask;
+
+            lock (IsUpdatingNowLock)
+            {
+                IsUpdatingNow = false;
+            }
         });
 
         // 全部选择
         public IAsyncRelayCommand SelectAllCommand => new AsyncRelayCommand(async () =>
         {
+            while (IsUpdatingNow && IsInitializeFinished)
+            {
+                await Task.Delay(300);
+                continue;
+            }
+
+            lock (IsUpdatingNowLock)
+            {
+                IsUpdatingNow = true;
+            }
+
             foreach (DownloadingModel downloadingItem in DownloadingDataList)
             {
                 downloadingItem.IsSelected = true;
             }
 
-            await Task.CompletedTask;
+            lock (IsUpdatingNowLock)
+            {
+                IsUpdatingNow = false;
+            }
         });
 
         // 全部不选
         public IAsyncRelayCommand SelectNoneCommand => new AsyncRelayCommand(async () =>
         {
+            while (IsUpdatingNow && IsInitializeFinished)
+            {
+                await Task.Delay(300);
+                continue;
+            }
+
+            lock (IsUpdatingNowLock)
+            {
+                IsUpdatingNow = true;
+            }
+
             foreach (DownloadingModel downloadingItem in DownloadingDataList)
             {
                 downloadingItem.IsSelected = false;
             }
 
-            await Task.CompletedTask;
+            lock (IsUpdatingNowLock)
+            {
+                IsUpdatingNow = false;
+            }
         });
 
         // 删除选中的任务
         public IAsyncRelayCommand DeleteSelectedCommand => new AsyncRelayCommand(async () =>
         {
             // 有信息在更新时，等待操作
-            while (IsUpdatingNow)
+            while (IsUpdatingNow && IsInitializeFinished)
             {
                 await Task.Delay(300);
                 continue;
@@ -165,19 +211,33 @@ namespace GetStoreApp.ViewModels.Controls.Download
         // 在多选模式下点击项目选择相应的条目
         public IAsyncRelayCommand ItemClickCommand => new AsyncRelayCommand<ItemClickEventArgs>(async (param) =>
         {
+            while (IsUpdatingNow && IsInitializeFinished)
+            {
+                await Task.Delay(300);
+                continue;
+            }
+
+            lock (IsUpdatingNowLock)
+            {
+                IsUpdatingNow = true;
+            }
+
             DownloadingModel downloadingItem = (DownloadingModel)param.ClickedItem;
             int ClickedIndex = DownloadingDataList.IndexOf(downloadingItem);
 
             DownloadingDataList[ClickedIndex].IsSelected = !DownloadingDataList[ClickedIndex].IsSelected;
 
-            await Task.CompletedTask;
+            lock (IsUpdatingNowLock)
+            {
+                IsUpdatingNow = false;
+            }
         });
 
         // 暂停下载当前任务
         public IAsyncRelayCommand PauseCommand => new AsyncRelayCommand<DownloadingModel>(async (param) =>
         {
             // 有信息在更新时，等待操作
-            while (IsUpdatingNow)
+            while (IsUpdatingNow && IsInitializeFinished)
             {
                 await Task.Delay(300);
                 continue;
@@ -202,7 +262,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         public IAsyncRelayCommand DeleteCommand => new AsyncRelayCommand<DownloadingModel>(async (param) =>
         {
             // 有信息在更新时，等待操作
-            while (IsUpdatingNow)
+            while (IsUpdatingNow && IsInitializeFinished)
             {
                 await Task.Delay(300);
                 continue;
@@ -236,7 +296,6 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
             WeakReferenceMessenger.Default.Register<DownloadingViewModel, PivotSelectionMessage>(this, async (downloadingViewModel, pivotSelectionMessage) =>
             {
-
                 // 切换到下载中页面时，开启监控。并更新当前页面的数据
                 if (pivotSelectionMessage.Value == 0)
                 {
@@ -277,6 +336,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     lock (IsUpdatingNowLock)
                     {
                         IsUpdatingNow = false;
+                        IsInitializeFinished = true;
                     }
 
                     DownloadingTimer.Start();
@@ -316,7 +376,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         private void DownloadInfoTimerTick(object sender, object e)
         {
             // 有信息在更新时，不再操作，等待下一秒尝试更新内容
-            if (IsUpdatingNow)
+            if (IsUpdatingNow && IsInitializeFinished)
             {
                 return;
             }
@@ -331,11 +391,18 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
             foreach (BackgroundModel backgroundItem in DownloadingList)
             {
-                int index = DownloadingDataList.IndexOf(DownloadingDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey));
-                DownloadingDataList[index].GID = backgroundItem.GID;
-                DownloadingDataList[index].FinishedSize = backgroundItem.FinishedSize;
-                DownloadingDataList[index].TotalSize = backgroundItem.TotalSize;
-                DownloadingDataList[index].CurrentSpeed = backgroundItem.CurrentSpeed;
+                try
+                {
+                    int index = DownloadingDataList.IndexOf(DownloadingDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey));
+                    DownloadingDataList[index].GID = backgroundItem.GID;
+                    DownloadingDataList[index].FinishedSize = backgroundItem.FinishedSize;
+                    DownloadingDataList[index].TotalSize = backgroundItem.TotalSize;
+                    DownloadingDataList[index].CurrentSpeed = backgroundItem.CurrentSpeed;
+                }
+                catch (Exception)
+                {
+                    continue;
+                }
             }
 
             // 信息更新完毕时，允许其他操作开始执行
@@ -351,7 +418,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         private async void DownloadingListItemsChanged(object sender, Extensions.Event.ItemsChangedEventArgs<BackgroundModel> args)
         {
             // 有信息在更新时，等待操作
-            while (IsUpdatingNow)
+            while (IsUpdatingNow && IsInitializeFinished)
             {
                 await Task.Delay(300);
                 continue;
@@ -392,7 +459,14 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 {
                     foreach (BackgroundModel backgroundItem in args.RemovedItems)
                     {
-                        DownloadingDataList.Remove(DownloadingDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey));
+                        try
+                        {
+                            DownloadingDataList.Remove(DownloadingDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey));
+                        }
+                        catch (Exception)
+                        {
+                            continue;
+                        }
                     }
                 });
             }
@@ -410,7 +484,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         private async void WaitingListItemsChanged(object sender, Extensions.Event.ItemsChangedEventArgs<BackgroundModel> args)
         {
             // 有信息在更新时，等待操作
-            while (IsUpdatingNow)
+            while (IsUpdatingNow && IsInitializeFinished)
             {
                 await Task.Delay(300);
                 continue;
@@ -450,7 +524,14 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 {
                     foreach (BackgroundModel backgroundItem in args.RemovedItems)
                     {
-                        DownloadingDataList.Remove(DownloadingDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey));
+                        try
+                        {
+                            DownloadingDataList.Remove(DownloadingDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey));
+                        }
+                        catch (Exception)
+                        {
+                            continue;
+                        }
                     }
                 });
             }

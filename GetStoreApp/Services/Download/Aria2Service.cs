@@ -1,9 +1,9 @@
 ﻿using Aria2NET;
 using GetStoreApp.Contracts.Services.Download;
+using GetStoreApp.Extensions.AppException;
 using GetStoreApp.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -65,12 +65,22 @@ namespace GetStoreApp.Services.Download
 
             try
             {
+                // 判断下载进程是否存在
+                if (!Aria2ProcessHelper.IsAria2ProcessExisted())
+                {
+                    throw new ProcessNotExistException();
+                }
+
                 string AddResult = await Aria2Client.AddUriAsync(
                     new List<string> { downloadLink },
                     new Dictionary<string, object> { { "dir", folderPath } },
                     0);
 
                 return (true, AddResult);
+            }
+            catch (ProcessNotExistException)
+            {
+                return (false, string.Empty);
             }
             catch (Exception)
             {
@@ -85,8 +95,18 @@ namespace GetStoreApp.Services.Download
         {
             try
             {
+                // 判断下载进程是否存在
+                if (!Aria2ProcessHelper.IsAria2ProcessExisted())
+                {
+                    throw new ProcessNotExistException();
+                }
+
                 string PauseResult = await Aria2Client.ForceRemoveAsync(GID);
                 return (true, PauseResult);
+            }
+            catch (ProcessNotExistException)
+            {
+                return (false, string.Empty);
             }
             catch (Exception)
             {
@@ -101,8 +121,18 @@ namespace GetStoreApp.Services.Download
         {
             try
             {
+                // 判断下载进程是否存在
+                if (!Aria2ProcessHelper.IsAria2ProcessExisted())
+                {
+                    throw new ProcessNotExistException();
+                }
+
                 string DeleteResult = await Aria2Client.ForceRemoveAsync(GID);
                 return (true, DeleteResult);
+            }
+            catch (ProcessNotExistException)
+            {
+                return (false, string.Empty);
             }
             catch (Exception)
             {
@@ -117,10 +147,20 @@ namespace GetStoreApp.Services.Download
         {
             try
             {
+                // 判断下载进程是否存在
+                if (!Aria2ProcessHelper.IsAria2ProcessExisted())
+                {
+                    throw new ProcessNotExistException();
+                }
+
                 DownloadStatusResult TellStatusResult = await Aria2Client.TellStatusAsync(GID);
 
                 return (true,
                  TellStatusResult.Status, TellStatusResult.CompletedLength, TellStatusResult.TotalLength, TellStatusResult.DownloadSpeed);
+            }
+            catch (ProcessNotExistException)
+            {
+                return (false, string.Empty, default(long), default(long), default(long));
             }
             catch (Exception)
             {
@@ -135,9 +175,19 @@ namespace GetStoreApp.Services.Download
         {
             try
             {
+                // 判断下载进程是否存在
+                if (!Aria2ProcessHelper.IsAria2ProcessExisted())
+                {
+                    throw new ProcessNotExistException();
+                }
+
                 DownloadStatusResult GetFileSizeResult = await Aria2Client.TellStatusAsync(GID);
 
                 return (true, GetFileSizeResult.TotalLength);
+            }
+            catch (ProcessNotExistException)
+            {
+                return (false, default(long));
             }
             catch (Exception)
             {

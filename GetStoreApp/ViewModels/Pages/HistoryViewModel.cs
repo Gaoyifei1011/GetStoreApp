@@ -310,7 +310,7 @@ namespace GetStoreApp.ViewModels.Pages
         /// </summary>
         private async Task GetHistoryDataListAsync()
         {
-            Tuple<List<HistoryModel>, bool, bool> HistoryAllData = await HistoryDBService.QueryAllAsync(TimeSortOrder, TypeFilter, ChannelFilter);
+            (List<HistoryModel>, bool, bool) HistoryAllData = await HistoryDBService.QueryAllAsync(TimeSortOrder, TypeFilter, ChannelFilter);
 
             // 获取数据库的原始记录数据
             List<HistoryModel> HistoryRawList = HistoryAllData.Item1;

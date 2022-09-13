@@ -220,7 +220,7 @@
                             <Button
                                 Command="{Binding ElementName=CompletedRoot, Path=ViewModel.InstallCommand}"
                                 CommandParameter="{x:Bind FilePath}"
-                                Content="&#xE710;"
+                                Content="&#xE74b;"
                                 IsEnabled="False"
                                 Style="{StaticResource ButtonDownloadStyle}"
                                 ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=InstallToolTip}" />
@@ -228,7 +228,7 @@
                             <Button
                                 Command="{Binding ElementName=CompletedRoot, Path=ViewModel.OpenItemFolderCommand}"
                                 CommandParameter="{x:Bind FilePath}"
-                                Content="&#xE8b7;"
+                                Content="&#xE8da;"
                                 IsEnabled="{Binding ElementName=CompletedRoot, Path=ViewModel.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
                                 Style="{StaticResource ButtonDownloadStyle}"
                                 ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=OpenItemFolderToolTip}" />

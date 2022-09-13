@@ -72,7 +72,14 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 {
                     lock (UnfinishedDataListLock)
                     {
-                        UnfinishedDataList.Remove(UnfinishedDataList.First(item => item.DownloadKey == item.DownloadKey));
+                        try
+                        {
+                            UnfinishedDataList.Remove(UnfinishedDataList.First(item => item.DownloadKey == item.DownloadKey));
+                        }
+                        catch (Exception)
+                        {
+                            continue;
+                        }
                     }
                 }
                 else
@@ -150,9 +157,9 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
             foreach (BackgroundModel item in SelectedUnfinishedDataList)
             {
-                // 删除文件
                 try
                 {
+                    // 删除文件
                     string tempFilePath = item.FilePath;
                     string tempFileAria2Path = string.Format("{0}.{1}", item.FilePath, "Aria2");
 
@@ -165,23 +172,19 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     {
                         File.Delete(tempFileAria2Path);
                     }
-                }
-                catch (Exception)
-                {
-                    continue;
-                }
 
-                // 删除记录
-                bool DeleteResult = await DownloadDBService.DeleteAsync(item.DownloadKey);
+                    // 删除记录
+                    bool DeleteResult = await DownloadDBService.DeleteAsync(item.DownloadKey);
 
-                if (DeleteResult)
-                {
-                    lock (UnfinishedDataListLock)
+                    if (DeleteResult)
                     {
-                        UnfinishedDataList.Remove(UnfinishedDataList.First(item => item.DownloadKey == item.DownloadKey));
+                        lock (UnfinishedDataListLock)
+                        {
+                            UnfinishedDataList.Remove(UnfinishedDataList.First(item => item.DownloadKey == item.DownloadKey));
+                        }
                     }
                 }
-                else
+                catch (Exception)
                 {
                     continue;
                 }

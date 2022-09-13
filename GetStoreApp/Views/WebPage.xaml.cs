@@ -14,7 +14,6 @@ namespace GetStoreApp.Views
         public WebPage()
         {
             InitializeComponent();
-
             ViewModel.WebViewService.Initialize(webView);
         }
     }
