@@ -107,7 +107,7 @@ namespace GetStoreApp.Services.Settings
         {
             if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
             {
-                IntPtr pidlList = ILCreateFromPathW(filePath.Replace(@"\\", @"\"));
+                IntPtr pidlList = ILCreateFromPathW(filePath);
                 if (pidlList != IntPtr.Zero)
                 {
                     try

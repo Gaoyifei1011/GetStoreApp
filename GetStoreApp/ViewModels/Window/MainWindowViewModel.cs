@@ -20,7 +20,7 @@ namespace GetStoreApp.ViewModels.Window
         private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
 
         /// <summary>
-        /// 关闭窗口之后关闭其他任务
+        /// 关闭窗口之后关闭其他服务
         /// </summary>
         public async void WindowClosed()
         {

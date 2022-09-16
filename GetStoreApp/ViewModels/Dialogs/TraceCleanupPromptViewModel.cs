@@ -198,7 +198,7 @@ namespace GetStoreApp.ViewModels.Dialogs
             // 清理本地创建的文件
             if (IsLocalFileClean)
             {
-                List<BackgroundModel> LocalFileData = (await DownloadDBService.QueryAsync(4));
+                List<BackgroundModel> LocalFileData = (await DownloadDBService.QueryWithFlagAsync(4));
                 LocalCleanResult = DeleteFiles(ref LocalFileData);
             }
 

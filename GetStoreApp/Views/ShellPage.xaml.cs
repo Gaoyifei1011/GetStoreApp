@@ -87,6 +87,7 @@ namespace GetStoreApp.Views
                 {
                     switch (inAppNotificationMessage.Value.NotificationContent)
                     {
+                        case "NetWorkError": ShellNotification.Show(new NetWorkErrorNotification(), NotificationDuration); break;
                         case "HistoryCopy": ShellNotification.Show(new HistoryCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
                         case "ResultLinkCopy": ShellNotification.Show(new ResultLinkCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
                         case "ResultIDCopy": ShellNotification.Show(new ResultIDCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;

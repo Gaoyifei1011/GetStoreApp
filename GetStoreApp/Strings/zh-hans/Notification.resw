@@ -117,17 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DownloadCreateFailed" xml:space="preserve">
-    <value>下载链接创建失败，无法下载</value>
+  <data name="CheckNetWorkConnection" xml:space="preserve">
+    <value>检查网络连接</value>
   </data>
-  <data name="DownloadCreateSuccessfully" xml:space="preserve">
-    <value>成功创建下载链接</value>
+  <data name="DownloadCompleted" xml:space="preserve">
+    <value>下载完成</value>
   </data>
-  <data name="DownloadSelectedCreateFailed" xml:space="preserve">
-    <value>{0}个下载链接创建失败，无法下载</value>
+  <data name="DownloadCompletedDescription" xml:space="preserve">
+    <value>所有任务都已经下载完成。</value>
   </data>
-  <data name="DownloadSelectedCreateSuccessfully" xml:space="preserve">
-    <value>成功创建{0}个下载链接</value>
+  <data name="DownloadingAborted" xml:space="preserve">
+    <value>网络连接异常，当前正在下载中的任务已经全部暂停，请确保您的网络处于连接状态后再尝试下载。</value>
   </data>
   <data name="HistoryCopyFailed" xml:space="preserve">
     <value>该条历史记录复制失败，请检查的剪贴板的访问权限</value>
@@ -146,6 +146,15 @@
   </data>
   <data name="LanguageChangeSuccessfully" xml:space="preserve">
     <value>语言设置修改成功，重启应用后生效</value>
+  </data>
+  <data name="NetWorkError" xml:space="preserve">
+    <value>网络连接异常，请检查您的网络连接后再尝试下载</value>
+  </data>
+  <data name="NotDownload" xml:space="preserve">
+    <value>网络连接异常，应用处于离线模式，请检查您的网络连接。</value>
+  </data>
+  <data name="OfflineMode" xml:space="preserve">
+    <value>应用处于离线模式</value>
   </data>
   <data name="ResultContentCopyFailed" xml:space="preserve">
     <value>该条下载记录复制失败，请检查的剪贴板的访问权限</value>
@@ -176,5 +185,8 @@
   </data>
   <data name="ResultLinkSelectedCopySuccessfully" xml:space="preserve">
     <value>{0}条下载链接已经成功复制到剪贴板</value>
+  </data>
+  <data name="ViewDownloadPage" xml:space="preserve">
+    <value>打开下载页面</value>
   </data>
 </root>

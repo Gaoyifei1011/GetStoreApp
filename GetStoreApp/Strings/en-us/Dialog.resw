@@ -151,13 +151,16 @@
     <value>Cancel</value>
   </data>
   <data name="DeleteContent" xml:space="preserve">
-    <value>The selected record is permanently deleted, and the action is irrevocable.</value>
+    <value>The selected record will be permanently deleted, the operation is irrevocable, please proceed with caution.</value>
   </data>
   <data name="DeleteContinue" xml:space="preserve">
     <value>Continue</value>
   </data>
   <data name="DeleteTitle" xml:space="preserve">
     <value>Delete record</value>
+  </data>
+  <data name="DeleteWithFileContent" xml:space="preserve">
+    <value>Selected records (including files) are permanently deleted, this is irrevocable, so use caution.</value>
   </data>
   <data name="DesktopAppsContent1" xml:space="preserve">
     <value>Microsoft divides the app into two categories of apps in the latest Microsoft Store, one is the Store app, installing and updating the services that depend on the Store; The other type is the classical desktop application, the installation of this type of application is installed independently, when updating, it is updated inside the application, and the store only provides the download service of the application installation package.</value>
@@ -170,6 +173,24 @@
   </data>
   <data name="DownloadCleanError" xml:space="preserve">
     <value>An error occurred during the download record cleanup. Please check the download record access rights.</value>
+  </data>
+  <data name="DownloadNotifyCancel" xml:space="preserve">
+    <value>Cancel the download</value>
+  </data>
+  <data name="DownloadNotifyContent" xml:space="preserve">
+    <value>The current task already exists, and re-downloading will delete the downloaded content</value>
+  </data>
+  <data name="DownloadNotifyMultiContent" xml:space="preserve">
+    <value>A total of {0} download records already exist, and re-downloading will delete the downloaded content</value>
+  </data>
+  <data name="DownloadNotifySure" xml:space="preserve">
+    <value>Re-download</value>
+  </data>
+  <data name="DownloadNotifyTitle" xml:space="preserve">
+    <value>Repeat the download prompt</value>
+  </data>
+  <data name="DownloadNotifyView" xml:space="preserve">
+    <value>View your download history</value>
   </data>
   <data name="DownloadRecord" xml:space="preserve">
     <value>Download records</value>

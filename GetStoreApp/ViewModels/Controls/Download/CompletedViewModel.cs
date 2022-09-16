@@ -1,12 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.WinUI;
 using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Extensions.Event;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Download;
 using GetStoreApp.UI.Dialogs;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -15,6 +18,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace GetStoreApp.ViewModels.Controls.Download
 {
@@ -23,7 +27,11 @@ namespace GetStoreApp.ViewModels.Controls.Download
         // 临界区资源访问互斥锁
         private readonly object CompletedDataListLock = new object();
 
+        private DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+
         private IDownloadDBService DownloadDBService { get; } = IOCHelper.GetService<IDownloadDBService>();
+
+        private IDownloadSchedulerService DownloadSchedulerService { get; } = IOCHelper.GetService<IDownloadSchedulerService>();
 
         private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
 
@@ -152,7 +160,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
 
             // 删除时显示删除确认对话框
-            ContentDialogResult result = await new DeletePromptDialog().ShowAsync();
+            ContentDialogResult result = await new DeletePromptDialog("DeleteWithFile").ShowAsync();
 
             if (result == ContentDialogResult.Primary)
             {
@@ -220,8 +228,26 @@ namespace GetStoreApp.ViewModels.Controls.Download
         {
             if (param is not null)
             {
-                Debug.WriteLine(param.Replace(@"\\", @"\"));
-                await DownloadOptionsService.OpenItemFolderAsync(param);
+                param = param.Replace(@"\\", @"\");
+
+                // 判断文件是否存在，文件存在则寻找对应的文件，不存在打开对应的目录；若目录不存在，则仅启动Explorer.exe进程，打开资源管理器的默认文件夹
+                if (!string.IsNullOrEmpty(param) && File.Exists(param))
+                {
+                    await DownloadOptionsService.OpenItemFolderAsync(param);
+                }
+                else
+                {
+                    string FileFolderPath = Path.GetDirectoryName(param);
+
+                    if (Directory.Exists(FileFolderPath))
+                    {
+                        await Windows.System.Launcher.LaunchFolderAsync(await StorageFolder.GetFolderFromPathAsync(FileFolderPath));
+                    }
+                    else
+                    {
+                        Process.Start("explorer.exe");
+                    }
+                }
             }
         });
 
@@ -249,24 +275,31 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 // 切换到已完成页面时，更新当前页面的数据
                 if (pivotSelectionMessage.Value == 2)
                 {
-                    await GetDownloadDataListAsync();
+                    await GetCompletedDataListAsync();
                 }
 
                 // 从下载页面离开时，关闭所有事件。并注销所有消息服务
                 else if (pivotSelectionMessage.Value == -1)
                 {
+                    // 取消订阅所有事件
+                    DownloadSchedulerService.DownloadingList.ItemsChanged -= DownloadingListItemsChanged;
+
+                    // 关闭消息服务
                     Messenger.UnregisterAll(this);
                 }
                 await Task.CompletedTask;
             });
+
+            // 订阅事件
+            DownloadSchedulerService.DownloadingList.ItemsChanged += DownloadingListItemsChanged;
         }
 
         /// <summary>
         /// 从数据库中加载已下载完成的数据
         /// </summary>
-        private async Task GetDownloadDataListAsync()
+        private async Task GetCompletedDataListAsync()
         {
-            List<BackgroundModel> DownloadRawList = await DownloadDBService.QueryAsync(4);
+            List<BackgroundModel> DownloadRawList = await DownloadDBService.QueryWithFlagAsync(4);
 
             lock (CompletedDataListLock)
             {
@@ -281,12 +314,47 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     {
                         DownloadKey = downloadRawData.DownloadKey,
                         FileName = downloadRawData.FileName,
+                        FileLink = downloadRawData.FileLink,
                         FilePath = downloadRawData.FilePath,
                         FileSHA1 = downloadRawData.FileSHA1,
                         TotalSize = downloadRawData.TotalSize,
                         DownloadFlag = downloadRawData.DownloadFlag
                     });
                 }
+            }
+        }
+
+        /// <summary>
+        /// 订阅事件，下载中列表内容有完成项目时通知UI更改
+        /// </summary>
+        private async void DownloadingListItemsChanged(object sender, ItemsChangedEventArgs<BackgroundModel> args)
+        {
+            if (args.RemovedItems.Any(item => item.DownloadFlag == 4))
+            {
+                await dispatcherQueue.EnqueueAsync(async () =>
+                {
+                    foreach (BackgroundModel backgroundItem in args.RemovedItems)
+                    {
+                        if (backgroundItem.DownloadFlag == 4)
+                        {
+                            BackgroundModel item = await DownloadDBService.QueryWithKeyAsync(backgroundItem.DownloadKey);
+
+                            lock (CompletedDataListLock)
+                            {
+                                CompletedDataList.Insert(0, new CompletedModel
+                                {
+                                    DownloadKey = item.DownloadKey,
+                                    FileName = item.FileName,
+                                    FileLink = item.FileLink,
+                                    FilePath = item.FilePath,
+                                    FileSHA1 = item.FileSHA1,
+                                    TotalSize = item.TotalSize,
+                                    DownloadFlag = item.DownloadFlag
+                                });
+                            }
+                        }
+                    }
+                });
             }
         }
     }

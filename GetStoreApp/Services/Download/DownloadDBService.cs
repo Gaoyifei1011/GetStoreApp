@@ -22,7 +22,7 @@ namespace GetStoreApp.Services.Download
         public async Task InitializeDownloadDBAsync()
         {
             // 将处于等待下载状态的任务调整为暂停下载状态
-            List<BackgroundModel> DownloadWaitingList = await QueryAsync(1);
+            List<BackgroundModel> DownloadWaitingList = await QueryWithFlagAsync(1);
 
             foreach (BackgroundModel backgroundItem in DownloadWaitingList)
             {
@@ -30,7 +30,7 @@ namespace GetStoreApp.Services.Download
             }
 
             // 将正在下载状态的任务调整为暂停下载状态
-            List<BackgroundModel> DownloadingList = await QueryAsync(3);
+            List<BackgroundModel> DownloadingList = await QueryWithFlagAsync(3);
 
             foreach (BackgroundModel backgroundItem in DownloadingList)
             {
@@ -179,7 +179,7 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         /// <param name="downloadFlag">文件下载标志：0为下载失败，1为等待下载，2为暂停下载，3为正在下载，4为成功下载</param>
         /// <returns>返回指定下载标志记录列表</returns>
-        public async Task<List<BackgroundModel>> QueryAsync(int downloadFlag)
+        public async Task<List<BackgroundModel>> QueryWithFlagAsync(int downloadFlag)
         {
             List<BackgroundModel> DownloadRawList = new List<BackgroundModel>();
 
@@ -219,6 +219,48 @@ namespace GetStoreApp.Services.Download
                 await db.CloseAsync();
             }
             return DownloadRawList;
+        }
+
+        /// <summary>
+        /// 获取指定下载键值的下载记录数据
+        /// </summary>
+        /// <param name="downloadKey">文件下载对应的唯一键值</param>
+        /// <returns>返回指定下载键值对应的具体信息</returns>
+        public async Task<BackgroundModel> QueryWithKeyAsync(string downloadKey)
+        {
+            BackgroundModel downloadRawModel = new BackgroundModel();
+
+            // 从数据库中获取数据
+            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
+            {
+                await db.OpenAsync();
+
+                SqliteCommand SelectCommand = new SqliteCommand
+                {
+                    Connection = db,
+
+                    CommandText = string.Format("SELECT * FROM {0} WHERE DOWNLOADKEY = '{1}'",
+                        DataBaseService.DownloadTableName,
+                        downloadKey
+                        )
+                };
+
+                SqliteDataReader Query = await SelectCommand.ExecuteReaderAsync();
+
+                while (await Query.ReadAsync())
+                {
+                    downloadRawModel.DownloadKey = Query.GetString(0);
+                    downloadRawModel.FileName = Query.GetString(1);
+                    downloadRawModel.FileLink = Query.GetString(2);
+                    downloadRawModel.FilePath = Query.GetString(3);
+                    downloadRawModel.FileSHA1 = Query.GetString(4);
+                    downloadRawModel.TotalSize = Convert.ToInt32(Query.GetString(5));
+                    downloadRawModel.DownloadFlag = Convert.ToInt32(Query.GetString(6));
+                }
+
+                await db.CloseAsync();
+            }
+            return downloadRawModel;
         }
 
         /// <summary>

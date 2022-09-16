@@ -24,13 +24,15 @@ namespace GetStoreApp.Services.Root
 
         private IEnumerable<IActivationHandler> ActivationHandlers { get; } = IOCHelper.GetService<IEnumerable<IActivationHandler>>();
 
+        private IAppNotificationService AppNotificationService { get; } = IOCHelper.GetService<IAppNotificationService>();
+
         private IDataBaseService DataBaseService { get; } = IOCHelper.GetService<IDataBaseService>();
 
         private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
         private IAria2Service Aria2Service { get; } = IOCHelper.GetService<IAria2Service>();
 
-        private IDownloadDBService DownloadDatatService { get; } = IOCHelper.GetService<IDownloadDBService>();
+        private IDownloadDBService DownloadDBService { get; } = IOCHelper.GetService<IDownloadDBService>();
 
         private IDownloadSchedulerService DownloadSchedulerService { get; } = IOCHelper.GetService<IDownloadSchedulerService>();
 
@@ -88,7 +90,7 @@ namespace GetStoreApp.Services.Root
 
             // 初始化数据库信息
             await DataBaseService.InitializeDataBaseAsync();
-            await DownloadDatatService.InitializeDownloadDBAsync();
+            await DownloadDBService.InitializeDownloadDBAsync();
 
             // 初始化应用配置信息
             await BackdropService.InitializeBackdropAsync();
@@ -100,6 +102,9 @@ namespace GetStoreApp.Services.Root
             await ThemeService.InitializeThemeAsync();
             await TopMostService.InitializeTopMostValueAsync();
             await UseInstructionService.InitializeUseInsVisValueAsync();
+
+            // 初始化应用通知服务
+            AppNotificationService.Initialize();
         }
 
         /// <summary>

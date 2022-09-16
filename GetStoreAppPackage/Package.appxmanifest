@@ -2,11 +2,13 @@
 
 <Package
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
+  xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   xmlns:genTemplate="http://schemas.microsoft.com/appx/developer/templatestudio"
-  IgnorableNamespaces="uap uap5 rescap genTemplate">
+  IgnorableNamespaces="desktop uap uap5 rescap genTemplate">
 
   <Identity
     Name="Gaoyifei1011.GetStoreApp"
@@ -54,6 +56,17 @@
             <uap5:ExecutionAlias Alias="GetStoreApp.exe" />
           </uap5:AppExecutionAlias>
         </uap5:Extension>
+        <desktop:Extension Category="windows.toastNotificationActivation">
+          <desktop:ToastNotificationActivation ToastActivatorCLSID="6CA254A3-8B8C-4441-AE81-0FBA18ADD8B0" />
+        </desktop:Extension>
+
+        <com:Extension Category="windows.comServer">
+          <com:ComServer>
+            <com:ExeServer Executable="GetStoreApp.exe" Arguments="----AppNotificationActivated:" DisplayName="Toast activator">
+              <com:Class Id="6CA254A3-8B8C-4441-AE81-0FBA18ADD8B0" DisplayName="Toast activator"/>
+            </com:ExeServer>
+          </com:ComServer>
+        </com:Extension>
       </Extensions>
     </Application>
   </Applications>

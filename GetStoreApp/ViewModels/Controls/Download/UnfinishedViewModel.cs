@@ -1,12 +1,17 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.WinUI;
 using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Extensions.Enum;
+using GetStoreApp.Extensions.Event;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Download;
+using GetStoreApp.Models.Notification;
 using GetStoreApp.UI.Dialogs;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -21,6 +26,8 @@ namespace GetStoreApp.ViewModels.Controls.Download
     {
         // 临界区资源访问互斥锁
         private readonly object UnfinishedDataListLock = new object();
+
+        private DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
         private IDownloadDBService DownloadDBService { get; } = IOCHelper.GetService<IDownloadDBService>();
 
@@ -48,6 +55,18 @@ namespace GetStoreApp.ViewModels.Controls.Download
         // 继续下载全部任务
         public IAsyncRelayCommand ContinueAllCommand => new AsyncRelayCommand(async () =>
         {
+            NetWorkStatus NetStatus = NetWorkHelper.GetNetWorkStatus();
+
+            // 网络处于未连接状态，不再进行下载，显示通知
+            if (NetStatus == NetWorkStatus.None || NetStatus == NetWorkStatus.Unknown)
+            {
+                WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
+                {
+                    NotificationContent = "NetWorkError",
+                }));
+                return;
+            }
+
             List<BackgroundModel> PauseList = new List<BackgroundModel>();
 
             foreach (UnfinishedModel unfinishedItem in UnfinishedDataList.Where(item => item.DownloadFlag == 2))
@@ -212,6 +231,18 @@ namespace GetStoreApp.ViewModels.Controls.Download
         // 继续下载当前任务
         public IAsyncRelayCommand ContinueCommand => new AsyncRelayCommand<UnfinishedModel>(async (param) =>
         {
+            NetWorkStatus NetStatus = NetWorkHelper.GetNetWorkStatus();
+
+            // 网络处于未连接状态，不再进行下载，显示通知
+            if (NetStatus == NetWorkStatus.None || NetStatus == NetWorkStatus.Unknown)
+            {
+                WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
+                {
+                    NotificationContent = "NetWorkError",
+                }));
+                return;
+            }
+
             if (param.DownloadFlag == 2)
             {
                 bool ContinueResult = await DownloadSchedulerService.ContinueTaskAsync(new BackgroundModel
@@ -255,27 +286,33 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 // 切换到已完成页面时，更新当前页面的数据
                 if (pivotSelectionMessage.Value == 1)
                 {
-                    await GetDownloadDataListAsync();
+                    await GetUnfinishedDataListAsync();
                 }
 
                 // 从下载页面离开时，关闭所有事件。并注销所有消息服务
                 else if (pivotSelectionMessage.Value == -1)
                 {
+                    // 取消订阅所有事件
+                    DownloadSchedulerService.DownloadingList.ItemsChanged -= DownloadingListItemsChanged;
+
                     Messenger.UnregisterAll(this);
                 }
 
                 await Task.CompletedTask;
             });
+
+            // 订阅事件
+            DownloadSchedulerService.DownloadingList.ItemsChanged += DownloadingListItemsChanged;
         }
 
         /// <summary>
         /// 从数据库中加载未下载完成和下载失败的数据
         /// </summary>
-        private async Task GetDownloadDataListAsync()
+        private async Task GetUnfinishedDataListAsync()
         {
-            List<BackgroundModel> FailureDownloadRawList = await DownloadDBService.QueryAsync(0);
+            List<BackgroundModel> FailureDownloadRawList = await DownloadDBService.QueryWithFlagAsync(0);
 
-            List<BackgroundModel> PauseDownloadRawList = await DownloadDBService.QueryAsync(2);
+            List<BackgroundModel> PauseDownloadRawList = await DownloadDBService.QueryWithFlagAsync(2);
 
             lock (UnfinishedDataListLock)
             {
@@ -311,6 +348,40 @@ namespace GetStoreApp.ViewModels.Controls.Download
                         DownloadFlag = downloadItem.DownloadFlag
                     });
                 }
+            }
+        }
+
+        /// <summary>
+        /// 订阅事件，下载中列表内容有暂停下载或下载失败的项目时通知UI更改
+        /// </summary>
+        private async void DownloadingListItemsChanged(object sender, ItemsChangedEventArgs<BackgroundModel> args)
+        {
+            if (args.RemovedItems.Any(item => item.DownloadFlag == 0 || item.DownloadFlag == 2))
+            {
+                await dispatcherQueue.EnqueueAsync(async () =>
+                {
+                    foreach (BackgroundModel backgroundItem in args.RemovedItems)
+                    {
+                        if (backgroundItem.DownloadFlag == 0 || backgroundItem.DownloadFlag == 2)
+                        {
+                            BackgroundModel item = await DownloadDBService.QueryWithKeyAsync(backgroundItem.DownloadKey);
+
+                            lock (UnfinishedDataListLock)
+                            {
+                                UnfinishedDataList.Insert(0, new UnfinishedModel
+                                {
+                                    DownloadKey = item.DownloadKey,
+                                    FileName = item.FileName,
+                                    FilePath = item.FilePath,
+                                    FileLink = item.FileLink,
+                                    FileSHA1 = item.FileSHA1,
+                                    TotalSize = item.TotalSize,
+                                    DownloadFlag = item.DownloadFlag
+                                });
+                            }
+                        }
+                    }
+                });
             }
         }
     }

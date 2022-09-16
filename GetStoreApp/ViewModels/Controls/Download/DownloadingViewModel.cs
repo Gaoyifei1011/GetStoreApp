@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
 using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Extensions.Event;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Download;
@@ -290,54 +291,12 @@ namespace GetStoreApp.ViewModels.Controls.Download
             // Interval 获取或设置计时器刻度之间的时间段
             DownloadingTimer.Interval = new TimeSpan(0, 0, 1);
 
-            // 订阅事件
-            DownloadSchedulerService.DownloadingList.ItemsChanged += DownloadingListItemsChanged;
-            DownloadSchedulerService.WaitingList.ItemsChanged += WaitingListItemsChanged;
-
             WeakReferenceMessenger.Default.Register<DownloadingViewModel, PivotSelectionMessage>(this, async (downloadingViewModel, pivotSelectionMessage) =>
             {
                 // 切换到下载中页面时，开启监控。并更新当前页面的数据
                 if (pivotSelectionMessage.Value == 0)
                 {
-                    lock (IsUpdatingNowLock)
-                    {
-                        IsUpdatingNow = true;
-                    }
-
-                    DownloadingDataList.Clear();
-
-                    foreach (BackgroundModel item in DownloadSchedulerService.DownloadingList)
-                    {
-                        DownloadingDataList.Add(new DownloadingModel
-                        {
-                            DownloadKey = item.DownloadKey,
-                            FileName = item.FileName,
-                            FileLink = item.FileLink,
-                            FilePath = item.FilePath,
-                            FileSHA1 = item.FileSHA1,
-                            TotalSize = item.TotalSize,
-                            DownloadFlag = item.DownloadFlag
-                        });
-                    }
-                    foreach (BackgroundModel downloadItem in DownloadSchedulerService.WaitingList)
-                    {
-                        DownloadingDataList.Add(new DownloadingModel
-                        {
-                            DownloadKey = downloadItem.DownloadKey,
-                            FileName = downloadItem.FileName,
-                            FileLink = downloadItem.FileLink,
-                            FilePath = downloadItem.FilePath,
-                            FileSHA1 = downloadItem.FileSHA1,
-                            TotalSize = downloadItem.TotalSize,
-                            DownloadFlag = downloadItem.DownloadFlag
-                        });
-                    }
-
-                    lock (IsUpdatingNowLock)
-                    {
-                        IsUpdatingNow = false;
-                        IsInitializeFinished = true;
-                    }
+                    await GetDownloadingDataListAsync();
 
                     DownloadingTimer.Start();
                 }
@@ -368,6 +327,58 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
                 await Task.CompletedTask;
             });
+
+            // 订阅事件
+            DownloadSchedulerService.DownloadingList.ItemsChanged += DownloadingListItemsChanged;
+            DownloadSchedulerService.WaitingList.ItemsChanged += WaitingListItemsChanged;
+        }
+
+        /// <summary>
+        /// 从下载调度服务中获取正在下载和等待下载的数据
+        /// </summary>
+        private async Task GetDownloadingDataListAsync()
+        {
+            lock (IsUpdatingNowLock)
+            {
+                IsUpdatingNow = true;
+            }
+
+            DownloadingDataList.Clear();
+
+            foreach (BackgroundModel item in DownloadSchedulerService.DownloadingList)
+            {
+                DownloadingDataList.Add(new DownloadingModel
+                {
+                    DownloadKey = item.DownloadKey,
+                    FileName = item.FileName,
+                    FileLink = item.FileLink,
+                    FilePath = item.FilePath,
+                    FileSHA1 = item.FileSHA1,
+                    TotalSize = item.TotalSize,
+                    DownloadFlag = item.DownloadFlag
+                });
+            }
+            foreach (BackgroundModel downloadItem in DownloadSchedulerService.WaitingList)
+            {
+                DownloadingDataList.Add(new DownloadingModel
+                {
+                    DownloadKey = downloadItem.DownloadKey,
+                    FileName = downloadItem.FileName,
+                    FileLink = downloadItem.FileLink,
+                    FilePath = downloadItem.FilePath,
+                    FileSHA1 = downloadItem.FileSHA1,
+                    TotalSize = downloadItem.TotalSize,
+                    DownloadFlag = downloadItem.DownloadFlag
+                });
+            }
+
+            lock (IsUpdatingNowLock)
+            {
+                IsUpdatingNow = false;
+                IsInitializeFinished = true;
+            }
+
+            await Task.CompletedTask;
         }
 
         /// <summary>
@@ -415,7 +426,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// <summary>
         /// 订阅事件，下载中列表内容发生改变时通知UI更改
         /// </summary>
-        private async void DownloadingListItemsChanged(object sender, Extensions.Event.ItemsChangedEventArgs<BackgroundModel> args)
+        private async void DownloadingListItemsChanged(object sender, ItemsChangedEventArgs<BackgroundModel> args)
         {
             // 有信息在更新时，等待操作
             while (IsUpdatingNow && IsInitializeFinished)
@@ -461,7 +472,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     {
                         try
                         {
-                            DownloadingDataList.Remove(DownloadingDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey));
+                            DownloadingDataList.Remove(DownloadingDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey && item.DownloadFlag == 3));
                         }
                         catch (Exception)
                         {
@@ -481,7 +492,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// <summary>
         /// 订阅事件，等待列表内容发生改变时通知UI更改
         /// </summary>
-        private async void WaitingListItemsChanged(object sender, Extensions.Event.ItemsChangedEventArgs<BackgroundModel> args)
+        private async void WaitingListItemsChanged(object sender, ItemsChangedEventArgs<BackgroundModel> args)
         {
             // 有信息在更新时，等待操作
             while (IsUpdatingNow && IsInitializeFinished)
@@ -526,7 +537,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     {
                         try
                         {
-                            DownloadingDataList.Remove(DownloadingDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey));
+                            DownloadingDataList.Remove(DownloadingDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey && item.DownloadFlag == 1));
                         }
                         catch (Exception)
                         {

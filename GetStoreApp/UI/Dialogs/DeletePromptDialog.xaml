@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="{x:Bind ResourceService.GetLocalized('/Dialog/DeleteTitle')}"
     CloseButtonText="{x:Bind ResourceService.GetLocalized('/Dialog/DeleteCancel')}"
-    Content="{x:Bind ResourceService.GetLocalized('/Dialog/DeleteContent')}"
+    Content="{x:Bind DeleteContent}"
     PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
     PrimaryButtonText="{x:Bind ResourceService.GetLocalized('/Dialog/DeleteContinue')}"
     RequestedTheme="{x:Bind DialogTheme}"

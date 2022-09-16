@@ -3,16 +3,22 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
+using GetStoreApp.Models.Download;
 using GetStoreApp.Models.Home;
 using GetStoreApp.Models.Notification;
 using GetStoreApp.UI.Dialogs;
+using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media.Animation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,9 +29,13 @@ namespace GetStoreApp.ViewModels.Controls.Home
         // 临界区资源访问互斥锁
         private readonly object ResultDataListLock = new object();
 
-        private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
+        private IDownloadDBService DownloadDBService { get; } = IOCHelper.GetService<IDownloadDBService>();
 
         private IDownloadSchedulerService DownloadSchedulerService { get; } = IOCHelper.GetService<IDownloadSchedulerService>();
+
+        private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
+
+        private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
 
         public ObservableCollection<ResultModel> ResultDataList { get; } = new ObservableCollection<ResultModel>();
 
@@ -183,6 +193,18 @@ namespace GetStoreApp.ViewModels.Controls.Home
         // 下载选定项目
         public IAsyncRelayCommand DownloadSelectedCommand => new AsyncRelayCommand(async () =>
         {
+            NetWorkStatus NetStatus = NetWorkHelper.GetNetWorkStatus();
+
+            // 网络处于未连接状态，不再进行下载，显示通知
+            if (NetStatus == NetWorkStatus.None || NetStatus == NetWorkStatus.Unknown)
+            {
+                WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
+                {
+                    NotificationContent = "NetWorkError",
+                }));
+                return;
+            }
+
             List<ResultModel> SelectedResultDataList = ResultDataList.Where(item => item.IsSelected == true).ToList();
 
             // 内容为空时显示空提示对话框
@@ -195,9 +217,46 @@ namespace GetStoreApp.ViewModels.Controls.Home
             // 使用应用内提供的下载方式
             if (DownloadOptionsService.DownloadMode.InternalName == DownloadOptionsService.DownloadModeList[0].InternalName)
             {
+                List<BackgroundModel> duplicatedList = new List<BackgroundModel>();
+
                 foreach (ResultModel resultItem in SelectedResultDataList)
                 {
-                    await DownloadSchedulerService.AddTaskAsync(resultItem.FileName, resultItem.FileLink, resultItem.FileSHA1);
+                    BackgroundModel backgroundItem = new BackgroundModel
+                    {
+                        DownloadKey = GenerateUniqueKey(resultItem.FileName, resultItem.FileLink, resultItem.FileSHA1),
+                        FileName = resultItem.FileName,
+                        FileLink = resultItem.FileLink,
+                        FilePath = string.Format("{0}\\{1}", DownloadOptionsService.DownloadFolder.Path, resultItem.FileName),
+                        TotalSize = 0,
+                        FileSHA1 = resultItem.FileSHA1,
+                        DownloadFlag = 1
+                    };
+
+                    if (await DownloadDBService.CheckDuplicatedAsync(backgroundItem.DownloadKey))
+                    {
+                        duplicatedList.Add(backgroundItem);
+                    }
+                    else
+                    {
+                        await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add");
+                    }
+                }
+
+                if (duplicatedList.Count > 0)
+                {
+                    ContentDialogResult result = await new DownloadNotificationDialog(duplicatedList.Count).ShowAsync();
+
+                    if (result == ContentDialogResult.Primary)
+                    {
+                        foreach (BackgroundModel backgroundItem in duplicatedList)
+                        {
+                            await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
+                        }
+                    }
+                    else if (result == ContentDialogResult.Secondary)
+                    {
+                        NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+                    }
                 }
             }
 
@@ -235,10 +294,52 @@ namespace GetStoreApp.ViewModels.Controls.Home
         // 根据设置存储的文件链接操作方式操作获取到的文件链接
         public IAsyncRelayCommand DownloadCommand => new AsyncRelayCommand<ResultModel>(async (param) =>
         {
+            NetWorkStatus NetStatus = NetWorkHelper.GetNetWorkStatus();
+
+            // 网络处于未连接状态，不再进行下载，显示通知
+            if (NetStatus == NetWorkStatus.None || NetStatus == NetWorkStatus.Unknown)
+            {
+                WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
+                {
+                    NotificationContent = "NetWorkError",
+                }));
+                return;
+            }
+
             // 使用应用内提供的下载方式
             if (DownloadOptionsService.DownloadMode.InternalName == DownloadOptionsService.DownloadModeList[0].InternalName)
             {
-                await DownloadSchedulerService.AddTaskAsync(param.FileName, param.FileLink, param.FileSHA1);
+                BackgroundModel backgroundItem = new BackgroundModel
+                {
+                    DownloadKey = GenerateUniqueKey(param.FileName, param.FileLink, param.FileSHA1),
+                    FileName = param.FileName,
+                    FileLink = param.FileLink,
+                    FilePath = string.Format("{0}\\{1}", DownloadOptionsService.DownloadFolder.Path, param.FileName),
+                    TotalSize = 0,
+                    FileSHA1 = param.FileSHA1,
+                    DownloadFlag = 1
+                };
+
+                // 检查是否存在相同的任务记录
+                bool CheckResult = await DownloadDBService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
+
+                if (CheckResult)
+                {
+                    ContentDialogResult result = await new DownloadNotificationDialog(0).ShowAsync();
+
+                    if (result == ContentDialogResult.Primary)
+                    {
+                        await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
+                    }
+                    else if (result == ContentDialogResult.Secondary)
+                    {
+                        NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+                    }
+                }
+                else
+                {
+                    await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add");
+                }
             }
 
             // 使用浏览器下载
@@ -315,6 +416,28 @@ namespace GetStoreApp.ViewModels.Controls.Home
             });
 
             TestResultViewModel();
+        }
+
+        /// <summary>
+        /// 生成唯一的下载键值
+        /// </summary>
+        public string GenerateUniqueKey(string fileName, string fileLink, string fileSHA1)
+        {
+            string Content = string.Format("{0} {1} {2}", fileName, fileLink, fileSHA1);
+
+            MD5 md5Hash = MD5.Create();
+
+            // 将输入字符串转换为字节数组并计算哈希数据
+            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(Content));
+
+            // 创建一个 Stringbuilder 来收集字节并创建字符串
+            StringBuilder str = new StringBuilder();
+
+            // 循环遍历哈希数据的每一个字节并格式化为十六进制字符串
+            for (int i = 0; i < data.Length; i++) str.Append(data[i].ToString("x2"));//加密结果"x2"结果为32位,"x3"结果为48位,"x4"结果为64位
+
+            // 返回十六进制字符串
+            return str.ToString();
         }
 
         private void TestResultViewModel()

@@ -117,17 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DownloadCreateFailed" xml:space="preserve">
-    <value>The download link creation failed and could not be downloaded</value>
+  <data name="CheckNetWorkConnection" xml:space="preserve">
+    <value>Check the network connection</value>
   </data>
-  <data name="DownloadCreateSuccessfully" xml:space="preserve">
-    <value>The download link was created successfully</value>
+  <data name="DownloadCompleted" xml:space="preserve">
+    <value>Download completed</value>
   </data>
-  <data name="DownloadSelectedCreateFailed" xml:space="preserve">
-    <value>{0} download links created failed and could not be downloaded</value>
+  <data name="DownloadCompletedDescription" xml:space="preserve">
+    <value>All tasks have been downloaded.</value>
   </data>
-  <data name="DownloadSelectedCreateSuccessfully" xml:space="preserve">
-    <value>{0} download links are created successfully</value>
+  <data name="DownloadingAborted" xml:space="preserve">
+    <value>The network connection is abnormal, the tasks that are currently being downloaded have all been paused, please make sure that your network is connected before trying to download.</value>
   </data>
   <data name="HistoryCopyFailed" xml:space="preserve">
     <value>The history record copy failed, check the access rights of the clipboard</value>
@@ -146,6 +146,15 @@
   </data>
   <data name="LanguageChangeSuccessfully" xml:space="preserve">
     <value>The language setting is modified successfully and takes effect after restarting the application</value>
+  </data>
+  <data name="NetWorkError" xml:space="preserve">
+    <value>The network connection is abnormal, please check your network connection before trying to download</value>
+  </data>
+  <data name="NotDownload" xml:space="preserve">
+    <value>The network connection is abnormal, the app is in offline mode, please check your network connection.</value>
+  </data>
+  <data name="OfflineMode" xml:space="preserve">
+    <value>The app is in offline mode</value>
   </data>
   <data name="ResultContentCopyFailed" xml:space="preserve">
     <value>The download record copy failed, check the access rights of the clipboard</value>
@@ -176,5 +185,8 @@
   </data>
   <data name="ResultLinkSelectedCopySuccessfully" xml:space="preserve">
     <value>{0} download links has been successfully copied to the clipboard</value>
+  </data>
+  <data name="ViewDownloadPage" xml:space="preserve">
+    <value>View download page</value>
   </data>
 </root>
