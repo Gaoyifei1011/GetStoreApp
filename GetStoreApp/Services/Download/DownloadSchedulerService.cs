@@ -1,12 +1,12 @@
 ﻿using GetStoreApp.Contracts.Services.Download;
+using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Extensions.Collection;
+using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Helpers;
 using GetStoreApp.Models.Download;
 using System;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 
@@ -20,12 +20,18 @@ namespace GetStoreApp.Services.Download
         // 临界区资源访问互斥锁
         private readonly object IsUpdatingNowLock = new object();
 
+        private readonly object IsNetWorkConnectedLock = new object();
+
         // 标志信息是否在更新中
         private bool IsUpdatingNow = false;
+
+        private bool IsNetWorkConnected = true;
 
         private IAria2Service Aria2Service { get; } = IOCHelper.GetService<IAria2Service>();
 
         private IDownloadDBService DownloadDBService { get; } = IOCHelper.GetService<IDownloadDBService>();
+
+        private IAppNotificationService AppNotificationService { get; } = IOCHelper.GetService<IAppNotificationService>();
 
         private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
 
@@ -39,10 +45,18 @@ namespace GetStoreApp.Services.Download
         public NotifyList<BackgroundModel> WaitingList { get; } = new NotifyList<BackgroundModel>();
 
         /// <summary>
-        /// 初始化下载监控任务
+        /// 先获取当前网络状态信息，然后初始化下载监控任务
         /// </summary>
         public async Task InitializeDownloadMonitorAsync()
         {
+            NetWorkStatus NetStatus = NetWorkHelper.GetNetWorkStatus();
+
+            if (NetStatus == NetWorkStatus.None || NetStatus == NetWorkStatus.Unknown)
+            {
+                IsNetWorkConnected = false;
+                AppNotificationService.Show("DownloadAborted", "NotDownload");
+            }
+
             DownloadSchedulerTimer.Elapsed += DownloadMonitorTimerElapsed;
             DownloadSchedulerTimer.AutoReset = true;
             DownloadSchedulerTimer.Start();
@@ -63,7 +77,7 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 添加下载任务
         /// </summary>
-        public async Task<int> AddTaskAsync(string fileName, string fileLink, string fileSHA1)
+        public async Task<bool> AddTaskAsync(BackgroundModel backgroundItem, string operation)
         {
             // 有信息在更新时，等待操作
             while (IsUpdatingNow)
@@ -78,42 +92,31 @@ namespace GetStoreApp.Services.Download
                 IsUpdatingNow = true;
             }
 
-            int Result = 0;
+            bool Result = false;
 
-            BackgroundModel downloadItem = new BackgroundModel
-            {
-                DownloadKey = GenerateUniqueKey(fileName, fileLink, fileSHA1),
-                FileName = fileName,
-                FileLink = fileLink,
-                FilePath = string.Format("{0}\\{1}", DownloadOptionsService.DownloadFolder.Path, fileName),
-                TotalSize = 0,
-                FileSHA1 = fileSHA1,
-                DownloadFlag = 1
-            };
-
-            // 检查是否存在相同的任务记录
-            bool SearchResult = await DownloadDBService.CheckDuplicatedAsync(downloadItem.DownloadKey);
-
-            if (!SearchResult)
+            if (operation == "Add")
             {
                 // 在数据库中添加下载信息，并获取添加成功的结果
-                bool AddResult = await DownloadDBService.AddAsync(downloadItem);
+                bool AddResult = await DownloadDBService.AddAsync(backgroundItem);
 
                 // 数据库添加成功后添加等待下载任务
                 if (AddResult)
                 {
-                    WaitingList.Add(downloadItem);
-                }
-                // 下载记录发生了异常
-                else
-                {
-                    Result = 1;
+                    WaitingList.Add(backgroundItem);
+                    Result = true;
                 }
             }
             // 存在重复的下载记录
-            else
+            else if (operation == "Update")
             {
-                Result = 2;
+                bool UpdateResult = await DownloadDBService.UpdateFlagAsync(backgroundItem.DownloadKey, 1);
+
+                // 数据库更新成功后添加等待下载任务
+                if (UpdateResult)
+                {
+                    WaitingList.Add(backgroundItem);
+                    Result = true;
+                }
             }
 
             // 信息更新完毕时，允许其他操作开始执行
@@ -313,6 +316,8 @@ namespace GetStoreApp.Services.Download
                 IsUpdatingNow = true;
             }
 
+            await ScheduledGetNetWorkAsync();
+
             await ScheduledUpdateStatusAsync();
 
             await ScheduledAddTaskAsync();
@@ -321,6 +326,84 @@ namespace GetStoreApp.Services.Download
             lock (IsUpdatingNowLock)
             {
                 IsUpdatingNow = false;
+            }
+        }
+
+        /// <summary>
+        /// 定时检查网络是否处于连接状态
+        /// </summary>
+        private async Task ScheduledGetNetWorkAsync()
+        {
+            NetWorkStatus NetStatus = NetWorkHelper.GetNetWorkStatus();
+
+            // 网络处于未连接状态，暂停所有任务
+            if (NetStatus == NetWorkStatus.None || NetStatus == NetWorkStatus.Unknown)
+            {
+                // 如果网络处于正在连接状态，修改当前网络状态并发送通知
+                if (IsNetWorkConnected)
+                {
+                    lock (IsNetWorkConnectedLock)
+                    {
+                        IsNetWorkConnected = false;
+                    }
+
+                    // TODO: 发送通知
+                    if (DownloadingList.Any() || WaitingList.Any())
+                    {
+                        AppNotificationService.Show("DownloadAborted", "Downloading");
+                    }
+                    else
+                    {
+                        AppNotificationService.Show("DownloadAborted", "NotDownload");
+                    }
+                }
+
+                // 从正在下载列表中暂停所有正在下载任务
+                foreach (BackgroundModel backgroundItem in DownloadingList)
+                {
+                    // 从下载进程中移除正在下载的任务
+                    (bool, string) DeleteResult = await Aria2Service.PauseAsync(backgroundItem.GID);
+
+                    if (DeleteResult.Item1)
+                    {
+                        try
+                        {
+                            await DownloadDBService.UpdateFlagAsync(backgroundItem.DownloadKey, 2);
+                        }
+                        catch (Exception)
+                        {
+                            continue;
+                        }
+                    }
+                }
+
+                // 从等待下载列表中暂停所有等待下载任务
+                foreach (BackgroundModel backgroundItem in WaitingList)
+                {
+                    try
+                    {
+                        await DownloadDBService.UpdateFlagAsync(backgroundItem.DownloadKey, 2);
+                    }
+                    catch (Exception)
+                    {
+                        continue;
+                    }
+                }
+
+                // 清空所有正在下载和等待下载的列表内容
+                DownloadingList.Clear();
+                WaitingList.Clear();
+            }
+            else
+            {
+                // 如果网络处于断线状态，修改当前网络状态
+                if (!IsNetWorkConnected)
+                {
+                    lock (IsNetWorkConnectedLock)
+                    {
+                        IsNetWorkConnected = true;
+                    }
+                }
             }
         }
 
@@ -346,6 +429,7 @@ namespace GetStoreApp.Services.Download
                     try
                     {
                         WaitingList.RemoveAll(item => item.DownloadKey == DownloadItem.DownloadKey);
+
                         DownloadingList.Add(DownloadItem);
 
                         await DownloadDBService.UpdateFlagAsync(DownloadItem.DownloadKey, DownloadItem.DownloadFlag);
@@ -419,29 +503,13 @@ namespace GetStoreApp.Services.Download
 
                 // 正在下载列表中删除掉不是处于下载状态的任务
                 DownloadingList.RemoveAll(item => item.DownloadFlag != 3);
+
+                // 下载完成后发送通知
+                if (DownloadingList.Count == 0 && WaitingList.Count == 0)
+                {
+                    AppNotificationService.Show("DownloadCompleted");
+                }
             }
-        }
-
-        /// <summary>
-        /// 生成唯一的下载键值
-        /// </summary>
-        private string GenerateUniqueKey(string fileName, string fileLink, string fileSHA1)
-        {
-            string Content = string.Format("{0} {1} {2}", fileName, fileLink, fileSHA1);
-
-            MD5 md5Hash = MD5.Create();
-
-            // 将输入字符串转换为字节数组并计算哈希数据
-            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(Content));
-
-            // 创建一个 Stringbuilder 来收集字节并创建字符串
-            StringBuilder str = new StringBuilder();
-
-            // 循环遍历哈希数据的每一个字节并格式化为十六进制字符串
-            for (int i = 0; i < data.Length; i++) str.Append(data[i].ToString("x2"));//加密结果"x2"结果为32位,"x3"结果为48位,"x4"结果为64位
-
-            // 返回十六进制字符串
-            return str.ToString();
         }
     }
 }

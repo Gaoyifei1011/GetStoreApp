@@ -14,7 +14,7 @@ namespace GetStoreApp.Contracts.Services.Download
 
         Task CloseDownloadMonitorAsync();
 
-        Task<int> AddTaskAsync(string fileName, string fileLink, string fileSHA1);
+        Task<bool> AddTaskAsync(BackgroundModel backgroundItem, string operation);
 
         Task<bool> ContinueTaskAsync(BackgroundModel downloadItem);
 

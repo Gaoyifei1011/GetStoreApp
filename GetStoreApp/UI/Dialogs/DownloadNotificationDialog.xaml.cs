@@ -7,7 +7,7 @@ using System;
 
 namespace GetStoreApp.UI.Dialogs
 {
-    public sealed partial class DeletePromptDialog : ContentDialog
+    public sealed partial class DownloadNotificationDialog : ContentDialog
     {
         public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
@@ -15,19 +15,20 @@ namespace GetStoreApp.UI.Dialogs
 
         public ElementTheme DialogTheme => (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
 
-        public string DeleteContent { get; set; }
+        public string DownloadNotifyContent { get; set; }
 
-        public DeletePromptDialog(params string[] parameter)
+        public DownloadNotificationDialog(int count)
         {
             XamlRoot = App.MainWindow.Content.XamlRoot;
+            RequestedTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
 
-            if (parameter.Length == 0)
+            if (count == default(int))
             {
-                DeleteContent = ResourceService.GetLocalized("/Dialog/DeleteContent");
+                DownloadNotifyContent = ResourceService.GetLocalized("/Dialog/DownloadNotifyContent");
             }
-            else if (parameter[0] == "DeleteWithFile")
+            else
             {
-                DeleteContent = ResourceService.GetLocalized("/Dialog/DeleteWithFileContent");
+                DownloadNotifyContent = string.Format(ResourceService.GetLocalized("/Dialog/DownloadNotifyMultiContent"), count);
             }
 
             InitializeComponent();

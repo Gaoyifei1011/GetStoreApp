@@ -14,7 +14,9 @@ namespace GetStoreApp.Contracts.Services.Download
 
         Task<bool> UpdateFileSizeAsync(string downloadKey, double fileSize);
 
-        Task<List<BackgroundModel>> QueryAsync(int downloadFlag);
+        Task<List<BackgroundModel>> QueryWithFlagAsync(int downloadFlag);
+
+        Task<BackgroundModel> QueryWithKeyAsync(string downloadKey);
 
         Task<bool> CheckDuplicatedAsync(string downloadKey);
 
