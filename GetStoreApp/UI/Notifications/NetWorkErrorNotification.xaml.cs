@@ -10,7 +10,7 @@ namespace GetStoreApp.UI.Notifications
 
         public NetWorkErrorNotification()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
     }
 }

@@ -22,11 +22,20 @@
                 <StackPanel Spacing="5">
                     <TextBlock Text="{x:Bind ResourceService.GetLocalized('/Download/ExplanContent1')}" TextWrapping="WrapWholeWords" />
                     <TextBlock Text="{x:Bind ResourceService.GetLocalized('/Download/ExplanContent2')}" TextWrapping="WrapWholeWords" />
-                    <Button
+                    <TextBlock Text="{x:Bind ResourceService.GetLocalized('/Download/ExplanContent3')}" TextWrapping="WrapWholeWords" />
+                    <StackPanel
                         HorizontalAlignment="Right"
-                        Command="{x:Bind ViewModel.DownloadSettingsCommand}"
-                        CommandParameter="{Binding ElementName=DownloadTeachingTip}"
-                        Content="{x:Bind ResourceService.GetLocalized('/Download/OpenSettings')}" />
+                        Orientation="Horizontal"
+                        Spacing="5">
+                        <Button
+                            Command="{x:Bind ViewModel.LearnMoreCommand}"
+                            CommandParameter="{x:Bind DownloadTeachingTip}"
+                            Content="{x:Bind ResourceService.GetLocalized('/Download/LearnMore')}" />
+                        <Button
+                            Command="{x:Bind ViewModel.DownloadSettingsCommand}"
+                            CommandParameter="{x:Bind DownloadTeachingTip}"
+                            Content="{x:Bind ResourceService.GetLocalized('/Download/OpenSettings')}" />
+                    </StackPanel>
                 </StackPanel>
             </TeachingTip.Content>
         </TeachingTip>

@@ -1,11 +1,13 @@
 ﻿using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers;
+using GetStoreApp.UI.Controls.Custom;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Windows.Win32.Foundation;
 using WinUIEx;
 
 namespace GetStoreApp
@@ -13,6 +15,8 @@ namespace GetStoreApp
     public partial class App : Application
     {
         private IActivationService ActivationService { get; }
+
+        private IResourceService ResourceService { get; }
 
         public IAria2Service Aria2Service { get; }
 
@@ -28,6 +32,7 @@ namespace GetStoreApp
             IOCHelper.InitializeIOCService();
 
             ActivationService = IOCHelper.GetService<IActivationService>();
+            ResourceService = IOCHelper.GetService<IResourceService>();
             Aria2Service = IOCHelper.GetService<IAria2Service>();
 
             UnhandledException += OnUnhandledException;
@@ -75,17 +80,23 @@ namespace GetStoreApp
             }
 
             // 否则将注册激活重定向
-            AppInstance.GetCurrent().Activated += App_Activated;
+            AppInstance.GetCurrent().Activated += AppActivated;
         }
 
         /// <summary>
         /// 关闭其他实例后，按照原来的状态显示已经打开的实例窗口
         /// </summary>
-        private void App_Activated(object sender, AppActivationArguments e)
+        private void AppActivated(object sender, AppActivationArguments e)
         {
             WindowHelper.SetAppWindow();
 
-            //TODO: 显示提示消息对话框
+            //显示提示消息对话框
+            WinUIMessageBox.ShowMessageBox(
+                (HWND)WinRT.Interop.WindowNative.GetWindowHandle(MainWindow),
+                ResourceService.GetLocalized("AppIsRunning"),
+                ResourceService.GetLocalized("AppDisplayName"),
+                WinUIMessageBox.MB_OK | WinUIMessageBox.MB_ICONINFORMATION | WinUIMessageBox.MB_APPLMODAL | WinUIMessageBox.MB_TOPMOST
+                );
         }
     }
 }

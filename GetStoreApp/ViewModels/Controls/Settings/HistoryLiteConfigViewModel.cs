@@ -24,6 +24,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             set { SetProperty(ref _historyLiteItem, value); }
         }
 
+        // 主页面“历史记录”显示数目修改
         public IAsyncRelayCommand HistoryLiteItemSelectCommand => new AsyncRelayCommand(async () =>
         {
             await HistoryLiteNumService.SetHistoryLiteNumAsync(HistoryLiteItem);

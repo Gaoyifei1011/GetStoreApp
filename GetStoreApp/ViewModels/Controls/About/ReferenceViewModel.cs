@@ -5,6 +5,7 @@ namespace GetStoreApp.ViewModels.Controls.About
 {
     public class ReferenceViewModel : ObservableRecipient
     {
+        //项目引用信息
         public Dictionary<string, string> ReferenceDict => new Dictionary<string, string>
         {
             {"Aira2","https://aria2.github.io" },
@@ -16,12 +17,10 @@ namespace GetStoreApp.ViewModels.Controls.About
             {"Microsoft.Data.Sqlite","https://docs.microsoft.com/dotnet/standard/data/sqlite" },
             {"Microsoft.Extensions.Hosting","https://www.nuget.org/packages/Microsoft.Extensions.Hosting" },
             {"Microsoft.Windows.CsWin32","https://github.com/Microsoft/CsWin32" },
-            {"Microsoft.Windows.CsWinRT","https://github.com/microsoft/cswinrt" },
             {"Microsoft.Windows.SDK.BuildTools","https://www.nuget.org/packages/Microsoft.Windows.SDK.BuildTools" },
             {"Microsoft.WindowsAppSDK","https://github.com/microsoft/windowsappsdk" },
             {"Microsoft.Xaml.Behaviors.WinUI.Managed","https://www.nuget.org/packages/Microsoft.Xaml.Behaviors.WinUI.Managed" },
             {"NETStandard.Library","https://www.nuget.org/packages/NETStandard.Library" },
-            {"Newtonsoft.Json" ,"https://www.newtonsoft.com/json"},
             {"PInvoke.SHCore","https://github.com/dotnet/pinvoke" },
             {"System.Management","https://www.nuget.org/packages/System.Management" },
             {"Template Studio","https://github.com/microsoft/TemplateStudio" },

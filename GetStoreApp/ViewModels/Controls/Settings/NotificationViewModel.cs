@@ -18,6 +18,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             set { SetProperty(ref _notification, value); }
         }
 
+        // 设置是否开启应用通知
         public IAsyncRelayCommand NotificationCommand => new AsyncRelayCommand<bool>(async (param) =>
         {
             await NotificationService.SetNotificationAsync(param);

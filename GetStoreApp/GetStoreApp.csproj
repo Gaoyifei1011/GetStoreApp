@@ -21,7 +21,6 @@
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <StartupObject>GetStoreApp.Program</StartupObject>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <CsWinRTIncludes>Contoso</CsWinRTIncludes>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
@@ -101,12 +100,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.0" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.1" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.5" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.8" />
     <PackageReference Include="NETStandard.Library" Version="2.0.3" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="PInvoke.SHCore" Version="0.7.124" />
     <PackageReference Include="System.Management" Version="6.0.0" />
     <PackageReference Include="WinUIEx" Version="1.8.0" />

@@ -414,8 +414,6 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
                 await Task.CompletedTask;
             });
-
-            TestResultViewModel();
         }
 
         /// <summary>
@@ -438,51 +436,6 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             // 返回十六进制字符串
             return str.ToString();
-        }
-
-        private void TestResultViewModel()
-        {
-            ResultControlVisable = true;
-            ResultDataList.Add(new ResultModel()
-            {
-                FileName = "WPS_Setup_12358.exe",
-                FileLinkExpireTime = "2022-09-08 08:14:56 GMT",
-                FileSHA1 = "1234567",
-                FileSize = "150.91 MB",
-                FileLink = "https://official-package.wpscdn.cn/wps/download/WPS_Setup_12358.exe"
-            });
-            ResultDataList.Add(new ResultModel()
-            {
-                FileName = "bili_win-install.exe",
-                FileLinkExpireTime = "2022-09-08 08:14:56 GMT",
-                FileSHA1 = "980821",
-                FileSize = "87.15MB",
-                FileLink = "https://dl.hdslb.com/mobile/fixed/bili_win/bili_win-install.exe?v=1.6.0"
-            });
-            ResultDataList.Add(new ResultModel()
-            {
-                FileName = "iBiliTV-master.apk",
-                FileLinkExpireTime = "2022-09-08 08:20:56 GMT",
-                FileSHA1 = "123456789",
-                FileSize = "22.21 MB",
-                FileLink = "https://dl.hdslb.com/mobile/latest/android_tv_yst/iBiliTV-master.apk?t=20220911"
-            });
-            ResultDataList.Add(new ResultModel()
-            {
-                FileName = "code_1.71.0-1662018389_amd64.deb",
-                FileLinkExpireTime = "2022-09-09 08:14:56 GMT",
-                FileSHA1 = "980821456789",
-                FileSize = "81.4 MB",
-                FileLink = "https://az764295.vo.msecnd.net/stable/784b0177c56c607789f9638da7b6bf3230d47a8c/code_1.71.0-1662018389_amd64.deb"
-            });
-            ResultDataList.Add(new ResultModel()
-            {
-                FileName = "VSCodeSetup-x64-1.71.0.exe",
-                FileLinkExpireTime = "2022-09-10 08:14:56 GMT",
-                FileSHA1 = "980821MSIX",
-                FileSize = "79.23 MB",
-                FileLink = "https://az764295.vo.msecnd.net/stable/784b0177c56c607789f9638da7b6bf3230d47a8c/VSCodeSetup-x64-1.71.0.exe"
-            });
         }
     }
 }

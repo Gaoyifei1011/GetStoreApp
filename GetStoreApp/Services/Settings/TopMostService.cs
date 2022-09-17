@@ -7,6 +7,9 @@ using Windows.Win32.Foundation;
 
 namespace GetStoreApp.Services.Settings
 {
+    /// <summary>
+    /// 应用窗口置顶设置服务
+    /// </summary>
     public class TopMostService : ITopMostService
     {
         private IConfigStorageService ConfigStorageService { get; } = IOCHelper.GetService<IConfigStorageService>();

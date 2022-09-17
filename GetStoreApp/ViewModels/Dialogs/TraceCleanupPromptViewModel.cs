@@ -133,8 +133,10 @@ namespace GetStoreApp.ViewModels.Dialogs
             set { SetProperty(ref _localFileCleanErrorVisable, value); }
         }
 
+        // 痕迹清理
         public IAsyncRelayCommand TraceCleanupSureCommand => new AsyncRelayCommand(TraceCleanupAsync);
 
+        // 取消痕迹清理
         public IAsyncRelayCommand TraceCleanupCancelCommand => new AsyncRelayCommand<ContentDialog>(async (param) =>
         {
             param.Hide();

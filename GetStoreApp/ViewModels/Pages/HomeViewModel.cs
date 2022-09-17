@@ -24,6 +24,7 @@ namespace GetStoreApp.ViewModels.Pages
             set { SetProperty(ref _useInsVisValue, value); }
         }
 
+        // 了解应用具体的使用说明
         public IAsyncRelayCommand UseInstructionCommand => new AsyncRelayCommand(async () =>
         {
             App.NavigationArgs = "Instructions";

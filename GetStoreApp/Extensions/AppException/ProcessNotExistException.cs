@@ -10,18 +10,24 @@ namespace GetStoreApp.Extensions.AppException
         private string error;
         private Exception innerException;
 
-        //无参数构造函数
+        /// <summary>
+        /// 无参数构造函数
+        /// </summary>
         public ProcessNotExistException()
         {
         }
 
-        //带一个字符串参数的构造函数
+        /// <summary>
+        /// 带一个字符串参数的构造函数
+        /// </summary>
         public ProcessNotExistException(string msg)
         {
             error = msg;
         }
 
-        //带有一个字符串参数和一个内部异常信息参数的构造函数
+        /// <summary>
+        /// 带有一个字符串参数和一个内部异常信息参数的构造函数
+        /// </summary>
         public ProcessNotExistException(string msg, Exception exception)
         {
             innerException = exception;
@@ -40,6 +46,9 @@ namespace GetStoreApp.Extensions.AppException
             }
         }
 
+        /// <summary>
+        /// 获取异常信息
+        /// </summary>
         public Exception GetInnerException()
         {
             if (innerException is not null)

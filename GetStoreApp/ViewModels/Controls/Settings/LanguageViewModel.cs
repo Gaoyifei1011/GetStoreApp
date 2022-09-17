@@ -31,6 +31,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             set { SetProperty(ref _language, value); }
         }
 
+        // 语言设置说明
         public IAsyncRelayCommand LanguageTipCommand => new AsyncRelayCommand(async () =>
         {
             App.NavigationArgs = "SettingsHelp";
@@ -38,6 +39,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             await Task.CompletedTask;
         });
 
+        // 应用默认语言修改
         public IAsyncRelayCommand LanguageSelectCommand => new AsyncRelayCommand(async () =>
         {
             await LanguageService.SetLanguageAsync(Language);

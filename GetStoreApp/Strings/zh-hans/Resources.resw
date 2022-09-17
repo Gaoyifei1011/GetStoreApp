@@ -125,6 +125,9 @@
     <value>获取商店应用 (Dev)</value>
     <comment>应用名称显示</comment>
   </data>
+  <data name="AppIsRunning" xml:space="preserve">
+    <value>应用程序正在运行中。</value>
+  </data>
   <data name="AppShortDisplayName" xml:space="preserve">
     <value>获取商店应用</value>
   </data>
