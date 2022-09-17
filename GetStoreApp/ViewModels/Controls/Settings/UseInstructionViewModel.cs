@@ -18,6 +18,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             set { SetProperty(ref _useInsVisValue, value); }
         }
 
+        // “使用说明”按钮显示设置
         public IAsyncRelayCommand UseInstructionCommand => new AsyncRelayCommand<bool>(async (param) =>
         {
             await UseInstructionService.SetUseInsVisValueAsync(param);

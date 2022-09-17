@@ -30,6 +30,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
         public bool BackdropIsEnabled { get; }
 
+        // 背景色不可用时具体信息了解
         public IAsyncRelayCommand BackdropTipCommand => new AsyncRelayCommand(async () =>
         {
             App.NavigationArgs = "SettingsHelp";
@@ -37,6 +38,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             await Task.CompletedTask;
         });
 
+        // 选择背景色
         public IAsyncRelayCommand BackdropSelectCommand => new AsyncRelayCommand(async () =>
         {
             await BackdropService.SetBackdropAsync(Backdrop);

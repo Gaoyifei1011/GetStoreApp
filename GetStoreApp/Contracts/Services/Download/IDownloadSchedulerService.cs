@@ -20,6 +20,8 @@ namespace GetStoreApp.Contracts.Services.Download
 
         Task<bool> PauseTaskAsync(string downloadKey, string gID, int downloadFlag);
 
+        Task PauseAllTaskAsync();
+
         Task<bool> DeleteTaskAsync(string downloadKey, string gID, int downloadFlag);
     }
 }

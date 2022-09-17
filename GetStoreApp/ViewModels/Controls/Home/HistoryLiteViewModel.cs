@@ -41,15 +41,17 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public ObservableCollection<HistoryModel> HistoryLiteDataList { get; } = new ObservableCollection<HistoryModel>();
 
-        // List列表初始化，可以从数据库获得的列表中加载
+        // 列表初始化，可以从数据库获得的列表中加载
         public IAsyncRelayCommand LoadedCommand => new AsyncRelayCommand(GetHistoryLiteDataListAsync);
 
+        // 查看全部
         public IAsyncRelayCommand ViewAllCommand => new AsyncRelayCommand(async () =>
         {
             NavigationService.NavigateTo(typeof(HistoryViewModel).FullName, null, new DrillInNavigationTransitionInfo());
             await Task.CompletedTask;
         });
 
+        // 复制到剪贴板
         public IAsyncRelayCommand CopyCommand => new AsyncRelayCommand<HistoryModel>(async (param) =>
         {
             string CopyContent = string.Format("{0}\t{1}\t{2}",
@@ -67,6 +69,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             await Task.CompletedTask;
         });
 
+        // 填入到文本框
         public IAsyncRelayCommand FillinCommand => new AsyncRelayCommand<HistoryModel>(async (param) =>
         {
             WeakReferenceMessenger.Default.Send(new FillinMessage(param));

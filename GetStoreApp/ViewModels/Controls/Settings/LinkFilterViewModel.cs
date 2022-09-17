@@ -34,6 +34,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             set { SetProperty(ref _blockMapFilterValue, value); }
         }
 
+        // 链接过滤说明
         public IAsyncRelayCommand LinkFilterInstructionCommand => new AsyncRelayCommand(async () =>
         {
             App.NavigationArgs = "SettingsHelp";
@@ -41,12 +42,14 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             await Task.CompletedTask;
         });
 
+        // 设置是否过滤以“.e”开头的文件
         public IAsyncRelayCommand StartWithEFilterCommand => new AsyncRelayCommand<bool>(async (param) =>
         {
             await LinkFilterService.SetStartsWithEFilterValueAsync(param);
             StartsWithEFilterValue = param;
         });
 
+        // 设置是否过滤包块映射文件
         public IAsyncRelayCommand BlockMapFilterCommand => new AsyncRelayCommand<bool>(async (param) =>
         {
             await LinkFilterService.SetBlockMapFilterValueAsync(param);

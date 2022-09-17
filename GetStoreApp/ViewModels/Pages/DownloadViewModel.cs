@@ -16,6 +16,16 @@ namespace GetStoreApp.ViewModels.Pages
     {
         private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
 
+        // 了解更多下载管理说明
+        public IAsyncRelayCommand LearnMoreCommand => new AsyncRelayCommand<TeachingTip>(async (param) =>
+        {
+            App.NavigationArgs = "SettingsHelp";
+            param.IsOpen = false;
+            NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+            await Task.CompletedTask;
+        });
+
+        // 打开应用“下载设置”
         public IAsyncRelayCommand DownloadSettingsCommand => new AsyncRelayCommand<TeachingTip>(async (param) =>
         {
             App.NavigationArgs = "DownloadOptions";

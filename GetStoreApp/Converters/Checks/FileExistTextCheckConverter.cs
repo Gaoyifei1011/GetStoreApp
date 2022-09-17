@@ -6,6 +6,9 @@ using System;
 
 namespace GetStoreApp.Converters.Checks
 {
+    /// <summary>
+    /// 检测文件是否存在文字提示转换器
+    /// </summary>
     public class FileExistTextCheckConverter : IValueConverter
     {
         private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();

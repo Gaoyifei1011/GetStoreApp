@@ -156,4 +156,7 @@
   <data name="URL" xml:space="preserve">
     <value>URL(Link)</value>
   </data>
+  <data name="AppIsRunning" xml:space="preserve">
+    <value>The application is running.</value>
+  </data>
 </root>

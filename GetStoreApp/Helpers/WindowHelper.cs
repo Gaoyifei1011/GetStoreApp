@@ -4,6 +4,9 @@ using Windows.Win32.Foundation;
 
 namespace GetStoreApp.Helpers
 {
+    /// <summary>
+    /// 应用窗口设置
+    /// </summary>
     public static class WindowHelper
     {
         [DllImport("user32.dll")]

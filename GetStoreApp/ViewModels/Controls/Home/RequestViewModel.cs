@@ -79,6 +79,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _linkText, value); }
         }
 
+        // 类型选择后修改样例文本
         public IAsyncRelayCommand TypeSelectCommand => new AsyncRelayCommand(async () =>
         {
             SampleLink = SampleLinkList[SelectedType];
@@ -88,6 +89,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             await Task.CompletedTask;
         });
 
+        // 获取链接
         public IAsyncRelayCommand GetLinksCommand => new AsyncRelayCommand(GetLinksAsync);
 
         public RequestViewModel()

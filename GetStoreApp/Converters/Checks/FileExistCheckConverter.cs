@@ -5,6 +5,9 @@ using System.IO;
 
 namespace GetStoreApp.Converters.Checks
 {
+    /// <summary>
+    /// 检测文件是否存在转换器
+    /// </summary>
     public class FileExistCheckConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)

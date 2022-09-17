@@ -202,7 +202,10 @@
     <value>The download feature is in beta and may be unstable. If the current download file is large or an error occurs during the application re-download process, it is recommended to modify the download default options, and then use a professional download tool to assist the download.</value>
   </data>
   <data name="ExplanContent2" xml:space="preserve">
-    <value>The download link is time-sensitive and cannot be accessed after a certain period of time. Therefore, the application does not support resuming downloads for applications that fail to download. If you have a need for this, please re-obtain the link and download it.</value>
+    <value>The download link is time-sensitive, and the app does not currently support resuming downloads for apps that fail to download.</value>
+  </data>
+  <data name="ExplanContent3" xml:space="preserve">
+    <value>If you encounter a download service that quits because of an exception, we recommend restarting the app before trying to download.</value>
   </data>
   <data name="FileNotExist" xml:space="preserve">
     <value>The downloaded file may have been removed</value>
@@ -215,6 +218,9 @@
   </data>
   <data name="InvalidLink" xml:space="preserve">
     <value>The link has been expired</value>
+  </data>
+  <data name="LearnMore" xml:space="preserve">
+    <value>Learn more</value>
   </data>
   <data name="OpenFolder" xml:space="preserve">
     <value>Open folder</value>

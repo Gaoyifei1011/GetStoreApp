@@ -232,6 +232,67 @@ namespace GetStoreApp.Services.Download
         }
 
         /// <summary>
+        /// 暂停全部下载任务
+        /// </summary>
+        public async Task PauseAllTaskAsync()
+        {
+            // 有信息在更新时，等待操作
+            while (IsUpdatingNow)
+            {
+                await Task.Delay(300);
+                continue;
+            }
+
+            // 当有信息处于更新状态中时，暂停其他操作
+            lock (IsUpdatingNowLock)
+            {
+                IsUpdatingNow = true;
+            }
+
+            // 从正在下载列表中暂停所有正在下载任务
+            foreach (BackgroundModel backgroundItem in DownloadingList)
+            {
+                // 从下载进程中移除正在下载的任务
+                (bool, string) DeleteResult = await Aria2Service.PauseAsync(backgroundItem.GID);
+
+                if (DeleteResult.Item1)
+                {
+                    try
+                    {
+                        await DownloadDBService.UpdateFlagAsync(backgroundItem.DownloadKey, 2);
+                    }
+                    catch (Exception)
+                    {
+                        continue;
+                    }
+                }
+            }
+
+            // 从等待下载列表中暂停所有等待下载任务
+            foreach (BackgroundModel backgroundItem in WaitingList)
+            {
+                try
+                {
+                    await DownloadDBService.UpdateFlagAsync(backgroundItem.DownloadKey, 2);
+                }
+                catch (Exception)
+                {
+                    continue;
+                }
+            }
+
+            // 清空所有正在下载和等待下载的列表内容
+            DownloadingList.Clear();
+            WaitingList.Clear();
+
+            // 信息更新完毕时，允许其他操作开始执行
+            lock (IsUpdatingNowLock)
+            {
+                IsUpdatingNow = false;
+            }
+        }
+
+        /// <summary>
         /// 删除下载任务
         /// </summary>
         public async Task<bool> DeleteTaskAsync(string downloadKey, string gID, int downloadFlag)
@@ -304,6 +365,8 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         private async void DownloadMonitorTimerElapsed(object sender, ElapsedEventArgs args)
         {
+            await ScheduledGetNetWorkAsync();
+
             // 有信息在更新时，不再操作，等待下一秒尝试更新内容
             if (IsUpdatingNow)
             {
@@ -315,8 +378,6 @@ namespace GetStoreApp.Services.Download
             {
                 IsUpdatingNow = true;
             }
-
-            await ScheduledGetNetWorkAsync();
 
             await ScheduledUpdateStatusAsync();
 
@@ -358,41 +419,8 @@ namespace GetStoreApp.Services.Download
                     }
                 }
 
-                // 从正在下载列表中暂停所有正在下载任务
-                foreach (BackgroundModel backgroundItem in DownloadingList)
-                {
-                    // 从下载进程中移除正在下载的任务
-                    (bool, string) DeleteResult = await Aria2Service.PauseAsync(backgroundItem.GID);
-
-                    if (DeleteResult.Item1)
-                    {
-                        try
-                        {
-                            await DownloadDBService.UpdateFlagAsync(backgroundItem.DownloadKey, 2);
-                        }
-                        catch (Exception)
-                        {
-                            continue;
-                        }
-                    }
-                }
-
-                // 从等待下载列表中暂停所有等待下载任务
-                foreach (BackgroundModel backgroundItem in WaitingList)
-                {
-                    try
-                    {
-                        await DownloadDBService.UpdateFlagAsync(backgroundItem.DownloadKey, 2);
-                    }
-                    catch (Exception)
-                    {
-                        continue;
-                    }
-                }
-
-                // 清空所有正在下载和等待下载的列表内容
-                DownloadingList.Clear();
-                WaitingList.Clear();
+                // 暂停所有下载任务
+                await PauseAllTaskAsync();
             }
             else
             {

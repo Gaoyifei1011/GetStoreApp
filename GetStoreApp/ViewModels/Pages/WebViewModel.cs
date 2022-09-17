@@ -35,6 +35,7 @@ namespace GetStoreApp.ViewModels.Pages
             set { SetProperty(ref _isLoading, value); }
         }
 
+        // 网页后退
         public IAsyncRelayCommand BrowserBackCommand => new AsyncRelayCommand(
             async () =>
             {
@@ -44,6 +45,7 @@ namespace GetStoreApp.ViewModels.Pages
             () => WebViewService.CanGoBack
             );
 
+        // 网页前进
         public IAsyncRelayCommand BrowserForwardCommand => new AsyncRelayCommand(
             async () =>
             {
@@ -53,21 +55,18 @@ namespace GetStoreApp.ViewModels.Pages
             () => WebViewService.CanGoForward
             );
 
+        // 网页刷新
         public IAsyncRelayCommand RefreshCommand => new AsyncRelayCommand(async () =>
         {
             WebViewService.Reload();
             await Task.CompletedTask;
         });
 
+        // 在浏览器中打开
         public IAsyncRelayCommand OpenInBrowserCommand => new AsyncRelayCommand(async () =>
         {
             await Windows.System.Launcher.LaunchUriAsync(Source);
         });
-
-        public void InitializeWebView2(int processid)
-        {
-            WebView2ProcessID = processid;
-        }
 
         public void OnNavigatedTo(object parameter)
         {

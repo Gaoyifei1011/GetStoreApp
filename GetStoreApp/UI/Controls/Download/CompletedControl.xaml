@@ -223,7 +223,8 @@
                                 Content="&#xE74b;"
                                 IsEnabled="False"
                                 Style="{StaticResource ButtonDownloadStyle}"
-                                ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=InstallToolTip}" />
+                                ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=InstallToolTip}"
+                                Visibility="Collapsed" />
 
                             <Button
                                 Command="{Binding ElementName=CompletedRoot, Path=ViewModel.OpenItemFolderCommand}"

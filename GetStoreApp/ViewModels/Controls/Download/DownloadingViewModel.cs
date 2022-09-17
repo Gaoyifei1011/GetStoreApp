@@ -72,12 +72,8 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 IsUpdatingNow = true;
             }
 
-            List<DownloadingModel> SelectedDownloadingDataList = DownloadingDataList.Where(item => item.IsSelected == true).ToList();
-
-            foreach (DownloadingModel downloadingItem in SelectedDownloadingDataList)
-            {
-                bool PauseResult = await DownloadSchedulerService.PauseTaskAsync(downloadingItem.DownloadKey, downloadingItem.GID, downloadingItem.DownloadFlag);
-            }
+            // 暂停下载所有任务
+            await DownloadSchedulerService.PauseAllTaskAsync();
 
             // 信息更新完毕时，允许其他操作开始执行
             lock (IsUpdatingNowLock)

@@ -27,6 +27,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         // 临界区资源访问互斥锁
         private readonly object CompletedDataListLock = new object();
 
+        // 获取UI主线程
         private DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
         private IDownloadDBService DownloadDBService { get; } = IOCHelper.GetService<IDownloadDBService>();

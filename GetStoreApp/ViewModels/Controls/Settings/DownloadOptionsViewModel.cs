@@ -51,6 +51,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             set { SetProperty(ref _downloadMode, value); }
         }
 
+        // 下载管理说明
         public IAsyncRelayCommand DownloadInstructionCommand => new AsyncRelayCommand(async () =>
         {
             App.NavigationArgs = "SettingsHelp";
@@ -58,6 +59,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             await Task.CompletedTask;
         });
 
+        // 打开文件存放目录
         public IAsyncRelayCommand OpenFolderCommand => new AsyncRelayCommand(async () =>
         {
             await DownloadOptionsService.OpenFolderAsync(DownloadFolder);

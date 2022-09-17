@@ -18,6 +18,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             set { SetProperty(ref _topMostValue, value); }
         }
 
+        // 是否开启应用窗口置顶
         public IAsyncRelayCommand TopMostCommand => new AsyncRelayCommand<bool>(async
                 (param) =>
         {
