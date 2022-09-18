@@ -16,8 +16,15 @@ namespace GetStoreApp.Helpers
     {
         private static Process Aria2Process { get; } = new Process();
 
-        // 与Aria2 进程启动时所需要的进程树相关的进程信息列表
         private static List<int> Aria2ProcessList { get; } = new List<int>();
+
+        /// <summary>
+        /// 获取当前进程的PID信息
+        /// </summary>
+        public static int GetProcessID()
+        {
+            return Aria2Process.Id;
+        }
 
         /// <summary>
         /// 启动命令提示符进程
@@ -48,40 +55,35 @@ namespace GetStoreApp.Helpers
             }
             ConhostWriter.Close();
 
-            Aria2ProcessList.Add(Aria2Process.Id);
-            FindProcessTreeID(Aria2Process.Id);
-
             await Aria2Process.WaitForExitAsync();
-        }
-
-        // 寻找Aria2进程对应的进程树ID
-        private static void FindProcessTreeID(int ProcessID)
-        {
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" + ProcessID);
-            ManagementObjectCollection moc = searcher.Get();
-
-            foreach (ManagementObject mo in moc.Cast<ManagementObject>())
-            {
-                Aria2ProcessList.Add(Convert.ToInt32(mo["ProcessID"]));
-            }
         }
 
         /// <summary>
         /// 应用程序关闭时，需要终止相应的Aria2进程树
         /// </summary>
-        public static void KillProcessAndChildren()
+        public static void KillProcessAndChildren(int processID)
         {
-            foreach (int id in Aria2ProcessList)
+            ManagementObjectSearcher searcher = new ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" + processID);
+            ManagementObjectCollection moc = searcher.Get();
+
+            foreach (ManagementObject mo in moc)
             {
-                // 如果进程存活，杀掉相应的进程
-                if (IsProcessRunning(id))
-                {
-                    Process.GetProcessById(id).Kill();
-                }
+                KillProcessAndChildren(Convert.ToInt32(mo["ProcessID"]));
             }
 
-            // 清理掉当前保存的进程信息列表
-            Aria2ProcessList.Clear();
+            try
+            {
+                Process process = Process.GetProcessById(processID);
+                process.Kill();
+            }
+
+            // 无法终止相关联的进程。
+            catch (Win32Exception) { }
+
+            // 不支持远程计算机上运行的进程调用 Kill()。 该方法仅对本地计算机上运行的进程可用。
+            catch (NotSupportedException) { }
+            // 没有与此 Process 对象关联的进程
+            catch (InvalidOperationException) { }
         }
 
         /// <summary>
@@ -89,6 +91,17 @@ namespace GetStoreApp.Helpers
         /// </summary>
         public static bool IsAria2ProcessExisted()
         {
+            if (Aria2ProcessList.Count == 0)
+            {
+                ManagementObjectSearcher searcher = new ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" + GetProcessID());
+                ManagementObjectCollection moc = searcher.Get();
+
+                foreach (ManagementObject mo in moc.Cast<ManagementObject>())
+                {
+                    Aria2ProcessList.Add(Convert.ToInt32(mo["ProcessID"]));
+                }
+            }
+
             foreach (int processId in Aria2ProcessList)
             {
                 if (!IsProcessRunning(processId))

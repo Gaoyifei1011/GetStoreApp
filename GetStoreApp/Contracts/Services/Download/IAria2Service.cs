@@ -6,8 +6,6 @@ namespace GetStoreApp.Contracts.Services.Download
     {
         Task InitializeAria2Async();
 
-        Task RestartAria2Async();
-
         Task CloseAria2Async();
 
         Task<(bool, string)> AddUriAsync(string downloadLink, string folderPath);

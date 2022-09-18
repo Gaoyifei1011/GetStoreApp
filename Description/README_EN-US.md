@@ -19,13 +19,16 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 ### Screenshot of the app
 
 #### <p align="center">The app successfully gets the interface</p>
-![image](https://user-images.githubusercontent.com/49179966/185371877-e5f2da19-e273-43eb-b845-08eb3fe2ab3f.png)
+![image](https://user-images.githubusercontent.com/49179966/190880888-ecba0107-3d5a-4b16-a3ec-e47eb7f9f166.png)
 #### <p align="center">History Records</p>
-![image](https://user-images.githubusercontent.com/49179966/185371452-ff1e6c83-0e60-40e4-97c2-e5ca78c03b51.png)
-#### <p align="center">Web interface</p>
-![image](https://user-images.githubusercontent.com/49179966/185371942-8f82b5c7-84cb-4810-b77d-a0d8c2f74d26.png)
-#### <p align="center">Application Notes</p>
-![image](https://user-images.githubusercontent.com/49179966/185371766-424e3349-1758-45a8-a6ce-ffa8f238d73c.png)
+![image](https://user-images.githubusercontent.com/49179966/190880874-bdbd173d-333e-4409-af1c-e3fe9d596bb5.png)
+#### <p align="center">Download Page</p>
+![image](https://user-images.githubusercontent.com/49179966/190881022-38955a18-fa97-4ba2-ad43-a57c2cc9d383.png)
+![image](https://user-images.githubusercontent.com/49179966/190881042-78c3facc-4d10-48e8-b631-7c59427cea43.png)
+#### <p align="center">Web Page</p>
+![image](https://user-images.githubusercontent.com/49179966/190880867-2a96f02c-9073-4179-8689-32dd1aeef507.png)
+#### <p align="center">Application Descriptions</p>
+![image](https://user-images.githubusercontent.com/49179966/190881054-4d6c5d5b-2bbc-4d51-a98e-5adcc3d5a5eb.png)
 
 ------
 
@@ -35,22 +38,23 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 | ---------------------------------------------------------| -------------------------------------------------------------------------------------------------------------------|
 | Main page functionality                                  | Completed, the download interface is being implemented, and it can be docked after the implementation is completed |
 | History (records used links)                             | Completed                                                                                                          |
-| Download the file from the generated link                | In development, 50% complete                                                                                       |
+| Download the file from the generated link                | Completed (in beta)                                                                                                |
 | Deploy the app offline after the download is complete    | Developed not yet                                                                                                  |
 | Console applications (quickly download and deploy)       | Planning                                                                                                           |
 | Access the web version of the docking download interface | Planning                                                                                                           |
 | Program performance optimization                         | Developed not yet                                                                                                  |
 
-At present, the application is in the development stage, some functions have not yet been implemented, and only basic functions are currently provided. In addition, I am a beginner in C#, and I am more time-constrained, I can only use my spare time to develop, the development progress is relatively slow, please understand.
-
+> * At present, the application is in the development stage, some functions have not yet been implemented, and only basic functions are currently provided. In addition, I am a beginner in C#, and I am more time-constrained, I can only use my spare time to develop, the development progress is relatively slow, please understand.
+> * The download function is in the testing stage, there may be instability during use, if there is an abnormality during use, please use a browser to download.
 ------
 
 ### Project References (Sort by alphabetical order)
 
 > * [Aira2](https://aria2.github.io)&emsp;
+> * [Aria2.NET](https://github.com/rogerfar/Aria2.NET)&emsp;
 > * [CommunityToolkit.Mvvm](https://github.com/CommunityToolkit/WindowsCommunityToolkit)&emsp;
-> * [CommunityToolkit.WinUI.UI.Controls.DataGrid](https://docs.microsoft.com/en-us/windows/communitytoolkit/controls/datagrid)&emsp;
 > * [CommunityToolkit.WinUI.Notifications](https://www.nuget.org/packages/CommunityToolkit.WinUI.Notifications)&emsp;
+> * [CommunityToolkit.WinUI.UI.Controls](https://github.com/CommunityToolkit/WindowsCommunityToolkit)&emsp;
 > * [HtmlAgilityPack](http://html-agility-pack.net)&emsp;
 > * [Microsoft.Data.Sqlite](https://docs.microsoft.com/dotnet/standard/data/sqlite)&emsp;
 > * [Microsoft.Extensions.Hosting](https://www.nuget.org/packages/Microsoft.Extensions.Hosting)&emsp;
@@ -59,7 +63,6 @@ At present, the application is in the development stage, some functions have not
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Microsoft.Xaml.Behaviors.WinUI.Managed](https://www.nuget.org/packages/Microsoft.Xaml.Behaviors.WinUI.Managed)&emsp;
 > * [NETStandard.Library](https://www.nuget.org/packages/NETStandard.Library)&emsp;
-> * [Newtonsoft.Json](https://www.newtonsoft.com/json)&emsp;
 > * [PInvoke.SHCore](https://github.com/dotnet/pinvoke)&emsp;
 > * [System.Management](https://www.nuget.org/packages/System.Management)&emsp;
 > * [Template Studio](https://github.com/microsoft/TemplateStudio)&emsp;
@@ -100,7 +103,8 @@ At present, the application is in the development stage, some functions have not
 > * Open the renamed file, translate all the statements and save them. Please check it carefully after the translation is completed.
 > * Open the README.md of the project's home page and add your language in the language selection at the top. For example, "English", note that the text is accompanied by a hyperlink.
 > * README_ (corresponding language).The language screenshot added in the md file is replaced with the app screenshot in the language you are familiar with.
-> * Complete the compilation steps described above to ensure that all steps run smoothly.
+> * Complete the translation steps described above to ensure that all steps run smoothly.
+> * Open the GetStoreAppPackage packaging project, find the Package.appxmanifest file, right-click the file, click View Code, find the Sources tab, and add the corresponding language according to the template, such as "<Resource Language="EN-US"/>".
 > * Open the Strings folder of the project and create the language you are using, for example ( English (United States) folder name is en-us , you can refer to the Table of Indicating Language (Culture) Codes and Countries and Regions)
 > * Open the resw file under the subfolder and translate each name.
 > * Compile and run the code and test your language, when the application is first opened if there is no language you use to display English (United States) by default, it needs to be dynamically adjusted in the settings.
