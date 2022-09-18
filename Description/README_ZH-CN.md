@@ -19,13 +19,16 @@
 ### 应用截图
 
 #### <p align="center">应用成功获取界面</p>
-![image](https://user-images.githubusercontent.com/49179966/185371877-e5f2da19-e273-43eb-b845-08eb3fe2ab3f.png)
+![image](https://user-images.githubusercontent.com/49179966/190880785-3df61d85-2134-41c1-bb94-6cd9a91cf1e5.png)
 #### <p align="center">历史记录</p>
-![image](https://user-images.githubusercontent.com/49179966/185371452-ff1e6c83-0e60-40e4-97c2-e5ca78c03b51.png)
+![image](https://user-images.githubusercontent.com/49179966/190880908-fe88b95f-28e9-4081-8ad0-95fbf8b36295.png)
+#### <p align="center">下载界面</p>
+![image](https://user-images.githubusercontent.com/49179966/190880969-07aba750-0c0a-474b-ab73-69176c25145e.png)
+![image](https://user-images.githubusercontent.com/49179966/190880987-71946b4e-6267-4315-b0e7-a68349ff1f56.png)
 #### <p align="center">网页界面</p>
-![image](https://user-images.githubusercontent.com/49179966/185371942-8f82b5c7-84cb-4810-b77d-a0d8c2f74d26.png)
+![image](https://user-images.githubusercontent.com/49179966/190880935-c4efdcbf-f8ef-44e3-906b-27357be25795.png)
 #### <p align="center">应用说明</p>
-![image](https://user-images.githubusercontent.com/49179966/185371766-424e3349-1758-45a8-a6ce-ffa8f238d73c.png)
+![image](https://user-images.githubusercontent.com/49179966/190880798-eb849860-589b-4f24-9112-09514cfd1964.png)
 
 ------
 
@@ -35,22 +38,24 @@
 | --------------------------------| --------------------------------------------------|
 | 主页面功能                      | 已完成，下载接口正在实现中，实现完成后即可对接    |
 | 历史记录（记录使用过的链接）    | 已完成                                            |
-| 通过生成的链接下载文件          | 开发中，已完成50%                                 |
+| 通过生成的链接下载文件          | 已完成（处于测试阶段）                            |
 | 下载完成后离线部署应用          | 尚未开发                                          |
 | 控制台应用程序（快速下载并部署）| 计划中                                            |
 | 访问网页版对接下载接口          | 计划中                                            |
 | 程序性能优化                    | 尚未开发                                          |
 
-目前该应用处于开发阶段，有部分功能尚未实现，目前仅提供基础的功能。此外我是c#的初学者，且本人时间较为紧张，只能利用自己的闲余时间开发，开发进度较为缓慢，请谅解。
+> * 目前该应用处于开发阶段，有部分功能尚未实现，目前仅提供基础的功能。此外我是c#的初学者，且本人时间较为紧张，只能利用自己的闲余时间开发，开发进度较为缓慢，请谅解。
+> * 下载功能处于测试阶段，在使用过程中可能存在不稳定现象，如果在使用过程中出现异常，请使用浏览器下载。
 
 ------
 
 ### 项目引用（按英文首字母排序）
 
 > * [Aira2](https://aria2.github.io)&emsp;
+> * [Aria2.NET](https://github.com/rogerfar/Aria2.NET)&emsp;
 > * [CommunityToolkit.Mvvm](https://github.com/CommunityToolkit/WindowsCommunityToolkit)&emsp;
-> * [CommunityToolkit.WinUI.UI.Controls.DataGrid](https://docs.microsoft.com/en-us/windows/communitytoolkit/controls/datagrid)&emsp;
 > * [CommunityToolkit.WinUI.Notifications](https://www.nuget.org/packages/CommunityToolkit.WinUI.Notifications)&emsp;
+> * [CommunityToolkit.WinUI.UI.Controls](https://github.com/CommunityToolkit/WindowsCommunityToolkit)&emsp;
 > * [HtmlAgilityPack](http://html-agility-pack.net)&emsp;
 > * [Microsoft.Data.Sqlite](https://docs.microsoft.com/dotnet/standard/data/sqlite)&emsp;
 > * [Microsoft.Extensions.Hosting](https://www.nuget.org/packages/Microsoft.Extensions.Hosting)&emsp;
@@ -59,7 +64,6 @@
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Microsoft.Xaml.Behaviors.WinUI.Managed](https://www.nuget.org/packages/Microsoft.Xaml.Behaviors.WinUI.Managed)&emsp;
 > * [NETStandard.Library](https://www.nuget.org/packages/NETStandard.Library)&emsp;
-> * [Newtonsoft.Json](https://www.newtonsoft.com/json)&emsp;
 > * [PInvoke.SHCore](https://github.com/dotnet/pinvoke)&emsp;
 > * [System.Management](https://www.nuget.org/packages/System.Management)&emsp;
 > * [Template Studio](https://github.com/microsoft/TemplateStudio)&emsp;
@@ -100,7 +104,8 @@
 > * 打开重命名后的文件，翻译所有的语句后并保存。翻译完成后请您认真检查一下。
 > * 打开项目主页面的README.md，在最上方的“语言选择”中添加您对应的语言。例如“英文”，注意该文字附带超链接。
 > * README_(对应的语言).md文件中添加的语言截图替换为您熟悉的语言的应用截图。
-> * 完成上面所述的编译步骤，确保所有步骤能够顺利运行。
+> * 完成上面所述的翻译步骤，确保所有步骤能够顺利运行。
+> * 打开GetStoreAppPackage打包项目，找到Package.appxmanifest文件，右键该文件，点击查看代码，找到Resources标签，根据模板添加相对应的语言，例如“<Resource Language="EN-US"/>”。
 > * 打开项目的Strings文件夹，并创建您使用的语言，比如（English(United States)）文件夹名称为en-us，具体可以参考表示语言(文化)代码与国家地区对照表）。
 > * 打开子文件夹下的resw文件，对每一个名称进行翻译。
 > * 编译运行代码并测试您的语言，应用在初次打开的时候如果没有您使用的语言默认显示English(United States)，需要在设置中动态调整。

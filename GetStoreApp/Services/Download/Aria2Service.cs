@@ -34,22 +34,11 @@ namespace GetStoreApp.Services.Download
         }
 
         /// <summary>
-        /// 重新启动Aria2下载进程
-        /// </summary>
-        public async Task RestartAria2Async()
-        {
-            Aria2ProcessHelper.KillProcessAndChildren();
-
-            await Aria2ProcessHelper.RunCmdAsync();
-            await Aria2ProcessHelper.ExecuteCmdAsync(Aria2ExecuteCmd);
-        }
-
-        /// <summary>
         /// 关闭Aria2进程
         /// </summary>
         public async Task CloseAria2Async()
         {
-            Aria2ProcessHelper.KillProcessAndChildren();
+            Aria2ProcessHelper.KillProcessAndChildren(Aria2ProcessHelper.GetProcessID());
             await Task.CompletedTask;
         }
 
