@@ -90,7 +90,7 @@ namespace GetStoreApp
         {
             WindowHelper.SetAppWindow();
 
-            //显示提示消息对话框
+            // 显示提示消息对话框
             WinUIMessageBox.ShowMessageBox(
                 (HWND)WinRT.Interop.WindowNative.GetWindowHandle(MainWindow),
                 ResourceService.GetLocalized("AppIsRunning"),
