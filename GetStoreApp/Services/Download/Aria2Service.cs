@@ -14,11 +14,9 @@ namespace GetStoreApp.Services.Download
     /// </summary>
     public class Aria2Service : IAria2Service
     {
-        private string Aria2Path => Path.Combine(AppContext.BaseDirectory, "Aria2\\GetStoreAppAria2.exe");
+        private string Aria2FileName => Path.Combine(AppContext.BaseDirectory, "Aria2\\GetStoreAppAria2.exe");
 
-        private string Aria2ConfPath => Path.Combine(AppContext.BaseDirectory, "Aria2\\Config\\aria2.conf");
-
-        private string Aria2ExecuteCmd => string.Format("{0} --conf-path=\"{1}\" -D", Aria2Path, Aria2ConfPath);
+        private string Aria2Arguments => string.Format("--conf-path=\"{0}\" -D", Path.Combine(AppContext.BaseDirectory, "Aria2\\Config\\aria2.conf"));
 
         private string RPCServerLink => "http://127.0.0.1:6300/jsonrpc";
 
@@ -29,8 +27,7 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         public async Task InitializeAria2Async()
         {
-            await Aria2ProcessHelper.RunCmdAsync();
-            await Aria2ProcessHelper.ExecuteCmdAsync(Aria2ExecuteCmd);
+            await Aria2ProcessHelper.RunAria2Async(Aria2FileName, Aria2Arguments);
         }
 
         /// <summary>

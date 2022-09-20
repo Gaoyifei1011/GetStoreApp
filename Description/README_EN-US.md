@@ -72,7 +72,7 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 
 ### Download and installation considerations
 
-> * The program is built using the Windows Apps SDK, and it is recommended that your system version be Windows 11 (codename 21H2 / build 22000) or later, and the minimum version is Windows 10 (codename 1709 / build 17763) or later.
+> * The program is built using the Windows Apps SDK, and it is recommended that your system version be Windows 11 (codename 21H2 / build 22000) or later, and the minimum version is Windows 10 (codename 1803 / build 18362) or later.
 > * If your system is Windows 10, there are some limitations to app functionality:
     Setting the mica/acrylic background color is not supported at this time
     The application part of the icon uses the Segoe Fluent Icons icon, this type of icon is not built into the Windows icon, so there will be icon anomalies when opening the application for the first time. You need to download the corresponding [icon file](https://docs.microsoft.com/zh-cn/windows/apps/design/downloads/#fonts) yourself, click the right-click menu to install the font icon file, and restart the application icon to display normally.

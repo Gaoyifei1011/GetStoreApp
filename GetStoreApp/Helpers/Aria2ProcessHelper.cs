@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Management;
 using System.Threading.Tasks;
 
@@ -14,48 +11,40 @@ namespace GetStoreApp.Helpers
     /// </summary>
     public static class Aria2ProcessHelper
     {
-        private static Process Aria2Process { get; } = new Process();
-
-        private static List<int> Aria2ProcessList { get; } = new List<int>();
+        // Aria2下载进程的ID号
+        private static int Aria2ProcessID = default;
 
         /// <summary>
         /// 获取当前进程的PID信息
         /// </summary>
         public static int GetProcessID()
         {
-            return Aria2Process.Id;
+            return Aria2ProcessID;
         }
 
         /// <summary>
-        /// 启动命令提示符进程
+        /// 让Aria2以RPC方式启动，并让其在后台运行
         /// </summary>
-        public static async Task RunCmdAsync()
+        public static async Task RunAria2Async(string fileName, string arguments)
         {
-            Aria2Process.StartInfo.FileName = "cmd.exe";
-            Aria2Process.StartInfo.UseShellExecute = false;
-            Aria2Process.StartInfo.RedirectStandardInput = true;
-            Aria2Process.StartInfo.RedirectStandardOutput = true;
-            Aria2Process.StartInfo.RedirectStandardError = true;
-            Aria2Process.StartInfo.CreateNoWindow = true;
-            Aria2Process.Start();
+            //设置启动程序的信息
+            ProcessStartInfo Aria2Info = new ProcessStartInfo();
 
+            //设置外部程序名
+            Aria2Info.FileName = fileName;
+
+            Aria2Info.RedirectStandardOutput = true;
+            Aria2Info.RedirectStandardError = true;
+            Aria2Info.UseShellExecute = false;
+            Aria2Info.CreateNoWindow = true;
+
+            //最小化方式启动
+            Aria2Info.WindowStyle = ProcessWindowStyle.Hidden;
+            Aria2Info.Arguments = arguments;
+
+            // 启动Aria2下载进程，并设置进程ID号
+            Aria2ProcessID = Process.Start(Aria2Info).Id;
             await Task.CompletedTask;
-        }
-
-        /// <summary>
-        /// 命令提示符进程运行后，输入Aria2 RPC方式执行命令，并让其在后台运行
-        /// </summary>
-        public static async Task ExecuteCmdAsync(string executeCmd)
-        {
-            StreamWriter ConhostWriter = Aria2Process.StandardInput;
-            Aria2Process.BeginOutputReadLine();
-            if (!string.IsNullOrEmpty(executeCmd))
-            {
-                ConhostWriter.WriteLine(executeCmd);
-            }
-            ConhostWriter.Close();
-
-            await Aria2Process.WaitForExitAsync();
         }
 
         /// <summary>
@@ -66,7 +55,7 @@ namespace GetStoreApp.Helpers
             ManagementObjectSearcher searcher = new ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" + processID);
             ManagementObjectCollection moc = searcher.Get();
 
-            foreach (ManagementObject mo in moc)
+            foreach (ManagementBaseObject mo in moc)
             {
                 KillProcessAndChildren(Convert.ToInt32(mo["ProcessID"]));
             }
@@ -78,12 +67,21 @@ namespace GetStoreApp.Helpers
             }
 
             // 无法终止相关联的进程。
-            catch (Win32Exception) { }
+            catch (Win32Exception)
+            {
+                return;
+            }
 
             // 不支持远程计算机上运行的进程调用 Kill()。 该方法仅对本地计算机上运行的进程可用。
-            catch (NotSupportedException) { }
+            catch (NotSupportedException)
+            {
+                return;
+            }
             // 没有与此 Process 对象关联的进程
-            catch (InvalidOperationException) { }
+            catch (InvalidOperationException)
+            {
+                return;
+            }
         }
 
         /// <summary>
@@ -91,36 +89,17 @@ namespace GetStoreApp.Helpers
         /// </summary>
         public static bool IsAria2ProcessExisted()
         {
-            if (Aria2ProcessList.Count == 0)
+            try
             {
-                ManagementObjectSearcher searcher = new ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" + GetProcessID());
-                ManagementObjectCollection moc = searcher.Get();
-
-                foreach (ManagementObject mo in moc.Cast<ManagementObject>())
+                if (GetProcessID() != default)
                 {
-                    Aria2ProcessList.Add(Convert.ToInt32(mo["ProcessID"]));
+                    Process.GetProcessById(GetProcessID());
+                    return true;
                 }
-            }
-
-            foreach (int processId in Aria2ProcessList)
-            {
-                if (!IsProcessRunning(processId))
+                else
                 {
                     return false;
                 }
-            }
-            return true;
-        }
-
-        /// <summary>
-        /// 检测进程是否正在运行
-        /// </summary>
-        private static bool IsProcessRunning(int id)
-        {
-            try
-            {
-                Process.GetProcessById(id);
-                return true;
             }
             // 无法终止相关联的进程。
             catch (Win32Exception)
