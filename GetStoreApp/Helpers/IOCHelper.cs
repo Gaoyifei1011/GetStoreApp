@@ -73,6 +73,7 @@ namespace GetStoreApp.Helpers
                 services.AddSingleton<IBackdropService, BackdropService>();
                 services.AddSingleton<IDownloadOptionsService, DownloadOptionsService>();
                 services.AddSingleton<IHistoryLiteNumService, HistoryLiteNumService>();
+                services.AddSingleton<IInstallModeService, InstallModeService>();
                 services.AddSingleton<ILanguageService, LanguageService>();
                 services.AddSingleton<ILinkFilterService, LinkFilterService>();
                 services.AddSingleton<INotificationService, NotificatonService>();
@@ -147,6 +148,8 @@ namespace GetStoreApp.Helpers
                 services.AddTransient<DownloadOptionsViewModel>();
                 services.AddTransient<HistoryLiteConfigControl>();
                 services.AddTransient<HistoryLiteConfigViewModel>();
+                services.AddTransient<InstallModeControl>();
+                services.AddTransient<InstallModeViewModel>();
                 services.AddTransient<LauguageControl>();
                 services.AddTransient<LanguageViewModel>();
                 services.AddTransient<LinkFilterControl>();

@@ -19,6 +19,8 @@ namespace GetStoreApp.Contracts.Services.Root
 
         List<HistoryLiteNumModel> HistoryLiteNumList { get; }
 
+        List<InstallModeModel> InstallModeList { get; }
+
         List<ThemeModel> ThemeList { get; }
 
         Task InitializeResourceAsync(LanguageModel defaultAppLanguage, LanguageModel currentAppLanguage);

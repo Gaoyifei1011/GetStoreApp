@@ -66,6 +66,7 @@
     <None Remove="UI\Controls\Settings\BackdropControl.xaml" />
     <None Remove="UI\Controls\Settings\DownloadOptionsControl.xaml" />
     <None Remove="UI\Controls\Settings\HistoryLiteConfigControl.xaml" />
+    <None Remove="UI\Controls\Settings\InstallModeControl.xaml" />
     <None Remove="UI\Controls\Settings\LinkFilterControl.xaml" />
     <None Remove="UI\Controls\Settings\NotificationControl.xaml" />
     <None Remove="UI\Controls\Settings\TopMostControl.xaml" />
@@ -90,6 +91,7 @@
     <PackageReference Include="CommunityToolkit.WinUI.Notifications" Version="7.1.2">
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
+    <PackageReference Include="CommunityToolkit.WinUI.UI.Behaviors" Version="7.1.2" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.9" />
@@ -284,5 +286,11 @@
       <Link>Aria2\GetStoreAppAria2.exe</Link>
     </Content>
     <Content Include="Aria2\Config\aria2.conf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="UI\Controls\Settings\InstallModeControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>

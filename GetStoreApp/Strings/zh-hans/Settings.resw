@@ -123,6 +123,9 @@
   <data name="Appearance" xml:space="preserve">
     <value>外观</value>
   </data>
+  <data name="AppInstall" xml:space="preserve">
+    <value>使用应用安装程序安装</value>
+  </data>
   <data name="Backdrop" xml:space="preserve">
     <value>背景色</value>
   </data>
@@ -155,6 +158,9 @@
   </data>
   <data name="ChangeFolder" xml:space="preserve">
     <value>更改目录</value>
+  </data>
+  <data name="CodeInstall" xml:space="preserve">
+    <value>直接安装</value>
   </data>
   <data name="DownloadFolder" xml:space="preserve">
     <value>文件存放路径</value>
@@ -200,6 +206,15 @@
   </data>
   <data name="HistoryLiteNumMin" xml:space="preserve">
     <value>3条</value>
+  </data>
+  <data name="InstallMode" xml:space="preserve">
+    <value>应用安装方式</value>
+  </data>
+  <data name="InstallModeDescription" xml:space="preserve">
+    <value>选择Windows 应用包的安装方式</value>
+  </data>
+  <data name="InstallModeToolTip" xml:space="preserve">
+    <value>帮助</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>界面语言</value>

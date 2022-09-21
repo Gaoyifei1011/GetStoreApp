@@ -42,6 +42,8 @@ namespace GetStoreApp.Services.Root
 
         private IHistoryLiteNumService HistoryLiteNumService { get; } = IOCHelper.GetService<IHistoryLiteNumService>();
 
+        private IInstallModeService InstallModeService { get; } = IOCHelper.GetService<IInstallModeService>();
+
         private ILanguageService LanguageService { get; } = IOCHelper.GetService<ILanguageService>();
 
         private ILinkFilterService LinkFilterService { get; } = IOCHelper.GetService<ILinkFilterService>();
@@ -96,6 +98,7 @@ namespace GetStoreApp.Services.Root
             await BackdropService.InitializeBackdropAsync();
             await DownloadOptionsService.InitializeAsync();
             await HistoryLiteNumService.InitializeHistoryLiteNumAsync();
+            await InstallModeService.InitializeInstallModeAsync();
             await LinkFilterService.InitializeLinkFilterValueAsnyc();
             await NotificationService.InitializeNotificationAsync();
             await RegionService.InitializeRegionAsync();
