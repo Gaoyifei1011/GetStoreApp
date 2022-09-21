@@ -71,6 +71,8 @@
                 Style="{StaticResource BodyTextBlockStyle}"
                 Text="{x:Bind ResourceService.GetLocalized('/Settings/Advanced')}" />
 
+            <sc:InstallModeControl />
+
             <sc:TraceCleanupControl />
         </StackPanel>
     </ScrollViewer>

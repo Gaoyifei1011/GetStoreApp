@@ -36,6 +36,8 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
         private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
 
+        private IInstallModeService InstallModeService { get; } = IOCHelper.GetService<IInstallModeService>();
+
         public ObservableCollection<CompletedModel> CompletedDataList { get; } = new ObservableCollection<CompletedModel>();
 
         private bool _isSelectMode = false;
@@ -217,9 +219,23 @@ namespace GetStoreApp.ViewModels.Controls.Download
         // 安装应用
         public IAsyncRelayCommand InstallCommand => new AsyncRelayCommand<string>(async (param) =>
         {
-            if (param is not null)
+            // 使用应用安装程序安装
+            if (!string.IsNullOrEmpty(param) && File.Exists(param))
             {
-                // TODO:添加安装操作
+                if (InstallModeService.InstallMode.InternalName == InstallModeService.InstallModeList[0].InternalName)
+                {
+                    ProcessStartInfo Info = new ProcessStartInfo();
+                    Info.FileName = param;
+                    Info.UseShellExecute = true;
+
+                    Process.Start(Info);
+                }
+                // 直接安装
+                else
+                {
+                    return;
+                }
+
                 await Task.CompletedTask;
             }
         });

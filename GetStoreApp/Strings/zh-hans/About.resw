@@ -213,6 +213,18 @@
   <data name="HeaderDescription" xml:space="preserve">
     <value>欢迎大家下载获取商店应用，祝您使用愉快</value>
   </data>
+  <data name="InstallMode" xml:space="preserve">
+    <value>应用安装方式说明</value>
+  </data>
+  <data name="InstallModeDescription1" xml:space="preserve">
+    <value>应用安装方式分为使用应用程序安装和直接安装两种方式。默认情况下是使用应用安装程序安装。</value>
+  </data>
+  <data name="InstallModeDescription2" xml:space="preserve">
+    <value>下载得到的应用包中可能会包含一些库依赖包，在安装过程中如果您对这些内容不是很了解，建议您使用应用安装程序安装，该方式会自动分析安装包里面的库依赖包，后台下载设备没有安装的依赖包并在后台安装。</value>
+  </data>
+  <data name="InstallModeDescription3" xml:space="preserve">
+    <value>如果你使用的操作系统版本中没有包含应用安装程序，建议您在下载应用的过程中同时将依赖包一并下载。下载完成后使用直接安装，先安装依赖包，然后安装主应用包。安装成功后即可正常运行应用。</value>
+  </data>
   <data name="Language" xml:space="preserve">
     <value>界面语言设置说明</value>
   </data>

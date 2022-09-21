@@ -37,6 +37,8 @@ namespace GetStoreApp.Services.Root
 
         public List<HistoryLiteNumModel> HistoryLiteNumList { get; } = new List<HistoryLiteNumModel>();
 
+        public List<InstallModeModel> InstallModeList { get; } = new List<InstallModeModel>();
+
         public List<ThemeModel> ThemeList { get; } = new List<ThemeModel>();
 
         public async Task InitializeResourceAsync(LanguageModel defaultAppLanguage, LanguageModel currentAppLanguage)
@@ -53,6 +55,7 @@ namespace GetStoreApp.Services.Root
             InitializeBackdropList();
             InitializeDownloadModeList();
             InitializeHistoryLiteNumList();
+            InitializeInstallModeList();
             InitializeThemeList();
             await Task.CompletedTask;
         }
@@ -207,6 +210,20 @@ namespace GetStoreApp.Services.Root
             {
                 HistoryLiteNumName = GetLocalized("/Settings/HistoryLiteNumMax"),
                 HistoryLiteNumValue = 5
+            });
+        }
+
+        private void InitializeInstallModeList()
+        {
+            InstallModeList.Add(new InstallModeModel
+            {
+                DisplayName = GetLocalized("/Settings/AppInstall"),
+                InternalName = "AppInstall"
+            });
+            InstallModeList.Add(new InstallModeModel
+            {
+                DisplayName = GetLocalized("/Settings/CodeInstall"),
+                InternalName = "CodeInstall"
             });
         }
 

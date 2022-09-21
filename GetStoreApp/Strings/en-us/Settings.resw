@@ -123,6 +123,9 @@
   <data name="Appearance" xml:space="preserve">
     <value>Appearance</value>
   </data>
+  <data name="AppInstall" xml:space="preserve">
+    <value>Install using the app installer</value>
+  </data>
   <data name="Backdrop" xml:space="preserve">
     <value>Backdrop Color</value>
   </data>
@@ -155,6 +158,9 @@
   </data>
   <data name="ChangeFolder" xml:space="preserve">
     <value>Change directory</value>
+  </data>
+  <data name="CodeInstall" xml:space="preserve">
+    <value>Direct installation</value>
   </data>
   <data name="DownloadFolder" xml:space="preserve">
     <value>File storage path</value>
@@ -200,6 +206,15 @@
   </data>
   <data name="HistoryLiteNumMin" xml:space="preserve">
     <value>3 items</value>
+  </data>
+  <data name="InstallMode" xml:space="preserve">
+    <value>Application install mode</value>
+  </data>
+  <data name="InstallModeDescription" xml:space="preserve">
+    <value>Select how the Windows app package is installed</value>
+  </data>
+  <data name="InstallModeToolTip" xml:space="preserve">
+    <value>Help</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Language</value>

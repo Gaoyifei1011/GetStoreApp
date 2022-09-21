@@ -12,6 +12,7 @@
     <convert:BooleanToOppositeValueConverter x:Name="BooleanToOppositeValueConverter" />
     <convert:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
     <convert:DownloadFlagConverter x:Name="DownloadFlagConverter" />
+    <convert:InstallFileVisibilityConverter x:Name="InstallFileVisibilityConverter" />
     <convert:IntToVisibilityConverter x:Name="IntToVisibilityConverter" />
 
     <format:DownloadSizeFormatConverter x:Name="DownloadSizeFormatConverter" />

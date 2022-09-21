@@ -216,6 +216,18 @@
   <data name="HeaderDescription" xml:space="preserve">
     <value>Welcome to download the GetStoreApp.Wish you a pleasant experience</value>
   </data>
+  <data name="InstallMode" xml:space="preserve">
+    <value>Insall mode instructions</value>
+  </data>
+  <data name="InstallModeDescription1" xml:space="preserve">
+    <value>App installation methods are divided into two ways: using application installation and direct installation. By default, it is installed using App Installer.</value>
+  </data>
+  <data name="InstallModeDescription2" xml:space="preserve">
+    <value>The downloaded application package may contain some library dependencies, in the installation process if you do not know these things very well, it is recommended that you use the application installer to install, this way will automatically analyze the library dependencies in the installation package, background download device does not have installed dependencies and install in the background.</value>
+  </data>
+  <data name="InstallModeDescription3" xml:space="preserve">
+    <value>If the version of the operating system you're using doesn't include an app installer, we recommend that you download the dependent packages as well as the app download. After the download is complete, use Direct Install, installing the dependent package first, and then installing the main app package. Once installed, the app will be up and running.</value>
+  </data>
   <data name="Language" xml:space="preserve">
     <value>Language setting insturctions</value>
   </data>
