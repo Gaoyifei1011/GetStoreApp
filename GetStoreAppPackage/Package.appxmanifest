@@ -51,11 +51,13 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
-        <uap5:Extension Category="windows.appExecutionAlias" Executable="GetStoreApp.exe" EntryPoint="Windows.FullTrustApplication">
-          <uap5:AppExecutionAlias>
-            <uap5:ExecutionAlias Alias="GetStoreApp.exe" />
-          </uap5:AppExecutionAlias>
-        </uap5:Extension>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="getstoreappdesktop">
+            <uap:Logo>Assets\StoreLogo.png</uap:Logo>
+            <uap:DisplayName>GetStoreApp Desktop</uap:DisplayName>
+          </uap:Protocol>
+        </uap:Extension>
+        
         <desktop:Extension Category="windows.toastNotificationActivation">
           <desktop:ToastNotificationActivation ToastActivatorCLSID="6CA254A3-8B8C-4441-AE81-0FBA18ADD8B0" />
         </desktop:Extension>
@@ -92,7 +94,7 @@
       <Extensions>
         <uap5:Extension Category="windows.appExecutionAlias" Executable="GetStoreAppConsole.exe" EntryPoint="Windows.FullTrustApplication">
           <uap5:AppExecutionAlias>
-            <uap5:ExecutionAlias Alias="GetStoreAppConsole.exe" />
+            <uap5:ExecutionAlias Alias="GetStoreApp.exe" />
           </uap5:AppExecutionAlias>
         </uap5:Extension>
       </Extensions>
@@ -102,6 +104,7 @@
   <Capabilities>
     <rescap:Capability Name="runFullTrust" />
     <Capability Name="internetClient"/>
+    <rescap:Capability Name="packageManagement" />
   </Capabilities>
 
   <genTemplate:Metadata>

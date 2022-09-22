@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using Windows.Storage;
 
 namespace GetStoreAppConsole
 {
@@ -6,7 +8,10 @@ namespace GetStoreAppConsole
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("GetStoreApp控制台程序目前仅供测试使用。");
+            Console.Title = "获取商店应用控制台程序";
+            ConsoleWindow.HideConsoleWindow(Console.Title);
+            //Console.WriteLine("GetStoreApp控制台程序目前仅供测试使用。");
+            Process.Start("getstoreappdesktop://");
         }
     }
 }

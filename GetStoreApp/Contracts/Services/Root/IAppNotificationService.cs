@@ -4,7 +4,7 @@
     {
         void Initialize();
 
-        void Show(params string[] notification);
+        void Show(string notificationKey, params string[] notificationContent);
 
         void Unregister();
     }

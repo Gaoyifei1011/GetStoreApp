@@ -16,6 +16,7 @@
         <check:FileExistCheckConverter x:Name="FileExistCheckConverter" />
         <check:FileExistTextCheckConverter x:Name="FileExistTextCheckConverter" />
         <format:CheckBoxToolTipFormatConverter x:Name="CheckBoxToolTipFormatConverter" />
+        <format:InstallValueFormatConverter x:Name="InstallValueFormatConverter" />
     </UserControl.Resources>
 
     <Grid>
@@ -184,32 +185,76 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <TextBlock
-                                Grid.Row="0"
-                                Style="{StaticResource DownloadItemTextStyle}"
-                                Text="{x:Bind FileName}"
-                                ToolTipService.ToolTip="{x:Bind FileName}" />
+                            <Grid Grid.Row="0" ColumnSpacing="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
 
-                            <TextBlock
-                                x:Name="FileExist"
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Style="{StaticResource DownloadItemTextStyle}"
+                                    Text="{x:Bind FileName}"
+                                    ToolTipService.ToolTip="{x:Bind FileName}" />
+
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Style="{StaticResource DownloadItemTextStyle}"
+                                    Text="{x:Bind TotalSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}"
+                                    ToolTipService.ToolTip="{x:Bind TotalSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}" />
+                            </Grid>
+
+                            <StackPanel Grid.Row="1" Visibility="{x:Bind IsInstalling, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}">
+                                <TextBlock
+                                    x:Name="FileExist"
+                                    x:Load="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}"
+                                    Style="{StaticResource SubDownloadItemTextStyle}"
+                                    Text="{x:Bind FilePath, Converter={StaticResource FileExistTextCheckConverter}}"
+                                    ToolTipService.ToolTip="{x:Bind FilePath, Converter={StaticResource FileExistTextCheckConverter}}" />
+                                <TextBlock
+                                    x:Name="FileNotExist"
+                                    x:Load="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}, ConverterParameter=Reverse}"
+                                    Foreground="{StaticResource SystemErrorTextColor}"
+                                    Style="{StaticResource SubDownloadItemTextStyle}"
+                                    Text="{x:Bind FilePath, Converter={StaticResource FileExistTextCheckConverter}, ConverterParameter=Reverse}"
+                                    ToolTipService.ToolTip="{x:Bind FilePath, Converter={StaticResource FileExistTextCheckConverter}, ConverterParameter=Reverse}" />
+                            </StackPanel>
+
+                            <Grid
+                                x:Name="InstallInfo"
                                 Grid.Row="1"
-                                x:Load="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}"
-                                Style="{StaticResource SubDownloadItemTextStyle}"
-                                Text="{x:Bind FilePath, Converter={StaticResource FileExistTextCheckConverter}}" />
-                            <TextBlock
-                                x:Name="FileNotExist"
-                                Grid.Row="1"
-                                x:Load="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}, ConverterParameter=Reverse}"
-                                Foreground="{StaticResource SystemErrorTextColor}"
-                                Style="{StaticResource SubDownloadItemTextStyle}"
-                                Text="{x:Bind FilePath, Converter={StaticResource FileExistTextCheckConverter}, ConverterParameter=Reverse}" />
+                                x:Load="{x:Bind IsInstalling, Mode=OneWay}"
+                                ColumnSpacing="10">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Style="{StaticResource SubDownloadItemTextStyle}"
+                                    Text="{Binding ElementName=CompletedRoot, Path=Installing}" />
+                                <ProgressBar
+                                    Grid.Column="1"
+                                    IsIndeterminate="False"
+                                    ShowError="{x:Bind InstallError, Mode=OneWay}"
+                                    Value="{x:Bind InstallValue, Mode=OneWay}" />
+                                <TextBlock
+                                    x:Name="InstallStateInfo"
+                                    Grid.Column="2"
+                                    x:Load="{x:Bind InstallError, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
+                                    Style="{StaticResource SubDownloadItemTextStyle}"
+                                    Text="{x:Bind InstallValue, Converter={StaticResource InstallValueFormatConverter}, Mode=OneWay}" />
+                                <TextBlock
+                                    x:Name="InstallErrorInfo"
+                                    Grid.Column="2"
+                                    x:Load="{x:Bind InstallError, Mode=OneWay}"
+                                    Style="{StaticResource SubDownloadItemTextStyle}"
+                                    Text="{Binding ElementName=CompletedRoot, Path=InstallError}" />
+                            </Grid>
                         </Grid>
-
-                        <TextBlock
-                            Grid.Column="2"
-                            Style="{StaticResource DownloadItemTextStyle}"
-                            Text="{x:Bind TotalSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}"
-                            ToolTipService.ToolTip="{x:Bind TotalSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}" />
 
                         <StackPanel
                             Grid.Column="3"
@@ -220,8 +265,8 @@
 
                             <Button
                                 Command="{Binding ElementName=CompletedRoot, Path=ViewModel.InstallCommand}"
-                                CommandParameter="{x:Bind FilePath}"
-                                Content="&#xE8e5;"
+                                CommandParameter="{Binding}"
+                                Content="&#xE710;"
                                 IsEnabled="{Binding ElementName=CompletedRoot, Path=ViewModel.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
                                 Style="{StaticResource ButtonDownloadStyle}"
                                 ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=InstallToolTip}"

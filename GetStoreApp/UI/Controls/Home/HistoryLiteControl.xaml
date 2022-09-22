@@ -55,7 +55,7 @@
 
                     <AppBarButton
                         Command="{x:Bind ViewModel.ViewAllCommand}"
-                        Icon="ViewAll"
+                        Icon="View"
                         Label="{x:Bind ResourceService.GetLocalized('/Home/ViewAll')}"
                         ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/ViewAllToolTip')}" />
                 </CommandBar>

@@ -31,6 +31,10 @@
     <Manifest Include="$(ApplicationManifest)" />
 
     <None Remove="Aria2\Config\aria2.conf" />
+
+    <None Remove="Aria2\X64\GetStoreAppAria2.exe" />
+
+    <None Remove="Aria2\X86\GetStoreAppAria2.exe" />
     <None Remove="Assets\GetStoreApp.png" />
     <None Remove="Assets\Images\CloudflareValidation.png" />
     <None Remove="Assets\Logo\GetStoreApp.png" />
@@ -144,6 +148,9 @@
     <Page Update="Styles\InAppNotification.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Update="Styles\InfoBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Styles\ListView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -151,6 +158,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Styles\TeachingTip.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\TextBlock.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     
@@ -205,16 +215,31 @@
     <Page Update="UI\Controls\Settings\HistoryLiteConfigControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Update="UI\Controls\Settings\InstallModeControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\Settings\LanguageControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="UI\Controls\Settings\LinkFilterControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Controls\Settings\NotificationControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Controls\Settings\TraceCleanupControl.xaml">
+    <Page Update="UI\Controls\Settings\RegionControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\Settings\ThemeControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Controls\Settings\TopMostControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\Settings\TraceCleanupControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\Settings\UseInstructionControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
@@ -242,6 +267,7 @@
     <Page Update="UI\Dialogs\TraceCleanupPromptDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    
     <Page Update="UI\Notifications\HistoryCopyNotification.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -258,6 +284,28 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Notifications\ResultLinkCopyNotification.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+
+    <Page Update="Views\AboutPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\DownloadPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\HistoryPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\HomePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\SettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\ShellPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\WebPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     
@@ -277,20 +325,16 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-
-    <PRIResource Remove="UI\Dialogs\Home\**" />
-
-    <Content Include="Aria2\GetStoreAppAria2.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DeploymentContent>true</DeploymentContent>
-      <Link>Aria2\GetStoreAppAria2.exe</Link>
-    </Content>
+    
     <Content Include="Aria2\Config\aria2.conf" />
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="UI\Controls\Settings\InstallModeControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Content Include="Aria2\X64\GetStoreAppAria2.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Aria2\X86\GetStoreAppAria2.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

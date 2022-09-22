@@ -14,7 +14,7 @@ namespace GetStoreApp.Services.Download
     /// </summary>
     public class Aria2Service : IAria2Service
     {
-        private string Aria2FileName => Path.Combine(AppContext.BaseDirectory, "Aria2\\GetStoreAppAria2.exe");
+        private string Aria2FileName => Path.Combine(AppContext.BaseDirectory, string.Format(@"Aria2\{0}\GetStoreAppAria2.exe", InfoHelper.GetAppProcessorArchitecture()));
 
         private string Aria2Arguments => string.Format("--conf-path=\"{0}\" -D", Path.Combine(AppContext.BaseDirectory, "Aria2\\Config\\aria2.conf"));
 
