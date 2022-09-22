@@ -124,5 +124,51 @@ namespace GetStoreApp.Models.Download
         // Using a DependencyProperty as the backing store for TotalSize.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TotalSizeProperty =
             DependencyProperty.Register("TotalSize", typeof(double), typeof(DownloadingModel), new PropertyMetadata(default(double)));
+
+        /// <summary>
+        /// 标志是否处于正在安装状态
+        /// </summary>
+        private bool _isInstalling;
+
+        public bool IsInstalling
+        {
+            get { return _isInstalling; }
+
+            set
+            {
+                _isInstalling = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// 安装文件的进度
+        /// </summary>
+        private double _installValue;
+
+        public double InstallValue
+        {
+            get { return _installValue; }
+
+            set
+            {
+                _installValue = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // 标记安装是否出现了异常
+        private bool _installError;
+
+        public bool InstallError
+        {
+            get { return _installError; }
+
+            set
+            {
+                _installError = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }

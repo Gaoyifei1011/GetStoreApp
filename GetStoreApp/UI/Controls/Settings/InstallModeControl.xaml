@@ -19,7 +19,7 @@
         <FontIcon
             Grid.Column="0"
             FontFamily="Segoe Fluent Icons"
-            Glyph="&#xF7b8;"
+            Glyph="&#xE8A9;"
             Style="{StaticResource FontIconStyle}" />
 
         <StackPanel Grid.Column="1" Orientation="Vertical">

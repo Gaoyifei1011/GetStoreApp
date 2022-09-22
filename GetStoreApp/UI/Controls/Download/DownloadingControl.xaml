@@ -215,6 +215,7 @@
                                 Grid.Row="1"
                                 Style="{StaticResource SubDownloadItemTextStyle}"
                                 Text="{Binding ElementName=DownloadingRoot, Path=WaitDownload}"
+                                ToolTipService.ToolTip="{Binding ElementName=DownloadingRoot, Path=WaitDownload}"
                                 Visibility="{x:Bind DownloadFlag, Converter={StaticResource DownloadFlagConverter}, ConverterParameter=1}" />
                         </Grid>
 

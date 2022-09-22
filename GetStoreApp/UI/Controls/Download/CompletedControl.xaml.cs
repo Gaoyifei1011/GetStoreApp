@@ -11,6 +11,10 @@ namespace GetStoreApp.UI.Controls.Download
 
         public CompletedViewModel ViewModel { get; } = IOCHelper.GetService<CompletedViewModel>();
 
+        public string Installing => ResourceService.GetLocalized("/Download/Installing");
+
+        public string InstallError => ResourceService.GetLocalized("/Download/InstallError");
+
         public string InstallToolTip => ResourceService.GetLocalized("/Download/InstallToolTip");
 
         public string OpenItemFolderToolTip => ResourceService.GetLocalized("/Download/OpenItemFolderToolTip");

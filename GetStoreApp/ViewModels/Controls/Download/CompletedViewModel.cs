@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
 using GetStoreApp.Contracts.Services.Download;
+using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Extensions.Event;
 using GetStoreApp.Helpers;
@@ -18,6 +19,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Management.Deployment;
 using Windows.Storage;
 
 namespace GetStoreApp.ViewModels.Controls.Download
@@ -31,6 +33,8 @@ namespace GetStoreApp.ViewModels.Controls.Download
         private DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
         private IDownloadDBService DownloadDBService { get; } = IOCHelper.GetService<IDownloadDBService>();
+
+        private IAppNotificationService AppNotificationService { get; } = IOCHelper.GetService<IAppNotificationService>();
 
         private IDownloadSchedulerService DownloadSchedulerService { get; } = IOCHelper.GetService<IDownloadSchedulerService>();
 
@@ -217,26 +221,55 @@ namespace GetStoreApp.ViewModels.Controls.Download
         });
 
         // 安装应用
-        public IAsyncRelayCommand InstallCommand => new AsyncRelayCommand<string>(async (param) =>
+        public IAsyncRelayCommand InstallCommand => new AsyncRelayCommand<CompletedModel>(async (param) =>
         {
             // 使用应用安装程序安装
-            if (!string.IsNullOrEmpty(param) && File.Exists(param))
+            if (!string.IsNullOrEmpty(param.FilePath) && File.Exists(param.FilePath))
             {
                 if (InstallModeService.InstallMode.InternalName == InstallModeService.InstallModeList[0].InternalName)
                 {
                     ProcessStartInfo Info = new ProcessStartInfo();
-                    Info.FileName = param;
+                    Info.FileName = param.FilePath;
                     Info.UseShellExecute = true;
 
                     Process.Start(Info);
                 }
-                // 直接安装
-                else
-                {
-                    return;
-                }
 
-                await Task.CompletedTask;
+                // 直接安装
+                else if (InstallModeService.InstallMode.InternalName == InstallModeService.InstallModeList[1].InternalName)
+                {
+                    // 标记安装状态
+                    int InstallIndex = CompletedDataList.IndexOf(CompletedDataList.First(item => item.DownloadKey == param.DownloadKey));
+                    CompletedDataList[InstallIndex].IsInstalling = true;
+
+                    PackageManager packageManager = new PackageManager();
+
+                    // 更新安装进度
+                    Progress<DeploymentProgress> progressCallBack = new Progress<DeploymentProgress>((installProgress) =>
+                    {
+                        CompletedDataList[InstallIndex].InstallValue = installProgress.percentage;
+                    });
+
+                    try
+                    {
+                        // 安装目标应用
+                        DeploymentResult InstallResult = await packageManager.AddPackageAsync(new Uri(param.FilePath), null, DeploymentOptions.None).AsTask(progressCallBack);
+                        // 显示安装成功通知
+                    }
+                    // 安装失败显示失败信息
+                    catch (Exception)
+                    {
+                        CompletedDataList[InstallIndex].InstallError = true;
+                        // 显示安装失败通知
+                    }
+                    // 恢复原来的安装信息显示（并延缓当前安装信息显示时间3秒）
+                    finally
+                    {
+                        await Task.Delay(3000);
+                        CompletedDataList[InstallIndex].IsInstalling = false;
+                        CompletedDataList[InstallIndex].InstallError = false;
+                    }
+                }
             }
         });
 

@@ -213,8 +213,17 @@
   <data name="FileNotExists" xml:space="preserve">
     <value>The file does not exist</value>
   </data>
+  <data name="InstallError" xml:space="preserve">
+    <value>Install failed</value>
+  </data>
+  <data name="Installing" xml:space="preserve">
+    <value>Installing, please wait......</value>
+  </data>
   <data name="InstallToolTip" xml:space="preserve">
     <value>Install the app</value>
+  </data>
+  <data name="InstallValue" xml:space="preserve">
+    <value>{0}% Installed</value>
   </data>
   <data name="InvalidLink" xml:space="preserve">
     <value>The link has been expired</value>

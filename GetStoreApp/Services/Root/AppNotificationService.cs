@@ -24,6 +24,10 @@ namespace GetStoreApp.Services.Root
 
         public INotificationService NotificationService { get; } = IOCHelper.GetService<INotificationService>();
 
+        private string InstallTag { get; } = "InstallTag";
+
+        private string InstallGroup { get; } = "InstallGroup";
+
         ~AppNotificationService()
         {
             Unregister();
@@ -94,63 +98,84 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 显示通知
         /// </summary>
-        /// <param name="notificationType">显示通知的类型</param>
-        public void Show(params string[] notification)
+        public void Show(string notificationKey, params string[] notificationContent)
         {
             if (!NotificationService.AppNotification)
             {
                 return;
             }
 
-            if (notification.Length > 0)
+            switch (notificationKey)
             {
-                if (notification[0] == "DownloadAborted")
-                {
-                    if (notification[1] == "DownloadingNow")
+                case "DownloadAborted":
                     {
-                        new ToastContentBuilder().AddArgument("AppNotifications", notification[1])
-                            .AddText(ResourceService.GetLocalized("/Notification/OfflineMode"))
+                        if (notificationContent.Length == 0)
+                        {
+                            return;
+                        }
 
-                            .AddText(ResourceService.GetLocalized("/Notification/DownloadingAborted"))
+                        // 有任务处于正在下载状态时被迫中断显示相应的通知
+                        if (notificationContent[0] == "DownloadingNow")
+                        {
+                            new ToastContentBuilder().AddArgument("AppNotifications", notificationKey)
+                                .AddText(ResourceService.GetLocalized("/Notification/OfflineMode"))
+
+                                .AddText(ResourceService.GetLocalized("/Notification/DownloadingAborted"))
+
+                                .AddButton(new ToastButton()
+                                    .SetContent(ResourceService.GetLocalized("/Notification/ViewDownloadPage"))
+                                    .AddArgument("AppNotifications", "ViewDownloadPage")
+                                    .SetBackgroundActivation())
+
+                                .AddButton(new ToastButton()
+                                    .SetContent(ResourceService.GetLocalized("/Notification/CheckNetWorkConnection"))
+                                    .AddArgument("AppNotifications", "CheckNetWorkConnection")
+                                    .SetBackgroundActivation())
+                                .Show();
+                        }
+
+                        // 没有任务下载时显示相应的通知
+                        else if (notificationContent[0] == "NotDownload")
+                        {
+                            new ToastContentBuilder().AddArgument("AppNotifications", notificationKey)
+                                .AddText(ResourceService.GetLocalized("/Notification/OfflineMode"))
+
+                                .AddText(ResourceService.GetLocalized("/Notification/NotDownload"))
+
+                                .AddButton(new ToastButton()
+                                    .SetContent(ResourceService.GetLocalized("/Notification/CheckNetWorkConnection"))
+                                    .AddArgument("AppNotifications", "CheckNetWorkConnection")
+                                    .SetBackgroundActivation())
+                                .Show();
+                        }
+                        break;
+                    }
+
+                // 所有任务下载完成时显示通知
+                case "DownloadingCompleted":
+                    {
+                        new ToastContentBuilder().AddArgument("AppNotifications", notificationKey)
+                            .AddText(ResourceService.GetLocalized("/Notification/DownloadCompleted"))
+
+                            .AddText(ResourceService.GetLocalized("/Notification/DownloadCompletedDescription"))
 
                             .AddButton(new ToastButton()
                                 .SetContent(ResourceService.GetLocalized("/Notification/ViewDownloadPage"))
                                 .AddArgument("AppNotifications", "ViewDownloadPage")
                                 .SetBackgroundActivation())
-
-                            .AddButton(new ToastButton()
-                                .SetContent(ResourceService.GetLocalized("/Notification/CheckNetWorkConnection"))
-                                .AddArgument("AppNotifications", "CheckNetWorkConnection")
-                                .SetBackgroundActivation())
                             .Show();
+                        break;
                     }
-                    else if (notification[1] == "NotDownload")
+
+                // 安装应用显示相应的通知
+                case "InstallApp":
                     {
-                        new ToastContentBuilder().AddArgument("AppNotifications", notification[1])
-                            .AddText(ResourceService.GetLocalized("/Notification/OfflineMode"))
-
-                            .AddText(ResourceService.GetLocalized("/Notification/NotDownload"))
-
-                            .AddButton(new ToastButton()
-                                .SetContent(ResourceService.GetLocalized("/Notification/CheckNetWorkConnection"))
-                                .AddArgument("AppNotifications", "CheckNetWorkConnection")
-                                .SetBackgroundActivation())
-                            .Show();
+                        //new ToastContentBuilder().AddArgument("AppNotifications", notificationKey)
+                        //    .AddText(Resource);
+                        break;
                     }
-                }
-                else if (notification[0] == "DownloadCompleted")
-                {
-                    new ToastContentBuilder().AddArgument("AppNotifications", notification[0])
-                        .AddText(ResourceService.GetLocalized("/Notification/DownloadCompleted"))
-
-                        .AddText(ResourceService.GetLocalized("/Notification/DownloadCompletedDescription"))
-
-                        .AddButton(new ToastButton()
-                            .SetContent(ResourceService.GetLocalized("/Notification/ViewDownloadPage"))
-                            .AddArgument("AppNotifications", "ViewDownloadPage")
-                            .SetBackgroundActivation())
-                        .Show();
-                }
+                default:
+                    break;
             }
         }
 

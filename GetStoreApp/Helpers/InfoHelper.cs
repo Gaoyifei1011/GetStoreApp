@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Runtime.InteropServices;
+﻿using System;
+using System.Collections.Generic;
 using Windows.ApplicationModel;
 using Windows.System.Profile;
 
@@ -68,11 +68,11 @@ namespace GetStoreApp.Helpers
         }
 
         /// <summary>
-        /// 获取系统处理器架构
+        /// 获取应用包的架构
         /// </summary>
-        public static string GetProcessorArchitecture()
+        public static string GetAppProcessorArchitecture()
         {
-            return RuntimeInformation.ProcessArchitecture.ToString();
+            return Convert.ToString(Package.Current.Id.Architecture);
         }
     }
 }

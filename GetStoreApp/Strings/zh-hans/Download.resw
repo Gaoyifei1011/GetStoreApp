@@ -213,8 +213,17 @@
   <data name="FileNotExists" xml:space="preserve">
     <value>文件不存在</value>
   </data>
+  <data name="InstallError" xml:space="preserve">
+    <value>安装失败</value>
+  </data>
+  <data name="Installing" xml:space="preserve">
+    <value>正在安装中，请稍侯...</value>
+  </data>
   <data name="InstallToolTip" xml:space="preserve">
     <value>安装该应用</value>
+  </data>
+  <data name="InstallValue" xml:space="preserve">
+    <value>已安装{0}%</value>
   </data>
   <data name="InvalidLink" xml:space="preserve">
     <value>该链接已失效</value>
