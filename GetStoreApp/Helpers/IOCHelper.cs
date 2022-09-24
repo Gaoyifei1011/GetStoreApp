@@ -50,7 +50,7 @@ namespace GetStoreApp.Helpers
             return service;
         }
 
-        public static void InitializeIOCService()
+        public static void InitializeService()
         {
             Host = Microsoft.Extensions.Hosting.Host.
             CreateDefaultBuilder().

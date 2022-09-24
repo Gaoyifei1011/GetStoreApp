@@ -368,7 +368,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
                             lock (UnfinishedDataListLock)
                             {
-                                UnfinishedDataList.Insert(0, new UnfinishedModel
+                                UnfinishedDataList.Add(new UnfinishedModel
                                 {
                                     DownloadKey = item.DownloadKey,
                                     FileName = item.FileName,

@@ -22,7 +22,7 @@ namespace GetStoreApp.Contracts.Services.Download
 
         Task<bool> DeleteAsync(string downloadKey);
 
-        Task<bool> DeleteSelectedAsync(List<string> selectedDownloadKeyList);
+        Task<bool> DeleteSelectedAsync(List<BackgroundModel> selectedDownloadList);
 
         Task<bool> ClearAsync();
     }

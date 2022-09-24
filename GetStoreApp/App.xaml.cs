@@ -29,7 +29,7 @@ namespace GetStoreApp
         {
             InitializeComponent();
 
-            IOCHelper.InitializeIOCService();
+            IOCHelper.InitializeService();
 
             ActivationService = IOCHelper.GetService<IActivationService>();
             ResourceService = IOCHelper.GetService<IResourceService>();

@@ -36,16 +36,18 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 
 | Project progress                                         | Development progress                                                                                               |
 | ---------------------------------------------------------| -------------------------------------------------------------------------------------------------------------------|
-| Main page functionality                                  | Completed, the download interface is being implemented, and it can be docked after the implementation is completed |
+| Main page functionality                                  | Completed                                                                                                          |
 | History (records used links)                             | Completed                                                                                                          |
 | Download the file from the generated link                | Completed (in beta)                                                                                                |
-| Deploy the app offline after the download is complete    | Developed not yet                                                                                                  |
-| Console applications (quickly download and deploy)       | Planning                                                                                                           |
-| Access the web version of the docking download interface | Planning                                                                                                           |
-| Program performance optimization                         | Developed not yet                                                                                                  |
+| Deploy the app offline after the download is complete    | Completed                                                                                                          |
+| Console applications (quickly download and deploy)       | Planning (Expected 0.6.0 preview implementation)                                                                   |
+| Access the web version of the docking download interface | Planning (Expected 0.7.0 preview implementation)                                                                   |
+| Program performance optimization                         | Planning (Expected to be implemented in version 1.0.0)                                                             |
 
 > * At present, the application is in the development stage, some functions have not yet been implemented, and only basic functions are currently provided. In addition, I am a beginner in C#, and I am more time-constrained, I can only use my spare time to develop, the development progress is relatively slow, please understand.
 > * The download function is in the testing stage, there may be instability during use, if there is an abnormality during use, please use a browser to download.
+> * When you open the app for the first time, a Windows Security Center alert window will pop up, asking you to allow getstoreapparia2.exe to communicate on private and public networks for quick app download.
+
 ------
 
 ### Project References (Sort by alphabetical order)
@@ -54,6 +56,7 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 > * [Aria2.NET](https://github.com/rogerfar/Aria2.NET)&emsp;
 > * [CommunityToolkit.Mvvm](https://github.com/CommunityToolkit/WindowsCommunityToolkit)&emsp;
 > * [CommunityToolkit.WinUI.Notifications](https://www.nuget.org/packages/CommunityToolkit.WinUI.Notifications)&emsp;
+> * [CommunityToolkit.WinUI.UI.Behaviors](https://github.com/CommunityToolkit/WindowsCommunityToolkit)&emsp;
 > * [CommunityToolkit.WinUI.UI.Controls](https://github.com/CommunityToolkit/WindowsCommunityToolkit)&emsp;
 > * [HtmlAgilityPack](http://html-agility-pack.net)&emsp;
 > * [Microsoft.Data.Sqlite](https://docs.microsoft.com/dotnet/standard/data/sqlite)&emsp;
@@ -62,7 +65,6 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 > * [Microsoft.Windows.SDK.BuildTools](https://www.nuget.org/packages/Microsoft.Windows.SDK.BuildTools)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Microsoft.Xaml.Behaviors.WinUI.Managed](https://www.nuget.org/packages/Microsoft.Xaml.Behaviors.WinUI.Managed)&emsp;
-> * [NETStandard.Library](https://www.nuget.org/packages/NETStandard.Library)&emsp;
 > * [PInvoke.SHCore](https://github.com/dotnet/pinvoke)&emsp;
 > * [System.Management](https://www.nuget.org/packages/System.Management)&emsp;
 > * [Template Studio](https://github.com/microsoft/TemplateStudio)&emsp;

@@ -141,6 +141,15 @@
   <data name="HistorySelectedCopySuccessfully" xml:space="preserve">
     <value>{0}条历史记录已经成功复制到剪贴板</value>
   </data>
+  <data name="InstallError" xml:space="preserve">
+    <value>文件 {0} 安装失败</value>
+  </data>
+  <data name="InstallErrorDescription" xml:space="preserve">
+    <value>错误信息：{0}</value>
+  </data>
+  <data name="InstallSuccessfully" xml:space="preserve">
+    <value>文件 {0} 已成功安装</value>
+  </data>
   <data name="LanguageChangeFailed" xml:space="preserve">
     <value>语言设置修改失败，请重试</value>
   </data>

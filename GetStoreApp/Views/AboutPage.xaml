@@ -17,7 +17,15 @@
             Padding="0,0,0,40"
             Spacing="10">
 
-            <TextBlock FontSize="26" Text="{x:Bind ResourceService.GetLocalized('/About/Title')}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock FontSize="26" Text="{x:Bind ResourceService.GetLocalized('/About/Title')}" />
+                <!--<DropDownButton Content="更多操作" />-->
+            </Grid>
 
             <ac:HeaderControl />
 

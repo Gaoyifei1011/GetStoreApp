@@ -11,8 +11,8 @@
     <PackageCertificateThumbprint>7F64DB0B0770C29C61E5F8DC60430B3DC390D99F</PackageCertificateThumbprint>
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
     <ApplicationIcon>Assets\Logo\GetStoreApp.ico</ApplicationIcon>
-    <Version>0.5.0.0</Version>
-    <FileVersion>0.5.0.0</FileVersion>
+    <Version>0.5.5.0</Version>
+    <FileVersion>0.5.5.0</FileVersion>
     <Copyright>高怡飞</Copyright>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
@@ -79,7 +79,8 @@
     <None Remove="UI\Dialogs\CloudflareValidationDialog.xaml" />
     <None Remove="UI\Dialogs\DeletePromptDialog.xaml" />
     <None Remove="UI\Dialogs\DesktopAppsDialog.xaml" />
-    <None Remove="UI\Dialogs\DownloadNotificationDialog.xaml" />
+    <None Remove="UI\Dialogs\DownloadNotifyDialog.xaml" />
+    <None Remove="UI\Dialogs\InstallingNotifyDialog.xaml" />
     <None Remove="UI\Dialogs\RestartAppsDialog.xaml" />
     <None Remove="UI\Dialogs\SelectEmptyPromptDialog.xaml" />
     <None Remove="UI\Dialogs\TraceCleanupPromptDialog.xaml" />
@@ -255,7 +256,10 @@
     <Page Update="UI\Dialogs\DesktopAppsDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Dialogs\DownloadNotificationDialog.xaml">
+    <Page Update="UI\Dialogs\DownloadNotifyDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Dialogs\InstallingNotifyDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Dialogs\RestartAppsDialog.xaml">

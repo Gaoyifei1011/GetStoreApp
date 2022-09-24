@@ -13,7 +13,7 @@
   <Identity
     Name="Gaoyifei1011.GetStoreApp"
     Publisher="CN=高怡飞"
-    Version="0.5.1.0" />
+    Version="0.5.5.0" />
 
   <Properties>
     <DisplayName>ms-resource:PackageDisplayName</DisplayName>
@@ -27,8 +27,8 @@
   </Dependencies>
 
   <Resources>
-    <Resource Language="EN-US"/>
-    <Resource Language="ZH-HANS"/>
+    <Resource Language="EN-US" />
+    <Resource Language="ZH-HANS" />
   </Resources>
 
   <Applications>
@@ -43,21 +43,27 @@
         Square44x44Logo="Assets\Square44x44Logo.png">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"  ShortName="ms-resource:AppShortDisplayName" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png">
           <uap:ShowNameOnTiles>
-            <uap:ShowOn Tile="square150x150Logo"/>
-            <uap:ShowOn Tile="wide310x150Logo"/>
-            <uap:ShowOn Tile="square310x310Logo"/>
+            <uap:ShowOn Tile="square150x150Logo" />
+            <uap:ShowOn Tile="wide310x150Logo" />
+            <uap:ShowOn Tile="square310x310Logo" />
           </uap:ShowNameOnTiles>
-        </uap:DefaultTile >
+        </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
         <uap:Extension Category="windows.protocol">
-          <uap:Protocol Name="getstoreappdesktop">
+          <uap:Protocol Name="getstoreapp">
             <uap:Logo>Assets\StoreLogo.png</uap:Logo>
-            <uap:DisplayName>GetStoreApp Desktop</uap:DisplayName>
+            <uap:DisplayName>ms-resource:ProtocolName</uap:DisplayName>
           </uap:Protocol>
         </uap:Extension>
-        
+
+        <uap5:Extension Category="windows.appExecutionAlias" Executable="GetStoreApp.exe" EntryPoint="Windows.FullTrustApplication">
+          <uap5:AppExecutionAlias>
+            <uap5:ExecutionAlias Alias="GetStoreApp.exe" />
+          </uap5:AppExecutionAlias>
+        </uap5:Extension>
+
         <desktop:Extension Category="windows.toastNotificationActivation">
           <desktop:ToastNotificationActivation ToastActivatorCLSID="6CA254A3-8B8C-4441-AE81-0FBA18ADD8B0" />
         </desktop:Extension>
@@ -65,7 +71,7 @@
         <com:Extension Category="windows.comServer">
           <com:ComServer>
             <com:ExeServer Executable="GetStoreApp.exe" Arguments="----AppNotificationActivated:" DisplayName="Toast activator">
-              <com:Class Id="6CA254A3-8B8C-4441-AE81-0FBA18ADD8B0" DisplayName="Toast activator"/>
+              <com:Class Id="6CA254A3-8B8C-4441-AE81-0FBA18ADD8B0" DisplayName="Toast activator" />
             </com:ExeServer>
           </com:ComServer>
         </com:Extension>
@@ -84,17 +90,17 @@
         Square44x44Logo="Assets\Square44x44Logo.png">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"  ShortName="ms-resource:AppShortDisplayName" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png">
           <uap:ShowNameOnTiles>
-            <uap:ShowOn Tile="square150x150Logo"/>
-            <uap:ShowOn Tile="wide310x150Logo"/>
-            <uap:ShowOn Tile="square310x310Logo"/>
+            <uap:ShowOn Tile="square150x150Logo" />
+            <uap:ShowOn Tile="wide310x150Logo" />
+            <uap:ShowOn Tile="square310x310Logo" />
           </uap:ShowNameOnTiles>
-        </uap:DefaultTile >
+        </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
         <uap5:Extension Category="windows.appExecutionAlias" Executable="GetStoreAppConsole.exe" EntryPoint="Windows.FullTrustApplication">
           <uap5:AppExecutionAlias>
-            <uap5:ExecutionAlias Alias="GetStoreApp.exe" />
+            <uap5:ExecutionAlias Alias="GetStoreAppConsole.exe" />
           </uap5:AppExecutionAlias>
         </uap5:Extension>
       </Extensions>
@@ -103,12 +109,12 @@
 
   <Capabilities>
     <rescap:Capability Name="runFullTrust" />
-    <Capability Name="internetClient"/>
+    <Capability Name="internetClient" />
     <rescap:Capability Name="packageManagement" />
   </Capabilities>
 
   <genTemplate:Metadata>
-    <genTemplate:Item Name="generator" Value="Template Studio"/>
+    <genTemplate:Item Name="generator" Value="Template Studio" />
     <genTemplate:Item Name="wizardVersion" Version="v5.2.1" />
     <genTemplate:Item Name="projectType" Value="NavView" />
     <genTemplate:Item Name="framework" Value="MVVMToolkit" />

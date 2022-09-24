@@ -244,7 +244,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
                 if (duplicatedList.Count > 0)
                 {
-                    ContentDialogResult result = await new DownloadNotificationDialog(duplicatedList.Count).ShowAsync();
+                    ContentDialogResult result = await new DownloadNotifyDialog(duplicatedList.Count).ShowAsync();
 
                     if (result == ContentDialogResult.Primary)
                     {
@@ -325,7 +325,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
                 if (CheckResult)
                 {
-                    ContentDialogResult result = await new DownloadNotificationDialog(0).ShowAsync();
+                    ContentDialogResult result = await new DownloadNotifyDialog(0).ShowAsync();
 
                     if (result == ContentDialogResult.Primary)
                     {

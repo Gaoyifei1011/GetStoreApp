@@ -7,7 +7,7 @@ using System;
 
 namespace GetStoreApp.UI.Notifications
 {
-    public sealed partial class HistoryCopyNotification : UserControl
+    public sealed partial class HistoryCopyNotification : StackPanel
     {
         public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 

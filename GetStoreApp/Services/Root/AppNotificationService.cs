@@ -170,8 +170,22 @@ namespace GetStoreApp.Services.Root
                 // 安装应用显示相应的通知
                 case "InstallApp":
                     {
-                        //new ToastContentBuilder().AddArgument("AppNotifications", notificationKey)
-                        //    .AddText(Resource);
+                        if (notificationContent.Length == 0)
+                        {
+                            return;
+                        }
+
+                        // 成功安装应用通知
+                        if (notificationContent[0] == "Successfully")
+                        {
+                            new ToastContentBuilder().AddText(string.Format(ResourceService.GetLocalized("/Notification/InstallSuccessfully"), notificationContent[1])).Show();
+                        }
+                        else if (notificationContent[0] == "Error")
+                        {
+                            new ToastContentBuilder().AddText(string.Format(ResourceService.GetLocalized("/Notification/InstallError"), notificationContent[1]))
+                                .AddText(string.Format(ResourceService.GetLocalized("/Notification/InstallErrorDescription"), notificationContent[2]))
+                                .Show();
+                        }
                         break;
                     }
                 default:
