@@ -201,6 +201,15 @@
   <data name="HistoryRecord" xml:space="preserve">
     <value>历史记录</value>
   </data>
+  <data name="InstallingNotifyContent" xml:space="preserve">
+    <value>您的应用正在安装中，安装完成后再进行其他操作</value>
+  </data>
+  <data name="InstallingNotifySure" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="InstallingNotifyTitle" xml:space="preserve">
+    <value>应用安装提示</value>
+  </data>
   <data name="LocalFile" xml:space="preserve">
     <value>本地创建的文件</value>
   </data>

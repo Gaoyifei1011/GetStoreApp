@@ -342,7 +342,7 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 删除选定的下载记录数据
         /// </summary>
-        public async Task<bool> DeleteSelectedAsync(List<string> selectedDownloadKeyList)
+        public async Task<bool> DeleteSelectedAsync(List<BackgroundModel> selectedDownloadList)
         {
             bool IsDeleteSuccessfully = true;
 
@@ -359,11 +359,11 @@ namespace GetStoreApp.Services.Download
 
                         try
                         {
-                            foreach (string downloadKey in selectedDownloadKeyList)
+                            foreach (BackgroundModel backgroundItem in selectedDownloadList)
                             {
                                 DeleteCommand.CommandText = string.Format("DELETE FROM {0} WHERE DOWNLOADKEY = '{1}'",
                                     DataBaseService.DownloadTableName,
-                                    downloadKey
+                                    backgroundItem.DownloadKey
                                     );
                                 await DeleteCommand.ExecuteNonQueryAsync();
                             }

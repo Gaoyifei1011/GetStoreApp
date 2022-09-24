@@ -6,7 +6,7 @@ using System;
 
 namespace GetStoreApp.UI.Notifications
 {
-    public sealed partial class ResultIDCopyNotification : UserControl
+    public sealed partial class ResultIDCopyNotification : StackPanel
     {
         public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 

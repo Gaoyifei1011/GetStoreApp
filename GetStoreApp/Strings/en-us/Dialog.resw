@@ -201,6 +201,15 @@
   <data name="HistoryRecord" xml:space="preserve">
     <value>History records</value>
   </data>
+  <data name="InstallingNotifyContent" xml:space="preserve">
+    <value>Your app is being installed and you can do anything else after the installation is complete</value>
+  </data>
+  <data name="InstallingNotifySure" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="InstallingNotifyTitle" xml:space="preserve">
+    <value>App installation prompts</value>
+  </data>
   <data name="LocalFile" xml:space="preserve">
     <value>Locally created files</value>
   </data>

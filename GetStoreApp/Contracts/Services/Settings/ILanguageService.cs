@@ -15,7 +15,5 @@ namespace GetStoreApp.Contracts.Services.Settings
         Task InitializeLanguageAsync();
 
         Task SetLanguageAsync(LanguageModel language);
-
-        Task SetAppLanguageAsync();
     }
 }

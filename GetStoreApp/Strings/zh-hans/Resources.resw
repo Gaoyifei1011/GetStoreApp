@@ -119,11 +119,9 @@
   </resheader>
   <data name="AppDescription" xml:space="preserve">
     <value>获取商店应用 (Dev)</value>
-    <comment>应用描述</comment>
   </data>
   <data name="AppDisplayName" xml:space="preserve">
     <value>获取商店应用 (Dev)</value>
-    <comment>应用名称显示</comment>
   </data>
   <data name="AppIsRunning" xml:space="preserve">
     <value>应用程序正在运行中。</value>
@@ -139,13 +137,15 @@
   </data>
   <data name="PackageDisplayName" xml:space="preserve">
     <value>获取商店应用 (Dev)</value>
-    <comment>应用程序包显示名称</comment>
   </data>
   <data name="PackageFamilyName" xml:space="preserve">
     <value>PackageFamilyName</value>
   </data>
   <data name="ProductID" xml:space="preserve">
     <value>ProductID</value>
+  </data>
+  <data name="ProtocolName" xml:space="preserve">
+    <value>获取商店应用 桌面应用</value>
   </data>
   <data name="Retail" xml:space="preserve">
     <value>正式版</value>

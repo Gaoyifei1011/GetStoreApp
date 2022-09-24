@@ -141,6 +141,15 @@
   <data name="HistorySelectedCopySuccessfully" xml:space="preserve">
     <value>{0} history records has been successfully copied to the clipboard</value>
   </data>
+  <data name="InstallError" xml:space="preserve">
+    <value>File {0} installation failed</value>
+  </data>
+  <data name="InstallErrorDescription" xml:space="preserve">
+    <value>Error message: {0}</value>
+  </data>
+  <data name="InstallSuccessfully" xml:space="preserve">
+    <value>File {0} was successfully installed</value>
+  </data>
   <data name="LanguageChangeFailed" xml:space="preserve">
     <value>Language setting modification failed, please try again</value>
   </data>

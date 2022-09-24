@@ -105,17 +105,28 @@ namespace GetStoreApp.ViewModels.Controls.Download
         // 删除选中的任务
         public IAsyncRelayCommand DeleteRecordCommand => new AsyncRelayCommand(async () =>
         {
-            List<string> SelectedDownloadKeyList = new List<string>();
+            List<BackgroundModel> SelectedCompletedDataList = new List<BackgroundModel>();
 
             foreach (CompletedModel completedItem in CompletedDataList.Where(item => item.IsSelected == true))
             {
-                SelectedDownloadKeyList.Add(completedItem.DownloadKey);
+                SelectedCompletedDataList.Add(new BackgroundModel
+                {
+                    DownloadKey = completedItem.DownloadKey,
+                    IsInstalling = completedItem.IsInstalling
+                });
             }
 
             // 没有选中任何内容时显示空提示对话框
-            if (SelectedDownloadKeyList.Count == 0)
+            if (SelectedCompletedDataList.Count == 0)
             {
                 await new SelectEmptyPromptDialog().ShowAsync();
+                return;
+            }
+
+            // 当前任务正在安装时，不进行其他任何操作
+            if (SelectedCompletedDataList.Exists(item => item.IsInstalling == true))
+            {
+                await new InstallingNotifyDialog().ShowAsync();
                 return;
             }
 
@@ -126,15 +137,15 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 IsSelectMode = false;
 
-                bool DeleteSelectedResult = await DownloadDBService.DeleteSelectedAsync(SelectedDownloadKeyList);
+                bool DeleteSelectedResult = await DownloadDBService.DeleteSelectedAsync(SelectedCompletedDataList);
 
                 lock (CompletedDataListLock)
                 {
-                    foreach (string downloadKey in SelectedDownloadKeyList)
+                    foreach (BackgroundModel backgroundItem in SelectedCompletedDataList)
                     {
                         try
                         {
-                            CompletedDataList.Remove(CompletedDataList.First(item => item.DownloadKey == downloadKey));
+                            CompletedDataList.Remove(CompletedDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey));
                         }
                         catch (Exception)
                         {
@@ -155,7 +166,8 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 SelectedCompletedDataList.Add(new BackgroundModel
                 {
                     DownloadKey = completedItem.DownloadKey,
-                    FilePath = completedItem.FilePath
+                    FilePath = completedItem.FilePath,
+                    IsInstalling = completedItem.IsInstalling,
                 });
             }
 
@@ -163,6 +175,13 @@ namespace GetStoreApp.ViewModels.Controls.Download
             if (SelectedCompletedDataList.Count == 0)
             {
                 await new SelectEmptyPromptDialog().ShowAsync();
+                return;
+            }
+
+            // 当前任务正在安装时，不进行其他任何操作
+            if (SelectedCompletedDataList.Exists(item => item.IsInstalling == true))
+            {
+                await new InstallingNotifyDialog().ShowAsync();
                 return;
             }
 
@@ -255,12 +274,14 @@ namespace GetStoreApp.ViewModels.Controls.Download
                         // 安装目标应用
                         DeploymentResult InstallResult = await packageManager.AddPackageAsync(new Uri(param.FilePath), null, DeploymentOptions.None).AsTask(progressCallBack);
                         // 显示安装成功通知
+                        AppNotificationService.Show("InstallApp", "Successfully", Path.GetFileName(param.FilePath));
                     }
                     // 安装失败显示失败信息
-                    catch (Exception)
+                    catch (Exception e)
                     {
                         CompletedDataList[InstallIndex].InstallError = true;
                         // 显示安装失败通知
+                        AppNotificationService.Show("InstallApp", "Error", Path.GetFileName(param.FilePath), e.Message);
                     }
                     // 恢复原来的安装信息显示（并延缓当前安装信息显示时间3秒）
                     finally
@@ -306,6 +327,12 @@ namespace GetStoreApp.ViewModels.Controls.Download
         {
             if (param is not null)
             {
+                if (param.IsInstalling == true)
+                {
+                    await new InstallingNotifyDialog().ShowAsync();
+                    return;
+                }
+
                 bool DeleteResult = await DownloadDBService.DeleteAsync(param.DownloadKey);
 
                 if (DeleteResult)
@@ -391,7 +418,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
                             lock (CompletedDataListLock)
                             {
-                                CompletedDataList.Insert(0, new CompletedModel
+                                CompletedDataList.Add(new CompletedModel
                                 {
                                     DownloadKey = item.DownloadKey,
                                     FileName = item.FileName,

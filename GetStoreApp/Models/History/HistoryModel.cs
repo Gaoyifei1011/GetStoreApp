@@ -85,13 +85,5 @@ namespace GetStoreApp.Models.History
         // Using a DependencyProperty as the backing store for HistoryLink.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty HistoryLinkProperty =
             DependencyProperty.Register("HistoryLink", typeof(string), typeof(HistoryModel), new PropertyMetadata(string.Empty));
-
-        /// <summary>
-        /// 按时间升序排列
-        /// </summary>
-        public int CompareTo(HistoryModel other)
-        {
-            return CreateTimeStamp.CompareTo(other.CreateTimeStamp);
-        }
     }
 }

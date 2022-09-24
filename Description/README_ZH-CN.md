@@ -36,16 +36,17 @@
 
 | 项目内容                        | 开发进展                                          |
 | --------------------------------| --------------------------------------------------|
-| 主页面功能                      | 已完成，下载接口正在实现中，实现完成后即可对接    |
+| 主页面功能                      | 已完成                                            |
 | 历史记录（记录使用过的链接）    | 已完成                                            |
 | 通过生成的链接下载文件          | 已完成（处于测试阶段）                            |
-| 下载完成后离线部署应用          | 尚未开发                                          |
-| 控制台应用程序（快速下载并部署）| 计划中                                            |
-| 访问网页版对接下载接口          | 计划中                                            |
-| 程序性能优化                    | 尚未开发                                          |
+| 下载完成后离线部署应用          | 已完成                                            |
+| 控制台应用程序（快速下载并部署）| 计划中（预计0.6.0预览版本实现）                   |
+| 访问网页版对接下载接口          | 计划中（预计0.7.0预览版本实现）                   |
+| 程序性能优化                    | 计划中（预计1.0.0正式版本实现）                   |
 
 > * 目前该应用处于开发阶段，有部分功能尚未实现，目前仅提供基础的功能。此外我是c#的初学者，且本人时间较为紧张，只能利用自己的闲余时间开发，开发进度较为缓慢，请谅解。
 > * 下载功能处于测试阶段，在使用过程中可能存在不稳定现象，如果在使用过程中出现异常，请使用浏览器下载。
+> * 初次打开应用时，会弹出Windows 安全中心警报的窗口，请您允许getstoreapparia2.exe在专用网络和公用网络中通信，方便快速下载应用。
 
 ------
 
@@ -55,6 +56,7 @@
 > * [Aria2.NET](https://github.com/rogerfar/Aria2.NET)&emsp;
 > * [CommunityToolkit.Mvvm](https://github.com/CommunityToolkit/WindowsCommunityToolkit)&emsp;
 > * [CommunityToolkit.WinUI.Notifications](https://www.nuget.org/packages/CommunityToolkit.WinUI.Notifications)&emsp;
+> * [CommunityToolkit.WinUI.UI.Behaviors](https://github.com/CommunityToolkit/WindowsCommunityToolkit)&emsp;
 > * [CommunityToolkit.WinUI.UI.Controls](https://github.com/CommunityToolkit/WindowsCommunityToolkit)&emsp;
 > * [HtmlAgilityPack](http://html-agility-pack.net)&emsp;
 > * [Microsoft.Data.Sqlite](https://docs.microsoft.com/dotnet/standard/data/sqlite)&emsp;
@@ -63,7 +65,6 @@
 > * [Microsoft.Windows.SDK.BuildTools](https://www.nuget.org/packages/Microsoft.Windows.SDK.BuildTools)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Microsoft.Xaml.Behaviors.WinUI.Managed](https://www.nuget.org/packages/Microsoft.Xaml.Behaviors.WinUI.Managed)&emsp;
-> * [NETStandard.Library](https://www.nuget.org/packages/NETStandard.Library)&emsp;
 > * [PInvoke.SHCore](https://github.com/dotnet/pinvoke)&emsp;
 > * [System.Management](https://www.nuget.org/packages/System.Management)&emsp;
 > * [Template Studio](https://github.com/microsoft/TemplateStudio)&emsp;

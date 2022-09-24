@@ -119,15 +119,12 @@
   </resheader>
   <data name="AppDescription" xml:space="preserve">
     <value>GetStoreApp (Dev)</value>
-    <comment>Application description</comment>
   </data>
   <data name="AppDisplayName" xml:space="preserve">
     <value>GetStoreApp (Dev)</value>
-    <comment>Application display name</comment>
   </data>
   <data name="PackageDisplayName" xml:space="preserve">
     <value>GetStoreApp (Dev)</value>
-    <comment>Application package display name</comment>
   </data>
   <data name="AppShortDisplayName" xml:space="preserve">
     <value>GetStoreApp</value>
@@ -158,5 +155,8 @@
   </data>
   <data name="AppIsRunning" xml:space="preserve">
     <value>The application is running.</value>
+  </data>
+  <data name="ProtocolName" xml:space="preserve">
+    <value>GetStoreApp Desktop App</value>
   </data>
 </root>

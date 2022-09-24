@@ -87,7 +87,6 @@ namespace GetStoreApp.Services.Root
         {
             // 初始化应用资源及应用使用的语言信息
             await LanguageService.InitializeLanguageAsync();
-            await LanguageService.SetAppLanguageAsync();
             await ResourceService.InitializeResourceAsync(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
 
             // 初始化数据库信息

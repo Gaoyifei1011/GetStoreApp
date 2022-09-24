@@ -51,5 +51,10 @@
         /// 文件下载速度
         /// </summary>
         public double CurrentSpeed { get; set; }
+
+        /// <summary>
+        /// 文件是否处于正在安装状态
+        /// </summary>
+        public bool IsInstalling { get; set; }
     }
 }

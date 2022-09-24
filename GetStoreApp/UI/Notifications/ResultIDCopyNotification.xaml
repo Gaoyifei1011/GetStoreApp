@@ -1,21 +1,18 @@
-﻿<UserControl
+﻿<StackPanel
     x:Class="GetStoreApp.UI.Notifications.ResultIDCopyNotification"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-
-    <StackPanel>
-        <TextBlock
-            x:Name="CopySuccess"
-            x:Load="{x:Bind ViewModel.CopyState, Mode=OneWay}"
-            Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
-            Text="{x:Bind ResourceService.GetLocalized('/Notification/ResultIDCopySuccessfully')}" />
-        <TextBlock
-            x:Name="CopyFailed"
-            x:Load="{x:Bind ViewModel.CopyState, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
-            Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
-            Text="{x:Bind ResourceService.GetLocalized('/Notification/ResultIDCopyFailed')}" />
-    </StackPanel>
-</UserControl>
+    <TextBlock
+        x:Name="CopySuccess"
+        x:Load="{x:Bind ViewModel.CopyState, Mode=OneWay}"
+        Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
+        Text="{x:Bind ResourceService.GetLocalized('/Notification/ResultIDCopySuccessfully')}" />
+    <TextBlock
+        x:Name="CopyFailed"
+        x:Load="{x:Bind ViewModel.CopyState, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
+        Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
+        Text="{x:Bind ResourceService.GetLocalized('/Notification/ResultIDCopyFailed')}" />
+</StackPanel>
