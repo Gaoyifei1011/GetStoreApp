@@ -5,7 +5,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Windows.Foundation;
 
-namespace GetStoreApp.Views
+namespace GetStoreApp.Views.Pages
 {
     public sealed partial class AboutPage : Page
     {

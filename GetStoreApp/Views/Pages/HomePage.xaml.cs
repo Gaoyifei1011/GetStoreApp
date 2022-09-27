@@ -3,18 +3,17 @@ using GetStoreApp.Helpers;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml.Controls;
 
-namespace GetStoreApp.Views
+namespace GetStoreApp.Views.Pages
 {
-    public sealed partial class WebPage : Page
+    public sealed partial class HomePage : Page
     {
         public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        public WebViewModel ViewModel { get; } = IOCHelper.GetService<WebViewModel>();
+        public HomeViewModel ViewModel { get; } = IOCHelper.GetService<HomeViewModel>();
 
-        public WebPage()
+        public HomePage()
         {
             InitializeComponent();
-            ViewModel.WebViewService.Initialize(webView);
         }
     }
 }

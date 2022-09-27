@@ -4,7 +4,7 @@ using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
-namespace GetStoreApp.Views
+namespace GetStoreApp.Views.Pages
 {
     public sealed partial class DownloadPage : Page
     {

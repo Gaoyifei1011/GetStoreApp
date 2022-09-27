@@ -1,10 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Download;
+using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Extensions.Delegate;
 using GetStoreApp.Helpers;
+using GetStoreApp.Messages;
 using GetStoreApp.UI.Dialogs;
 using GetStoreApp.ViewModels.Pages;
+using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
@@ -14,6 +18,8 @@ namespace GetStoreApp.ViewModels.Window
     public class MainWindowViewModel : ObservableRecipient
     {
         private IAria2Service Aria2Service { get; } = IOCHelper.GetService<IAria2Service>();
+
+        private IAppExitService AppExitService { get; } = IOCHelper.GetService<IAppExitService>();
 
         private IDownloadSchedulerService DownloadSchedulerService { get; } = IOCHelper.GetService<IDownloadSchedulerService>();
 
@@ -26,6 +32,8 @@ namespace GetStoreApp.ViewModels.Window
         {
             await Aria2Service.CloseAria2Async();
             await DownloadSchedulerService.CloseDownloadMonitorAsync();
+
+            WeakReferenceMessenger.Default.Send(new TrayIconDisposeMessage(true));
         }
 
         /// <summary>
@@ -33,22 +41,32 @@ namespace GetStoreApp.ViewModels.Window
         /// </summary>
         public async void WindowClosing(object sender, WindowClosingEventArgs args)
         {
-            if (DownloadSchedulerService.DownloadingList.Count > 0 || DownloadSchedulerService.WaitingList.Count > 0)
+            if (AppExitService.AppExit.InternalName == AppExitService.AppExitList[0].InternalName)
             {
-                ContentDialogResult result = await new ClosingWindowDialog().ShowAsync();
-
-                if (result == ContentDialogResult.Primary)
-                {
-                    args.TryCloseWindow();
-                }
-                else if (result == ContentDialogResult.Secondary)
-                {
-                    NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo());
-                }
+                WindowHelper.HideAppWindow();
             }
             else
             {
-                args.TryCloseWindow();
+                if (DownloadSchedulerService.DownloadingList.Count > 0 || DownloadSchedulerService.WaitingList.Count > 0)
+                {
+                    ContentDialogResult result = await new ClosingWindowDialog().ShowAsync();
+
+                    if (result == ContentDialogResult.Primary)
+                    {
+                        args.TryCloseWindow();
+                    }
+                    else if (result == ContentDialogResult.Secondary)
+                    {
+                        if (NavigationService.Frame.CurrentSourcePageType != typeof(DownloadPage))
+                        {
+                            NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+                        }
+                    }
+                }
+                else
+                {
+                    args.TryCloseWindow();
+                }
             }
         }
     }

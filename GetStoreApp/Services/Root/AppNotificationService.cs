@@ -4,7 +4,7 @@ using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Helpers;
 using GetStoreApp.ViewModels.Pages;
-using GetStoreApp.Views;
+using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.Windows.AppNotifications;
 using System;
@@ -56,7 +56,7 @@ namespace GetStoreApp.Services.Root
                 App.MainWindow.DispatcherQueue.TryEnqueue(() =>
                 {
                     // 先设置应用窗口的显示方式
-                    WindowHelper.SetAppWindow();
+                    WindowHelper.ShowAppWindow();
 
                     // 根据点击通知获取到的参数来选择相应的操作
                     if (ParseArguments(args.Argument)["AppNotifications"] == "DownloadingNow" && NavigationService.Frame.CurrentSourcePageType != typeof(DownloadPage))

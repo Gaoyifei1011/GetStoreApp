@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using Windows.Win32.Foundation;
+using WinUIEx;
 
 namespace GetStoreApp.Helpers
 {
@@ -12,7 +13,10 @@ namespace GetStoreApp.Helpers
         [DllImport("user32.dll")]
         private static extern bool IsZoomed(IntPtr hWnd);
 
-        public static void SetAppWindow()
+        /// <summary>
+        /// 显示窗口
+        /// </summary>
+        public static void ShowAppWindow()
         {
             // 将窗口置于前台前首先获取窗口句柄
             HWND hwnd = (HWND)WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
@@ -32,6 +36,17 @@ namespace GetStoreApp.Helpers
 
             // 将指定窗口的线程设置到前台时，需要 Microsoft.Windows.CsWin32 NuGet 包和一个具有 SetForegroundWindow() 方法的 NativeMethods.txt 文件
             Windows.Win32.PInvoke.SetForegroundWindow(hwnd);
+        }
+
+        /// <summary>
+        /// 隐藏窗口
+        /// </summary>
+        public static void HideAppWindow()
+        {
+            if (App.MainWindow.Visible)
+            {
+                App.MainWindow.Hide();
+            }
         }
     }
 }

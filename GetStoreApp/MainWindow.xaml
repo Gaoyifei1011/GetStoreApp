@@ -5,9 +5,9 @@
     xmlns:WinUI="using:GetStoreApp.Extensions.Window"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="{x:Bind ResourceService.GetLocalized('AppDisplayName')}"
     MinWidth="1024"
     MinHeight="768"
     Closed="{x:Bind ViewModel.WindowClosed}"
     Closing="{x:Bind ViewModel.WindowClosing}"
-    PersistenceId="MainWindow"
     mc:Ignorable="d" />

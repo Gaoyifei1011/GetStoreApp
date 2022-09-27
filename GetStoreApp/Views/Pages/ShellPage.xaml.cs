@@ -12,7 +12,7 @@ using Microsoft.UI.Xaml.Input;
 using System.Threading.Tasks;
 using Windows.System;
 
-namespace GetStoreApp.Views
+namespace GetStoreApp.Views.Pages
 {
     public sealed partial class ShellPage : Page
     {

@@ -123,6 +123,12 @@
   <data name="Appearance" xml:space="preserve">
     <value>Appearance</value>
   </data>
+  <data name="AppExit" xml:space="preserve">
+    <value>Application closing mode</value>
+  </data>
+  <data name="AppExitDescription" xml:space="preserve">
+    <value>Set the action that needs to be taken when the app closes</value>
+  </data>
   <data name="AppInstall" xml:space="preserve">
     <value>Install using the app installer</value>
   </data>
@@ -159,6 +165,9 @@
   <data name="ChangeFolder" xml:space="preserve">
     <value>Change directory</value>
   </data>
+  <data name="CloseApp" xml:space="preserve">
+    <value>Quit the app</value>
+  </data>
   <data name="CodeInstall" xml:space="preserve">
     <value>Direct installation</value>
   </data>
@@ -194,6 +203,9 @@
   </data>
   <data name="General" xml:space="preserve">
     <value>General Options</value>
+  </data>
+  <data name="HideToTray" xml:space="preserve">
+    <value>Minimize to the system tray</value>
   </data>
   <data name="HistoryLiteConfig" xml:space="preserve">
     <value>The number of main page history item displays</value>

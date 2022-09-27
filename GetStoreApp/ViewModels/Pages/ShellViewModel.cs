@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Helpers;
-using GetStoreApp.Views;
+using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml.Navigation;
 
 namespace GetStoreApp.ViewModels.Pages

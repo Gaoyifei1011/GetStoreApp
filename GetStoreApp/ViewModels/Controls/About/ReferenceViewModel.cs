@@ -14,6 +14,7 @@ namespace GetStoreApp.ViewModels.Controls.About
             {"CommunityToolkit.WinUI.Notifications","https://www.nuget.org/packages/CommunityToolkit.WinUI.Notifications" },
             {"CommunityToolkit.WinUI.UI.Behaviors","https://github.com/CommunityToolkit/WindowsCommunityToolkit" },
             {"CommunityToolkit.WinUI.UI.Controls","https://github.com/CommunityToolkit/WindowsCommunityToolkit" },
+            {"H.NotifyIcon.WinUI","https://github.com/HavenDV/H.NotifyIcon" },
             {"HtmlAgilityPack","http://html-agility-pack.net" },
             {"Microsoft.Data.Sqlite","https://docs.microsoft.com/dotnet/standard/data/sqlite" },
             {"Microsoft.Extensions.Hosting","https://www.nuget.org/packages/Microsoft.Extensions.Hosting" },

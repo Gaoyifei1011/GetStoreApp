@@ -24,8 +24,10 @@ using GetStoreApp.ViewModels.Controls.Settings;
 using GetStoreApp.ViewModels.Dialogs;
 using GetStoreApp.ViewModels.Notifications;
 using GetStoreApp.ViewModels.Pages;
+using GetStoreApp.ViewModels.Tray;
 using GetStoreApp.ViewModels.Window;
-using GetStoreApp.Views;
+using GetStoreApp.Views.Pages;
+using GetStoreApp.Views.Tray;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
@@ -67,9 +69,8 @@ namespace GetStoreApp.Helpers
                 services.AddSingleton<IAria2Service, Aria2Service>();
                 services.AddSingleton<IDownloadDBService, DownloadDBService>();
                 services.AddSingleton<IDownloadSchedulerService, DownloadSchedulerService>();
-
                 services.AddSingleton<IHistoryDBService, HistoryDBService>();
-
+                services.AddSingleton<IAppExitService, AppExitService>();
                 services.AddSingleton<IBackdropService, BackdropService>();
                 services.AddSingleton<IDownloadOptionsService, DownloadOptionsService>();
                 services.AddSingleton<IHistoryLiteNumService, HistoryLiteNumService>();
@@ -111,6 +112,10 @@ namespace GetStoreApp.Helpers
                 services.AddTransient<WebPage>();
                 services.AddTransient<WebViewModel>();
 
+                // 托盘控件（MVVM）
+                services.AddTransient<TaskBarControl>();
+                services.AddTransient<TaskBarViewModel>();
+
                 // 关于页面的控件（MVVM）
                 services.AddTransient<HeaderControl>();
                 services.AddTransient<HeaderViewModel>();
@@ -142,6 +147,8 @@ namespace GetStoreApp.Helpers
                 services.AddTransient<StatusBarViewModel>();
 
                 // 设置页面的控件（MVVM）
+                services.AddTransient<AppExitControl>();
+                services.AddTransient<AppExitViewModel>();
                 services.AddTransient<BackdropControl>();
                 services.AddTransient<BackdropViewModel>();
                 services.AddTransient<DownloadOptionsControl>();

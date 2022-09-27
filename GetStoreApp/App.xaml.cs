@@ -28,7 +28,6 @@ namespace GetStoreApp
         public App()
         {
             InitializeComponent();
-
             IOCHelper.InitializeService();
 
             ActivationService = IOCHelper.GetService<IActivationService>();
@@ -88,7 +87,7 @@ namespace GetStoreApp
         /// </summary>
         private void AppActivated(object sender, AppActivationArguments e)
         {
-            WindowHelper.SetAppWindow();
+            WindowHelper.ShowAppWindow();
 
             // 显示提示消息对话框
             WinUIMessageBox.ShowMessageBox(

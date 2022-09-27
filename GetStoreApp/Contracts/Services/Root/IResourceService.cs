@@ -13,6 +13,8 @@ namespace GetStoreApp.Contracts.Services.Root
 
         List<StatusBarStateModel> StatusBarStateList { get; }
 
+        List<AppExitModel> AppExitList { get; }
+
         List<BackdropModel> BackdropList { get; }
 
         List<DownloadModeModel> DownloadModeList { get; }

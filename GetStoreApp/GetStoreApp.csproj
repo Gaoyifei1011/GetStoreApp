@@ -67,6 +67,7 @@
     <None Remove="UI\Controls\Home\RequestControl.xaml" />
     <None Remove="UI\Controls\Home\ResultControl.xaml" />
     <None Remove="UI\Controls\Home\StatusBarControl.xaml" />
+    <None Remove="UI\Controls\Settings\AppExitControl.xaml" />
     <None Remove="UI\Controls\Settings\BackdropControl.xaml" />
     <None Remove="UI\Controls\Settings\DownloadOptionsControl.xaml" />
     <None Remove="UI\Controls\Settings\HistoryLiteConfigControl.xaml" />
@@ -90,6 +91,7 @@
     <None Remove="UI\Notifications\ResultContentCopyNotification.xaml" />
     <None Remove="UI\Notifications\ResultIDCopyNotification.xaml" />
     <None Remove="UI\Notifications\ResultLinkCopyNotification.xaml" />
+    <None Remove="Views\Tray\TaskBarControl.xaml" />
     
     <PackageReference Include="Aria2.NET" Version="1.0.5" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
@@ -98,12 +100,12 @@
     </PackageReference>
     <PackageReference Include="CommunityToolkit.WinUI.UI.Behaviors" Version="7.1.2" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
+    <PackageReference Include="H.NotifyIcon.WinUI" Version="2.0.67" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.9" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
-    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.46-beta">
+    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.63-beta">
       <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.1" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.5" />
@@ -291,25 +293,25 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
-    <Page Update="Views\AboutPage.xaml">
+    <Page Update="Views\Pages\AboutPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\DownloadPage.xaml">
+    <Page Update="Views\Pages\DownloadPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\HistoryPage.xaml">
+    <Page Update="Views\Pages\HistoryPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\HomePage.xaml">
+    <Page Update="Views\Pages\HomePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\SettingsPage.xaml">
+    <Page Update="Views\Pages\SettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\ShellPage.xaml">
+    <Page Update="Views\Pages\ShellPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\WebPage.xaml">
+    <Page Update="Views\Pages\WebPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     
@@ -340,5 +342,23 @@
     <Content Include="Aria2\X86\GetStoreAppAria2.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Assets\Logo\NotifyIcon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="UI\Controls\Settings\AppExitControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\Tray\TaskBarControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>

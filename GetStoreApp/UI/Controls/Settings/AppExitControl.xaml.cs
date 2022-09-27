@@ -1,17 +1,17 @@
 ﻿using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers;
-using GetStoreApp.ViewModels.Pages;
+using GetStoreApp.ViewModels.Controls.Settings;
 using Microsoft.UI.Xaml.Controls;
 
-namespace GetStoreApp.Views
+namespace GetStoreApp.UI.Controls.Settings
 {
-    public sealed partial class HomePage : Page
+    public sealed partial class AppExitControl : UserControl
     {
         public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        public HomeViewModel ViewModel { get; } = IOCHelper.GetService<HomeViewModel>();
+        public AppExitViewModel ViewModel { get; } = IOCHelper.GetService<AppExitViewModel>();
 
-        public HomePage()
+        public AppExitControl()
         {
             InitializeComponent();
         }

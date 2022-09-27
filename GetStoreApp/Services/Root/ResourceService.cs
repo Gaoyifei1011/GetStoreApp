@@ -31,6 +31,8 @@ namespace GetStoreApp.Services.Root
 
         public List<StatusBarStateModel> StatusBarStateList { get; } = new List<StatusBarStateModel>();
 
+        public List<AppExitModel> AppExitList { get; } = new List<AppExitModel>();
+
         public List<BackdropModel> BackdropList { get; } = new List<BackdropModel>();
 
         public List<DownloadModeModel> DownloadModeList { get; } = new List<DownloadModeModel>();
@@ -52,6 +54,7 @@ namespace GetStoreApp.Services.Root
             InitializeTypeList();
             InitializeChannelList();
             InitializeStatusBarStateList();
+            InitializeAppExitList();
             InitializeBackdropList();
             InitializeDownloadModeList();
             InitializeHistoryLiteNumList();
@@ -152,6 +155,23 @@ namespace GetStoreApp.Services.Root
                 StateInfoText = GetLocalized("/Home/StatusInfoError"),
                 StatePrRingActValue = false,
                 StatePrRingVisValue = false
+            });
+        }
+
+        /// <summary>
+        /// 初始化应用退出内容列表
+        /// </summary>
+        private void InitializeAppExitList()
+        {
+            AppExitList.Add(new AppExitModel
+            {
+                DisplayName = GetLocalized("/Settings/HideToTray"),
+                InternalName = "HideToTray"
+            });
+            AppExitList.Add(new AppExitModel
+            {
+                DisplayName = GetLocalized("/Settings/CloseApp"),
+                InternalName = "CloseApp"
             });
         }
 

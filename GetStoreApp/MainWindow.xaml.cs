@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Extensions.Window;
+﻿using GetStoreApp.Contracts.Services.Root;
+using GetStoreApp.Extensions.Window;
 using GetStoreApp.Helpers;
 using GetStoreApp.ViewModels.Window;
 using System;
@@ -8,11 +9,14 @@ namespace GetStoreApp
 {
     public sealed partial class MainWindow : DesktopWindow
     {
+        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+
         public MainWindowViewModel ViewModel { get; }
 
         public MainWindow()
         {
             ViewModel = IOCHelper.GetService<MainWindowViewModel>();
+            ExtendsContentIntoTitleBar = true;
             InitializeComponent();
 
             AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/Logo/GetStoreApp.ico"));

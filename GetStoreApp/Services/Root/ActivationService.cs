@@ -4,7 +4,7 @@ using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Helpers;
-using GetStoreApp.Views;
+using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
@@ -35,6 +35,8 @@ namespace GetStoreApp.Services.Root
         private IDownloadDBService DownloadDBService { get; } = IOCHelper.GetService<IDownloadDBService>();
 
         private IDownloadSchedulerService DownloadSchedulerService { get; } = IOCHelper.GetService<IDownloadSchedulerService>();
+
+        private IAppExitService AppExitService { get; } = IOCHelper.GetService<IAppExitService>();
 
         private IBackdropService BackdropService { get; } = IOCHelper.GetService<IBackdropService>();
 
@@ -94,6 +96,7 @@ namespace GetStoreApp.Services.Root
             await DownloadDBService.InitializeDownloadDBAsync();
 
             // 初始化应用配置信息
+            await AppExitService.InitializeAppExitAsync();
             await BackdropService.InitializeBackdropAsync();
             await DownloadOptionsService.InitializeAsync();
             await HistoryLiteNumService.InitializeHistoryLiteNumAsync();
@@ -132,8 +135,6 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private async Task StartupAsync()
         {
-            App.MainWindow.ExtendsContentIntoTitleBar = true;
-
             // 设置应用主题
             await ThemeService.SetAppThemeAsync();
 
@@ -142,9 +143,6 @@ namespace GetStoreApp.Services.Root
 
             // 设置应用置顶状态
             await TopMostService.SetAppTopMostAsync();
-
-            // 设置应用标题名称
-            App.MainWindow.Title = ResourceService.GetLocalized("AppDisplayName");
 
             // 初始化下载监控服务
             await DownloadSchedulerService.InitializeDownloadMonitorAsync();

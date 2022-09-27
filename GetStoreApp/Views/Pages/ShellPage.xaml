@@ -1,9 +1,10 @@
 ﻿<Page
-    x:Class="GetStoreApp.Views.ShellPage"
+    x:Class="GetStoreApp.Views.Pages.ShellPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:helpers="using:GetStoreApp.Helpers"
+    xmlns:tray="using:GetStoreApp.Views.Tray"
     Loaded="{x:Bind ShellLoaded}">
 
     <Grid>
@@ -74,5 +75,6 @@
             <Frame x:Name="NavigationFrame" />
         </NavigationView>
         <controls:InAppNotification x:Name="ShellNotification" Style="{StaticResource InAppNotificationsStyle}" />
+        <tray:TaskBarControl />
     </Grid>
 </Page>
