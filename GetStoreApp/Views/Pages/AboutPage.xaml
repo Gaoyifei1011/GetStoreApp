@@ -10,8 +10,11 @@
 
     <ScrollViewer
         x:Name="AboutScroll"
+        HorizontalScrollBarVisibility="Disabled"
         HorizontalScrollMode="Disabled"
-        VerticalScrollBarVisibility="Auto">
+        VerticalScrollBarVisibility="Auto"
+        VerticalScrollMode="Enabled">
+
         <StackPanel
             Margin="30,15,30,0"
             Padding="0,0,0,40"
@@ -24,7 +27,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock FontSize="26" Text="{x:Bind ResourceService.GetLocalized('/About/Title')}" />
-                <!--<DropDownButton Content="更多操作" />-->
+
             </Grid>
 
             <ac:HeaderControl />

@@ -23,17 +23,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="UI\Dialogs\Home\**" />
-    <EmbeddedResource Remove="UI\Dialogs\Home\**" />
-    <None Remove="UI\Dialogs\Home\**" />
-    <Page Remove="UI\Dialogs\Home\**" />
-
     <Manifest Include="$(ApplicationManifest)" />
 
     <None Remove="Aria2\Config\aria2.conf" />
-
     <None Remove="Aria2\X64\GetStoreAppAria2.exe" />
-
     <None Remove="Aria2\X86\GetStoreAppAria2.exe" />
     <None Remove="Assets\GetStoreApp.png" />
     <None Remove="Assets\Images\CloudflareValidation.png" />
@@ -45,7 +38,6 @@
     <None Remove="Styles\Converter.xaml" />
     <None Remove="Styles\DropDownButton.xaml" />
     <None Remove="Styles\Expander.xaml" />
-    <None Remove="Styles\ExpanderThemeResources.xaml" />
     <None Remove="Styles\FontIcon.xaml" />
     <None Remove="Styles\Grid.xaml" />
     <None Remove="Styles\GridView.xaml" />
@@ -74,6 +66,7 @@
     <None Remove="UI\Controls\Settings\InstallModeControl.xaml" />
     <None Remove="UI\Controls\Settings\LinkFilterControl.xaml" />
     <None Remove="UI\Controls\Settings\NotificationControl.xaml" />
+    <None Remove="UI\Controls\Settings\ThemeControl.xaml" />
     <None Remove="UI\Controls\Settings\TopMostControl.xaml" />
     <None Remove="UI\Controls\Settings\TraceCleanupControl.xaml" />
     <None Remove="UI\Dialogs\ClosingWindowDialog.xaml" />
@@ -91,6 +84,13 @@
     <None Remove="UI\Notifications\ResultContentCopyNotification.xaml" />
     <None Remove="UI\Notifications\ResultIDCopyNotification.xaml" />
     <None Remove="UI\Notifications\ResultLinkCopyNotification.xaml" />
+    <None Remove="Views\Pages\AboutPage.xaml" />
+    <None Remove="Views\Pages\DownloadPage.xaml" />
+    <None Remove="Views\Pages\HistoryPage.xaml" />
+    <None Remove="Views\Pages\HomePage.xaml" />
+    <None Remove="Views\Pages\SettingsPage.xaml" />
+    <None Remove="Views\Pages\ShellPage.xaml" />
+    <None Remove="Views\Pages\WebPage.xaml" />
     <None Remove="Views\Tray\TaskBarControl.xaml" />
     
     <PackageReference Include="Aria2.NET" Version="1.0.5" />
@@ -115,6 +115,9 @@
     <PackageReference Include="WinUIEx" Version="1.8.0" />
 
     <Page Update="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Tray\TaskBarControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
@@ -209,6 +212,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
+    <Page Update="UI\Controls\Settings\AppExitControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="UI\Controls\Settings\BackdropControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -321,44 +327,29 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
 
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     
     <Content Include="Aria2\Config\aria2.conf" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="Aria2\X64\GetStoreAppAria2.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Aria2\X86\GetStoreAppAria2.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="Assets\Logo\NotifyIcon.ico">
+    <Content Update="Assets\Images\CloudflareValidation.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="UI\Controls\Settings\AppExitControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Views\Tray\TaskBarControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Content Update="Assets\Images\DesktopApps.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Logo\GetStoreApp.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Logo\GetStoreApp.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

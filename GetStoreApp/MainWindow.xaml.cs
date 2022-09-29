@@ -2,8 +2,6 @@
 using GetStoreApp.Extensions.Window;
 using GetStoreApp.Helpers;
 using GetStoreApp.ViewModels.Window;
-using System;
-using System.IO;
 
 namespace GetStoreApp
 {
@@ -11,16 +9,13 @@ namespace GetStoreApp
     {
         public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        public MainWindowViewModel ViewModel { get; }
+        public MainWindowViewModel ViewModel { get; } = IOCHelper.GetService<MainWindowViewModel>();
 
         public MainWindow()
         {
-            ViewModel = IOCHelper.GetService<MainWindowViewModel>();
+            Content = null;
             ExtendsContentIntoTitleBar = true;
             InitializeComponent();
-
-            AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/Logo/GetStoreApp.ico"));
-            Content = null;
         }
     }
 }

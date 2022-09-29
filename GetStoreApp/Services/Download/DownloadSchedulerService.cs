@@ -47,7 +47,7 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 先获取当前网络状态信息，然后初始化下载监控任务
         /// </summary>
-        public async Task InitializeDownloadMonitorAsync()
+        public async Task InitializeDownloadSchedulerAsync()
         {
             NetWorkStatus NetStatus = NetWorkHelper.GetNetWorkStatus();
 
@@ -57,7 +57,7 @@ namespace GetStoreApp.Services.Download
                 AppNotificationService.Show("DownloadAborted", "NotDownload");
             }
 
-            DownloadSchedulerTimer.Elapsed += DownloadMonitorTimerElapsed;
+            DownloadSchedulerTimer.Elapsed += DownloadSchedulerTimerElapsed;
             DownloadSchedulerTimer.AutoReset = true;
             DownloadSchedulerTimer.Start();
             await Task.CompletedTask;
@@ -66,10 +66,10 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 关闭下载监控任务
         /// </summary>
-        public async Task CloseDownloadMonitorAsync()
+        public async Task CloseDownloadSchedulerAsync()
         {
             DownloadSchedulerTimer.Stop();
-            DownloadSchedulerTimer.Elapsed -= DownloadMonitorTimerElapsed;
+            DownloadSchedulerTimer.Elapsed -= DownloadSchedulerTimerElapsed;
 
             await Task.CompletedTask;
         }
@@ -363,7 +363,7 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 定时计划添加下载任务，更新下载任务信息
         /// </summary>
-        private async void DownloadMonitorTimerElapsed(object sender, ElapsedEventArgs args)
+        private async void DownloadSchedulerTimerElapsed(object sender, ElapsedEventArgs args)
         {
             await ScheduledGetNetWorkAsync();
 

@@ -87,7 +87,7 @@ namespace GetStoreApp.ViewModels.Tray
             App.MainWindow.Close();
             appTaskbarIcon.Dispose();
             await Aria2Service.CloseAria2Async();
-            await DownloadSchedulerService.CloseDownloadMonitorAsync();
+            await DownloadSchedulerService.CloseDownloadSchedulerAsync();
         }
     }
 }

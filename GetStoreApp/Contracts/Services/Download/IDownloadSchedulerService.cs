@@ -10,9 +10,9 @@ namespace GetStoreApp.Contracts.Services.Download
 
         NotifyList<BackgroundModel> WaitingList { get; }
 
-        Task InitializeDownloadMonitorAsync();
+        Task InitializeDownloadSchedulerAsync();
 
-        Task CloseDownloadMonitorAsync();
+        Task CloseDownloadSchedulerAsync();
 
         Task<bool> AddTaskAsync(BackgroundModel backgroundItem, string operation);
 

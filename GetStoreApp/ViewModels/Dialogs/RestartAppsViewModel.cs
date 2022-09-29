@@ -36,7 +36,7 @@ namespace GetStoreApp.ViewModels.Dialogs
             dialog.Hide();
 
             await Aria2Service.CloseAria2Async();
-            await DownloadSchedulerService.CloseDownloadMonitorAsync();
+            await DownloadSchedulerService.CloseDownloadSchedulerAsync();
 
             // 重启应用
             AppInstance.Restart("");

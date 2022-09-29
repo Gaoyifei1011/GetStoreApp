@@ -145,7 +145,7 @@ namespace GetStoreApp.Services.Root
             await TopMostService.SetAppTopMostAsync();
 
             // 初始化下载监控服务
-            await DownloadSchedulerService.InitializeDownloadMonitorAsync();
+            await DownloadSchedulerService.InitializeDownloadSchedulerAsync();
 
             // 启动Aria2下载服务（该服务会在后台长时间运行）
             await Aria2Service.InitializeAria2Async();

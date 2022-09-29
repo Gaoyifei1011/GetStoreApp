@@ -31,7 +31,7 @@ namespace GetStoreApp.ViewModels.Window
         public async void WindowClosed()
         {
             await Aria2Service.CloseAria2Async();
-            await DownloadSchedulerService.CloseDownloadMonitorAsync();
+            await DownloadSchedulerService.CloseDownloadSchedulerAsync();
 
             WeakReferenceMessenger.Default.Send(new TrayIconDisposeMessage(true));
         }

@@ -11,8 +11,11 @@
 
     <ScrollViewer
         x:Name="SettingsScroll"
+        HorizontalScrollBarVisibility="Disabled"
         HorizontalScrollMode="Disabled"
-        VerticalScrollBarVisibility="Auto">
+        VerticalScrollBarVisibility="Auto"
+        VerticalScrollMode="Enabled">
+
         <StackPanel
             Margin="30,15,30,0"
             Padding="0,0,0,40"
@@ -49,8 +52,6 @@
 
             <sc:TopMostControl />
 
-            <sc:AppExitControl />
-
             <TextBlock
                 FontSize="16"
                 Style="{StaticResource BodyTextBlockStyle}"
@@ -76,6 +77,8 @@
             <sc:InstallModeControl />
 
             <sc:TraceCleanupControl />
+
+            <sc:AppExitControl />
         </StackPanel>
     </ScrollViewer>
 </Page>
