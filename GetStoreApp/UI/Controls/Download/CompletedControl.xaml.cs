@@ -19,7 +19,15 @@ namespace GetStoreApp.UI.Controls.Download
 
         public string OpenItemFolderToolTip => ResourceService.GetLocalized("/Download/OpenItemFolderToolTip");
 
+        public string ViewMore => ResourceService.GetLocalized("/Download/ViewMore");
+
+        public string Delete => ResourceService.GetLocalized("/Download/Delete");
+
+        public string DeleteWithFile => ResourceService.GetLocalized("/Download/DeleteWithFile");
+
         public string DeleteToolTip => ResourceService.GetLocalized("/Download/DeleteToolTip");
+
+        public string DeleteWithFileToolTip => ResourceService.GetLocalized("/Download/DeleteWithFileToolTip");
 
         public CompletedControl()
         {

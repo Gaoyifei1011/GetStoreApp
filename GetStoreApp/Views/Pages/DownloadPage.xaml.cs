@@ -17,7 +17,7 @@ namespace GetStoreApp.Views.Pages
             InitializeComponent();
         }
 
-        public void TeachingTipClick(object sender, RoutedEventArgs args)
+        public void TeachingTipTapped(object sender, RoutedEventArgs args)
         {
             DownloadTeachingTip.IsOpen = true;
         }

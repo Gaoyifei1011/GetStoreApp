@@ -331,7 +331,7 @@
     <value>“使用说明”按钮</value>
   </data>
   <data name="UseInstructionDescription" xml:space="preserve">
-    <value>应用启动后在主页面打开时显示“使用说明”按钮</value>
+    <value>是否在相应的页面上显示快速了解相应功能的使用情况</value>
   </data>
   <data name="UseInstructionOffContent" xml:space="preserve">
     <value>关闭</value>

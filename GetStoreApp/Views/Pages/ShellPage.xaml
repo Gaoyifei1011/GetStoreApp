@@ -74,6 +74,7 @@
 
             <Frame x:Name="NavigationFrame" />
         </NavigationView>
+
         <controls:InAppNotification x:Name="ShellNotification" Style="{StaticResource InAppNotificationsStyle}" />
         <tray:TaskBarControl />
     </Grid>

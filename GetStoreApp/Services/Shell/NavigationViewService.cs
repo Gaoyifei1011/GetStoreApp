@@ -46,7 +46,7 @@ namespace GetStoreApp.Services.Shell
         {
             if (args.IsSettingsInvoked)
             {
-                NavigationService.NavigateTo(typeof(SettingsViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+                NavigationService.NavigateTo(typeof(SettingsViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
             }
             else
             {
@@ -54,7 +54,7 @@ namespace GetStoreApp.Services.Shell
 
                 if (selectedItem.GetValue(NavigationHelper.NavigateToProperty) is string pageKey)
                 {
-                    NavigationService.NavigateTo(pageKey, null, new DrillInNavigationTransitionInfo());
+                    NavigationService.NavigateTo(pageKey, null, new DrillInNavigationTransitionInfo(),false);
                 }
             }
         }

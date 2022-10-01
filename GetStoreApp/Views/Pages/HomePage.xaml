@@ -5,54 +5,66 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="using:GetStoreApp.UI.Controls.Home"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Loaded="{x:Bind HomeLoaded}"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
-    <Grid Margin="30,15,30,0">
+    <Grid Padding="0">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Margin="0,0,0,10">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <TextBlock
-                    Grid.Column="0"
-                    FontSize="26"
-                    Text="{x:Bind ResourceService.GetLocalized('/Home/Title')}" />
-
-                <Button
-                    Grid.Column="1"
-                    VerticalAlignment="Center"
-                    Command="{x:Bind ViewModel.UseInstructionCommand}"
-                    Content="{x:Bind ResourceService.GetLocalized('/Home/UseInstruction')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/UseInstructionToolTip')}"
-                    Visibility="{x:Bind ViewModel.UseInsVisValue, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
-            </Grid>
+        <Grid Grid.Row="0" Margin="30,15,30,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
             <TextBlock
-                Margin="0,0,0,5"
-                Style="{StaticResource TitleDescriptionStyle}"
-                Text="{x:Bind ResourceService.GetLocalized('/Home/TitleDescription1')}" />
+                Grid.Column="0"
+                FontSize="26"
+                Text="{x:Bind ResourceService.GetLocalized('/Home/Title')}" />
 
-            <TextBlock Style="{StaticResource TitleDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/Home/TitleDescription2')}" />
-        </StackPanel>
+            <Button
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                Command="{x:Bind ViewModel.UseInstructionCommand}"
+                Content="{x:Bind ResourceService.GetLocalized('/Home/UseInstruction')}"
+                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/UseInstructionToolTip')}"
+                Visibility="{x:Bind ViewModel.UseInsVisValue, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        </Grid>
 
-        <hc:RequestControl Grid.Row="1" />
+        <ScrollViewer
+            x:Name="HomeScroll"
+            Grid.Row="1"
+            Padding="0,5,0,0"
+            HorizontalScrollBarVisibility="Disabled"
+            HorizontalScrollMode="Disabled"
+            VerticalScrollBarVisibility="Auto"
+            VerticalScrollMode="Enabled">
 
-        <hc:StatusBarControl Grid.Row="2" />
+            <StackPanel
+                Margin="30,0"
+                Padding="0,0,0,30"
+                Spacing="3">
 
-        <hc:HistoryLiteControl Grid.Row="3" />
+                <TextBlock
+                    Margin="0,-3,0,0"
+                    Style="{StaticResource TitleDescriptionStyle}"
+                    Text="{x:Bind ResourceService.GetLocalized('/Home/TitleDescription1')}" />
 
-        <hc:ResultControl Grid.Row="4" />
+                <TextBlock Style="{StaticResource TitleDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/Home/TitleDescription2')}" />
+
+                <hc:RequestControl />
+
+                <hc:StatusBarControl />
+
+                <hc:HistoryLiteControl />
+
+                <hc:ResultControl />
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

@@ -1,6 +1,8 @@
-﻿using GetStoreApp.Contracts.Services.Download;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers;
+using GetStoreApp.Messages;
 using GetStoreApp.UI.Controls.Custom;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
@@ -20,6 +22,8 @@ namespace GetStoreApp
 
         public IAria2Service Aria2Service { get; }
 
+        public IDownloadSchedulerService DownloadSchedulerService { get; }
+
         public static WindowEx MainWindow { get; } = new MainWindow();
 
         // 导航页面后使用到的参数
@@ -33,6 +37,7 @@ namespace GetStoreApp
             ActivationService = IOCHelper.GetService<IActivationService>();
             ResourceService = IOCHelper.GetService<IResourceService>();
             Aria2Service = IOCHelper.GetService<IAria2Service>();
+            DownloadSchedulerService = IOCHelper.GetService<IDownloadSchedulerService>();
 
             UnhandledException += OnUnhandledException;
         }
@@ -53,7 +58,9 @@ namespace GetStoreApp
         {
             args.Handled = true;
 
+            await DownloadSchedulerService.CloseDownloadSchedulerAsync();
             await Aria2Service.CloseAria2Async();
+            WeakReferenceMessenger.Default.Send(new TrayIconDisposeMessage(true));
         }
 
         /// <summary>

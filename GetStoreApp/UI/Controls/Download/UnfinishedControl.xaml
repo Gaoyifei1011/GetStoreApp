@@ -15,14 +15,17 @@
         <converter:CheckBoxToolTipFormatConverter x:Name="CheckBoxToolTipFormatConverter" />
     </UserControl.Resources>
 
-    <Grid>
+    <Grid Padding="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Style="{StaticResource ListViewHeaderGridStyle}">
+        <Grid
+            Grid.Row="0"
+            Margin="30,0"
+            Style="{StaticResource ListViewHeaderGridStyle}">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -118,110 +121,118 @@
 
         <Grid
             Grid.Row="1"
-            Margin="0,0,0,10"
+            Margin="30,3,30,0"
             Style="{StaticResource CardGridStyle}"
             Visibility="{x:Bind ViewModel.UnfinishedDataList.Count, Converter={StaticResource IntToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}">
             <TextBlock
-                Margin="0,10,0,10"
+                Margin="0,10"
                 VerticalAlignment="Center"
                 Text="{x:Bind ResourceService.GetLocalized('/Download/UnfinishedEmptyDescription')}"
                 TextAlignment="Center"
                 ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/UnfinishedEmptyDescription')}" />
         </Grid>
 
-        <ListView
+        <ScrollViewer
             Grid.Row="2"
-            IsItemClickEnabled="{x:Bind ViewModel.IsSelectMode, Mode=OneWay}"
-            ItemContainerStyle="{StaticResource ListPickerFlyoutPresenterItemStyle}"
-            ItemsSource="{x:Bind ViewModel.UnfinishedDataList, Mode=OneWay}"
-            ScrollViewer.VerticalScrollBarVisibility="Auto"
-            ScrollViewer.VerticalScrollMode="Enabled"
-            SelectionMode="None"
-            Visibility="{x:Bind ViewModel.UnfinishedDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
+            Padding="0,3,0,0"
+            HorizontalScrollBarVisibility="Disabled"
+            HorizontalScrollMode="Disabled"
+            VerticalScrollBarVisibility="Auto"
+            VerticalScrollMode="Enabled">
 
-            <i:Interaction.Behaviors>
-                <ic:EventTriggerBehavior EventName="ItemClick">
-                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.ItemClickCommand}" />
-                </ic:EventTriggerBehavior>
-            </i:Interaction.Behaviors>
+            <ListView
+                Padding="30,0,30,30"
+                IsItemClickEnabled="{x:Bind ViewModel.IsSelectMode, Mode=OneWay}"
+                ItemContainerStyle="{StaticResource ListPickerFlyoutPresenterItemStyle}"
+                ItemsSource="{x:Bind ViewModel.UnfinishedDataList, Mode=OneWay}"
+                SelectionMode="None"
+                Visibility="{x:Bind ViewModel.UnfinishedDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
 
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="models:UnfinishedModel">
-                    <Grid Style="{StaticResource CardGridStyle}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
+                <i:Interaction.Behaviors>
+                    <ic:EventTriggerBehavior EventName="ItemClick">
+                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.ItemClickCommand}" />
+                    </ic:EventTriggerBehavior>
+                </i:Interaction.Behaviors>
 
-                        <CheckBox
-                            Grid.Column="0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
-                            IsThreeState="False"
-                            Style="{StaticResource CheckBoxStyle}"
-                            ToolTipService.ToolTip="{x:Bind IsSelected, Converter={StaticResource CheckBoxToolTipFormatConverter}, ConverterParameter=Download, Mode=OneWay}"
-                            Visibility="{Binding ElementName=UnfinishedRoot, Path=ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:UnfinishedModel">
+                        <Grid Style="{StaticResource CardGridStyle}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
 
-                        <Grid
-                            Grid.Column="1"
-                            Margin="0,0,10,0"
-                            VerticalAlignment="Center"
-                            RowSpacing="5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
+                            <CheckBox
+                                Grid.Column="0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
+                                IsThreeState="False"
+                                Style="{StaticResource CheckBoxStyle}"
+                                ToolTipService.ToolTip="{x:Bind IsSelected, Converter={StaticResource CheckBoxToolTipFormatConverter}, ConverterParameter=Download, Mode=OneWay}"
+                                Visibility="{Binding ElementName=UnfinishedRoot, Path=ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
 
-                            <TextBlock
-                                Grid.Row="0"
-                                Style="{StaticResource DownloadItemTextStyle}"
-                                Text="{x:Bind FileName}"
-                                ToolTipService.ToolTip="{x:Bind FileName}" />
+                            <Grid
+                                Grid.Column="1"
+                                Margin="0,0,10,0"
+                                VerticalAlignment="Center"
+                                RowSpacing="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
 
-                            <TextBlock
-                                Grid.Row="1"
-                                Style="{StaticResource SubDownloadItemTextStyle}"
-                                Text="{Binding ElementName=UnfinishedRoot, Path=PauseDownload}"
-                                ToolTipService.ToolTip="{Binding ElementName=UnfinishedRoot, Path=PauseDownload}"
-                                Visibility="{x:Bind DownloadFlag, Converter={StaticResource DownloadFlagConverter}, ConverterParameter=2}" />
-                            <TextBlock
-                                Grid.Row="1"
-                                Foreground="{StaticResource SystemErrorTextColor}"
-                                Style="{StaticResource SubDownloadItemTextStyle}"
-                                Text="{Binding ElementName=UnfinishedRoot, Path=InvalidLink}"
-                                ToolTipService.ToolTip="{Binding ElementName=UnfinishedRoot, Path=InvalidLink}"
-                                Visibility="{x:Bind DownloadFlag, Converter={StaticResource DownloadFlagConverter}, ConverterParameter=0}" />
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Style="{StaticResource DownloadItemTextStyle}"
+                                    Text="{x:Bind FileName}"
+                                    ToolTipService.ToolTip="{x:Bind FileName}" />
+
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Style="{StaticResource SubDownloadItemTextStyle}"
+                                    Text="{Binding ElementName=UnfinishedRoot, Path=PauseDownload}"
+                                    ToolTipService.ToolTip="{Binding ElementName=UnfinishedRoot, Path=PauseDownload}"
+                                    Visibility="{x:Bind DownloadFlag, Converter={StaticResource DownloadFlagConverter}, ConverterParameter=2}" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Foreground="{StaticResource SystemErrorTextColor}"
+                                    Style="{StaticResource SubDownloadItemTextStyle}"
+                                    Text="{Binding ElementName=UnfinishedRoot, Path=InvalidLink}"
+                                    ToolTipService.ToolTip="{Binding ElementName=UnfinishedRoot, Path=InvalidLink}"
+                                    Visibility="{x:Bind DownloadFlag, Converter={StaticResource DownloadFlagConverter}, ConverterParameter=0}" />
+                            </Grid>
+
+                            <ContentControl
+                                Grid.Column="2"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                IsEnabled="{Binding ElementName=UnfinishedRoot, Path=ViewModel.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}">
+
+                                <StackPanel Orientation="Horizontal">
+
+                                    <Button
+                                        Command="{Binding ElementName=UnfinishedRoot, Path=ViewModel.ContinueCommand}"
+                                        CommandParameter="{Binding}"
+                                        Content="&#xE74b;"
+                                        Style="{StaticResource ButtonDownloadStyle}"
+                                        ToolTipService.ToolTip="{Binding ElementName=UnfinishedRoot, Path=ContinueToolTip}"
+                                        Visibility="{x:Bind DownloadFlag, Converter={StaticResource ContinueDownloadCheckConverter}}" />
+
+                                    <Button
+                                        Command="{Binding ElementName=UnfinishedRoot, Path=ViewModel.DeleteCommand}"
+                                        CommandParameter="{Binding}"
+                                        Content="&#xE711;"
+                                        Style="{StaticResource ButtonDownloadStyle}"
+                                        ToolTipService.ToolTip="{Binding ElementName=UnfinishedRoot, Path=DeleteToolTip}" />
+                                </StackPanel>
+                            </ContentControl>
                         </Grid>
-
-                        <StackPanel
-                            Grid.Column="2"
-                            Margin="10,0,0,0"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
-
-                            <Button
-                                Command="{Binding ElementName=UnfinishedRoot, Path=ViewModel.ContinueCommand}"
-                                CommandParameter="{Binding}"
-                                Content="&#xE74b;"
-                                IsEnabled="{Binding ElementName=UnfinishedRoot, Path=ViewModel.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
-                                Style="{StaticResource ButtonDownloadStyle}"
-                                ToolTipService.ToolTip="{Binding ElementName=UnfinishedRoot, Path=ContinueToolTip}"
-                                Visibility="{x:Bind DownloadFlag, Converter={StaticResource ContinueDownloadCheckConverter}}" />
-
-                            <Button
-                                Command="{Binding ElementName=UnfinishedRoot, Path=ViewModel.DeleteCommand}"
-                                CommandParameter="{Binding}"
-                                Content="&#xE711;"
-                                IsEnabled="{Binding ElementName=UnfinishedRoot, Path=ViewModel.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
-                                Style="{StaticResource ButtonDownloadStyle}"
-                                ToolTipService.ToolTip="{Binding ElementName=UnfinishedRoot, Path=DeleteToolTip}" />
-                        </StackPanel>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollViewer>
     </Grid>
 </UserControl>

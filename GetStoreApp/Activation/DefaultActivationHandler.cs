@@ -18,7 +18,7 @@ namespace GetStoreApp.Activation
 
         protected override async Task HandleInternalAsync(LaunchActivatedEventArgs args)
         {
-            NavigationService.NavigateTo(typeof(HomeViewModel).FullName, args.Arguments);
+            NavigationService.NavigateTo(typeof(HomeViewModel).FullName, args.Arguments, null, false);
             await Task.CompletedTask;
         }
     }

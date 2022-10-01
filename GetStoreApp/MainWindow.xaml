@@ -8,7 +8,7 @@
     Title="{x:Bind ResourceService.GetLocalized('AppDisplayName')}"
     MinWidth="1024"
     MinHeight="768"
-    TaskBarIcon="Assets/Logo/GetStoreApp.ico"
     Closed="{x:Bind ViewModel.WindowClosed}"
     Closing="{x:Bind ViewModel.WindowClosing}"
+    TaskBarIcon="Assets/Logo/GetStoreApp.ico"
     mc:Ignorable="d" />

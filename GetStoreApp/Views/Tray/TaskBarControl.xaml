@@ -11,7 +11,8 @@
     IconSource="ms-appx:///Assets/Logo/GetStoreApp.ico"
     IsDoubleTapEnabled="True"
     NoLeftClickDelay="True"
-    ToolTipText="{x:Bind ResourceService.GetLocalized('AppShortDisplayName')}"
+    RequestedTheme="{x:Bind TrayTheme}"
+    ToolTipText="{x:Bind ResourceService.GetLocalized('AppDisplayName')}"
     mc:Ignorable="d">
 
     <notifyicon:TaskbarIcon.ContextFlyout>

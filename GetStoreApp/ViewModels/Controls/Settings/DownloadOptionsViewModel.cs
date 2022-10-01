@@ -55,7 +55,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         public IAsyncRelayCommand DownloadInstructionCommand => new AsyncRelayCommand(async () =>
         {
             App.NavigationArgs = "SettingsHelp";
-            NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+            NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo(),false);
             await Task.CompletedTask;
         });
 

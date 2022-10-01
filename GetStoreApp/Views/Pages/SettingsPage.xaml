@@ -9,76 +9,89 @@
     NavigationCacheMode="Required"
     mc:Ignorable="d">
 
-    <ScrollViewer
-        x:Name="SettingsScroll"
-        HorizontalScrollBarVisibility="Disabled"
-        HorizontalScrollMode="Disabled"
-        VerticalScrollBarVisibility="Auto"
-        VerticalScrollMode="Enabled">
+    <Grid Padding="0">
 
-        <StackPanel
-            Margin="30,15,30,0"
-            Padding="0,0,0,40"
-            Spacing="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" Margin="30,15,30,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+                Grid.Column="0"
+                FontSize="26"
+                Text="{x:Bind ResourceService.GetLocalized('/Settings/Title')}" />
+
+            <Button
+                Grid.Column="1"
+                Command="{x:Bind ViewModel.RestartCommand}"
+                Content="{x:Bind ResourceService.GetLocalized('/Settings/RestartApp')}"
+                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/RestartAppToolTip')}" />
+        </Grid>
+
+        <ScrollViewer
+            x:Name="SettingsScroll"
+            Grid.Row="1"
+            Padding="0,5,0,0"
+            HorizontalScrollBarVisibility="Disabled"
+            HorizontalScrollMode="Disabled"
+            VerticalScrollBarVisibility="Auto"
+            VerticalScrollMode="Enabled">
+
+            <StackPanel
+                Margin="30,0"
+                Padding="0,0,0,30"
+                Spacing="3">
 
                 <TextBlock
-                    Grid.Column="0"
-                    FontSize="26"
-                    Text="{x:Bind ResourceService.GetLocalized('/Settings/Title')}" />
+                    Margin="0,0,0,5"
+                    FontSize="16"
+                    Style="{StaticResource BodyTextBlockStyle}"
+                    Text="{x:Bind ResourceService.GetLocalized('/Settings/Appearance')}" />
 
-                <Button
-                    Grid.Column="1"
-                    Command="{x:Bind ViewModel.RestartCommand}"
-                    Content="{x:Bind ResourceService.GetLocalized('/Settings/RestartApp')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/RestartAppToolTip')}" />
-            </Grid>
+                <sc:ThemeControl />
 
-            <TextBlock
-                FontSize="16"
-                Style="{StaticResource BodyTextBlockStyle}"
-                Text="{x:Bind ResourceService.GetLocalized('/Settings/Appearance')}" />
+                <sc:BackdropControl />
 
-            <sc:ThemeControl />
+                <sc:LauguageControl />
 
-            <sc:BackdropControl />
+                <sc:TopMostControl />
 
-            <sc:LauguageControl />
+                <TextBlock
+                    Margin="0,5"
+                    FontSize="16"
+                    Style="{StaticResource BodyTextBlockStyle}"
+                    Text="{x:Bind ResourceService.GetLocalized('/Settings/General')}" />
 
-            <sc:TopMostControl />
+                <sc:NotificationControl />
 
-            <TextBlock
-                FontSize="16"
-                Style="{StaticResource BodyTextBlockStyle}"
-                Text="{x:Bind ResourceService.GetLocalized('/Settings/General')}" />
+                <sc:UseInstructionControl />
 
-            <sc:NotificationControl />
+                <sc:HistoryLiteConfigControl />
 
-            <sc:UseInstructionControl />
+                <sc:RegionControl />
 
-            <sc:HistoryLiteConfigControl />
+                <sc:LinkFilterControl />
 
-            <sc:RegionControl />
+                <sc:DownloadOptionsControl x:Name="DownloadOptions" />
 
-            <sc:LinkFilterControl />
+                <TextBlock
+                    Margin="0,5"
+                    FontSize="16"
+                    Style="{StaticResource BodyTextBlockStyle}"
+                    Text="{x:Bind ResourceService.GetLocalized('/Settings/Advanced')}" />
 
-            <sc:DownloadOptionsControl x:Name="DownloadOptions" />
+                <sc:InstallModeControl />
 
-            <TextBlock
-                FontSize="16"
-                Style="{StaticResource BodyTextBlockStyle}"
-                Text="{x:Bind ResourceService.GetLocalized('/Settings/Advanced')}" />
+                <sc:TraceCleanupControl />
 
-            <sc:InstallModeControl />
-
-            <sc:TraceCleanupControl />
-
-            <sc:AppExitControl />
-        </StackPanel>
-    </ScrollViewer>
+                <sc:AppExitControl />
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
 </Page>

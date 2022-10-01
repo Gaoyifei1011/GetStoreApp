@@ -276,6 +276,7 @@
     <Style x:Key="ExpanderAboutStyle" TargetType="Expander">
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="IsExpanded" Value="True" />
+        <Setter Property="Padding" Value="16,5,0,5" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
     </Style>
 

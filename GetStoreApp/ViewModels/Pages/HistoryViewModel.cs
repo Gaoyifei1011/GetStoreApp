@@ -273,8 +273,9 @@ namespace GetStoreApp.ViewModels.Pages
         // 填入指定项目的内容
         public IAsyncRelayCommand FillinCommand => new AsyncRelayCommand<HistoryModel>(async (param) =>
         {
+            App.NavigationArgs = "Home";
             WeakReferenceMessenger.Default.Send(new FillinMessage(param));
-            NavigationService.NavigateTo(typeof(HomeViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+            NavigationService.NavigateTo(typeof(HomeViewModel).FullName, null, new DrillInNavigationTransitionInfo(),false);
             await Task.CompletedTask;
         });
 

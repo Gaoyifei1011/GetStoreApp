@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Contracts.Services.Shell;
-using GetStoreApp.Extensions.Delegate;
+using GetStoreApp.Extensions.Event;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.UI.Dialogs;
@@ -30,9 +30,8 @@ namespace GetStoreApp.ViewModels.Window
         /// </summary>
         public async void WindowClosed()
         {
-            await Aria2Service.CloseAria2Async();
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
-
+            await Aria2Service.CloseAria2Async();
             WeakReferenceMessenger.Default.Send(new TrayIconDisposeMessage(true));
         }
 
@@ -59,7 +58,7 @@ namespace GetStoreApp.ViewModels.Window
                     {
                         if (NavigationService.Frame.CurrentSourcePageType != typeof(DownloadPage))
                         {
-                            NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+                            NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(),false);
                         }
                     }
                 }

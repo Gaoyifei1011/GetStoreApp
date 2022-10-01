@@ -404,6 +404,7 @@
                                         </Grid.RenderTransform>
                                         <ContentPresenter
                                             x:Name="LeftHeaderPresenter"
+                                            Margin="30,0,0,0"
                                             HorizontalAlignment="Stretch"
                                             VerticalAlignment="Stretch"
                                             Content="{TemplateBinding LeftHeader}"
@@ -470,6 +471,7 @@
                                         <ContentPresenter
                                             x:Name="RightHeaderPresenter"
                                             Grid.Column="2"
+                                            Margin="0,0,30,0"
                                             HorizontalAlignment="Stretch"
                                             VerticalAlignment="Stretch"
                                             Content="{TemplateBinding RightHeader}"
@@ -618,7 +620,7 @@
         <Setter Property="Foreground" Value="{ThemeResource PivotHeaderItemForegroundUnselected}" />
         <Setter Property="Padding" Value="0,0,24,0" />
         <Setter Property="Height" Value="40" />
-        <Setter Property="Margin" Value="0,0,0,10" />
+        <Setter Property="Margin" Value="0,0,0,5" />
         <Setter Property="VerticalContentAlignment" Value="Top" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="UseSystemFocusVisuals" Value="False" />

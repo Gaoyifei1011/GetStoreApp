@@ -150,32 +150,35 @@
   <data name="ContinueToolTip" xml:space="preserve">
     <value>Continue downloading the current task</value>
   </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="DeleteOptions" xml:space="preserve">
     <value>Delete options</value>
   </data>
   <data name="DeleteOptionsToolTip" xml:space="preserve">
     <value>Click Show Delete Options</value>
   </data>
-  <data name="DeleteRecord" xml:space="preserve">
-    <value>Only delete records</value>
-  </data>
-  <data name="DeleteRecordToolTip" xml:space="preserve">
-    <value>Delete only completed downloads</value>
-  </data>
-  <data name="DeleteRecordWithFile" xml:space="preserve">
-    <value>Delete records (including files)</value>
-  </data>
-  <data name="DeleteRecordWithFileToolTip" xml:space="preserve">
-    <value>Delete the completed download history and the corresponding files</value>
-  </data>
   <data name="DeleteSelected" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="DeleteSelectedToolTip" xml:space="preserve">
-    <value>Deletes the current task</value>
+    <value>Delete only the records of the selected items, not including the files</value>
+  </data>
+  <data name="DeleteSelectedWithFile" xml:space="preserve">
+    <value>Delete (including files)</value>
+  </data>
+  <data name="DeleteSelectedWithFileToolTip" xml:space="preserve">
+    <value>Delete records of selected items and delete local files</value>
   </data>
   <data name="DeleteToolTip" xml:space="preserve">
-    <value>Deletes the current task</value>
+    <value>Deletes only the current record, not including the file</value>
+  </data>
+  <data name="DeleteWithFile" xml:space="preserve">
+    <value>Delete records (including files)</value>
+  </data>
+  <data name="DeleteWithFileToolTip" xml:space="preserve">
+    <value>Local files are deleted when records are deleted</value>
   </data>
   <data name="DownloadDescription" xml:space="preserve">
     <value>Download instructions</value>
@@ -293,6 +296,9 @@
   </data>
   <data name="UnselectedToolTip" xml:space="preserve">
     <value>Not selected</value>
+  </data>
+  <data name="ViewMore" xml:space="preserve">
+    <value>View more</value>
   </data>
   <data name="WaitDownload" xml:space="preserve">
     <value>Waiting for download</value>

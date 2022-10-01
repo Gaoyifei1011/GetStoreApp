@@ -14,6 +14,7 @@
         <Expander.Content>
             <GridView
                 Margin="9,0,0,0"
+                Padding="0"
                 HorizontalAlignment="Stretch"
                 HorizontalContentAlignment="Stretch"
                 ItemContainerStyle="{StaticResource GridViewItemStyle}"
@@ -23,8 +24,8 @@
                 <GridView.ItemTemplate>
                     <DataTemplate>
                         <HyperlinkButton
-                            MinWidth="290"
-                            Padding="5,10,0,10"
+                            MinWidth="270"
+                            Padding="5,8,0,8"
                             HorizontalContentAlignment="Left"
                             Content="{Binding Key}"
                             NavigateUri="{Binding Value}"

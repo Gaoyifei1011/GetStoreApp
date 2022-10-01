@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Contracts.ViewModels;
 using GetStoreApp.Helpers;
@@ -14,14 +15,25 @@ namespace GetStoreApp.ViewModels.Pages
 {
     public class DownloadViewModel : ObservableRecipient, INavigationAware
     {
+        private IUseInstructionService UseInstructionService { get; } = IOCHelper.GetService<IUseInstructionService>();
+
         private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
+
+        private bool _useInsVisValue;
+
+        public bool UseInsVisValue
+        {
+            get { return _useInsVisValue; }
+
+            set { SetProperty(ref _useInsVisValue, value); }
+        }
 
         // 了解更多下载管理说明
         public IAsyncRelayCommand LearnMoreCommand => new AsyncRelayCommand<TeachingTip>(async (param) =>
         {
             App.NavigationArgs = "SettingsHelp";
             param.IsOpen = false;
-            NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+            NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
             await Task.CompletedTask;
         });
 
@@ -30,7 +42,7 @@ namespace GetStoreApp.ViewModels.Pages
         {
             App.NavigationArgs = "DownloadOptions";
             param.IsOpen = false;
-            NavigationService.NavigateTo(typeof(SettingsViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+            NavigationService.NavigateTo(typeof(SettingsViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
             await Task.CompletedTask;
         });
 
@@ -44,6 +56,7 @@ namespace GetStoreApp.ViewModels.Pages
         // 初次加载页面时，开启下载中页面的所有事件，加载下载中页面的数据
         public void OnNavigatedTo(object parameter)
         {
+            UseInsVisValue = UseInstructionService.UseInsVisValue;
             WeakReferenceMessenger.Default.Send(new PivotSelectionMessage(0));
         }
 
@@ -51,6 +64,11 @@ namespace GetStoreApp.ViewModels.Pages
         public void OnNavigatedFrom()
         {
             WeakReferenceMessenger.Default.Send(new PivotSelectionMessage(-1));
+        }
+
+        public DownloadViewModel()
+        {
+            UseInsVisValue = UseInstructionService.UseInsVisValue;
         }
     }
 }

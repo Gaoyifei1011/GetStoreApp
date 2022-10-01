@@ -45,7 +45,7 @@ namespace GetStoreApp.ViewModels.Tray
 
             if (NavigationService.Frame.CurrentSourcePageType != typeof(SettingsPage))
             {
-                NavigationService.NavigateTo(typeof(SettingsViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+                NavigationService.NavigateTo(typeof(SettingsViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
             }
             await Task.CompletedTask;
         });
@@ -68,7 +68,7 @@ namespace GetStoreApp.ViewModels.Tray
                 {
                     if (NavigationService.Frame.CurrentSourcePageType != typeof(DownloadPage))
                     {
-                        NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+                        NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(),false);
                     }
                     return;
                 }
@@ -84,10 +84,10 @@ namespace GetStoreApp.ViewModels.Tray
         /// </summary>
         private async Task CloseApp(TaskbarIcon appTaskbarIcon)
         {
-            App.MainWindow.Close();
             appTaskbarIcon.Dispose();
-            await Aria2Service.CloseAria2Async();
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
+            await Aria2Service.CloseAria2Async();
+            WindowHelper.CloseWindow();
         }
     }
 }

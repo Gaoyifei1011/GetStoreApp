@@ -12,7 +12,7 @@ namespace GetStoreApp.Contracts.Services.Shell
 
         Frame Frame { get; set; }
 
-        bool NavigateTo(string pageKey, object parameter = null, NavigationTransitionInfo infoOverride = null, bool clearNavigation = false);
+        bool NavigateTo(string pageKey, object parameter, NavigationTransitionInfo infoOverride, bool clearNavigation);
 
         bool GoBack();
     }

@@ -1,9 +1,10 @@
-﻿using GetStoreApp.Models.Settings;
+﻿using GetStoreApp.Extensions.Delegate;
+using GetStoreApp.Extensions.Enum;
+using GetStoreApp.Models.Settings;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text;
-using static GetStoreApp.Helpers.SystemGeographicalLocationHelper;
 
 namespace GetStoreApp.Helpers
 {
@@ -16,6 +17,7 @@ namespace GetStoreApp.Helpers
         private static readonly List<int> _geoIds;
         private static readonly EnumGeoInfoProc _callback;
         private static readonly int _lcid;
+        private static readonly int GEOCLASS_NATION = 0x10;
 
         [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         private static extern int GetGeoInfo(int location, SYSGEOTYPE geoType, StringBuilder lpGeoData, int cchData, int langId);

@@ -331,7 +331,7 @@
     <value>Instructions for use button</value>
   </data>
   <data name="UseInstructionDescription" xml:space="preserve">
-    <value>After the app launches, the Instructions button appears when the main page opens</value>
+    <value>Whether to quickly learn about the function on the corresponding page</value>
   </data>
   <data name="UseInstructionOffContent" xml:space="preserve">
     <value>Closed</value>

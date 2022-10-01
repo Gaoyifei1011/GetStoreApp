@@ -35,7 +35,7 @@ namespace GetStoreApp.Helpers
             }
 
             // 将应用窗口设置到前台
-            App.MainWindow.SetForegroundWindow();
+            App.MainWindow.BringToFront();
         }
 
         /// <summary>
@@ -47,6 +47,22 @@ namespace GetStoreApp.Helpers
             {
                 App.MainWindow.Hide();
             }
+        }
+
+        /// <summary>
+        /// 设置应用窗口置顶
+        /// </summary>
+        public static void SetAppTopMost(bool topMostValue)
+        {
+            App.MainWindow.IsAlwaysOnTop = topMostValue;
+        }
+
+        /// <summary>
+        /// 关闭应用窗口
+        /// </summary>
+        public static void CloseWindow()
+        {
+            App.MainWindow.Close();
         }
     }
 }

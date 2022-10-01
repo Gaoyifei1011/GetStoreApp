@@ -47,7 +47,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
         // 查看全部
         public IAsyncRelayCommand ViewAllCommand => new AsyncRelayCommand(async () =>
         {
-            NavigationService.NavigateTo(typeof(HistoryViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+            NavigationService.NavigateTo(typeof(HistoryViewModel).FullName, null, new DrillInNavigationTransitionInfo(),false);
             await Task.CompletedTask;
         });
 

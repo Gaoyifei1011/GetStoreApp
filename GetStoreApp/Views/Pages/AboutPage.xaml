@@ -8,39 +8,63 @@
     Loaded="{x:Bind AboutLoaded}"
     mc:Ignorable="d">
 
-    <ScrollViewer
-        x:Name="AboutScroll"
-        HorizontalScrollBarVisibility="Disabled"
-        HorizontalScrollMode="Disabled"
-        VerticalScrollBarVisibility="Auto"
-        VerticalScrollMode="Enabled">
+    <Grid Padding="0">
 
-        <StackPanel
-            Margin="30,15,30,0"
-            Padding="0,0,0,40"
-            Spacing="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" Margin="30,15,30,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
-                <TextBlock FontSize="26" Text="{x:Bind ResourceService.GetLocalized('/About/Title')}" />
+            <TextBlock
+                Grid.Column="0"
+                FontSize="26"
+                Text="{x:Bind ResourceService.GetLocalized('/About/Title')}" />
 
-            </Grid>
+            <Button Grid.Column="1">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="了解更多" />
+                        <FontIcon
+                            FontFamily="Segoe Fluent Icons"
+                            Glyph="&#xE70D;"
+                            Style="{StaticResource AboutHeaderIconStyle}" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </Grid>
 
-            <ac:HeaderControl />
+        <ScrollViewer
+            x:Name="AboutScroll"
+            Grid.Row="1"
+            Padding="0,5,0,0"
+            HorizontalScrollBarVisibility="Disabled"
+            HorizontalScrollMode="Disabled"
+            VerticalScrollBarVisibility="Auto"
+            VerticalScrollMode="Enabled">
 
-            <ac:IntroductionControl x:Name="Introduction" />
+            <StackPanel
+                Margin="30,0"
+                Padding="0,0,0,30"
+                Spacing="3">
 
-            <ac:ReferenceControl />
+                <ac:HeaderControl />
 
-            <ac:InstructionsControl x:Name="Instructions" />
+                <ac:IntroductionControl x:Name="Introduction" />
 
-            <ac:PrecautionControl />
+                <ac:ReferenceControl />
 
-            <ac:SettingsHelpControl x:Name="SettingsHelp" />
-        </StackPanel>
-    </ScrollViewer>
+                <ac:InstructionsControl x:Name="Instructions" />
+
+                <ac:PrecautionControl />
+
+                <ac:SettingsHelpControl x:Name="SettingsHelp" />
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
 </Page>

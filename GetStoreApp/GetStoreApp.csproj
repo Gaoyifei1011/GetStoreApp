@@ -11,8 +11,8 @@
     <PackageCertificateThumbprint>7F64DB0B0770C29C61E5F8DC60430B3DC390D99F</PackageCertificateThumbprint>
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
     <ApplicationIcon>Assets\Logo\GetStoreApp.ico</ApplicationIcon>
-    <Version>0.5.5.0</Version>
-    <FileVersion>0.5.5.0</FileVersion>
+    <Version>0.5.6.0</Version>
+    <FileVersion>0.5.6.0</FileVersion>
     <Copyright>高怡飞</Copyright>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
@@ -109,7 +109,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.1" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.5" />
-    <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.8" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
     <PackageReference Include="PInvoke.SHCore" Version="0.7.124" />
     <PackageReference Include="System.Management" Version="6.0.0" />
     <PackageReference Include="WinUIEx" Version="1.8.0" />

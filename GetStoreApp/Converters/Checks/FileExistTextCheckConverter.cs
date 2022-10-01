@@ -3,6 +3,7 @@ using GetStoreApp.Helpers;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
 using System;
+using System.IO;
 
 namespace GetStoreApp.Converters.Checks
 {
@@ -21,15 +22,14 @@ namespace GetStoreApp.Converters.Checks
             }
 
             string FilePath = System.Convert.ToString(value);
-            string param = System.Convert.ToString(parameter);
 
-            if (param == "Reverse")
+            if (File.Exists(FilePath))
             {
-                return ResourceService.GetLocalized("/Download/FileNotExist");
+                return ResourceService.GetLocalized("/Download/CompleteDownload");
             }
             else
             {
-                return ResourceService.GetLocalized("/Download/CompleteDownload");
+                return ResourceService.GetLocalized("/Download/FileNotExist");
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.Delegate;
+using GetStoreApp.Extensions.Event;
 using System;
 using System.Runtime.InteropServices;
 using WinUIEx;
@@ -21,8 +22,6 @@ namespace GetStoreApp.Extensions.Window
         {
             get { return _hwnd; }
         }
-
-        private delegate IntPtr WinProc(IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam);
 
         public event EventHandler<WindowClosingEventArgs> Closing;
 

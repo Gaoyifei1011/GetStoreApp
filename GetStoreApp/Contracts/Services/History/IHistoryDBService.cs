@@ -8,7 +8,7 @@ namespace GetStoreApp.Contracts.Services.History
     {
         Task AddAsync(HistoryModel history);
 
-        Task<(List<HistoryModel>, bool, bool)> QueryAllAsync(bool timeSortOrder = false, string typeFilter = "None", string channelFilter = "None");
+        Task<(List<HistoryModel>, bool, bool)> QueryAllAsync(bool timeSortOrder, string typeFilter, string channelFilter);
 
         Task<List<HistoryModel>> QueryAsync(int value);
 

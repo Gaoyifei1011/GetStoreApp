@@ -3,7 +3,6 @@ using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Helpers;
 using System;
 using System.Threading.Tasks;
-using Windows.Win32.Foundation;
 
 namespace GetStoreApp.Services.Settings
 {
@@ -58,17 +57,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         public async Task SetAppTopMostAsync()
         {
-            // 将窗口置顶前首先获取窗口句柄
-            HWND hwnd = (HWND)WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
-
-            if (TopMostValue)
-            {
-                PInvoke.User32.SetWindowPos(hwnd, PInvoke.User32.SpecialWindowHandles.HWND_TOPMOST, 0, 0, 0, 0, PInvoke.User32.SetWindowPosFlags.SWP_NOMOVE | PInvoke.User32.SetWindowPosFlags.SWP_NOSIZE);
-            }
-            else
-            {
-                PInvoke.User32.SetWindowPos(hwnd, PInvoke.User32.SpecialWindowHandles.HWND_NOTOPMOST, 0, 0, 0, 0, PInvoke.User32.SetWindowPosFlags.SWP_NOMOVE | PInvoke.User32.SetWindowPosFlags.SWP_NOSIZE);
-            }
+            WindowHelper.SetAppTopMost(TopMostValue);
 
             await Task.CompletedTask;
         }

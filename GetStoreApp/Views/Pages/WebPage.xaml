@@ -13,72 +13,72 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <Grid>
+            <Grid
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Canvas.ZIndex="0">
+
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <CommandBar
+                <ProgressRing
                     Grid.Column="0"
-                    HorizontalAlignment="Left"
+                    Width="20"
+                    Height="20"
+                    Margin="0,0,5,0"
+                    HorizontalAlignment="Right"
+                    IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
+                    Visibility="{x:Bind ViewModel.IsLoading, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
+                <TextBlock
+                    Grid.Column="1"
                     VerticalAlignment="Center"
-                    Background="Transparent"
-                    DefaultLabelPosition="Right">
-                    <AppBarButton
-                        Command="{x:Bind ViewModel.BrowserBackCommand, Mode=OneWay}"
-                        Icon="Back"
-                        Label="{x:Bind ResourceService.GetLocalized('/Web/Back')}"
-                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/Back')}" />
-                    <AppBarButton
-                        Command="{x:Bind ViewModel.BrowserForwardCommand, Mode=OneWay}"
-                        Icon="Forward"
-                        Label="{x:Bind ResourceService.GetLocalized('/Web/Forward')}"
-                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/Forward')}" />
-                    <AppBarButton
-                        Command="{x:Bind ViewModel.RefreshCommand}"
-                        Icon="Refresh"
-                        Label="{x:Bind ResourceService.GetLocalized('/Web/Refresh')}"
-                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/Refresh')}" />
-                </CommandBar>
-
-                <Grid Grid.Column="1" VerticalAlignment="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <ProgressRing
-                        Grid.Column="0"
-                        Width="20"
-                        Height="20"
-                        HorizontalAlignment="Right"
-                        IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
-                        Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}" />
-                    <TextBlock
-                        Grid.Column="1"
-                        VerticalAlignment="Center"
-                        Text="{x:Bind ResourceService.GetLocalized('/Web/Title')}" />
-                    <TextBlock
-                        Grid.Column="2"
-                        VerticalAlignment="Center"
-                        Text="{x:Bind ResourceService.GetLocalized('/Web/Loading')}"
-                        Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}" />
-                </Grid>
-
-                <CommandBar
+                    Text="{x:Bind ResourceService.GetLocalized('/Web/Title')}" />
+                <TextBlock
                     Grid.Column="2"
                     VerticalAlignment="Center"
-                    Background="Transparent"
-                    DefaultLabelPosition="Right">
-                    <AppBarButton
-                        Command="{x:Bind ViewModel.OpenInBrowserCommand}"
-                        Icon="Globe"
-                        Label="{x:Bind ResourceService.GetLocalized('/Web/OpenWithBrowser')}"
-                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/OpenWithBrowser')}" />
-                </CommandBar>
+                    Text="{x:Bind ResourceService.GetLocalized('/Web/Loading')}"
+                    Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}" />
             </Grid>
+
+            <CommandBar
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Background="Transparent"
+                Canvas.ZIndex="1"
+                DefaultLabelPosition="Right">
+
+                <AppBarButton
+                    Command="{x:Bind ViewModel.BrowserBackCommand, Mode=OneWay}"
+                    Icon="Back"
+                    Label="{x:Bind ResourceService.GetLocalized('/Web/Back')}"
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/Back')}" />
+                <AppBarButton
+                    Command="{x:Bind ViewModel.BrowserForwardCommand, Mode=OneWay}"
+                    Icon="Forward"
+                    Label="{x:Bind ResourceService.GetLocalized('/Web/Forward')}"
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/Forward')}" />
+                <AppBarButton
+                    Command="{x:Bind ViewModel.RefreshCommand}"
+                    Icon="Refresh"
+                    Label="{x:Bind ResourceService.GetLocalized('/Web/Refresh')}"
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/Refresh')}" />
+            </CommandBar>
+
+            <CommandBar
+                VerticalAlignment="Center"
+                Background="Transparent"
+                Canvas.ZIndex="1"
+                DefaultLabelPosition="Right">
+
+                <AppBarButton
+                    Command="{x:Bind ViewModel.OpenInBrowserCommand}"
+                    Icon="Globe"
+                    Label="{x:Bind ResourceService.GetLocalized('/Web/OpenWithBrowser')}"
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/OpenWithBrowser')}" />
+            </CommandBar>
         </Grid>
 
         <WebView2

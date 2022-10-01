@@ -103,7 +103,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         });
 
         // 删除选中的任务
-        public IAsyncRelayCommand DeleteRecordCommand => new AsyncRelayCommand(async () =>
+        public IAsyncRelayCommand DeleteSelectedCommand => new AsyncRelayCommand(async () =>
         {
             List<BackgroundModel> SelectedCompletedDataList = new List<BackgroundModel>();
 
@@ -131,7 +131,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
 
             // 删除时显示删除确认对话框
-            ContentDialogResult result = await new DeletePromptDialog().ShowAsync();
+            ContentDialogResult result = await new DeletePromptDialog("DownloadSelected").ShowAsync();
 
             if (result == ContentDialogResult.Primary)
             {
@@ -157,7 +157,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         });
 
         // 删除选中的任务（包括文件）
-        public IAsyncRelayCommand DeleteRecordWithFileCommand => new AsyncRelayCommand(async () =>
+        public IAsyncRelayCommand DeleteSelectedWithFileCommand => new AsyncRelayCommand(async () =>
         {
             List<BackgroundModel> SelectedCompletedDataList = new List<BackgroundModel>();
 
@@ -186,7 +186,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
 
             // 删除时显示删除确认对话框
-            ContentDialogResult result = await new DeletePromptDialog("DeleteWithFile").ShowAsync();
+            ContentDialogResult result = await new DeletePromptDialog("DeleteWithFileSelected").ShowAsync();
 
             if (result == ContentDialogResult.Primary)
             {
@@ -341,6 +341,41 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     {
                         CompletedDataList.Remove(param);
                     }
+                }
+            }
+        });
+
+        // 删除当前任务
+        public IAsyncRelayCommand DeleteWithFileCommand => new AsyncRelayCommand<CompletedModel>(async (param) =>
+        {
+            if (param is not null)
+            {
+                if (param.IsInstalling == true)
+                {
+                    await new InstallingNotifyDialog().ShowAsync();
+                    return;
+                }
+
+                try
+                {
+                    if (File.Exists(param.FilePath))
+                    {
+                        File.Delete(param.FilePath);
+                    }
+
+                    bool DeleteResult = await DownloadDBService.DeleteAsync(param.DownloadKey);
+
+                    if (DeleteResult)
+                    {
+                        lock (CompletedDataListLock)
+                        {
+                            CompletedDataList.Remove(param);
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    return;
                 }
             }
         });

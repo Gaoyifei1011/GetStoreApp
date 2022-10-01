@@ -43,7 +43,7 @@
 
     <Pivot
         x:Name="DownloadPivot"
-        Margin="30,15,30,0"
+        Margin="0,15,0,0"
         Style="{StaticResource PivotStyle}">
 
         <i:Interaction.Behaviors>
@@ -68,9 +68,8 @@
             <StackPanel VerticalAlignment="Top" Orientation="Horizontal">
                 <Button
                     x:Name="TeachingTipButton"
-                    Margin="0,0,6,0"
-                    Click="{x:Bind TeachingTipClick}"
                     Content="{x:Bind ResourceService.GetLocalized('/Download/DownloadDescription')}"
+                    Tapped="{x:Bind TeachingTipTapped}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/DownloadDescription')}" />
             </StackPanel>
         </Pivot.RightHeader>

@@ -5,14 +5,16 @@
     xmlns:convert="using:GetStoreApp.Converters.Conversions"
     xmlns:format="using:GetStoreApp.Converters.Formats">
 
+    <check:FileExistCheckConverter x:Name="FileExistCheckConverter" />
+    <check:FileExistVisibilityCheckConverter x:Name="FileExistVisibilityCheckConverter" />
     <check:FilterValueCheckConverter x:Name="FilterValueCheckConverter" />
+    <check:InstallFileCheckConverter x:Name="InstallFileCheckConverter" />
     <check:TimeSortValueCheckConverter x:Name="TimeSortValueCheckConverter" />
     <check:ContinueDownloadCheckConverter x:Name="ContinueDownloadCheckConverter" />
 
     <convert:BooleanToOppositeValueConverter x:Name="BooleanToOppositeValueConverter" />
     <convert:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
     <convert:DownloadFlagConverter x:Name="DownloadFlagConverter" />
-    <convert:InstallFileVisibilityConverter x:Name="InstallFileVisibilityConverter" />
     <convert:IntToVisibilityConverter x:Name="IntToVisibilityConverter" />
 
     <format:DownloadSizeFormatConverter x:Name="DownloadSizeFormatConverter" />

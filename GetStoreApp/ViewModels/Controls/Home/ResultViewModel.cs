@@ -255,7 +255,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                     }
                     else if (result == ContentDialogResult.Secondary)
                     {
-                        NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+                        NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(),false);
                     }
                 }
             }
@@ -333,7 +333,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                     }
                     else if (result == ContentDialogResult.Secondary)
                     {
-                        NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+                        NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(),false);
                     }
                 }
                 else

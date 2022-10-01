@@ -1,9 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Root;
+using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.ViewModels.Tray;
 using H.NotifyIcon;
+using Microsoft.UI.Xaml;
+using System;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.Views.Tray
@@ -12,7 +15,11 @@ namespace GetStoreApp.Views.Tray
     {
         public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
+        public IThemeService ThemeService { get; } = IOCHelper.GetService<IThemeService>();
+
         public TaskBarViewModel ViewModel { get; } = IOCHelper.GetService<TaskBarViewModel>();
+
+        public ElementTheme TrayTheme => (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
 
         public TaskBarControl()
         {

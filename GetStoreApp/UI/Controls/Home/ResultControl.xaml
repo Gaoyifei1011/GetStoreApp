@@ -142,8 +142,6 @@
             IsItemClickEnabled="{x:Bind ViewModel.IsSelectMode, Mode=OneWay}"
             ItemContainerStyle="{StaticResource ListViewItemStyle}"
             ItemsSource="{x:Bind ViewModel.ResultDataList, Mode=OneWay}"
-            ScrollViewer.VerticalScrollBarVisibility="Auto"
-            ScrollViewer.VerticalScrollMode="Enabled"
             SelectionMode="None"
             Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
 

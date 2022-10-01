@@ -7,7 +7,6 @@
     mc:Ignorable="d">
 
     <InfoBar
-        Margin="0,0,0,10"
         IsClosable="False"
         IsOpen="True"
         Message="{x:Bind ViewModel.StateInfoText, Mode=OneWay}"

@@ -2,12 +2,12 @@
 using Microsoft.UI.Xaml.Data;
 using System;
 
-namespace GetStoreApp.Converters.Conversions
+namespace GetStoreApp.Converters.Checks
 {
     /// <summary>
-    /// 安装文件按钮显示值转换器
+    /// 安装文件按钮可用值转换器
     /// </summary>
-    public class InstallFileVisibilityConverter : IValueConverter
+    public class InstallFileCheckConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
@@ -23,11 +23,11 @@ namespace GetStoreApp.Converters.Conversions
                 result.EndsWith(".appxbundle", StringComparison.OrdinalIgnoreCase) ||
                 result.EndsWith(".msixbundle", StringComparison.OrdinalIgnoreCase))
             {
-                return Visibility.Visible;
+                return true;
             }
             else
             {
-                return Visibility.Collapsed;
+                return false;
             }
         }
 

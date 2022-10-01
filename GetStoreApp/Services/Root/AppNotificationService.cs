@@ -24,10 +24,6 @@ namespace GetStoreApp.Services.Root
 
         public INotificationService NotificationService { get; } = IOCHelper.GetService<INotificationService>();
 
-        private string InstallTag { get; } = "InstallTag";
-
-        private string InstallGroup { get; } = "InstallGroup";
-
         ~AppNotificationService()
         {
             Unregister();
@@ -61,24 +57,24 @@ namespace GetStoreApp.Services.Root
                     // 根据点击通知获取到的参数来选择相应的操作
                     if (ParseArguments(args.Argument)["AppNotifications"] == "DownloadingNow" && NavigationService.Frame.CurrentSourcePageType != typeof(DownloadPage))
                     {
-                        NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+                        NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(),false);
                     }
 
                     if (ParseArguments(args.Argument)["AppNotifications"] == "NotDownload" && NavigationService.Frame.CurrentSourcePageType != typeof(DownloadPage))
                     {
-                        NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+                        NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
                     }
 
                     if (ParseArguments(args.Argument)["AppNotifications"] == "ViewDownloadPage" && NavigationService.Frame.CurrentSourcePageType != typeof(DownloadPage))
                     {
-                        NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+                        NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
                     }
 
                     if (ParseArguments(args.Argument)["AppNotifications"] == "DownloadCompleted")
                     {
                         if (NavigationService.Frame.CurrentSourcePageType != typeof(DownloadPage))
                         {
-                            NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo());
+                            NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(),false);
                         }
 
                         //App.NavigationArgs = "DownloadCompleted";
