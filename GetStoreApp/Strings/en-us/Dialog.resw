@@ -150,17 +150,20 @@
   <data name="DeleteCancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="DeleteContent" xml:space="preserve">
-    <value>The selected record will be permanently deleted, the operation is irrevocable, please proceed with caution.</value>
-  </data>
   <data name="DeleteContinue" xml:space="preserve">
     <value>Continue</value>
   </data>
+  <data name="DeleteDownload" xml:space="preserve">
+    <value>The selected download records will be permanently deleted, the operation is irrevocable, please proceed with caution.</value>
+  </data>
+  <data name="DeleteDownloadWithFile" xml:space="preserve">
+    <value>The selected download records (including files) will be permanently deleted. This operation cannot be undone. Please exercise caution.</value>
+  </data>
+  <data name="DeleteHistory" xml:space="preserve">
+    <value>The selected history records will be permanently deleted, the operation is irrevocable, please proceed with caution.</value>
+  </data>
   <data name="DeleteTitle" xml:space="preserve">
     <value>Delete record</value>
-  </data>
-  <data name="DeleteWithFileContent" xml:space="preserve">
-    <value>Selected records (including files) are permanently deleted, this is irrevocable, so use caution.</value>
   </data>
   <data name="DesktopAppsContent1" xml:space="preserve">
     <value>Microsoft divides the app into two categories of apps in the latest Microsoft Store, one is the Store app, installing and updating the services that depend on the Store; The other type is the classical desktop application, the installation of this type of application is installed independently, when updating, it is updated inside the application, and the store only provides the download service of the application installation package.</value>
@@ -210,6 +213,12 @@
   <data name="InstallingNotifyTitle" xml:space="preserve">
     <value>App installation prompts</value>
   </data>
+  <data name="License" xml:space="preserve">
+    <value>GetStoreApp License</value>
+  </data>
+  <data name="LicenseCloseWindow" xml:space="preserve">
+    <value>Close window</value>
+  </data>
   <data name="LocalFile" xml:space="preserve">
     <value>Locally created files</value>
   </data>
@@ -244,7 +253,7 @@
     <value>Item selection prompts</value>
   </data>
   <data name="TraceCleanupCancel" xml:space="preserve">
-    <value>Close the window</value>
+    <value>Close window</value>
   </data>
   <data name="TraceCleanupContent" xml:space="preserve">
     <value>Trace clearing includes history records, download records, and files created locally when an application is downloaded. Select the items you want to clean.</value>

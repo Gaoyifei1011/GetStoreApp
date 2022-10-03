@@ -15,6 +15,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -189,6 +190,23 @@ namespace GetStoreApp.ViewModels.Controls.Download
             foreach (DownloadingModel downloadingItem in SelectedDownloadingDataList)
             {
                 bool DeleteResult = await DownloadSchedulerService.DeleteTaskAsync(downloadingItem.DownloadKey, downloadingItem.GID, downloadingItem.DownloadFlag);
+
+                if (DeleteResult)
+                {
+                    // 删除文件
+                    string tempFilePath = downloadingItem.FilePath;
+                    string tempFileAria2Path = string.Format("{0}.{1}", downloadingItem.FilePath, "aria2");
+
+                    if (File.Exists(tempFilePath))
+                    {
+                        File.Delete(tempFilePath);
+                    }
+
+                    if (File.Exists(tempFileAria2Path))
+                    {
+                        File.Delete(tempFileAria2Path);
+                    }
+                }
             }
 
             // 信息更新完毕时，允许其他操作开始执行
@@ -272,6 +290,23 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
 
             bool DeleteResult = await DownloadSchedulerService.DeleteTaskAsync(param.DownloadKey, param.GID, param.DownloadFlag);
+
+            if (DeleteResult)
+            {
+                // 删除文件
+                string tempFilePath = param.FilePath;
+                string tempFileAria2Path = string.Format("{0}.{1}", param.FilePath, "aria2");
+
+                if (File.Exists(tempFilePath))
+                {
+                    File.Delete(tempFilePath);
+                }
+
+                if (File.Exists(tempFileAria2Path))
+                {
+                    File.Delete(tempFileAria2Path);
+                }
+            }
 
             // 信息更新完毕时，允许其他操作开始执行
             lock (IsUpdatingNowLock)

@@ -5,6 +5,7 @@ using GetStoreApp.Contracts.Services.History;
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Contracts.ViewModels;
+using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.History;
@@ -191,7 +192,7 @@ namespace GetStoreApp.ViewModels.Pages
 
             WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
             {
-                NotificationContent = "HistoryCopy",
+                NotificationContent = InAppNotificationContent.HistoryCopy,
                 NotificationValue = new object[] { true, true, SelectedHistoryDataList.Count }
             }));
 
@@ -211,7 +212,7 @@ namespace GetStoreApp.ViewModels.Pages
             };
 
             // 删除时显示删除确认对话框
-            ContentDialogResult result = await new DeletePromptDialog().ShowAsync();
+            ContentDialogResult result = await new DeletePromptDialog(DeletePrompt.History).ShowAsync();
 
             if (result == ContentDialogResult.Primary)
             {
@@ -273,9 +274,9 @@ namespace GetStoreApp.ViewModels.Pages
         // 填入指定项目的内容
         public IAsyncRelayCommand FillinCommand => new AsyncRelayCommand<HistoryModel>(async (param) =>
         {
-            App.NavigationArgs = "Home";
+            App.NavigationArgs = AppNaviagtionArgs.Home;
             WeakReferenceMessenger.Default.Send(new FillinMessage(param));
-            NavigationService.NavigateTo(typeof(HomeViewModel).FullName, null, new DrillInNavigationTransitionInfo(),false);
+            NavigationService.NavigateTo(typeof(HomeViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
             await Task.CompletedTask;
         });
 
@@ -290,7 +291,7 @@ namespace GetStoreApp.ViewModels.Pages
 
             WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
             {
-                NotificationContent = "HistoryCopy",
+                NotificationContent = InAppNotificationContent.HistoryCopy,
                 NotificationValue = new object[] { true, false }
             }));
 

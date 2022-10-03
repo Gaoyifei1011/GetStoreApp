@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Notification;
@@ -34,8 +35,8 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         // 语言设置说明
         public IAsyncRelayCommand LanguageTipCommand => new AsyncRelayCommand(async () =>
         {
-            App.NavigationArgs = "SettingsHelp";
-            NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo(),false);
+            App.NavigationArgs = AppNaviagtionArgs.SettingsHelp;
+            NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
             await Task.CompletedTask;
         });
 
@@ -45,7 +46,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             await LanguageService.SetLanguageAsync(Language);
             WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
             {
-                NotificationContent = "LanguageSettings",
+                NotificationContent = InAppNotificationContent.LanguageSettings,
                 NotificationValue = new object[] { true }
             }));
         });

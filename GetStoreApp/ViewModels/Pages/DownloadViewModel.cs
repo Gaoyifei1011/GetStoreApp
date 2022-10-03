@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Contracts.ViewModels;
+using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using Microsoft.UI.Xaml.Controls;
@@ -31,7 +32,7 @@ namespace GetStoreApp.ViewModels.Pages
         // 了解更多下载管理说明
         public IAsyncRelayCommand LearnMoreCommand => new AsyncRelayCommand<TeachingTip>(async (param) =>
         {
-            App.NavigationArgs = "SettingsHelp";
+            App.NavigationArgs = AppNaviagtionArgs.SettingsHelp;
             param.IsOpen = false;
             NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
             await Task.CompletedTask;
@@ -40,7 +41,7 @@ namespace GetStoreApp.ViewModels.Pages
         // 打开应用“下载设置”
         public IAsyncRelayCommand DownloadSettingsCommand => new AsyncRelayCommand<TeachingTip>(async (param) =>
         {
-            App.NavigationArgs = "DownloadOptions";
+            App.NavigationArgs = AppNaviagtionArgs.DownloadOptions;
             param.IsOpen = false;
             NavigationService.NavigateTo(typeof(SettingsViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
             await Task.CompletedTask;

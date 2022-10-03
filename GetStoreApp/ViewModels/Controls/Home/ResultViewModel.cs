@@ -72,7 +72,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             CopyPasteHelper.CopyToClipBoard(CategoryId);
             WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
             {
-                NotificationContent = "ResultIDCopy",
+                NotificationContent = InAppNotificationContent.ResultIDCopy,
                 NotificationValue = new object[] { true }
             }));
 
@@ -153,7 +153,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
             {
-                NotificationContent = "ResultContentCopy",
+                NotificationContent = InAppNotificationContent.ResultContentCopy,
                 NotificationValue = new object[] { true, true, SelectedResultDataList.Count }
             }));
 
@@ -183,7 +183,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
             {
-                NotificationContent = "ResultLinkCopy",
+                NotificationContent = InAppNotificationContent.ResultLinkCopy,
                 NotificationValue = new object[] { true, true, SelectedResultDataList.Count }
             }));
 
@@ -200,7 +200,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             {
                 WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
                 {
-                    NotificationContent = "NetWorkError",
+                    NotificationContent = InAppNotificationContent.NetWorkError,
                 }));
                 return;
             }
@@ -255,7 +255,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                     }
                     else if (result == ContentDialogResult.Secondary)
                     {
-                        NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(),false);
+                        NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
                     }
                 }
             }
@@ -301,7 +301,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             {
                 WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
                 {
-                    NotificationContent = "NetWorkError",
+                    NotificationContent = InAppNotificationContent.NetWorkError,
                 }));
                 return;
             }
@@ -333,7 +333,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                     }
                     else if (result == ContentDialogResult.Secondary)
                     {
-                        NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(),false);
+                        NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
                     }
                 }
                 else
@@ -356,7 +356,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
             {
-                NotificationContent = "ResultLinkCopy",
+                NotificationContent = InAppNotificationContent.ResultLinkCopy,
                 NotificationValue = new object[] { true, false }
             }));
 
@@ -377,7 +377,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel()
             {
-                NotificationContent = "ResultContentCopy",
+                NotificationContent = InAppNotificationContent.ResultContentCopy,
                 NotificationValue = new object[] { true, false }
             }));
 

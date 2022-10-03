@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.Root;
+using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.UI.Controls.Custom;
@@ -27,7 +28,7 @@ namespace GetStoreApp
         public static WindowEx MainWindow { get; } = new MainWindow();
 
         // 导航页面后使用到的参数
-        public static string NavigationArgs { get; set; } = string.Empty;
+        public static AppNaviagtionArgs NavigationArgs { get; set; } = AppNaviagtionArgs.None;
 
         public App()
         {

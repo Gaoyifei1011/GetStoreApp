@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Contracts.Services.Root;
+using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Helpers;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml;
@@ -24,12 +25,12 @@ namespace GetStoreApp.Views.Pages
             double CurrentScrollPosition = SettingsScroll.VerticalOffset;
             Point CurrentPoint = new Point(0, (int)CurrentScrollPosition);
 
-            if (App.NavigationArgs == DownloadOptions.Name)
+            if (App.NavigationArgs == AppNaviagtionArgs.DownloadOptions)
             {
                 Point TargetPosition = DownloadOptions.TransformToVisual(SettingsScroll).TransformPoint(CurrentPoint);
                 SettingsScroll.ChangeView(null, TargetPosition.Y, null);
 
-                App.NavigationArgs = string.Empty;
+                App.NavigationArgs = AppNaviagtionArgs.None;
             }
         }
     }

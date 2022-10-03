@@ -50,10 +50,7 @@
                 Padding="0,0,0,30"
                 Spacing="3">
 
-                <TextBlock
-                    Margin="0,-3,0,0"
-                    Style="{StaticResource TitleDescriptionStyle}"
-                    Text="{x:Bind ResourceService.GetLocalized('/Home/TitleDescription1')}" />
+                <TextBlock Style="{StaticResource TitleDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/Home/TitleDescription1')}" />
 
                 <TextBlock Style="{StaticResource TitleDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/Home/TitleDescription2')}" />
 

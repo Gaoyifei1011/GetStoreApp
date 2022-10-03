@@ -62,7 +62,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
                 {
-                    NotificationContent = "NetWorkError",
+                    NotificationContent = InAppNotificationContent.NetWorkError,
                 }));
                 return;
             }
@@ -174,13 +174,13 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
             IsSelectMode = false;
 
-            foreach (BackgroundModel item in SelectedUnfinishedDataList)
+            foreach (BackgroundModel backgroundItem in SelectedUnfinishedDataList)
             {
                 try
                 {
                     // 删除文件
-                    string tempFilePath = item.FilePath;
-                    string tempFileAria2Path = string.Format("{0}.{1}", item.FilePath, "Aria2");
+                    string tempFilePath = backgroundItem.FilePath;
+                    string tempFileAria2Path = string.Format("{0}.{1}", backgroundItem.FilePath, "aria2");
 
                     if (File.Exists(tempFilePath))
                     {
@@ -193,7 +193,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     }
 
                     // 删除记录
-                    bool DeleteResult = await DownloadDBService.DeleteAsync(item.DownloadKey);
+                    bool DeleteResult = await DownloadDBService.DeleteAsync(backgroundItem.DownloadKey);
 
                     if (DeleteResult)
                     {
@@ -238,7 +238,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
                 {
-                    NotificationContent = "NetWorkError",
+                    NotificationContent = InAppNotificationContent.NetWorkError,
                 }));
                 return;
             }
@@ -268,14 +268,35 @@ namespace GetStoreApp.ViewModels.Controls.Download
         // 删除当前任务
         public IAsyncRelayCommand DeleteCommand => new AsyncRelayCommand<UnfinishedModel>(async (param) =>
         {
-            bool DeleteResult = await DownloadDBService.DeleteAsync(param.DownloadKey);
-
-            if (DeleteResult)
+            try
             {
-                lock (UnfinishedDataListLock)
+                // 删除文件
+                string tempFilePath = param.FilePath;
+                string tempFileAria2Path = string.Format("{0}.{1}", param.FilePath, "aria2");
+
+                if (File.Exists(tempFilePath))
                 {
-                    UnfinishedDataList.Remove(param);
+                    File.Delete(tempFilePath);
                 }
+
+                if (File.Exists(tempFileAria2Path))
+                {
+                    File.Delete(tempFileAria2Path);
+                }
+
+                bool DeleteResult = await DownloadDBService.DeleteAsync(param.DownloadKey);
+
+                if (DeleteResult)
+                {
+                    lock (UnfinishedDataListLock)
+                    {
+                        UnfinishedDataList.Remove(param);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return;
             }
         });
 

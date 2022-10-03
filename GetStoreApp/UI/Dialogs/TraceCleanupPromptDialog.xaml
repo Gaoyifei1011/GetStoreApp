@@ -44,7 +44,7 @@
                         Width="20"
                         Height="20"
                         Visibility="{x:Bind ViewModel.ClearStateRing, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
-                    <TextBlock VerticalAlignment="Center" Text="{x:Bind ViewModel.ClearStateText, Mode=OneWay}" />
+                    <TextBlock VerticalAlignment="Center" Text="{x:Bind LocalizeClearStateText(ViewModel.ClearStateText), Mode=OneWay}" />
                 </StackPanel>
 
                 <StackPanel

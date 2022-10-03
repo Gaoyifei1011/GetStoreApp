@@ -34,7 +34,7 @@ namespace GetStoreApp.Views.Pages
             WeakReferenceMessenger.Default.UnregisterAll(this);
         }
 
-        public string LocalizedHistoryCountInfo(int count)
+        public string LocalizeHistoryCountInfo(int count)
         {
             if (count == 0)
             {

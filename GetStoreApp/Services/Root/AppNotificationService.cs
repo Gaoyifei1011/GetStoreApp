@@ -57,7 +57,7 @@ namespace GetStoreApp.Services.Root
                     // 根据点击通知获取到的参数来选择相应的操作
                     if (ParseArguments(args.Argument)["AppNotifications"] == "DownloadingNow" && NavigationService.Frame.CurrentSourcePageType != typeof(DownloadPage))
                     {
-                        NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(),false);
+                        NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
                     }
 
                     if (ParseArguments(args.Argument)["AppNotifications"] == "NotDownload" && NavigationService.Frame.CurrentSourcePageType != typeof(DownloadPage))
@@ -74,7 +74,7 @@ namespace GetStoreApp.Services.Root
                     {
                         if (NavigationService.Frame.CurrentSourcePageType != typeof(DownloadPage))
                         {
-                            NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(),false);
+                            NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
                         }
 
                         //App.NavigationArgs = "DownloadCompleted";

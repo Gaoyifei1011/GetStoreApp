@@ -27,12 +27,12 @@ namespace GetStoreApp.UI.Controls.Home
             InitializeComponent();
         }
 
-        public string LocalizedCategoryId(string categoryId)
+        public string LocalizeCategoryId(string categoryId)
         {
             return string.Format(ResourceService.GetLocalized("/Home/categoryId"), categoryId);
         }
 
-        public string LocalizedResultCountInfo(int count)
+        public string LocalizeResultCountInfo(int count)
         {
             return string.Format(ResourceService.GetLocalized("/Home/ResultCountInfo"), count);
         }

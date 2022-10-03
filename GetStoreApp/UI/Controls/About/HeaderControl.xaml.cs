@@ -16,7 +16,7 @@ namespace GetStoreApp.UI.Controls.About
             InitializeComponent();
         }
 
-        private string LocalizedAppVersion(string appVersion)
+        private string LocalizeAppVersion(string appVersion)
         {
             return string.Format(ResourceService.GetLocalized("/About/AppVersion"), appVersion);
         }

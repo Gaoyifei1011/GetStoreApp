@@ -54,7 +54,7 @@ namespace GetStoreApp.Services.Shell
 
                 if (selectedItem.GetValue(NavigationHelper.NavigateToProperty) is string pageKey)
                 {
-                    NavigationService.NavigateTo(pageKey, null, new DrillInNavigationTransitionInfo(),false);
+                    NavigationService.NavigateTo(pageKey, null, new DrillInNavigationTransitionInfo(), false);
                 }
             }
         }

@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Contracts.ViewModels;
+using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Helpers;
 using Microsoft.UI.Xaml.Media.Animation;
 using System.Threading.Tasks;
@@ -27,8 +28,8 @@ namespace GetStoreApp.ViewModels.Pages
         // 了解应用具体的使用说明
         public IAsyncRelayCommand UseInstructionCommand => new AsyncRelayCommand(async () =>
         {
-            App.NavigationArgs = "Instructions";
-            NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo(),false);
+            App.NavigationArgs = AppNaviagtionArgs.Instructions;
+            NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
             await Task.CompletedTask;
         });
 

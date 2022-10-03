@@ -68,7 +68,7 @@ namespace GetStoreApp.ViewModels.Tray
                 {
                     if (NavigationService.Frame.CurrentSourcePageType != typeof(DownloadPage))
                     {
-                        NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(),false);
+                        NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
                     }
                     return;
                 }

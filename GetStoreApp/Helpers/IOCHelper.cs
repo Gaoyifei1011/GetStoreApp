@@ -175,6 +175,8 @@ namespace GetStoreApp.Helpers
                 services.AddTransient<UseInstructionViewModel>();
 
                 // 对话框（MVVM）
+                services.AddTransient<LicenseDialog>();
+                services.AddTransient<LicenseViewModel>();
                 services.AddTransient<RestartAppsDialog>();
                 services.AddTransient<RestartAppsViewModel>();
                 services.AddTransient<TraceCleanupPromptDialog>();

@@ -13,10 +13,41 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <Grid
-                HorizontalAlignment="Center"
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <CommandBar
+                Grid.Column="0"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                Canvas.ZIndex="0">
+                Background="Transparent"
+                DefaultLabelPosition="Right">
+
+                <AppBarButton
+                    Command="{x:Bind ViewModel.BrowserBackCommand, Mode=OneWay}"
+                    Icon="Back"
+                    Label="{x:Bind ResourceService.GetLocalized('/Web/Back')}"
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/Back')}" />
+                <AppBarButton
+                    Command="{x:Bind ViewModel.BrowserForwardCommand, Mode=OneWay}"
+                    Icon="Forward"
+                    Label="{x:Bind ResourceService.GetLocalized('/Web/Forward')}"
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/Forward')}" />
+                <AppBarButton
+                    Command="{x:Bind ViewModel.RefreshCommand}"
+                    Icon="Refresh"
+                    Label="{x:Bind ResourceService.GetLocalized('/Web/Refresh')}"
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/Refresh')}" />
+            </CommandBar>
+
+            <Grid
+                Grid.Column="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -44,33 +75,10 @@
             </Grid>
 
             <CommandBar
-                HorizontalAlignment="Left"
+                Grid.Column="2"
+                HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 Background="Transparent"
-                Canvas.ZIndex="1"
-                DefaultLabelPosition="Right">
-
-                <AppBarButton
-                    Command="{x:Bind ViewModel.BrowserBackCommand, Mode=OneWay}"
-                    Icon="Back"
-                    Label="{x:Bind ResourceService.GetLocalized('/Web/Back')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/Back')}" />
-                <AppBarButton
-                    Command="{x:Bind ViewModel.BrowserForwardCommand, Mode=OneWay}"
-                    Icon="Forward"
-                    Label="{x:Bind ResourceService.GetLocalized('/Web/Forward')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/Forward')}" />
-                <AppBarButton
-                    Command="{x:Bind ViewModel.RefreshCommand}"
-                    Icon="Refresh"
-                    Label="{x:Bind ResourceService.GetLocalized('/Web/Refresh')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/Refresh')}" />
-            </CommandBar>
-
-            <CommandBar
-                VerticalAlignment="Center"
-                Background="Transparent"
-                Canvas.ZIndex="1"
                 DefaultLabelPosition="Right">
 
                 <AppBarButton

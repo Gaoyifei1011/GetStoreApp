@@ -52,6 +52,11 @@
 
     <Style BasedOn="{StaticResource DefaultHyperlinkButtonStyle}" TargetType="HyperlinkButton" />
 
+    <Style x:Key="AboutHyperlinkButtonStyle" TargetType="HyperlinkButton">
+        <Setter Property="Margin" Value="-5,0,10,0" />
+        <Setter Property="Padding" Value="5" />
+    </Style>
+
     <Style x:Key="HyperlinkButtonStyle" TargetType="HyperlinkButton">
         <Setter Property="Background" Value="{ThemeResource HyperlinkButtonBackground}" />
         <Setter Property="Foreground" Value="{ThemeResource HyperlinkButtonForeground}" />

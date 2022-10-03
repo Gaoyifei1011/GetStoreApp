@@ -16,10 +16,9 @@
                 <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/BackdropDescription')}" />
 
                 <HyperlinkButton
-                    Margin="-5,0,10,0"
-                    Padding="5"
                     Command="{x:Bind ViewModel.SystemInformationCommand}"
                     Content="{x:Bind ResourceService.GetLocalized('/About/SystemInformation')}"
+                    Style="{StaticResource AboutHyperlinkButtonStyle}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/About/SystemInformation')}" />
                 <MenuFlyoutSeparator Margin="0,0,0,8" />
 
@@ -27,10 +26,9 @@
                 <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/LanguageDescription')}" />
 
                 <HyperlinkButton
-                    Margin="-5,0,10,0"
-                    Padding="5"
                     Command="{x:Bind ViewModel.AppInformationCommand}"
                     Content="{x:Bind ResourceService.GetLocalized('/About/AppInformation')}"
+                    Style="{StaticResource AboutHyperlinkButtonStyle}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/About/AppInformation')}" />
                 <MenuFlyoutSeparator Margin="0,0,0,8" />
 
@@ -40,17 +38,15 @@
 
                 <StackPanel Orientation="Horizontal">
                     <HyperlinkButton
-                        Margin="-5,0,10,0"
-                        Padding="5"
                         Command="{x:Bind ViewModel.StartsWithECommand}"
                         Content="{x:Bind ResourceService.GetLocalized('/About/StartsWithEButton')}"
+                        Style="{StaticResource AboutHyperlinkButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/About/StartsWithEButton')}" />
 
                     <HyperlinkButton
-                        Margin="-5,0,0,0"
-                        Padding="5"
                         Command="{x:Bind ViewModel.BlockMapCommand}"
                         Content="{x:Bind ResourceService.GetLocalized('/About/BlockMapButton')}"
+                        Style="{StaticResource AboutHyperlinkButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/About/BlockMapButton')}" />
                 </StackPanel>
 

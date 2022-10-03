@@ -22,7 +22,7 @@ namespace GetStoreApp.UI.Controls.Download
             InitializeComponent();
         }
 
-        public string LocalizedDownloadingCountInfo(int count)
+        public string LocalizeDownloadingCountInfo(int count)
         {
             if (count == 0)
             {

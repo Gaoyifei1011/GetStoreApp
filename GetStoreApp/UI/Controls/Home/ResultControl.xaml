@@ -48,8 +48,8 @@
                 Grid.Column="3"
                 VerticalAlignment="Center"
                 Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
-                <TextBlock Text="{x:Bind LocalizedCategoryId(ViewModel.CategoryId), Mode=OneWay}" ToolTipService.ToolTip="{x:Bind ViewModel.CategoryId, Mode=OneWay}" />
-                <TextBlock Text="{x:Bind LocalizedResultCountInfo(ViewModel.ResultDataList.Count), Mode=OneWay}" ToolTipService.ToolTip="{x:Bind LocalizedResultCountInfo(ViewModel.ResultDataList.Count), Mode=OneWay}" />
+                <TextBlock Text="{x:Bind LocalizeCategoryId(ViewModel.CategoryId), Mode=OneWay}" ToolTipService.ToolTip="{x:Bind ViewModel.CategoryId, Mode=OneWay}" />
+                <TextBlock Text="{x:Bind LocalizeResultCountInfo(ViewModel.ResultDataList.Count), Mode=OneWay}" ToolTipService.ToolTip="{x:Bind LocalizeResultCountInfo(ViewModel.ResultDataList.Count), Mode=OneWay}" />
             </StackPanel>
 
             <TextBlock

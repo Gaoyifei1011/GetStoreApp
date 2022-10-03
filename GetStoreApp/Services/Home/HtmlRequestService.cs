@@ -16,14 +16,14 @@ namespace GetStoreApp.Services.Home
 
         private RequestModel HttpRequestResult;
 
-        // 数据的请求状态，0是正常状态，1是网络异常（WebExpection），2是超时异常（TimeOutExpection），3是其他异常（默认值）
+        // 数据的请求状态，0是正常状态，1是网络异常（WebException），2是超时异常（TimeOutException），3是其他异常（默认值）
         private int RequestId = 3;
 
         private string RequestStatusCode = string.Empty;
 
         private string RequestContent = string.Empty;
 
-        private string RequestExpectionContent = string.Empty;
+        private string RequestExceptionContent = string.Empty;
 
         public async Task<RequestModel> HttpRequestAsync(string content)
         {
@@ -65,20 +65,20 @@ namespace GetStoreApp.Services.Home
             {
                 RequestId = 1;
                 RequestStatusCode = Convert.ToString(httpRequestException.StatusCode);
-                RequestExpectionContent = httpRequestException.Message;
+                RequestExceptionContent = httpRequestException.Message;
             }
 
             // 捕捉因访问超时引发的异常
-            catch (TaskCanceledException taskCanceledExpection)
+            catch (TaskCanceledException taskCanceledException)
             {
                 RequestId = 2;
-                RequestExpectionContent = taskCanceledExpection.Message;
+                RequestExceptionContent = taskCanceledException.Message;
             }
 
             // 其他未知异常
-            catch (Exception expection)
+            catch (Exception e)
             {
-                RequestExpectionContent = expection.Message;
+                RequestExceptionContent = e.Message;
             }
             finally
             {
@@ -87,7 +87,7 @@ namespace GetStoreApp.Services.Home
                     RequestId = RequestId,
                     RequestStatusCode = RequestStatusCode,
                     RequestContent = RequestContent,
-                    RequestExpectionContent = RequestExpectionContent
+                    RequestExceptionContent = RequestExceptionContent
                 };
             }
 

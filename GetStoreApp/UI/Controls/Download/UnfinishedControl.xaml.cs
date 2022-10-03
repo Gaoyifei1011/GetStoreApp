@@ -24,7 +24,7 @@ namespace GetStoreApp.UI.Controls.Download
             InitializeComponent();
         }
 
-        public string LocalizedUnfinishedCountInfo(int count)
+        public string LocalizeUnfinishedCountInfo(int count)
         {
             if (count == 0)
             {

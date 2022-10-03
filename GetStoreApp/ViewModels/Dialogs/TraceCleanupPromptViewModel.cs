@@ -17,8 +17,6 @@ namespace GetStoreApp.ViewModels.Dialogs
 {
     public class TraceCleanupPromptViewModel : ObservableRecipient
     {
-        private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
-
         private IHistoryDBService HistoryDBService { get; } = IOCHelper.GetService<IHistoryDBService>();
 
         private IDownloadDBService DownloadDBService { get; } = IOCHelper.GetService<IDownloadDBService>();
@@ -152,7 +150,7 @@ namespace GetStoreApp.ViewModels.Dialogs
             IsCleaning = false;
             ClearState = true;
             ClearStateRing = true;
-            ClearStateText = ResourceService.GetLocalized("/Dialog/CleaningNow");
+            ClearStateText = "CleaningNow";
             LocalFileCleanErrorVisable = false;
             HistoryCleanErrorVisable = false;
             DownloadCleanErrorVisable = false;
@@ -168,7 +166,7 @@ namespace GetStoreApp.ViewModels.Dialogs
             // 成功清理
             if (CleanResult.Item1 && CleanResult.Item2 && CleanResult.Item3)
             {
-                ClearStateText = ResourceService.GetLocalized("/Dialog/CleanSuccessfully");
+                ClearStateText = "CleanSuccessfully";
 
                 // 发送消息，更新UI界面
                 WeakReferenceMessenger.Default.Send(new HistoryMessage(true));
@@ -177,7 +175,7 @@ namespace GetStoreApp.ViewModels.Dialogs
             // 清理失败，显示清理异常错误信息
             else
             {
-                ClearStateText = ResourceService.GetLocalized("/Dialog/CleanFailed");
+                ClearStateText = "CleanFailed";
 
                 LocalFileCleanErrorVisable = CleanResult.Item1 == false;
 

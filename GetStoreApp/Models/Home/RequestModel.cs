@@ -47,14 +47,14 @@ namespace GetStoreApp.Models.Home
         /// <summary>
         /// 异常网页请求返回的信息
         /// </summary>
-        public string RequestExpectionContent
+        public string RequestExceptionContent
         {
-            get { return (string)GetValue(RequestExpectionContentProperty); }
-            set { SetValue(RequestExpectionContentProperty, value); }
+            get { return (string)GetValue(RequestExceptionContentProperty); }
+            set { SetValue(RequestExceptionContentProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for RequestExpectionContent.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty RequestExpectionContentProperty =
-            DependencyProperty.Register("RequestExpectionContent", typeof(string), typeof(RequestModel), new PropertyMetadata(string.Empty));
+        // Using a DependencyProperty as the backing store for RequestExceptionContent.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty RequestExceptionContentProperty =
+            DependencyProperty.Register("RequestExceptionContent", typeof(string), typeof(RequestModel), new PropertyMetadata(string.Empty));
     }
 }

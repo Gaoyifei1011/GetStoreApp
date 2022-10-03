@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Helpers;
 using GetStoreApp.Models.Settings;
 using GetStoreApp.ViewModels.Pages;
@@ -32,8 +33,8 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         // 应用安装方式说明
         public IAsyncRelayCommand InstallModeTipCommand => new AsyncRelayCommand(async () =>
         {
-            App.NavigationArgs = "SettingsHelp";
-            NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo(),false);
+            App.NavigationArgs = AppNaviagtionArgs.SettingsHelp;
+            NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
             await Task.CompletedTask;
         });
 

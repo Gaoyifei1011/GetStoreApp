@@ -31,6 +31,7 @@
     <None Remove="Assets\GetStoreApp.png" />
     <None Remove="Assets\Images\CloudflareValidation.png" />
     <None Remove="Assets\Logo\GetStoreApp.png" />
+    <None Remove="LICENSE" />
     <None Remove="MainWindow.xaml" />
     <None Remove="Styles\Button.xaml" />
     <None Remove="Styles\Checkbox.xaml" />
@@ -75,6 +76,7 @@
     <None Remove="UI\Dialogs\DesktopAppsDialog.xaml" />
     <None Remove="UI\Dialogs\DownloadNotifyDialog.xaml" />
     <None Remove="UI\Dialogs\InstallingNotifyDialog.xaml" />
+    <None Remove="UI\Dialogs\LicenseDialog.xaml" />
     <None Remove="UI\Dialogs\RestartAppsDialog.xaml" />
     <None Remove="UI\Dialogs\SelectEmptyPromptDialog.xaml" />
     <None Remove="UI\Dialogs\TraceCleanupPromptDialog.xaml" />
@@ -108,7 +110,9 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.1" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.5" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.5">
+      <TreatAsUsed>true</TreatAsUsed>
+    </PackageReference>
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
     <PackageReference Include="PInvoke.SHCore" Version="0.7.124" />
     <PackageReference Include="System.Management" Version="6.0.0" />
@@ -270,6 +274,9 @@
     <Page Update="UI\Dialogs\InstallingNotifyDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Update="UI\Dialogs\LicenseDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="UI\Dialogs\RestartAppsDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -337,6 +344,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Aria2\X86\GetStoreAppAria2.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="LICENSE">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="Assets\Images\CloudflareValidation.png">

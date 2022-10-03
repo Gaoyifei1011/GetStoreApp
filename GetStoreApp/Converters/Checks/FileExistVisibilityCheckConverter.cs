@@ -33,7 +33,7 @@ namespace GetStoreApp.Converters.Checks
             }
             else
             {
-                if(File.Exists(FilePath))
+                if (File.Exists(FilePath))
                 {
                     return Visibility.Visible;
                 }

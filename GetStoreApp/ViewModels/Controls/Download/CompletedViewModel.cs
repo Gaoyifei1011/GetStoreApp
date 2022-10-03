@@ -5,6 +5,7 @@ using CommunityToolkit.WinUI;
 using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Extensions.Event;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
@@ -131,7 +132,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
 
             // 删除时显示删除确认对话框
-            ContentDialogResult result = await new DeletePromptDialog("DownloadSelected").ShowAsync();
+            ContentDialogResult result = await new DeletePromptDialog(DeletePrompt.Download).ShowAsync();
 
             if (result == ContentDialogResult.Primary)
             {
@@ -186,7 +187,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
 
             // 删除时显示删除确认对话框
-            ContentDialogResult result = await new DeletePromptDialog("DeleteWithFileSelected").ShowAsync();
+            ContentDialogResult result = await new DeletePromptDialog(DeletePrompt.DownloadWithFile).ShowAsync();
 
             if (result == ContentDialogResult.Primary)
             {

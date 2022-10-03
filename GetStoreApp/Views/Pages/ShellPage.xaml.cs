@@ -2,6 +2,7 @@
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.UI.Notifications;
@@ -87,12 +88,12 @@ namespace GetStoreApp.Views.Pages
                 {
                     switch (inAppNotificationMessage.Value.NotificationContent)
                     {
-                        case "NetWorkError": ShellNotification.Show(new NetWorkErrorNotification(), NotificationDuration); break;
-                        case "HistoryCopy": ShellNotification.Show(new HistoryCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
-                        case "ResultLinkCopy": ShellNotification.Show(new ResultLinkCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
-                        case "ResultIDCopy": ShellNotification.Show(new ResultIDCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
-                        case "ResultContentCopy": ShellNotification.Show(new ResultContentCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
-                        case "LanguageSettings": ShellNotification.Show(new LanguageChangeNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
+                        case InAppNotificationContent.NetWorkError: ShellNotification.Show(new NetWorkErrorNotification(), NotificationDuration); break;
+                        case InAppNotificationContent.HistoryCopy: ShellNotification.Show(new HistoryCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
+                        case InAppNotificationContent.ResultLinkCopy: ShellNotification.Show(new ResultLinkCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
+                        case InAppNotificationContent.ResultIDCopy: ShellNotification.Show(new ResultIDCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
+                        case InAppNotificationContent.ResultContentCopy: ShellNotification.Show(new ResultContentCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
+                        case InAppNotificationContent.LanguageSettings: ShellNotification.Show(new LanguageChangeNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
                         default: break;
                     };
                 }

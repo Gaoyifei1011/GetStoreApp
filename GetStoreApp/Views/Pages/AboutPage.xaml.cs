@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Contracts.Services.Root;
+using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Helpers;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml;
@@ -24,20 +25,25 @@ namespace GetStoreApp.Views.Pages
             double CurrentScrollPosition = AboutScroll.VerticalOffset;
             Point CurrentPoint = new Point(0, (int)CurrentScrollPosition);
 
-            if (App.NavigationArgs == Instructions.Name)
+            switch (App.NavigationArgs)
             {
-                Point TargetPosition = Instructions.TransformToVisual(AboutScroll).TransformPoint(CurrentPoint);
-                AboutScroll.ChangeView(null, TargetPosition.Y, null);
-
-                App.NavigationArgs = string.Empty;
+                case AppNaviagtionArgs.Instructions:
+                    {
+                        Point TargetPosition = Instructions.TransformToVisual(AboutScroll).TransformPoint(CurrentPoint);
+                        AboutScroll.ChangeView(null, TargetPosition.Y, null);
+                        break;
+                    }
+                case AppNaviagtionArgs.SettingsHelp:
+                    {
+                        Point TargetPosition = SettingsHelp.TransformToVisual(AboutScroll).TransformPoint(CurrentPoint);
+                        AboutScroll.ChangeView(null, TargetPosition.Y, null);
+                        break;
+                    }
+                default:
+                    break;
             }
-            else if (App.NavigationArgs == SettingsHelp.Name)
-            {
-                Point TargetPosition = SettingsHelp.TransformToVisual(AboutScroll).TransformPoint(CurrentPoint);
-                AboutScroll.ChangeView(null, TargetPosition.Y, null);
 
-                App.NavigationArgs = string.Empty;
-            }
+            App.NavigationArgs = AppNaviagtionArgs.None;
         }
     }
 }

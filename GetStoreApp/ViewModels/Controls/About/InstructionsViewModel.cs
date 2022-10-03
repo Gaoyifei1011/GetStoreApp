@@ -7,6 +7,18 @@ namespace GetStoreApp.ViewModels.Controls.About
 {
     public class InstructionsViewModel : ObservableRecipient
     {
+        // 了解字体图标库
+        public IAsyncRelayCommand AcknowledgeIconCommand => new AsyncRelayCommand(async () =>
+        {
+            await Windows.System.Launcher.LaunchUriAsync(new Uri("https://learn.microsoft.com/zh-cn/windows/apps/design/downloads/#fonts"));
+        });
+
+        // 下载字体图标库
+        public IAsyncRelayCommand InstallIconCommand => new AsyncRelayCommand(async () =>
+        {
+            await Windows.System.Launcher.LaunchUriAsync(new Uri("https://aka.ms/SegoeFluentIcons"));
+        });
+
         // 检查网络
         public IAsyncRelayCommand CheckNetWorkCommand => new AsyncRelayCommand(async () =>
         {

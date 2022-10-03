@@ -70,7 +70,8 @@
                     x:Name="TeachingTipButton"
                     Content="{x:Bind ResourceService.GetLocalized('/Download/DownloadDescription')}"
                     Tapped="{x:Bind TeachingTipTapped}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/DownloadDescription')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/DownloadDescription')}"
+                    Visibility="{x:Bind ViewModel.UseInsVisValue, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
             </StackPanel>
         </Pivot.RightHeader>
     </Pivot>

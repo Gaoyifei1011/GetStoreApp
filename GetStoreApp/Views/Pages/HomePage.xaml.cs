@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Contracts.Services.Root;
+using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Helpers;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml;
@@ -20,10 +21,10 @@ namespace GetStoreApp.Views.Pages
         // 页面加载完成后如果有具体的要求，将页面滚动到指定位置
         public void HomeLoaded(object sender, RoutedEventArgs args)
         {
-            if (App.NavigationArgs == "Home")
+            if (App.NavigationArgs == AppNaviagtionArgs.Home)
             {
                 HomeScroll.ChangeView(null, 0, null);
-                App.NavigationArgs = string.Empty;
+                App.NavigationArgs = AppNaviagtionArgs.None;
             }
         }
     }

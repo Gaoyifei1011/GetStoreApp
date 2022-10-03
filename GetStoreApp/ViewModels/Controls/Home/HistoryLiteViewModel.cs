@@ -5,6 +5,7 @@ using GetStoreApp.Contracts.Services.History;
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.History;
@@ -47,7 +48,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
         // 查看全部
         public IAsyncRelayCommand ViewAllCommand => new AsyncRelayCommand(async () =>
         {
-            NavigationService.NavigateTo(typeof(HistoryViewModel).FullName, null, new DrillInNavigationTransitionInfo(),false);
+            NavigationService.NavigateTo(typeof(HistoryViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
             await Task.CompletedTask;
         });
 
@@ -62,7 +63,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
             {
-                NotificationContent = "HistoryCopy",
+                NotificationContent = InAppNotificationContent.HistoryCopy,
                 NotificationValue = new object[] { true, false }
             }));
 

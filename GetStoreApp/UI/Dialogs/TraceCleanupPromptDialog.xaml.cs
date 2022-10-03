@@ -45,5 +45,10 @@ namespace GetStoreApp.UI.Dialogs
                 return false;
             }
         }
+
+        public string LocalizeClearStateText(string clearStateText)
+        {
+            return ResourceService.GetLocalized(string.Format("/Dialog/{0}", clearStateText));
+        }
     }
 }

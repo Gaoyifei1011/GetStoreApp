@@ -26,17 +26,14 @@
                 FontSize="26"
                 Text="{x:Bind ResourceService.GetLocalized('/About/Title')}" />
 
-            <Button Grid.Column="1">
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="了解更多" />
-                        <FontIcon
-                            FontFamily="Segoe Fluent Icons"
-                            Glyph="&#xE70D;"
-                            Style="{StaticResource AboutHeaderIconStyle}" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>
+            <DropDownButton Grid.Column="1" Content="{x:Bind ResourceService.GetLocalized('/About/Others')}">
+                <DropDownButton.Flyout>
+                    <MenuFlyout Placement="Bottom">
+                        <MenuFlyoutItem Command="{x:Bind ViewModel.ShowReleaseNotesCommand}" Text="{x:Bind ResourceService.GetLocalized('/About/ShowReleaseNotes')}" />
+                        <MenuFlyoutItem Command="{x:Bind ViewModel.ShowLicenseCommand}" Text="{x:Bind ResourceService.GetLocalized('/About/ShowLicense')}" />
+                    </MenuFlyout>
+                </DropDownButton.Flyout>
+            </DropDownButton>
         </Grid>
 
         <ScrollViewer
@@ -55,7 +52,7 @@
 
                 <ac:HeaderControl />
 
-                <ac:IntroductionControl x:Name="Introduction" />
+                <ac:IntroductionControl />
 
                 <ac:ReferenceControl />
 

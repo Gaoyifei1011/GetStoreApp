@@ -22,10 +22,9 @@
                 <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/DesktopAppsDescription')}" />
 
                 <HyperlinkButton
-                    Margin="-5,0,0,0"
-                    Padding="5"
                     Command="{x:Bind ViewModel.RecognizeCommand}"
                     Content="{x:Bind ResourceService.GetLocalized('/About/RecognizeDesktopApps')}"
+                    Style="{StaticResource AboutHyperlinkButtonStyle}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/About/RecognizeDesktopApps')}" />
             </StackPanel>
         </Expander.Content>

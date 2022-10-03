@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Helpers;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml.Media.Animation;
@@ -37,8 +38,8 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         // 链接过滤说明
         public IAsyncRelayCommand LinkFilterInstructionCommand => new AsyncRelayCommand(async () =>
         {
-            App.NavigationArgs = "SettingsHelp";
-            NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo(),false);
+            App.NavigationArgs = AppNaviagtionArgs.SettingsHelp;
+            NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
             await Task.CompletedTask;
         });
 

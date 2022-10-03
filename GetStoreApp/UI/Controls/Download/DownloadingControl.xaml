@@ -50,8 +50,8 @@
             <TextBlock
                 Grid.Column="3"
                 VerticalAlignment="Center"
-                Text="{x:Bind LocalizedDownloadingCountInfo(ViewModel.DownloadingDataList.Count), Mode=OneWay}"
-                ToolTipService.ToolTip="{x:Bind LocalizedDownloadingCountInfo(ViewModel.DownloadingDataList.Count), Mode=OneWay}" />
+                Text="{x:Bind LocalizeDownloadingCountInfo(ViewModel.DownloadingDataList.Count), Mode=OneWay}"
+                ToolTipService.ToolTip="{x:Bind LocalizeDownloadingCountInfo(ViewModel.DownloadingDataList.Count), Mode=OneWay}" />
 
             <CommandBar
                 x:Name="NormalMode"

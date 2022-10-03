@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Helpers;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -17,17 +18,15 @@ namespace GetStoreApp.UI.Dialogs
 
         public string DeleteContent { get; set; }
 
-        public DeletePromptDialog(params string[] parameter)
+        public DeletePromptDialog(DeletePrompt deletePrompt)
         {
             XamlRoot = App.MainWindow.Content.XamlRoot;
 
-            if (parameter.Length == 0)
+            switch (deletePrompt)
             {
-                DeleteContent = ResourceService.GetLocalized("/Dialog/DeleteContent");
-            }
-            else if (parameter[0] == "DeleteWithFile")
-            {
-                DeleteContent = ResourceService.GetLocalized("/Dialog/DeleteWithFileContent");
+                case DeletePrompt.History: DeleteContent = ResourceService.GetLocalized(string.Format("/Dialog/Delete{0}", deletePrompt.ToString())); break;
+                case DeletePrompt.Download: DeleteContent = ResourceService.GetLocalized(string.Format("/Dialog/Delete{0}", deletePrompt.ToString())); break;
+                case DeletePrompt.DownloadWithFile: DeleteContent = ResourceService.GetLocalized(string.Format("/Dialog/Delete{0}", deletePrompt.ToString())); break;
             }
 
             InitializeComponent();

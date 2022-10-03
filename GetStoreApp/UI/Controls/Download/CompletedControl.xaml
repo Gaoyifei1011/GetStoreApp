@@ -53,8 +53,8 @@
             <TextBlock
                 Grid.Column="3"
                 VerticalAlignment="Center"
-                Text="{x:Bind LocalizedCompletedCountInfo(ViewModel.CompletedDataList.Count), Mode=OneWay}"
-                ToolTipService.ToolTip="{x:Bind LocalizedCompletedCountInfo(ViewModel.CompletedDataList.Count), Mode=OneWay}" />
+                Text="{x:Bind LocalizeCompletedCountInfo(ViewModel.CompletedDataList.Count), Mode=OneWay}"
+                ToolTipService.ToolTip="{x:Bind LocalizeCompletedCountInfo(ViewModel.CompletedDataList.Count), Mode=OneWay}" />
 
             <CommandBar
                 x:Name="NormalMode"
@@ -290,7 +290,6 @@
                                                 Style="{StaticResource ButtonDownloadStyle}"
                                                 ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=OpenItemFolderToolTip}" />
                                         </StackPanel>
-
                                     </ContentControl>
 
                                     <Button
