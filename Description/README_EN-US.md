@@ -89,7 +89,6 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 
 > * [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com/) 
 > * . NET Desktop Development (Installed in Visual Studio Installer, .NET SDK Version 6.0)
-> * Single-package project tool（[Single-project MSIX Packaging Tools for VS2022](https://docs.microsoft.com/en-us/windows/apps/windows-app-sdk/single-project-msix?tabs=csharp)）
 
 #### <p align="center">Compilation steps</p>
 
@@ -112,3 +111,7 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 > * Compile and run the code and test your language, when the application is first opened if there is no language you use to display English (United States) by default, it needs to be dynamically adjusted in the settings.
 > * Create a PR after completing the above steps, then submit the modified content to this project and wait for the merge.
 
+------
+
+## Trend chart of project Star quantity statistics
+[![Stargazers over time](https://starchart.cc/Gaoyifei1011/GetStoreApp.svg)](https://starchart.cc/Gaoyifei1011/GetStoreApp)

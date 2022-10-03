@@ -89,7 +89,6 @@
 
 > * [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com/) 
 > * .NET桌面开发（Visual Studio Installer中安装，.NET SDK 版本 6.0）
-> * 单打包项目工具（[Single-project MSIX Packaging Tools for VS2022](https://docs.microsoft.com/en-us/windows/apps/windows-app-sdk/single-project-msix?tabs=csharp)）
 
 #### <p align="center">编译步骤</p>
 
@@ -112,3 +111,7 @@
 > * 编译运行代码并测试您的语言，应用在初次打开的时候如果没有您使用的语言默认显示English(United States)，需要在设置中动态调整。
 > * 完成上述步骤后创建PR，然后将修改的内容提交到本项目，等待合并即可。
 
+------
+
+## 项目 Star 数量统计趋势图
+[![Stargazers over time](https://starchart.cc/Gaoyifei1011/GetStoreApp.svg)](https://starchart.cc/Gaoyifei1011/GetStoreApp)
