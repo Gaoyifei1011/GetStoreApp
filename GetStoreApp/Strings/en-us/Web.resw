@@ -120,8 +120,17 @@
   <data name="Back" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="DownloadWebView2" xml:space="preserve">
+    <value>Download the WebView2 runtime</value>
+  </data>
   <data name="Forward" xml:space="preserve">
     <value>Forward</value>
+  </data>
+  <data name="LoadFailedDescription" xml:space="preserve">
+    <value>Unfortunately, the web page opens abnormally and the application detects that your system does not have Microsoft Edge WebView2 installed at runtime.</value>
+  </data>
+  <data name="LoadFailedTitle" xml:space="preserve">
+    <value>Welcome to the Get Store App Web version feature</value>
   </data>
   <data name="Loading" xml:space="preserve">
     <value>(Loading)</value>
@@ -129,8 +138,17 @@
   <data name="OpenWithBrowser" xml:space="preserve">
     <value>Open With Browser</value>
   </data>
+  <data name="ProblemSolution" xml:space="preserve">
+    <value>You can access the web page by:</value>
+  </data>
   <data name="Refresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="Solution1" xml:space="preserve">
+    <value>1. Click the Download WebView2 Runtime button, which opens your browser and downloads and installs the WebView2 Runtime. After the operation is completed, restart the app to access the page normally.</value>
+  </data>
+  <data name="Solution2" xml:space="preserve">
+    <value>2. Use the system's default browser to access the page.</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Official Webpage</value>

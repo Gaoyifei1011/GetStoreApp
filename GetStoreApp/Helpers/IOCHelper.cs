@@ -15,12 +15,14 @@ using GetStoreApp.UI.Controls.About;
 using GetStoreApp.UI.Controls.Download;
 using GetStoreApp.UI.Controls.Home;
 using GetStoreApp.UI.Controls.Settings;
+using GetStoreApp.UI.Controls.Web;
 using GetStoreApp.UI.Dialogs;
 using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Controls.About;
 using GetStoreApp.ViewModels.Controls.Download;
 using GetStoreApp.ViewModels.Controls.Home;
 using GetStoreApp.ViewModels.Controls.Settings;
+using GetStoreApp.ViewModels.Controls.Web;
 using GetStoreApp.ViewModels.Dialogs;
 using GetStoreApp.ViewModels.Notifications;
 using GetStoreApp.ViewModels.Pages;
@@ -173,6 +175,10 @@ namespace GetStoreApp.Helpers
                 services.AddTransient<TraceCleanupViewModel>();
                 services.AddTransient<UseInstructionControl>();
                 services.AddTransient<UseInstructionViewModel>();
+
+                // 网页界面控件（MVVM）
+                services.AddTransient<LoadFailedControl>();
+                services.AddTransient<LoadFailedViewModel>();
 
                 // 对话框（MVVM）
                 services.AddTransient<LicenseDialog>();

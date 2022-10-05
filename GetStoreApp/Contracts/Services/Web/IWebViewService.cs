@@ -8,11 +8,15 @@ namespace GetStoreApp.Contracts.Services.Web
     {
         event EventHandler<CoreWebView2WebErrorStatus> NavigationCompleted;
 
+        WebView2 WebView { get; }
+
         bool CanGoBack { get; }
 
         bool CanGoForward { get; }
 
         void Initialize(WebView2 webView);
+
+        bool CheckEnvironment();
 
         void UnregisterEvents();
 

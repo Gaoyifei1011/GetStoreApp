@@ -33,7 +33,6 @@
 
             <FontIcon
                 Grid.Column="0"
-                FontFamily="Segoe Fluent Icons"
                 Glyph="&#xE71e;"
                 Style="{StaticResource FontIconStyle}" />
 
@@ -68,17 +67,23 @@
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.CopyIDCommand}"
-                    Icon="Copy"
                     IsEnabled="{x:Bind system:Convert.ToBoolean(ViewModel.ResultDataList.Count), Mode=OneWay}"
                     Label="{x:Bind ResourceService.GetLocalized('/Home/CopyID')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/CopyIDToolTip')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/CopyIDToolTip')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE8c8;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.SelectCommand}"
-                    Icon="Bullets"
                     IsEnabled="{x:Bind system:Convert.ToBoolean(ViewModel.ResultDataList.Count), Mode=OneWay}"
                     Label="{x:Bind ResourceService.GetLocalized('/Home/Select')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/SelectToolTip')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/SelectToolTip')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE762;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
             </CommandBar>
 
             <CommandBar
@@ -91,20 +96,27 @@
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.SelectAllCommand}"
-                    Icon="SelectAll"
                     Label="{x:Bind ResourceService.GetLocalized('/Home/SelectAll')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/SelectAll')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/SelectAll')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE8b3;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.SelectNoneCommand}"
-                    Icon="ClearSelection"
                     Label="{x:Bind ResourceService.GetLocalized('/Home/SelectNone')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/SelectNone')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/SelectNone')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE8e6;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
-                <AppBarButton
-                    Icon="Copy"
-                    Label="{x:Bind ResourceService.GetLocalized('/Home/CopyOptions')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/CopyOptionsToolTip')}">
+                <AppBarButton Label="{x:Bind ResourceService.GetLocalized('/Home/CopyOptions')}" ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/CopyOptionsToolTip')}">
+
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE8c8;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
 
                     <AppBarButton.Flyout>
                         <MenuFlyout Placement="Bottom">
@@ -125,15 +137,18 @@
                     Label="{x:Bind ResourceService.GetLocalized('/Home/DownloadSelected')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/DownloadSelected')}">
                     <AppBarButton.Icon>
-                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE74b;" />
+                        <FontIcon Glyph="&#xE74b;" Style="{StaticResource FontFamilyStyle}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.CancelCommand}"
-                    Icon="Cancel"
                     Label="{x:Bind ResourceService.GetLocalized('/Home/Cancel')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/CancelToolTip')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/CancelToolTip')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE711;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
             </CommandBar>
         </Grid>
 

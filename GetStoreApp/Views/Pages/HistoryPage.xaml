@@ -47,7 +47,6 @@
 
             <FontIcon
                 Grid.Column="0"
-                FontFamily="Segoe Fluent Icons"
                 Glyph="&#xE74C;"
                 Style="{StaticResource FontIconStyle}" />
             <TextBlock
@@ -72,24 +71,32 @@
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.SelectCommand}"
-                    Icon="Bullets"
                     Label="{x:Bind ResourceService.GetLocalized('/History/Select')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/SelectToolTip')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/SelectToolTip')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE762;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
-                <AppBarButton
-                    Icon="Sort"
-                    Label="{x:Bind ResourceService.GetLocalized('/History/Sort')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/SortToolTip')}">
+                <AppBarButton Label="{x:Bind ResourceService.GetLocalized('/History/Sort')}" ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/SortToolTip')}">
+
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE8cb;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
+
                     <AppBarButton.Flyout>
                         <MenuFlyout Placement="Bottom">
 
                             <RadioMenuFlyoutItem
                                 Command="{x:Bind ViewModel.TimeSortCommand}"
                                 CommandParameter="True"
-                                Icon="Up"
                                 IsChecked="{x:Bind ViewModel.TimeSortOrder, Converter={StaticResource TimeSortValueCheckConverter}, ConverterParameter=true, Mode=OneWay}"
                                 Text="{x:Bind ResourceService.GetLocalized('/History/TimeIncreaseSort')}"
-                                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/TimeIncreaseSortToolTip')}" />
+                                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/TimeIncreaseSortToolTip')}">
+                                <RadioMenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE74a;" Style="{StaticResource FontFamilyStyle}" />
+                                </RadioMenuFlyoutItem.Icon>
+                            </RadioMenuFlyoutItem>
 
                             <RadioMenuFlyoutItem
                                 Command="{x:Bind ViewModel.TimeSortCommand}"
@@ -98,17 +105,19 @@
                                 Text="{x:Bind ResourceService.GetLocalized('/History/TimeDecreaseSort')}"
                                 ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/TimeDecreaseSortToolTip')}">
                                 <RadioMenuFlyoutItem.Icon>
-                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE74b;" />
+                                    <FontIcon Glyph="&#xE74b;" Style="{StaticResource FontFamilyStyle}" />
                                 </RadioMenuFlyoutItem.Icon>
                             </RadioMenuFlyoutItem>
                         </MenuFlyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
 
-                <AppBarButton
-                    Icon="Filter"
-                    Label="{x:Bind ResourceService.GetLocalized('/History/Filter')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/FilterToolTip')}">
+                <AppBarButton Label="{x:Bind ResourceService.GetLocalized('/History/Filter')}" ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/FilterToolTip')}">
+
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE74a;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
+
                     <AppBarButton.Flyout>
 
                         <MenuFlyout Placement="Bottom">
@@ -205,9 +214,12 @@
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.RefreshCommand}"
-                    Icon="Refresh"
                     Label="{x:Bind ResourceService.GetLocalized('/History/Refresh')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/RefreshToolTip')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/RefreshToolTip')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE72c;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
             </CommandBar>
 
             <CommandBar
@@ -220,33 +232,48 @@
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.SelectAllCommand}"
-                    Icon="SelectAll"
                     Label="{x:Bind ResourceService.GetLocalized('/History/SelectAll')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/SelectAll')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/SelectAll')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE8b3;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.SelectNoneCommand}"
-                    Icon="ClearSelection"
                     Label="{x:Bind ResourceService.GetLocalized('/History/SelectNone')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/SelectNone')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/SelectNone')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE8e6;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.CopySelectedCommand}"
-                    Icon="Copy"
                     Label="{x:Bind ResourceService.GetLocalized('/History/CopySelected')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/CopySelectedToolTip')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/CopySelectedToolTip')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE8c8;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.DeleteCommand}"
-                    Icon="Delete"
                     Label="{x:Bind ResourceService.GetLocalized('/History/Delete')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/DeleteToolTip')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/DeleteToolTip')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE74d;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.CancelCommand}"
-                    Icon="Cancel"
                     Label="{x:Bind ResourceService.GetLocalized('/History/Cancel')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/CancelToolTip')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/CancelToolTip')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE711;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
             </CommandBar>
         </Grid>
 

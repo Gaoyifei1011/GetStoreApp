@@ -40,7 +40,6 @@
 
             <FontIcon
                 Grid.Column="0"
-                FontFamily="Segoe Fluent Icons"
                 Glyph="&#xE74C;"
                 Style="{StaticResource FontIconStyle}" />
 
@@ -69,15 +68,18 @@
                     Label="{x:Bind ResourceService.GetLocalized('/Download/OpenFolder')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/OpenFolderToolTip')}">
                     <AppBarButton.Icon>
-                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8b7;" />
+                        <FontIcon Glyph="&#xE8b7;" Style="{StaticResource FontFamilyStyle}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.SelectCommand}"
-                    Icon="Bullets"
                     Label="{x:Bind ResourceService.GetLocalized('/Download/Select')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SelectToolTip')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SelectToolTip')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE762;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
             </CommandBar>
 
             <CommandBar
@@ -90,20 +92,27 @@
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.SelectAllCommand}"
-                    Icon="SelectAll"
                     Label="{x:Bind ResourceService.GetLocalized('/Download/SelectAll')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SelectAll')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SelectAll')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE8b3;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.SelectNoneCommand}"
-                    Icon="ClearSelection"
                     Label="{x:Bind ResourceService.GetLocalized('/Download/SelectNone')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SelectNone')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SelectNone')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE8e6;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
-                <AppBarButton
-                    Icon="Delete"
-                    Label="{x:Bind ResourceService.GetLocalized('/Download/DeleteOptions')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/DeleteOptionsToolTip')}">
+                <AppBarButton Label="{x:Bind ResourceService.GetLocalized('/Download/DeleteOptions')}" ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/DeleteOptionsToolTip')}">
+
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE74d;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
 
                     <AppBarButton.Flyout>
                         <MenuFlyout Placement="Bottom">
@@ -122,9 +131,13 @@
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.CancelCommand}"
-                    Icon="Cancel"
                     Label="{x:Bind ResourceService.GetLocalized('/Download/Cancel')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/CancelToolTip')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/CancelToolTip')}">
+
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE711;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
             </CommandBar>
         </Grid>
 
@@ -278,24 +291,31 @@
                                             <Button
                                                 Command="{Binding ElementName=CompletedRoot, Path=ViewModel.InstallCommand}"
                                                 CommandParameter="{Binding}"
-                                                Content="&#xE710;"
                                                 IsEnabled="{x:Bind FileName, Converter={StaticResource InstallFileCheckConverter}}"
                                                 Style="{StaticResource ButtonDownloadStyle}"
-                                                ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=InstallToolTip}" />
+                                                ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=InstallToolTip}">
+                                                <Button.Content>
+                                                    <FontIcon Glyph="&#xE710;" Style="{StaticResource FontFamilyStyle}" />
+                                                </Button.Content>
+                                            </Button>
 
                                             <Button
                                                 Command="{Binding ElementName=CompletedRoot, Path=ViewModel.OpenItemFolderCommand}"
                                                 CommandParameter="{x:Bind FilePath}"
-                                                Content="&#xE8da;"
                                                 Style="{StaticResource ButtonDownloadStyle}"
-                                                ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=OpenItemFolderToolTip}" />
+                                                ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=OpenItemFolderToolTip}">
+                                                <Button.Content>
+                                                    <FontIcon Glyph="&#xE8da;" Style="{StaticResource FontFamilyStyle}" />
+                                                </Button.Content>
+                                            </Button>
                                         </StackPanel>
                                     </ContentControl>
 
-                                    <Button
-                                        Content="&#xE712;"
-                                        Style="{StaticResource ButtonDownloadStyle}"
-                                        ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=ViewMore}">
+                                    <Button Style="{StaticResource ButtonDownloadStyle}" ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=ViewMore}">
+
+                                        <Button.Content>
+                                            <FontIcon Glyph="&#xE712;" Style="{StaticResource FontFamilyStyle}" />
+                                        </Button.Content>
 
                                         <Button.Flyout>
                                             <MenuFlyout Placement="Bottom">

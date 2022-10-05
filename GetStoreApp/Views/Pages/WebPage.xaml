@@ -4,15 +4,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:wc="using:GetStoreApp.UI.Controls.Web"
     mc:Ignorable="d">
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="0" Padding="0">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -21,27 +23,42 @@
             </Grid.ColumnDefinitions>
 
             <CommandBar
+                x:Name="BrowserFunction"
                 Grid.Column="0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
+                x:Load="{x:Bind ViewModel.IsWebView2Exist}"
                 Background="Transparent"
                 DefaultLabelPosition="Right">
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.BrowserBackCommand, Mode=OneWay}"
-                    Icon="Back"
+                    IsEnabled="{x:Bind ViewModel.CanGoBack, Mode=OneWay}"
                     Label="{x:Bind ResourceService.GetLocalized('/Web/Back')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/Back')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/Back')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE72b;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+
                 <AppBarButton
                     Command="{x:Bind ViewModel.BrowserForwardCommand, Mode=OneWay}"
-                    Icon="Forward"
+                    IsEnabled="{x:Bind ViewModel.CanGoForward, Mode=OneWay}"
                     Label="{x:Bind ResourceService.GetLocalized('/Web/Forward')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/Forward')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/Forward')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE72a;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+
                 <AppBarButton
                     Command="{x:Bind ViewModel.RefreshCommand}"
-                    Icon="Refresh"
                     Label="{x:Bind ResourceService.GetLocalized('/Web/Refresh')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/Refresh')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/Refresh')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE72c;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
             </CommandBar>
 
             <Grid
@@ -82,16 +99,27 @@
                 DefaultLabelPosition="Right">
 
                 <AppBarButton
-                    Command="{x:Bind ViewModel.OpenInBrowserCommand}"
-                    Icon="Globe"
+                    Command="{x:Bind ViewModel.OpenWithBrowserCommand}"
                     Label="{x:Bind ResourceService.GetLocalized('/Web/OpenWithBrowser')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/OpenWithBrowser')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/OpenWithBrowser')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE774;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
             </CommandBar>
         </Grid>
 
-        <WebView2
-            x:Name="webView"
+        <MenuFlyoutSeparator
             Grid.Row="1"
-            Source="{x:Bind ViewModel.Source, Mode=OneWay}" />
+            Height="2"
+            Padding="0" />
+
+        <WebView2
+            x:Name="WebView"
+            Grid.Row="2"
+            Source="{x:Bind ViewModel.Source, Mode=OneWay}"
+            Visibility="{x:Bind ViewModel.IsWebView2Exist, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+        <wc:LoadFailedControl Grid.Row="2" Visibility="{x:Bind ViewModel.IsWebView2Exist, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Reverse}" />
     </Grid>
 </Page>

@@ -10,7 +10,7 @@ namespace GetStoreApp.Services.Web
     /// </summary>
     public class WebViewService : IWebViewService
     {
-        private WebView2 WebView { get; set; }
+        public WebView2 WebView { get; set; }
 
         public bool CanGoBack => WebView.CanGoBack;
 
@@ -22,6 +22,27 @@ namespace GetStoreApp.Services.Web
         {
             WebView = webView;
             WebView.NavigationCompleted += OnWebViewNavigationCompleted;
+        }
+
+        public bool CheckEnvironment()
+        {
+            try
+            {
+                string WebView2Version = CoreWebView2Environment.GetAvailableBrowserVersionString(browserExecutableFolder: default);
+
+                if (string.IsNullOrEmpty(WebView2Version) || WebView2Version == "0.0.0.0")
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public void UnregisterEvents()

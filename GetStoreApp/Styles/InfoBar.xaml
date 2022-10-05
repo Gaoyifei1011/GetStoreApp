@@ -116,8 +116,6 @@
     <Thickness x:Key="InfoBarActionHorizontalOrientationMargin">16,8,0,0</Thickness>
     <Thickness x:Key="InfoBarActionVerticalOrientationMargin">0,12,0,0</Thickness>
 
-    <Symbol x:Key="InfoBarCloseButtonSymbol">Cancel</Symbol>
-
     <Style
         x:Key="InfoBarCloseButtonStyle"
         BasedOn="{StaticResource DefaultButtonStyle}"
@@ -323,7 +321,7 @@
                                     Height="{StaticResource InfoBarCloseButtonGlyphSize}"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center">
-                                    <SymbolIcon Symbol="{StaticResource InfoBarCloseButtonSymbol}" />
+                                    <FontIcon FontFamily="ms-appx:///Fonts/Segoe Fluent Icons.ttf#Segoe Fluent Icons" Glyph="&#xE711;" />
                                 </Viewbox>
                             </Button>
                         </Grid>

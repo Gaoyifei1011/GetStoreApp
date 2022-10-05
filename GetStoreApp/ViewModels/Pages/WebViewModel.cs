@@ -5,6 +5,7 @@ using GetStoreApp.Contracts.ViewModels;
 using GetStoreApp.Helpers;
 using Microsoft.Web.WebView2.Core;
 using System;
+using System.Data;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Pages
@@ -15,7 +16,25 @@ namespace GetStoreApp.ViewModels.Pages
 
         public IWebViewService WebViewService { get; } = IOCHelper.GetService<IWebViewService>();
 
-        public int WebView2ProcessID;
+        public bool IsWebView2Exist => WebViewService.CheckEnvironment();
+
+        private bool _canGoBack = false;
+
+        public bool CanGoBack
+        {
+            get { return _canGoBack; }
+
+            set { SetProperty(ref _canGoBack, value); }
+        }
+
+        private bool _canGoForward = false;
+
+        public bool CanGoForward
+        {
+            get { return _canGoForward; }
+
+            set { SetProperty(ref _canGoForward, value); }
+        }
 
         private Uri _source;
 
@@ -39,21 +58,31 @@ namespace GetStoreApp.ViewModels.Pages
         public IAsyncRelayCommand BrowserBackCommand => new AsyncRelayCommand(
             async () =>
             {
-                WebViewService.GoBack();
+                if (WebViewService.WebView.CanGoBack)
+                {
+                    WebViewService.GoBack();
+                }
+                else
+                {
+                    CanGoBack = WebViewService.WebView.CanGoBack;
+                }
                 await Task.CompletedTask;
-            },
-            () => WebViewService.CanGoBack
-            );
+            });
 
         // 网页前进
         public IAsyncRelayCommand BrowserForwardCommand => new AsyncRelayCommand(
             async () =>
             {
-                WebViewService.GoForward();
+                if (WebViewService.WebView.CanGoForward)
+                {
+                    WebViewService.GoForward();
+                }
+                else
+                {
+                    CanGoForward = WebViewService.WebView.CanGoForward;
+                }
                 await Task.CompletedTask;
-            },
-            () => WebViewService.CanGoForward
-            );
+            });
 
         // 网页刷新
         public IAsyncRelayCommand RefreshCommand => new AsyncRelayCommand(async () =>
@@ -63,7 +92,7 @@ namespace GetStoreApp.ViewModels.Pages
         });
 
         // 在浏览器中打开
-        public IAsyncRelayCommand OpenInBrowserCommand => new AsyncRelayCommand(async () =>
+        public IAsyncRelayCommand OpenWithBrowserCommand => new AsyncRelayCommand(async () =>
         {
             await Windows.System.Launcher.LaunchUriAsync(Source);
         });
@@ -78,13 +107,15 @@ namespace GetStoreApp.ViewModels.Pages
         {
             WebViewService.UnregisterEvents();
             WebViewService.NavigationCompleted -= OnNavigationCompleted;
+            
+            
         }
 
         private void OnNavigationCompleted(object sender, CoreWebView2WebErrorStatus webErrorStatus)
         {
             IsLoading = false;
-            OnPropertyChanged(nameof(BrowserBackCommand));
-            OnPropertyChanged(nameof(BrowserForwardCommand));
+            CanGoBack = WebViewService.CanGoBack;
+            CanGoForward = WebViewService.CanGoForward;
         }
     }
 }

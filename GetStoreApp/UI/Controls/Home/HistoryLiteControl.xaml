@@ -37,7 +37,6 @@
 
                 <FontIcon
                     Grid.Column="0"
-                    FontFamily="Segoe Fluent Icons"
                     Glyph="&#xE823;"
                     Style="{StaticResource FontIconStyle}" />
                 <TextBlock
@@ -54,9 +53,12 @@
 
                     <AppBarButton
                         Command="{x:Bind ViewModel.ViewAllCommand}"
-                        Icon="View"
                         Label="{x:Bind ResourceService.GetLocalized('/Home/ViewAll')}"
-                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/ViewAllToolTip')}" />
+                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/ViewAllToolTip')}">
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE890;" Style="{StaticResource FontFamilyStyle}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
                 </CommandBar>
             </Grid>
         </Expander.Header>

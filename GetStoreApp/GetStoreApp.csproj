@@ -31,6 +31,8 @@
     <None Remove="Assets\GetStoreApp.png" />
     <None Remove="Assets\Images\CloudflareValidation.png" />
     <None Remove="Assets\Logo\GetStoreApp.png" />
+    <None Remove="Fonts\EULA.txt" />
+    <None Remove="Fonts\Segoe Fluent Icons.ttf" />
     <None Remove="LICENSE" />
     <None Remove="MainWindow.xaml" />
     <None Remove="Styles\Button.xaml" />
@@ -70,6 +72,7 @@
     <None Remove="UI\Controls\Settings\ThemeControl.xaml" />
     <None Remove="UI\Controls\Settings\TopMostControl.xaml" />
     <None Remove="UI\Controls\Settings\TraceCleanupControl.xaml" />
+    <None Remove="UI\Controls\Web\LoadFailedControl.xaml" />
     <None Remove="UI\Dialogs\ClosingWindowDialog.xaml" />
     <None Remove="UI\Dialogs\CloudflareValidationDialog.xaml" />
     <None Remove="UI\Dialogs\DeletePromptDialog.xaml" />
@@ -102,7 +105,7 @@
     </PackageReference>
     <PackageReference Include="CommunityToolkit.WinUI.UI.Behaviors" Version="7.1.2" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
-    <PackageReference Include="H.NotifyIcon.WinUI" Version="2.0.67" />
+    <PackageReference Include="H.NotifyIcon.WinUI" Version="2.0.68" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.9" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
@@ -346,6 +349,12 @@
     <Content Include="Aria2\X86\GetStoreAppAria2.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Fonts\EULA.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\Segoe Fluent Icons.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="LICENSE">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -362,4 +371,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="UI\Controls\Web\LoadFailedControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 </Project>

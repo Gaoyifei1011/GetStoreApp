@@ -38,7 +38,6 @@
 
             <FontIcon
                 Grid.Column="0"
-                FontFamily="Segoe Fluent Icons"
                 Glyph="&#xE74C;"
                 Style="{StaticResource FontIconStyle}" />
             <TextBlock
@@ -66,21 +65,27 @@
                     Label="{x:Bind ResourceService.GetLocalized('/Download/OpenFolder')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/OpenFolderToolTip')}">
                     <AppBarButton.Icon>
-                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8b7;" />
+                        <FontIcon Glyph="&#xE8b7;" Style="{StaticResource FontFamilyStyle}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.PauseAllCommand}"
-                    Icon="Pause"
                     Label="{x:Bind ResourceService.GetLocalized('/Download/PauseAll')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/PauseAllToolTip')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/PauseAllToolTip')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE769;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.SelectCommand}"
-                    Icon="Bullets"
                     Label="{x:Bind ResourceService.GetLocalized('/Download/Select')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SelectToolTip')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SelectToolTip')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE762;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
             </CommandBar>
 
             <CommandBar
@@ -93,27 +98,39 @@
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.SelectAllCommand}"
-                    Icon="SelectAll"
                     Label="{x:Bind ResourceService.GetLocalized('/Download/SelectAll')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SelectAll')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SelectAll')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE8b3;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.SelectNoneCommand}"
-                    Icon="ClearSelection"
                     Label="{x:Bind ResourceService.GetLocalized('/Download/SelectNone')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SelectNone')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SelectNone')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE8e6;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.DeleteSelectedCommand}"
-                    Icon="Delete"
                     Label="{x:Bind ResourceService.GetLocalized('/Download/DeleteSelected')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/DeleteSelectedToolTip')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/DeleteSelectedToolTip')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE74d;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.CancelCommand}"
-                    Icon="Cancel"
                     Label="{x:Bind ResourceService.GetLocalized('/Download/Cancel')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/CancelToolTip')}" />
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/CancelToolTip')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE711;" Style="{StaticResource FontFamilyStyle}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
             </CommandBar>
         </Grid>
 
@@ -240,16 +257,22 @@
                                     <Button
                                         Command="{Binding ElementName=DownloadingRoot, Path=ViewModel.PauseCommand}"
                                         CommandParameter="{Binding}"
-                                        Content="&#xE769;"
                                         Style="{StaticResource ButtonDownloadStyle}"
-                                        ToolTipService.ToolTip="{Binding ElementName=DownloadingRoot, Path=PauseToolTip}" />
+                                        ToolTipService.ToolTip="{Binding ElementName=DownloadingRoot, Path=PauseToolTip}">
+                                        <Button.Content>
+                                            <FontIcon Glyph="&#xE769;" Style="{StaticResource FontFamilyStyle}" />
+                                        </Button.Content>
+                                    </Button>
 
                                     <Button
                                         Command="{Binding ElementName=DownloadingRoot, Path=ViewModel.DeleteCommand}"
                                         CommandParameter="{Binding}"
-                                        Content="&#xE711;"
                                         Style="{StaticResource ButtonDownloadStyle}"
-                                        ToolTipService.ToolTip="{Binding ElementName=DownloadingRoot, Path=DeleteToolTip}" />
+                                        ToolTipService.ToolTip="{Binding ElementName=DownloadingRoot, Path=DeleteToolTip}">
+                                        <Button.Content>
+                                            <FontIcon Glyph="&#xE711;" Style="{StaticResource FontFamilyStyle}" />
+                                        </Button.Content>
+                                    </Button>
                                 </StackPanel>
                             </ContentControl>
                         </Grid>
