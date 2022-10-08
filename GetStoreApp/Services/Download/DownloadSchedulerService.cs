@@ -408,7 +408,7 @@ namespace GetStoreApp.Services.Download
                         IsNetWorkConnected = false;
                     }
 
-                    // TODO: 发送通知
+                    // 发送通知
                     if (DownloadingList.Any() || WaitingList.Any())
                     {
                         AppNotificationService.Show("DownloadAborted", "Downloading");

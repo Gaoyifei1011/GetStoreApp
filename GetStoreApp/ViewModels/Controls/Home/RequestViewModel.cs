@@ -80,17 +80,19 @@ namespace GetStoreApp.ViewModels.Controls.Home
         }
 
         // 类型选择后修改样例文本
-        public IAsyncRelayCommand TypeSelectCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand TypeSelectCommand => new RelayCommand(() =>
         {
             SampleLink = SampleLinkList[SelectedType];
             LinkPlaceHolderText = SampleTitle + SampleLink;
 
             LinkText = string.Empty;
-            await Task.CompletedTask;
         });
 
         // 获取链接
-        public IAsyncRelayCommand GetLinksCommand => new AsyncRelayCommand(GetLinksAsync);
+        public IRelayCommand GetLinksCommand => new RelayCommand(async () =>
+        {
+            await GetLinksAsync();
+        });
 
         public RequestViewModel()
         {
@@ -182,19 +184,13 @@ namespace GetStoreApp.ViewModels.Controls.Home
         /// </summary>
         private async Task UpdateHistoryAsync(int currentType, int currentChannel, string currentLink)
         {
-            // 拼接准备要生成唯一的MD5值的内容
-            string Content = string.Format("{0} {1} {2}", TypeList[currentType].InternalName, ChannelList[currentChannel].InternalName, currentLink);
-
             // 添加时间戳
             long TimeStamp = GenerateTimeStamp();
-
-            // 生成唯一的MD5值
-            string UniqueKey = GenerateUniqueKey(Content);
 
             await HistoryDBService.AddAsync(new HistoryModel
             {
                 CreateTimeStamp = TimeStamp,
-                HistoryKey = UniqueKey,
+                HistoryKey = UniqueKeyHelper.GenerateHistoryKey(TypeList[currentType].InternalName, ChannelList[currentChannel].InternalName, currentLink),
                 HistoryType = TypeList[currentType].InternalName,
                 HistoryChannel = ChannelList[currentChannel].InternalName,
                 HistoryLink = currentLink

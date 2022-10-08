@@ -6,7 +6,6 @@ using GetStoreApp.Messages;
 using GetStoreApp.Models.Home;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Controls.Home
 {
@@ -56,13 +55,12 @@ namespace GetStoreApp.ViewModels.Controls.Home
         {
             StateInfoText = ResourceService.GetLocalized("/Home/StatusInfoWelcome");
 
-            WeakReferenceMessenger.Default.Register(this, (MessageHandler<StatusBarViewModel, StatusBarStateMessage>)(async (statusbarViewModel, statusBarStateMessage) =>
+            WeakReferenceMessenger.Default.Register(this, (MessageHandler<StatusBarViewModel, StatusBarStateMessage>)((statusbarViewModel, statusBarStateMessage) =>
                         {
                             statusbarViewModel.InfoBarSeverity = StatusBarStateList[statusBarStateMessage.Value].InfoBarSeverity;
                             statusbarViewModel.StateInfoText = StatusBarStateList[statusBarStateMessage.Value].StateInfoText;
                             statusbarViewModel.StatePrRingVisValue = StatusBarStateList[statusBarStateMessage.Value].StatePrRingVisValue;
                             statusbarViewModel.StatePrRingActValue = StatusBarStateList[statusBarStateMessage.Value].StatePrRingActValue;
-                            await Task.CompletedTask;
                         }));
         }
     }

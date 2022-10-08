@@ -9,8 +9,6 @@ using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
-using System;
-using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Pages
 {
@@ -30,28 +28,25 @@ namespace GetStoreApp.ViewModels.Pages
         }
 
         // 了解更多下载管理说明
-        public IAsyncRelayCommand LearnMoreCommand => new AsyncRelayCommand<TeachingTip>(async (param) =>
+        public IRelayCommand LearnMoreCommand => new RelayCommand<TeachingTip>((downloadTeachingTip) =>
         {
             App.NavigationArgs = AppNaviagtionArgs.SettingsHelp;
-            param.IsOpen = false;
+            downloadTeachingTip.IsOpen = false;
             NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
-            await Task.CompletedTask;
         });
 
         // 打开应用“下载设置”
-        public IAsyncRelayCommand DownloadSettingsCommand => new AsyncRelayCommand<TeachingTip>(async (param) =>
+        public IRelayCommand DownloadSettingsCommand => new RelayCommand<TeachingTip>((downloadTeachingTip) =>
         {
             App.NavigationArgs = AppNaviagtionArgs.DownloadOptions;
-            param.IsOpen = false;
+            downloadTeachingTip.IsOpen = false;
             NavigationService.NavigateTo(typeof(SettingsViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
-            await Task.CompletedTask;
         });
 
         // DownloadPivot选中项发生变化时，关闭离开页面的事件，开启要导航到的页面的事件，并更新新页面的数据
-        public IAsyncRelayCommand DownloadContentCommand => new AsyncRelayCommand<int>(async (param) =>
+        public IRelayCommand DownloadContentCommand => new RelayCommand<int>((value) =>
         {
-            WeakReferenceMessenger.Default.Send(new PivotSelectionMessage(param));
-            await Task.CompletedTask;
+            WeakReferenceMessenger.Default.Send(new PivotSelectionMessage(value));
         });
 
         // 初次加载页面时，开启下载中页面的所有事件，加载下载中页面的数据

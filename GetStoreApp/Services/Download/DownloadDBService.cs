@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.Root;
+using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Helpers;
 using GetStoreApp.Models.Download;
 using Microsoft.Data.Sqlite;
@@ -266,9 +267,9 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 检查是否存在相同键值的数据
         /// </summary>
-        public async Task<bool> CheckDuplicatedAsync(string downloadKey)
+        public async Task<DuplicatedDataInfo> CheckDuplicatedAsync(string downloadKey)
         {
-            bool IsExists = false;
+            DuplicatedDataInfo duplicatedDataInfo = DuplicatedDataInfo.None;
 
             // 从数据库中获取数据
             using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
@@ -289,13 +290,22 @@ namespace GetStoreApp.Services.Download
 
                 if (await Query.ReadAsync())
                 {
-                    IsExists = true;
+                    int downloadFlag = Convert.ToInt32(Query.GetString(6));
+
+                    if (downloadFlag == 4)
+                    {
+                        duplicatedDataInfo = DuplicatedDataInfo.Completed;
+                    }
+                    else
+                    {
+                        duplicatedDataInfo = DuplicatedDataInfo.Unfinished;
+                    }
                 }
 
                 await db.CloseAsync();
             }
 
-            return IsExists;
+            return duplicatedDataInfo;
         }
 
         /// <summary>

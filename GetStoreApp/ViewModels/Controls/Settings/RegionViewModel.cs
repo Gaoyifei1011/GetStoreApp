@@ -23,7 +23,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         }
 
         // 应用在应用商店对应的区域选择
-        public IAsyncRelayCommand RegionSelectCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand RegionSelectCommand => new RelayCommand(async () =>
         {
             await RegionService.SetRegionAsync(Region);
         });

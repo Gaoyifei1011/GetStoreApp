@@ -3,6 +3,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:wc="using:GetStoreApp.UI.Controls.Web"
     mc:Ignorable="d">
@@ -27,7 +29,7 @@
                 Grid.Column="0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                x:Load="{x:Bind ViewModel.IsWebView2Exist}"
+                x:Load="{x:Bind ViewModel.IsWebView2Installed}"
                 Background="Transparent"
                 DefaultLabelPosition="Right">
 
@@ -53,6 +55,7 @@
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.RefreshCommand}"
+                    CommandParameter="{Binding ElementName=WebView}"
                     Label="{x:Bind ResourceService.GetLocalized('/Web/Refresh')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/Refresh')}">
                     <AppBarButton.Icon>
@@ -118,8 +121,22 @@
             x:Name="WebView"
             Grid.Row="2"
             Source="{x:Bind ViewModel.Source, Mode=OneWay}"
-            Visibility="{x:Bind ViewModel.IsWebView2Exist, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            Visibility="{x:Bind ViewModel.IsWebView2Installed, Converter={StaticResource BooleanToVisibilityConverter}}">
 
-        <wc:LoadFailedControl Grid.Row="2" Visibility="{x:Bind ViewModel.IsWebView2Exist, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Reverse}" />
+            <i:Interaction.Behaviors>
+                <ic:EventTriggerBehavior EventName="NavigationStarting">
+                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.NavigationStartingCommand}" />
+                </ic:EventTriggerBehavior>
+
+                <ic:EventTriggerBehavior EventName="NavigationCompleted">
+                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.NavigationCompletedCommand}" CommandParameter="{Binding ElementName=WebView}" />
+                </ic:EventTriggerBehavior>
+            </i:Interaction.Behaviors>
+        </WebView2>
+
+        <wc:LoadFailedControl
+            x:Name="LoadFailed"
+            Grid.Row="2"
+            x:Load="{x:Bind ViewModel.IsWebView2Installed, Converter={StaticResource BooleanToOppositeValueConverter}}" />
     </Grid>
 </Page>

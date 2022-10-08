@@ -7,9 +7,7 @@ using GetStoreApp.Helpers;
 using GetStoreApp.Models.Settings;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml.Media.Animation;
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
 {
@@ -31,14 +29,13 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         }
 
         // 应用安装方式说明
-        public IAsyncRelayCommand InstallModeTipCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand InstallModeTipCommand => new RelayCommand(() =>
         {
             App.NavigationArgs = AppNaviagtionArgs.SettingsHelp;
             NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
-            await Task.CompletedTask;
         });
 
-        public IAsyncRelayCommand InstallModeSelectCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand InstallModeSelectCommand => new RelayCommand(async () =>
         {
             await InstallModeService.SetInstallModeAsync(InstallMode);
         });

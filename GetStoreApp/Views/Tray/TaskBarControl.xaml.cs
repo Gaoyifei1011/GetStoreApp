@@ -7,7 +7,6 @@ using GetStoreApp.ViewModels.Tray;
 using H.NotifyIcon;
 using Microsoft.UI.Xaml;
 using System;
-using System.Threading.Tasks;
 
 namespace GetStoreApp.Views.Tray
 {
@@ -25,13 +24,12 @@ namespace GetStoreApp.Views.Tray
         {
             InitializeComponent();
 
-            WeakReferenceMessenger.Default.Register<TaskBarControl, TrayIconDisposeMessage>(this, async (taskbarControl, trayIconDisposeMessage) =>
+            WeakReferenceMessenger.Default.Register<TaskBarControl, TrayIconDisposeMessage>(this, (taskbarControl, trayIconDisposeMessage) =>
             {
                 if (trayIconDisposeMessage.Value)
                 {
                     Dispose();
                 }
-                await Task.CompletedTask;
             });
         }
     }

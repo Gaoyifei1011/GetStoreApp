@@ -12,7 +12,6 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="0.8*" />
             <RowDefinition Height="1.2*" />
-
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" VerticalAlignment="Bottom">

@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.History;
-using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Download;
@@ -132,13 +131,15 @@ namespace GetStoreApp.ViewModels.Dialogs
         }
 
         // 痕迹清理
-        public IAsyncRelayCommand TraceCleanupSureCommand => new AsyncRelayCommand(TraceCleanupAsync);
+        public IRelayCommand TraceCleanupSureCommand => new RelayCommand(async () =>
+        {
+            await TraceCleanupAsync();
+        });
 
         // 取消痕迹清理
-        public IAsyncRelayCommand TraceCleanupCancelCommand => new AsyncRelayCommand<ContentDialog>(async (param) =>
+        public IRelayCommand TraceCleanupCancelCommand => new RelayCommand<ContentDialog>((dialog) =>
         {
-            param.Hide();
-            await Task.CompletedTask;
+            dialog.Hide();
         });
 
         /// <summary>
@@ -198,7 +199,7 @@ namespace GetStoreApp.ViewModels.Dialogs
             // 清理本地创建的文件
             if (IsLocalFileClean)
             {
-                List<BackgroundModel> LocalFileData = (await DownloadDBService.QueryWithFlagAsync(4));
+                List<BackgroundModel> LocalFileData = await DownloadDBService.QueryWithFlagAsync(4);
                 LocalCleanResult = DeleteFiles(ref LocalFileData);
             }
 

@@ -11,7 +11,6 @@ using GetStoreApp.Models.Settings;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml.Media.Animation;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
 {
@@ -33,15 +32,14 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         }
 
         // 语言设置说明
-        public IAsyncRelayCommand LanguageTipCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand LanguageTipCommand => new RelayCommand(() =>
         {
             App.NavigationArgs = AppNaviagtionArgs.SettingsHelp;
             NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
-            await Task.CompletedTask;
         });
 
         // 应用默认语言修改
-        public IAsyncRelayCommand LanguageSelectCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand LanguageSelectCommand => new RelayCommand(async () =>
         {
             await LanguageService.SetLanguageAsync(Language);
             WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel

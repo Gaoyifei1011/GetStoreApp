@@ -19,10 +19,10 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         }
 
         // “使用说明”按钮显示设置
-        public IAsyncRelayCommand UseInstructionCommand => new AsyncRelayCommand<bool>(async (param) =>
+        public IRelayCommand UseInstructionCommand => new RelayCommand<bool>(async (useInsVisValue) =>
         {
-            await UseInstructionService.SetUseInsVisValueAsync(param);
-            UseInsVisValue = param;
+            await UseInstructionService.SetUseInsVisValueAsync(useInsVisValue);
+            UseInsVisValue = useInsVisValue;
         });
 
         public UseInstructionViewModel()

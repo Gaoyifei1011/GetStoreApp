@@ -19,12 +19,11 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         }
 
         // 是否开启应用窗口置顶
-        public IAsyncRelayCommand TopMostCommand => new AsyncRelayCommand<bool>(async
-                (param) =>
+        public IRelayCommand TopMostCommand => new RelayCommand<bool>(async (topMostValue) =>
         {
-            await TopMostService.SetTopMostValueAsync(param);
+            await TopMostService.SetTopMostValueAsync(topMostValue);
             await TopMostService.SetAppTopMostAsync();
-            TopMostValue = param;
+            TopMostValue = topMostValue;
         });
 
         public TopMostViewModel()

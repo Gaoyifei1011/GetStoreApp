@@ -23,7 +23,7 @@ namespace GetStoreApp.ViewModels.Tray
         private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
 
         // 隐藏 / 显示窗口
-        public IAsyncRelayCommand ShowOrHideWindowCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand ShowOrHideWindowCommand => new RelayCommand(() =>
         {
             // 隐藏窗口
             if (App.MainWindow.Visible)
@@ -35,10 +35,9 @@ namespace GetStoreApp.ViewModels.Tray
             {
                 WindowHelper.ShowAppWindow();
             }
-            await Task.CompletedTask;
         });
 
-        public IAsyncRelayCommand SettingsCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand SettingsCommand => new RelayCommand(() =>
         {
             // 窗口置前端
             WindowHelper.ShowAppWindow();
@@ -47,11 +46,10 @@ namespace GetStoreApp.ViewModels.Tray
             {
                 NavigationService.NavigateTo(typeof(SettingsViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
             }
-            await Task.CompletedTask;
         });
 
         // 退出应用
-        public IAsyncRelayCommand ExitCommand => new AsyncRelayCommand<TaskbarIcon>(async (param) =>
+        public IRelayCommand ExitCommand => new RelayCommand<TaskbarIcon>(async (appNotifyIcon) =>
         {
             if (DownloadSchedulerService.DownloadingList.Count > 0 || DownloadSchedulerService.WaitingList.Count > 0)
             {
@@ -62,7 +60,7 @@ namespace GetStoreApp.ViewModels.Tray
 
                 if (result == ContentDialogResult.Primary)
                 {
-                    await CloseApp(param);
+                    await CloseApp(appNotifyIcon);
                 }
                 if (result == ContentDialogResult.Secondary)
                 {
@@ -75,7 +73,7 @@ namespace GetStoreApp.ViewModels.Tray
             }
             else
             {
-                await CloseApp(param);
+                await CloseApp(appNotifyIcon);
             }
         });
 
@@ -84,9 +82,9 @@ namespace GetStoreApp.ViewModels.Tray
         /// </summary>
         private async Task CloseApp(TaskbarIcon appTaskbarIcon)
         {
-            appTaskbarIcon.Dispose();
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
             await Aria2Service.CloseAria2Async();
+            appTaskbarIcon.Dispose();
             WindowHelper.CloseWindow();
         }
     }

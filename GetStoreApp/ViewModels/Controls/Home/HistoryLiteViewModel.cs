@@ -14,7 +14,6 @@ using GetStoreApp.Models.Notification;
 using GetStoreApp.Models.Settings;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml.Media.Animation;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -43,22 +42,24 @@ namespace GetStoreApp.ViewModels.Controls.Home
         public ObservableCollection<HistoryModel> HistoryLiteDataList { get; } = new ObservableCollection<HistoryModel>();
 
         // 列表初始化，可以从数据库获得的列表中加载
-        public IAsyncRelayCommand LoadedCommand => new AsyncRelayCommand(GetHistoryLiteDataListAsync);
+        public IRelayCommand LoadedCommand => new RelayCommand(async () =>
+        {
+            await GetHistoryLiteDataListAsync();
+        });
 
         // 查看全部
-        public IAsyncRelayCommand ViewAllCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand ViewAllCommand => new RelayCommand(() =>
         {
             NavigationService.NavigateTo(typeof(HistoryViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
-            await Task.CompletedTask;
         });
 
         // 复制到剪贴板
-        public IAsyncRelayCommand CopyCommand => new AsyncRelayCommand<HistoryModel>(async (param) =>
+        public IRelayCommand CopyCommand => new RelayCommand<HistoryModel>((historyItem) =>
         {
             string CopyContent = string.Format("{0}\t{1}\t{2}",
-                TypeList.Find(item => item.InternalName.Equals(param.HistoryType)).DisplayName,
-                ChannelList.Find(item => item.InternalName.Equals(param.HistoryChannel)).DisplayName,
-                param.HistoryLink);
+                TypeList.Find(item => item.InternalName.Equals(historyItem.HistoryType)).DisplayName,
+                ChannelList.Find(item => item.InternalName.Equals(historyItem.HistoryChannel)).DisplayName,
+                historyItem.HistoryLink);
             CopyPasteHelper.CopyToClipBoard(CopyContent);
 
             WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
@@ -66,15 +67,12 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 NotificationContent = InAppNotificationContent.HistoryCopy,
                 NotificationValue = new object[] { true, false }
             }));
-
-            await Task.CompletedTask;
         });
 
         // 填入到文本框
-        public IAsyncRelayCommand FillinCommand => new AsyncRelayCommand<HistoryModel>(async (param) =>
+        public IRelayCommand FillinCommand => new RelayCommand<HistoryModel>((historyItem) =>
         {
-            WeakReferenceMessenger.Default.Send(new FillinMessage(param));
-            await Task.CompletedTask;
+            WeakReferenceMessenger.Default.Send(new FillinMessage(historyItem));
         });
 
         public HistoryLiteViewModel()

@@ -24,14 +24,14 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         }
 
         // 主题修改设置
-        public IAsyncRelayCommand ThemeSelectCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand ThemeSelectCommand => new RelayCommand(async () =>
             {
                 await ThemeService.SetThemeAsync(Theme);
                 await ThemeService.SetAppThemeAsync();
             });
 
         // 打开系统主题设置
-        public IAsyncRelayCommand SettingsColorCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand SettingsColorCommand => new RelayCommand(async () =>
         {
             await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:colors"));
         });

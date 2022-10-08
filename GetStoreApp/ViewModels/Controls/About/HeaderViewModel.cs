@@ -25,25 +25,25 @@ namespace GetStoreApp.ViewModels.Controls.About
         }
 
         // 开发者个人信息
-        public IAsyncRelayCommand DeveloperDescriptionCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand DeveloperDescriptionCommand => new RelayCommand(async () =>
         {
             await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011"));
         });
 
         // 项目主页
-        public IAsyncRelayCommand ProjectDescriptionCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand ProjectDescriptionCommand => new RelayCommand(async () =>
         {
             await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp"));
         });
 
         // 发送反馈
-        public IAsyncRelayCommand SendFeedbackCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand SendFeedbackCommand => new RelayCommand(async () =>
         {
             await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/issues"));
         });
 
         // 检查更新
-        public IAsyncRelayCommand CheckUpdateCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand CheckUpdateCommand => new RelayCommand(async () =>
         {
             await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/releases"));
         });

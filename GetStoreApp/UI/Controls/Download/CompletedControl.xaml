@@ -314,7 +314,10 @@
                                     <Button Style="{StaticResource ButtonDownloadStyle}" ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=ViewMore}">
 
                                         <Button.Content>
-                                            <FontIcon Glyph="&#xE712;" Style="{StaticResource FontFamilyStyle}" />
+                                            <FontIcon
+                                                FontSize="16"
+                                                Glyph="&#xE712;"
+                                                Style="{StaticResource FontFamilyStyle}" />
                                         </Button.Content>
 
                                         <Button.Flyout>
@@ -330,6 +333,8 @@
                                                     IsEnabled="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}"
                                                     Text="{Binding ElementName=CompletedRoot, Path=DeleteWithFile}"
                                                     ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=DeleteWithFileToolTip}" />
+                                                <MenuFlyoutSeparator />
+                                                <MenuFlyoutItem IsEnabled="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}" Text="查看文件信息" />
                                             </MenuFlyout>
                                         </Button.Flyout>
                                     </Button>

@@ -177,14 +177,14 @@
   <data name="DownloadCleanError" xml:space="preserve">
     <value>下载记录在清理的过程中发生了错误，请检查下载记录访问权限。</value>
   </data>
+  <data name="DownloadCompletedContent" xml:space="preserve">
+    <value>您当前的下载任务已经完成，是否要重新下载？</value>
+  </data>
+  <data name="DownloadMultiRecordContent" xml:space="preserve">
+    <value>您有多条重复的下载记录，是否要重新下载？</value>
+  </data>
   <data name="DownloadNotifyCancel" xml:space="preserve">
     <value>取消下载</value>
-  </data>
-  <data name="DownloadNotifyContent" xml:space="preserve">
-    <value>当前任务已存在，重新下载将删除已下载的内容</value>
-  </data>
-  <data name="DownloadNotifyMultiContent" xml:space="preserve">
-    <value>共有{0}条下载记录已存在，重新下载将删除已下载的内容</value>
   </data>
   <data name="DownloadNotifySure" xml:space="preserve">
     <value>重新下载</value>
@@ -197,6 +197,9 @@
   </data>
   <data name="DownloadRecord" xml:space="preserve">
     <value>下载记录</value>
+  </data>
+  <data name="DownloadUnfinishedContent" xml:space="preserve">
+    <value>您当前的下载任务尚未完成，是否要重新下载？</value>
   </data>
   <data name="HistoryCleanError" xml:space="preserve">
     <value>历史记录在清理的过程中发生了错误，请检查历史记录访问权限。</value>

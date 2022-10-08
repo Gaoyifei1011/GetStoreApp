@@ -28,19 +28,20 @@ namespace GetStoreApp.Helpers
         public static async Task RunAria2Async(string fileName, string arguments)
         {
             //设置启动程序的信息
-            ProcessStartInfo Aria2Info = new ProcessStartInfo();
+            ProcessStartInfo Aria2Info = new ProcessStartInfo
+            {
+                //设置外部程序名
+                FileName = fileName,
 
-            //设置外部程序名
-            Aria2Info.FileName = fileName;
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true,
 
-            Aria2Info.RedirectStandardOutput = true;
-            Aria2Info.RedirectStandardError = true;
-            Aria2Info.UseShellExecute = false;
-            Aria2Info.CreateNoWindow = true;
-
-            //最小化方式启动
-            Aria2Info.WindowStyle = ProcessWindowStyle.Hidden;
-            Aria2Info.Arguments = arguments;
+                //最小化方式启动
+                WindowStyle = ProcessWindowStyle.Hidden,
+                Arguments = arguments
+            };
 
             // 启动Aria2下载进程，并设置进程ID号
             Aria2ProcessID = Process.Start(Aria2Info).Id;

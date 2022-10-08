@@ -22,7 +22,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             set { SetProperty(ref _appExit, value); }
         }
 
-        public IAsyncRelayCommand AppExitSelectCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand AppExitSelectCommand => new RelayCommand(async () =>
         {
             await AppExitService.SetAppExitAsync(AppExit);
         });

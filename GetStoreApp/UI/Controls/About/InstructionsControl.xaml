@@ -17,26 +17,6 @@
                 <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/BeginnerGuideDescription')}" />
                 <MenuFlyoutSeparator Margin="0,0,0,8" />
 
-                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/IconDisplay')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/IconDisplayDescription1')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/IconDisplayDescription2')}" />
-
-                <StackPanel Orientation="Horizontal">
-                    <HyperlinkButton
-                        Command="{x:Bind ViewModel.AcknowledgeIconCommand}"
-                        Content="{x:Bind ResourceService.GetLocalized('/About/AcknowledgeIcon')}"
-                        Style="{StaticResource AboutHyperlinkButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/About/AcknowledgeIcon')}" />
-
-                    <HyperlinkButton
-                        Command="{x:Bind ViewModel.InstallIconCommand}"
-                        Content="{x:Bind ResourceService.GetLocalized('/About/InstallIcon')}"
-                        Style="{StaticResource AboutHyperlinkButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/About/InstallIcon')}" />
-                </StackPanel>
-
-                <MenuFlyoutSeparator Margin="0,0,0,8" />
-
                 <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/ErrorSolution')}" />
                 <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/ErrorSolutionDescription')}" />
                 <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/CheckStep1')}" />

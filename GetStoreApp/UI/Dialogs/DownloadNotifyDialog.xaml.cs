@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Helpers;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -17,18 +18,16 @@ namespace GetStoreApp.UI.Dialogs
 
         public string DownloadNotifyContent { get; set; }
 
-        public DownloadNotifyDialog(int count)
+        public DownloadNotifyDialog(DuplicatedDataInfo duplicatedDataInfo)
         {
             XamlRoot = App.MainWindow.Content.XamlRoot;
             RequestedTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
 
-            if (count == default(int))
+            switch (duplicatedDataInfo)
             {
-                DownloadNotifyContent = ResourceService.GetLocalized("/Dialog/DownloadNotifyContent");
-            }
-            else
-            {
-                DownloadNotifyContent = string.Format(ResourceService.GetLocalized("/Dialog/DownloadNotifyMultiContent"), count);
+                case DuplicatedDataInfo.Unfinished: DownloadNotifyContent = ResourceService.GetLocalized("/Dialog/DownloadUnfinishedContent"); break;
+                case DuplicatedDataInfo.Completed: DownloadNotifyContent = ResourceService.GetLocalized("/Dialog/DownloadCompletedContent"); break;
+                case DuplicatedDataInfo.MultiRecord: DownloadNotifyContent = ResourceService.GetLocalized("/Dialog/DownloadMultiRecordContent"); break;
             }
 
             InitializeComponent();

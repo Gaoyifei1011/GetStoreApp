@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AcknowledgeIcon" xml:space="preserve">
-    <value>Learn about font icon libraries</value>
-  </data>
   <data name="AppInformation" xml:space="preserve">
     <value>View app information</value>
   </data>
@@ -218,18 +215,6 @@
   </data>
   <data name="HeaderDescription" xml:space="preserve">
     <value>Welcome to download the GetStoreApp.Wish you a pleasant experience</value>
-  </data>
-  <data name="IconDisplay" xml:space="preserve">
-    <value>Abnormal icon display</value>
-  </data>
-  <data name="IconDisplayDescription1" xml:space="preserve">
-    <value>The application uses Segoe Fluent Icons font icon library of Windows system. The font icon library is only pre-installed on Windows 11 or later, not on Windows 10. Therefore, the icon is displayed abnormally on Windows 10.</value>
-  </data>
-  <data name="IconDisplayDescription2" xml:space="preserve">
-    <value>If the font icon is displayed abnormally, you need to download the font icon library separately and right-click the menu to install the font icon library. After the installation is complete, restart the application and the font icon will display properly</value>
-  </data>
-  <data name="InstallIcon" xml:space="preserve">
-    <value>Install the font icon library</value>
   </data>
   <data name="InstallMode" xml:space="preserve">
     <value>Insall mode instructions</value>

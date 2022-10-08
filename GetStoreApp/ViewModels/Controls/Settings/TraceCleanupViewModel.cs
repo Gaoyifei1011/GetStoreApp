@@ -8,7 +8,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
     public class TraceCleanupViewModel : ObservableRecipient
     {
         // 清理应用内使用的所有痕迹
-        public IAsyncRelayCommand TraceCleanupCommand = new AsyncRelayCommand(async () =>
+        public IRelayCommand TraceCleanupCommand = new RelayCommand(async () =>
         {
             await new TraceCleanupPromptDialog().ShowAsync();
         });

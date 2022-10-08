@@ -259,6 +259,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
+    <Page Update="UI\Controls\Web\LoadFailedControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+
     <Page Update="UI\Dialogs\ClosingWindowDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -372,11 +376,9 @@
     </Content>
   </ItemGroup>
 
-  <ItemGroup>
-    <Page Update="UI\Controls\Web\LoadFailedControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties properties_4launchsettings_1json__JsonSchema="" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

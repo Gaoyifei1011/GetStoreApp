@@ -6,7 +6,6 @@ using GetStoreApp.Contracts.ViewModels;
 using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Helpers;
 using Microsoft.UI.Xaml.Media.Animation;
-using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Pages
 {
@@ -26,11 +25,10 @@ namespace GetStoreApp.ViewModels.Pages
         }
 
         // 了解应用具体的使用说明
-        public IAsyncRelayCommand UseInstructionCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand UseInstructionCommand => new RelayCommand(() =>
         {
             App.NavigationArgs = AppNaviagtionArgs.Instructions;
             NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
-            await Task.CompletedTask;
         });
 
         public HomeViewModel()

@@ -4,13 +4,11 @@ using GetStoreApp.Contracts.Services.History;
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Contracts.Services.Shell;
-using GetStoreApp.Contracts.Services.Web;
 using GetStoreApp.Services.Download;
 using GetStoreApp.Services.History;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Settings;
 using GetStoreApp.Services.Shell;
-using GetStoreApp.Services.Web;
 using GetStoreApp.UI.Controls.About;
 using GetStoreApp.UI.Controls.Download;
 using GetStoreApp.UI.Controls.Home;
@@ -88,8 +86,6 @@ namespace GetStoreApp.Helpers
                 services.AddSingleton<INavigationService, NavigationService>();
                 services.AddTransient<INavigationViewService, NavigationViewService>();
                 services.AddSingleton<IPageService, PageService>();
-
-                services.AddTransient<IWebViewService, WebViewService>();
 
                 // Default Activation Handler
                 services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();

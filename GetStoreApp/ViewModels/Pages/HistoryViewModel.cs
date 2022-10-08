@@ -98,7 +98,7 @@ namespace GetStoreApp.ViewModels.Pages
         }
 
         // 进入多选模式
-        public IAsyncRelayCommand SelectCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand SelectCommand => new RelayCommand(() =>
         {
             // 保证线程安全
             lock (HistoryDataListLock)
@@ -110,35 +110,37 @@ namespace GetStoreApp.ViewModels.Pages
             }
 
             IsSelectMode = true;
-            await Task.CompletedTask;
         });
 
         // 按时间进行排序
-        public IAsyncRelayCommand TimeSortCommand => new AsyncRelayCommand<string>(async (param) =>
+        public IRelayCommand TimeSortCommand => new RelayCommand<string>(async (value) =>
         {
-            TimeSortOrder = Convert.ToBoolean(param);
+            TimeSortOrder = Convert.ToBoolean(value);
             await GetHistoryDataListAsync();
         });
 
         // 按类型进行过滤
-        public IAsyncRelayCommand TypeFilterCommand => new AsyncRelayCommand<string>(async (param) =>
+        public IRelayCommand TypeFilterCommand => new RelayCommand<string>(async (value) =>
         {
-            TypeFilter = param;
+            TypeFilter = value;
             await GetHistoryDataListAsync();
         });
 
         // 按通道进行过滤
-        public IAsyncRelayCommand ChannelFilterCommand => new AsyncRelayCommand<string>(async (param) =>
+        public IRelayCommand ChannelFilterCommand => new RelayCommand<string>(async (value) =>
         {
-            ChannelFilter = param;
+            ChannelFilter = value;
             await GetHistoryDataListAsync();
         });
 
         // 刷新数据
-        public IAsyncRelayCommand RefreshCommand => new AsyncRelayCommand(GetHistoryDataListAsync);
+        public IRelayCommand RefreshCommand => new RelayCommand(async () =>
+        {
+            await GetHistoryDataListAsync();
+        });
 
         // 全选
-        public IAsyncRelayCommand SelectAllCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand SelectAllCommand => new RelayCommand(() =>
         {
             // 保证线程安全
             lock (HistoryDataListLock)
@@ -148,12 +150,10 @@ namespace GetStoreApp.ViewModels.Pages
                     historyItem.IsSelected = true;
                 }
             }
-
-            await Task.CompletedTask;
         });
 
         // 全部不选
-        public IAsyncRelayCommand SelectNoneCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand SelectNoneCommand => new RelayCommand(() =>
         {
             // 保证线程安全
             lock (HistoryDataListLock)
@@ -163,12 +163,10 @@ namespace GetStoreApp.ViewModels.Pages
                     historyItem.IsSelected = false;
                 }
             }
-
-            await Task.CompletedTask;
         });
 
         // 复制选定项目的内容
-        public IAsyncRelayCommand CopySelectedCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand CopySelectedCommand => new RelayCommand(async () =>
         {
             List<HistoryModel> SelectedHistoryDataList = HistoryDataList.Where(item => item.IsSelected == true).ToList();
 
@@ -195,12 +193,10 @@ namespace GetStoreApp.ViewModels.Pages
                 NotificationContent = InAppNotificationContent.HistoryCopy,
                 NotificationValue = new object[] { true, true, SelectedHistoryDataList.Count }
             }));
-
-            await Task.CompletedTask;
         });
 
         // 删除选定的项目
-        public IAsyncRelayCommand DeleteCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand DeleteCommand => new RelayCommand(async () =>
         {
             List<HistoryModel> SelectedHistoryDataList = HistoryDataList.Where(item => item.IsSelected == true).ToList();
 
@@ -251,42 +247,38 @@ namespace GetStoreApp.ViewModels.Pages
         });
 
         // 退出多选模式
-        public IAsyncRelayCommand CancelCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand CancelCommand => new RelayCommand(() =>
         {
             IsSelectMode = false;
-            await Task.CompletedTask;
         });
 
         // 在多选模式下点击项目选择相应的条目
-        public IAsyncRelayCommand ItemClickCommand => new AsyncRelayCommand<ItemClickEventArgs>(async (param) =>
+        public IRelayCommand ItemClickCommand => new RelayCommand<ItemClickEventArgs>((args) =>
         {
-            HistoryModel historyItem = (HistoryModel)param.ClickedItem;
+            HistoryModel historyItem = (HistoryModel)args.ClickedItem;
             int ClickedIndex = HistoryDataList.IndexOf(historyItem);
 
             lock (HistoryDataListLock)
             {
                 HistoryDataList[ClickedIndex].IsSelected = !HistoryDataList[ClickedIndex].IsSelected;
             }
-
-            await Task.CompletedTask;
         });
 
         // 填入指定项目的内容
-        public IAsyncRelayCommand FillinCommand => new AsyncRelayCommand<HistoryModel>(async (param) =>
+        public IRelayCommand FillinCommand => new RelayCommand<HistoryModel>((historyItem) =>
         {
             App.NavigationArgs = AppNaviagtionArgs.Home;
-            WeakReferenceMessenger.Default.Send(new FillinMessage(param));
+            WeakReferenceMessenger.Default.Send(new FillinMessage(historyItem));
             NavigationService.NavigateTo(typeof(HomeViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
-            await Task.CompletedTask;
         });
 
         // 复制指定项目的内容
-        public IAsyncRelayCommand CopyCommand => new AsyncRelayCommand<HistoryModel>(async (param) =>
+        public IRelayCommand CopyCommand => new RelayCommand<HistoryModel>((historyItem) =>
         {
             string CopyContent = string.Format("{0}\t{1}\t{2}",
-                TypeList.Find(item => item.InternalName.Equals(param.HistoryType)).DisplayName,
-                ChannelList.Find(item => item.InternalName.Equals(param.HistoryChannel)).DisplayName,
-                param.HistoryLink);
+                TypeList.Find(item => item.InternalName.Equals(historyItem.HistoryType)).DisplayName,
+                ChannelList.Find(item => item.InternalName.Equals(historyItem.HistoryChannel)).DisplayName,
+                historyItem.HistoryLink);
             CopyPasteHelper.CopyToClipBoard(CopyContent);
 
             WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
@@ -294,8 +286,6 @@ namespace GetStoreApp.ViewModels.Pages
                 NotificationContent = InAppNotificationContent.HistoryCopy,
                 NotificationValue = new object[] { true, false }
             }));
-
-            await Task.CompletedTask;
         });
 
         // 导航到历史记录页面时，历史记录数据列表初始化，从数据库中存储的列表中加载

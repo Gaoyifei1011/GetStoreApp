@@ -47,13 +47,13 @@ namespace GetStoreApp.ViewModels.Controls.Download
         }
 
         // 打开默认保存的文件夹
-        public IAsyncRelayCommand OpenFolderCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand OpenFolderCommand => new RelayCommand(async () =>
         {
             await DownloadOptionsService.OpenFolderAsync(DownloadOptionsService.DownloadFolder);
         });
 
         // 继续下载全部任务
-        public IAsyncRelayCommand ContinueAllCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand ContinueAllCommand => new RelayCommand(async () =>
         {
             NetWorkStatus NetStatus = NetWorkHelper.GetNetWorkStatus();
 
@@ -109,7 +109,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         });
 
         // 进入多选模式
-        public IAsyncRelayCommand SelectCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand SelectCommand => new RelayCommand(() =>
         {
             lock (UnfinishedDataListLock)
             {
@@ -120,11 +120,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
 
             IsSelectMode = true;
-            await Task.CompletedTask;
         });
 
         // 全部选择
-        public IAsyncRelayCommand SelectAllCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand SelectAllCommand => new RelayCommand(() =>
         {
             lock (UnfinishedDataListLock)
             {
@@ -133,12 +132,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     unfinishedItem.IsSelected = true;
                 }
             }
-
-            await Task.CompletedTask;
         });
 
         // 全部不选
-        public IAsyncRelayCommand SelectNoneCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand SelectNoneCommand => new RelayCommand(() =>
         {
             lock (UnfinishedDataListLock)
             {
@@ -147,12 +144,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     unfinishedItem.IsSelected = false;
                 }
             }
-
-            await Task.CompletedTask;
         });
 
         // 删除选中的任务
-        public IAsyncRelayCommand DeleteSelectedCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand DeleteSelectedCommand => new RelayCommand(async () =>
         {
             List<BackgroundModel> SelectedUnfinishedDataList = new List<BackgroundModel>();
 
@@ -211,25 +206,25 @@ namespace GetStoreApp.ViewModels.Controls.Download
         });
 
         // 退出多选模式
-        public IAsyncRelayCommand CancelCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand CancelCommand => new RelayCommand(() =>
         {
             IsSelectMode = false;
-            await Task.CompletedTask;
         });
 
         // 在多选模式下点击项目选择相应的条目
-        public IAsyncRelayCommand ItemClickCommand => new AsyncRelayCommand<ItemClickEventArgs>(async (param) =>
+        public IRelayCommand ItemClickCommand => new RelayCommand<ItemClickEventArgs>((args) =>
         {
-            UnfinishedModel resultItem = (UnfinishedModel)param.ClickedItem;
+            UnfinishedModel resultItem = (UnfinishedModel)args.ClickedItem;
             int ClickedIndex = UnfinishedDataList.IndexOf(resultItem);
 
-            UnfinishedDataList[ClickedIndex].IsSelected = !UnfinishedDataList[ClickedIndex].IsSelected;
-
-            await Task.CompletedTask;
+            lock (UnfinishedDataListLock)
+            {
+                UnfinishedDataList[ClickedIndex].IsSelected = !UnfinishedDataList[ClickedIndex].IsSelected;
+            }
         });
 
         // 继续下载当前任务
-        public IAsyncRelayCommand ContinueCommand => new AsyncRelayCommand<UnfinishedModel>(async (param) =>
+        public IRelayCommand ContinueCommand => new RelayCommand<UnfinishedModel>(async (unfinishedItem) =>
         {
             NetWorkStatus NetStatus = NetWorkHelper.GetNetWorkStatus();
 
@@ -243,36 +238,36 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 return;
             }
 
-            if (param.DownloadFlag == 2)
+            if (unfinishedItem.DownloadFlag == 2)
             {
                 bool ContinueResult = await DownloadSchedulerService.ContinueTaskAsync(new BackgroundModel
                 {
-                    DownloadKey = param.DownloadKey,
-                    FileName = param.FileName,
-                    FileLink = param.FileLink,
-                    FilePath = param.FilePath,
-                    FileSHA1 = param.FileSHA1,
-                    TotalSize = param.TotalSize
+                    DownloadKey = unfinishedItem.DownloadKey,
+                    FileName = unfinishedItem.FileName,
+                    FileLink = unfinishedItem.FileLink,
+                    FilePath = unfinishedItem.FilePath,
+                    FileSHA1 = unfinishedItem.FileSHA1,
+                    TotalSize = unfinishedItem.TotalSize
                 });
 
                 if (ContinueResult)
                 {
                     lock (UnfinishedDataList)
                     {
-                        UnfinishedDataList.Remove(param);
+                        UnfinishedDataList.Remove(unfinishedItem);
                     }
                 }
             }
         });
 
         // 删除当前任务
-        public IAsyncRelayCommand DeleteCommand => new AsyncRelayCommand<UnfinishedModel>(async (param) =>
+        public IRelayCommand DeleteCommand => new RelayCommand<UnfinishedModel>(async (unfinishedItem) =>
         {
             try
             {
                 // 删除文件
-                string tempFilePath = param.FilePath;
-                string tempFileAria2Path = string.Format("{0}.{1}", param.FilePath, "aria2");
+                string tempFilePath = unfinishedItem.FilePath;
+                string tempFileAria2Path = string.Format("{0}.{1}", unfinishedItem.FilePath, "aria2");
 
                 if (File.Exists(tempFilePath))
                 {
@@ -284,13 +279,13 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     File.Delete(tempFileAria2Path);
                 }
 
-                bool DeleteResult = await DownloadDBService.DeleteAsync(param.DownloadKey);
+                bool DeleteResult = await DownloadDBService.DeleteAsync(unfinishedItem.DownloadKey);
 
                 if (DeleteResult)
                 {
                     lock (UnfinishedDataListLock)
                     {
-                        UnfinishedDataList.Remove(param);
+                        UnfinishedDataList.Remove(unfinishedItem);
                     }
                 }
             }
@@ -318,8 +313,6 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
                     Messenger.UnregisterAll(this);
                 }
-
-                await Task.CompletedTask;
             });
 
             // 订阅事件

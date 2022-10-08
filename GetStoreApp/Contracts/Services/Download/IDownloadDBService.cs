@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Models.Download;
+﻿using GetStoreApp.Extensions.Enum;
+using GetStoreApp.Models.Download;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -18,7 +19,7 @@ namespace GetStoreApp.Contracts.Services.Download
 
         Task<BackgroundModel> QueryWithKeyAsync(string downloadKey);
 
-        Task<bool> CheckDuplicatedAsync(string downloadKey);
+        Task<DuplicatedDataInfo> CheckDuplicatedAsync(string downloadKey);
 
         Task<bool> DeleteAsync(string downloadKey);
 

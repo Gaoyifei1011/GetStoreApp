@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Helpers;
+using GetStoreApp.Messages;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.AppLifecycle;
 using System;
@@ -16,16 +18,15 @@ namespace GetStoreApp.ViewModels.Dialogs
         private IDownloadSchedulerService DownloadSchedulerService { get; } = IOCHelper.GetService<IDownloadSchedulerService>();
 
         // 重启应用
-        public IAsyncRelayCommand RestartAppsSureCommand => new AsyncRelayCommand<ContentDialog>(async (param) =>
+        public IRelayCommand RestartAppsSureCommand => new RelayCommand<ContentDialog>(async (dialog) =>
         {
-            await RestartAppsAsync(param);
+            await RestartAppsAsync(dialog);
         });
 
         // 取消重启应用
-        public IAsyncRelayCommand RestartAppsCancelCommand => new AsyncRelayCommand<ContentDialog>(async (param) =>
+        public IRelayCommand RestartAppsCancelCommand => new RelayCommand<ContentDialog>((dialog) =>
         {
-            param.Hide();
-            await Task.CompletedTask;
+            dialog.Hide();
         });
 
         /// <summary>
@@ -35,8 +36,9 @@ namespace GetStoreApp.ViewModels.Dialogs
         {
             dialog.Hide();
 
-            await Aria2Service.CloseAria2Async();
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
+            await Aria2Service.CloseAria2Async();
+            WeakReferenceMessenger.Default.Send(new TrayIconDisposeMessage(true));
 
             // 重启应用
             AppInstance.Restart("");

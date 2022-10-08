@@ -55,13 +55,13 @@ namespace GetStoreApp.ViewModels.Controls.Download
         }
 
         // 打开默认保存的文件夹
-        public IAsyncRelayCommand OpenFolderCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand OpenFolderCommand => new RelayCommand(async () =>
         {
             await DownloadOptionsService.OpenFolderAsync(DownloadOptionsService.DownloadFolder);
         });
 
         // 进入多选模式
-        public IAsyncRelayCommand SelectCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand SelectCommand => new RelayCommand(() =>
         {
             lock (CompletedDataListLock)
             {
@@ -72,11 +72,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
 
             IsSelectMode = true;
-            await Task.CompletedTask;
         });
 
         // 全部选择
-        public IAsyncRelayCommand SelectAllCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand SelectAllCommand => new RelayCommand(() =>
         {
             lock (CompletedDataListLock)
             {
@@ -85,12 +84,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     completedItem.IsSelected = true;
                 }
             }
-
-            await Task.CompletedTask;
         });
 
         // 全部不选
-        public IAsyncRelayCommand SelectNoneCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand SelectNoneCommand => new RelayCommand(() =>
         {
             lock (CompletedDataListLock)
             {
@@ -99,12 +96,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     completedItem.IsSelected = false;
                 }
             }
-
-            await Task.CompletedTask;
         });
 
         // 删除选中的任务
-        public IAsyncRelayCommand DeleteSelectedCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand DeleteSelectedCommand => new RelayCommand(async () =>
         {
             List<BackgroundModel> SelectedCompletedDataList = new List<BackgroundModel>();
 
@@ -158,7 +153,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         });
 
         // 删除选中的任务（包括文件）
-        public IAsyncRelayCommand DeleteSelectedWithFileCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand DeleteSelectedWithFileCommand => new RelayCommand(async () =>
         {
             List<BackgroundModel> SelectedCompletedDataList = new List<BackgroundModel>();
 
@@ -223,33 +218,33 @@ namespace GetStoreApp.ViewModels.Controls.Download
         });
 
         // 退出多选模式
-        public IAsyncRelayCommand CancelCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand CancelCommand => new RelayCommand(() =>
         {
             IsSelectMode = false;
-            await Task.CompletedTask;
         });
 
         // 在多选模式下点击项目选择相应的条目
-        public IAsyncRelayCommand ItemClickCommand => new AsyncRelayCommand<ItemClickEventArgs>(async (param) =>
+        public IRelayCommand ItemClickCommand => new RelayCommand<ItemClickEventArgs>((args) =>
         {
-            CompletedModel completedItem = (CompletedModel)param.ClickedItem;
+            CompletedModel completedItem = (CompletedModel)args.ClickedItem;
             int ClickedIndex = CompletedDataList.IndexOf(completedItem);
 
-            CompletedDataList[ClickedIndex].IsSelected = !CompletedDataList[ClickedIndex].IsSelected;
-
-            await Task.CompletedTask;
+            lock (CompletedDataListLock)
+            {
+                CompletedDataList[ClickedIndex].IsSelected = !CompletedDataList[ClickedIndex].IsSelected;
+            }
         });
 
         // 安装应用
-        public IAsyncRelayCommand InstallCommand => new AsyncRelayCommand<CompletedModel>(async (param) =>
+        public IRelayCommand InstallCommand => new RelayCommand<CompletedModel>(async (completedItem) =>
         {
             // 使用应用安装程序安装
-            if (!string.IsNullOrEmpty(param.FilePath) && File.Exists(param.FilePath))
+            if (!string.IsNullOrEmpty(completedItem.FilePath) && File.Exists(completedItem.FilePath))
             {
                 if (InstallModeService.InstallMode.InternalName == InstallModeService.InstallModeList[0].InternalName)
                 {
                     ProcessStartInfo Info = new ProcessStartInfo();
-                    Info.FileName = param.FilePath;
+                    Info.FileName = completedItem.FilePath;
                     Info.UseShellExecute = true;
 
                     Process.Start(Info);
@@ -259,7 +254,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 else if (InstallModeService.InstallMode.InternalName == InstallModeService.InstallModeList[1].InternalName)
                 {
                     // 标记安装状态
-                    int InstallIndex = CompletedDataList.IndexOf(CompletedDataList.First(item => item.DownloadKey == param.DownloadKey));
+                    int InstallIndex = CompletedDataList.IndexOf(CompletedDataList.First(item => item.DownloadKey == completedItem.DownloadKey));
                     CompletedDataList[InstallIndex].IsInstalling = true;
 
                     PackageManager packageManager = new PackageManager();
@@ -273,16 +268,16 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     try
                     {
                         // 安装目标应用
-                        DeploymentResult InstallResult = await packageManager.AddPackageAsync(new Uri(param.FilePath), null, DeploymentOptions.None).AsTask(progressCallBack);
+                        DeploymentResult InstallResult = await packageManager.AddPackageAsync(new Uri(completedItem.FilePath), null, DeploymentOptions.None).AsTask(progressCallBack);
                         // 显示安装成功通知
-                        AppNotificationService.Show("InstallApp", "Successfully", Path.GetFileName(param.FilePath));
+                        AppNotificationService.Show("InstallApp", "Successfully", Path.GetFileName(completedItem.FilePath));
                     }
                     // 安装失败显示失败信息
                     catch (Exception e)
                     {
                         CompletedDataList[InstallIndex].InstallError = true;
                         // 显示安装失败通知
-                        AppNotificationService.Show("InstallApp", "Error", Path.GetFileName(param.FilePath), e.Message);
+                        AppNotificationService.Show("InstallApp", "Error", Path.GetFileName(completedItem.FilePath), e.Message);
                     }
                     // 恢复原来的安装信息显示（并延缓当前安装信息显示时间3秒）
                     finally
@@ -296,20 +291,20 @@ namespace GetStoreApp.ViewModels.Controls.Download
         });
 
         // 打开当前项目存储的文件夹
-        public IAsyncRelayCommand OpenItemFolderCommand => new AsyncRelayCommand<string>(async (param) =>
+        public IRelayCommand OpenItemFolderCommand => new RelayCommand<string>(async (filePath) =>
         {
-            if (param is not null)
+            if (filePath is not null)
             {
-                param = param.Replace(@"\\", @"\");
+                filePath = filePath.Replace(@"\\", @"\");
 
                 // 判断文件是否存在，文件存在则寻找对应的文件，不存在打开对应的目录；若目录不存在，则仅启动Explorer.exe进程，打开资源管理器的默认文件夹
-                if (!string.IsNullOrEmpty(param) && File.Exists(param))
+                if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
                 {
-                    await DownloadOptionsService.OpenItemFolderAsync(param);
+                    await DownloadOptionsService.OpenItemFolderAsync(filePath);
                 }
                 else
                 {
-                    string FileFolderPath = Path.GetDirectoryName(param);
+                    string FileFolderPath = Path.GetDirectoryName(filePath);
 
                     if (Directory.Exists(FileFolderPath))
                     {
@@ -324,34 +319,34 @@ namespace GetStoreApp.ViewModels.Controls.Download
         });
 
         // 删除当前任务
-        public IAsyncRelayCommand DeleteCommand => new AsyncRelayCommand<CompletedModel>(async (param) =>
+        public IRelayCommand DeleteCommand => new RelayCommand<CompletedModel>(async (completedItem) =>
         {
-            if (param is not null)
+            if (completedItem is not null)
             {
-                if (param.IsInstalling == true)
+                if (completedItem.IsInstalling == true)
                 {
                     await new InstallingNotifyDialog().ShowAsync();
                     return;
                 }
 
-                bool DeleteResult = await DownloadDBService.DeleteAsync(param.DownloadKey);
+                bool DeleteResult = await DownloadDBService.DeleteAsync(completedItem.DownloadKey);
 
                 if (DeleteResult)
                 {
                     lock (CompletedDataListLock)
                     {
-                        CompletedDataList.Remove(param);
+                        CompletedDataList.Remove(completedItem);
                     }
                 }
             }
         });
 
         // 删除当前任务
-        public IAsyncRelayCommand DeleteWithFileCommand => new AsyncRelayCommand<CompletedModel>(async (param) =>
+        public IRelayCommand DeleteWithFileCommand => new RelayCommand<CompletedModel>(async (completedItem) =>
         {
-            if (param is not null)
+            if (completedItem is not null)
             {
-                if (param.IsInstalling == true)
+                if (completedItem.IsInstalling == true)
                 {
                     await new InstallingNotifyDialog().ShowAsync();
                     return;
@@ -359,18 +354,18 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
                 try
                 {
-                    if (File.Exists(param.FilePath))
+                    if (File.Exists(completedItem.FilePath))
                     {
-                        File.Delete(param.FilePath);
+                        File.Delete(completedItem.FilePath);
                     }
 
-                    bool DeleteResult = await DownloadDBService.DeleteAsync(param.DownloadKey);
+                    bool DeleteResult = await DownloadDBService.DeleteAsync(completedItem.DownloadKey);
 
                     if (DeleteResult)
                     {
                         lock (CompletedDataListLock)
                         {
-                            CompletedDataList.Remove(param);
+                            CompletedDataList.Remove(completedItem);
                         }
                     }
                 }
@@ -400,7 +395,6 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     // 关闭消息服务
                     Messenger.UnregisterAll(this);
                 }
-                await Task.CompletedTask;
             });
 
             // 订阅事件

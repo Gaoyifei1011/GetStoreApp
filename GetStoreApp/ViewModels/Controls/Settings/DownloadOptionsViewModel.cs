@@ -9,7 +9,6 @@ using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 
@@ -53,28 +52,27 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         }
 
         // 下载管理说明
-        public IAsyncRelayCommand DownloadInstructionCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand DownloadInstructionCommand => new RelayCommand(() =>
         {
             App.NavigationArgs = AppNaviagtionArgs.SettingsHelp;
             NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
-            await Task.CompletedTask;
         });
 
         // 打开文件存放目录
-        public IAsyncRelayCommand OpenFolderCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand OpenFolderCommand => new RelayCommand(async () =>
         {
             await DownloadOptionsService.OpenFolderAsync(DownloadFolder);
         });
 
         // 使用默认目录
-        public IAsyncRelayCommand UseDefaultFolderCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand UseDefaultFolderCommand => new RelayCommand(async () =>
         {
             DownloadFolder = DownloadOptionsService.DefaultFolder;
             await DownloadOptionsService.SetFolderAsync(DownloadOptionsService.DefaultFolder);
         });
 
         // 修改下载目录
-        public IAsyncRelayCommand ChangeFolderCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand ChangeFolderCommand => new RelayCommand(async () =>
         {
             await DownloadOptionsService.CreateFolderAsync(DownloadOptionsService.DefaultFolder.Path);
 
@@ -95,13 +93,13 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         });
 
         // 修改同时下载文件数
-        public IAsyncRelayCommand DownloadItemCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand DownloadItemCommand => new RelayCommand(async () =>
         {
             await DownloadOptionsService.SetItemAsync(DownloadItem);
         });
 
         // 修改下载文件的方式
-        public IAsyncRelayCommand DownloadModeCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand DownloadModeCommand => new RelayCommand(async () =>
         {
             await DownloadOptionsService.SetModeAsync(DownloadMode);
         });

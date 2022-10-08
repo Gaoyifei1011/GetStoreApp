@@ -10,7 +10,6 @@ using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
-using System.Threading.Tasks;
 using Windows.System;
 
 namespace GetStoreApp.Views.Pages
@@ -82,7 +81,7 @@ namespace GetStoreApp.Views.Pages
         {
             int NotificationDuration = 2500;
 
-            WeakReferenceMessenger.Default.Register<ShellPage, InAppNotificationMessage>(this, async (shellPage, inAppNotificationMessage) =>
+            WeakReferenceMessenger.Default.Register<ShellPage, InAppNotificationMessage>(this, (shellPage, inAppNotificationMessage) =>
             {
                 if (NotificationService.AppNotification)
                 {
@@ -97,8 +96,6 @@ namespace GetStoreApp.Views.Pages
                         default: break;
                     };
                 }
-
-                await Task.CompletedTask;
             });
         }
     }

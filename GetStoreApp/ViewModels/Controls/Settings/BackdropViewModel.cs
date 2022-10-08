@@ -8,7 +8,6 @@ using GetStoreApp.Models.Settings;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml.Media.Animation;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
 {
@@ -32,15 +31,14 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         public bool BackdropIsEnabled { get; }
 
         // 背景色不可用时具体信息了解
-        public IAsyncRelayCommand BackdropTipCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand BackdropTipCommand => new RelayCommand(() =>
         {
             App.NavigationArgs = AppNaviagtionArgs.SettingsHelp;
             NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
-            await Task.CompletedTask;
         });
 
         // 选择背景色
-        public IAsyncRelayCommand BackdropSelectCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand BackdropSelectCommand => new RelayCommand(async () =>
         {
             await BackdropService.SetBackdropAsync(Backdrop);
             await BackdropService.SetAppBackdropAsync();

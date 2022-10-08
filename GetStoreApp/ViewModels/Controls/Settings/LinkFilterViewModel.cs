@@ -6,8 +6,6 @@ using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Helpers;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml.Media.Animation;
-using System;
-using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
 {
@@ -36,25 +34,24 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         }
 
         // 链接过滤说明
-        public IAsyncRelayCommand LinkFilterInstructionCommand => new AsyncRelayCommand(async () =>
+        public IRelayCommand LinkFilterInstructionCommand => new RelayCommand(() =>
         {
             App.NavigationArgs = AppNaviagtionArgs.SettingsHelp;
             NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
-            await Task.CompletedTask;
         });
 
         // 设置是否过滤以“.e”开头的文件
-        public IAsyncRelayCommand StartWithEFilterCommand => new AsyncRelayCommand<bool>(async (param) =>
+        public IRelayCommand StartWithEFilterCommand => new RelayCommand<bool>(async (startWithEFilterValue) =>
         {
-            await LinkFilterService.SetStartsWithEFilterValueAsync(param);
-            StartsWithEFilterValue = param;
+            await LinkFilterService.SetStartsWithEFilterValueAsync(startWithEFilterValue);
+            StartsWithEFilterValue = startWithEFilterValue;
         });
 
         // 设置是否过滤包块映射文件
-        public IAsyncRelayCommand BlockMapFilterCommand => new AsyncRelayCommand<bool>(async (param) =>
+        public IRelayCommand BlockMapFilterCommand => new RelayCommand<bool>(async (blockMapFilterValue) =>
         {
-            await LinkFilterService.SetBlockMapFilterValueAsync(param);
-            BlockMapFilterValue = param;
+            await LinkFilterService.SetBlockMapFilterValueAsync(blockMapFilterValue);
+            BlockMapFilterValue = blockMapFilterValue;
         });
 
         public LinkFilterViewModel()
