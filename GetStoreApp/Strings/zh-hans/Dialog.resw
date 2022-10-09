@@ -147,6 +147,15 @@
   <data name="CloudflareValidationSure" xml:space="preserve">
     <value>确定</value>
   </data>
+  <data name="CopyException" xml:space="preserve">
+    <value>复制异常信息</value>
+  </data>
+  <data name="CoreWebView2FailedCancel" xml:space="preserve">
+    <value>关闭窗口</value>
+  </data>
+  <data name="CoreWebView2FailedTitle" xml:space="preserve">
+    <value>浏览器进程发生异常</value>
+  </data>
   <data name="DeleteCancel" xml:space="preserve">
     <value>取消</value>
   </data>
@@ -201,6 +210,9 @@
   <data name="DownloadUnfinishedContent" xml:space="preserve">
     <value>您当前的下载任务尚未完成，是否要重新下载？</value>
   </data>
+  <data name="ExitCode" xml:space="preserve">
+    <value>退出代码：{0}</value>
+  </data>
   <data name="HistoryCleanError" xml:space="preserve">
     <value>历史记录在清理的过程中发生了错误，请检查历史记录访问权限。</value>
   </data>
@@ -230,6 +242,15 @@
   </data>
   <data name="OpenDownloadPage" xml:space="preserve">
     <value>打开下载页面</value>
+  </data>
+  <data name="ProcessDescription" xml:space="preserve">
+    <value>详细信息：{0}</value>
+  </data>
+  <data name="ProcessFailedKind" xml:space="preserve">
+    <value>异常类型：{0}</value>
+  </data>
+  <data name="Reason" xml:space="preserve">
+    <value>异常原因：{0}</value>
   </data>
   <data name="RecognizeDesktopApps" xml:space="preserve">
     <value>如何识别传统桌面应用?</value>

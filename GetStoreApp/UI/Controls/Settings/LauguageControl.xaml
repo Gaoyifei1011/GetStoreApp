@@ -45,7 +45,7 @@
                 <FontIcon
                     FontSize="16"
                     Glyph="&#xE946;"
-                    Style="{StaticResource FontFamilyStyle}" />
+                    Style="{StaticResource SegoeFluentStyle}" />
             </Button.Content>
         </Button>
 

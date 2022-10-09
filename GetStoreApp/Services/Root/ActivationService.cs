@@ -119,7 +119,7 @@ namespace GetStoreApp.Services.Root
         {
             IActivationHandler activationHandler = ActivationHandlers.FirstOrDefault(h => h.CanHandle(activationArgs));
 
-            if (activationHandler != null)
+            if (activationHandler is not null)
             {
                 await activationHandler.HandleAsync(activationArgs);
             }

@@ -65,7 +65,7 @@
                     Label="{x:Bind ResourceService.GetLocalized('/Download/OpenFolder')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/OpenFolderToolTip')}">
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE8b7;" Style="{StaticResource FontFamilyStyle}" />
+                        <FontIcon Glyph="&#xE8b7;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
 
@@ -74,7 +74,7 @@
                     Label="{x:Bind ResourceService.GetLocalized('/Download/PauseAll')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/PauseAllToolTip')}">
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE769;" Style="{StaticResource FontFamilyStyle}" />
+                        <FontIcon Glyph="&#xE769;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
 
@@ -83,7 +83,7 @@
                     Label="{x:Bind ResourceService.GetLocalized('/Download/Select')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SelectToolTip')}">
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE762;" Style="{StaticResource FontFamilyStyle}" />
+                        <FontIcon Glyph="&#xE762;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
             </CommandBar>
@@ -101,7 +101,7 @@
                     Label="{x:Bind ResourceService.GetLocalized('/Download/SelectAll')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SelectAll')}">
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE8b3;" Style="{StaticResource FontFamilyStyle}" />
+                        <FontIcon Glyph="&#xE8b3;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
 
@@ -110,7 +110,7 @@
                     Label="{x:Bind ResourceService.GetLocalized('/Download/SelectNone')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SelectNone')}">
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE8e6;" Style="{StaticResource FontFamilyStyle}" />
+                        <FontIcon Glyph="&#xE8e6;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
 
@@ -119,7 +119,7 @@
                     Label="{x:Bind ResourceService.GetLocalized('/Download/DeleteSelected')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/DeleteSelectedToolTip')}">
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE74d;" Style="{StaticResource FontFamilyStyle}" />
+                        <FontIcon Glyph="&#xE74d;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
 
@@ -128,7 +128,7 @@
                     Label="{x:Bind ResourceService.GetLocalized('/Download/Cancel')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/CancelToolTip')}">
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE711;" Style="{StaticResource FontFamilyStyle}" />
+                        <FontIcon Glyph="&#xE711;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
             </CommandBar>
@@ -260,7 +260,7 @@
                                         Style="{StaticResource ButtonDownloadStyle}"
                                         ToolTipService.ToolTip="{Binding ElementName=DownloadingRoot, Path=PauseToolTip}">
                                         <Button.Content>
-                                            <FontIcon Glyph="&#xE769;" Style="{StaticResource FontFamilyStyle}" />
+                                            <FontIcon Glyph="&#xE769;" Style="{StaticResource SegoeFluentStyle}" />
                                         </Button.Content>
                                     </Button>
 
@@ -270,7 +270,7 @@
                                         Style="{StaticResource ButtonDownloadStyle}"
                                         ToolTipService.ToolTip="{Binding ElementName=DownloadingRoot, Path=DeleteToolTip}">
                                         <Button.Content>
-                                            <FontIcon Glyph="&#xE711;" Style="{StaticResource FontFamilyStyle}" />
+                                            <FontIcon Glyph="&#xE711;" Style="{StaticResource SegoeFluentStyle}" />
                                         </Button.Content>
                                     </Button>
                                 </StackPanel>

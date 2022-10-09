@@ -177,6 +177,8 @@ namespace GetStoreApp.Helpers
                 services.AddTransient<LoadFailedViewModel>();
 
                 // 对话框（MVVM）
+                services.AddTransient<CoreWebView2FailedDialog>();
+                services.AddTransient<CoreWebView2FailedViewModel>();
                 services.AddTransient<LicenseDialog>();
                 services.AddTransient<LicenseViewModel>();
                 services.AddTransient<RestartAppsDialog>();

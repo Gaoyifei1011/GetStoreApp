@@ -133,7 +133,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             foreach (ResultModel resultItem in SelectedResultDataList)
             {
-                stringBuilder.Append(string.Format("[\n{0}\n{1}\n{2}\n{3}\n]\n",
+                stringBuilder.AppendLine(string.Format("[\n{0}\n{1}\n{2}\n{3}\n]",
                     resultItem.FileName,
                     resultItem.FileLink,
                     resultItem.FileSHA1,
@@ -166,7 +166,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             foreach (ResultModel resultItem in SelectedResultDataList)
             {
-                stringBuilder.Append(string.Format("{0}\n", resultItem.FileLink));
+                stringBuilder.AppendLine(string.Format("{0}", resultItem.FileLink));
             }
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());

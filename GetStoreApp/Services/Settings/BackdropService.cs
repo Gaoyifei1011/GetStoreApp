@@ -2,6 +2,7 @@
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Helpers;
 using GetStoreApp.Models.Settings;
+using Microsoft.UI.Composition.SystemBackdrops;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -70,7 +71,8 @@ namespace GetStoreApp.Services.Settings
         {
             App.MainWindow.Backdrop = AppBackdrop.InternalName switch
             {
-                "Mica" => new MicaSystemBackdrop(),
+                "Mica" => new MicaSystemBackdrop() { Kind = MicaKind.Base},
+                "MicaAlt" => new MicaSystemBackdrop() { Kind = MicaKind.BaseAlt},
                 "Acrylic" => new AcrylicSystemBackdrop(),
                 _ => null
             };

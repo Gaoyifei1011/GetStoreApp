@@ -44,25 +44,25 @@
             <NavigationView.MenuItems>
                 <NavigationViewItem helpers:NavigationHelper.NavigateTo="GetStoreApp.ViewModels.Pages.HomeViewModel" Content="{x:Bind ResourceService.GetLocalized('/Shell/Home')}">
                     <NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xE80f;" Style="{StaticResource FontFamilyStyle}" />
+                        <FontIcon Glyph="&#xE80f;" Style="{StaticResource SegoeFluentStyle}" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
                 <NavigationViewItem helpers:NavigationHelper.NavigateTo="GetStoreApp.ViewModels.Pages.HistoryViewModel" Content="{x:Bind ResourceService.GetLocalized('/Shell/History')}">
                     <NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xF738;" Style="{StaticResource FontFamilyStyle}" />
+                        <FontIcon Glyph="&#xF738;" Style="{StaticResource SegoeFluentStyle}" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
                 <NavigationViewItem helpers:NavigationHelper.NavigateTo="GetStoreApp.ViewModels.Pages.DownloadViewModel" Content="{x:Bind ResourceService.GetLocalized('/Shell/Download')}">
                     <NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xE896;" Style="{StaticResource FontFamilyStyle}" />
+                        <FontIcon Glyph="&#xE896;" Style="{StaticResource SegoeFluentStyle}" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
                 <NavigationViewItem helpers:NavigationHelper.NavigateTo="GetStoreApp.ViewModels.Pages.WebViewModel" Content="{x:Bind ResourceService.GetLocalized('/Shell/Web')}">
                     <NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xE774;" Style="{StaticResource FontFamilyStyle}" />
+                        <FontIcon Glyph="&#xE774;" Style="{StaticResource SegoeFluentStyle}" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
@@ -70,7 +70,7 @@
             <NavigationView.FooterMenuItems>
                 <NavigationViewItem helpers:NavigationHelper.NavigateTo="GetStoreApp.ViewModels.Pages.AboutViewModel" Content="{x:Bind ResourceService.GetLocalized('/Shell/About')}">
                     <NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xE946;" Style="{StaticResource FontFamilyStyle}" />
+                        <FontIcon Glyph="&#xE946;" Style="{StaticResource SegoeFluentStyle}" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.FooterMenuItems>

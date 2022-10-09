@@ -194,6 +194,12 @@ namespace GetStoreApp.Services.Root
 
             BackdropList.Add(new BackdropModel
             {
+                DisplayName = GetLocalized("/Settings/BackdropMicaAlt"),
+                InternalName = "MicaAlt"
+            });
+
+            BackdropList.Add(new BackdropModel
+            {
                 DisplayName = GetLocalized("/Settings/BackdropAcrylic"),
                 InternalName = "Acrylic"
             });

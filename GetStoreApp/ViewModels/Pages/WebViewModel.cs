@@ -69,10 +69,35 @@ namespace GetStoreApp.ViewModels.Pages
             set { SetProperty(ref _isLoading, value); }
         }
 
+        /// <summary>
+        /// 浏览器内核进程发生异常时对应的事件
+        /// </summary>
+        public IRelayCommand CoreProcessFailedCommand => new RelayCommand<CoreWebView2ProcessFailedEventArgs>(async (args) =>
+        {
+            // 显示异常信息错误原因，弹出对话框
+            await new CoreWebView2FailedDialog(args).ShowAsync();
+        });
+
+        /// <summary>
+        /// 初始化CoreWebView2对象
+        /// </summary>
+        public IRelayCommand CoreWebView2InitializedCommand => new RelayCommand<WebView2>((webView) =>
+        {
+            if (CoreWebView is null && webView.CoreWebView2 is not null)
+            {
+                CoreWebView = webView.CoreWebView2;
+
+                // 挂载对应的事件
+                CoreWebView.NewWindowRequested += OnNewWindowRequested;
+                CoreWebView.SourceChanged += OnSourceChanged;
+                CoreWebView.DownloadStarting += OnDownloadStarting;
+            }
+        });
+
         // 网页后退
         public IRelayCommand BrowserBackCommand => new RelayCommand(() =>
         {
-            if (CoreWebView != null && CoreWebView.CanGoBack)
+            if (CoreWebView is not null && CoreWebView.CanGoBack)
             {
                 CoreWebView.GoBack();
             }
@@ -81,7 +106,7 @@ namespace GetStoreApp.ViewModels.Pages
         // 网页前进
         public IRelayCommand BrowserForwardCommand => new RelayCommand(() =>
         {
-            if (CoreWebView != null && CoreWebView.CanGoForward)
+            if (CoreWebView is not null && CoreWebView.CanGoForward)
             {
                 CoreWebView.GoForward();
             }
@@ -106,13 +131,8 @@ namespace GetStoreApp.ViewModels.Pages
         });
 
         // 页面完成导航
-        public IRelayCommand NavigationCompletedCommand => new RelayCommand<WebView2>((webView) =>
+        public IRelayCommand NavigationCompletedCommand => new RelayCommand(() =>
         {
-            if (CoreWebView == null && webView.CoreWebView2 != null)
-            {
-                InitializeCoreWebView(webView.CoreWebView2);
-            }
-
             IsLoading = false;
         });
 
@@ -121,25 +141,12 @@ namespace GetStoreApp.ViewModels.Pages
             Source = new Uri(DefaultUrl);
         }
 
-        /// <summary>
-        /// 初始化CoreWebView2
-        /// TODO:这一事件本来应该在CoreWebView2InitializeCompleted事件中传递参数的， 但是这一Winui3自带的WebView2目前暂无这一事件，NavigationCompleted事件传递的WebView2参数获取CoreWebView2（此时已经初始化）
-        /// </summary>
-        private void InitializeCoreWebView(CoreWebView2 coreWebView)
-        {
-            CoreWebView = coreWebView;
-
-            CoreWebView.NewWindowRequested += OnNewWindowRequested;
-            CoreWebView.SourceChanged += OnSourceChanged;
-            CoreWebView.DownloadStarting += OnDownloadStarting;
-        }
-
         public void OnNavigatedTo(object parameter)
         { }
 
         public void OnNavigatedFrom()
         {
-            if (CoreWebView != null)
+            if (CoreWebView is not null)
             {
                 CoreWebView.NewWindowRequested -= OnNewWindowRequested;
                 CoreWebView.SourceChanged -= OnSourceChanged;
@@ -165,6 +172,9 @@ namespace GetStoreApp.ViewModels.Pages
             CanGoForward = CoreWebView.CanGoForward;
         }
 
+        /// <summary>
+        /// 当有任务要开始下载时触发这一事件
+        /// </summary>
         private void OnDownloadStarting(CoreWebView2 sender, CoreWebView2DownloadStartingEventArgs args)
         {
             Deferral deferral = args.GetDeferral();

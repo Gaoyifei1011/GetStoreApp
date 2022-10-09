@@ -161,6 +161,7 @@
                                     <Grid
                                         x:Name="CommandSpace"
                                         Grid.Row="1"
+                                        Padding="{StaticResource ContentDialogPadding}"
                                         HorizontalAlignment="Stretch"
                                         VerticalAlignment="Bottom"
                                         Background="{TemplateBinding Background}"

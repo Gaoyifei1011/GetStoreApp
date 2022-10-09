@@ -147,6 +147,15 @@
   <data name="CloudflareValidationSure" xml:space="preserve">
     <value>OK</value>
   </data>
+  <data name="CopyException" xml:space="preserve">
+    <value>Copy exception information</value>
+  </data>
+  <data name="CoreWebView2FailedCancel" xml:space="preserve">
+    <value>Close window</value>
+  </data>
+  <data name="CoreWebView2FailedTitle" xml:space="preserve">
+    <value>An exception occurred in th e browser process</value>
+  </data>
   <data name="DeleteCancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
@@ -201,6 +210,9 @@
   <data name="DownloadUnfinishedContent" xml:space="preserve">
     <value>Your current download task is not complete. Do you want to download again?</value>
   </data>
+  <data name="ExitCode" xml:space="preserve">
+    <value>Exit code: {0}</value>
+  </data>
   <data name="HistoryCleanError" xml:space="preserve">
     <value>An error occurred during the history cleaning process. Please check the history access permissions.</value>
   </data>
@@ -230,6 +242,15 @@
   </data>
   <data name="OpenDownloadPage" xml:space="preserve">
     <value>Open download page</value>
+  </data>
+  <data name="ProcessDescription" xml:space="preserve">
+    <value>Detail information: {0}</value>
+  </data>
+  <data name="ProcessFailedKind" xml:space="preserve">
+    <value>Exception type: {0}</value>
+  </data>
+  <data name="Reason" xml:space="preserve">
+    <value>Exception reason: {0}</value>
   </data>
   <data name="RecognizeDesktopApps" xml:space="preserve">
     <value>How to recognize traditional desktop apps?</value>

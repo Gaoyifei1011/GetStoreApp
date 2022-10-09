@@ -180,7 +180,7 @@ namespace GetStoreApp.ViewModels.Pages
 
             foreach (HistoryModel selectedHistoryData in SelectedHistoryDataList)
             {
-                stringBuilder.Append(string.Format("{0}\t{1}\t{2}\n",
+                stringBuilder.AppendLine(string.Format("{0}\t{1}\t{2}",
                     TypeList.Find(i => i.InternalName.Equals(selectedHistoryData.HistoryType)).DisplayName,
                     ChannelList.Find(i => i.InternalName.Equals(selectedHistoryData.HistoryChannel)).DisplayName,
                     selectedHistoryData.HistoryLink));

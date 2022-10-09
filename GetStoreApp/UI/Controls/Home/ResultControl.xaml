@@ -71,7 +71,7 @@
                     Label="{x:Bind ResourceService.GetLocalized('/Home/CopyID')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/CopyIDToolTip')}">
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE8c8;" Style="{StaticResource FontFamilyStyle}" />
+                        <FontIcon Glyph="&#xE8c8;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
 
@@ -81,7 +81,7 @@
                     Label="{x:Bind ResourceService.GetLocalized('/Home/Select')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/SelectToolTip')}">
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE762;" Style="{StaticResource FontFamilyStyle}" />
+                        <FontIcon Glyph="&#xE762;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
             </CommandBar>
@@ -99,7 +99,7 @@
                     Label="{x:Bind ResourceService.GetLocalized('/Home/SelectAll')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/SelectAll')}">
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE8b3;" Style="{StaticResource FontFamilyStyle}" />
+                        <FontIcon Glyph="&#xE8b3;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
 
@@ -108,14 +108,14 @@
                     Label="{x:Bind ResourceService.GetLocalized('/Home/SelectNone')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/SelectNone')}">
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE8e6;" Style="{StaticResource FontFamilyStyle}" />
+                        <FontIcon Glyph="&#xE8e6;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
 
                 <AppBarButton Label="{x:Bind ResourceService.GetLocalized('/Home/CopyOptions')}" ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/CopyOptionsToolTip')}">
 
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE8c8;" Style="{StaticResource FontFamilyStyle}" />
+                        <FontIcon Glyph="&#xE8c8;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
 
                     <AppBarButton.Flyout>
@@ -137,7 +137,7 @@
                     Label="{x:Bind ResourceService.GetLocalized('/Home/DownloadSelected')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/DownloadSelected')}">
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE74b;" Style="{StaticResource FontFamilyStyle}" />
+                        <FontIcon Glyph="&#xE74b;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
 
@@ -146,7 +146,7 @@
                     Label="{x:Bind ResourceService.GetLocalized('/Home/Cancel')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/CancelToolTip')}">
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE711;" Style="{StaticResource FontFamilyStyle}" />
+                        <FontIcon Glyph="&#xE711;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
             </CommandBar>

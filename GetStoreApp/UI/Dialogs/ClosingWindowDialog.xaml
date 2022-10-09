@@ -7,6 +7,7 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="{x:Bind ResourceService.GetLocalized('/Dialog/ClosingWindowTitle')}"
+    BorderBrush="{ThemeResource SystemAccentColor}"
     CloseButtonText="{x:Bind ResourceService.GetLocalized('/Dialog/ClosingWindowCancel')}"
     Content="{x:Bind ResourceService.GetLocalized('/Dialog/ClosingWindowContent')}"
     PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"

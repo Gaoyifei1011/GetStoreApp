@@ -45,7 +45,7 @@ namespace GetStoreApp.Services.Shell
 
         private void RegisterFrameEvents()
         {
-            if (_frame != null)
+            if (_frame is not null)
             {
                 _frame.Navigated += OnNavigated;
             }
@@ -53,7 +53,7 @@ namespace GetStoreApp.Services.Shell
 
         private void UnregisterFrameEvents()
         {
-            if (_frame != null)
+            if (_frame is not null)
             {
                 _frame.Navigated -= OnNavigated;
             }
@@ -80,7 +80,7 @@ namespace GetStoreApp.Services.Shell
         {
             Type pageType = PageService.GetPageType(pageKey);
 
-            if (_frame.Content?.GetType() != pageType || parameter != null && !parameter.Equals(_lastParameterUsed))
+            if (_frame.Content?.GetType() != pageType || parameter is not null && !parameter.Equals(_lastParameterUsed))
             {
                 _frame.Tag = clearNavigation;
                 object vmBeforeNavigation = _frame.GetPageViewModel();

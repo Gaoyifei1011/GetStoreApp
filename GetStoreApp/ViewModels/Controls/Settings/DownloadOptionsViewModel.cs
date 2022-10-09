@@ -85,7 +85,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
             StorageFolder Folder = await folderPicker.PickSingleFolderAsync();
 
-            if (Folder != null)
+            if (Folder is not null)
             {
                 DownloadFolder = Folder;
                 await DownloadOptionsService.SetFolderAsync(DownloadFolder);

@@ -56,7 +56,7 @@
                         Label="{x:Bind ResourceService.GetLocalized('/Home/ViewAll')}"
                         ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/ViewAllToolTip')}">
                         <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE890;" Style="{StaticResource FontFamilyStyle}" />
+                            <FontIcon Glyph="&#xE890;" Style="{StaticResource SegoeFluentStyle}" />
                         </AppBarButton.Icon>
                     </AppBarButton>
                 </CommandBar>

@@ -45,7 +45,7 @@ namespace GetStoreApp.ViewModels.Pages
             }
 
             var selectedItem = NavigationViewService.GetSelectedItem(args.SourcePageType);
-            if (selectedItem != null)
+            if (selectedItem is not null)
             {
                 Selected = selectedItem;
             }

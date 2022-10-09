@@ -74,14 +74,14 @@
                     Label="{x:Bind ResourceService.GetLocalized('/History/Select')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/SelectToolTip')}">
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE762;" Style="{StaticResource FontFamilyStyle}" />
+                        <FontIcon Glyph="&#xE762;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
 
                 <AppBarButton Label="{x:Bind ResourceService.GetLocalized('/History/Sort')}" ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/SortToolTip')}">
 
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE8cb;" Style="{StaticResource FontFamilyStyle}" />
+                        <FontIcon Glyph="&#xE8cb;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
 
                     <AppBarButton.Flyout>
@@ -94,7 +94,7 @@
                                 Text="{x:Bind ResourceService.GetLocalized('/History/TimeIncreaseSort')}"
                                 ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/TimeIncreaseSortToolTip')}">
                                 <RadioMenuFlyoutItem.Icon>
-                                    <FontIcon Glyph="&#xE74a;" Style="{StaticResource FontFamilyStyle}" />
+                                    <FontIcon Glyph="&#xE74a;" Style="{StaticResource SegoeFluentStyle}" />
                                 </RadioMenuFlyoutItem.Icon>
                             </RadioMenuFlyoutItem>
 
@@ -105,7 +105,7 @@
                                 Text="{x:Bind ResourceService.GetLocalized('/History/TimeDecreaseSort')}"
                                 ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/TimeDecreaseSortToolTip')}">
                                 <RadioMenuFlyoutItem.Icon>
-                                    <FontIcon Glyph="&#xE74b;" Style="{StaticResource FontFamilyStyle}" />
+                                    <FontIcon Glyph="&#xE74b;" Style="{StaticResource SegoeFluentStyle}" />
                                 </RadioMenuFlyoutItem.Icon>
                             </RadioMenuFlyoutItem>
                         </MenuFlyout>
@@ -115,7 +115,7 @@
                 <AppBarButton Label="{x:Bind ResourceService.GetLocalized('/History/Filter')}" ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/FilterToolTip')}">
 
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE74a;" Style="{StaticResource FontFamilyStyle}" />
+                        <FontIcon Glyph="&#xE74a;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
 
                     <AppBarButton.Flyout>
@@ -217,7 +217,7 @@
                     Label="{x:Bind ResourceService.GetLocalized('/History/Refresh')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/RefreshToolTip')}">
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE72c;" Style="{StaticResource FontFamilyStyle}" />
+                        <FontIcon Glyph="&#xE72c;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
             </CommandBar>
@@ -235,7 +235,7 @@
                     Label="{x:Bind ResourceService.GetLocalized('/History/SelectAll')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/SelectAll')}">
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE8b3;" Style="{StaticResource FontFamilyStyle}" />
+                        <FontIcon Glyph="&#xE8b3;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
 
@@ -244,7 +244,7 @@
                     Label="{x:Bind ResourceService.GetLocalized('/History/SelectNone')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/SelectNone')}">
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE8e6;" Style="{StaticResource FontFamilyStyle}" />
+                        <FontIcon Glyph="&#xE8e6;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
 
@@ -253,7 +253,7 @@
                     Label="{x:Bind ResourceService.GetLocalized('/History/CopySelected')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/CopySelectedToolTip')}">
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE8c8;" Style="{StaticResource FontFamilyStyle}" />
+                        <FontIcon Glyph="&#xE8c8;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
 
@@ -262,7 +262,7 @@
                     Label="{x:Bind ResourceService.GetLocalized('/History/Delete')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/DeleteToolTip')}">
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE74d;" Style="{StaticResource FontFamilyStyle}" />
+                        <FontIcon Glyph="&#xE74d;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
 
@@ -271,7 +271,7 @@
                     Label="{x:Bind ResourceService.GetLocalized('/History/Cancel')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/History/CancelToolTip')}">
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE711;" Style="{StaticResource FontFamilyStyle}" />
+                        <FontIcon Glyph="&#xE711;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
             </CommandBar>

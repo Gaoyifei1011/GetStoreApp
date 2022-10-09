@@ -14,9 +14,9 @@ namespace GetStoreApp.UI.Dialogs
 
         public IThemeService ThemeService { get; } = IOCHelper.GetService<IThemeService>();
 
-        public ElementTheme DialogTheme => (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
-
         public TraceCleanupPromptViewModel ViewModel { get; } = IOCHelper.GetService<TraceCleanupPromptViewModel>();
+
+        public ElementTheme DialogTheme => (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
 
         public TraceCleanupPromptDialog()
         {

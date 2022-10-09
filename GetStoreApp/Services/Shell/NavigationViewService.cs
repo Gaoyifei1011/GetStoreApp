@@ -69,7 +69,7 @@ namespace GetStoreApp.Services.Shell
                 }
 
                 NavigationViewItem selectedChild = GetSelectedItem(navigationViewItem.MenuItems, pageType);
-                if (selectedChild != null)
+                if (selectedChild is not null)
                 {
                     return selectedChild;
                 }

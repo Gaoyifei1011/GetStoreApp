@@ -147,6 +147,9 @@
   <data name="BackdropMica" xml:space="preserve">
     <value>云母</value>
   </data>
+  <data name="BackdropMicaAlt" xml:space="preserve">
+    <value>云母（Alt）</value>
+  </data>
   <data name="BackdropToolTip" xml:space="preserve">
     <value>帮助</value>
   </data>
