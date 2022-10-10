@@ -80,7 +80,7 @@
                     Grid.Column="0"
                     HorizontalAlignment="Stretch"
                     Command="{x:Bind ViewModel.TraceCleanupSureCommand}"
-                    Content="{x:Bind ResourceService.GetLocalized('/Dialog/TraceCleanupSure')}"
+                    Content="{x:Bind ResourceService.GetLocalized('/Dialog/CleanupNow')}"
                     IsEnabled="{x:Bind TraceCleanupSureIsEnabled( ViewModel.IsCleaning, ViewModel.IsHistoryClean, ViewModel.IsDownloadClean, ViewModel.IsLocalFileClean), Mode=OneWay}"
                     Style="{ThemeResource AccentButtonStyle}" />
                 <Button
@@ -88,7 +88,7 @@
                     HorizontalAlignment="Stretch"
                     Command="{x:Bind ViewModel.TraceCleanupCancelCommand}"
                     CommandParameter="{Binding ElementName=TraceCleanupRoot}"
-                    Content="{x:Bind ResourceService.GetLocalized('/Dialog/TraceCleanupCancel')}" />
+                    Content="{x:Bind ResourceService.GetLocalized('/Dialog/CloseWindow')}" />
             </Grid>
         </Grid>
     </ContentDialog.Content>

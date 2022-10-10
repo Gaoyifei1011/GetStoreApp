@@ -8,12 +8,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="{x:Bind ResourceService.GetLocalized('/Dialog/DownloadNotifyTitle')}"
     BorderBrush="{ThemeResource SystemAccentColor}"
-    CloseButtonText="{x:Bind ResourceService.GetLocalized('/Dialog/DownloadNotifyCancel')}"
+    CloseButtonText="{x:Bind ResourceService.GetLocalized('/Dialog/CancelDownload')}"
     Content="{x:Bind DownloadNotifyContent}"
     PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
-    PrimaryButtonText="{x:Bind ResourceService.GetLocalized('/Dialog/DownloadNotifySure')}"
+    PrimaryButtonText="{x:Bind ResourceService.GetLocalized('/Dialog/Redownload')}"
     RequestedTheme="{x:Bind DialogTheme}"
-    SecondaryButtonText="{x:Bind ResourceService.GetLocalized('/Dialog/DownloadNotifyView')}"
+    SecondaryButtonText="{x:Bind ResourceService.GetLocalized('/Dialog/ViewDownloadRecord')}"
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d">
     <i:Interaction.Behaviors>

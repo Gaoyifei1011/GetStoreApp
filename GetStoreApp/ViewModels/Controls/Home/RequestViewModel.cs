@@ -11,8 +11,6 @@ using GetStoreApp.Models.Home;
 using GetStoreApp.Services.Home;
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Controls.Home

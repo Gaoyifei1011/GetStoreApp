@@ -1,7 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Root;
+using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Helpers;
+using GetStoreApp.Messages;
+using GetStoreApp.Models.Notification;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Web.WebView2.Core;
 using System.Text;
@@ -39,6 +43,12 @@ namespace GetStoreApp.ViewModels.Dialogs
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
             dialog.Hide();
+
+            WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
+            {
+                NotificationContent = InAppNotificationContent.ExceptionCopy,
+                NotificationValue = new object[] { true }
+            }));
         });
 
         // 关闭窗口

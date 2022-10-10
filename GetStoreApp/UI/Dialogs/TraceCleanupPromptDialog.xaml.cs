@@ -48,6 +48,11 @@ namespace GetStoreApp.UI.Dialogs
 
         public string LocalizeClearStateText(string clearStateText)
         {
+            if (clearStateText == string.Empty)
+            {
+                return string.Empty;
+            }
+
             return ResourceService.GetLocalized(string.Format("/Dialog/{0}", clearStateText));
         }
     }

@@ -150,7 +150,6 @@ namespace GetStoreApp.ViewModels.Pages
             {
                 CoreWebView.NewWindowRequested -= OnNewWindowRequested;
                 CoreWebView.SourceChanged -= OnSourceChanged;
-                CoreWebView.Stop();
             }
         }
 

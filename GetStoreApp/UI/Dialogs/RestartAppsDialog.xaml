@@ -47,14 +47,14 @@
                     HorizontalAlignment="Stretch"
                     Command="{x:Bind ViewModel.RestartAppsSureCommand}"
                     CommandParameter="{Binding ElementName=RestartAppsRoot}"
-                    Content="{x:Bind ResourceService.GetLocalized('/Dialog/RestartSure')}"
+                    Content="{x:Bind ResourceService.GetLocalized('/Dialog/OK')}"
                     Style="{ThemeResource AccentButtonStyle}" />
                 <Button
                     Grid.Column="1"
                     HorizontalAlignment="Stretch"
                     Command="{x:Bind ViewModel.RestartAppsCancelCommand}"
                     CommandParameter="{Binding ElementName=RestartAppsRoot}"
-                    Content="{x:Bind ResourceService.GetLocalized('/Dialog/RestartCancel')}" />
+                    Content="{x:Bind ResourceService.GetLocalized('/Dialog/Cancel')}" />
             </Grid>
         </Grid>
     </ContentDialog.Content>

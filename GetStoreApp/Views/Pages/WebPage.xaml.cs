@@ -1,6 +1,7 @@
 ﻿using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers;
 using GetStoreApp.ViewModels.Pages;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.Views.Pages
@@ -15,6 +16,17 @@ namespace GetStoreApp.Views.Pages
         {
             InitializeComponent();
             ViewModel.InitializeSource();
+        }
+
+        /// <summary>
+        /// 关闭浏览器内核
+        /// </summary>
+        private void WebPageUnloaded(object sender, RoutedEventArgs e)
+        {
+            if (WebView is not null)
+            {
+                WebView.Close();
+            }
         }
     }
 }

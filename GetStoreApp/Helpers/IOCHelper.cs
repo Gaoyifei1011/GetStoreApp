@@ -187,6 +187,8 @@ namespace GetStoreApp.Helpers
                 services.AddTransient<TraceCleanupPromptViewModel>();
 
                 // 应用内消息通知框（MVVM）
+                services.AddTransient<ExceptionCopyNotification>();
+                services.AddTransient<ExceptionCopyViewModel>();
                 services.AddTransient<HistoryCopyNotification>();
                 services.AddTransient<HistoryCopyViewModel>();
                 services.AddTransient<LanguageChangeNotification>();

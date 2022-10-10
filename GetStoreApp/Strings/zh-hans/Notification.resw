@@ -129,6 +129,12 @@
   <data name="DownloadingAborted" xml:space="preserve">
     <value>网络连接异常，当前正在下载中的任务已经全部暂停，请确保您的网络处于连接状态后再尝试下载。</value>
   </data>
+  <data name="ExceptionCopyFailed" xml:space="preserve">
+    <value>浏览器异常信息复制失败，请检查的剪贴板的访问权限</value>
+  </data>
+  <data name="ExceptionCopySuccessfully" xml:space="preserve">
+    <value>浏览器异常信息已成功复制到剪贴板</value>
+  </data>
   <data name="HistoryCopyFailed" xml:space="preserve">
     <value>该条历史记录复制失败，请检查的剪贴板的访问权限</value>
   </data>

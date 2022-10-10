@@ -57,7 +57,7 @@
                     HorizontalAlignment="Stretch"
                     Command="{x:Bind ViewModel.CoreWebView2FailedCancelCommand}"
                     CommandParameter="{Binding ElementName=CoreWebView2FailedRoot}"
-                    Content="{x:Bind ResourceService.GetLocalized('/Dialog/CoreWebView2FailedCancel')}" />
+                    Content="{x:Bind ResourceService.GetLocalized('/Dialog/CloseWindow')}" />
             </Grid>
         </Grid>
     </ContentDialog.Content>

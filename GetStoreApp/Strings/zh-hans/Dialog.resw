@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="CancelDownload" xml:space="preserve">
+    <value>取消下载</value>
+  </data>
   <data name="CleanFailed" xml:space="preserve">
     <value>清理文件时发生了错误，请检查</value>
   </data>
@@ -126,14 +132,14 @@
   <data name="CleanSuccessfully" xml:space="preserve">
     <value>成功清理所有项目</value>
   </data>
-  <data name="ClosingWindowCancel" xml:space="preserve">
-    <value>取消</value>
+  <data name="CleanupNow" xml:space="preserve">
+    <value>立即清理</value>
+  </data>
+  <data name="CloseWindow" xml:space="preserve">
+    <value>关闭窗口</value>
   </data>
   <data name="ClosingWindowContent" xml:space="preserve">
     <value>您目前还有尚未完成下载的任务，是否要保存下载状态并强制退出应用？</value>
-  </data>
-  <data name="ClosingWindowSure" xml:space="preserve">
-    <value>确定</value>
   </data>
   <data name="ClosingWindowTitle" xml:space="preserve">
     <value>获取商店应用</value>
@@ -144,23 +150,14 @@
   <data name="CloudflareValidationContent" xml:space="preserve">
     <value>被 Cloudflare 保护的站点，在初次访问时，会等待 5 秒钟的验证，检测你是不是通过浏览器正常访问的。如果不是通过浏览器正常访问，服务器就会阻止用户发出的所有请求。</value>
   </data>
-  <data name="CloudflareValidationSure" xml:space="preserve">
-    <value>确定</value>
+  <data name="Continue" xml:space="preserve">
+    <value>继续</value>
   </data>
   <data name="CopyException" xml:space="preserve">
     <value>复制异常信息</value>
   </data>
-  <data name="CoreWebView2FailedCancel" xml:space="preserve">
-    <value>关闭窗口</value>
-  </data>
   <data name="CoreWebView2FailedTitle" xml:space="preserve">
     <value>浏览器进程发生异常</value>
-  </data>
-  <data name="DeleteCancel" xml:space="preserve">
-    <value>取消</value>
-  </data>
-  <data name="DeleteContinue" xml:space="preserve">
-    <value>继续</value>
   </data>
   <data name="DeleteDownload" xml:space="preserve">
     <value>选定的下载记录将被永久删除，该操作不可撤销，请谨慎操作。</value>
@@ -180,9 +177,6 @@
   <data name="DesktopAppsContent2" xml:space="preserve">
     <value>微软在传统桌面应用的详细介绍页中添加了说明。如下图所示，如若在应用标题下方出现一排小字，文字内容是"由某开发商提供和更新"时，说明该应用就是传统桌面应用。</value>
   </data>
-  <data name="DesktopAppsSure" xml:space="preserve">
-    <value>确定</value>
-  </data>
   <data name="DownloadCleanError" xml:space="preserve">
     <value>下载记录在清理的过程中发生了错误，请检查下载记录访问权限。</value>
   </data>
@@ -192,17 +186,8 @@
   <data name="DownloadMultiRecordContent" xml:space="preserve">
     <value>您有多条重复的下载记录，是否要重新下载？</value>
   </data>
-  <data name="DownloadNotifyCancel" xml:space="preserve">
-    <value>取消下载</value>
-  </data>
-  <data name="DownloadNotifySure" xml:space="preserve">
-    <value>重新下载</value>
-  </data>
   <data name="DownloadNotifyTitle" xml:space="preserve">
     <value>重复下载提示</value>
-  </data>
-  <data name="DownloadNotifyView" xml:space="preserve">
-    <value>查看下载记录</value>
   </data>
   <data name="DownloadRecord" xml:space="preserve">
     <value>下载记录</value>
@@ -213,6 +198,12 @@
   <data name="ExitCode" xml:space="preserve">
     <value>退出代码：{0}</value>
   </data>
+  <data name="FolderAccessFailedContent" xml:space="preserve">
+    <value>您没有选定文件夹的访问权限，请重新选择。</value>
+  </data>
+  <data name="FolderAccessFailedTitle" xml:space="preserve">
+    <value>文件夹访问失败</value>
+  </data>
   <data name="HistoryCleanError" xml:space="preserve">
     <value>历史记录在清理的过程中发生了错误，请检查历史记录访问权限。</value>
   </data>
@@ -222,23 +213,20 @@
   <data name="InstallingNotifyContent" xml:space="preserve">
     <value>您的应用正在安装中，安装完成后再进行其他操作</value>
   </data>
-  <data name="InstallingNotifySure" xml:space="preserve">
-    <value>确定</value>
-  </data>
   <data name="InstallingNotifyTitle" xml:space="preserve">
     <value>应用安装提示</value>
   </data>
   <data name="License" xml:space="preserve">
     <value>获取商店应用 许可证</value>
   </data>
-  <data name="LicenseCloseWindow" xml:space="preserve">
-    <value>关闭窗口</value>
-  </data>
   <data name="LocalFile" xml:space="preserve">
     <value>本地创建的文件</value>
   </data>
   <data name="LocalFileCleanError" xml:space="preserve">
     <value>本地创建的文件在清理的过程中发生了错误，请检查本地创建的文件的访问权限。</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>确定</value>
   </data>
   <data name="OpenDownloadPage" xml:space="preserve">
     <value>打开下载页面</value>
@@ -255,37 +243,37 @@
   <data name="RecognizeDesktopApps" xml:space="preserve">
     <value>如何识别传统桌面应用?</value>
   </data>
+  <data name="Redownload" xml:space="preserve">
+    <value>重新下载</value>
+  </data>
+  <data name="ReselectFolder" xml:space="preserve">
+    <value>重新选择</value>
+  </data>
   <data name="Restart" xml:space="preserve">
     <value>重启应用</value>
-  </data>
-  <data name="RestartCancel" xml:space="preserve">
-    <value>取消</value>
   </data>
   <data name="RestartContent" xml:space="preserve">
     <value>应用即将重启，重启后应用的数据将会丢失，请确保您的工作内容已经全部保存。</value>
   </data>
-  <data name="RestartSure" xml:space="preserve">
-    <value>确定</value>
-  </data>
   <data name="SelectEmptyContent" xml:space="preserve">
     <value>您没有选择任何内容，请选中后再进行操作</value>
-  </data>
-  <data name="SelectEmptySure" xml:space="preserve">
-    <value>确定</value>
   </data>
   <data name="SelectEmptyTitle" xml:space="preserve">
     <value>项目选择提示</value>
   </data>
-  <data name="TraceCleanupCancel" xml:space="preserve">
-    <value>关闭窗口</value>
-  </data>
   <data name="TraceCleanupContent" xml:space="preserve">
     <value>痕迹清理包括历史记录、下载记录和应用下载时在本地创建的文件。请选择您要清理的项目。</value>
   </data>
-  <data name="TraceCleanupSure" xml:space="preserve">
-    <value>立即清理</value>
-  </data>
   <data name="TraceCleanupTitle" xml:space="preserve">
     <value>痕迹清理</value>
+  </data>
+  <data name="UndoChanges" xml:space="preserve">
+    <value>撤销更改</value>
+  </data>
+  <data name="UseDefaultFolder" xml:space="preserve">
+    <value>使用默认目录</value>
+  </data>
+  <data name="ViewDownloadRecord" xml:space="preserve">
+    <value>查看下载记录</value>
   </data>
 </root>

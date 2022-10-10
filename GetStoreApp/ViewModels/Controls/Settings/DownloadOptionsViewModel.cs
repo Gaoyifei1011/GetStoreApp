@@ -5,10 +5,13 @@ using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Helpers;
 using GetStoreApp.Models.Settings;
+using GetStoreApp.UI.Dialogs;
 using GetStoreApp.ViewModels.Pages;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
 using System.Collections.Generic;
+using System.Security.AccessControl;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 
@@ -74,21 +77,56 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         // 修改下载目录
         public IRelayCommand ChangeFolderCommand => new RelayCommand(async () =>
         {
-            await DownloadOptionsService.CreateFolderAsync(DownloadOptionsService.DefaultFolder.Path);
+            bool ChangeSuccessfully = false;
 
-            FolderPicker folderPicker = new FolderPicker();
-
-            IntPtr hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
-            WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, hwnd);
-
-            folderPicker.SuggestedStartLocation = PickerLocationId.Downloads;
-
-            StorageFolder Folder = await folderPicker.PickSingleFolderAsync();
-
-            if (Folder is not null)
+            while (!ChangeSuccessfully)
             {
-                DownloadFolder = Folder;
-                await DownloadOptionsService.SetFolderAsync(DownloadFolder);
+                // 选择文件夹
+                FolderPicker folderPicker = new FolderPicker();
+
+                IntPtr hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
+                WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, hwnd);
+
+                folderPicker.SuggestedStartLocation = PickerLocationId.Downloads;
+
+                StorageFolder Folder = await folderPicker.PickSingleFolderAsync();
+
+                if (Folder is not null)
+                {
+                    bool CheckResult = FolderAccessHelper.CanWriteToFolder(Folder, FileSystemRights.Write);
+
+                    if (CheckResult)
+                    {
+                        DownloadFolder = Folder;
+                        await DownloadOptionsService.SetFolderAsync(DownloadFolder);
+
+                        ChangeSuccessfully = true;
+                    }
+                    else
+                    {
+                        ContentDialogResult result = await new FolderAccessFailedDialog().ShowAsync();
+
+                        if (result == ContentDialogResult.Primary)
+                        {
+                            ChangeSuccessfully = false;
+                        }
+                        else if (result == ContentDialogResult.Secondary)
+                        {
+                            DownloadFolder = DownloadOptionsService.DefaultFolder;
+                            await DownloadOptionsService.SetFolderAsync(DownloadFolder);
+
+                            ChangeSuccessfully = true;
+                        }
+                        else
+                        {
+                            ChangeSuccessfully = true;
+                        }
+                    }
+                }
+                else
+                {
+                    ChangeSuccessfully = true;
+                }
             }
         });
 

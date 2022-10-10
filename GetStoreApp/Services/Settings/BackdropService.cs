@@ -71,8 +71,8 @@ namespace GetStoreApp.Services.Settings
         {
             App.MainWindow.Backdrop = AppBackdrop.InternalName switch
             {
-                "Mica" => new MicaSystemBackdrop() { Kind = MicaKind.Base},
-                "MicaAlt" => new MicaSystemBackdrop() { Kind = MicaKind.BaseAlt},
+                "Mica" => new MicaSystemBackdrop() { Kind = MicaKind.Base },
+                "MicaAlt" => new MicaSystemBackdrop() { Kind = MicaKind.BaseAlt },
                 "Acrylic" => new AcrylicSystemBackdrop(),
                 _ => null
             };

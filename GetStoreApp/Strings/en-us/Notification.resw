@@ -129,6 +129,12 @@
   <data name="DownloadingAborted" xml:space="preserve">
     <value>The network connection is abnormal, the tasks that are currently being downloaded have all been paused, please make sure that your network is connected before trying to download.</value>
   </data>
+  <data name="ExceptionCopyFailed" xml:space="preserve">
+    <value>Browser exception information replication failed. Please check the access permissions of the clipboard</value>
+  </data>
+  <data name="ExceptionCopySuccessfully" xml:space="preserve">
+    <value>The browser exception information has been successfully copied to the clipboard</value>
+  </data>
   <data name="HistoryCopyFailed" xml:space="preserve">
     <value>The history record copy failed, check the access rights of the clipboard</value>
   </data>

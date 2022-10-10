@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CancelDownload" xml:space="preserve">
+    <value>Cancel the download</value>
+  </data>
   <data name="CleanFailed" xml:space="preserve">
     <value>Clean failed</value>
   </data>
@@ -126,14 +132,14 @@
   <data name="CleanSuccessfully" xml:space="preserve">
     <value>Cleanup completed</value>
   </data>
-  <data name="ClosingWindowCancel" xml:space="preserve">
-    <value>Cancel</value>
+  <data name="CleanupNow" xml:space="preserve">
+    <value>Cleanup now</value>
+  </data>
+  <data name="CloseWindow" xml:space="preserve">
+    <value>Close window</value>
   </data>
   <data name="ClosingWindowContent" xml:space="preserve">
     <value>You still have a task that you haven't completed downloading, do you want to save the download state and force quit the app?</value>
-  </data>
-  <data name="ClosingWindowSure" xml:space="preserve">
-    <value>OK</value>
   </data>
   <data name="ClosingWindowTitle" xml:space="preserve">
     <value>GetStoreApp</value>
@@ -144,23 +150,14 @@
   <data name="CloudflareValidationContent" xml:space="preserve">
     <value>Cloudflare-protected sites wait for a 5 second verification on your first visit to check that you are properly accessing them through your browser. If it is not properly accessed through a browser, the server blocks all requests made by the user.</value>
   </data>
-  <data name="CloudflareValidationSure" xml:space="preserve">
-    <value>OK</value>
+  <data name="Continue" xml:space="preserve">
+    <value>Continue</value>
   </data>
   <data name="CopyException" xml:space="preserve">
     <value>Copy exception information</value>
   </data>
-  <data name="CoreWebView2FailedCancel" xml:space="preserve">
-    <value>Close window</value>
-  </data>
   <data name="CoreWebView2FailedTitle" xml:space="preserve">
     <value>An exception occurred in th e browser process</value>
-  </data>
-  <data name="DeleteCancel" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="DeleteContinue" xml:space="preserve">
-    <value>Continue</value>
   </data>
   <data name="DeleteDownload" xml:space="preserve">
     <value>The selected download records will be permanently deleted, the operation is irrevocable, please proceed with caution.</value>
@@ -180,9 +177,6 @@
   <data name="DesktopAppsContent2" xml:space="preserve">
     <value>Microsoft has added instructions to the detail page of traditional desktop apps. As shown in the following figure, if a row of small print appears below the app title and the text content is "provided and updated by a developer", the application is a traditional desktop application.</value>
   </data>
-  <data name="DesktopAppsSure" xml:space="preserve">
-    <value>OK</value>
-  </data>
   <data name="DownloadCleanError" xml:space="preserve">
     <value>An error occurred during the download record cleanup. Please check the download record access rights.</value>
   </data>
@@ -192,17 +186,8 @@
   <data name="DownloadMultiRecordContent" xml:space="preserve">
     <value>You have multiple duplicate download records. Do you want to download again?</value>
   </data>
-  <data name="DownloadNotifyCancel" xml:space="preserve">
-    <value>Cancel the download</value>
-  </data>
-  <data name="DownloadNotifySure" xml:space="preserve">
-    <value>Re-download</value>
-  </data>
   <data name="DownloadNotifyTitle" xml:space="preserve">
     <value>Repeat the download prompt</value>
-  </data>
-  <data name="DownloadNotifyView" xml:space="preserve">
-    <value>View your download history</value>
   </data>
   <data name="DownloadRecord" xml:space="preserve">
     <value>Download records</value>
@@ -213,6 +198,12 @@
   <data name="ExitCode" xml:space="preserve">
     <value>Exit code: {0}</value>
   </data>
+  <data name="FolderAccessFailedContent" xml:space="preserve">
+    <value>You do not have access to the selected folder. Please reselect it.</value>
+  </data>
+  <data name="FolderAccessFailedTitle" xml:space="preserve">
+    <value>Folder access failed</value>
+  </data>
   <data name="HistoryCleanError" xml:space="preserve">
     <value>An error occurred during the history cleaning process. Please check the history access permissions.</value>
   </data>
@@ -222,23 +213,20 @@
   <data name="InstallingNotifyContent" xml:space="preserve">
     <value>Your app is being installed and you can do anything else after the installation is complete</value>
   </data>
-  <data name="InstallingNotifySure" xml:space="preserve">
-    <value>OK</value>
-  </data>
   <data name="InstallingNotifyTitle" xml:space="preserve">
     <value>App installation prompts</value>
   </data>
   <data name="License" xml:space="preserve">
     <value>GetStoreApp License</value>
   </data>
-  <data name="LicenseCloseWindow" xml:space="preserve">
-    <value>Close window</value>
-  </data>
   <data name="LocalFile" xml:space="preserve">
     <value>Locally created files</value>
   </data>
   <data name="LocalFileCleanError" xml:space="preserve">
     <value>An error occurred during the clearing of the locally created file. Check the access permission of the locally created file.</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
   </data>
   <data name="OpenDownloadPage" xml:space="preserve">
     <value>Open download page</value>
@@ -255,37 +243,37 @@
   <data name="RecognizeDesktopApps" xml:space="preserve">
     <value>How to recognize traditional desktop apps?</value>
   </data>
+  <data name="Redownload" xml:space="preserve">
+    <value>Re-download</value>
+  </data>
+  <data name="ReselectFolder" xml:space="preserve">
+    <value>Reselect folder</value>
+  </data>
   <data name="Restart" xml:space="preserve">
     <value>Application restart</value>
-  </data>
-  <data name="RestartCancel" xml:space="preserve">
-    <value>Cancel</value>
   </data>
   <data name="RestartContent" xml:space="preserve">
     <value>The app is about to restart, after the restart the app's data will be lost, make sure that your work has been saved in its entirety</value>
   </data>
-  <data name="RestartSure" xml:space="preserve">
-    <value>OK</value>
-  </data>
   <data name="SelectEmptyContent" xml:space="preserve">
     <value>You have not selected anything, please select it before proceeding</value>
-  </data>
-  <data name="SelectEmptySure" xml:space="preserve">
-    <value>OK</value>
   </data>
   <data name="SelectEmptyTitle" xml:space="preserve">
     <value>Item selection prompts</value>
   </data>
-  <data name="TraceCleanupCancel" xml:space="preserve">
-    <value>Close window</value>
-  </data>
   <data name="TraceCleanupContent" xml:space="preserve">
     <value>Trace clearing includes history records, download records, and files created locally when an application is downloaded. Select the items you want to clean.</value>
   </data>
-  <data name="TraceCleanupSure" xml:space="preserve">
-    <value>Cleanup now</value>
-  </data>
   <data name="TraceCleanupTitle" xml:space="preserve">
     <value>File cleaning prompts</value>
+  </data>
+  <data name="UndoChanges" xml:space="preserve">
+    <value>Undo the changes</value>
+  </data>
+  <data name="UseDefaultFolder" xml:space="preserve">
+    <value>Use defualt folder</value>
+  </data>
+  <data name="ViewDownloadRecord" xml:space="preserve">
+    <value>View your download history</value>
   </data>
 </root>
