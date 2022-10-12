@@ -41,7 +41,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private async Task<HistoryLiteNumModel> GetHistoryLiteNumAsync()
         {
-            int? historyLiteNumValue = await ConfigStorageService.GetSettingIntValueAsync(SettingsKey);
+            int? historyLiteNumValue = await ConfigStorageService.ReadSettingAsync<int?>(SettingsKey);
 
             if (!historyLiteNumValue.HasValue)
             {
@@ -58,7 +58,7 @@ namespace GetStoreApp.Services.Settings
         {
             HistoryLiteNum = historyLiteNum;
 
-            await ConfigStorageService.SaveSettingIntValueAsync(SettingsKey, historyLiteNum.HistoryLiteNumValue);
+            await ConfigStorageService.SaveSettingAsync(SettingsKey, historyLiteNum.HistoryLiteNumValue);
         }
     }
 }

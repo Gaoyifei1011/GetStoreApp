@@ -37,6 +37,7 @@
 
                 <FontIcon
                     Grid.Column="0"
+                    FontFamily="{StaticResource SegoeFluentFontFamily}"
                     Glyph="&#xE823;"
                     Style="{StaticResource FontIconStyle}" />
                 <TextBlock

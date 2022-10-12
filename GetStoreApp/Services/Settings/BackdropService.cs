@@ -44,7 +44,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private async Task<BackdropModel> GetBackdropAsync()
         {
-            string backdrop = await ConfigStorageService.GetSettingStringValueAsync(SettingsKey);
+            string backdrop = await ConfigStorageService.ReadSettingAsync<string>(SettingsKey);
 
             if (string.IsNullOrEmpty(backdrop))
             {
@@ -61,7 +61,7 @@ namespace GetStoreApp.Services.Settings
         {
             AppBackdrop = backdrop;
 
-            await ConfigStorageService.SaveSettingStringValueAsync(SettingsKey, backdrop.InternalName);
+            await ConfigStorageService.SaveSettingAsync(SettingsKey, backdrop.InternalName);
         }
 
         /// <summary>

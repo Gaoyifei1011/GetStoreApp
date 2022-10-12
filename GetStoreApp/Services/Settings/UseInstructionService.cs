@@ -32,7 +32,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private async Task<bool> GetUseInsVisValueAsync()
         {
-            bool? useInsVisValue = await ConfigStorageService.GetSettingBoolValueAsync(SettingsKey);
+            bool? useInsVisValue = await ConfigStorageService.ReadSettingAsync<bool?>(SettingsKey);
 
             if (!useInsVisValue.HasValue)
             {
@@ -49,7 +49,7 @@ namespace GetStoreApp.Services.Settings
         {
             UseInsVisValue = useInsVisValue;
 
-            await ConfigStorageService.SaveSettingBoolValueAsync(SettingsKey, useInsVisValue);
+            await ConfigStorageService.SaveSettingAsync(SettingsKey, useInsVisValue);
         }
     }
 }

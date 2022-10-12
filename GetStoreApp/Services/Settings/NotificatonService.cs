@@ -32,7 +32,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private async Task<bool> GetNotificationAsync()
         {
-            bool? appNotification = await ConfigStorageService.GetSettingBoolValueAsync(SettingsKey);
+            bool? appNotification = await ConfigStorageService.ReadSettingAsync<bool?>(SettingsKey);
 
             if (!appNotification.HasValue)
             {
@@ -49,7 +49,7 @@ namespace GetStoreApp.Services.Settings
         {
             AppNotification = appNotification;
 
-            await ConfigStorageService.SaveSettingBoolValueAsync(SettingsKey, appNotification);
+            await ConfigStorageService.SaveSettingAsync(SettingsKey, appNotification);
         }
     }
 }

@@ -81,6 +81,7 @@ namespace GetStoreApp.Helpers
                 services.AddSingleton<IRegionService, RegionService>();
                 services.AddSingleton<IThemeService, ThemeService>();
                 services.AddSingleton<ITopMostService, TopMostService>();
+                services.AddSingleton<ITraceCleanupService, TraceCleanupService>();
                 services.AddSingleton<IUseInstructionService, UseInstructionService>();
 
                 services.AddSingleton<INavigationService, NavigationService>();

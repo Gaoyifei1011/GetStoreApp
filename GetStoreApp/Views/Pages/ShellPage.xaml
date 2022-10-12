@@ -39,6 +39,7 @@
             IsTabStop="True"
             IsTitleBarAutoPaddingEnabled="False"
             OpenPaneLength="220"
+            PaneTitle="{x:Bind ResourceService.GetLocalized('/Shell/Title')}"
             SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}">
 
             <NavigationView.MenuItems>

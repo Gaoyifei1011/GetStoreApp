@@ -18,7 +18,8 @@
 
         <FontIcon
             Grid.Column="0"
-            Glyph="&#xE8A9;"
+            FontFamily="{StaticResource SettingsFluentFontFamily}"
+            Glyph="&#xF775;"
             Style="{StaticResource FontIconStyle}" />
 
         <StackPanel Grid.Column="1" Orientation="Vertical">

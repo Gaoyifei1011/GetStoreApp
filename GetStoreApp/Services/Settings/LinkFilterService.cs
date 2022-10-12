@@ -38,7 +38,8 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private async Task<bool> GetStartWithEFilterValueAsync()
         {
-            bool? startWithEFilterValue = await ConfigStorageService.GetSettingBoolValueAsync(StartWithESettingsKey);
+            //bool? startWithEFilterValue = await ConfigStorageService.ReadSettingBoolValueAsync(StartWithESettingsKey);
+            bool? startWithEFilterValue = await ConfigStorageService.ReadSettingAsync<bool?>(StartWithESettingsKey);
 
             if (!startWithEFilterValue.HasValue)
             {
@@ -53,7 +54,8 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private async Task<bool> GetBlockMapFilterValueAsync()
         {
-            bool? blockMapFilterValue = await ConfigStorageService.GetSettingBoolValueAsync(BlockMapSettingsKey);
+            //bool? blockMapFilterValue = await ConfigStorageService.ReadSettingBoolValueAsync(BlockMapSettingsKey);
+            bool? blockMapFilterValue = await ConfigStorageService.ReadSettingAsync<bool?>(BlockMapSettingsKey);
 
             if (!blockMapFilterValue.HasValue)
             {
@@ -70,7 +72,7 @@ namespace GetStoreApp.Services.Settings
         {
             StartWithEFilterValue = startWithEFilterValue;
 
-            await ConfigStorageService.SaveSettingBoolValueAsync(StartWithESettingsKey, startWithEFilterValue);
+            await ConfigStorageService.SaveSettingAsync(StartWithESettingsKey, startWithEFilterValue);
         }
 
         /// <summary>
@@ -80,7 +82,7 @@ namespace GetStoreApp.Services.Settings
         {
             BlockMapFilterValue = blockMapFilterValue;
 
-            await ConfigStorageService.SaveSettingBoolValueAsync(BlockMapSettingsKey, blockMapFilterValue);
+            await ConfigStorageService.SaveSettingAsync(BlockMapSettingsKey, blockMapFilterValue);
         }
     }
 }

@@ -21,14 +21,10 @@
                 <ResourceDictionary Source="ms-appx:///Styles/InAppNotification.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/InfoBar.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/ListView.xaml" />
+                <ResourceDictionary Source="ms-appx:///Styles/NavigationView.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Pivot.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/TeachingTip.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/TextBlock.xaml" />
-
-                <ResourceDictionary>
-                    <!--  导航视图控件中的内容窗口距离应用窗口上边界的距离  -->
-                    <Thickness x:Key="NavigationViewContentMargin">0,45,0,0</Thickness>
-                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

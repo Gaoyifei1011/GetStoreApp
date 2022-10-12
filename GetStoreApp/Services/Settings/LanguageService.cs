@@ -86,7 +86,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private async Task<(bool, LanguageModel)> GetLanguageAsync()
         {
-            string language = await ConfigStorageService.GetSettingStringValueAsync(SettingsKey);
+            string language = await ConfigStorageService.ReadSettingAsync<string>(SettingsKey);
 
             // 当前系统的语言值
             string CurrentSystemLanguage = CultureInfo.CurrentCulture.Parent.Name;
@@ -119,7 +119,7 @@ namespace GetStoreApp.Services.Settings
         {
             AppLanguage = language;
 
-            await ConfigStorageService.SaveSettingStringValueAsync(SettingsKey, language.InternalName);
+            await ConfigStorageService.SaveSettingAsync(SettingsKey, language.InternalName);
 
             SetAppLanguage(language);
         }

@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Contracts.Services.Root;
+using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Models.Home;
 using GetStoreApp.Models.Settings;
 using Microsoft.UI.Xaml;
@@ -43,6 +44,8 @@ namespace GetStoreApp.Services.Root
 
         public List<ThemeModel> ThemeList { get; } = new List<ThemeModel>();
 
+        public List<TraceCleanupModel> TraceCleanupList { get; } = new List<TraceCleanupModel>();
+
         public async Task InitializeResourceAsync(LanguageModel defaultAppLanguage, LanguageModel currentAppLanguage)
         {
             DefaultAppLanguage = defaultAppLanguage;
@@ -60,6 +63,7 @@ namespace GetStoreApp.Services.Root
             InitializeHistoryLiteNumList();
             InitializeInstallModeList();
             InitializeThemeList();
+            InitializeTraceCleanupList();
             await Task.CompletedTask;
         }
 
@@ -272,6 +276,34 @@ namespace GetStoreApp.Services.Root
             {
                 DisplayName = GetLocalized("/Settings/ThemeDark"),
                 InternalName = Convert.ToString(ElementTheme.Dark)
+            });
+        }
+
+        private void InitializeTraceCleanupList()
+        {
+            TraceCleanupList.Add(new TraceCleanupModel
+            {
+                DisplayName = GetLocalized("/Dialog/HistoryRecord"),
+                InternalName = CleanArgs.History,
+                CleanFailedText = GetLocalized("/Dialog/HistoryCleanError")
+            });
+            TraceCleanupList.Add(new TraceCleanupModel
+            {
+                DisplayName = GetLocalized("/Dialog/DownloadRecord"),
+                InternalName = CleanArgs.Download,
+                CleanFailedText = GetLocalized("/Dialog/DownloadCleanError")
+            });
+            TraceCleanupList.Add(new TraceCleanupModel
+            {
+                DisplayName = GetLocalized("/Dialog/LocalFile"),
+                InternalName = CleanArgs.LocalFile,
+                CleanFailedText = GetLocalized("/Dialog/LocalFileCleanError")
+            });
+            TraceCleanupList.Add(new TraceCleanupModel
+            {
+                DisplayName = GetLocalized("/Dialog/WebCache"),
+                InternalName = CleanArgs.WebCache,
+                CleanFailedText = GetLocalized("/Dialog/WebCacheCleanError")
             });
         }
 

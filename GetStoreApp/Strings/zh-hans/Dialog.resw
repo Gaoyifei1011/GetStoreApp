@@ -124,13 +124,10 @@
     <value>取消下载</value>
   </data>
   <data name="CleanFailed" xml:space="preserve">
-    <value>清理文件时发生了错误，请检查</value>
+    <value>清理失败</value>
   </data>
   <data name="CleaningNow" xml:space="preserve">
     <value>正在清理中，请稍侯...</value>
-  </data>
-  <data name="CleanSuccessfully" xml:space="preserve">
-    <value>成功清理所有项目</value>
   </data>
   <data name="CleanupNow" xml:space="preserve">
     <value>立即清理</value>
@@ -275,5 +272,11 @@
   </data>
   <data name="ViewDownloadRecord" xml:space="preserve">
     <value>查看下载记录</value>
+  </data>
+  <data name="WebCache" xml:space="preserve">
+    <value>网页缓存清理</value>
+  </data>
+  <data name="WebCacheCleanError" xml:space="preserve">
+    <value>网页缓存清理失败</value>
   </data>
 </root>

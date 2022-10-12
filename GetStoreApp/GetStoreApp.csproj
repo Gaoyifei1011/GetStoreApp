@@ -47,6 +47,7 @@
     <None Remove="Styles\HyperlinkButton.xaml" />
     <None Remove="Styles\InAppNotification.xaml" />
     <None Remove="Styles\ListView.xaml" />
+    <None Remove="Styles\NavigationView.xaml" />
     <None Remove="Styles\Pivot.xaml" />
     <None Remove="Styles\TeachingTip.xaml" />
     <None Remove="UI\Controls\About\HeaderControl.xaml" />
@@ -82,6 +83,7 @@
     <None Remove="UI\Dialogs\FolderAccessFailedDialog.xaml" />
     <None Remove="UI\Dialogs\InstallingNotifyDialog.xaml" />
     <None Remove="UI\Dialogs\LicenseDialog.xaml" />
+    <None Remove="UI\Dialogs\ReleaseNotesDialog.xaml" />
     <None Remove="UI\Dialogs\RestartAppsDialog.xaml" />
     <None Remove="UI\Dialogs\SelectEmptyPromptDialog.xaml" />
     <None Remove="UI\Dialogs\TraceCleanupPromptDialog.xaml" />
@@ -110,7 +112,7 @@
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
     <PackageReference Include="H.NotifyIcon.WinUI" Version="2.0.68" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.9" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.10" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
     <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.63-beta">
       <PrivateAssets>all</PrivateAssets>
@@ -120,6 +122,7 @@
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
+    <PackageReference Include="ObservableComputations" Version="2.3.0" />
     <PackageReference Include="PInvoke.SHCore" Version="0.7.124" />
     <PackageReference Include="System.Management" Version="6.0.0" />
     <PackageReference Include="WinUIEx" Version="1.8.0" />
@@ -168,6 +171,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Styles\ListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\NavigationView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Styles\Pivot.xaml">
@@ -291,6 +297,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Dialogs\LicenseDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Dialogs\ReleaseNotesDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Dialogs\RestartAppsDialog.xaml">

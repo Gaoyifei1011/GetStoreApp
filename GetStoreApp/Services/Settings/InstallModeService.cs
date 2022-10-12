@@ -42,7 +42,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private async Task<InstallModeModel> GetInstallModeAsync()
         {
-            string installMode = await ConfigStorageService.GetSettingStringValueAsync(SettingsKey);
+            string installMode = await ConfigStorageService.ReadSettingAsync<string>(SettingsKey);
 
             if (string.IsNullOrEmpty(installMode))
             {
@@ -59,7 +59,7 @@ namespace GetStoreApp.Services.Settings
         {
             InstallMode = installMode;
 
-            await ConfigStorageService.SaveSettingStringValueAsync(SettingsKey, installMode.InternalName);
+            await ConfigStorageService.SaveSettingAsync(SettingsKey, installMode.InternalName);
         }
     }
 }

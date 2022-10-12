@@ -43,7 +43,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private async Task<ThemeModel> GetThemeAsync()
         {
-            string theme = await ConfigStorageService.GetSettingStringValueAsync(SettingsKey);
+            string theme = await ConfigStorageService.ReadSettingAsync<string>(SettingsKey);
 
             if (string.IsNullOrEmpty(theme))
             {
@@ -60,7 +60,7 @@ namespace GetStoreApp.Services.Settings
         {
             AppTheme = theme;
 
-            await ConfigStorageService.SaveSettingStringValueAsync(SettingsKey, theme.InternalName);
+            await ConfigStorageService.SaveSettingAsync(SettingsKey, theme.InternalName);
         }
 
         /// <summary>

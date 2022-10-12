@@ -1,27 +1,47 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Services.Download;
-using GetStoreApp.Contracts.Services.History;
+using GetStoreApp.Contracts.Services.Root;
+using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
-using GetStoreApp.Models.Download;
+using GetStoreApp.Models.Settings;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Dialogs
 {
     public class TraceCleanupPromptViewModel : ObservableRecipient
     {
-        private IHistoryDBService HistoryDBService { get; } = IOCHelper.GetService<IHistoryDBService>();
+        private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        private IDownloadDBService DownloadDBService { get; } = IOCHelper.GetService<IDownloadDBService>();
+        private ITraceCleanupService TraceCleanupService { get; } = IOCHelper.GetService<ITraceCleanupService>();
 
-        // 是否处于正在清理状态
-        private bool _isCleaning = true;
+        public List<TraceCleanupModel> TraceCleanupList { get; set; }
+
+        private bool _isFirstInitialize = true;
+
+        public bool IsFirstInitialize
+        {
+            get { return _isFirstInitialize; }
+
+            set { SetProperty(ref _isFirstInitialize, value); }
+        }
+
+        private bool _isSelected;
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+
+            set { SetProperty(ref _isSelected, value); }
+        }
+
+        private bool _isCleaning = false;
 
         public bool IsCleaning
         {
@@ -30,115 +50,39 @@ namespace GetStoreApp.ViewModels.Dialogs
             set { SetProperty(ref _isCleaning, value); }
         }
 
-        // 是否要清理历史记录
-        private bool _isHistoryClean = false;
-
-        public bool IsHistoryClean
+        public void InitializeTraceCleanupList()
         {
-            get { return _isHistoryClean; }
+            TraceCleanupList = ResourceService.TraceCleanupList;
 
-            set { SetProperty(ref _isHistoryClean, value); }
-        }
-
-        // 是否要清理下载记录
-        private bool _isDownloadClean = false;
-
-        public bool IsDownloadClean
-        {
-            get { return _isDownloadClean; }
-
-            set { SetProperty(ref _isDownloadClean, value); }
-        }
-
-        // 是否要清理本地创建的文件
-        private bool _isLocalFileClean = false;
-
-        public bool IsLocalFileClean
-        {
-            get { return _isLocalFileClean; }
-
-            set { SetProperty(ref _isLocalFileClean, value); }
-        }
-
-        // 清理状态显示标志
-        private bool _clearState = false;
-
-        public bool ClearState
-        {
-            get { return _clearState; }
-
-            set { SetProperty(ref _clearState, value); }
-        }
-
-        // 清理状态圆环显示标志
-        private bool _clearStateRing = false;
-
-        public bool ClearStateRing
-        {
-            get { return _clearStateRing; }
-
-            set { SetProperty(ref _clearStateRing, value); }
-        }
-
-        // 清理状态文字信息
-        private string _clearStateText = string.Empty;
-
-        public string ClearStateText
-        {
-            get { return _clearStateText; }
-
-            set { SetProperty(ref _clearStateText, value); }
-        }
-
-        // 清理失误显示标志
-        private bool _clearErrorVisable = false;
-
-        public bool ClearErrorVisable
-        {
-            get { return _clearErrorVisable; }
-
-            set { SetProperty(ref _clearErrorVisable, value); }
-        }
-
-        // 历史记录清理失败显示标志
-        private bool _historyCleanErrorVisable = false;
-
-        public bool HistoryCleanErrorVisable
-        {
-            get { return _historyCleanErrorVisable; }
-
-            set { SetProperty(ref _historyCleanErrorVisable, value); }
-        }
-
-        // 下载记录清理失败显示标志
-        private bool _downloadCleanErrorVisable = false;
-
-        public bool DownloadCleanErrorVisable
-        {
-            get { return _downloadCleanErrorVisable; }
-
-            set { SetProperty(ref _downloadCleanErrorVisable, value); }
-        }
-
-        // 本地创建的文件清理失败显示标志
-        private bool _localFileCleanErrorVisable = false;
-
-        public bool LocalFileCleanErrorVisable
-        {
-            get { return _localFileCleanErrorVisable; }
-
-            set { SetProperty(ref _localFileCleanErrorVisable, value); }
+            foreach (TraceCleanupModel traceCleanupItem in TraceCleanupList)
+            {
+                traceCleanupItem.IsSelected = false;
+                traceCleanupItem.IsCleanFailed = false;
+                traceCleanupItem.PropertyChanged += OnPropertyChanged;
+            }
         }
 
         // 痕迹清理
         public IRelayCommand TraceCleanupSureCommand => new RelayCommand(async () =>
         {
+            IsFirstInitialize = false;
+            foreach (TraceCleanupModel traceCleanupItem in TraceCleanupList)
+            {
+                traceCleanupItem.IsCleanFailed = false;
+            }
+            IsCleaning = true;
             await TraceCleanupAsync();
+            await Task.Delay(1000);
+            IsCleaning = false;
         });
 
         // 取消痕迹清理
         public IRelayCommand TraceCleanupCancelCommand => new RelayCommand<ContentDialog>((dialog) =>
         {
+            foreach (TraceCleanupModel traceCleanupItem in TraceCleanupList)
+            {
+                traceCleanupItem.PropertyChanged -= OnPropertyChanged;
+            }
             dialog.Hide();
         });
 
@@ -147,92 +91,25 @@ namespace GetStoreApp.ViewModels.Dialogs
         /// </summary>
         private async Task TraceCleanupAsync()
         {
-            // 显示正在清理中的状态信息
-            IsCleaning = false;
-            ClearState = true;
-            ClearStateRing = true;
-            ClearStateText = "CleaningNow";
-            LocalFileCleanErrorVisable = false;
-            HistoryCleanErrorVisable = false;
-            DownloadCleanErrorVisable = false;
+            List<CleanArgs> SelectedCleanList = new List<CleanArgs>(TraceCleanupList.Where(item => item.IsSelected == true).Select(item => item.InternalName));
 
-            // 清理所有痕迹
-            (bool, bool, bool) CleanResult = await CleanAsync();
-            await Task.Delay(1000);
-
-            // 清理完成，显示清理完成的结果
-            ClearStateRing = false;
-            IsCleaning = true;
-
-            // 成功清理
-            if (CleanResult.Item1 && CleanResult.Item2 && CleanResult.Item3)
+            foreach (CleanArgs cleanupArgs in SelectedCleanList)
             {
-                ClearStateText = "CleanSuccessfully";
+                // 清理并反馈回结果，修改相应的状态信息
+                bool CleanReusult = await TraceCleanupService.CleanAppTraceAsync(cleanupArgs);
 
-                // 发送消息，更新UI界面
-                WeakReferenceMessenger.Default.Send(new HistoryMessage(true));
-            }
-
-            // 清理失败，显示清理异常错误信息
-            else
-            {
-                ClearStateText = "CleanFailed";
-
-                LocalFileCleanErrorVisable = CleanResult.Item1 == false;
-
-                if (CleanResult.Item2) WeakReferenceMessenger.Default.Send(new HistoryMessage(true));
-                else HistoryCleanErrorVisable = true;
-
-                DownloadCleanErrorVisable = CleanResult.Item3 == false;
-            }
-        }
-
-        /// <summary>
-        /// 清理记录
-        /// </summary>
-        private async Task<(bool, bool, bool)> CleanAsync()
-        {
-            bool LocalCleanResult = true;
-            bool HistoryCleanResult = true;
-            bool DownloadCleanResult = true;
-
-            // 清理本地创建的文件
-            if (IsLocalFileClean)
-            {
-                List<BackgroundModel> LocalFileData = await DownloadDBService.QueryWithFlagAsync(4);
-                LocalCleanResult = DeleteFiles(ref LocalFileData);
-            }
-
-            // 清理历史记录
-            if (IsHistoryClean) HistoryCleanResult = await HistoryDBService.ClearAsync();
-
-            // 清理下载记录
-            if (IsDownloadClean) DownloadCleanResult = await DownloadDBService.ClearAsync();
-
-            return (LocalCleanResult, HistoryCleanResult, DownloadCleanResult);
-        }
-
-        /// <summary>
-        /// 删除所有文件
-        /// </summary>
-        private bool DeleteFiles(ref List<BackgroundModel> downloadDataList)
-        {
-            try
-            {
-                // 文件存在时尝试删除文件
-                foreach (BackgroundModel downloadItem in downloadDataList)
+                if (cleanupArgs == CleanArgs.History)
                 {
-                    if (File.Exists(downloadItem.FilePath))
-                    {
-                        File.Delete(downloadItem.FilePath);
-                    }
+                    WeakReferenceMessenger.Default.Send(new HistoryMessage(true));
                 }
-                return true;
+
+                TraceCleanupList[TraceCleanupList.IndexOf(TraceCleanupList.First(item => item.InternalName == cleanupArgs))].IsCleanFailed = !CleanReusult;
             }
-            catch (Exception)
-            {
-                return false;
-            }
+        }
+
+        private void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            IsSelected = TraceCleanupList.Exists(item => item.IsSelected);
         }
     }
 }

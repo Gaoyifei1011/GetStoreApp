@@ -18,42 +18,18 @@ namespace GetStoreApp.UI.Dialogs
 
         public ElementTheme DialogTheme => (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
 
+        public string CleanFailed => ResourceService.GetLocalized("/Dialog/CleanFailed");
+
         public TraceCleanupPromptDialog()
         {
             XamlRoot = App.MainWindow.Content.XamlRoot;
+            ViewModel.InitializeTraceCleanupList();
             InitializeComponent();
         }
 
-        /// <summary>
-        /// 确定清理按钮的可用状态
-        /// </summary>
-        public bool TraceCleanupSureIsEnabled(bool isCleaning, bool isHistoryClean, bool isDownloadClean, bool isLocalFileClean)
+        public string LocalizeClearStateText(bool isCleaning, bool hasCleanCompleted)
         {
-            if (isCleaning)
-            {
-                if (isHistoryClean || isDownloadClean || isLocalFileClean)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public string LocalizeClearStateText(string clearStateText)
-        {
-            if (clearStateText == string.Empty)
-            {
-                return string.Empty;
-            }
-
-            return ResourceService.GetLocalized(string.Format("/Dialog/{0}", clearStateText));
+            return string.Empty;
         }
     }
 }

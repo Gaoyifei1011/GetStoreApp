@@ -16,6 +16,7 @@
 
         <FontIcon
             Grid.Column="0"
+            FontFamily="{StaticResource SegoeFluentFontFamily}"
             Glyph="&#xe74d;"
             Style="{StaticResource FontIconStyle}" />
 

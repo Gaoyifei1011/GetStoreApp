@@ -129,9 +129,6 @@
   <data name="CleaningNow" xml:space="preserve">
     <value>Cleaning up, please wait...</value>
   </data>
-  <data name="CleanSuccessfully" xml:space="preserve">
-    <value>Cleanup completed</value>
-  </data>
   <data name="CleanupNow" xml:space="preserve">
     <value>Cleanup now</value>
   </data>
@@ -275,5 +272,11 @@
   </data>
   <data name="ViewDownloadRecord" xml:space="preserve">
     <value>View your download history</value>
+  </data>
+  <data name="WebCache" xml:space="preserve">
+    <value>Web page cache cleanup</value>
+  </data>
+  <data name="WebCacheCleanError" xml:space="preserve">
+    <value>Web page cache cleanup failed</value>
   </data>
 </root>

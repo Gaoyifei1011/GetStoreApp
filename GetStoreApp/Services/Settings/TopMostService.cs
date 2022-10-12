@@ -32,7 +32,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private async Task<bool> GetTopMostValueAsync()
         {
-            bool? topMostValue = await ConfigStorageService.GetSettingBoolValueAsync(SettingsKey);
+            bool? topMostValue = await ConfigStorageService.ReadSettingAsync<bool?>(SettingsKey);
 
             if (!topMostValue.HasValue)
             {
@@ -49,7 +49,7 @@ namespace GetStoreApp.Services.Settings
         {
             TopMostValue = topMostValue;
 
-            await ConfigStorageService.SaveSettingBoolValueAsync(SettingsKey, topMostValue);
+            await ConfigStorageService.SaveSettingAsync(SettingsKey, topMostValue);
         }
 
         /// <summary>

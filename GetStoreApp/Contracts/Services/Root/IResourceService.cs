@@ -25,6 +25,8 @@ namespace GetStoreApp.Contracts.Services.Root
 
         List<ThemeModel> ThemeList { get; }
 
+        List<TraceCleanupModel> TraceCleanupList { get; }
+
         Task InitializeResourceAsync(LanguageModel defaultAppLanguage, LanguageModel currentAppLanguage);
 
         string GetLocalized(string resource);

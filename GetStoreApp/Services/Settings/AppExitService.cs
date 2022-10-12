@@ -42,7 +42,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private async Task<AppExitModel> GetAppExitAsync()
         {
-            string appExit = await ConfigStorageService.GetSettingStringValueAsync(SettingsKey);
+            string appExit = await ConfigStorageService.ReadSettingAsync<string>(SettingsKey);
 
             if (string.IsNullOrEmpty(appExit))
             {
@@ -59,7 +59,7 @@ namespace GetStoreApp.Services.Settings
         {
             AppExit = appExit;
 
-            await ConfigStorageService.SaveSettingStringValueAsync(SettingsKey, appExit.InternalName);
+            await ConfigStorageService.SaveSettingAsync(SettingsKey, appExit.InternalName);
         }
     }
 }

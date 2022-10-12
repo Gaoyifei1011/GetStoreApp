@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:GetStoreApp.Models.Settings"
     x:Name="TraceCleanupRoot"
     BorderBrush="{ThemeResource SystemAccentColor}"
     RequestedTheme="{x:Bind DialogTheme}"
@@ -25,71 +26,78 @@
 
             <StackPanel
                 Grid.Row="0"
-                Padding="24"
+                Padding="24,24,24,12"
                 Background="{ThemeResource ContentDialogTopOverlay}"
                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                 BorderThickness="{ThemeResource ContentDialogBorderWidth}">
+
                 <TextBlock Style="{StaticResource ContentDialogTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/Dialog/TraceCleanupTitle')}" />
                 <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind ResourceService.GetLocalized('/Dialog/TraceCleanupContent')}" />
 
-                <CheckBox Content="{x:Bind ResourceService.GetLocalized('/Dialog/HistoryRecord')}" IsChecked="{x:Bind ViewModel.IsHistoryClean, Mode=TwoWay}" />
-                <CheckBox Content="{x:Bind ResourceService.GetLocalized('/Dialog/DownloadRecord')}" IsChecked="{x:Bind ViewModel.IsDownloadClean, Mode=TwoWay}" />
-                <CheckBox Content="{x:Bind ResourceService.GetLocalized('/Dialog/LocalFile')}" IsChecked="{x:Bind ViewModel.IsLocalFileClean, Mode=TwoWay}" />
+                <ListView
+                    ItemContainerStyle="{StaticResource ListViewItemStyle}"
+                    ItemsSource="{x:Bind ViewModel.TraceCleanupList}"
+                    SelectionMode="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="models:TraceCleanupModel">
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox
+                                    Margin="0,0,10,0"
+                                    Content="{x:Bind DisplayName}"
+                                    IsChecked="{x:Bind IsSelected, Mode=TwoWay}" />
 
-                <StackPanel
-                    Margin="0,5,0,0"
-                    Orientation="Horizontal"
-                    Spacing="8"
-                    Visibility="{x:Bind ViewModel.ClearState, Mode=OneWay}">
+                                <ContentControl Visibility="{Binding ElementName=TraceCleanupRoot, Path=ViewModel.IsFirstInitialize, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}">
+                                    <TextBlock
+                                        Margin="0,5,0,0"
+                                        VerticalAlignment="Center"
+                                        Foreground="{ThemeResource SystemErrorTextColor}"
+                                        Text="{Binding ElementName=TraceCleanupRoot, Path=CleanFailed}"
+                                        ToolTipService.ToolTip="{x:Bind CleanFailedText}"
+                                        Visibility="{x:Bind IsCleanFailed, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
+                                </ContentControl>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <StackPanel Orientation="Horizontal" Visibility="{x:Bind ViewModel.IsCleaning, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
                     <ProgressRing
                         Width="20"
                         Height="20"
-                        Visibility="{x:Bind ViewModel.ClearStateRing, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
-                    <TextBlock VerticalAlignment="Center" Text="{x:Bind LocalizeClearStateText(ViewModel.ClearStateText), Mode=OneWay}" />
-                </StackPanel>
-
-                <StackPanel
-                    Margin="0,5,0,0"
-                    Spacing="5"
-                    Visibility="{x:Bind ViewModel.ClearErrorVisable}">
+                        Margin="0,0,8,0" />
                     <TextBlock
-                        Foreground="{ThemeResource SystemErrorTextColor}"
-                        Text="{x:Bind ResourceService.GetLocalized('/Dialog/HistoryCleanError')}"
-                        Visibility="{x:Bind ViewModel.HistoryCleanErrorVisable, Mode=OneWay}" />
-                    <TextBlock
-                        Foreground="{ThemeResource SystemErrorTextColor}"
-                        Text="{x:Bind ResourceService.GetLocalized('/Dialog/DownloadCleanError')}"
-                        Visibility="{x:Bind ViewModel.DownloadCleanErrorVisable, Mode=OneWay}" />
-                    <TextBlock
-                        Foreground="{ThemeResource SystemErrorTextColor}"
-                        Text="{x:Bind ResourceService.GetLocalized('/Dialog/LocalFileCleanError')}"
-                        Visibility="{x:Bind ViewModel.LocalFileCleanErrorVisable, Mode=OneWay}" />
+                        Margin="0,0,8,0"
+                        VerticalAlignment="Center"
+                        Text="{x:Bind ResourceService.GetLocalized('/Dialog/CleaningNow')}" />
                 </StackPanel>
             </StackPanel>
 
-            <Grid
+            <ContentControl
                 Grid.Row="1"
                 Padding="24"
-                ColumnSpacing="10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+                HorizontalContentAlignment="Stretch"
+                IsEnabled="{x:Bind ViewModel.IsCleaning, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}">
+                <Grid ColumnSpacing="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-                <Button
-                    Grid.Column="0"
-                    HorizontalAlignment="Stretch"
-                    Command="{x:Bind ViewModel.TraceCleanupSureCommand}"
-                    Content="{x:Bind ResourceService.GetLocalized('/Dialog/CleanupNow')}"
-                    IsEnabled="{x:Bind TraceCleanupSureIsEnabled( ViewModel.IsCleaning, ViewModel.IsHistoryClean, ViewModel.IsDownloadClean, ViewModel.IsLocalFileClean), Mode=OneWay}"
-                    Style="{ThemeResource AccentButtonStyle}" />
-                <Button
-                    Grid.Column="1"
-                    HorizontalAlignment="Stretch"
-                    Command="{x:Bind ViewModel.TraceCleanupCancelCommand}"
-                    CommandParameter="{Binding ElementName=TraceCleanupRoot}"
-                    Content="{x:Bind ResourceService.GetLocalized('/Dialog/CloseWindow')}" />
-            </Grid>
+                    <Button
+                        Grid.Column="0"
+                        HorizontalAlignment="Stretch"
+                        Command="{x:Bind ViewModel.TraceCleanupSureCommand}"
+                        Content="{x:Bind ResourceService.GetLocalized('/Dialog/CleanupNow')}"
+                        IsEnabled="{x:Bind ViewModel.IsSelected, Mode=OneWay}"
+                        Style="{ThemeResource AccentButtonStyle}" />
+                    <Button
+                        Grid.Column="1"
+                        HorizontalAlignment="Stretch"
+                        Command="{x:Bind ViewModel.TraceCleanupCancelCommand}"
+                        CommandParameter="{Binding ElementName=TraceCleanupRoot}"
+                        Content="{x:Bind ResourceService.GetLocalized('/Dialog/CloseWindow')}" />
+                </Grid>
+            </ContentControl>
         </Grid>
     </ContentDialog.Content>
 </ContentDialog>

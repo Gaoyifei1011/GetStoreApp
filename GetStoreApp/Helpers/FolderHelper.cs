@@ -6,11 +6,11 @@ using Windows.Storage;
 
 namespace GetStoreApp.Helpers
 {
-    /// <summary>
-    /// 检查选定的目录是否有写入权限
-    /// </summary>
-    public static class FolderAccessHelper
+    public static class FolderHelper
     {
+        /// <summary>
+        /// 检查选定的目录是否有写入权限
+        /// </summary>
         public static bool CanWriteToFolder(StorageFolder folder, FileSystemRights accessRights)
         {
             bool CanWrite = false;
@@ -59,6 +59,38 @@ namespace GetStoreApp.Helpers
             }
 
             return CanWrite;
+        }
+
+        /// <summary>
+        /// 清空文件夹
+        /// </summary>
+        /// <param name="folder"></param>
+        public static bool CleanFolder(StorageFolder folder)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(folder.Path) || !Directory.Exists(folder.Path))
+                {
+                    return true;
+                }
+
+                // 删除当前文件夹下所有文件
+                foreach (string strFile in Directory.GetFiles(folder.Path))
+                {
+                    File.Delete(strFile);
+                }
+                // 删除当前文件夹下所有子文件夹(递归)
+                foreach (string strDir in Directory.GetDirectories(folder.Path))
+                {
+                    Directory.Delete(strDir, true);
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

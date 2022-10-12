@@ -40,7 +40,7 @@ namespace GetStoreApp.Services.Settings
         /// </summary>
         private async Task<RegionModel> GetRegionAsync()
         {
-            string region = await ConfigStorageService.GetSettingStringValueAsync(SettingsKey);
+            string region = await ConfigStorageService.ReadSettingAsync<string>(SettingsKey);
 
             if (string.IsNullOrEmpty(region))
             {
@@ -57,7 +57,7 @@ namespace GetStoreApp.Services.Settings
         {
             AppRegion = region;
 
-            await ConfigStorageService.SaveSettingStringValueAsync(SettingsKey, region.ISO2);
+            await ConfigStorageService.SaveSettingAsync(SettingsKey, region.ISO2);
         }
     }
 }

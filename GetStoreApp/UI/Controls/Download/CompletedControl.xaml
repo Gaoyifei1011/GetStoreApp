@@ -9,6 +9,7 @@
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:GetStoreApp.Models.Download"
+    xmlns:sys="using:System"
     x:Name="CompletedRoot"
     mc:Ignorable="d">
 
@@ -40,6 +41,7 @@
 
             <FontIcon
                 Grid.Column="0"
+                FontFamily="{StaticResource SegoeFluentFontFamily}"
                 Glyph="&#xE74C;"
                 Style="{StaticResource FontIconStyle}" />
 
@@ -74,6 +76,7 @@
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.SelectCommand}"
+                    IsEnabled="{x:Bind sys:Convert.ToBoolean(ViewModel.CompletedDataList.Count), Mode=OneWay}"
                     Label="{x:Bind ResourceService.GetLocalized('/Download/Select')}"
                     ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SelectToolTip')}">
                     <AppBarButton.Icon>

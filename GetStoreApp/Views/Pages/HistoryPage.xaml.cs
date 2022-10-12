@@ -1,12 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers;
-using GetStoreApp.Models.History;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace GetStoreApp.Views.Pages
 {
@@ -44,11 +41,6 @@ namespace GetStoreApp.Views.Pages
             {
                 return string.Format(ResourceService.GetLocalized("/History/HistoryCountInfo"), count);
             }
-        }
-
-        public bool IsSelect(ObservableCollection<HistoryModel> historyDataList)
-        {
-            return historyDataList.Any(item => item.IsSelected);
         }
     }
 }
