@@ -13,6 +13,7 @@
     NoLeftClickDelay="True"
     RequestedTheme="{x:Bind TrayTheme}"
     ToolTipText="{x:Bind ResourceService.GetLocalized('AppDisplayName')}"
+    Unloaded="{x:Bind TaskBarUnloaded}"
     mc:Ignorable="d">
 
     <notifyicon:TaskbarIcon.ContextFlyout>

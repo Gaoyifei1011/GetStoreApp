@@ -4,13 +4,12 @@ using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
-using GetStoreApp.UI.Controls.Custom;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Windows.Win32.Foundation;
+using Windows.UI.Popups;
 using WinUIEx;
 
 namespace GetStoreApp
@@ -48,7 +47,6 @@ namespace GetStoreApp
             base.OnLaunched(args);
 
             await RunSingleInstanceAppAsync();
-
             await ActivationService.ActivateAsync(args);
         }
 
@@ -87,23 +85,23 @@ namespace GetStoreApp
             }
 
             // 否则将注册激活重定向
-            AppInstance.GetCurrent().Activated += AppActivated;
+            AppInstance.GetCurrent().Activated += OnAppActivated;
         }
 
         /// <summary>
         /// 关闭其他实例后，按照原来的状态显示已经打开的实例窗口
         /// </summary>
-        private void AppActivated(object sender, AppActivationArguments e)
+        private async void OnAppActivated(object sender, AppActivationArguments e)
         {
             WindowHelper.ShowAppWindow();
 
             // 显示提示消息对话框
-            WinUIMessageBox.ShowMessageBox(
-                (HWND)WinRT.Interop.WindowNative.GetWindowHandle(MainWindow),
-                ResourceService.GetLocalized("AppIsRunning"),
-                ResourceService.GetLocalized("AppDisplayName"),
-                WinUIMessageBox.MB_OK | WinUIMessageBox.MB_ICONINFORMATION | WinUIMessageBox.MB_APPLMODAL | WinUIMessageBox.MB_TOPMOST
-                );
+            MessageDialog showDialog = new MessageDialog(ResourceService.GetLocalized("AppIsRunning"), ResourceService.GetLocalized("AppDisplayName"));
+            showDialog.Commands.Add(new UICommand(ResourceService.GetLocalized("OK")));
+            showDialog.DefaultCommandIndex = 0;
+            WinRT.Interop.InitializeWithWindow.Initialize(showDialog,
+                WinRT.Interop.WindowNative.GetWindowHandle(MainWindow));
+            await showDialog.ShowAsync();
         }
     }
 }

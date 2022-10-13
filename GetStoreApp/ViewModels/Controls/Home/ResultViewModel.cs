@@ -65,6 +65,12 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _isSelectMode, value); }
         }
 
+        // 页面被卸载时，关闭消息服务
+        public IRelayCommand UnloadedCommand => new RelayCommand(() =>
+        {
+            WeakReferenceMessenger.Default.UnregisterAll(this);
+        });
+
         // 复制CategoryID
         public IRelayCommand CopyIDCommand => new RelayCommand(() =>
         {

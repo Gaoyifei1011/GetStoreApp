@@ -138,6 +138,9 @@
   <data name="Fast" xml:space="preserve">
     <value>快速</value>
   </data>
+  <data name="OK" xml:space="preserve">
+    <value>确定</value>
+  </data>
   <data name="PackageDisplayName" xml:space="preserve">
     <value>获取商店应用 (Dev)</value>
   </data>

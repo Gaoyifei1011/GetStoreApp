@@ -26,10 +26,5 @@ namespace GetStoreApp.UI.Dialogs
             ViewModel.InitializeTraceCleanupList();
             InitializeComponent();
         }
-
-        public string LocalizeClearStateText(bool isCleaning, bool hasCleanCompleted)
-        {
-            return string.Empty;
-        }
     }
 }

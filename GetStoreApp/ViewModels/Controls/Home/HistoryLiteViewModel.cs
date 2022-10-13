@@ -47,6 +47,12 @@ namespace GetStoreApp.ViewModels.Controls.Home
             await GetHistoryLiteDataListAsync();
         });
 
+        // 页面被卸载时，关闭消息服务
+        public IRelayCommand UnloadedCommand => new RelayCommand(() =>
+        {
+            WeakReferenceMessenger.Default.UnregisterAll(this);
+        });
+
         // 查看全部
         public IRelayCommand ViewAllCommand => new RelayCommand(() =>
         {

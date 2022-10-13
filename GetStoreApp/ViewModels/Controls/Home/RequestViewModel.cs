@@ -77,6 +77,12 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _linkText, value); }
         }
 
+        // 页面被卸载时，关闭消息服务
+        public IRelayCommand UnloadedCommand => new RelayCommand(() =>
+        {
+            WeakReferenceMessenger.Default.UnregisterAll(this);
+        });
+
         // 类型选择后修改样例文本
         public IRelayCommand TypeSelectCommand => new RelayCommand(() =>
         {

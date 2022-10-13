@@ -6,6 +6,9 @@ namespace GetStoreApp.Models.Settings
 {
     public class TraceCleanupModel : ModelBase
     {
+        /// <summary>
+        /// 清理选项是否被选择的标志
+        /// </summary>
         private bool _isSelected;
 
         public bool IsSelected
@@ -19,6 +22,9 @@ namespace GetStoreApp.Models.Settings
             }
         }
 
+        /// <summary>
+        /// 标志该清理选项是否清理失败
+        /// </summary>
         private bool _isCleanFailed;
 
         public bool IsCleanFailed
@@ -32,6 +38,9 @@ namespace GetStoreApp.Models.Settings
             }
         }
 
+        /// <summary>
+        /// 清理选项显示的名称
+        /// </summary>
         public string DisplayName
         {
             get { return (string)GetValue(DisplayNameProperty); }
@@ -42,6 +51,9 @@ namespace GetStoreApp.Models.Settings
         public static readonly DependencyProperty DisplayNameProperty =
             DependencyProperty.Register("DisplayName", typeof(string), typeof(TraceCleanupModel), new PropertyMetadata(string.Empty));
 
+        /// <summary>
+        /// 清理选项内部的名称
+        /// </summary>
         public CleanArgs InternalName
         {
             get { return (CleanArgs)GetValue(InternalNameProperty); }
@@ -52,6 +64,9 @@ namespace GetStoreApp.Models.Settings
         public static readonly DependencyProperty InternalNameProperty =
             DependencyProperty.Register("InternalName", typeof(string), typeof(TraceCleanupModel), new PropertyMetadata(CleanArgs.History));
 
+        /// <summary>
+        /// 清理失败时详细的错误文字信息
+        /// </summary>
         public string CleanFailedText
         {
             get { return (string)GetValue(CleanFailedTextProperty); }

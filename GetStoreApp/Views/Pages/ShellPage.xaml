@@ -4,8 +4,19 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:helpers="using:GetStoreApp.Helpers"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:tray="using:GetStoreApp.Views.Tray"
-    Loaded="{x:Bind ShellLoaded}">
+    Unloaded="{x:Bind ShellPageUnloaded}">
+
+    <i:Interaction.Behaviors>
+        <ic:EventTriggerBehavior EventName="Loaded">
+            <ic:InvokeCommandAction Command="{x:Bind ViewModel.LoadedCommand}" />
+        </ic:EventTriggerBehavior>
+        <ic:EventTriggerBehavior EventName="Unloaded">
+            <ic:InvokeCommandAction Command="{x:Bind ViewModel.UnloadedCommand}" />
+        </ic:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
 
     <Grid>
         <Grid

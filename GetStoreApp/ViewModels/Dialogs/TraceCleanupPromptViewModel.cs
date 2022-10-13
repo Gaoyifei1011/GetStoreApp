@@ -50,6 +50,9 @@ namespace GetStoreApp.ViewModels.Dialogs
             set { SetProperty(ref _isCleaning, value); }
         }
 
+        /// <summary>
+        /// 初始化清理列表信息
+        /// </summary>
         public void InitializeTraceCleanupList()
         {
             TraceCleanupList = ResourceService.TraceCleanupList;

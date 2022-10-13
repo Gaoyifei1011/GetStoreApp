@@ -20,6 +20,10 @@
         <ic:EventTriggerBehavior EventName="Loaded">
             <ic:InvokeCommandAction Command="{x:Bind ViewModel.LoadedCommand}" />
         </ic:EventTriggerBehavior>
+
+        <ic:EventTriggerBehavior EventName="Unloaded">
+            <ic:InvokeCommandAction Command="{x:Bind ViewModel.UnloadedCommand}" />
+        </ic:EventTriggerBehavior>
     </i:Interaction.Behaviors>
 
     <Expander

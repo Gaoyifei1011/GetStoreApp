@@ -6,7 +6,7 @@ namespace GetStoreApp.UI.Dialogs
     {
         public ReleaseNotesDialog()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
     }
 }

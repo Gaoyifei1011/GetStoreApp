@@ -44,10 +44,7 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         public async Task<(bool, string)> AddUriAsync(string downloadLink, string folderPath)
         {
-            if (Aria2Client is null)
-            {
-                Aria2Client = new Aria2NetClient(RPCServerLink, null, null, 0);
-            }
+            Aria2Client ??= new Aria2NetClient(RPCServerLink, null, null, 0);
 
             try
             {

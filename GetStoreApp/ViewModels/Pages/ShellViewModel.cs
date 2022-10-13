@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Helpers;
 using GetStoreApp.Views.Pages;
@@ -29,10 +30,16 @@ namespace GetStoreApp.ViewModels.Pages
             set { SetProperty(ref _selected, value); }
         }
 
-        public ShellViewModel()
+        public IRelayCommand LoadedCommand => new RelayCommand(() =>
         {
             NavigationService.Navigated += OnNavigated;
-        }
+        });
+
+        // 页面被卸载时，注销所有事件
+        public IRelayCommand UnloadedCommand => new RelayCommand(() =>
+        {
+            NavigationService.Navigated -= OnNavigated;
+        });
 
         private void OnNavigated(object sender, NavigationEventArgs args)
         {

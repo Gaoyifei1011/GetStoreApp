@@ -46,6 +46,12 @@ namespace GetStoreApp.ViewModels.Controls.Download
             set { SetProperty(ref _isSelectMode, value); }
         }
 
+        // 页面被卸载时，关闭消息服务
+        public IRelayCommand UnloadedCommand => new RelayCommand(() =>
+        {
+            WeakReferenceMessenger.Default.UnregisterAll(this);
+        });
+
         // 打开默认保存的文件夹
         public IRelayCommand OpenFolderCommand => new RelayCommand(async () =>
         {
@@ -305,18 +311,16 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     await GetUnfinishedDataListAsync();
                 }
 
-                // 从下载页面离开时，关闭所有事件。并注销所有消息服务
+                // 从下载页面离开时，关闭所有事件。
                 else if (pivotSelectionMessage.Value == -1)
                 {
                     // 取消订阅所有事件
-                    DownloadSchedulerService.DownloadingList.ItemsChanged -= DownloadingListItemsChanged;
-
-                    Messenger.UnregisterAll(this);
+                    DownloadSchedulerService.DownloadingList.ItemsChanged -= OnDownloadingListItemsChanged;
                 }
             });
 
             // 订阅事件
-            DownloadSchedulerService.DownloadingList.ItemsChanged += DownloadingListItemsChanged;
+            DownloadSchedulerService.DownloadingList.ItemsChanged += OnDownloadingListItemsChanged;
         }
 
         /// <summary>
@@ -368,7 +372,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// <summary>
         /// 订阅事件，下载中列表内容有暂停下载或下载失败的项目时通知UI更改
         /// </summary>
-        private async void DownloadingListItemsChanged(object sender, ItemsChangedEventArgs<BackgroundModel> args)
+        private async void OnDownloadingListItemsChanged(object sender, ItemsChangedEventArgs<BackgroundModel> args)
         {
             if (args.RemovedItems.Any(item => item.DownloadFlag == 0 || item.DownloadFlag == 2))
             {

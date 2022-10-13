@@ -194,6 +194,7 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         public void Unregister()
         {
+            AppNotificationManager.Default.NotificationInvoked -= OnNotificationInvoked;
             AppNotificationManager.Default.Unregister();
         }
     }

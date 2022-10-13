@@ -8,6 +8,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <i:Interaction.Behaviors>
+        <ic:EventTriggerBehavior EventName="Unloaded">
+            <ic:InvokeCommandAction Command="{x:Bind ViewModel.UnloadedCommand}" />
+        </ic:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+
     <Grid ColumnSpacing="6">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />

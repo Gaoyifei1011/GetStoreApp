@@ -54,6 +54,12 @@ namespace GetStoreApp.ViewModels.Controls.Download
             set { SetProperty(ref _isSelectMode, value); }
         }
 
+        // 页面被卸载时，关闭消息服务
+        public IRelayCommand UnloadedCommand => new RelayCommand(() =>
+        {
+            WeakReferenceMessenger.Default.UnregisterAll(this);
+        });
+
         // 打开默认保存的文件夹
         public IRelayCommand OpenFolderCommand => new RelayCommand(async () =>
         {
@@ -243,9 +249,11 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 if (InstallModeService.InstallMode.InternalName == InstallModeService.InstallModeList[0].InternalName)
                 {
-                    ProcessStartInfo Info = new ProcessStartInfo();
-                    Info.FileName = completedItem.FilePath;
-                    Info.UseShellExecute = true;
+                    ProcessStartInfo Info = new ProcessStartInfo
+                    {
+                        FileName = completedItem.FilePath,
+                        UseShellExecute = true
+                    };
 
                     Process.Start(Info);
                 }
@@ -386,19 +394,16 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     await GetCompletedDataListAsync();
                 }
 
-                // 从下载页面离开时，关闭所有事件。并注销所有消息服务
+                // 从下载页面离开时，关闭所有事件。
                 else if (pivotSelectionMessage.Value == -1)
                 {
                     // 取消订阅所有事件
-                    DownloadSchedulerService.DownloadingList.ItemsChanged -= DownloadingListItemsChanged;
-
-                    // 关闭消息服务
-                    Messenger.UnregisterAll(this);
+                    DownloadSchedulerService.DownloadingList.ItemsChanged -= OnDownloadingListItemsChanged;
                 }
             });
 
             // 订阅事件
-            DownloadSchedulerService.DownloadingList.ItemsChanged += DownloadingListItemsChanged;
+            DownloadSchedulerService.DownloadingList.ItemsChanged += OnDownloadingListItemsChanged;
         }
 
         /// <summary>
@@ -434,7 +439,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// <summary>
         /// 订阅事件，下载中列表内容有完成项目时通知UI更改
         /// </summary>
-        private async void DownloadingListItemsChanged(object sender, ItemsChangedEventArgs<BackgroundModel> args)
+        private async void OnDownloadingListItemsChanged(object sender, ItemsChangedEventArgs<BackgroundModel> args)
         {
             if (args.RemovedItems.Any(item => item.DownloadFlag == 4))
             {

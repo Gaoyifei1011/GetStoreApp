@@ -197,7 +197,7 @@ namespace GetStoreApp.Models.Download
         /// </summary>
         public double DownloadProgress(double finishedSize, double totalSize)
         {
-            if (totalSize == default(double))
+            if (totalSize == default)
             {
                 IsFileDownloading = false;
                 return default;

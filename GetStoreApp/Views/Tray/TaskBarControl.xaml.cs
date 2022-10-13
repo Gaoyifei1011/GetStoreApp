@@ -32,5 +32,11 @@ namespace GetStoreApp.Views.Tray
                 }
             });
         }
+
+        // 控件被卸载时，关闭消息服务
+        public void TaskBarUnloaded(object sender, RoutedEventArgs args)
+        {
+            WeakReferenceMessenger.Default.UnregisterAll(this);
+        }
     }
 }

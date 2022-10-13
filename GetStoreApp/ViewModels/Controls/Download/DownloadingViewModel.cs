@@ -51,6 +51,12 @@ namespace GetStoreApp.ViewModels.Controls.Download
             set { SetProperty(ref _isSelectMode, value); }
         }
 
+        // 页面被卸载时，关闭消息服务
+        public IRelayCommand UnloadedCommand => new RelayCommand(() =>
+        {
+            WeakReferenceMessenger.Default.UnregisterAll(this);
+        });
+
         // 打开默认保存的文件夹
         public IRelayCommand OpenFolderCommand => new RelayCommand(async () =>
         {
@@ -342,8 +348,8 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     // 取消订阅所有事件
                     DownloadingTimer.Tick -= DownloadInfoTimerTick;
 
-                    DownloadSchedulerService.DownloadingList.ItemsChanged -= DownloadingListItemsChanged;
-                    DownloadSchedulerService.WaitingList.ItemsChanged -= WaitingListItemsChanged;
+                    DownloadSchedulerService.DownloadingList.ItemsChanged -= OnDownloadingListItemsChanged;
+                    DownloadSchedulerService.WaitingList.ItemsChanged -= OnWaitingListItemsChanged;
 
                     // 关闭消息服务
                     Messenger.UnregisterAll(this);
@@ -357,8 +363,8 @@ namespace GetStoreApp.ViewModels.Controls.Download
             });
 
             // 订阅事件
-            DownloadSchedulerService.DownloadingList.ItemsChanged += DownloadingListItemsChanged;
-            DownloadSchedulerService.WaitingList.ItemsChanged += WaitingListItemsChanged;
+            DownloadSchedulerService.DownloadingList.ItemsChanged += OnDownloadingListItemsChanged;
+            DownloadSchedulerService.WaitingList.ItemsChanged += OnWaitingListItemsChanged;
         }
 
         /// <summary>
@@ -454,7 +460,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// <summary>
         /// 订阅事件，下载中列表内容发生改变时通知UI更改
         /// </summary>
-        private async void DownloadingListItemsChanged(object sender, ItemsChangedEventArgs<BackgroundModel> args)
+        private async void OnDownloadingListItemsChanged(object sender, ItemsChangedEventArgs<BackgroundModel> args)
         {
             // 有信息在更新时，等待操作
             while (IsUpdatingNow && IsInitializeFinished)
@@ -520,7 +526,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// <summary>
         /// 订阅事件，等待列表内容发生改变时通知UI更改
         /// </summary>
-        private async void WaitingListItemsChanged(object sender, ItemsChangedEventArgs<BackgroundModel> args)
+        private async void OnWaitingListItemsChanged(object sender, ItemsChangedEventArgs<BackgroundModel> args)
         {
             // 有信息在更新时，等待操作
             while (IsUpdatingNow && IsInitializeFinished)

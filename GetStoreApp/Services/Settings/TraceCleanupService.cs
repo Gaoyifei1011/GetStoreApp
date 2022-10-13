@@ -3,7 +3,6 @@ using GetStoreApp.Contracts.Services.History;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Helpers;
-using Microsoft.UI.Xaml.Controls;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Settings
@@ -16,6 +15,9 @@ namespace GetStoreApp.Services.Settings
 
         private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
 
+        /// <summary>
+        /// 根据传入的清理选项清理应用痕迹
+        /// </summary>
         public async Task<bool> CleanAppTraceAsync(CleanArgs cleanupArgs)
         {
             switch (cleanupArgs)

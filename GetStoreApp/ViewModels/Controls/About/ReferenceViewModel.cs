@@ -22,6 +22,7 @@ namespace GetStoreApp.ViewModels.Controls.About
             {"Microsoft.Windows.SDK.BuildTools","https://www.nuget.org/packages/Microsoft.Windows.SDK.BuildTools" },
             {"Microsoft.WindowsAppSDK","https://github.com/microsoft/windowsappsdk" },
             {"Microsoft.Xaml.Behaviors.WinUI.Managed","https://www.nuget.org/packages/Microsoft.Xaml.Behaviors.WinUI.Managed" },
+            {"Microsoft-WindowsAPICodePack-Shell","https://github.com/contre/Windows-API-Code-Pack-1.1" },
             {"PInvoke.SHCore","https://github.com/dotnet/pinvoke" },
             {"System.Management","https://www.nuget.org/packages/System.Management" },
             {"Template Studio","https://github.com/microsoft/TemplateStudio" },

@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Contracts.Services.Settings;
-using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
@@ -9,8 +8,6 @@ using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Input;
-using Windows.System;
 
 namespace GetStoreApp.Views.Pages
 {
@@ -25,19 +22,11 @@ namespace GetStoreApp.Views.Pages
         public ShellPage()
         {
             InitializeComponent();
-
+            App.MainWindow.SetTitleBar(AppTitleBar);
             ViewModel.NavigationService.Frame = NavigationFrame;
             ViewModel.NavigationViewService.Initialize(NavigationViewControl);
 
-            App.MainWindow.SetTitleBar(AppTitleBar);
-
             ShowInAppNotification();
-        }
-
-        private void ShellLoaded(object sender, RoutedEventArgs args)
-        {
-            KeyboardAccelerators.Add(BuildKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu));
-            KeyboardAccelerators.Add(BuildKeyboardAccelerator(VirtualKey.GoBack));
         }
 
         private void NavigationViewDisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)
@@ -49,32 +38,6 @@ namespace GetStoreApp.Views.Pages
                 Right = AppTitleBar.Margin.Right,
                 Bottom = AppTitleBar.Margin.Bottom
             };
-        }
-
-        private KeyboardAccelerator BuildKeyboardAccelerator(VirtualKey key, VirtualKeyModifiers? modifiers = null)
-        {
-            KeyboardAccelerator keyboardAccelerator = new KeyboardAccelerator()
-            {
-                Key = key
-            };
-
-            if (modifiers.HasValue)
-            {
-                keyboardAccelerator.Modifiers = modifiers.Value;
-            }
-
-            keyboardAccelerator.Invoked += OnKeyboardAcceleratorInvoked;
-
-            return keyboardAccelerator;
-        }
-
-        private void OnKeyboardAcceleratorInvoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
-        {
-            INavigationService navigationService = IOCHelper.GetService<INavigationService>();
-
-            bool result = navigationService.GoBack();
-
-            args.Handled = result;
         }
 
         private void ShowInAppNotification()
@@ -98,6 +61,12 @@ namespace GetStoreApp.Views.Pages
                     };
                 }
             });
+        }
+
+        // 页面被卸载时，关闭消息服务
+        private void ShellPageUnloaded(object sender, RoutedEventArgs e)
+        {
+            WeakReferenceMessenger.Default.UnregisterAll(this);
         }
     }
 }

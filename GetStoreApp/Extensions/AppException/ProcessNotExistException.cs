@@ -57,7 +57,7 @@ namespace GetStoreApp.Extensions.AppException
             }
             else
             {
-                return default(Exception);
+                return default;
             }
         }
     }

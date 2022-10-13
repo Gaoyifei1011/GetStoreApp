@@ -16,6 +16,12 @@
         <converter:CheckBoxToolTipFormatConverter x:Name="CheckBoxToolTipFormatConverter" />
     </UserControl.Resources>
 
+    <i:Interaction.Behaviors>
+        <ic:EventTriggerBehavior EventName="Unloaded">
+            <ic:InvokeCommandAction Command="{x:Bind ViewModel.UnloadedCommand}" />
+        </ic:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+
     <Grid Padding="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

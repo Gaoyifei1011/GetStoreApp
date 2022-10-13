@@ -276,6 +276,9 @@
   <data name="RestartAppToolTip" xml:space="preserve">
     <value>After the app settings are modified, some options need to be restarted to take effect</value>
   </data>
+  <data name="SelectFolder" xml:space="preserve">
+    <value>Please select the directory you want to save</value>
+  </data>
   <data name="StartsWithE" xml:space="preserve">
     <value>Files whose file extension begins with '.e' is not displayed</value>
   </data>
