@@ -6,6 +6,7 @@
     xmlns:helpers="using:GetStoreApp.Helpers"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:sc="using:GetStoreApp.UI.Controls.Shell"
     xmlns:tray="using:GetStoreApp.Views.Tray"
     Unloaded="{x:Bind ShellPageUnloaded}">
 
@@ -16,44 +17,31 @@
         <ic:EventTriggerBehavior EventName="Unloaded">
             <ic:InvokeCommandAction Command="{x:Bind ViewModel.UnloadedCommand}" />
         </ic:EventTriggerBehavior>
+        <ic:EventTriggerBehavior EventName="SizeChanged">
+            <ic:InvokeCommandAction Command="{x:Bind ViewModel.SizeChangedCommand}" />
+        </ic:EventTriggerBehavior>
     </i:Interaction.Behaviors>
 
     <Grid>
-        <Grid
+        <sc:AppTitleBar
             x:Name="AppTitleBar"
-            Height="{Binding ElementName=NavigationViewControl, Path=CompactPaneLength}"
-            VerticalAlignment="Top"
-            Canvas.ZIndex="1"
-            IsHitTestVisible="True">
-            <Image
-                Width="22"
-                Height="22"
-                HorizontalAlignment="Left"
-                Source="/Assets/Square44x44Logo.png" />
-            <TextBlock
-                Margin="32,0,0,0"
-                VerticalAlignment="Center"
-                Style="{StaticResource CaptionTextBlockStyle}"
-                Text="{x:Bind ResourceService.GetLocalized('/Shell/AppTitle')}"
-                TextWrapping="NoWrap" />
-        </Grid>
+            Height="45"
+            Margin="{x:Bind NavigationViewControl.PaneDisplayMode, Converter={StaticResource AppTitleBarMarginConverter}, Mode=OneWay}"
+            VerticalAlignment="Top" />
 
         <NavigationView
             x:Name="NavigationViewControl"
-            Canvas.ZIndex="0"
-            CompactModeThresholdWidth="640"
-            DisplayModeChanged="{x:Bind NavigationViewDisplayModeChanged}"
-            ExpandedModeThresholdWidth="1080"
-            IsBackButtonVisible="Visible"
             IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
+            IsPaneToggleButtonVisible="{x:Bind ViewModel.PaneToggleButtonVisible, Mode=OneWay}"
             IsSettingsVisible="True"
-            IsTabStop="True"
-            IsTitleBarAutoPaddingEnabled="False"
+            IsTitleBarAutoPaddingEnabled="True"
             OpenPaneLength="220"
-            PaneTitle="{x:Bind ResourceService.GetLocalized('/Shell/Title')}"
-            SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}">
+            PaneDisplayMode="{x:Bind ViewModel.NavigationDispalyMode, Mode=OneWay}"
+            SelectedItem="{x:Bind ViewModel.SelectedItem, Mode=OneWay}">
 
             <NavigationView.MenuItems>
+                <NavigationViewItemHeader Content="{x:Bind ResourceService.GetLocalized('/Shell/Title')}" Foreground="{ThemeResource NavigationViewItemForeground}" />
+
                 <NavigationViewItem helpers:NavigationHelper.NavigateTo="GetStoreApp.ViewModels.Pages.HomeViewModel" Content="{x:Bind ResourceService.GetLocalized('/Shell/Home')}">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE80f;" Style="{StaticResource SegoeFluentStyle}" />

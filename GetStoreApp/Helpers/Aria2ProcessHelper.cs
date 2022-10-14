@@ -64,7 +64,10 @@ namespace GetStoreApp.Helpers
             try
             {
                 Process process = Process.GetProcessById(processID);
-                process.Kill();
+                if(!process.HasExited)
+                {
+                    process.Kill();
+                }
             }
 
             // 无法终止相关联的进程。

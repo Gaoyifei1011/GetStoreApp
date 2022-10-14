@@ -60,10 +60,9 @@
                                     <TextBlock
                                         x:Name="PaneTitleTextBlock"
                                         Grid.Column="0"
-                                        Margin="-1,-2,0,0"
+                                        Margin="0,-2,0,0"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
-                                        FontWeight="Normal"
                                         Style="{StaticResource NavigationViewItemHeaderTextStyle}"
                                         Text="{TemplateBinding PaneTitle}" />
                                 </Button>

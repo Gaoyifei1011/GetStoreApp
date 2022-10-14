@@ -8,7 +8,7 @@ namespace GetStoreApp.Contracts.Services.Shell
     {
         IList<object> MenuItems { get; }
 
-        object SettingsItem { get; }
+        NavigationViewItem SettingsItem { get; }
 
         void Initialize(NavigationView navigationView);
 

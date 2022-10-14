@@ -87,7 +87,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Strings\StringLocalization.en-us.resx" />
     <EmbeddedResource Include="Strings\StringLocalization.resx">

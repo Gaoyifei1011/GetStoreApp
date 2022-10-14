@@ -96,12 +96,11 @@ namespace GetStoreApp
             WindowHelper.ShowAppWindow();
 
             // 显示提示消息对话框
-            MessageDialog showDialog = new MessageDialog(ResourceService.GetLocalized("AppIsRunning"), ResourceService.GetLocalized("AppDisplayName"));
-            showDialog.Commands.Add(new UICommand(ResourceService.GetLocalized("OK")));
-            showDialog.DefaultCommandIndex = 0;
-            WinRT.Interop.InitializeWithWindow.Initialize(showDialog,
-                WinRT.Interop.WindowNative.GetWindowHandle(MainWindow));
-            await showDialog.ShowAsync();
+            MessageDialog dialog = new MessageDialog(ResourceService.GetLocalized("AppIsRunning"), ResourceService.GetLocalized("AppDisplayName"));
+            dialog.Commands.Add(new UICommand(ResourceService.GetLocalized("OK")));
+            dialog.DefaultCommandIndex = 0;
+            WinRT.Interop.InitializeWithWindow.Initialize(dialog, WinRT.Interop.WindowNative.GetWindowHandle(MainWindow));
+            await dialog.ShowAsync();
         }
     }
 }

@@ -23,7 +23,7 @@ namespace GetStoreApp.Services.Shell
 
         public IList<object> FooterMenuItems => _navigationView.FooterMenuItems;
 
-        public object SettingsItem => _navigationView.SettingsItem;
+        public NavigationViewItem SettingsItem => (NavigationViewItem)_navigationView.SettingsItem;
 
         public NavigationViewItem GetSelectedItem(Type pageType) => GetSelectedItem(MenuItems.Concat(FooterMenuItems), pageType);
 

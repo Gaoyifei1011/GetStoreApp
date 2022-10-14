@@ -73,6 +73,7 @@
     <None Remove="UI\Controls\Settings\ThemeControl.xaml" />
     <None Remove="UI\Controls\Settings\TopMostControl.xaml" />
     <None Remove="UI\Controls\Settings\TraceCleanupControl.xaml" />
+    <None Remove="UI\Controls\Shell\AppTitleBar.xaml" />
     <None Remove="UI\Controls\Web\LoadFailedControl.xaml" />
     <None Remove="UI\Dialogs\ClosingWindowDialog.xaml" />
     <None Remove="UI\Dialogs\CloudflareValidationDialog.xaml" />
@@ -110,7 +111,7 @@
     </PackageReference>
     <PackageReference Include="CommunityToolkit.WinUI.UI.Behaviors" Version="7.1.2" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
-    <PackageReference Include="H.NotifyIcon.WinUI" Version="2.0.68" />
+    <PackageReference Include="H.NotifyIcon.WinUI" Version="2.0.73" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
     <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.4" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.10" />
@@ -265,6 +266,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Controls\Settings\UseInstructionControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+
+    <Page Update="UI\Controls\Shell\AppTitleBar.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
