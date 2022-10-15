@@ -8,6 +8,7 @@
         ResultIDCopy = 3,
         ResultContentCopy = 4,
         ExceptionCopy = 5,
-        LanguageSettings = 6
+        FileInformationCopy = 6,
+        LanguageSettings = 7
     }
 }

@@ -16,46 +16,44 @@
         <behavior:ContentDialogBehavior />
     </i:Interaction.Behaviors>
 
-    <ContentDialog.Content>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
-            <StackPanel
-                Grid.Row="0"
-                Padding="24"
-                Background="{ThemeResource ContentDialogTopOverlay}"
-                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                BorderThickness="{ThemeResource ContentDialogBorderWidth}">
-                <TextBlock Style="{StaticResource ContentDialogTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/Dialog/Restart')}" />
-                <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind ResourceService.GetLocalized('/Dialog/RestartContent')}" />
-            </StackPanel>
+        <StackPanel
+            Grid.Row="0"
+            Padding="24"
+            Background="{ThemeResource ContentDialogTopOverlay}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            BorderThickness="{ThemeResource ContentDialogBorderWidth}">
+            <TextBlock Style="{StaticResource ContentDialogTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/Dialog/Restart')}" />
+            <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind ResourceService.GetLocalized('/Dialog/RestartContent')}" />
+        </StackPanel>
 
-            <Grid
-                Grid.Row="1"
-                Padding="24"
-                ColumnSpacing="10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+        <Grid
+            Grid.Row="1"
+            Padding="24"
+            ColumnSpacing="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-                <Button
-                    Grid.Column="0"
-                    HorizontalAlignment="Stretch"
-                    Command="{x:Bind ViewModel.RestartAppsSureCommand}"
-                    CommandParameter="{Binding ElementName=RestartAppsRoot}"
-                    Content="{x:Bind ResourceService.GetLocalized('/Dialog/OK')}"
-                    Style="{ThemeResource AccentButtonStyle}" />
-                <Button
-                    Grid.Column="1"
-                    HorizontalAlignment="Stretch"
-                    Command="{x:Bind ViewModel.RestartAppsCancelCommand}"
-                    CommandParameter="{Binding ElementName=RestartAppsRoot}"
-                    Content="{x:Bind ResourceService.GetLocalized('/Dialog/Cancel')}" />
-            </Grid>
+            <Button
+                Grid.Column="0"
+                HorizontalAlignment="Stretch"
+                Command="{x:Bind ViewModel.RestartAppsCommand}"
+                CommandParameter="{Binding ElementName=RestartAppsRoot}"
+                Content="{x:Bind ResourceService.GetLocalized('/Dialog/OK')}"
+                Style="{ThemeResource AccentButtonStyle}" />
+            <Button
+                Grid.Column="1"
+                HorizontalAlignment="Stretch"
+                Command="{x:Bind ViewModel.CloswWindowCommand}"
+                CommandParameter="{Binding ElementName=RestartAppsRoot}"
+                Content="{x:Bind ResourceService.GetLocalized('/Dialog/Cancel')}" />
         </Grid>
-    </ContentDialog.Content>
+    </Grid>
 </ContentDialog>

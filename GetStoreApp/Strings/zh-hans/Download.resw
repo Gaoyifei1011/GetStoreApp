@@ -210,6 +210,9 @@
   <data name="ExplanContent3" xml:space="preserve">
     <value>如果遇到下载服务因为异常而退出，建议重启应用后再尝试下载。</value>
   </data>
+  <data name="FileInformation" xml:space="preserve">
+    <value>查看文件信息</value>
+  </data>
   <data name="FileNotExist" xml:space="preserve">
     <value>已下载完成的文件可能已经被移除</value>
   </data>

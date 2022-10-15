@@ -33,7 +33,6 @@
             x:Name="NavigationViewControl"
             IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
             IsPaneToggleButtonVisible="{x:Bind ViewModel.PaneToggleButtonVisible, Mode=OneWay}"
-            IsSettingsVisible="True"
             IsTitleBarAutoPaddingEnabled="True"
             OpenPaneLength="220"
             PaneDisplayMode="{x:Bind ViewModel.NavigationDispalyMode, Mode=OneWay}"

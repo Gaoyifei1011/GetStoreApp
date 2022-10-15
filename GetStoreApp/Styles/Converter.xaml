@@ -12,7 +12,7 @@
     <check:TimeSortValueCheckConverter x:Name="TimeSortValueCheckConverter" />
     <check:ContinueDownloadCheckConverter x:Name="ContinueDownloadCheckConverter" />
 
-    <convert:AppTitleBarMarginConverter x:Name="AppTitleBarMarginConverter"/>
+    <convert:AppTitleBarMarginConverter x:Name="AppTitleBarMarginConverter" />
     <convert:BooleanToOppositeValueConverter x:Name="BooleanToOppositeValueConverter" />
     <convert:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
     <convert:DownloadFlagConverter x:Name="DownloadFlagConverter" />

@@ -123,6 +123,12 @@
   <data name="CancelDownload" xml:space="preserve">
     <value>Cancel the download</value>
   </data>
+  <data name="CheckFileSHA1" xml:space="preserve">
+    <value>The SHA1 value of the verified file: </value>
+  </data>
+  <data name="CheckingFile" xml:space="preserve">
+    <value>Please wait while the file is being validated</value>
+  </data>
   <data name="CleanFailed" xml:space="preserve">
     <value>Clean failed</value>
   </data>
@@ -152,6 +158,9 @@
   </data>
   <data name="CopyException" xml:space="preserve">
     <value>Copy exception information</value>
+  </data>
+  <data name="CopyFileInformation" xml:space="preserve">
+    <value>Copy file information</value>
   </data>
   <data name="CoreWebView2FailedTitle" xml:space="preserve">
     <value>An exception occurred in th e browser process</value>
@@ -193,7 +202,22 @@
     <value>Your current download task is not complete. Do you want to download again?</value>
   </data>
   <data name="ExitCode" xml:space="preserve">
-    <value>Exit code: {0}</value>
+    <value>Exit code: </value>
+  </data>
+  <data name="FileInformationTitle" xml:space="preserve">
+    <value>File information</value>
+  </data>
+  <data name="FileName" xml:space="preserve">
+    <value>File name: </value>
+  </data>
+  <data name="FilePath" xml:space="preserve">
+    <value>File path: </value>
+  </data>
+  <data name="FileSHA1" xml:space="preserve">
+    <value>File SHA1 value: </value>
+  </data>
+  <data name="FileSize" xml:space="preserve">
+    <value>File size: </value>
   </data>
   <data name="FolderAccessFailedContent" xml:space="preserve">
     <value>You do not have access to the selected folder. Please reselect it.</value>
@@ -229,13 +253,13 @@
     <value>Open download page</value>
   </data>
   <data name="ProcessDescription" xml:space="preserve">
-    <value>Detail information: {0}</value>
+    <value>Detail information: </value>
   </data>
   <data name="ProcessFailedKind" xml:space="preserve">
-    <value>Exception type: {0}</value>
+    <value>Exception type: </value>
   </data>
   <data name="Reason" xml:space="preserve">
-    <value>Exception reason: {0}</value>
+    <value>Exception reason: </value>
   </data>
   <data name="RecognizeDesktopApps" xml:space="preserve">
     <value>How to recognize traditional desktop apps?</value>

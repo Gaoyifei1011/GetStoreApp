@@ -18,13 +18,13 @@ namespace GetStoreApp.ViewModels.Dialogs
         private IDownloadSchedulerService DownloadSchedulerService { get; } = IOCHelper.GetService<IDownloadSchedulerService>();
 
         // 重启应用
-        public IRelayCommand RestartAppsSureCommand => new RelayCommand<ContentDialog>(async (dialog) =>
+        public IRelayCommand RestartAppsCommand => new RelayCommand<ContentDialog>(async (dialog) =>
         {
             await RestartAppsAsync(dialog);
         });
 
         // 取消重启应用
-        public IRelayCommand RestartAppsCancelCommand => new RelayCommand<ContentDialog>((dialog) =>
+        public IRelayCommand CloswWindowCommand => new RelayCommand<ContentDialog>((dialog) =>
         {
             dialog.Hide();
         });

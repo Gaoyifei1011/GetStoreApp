@@ -20,9 +20,9 @@
             </TeachingTip.IconSource>
             <TeachingTip.Content>
                 <StackPanel Spacing="5">
-                    <TextBlock Text="{x:Bind ResourceService.GetLocalized('/Download/ExplanContent1')}" TextWrapping="WrapWholeWords" />
-                    <TextBlock Text="{x:Bind ResourceService.GetLocalized('/Download/ExplanContent2')}" TextWrapping="WrapWholeWords" />
-                    <TextBlock Text="{x:Bind ResourceService.GetLocalized('/Download/ExplanContent3')}" TextWrapping="WrapWholeWords" />
+                    <TextBlock Text="{x:Bind ResourceService.GetLocalized('/Download/ExplanContent1')}" TextWrapping="Wrap" />
+                    <TextBlock Text="{x:Bind ResourceService.GetLocalized('/Download/ExplanContent2')}" TextWrapping="Wrap" />
+                    <TextBlock Text="{x:Bind ResourceService.GetLocalized('/Download/ExplanContent3')}" TextWrapping="Wrap" />
                     <StackPanel
                         HorizontalAlignment="Right"
                         Orientation="Horizontal"

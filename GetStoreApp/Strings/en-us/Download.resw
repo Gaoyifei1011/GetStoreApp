@@ -210,6 +210,9 @@
   <data name="ExplanContent3" xml:space="preserve">
     <value>If you encounter a download service that quits because of an exception, we recommend restarting the app before trying to download.</value>
   </data>
+  <data name="FileInformation" xml:space="preserve">
+    <value>View file information</value>
+  </data>
   <data name="FileNotExist" xml:space="preserve">
     <value>The downloaded file may have been removed</value>
   </data>

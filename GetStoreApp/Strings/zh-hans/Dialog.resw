@@ -123,6 +123,12 @@
   <data name="CancelDownload" xml:space="preserve">
     <value>取消下载</value>
   </data>
+  <data name="CheckFileSHA1" xml:space="preserve">
+    <value>校验得到的文件SHA1值：</value>
+  </data>
+  <data name="CheckingFile" xml:space="preserve">
+    <value>文件正在校验中，请稍候</value>
+  </data>
   <data name="CleanFailed" xml:space="preserve">
     <value>清理失败</value>
   </data>
@@ -152,6 +158,9 @@
   </data>
   <data name="CopyException" xml:space="preserve">
     <value>复制异常信息</value>
+  </data>
+  <data name="CopyFileInformation" xml:space="preserve">
+    <value>复制文件信息</value>
   </data>
   <data name="CoreWebView2FailedTitle" xml:space="preserve">
     <value>浏览器进程发生异常</value>
@@ -193,7 +202,22 @@
     <value>您当前的下载任务尚未完成，是否要重新下载？</value>
   </data>
   <data name="ExitCode" xml:space="preserve">
-    <value>退出代码：{0}</value>
+    <value>退出代码：</value>
+  </data>
+  <data name="FileInformationTitle" xml:space="preserve">
+    <value>文件信息</value>
+  </data>
+  <data name="FileName" xml:space="preserve">
+    <value>文件名：</value>
+  </data>
+  <data name="FilePath" xml:space="preserve">
+    <value>文件路径：</value>
+  </data>
+  <data name="FileSHA1" xml:space="preserve">
+    <value>文件SHA1值：</value>
+  </data>
+  <data name="FileSize" xml:space="preserve">
+    <value>文件大小：</value>
   </data>
   <data name="FolderAccessFailedContent" xml:space="preserve">
     <value>您没有选定文件夹的访问权限，请重新选择。</value>
@@ -229,13 +253,13 @@
     <value>打开下载页面</value>
   </data>
   <data name="ProcessDescription" xml:space="preserve">
-    <value>详细信息：{0}</value>
+    <value>详细信息：</value>
   </data>
   <data name="ProcessFailedKind" xml:space="preserve">
-    <value>异常类型：{0}</value>
+    <value>异常类型：</value>
   </data>
   <data name="Reason" xml:space="preserve">
-    <value>异常原因：{0}</value>
+    <value>异常原因：</value>
   </data>
   <data name="RecognizeDesktopApps" xml:space="preserve">
     <value>如何识别传统桌面应用?</value>

@@ -384,6 +384,11 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
         });
 
+        public IRelayCommand FileInformationCommand => new RelayCommand<CompletedModel>(async (completedItem) =>
+        {
+            await new FileInformationDialog(completedItem).ShowAsync();
+        });
+
         public CompletedViewModel()
         {
             WeakReferenceMessenger.Default.Register<CompletedViewModel, PivotSelectionMessage>(this, async (completedViewModel, pivotSelectionMessage) =>

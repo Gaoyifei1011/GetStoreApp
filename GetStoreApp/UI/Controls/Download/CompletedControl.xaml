@@ -297,16 +297,18 @@
                                     <ContentControl IsEnabled="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}">
 
                                         <StackPanel Orientation="Horizontal">
-                                            <Button
-                                                Command="{Binding ElementName=CompletedRoot, Path=ViewModel.InstallCommand}"
-                                                CommandParameter="{Binding}"
-                                                IsEnabled="{x:Bind FileName, Converter={StaticResource InstallFileCheckConverter}}"
-                                                Style="{StaticResource ButtonDownloadStyle}"
-                                                ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=InstallToolTip}">
-                                                <Button.Content>
-                                                    <FontIcon Glyph="&#xF775;" Style="{StaticResource SettingsFluentStyle}" />
-                                                </Button.Content>
-                                            </Button>
+                                            <ContentControl IsEnabled="{x:Bind FileName, Converter={StaticResource InstallFileCheckConverter}}">
+                                                <Button
+                                                    Command="{Binding ElementName=CompletedRoot, Path=ViewModel.InstallCommand}"
+                                                    CommandParameter="{Binding}"
+                                                    IsEnabled="{x:Bind IsInstalling, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
+                                                    Style="{StaticResource ButtonDownloadStyle}"
+                                                    ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=InstallToolTip}">
+                                                    <Button.Content>
+                                                        <FontIcon Glyph="&#xF775;" Style="{StaticResource SettingsFluentStyle}" />
+                                                    </Button.Content>
+                                                </Button>
+                                            </ContentControl>
 
                                             <Button
                                                 Command="{Binding ElementName=CompletedRoot, Path=ViewModel.OpenItemFolderCommand}"
@@ -343,7 +345,15 @@
                                                     Text="{Binding ElementName=CompletedRoot, Path=DeleteWithFile}"
                                                     ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=DeleteWithFileToolTip}" />
                                                 <MenuFlyoutSeparator />
-                                                <MenuFlyoutItem IsEnabled="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}" Text="查看文件信息" />
+                                                <MenuFlyoutItem
+                                                    Command="{Binding ElementName=CompletedRoot, Path=ViewModel.FileInformationCommand}"
+                                                    CommandParameter="{Binding}"
+                                                    IsEnabled="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}"
+                                                    Text="{Binding ElementName=CompletedRoot, Path=FileInformation}">
+                                                    <MenuFlyoutItem.Icon>
+                                                        <FontIcon Glyph="&#xE946;" Style="{StaticResource SegoeFluentStyle}" />
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
                                             </MenuFlyout>
                                         </Button.Flyout>
                                     </Button>

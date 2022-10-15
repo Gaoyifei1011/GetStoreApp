@@ -21,16 +21,14 @@
         <behavior:ContentDialogBehavior />
     </i:Interaction.Behaviors>
 
-    <ContentDialog.Content>
-        <StackPanel>
-            <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind ResourceService.GetLocalized('/Dialog/CloudflareValidationContent')}" />
+    <StackPanel>
+        <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind ResourceService.GetLocalized('/Dialog/CloudflareValidationContent')}" />
 
-            <Border
-                HorizontalAlignment="Left"
-                BorderBrush="{StaticResource CardStrokeColorDefaultBrush}"
-                BorderThickness="2">
-                <Image Source="ms-appx:///Assets/Images/CloudflareValidation.png" />
-            </Border>
-        </StackPanel>
-    </ContentDialog.Content>
+        <Border
+            HorizontalAlignment="Left"
+            BorderBrush="{StaticResource CardStrokeColorDefaultBrush}"
+            BorderThickness="2">
+            <Image Source="ms-appx:///Assets/Images/CloudflareValidation.png" />
+        </Border>
+    </StackPanel>
 </ContentDialog>

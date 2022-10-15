@@ -135,6 +135,12 @@
   <data name="ExceptionCopySuccessfully" xml:space="preserve">
     <value>The browser exception information has been successfully copied to the clipboard</value>
   </data>
+  <data name="FileInformationCopyFailed" xml:space="preserve">
+    <value>File information copy failed.Please check the access permissions of the clipboard</value>
+  </data>
+  <data name="FileInformationCopySuccessfully" xml:space="preserve">
+    <value>The file information is copied successfully</value>
+  </data>
   <data name="HistoryCopyFailed" xml:space="preserve">
     <value>The history record copy failed, check the access rights of the clipboard</value>
   </data>

@@ -8,6 +8,7 @@ using GetStoreApp.Messages;
 using GetStoreApp.Models.Notification;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Web.WebView2.Core;
+using System;
 using System.Text;
 
 namespace GetStoreApp.ViewModels.Dialogs
@@ -26,20 +27,20 @@ namespace GetStoreApp.ViewModels.Dialogs
 
         public void InitializeFailedInformation(CoreWebView2ProcessFailedEventArgs args)
         {
-            ProcessFailedKind = string.Format(ResourceService.GetLocalized("/Dialog/ProcessFailedKind"), args.ProcessFailedKind);
-            Reason = string.Format(ResourceService.GetLocalized("/Dialog/Reason"), args.Reason);
-            ExitCode = string.Format(ResourceService.GetLocalized("/Dialog/ExitCode"), args.ExitCode);
-            ProcessDescription = string.Format(ResourceService.GetLocalized("/Dialog/ProcessDescription"), args.ProcessDescription);
+            ProcessFailedKind = Convert.ToString(args.ProcessFailedKind);
+            Reason = Convert.ToString(args.Reason);
+            ExitCode = Convert.ToString(args.ExitCode);
+            ProcessDescription = Convert.ToString(args.ProcessDescription);
         }
 
         // 复制异常信息
         public IRelayCommand CopyExceptionCommand => new RelayCommand<ContentDialog>((dialog) =>
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine(ProcessFailedKind);
-            stringBuilder.AppendLine(Reason);
-            stringBuilder.AppendLine(ExitCode);
-            stringBuilder.AppendLine(ProcessDescription);
+            stringBuilder.AppendLine(ResourceService.GetLocalized("/Dialog/ProcessFailedKind") + ProcessFailedKind);
+            stringBuilder.AppendLine(ResourceService.GetLocalized("/Dialog/Reason") + Reason);
+            stringBuilder.AppendLine(ResourceService.GetLocalized("/Dialog/ExitCode") + ExitCode);
+            stringBuilder.AppendLine(ResourceService.GetLocalized("/Dialog/ProcessDescription") + ProcessDescription);
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
             dialog.Hide();
@@ -52,7 +53,7 @@ namespace GetStoreApp.ViewModels.Dialogs
         });
 
         // 关闭窗口
-        public IRelayCommand CoreWebView2FailedCancelCommand => new RelayCommand<ContentDialog>((dialog) =>
+        public IRelayCommand CloswWindowCommand => new RelayCommand<ContentDialog>((dialog) =>
         {
             dialog.Hide();
         });

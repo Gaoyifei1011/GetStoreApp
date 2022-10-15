@@ -17,12 +17,11 @@
         <behavior:ContentDialogBehavior />
     </i:Interaction.Behaviors>
 
-    <ContentDialog.Content>
-        <TextBox
-            IsReadOnly="True"
-            ScrollViewer.VerticalScrollBarVisibility="Auto"
-            ScrollViewer.VerticalScrollMode="Enabled"
-            Text="{x:Bind ViewModel.LicenseText}"
-            TextWrapping="Wrap" />
-    </ContentDialog.Content>
+
+    <TextBox
+        IsReadOnly="True"
+        ScrollViewer.VerticalScrollBarVisibility="Auto"
+        ScrollViewer.VerticalScrollMode="Enabled"
+        Text="{x:Bind ViewModel.LicenseText}"
+        TextWrapping="Wrap" />
 </ContentDialog>

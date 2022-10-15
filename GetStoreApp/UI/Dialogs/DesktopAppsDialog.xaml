@@ -21,20 +21,18 @@
         <behavior:ContentDialogBehavior />
     </i:Interaction.Behaviors>
 
-    <ContentDialog.Content>
-        <StackPanel>
-            <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind ResourceService.GetLocalized('/Dialog/DesktopAppsContent1')}" />
-            <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind ResourceService.GetLocalized('/Dialog/DesktopAppsContent2')}" />
+    <StackPanel>
+        <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind ResourceService.GetLocalized('/Dialog/DesktopAppsContent1')}" />
+        <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind ResourceService.GetLocalized('/Dialog/DesktopAppsContent2')}" />
 
-            <Border
-                HorizontalAlignment="Left"
-                BorderBrush="{StaticResource CardStrokeColorDefaultBrush}"
-                BorderThickness="2">
-                <Image
-                    Width="463"
-                    Height="107"
-                    Source="ms-appx:///Assets/Images/DesktopApps.png" />
-            </Border>
-        </StackPanel>
-    </ContentDialog.Content>
+        <Border
+            HorizontalAlignment="Left"
+            BorderBrush="{StaticResource CardStrokeColorDefaultBrush}"
+            BorderThickness="2">
+            <Image
+                Width="463"
+                Height="107"
+                Source="ms-appx:///Assets/Images/DesktopApps.png" />
+        </Border>
+    </StackPanel>
 </ContentDialog>

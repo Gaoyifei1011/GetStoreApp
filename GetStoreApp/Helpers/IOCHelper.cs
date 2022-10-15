@@ -180,8 +180,12 @@ namespace GetStoreApp.Helpers
                 // 对话框（MVVM）
                 services.AddTransient<CoreWebView2FailedDialog>();
                 services.AddTransient<CoreWebView2FailedViewModel>();
+                services.AddTransient<FileInformationDialog>();
+                services.AddTransient<FileInformationViewModel>();
                 services.AddTransient<LicenseDialog>();
                 services.AddTransient<LicenseViewModel>();
+                services.AddTransient<ReleaseNotesDialog>();
+                services.AddTransient<ReleaseNotesViewModel>();
                 services.AddTransient<RestartAppsDialog>();
                 services.AddTransient<RestartAppsViewModel>();
                 services.AddTransient<TraceCleanupPromptDialog>();
@@ -190,6 +194,8 @@ namespace GetStoreApp.Helpers
                 // 应用内消息通知框（MVVM）
                 services.AddTransient<ExceptionCopyNotification>();
                 services.AddTransient<ExceptionCopyViewModel>();
+                services.AddTransient<FileInformationCopyNotification>();
+                services.AddTransient<FileInformationCopyViewModel>();
                 services.AddTransient<HistoryCopyNotification>();
                 services.AddTransient<HistoryCopyViewModel>();
                 services.AddTransient<LanguageChangeNotification>();

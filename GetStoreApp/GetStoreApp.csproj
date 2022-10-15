@@ -81,6 +81,7 @@
     <None Remove="UI\Dialogs\DeletePromptDialog.xaml" />
     <None Remove="UI\Dialogs\DesktopAppsDialog.xaml" />
     <None Remove="UI\Dialogs\DownloadNotifyDialog.xaml" />
+    <None Remove="UI\Dialogs\FileInformationDialog.xaml" />
     <None Remove="UI\Dialogs\FolderAccessFailedDialog.xaml" />
     <None Remove="UI\Dialogs\InstallingNotifyDialog.xaml" />
     <None Remove="UI\Dialogs\LicenseDialog.xaml" />
@@ -89,6 +90,7 @@
     <None Remove="UI\Dialogs\SelectEmptyPromptDialog.xaml" />
     <None Remove="UI\Dialogs\TraceCleanupPromptDialog.xaml" />
     <None Remove="UI\Notifications\ExceptionCopyNotification.xaml" />
+    <None Remove="UI\Notifications\FileInformationCopyNotification.xaml" />
     <None Remove="UI\Notifications\HistoryCopyNotification.xaml" />
     <None Remove="UI\Notifications\LanguageChangeNotification.xaml" />
     <None Remove="UI\Notifications\NetWorkErrorNotification.xaml" />
@@ -295,6 +297,9 @@
     <Page Update="UI\Dialogs\DownloadNotifyDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Update="UI\Dialogs\FileInformationDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="UI\Dialogs\FolderAccessFailedDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -318,6 +323,9 @@
     </Page>
 
     <Page Update="UI\Notifications\ExceptionCopyNotification.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Notifications\FileInformationCopyNotification.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Notifications\HistoryCopyNotification.xaml">

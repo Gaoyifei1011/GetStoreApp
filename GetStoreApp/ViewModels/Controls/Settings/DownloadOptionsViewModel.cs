@@ -98,7 +98,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
 
                     if (Folder is not null)
                     {
-                        bool CheckResult = FolderHelper.CanWriteToFolder(Folder, FileSystemRights.Write);
+                        bool CheckResult = IOHelper.GetFolderAuthorization(Folder, FileSystemRights.Write);
 
                         if (CheckResult)
                         {

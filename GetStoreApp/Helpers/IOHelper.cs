@@ -1,17 +1,19 @@
 ﻿using System;
 using System.IO;
 using System.Security.AccessControl;
+using System.Security.Cryptography;
 using System.Security.Principal;
+using System.Text;
 using Windows.Storage;
 
 namespace GetStoreApp.Helpers
 {
-    public static class FolderHelper
+    public static class IOHelper
     {
         /// <summary>
         /// 检查选定的目录是否有写入权限
         /// </summary>
-        public static bool CanWriteToFolder(StorageFolder folder, FileSystemRights accessRights)
+        public static bool GetFolderAuthorization(StorageFolder folder, FileSystemRights accessRights)
         {
             bool CanWrite = false;
 
@@ -90,6 +92,31 @@ namespace GetStoreApp.Helpers
             catch (Exception)
             {
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// 获取文件的SHA1值
+        /// </summary>
+        public static string GetFileSHA1(string filePath)
+        {
+            try
+            {
+                FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, 1024, FileOptions.Asynchronous);
+                SHA1 sha1 = SHA1.Create();
+                byte[] retval = sha1.ComputeHash(fileStream);
+                fileStream.Close();
+
+                StringBuilder stringBuilder = new StringBuilder();
+                for (int i = 0; i < retval.Length; i++)
+                {
+                    stringBuilder.Append(retval[i].ToString("x2"));
+                }
+                return stringBuilder.ToString();
+            }
+            catch(Exception)
+            {
+                return null;
             }
         }
     }

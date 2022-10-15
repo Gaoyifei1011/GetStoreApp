@@ -130,19 +130,25 @@
     <value>网络连接异常，当前正在下载中的任务已经全部暂停，请确保您的网络处于连接状态后再尝试下载。</value>
   </data>
   <data name="ExceptionCopyFailed" xml:space="preserve">
-    <value>浏览器异常信息复制失败，请检查的剪贴板的访问权限</value>
+    <value>浏览器异常信息复制失败，请检查剪贴板的访问权限</value>
   </data>
   <data name="ExceptionCopySuccessfully" xml:space="preserve">
     <value>浏览器异常信息已成功复制到剪贴板</value>
   </data>
+  <data name="FileInformationCopyFailed" xml:space="preserve">
+    <value>文件信息复制失败，请检查剪贴板的访问权限</value>
+  </data>
+  <data name="FileInformationCopySuccessfully" xml:space="preserve">
+    <value>文件信息复制成功</value>
+  </data>
   <data name="HistoryCopyFailed" xml:space="preserve">
-    <value>该条历史记录复制失败，请检查的剪贴板的访问权限</value>
+    <value>该条历史记录复制失败，请检查剪贴板的访问权限</value>
   </data>
   <data name="HistoryCopySuccessfully" xml:space="preserve">
     <value>该条历史记录已成功复制到剪贴板</value>
   </data>
   <data name="HistorySelectedCopyFailed" xml:space="preserve">
-    <value>{0}条历史记录复制失败，请检查的剪贴板的访问权限</value>
+    <value>{0}条历史记录复制失败，请检查剪贴板的访问权限</value>
   </data>
   <data name="HistorySelectedCopySuccessfully" xml:space="preserve">
     <value>{0}条历史记录已经成功复制到剪贴板</value>
@@ -172,31 +178,31 @@
     <value>应用处于离线模式</value>
   </data>
   <data name="ResultContentCopyFailed" xml:space="preserve">
-    <value>该条下载记录复制失败，请检查的剪贴板的访问权限</value>
+    <value>该条下载记录复制失败，请检查剪贴板的访问权限</value>
   </data>
   <data name="ResultContentCopySuccessfully" xml:space="preserve">
     <value>该条下载记录已成功复制到剪贴板</value>
   </data>
   <data name="ResultContentSelectedCopyFailed" xml:space="preserve">
-    <value>{0}条下载记录复制失败，请检查的剪贴板的访问权限</value>
+    <value>{0}条下载记录复制失败，请检查剪贴板的访问权限</value>
   </data>
   <data name="ResultContentSelectedCopySuccessfully" xml:space="preserve">
     <value>{0}条下载记录已经成功复制到剪贴板</value>
   </data>
   <data name="ResultIDCopyFailed" xml:space="preserve">
-    <value>该CategoryID复制失败，请检查的剪贴板的访问权限</value>
+    <value>该CategoryID复制失败，请检查剪贴板的访问权限</value>
   </data>
   <data name="ResultIDCopySuccessfully" xml:space="preserve">
     <value>该CategoryID已成功复制到剪贴板</value>
   </data>
   <data name="ResultLinkCopyFailed" xml:space="preserve">
-    <value>该条下载链接复制失败，请检查的剪贴板的访问权限</value>
+    <value>该条下载链接复制失败，请检查剪贴板的访问权限</value>
   </data>
   <data name="ResultLinkCopySuccessfully" xml:space="preserve">
     <value>该条下载链接已成功复制到剪贴板</value>
   </data>
   <data name="ResultLinkSelectedCopyFailed" xml:space="preserve">
-    <value>{0}条下载链接复制失败，请检查的剪贴板的访问权限</value>
+    <value>{0}条下载链接复制失败，请检查剪贴板的访问权限</value>
   </data>
   <data name="ResultLinkSelectedCopySuccessfully" xml:space="preserve">
     <value>{0}条下载链接已经成功复制到剪贴板</value>
