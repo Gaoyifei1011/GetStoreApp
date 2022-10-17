@@ -64,7 +64,7 @@ namespace GetStoreApp.Helpers
             try
             {
                 Process process = Process.GetProcessById(processID);
-                if(!process.HasExited)
+                if (!process.HasExited)
                 {
                     process.Kill();
                 }

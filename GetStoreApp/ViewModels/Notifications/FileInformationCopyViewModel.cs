@@ -2,7 +2,7 @@
 
 namespace GetStoreApp.ViewModels.Notifications
 {
-    public class FileInformationCopyViewModel: ObservableRecipient
+    public class FileInformationCopyViewModel : ObservableRecipient
     {
         private bool _copyState = false;
 

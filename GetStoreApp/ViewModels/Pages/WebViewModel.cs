@@ -1,12 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Contracts.ViewModels;
 using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Helpers;
+using GetStoreApp.Messages;
 using GetStoreApp.Models.Download;
+using GetStoreApp.Models.Notification;
 using GetStoreApp.UI.Dialogs;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
@@ -207,15 +210,24 @@ namespace GetStoreApp.ViewModels.Pages
                         backgroundItem.DownloadKey = UniqueKeyHelper.GenerateDownloadKey(backgroundItem.FileName, backgroundItem.FilePath);
 
                         // 检查是否存在相同的任务记录
-                        DuplicatedDataInfo CheckResult = await DownloadDBService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
+                        DuplicatedDataInfoArgs CheckResult = await DownloadDBService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
 
                         switch (CheckResult)
                         {
-                            case DuplicatedDataInfo.None: await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add"); break;
-
-                            case DuplicatedDataInfo.Unfinished:
+                            case DuplicatedDataInfoArgs.None:
                                 {
-                                    ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfo.Unfinished).ShowAsync();
+                                    await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add");
+                                    WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
+                                    {
+                                        NotificationArgs = InAppNotificationArgs.DownloadCreate,
+                                        NotificationValue = new object[] { true }
+                                    }));
+                                    break;
+                                }
+
+                            case DuplicatedDataInfoArgs.Unfinished:
+                                {
+                                    ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Unfinished).ShowAsync();
 
                                     if (result == ContentDialogResult.Primary)
                                     {
@@ -229,6 +241,11 @@ namespace GetStoreApp.ViewModels.Pages
                                         finally
                                         {
                                             await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
+                                            WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
+                                            {
+                                                NotificationArgs = InAppNotificationArgs.DownloadCreate,
+                                                NotificationValue = new object[] { true }
+                                            }));
                                         }
                                     }
                                     else if (result == ContentDialogResult.Secondary)
@@ -238,9 +255,9 @@ namespace GetStoreApp.ViewModels.Pages
                                     break;
                                 }
 
-                            case DuplicatedDataInfo.Completed:
+                            case DuplicatedDataInfoArgs.Completed:
                                 {
-                                    ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfo.Completed).ShowAsync();
+                                    ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Completed).ShowAsync();
 
                                     if (result == ContentDialogResult.Primary)
                                     {
@@ -254,6 +271,11 @@ namespace GetStoreApp.ViewModels.Pages
                                         finally
                                         {
                                             await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
+                                            WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
+                                            {
+                                                NotificationArgs = InAppNotificationArgs.DownloadCreate,
+                                                NotificationValue = new object[] { true }
+                                            }));
                                         }
                                     }
                                     else if (result == ContentDialogResult.Secondary)

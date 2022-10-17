@@ -114,7 +114,7 @@ namespace GetStoreApp.Helpers
                 }
                 return stringBuilder.ToString();
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return null;
             }

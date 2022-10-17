@@ -190,7 +190,7 @@ namespace GetStoreApp.ViewModels.Pages
 
             WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
             {
-                NotificationContent = InAppNotificationContent.HistoryCopy,
+                NotificationArgs = InAppNotificationArgs.HistoryCopy,
                 NotificationValue = new object[] { true, true, SelectedHistoryDataList.Count }
             }));
         });
@@ -208,7 +208,7 @@ namespace GetStoreApp.ViewModels.Pages
             };
 
             // 删除时显示删除确认对话框
-            ContentDialogResult result = await new DeletePromptDialog(DeletePrompt.History).ShowAsync();
+            ContentDialogResult result = await new DeletePromptDialog(DeleteArgs.History).ShowAsync();
 
             if (result == ContentDialogResult.Primary)
             {
@@ -283,7 +283,7 @@ namespace GetStoreApp.ViewModels.Pages
 
             WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
             {
-                NotificationContent = InAppNotificationContent.HistoryCopy,
+                NotificationArgs = InAppNotificationArgs.HistoryCopy,
                 NotificationValue = new object[] { true, false }
             }));
         });

@@ -129,6 +129,12 @@
   <data name="Channel" xml:space="preserve">
     <value>通道</value>
   </data>
+  <data name="ClickToAccess" xml:space="preserve">
+    <value>单击以访问</value>
+  </data>
+  <data name="ClickToDownload" xml:space="preserve">
+    <value>单击以下载</value>
+  </data>
   <data name="Copy" xml:space="preserve">
     <value>复制</value>
   </data>

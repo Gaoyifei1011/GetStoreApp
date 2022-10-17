@@ -40,13 +40,12 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 | History (records used links)                             | Completed                                                                                                          |
 | Download the file from the generated link                | Completed (in beta)                                                                                                |
 | Deploy the app offline after the download is complete    | Completed                                                                                                          |
-| Access the web version of the docking download interface | Developing (Expected 0.6.0 preview implementation)                                                                   |
+| Access the web version of the docking download interface | Completed                                                                                                          |
 | Console applications (quickly download and deploy)       | Planning (Expected 0.7.0 preview implementation)                                                                   |
 | Program performance optimization                         | Planning (Expected to be implemented in version 1.0.0)                                                             |
 
 > * At present, the application is in the development stage, some functions have not yet been implemented, and only basic functions are currently provided. In addition, I am a beginner in C#, and I am more time-constrained, I can only use my spare time to develop, the development progress is relatively slow, please understand.
 > * The download function is in the testing stage, there may be instability during use, if there is an abnormality during use, please use a browser to download.
-> * When you open the app for the first time, a Windows Security Center alert window will pop up, asking you to allow getstoreapparia2.exe to communicate on private and public networks for quick app download.
 
 ------
 

@@ -129,6 +129,12 @@
   <data name="Channel" xml:space="preserve">
     <value>Channel</value>
   </data>
+  <data name="ClickToAccess" xml:space="preserve">
+    <value>Click to access</value>
+  </data>
+  <data name="ClickToDownload" xml:space="preserve">
+    <value>Click to download</value>
+  </data>
   <data name="Copy" xml:space="preserve">
     <value>Copy</value>
   </data>

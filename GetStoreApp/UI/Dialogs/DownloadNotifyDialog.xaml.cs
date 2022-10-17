@@ -18,16 +18,16 @@ namespace GetStoreApp.UI.Dialogs
 
         public string DownloadNotifyContent { get; set; }
 
-        public DownloadNotifyDialog(DuplicatedDataInfo duplicatedDataInfo)
+        public DownloadNotifyDialog(DuplicatedDataInfoArgs duplicatedDataInfo)
         {
             XamlRoot = App.MainWindow.Content.XamlRoot;
             RequestedTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
 
             switch (duplicatedDataInfo)
             {
-                case DuplicatedDataInfo.Unfinished: DownloadNotifyContent = ResourceService.GetLocalized("/Dialog/DownloadUnfinishedContent"); break;
-                case DuplicatedDataInfo.Completed: DownloadNotifyContent = ResourceService.GetLocalized("/Dialog/DownloadCompletedContent"); break;
-                case DuplicatedDataInfo.MultiRecord: DownloadNotifyContent = ResourceService.GetLocalized("/Dialog/DownloadMultiRecordContent"); break;
+                case DuplicatedDataInfoArgs.Unfinished: DownloadNotifyContent = ResourceService.GetLocalized("/Dialog/DownloadUnfinishedContent"); break;
+                case DuplicatedDataInfoArgs.Completed: DownloadNotifyContent = ResourceService.GetLocalized("/Dialog/DownloadCompletedContent"); break;
+                case DuplicatedDataInfoArgs.MultiRecord: DownloadNotifyContent = ResourceService.GetLocalized("/Dialog/DownloadMultiRecordContent"); break;
             }
 
             InitializeComponent();

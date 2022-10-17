@@ -133,7 +133,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
 
             // 删除时显示删除确认对话框
-            ContentDialogResult result = await new DeletePromptDialog(DeletePrompt.Download).ShowAsync();
+            ContentDialogResult result = await new DeletePromptDialog(DeleteArgs.Download).ShowAsync();
 
             if (result == ContentDialogResult.Primary)
             {
@@ -188,7 +188,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
 
             // 删除时显示删除确认对话框
-            ContentDialogResult result = await new DeletePromptDialog(DeletePrompt.DownloadWithFile).ShowAsync();
+            ContentDialogResult result = await new DeletePromptDialog(DeleteArgs.DownloadWithFile).ShowAsync();
 
             if (result == ContentDialogResult.Primary)
             {

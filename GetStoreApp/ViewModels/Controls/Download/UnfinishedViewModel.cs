@@ -68,7 +68,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
                 {
-                    NotificationContent = InAppNotificationContent.NetWorkError,
+                    NotificationArgs = InAppNotificationArgs.NetWorkError,
                 }));
                 return;
             }
@@ -239,7 +239,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
                 {
-                    NotificationContent = InAppNotificationContent.NetWorkError,
+                    NotificationArgs = InAppNotificationArgs.NetWorkError,
                 }));
                 return;
             }

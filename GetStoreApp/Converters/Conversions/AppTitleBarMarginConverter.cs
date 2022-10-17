@@ -14,7 +14,7 @@ namespace GetStoreApp.Converters.Conversions
                 return new Thickness(0);
             }
 
-            if(((NavigationViewPaneDisplayMode)value == NavigationViewPaneDisplayMode.LeftMinimal))
+            if (((NavigationViewPaneDisplayMode)value == NavigationViewPaneDisplayMode.LeftMinimal))
             {
                 return new Thickness(96, 0, 0, 0);
             }

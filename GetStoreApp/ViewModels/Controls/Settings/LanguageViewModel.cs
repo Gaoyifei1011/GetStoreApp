@@ -44,7 +44,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             await LanguageService.SetLanguageAsync(Language);
             WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
             {
-                NotificationContent = InAppNotificationContent.LanguageSettings,
+                NotificationArgs = InAppNotificationArgs.LanguageSettings,
                 NotificationValue = new object[] { true }
             }));
         });

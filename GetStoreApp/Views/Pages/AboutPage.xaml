@@ -1,10 +1,10 @@
 ﻿<Page
     x:Class="GetStoreApp.Views.Pages.AboutPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:ac="using:GetStoreApp.UI.Controls.About"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ac="using:GetStoreApp.UI.Controls.About"
     Loaded="{x:Bind AboutLoaded}"
     mc:Ignorable="d">
 
@@ -26,11 +26,20 @@
                 FontSize="26"
                 Text="{x:Bind ResourceService.GetLocalized('/About/Title')}" />
 
-            <DropDownButton Grid.Column="1" Content="{x:Bind ResourceService.GetLocalized('/About/Others')}">
+            <DropDownButton
+                Grid.Column="1"
+                Content="{x:Bind ResourceService.GetLocalized('/About/Others')}"
+                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/About/OthersToolTip')}">
                 <DropDownButton.Flyout>
                     <MenuFlyout Placement="Bottom">
-                        <MenuFlyoutItem Command="{x:Bind ViewModel.ShowReleaseNotesCommand}" Text="{x:Bind ResourceService.GetLocalized('/About/ShowReleaseNotes')}" />
-                        <MenuFlyoutItem Command="{x:Bind ViewModel.ShowLicenseCommand}" Text="{x:Bind ResourceService.GetLocalized('/About/ShowLicense')}" />
+                        <MenuFlyoutItem
+                            Command="{x:Bind ViewModel.ShowReleaseNotesCommand}"
+                            Text="{x:Bind ResourceService.GetLocalized('/About/ShowReleaseNotes')}"
+                            ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/About/ShowReleaseNotesToolTip')}" />
+                        <MenuFlyoutItem
+                            Command="{x:Bind ViewModel.ShowLicenseCommand}"
+                            Text="{x:Bind ResourceService.GetLocalized('/About/ShowLicense')}"
+                            ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/About/ShowLicenseToolTip')}" />
                     </MenuFlyout>
                 </DropDownButton.Flyout>
             </DropDownButton>

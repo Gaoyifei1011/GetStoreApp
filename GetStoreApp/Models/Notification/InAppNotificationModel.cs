@@ -6,15 +6,15 @@ namespace GetStoreApp.Models.Notification
 {
     public class InAppNotificationModel : ModelBase
     {
-        public InAppNotificationContent NotificationContent
+        public InAppNotificationArgs NotificationArgs
         {
-            get { return (InAppNotificationContent)GetValue(NotificationContentProperty); }
-            set { SetValue(NotificationContentProperty, value); }
+            get { return (InAppNotificationArgs)GetValue(NotificationArgsProperty); }
+            set { SetValue(NotificationArgsProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for NotificationContent.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty NotificationContentProperty =
-            DependencyProperty.Register("NotificationContent", typeof(InAppNotificationContent), typeof(InAppNotificationModel), new PropertyMetadata(null));
+        // Using a DependencyProperty as the backing store for NotificationArgs.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty NotificationArgsProperty =
+            DependencyProperty.Register("NotificationArgs", typeof(InAppNotificationArgs), typeof(InAppNotificationModel), new PropertyMetadata(null));
 
         public object[] NotificationValue
         {

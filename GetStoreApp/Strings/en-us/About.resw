@@ -241,10 +241,13 @@
     <value>Subsequent updates / maintenance</value>
   </data>
   <data name="MaintenanceDescription" xml:space="preserve">
-    <value>At present, the basic functions of the application have been implemented, and the download and offline installation of the application are also included in the future development plan. Subsequent updates are scheduled for an indefinite period of time.</value>
+    <value>View the project schedule</value>
   </data>
   <data name="Others" xml:space="preserve">
     <value>Others</value>
+  </data>
+  <data name="OthersToolTip" xml:space="preserve">
+    <value>Other options</value>
   </data>
   <data name="PaidApps" xml:space="preserve">
     <value>Please download the paid app from the official channel</value>
@@ -282,8 +285,14 @@
   <data name="ShowLicense" xml:space="preserve">
     <value>Show License</value>
   </data>
+  <data name="ShowLicenseToolTip" xml:space="preserve">
+    <value>View the app's license agreement</value>
+  </data>
   <data name="ShowReleaseNotes" xml:space="preserve">
     <value>Show release notes</value>
+  </data>
+  <data name="ShowReleaseNotesToolTip" xml:space="preserve">
+    <value>Learn about app-specific updates</value>
   </data>
   <data name="StartsWithEButton" xml:space="preserve">
     <value>Learn about files that begin with ".e"</value>

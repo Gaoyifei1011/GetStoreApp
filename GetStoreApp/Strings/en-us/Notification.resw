@@ -126,6 +126,12 @@
   <data name="DownloadCompletedDescription" xml:space="preserve">
     <value>All tasks have been downloaded.</value>
   </data>
+  <data name="DownloadCreateFailed" xml:space="preserve">
+    <value>The download task is created failed</value>
+  </data>
+  <data name="DownloadCreateSuccessfully" xml:space="preserve">
+    <value>The download task is created successfully</value>
+  </data>
   <data name="DownloadingAborted" xml:space="preserve">
     <value>The network connection is abnormal, the tasks that are currently being downloaded have all been paused, please make sure that your network is connected before trying to download.</value>
   </data>

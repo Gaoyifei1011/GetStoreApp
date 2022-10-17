@@ -9,6 +9,7 @@ using GetStoreApp.Messages;
 using GetStoreApp.Models.History;
 using GetStoreApp.Models.Home;
 using GetStoreApp.Services.Home;
+using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -77,11 +78,14 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _linkText, value); }
         }
 
-        // 页面被卸载时，关闭消息服务
-        public IRelayCommand UnloadedCommand => new RelayCommand(() =>
+        private bool _isGettingLinks;
+
+        public bool IsGettingLinks
         {
-            WeakReferenceMessenger.Default.UnregisterAll(this);
-        });
+            get { return _isGettingLinks; }
+
+            set { SetProperty(ref _isGettingLinks, value); }
+        }
 
         // 类型选择后修改样例文本
         public IRelayCommand TypeSelectCommand => new RelayCommand(() =>
@@ -104,6 +108,10 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             LinkPlaceHolderText = SampleTitle + SampleLink;
 
+            IsGettingLinks = false;
+
+            App.MainWindow.Closed += OnWindowClosed;
+
             WeakReferenceMessenger.Default.Register<RequestViewModel, FillinMessage>(this, (requestViewModel, fillinMessage) =>
             {
                 requestViewModel.SelectedType = TypeList.FindIndex(item => item.InternalName.Equals(fillinMessage.Value.HistoryType));
@@ -120,6 +128,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
             bool ResultControlVisable;
 
             string CategoryId = string.Empty;
+
+            IsGettingLinks = true;
 
             List<ResultModel> ResultDataList = new List<ResultModel>();
 
@@ -156,6 +166,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             // 设置结果控件的显示状态
             ResultControlVisable = state is 1 or 2;
+
+            IsGettingLinks = false;
 
             // 成功状态下解析数据，并更新相应的历史记录
             if (state == 1)
@@ -224,6 +236,15 @@ namespace GetStoreApp.ViewModels.Controls.Home
             {
                 resultDataList.RemoveAll(item => item.FileName.EndsWith("blockmap", StringComparison.OrdinalIgnoreCase));
             }
+        }
+
+        /// <summary>
+        /// 应用关闭后注销所有消息服务，释放所有资源
+        /// </summary>
+        private void OnWindowClosed(object sender, WindowEventArgs args)
+        {
+            WeakReferenceMessenger.Default.UnregisterAll(this);
+            App.MainWindow.Closed -= OnWindowClosed;
         }
     }
 }

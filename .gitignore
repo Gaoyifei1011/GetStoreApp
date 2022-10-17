@@ -358,3 +358,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+[core]
+autocrlf = false
+filemode = false
+safecrlf = true

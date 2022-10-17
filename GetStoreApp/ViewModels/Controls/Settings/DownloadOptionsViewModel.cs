@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Extensions.Enum;
@@ -10,18 +9,16 @@ using GetStoreApp.UI.Dialogs;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
-using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Security.AccessControl;
 using Windows.Storage;
+using Windows.Storage.Pickers;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class DownloadOptionsViewModel : ObservableRecipient
     {
-        private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
-
         private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
 
         private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
@@ -82,53 +79,44 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         {
             while (true)
             {
-                CommonOpenFileDialog dialog = new CommonOpenFileDialog
+                // 选择文件夹
+                FolderPicker folderPicker = new FolderPicker();
+
+                IntPtr hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
+                WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, hwnd);
+
+                folderPicker.SuggestedStartLocation = PickerLocationId.Downloads;
+
+                StorageFolder Folder = await folderPicker.PickSingleFolderAsync();
+
+                if (Folder is not null)
                 {
-                    IsFolderPicker = true,
-                    Title = ResourceService.GetLocalized("/Settings/SelectFolder"),
-                    Multiselect = false,
-                    InitialDirectory = DownloadFolder.Path
-                };
+                    bool CheckResult = IOHelper.GetFolderAuthorization(Folder, FileSystemRights.Write);
 
-                CommonFileDialogResult SelectResult = dialog.ShowDialog(WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow));
-
-                if (SelectResult == CommonFileDialogResult.Ok)
-                {
-                    StorageFolder Folder = await StorageFolder.GetFolderFromPathAsync(dialog.FileName);
-
-                    if (Folder is not null)
+                    if (CheckResult)
                     {
-                        bool CheckResult = IOHelper.GetFolderAuthorization(Folder, FileSystemRights.Write);
+                        DownloadFolder = Folder;
+                        await DownloadOptionsService.SetFolderAsync(DownloadFolder);
+                        break;
+                    }
+                    else
+                    {
+                        ContentDialogResult result = await new FolderAccessFailedDialog().ShowAsync();
 
-                        if (CheckResult)
+                        if (result == ContentDialogResult.Primary)
                         {
-                            DownloadFolder = Folder;
+                            continue;
+                        }
+                        else if (result == ContentDialogResult.Secondary)
+                        {
+                            DownloadFolder = DownloadOptionsService.DefaultFolder;
                             await DownloadOptionsService.SetFolderAsync(DownloadFolder);
                             break;
                         }
                         else
                         {
-                            ContentDialogResult result = await new FolderAccessFailedDialog().ShowAsync();
-
-                            if (result == ContentDialogResult.Primary)
-                            {
-                                continue;
-                            }
-                            else if (result == ContentDialogResult.Secondary)
-                            {
-                                DownloadFolder = DownloadOptionsService.DefaultFolder;
-                                await DownloadOptionsService.SetFolderAsync(DownloadFolder);
-                                break;
-                            }
-                            else
-                            {
-                                break;
-                            }
+                            break;
                         }
-                    }
-                    else
-                    {
-                        break;
                     }
                 }
                 else

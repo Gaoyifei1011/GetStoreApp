@@ -19,7 +19,7 @@ namespace GetStoreApp.Contracts.Services.Download
 
         Task<BackgroundModel> QueryWithKeyAsync(string downloadKey);
 
-        Task<DuplicatedDataInfo> CheckDuplicatedAsync(string downloadKey);
+        Task<DuplicatedDataInfoArgs> CheckDuplicatedAsync(string downloadKey);
 
         Task<bool> DeleteAsync(string downloadKey);
 

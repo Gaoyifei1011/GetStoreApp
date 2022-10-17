@@ -1,14 +1,14 @@
 ﻿<UserControl
     x:Class="GetStoreApp.UI.Controls.Download.CompletedControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:check="using:GetStoreApp.Converters.Checks"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:format="using:GetStoreApp.Converters.Formats"
-    xmlns:i="using:Microsoft.Xaml.Interactivity"
-    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:check="using:GetStoreApp.Converters.Checks"
+    xmlns:format="using:GetStoreApp.Converters.Formats"
     xmlns:models="using:GetStoreApp.Models.Download"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:sys="using:System"
     x:Name="CompletedRoot"
     mc:Ignorable="d">
@@ -264,7 +264,8 @@
                                     <TextBlock
                                         Grid.Column="0"
                                         Style="{StaticResource SubDownloadItemTextStyle}"
-                                        Text="{Binding ElementName=CompletedRoot, Path=Installing}" />
+                                        Text="{Binding ElementName=CompletedRoot, Path=Installing}"
+                                        ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=Installing}" />
                                     <ProgressBar
                                         Grid.Column="1"
                                         IsIndeterminate="False"
@@ -275,13 +276,15 @@
                                         Grid.Column="2"
                                         x:Load="{x:Bind InstallError, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
                                         Style="{StaticResource SubDownloadItemTextStyle}"
-                                        Text="{x:Bind InstallValue, Converter={StaticResource InstallValueFormatConverter}, Mode=OneWay}" />
+                                        Text="{x:Bind InstallValue, Converter={StaticResource InstallValueFormatConverter}, Mode=OneWay}"
+                                        ToolTipService.ToolTip="{x:Bind InstallValue, Converter={StaticResource InstallValueFormatConverter}, Mode=OneWay}" />
                                     <TextBlock
                                         x:Name="InstallErrorInfo"
                                         Grid.Column="2"
                                         x:Load="{x:Bind InstallError, Mode=OneWay}"
                                         Style="{StaticResource SubDownloadItemTextStyle}"
-                                        Text="{Binding ElementName=CompletedRoot, Path=InstallError}" />
+                                        Text="{Binding ElementName=CompletedRoot, Path=InstallError}"
+                                        ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=InstallError}" />
                                 </Grid>
                             </Grid>
 
@@ -349,7 +352,8 @@
                                                     Command="{Binding ElementName=CompletedRoot, Path=ViewModel.FileInformationCommand}"
                                                     CommandParameter="{Binding}"
                                                     IsEnabled="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}"
-                                                    Text="{Binding ElementName=CompletedRoot, Path=FileInformation}">
+                                                    Text="{Binding ElementName=CompletedRoot, Path=FileInformation}"
+                                                    ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=FileInformation}">
                                                     <MenuFlyoutItem.Icon>
                                                         <FontIcon Glyph="&#xE946;" Style="{StaticResource SegoeFluentStyle}" />
                                                     </MenuFlyoutItem.Icon>

@@ -13,6 +13,7 @@ using GetStoreApp.Models.Home;
 using GetStoreApp.Models.Notification;
 using GetStoreApp.Models.Settings;
 using GetStoreApp.ViewModels.Pages;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media.Animation;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -47,12 +48,6 @@ namespace GetStoreApp.ViewModels.Controls.Home
             await GetHistoryLiteDataListAsync();
         });
 
-        // 页面被卸载时，关闭消息服务
-        public IRelayCommand UnloadedCommand => new RelayCommand(() =>
-        {
-            WeakReferenceMessenger.Default.UnregisterAll(this);
-        });
-
         // 查看全部
         public IRelayCommand ViewAllCommand => new RelayCommand(() =>
         {
@@ -70,7 +65,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
             {
-                NotificationContent = InAppNotificationContent.HistoryCopy,
+                NotificationArgs = InAppNotificationArgs.HistoryCopy,
                 NotificationValue = new object[] { true, false }
             }));
         });
@@ -84,6 +79,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
         public HistoryLiteViewModel()
         {
             HistoryLiteItem = HistoryLiteNumService.HistoryLiteNum;
+            App.MainWindow.Closed += OnWindowClosed;
 
             WeakReferenceMessenger.Default.Register<HistoryLiteViewModel, HistoryMessage>(this, async (historyLiteViewModel, historyMessage) =>
             {
@@ -120,6 +116,15 @@ namespace GetStoreApp.ViewModels.Controls.Home
                     HistoryLiteDataList.Add(historyRawData);
                 }
             }
+        }
+
+        /// <summary>
+        /// 应用关闭后注销所有消息服务，释放所有资源
+        /// </summary>
+        private void OnWindowClosed(object sender, WindowEventArgs args)
+        {
+            WeakReferenceMessenger.Default.UnregisterAll(this);
+            App.MainWindow.Closed -= OnWindowClosed;
         }
     }
 }

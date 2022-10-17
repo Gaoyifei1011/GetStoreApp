@@ -1,18 +1,12 @@
 ﻿<UserControl
     x:Class="GetStoreApp.UI.Controls.Home.RequestControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:i="using:Microsoft.Xaml.Interactivity"
-    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
     mc:Ignorable="d">
-
-    <i:Interaction.Behaviors>
-        <ic:EventTriggerBehavior EventName="Unloaded">
-            <ic:InvokeCommandAction Command="{x:Bind ViewModel.UnloadedCommand}" />
-        </ic:EventTriggerBehavior>
-    </i:Interaction.Behaviors>
 
     <Grid ColumnSpacing="6">
         <Grid.ColumnDefinitions>
@@ -28,6 +22,7 @@
             ItemsSource="{x:Bind ViewModel.TypeList}"
             SelectedIndex="{x:Bind ViewModel.SelectedType, Mode=TwoWay}"
             ToolTipService.ToolTip="{x:Bind GetSelectedTypeName(ViewModel.SelectedType), Mode=OneWay}">
+
             <i:Interaction.Behaviors>
                 <ic:EventTriggerBehavior EventName="SelectionChanged">
                     <ic:InvokeCommandAction Command="{x:Bind ViewModel.TypeSelectCommand}" />
@@ -60,6 +55,7 @@
             VerticalAlignment="Bottom"
             Command="{x:Bind ViewModel.GetLinksCommand}"
             Content="{x:Bind ResourceService.GetLocalized('/Home/GetLinks')}"
+            IsEnabled="{x:Bind ViewModel.IsGettingLinks, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
             Style="{StaticResource AccentButtonStyle}"
             ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/GetLinks')}" />
     </Grid>

@@ -11,8 +11,8 @@
     <PackageCertificateThumbprint>7F64DB0B0770C29C61E5F8DC60430B3DC390D99F</PackageCertificateThumbprint>
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
     <ApplicationIcon>Assets\Logo\GetStoreApp.ico</ApplicationIcon>
-    <Version>0.5.6.0</Version>
-    <FileVersion>0.5.6.0</FileVersion>
+    <Version>0.6.0.0</Version>
+    <FileVersion>0.6.0.0</FileVersion>
     <Copyright>高怡飞</Copyright>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
@@ -26,8 +26,10 @@
     <Manifest Include="$(ApplicationManifest)" />
 
     <None Remove="Aria2\Config\aria2.conf" />
-    <None Remove="Aria2\X64\GetStoreAppAria2.exe" />
-    <None Remove="Aria2\X86\GetStoreAppAria2.exe" />
+
+    <None Remove="Aria2\X64\Aria2Desktop.exe" />
+
+    <None Remove="Aria2\X86\Aria2Desktop.exe" />
     <None Remove="Assets\GetStoreApp.png" />
     <None Remove="Assets\Images\CloudflareValidation.png" />
     <None Remove="Assets\Logo\GetStoreApp.png" />
@@ -85,10 +87,10 @@
     <None Remove="UI\Dialogs\FolderAccessFailedDialog.xaml" />
     <None Remove="UI\Dialogs\InstallingNotifyDialog.xaml" />
     <None Remove="UI\Dialogs\LicenseDialog.xaml" />
-    <None Remove="UI\Dialogs\ReleaseNotesDialog.xaml" />
     <None Remove="UI\Dialogs\RestartAppsDialog.xaml" />
     <None Remove="UI\Dialogs\SelectEmptyPromptDialog.xaml" />
     <None Remove="UI\Dialogs\TraceCleanupPromptDialog.xaml" />
+    <None Remove="UI\Notifications\DownloadCreateNotification.xaml" />
     <None Remove="UI\Notifications\ExceptionCopyNotification.xaml" />
     <None Remove="UI\Notifications\FileInformationCopyNotification.xaml" />
     <None Remove="UI\Notifications\HistoryCopyNotification.xaml" />
@@ -105,18 +107,17 @@
     <None Remove="Views\Pages\ShellPage.xaml" />
     <None Remove="Views\Pages\WebPage.xaml" />
     <None Remove="Views\Tray\TaskBarControl.xaml" />
-    
+ 
     <PackageReference Include="Aria2.NET" Version="1.0.5" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
     <PackageReference Include="CommunityToolkit.WinUI.Notifications" Version="7.1.2">
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
     <PackageReference Include="CommunityToolkit.WinUI.UI.Behaviors" Version="7.1.2" />
-    <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
+    <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.Core" Version="7.1.2" />
     <PackageReference Include="H.NotifyIcon.WinUI" Version="2.0.73" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
-    <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.4" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.10" />
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="6.0.10" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
     <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.63-beta">
       <PrivateAssets>all</PrivateAssets>
@@ -127,6 +128,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
     <PackageReference Include="PInvoke.SHCore" Version="0.7.124" />
+    <PackageReference Include="SQLitePCLRaw.bundle_winsqlite3" Version="2.1.2" />
     <PackageReference Include="System.Management" Version="6.0.0" />
     <PackageReference Include="WinUIEx" Version="1.8.0" />
 
@@ -309,9 +311,6 @@
     <Page Update="UI\Dialogs\LicenseDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Dialogs\ReleaseNotesDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Update="UI\Dialogs\RestartAppsDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -322,6 +321,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
+    <Page Update="UI\Notifications\DownloadCreateNotification.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="UI\Notifications\ExceptionCopyNotification.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -381,10 +383,10 @@
     </EmbeddedResource>
     
     <Content Include="Aria2\Config\aria2.conf" />
-    <Content Include="Aria2\X64\GetStoreAppAria2.exe">
+    <Content Include="Aria2\X64\Aria2Desktop.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Aria2\X86\GetStoreAppAria2.exe">
+    <Content Include="Aria2\X86\Aria2Desktop.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Fonts\Segoe Fluent Icons.ttf">

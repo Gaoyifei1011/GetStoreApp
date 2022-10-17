@@ -45,7 +45,7 @@ namespace GetStoreApp.Services.Settings
         }
 
         /// <summary>
-        /// 当设置中的键值为空时，判断当前系统语言是否存在于LanguageList中
+        /// 当设置中的键值为空时，判断当前系统语言是否存在于语言列表中
         /// </summary>
         private bool IsExistsInLanguageList(string currentSystemLanguage)
         {

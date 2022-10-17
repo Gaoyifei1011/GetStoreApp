@@ -1,4 +1,5 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <FontFamily x:Key="SegoeFluentFontFamily">ms-appx:///Fonts/Segoe Fluent Icons.ttf#Segoe Fluent Icons</FontFamily>
     <FontFamily x:Key="SettingsFluentFontFamily">ms-appx:///Fonts/Settings Fluent Icons.ttf#Settings Fluent Icons</FontFamily>

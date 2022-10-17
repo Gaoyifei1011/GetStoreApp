@@ -267,9 +267,9 @@ namespace GetStoreApp.Services.Download
         /// <summary>
         /// 检查是否存在相同键值的数据
         /// </summary>
-        public async Task<DuplicatedDataInfo> CheckDuplicatedAsync(string downloadKey)
+        public async Task<DuplicatedDataInfoArgs> CheckDuplicatedAsync(string downloadKey)
         {
-            DuplicatedDataInfo duplicatedDataInfo = DuplicatedDataInfo.None;
+            DuplicatedDataInfoArgs duplicatedDataInfo = DuplicatedDataInfoArgs.None;
 
             // 从数据库中获取数据
             using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
@@ -294,11 +294,11 @@ namespace GetStoreApp.Services.Download
 
                     if (downloadFlag == 4)
                     {
-                        duplicatedDataInfo = DuplicatedDataInfo.Completed;
+                        duplicatedDataInfo = DuplicatedDataInfoArgs.Completed;
                     }
                     else
                     {
-                        duplicatedDataInfo = DuplicatedDataInfo.Unfinished;
+                        duplicatedDataInfo = DuplicatedDataInfoArgs.Unfinished;
                     }
                 }
 

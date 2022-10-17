@@ -1,14 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Root;
+using GetStoreApp.Extensions.Enum;
+using GetStoreApp.Extensions.Taskbar;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Home;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.WindowsAPICodePack.Taskbar;
 using System.Collections.Generic;
-using Windows.Win32.Foundation;
 
 namespace GetStoreApp.ViewModels.Controls.Home
 {
@@ -16,11 +16,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
     {
         private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        public List<StatusBarStateModel> StatusBarStateList => ResourceService.StatusBarStateList;
-
         private TaskbarManager Taskbar = TaskbarManager.Instance;
 
         private HWND hwnd = (HWND)WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
+
+        public List<StatusBarStateModel> StatusBarStateList => ResourceService.StatusBarStateList;
 
         private InfoBarSeverity _infoSeverity = InfoBarSeverity.Informational;
 
@@ -58,36 +58,28 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _statePrRingVisValue, value); }
         }
 
-        // 页面被卸载时，关闭消息服务和事件
-        public IRelayCommand UnloadedCommand => new RelayCommand(() =>
-        {
-            WeakReferenceMessenger.Default.UnregisterAll(this);
-            PropertyChanged -= OnStatusPropertyChanged;
-        });
-
         public StatusBarViewModel()
         {
             StateInfoText = ResourceService.GetLocalized("/Home/StatusInfoWelcome");
 
-            Taskbar.SetProgressState(TaskbarProgressBarState.NoProgress, hwnd);
-
             WeakReferenceMessenger.Default.Register(this, (MessageHandler<StatusBarViewModel, StatusBarStateMessage>)((statusbarViewModel, statusBarStateMessage) =>
-                        {
-                            statusbarViewModel.InfoBarSeverity = StatusBarStateList[statusBarStateMessage.Value].InfoBarSeverity;
-                            statusbarViewModel.StateInfoText = StatusBarStateList[statusBarStateMessage.Value].StateInfoText;
-                            statusbarViewModel.StatePrRingVisValue = StatusBarStateList[statusBarStateMessage.Value].StatePrRingVisValue;
-                            statusbarViewModel.StatePrRingActValue = StatusBarStateList[statusBarStateMessage.Value].StatePrRingActValue;
-                        }));
+            {
+                statusbarViewModel.InfoBarSeverity = StatusBarStateList[statusBarStateMessage.Value].InfoBarSeverity;
+                statusbarViewModel.StateInfoText = StatusBarStateList[statusBarStateMessage.Value].StateInfoText;
+                statusbarViewModel.StatePrRingVisValue = StatusBarStateList[statusBarStateMessage.Value].StatePrRingVisValue;
+                statusbarViewModel.StatePrRingActValue = StatusBarStateList[statusBarStateMessage.Value].StatePrRingActValue;
+            }));
 
-            PropertyChanged += OnStatusPropertyChanged;
+            PropertyChanged += OnPropertyChanged;
+            App.MainWindow.Closed += OnWindowClosed;
         }
 
         /// <summary>
-        /// 状态栏发生变化时通知任务栏做出相应的变化
+        /// 圆环动画状态修改时修改任务栏的动画显示
         /// </summary>
-        private void OnStatusPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs args)
         {
-            if (e.PropertyName == nameof(StatePrRingActValue))
+            if (args.PropertyName == nameof(StatePrRingActValue))
             {
                 if (StatePrRingActValue)
                 {
@@ -98,6 +90,16 @@ namespace GetStoreApp.ViewModels.Controls.Home
                     Taskbar.SetProgressState(TaskbarProgressBarState.NoProgress, hwnd);
                 }
             }
+        }
+
+        /// <summary>
+        /// 应用关闭后注销所有消息服务，释放所有资源
+        /// </summary>
+        private void OnWindowClosed(object sender, WindowEventArgs args)
+        {
+            WeakReferenceMessenger.Default.UnregisterAll(this);
+            PropertyChanged -= OnPropertyChanged;
+            App.MainWindow.Closed -= OnWindowClosed;
         }
     }
 }

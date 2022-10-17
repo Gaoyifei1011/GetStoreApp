@@ -126,6 +126,12 @@
   <data name="DownloadCompletedDescription" xml:space="preserve">
     <value>所有任务都已经下载完成。</value>
   </data>
+  <data name="DownloadCreateFailed" xml:space="preserve">
+    <value>下载任务创建失败</value>
+  </data>
+  <data name="DownloadCreateSuccessfully" xml:space="preserve">
+    <value>下载任务创建成功</value>
+  </data>
   <data name="DownloadingAborted" xml:space="preserve">
     <value>网络连接异常，当前正在下载中的任务已经全部暂停，请确保您的网络处于连接状态后再尝试下载。</value>
   </data>

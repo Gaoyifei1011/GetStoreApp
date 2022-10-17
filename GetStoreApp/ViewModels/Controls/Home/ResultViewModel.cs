@@ -12,6 +12,7 @@ using GetStoreApp.Models.Home;
 using GetStoreApp.Models.Notification;
 using GetStoreApp.UI.Dialogs;
 using GetStoreApp.ViewModels.Pages;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
@@ -65,19 +66,13 @@ namespace GetStoreApp.ViewModels.Controls.Home
             set { SetProperty(ref _isSelectMode, value); }
         }
 
-        // 页面被卸载时，关闭消息服务
-        public IRelayCommand UnloadedCommand => new RelayCommand(() =>
-        {
-            WeakReferenceMessenger.Default.UnregisterAll(this);
-        });
-
         // 复制CategoryID
         public IRelayCommand CopyIDCommand => new RelayCommand(() =>
         {
             CopyPasteHelper.CopyToClipBoard(CategoryId);
             WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
             {
-                NotificationContent = InAppNotificationContent.ResultIDCopy,
+                NotificationArgs = InAppNotificationArgs.ResultIDCopy,
                 NotificationValue = new object[] { true }
             }));
         });
@@ -151,7 +146,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
             {
-                NotificationContent = InAppNotificationContent.ResultContentCopy,
+                NotificationArgs = InAppNotificationArgs.ResultContentCopy,
                 NotificationValue = new object[] { true, true, SelectedResultDataList.Count }
             }));
         });
@@ -179,7 +174,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
             {
-                NotificationContent = InAppNotificationContent.ResultLinkCopy,
+                NotificationArgs = InAppNotificationArgs.ResultLinkCopy,
                 NotificationValue = new object[] { true, true, SelectedResultDataList.Count }
             }));
         });
@@ -194,7 +189,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             {
                 WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
                 {
-                    NotificationContent = InAppNotificationContent.NetWorkError,
+                    NotificationArgs = InAppNotificationArgs.NetWorkError,
                 }));
                 return;
             }
@@ -213,6 +208,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
             {
                 List<BackgroundModel> duplicatedList = new List<BackgroundModel>();
 
+                bool IsDownloadSuccessfully = false;
+
                 foreach (ResultModel resultItem in SelectedResultDataList)
                 {
                     string DownloadFilePath = string.Format("{0}\\{1}", DownloadOptionsService.DownloadFolder.Path, resultItem.FileName);
@@ -228,11 +225,12 @@ namespace GetStoreApp.ViewModels.Controls.Home
                         DownloadFlag = 1
                     };
 
-                    DuplicatedDataInfo CheckResult = await DownloadDBService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
+                    DuplicatedDataInfoArgs CheckResult = await DownloadDBService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
 
-                    if (CheckResult == DuplicatedDataInfo.None)
+                    if (CheckResult == DuplicatedDataInfoArgs.None)
                     {
                         await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add");
+                        IsDownloadSuccessfully = true;
                     }
                     else
                     {
@@ -242,7 +240,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
                 if (duplicatedList.Count > 0)
                 {
-                    ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfo.MultiRecord).ShowAsync();
+                    ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.MultiRecord).ShowAsync();
 
                     if (result == ContentDialogResult.Primary)
                     {
@@ -258,6 +256,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                             finally
                             {
                                 await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
+                                IsDownloadSuccessfully = true;
                             }
                         }
                     }
@@ -265,6 +264,16 @@ namespace GetStoreApp.ViewModels.Controls.Home
                     {
                         NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
                     }
+                }
+
+                // 显示下载任务创建成功消息
+                if (IsDownloadSuccessfully)
+                {
+                    WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
+                    {
+                        NotificationArgs = InAppNotificationArgs.DownloadCreate,
+                        NotificationValue = new object[] { true }
+                    }));
                 }
             }
 
@@ -306,7 +315,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             {
                 WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
                 {
-                    NotificationContent = InAppNotificationContent.NetWorkError,
+                    NotificationArgs = InAppNotificationArgs.NetWorkError,
                 }));
                 return;
             }
@@ -328,15 +337,24 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 };
 
                 // 检查是否存在相同的任务记录
-                DuplicatedDataInfo CheckResult = await DownloadDBService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
+                DuplicatedDataInfoArgs CheckResult = await DownloadDBService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
 
                 switch (CheckResult)
                 {
-                    case DuplicatedDataInfo.None: await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add"); break;
-
-                    case DuplicatedDataInfo.Unfinished:
+                    case DuplicatedDataInfoArgs.None:
                         {
-                            ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfo.Unfinished).ShowAsync();
+                            await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add");
+                            WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
+                            {
+                                NotificationArgs = InAppNotificationArgs.DownloadCreate,
+                                NotificationValue = new object[] { true }
+                            }));
+                            break;
+                        }
+
+                    case DuplicatedDataInfoArgs.Unfinished:
+                        {
+                            ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Unfinished).ShowAsync();
 
                             if (result == ContentDialogResult.Primary)
                             {
@@ -350,6 +368,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
                                 finally
                                 {
                                     await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
+                                    WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
+                                    {
+                                        NotificationArgs = InAppNotificationArgs.DownloadCreate,
+                                        NotificationValue = new object[] { true }
+                                    }));
                                 }
                             }
                             else if (result == ContentDialogResult.Secondary)
@@ -359,9 +382,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
                             break;
                         }
 
-                    case DuplicatedDataInfo.Completed:
+                    case DuplicatedDataInfoArgs.Completed:
                         {
-                            ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfo.Completed).ShowAsync();
+                            ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Completed).ShowAsync();
 
                             if (result == ContentDialogResult.Primary)
                             {
@@ -375,6 +398,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
                                 finally
                                 {
                                     await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
+                                    WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
+                                    {
+                                        NotificationArgs = InAppNotificationArgs.DownloadCreate,
+                                        NotificationValue = new object[] { true }
+                                    }));
                                 }
                             }
                             else if (result == ContentDialogResult.Secondary)
@@ -400,7 +428,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
             {
-                NotificationContent = InAppNotificationContent.ResultLinkCopy,
+                NotificationArgs = InAppNotificationArgs.ResultLinkCopy,
                 NotificationValue = new object[] { true, false }
             }));
         });
@@ -419,13 +447,15 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel()
             {
-                NotificationContent = InAppNotificationContent.ResultContentCopy,
+                NotificationArgs = InAppNotificationArgs.ResultContentCopy,
                 NotificationValue = new object[] { true, false }
             }));
         });
 
         public ResultViewModel()
         {
+            App.MainWindow.Closed += OnWindowClosed;
+
             WeakReferenceMessenger.Default.Register<ResultViewModel, ResultControlVisableMessage>(this, (resultViewModel, resultControlVisableMessage) =>
             {
                 resultViewModel.ResultControlVisable = resultControlVisableMessage.Value;
@@ -452,6 +482,15 @@ namespace GetStoreApp.ViewModels.Controls.Home
                     }
                 }
             });
+        }
+
+        /// <summary>
+        /// 应用关闭后注销所有消息服务，释放所有资源
+        /// </summary>
+        private void OnWindowClosed(object sender, WindowEventArgs args)
+        {
+            WeakReferenceMessenger.Default.UnregisterAll(this);
+            App.MainWindow.Closed -= OnWindowClosed;
         }
     }
 }

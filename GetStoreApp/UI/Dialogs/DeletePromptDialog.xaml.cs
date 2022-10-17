@@ -18,15 +18,15 @@ namespace GetStoreApp.UI.Dialogs
 
         public string DeleteContent { get; set; }
 
-        public DeletePromptDialog(DeletePrompt deletePrompt)
+        public DeletePromptDialog(DeleteArgs deletePrompt)
         {
             XamlRoot = App.MainWindow.Content.XamlRoot;
 
             switch (deletePrompt)
             {
-                case DeletePrompt.History: DeleteContent = ResourceService.GetLocalized(string.Format("/Dialog/Delete{0}", deletePrompt.ToString())); break;
-                case DeletePrompt.Download: DeleteContent = ResourceService.GetLocalized(string.Format("/Dialog/Delete{0}", deletePrompt.ToString())); break;
-                case DeletePrompt.DownloadWithFile: DeleteContent = ResourceService.GetLocalized(string.Format("/Dialog/Delete{0}", deletePrompt.ToString())); break;
+                case DeleteArgs.History: DeleteContent = ResourceService.GetLocalized(string.Format("/Dialog/Delete{0}", deletePrompt.ToString())); break;
+                case DeleteArgs.Download: DeleteContent = ResourceService.GetLocalized(string.Format("/Dialog/Delete{0}", deletePrompt.ToString())); break;
+                case DeleteArgs.DownloadWithFile: DeleteContent = ResourceService.GetLocalized(string.Format("/Dialog/Delete{0}", deletePrompt.ToString())); break;
             }
 
             InitializeComponent();

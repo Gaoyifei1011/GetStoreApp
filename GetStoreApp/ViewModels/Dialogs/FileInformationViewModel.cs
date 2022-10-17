@@ -70,7 +70,7 @@ namespace GetStoreApp.ViewModels.Dialogs
 
             WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
             {
-                NotificationContent = InAppNotificationContent.FileInformationCopy,
+                NotificationArgs = InAppNotificationArgs.FileInformationCopy,
                 NotificationValue = new object[] { true }
             }));
         });

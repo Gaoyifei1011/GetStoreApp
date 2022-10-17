@@ -238,10 +238,13 @@
     <value>后续的更新 / 维护</value>
   </data>
   <data name="MaintenanceDescription" xml:space="preserve">
-    <value>目前应用的基本功能已经实现，在未来的开发计划中也包含了对应用的下载和离线安装。后续更新的计划不定，有时间更新。</value>
+    <value>查看项目计划表</value>
   </data>
   <data name="Others" xml:space="preserve">
     <value>其他</value>
+  </data>
+  <data name="OthersToolTip" xml:space="preserve">
+    <value>其他选项</value>
   </data>
   <data name="PaidApps" xml:space="preserve">
     <value>付费应用请从官方渠道下载</value>
@@ -279,8 +282,14 @@
   <data name="ShowLicense" xml:space="preserve">
     <value>查看许可证</value>
   </data>
+  <data name="ShowLicenseToolTip" xml:space="preserve">
+    <value>查看应用的许可协议</value>
+  </data>
   <data name="ShowReleaseNotes" xml:space="preserve">
     <value>查看更新日志</value>
+  </data>
+  <data name="ShowReleaseNotesToolTip" xml:space="preserve">
+    <value>了解应用具体的更新内容</value>
   </data>
   <data name="StartsWithEButton" xml:space="preserve">
     <value>了解以“.e”开头的文件</value>

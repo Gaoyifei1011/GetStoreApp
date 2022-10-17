@@ -120,6 +120,8 @@ namespace GetStoreApp.Helpers
                 services.AddTransient<HeaderViewModel>();
                 services.AddTransient<InstructionsControl>();
                 services.AddTransient<InstructionsViewModel>();
+                services.AddTransient<IntroductionControl>();
+                services.AddTransient<IntroductionViewModel>();
                 services.AddTransient<PrecautionControl>();
                 services.AddTransient<PrecautionViewModel>();
                 services.AddTransient<ReferenceControl>();
@@ -184,14 +186,14 @@ namespace GetStoreApp.Helpers
                 services.AddTransient<FileInformationViewModel>();
                 services.AddTransient<LicenseDialog>();
                 services.AddTransient<LicenseViewModel>();
-                services.AddTransient<ReleaseNotesDialog>();
-                services.AddTransient<ReleaseNotesViewModel>();
                 services.AddTransient<RestartAppsDialog>();
                 services.AddTransient<RestartAppsViewModel>();
                 services.AddTransient<TraceCleanupPromptDialog>();
                 services.AddTransient<TraceCleanupPromptViewModel>();
 
                 // 应用内消息通知框（MVVM）
+                services.AddTransient<DownloadCreateNotification>();
+                services.AddTransient<DownloadCreateViewModel>();
                 services.AddTransient<ExceptionCopyNotification>();
                 services.AddTransient<ExceptionCopyViewModel>();
                 services.AddTransient<FileInformationCopyNotification>();

@@ -3,17 +3,18 @@
 <Package
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
+  xmlns:desktop2="http://schemas.microsoft.com/appx/manifest/desktop/windows10/2"
   xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   xmlns:genTemplate="http://schemas.microsoft.com/appx/developer/templatestudio"
-  IgnorableNamespaces="desktop uap uap5 rescap genTemplate">
+  IgnorableNamespaces="desktop desktop2 uap uap5 rescap genTemplate">
 
   <Identity
     Name="Gaoyifei1011.GetStoreApp"
     Publisher="CN=高怡飞"
-    Version="0.5.6.0" />
+    Version="0.6.0.0" />
 
   <Properties>
     <DisplayName>ms-resource:PackageDisplayName</DisplayName>
@@ -107,6 +108,22 @@
     </Application>
   </Applications>
 
+  <Extensions>
+    <desktop2:Extension Category="windows.firewallRules">
+      <desktop2:FirewallRules Executable="Aria2/X64/Aria2Desktop.exe">
+        <desktop2:Rule Direction="in" IPProtocol="TCP" Profile="all"/>
+        <desktop2:Rule Direction="in" IPProtocol="UDP" Profile="all"/>
+      </desktop2:FirewallRules>
+    </desktop2:Extension>
+
+    <desktop2:Extension Category="windows.firewallRules">
+      <desktop2:FirewallRules Executable="Aria2/X86/Aria2Desktop.exe">
+        <desktop2:Rule Direction="in" IPProtocol="TCP" Profile="all"/>
+        <desktop2:Rule Direction="in" IPProtocol="UDP" Profile="all"/>
+      </desktop2:FirewallRules>
+    </desktop2:Extension>
+  </Extensions>
+  
   <Capabilities>
     <rescap:Capability Name="runFullTrust" />
     <Capability Name="internetClient" />

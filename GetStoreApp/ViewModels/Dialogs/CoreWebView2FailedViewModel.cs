@@ -47,7 +47,7 @@ namespace GetStoreApp.ViewModels.Dialogs
 
             WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
             {
-                NotificationContent = InAppNotificationContent.ExceptionCopy,
+                NotificationArgs = InAppNotificationArgs.ExceptionCopy,
                 NotificationValue = new object[] { true }
             }));
         });

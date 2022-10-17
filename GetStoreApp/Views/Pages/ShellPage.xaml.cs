@@ -37,16 +37,17 @@ namespace GetStoreApp.Views.Pages
             {
                 if (NotificationService.AppNotification)
                 {
-                    switch (inAppNotificationMessage.Value.NotificationContent)
+                    switch (inAppNotificationMessage.Value.NotificationArgs)
                     {
-                        case InAppNotificationContent.NetWorkError: ShellNotification.Show(new NetWorkErrorNotification(), NotificationDuration); break;
-                        case InAppNotificationContent.HistoryCopy: ShellNotification.Show(new HistoryCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
-                        case InAppNotificationContent.ResultLinkCopy: ShellNotification.Show(new ResultLinkCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
-                        case InAppNotificationContent.ResultIDCopy: ShellNotification.Show(new ResultIDCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
-                        case InAppNotificationContent.ResultContentCopy: ShellNotification.Show(new ResultContentCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
-                        case InAppNotificationContent.ExceptionCopy: ShellNotification.Show(new ExceptionCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
-                        case InAppNotificationContent.FileInformationCopy: ShellNotification.Show(new FileInformationCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
-                        case InAppNotificationContent.LanguageSettings: ShellNotification.Show(new LanguageChangeNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
+                        case InAppNotificationArgs.NetWorkError: ShellNotification.Show(new NetWorkErrorNotification(), NotificationDuration); break;
+                        case InAppNotificationArgs.HistoryCopy: ShellNotification.Show(new HistoryCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
+                        case InAppNotificationArgs.ResultLinkCopy: ShellNotification.Show(new ResultLinkCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
+                        case InAppNotificationArgs.ResultIDCopy: ShellNotification.Show(new ResultIDCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
+                        case InAppNotificationArgs.ResultContentCopy: ShellNotification.Show(new ResultContentCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
+                        case InAppNotificationArgs.ExceptionCopy: ShellNotification.Show(new ExceptionCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
+                        case InAppNotificationArgs.FileInformationCopy: ShellNotification.Show(new FileInformationCopyNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
+                        case InAppNotificationArgs.DownloadCreate: ShellNotification.Show(new DownloadCreateNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
+                        case InAppNotificationArgs.LanguageSettings: ShellNotification.Show(new LanguageChangeNotification(inAppNotificationMessage.Value.NotificationValue), NotificationDuration); break;
                         default: break;
                     };
                 }
