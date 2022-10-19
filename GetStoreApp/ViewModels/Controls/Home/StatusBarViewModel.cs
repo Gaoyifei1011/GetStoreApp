@@ -9,6 +9,7 @@ using GetStoreApp.Models.Home;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
+using Windows.Win32.Foundation;
 
 namespace GetStoreApp.ViewModels.Controls.Home
 {

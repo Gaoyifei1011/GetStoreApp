@@ -8,7 +8,7 @@ namespace GetStoreApp.Extensions.Struct
     public struct ThumbButton
     {
         /// <summary>
-        /// WPARAM value for a THUMBBUTTON being clicked.
+        /// 单击按钮的 WPARAM 值
         /// </summary>
         internal const int Clicked = 0x1800;
 

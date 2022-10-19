@@ -10,6 +10,7 @@ namespace GetStoreApp.ViewModels.Controls.About
         {
             {"Aira2","https://aria2.github.io" },
             {"Aria2.NET","https://github.com/rogerfar/Aria2.NET" },
+            { "CommandLineParser","https://github.com/commandlineparser/commandline"},
             {"CommunityToolkit.Mvvm","https://github.com/CommunityToolkit/WindowsCommunityToolkit" },
             {"CommunityToolkit.WinUI.Notifications","https://www.nuget.org/packages/CommunityToolkit.WinUI.Notifications" },
             {"CommunityToolkit.WinUI.UI.Behaviors","https://github.com/CommunityToolkit/WindowsCommunityToolkit" },

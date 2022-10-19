@@ -45,7 +45,6 @@ namespace GetStoreApp
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
             base.OnLaunched(args);
-
             await RunSingleInstanceAppAsync();
             await ActivationService.ActivateAsync(args);
         }

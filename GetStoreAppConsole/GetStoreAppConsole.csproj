@@ -88,6 +88,9 @@
     <EmbeddedResource Include="Strings\StringLocalization.zh-hans.resx" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="CommandLineParser">
+      <Version>2.9.1</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.Windows.SDK.Contracts">
       <Version>10.0.22621.2</Version>
     </PackageReference>

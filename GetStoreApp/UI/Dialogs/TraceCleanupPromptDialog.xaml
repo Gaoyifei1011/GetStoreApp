@@ -1,12 +1,12 @@
 ﻿<ContentDialog
     x:Class="GetStoreApp.UI.Dialogs.TraceCleanupPromptDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:behavior="using:GetStoreApp.Behaviors"
-    xmlns:models="using:GetStoreApp.Models.Settings"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:GetStoreApp.Models.Settings"
     x:Name="TraceCleanupRoot"
     BorderBrush="{ThemeResource SystemAccentColor}"
     RequestedTheme="{x:Bind DialogTheme}"
@@ -35,6 +35,11 @@
                 ItemContainerStyle="{StaticResource ListViewItemStyle}"
                 ItemsSource="{x:Bind ViewModel.TraceCleanupList}"
                 SelectionMode="None">
+                
+                <ItemsControl.ItemContainerTransitions>
+                    <TransitionCollection />
+                </ItemsControl.ItemContainerTransitions>
+                
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:TraceCleanupModel">
                         <StackPanel Orientation="Horizontal">

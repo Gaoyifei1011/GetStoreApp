@@ -64,14 +64,17 @@
 > * [CommunityToolkit.WinUI.Notifications](https://www.nuget.org/packages/CommunityToolkit.WinUI.Notifications)&emsp;
 > * [CommunityToolkit.WinUI.UI.Behaviors](https://github.com/CommunityToolkit/WindowsCommunityToolkit)&emsp;
 > * [CommunityToolkit.WinUI.UI.Controls](https://github.com/CommunityToolkit/WindowsCommunityToolkit)&emsp;
+> * [H.NotifyIcon.WinUI](https://github.com/HavenDV/H.NotifyIcon)&emsp;
 > * [HtmlAgilityPack](http://html-agility-pack.net)&emsp;
-> * [Microsoft.Data.Sqlite](https://docs.microsoft.com/dotnet/standard/data/sqlite)&emsp;
+> * [Microsoft.Data.Sqlite.Core](https://docs.microsoft.com/dotnet/standard/data/sqlite)&emsp;
 > * [Microsoft.Extensions.Hosting](https://www.nuget.org/packages/Microsoft.Extensions.Hosting)&emsp;
 > * [Microsoft.Windows.CsWin32](https://github.com/Microsoft/CsWin32)&emsp;
 > * [Microsoft.Windows.SDK.BuildTools](https://www.nuget.org/packages/Microsoft.Windows.SDK.BuildTools)&emsp;
+> * [Microsoft.Windows.SDK.Contracts](https://aka.ms/WinSDKProjectURL)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Microsoft.Xaml.Behaviors.WinUI.Managed](https://www.nuget.org/packages/Microsoft.Xaml.Behaviors.WinUI.Managed)&emsp;
 > * [PInvoke.SHCore](https://github.com/dotnet/pinvoke)&emsp;
+> * SQLitePCLRaw.bundle_winsqlite3](https://github.com/ericsink/SQLitePCL.raw)&emsp;
 > * [System.Management](https://www.nuget.org/packages/System.Management)&emsp;
 > * [Template Studio](https://github.com/microsoft/TemplateStudio)&emsp;
 > * [WinUIEx](https://dotmorten.github.io/WinUIEx)&emsp;

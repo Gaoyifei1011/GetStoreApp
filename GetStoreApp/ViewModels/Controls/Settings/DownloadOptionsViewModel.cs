@@ -1,11 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Helpers;
 using GetStoreApp.Models.Settings;
 using GetStoreApp.UI.Dialogs;
+using GetStoreApp.UI.Dialogs.CommonDialog;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
@@ -13,12 +15,13 @@ using System;
 using System.Collections.Generic;
 using System.Security.AccessControl;
 using Windows.Storage;
-using Windows.Storage.Pickers;
 
 namespace GetStoreApp.ViewModels.Controls.Settings
 {
     public class DownloadOptionsViewModel : ObservableRecipient
     {
+        private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+
         private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
 
         private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
@@ -77,20 +80,23 @@ namespace GetStoreApp.ViewModels.Controls.Settings
         // 修改下载目录
         public IRelayCommand ChangeFolderCommand => new RelayCommand(async () =>
         {
+            StorageFolder Folder;
+
             while (true)
             {
                 // 选择文件夹
-                FolderPicker folderPicker = new FolderPicker();
-
-                IntPtr hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
-                WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, hwnd);
-
-                folderPicker.SuggestedStartLocation = PickerLocationId.Downloads;
-
-                StorageFolder Folder = await folderPicker.PickSingleFolderAsync();
-
-                if (Folder is not null)
+                FolderSelectDialog dialog = new FolderSelectDialog()
                 {
+                    Title = ResourceService.GetLocalized("/Settings/SelectFolder"),
+                    Path = DownloadFolder.Path
+                };
+
+                bool Result = dialog.ShowDialog(WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow));
+
+                if (Result && !string.IsNullOrEmpty(dialog.Path))
+                {
+                    Folder = await StorageFolder.GetFolderFromPathAsync(dialog.Path);
+
                     bool CheckResult = IOHelper.GetFolderAuthorization(Folder, FileSystemRights.Write);
 
                     if (CheckResult)
@@ -132,19 +138,19 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             await DownloadOptionsService.SetItemAsync(DownloadItem);
         });
 
-        // 修改下载文件的方式
-        public IRelayCommand DownloadModeCommand => new RelayCommand(async () =>
-        {
-            await DownloadOptionsService.SetModeAsync(DownloadMode);
-        });
+    // 修改下载文件的方式
+    public IRelayCommand DownloadModeCommand => new RelayCommand(async () =>
+    {
+        await DownloadOptionsService.SetModeAsync(DownloadMode);
+    });
 
-        public DownloadOptionsViewModel()
-        {
-            DownloadFolder = DownloadOptionsService.DownloadFolder;
+    public DownloadOptionsViewModel()
+    {
+        DownloadFolder = DownloadOptionsService.DownloadFolder;
 
-            DownloadItem = DownloadOptionsService.DownloadItem;
+        DownloadItem = DownloadOptionsService.DownloadItem;
 
-            DownloadMode = DownloadOptionsService.DownloadMode;
-        }
+        DownloadMode = DownloadOptionsService.DownloadMode;
     }
+}
 }
