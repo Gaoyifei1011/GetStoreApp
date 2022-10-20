@@ -7,6 +7,18 @@ namespace GetStoreApp.ViewModels.Controls.About
 {
     public class InstructionsViewModel : ObservableRecipient
     {
+        // 桌面程序启动参数说明
+        public IRelayCommand DesktopLaunchCommand => new RelayCommand(() =>
+        {
+
+        });
+
+        // 控制台程序启动参数说明
+        public IRelayCommand ConsoleLaunchCommand => new RelayCommand(() =>
+        {
+
+        });
+
         // 检查网络
         public IRelayCommand CheckNetWorkCommand => new RelayCommand(async () =>
         {

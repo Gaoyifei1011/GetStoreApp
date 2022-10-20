@@ -30,6 +30,8 @@ namespace GetStoreApp.Services.Root
 
         private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
+        private IStartupArgsService StartupArgsService { get; } = IOCHelper.GetService<IStartupArgsService>();
+
         private IAria2Service Aria2Service { get; } = IOCHelper.GetService<IAria2Service>();
 
         private IDownloadDBService DownloadDBService { get; } = IOCHelper.GetService<IDownloadDBService>();
@@ -87,9 +89,10 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private async Task InitializeAsync()
         {
-            // 初始化应用资源及应用使用的语言信息
+            // 初始化应用资源，应用使用的语言信息和启动参数
             await LanguageService.InitializeLanguageAsync();
             await ResourceService.InitializeResourceAsync(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
+            await StartupArgsService.InitializeStartupArgsAsync();
 
             // 初始化数据库信息
             await DataBaseService.InitializeDataBaseAsync();

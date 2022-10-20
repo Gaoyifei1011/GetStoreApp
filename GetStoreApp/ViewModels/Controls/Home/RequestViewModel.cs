@@ -22,6 +22,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
+        private IStartupArgsService StartupArgsService { get; } = IOCHelper.GetService<IStartupArgsService>();
+
         private IHistoryDBService HistoryDBService { get; } = IOCHelper.GetService<IHistoryDBService>();
 
         private ILinkFilterService LinkFilterService { get; } = IOCHelper.GetService<ILinkFilterService>();
@@ -42,7 +44,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         private string SampleLink { get; set; }
 
-        private int _selectedType = 0;
+        private int _selectedType;
 
         public int SelectedType
         {
@@ -104,6 +106,12 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public RequestViewModel()
         {
+            SelectedType = Convert.ToInt32(StartupArgsService.StartupArgs["TypeName"]) == -1 ? 0 : Convert.ToInt32(StartupArgsService.StartupArgs["TypeName"]);
+
+            SelectedChannel = Convert.ToInt32(StartupArgsService.StartupArgs["ChannelName"]) == -1 ? 3 : Convert.ToInt32(StartupArgsService.StartupArgs["ChannelName"]);
+
+            LinkText = StartupArgsService.StartupArgs["Link"] is null ? string.Empty : (string)StartupArgsService.StartupArgs["Link"];
+
             SampleLink = SampleLinkList[0];
 
             LinkPlaceHolderText = SampleTitle + SampleLink;

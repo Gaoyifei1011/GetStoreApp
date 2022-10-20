@@ -138,19 +138,19 @@ namespace GetStoreApp.ViewModels.Controls.Settings
             await DownloadOptionsService.SetItemAsync(DownloadItem);
         });
 
-    // 修改下载文件的方式
-    public IRelayCommand DownloadModeCommand => new RelayCommand(async () =>
-    {
-        await DownloadOptionsService.SetModeAsync(DownloadMode);
-    });
+        // 修改下载文件的方式
+        public IRelayCommand DownloadModeCommand => new RelayCommand(async () =>
+        {
+            await DownloadOptionsService.SetModeAsync(DownloadMode);
+        });
 
-    public DownloadOptionsViewModel()
-    {
-        DownloadFolder = DownloadOptionsService.DownloadFolder;
+        public DownloadOptionsViewModel()
+        {
+            DownloadFolder = DownloadOptionsService.DownloadFolder;
 
-        DownloadItem = DownloadOptionsService.DownloadItem;
+            DownloadItem = DownloadOptionsService.DownloadItem;
 
-        DownloadMode = DownloadOptionsService.DownloadMode;
+            DownloadMode = DownloadOptionsService.DownloadMode;
+        }
     }
-}
 }

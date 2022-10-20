@@ -1,8 +1,8 @@
 ﻿<UserControl
     x:Class="GetStoreApp.UI.Controls.About.InstructionsControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
@@ -15,6 +15,25 @@
             <StackPanel Margin="14,0,10,0">
                 <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/BeginnerGuide')}" />
                 <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/BeginnerGuideDescription')}" />
+                <MenuFlyoutSeparator Margin="0,0,0,8" />
+
+                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/LaunchParameters')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/LaunchParametersDescription')}" />
+
+                <StackPanel Orientation="Horizontal">
+                    <HyperlinkButton
+                        Command="{x:Bind ViewModel.DesktopLaunchCommand}"
+                        Content="{x:Bind ResourceService.GetLocalized('/About/DesktopLaunch')}"
+                        Style="{StaticResource AboutHyperlinkButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/About/DesktopLaunch')}" />
+
+                    <HyperlinkButton
+                        Command="{x:Bind ViewModel.ConsoleLaunchCommand}"
+                        Content="{x:Bind ResourceService.GetLocalized('/About/ConsoleLaunch')}"
+                        Style="{StaticResource AboutHyperlinkButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/About/ConsoleLaunch')}" />
+                </StackPanel>
+
                 <MenuFlyoutSeparator Margin="0,0,0,8" />
 
                 <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/About/ErrorSolution')}" />

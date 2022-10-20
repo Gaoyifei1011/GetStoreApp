@@ -165,11 +165,17 @@
   <data name="CloudflareValidation" xml:space="preserve">
     <value>什么是Cloudflare 5秒验证？</value>
   </data>
+  <data name="ConsoleLaunch" xml:space="preserve">
+    <value>控制台程序参数</value>
+  </data>
   <data name="DesktopApps" xml:space="preserve">
     <value>传统桌面应用不能获取</value>
   </data>
   <data name="DesktopAppsDescription" xml:space="preserve">
     <value>微软已经允许在最新的 Microsoft Store 中发布传统桌面应用。这些应用程序的安装包通常为 .EXE 或 .MSI 格式，而非商店中的 .MSIX 或 .APPX 格式。这一类型的应用程序是不能通过该应用自动抓取的。</value>
+  </data>
+  <data name="DesktopLaunch" xml:space="preserve">
+    <value>桌面程序参数</value>
   </data>
   <data name="Developer" xml:space="preserve">
     <value>开发者：</value>
@@ -230,6 +236,12 @@
   </data>
   <data name="LanguageDescription" xml:space="preserve">
     <value>"开始"菜单应用的名称并不会跟随应用语言设置发生改变。请在设置中找到应用点击修复按钮，应用名称随即发生改变，这不会清除您应用的数据。</value>
+  </data>
+  <data name="LaunchParameters" xml:space="preserve">
+    <value>启动参数</value>
+  </data>
+  <data name="LaunchParametersDescription" xml:space="preserve">
+    <value>桌面应用程序现在已经开始支持参数运行了，具体的使用方法请点击下方的参数说明</value>
   </data>
   <data name="LinkFilter" xml:space="preserve">
     <value>链接过滤说明</value>

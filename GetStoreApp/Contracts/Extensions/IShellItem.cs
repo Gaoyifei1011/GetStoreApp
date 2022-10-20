@@ -13,9 +13,13 @@ namespace GetStoreApp.Contracts.Extensions
             IntPtr pbc,
             [MarshalAs(UnmanagedType.LPStruct)] Guid bhid,
             [MarshalAs(UnmanagedType.LPStruct)] Guid riid);
+
         IShellItem GetParent();
+
         void GetDisplayName(SIGDN sigdnName, [MarshalAs(UnmanagedType.LPWStr)] out string ppszName);
+
         SFGAOF GetAttributes(SFGAOF sfgaoMask);
+
         int Compare(IShellItem psi, SICHINTF hint);
     }
 }

@@ -65,6 +65,7 @@ namespace GetStoreApp.Helpers
                 services.AddSingleton<IConfigStorageService, ConfigStorageService>();
                 services.AddSingleton<IDataBaseService, DataBaseService>();
                 services.AddSingleton<IResourceService, ResourceService>();
+                services.AddSingleton<IStartupArgsService, StartupArgsService>();
 
                 services.AddSingleton<IAria2Service, Aria2Service>();
                 services.AddSingleton<IDownloadDBService, DownloadDBService>();

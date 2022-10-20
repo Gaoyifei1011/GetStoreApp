@@ -35,11 +35,11 @@
                 ItemContainerStyle="{StaticResource ListViewItemStyle}"
                 ItemsSource="{x:Bind ViewModel.TraceCleanupList}"
                 SelectionMode="None">
-                
+
                 <ItemsControl.ItemContainerTransitions>
                     <TransitionCollection />
                 </ItemsControl.ItemContainerTransitions>
-                
+
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:TraceCleanupModel">
                         <StackPanel Orientation="Horizontal">

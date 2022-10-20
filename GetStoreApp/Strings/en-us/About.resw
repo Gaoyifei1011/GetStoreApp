@@ -168,11 +168,17 @@
   <data name="CloudflareValidationContent" xml:space="preserve">
     <value>Cloudflare-protected sites wait for a 5 second verification on your first visit to check that you are properly accessing them through your browser. If it is not properly accessed through a browser, the server blocks all requests made by the user.</value>
   </data>
+  <data name="ConsoleLaunch" xml:space="preserve">
+    <value>Console program parameters</value>
+  </data>
   <data name="DesktopApps" xml:space="preserve">
     <value>Traditional desktop apps</value>
   </data>
   <data name="DesktopAppsDescription" xml:space="preserve">
     <value>Microsoft has allowed the release of traditional desktop apps in the latest Microsoft Store. The installation packages for these applications are typically in .EXE or .MSI format, rather than the . MSIX or . APPX format. This type of application cannot be crawled automatically through the app.</value>
+  </data>
+  <data name="DesktopLaunch" xml:space="preserve">
+    <value>Desktop program parameters</value>
   </data>
   <data name="Developer" xml:space="preserve">
     <value>Developer:</value>
@@ -233,6 +239,12 @@
   </data>
   <data name="LanguageDescription" xml:space="preserve">
     <value>The name of the Start menu app doesn't change with the app language setting. Find the app in settings and click the Repair button and the app name changes without clearing your app's data.</value>
+  </data>
+  <data name="LaunchParameters" xml:space="preserve">
+    <value>Launch parameters</value>
+  </data>
+  <data name="LaunchParametersDescription" xml:space="preserve">
+    <value>The desktop application now supports parameter operation, please click the parameter description below for specific usage</value>
   </data>
   <data name="LinkFilter" xml:space="preserve">
     <value>Link filtering instructions</value>

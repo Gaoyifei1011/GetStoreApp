@@ -1,13 +1,17 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+﻿using CommandLine;
+using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.Root;
+using GetStoreApp.Extensions.CommandLine;
 using GetStoreApp.Extensions.Enum;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
 using WinUIEx;
@@ -29,6 +33,8 @@ namespace GetStoreApp
         // 导航页面后使用到的参数
         public static AppNaviagtionArgs NavigationArgs { get; set; } = AppNaviagtionArgs.None;
 
+
+
         public App()
         {
             InitializeComponent();
@@ -42,6 +48,9 @@ namespace GetStoreApp
             UnhandledException += OnUnhandledException;
         }
 
+        /// <summary>
+        /// 处理应用启动
+        /// </summary>
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
             base.OnLaunched(args);
