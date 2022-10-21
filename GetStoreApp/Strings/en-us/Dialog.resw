@@ -117,11 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Argument" xml:space="preserve">
+    <value>Argument</value>
+  </data>
+  <data name="ArgumentName" xml:space="preserve">
+    <value>Argument name</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
   <data name="CancelDownload" xml:space="preserve">
     <value>Cancel the download</value>
+  </data>
+  <data name="Channel" xml:space="preserve">
+    <value>Channel</value>
   </data>
   <data name="CheckFileSHA1" xml:space="preserve">
     <value>The SHA1 value of the verified file: </value>
@@ -183,6 +192,15 @@
   <data name="DesktopAppsContent2" xml:space="preserve">
     <value>Microsoft has added instructions to the detail page of traditional desktop apps. As shown in the following figure, if a row of small print appears below the app title and the text content is "provided and updated by a developer", the application is a traditional desktop application.</value>
   </data>
+  <data name="DesktopStartupArgsDescription1" xml:space="preserve">
+    <value>The desktop application can select the type and channel name you want to get through input parameters, and fill in the corresponding links to facilitate and quickly obtain</value>
+  </data>
+  <data name="DesktopStartupArgsDescription2" xml:space="preserve">
+    <value>Some parameters are optional and are replaced by default parameters when there is no input or input error</value>
+  </data>
+  <data name="DesktopStartupArgsTitle" xml:space="preserve">
+    <value>Desktop program parameter description</value>
+  </data>
   <data name="DownloadCleanError" xml:space="preserve">
     <value>An error occurred during the download record cleanup. Please check the download record access rights.</value>
   </data>
@@ -231,20 +249,35 @@
   <data name="HistoryRecord" xml:space="preserve">
     <value>History records</value>
   </data>
+  <data name="InputContent" xml:space="preserve">
+    <value>Input content</value>
+  </data>
   <data name="InstallingNotifyContent" xml:space="preserve">
     <value>Your app is being installed and you can do anything else after the installation is complete</value>
   </data>
   <data name="InstallingNotifyTitle" xml:space="preserve">
     <value>App installation prompts</value>
   </data>
+  <data name="IsRequired" xml:space="preserve">
+    <value>Is required</value>
+  </data>
   <data name="License" xml:space="preserve">
     <value>GetStoreApp License</value>
+  </data>
+  <data name="Link" xml:space="preserve">
+    <value>Link</value>
+  </data>
+  <data name="LinkContent" xml:space="preserve">
+    <value>Need to input the correlative content</value>
   </data>
   <data name="LocalFile" xml:space="preserve">
     <value>Locally created files</value>
   </data>
   <data name="LocalFileCleanError" xml:space="preserve">
     <value>An error occurred during the clearing of the locally created file. Check the access permission of the locally created file.</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
   </data>
   <data name="OK" xml:space="preserve">
     <value>OK</value>
@@ -282,11 +315,17 @@
   <data name="SelectEmptyTitle" xml:space="preserve">
     <value>Item selection prompts</value>
   </data>
+  <data name="StartupArgsSample" xml:space="preserve">
+    <value>Reference example</value>
+  </data>
   <data name="TraceCleanupContent" xml:space="preserve">
     <value>Trace clearing includes history records, download records, and files created locally when an application is downloaded. Select the items you want to clean.</value>
   </data>
   <data name="TraceCleanupTitle" xml:space="preserve">
     <value>File cleaning prompts</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
   </data>
   <data name="UndoChanges" xml:space="preserve">
     <value>Undo the changes</value>
@@ -302,5 +341,8 @@
   </data>
   <data name="WebCacheCleanError" xml:space="preserve">
     <value>Web page cache cleanup failed</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
 </root>

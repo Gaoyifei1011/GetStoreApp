@@ -1,9 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using GetStoreApp.Contracts.Navigation;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Contracts.Services.Shell;
-using GetStoreApp.Contracts.ViewModels;
-using GetStoreApp.Extensions.Enum;
+using GetStoreApp.Extensions.DataType.Enum;
 using GetStoreApp.Helpers;
 using Microsoft.UI.Xaml.Media.Animation;
 

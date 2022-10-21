@@ -183,6 +183,8 @@ namespace GetStoreApp.Helpers
                 // 对话框（MVVM）
                 services.AddTransient<CoreWebView2FailedDialog>();
                 services.AddTransient<CoreWebView2FailedViewModel>();
+                services.AddTransient<DesktopStartupArgsDialog>();
+                services.AddTransient<DesktopStartupArgsViewModel>();
                 services.AddTransient<FileInformationDialog>();
                 services.AddTransient<FileInformationViewModel>();
                 services.AddTransient<LicenseDialog>();

@@ -1,6 +1,6 @@
 ﻿using Aria2NET;
 using GetStoreApp.Contracts.Services.Download;
-using GetStoreApp.Extensions.AppException;
+using GetStoreApp.Extensions.DataType.AppException;
 using GetStoreApp.Helpers;
 using System;
 using System.Collections.Generic;

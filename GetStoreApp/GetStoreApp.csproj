@@ -82,6 +82,7 @@
     <None Remove="UI\Dialogs\CoreWebView2FailedDialog.xaml" />
     <None Remove="UI\Dialogs\DeletePromptDialog.xaml" />
     <None Remove="UI\Dialogs\DesktopAppsDialog.xaml" />
+    <None Remove="UI\Dialogs\DesktopStartupArgsDialog.xaml" />
     <None Remove="UI\Dialogs\DownloadNotifyDialog.xaml" />
     <None Remove="UI\Dialogs\FileInformationDialog.xaml" />
     <None Remove="UI\Dialogs\FolderAccessFailedDialog.xaml" />
@@ -134,7 +135,7 @@
     <PackageReference Include="System.Management" Version="6.0.0" />
     <PackageReference Include="WinUIEx" Version="1.8.0" />
 
-    <Page Update="MainWindow.xaml">
+    <Page Update="Views\Window\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\Tray\TaskBarControl.xaml">
@@ -412,6 +413,12 @@
     <Content Update="Assets\Logo\GetStoreApp.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="UI\Dialogs\DesktopStartupArgsDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <ProjectExtensions>

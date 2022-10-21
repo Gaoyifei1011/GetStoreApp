@@ -1,8 +1,8 @@
 ﻿using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Contracts.Services.Settings;
-using GetStoreApp.Extensions.Collection;
-using GetStoreApp.Extensions.Enum;
+using GetStoreApp.Extensions.DataType.Collection;
+using GetStoreApp.Extensions.DataType.Enum;
 using GetStoreApp.Helpers;
 using GetStoreApp.Models.Download;
 using System;

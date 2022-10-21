@@ -1,11 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Extensions.Enum;
-using GetStoreApp.Extensions.Taskbar;
+using GetStoreApp.Extensions.DataType.Enum;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Home;
+using GetStoreApp.Views.Taskbar;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;

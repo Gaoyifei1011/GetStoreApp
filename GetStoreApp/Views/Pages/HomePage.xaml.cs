@@ -1,5 +1,5 @@
 ﻿using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Extensions.Enum;
+using GetStoreApp.Extensions.DataType.Enum;
 using GetStoreApp.Helpers;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml;

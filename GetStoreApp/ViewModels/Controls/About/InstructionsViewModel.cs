@@ -8,9 +8,9 @@ namespace GetStoreApp.ViewModels.Controls.About
     public class InstructionsViewModel : ObservableRecipient
     {
         // 桌面程序启动参数说明
-        public IRelayCommand DesktopLaunchCommand => new RelayCommand(() =>
+        public IRelayCommand DesktopLaunchCommand => new RelayCommand(async () =>
         {
-
+            await new DesktopStartupArgsDialog().ShowAsync();
         });
 
         // 控制台程序启动参数说明

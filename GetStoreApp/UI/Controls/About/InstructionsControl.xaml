@@ -31,7 +31,8 @@
                         Command="{x:Bind ViewModel.ConsoleLaunchCommand}"
                         Content="{x:Bind ResourceService.GetLocalized('/About/ConsoleLaunch')}"
                         Style="{StaticResource AboutHyperlinkButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/About/ConsoleLaunch')}" />
+                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/About/ConsoleLaunch')}"
+                        Visibility="Collapsed" />
                 </StackPanel>
 
                 <MenuFlyoutSeparator Margin="0,0,0,8" />

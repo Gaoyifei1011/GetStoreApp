@@ -7,9 +7,9 @@ namespace GetStoreApp.Contracts.Services.Root
 {
     public interface IResourceService
     {
-        List<GetAppTypeModel> TypeList { get; }
+        List<TypeModel> TypeList { get; }
 
-        List<GetAppChannelModel> ChannelList { get; }
+        List<ChannelModel> ChannelList { get; }
 
         List<StatusBarStateModel> StatusBarStateList { get; }
 

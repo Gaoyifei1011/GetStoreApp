@@ -1,11 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Navigation;
 using GetStoreApp.Contracts.Services.History;
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Contracts.Services.Shell;
-using GetStoreApp.Contracts.ViewModels;
-using GetStoreApp.Extensions.Enum;
+using GetStoreApp.Extensions.DataType.Enum;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.History;
@@ -34,9 +34,9 @@ namespace GetStoreApp.ViewModels.Pages
 
         private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
 
-        public List<GetAppTypeModel> TypeList => ResourceService.TypeList;
+        public List<TypeModel> TypeList => ResourceService.TypeList;
 
-        public List<GetAppChannelModel> ChannelList => ResourceService.ChannelList;
+        public List<ChannelModel> ChannelList => ResourceService.ChannelList;
 
         public ObservableCollection<HistoryModel> HistoryDataList { get; } = new ObservableCollection<HistoryModel>();
 

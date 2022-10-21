@@ -1,5 +1,5 @@
-﻿using GetStoreApp.Extensions.Enum;
-using GetStoreApp.Extensions.Struct;
+﻿using GetStoreApp.Extensions.DataType.Enum;
+using GetStoreApp.Extensions.DataType.Struct;
 using System;
 using System.Runtime.InteropServices;
 

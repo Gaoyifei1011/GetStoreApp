@@ -1,5 +1,5 @@
 ﻿using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Extensions.Enum;
+using GetStoreApp.Extensions.DataType.Enum;
 using GetStoreApp.Models.Home;
 using GetStoreApp.Models.Settings;
 using Microsoft.UI.Xaml;
@@ -26,9 +26,9 @@ namespace GetStoreApp.Services.Root
 
         private ResourceMap ResourceMap { get; } = ResourceManager.Current.MainResourceMap.GetSubtree("Resources");
 
-        public List<GetAppTypeModel> TypeList { get; } = new List<GetAppTypeModel>();
+        public List<TypeModel> TypeList { get; } = new List<TypeModel>();
 
-        public List<GetAppChannelModel> ChannelList { get; } = new List<GetAppChannelModel>();
+        public List<ChannelModel> ChannelList { get; } = new List<ChannelModel>();
 
         public List<StatusBarStateModel> StatusBarStateList { get; } = new List<StatusBarStateModel>();
 
@@ -72,28 +72,32 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private void InitializeTypeList()
         {
-            TypeList.Add(new GetAppTypeModel
+            TypeList.Add(new TypeModel
             {
                 DisplayName = GetLocalized("URL"),
-                InternalName = "url"
+                InternalName = "url",
+                ShortName = "url"
             });
 
-            TypeList.Add(new GetAppTypeModel
+            TypeList.Add(new TypeModel
             {
                 DisplayName = GetLocalized("ProductID"),
-                InternalName = "ProductId"
+                InternalName = "ProductId",
+                ShortName = "pid"
             });
 
-            TypeList.Add(new GetAppTypeModel
+            TypeList.Add(new TypeModel
             {
                 DisplayName = GetLocalized("PackageFamilyName"),
-                InternalName = "PackageFamilyName"
+                InternalName = "PackageFamilyName",
+                ShortName = "pfn"
             });
 
-            TypeList.Add(new GetAppTypeModel
+            TypeList.Add(new TypeModel
             {
                 DisplayName = GetLocalized("CategoryID"),
-                InternalName = "CategoryId"
+                InternalName = "CategoryId",
+                ShortName = "cid"
             });
         }
 
@@ -102,28 +106,32 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private void InitializeChannelList()
         {
-            ChannelList.Add(new GetAppChannelModel
+            ChannelList.Add(new ChannelModel
             {
                 DisplayName = GetLocalized("Fast"),
-                InternalName = "WIF"
+                InternalName = "WIF",
+                ShortName = "wif"
             });
 
-            ChannelList.Add(new GetAppChannelModel
+            ChannelList.Add(new ChannelModel
             {
                 DisplayName = GetLocalized("Slow"),
-                InternalName = "WIS"
+                InternalName = "WIS",
+                ShortName = "wis"
             });
 
-            ChannelList.Add(new GetAppChannelModel
+            ChannelList.Add(new ChannelModel
             {
                 DisplayName = GetLocalized("RP"),
-                InternalName = "RP"
+                InternalName = "RP",
+                ShortName = "rp"
             });
 
-            ChannelList.Add(new GetAppChannelModel
+            ChannelList.Add(new ChannelModel
             {
                 DisplayName = GetLocalized("Retail"),
-                InternalName = "Retail"
+                InternalName = "Retail",
+                ShortName = "rt"
             });
         }
 
@@ -243,6 +251,9 @@ namespace GetStoreApp.Services.Root
             });
         }
 
+        /// <summary>
+        /// 初始化安装模式信息列表
+        /// </summary>
         private void InitializeInstallModeList()
         {
             InstallModeList.Add(new InstallModeModel

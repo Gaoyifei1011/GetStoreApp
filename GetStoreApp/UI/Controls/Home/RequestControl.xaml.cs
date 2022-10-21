@@ -13,9 +13,9 @@ namespace GetStoreApp.UI.Controls.Home
 
         public RequestViewModel ViewModel { get; } = IOCHelper.GetService<RequestViewModel>();
 
-        public List<GetAppTypeModel> TypeList => ResourceService.TypeList;
+        public List<TypeModel> TypeList => ResourceService.TypeList;
 
-        public List<GetAppChannelModel> ChannelList => ResourceService.ChannelList;
+        public List<ChannelModel> ChannelList => ResourceService.ChannelList;
 
         public RequestControl()
         {

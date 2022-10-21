@@ -117,11 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Argument" xml:space="preserve">
+    <value>参数</value>
+  </data>
+  <data name="ArgumentName" xml:space="preserve">
+    <value>参数名称</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
   <data name="CancelDownload" xml:space="preserve">
     <value>取消下载</value>
+  </data>
+  <data name="Channel" xml:space="preserve">
+    <value>通道</value>
   </data>
   <data name="CheckFileSHA1" xml:space="preserve">
     <value>校验得到的文件SHA1值：</value>
@@ -183,6 +192,15 @@
   <data name="DesktopAppsContent2" xml:space="preserve">
     <value>微软在传统桌面应用的详细介绍页中添加了说明。如下图所示，如若在应用标题下方出现一排小字，文字内容是"由某开发商提供和更新"时，说明该应用就是传统桌面应用。</value>
   </data>
+  <data name="DesktopStartupArgsDescription1" xml:space="preserve">
+    <value>桌面应用可以通过输入参数选定好想要获取的类型、通道名称，填入相应的链接，方便快速获取</value>
+  </data>
+  <data name="DesktopStartupArgsDescription2" xml:space="preserve">
+    <value>部分参数为可选参数，在缺省或输入错误时会使用默认参数代替</value>
+  </data>
+  <data name="DesktopStartupArgsTitle" xml:space="preserve">
+    <value>桌面程序参数说明</value>
+  </data>
   <data name="DownloadCleanError" xml:space="preserve">
     <value>下载记录在清理的过程中发生了错误，请检查下载记录访问权限。</value>
   </data>
@@ -231,20 +249,35 @@
   <data name="HistoryRecord" xml:space="preserve">
     <value>历史记录</value>
   </data>
+  <data name="InputContent" xml:space="preserve">
+    <value>输入内容</value>
+  </data>
   <data name="InstallingNotifyContent" xml:space="preserve">
     <value>您的应用正在安装中，安装完成后再进行其他操作</value>
   </data>
   <data name="InstallingNotifyTitle" xml:space="preserve">
     <value>应用安装提示</value>
   </data>
+  <data name="IsRequired" xml:space="preserve">
+    <value>是否必需</value>
+  </data>
   <data name="License" xml:space="preserve">
     <value>获取商店应用 许可证</value>
+  </data>
+  <data name="Link" xml:space="preserve">
+    <value>链接</value>
+  </data>
+  <data name="LinkContent" xml:space="preserve">
+    <value>需输入相应内容</value>
   </data>
   <data name="LocalFile" xml:space="preserve">
     <value>本地创建的文件</value>
   </data>
   <data name="LocalFileCleanError" xml:space="preserve">
     <value>本地创建的文件在清理的过程中发生了错误，请检查本地创建的文件的访问权限。</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>否</value>
   </data>
   <data name="OK" xml:space="preserve">
     <value>确定</value>
@@ -282,11 +315,17 @@
   <data name="SelectEmptyTitle" xml:space="preserve">
     <value>项目选择提示</value>
   </data>
+  <data name="StartupArgsSample" xml:space="preserve">
+    <value>参考样例</value>
+  </data>
   <data name="TraceCleanupContent" xml:space="preserve">
     <value>痕迹清理包括历史记录、下载记录和应用下载时在本地创建的文件。请选择您要清理的项目。</value>
   </data>
   <data name="TraceCleanupTitle" xml:space="preserve">
     <value>痕迹清理</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>类型</value>
   </data>
   <data name="UndoChanges" xml:space="preserve">
     <value>撤销更改</value>
@@ -302,5 +341,8 @@
   </data>
   <data name="WebCacheCleanError" xml:space="preserve">
     <value>网页缓存清理失败</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>是</value>
   </data>
 </root>

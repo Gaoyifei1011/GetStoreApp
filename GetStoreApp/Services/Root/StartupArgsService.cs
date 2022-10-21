@@ -41,8 +41,8 @@ namespace GetStoreApp.Services.Root
             {
                 Parser.Default.ParseArguments<CommandOptions>(CommandLineArgs).WithParsed((options) =>
                 {
-                    StartupArgs["TypeName"] = ResoureService.TypeList.FindIndex(item => item.InternalName.Equals(options.TypeName, StringComparison.OrdinalIgnoreCase));
-                    StartupArgs["ChannelName"] = ResoureService.ChannelList.FindIndex(item => item.InternalName.Equals(options.ChannelName, StringComparison.OrdinalIgnoreCase));
+                    StartupArgs["TypeName"] = ResoureService.TypeList.FindIndex(item => item.ShortName.Equals(options.TypeName, StringComparison.OrdinalIgnoreCase));
+                    StartupArgs["ChannelName"] = ResoureService.ChannelList.FindIndex(item => item.ShortName.Equals(options.ChannelName, StringComparison.OrdinalIgnoreCase));
                     StartupArgs["Link"] = options.Link;
                 });
             }

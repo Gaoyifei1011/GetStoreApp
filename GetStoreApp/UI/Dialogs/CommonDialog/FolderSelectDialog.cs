@@ -1,5 +1,5 @@
 ﻿using GetStoreApp.Contracts.Extensions;
-using GetStoreApp.Extensions.Enum;
+using GetStoreApp.Extensions.DataType.Enum;
 using GetStoreApp.Extensions.Native;
 using System;
 using System.Runtime.InteropServices;

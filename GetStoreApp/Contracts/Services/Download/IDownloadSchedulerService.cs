@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Extensions.Collection;
+﻿using GetStoreApp.Extensions.DataType.Collection;
 using GetStoreApp.Models.Download;
 using System.Threading.Tasks;
 

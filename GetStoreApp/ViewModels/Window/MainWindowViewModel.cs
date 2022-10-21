@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.Settings;
 using GetStoreApp.Contracts.Services.Shell;
-using GetStoreApp.Extensions.Event;
+using GetStoreApp.Extensions.DataType.Event;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.UI.Dialogs;

@@ -28,9 +28,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         private ILinkFilterService LinkFilterService { get; } = IOCHelper.GetService<ILinkFilterService>();
 
-        public List<GetAppTypeModel> TypeList => ResourceService.TypeList;
+        public List<TypeModel> TypeList => ResourceService.TypeList;
 
-        public List<GetAppChannelModel> ChannelList => ResourceService.ChannelList;
+        public List<ChannelModel> ChannelList => ResourceService.ChannelList;
 
         public static IReadOnlyList<string> SampleLinkList { get; } = new List<string>
         {

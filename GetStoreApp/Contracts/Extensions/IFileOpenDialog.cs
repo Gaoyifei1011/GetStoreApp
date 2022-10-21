@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Extensions.Enum;
+﻿using GetStoreApp.Extensions.DataType.Enum;
 using System;
 using System.Runtime.InteropServices;
 
