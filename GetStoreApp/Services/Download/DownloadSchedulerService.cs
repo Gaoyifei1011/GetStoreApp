@@ -1,6 +1,7 @@
 ﻿using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Contracts.Services.Settings.Common;
+using GetStoreApp.Contracts.Services.Settings.Experiment;
 using GetStoreApp.Extensions.DataType.Collection;
 using GetStoreApp.Extensions.DataType.Enum;
 using GetStoreApp.Helpers;
@@ -35,6 +36,8 @@ namespace GetStoreApp.Services.Download
 
         private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
 
+        private INetWorkMonitorService NetWorkMonitorService { get; } = IOCHelper.GetService<INetWorkMonitorService>();
+
         // 下载调度器
         private Timer DownloadSchedulerTimer { get; } = new Timer(1000);
 
@@ -49,12 +52,16 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         public async Task InitializeDownloadSchedulerAsync()
         {
-            NetWorkStatus NetStatus = NetWorkHelper.GetNetWorkStatus();
-
-            if (NetStatus == NetWorkStatus.None || NetStatus == NetWorkStatus.Unknown)
+            // 查看是否开启了网络监控服务
+            if (NetWorkMonitorService.NetWorkMonitorValue)
             {
-                IsNetWorkConnected = false;
-                AppNotificationService.Show("DownloadAborted", "NotDownload");
+                NetWorkStatus NetStatus = NetWorkHelper.GetNetWorkStatus();
+
+                if (NetStatus == NetWorkStatus.None || NetStatus == NetWorkStatus.Unknown)
+                {
+                    IsNetWorkConnected = false;
+                    AppNotificationService.Show("DownloadAborted", "NotDownload");
+                }
             }
 
             DownloadSchedulerTimer.Elapsed += DownloadSchedulerTimerElapsed;
@@ -365,7 +372,11 @@ namespace GetStoreApp.Services.Download
         /// </summary>
         private async void DownloadSchedulerTimerElapsed(object sender, ElapsedEventArgs args)
         {
-            await ScheduledGetNetWorkAsync();
+            // 查看是否开启了网络监控服务
+            if (NetWorkMonitorService.NetWorkMonitorValue)
+            {
+                await ScheduledGetNetWorkAsync();
+            }
 
             // 有信息在更新时，不再操作，等待下一秒尝试更新内容
             if (IsUpdatingNow)

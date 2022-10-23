@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace GetStoreApp.Services.Download
 {
@@ -14,20 +15,55 @@ namespace GetStoreApp.Services.Download
     /// </summary>
     public class Aria2Service : IAria2Service
     {
-        private string Aria2FileName => Path.Combine(AppContext.BaseDirectory, string.Format(@"Aria2\{0}\Aria2Desktop.exe", InfoHelper.GetAppProcessorArchitecture()));
+        private string Aria2FilePath => Path.Combine(AppContext.BaseDirectory, string.Format(@"Aria2\{0}\Aria2Desktop.exe", InfoHelper.GetAppProcessorArchitecture()));
 
-        private string Aria2Arguments => string.Format("--conf-path=\"{0}\" -D", Path.Combine(AppContext.BaseDirectory, "Aria2\\Config\\aria2.conf"));
+        private string DefaultAria2ConfPath => Path.Combine(AppContext.BaseDirectory, "Aria2\\Config\\aria2.conf");
+
+        public string Aria2ConfPath => Path.Combine(ApplicationData.Current.LocalFolder.Path, "aria2.conf");
+
+        private string Aria2Arguments { get; set; }
 
         private string RPCServerLink => "http://127.0.0.1:6300/jsonrpc";
 
         private Aria2NetClient Aria2Client { get; set; }
 
         /// <summary>
+        /// 初始化Aria2配置文件
+        /// </summary>
+        public async Task InitializeAria2ConfAsync()
+        {
+            try
+            {
+                // 原配置文件存在且新的配置文件不存在，拷贝到指定目录
+                if (File.Exists(DefaultAria2ConfPath) && !File.Exists(Aria2ConfPath))
+                {
+                    new FileInfo(DefaultAria2ConfPath).CopyTo(Aria2ConfPath);
+                }
+
+                // 使用自定义的配置文件目录
+                Aria2Arguments = string.Format("--conf-path=\"{0}\" -D", Aria2ConfPath);
+            }
+
+            //  发生异常时，使用默认的配置文件目录
+            catch (Exception)
+            {
+                if (File.Exists(DefaultAria2ConfPath))
+                {
+                    Aria2Arguments = string.Format("--conf-path=\"{0}\" -D", DefaultAria2ConfPath);
+                }
+            }
+            finally
+            {
+                await Task.CompletedTask;
+            }
+        }
+
+        /// <summary>
         /// 初始化运行Aria2下载进程
         /// </summary>
-        public async Task InitializeAria2Async()
+        public async Task StartAria2Async()
         {
-            await Aria2ProcessHelper.RunAria2Async(Aria2FileName, Aria2Arguments);
+            await Aria2ProcessHelper.RunAria2Async(Aria2FilePath, Aria2Arguments);
         }
 
         /// <summary>
@@ -37,6 +73,37 @@ namespace GetStoreApp.Services.Download
         {
             Aria2ProcessHelper.KillProcessAndChildren(Aria2ProcessHelper.GetProcessID());
             await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// 恢复配置文件默认值
+        /// </summary>
+        public async Task ReturnDefaultAsync()
+        {
+            try
+            {
+                // 原配置文件存在时，覆盖已经修改的配置文件
+                if (File.Exists(DefaultAria2ConfPath))
+                {
+                    new FileInfo(DefaultAria2ConfPath).CopyTo(Aria2ConfPath, true);
+                }
+
+                // 使用自定义的配置文件目录
+                Aria2Arguments = string.Format("--conf-path=\"{0}\" -D", Aria2ConfPath);
+            }
+
+            //  发生异常时，使用默认的配置文件目录
+            catch (Exception)
+            {
+                if (File.Exists(DefaultAria2ConfPath))
+                {
+                    Aria2Arguments = string.Format("--conf-path=\"{0}\" -D", DefaultAria2ConfPath);
+                }
+            }
+            finally
+            {
+                await Task.CompletedTask;
+            }
         }
 
         /// <summary>

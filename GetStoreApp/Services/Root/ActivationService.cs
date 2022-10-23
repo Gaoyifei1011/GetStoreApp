@@ -2,7 +2,10 @@
 using GetStoreApp.Contracts.Activation;
 using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Contracts.Services.Settings.Advanced;
+using GetStoreApp.Contracts.Services.Settings.Appearance;
+using GetStoreApp.Contracts.Services.Settings.Common;
+using GetStoreApp.Contracts.Services.Settings.Experiment;
 using GetStoreApp.Helpers;
 using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml;
@@ -40,15 +43,19 @@ namespace GetStoreApp.Services.Root
 
         private IAppExitService AppExitService { get; } = IOCHelper.GetService<IAppExitService>();
 
+        private IInstallModeService InstallModeService { get; } = IOCHelper.GetService<IInstallModeService>();
+
         private IBackdropService BackdropService { get; } = IOCHelper.GetService<IBackdropService>();
+
+        private ILanguageService LanguageService { get; } = IOCHelper.GetService<ILanguageService>();
+
+        private IThemeService ThemeService { get; } = IOCHelper.GetService<IThemeService>();
+
+        private ITopMostService TopMostService { get; } = IOCHelper.GetService<ITopMostService>();
 
         private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
 
         private IHistoryLiteNumService HistoryLiteNumService { get; } = IOCHelper.GetService<IHistoryLiteNumService>();
-
-        private IInstallModeService InstallModeService { get; } = IOCHelper.GetService<IInstallModeService>();
-
-        private ILanguageService LanguageService { get; } = IOCHelper.GetService<ILanguageService>();
 
         private ILinkFilterService LinkFilterService { get; } = IOCHelper.GetService<ILinkFilterService>();
 
@@ -56,11 +63,9 @@ namespace GetStoreApp.Services.Root
 
         private IRegionService RegionService { get; } = IOCHelper.GetService<IRegionService>();
 
-        private IThemeService ThemeService { get; } = IOCHelper.GetService<IThemeService>();
-
-        private ITopMostService TopMostService { get; } = IOCHelper.GetService<ITopMostService>();
-
         private IUseInstructionService UseInstructionService { get; } = IOCHelper.GetService<IUseInstructionService>();
+
+        private INetWorkMonitorService NetWorkMonitorService { get; } = IOCHelper.GetService<INetWorkMonitorService>();
 
         public async Task ActivateAsync(object activationArgs)
         {
@@ -100,16 +105,21 @@ namespace GetStoreApp.Services.Root
 
             // 初始化应用配置信息
             await AppExitService.InitializeAppExitAsync();
+            await InstallModeService.InitializeInstallModeAsync();
+
             await BackdropService.InitializeBackdropAsync();
+            await ThemeService.InitializeThemeAsync();
+            await TopMostService.InitializeTopMostValueAsync();
+
             await DownloadOptionsService.InitializeAsync();
             await HistoryLiteNumService.InitializeHistoryLiteNumAsync();
-            await InstallModeService.InitializeInstallModeAsync();
             await LinkFilterService.InitializeLinkFilterValueAsnyc();
             await NotificationService.InitializeNotificationAsync();
             await RegionService.InitializeRegionAsync();
-            await ThemeService.InitializeThemeAsync();
-            await TopMostService.InitializeTopMostValueAsync();
             await UseInstructionService.InitializeUseInsVisValueAsync();
+
+            // 实验功能设置配置
+            await NetWorkMonitorService.InitializeNetWorkMonitorValueAsync();
 
             // 初始化应用通知服务
             AppNotificationService.Initialize();
@@ -150,8 +160,11 @@ namespace GetStoreApp.Services.Root
             // 初始化下载监控服务
             await DownloadSchedulerService.InitializeDownloadSchedulerAsync();
 
+            // 初始化Aria2配置文件信息
+            await Aria2Service.InitializeAria2ConfAsync();
+
             // 启动Aria2下载服务（该服务会在后台长时间运行）
-            await Aria2Service.InitializeAria2Async();
+            await Aria2Service.StartAria2Async();
         }
     }
 }

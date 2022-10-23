@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:GetStoreApp.Models.Dialogs"
     x:Name="DesktopStartupArgsRoot"
+    BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
     RequestedTheme="{x:Bind DialogTheme}"
     Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">
@@ -54,7 +55,7 @@
                     <Grid
                         Height="35"
                         Padding="6,0,0,0"
-                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}"
                         BorderThickness="1,1,1,1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="100" />
@@ -95,7 +96,7 @@
                         <Grid
                             Height="35"
                             Padding="6,0,0,0"
-                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                            BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}"
                             BorderThickness="1,0,1,1">
 
                             <Grid.ColumnDefinitions>

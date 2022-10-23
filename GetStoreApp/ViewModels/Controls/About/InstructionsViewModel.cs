@@ -16,7 +16,6 @@ namespace GetStoreApp.ViewModels.Controls.About
         // 控制台程序启动参数说明
         public IRelayCommand ConsoleLaunchCommand => new RelayCommand(() =>
         {
-
         });
 
         // 检查网络

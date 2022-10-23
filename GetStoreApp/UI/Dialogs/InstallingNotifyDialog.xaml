@@ -7,7 +7,7 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="{x:Bind ResourceService.GetLocalized('/Dialog/InstallingNotifyTitle')}"
-    BorderBrush="{ThemeResource SystemAccentColor}"
+    BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
     CloseButtonText="{x:Bind ResourceService.GetLocalized('/Dialog/OK')}"
     Content="{x:Bind ResourceService.GetLocalized('/Dialog/InstallingNotifyContent')}"
     RequestedTheme="{x:Bind DialogTheme}"

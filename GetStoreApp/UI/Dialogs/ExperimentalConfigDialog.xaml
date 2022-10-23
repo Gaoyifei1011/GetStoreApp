@@ -1,0 +1,83 @@
+﻿<ContentDialog
+    x:Class="GetStoreApp.UI.Dialogs.ExperimentalConfigDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behavior="using:GetStoreApp.Behaviors"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:experiment="using:GetStoreApp.UI.Controls.Settings.Experiment"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="ExperimentalConfigRoot"
+    BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
+    RequestedTheme="{x:Bind DialogTheme}"
+    Style="{StaticResource ContentDialogStyle}"
+    mc:Ignorable="d">
+
+    <i:Interaction.Behaviors>
+        <behavior:ContentDialogBehavior />
+    </i:Interaction.Behaviors>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel
+            Grid.Row="0"
+            Padding="24,24,24,12"
+            Background="{ThemeResource ContentDialogTopOverlay}"
+            Spacing="3">
+
+            <TextBlock Style="{StaticResource ContentDialogTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/Dialog/ExperimentalFeatures')}" />
+
+            <InfoBar
+                Margin="0"
+                IsClosable="False"
+                IsOpen="True"
+                Message="{x:Bind ResourceService.GetLocalized('/Dialog/ExperimentalWarning')}"
+                Severity="Warning"
+                Style="{StaticResource ExperimentalInfoBarStyle}" />
+
+            <experiment:NetWorkMonitorControl />
+
+            <experiment:OpenConfigFIleControl />
+
+            <NavigationViewItemSeparator />
+
+            <TextBlock Text="{x:Bind ResourceService.GetLocalized('/Dialog/ExperimentalFeaturesDescription')}" />
+            <TextBlock
+                Text="{x:Bind ResourceService.GetLocalized('/Dialog/ExperimentalFeaturesDescription1')}"
+                TextAlignment="Justify"
+                TextWrapping="Wrap" />
+            <TextBlock
+                Text="{x:Bind ResourceService.GetLocalized('/Dialog/ExperimentalFeaturesDescription2')}"
+                TextAlignment="Justify"
+                TextWrapping="Wrap" />
+        </StackPanel>
+
+        <Grid
+            Grid.Row="1"
+            Padding="24"
+            ColumnSpacing="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button
+                Grid.Column="0"
+                HorizontalAlignment="Stretch"
+                Command="{x:Bind ViewModel.RestoreDefualtCommand}"
+                CommandParameter="{Binding ElementName=CoreWebView2FailedRoot}"
+                Content="{x:Bind ResourceService.GetLocalized('/Dialog/RestoreDefualt')}"
+                Style="{ThemeResource AccentButtonStyle}" />
+            <Button
+                Grid.Column="1"
+                HorizontalAlignment="Stretch"
+                Command="{x:Bind ViewModel.CloswWindowCommand}"
+                CommandParameter="{Binding ElementName=ExperimentalConfigRoot}"
+                Content="{x:Bind ResourceService.GetLocalized('/Dialog/CloseWindow')}" />
+        </Grid>
+    </Grid>
+</ContentDialog>

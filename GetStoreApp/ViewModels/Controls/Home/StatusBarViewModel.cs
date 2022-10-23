@@ -5,7 +5,7 @@ using GetStoreApp.Extensions.DataType.Enum;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Home;
-using GetStoreApp.Views.Taskbar;
+using GetStoreApp.Views.Shell;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;

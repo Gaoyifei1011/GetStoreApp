@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.WinUI.Notifications;
 using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Contracts.Services.Settings.Common;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Helpers;
 using GetStoreApp.ViewModels.Pages;

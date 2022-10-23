@@ -1,5 +1,5 @@
-﻿using GetStoreApp.Extensions.DataType.Event;
-using GetStoreApp.Extensions.DataType.Delegate;
+﻿using GetStoreApp.Extensions.DataType.Delegate;
+using GetStoreApp.Extensions.DataType.Event;
 using System;
 using System.Runtime.InteropServices;
 using WinUIEx;

@@ -35,7 +35,7 @@ namespace GetStoreApp.UI.Dialogs.CommonDialog
             {
                 if (hwnd == IntPtr.Zero)
                 {
-                    hwnd = NativeMethods.GetForegroundWindow();
+                    hwnd = PInvoke.User32.GetForegroundWindow();
                 }
 
                 FILEOPENDIALOGOPTIONS option = dialog.GetOptions();

@@ -4,9 +4,15 @@ namespace GetStoreApp.Contracts.Services.Download
 {
     public interface IAria2Service
     {
-        Task InitializeAria2Async();
+        string Aria2ConfPath { get; }
+
+        Task InitializeAria2ConfAsync();
+
+        Task StartAria2Async();
 
         Task CloseAria2Async();
+
+        Task ReturnDefaultAsync();
 
         Task<(bool, string)> AddUriAsync(string downloadLink, string folderPath);
 

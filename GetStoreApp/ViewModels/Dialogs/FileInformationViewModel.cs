@@ -75,7 +75,7 @@ namespace GetStoreApp.ViewModels.Dialogs
             }));
         });
 
-        // 关闭查看文件信息窗口
+        // 关闭窗口
         public IRelayCommand CloseWindowCommand => new RelayCommand<ContentDialog>((dialog) =>
         {
             dialog.Hide();

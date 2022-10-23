@@ -1,5 +1,5 @@
-﻿using GetStoreApp.Extensions.DataType.Enum;
-using GetStoreApp.Extensions.DataType.Delegate;
+﻿using GetStoreApp.Extensions.DataType.Delegate;
+using GetStoreApp.Extensions.DataType.Enum;
 using GetStoreApp.Models.Settings;
 using System.Collections.Generic;
 using System.Globalization;

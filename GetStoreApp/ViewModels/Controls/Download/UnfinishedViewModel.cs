@@ -3,7 +3,8 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
 using GetStoreApp.Contracts.Services.Download;
-using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Contracts.Services.Settings.Common;
+using GetStoreApp.Contracts.Services.Settings.Experiment;
 using GetStoreApp.Extensions.DataType.Enum;
 using GetStoreApp.Extensions.DataType.Event;
 using GetStoreApp.Helpers;
@@ -35,6 +36,8 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
         private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
 
+        private INetWorkMonitorService NetWorkMonitorService { get; } = IOCHelper.GetService<INetWorkMonitorService>();
+
         public ObservableCollection<UnfinishedModel> UnfinishedDataList { get; } = new ObservableCollection<UnfinishedModel>();
 
         private bool _isSelectMode = false;
@@ -61,16 +64,20 @@ namespace GetStoreApp.ViewModels.Controls.Download
         // 继续下载全部任务
         public IRelayCommand ContinueAllCommand => new RelayCommand(async () =>
         {
-            NetWorkStatus NetStatus = NetWorkHelper.GetNetWorkStatus();
-
-            // 网络处于未连接状态，不再进行下载，显示通知
-            if (NetStatus == NetWorkStatus.None || NetStatus == NetWorkStatus.Unknown)
+            // 查看是否开启了网络监控服务
+            if (NetWorkMonitorService.NetWorkMonitorValue)
             {
-                WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
+                NetWorkStatus NetStatus = NetWorkHelper.GetNetWorkStatus();
+
+                // 网络处于未连接状态，不再进行下载，显示通知
+                if (NetStatus == NetWorkStatus.None || NetStatus == NetWorkStatus.Unknown)
                 {
-                    NotificationArgs = InAppNotificationArgs.NetWorkError,
-                }));
-                return;
+                    WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
+                    {
+                        NotificationArgs = InAppNotificationArgs.NetWorkError,
+                    }));
+                    return;
+                }
             }
 
             List<BackgroundModel> PauseList = new List<BackgroundModel>();
@@ -232,16 +239,20 @@ namespace GetStoreApp.ViewModels.Controls.Download
         // 继续下载当前任务
         public IRelayCommand ContinueCommand => new RelayCommand<UnfinishedModel>(async (unfinishedItem) =>
         {
-            NetWorkStatus NetStatus = NetWorkHelper.GetNetWorkStatus();
-
-            // 网络处于未连接状态，不再进行下载，显示通知
-            if (NetStatus == NetWorkStatus.None || NetStatus == NetWorkStatus.Unknown)
+            // 查看是否开启了网络监控服务
+            if (NetWorkMonitorService.NetWorkMonitorValue)
             {
-                WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
+                NetWorkStatus NetStatus = NetWorkHelper.GetNetWorkStatus();
+
+                // 网络处于未连接状态，不再进行下载，显示通知
+                if (NetStatus == NetWorkStatus.None || NetStatus == NetWorkStatus.Unknown)
                 {
-                    NotificationArgs = InAppNotificationArgs.NetWorkError,
-                }));
-                return;
+                    WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
+                    {
+                        NotificationArgs = InAppNotificationArgs.NetWorkError,
+                    }));
+                    return;
+                }
             }
 
             if (unfinishedItem.DownloadFlag == 2)

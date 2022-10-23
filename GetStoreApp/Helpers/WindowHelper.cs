@@ -1,6 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using Windows.Win32.Foundation;
+﻿using Windows.Win32.Foundation;
 using WinUIEx;
 
 namespace GetStoreApp.Helpers
@@ -10,9 +8,6 @@ namespace GetStoreApp.Helpers
     /// </summary>
     public static class WindowHelper
     {
-        [DllImport("user32.dll")]
-        private static extern bool IsZoomed(IntPtr hWnd);
-
         /// <summary>
         /// 显示窗口
         /// </summary>
@@ -22,7 +17,7 @@ namespace GetStoreApp.Helpers
             HWND hwnd = (HWND)WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
 
             // 判断窗口状态是否处于最大化状态，如果是，直接最大化窗口
-            if (IsZoomed(hwnd))
+            if (PInvoke.User32.IsZoomed(hwnd))
             {
                 App.MainWindow.Maximize();
             }

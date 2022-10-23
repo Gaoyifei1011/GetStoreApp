@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Download;
-using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Contracts.Services.Settings.Advanced;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Extensions.DataType.Event;
 using GetStoreApp.Helpers;

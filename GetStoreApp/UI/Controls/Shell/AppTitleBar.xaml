@@ -6,11 +6,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Image
-        Width="28"
-        Height="28"
-        Margin="0,2,0,0"
+        Width="22"
+        Height="22"
+        Margin="0,3,0,0"
         HorizontalAlignment="Left"
-        Source="/Assets/Square44x44Logo.png" />
+        Source="ms-appx:///Assets/Logo/GetStoreApp.png" />
     <TextBlock
         Margin="36,2,0,0"
         VerticalAlignment="Center"

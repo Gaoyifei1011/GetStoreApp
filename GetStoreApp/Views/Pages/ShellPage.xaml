@@ -7,7 +7,7 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:sc="using:GetStoreApp.UI.Controls.Shell"
-    xmlns:tray="using:GetStoreApp.Views.Tray"
+    xmlns:shell="using:GetStoreApp.Views.Shell"
     Unloaded="{x:Bind ShellPageUnloaded}">
 
     <i:Interaction.Behaviors>
@@ -78,6 +78,6 @@
         </NavigationView>
 
         <controls:InAppNotification x:Name="ShellNotification" Style="{StaticResource InAppNotificationsStyle}" />
-        <tray:TaskBarControl />
+        <shell:TaskBarControl />
     </Grid>
 </Page>

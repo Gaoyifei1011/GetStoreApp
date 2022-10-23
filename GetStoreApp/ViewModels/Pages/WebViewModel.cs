@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Navigation;
 using GetStoreApp.Contracts.Services.Download;
-using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Contracts.Services.Settings.Common;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Extensions.DataType.Enum;
 using GetStoreApp.Helpers;

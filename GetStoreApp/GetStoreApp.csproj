@@ -68,6 +68,9 @@
     <None Remove="UI\Controls\Settings\AppExitControl.xaml" />
     <None Remove="UI\Controls\Settings\BackdropControl.xaml" />
     <None Remove="UI\Controls\Settings\DownloadOptionsControl.xaml" />
+    <None Remove="UI\Controls\Settings\ExperimentalFeaturesControl.xaml" />
+    <None Remove="UI\Controls\Settings\Experiment\NetWorkMonitorControl.xaml" />
+    <None Remove="UI\Controls\Settings\Experiment\OpenConfigFIleControl.xaml" />
     <None Remove="UI\Controls\Settings\HistoryLiteConfigControl.xaml" />
     <None Remove="UI\Controls\Settings\InstallModeControl.xaml" />
     <None Remove="UI\Controls\Settings\LinkFilterControl.xaml" />
@@ -84,6 +87,7 @@
     <None Remove="UI\Dialogs\DesktopAppsDialog.xaml" />
     <None Remove="UI\Dialogs\DesktopStartupArgsDialog.xaml" />
     <None Remove="UI\Dialogs\DownloadNotifyDialog.xaml" />
+    <None Remove="UI\Dialogs\ExperimentalConfigDialog.xaml" />
     <None Remove="UI\Dialogs\FileInformationDialog.xaml" />
     <None Remove="UI\Dialogs\FolderAccessFailedDialog.xaml" />
     <None Remove="UI\Dialogs\InstallingNotifyDialog.xaml" />
@@ -107,7 +111,6 @@
     <None Remove="Views\Pages\SettingsPage.xaml" />
     <None Remove="Views\Pages\ShellPage.xaml" />
     <None Remove="Views\Pages\WebPage.xaml" />
-    <None Remove="Views\Tray\TaskBarControl.xaml" />
  
     <PackageReference Include="Aria2.NET" Version="1.0.5" />
  
@@ -138,7 +141,7 @@
     <Page Update="Views\Window\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\Tray\TaskBarControl.xaml">
+    <Page Update="Views\Shell\TaskBarControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
@@ -236,43 +239,55 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
-    <Page Update="UI\Controls\Settings\AppExitControl.xaml">
+    <Page Update="UI\Controls\Settings\Advanced\AppExitControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Controls\Settings\BackdropControl.xaml">
+    <Page Update="UI\Controls\Settings\Advanced\ExperimentalFeaturesControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Controls\Settings\DownloadOptionsControl.xaml">
+    <Page Update="UI\Controls\Settings\Advanced\InstallModeControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Controls\Settings\HistoryLiteConfigControl.xaml">
+    <Page Update="UI\Controls\Settings\Advanced\TraceCleanupControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Controls\Settings\InstallModeControl.xaml">
+    
+    <Page Update="UI\Controls\Settings\Appearance\BackdropControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Controls\Settings\LanguageControl.xaml">
+    <Page Update="UI\Controls\Settings\Appearance\LanguageControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Controls\Settings\LinkFilterControl.xaml">
+    <Page Update="UI\Controls\Settings\Appearance\ThemeControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Controls\Settings\NotificationControl.xaml">
+    <Page Update="UI\Controls\Settings\Appearance\TopMostControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Controls\Settings\RegionControl.xaml">
+
+    <Page Update="UI\Controls\Settings\Common\DownloadOptionsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Controls\Settings\ThemeControl.xaml">
+    <Page Update="UI\Controls\Settings\Common\HistoryLiteConfigControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Controls\Settings\TopMostControl.xaml">
+    <Page Update="UI\Controls\Settings\Common\LinkFilterControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Controls\Settings\TraceCleanupControl.xaml">
+    <Page Update="UI\Controls\Settings\Common\NotificationControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Controls\Settings\UseInstructionControl.xaml">
+    <Page Update="UI\Controls\Settings\Common\RegionControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\Settings\Common\UseInstructionControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+
+    <Page Update="UI\Controls\Settings\Experiment\NetWorkMonitorControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\Settings\Experiment\OpenConfigFIleControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
@@ -299,7 +314,13 @@
     <Page Update="UI\Dialogs\DesktopAppsDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Update="UI\Dialogs\DesktopStartupArgsDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="UI\Dialogs\DownloadNotifyDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Dialogs\ExperimentalConfigDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Dialogs\FileInformationDialog.xaml">
@@ -413,12 +434,6 @@
     <Content Update="Assets\Logo\GetStoreApp.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="UI\Dialogs\DesktopStartupArgsDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
 
   <ProjectExtensions>

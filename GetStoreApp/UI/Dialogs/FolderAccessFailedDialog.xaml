@@ -7,7 +7,7 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="{x:Bind ResourceService.GetLocalized('/Dialog/FolderAccessFailedTitle')}"
-    BorderBrush="{ThemeResource SystemAccentColor}"
+    BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
     CloseButtonText="{x:Bind ResourceService.GetLocalized('/Dialog/UndoChanges')}"
     Content="{x:Bind ResourceService.GetLocalized('/Dialog/FolderAccessFailedContent')}"
     PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"

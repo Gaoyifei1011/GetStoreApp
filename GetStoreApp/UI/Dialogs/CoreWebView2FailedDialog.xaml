@@ -7,7 +7,7 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Name="CoreWebView2FailedRoot"
-    BorderBrush="{ThemeResource SystemAccentColor}"
+    BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
     RequestedTheme="{x:Bind DialogTheme}"
     Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">

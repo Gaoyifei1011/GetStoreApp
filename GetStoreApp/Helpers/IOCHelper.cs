@@ -2,32 +2,44 @@
 using GetStoreApp.Contracts.Services.Download;
 using GetStoreApp.Contracts.Services.History;
 using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Contracts.Services.Settings.Advanced;
+using GetStoreApp.Contracts.Services.Settings.Appearance;
+using GetStoreApp.Contracts.Services.Settings.Common;
+using GetStoreApp.Contracts.Services.Settings.Experiment;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Services.Download;
 using GetStoreApp.Services.History;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Services.Settings;
+using GetStoreApp.Services.Settings.Advanced;
+using GetStoreApp.Services.Settings.Appearance;
+using GetStoreApp.Services.Settings.Common;
+using GetStoreApp.Services.Settings.Experiment;
 using GetStoreApp.Services.Shell;
 using GetStoreApp.UI.Controls.About;
 using GetStoreApp.UI.Controls.Download;
 using GetStoreApp.UI.Controls.Home;
-using GetStoreApp.UI.Controls.Settings;
+using GetStoreApp.UI.Controls.Settings.Advanced;
+using GetStoreApp.UI.Controls.Settings.Appearance;
+using GetStoreApp.UI.Controls.Settings.Common;
+using GetStoreApp.UI.Controls.Settings.Experiment;
 using GetStoreApp.UI.Controls.Web;
 using GetStoreApp.UI.Dialogs;
 using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Controls.About;
 using GetStoreApp.ViewModels.Controls.Download;
 using GetStoreApp.ViewModels.Controls.Home;
-using GetStoreApp.ViewModels.Controls.Settings;
+using GetStoreApp.ViewModels.Controls.Settings.Advanced;
+using GetStoreApp.ViewModels.Controls.Settings.Appearance;
+using GetStoreApp.ViewModels.Controls.Settings.Common;
+using GetStoreApp.ViewModels.Controls.Settings.Experiment;
 using GetStoreApp.ViewModels.Controls.Web;
 using GetStoreApp.ViewModels.Dialogs;
 using GetStoreApp.ViewModels.Notifications;
 using GetStoreApp.ViewModels.Pages;
-using GetStoreApp.ViewModels.Tray;
+using GetStoreApp.ViewModels.Shell;
 using GetStoreApp.ViewModels.Window;
 using GetStoreApp.Views.Pages;
-using GetStoreApp.Views.Tray;
+using GetStoreApp.Views.Shell;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
@@ -70,20 +82,26 @@ namespace GetStoreApp.Helpers
                 services.AddSingleton<IAria2Service, Aria2Service>();
                 services.AddSingleton<IDownloadDBService, DownloadDBService>();
                 services.AddSingleton<IDownloadSchedulerService, DownloadSchedulerService>();
+
                 services.AddSingleton<IHistoryDBService, HistoryDBService>();
+
                 services.AddSingleton<IAppExitService, AppExitService>();
+                services.AddSingleton<IInstallModeService, InstallModeService>();
+                services.AddSingleton<ITraceCleanupService, TraceCleanupService>();
+
                 services.AddSingleton<IBackdropService, BackdropService>();
+                services.AddSingleton<ILanguageService, LanguageService>();
+                services.AddSingleton<IThemeService, ThemeService>();
+                services.AddSingleton<ITopMostService, TopMostService>();
+
                 services.AddSingleton<IDownloadOptionsService, DownloadOptionsService>();
                 services.AddSingleton<IHistoryLiteNumService, HistoryLiteNumService>();
-                services.AddSingleton<IInstallModeService, InstallModeService>();
-                services.AddSingleton<ILanguageService, LanguageService>();
                 services.AddSingleton<ILinkFilterService, LinkFilterService>();
                 services.AddSingleton<INotificationService, NotificatonService>();
                 services.AddSingleton<IRegionService, RegionService>();
-                services.AddSingleton<IThemeService, ThemeService>();
-                services.AddSingleton<ITopMostService, TopMostService>();
-                services.AddSingleton<ITraceCleanupService, TraceCleanupService>();
                 services.AddSingleton<IUseInstructionService, UseInstructionService>();
+
+                services.AddSingleton<INetWorkMonitorService, NetWorkMonitorService>();
 
                 services.AddSingleton<INavigationService, NavigationService>();
                 services.AddTransient<INavigationViewService, NavigationViewService>();
@@ -149,32 +167,45 @@ namespace GetStoreApp.Helpers
                 services.AddTransient<StatusBarViewModel>();
 
                 // 设置页面的控件（MVVM）
+                // 高级选项
                 services.AddTransient<AppExitControl>();
                 services.AddTransient<AppExitViewModel>();
+                services.AddTransient<ExperimentalFeaturesControl>();
+                services.AddTransient<ExperimentalFeaturesViewModel>();
+                services.AddTransient<InstallModeControl>();
+                services.AddTransient<InstallModeViewModel>();
+                services.AddTransient<TraceCleanupControl>();
+                services.AddTransient<TraceCleanupViewModel>();
+
+                // 外观
                 services.AddTransient<BackdropControl>();
                 services.AddTransient<BackdropViewModel>();
+                services.AddTransient<LauguageControl>();
+                services.AddTransient<LanguageViewModel>();
+                services.AddTransient<ThemeControl>();
+                services.AddTransient<ThemeViewModel>();
+                services.AddTransient<TopMostControl>();
+                services.AddTransient<TopMostViewModel>();
+
+                // 常规选项
                 services.AddTransient<DownloadOptionsControl>();
                 services.AddTransient<DownloadOptionsViewModel>();
                 services.AddTransient<HistoryLiteConfigControl>();
                 services.AddTransient<HistoryLiteConfigViewModel>();
-                services.AddTransient<InstallModeControl>();
-                services.AddTransient<InstallModeViewModel>();
-                services.AddTransient<LauguageControl>();
-                services.AddTransient<LanguageViewModel>();
                 services.AddTransient<LinkFilterControl>();
                 services.AddTransient<LinkFilterViewModel>();
                 services.AddTransient<NotificationControl>();
                 services.AddTransient<NotificationViewModel>();
                 services.AddTransient<RegionControl>();
                 services.AddTransient<RegionViewModel>();
-                services.AddTransient<ThemeControl>();
-                services.AddTransient<ThemeViewModel>();
-                services.AddTransient<TopMostControl>();
-                services.AddTransient<TopMostViewModel>();
-                services.AddTransient<TraceCleanupControl>();
-                services.AddTransient<TraceCleanupViewModel>();
                 services.AddTransient<UseInstructionControl>();
                 services.AddTransient<UseInstructionViewModel>();
+
+                // 实验性功能选项
+                services.AddTransient<NetWorkMonitorControl>();
+                services.AddTransient<NetWorkMonitorViewModel>();
+                services.AddTransient<OpenConfigFIleControl>();
+                services.AddTransient<OpenConfigFileViewModel>();
 
                 // 网页界面控件（MVVM）
                 services.AddTransient<LoadFailedControl>();
@@ -185,6 +216,8 @@ namespace GetStoreApp.Helpers
                 services.AddTransient<CoreWebView2FailedViewModel>();
                 services.AddTransient<DesktopStartupArgsDialog>();
                 services.AddTransient<DesktopStartupArgsViewModel>();
+                services.AddTransient<ExperimentalConfigDialog>();
+                services.AddTransient<ExperimentalConfigViewModel>();
                 services.AddTransient<FileInformationDialog>();
                 services.AddTransient<FileInformationViewModel>();
                 services.AddTransient<LicenseDialog>();

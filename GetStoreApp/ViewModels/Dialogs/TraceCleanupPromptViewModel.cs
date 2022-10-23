@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Contracts.Services.Settings.Advanced;
 using GetStoreApp.Extensions.DataType.Enum;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;
@@ -66,7 +66,7 @@ namespace GetStoreApp.ViewModels.Dialogs
         }
 
         // 痕迹清理
-        public IRelayCommand TraceCleanupSureCommand => new RelayCommand(async () =>
+        public IRelayCommand CleanupNowCommand => new RelayCommand(async () =>
         {
             IsFirstInitialize = false;
             foreach (TraceCleanupModel traceCleanupItem in TraceCleanupList)
@@ -79,8 +79,8 @@ namespace GetStoreApp.ViewModels.Dialogs
             IsCleaning = false;
         });
 
-        // 取消痕迹清理
-        public IRelayCommand TraceCleanupCancelCommand => new RelayCommand<ContentDialog>((dialog) =>
+        // 关闭窗口
+        public IRelayCommand CloseWindowCommand => new RelayCommand<ContentDialog>((dialog) =>
         {
             foreach (TraceCleanupModel traceCleanupItem in TraceCleanupList)
             {

@@ -1,0 +1,69 @@
+﻿<UserControl
+    x:Class="GetStoreApp.UI.Controls.Settings.Appearance.LauguageControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid VerticalAlignment="Center" Style="{StaticResource CardGridStyle}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <FontIcon
+            Grid.Column="0"
+            FontFamily="{StaticResource SegoeFluentFontFamily}"
+            Glyph="&#xF2B7;"
+            Style="{StaticResource FontIconStyle}" />
+
+        <StackPanel Grid.Column="1" Orientation="Vertical">
+
+            <TextBlock
+                VerticalAlignment="Center"
+                Style="{StaticResource BodyTextBlockStyle}"
+                Text="{x:Bind ResourceService.GetLocalized('/Settings/Language')}" />
+
+            <TextBlock
+                VerticalAlignment="Center"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                Style="{StaticResource CaptionTextBlockStyle}"
+                Text="{x:Bind ResourceService.GetLocalized('/Settings/LanguageDescription')}" />
+        </StackPanel>
+
+        <Button
+            Grid.Column="2"
+            VerticalAlignment="Center"
+            Command="{x:Bind ViewModel.LanguageTipCommand}"
+            Style="{StaticResource ButtonInfoStyle}"
+            ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/LanguageToolTip')}">
+            <Button.Content>
+                <FontIcon
+                    FontSize="16"
+                    Glyph="&#xE946;"
+                    Style="{StaticResource SegoeFluentStyle}" />
+            </Button.Content>
+        </Button>
+
+        <ComboBox
+            Grid.Column="3"
+            Width="Auto"
+            VerticalAlignment="Center"
+            DisplayMemberPath="DisplayName"
+            ItemsSource="{x:Bind ViewModel.LanguageList}"
+            SelectedItem="{x:Bind ViewModel.Language, Mode=TwoWay}"
+            ToolTipService.ToolTip="{x:Bind ViewModel.Language.DisplayName, Mode=OneWay}">
+
+            <i:Interaction.Behaviors>
+                <ic:EventTriggerBehavior EventName="SelectionChanged">
+                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.LanguageSelectCommand}" />
+                </ic:EventTriggerBehavior>
+            </i:Interaction.Behaviors>
+        </ComboBox>
+    </Grid>
+</UserControl>

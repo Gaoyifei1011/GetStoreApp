@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
 using GetStoreApp.Contracts.Services.Download;
-using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Contracts.Services.Settings.Common;
 using GetStoreApp.Extensions.DataType.Event;
 using GetStoreApp.Helpers;
 using GetStoreApp.Messages;

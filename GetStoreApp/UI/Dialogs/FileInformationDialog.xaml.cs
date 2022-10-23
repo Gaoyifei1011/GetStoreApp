@@ -1,5 +1,5 @@
 ﻿using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Contracts.Services.Settings;
+using GetStoreApp.Contracts.Services.Settings.Appearance;
 using GetStoreApp.Helpers;
 using GetStoreApp.Models.Download;
 using GetStoreApp.ViewModels.Dialogs;
