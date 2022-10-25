@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Messaging.Messages;
-using GetStoreApp.Models.Home;
+using GetStoreApp.Models.Controls.Home;
 using System.Collections.Generic;
 
 namespace GetStoreApp.Messages

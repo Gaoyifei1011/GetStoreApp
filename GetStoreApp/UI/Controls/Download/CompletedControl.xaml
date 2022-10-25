@@ -4,11 +4,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:check="using:GetStoreApp.Converters.Checks"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:download="using:GetStoreApp.Models.Controls.Download"
     xmlns:format="using:GetStoreApp.Converters.Formats"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:GetStoreApp.Models.Download"
     xmlns:sys="using:System"
     x:Name="CompletedRoot"
     mc:Ignorable="d">
@@ -186,7 +186,7 @@
                 </i:Interaction.Behaviors>
 
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="models:CompletedModel">
+                    <DataTemplate x:DataType="download:CompletedModel">
                         <Grid Style="{StaticResource CardGridStyle}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />

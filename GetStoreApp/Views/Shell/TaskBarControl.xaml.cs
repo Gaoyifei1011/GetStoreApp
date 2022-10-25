@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Services.Controls.Settings.Appearance;
 using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Contracts.Services.Settings.Appearance;
-using GetStoreApp.Helpers;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
 using GetStoreApp.ViewModels.Shell;
 using H.NotifyIcon;

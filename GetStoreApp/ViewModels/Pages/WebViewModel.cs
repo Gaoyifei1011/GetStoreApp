@@ -2,15 +2,17 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Navigation;
-using GetStoreApp.Contracts.Services.Download;
-using GetStoreApp.Contracts.Services.Settings.Common;
+using GetStoreApp.Contracts.Services.Controls.Download;
+using GetStoreApp.Contracts.Services.Controls.Settings.Common;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Extensions.DataType.Enum;
-using GetStoreApp.Helpers;
+using GetStoreApp.Helpers.Controls.Web;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
-using GetStoreApp.Models.Download;
-using GetStoreApp.Models.Notification;
-using GetStoreApp.UI.Dialogs;
+using GetStoreApp.Models.Controls.Download;
+using GetStoreApp.Models.Notifications;
+using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
+using GetStoreApp.UI.Dialogs.ContentDialogs.Web;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.Web.WebView2.Core;
@@ -72,13 +74,24 @@ namespace GetStoreApp.ViewModels.Pages
             set { SetProperty(ref _isLoading, value); }
         }
 
+        // 初始化页面信息
+        public IRelayCommand LoadedCommand => new RelayCommand(() =>
+        {
+            Source = new Uri(DefaultUrl);
+        });
+
         /// <summary>
         /// 浏览器内核进程发生异常时对应的事件
         /// </summary>
         public IRelayCommand CoreProcessFailedCommand => new RelayCommand<CoreWebView2ProcessFailedEventArgs>(async (args) =>
         {
             // 显示异常信息错误原因，弹出对话框
-            await new CoreWebView2FailedDialog(args).ShowAsync();
+            if (!App.IsDialogOpening)
+            {
+                App.IsDialogOpening = true;
+                await new CoreWebView2FailedDialog(args).ShowAsync();
+                App.IsDialogOpening = false;
+            }
         });
 
         /// <summary>
@@ -138,11 +151,6 @@ namespace GetStoreApp.ViewModels.Pages
         {
             IsLoading = false;
         });
-
-        public void InitializeSource()
-        {
-            Source = new Uri(DefaultUrl);
-        }
 
         public void OnNavigatedTo(object parameter)
         { }
@@ -227,60 +235,72 @@ namespace GetStoreApp.ViewModels.Pages
 
                             case DuplicatedDataInfoArgs.Unfinished:
                                 {
-                                    ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Unfinished).ShowAsync();
-
-                                    if (result == ContentDialogResult.Primary)
+                                    if (!App.IsDialogOpening)
                                     {
-                                        try
+                                        App.IsDialogOpening = true;
+
+                                        ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Unfinished).ShowAsync();
+
+                                        if (result == ContentDialogResult.Primary)
                                         {
-                                            if (File.Exists(backgroundItem.FilePath))
+                                            try
                                             {
-                                                File.Delete(backgroundItem.FilePath);
+                                                if (File.Exists(backgroundItem.FilePath))
+                                                {
+                                                    File.Delete(backgroundItem.FilePath);
+                                                }
+                                            }
+                                            finally
+                                            {
+                                                await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
+                                                WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
+                                                {
+                                                    NotificationArgs = InAppNotificationArgs.DownloadCreate,
+                                                    NotificationValue = new object[] { true }
+                                                }));
                                             }
                                         }
-                                        finally
+                                        else if (result == ContentDialogResult.Secondary)
                                         {
-                                            await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                            WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
-                                            {
-                                                NotificationArgs = InAppNotificationArgs.DownloadCreate,
-                                                NotificationValue = new object[] { true }
-                                            }));
+                                            NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
                                         }
-                                    }
-                                    else if (result == ContentDialogResult.Secondary)
-                                    {
-                                        NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+                                        App.IsDialogOpening = false;
                                     }
                                     break;
                                 }
 
                             case DuplicatedDataInfoArgs.Completed:
                                 {
-                                    ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Completed).ShowAsync();
-
-                                    if (result == ContentDialogResult.Primary)
+                                    if (!App.IsDialogOpening)
                                     {
-                                        try
+                                        App.IsDialogOpening = true;
+
+                                        ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Completed).ShowAsync();
+
+                                        if (result == ContentDialogResult.Primary)
                                         {
-                                            if (File.Exists(backgroundItem.FilePath))
+                                            try
                                             {
-                                                File.Delete(backgroundItem.FilePath);
+                                                if (File.Exists(backgroundItem.FilePath))
+                                                {
+                                                    File.Delete(backgroundItem.FilePath);
+                                                }
+                                            }
+                                            finally
+                                            {
+                                                await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
+                                                WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
+                                                {
+                                                    NotificationArgs = InAppNotificationArgs.DownloadCreate,
+                                                    NotificationValue = new object[] { true }
+                                                }));
                                             }
                                         }
-                                        finally
+                                        else if (result == ContentDialogResult.Secondary)
                                         {
-                                            await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                            WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
-                                            {
-                                                NotificationArgs = InAppNotificationArgs.DownloadCreate,
-                                                NotificationValue = new object[] { true }
-                                            }));
+                                            NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
                                         }
-                                    }
-                                    else if (result == ContentDialogResult.Secondary)
-                                    {
-                                        NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+                                        App.IsDialogOpening = false;
                                     }
                                     break;
                                 }

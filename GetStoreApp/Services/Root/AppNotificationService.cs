@@ -1,8 +1,9 @@
 ﻿using CommunityToolkit.WinUI.Notifications;
+using GetStoreApp.Contracts.Services.Controls.Settings.Common;
 using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Contracts.Services.Settings.Common;
 using GetStoreApp.Contracts.Services.Shell;
-using GetStoreApp.Helpers;
+using GetStoreApp.Helpers.Root;
+using GetStoreApp.Helpers.Window;
 using GetStoreApp.ViewModels.Pages;
 using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml.Media.Animation;

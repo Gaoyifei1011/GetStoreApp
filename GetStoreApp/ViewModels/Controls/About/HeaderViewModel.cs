@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Helpers;
+using GetStoreApp.Helpers.Root;
 using System;
 
 namespace GetStoreApp.ViewModels.Controls.About

@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Contracts.Services.Settings.Appearance;
-using GetStoreApp.Helpers;
-using GetStoreApp.Models.Settings;
+using GetStoreApp.Contracts.Services.Controls.Settings.Appearance;
+using GetStoreApp.Helpers.Root;
+using GetStoreApp.Models.Controls.Settings.Appearance;
 using System;
 using System.Collections.Generic;
 

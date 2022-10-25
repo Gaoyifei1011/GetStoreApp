@@ -1,0 +1,159 @@
+﻿<ContentDialog
+    x:Class="GetStoreApp.UI.Dialogs.ContentDialogs.Download.FileInformationDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behavior="using:GetStoreApp.Behaviors"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="FileInformationRoot"
+    BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
+    RequestedTheme="{x:Bind DialogTheme}"
+    Style="{StaticResource ContentDialogStyle}"
+    mc:Ignorable="d">
+
+    <i:Interaction.Behaviors>
+        <behavior:ContentDialogBehavior />
+        <ic:EventTriggerBehavior EventName="Loaded">
+            <ic:InvokeCommandAction Command="{x:Bind ViewModel.LoadedCommand}" />
+        </ic:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel
+            Grid.Row="0"
+            Padding="24,24,24,12"
+            Background="{ThemeResource ContentDialogTopOverlay}">
+
+            <TextBlock Style="{StaticResource ContentDialogTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/Dialog/FileInformationTitle')}" />
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Column="0"
+                    Style="{StaticResource ContentDialogContentStyle}"
+                    Text="{x:Bind ResourceService.GetLocalized('/Dialog/FileName')}" />
+                <TextBlock
+                    Grid.Column="1"
+                    Style="{StaticResource ContentDialogContentStyle}"
+                    Text="{x:Bind ViewModel.FileName}"
+                    TextAlignment="DetectFromContent"
+                    TextWrapping="Wrap" />
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Column="0"
+                    Style="{StaticResource ContentDialogContentStyle}"
+                    Text="{x:Bind ResourceService.GetLocalized('/Dialog/FilePath')}" />
+                <TextBlock
+                    Grid.Column="1"
+                    Style="{StaticResource ContentDialogContentStyle}"
+                    Text="{x:Bind ViewModel.FilePath}"
+                    TextAlignment="DetectFromContent"
+                    TextWrapping="Wrap" />
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Column="0"
+                    Style="{StaticResource ContentDialogContentStyle}"
+                    Text="{x:Bind ResourceService.GetLocalized('/Dialog/FileSize')}" />
+                <TextBlock
+                    Grid.Column="1"
+                    Style="{StaticResource ContentDialogContentStyle}"
+                    Text="{x:Bind ViewModel.FileSize}"
+                    TextAlignment="DetectFromContent"
+                    TextWrapping="Wrap" />
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Column="0"
+                    Style="{StaticResource ContentDialogContentStyle}"
+                    Text="{x:Bind ResourceService.GetLocalized('/Dialog/FileSHA1')}" />
+                <TextBlock
+                    x:Name="FileSHA1Info"
+                    Grid.Column="1"
+                    x:Load="{x:Bind ViewModel.FileSHA1Load}"
+                    Style="{StaticResource ContentDialogContentStyle}"
+                    Text="{x:Bind ViewModel.FileSHA1}"
+                    TextWrapping="Wrap" />
+            </Grid>
+
+            <StackPanel
+                x:Name="FileChecking"
+                x:Load="{x:Bind ViewModel.FileCheckState, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
+                Orientation="Horizontal"
+                Spacing="5">
+                <ProgressRing
+                    Width="20"
+                    Height="20"
+                    IsActive="True" />
+                <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind ResourceService.GetLocalized('/Dialog/CheckingFile')}" />
+            </StackPanel>
+
+            <Grid x:Name="FileChecked" x:Load="{x:Bind ViewModel.FileCheckState, Mode=OneWay}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Column="0"
+                    Style="{StaticResource ContentDialogContentStyle}"
+                    Text="{x:Bind ResourceService.GetLocalized('/Dialog/CheckFileSHA1')}" />
+                <TextBlock
+                    Grid.Column="1"
+                    Style="{StaticResource ContentDialogContentStyle}"
+                    Text="{x:Bind ViewModel.CheckFileSHA1, Mode=OneWay}"
+                    TextWrapping="Wrap" />
+            </Grid>
+        </StackPanel>
+
+        <Grid
+            Grid.Row="1"
+            Padding="24"
+            ColumnSpacing="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button
+                Grid.Column="0"
+                HorizontalAlignment="Stretch"
+                Command="{x:Bind ViewModel.CopyFileInformationCommand}"
+                CommandParameter="{Binding ElementName=FileInformationRoot}"
+                Content="{x:Bind ResourceService.GetLocalized('/Dialog/CopyFileInformation')}"
+                IsEnabled="{x:Bind ViewModel.FileCheckState, Mode=OneWay}"
+                Style="{ThemeResource AccentButtonStyle}" />
+            <Button
+                Grid.Column="1"
+                HorizontalAlignment="Stretch"
+                Command="{x:Bind ViewModel.CloseWindowCommand}"
+                CommandParameter="{Binding ElementName=FileInformationRoot}"
+                Content="{x:Bind ResourceService.GetLocalized('/Dialog/CloseWindow')}" />
+        </Grid>
+    </Grid>
+</ContentDialog>

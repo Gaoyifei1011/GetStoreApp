@@ -2,10 +2,10 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Navigation;
-using GetStoreApp.Contracts.Services.Settings.Common;
+using GetStoreApp.Contracts.Services.Controls.Settings.Common;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Extensions.DataType.Enum;
-using GetStoreApp.Helpers;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;

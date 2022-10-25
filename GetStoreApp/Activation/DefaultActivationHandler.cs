@@ -1,5 +1,5 @@
 ﻿using GetStoreApp.Contracts.Services.Shell;
-using GetStoreApp.Helpers;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml;
 using System;

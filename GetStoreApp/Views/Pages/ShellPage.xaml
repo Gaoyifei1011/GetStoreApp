@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
-    xmlns:helpers="using:GetStoreApp.Helpers"
+    xmlns:helpers="using:GetStoreApp.Helpers.Shell"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:sc="using:GetStoreApp.UI.Controls.Shell"
@@ -23,7 +23,7 @@
     </i:Interaction.Behaviors>
 
     <Grid>
-        <sc:AppTitleBar
+        <sc:AppTitleBarControl
             x:Name="AppTitleBar"
             Height="45"
             Margin="{x:Bind NavigationViewControl.PaneDisplayMode, Converter={StaticResource AppTitleBarMarginConverter}, Mode=OneWay}"

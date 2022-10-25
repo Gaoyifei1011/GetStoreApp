@@ -5,6 +5,9 @@ using System;
 
 namespace GetStoreApp.Converters.Conversions
 {
+    /// <summary>
+    /// 应用标题栏距离左边界值计算转换器
+    /// </summary>
     public class AppTitleBarMarginConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)

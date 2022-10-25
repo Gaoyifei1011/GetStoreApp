@@ -1,6 +1,6 @@
-﻿using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Contracts.Services.Settings.Common;
-using GetStoreApp.Helpers;
+﻿using GetStoreApp.Contracts.Services.Controls.Settings.Common;
+using GetStoreApp.Contracts.Services.Root;
+using GetStoreApp.Helpers.Root;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
 using System;

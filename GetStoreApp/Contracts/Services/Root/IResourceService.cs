@@ -1,5 +1,8 @@
-﻿using GetStoreApp.Models.Home;
-using GetStoreApp.Models.Settings;
+﻿using GetStoreApp.Models.Controls.Home;
+using GetStoreApp.Models.Controls.Settings.Advanced;
+using GetStoreApp.Models.Controls.Settings.Appearance;
+using GetStoreApp.Models.Controls.Settings.Common;
+using GetStoreApp.Models.Dialogs.CommonDialogs.Settings;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

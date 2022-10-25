@@ -125,6 +125,10 @@
                 Source="{x:Bind ViewModel.Source, Mode=OneWay}">
 
                 <i:Interaction.Behaviors>
+                    <ic:EventTriggerBehavior EventName="Loaded">
+                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.LoadedCommand}" />
+                    </ic:EventTriggerBehavior>
+
                     <ic:EventTriggerBehavior EventName="CoreProcessFailed">
                         <ic:InvokeCommandAction Command="{x:Bind ViewModel.CoreProcessFailedCommand}" />
                     </ic:EventTriggerBehavior>

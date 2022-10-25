@@ -1,8 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Services.Download;
+using GetStoreApp.Contracts.Services.Controls.Download;
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Extensions.DataType.Enum;
-using GetStoreApp.Helpers;
+using GetStoreApp.Helpers.Root;
+using GetStoreApp.Helpers.Window;
 using GetStoreApp.Messages;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
@@ -25,6 +26,9 @@ namespace GetStoreApp
         public IDownloadSchedulerService DownloadSchedulerService { get; }
 
         public static WindowEx MainWindow { get; } = new MainWindow();
+
+        // 标志内容对话框是否处于正在打开状态。若是，则不再打开其他内容对话框，防止造成应用异常
+        public static bool IsDialogOpening { get; set; } = false;
 
         // 导航页面后使用到的参数
         public static AppNaviagtionArgs NavigationArgs { get; set; } = AppNaviagtionArgs.None;
@@ -93,11 +97,10 @@ namespace GetStoreApp
         /// <summary>
         /// 关闭其他实例后，按照原来的状态显示已经打开的实例窗口
         /// </summary>
-        private async void OnAppActivated(object sender, AppActivationArguments e)
+        private async void OnAppActivated(object sender, AppActivationArguments args)
         {
             WindowHelper.ShowAppWindow();
 
-            // 显示提示消息对话框
             MessageDialog dialog = new MessageDialog(ResourceService.GetLocalized("AppIsRunning"), ResourceService.GetLocalized("AppDisplayName"));
             dialog.Commands.Add(new UICommand(ResourceService.GetLocalized("OK")));
             dialog.DefaultCommandIndex = 0;

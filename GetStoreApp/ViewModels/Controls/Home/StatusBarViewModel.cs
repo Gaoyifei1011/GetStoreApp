@@ -2,9 +2,9 @@
 using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Extensions.DataType.Enum;
-using GetStoreApp.Helpers;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
-using GetStoreApp.Models.Home;
+using GetStoreApp.Models.Controls.Home;
 using GetStoreApp.Views.Shell;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;

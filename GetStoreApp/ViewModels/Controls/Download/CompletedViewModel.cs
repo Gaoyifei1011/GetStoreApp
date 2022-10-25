@@ -2,16 +2,17 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
-using GetStoreApp.Contracts.Services.Download;
+using GetStoreApp.Contracts.Services.Controls.Download;
+using GetStoreApp.Contracts.Services.Controls.Settings.Advanced;
+using GetStoreApp.Contracts.Services.Controls.Settings.Common;
 using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Contracts.Services.Settings.Advanced;
-using GetStoreApp.Contracts.Services.Settings.Common;
 using GetStoreApp.Extensions.DataType.Enum;
 using GetStoreApp.Extensions.DataType.Event;
-using GetStoreApp.Helpers;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
-using GetStoreApp.Models.Download;
-using GetStoreApp.UI.Dialogs;
+using GetStoreApp.Models.Controls.Download;
+using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
+using GetStoreApp.UI.Dialogs.ContentDialogs.Download;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -129,7 +130,12 @@ namespace GetStoreApp.ViewModels.Controls.Download
             // 当前任务正在安装时，不进行其他任何操作
             if (SelectedCompletedDataList.Exists(item => item.IsInstalling == true))
             {
-                await new InstallingNotifyDialog().ShowAsync();
+                if (!App.IsDialogOpening)
+                {
+                    App.IsDialogOpening = true;
+                    await new InstallingNotifyDialog().ShowAsync();
+                    App.IsDialogOpening = false;
+                }
                 return;
             }
 
@@ -184,7 +190,12 @@ namespace GetStoreApp.ViewModels.Controls.Download
             // 当前任务正在安装时，不进行其他任何操作
             if (SelectedCompletedDataList.Exists(item => item.IsInstalling == true))
             {
-                await new InstallingNotifyDialog().ShowAsync();
+                if (!App.IsDialogOpening)
+                {
+                    App.IsDialogOpening = true;
+                    await new InstallingNotifyDialog().ShowAsync();
+                    App.IsDialogOpening = false;
+                }
                 return;
             }
 
@@ -334,7 +345,12 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 if (completedItem.IsInstalling == true)
                 {
-                    await new InstallingNotifyDialog().ShowAsync();
+                    if (!App.IsDialogOpening)
+                    {
+                        App.IsDialogOpening = true;
+                        await new InstallingNotifyDialog().ShowAsync();
+                        App.IsDialogOpening = false;
+                    }
                     return;
                 }
 
@@ -357,7 +373,12 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 if (completedItem.IsInstalling == true)
                 {
-                    await new InstallingNotifyDialog().ShowAsync();
+                    if (!App.IsDialogOpening)
+                    {
+                        App.IsDialogOpening = true;
+                        await new InstallingNotifyDialog().ShowAsync();
+                        App.IsDialogOpening = false;
+                    }
                     return;
                 }
 
@@ -385,6 +406,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
         });
 
+        // 查看文件信息
         public IRelayCommand FileInformationCommand => new RelayCommand<CompletedModel>(async (completedItem) =>
         {
             await new FileInformationDialog(completedItem).ShowAsync();

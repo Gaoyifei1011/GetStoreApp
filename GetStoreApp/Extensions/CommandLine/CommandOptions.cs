@@ -2,6 +2,9 @@
 
 namespace GetStoreApp.Extensions.CommandLine
 {
+    /// <summary>
+    /// 应用启动的参数
+    /// </summary>
     public class CommandOptions
     {
         [Option('t', "type", Required = false)]

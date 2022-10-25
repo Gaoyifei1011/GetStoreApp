@@ -1,14 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Services.History;
+using GetStoreApp.Contracts.Services.Controls.History;
+using GetStoreApp.Contracts.Services.Controls.Settings.Common;
 using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Contracts.Services.Settings.Common;
-using GetStoreApp.Helpers;
+using GetStoreApp.Helpers.Controls.Home;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
-using GetStoreApp.Models.History;
-using GetStoreApp.Models.Home;
-using GetStoreApp.Services.Home;
+using GetStoreApp.Models.Controls.History;
+using GetStoreApp.Models.Controls.Home;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
@@ -157,7 +157,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             WeakReferenceMessenger.Default.Send(new StatusBarStateMessage(0));
 
             // 生成请求的内容
-            GenerateContentService generateContentService = new GenerateContentService();
+            GenerateContentHelper generateContentService = new GenerateContentHelper();
             string content = generateContentService.GenerateContent(
                 TypeList[SelectedType].InternalName,
                 LinkText,
@@ -165,11 +165,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 RegionService.AppRegion.ISO2);
 
             // 获取网页反馈回的原始数据
-            HtmlRequestService htmlRequestService = new HtmlRequestService();
+            HtmlRequestHelper htmlRequestService = new HtmlRequestHelper();
             RequestModel httpRequestData = await htmlRequestService.HttpRequestAsync(content);
 
             // 检查服务器返回获取的状态
-            HtmlRequestStateService htmlRequestStateService = new HtmlRequestStateService();
+            HtmlRequestStateHelper htmlRequestStateService = new HtmlRequestStateHelper();
             int state = htmlRequestStateService.CheckRequestState(httpRequestData);
 
             // 设置结果控件的显示状态
@@ -180,7 +180,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             // 成功状态下解析数据，并更新相应的历史记录
             if (state == 1)
             {
-                HtmlParseService htmlParseService = new HtmlParseService(httpRequestData);
+                HtmlParseHelper htmlParseService = new HtmlParseHelper(httpRequestData);
 
                 CategoryId = htmlParseService.HtmlParseCID();
 

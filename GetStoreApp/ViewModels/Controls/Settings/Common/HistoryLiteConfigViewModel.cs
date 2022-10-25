@@ -1,10 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Services.Settings.Common;
-using GetStoreApp.Helpers;
+using GetStoreApp.Contracts.Services.Controls.Settings.Common;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
-using GetStoreApp.Models.Settings;
+using GetStoreApp.Models.Controls.Settings.Common;
 using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Common

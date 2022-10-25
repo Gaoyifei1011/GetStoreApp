@@ -1,17 +1,17 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Services.Download;
-using GetStoreApp.Contracts.Services.Settings.Common;
-using GetStoreApp.Contracts.Services.Settings.Experiment;
+using GetStoreApp.Contracts.Services.Controls.Download;
+using GetStoreApp.Contracts.Services.Controls.Settings.Common;
+using GetStoreApp.Contracts.Services.Controls.Settings.Experiment;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Extensions.DataType.Enum;
-using GetStoreApp.Helpers;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
-using GetStoreApp.Models.Download;
-using GetStoreApp.Models.Home;
-using GetStoreApp.Models.Notification;
-using GetStoreApp.UI.Dialogs;
+using GetStoreApp.Models.Controls.Download;
+using GetStoreApp.Models.Controls.Home;
+using GetStoreApp.Models.Notifications;
+using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -247,29 +247,35 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
                 if (duplicatedList.Count > 0)
                 {
-                    ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.MultiRecord).ShowAsync();
-
-                    if (result == ContentDialogResult.Primary)
+                    if (!App.IsDialogOpening)
                     {
-                        foreach (BackgroundModel backgroundItem in duplicatedList)
+                        App.IsDialogOpening = true;
+
+                        ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.MultiRecord).ShowAsync();
+
+                        if (result == ContentDialogResult.Primary)
                         {
-                            try
+                            foreach (BackgroundModel backgroundItem in duplicatedList)
                             {
-                                if (File.Exists(backgroundItem.FilePath))
+                                try
                                 {
-                                    File.Delete(backgroundItem.FilePath);
+                                    if (File.Exists(backgroundItem.FilePath))
+                                    {
+                                        File.Delete(backgroundItem.FilePath);
+                                    }
+                                }
+                                finally
+                                {
+                                    await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
+                                    IsDownloadSuccessfully = true;
                                 }
                             }
-                            finally
-                            {
-                                await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                IsDownloadSuccessfully = true;
-                            }
                         }
-                    }
-                    else if (result == ContentDialogResult.Secondary)
-                    {
-                        NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+                        else if (result == ContentDialogResult.Secondary)
+                        {
+                            NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+                        }
+                        App.IsDialogOpening = false;
                     }
                 }
 
@@ -365,60 +371,72 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
                     case DuplicatedDataInfoArgs.Unfinished:
                         {
-                            ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Unfinished).ShowAsync();
-
-                            if (result == ContentDialogResult.Primary)
+                            if (!App.IsDialogOpening)
                             {
-                                try
+                                App.IsDialogOpening = true;
+
+                                ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Unfinished).ShowAsync();
+
+                                if (result == ContentDialogResult.Primary)
                                 {
-                                    if (File.Exists(backgroundItem.FilePath))
+                                    try
                                     {
-                                        File.Delete(backgroundItem.FilePath);
+                                        if (File.Exists(backgroundItem.FilePath))
+                                        {
+                                            File.Delete(backgroundItem.FilePath);
+                                        }
+                                    }
+                                    finally
+                                    {
+                                        await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
+                                        WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
+                                        {
+                                            NotificationArgs = InAppNotificationArgs.DownloadCreate,
+                                            NotificationValue = new object[] { true }
+                                        }));
                                     }
                                 }
-                                finally
+                                else if (result == ContentDialogResult.Secondary)
                                 {
-                                    await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                    WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
-                                    {
-                                        NotificationArgs = InAppNotificationArgs.DownloadCreate,
-                                        NotificationValue = new object[] { true }
-                                    }));
+                                    NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
                                 }
-                            }
-                            else if (result == ContentDialogResult.Secondary)
-                            {
-                                NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+                                App.IsDialogOpening = false;
                             }
                             break;
                         }
 
                     case DuplicatedDataInfoArgs.Completed:
                         {
-                            ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Completed).ShowAsync();
-
-                            if (result == ContentDialogResult.Primary)
+                            if (!App.IsDialogOpening)
                             {
-                                try
+                                App.IsDialogOpening = true;
+
+                                ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Completed).ShowAsync();
+
+                                if (result == ContentDialogResult.Primary)
                                 {
-                                    if (File.Exists(backgroundItem.FilePath))
+                                    try
                                     {
-                                        File.Delete(backgroundItem.FilePath);
+                                        if (File.Exists(backgroundItem.FilePath))
+                                        {
+                                            File.Delete(backgroundItem.FilePath);
+                                        }
+                                    }
+                                    finally
+                                    {
+                                        await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
+                                        WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
+                                        {
+                                            NotificationArgs = InAppNotificationArgs.DownloadCreate,
+                                            NotificationValue = new object[] { true }
+                                        }));
                                     }
                                 }
-                                finally
+                                else if (result == ContentDialogResult.Secondary)
                                 {
-                                    await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                    WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
-                                    {
-                                        NotificationArgs = InAppNotificationArgs.DownloadCreate,
-                                        NotificationValue = new object[] { true }
-                                    }));
+                                    NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
                                 }
-                            }
-                            else if (result == ContentDialogResult.Secondary)
-                            {
-                                NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+                                App.IsDialogOpening = false;
                             }
                             break;
                         }

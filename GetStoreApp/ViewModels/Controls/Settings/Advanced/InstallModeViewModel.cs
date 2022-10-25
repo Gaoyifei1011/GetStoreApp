@@ -1,10 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Contracts.Services.Settings.Advanced;
+using GetStoreApp.Contracts.Services.Controls.Settings.Advanced;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Extensions.DataType.Enum;
-using GetStoreApp.Helpers;
-using GetStoreApp.Models.Settings;
+using GetStoreApp.Helpers.Root;
+using GetStoreApp.Models.Controls.Settings.Advanced;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml.Media.Animation;
 using System.Collections.Generic;
@@ -35,6 +35,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
             NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
         });
 
+        // 应用安装方式设置
         public IRelayCommand InstallModeSelectCommand => new RelayCommand(async () =>
         {
             await InstallModeService.SetInstallModeAsync(InstallMode);

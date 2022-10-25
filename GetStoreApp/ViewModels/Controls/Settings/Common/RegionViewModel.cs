@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Contracts.Services.Settings.Common;
-using GetStoreApp.Helpers;
-using GetStoreApp.Models.Settings;
+using GetStoreApp.Contracts.Services.Controls.Settings.Common;
+using GetStoreApp.Helpers.Root;
+using GetStoreApp.Models.Controls.Settings.Common;
 using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Common

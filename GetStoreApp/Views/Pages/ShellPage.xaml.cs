@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Services.Controls.Settings.Common;
 using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Contracts.Services.Settings.Common;
 using GetStoreApp.Extensions.DataType.Enum;
-using GetStoreApp.Helpers;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
 using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Pages;

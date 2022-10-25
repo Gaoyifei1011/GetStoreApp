@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Helpers;
+﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.ViewModels.Controls.Home;
 using Microsoft.UI.Xaml.Controls;
 

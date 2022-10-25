@@ -1,7 +1,7 @@
 ﻿using CommandLine;
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Extensions.CommandLine;
-using GetStoreApp.Helpers;
+using GetStoreApp.Helpers.Root;
 using System;
 using System.Collections;
 using System.Linq;

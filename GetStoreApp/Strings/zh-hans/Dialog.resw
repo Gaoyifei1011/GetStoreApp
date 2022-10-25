@@ -154,7 +154,7 @@
     <value>您目前还有尚未完成下载的任务，是否要保存下载状态并强制退出应用？</value>
   </data>
   <data name="ClosingWindowTitle" xml:space="preserve">
-    <value>获取商店应用</value>
+    <value>任务下载中提示</value>
   </data>
   <data name="CloudflareValidation" xml:space="preserve">
     <value>什么是Cloudflare 5秒验证？</value>
@@ -326,6 +326,9 @@
   </data>
   <data name="RestoreDefualt" xml:space="preserve">
     <value>还原默认值</value>
+  </data>
+  <data name="RestoreDefaultSuccessfully" xml:space="preserve">
+    <value>已成功还原默认值</value>
   </data>
   <data name="SelectEmptyContent" xml:space="preserve">
     <value>您没有选择任何内容，请选中后再进行操作</value>

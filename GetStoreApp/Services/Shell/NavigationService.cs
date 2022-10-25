@@ -1,6 +1,7 @@
 ﻿using GetStoreApp.Contracts.Navigation;
 using GetStoreApp.Contracts.Services.Shell;
-using GetStoreApp.Helpers;
+using GetStoreApp.Helpers.Root;
+using GetStoreApp.Helpers.Shell;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;

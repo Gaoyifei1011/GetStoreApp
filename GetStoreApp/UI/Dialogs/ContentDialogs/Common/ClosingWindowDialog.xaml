@@ -1,0 +1,23 @@
+﻿<ContentDialog
+    x:Class="GetStoreApp.UI.Dialogs.ContentDialogs.Common.ClosingWindowDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behavior="using:GetStoreApp.Behaviors"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="{x:Bind ResourceService.GetLocalized('/Dialog/ClosingWindowTitle')}"
+    BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
+    CloseButtonText="{x:Bind ResourceService.GetLocalized('/Dialog/Cancel')}"
+    Content="{x:Bind ResourceService.GetLocalized('/Dialog/ClosingWindowContent')}"
+    PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
+    PrimaryButtonText="{x:Bind ResourceService.GetLocalized('/Dialog/OK')}"
+    RequestedTheme="{x:Bind DialogTheme}"
+    SecondaryButtonText="{x:Bind ResourceService.GetLocalized('/Dialog/OpenDownloadPage')}"
+    Style="{StaticResource DefaultContentDialogStyle}"
+    mc:Ignorable="d">
+
+    <i:Interaction.Behaviors>
+        <behavior:ContentDialogBehavior />
+    </i:Interaction.Behaviors>
+</ContentDialog>

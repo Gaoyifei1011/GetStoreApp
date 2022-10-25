@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Contracts.Services.Settings.Advanced;
-using GetStoreApp.Helpers;
-using GetStoreApp.Models.Settings;
+using GetStoreApp.Contracts.Services.Controls.Settings.Advanced;
+using GetStoreApp.Helpers.Root;
+using GetStoreApp.Models.Controls.Settings.Advanced;
 using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
@@ -22,6 +22,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
             set { SetProperty(ref _appExit, value); }
         }
 
+        // 应用退出方式设置
         public IRelayCommand AppExitSelectCommand => new RelayCommand(async () =>
         {
             await AppExitService.SetAppExitAsync(AppExit);

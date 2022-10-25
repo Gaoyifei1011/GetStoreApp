@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Contracts.Services.Download;
-using GetStoreApp.Helpers;
+using GetStoreApp.Contracts.Services.Controls.Download;
+using GetStoreApp.Helpers.Root;
 using System;
 using System.Diagnostics;
 using System.IO;

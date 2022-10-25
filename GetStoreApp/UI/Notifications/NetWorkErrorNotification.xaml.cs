@@ -1,5 +1,5 @@
 ﻿using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Helpers;
+using GetStoreApp.Helpers.Root;
 using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.UI.Notifications

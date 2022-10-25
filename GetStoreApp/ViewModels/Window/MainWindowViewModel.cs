@@ -1,12 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Services.Download;
-using GetStoreApp.Contracts.Services.Settings.Advanced;
+using GetStoreApp.Contracts.Services.Controls.Download;
+using GetStoreApp.Contracts.Services.Controls.Settings.Advanced;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Extensions.DataType.Event;
-using GetStoreApp.Helpers;
+using GetStoreApp.Helpers.Root;
+using GetStoreApp.Helpers.Window;
 using GetStoreApp.Messages;
-using GetStoreApp.UI.Dialogs;
+using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
 using GetStoreApp.ViewModels.Pages;
 using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml.Controls;
@@ -46,20 +47,29 @@ namespace GetStoreApp.ViewModels.Window
             }
             else
             {
+                // 下载队列存在任务时，弹出对话窗口确认是否要关闭窗口
                 if (DownloadSchedulerService.DownloadingList.Count > 0 || DownloadSchedulerService.WaitingList.Count > 0)
                 {
-                    ContentDialogResult result = await new ClosingWindowDialog().ShowAsync();
+                    // 关闭窗口提示对话框是否已经处于打开状态，如果是，不再弹出
+                    if (!App.IsDialogOpening)
+                    {
+                        App.IsDialogOpening = true;
 
-                    if (result == ContentDialogResult.Primary)
-                    {
-                        args.TryCloseWindow();
-                    }
-                    else if (result == ContentDialogResult.Secondary)
-                    {
-                        if (NavigationService.Frame.CurrentSourcePageType != typeof(DownloadPage))
+                        ContentDialogResult result = await new ClosingWindowDialog().ShowAsync();
+
+                        if (result == ContentDialogResult.Primary)
                         {
-                            NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+                            args.TryCloseWindow();
                         }
+                        else if (result == ContentDialogResult.Secondary)
+                        {
+                            if (NavigationService.Frame.CurrentSourcePageType != typeof(DownloadPage))
+                            {
+                                NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+                            }
+                        }
+
+                        App.IsDialogOpening = false;
                     }
                 }
                 else

@@ -154,7 +154,7 @@
     <value>You still have a task that you haven't completed downloading, do you want to save the download state and force quit the app?</value>
   </data>
   <data name="ClosingWindowTitle" xml:space="preserve">
-    <value>GetStoreApp</value>
+    <value>Task downloading prompt</value>
   </data>
   <data name="CloudflareValidation" xml:space="preserve">
     <value>What is Cloudflare 5 seconds validation?</value>
@@ -326,6 +326,9 @@
   </data>
   <data name="RestoreDefualt" xml:space="preserve">
     <value>Restore default values</value>
+  </data>
+  <data name="RestoreDefaultSuccessfully" xml:space="preserve">
+    <value>The default values were successfully restored</value>
   </data>
   <data name="SelectEmptyContent" xml:space="preserve">
     <value>You have not selected anything, please select it before proceeding</value>
