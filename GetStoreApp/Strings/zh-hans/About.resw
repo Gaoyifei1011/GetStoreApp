@@ -312,6 +312,15 @@
   <data name="SystemInformation" xml:space="preserve">
     <value>查看系统信息</value>
   </data>
+  <data name="Thanks" xml:space="preserve">
+    <value>感谢（按英文首字母排序）</value>
+  </data>
+  <data name="ThanksDescription" xml:space="preserve">
+    <value>开发之路，道阻且长。非常感谢这些朋友的支持。</value>
+  </data>
+  <data name="ThanksToolTip" xml:space="preserve">
+    <value>单击了解该感谢者的个人信息</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>关于</value>
   </data>

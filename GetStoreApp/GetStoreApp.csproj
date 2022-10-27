@@ -62,6 +62,7 @@
     <None Remove="UI\Controls\About\PrecautionControl.xaml" />
     <None Remove="UI\Controls\About\ReferenceControl.xaml" />
     <None Remove="UI\Controls\About\SettingsHelpControl.xaml" />
+    <None Remove="UI\Controls\About\ThanksControl.xaml" />
     
     <None Remove="UI\Controls\Download\CompletedControl.xaml" />
     <None Remove="UI\Controls\Download\DownloadingControl.xaml" />
@@ -472,4 +473,12 @@
       <UserProperties properties_4launchsettings_1json__JsonSchema="" />
     </VisualStudio>
   </ProjectExtensions>
+
+  <ItemGroup>
+    <CustomAdditionalCompileInputs Remove="UI\Controls\About\ThanksControl.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Remove="UI\Controls\About\ThanksControl.xaml" />
+  </ItemGroup>
 </Project>

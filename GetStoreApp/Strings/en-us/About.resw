@@ -315,6 +315,15 @@
   <data name="SystemInformation" xml:space="preserve">
     <value>View system information</value>
   </data>
+  <data name="Thanks" xml:space="preserve">
+    <value>Thanks (Sort by alphabetical order)</value>
+  </data>
+  <data name="ThanksDescription" xml:space="preserve">
+    <value>The road to development is long and obstructive. Thank you very much for the support of these friends.</value>
+  </data>
+  <data name="ThanksToolTip" xml:space="preserve">
+    <value>Click Learn about the thank-your's personal information</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>About</value>
   </data>

@@ -53,6 +53,7 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 
 > * [Aira2](https://aria2.github.io)&emsp;
 > * [Aria2.NET](https://github.com/rogerfar/Aria2.NET)&emsp;
+> * [CommandLineParser](https://github.com/commandlineparser/commandline)&emsp;
 > * [CommunityToolkit.Mvvm](https://github.com/CommunityToolkit/WindowsCommunityToolkit)&emsp;
 > * [CommunityToolkit.WinUI.Notifications](https://www.nuget.org/packages/CommunityToolkit.WinUI.Notifications)&emsp;
 > * [CommunityToolkit.WinUI.UI.Behaviors](https://github.com/CommunityToolkit/WindowsCommunityToolkit)&emsp;
@@ -67,7 +68,7 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Microsoft.Xaml.Behaviors.WinUI.Managed](https://www.nuget.org/packages/Microsoft.Xaml.Behaviors.WinUI.Managed)&emsp;
 > * [PInvoke.SHCore](https://github.com/dotnet/pinvoke)&emsp;
-> * SQLitePCLRaw.bundle_winsqlite3](https://github.com/ericsink/SQLitePCL.raw)&emsp;
+> * [SQLitePCLRaw.bundle_winsqlite3](https://github.com/ericsink/SQLitePCL.raw)&emsp;
 > * [System.Management](https://www.nuget.org/packages/System.Management)&emsp;
 > * [Template Studio](https://github.com/microsoft/TemplateStudio)&emsp;
 > * [WinUIEx](https://dotmorten.github.io/WinUIEx)&emsp;
@@ -78,8 +79,7 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 
 > * The program is built using the Windows Apps SDK, and it is recommended that your system version be Windows 11 (codename 21H2 / build 22000) or later, and the minimum version is Windows 10 (codename 1803 / build 18362) or later.
 > * If your system is Windows 10, there are some limitations to app functionality:
-    Setting the mica/acrylic background color is not supported at this time
-    The application part of the icon uses the Segoe Fluent Icons icon, this type of icon is not built into the Windows icon, so there will be icon anomalies when opening the application for the first time. You need to download the corresponding [icon file](https://docs.microsoft.com/zh-cn/windows/apps/design/downloads/#fonts) yourself, click the right-click menu to install the font icon file, and restart the application icon to display normally.
+    Setting the mica/mica alt/acrylic background color is not supported at this time
 > * [Release](https://github.com/Gaoyifei1011/GetStoreApp/releases) The binary installation file for the page has been packaged into a compressed package. Unzip the package and run the install.ps1 file in Powershell admin mode (if necessary) for a quick installation.
 > * Download and compile the project source code yourself. (Please read the project compilation steps below carefully)
 
@@ -91,12 +91,14 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 
 > * [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com/) 
 > * . NET Desktop Development (Installed in Visual Studio Installer, .NET SDK Version 6.0)
+> * [Microsoft Edge WebView2 Runtime](https://developer.microsoft.com/zh-cn/microsoft-edge/webview2/) £¨install recommendedly£©
 
 #### <p align="center">Compilation steps</p>
 
 > * Fork the project and download the code locally
-> * Open the GetStoreApp.sln file using Visual Studio 2022, and if the solution prompts some of the tools are not installed, open the solution again after completing the installation steps.
-> * Right-click the project solution, build the solution, and click Deploy Solution.
+> * Use Visual Studio 2022 to open the GetStoreApp.sln file. If the solution prompts that some tools are not installed, complete the installation steps and open the solution again.
+> * Restore the Nuget package for the project.
+> * After the restore is complete, right-click the project solution, generate the solution and click Deploy Solution.
 > * Open the Start menu after the deployment is complete to run the app.
 
 #### <p align="center">App localization</p>

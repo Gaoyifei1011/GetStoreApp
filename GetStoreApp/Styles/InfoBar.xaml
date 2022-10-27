@@ -123,7 +123,7 @@
         <Style.Setters>
             <Setter Property="Width" Value="{StaticResource InfoBarCloseButtonSize}" />
             <Setter Property="Height" Value="{StaticResource InfoBarCloseButtonSize}" />
-            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="Margin" Value="5" />
         </Style.Setters>
     </Style>
@@ -142,7 +142,7 @@
                 <ControlTemplate TargetType="InfoBar">
                     <Border
                         x:Name="ContentRoot"
-                        VerticalAlignment="Top"
+                        VerticalAlignment="Center"
                         contract7Present:CornerRadius="{TemplateBinding CornerRadius}"
                         Background="Transparent"
                         BorderBrush="{TemplateBinding BorderBrush}"
@@ -179,7 +179,7 @@
                                     x:Name="IconBackground"
                                     Grid.Column="0"
                                     Margin="{StaticResource InfoBarIconMargin}"
-                                    VerticalAlignment="Top"
+                                    VerticalAlignment="Center"
                                     AutomationProperties.AccessibilityView="Raw"
                                     FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                     FontSize="{StaticResource InfoBarIconFontSize}"
@@ -190,7 +190,7 @@
                                     x:Name="StandardIcon"
                                     Grid.Column="0"
                                     Margin="{StaticResource InfoBarIconMargin}"
-                                    VerticalAlignment="Top"
+                                    VerticalAlignment="Center"
                                     FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                     FontSize="{StaticResource InfoBarIconFontSize}"
                                     Foreground="{ThemeResource InfoBarInformationalSeverityIconForeground}"
@@ -203,7 +203,7 @@
                                 MaxWidth="{ThemeResource InfoBarIconFontSize}"
                                 MaxHeight="{ThemeResource InfoBarIconFontSize}"
                                 Margin="{ThemeResource InfoBarIconMargin}"
-                                VerticalAlignment="Top"
+                                VerticalAlignment="Center"
                                 Child="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.IconElement}"
                                 Visibility="Collapsed" />
 
@@ -234,7 +234,7 @@
                                     TextWrapping="WrapWholeWords" />
 
                                 <ContentPresenter
-                                    VerticalAlignment="Top"
+                                    VerticalAlignment="Center"
                                     primitives:InfoBarPanel.HorizontalOrientationMargin="{StaticResource InfoBarActionHorizontalOrientationMargin}"
                                     primitives:InfoBarPanel.VerticalOrientationMargin="{StaticResource InfoBarActionVerticalOrientationMargin}"
                                     Content="{TemplateBinding ActionButton}">

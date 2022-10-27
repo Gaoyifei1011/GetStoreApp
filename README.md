@@ -60,6 +60,7 @@
 
 > * [Aira2](https://aria2.github.io)&emsp;
 > * [Aria2.NET](https://github.com/rogerfar/Aria2.NET)&emsp;
+> * [CommandLineParser](https://github.com/commandlineparser/commandline)&emsp;
 > * [CommunityToolkit.Mvvm](https://github.com/CommunityToolkit/WindowsCommunityToolkit)&emsp;
 > * [CommunityToolkit.WinUI.Notifications](https://www.nuget.org/packages/CommunityToolkit.WinUI.Notifications)&emsp;
 > * [CommunityToolkit.WinUI.UI.Behaviors](https://github.com/CommunityToolkit/WindowsCommunityToolkit)&emsp;
@@ -74,7 +75,7 @@
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Microsoft.Xaml.Behaviors.WinUI.Managed](https://www.nuget.org/packages/Microsoft.Xaml.Behaviors.WinUI.Managed)&emsp;
 > * [PInvoke.SHCore](https://github.com/dotnet/pinvoke)&emsp;
-> * SQLitePCLRaw.bundle_winsqlite3](https://github.com/ericsink/SQLitePCL.raw)&emsp;
+> * [SQLitePCLRaw.bundle_winsqlite3](https://github.com/ericsink/SQLitePCL.raw)&emsp;
 > * [System.Management](https://www.nuget.org/packages/System.Management)&emsp;
 > * [Template Studio](https://github.com/microsoft/TemplateStudio)&emsp;
 > * [WinUIEx](https://dotmorten.github.io/WinUIEx)&emsp;
@@ -85,8 +86,7 @@
 
 > * 该程序使用的是Windows 应用 SDK构建的，建议您的系统版本为Windows 11（代号 21H2 / 内部版本号 22000）或更高版本，最低版本为Windows 10（代号1803 / 内部版本号18362）或更高版本。
 > * 如果您的系统是Windows 10，应用功能存在一些限制：
-    暂不支持设置云母/亚克力背景色
-    应用部分图标使用的是Segoe Fluent  Icons图标，这一类型图标并没有内置到Windows图标，所以初次打开应用时会存在图标异常的问题。需要您亲自下载相应的[图标文件](https://docs.microsoft.com/zh-cn/windows/apps/design/downloads/#fonts)，点击右键菜单安装该字体图标文件，重启应用图标才能正常显示。
+    暂不支持设置云母/云母Alt/亚克力背景色
 > * [Release](https://github.com/Gaoyifei1011/GetStoreApp/releases)页面的二进制安装文件已经打包成压缩包。请解压压缩包并使用Powershell管理员模式（必要情况下）运行install.ps1文件方可实现快速安装。
 > * 自行下载项目源代码并编译。（请仔细阅读下面的项目编译步骤）
 
@@ -98,12 +98,14 @@
 
 > * [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com/) 
 > * .NET桌面开发（Visual Studio Installer中安装，.NET SDK 版本 6.0）
+> * [Microsoft Edge WebView2 运行时](https://developer.microsoft.com/zh-cn/microsoft-edge/webview2/) （推荐安装）
 
 #### <p align="center">编译步骤</p>
 
 > * 克隆项目并下载代码到本地
-> * 使用Visual Studio 2022打开GetStoreApp.sln文件，如果解决方案提示部分工具没有安装，请完成安装步骤后再次打开该解决方案。
-> * 右键项目解决方案，生成该解决方案后点击部署解决方案。
+> * 使用Visual Studio 2022打开GetStoreApp.sln文件，如果解决方案提示部分工具没有安装，请完成安装工具步骤后再次打开该解决方案。
+> * 还原项目的Nuget包。
+> * 还原完成后，右键项目解决方案，生成该解决方案后点击部署解决方案。
 > * 部署完成后打开“开始”菜单即可运行应用。
 
 #### <p align="center">应用本地化</p>

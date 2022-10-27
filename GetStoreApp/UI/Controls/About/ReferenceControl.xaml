@@ -6,11 +6,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:format="using:GetStoreApp.Converters.Formats"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    x:Name="ReferenceRoot"
     mc:Ignorable="d">
 
     <UserControl.Resources>
-        <format:ReferenceTipFormatConverter x:Name="ReferenceTipFormatConverter" />
+        <format:AboutToolTipFormatConverter x:Name="AboutToolTipFormatConverter" />
     </UserControl.Resources>
 
     <Expander Style="{StaticResource ExpanderAboutStyle}">
@@ -37,7 +36,7 @@
                             HorizontalContentAlignment="Left"
                             Content="{Binding Key}"
                             NavigateUri="{Binding Value}"
-                            ToolTipService.ToolTip="{Binding Key, Converter={StaticResource ReferenceTipFormatConverter}}" />
+                            ToolTipService.ToolTip="{Binding Key, Converter={StaticResource AboutToolTipFormatConverter},ConverterParameter=Reference}" />
                     </DataTemplate>
                 </controls:AdaptiveGridView.ItemTemplate>
             </controls:AdaptiveGridView>

@@ -153,6 +153,8 @@ namespace GetStoreApp.Helpers.Root
                 services.AddTransient<ReferenceViewModel>();
                 services.AddTransient<SettingsHelpControl>();
                 services.AddTransient<SettingsHelpViewModel>();
+                services.AddTransient<ThanksControl>();
+                services.AddTransient<ThanksViewModel>();
 
                 // 下载页面的控件（MVVM）
                 services.AddTransient<DownloadingControl>();

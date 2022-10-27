@@ -70,6 +70,8 @@
                 <ac:PrecautionControl />
 
                 <ac:SettingsHelpControl x:Name="SettingsHelp" />
+
+                <ac:ThanksControl />
             </StackPanel>
         </ScrollViewer>
     </Grid>
