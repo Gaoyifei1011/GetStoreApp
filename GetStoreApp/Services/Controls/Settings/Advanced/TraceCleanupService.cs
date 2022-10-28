@@ -2,7 +2,7 @@
 using GetStoreApp.Contracts.Services.Controls.History;
 using GetStoreApp.Contracts.Services.Controls.Settings.Advanced;
 using GetStoreApp.Contracts.Services.Controls.Settings.Common;
-using GetStoreApp.Extensions.DataType.Enum;
+using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using System.Threading.Tasks;
 

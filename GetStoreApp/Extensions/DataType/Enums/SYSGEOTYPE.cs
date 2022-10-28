@@ -1,4 +1,4 @@
-﻿namespace GetStoreApp.Extensions.DataType.Enum
+﻿namespace GetStoreApp.Extensions.DataType.Enums
 {
     public enum SYSGEOTYPE
     {

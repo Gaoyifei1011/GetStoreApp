@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Extensions.DataType.Enum;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using Windows.Networking.Connectivity;
 
 namespace GetStoreApp.Helpers.Root

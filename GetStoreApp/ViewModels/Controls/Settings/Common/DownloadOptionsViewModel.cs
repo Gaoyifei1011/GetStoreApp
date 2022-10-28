@@ -3,14 +3,14 @@ using CommunityToolkit.Mvvm.Input;
 using GetStoreApp.Contracts.Services.Controls.Settings.Common;
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Contracts.Services.Shell;
-using GetStoreApp.Extensions.DataType.Enum;
+using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings.Common;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Settings;
-using GetStoreApp.UI.Dialogs.IODialogs;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Security.AccessControl;
@@ -80,49 +80,55 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
         // 修改下载目录
         public IRelayCommand ChangeFolderCommand => new RelayCommand(async () =>
         {
-            StorageFolder Folder;
-
             while (true)
             {
                 // 选择文件夹
-                FolderSelectDialog dialog = new FolderSelectDialog()
+                CommonOpenFileDialog dialog = new CommonOpenFileDialog()
                 {
                     Title = ResourceService.GetLocalized("/Settings/SelectFolder"),
-                    Path = DownloadFolder.Path
+                    IsFolderPicker = true,
+                    InitialDirectory = DownloadFolder.Path
                 };
 
-                bool Result = dialog.ShowDialog(WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow));
+                CommonFileDialogResult SelectResult = dialog.ShowDialog(WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow));
 
-                if (Result && !string.IsNullOrEmpty(dialog.Path))
+                if (SelectResult == CommonFileDialogResult.Ok)
                 {
-                    Folder = await StorageFolder.GetFolderFromPathAsync(dialog.Path);
+                    StorageFolder Folder = await StorageFolder.GetFolderFromPathAsync(dialog.FileName);
 
-                    bool CheckResult = IOHelper.GetFolderAuthorization(Folder, FileSystemRights.Write);
-
-                    if (CheckResult)
+                    if (Folder is not null)
                     {
-                        DownloadFolder = Folder;
-                        await DownloadOptionsService.SetFolderAsync(DownloadFolder);
-                        break;
-                    }
-                    else
-                    {
-                        ContentDialogResult result = await new FolderAccessFailedDialog().ShowAsync();
+                        bool CheckResult = IOHelper.GetFolderAuthorization(Folder, FileSystemRights.Write);
 
-                        if (result == ContentDialogResult.Primary)
+                        if (CheckResult)
                         {
-                            continue;
-                        }
-                        else if (result == ContentDialogResult.Secondary)
-                        {
-                            DownloadFolder = DownloadOptionsService.DefaultFolder;
+                            DownloadFolder = Folder;
                             await DownloadOptionsService.SetFolderAsync(DownloadFolder);
                             break;
                         }
                         else
                         {
-                            break;
+                            ContentDialogResult result = await new FolderAccessFailedDialog().ShowAsync();
+
+                            if (result == ContentDialogResult.Primary)
+                            {
+                                continue;
+                            }
+                            else if (result == ContentDialogResult.Secondary)
+                            {
+                                DownloadFolder = DownloadOptionsService.DefaultFolder;
+                                await DownloadOptionsService.SetFolderAsync(DownloadFolder);
+                                break;
+                            }
+                            else
+                            {
+                                break;
+                            }
                         }
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
                 else

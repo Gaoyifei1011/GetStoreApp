@@ -1,6 +1,6 @@
-﻿using GetStoreApp.Extensions.DataType.Event;
+﻿using GetStoreApp.Extensions.DataType.Events;
 
-namespace GetStoreApp.Extensions.DataType.Delegate
+namespace GetStoreApp.Extensions.DataType.Delegates
 {
     public delegate void ListItemsChangedEventHandler<T>(object sender, ItemsChangedEventArgs<T> args);
 }

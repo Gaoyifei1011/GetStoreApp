@@ -1,4 +1,4 @@
-﻿namespace GetStoreApp.Extensions.DataType.Delegate
+﻿namespace GetStoreApp.Extensions.DataType.Delegates
 {
     public delegate bool EnumGeoInfoProc(int GeoId);
 }

@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Extensions.DataType.Enum;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.Contracts.Services.Controls.Settings.Advanced

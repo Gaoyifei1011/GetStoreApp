@@ -1,10 +1,10 @@
-﻿using GetStoreApp.Extensions.DataType.Delegate;
-using GetStoreApp.Extensions.DataType.Event;
+﻿using GetStoreApp.Extensions.DataType.Delegates;
+using GetStoreApp.Extensions.DataType.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GetStoreApp.Extensions.DataType.Collection
+namespace GetStoreApp.Extensions.DataType.Collections
 {
     /// <summary>
     /// 扩展List类，实现带通知的List，当List添加或删除项目时，进行通知

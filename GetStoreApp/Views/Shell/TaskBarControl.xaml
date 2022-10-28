@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:notifyicon="using:H.NotifyIcon"
     x:Name="AppNotifyIcon"
-    ContextMenuMode="SecondWindow"
+    ContextMenuMode="PopupMenu"
     DoubleClickCommand="{x:Bind ViewModel.ShowOrHideWindowCommand}"
     IconSource="ms-appx:///Assets/Logo/GetStoreApp.ico"
     IsDoubleTapEnabled="True"

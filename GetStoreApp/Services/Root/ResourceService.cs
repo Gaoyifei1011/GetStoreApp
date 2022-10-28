@@ -1,5 +1,5 @@
 ﻿using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Extensions.DataType.Enum;
+using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Models.Controls.Home;
 using GetStoreApp.Models.Controls.Settings.Advanced;
 using GetStoreApp.Models.Controls.Settings.Appearance;

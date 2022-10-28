@@ -149,7 +149,7 @@ namespace GetStoreApp.Services.Root
                     }
 
                 // 所有任务下载完成时显示通知
-                case "DownloadingCompleted":
+                case "DownloadCompleted":
                     {
                         new ToastContentBuilder().AddArgument("AppNotifications", notificationKey)
                             .AddText(ResourceService.GetLocalized("/Notification/DownloadCompleted"))

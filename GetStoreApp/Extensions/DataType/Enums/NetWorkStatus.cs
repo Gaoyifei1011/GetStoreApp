@@ -1,4 +1,4 @@
-﻿namespace GetStoreApp.Extensions.DataType.Enum
+﻿namespace GetStoreApp.Extensions.DataType.Enums
 {
     /// <summary>
     /// 系统网络状态枚举值

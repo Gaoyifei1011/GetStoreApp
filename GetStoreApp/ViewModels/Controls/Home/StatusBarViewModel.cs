@@ -1,13 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Extensions.DataType.Enum;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.Home;
-using GetStoreApp.Views.Shell;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.WindowsAPICodePack.Taskbar;
 using System.Collections.Generic;
 using Windows.Win32.Foundation;
 
@@ -17,7 +16,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
     {
         private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
 
-        private TaskbarManager Taskbar = TaskbarManager.Instance;
+        private TaskbarManager Taskbar { get; } = TaskbarManager.Instance;
 
         private HWND hwnd = (HWND)WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
 

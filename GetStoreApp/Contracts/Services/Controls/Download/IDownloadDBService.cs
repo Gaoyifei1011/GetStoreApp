@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Extensions.DataType.Enum;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Models.Controls.Download;
 using System.Collections.Generic;
 using System.Threading.Tasks;

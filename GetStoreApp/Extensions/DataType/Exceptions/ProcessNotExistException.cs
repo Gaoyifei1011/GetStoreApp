@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GetStoreApp.Extensions.DataType.AppException
+namespace GetStoreApp.Extensions.DataType.Exceptions
 {
     /// <summary>
     /// 进程不存在异常

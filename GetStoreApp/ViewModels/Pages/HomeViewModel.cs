@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using GetStoreApp.Contracts.Navigation;
 using GetStoreApp.Contracts.Services.Controls.Settings.Common;
 using GetStoreApp.Contracts.Services.Shell;
-using GetStoreApp.Extensions.DataType.Enum;
+using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using Microsoft.UI.Xaml.Media.Animation;
 

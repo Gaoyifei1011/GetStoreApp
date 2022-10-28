@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace GetStoreApp.Extensions.DataType.Event
+namespace GetStoreApp.Extensions.DataType.Events
 {
     /// <summary>
     /// 扩展List类，实现带通知的List，当List添加或删除项目时，进行通知

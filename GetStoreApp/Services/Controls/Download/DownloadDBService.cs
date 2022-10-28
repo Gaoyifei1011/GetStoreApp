@@ -1,6 +1,6 @@
 ﻿using GetStoreApp.Contracts.Services.Controls.Download;
 using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Extensions.DataType.Enum;
+using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
 using Microsoft.Data.Sqlite;

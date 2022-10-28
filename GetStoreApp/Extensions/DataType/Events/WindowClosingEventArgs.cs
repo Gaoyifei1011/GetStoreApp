@@ -1,7 +1,7 @@
 ﻿using GetStoreApp.Views.Window;
 using System;
 
-namespace GetStoreApp.Extensions.DataType.Event
+namespace GetStoreApp.Extensions.DataType.Events
 {
     /// <summary>
     /// 自定义Window 应用 Sdk（Winui3）窗口正在关闭事件
