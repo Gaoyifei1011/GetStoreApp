@@ -4,15 +4,15 @@
     <TargetFramework>net6.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
     <RootNamespace>GetStoreApp</RootNamespace>
-    <Platforms>x86;x64;arm64</Platforms>
-    <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
+    <Platforms>x86;x64</Platforms>
+    <RuntimeIdentifiers>win10-x86;win10-x64</RuntimeIdentifiers>
     <PublishProfile>Properties\PublishProfiles\win10-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
     <PackageCertificateThumbprint>7F64DB0B0770C29C61E5F8DC60430B3DC390D99F</PackageCertificateThumbprint>
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
     <ApplicationIcon>Assets\Logo\GetStoreApp.ico</ApplicationIcon>
-    <Version>0.6.5.0</Version>
-    <FileVersion>0.6.5.0</FileVersion>
+    <Version>0.6.6.0</Version>
+    <FileVersion>0.6.6.0</FileVersion>
     <Copyright>高怡飞</Copyright>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
@@ -25,6 +25,7 @@
     <DelaySign>False</DelaySign>
     <IncludeSymbols>False</IncludeSymbols>
   </PropertyGroup>
+  
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <FileAlignment>512</FileAlignment>
@@ -159,7 +160,6 @@
     <None Remove="Views\Window\MainWindow.xaml" />
     
     <PackageReference Include="Aria2.NET" Version="1.0.5" />
- 
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
     <PackageReference Include="CommunityToolkit.WinUI.Notifications" Version="7.1.2">
@@ -172,11 +172,11 @@
     <PackageReference Include="Microsoft-Windows10-APICodePack-Shell" Version="1.1.8" />
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="6.0.10" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
-    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.63-beta">
+    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.104-beta">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.1" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.755" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.5">
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
@@ -254,6 +254,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Controls\About\SettingsHelpControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\About\ThanksControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
@@ -494,19 +497,4 @@
       <UserProperties properties_4launchsettings_1json__JsonSchema="" />
     </VisualStudio>
   </ProjectExtensions>
-
-  <ItemGroup>
-    <CustomAdditionalCompileInputs Remove="UI\Controls\About\ThanksControl.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Remove="UI\Controls\About\ThanksControl.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Assets\Logo\GetStoreApp.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
 </Project>

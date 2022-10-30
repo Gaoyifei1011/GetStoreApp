@@ -1,11 +1,9 @@
 ﻿using GetStoreAppConsole.Strings;
-using System;
 using System.Globalization;
-using System.Reflection;
-using System.Threading;
+using Windows.ApplicationModel;
 using Windows.Globalization;
 
-namespace GetStoreAppConsole
+namespace GetStoreAppConsole.Helpers
 {
     public static class ConsoleHelper
     {
@@ -19,7 +17,7 @@ namespace GetStoreAppConsole
         {
             Console.Title = StringLocalization.Title;
 
-            Console.WriteLine(string.Format(StringLocalization.HeaderDescription1, Assembly.GetExecutingAssembly().GetName().Version) + LineBreaks);
+            Console.WriteLine(string.Format(StringLocalization.HeaderDescription1, Package.Current.Id.Version.Major, Package.Current.Id.Version.Minor, Package.Current.Id.Version.Build, Package.Current.Id.Version.Revision) + LineBreaks);
             Console.WriteLine(StringLocalization.HeaderDescription2);
             Console.WriteLine(StringLocalization.HeaderDescription3 + LineBreaks);
 

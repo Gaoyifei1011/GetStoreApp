@@ -13,6 +13,8 @@ namespace GetStoreApp.Services.Root
     {
         private IResourceService ResoureService = IOCHelper.GetService<IResourceService>();
 
+        private readonly string CommandParameter = "getstoreapp:///";
+
         private readonly string[] CommandLineArgs = Environment.GetCommandLineArgs().Where((source, index) => index != 0).ToArray();
 
         // 应用启动时使用的参数
@@ -35,7 +37,10 @@ namespace GetStoreApp.Services.Root
             }
             else if (CommandLineArgs.Length == 1)
             {
-                StartupArgs["Link"] = CommandLineArgs[0];
+                if (!CommandLineArgs[0].Equals(CommandParameter, StringComparison.OrdinalIgnoreCase))
+                {
+                    StartupArgs["Link"] = CommandLineArgs[0];
+                }
             }
             else
             {

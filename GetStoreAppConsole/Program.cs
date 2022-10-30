@@ -1,11 +1,10 @@
-﻿using System;
-using System.Diagnostics;
+﻿using GetStoreAppConsole.Helpers;
 
 namespace GetStoreAppConsole
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             // 初始化控制台程序的本地化资源内容
             ConsoleHelper.InitializeLocalization();
@@ -13,7 +12,7 @@ namespace GetStoreAppConsole
             // 初始化控制台程序的信息显示
             ConsoleHelper.InitializeDescription();
 
-            Process.Start("getstoreapp://");
+            await Windows.System.Launcher.LaunchUriAsync(new Uri("getstoreapp://"));
 
             // 退出应用程序
             Environment.Exit(0);

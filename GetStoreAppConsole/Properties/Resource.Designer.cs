@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GetStoreAppConsole.Strings {
+namespace GetStoreAppConsole.Properties {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace GetStoreAppConsole.Strings {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class StringLocalization {
+    internal class Resource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal StringLocalization() {
+        internal Resource() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace GetStoreAppConsole.Strings {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("GetStoreAppConsole.Strings.StringLocalization", typeof(StringLocalization).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("GetStoreAppConsole.Properties.Resource", typeof(Resource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,60 +57,6 @@ namespace GetStoreAppConsole.Strings {
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Get the Store app (console) version: {0}.{1}.{2}.{3} 的本地化字符串。
-        /// </summary>
-        internal static string HeaderDescription1 {
-            get {
-                return ResourceManager.GetString("HeaderDescription1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Get the Store app (console program) to quickly query and download the installation package for Microsoft Store apps. 的本地化字符串。
-        /// </summary>
-        internal static string HeaderDescription2 {
-            get {
-                return ResourceManager.GetString("HeaderDescription2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 For more information, navigate to the &quot;About&quot; page of the application and learn about it in the &quot;Usage Instructions&quot; module. 的本地化字符串。
-        /// </summary>
-        internal static string HeaderDescription3 {
-            get {
-                return ResourceManager.GetString("HeaderDescription3", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 GetStoreApp (Dev) 的本地化字符串。
-        /// </summary>
-        internal static string Title {
-            get {
-                return ResourceManager.GetString("Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 The current console program is under development and is currently only used as a placeholder. 的本地化字符串。
-        /// </summary>
-        internal static string UnfinishedNotification1 {
-            get {
-                return ResourceManager.GetString("UnfinishedNotification1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 The program redirects to the desktop app. 的本地化字符串。
-        /// </summary>
-        internal static string UnfinishedNotification2 {
-            get {
-                return ResourceManager.GetString("UnfinishedNotification2", resourceCulture);
             }
         }
     }

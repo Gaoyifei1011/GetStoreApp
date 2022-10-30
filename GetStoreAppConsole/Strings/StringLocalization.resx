@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="HeaderDescription1" xml:space="preserve">
-    <value>Get the Store app (console) version: {0}</value>
+    <value>Get the Store app (console) version: {0}.{1}.{2}.{3}</value>
   </data>
   <data name="HeaderDescription2" xml:space="preserve">
     <value>Get the Store app (console program) to quickly query and download the installation package for Microsoft Store apps.</value>

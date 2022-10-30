@@ -14,7 +14,7 @@
   <Identity
     Name="Gaoyifei1011.GetStoreApp"
     Publisher="CN=高怡飞"
-    Version="0.6.5.0" />
+    Version="0.6.6.0" />
 
   <Properties>
     <DisplayName>ms-resource:PackageDisplayName</DisplayName>
@@ -40,16 +40,16 @@
         DisplayName="ms-resource:AppDisplayName"
         Description="ms-resource:AppDescription"
         BackgroundColor="transparent"
-        Square150x150Logo="Assets\Square150x150Logo.png"
-        Square44x44Logo="Assets\Square44x44Logo.png">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"  ShortName="ms-resource:AppShortDisplayName" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png">
+        Square150x150Logo="Assets\Desktop\Square150x150Logo.png"
+        Square44x44Logo="Assets\Desktop\Square44x44Logo.png">
+        <uap:DefaultTile Wide310x150Logo="Assets\Desktop\Wide310x150Logo.png"  ShortName="ms-resource:AppShortDisplayName" Square71x71Logo="Assets\Desktop\SmallTile.png" Square310x310Logo="Assets\Desktop\LargeTile.png">
           <uap:ShowNameOnTiles>
-            <uap:ShowOn Tile="square150x150Logo" />
             <uap:ShowOn Tile="wide310x150Logo" />
             <uap:ShowOn Tile="square310x310Logo" />
+            <uap:ShowOn Tile="square150x150Logo"/>
           </uap:ShowNameOnTiles>
         </uap:DefaultTile>
-        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:SplashScreen Image="Assets\Desktop\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
         <uap:Extension Category="windows.protocol">
@@ -87,16 +87,16 @@
         DisplayName="ms-resource:AppDisplayName"
         Description="ms-resource:AppDescription"
         BackgroundColor="transparent"
-        Square150x150Logo="Assets\Square150x150Logo.png"
-        Square44x44Logo="Assets\Square44x44Logo.png">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"  ShortName="ms-resource:AppShortDisplayName" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png">
+        Square150x150Logo="Assets\Console\Square150x150Logo.png"
+        Square44x44Logo="Assets\Console\Square44x44Logo.png">
+        <uap:DefaultTile Wide310x150Logo="Assets\Console\Wide310x150Logo.png"  ShortName="ms-resource:AppShortDisplayName" Square71x71Logo="Assets\Console\SmallTile.png" Square310x310Logo="Assets\Console\LargeTile.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo" />
             <uap:ShowOn Tile="wide310x150Logo" />
             <uap:ShowOn Tile="square310x310Logo" />
           </uap:ShowNameOnTiles>
         </uap:DefaultTile>
-        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:SplashScreen Image="Assets\Console\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
         <uap5:Extension Category="windows.appExecutionAlias" Executable="GetStoreAppConsole.exe" EntryPoint="Windows.FullTrustApplication">

@@ -22,7 +22,6 @@ namespace GetStoreApp.ViewModels.Controls.About
             {"Microsoft.Windows.CsWin32","https://github.com/Microsoft/CsWin32" },
             {"Microsoft.Windows.CsWinRT","https://github.com/microsoft/cswinrt" },
             {"Microsoft.Windows.SDK.BuildTools","https://www.nuget.org/packages/Microsoft.Windows.SDK.BuildTools" },
-            {"Microsoft.Windows.SDK.Contracts","https://aka.ms/WinSDKProjectURL"},
             {"Microsoft.WindowsAppSDK","https://github.com/microsoft/windowsappsdk" },
             {"Microsoft.Xaml.Behaviors.WinUI.Managed","https://www.nuget.org/packages/Microsoft.Xaml.Behaviors.WinUI.Managed" },
             {"Microsoft-Windows10-APICodePack-Shell","https://github.com/bau-global/Windows-API-Code-Pack-1.1"},
