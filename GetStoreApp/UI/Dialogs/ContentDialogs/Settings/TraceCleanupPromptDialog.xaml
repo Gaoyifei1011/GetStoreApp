@@ -8,7 +8,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:settings="using:GetStoreApp.Models.Dialogs.CommonDialogs.Settings"
     x:Name="TraceCleanupRoot"
-    BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
     RequestedTheme="{x:Bind DialogTheme}"
     Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">
@@ -91,13 +90,15 @@
                     Command="{x:Bind ViewModel.CleanupNowCommand}"
                     Content="{x:Bind ResourceService.GetLocalized('/Dialog/CleanupNow')}"
                     IsEnabled="{x:Bind ViewModel.IsSelected, Mode=OneWay}"
-                    Style="{ThemeResource AccentButtonStyle}" />
+                    Style="{ThemeResource AccentButtonStyle}"
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Dialog/CleanupNow')}" />
                 <Button
                     Grid.Column="1"
                     HorizontalAlignment="Stretch"
                     Command="{x:Bind ViewModel.CloseWindowCommand}"
                     CommandParameter="{Binding ElementName=TraceCleanupRoot}"
-                    Content="{x:Bind ResourceService.GetLocalized('/Dialog/CloseWindow')}" />
+                    Content="{x:Bind ResourceService.GetLocalized('/Dialog/CloseWindow')}"
+                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Dialog/CloseWindow')}" />
             </Grid>
         </ContentControl>
     </Grid>

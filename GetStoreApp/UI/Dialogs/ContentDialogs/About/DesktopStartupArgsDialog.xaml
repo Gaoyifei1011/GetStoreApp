@@ -8,7 +8,6 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Name="DesktopStartupArgsRoot"
-    BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
     RequestedTheme="{x:Bind DialogTheme}"
     Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">
@@ -154,12 +153,21 @@
                 ToolTipService.ToolTip="{x:Bind ViewModel.SampleFull}" />
         </StackPanel>
 
-        <Grid Grid.Row="1" Padding="24">
+        <Grid
+            Grid.Row="1"
+            Padding="24"
+            ColumnSpacing="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
             <Button
-                HorizontalAlignment="Right"
+                Grid.Column="1"
+                HorizontalAlignment="Stretch"
                 Command="{x:Bind ViewModel.CloswWindowCommand}"
                 CommandParameter="{Binding ElementName=DesktopStartupArgsRoot}"
-                Content="{x:Bind ResourceService.GetLocalized('/Dialog/CloseWindow')}" />
+                Content="{x:Bind ResourceService.GetLocalized('/Dialog/CloseWindow')}"
+                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Dialog/CloseWindow')}" />
         </Grid>
     </Grid>
 </ContentDialog>

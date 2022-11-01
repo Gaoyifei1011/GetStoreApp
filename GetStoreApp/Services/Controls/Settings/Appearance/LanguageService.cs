@@ -23,7 +23,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
 
         public LanguageModel AppLanguage { get; set; }
 
-        private readonly IReadOnlyList<string> AppLanguages = ApplicationLanguages.ManifestLanguages;
+        private readonly IReadOnlyList<string> AppLanguagesList = ApplicationLanguages.ManifestLanguages;
 
         public List<LanguageModel> LanguageList { get; set; } = new List<LanguageModel>();
 
@@ -32,7 +32,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// </summary>
         private void InitializeLanguageList()
         {
-            foreach (string applanguage in AppLanguages)
+            foreach (string applanguage in AppLanguagesList)
             {
                 CultureInfo culture = CultureInfo.GetCultureInfo(applanguage);
 
@@ -68,7 +68,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
 
             InitializeLanguageList();
 
-            DefaultAppLanguage = LanguageList.Find(item => item.InternalName.Equals("en-US"));
+            DefaultAppLanguage = LanguageList.Find(item => item.InternalName.Equals("en-US",StringComparison.OrdinalIgnoreCase));
 
             (bool, LanguageModel) LanguageValueResult = await GetLanguageAsync();
 

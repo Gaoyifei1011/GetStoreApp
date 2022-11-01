@@ -8,7 +8,6 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Name="ExperimentalConfigRoot"
-    BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
     RequestedTheme="{x:Bind DialogTheme}"
     Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">
@@ -87,13 +86,15 @@
                 Command="{x:Bind ViewModel.RestoreDefualtCommand}"
                 CommandParameter="{Binding ElementName=CoreWebView2FailedRoot}"
                 Content="{x:Bind ResourceService.GetLocalized('/Dialog/RestoreDefualt')}"
-                Style="{ThemeResource AccentButtonStyle}" />
+                Style="{ThemeResource AccentButtonStyle}"
+                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Dialog/RestoreDefualt')}" />
             <Button
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
                 Command="{x:Bind ViewModel.CloswWindowCommand}"
                 CommandParameter="{Binding ElementName=ExperimentalConfigRoot}"
-                Content="{x:Bind ResourceService.GetLocalized('/Dialog/CloseWindow')}" />
+                Content="{x:Bind ResourceService.GetLocalized('/Dialog/CloseWindow')}"
+                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Dialog/CloseWindow')}" />
         </Grid>
     </Grid>
 </ContentDialog>

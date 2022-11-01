@@ -117,22 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="HeaderDescription1" xml:space="preserve">
-    <value>Get the Store app (console) version: {0}.{1}.{2}.{3}</value>
-  </data>
-  <data name="HeaderDescription2" xml:space="preserve">
-    <value>Get the Store app (console program) to quickly query and download the installation package for Microsoft Store apps.</value>
-  </data>
-  <data name="HeaderDescription3" xml:space="preserve">
-    <value>For more information, navigate to the "About" page of the application and learn about it in the "Usage Instructions" module.</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>GetStoreApp (Dev)</value>
-  </data>
-  <data name="UnfinishedNotification1" xml:space="preserve">
-    <value>The current console program is under development and is currently only used as a placeholder.</value>
-  </data>
-  <data name="UnfinishedNotification2" xml:space="preserve">
-    <value>The program redirects to the desktop app.</value>
-  </data>
 </root>

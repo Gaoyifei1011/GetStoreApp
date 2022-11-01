@@ -8,7 +8,6 @@
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Name="FileInformationRoot"
-    BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
     RequestedTheme="{x:Bind DialogTheme}"
     Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">
@@ -147,13 +146,15 @@
                 CommandParameter="{Binding ElementName=FileInformationRoot}"
                 Content="{x:Bind ResourceService.GetLocalized('/Dialog/CopyFileInformation')}"
                 IsEnabled="{x:Bind ViewModel.FileCheckState, Mode=OneWay}"
-                Style="{ThemeResource AccentButtonStyle}" />
+                Style="{ThemeResource AccentButtonStyle}"
+                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Dialog/CopyFileInformation')}" />
             <Button
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
                 Command="{x:Bind ViewModel.CloseWindowCommand}"
                 CommandParameter="{Binding ElementName=FileInformationRoot}"
-                Content="{x:Bind ResourceService.GetLocalized('/Dialog/CloseWindow')}" />
+                Content="{x:Bind ResourceService.GetLocalized('/Dialog/CloseWindow')}"
+                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Dialog/CloseWindow')}" />
         </Grid>
     </Grid>
 </ContentDialog>
