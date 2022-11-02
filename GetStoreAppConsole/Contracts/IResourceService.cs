@@ -1,4 +1,6 @@
-﻿namespace GetStoreAppConsole.Contracts
+﻿using System.Threading.Tasks;
+
+namespace GetStoreAppConsole.Contracts
 {
     public interface IResourceService
     {

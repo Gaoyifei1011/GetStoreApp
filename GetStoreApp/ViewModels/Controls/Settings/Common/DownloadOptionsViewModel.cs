@@ -8,9 +8,9 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings.Common;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Settings;
 using GetStoreApp.ViewModels.Pages;
+using GetStoreAppWindowsAPI.UI.Dialogs.FileDialog;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
-using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Security.AccessControl;
@@ -80,55 +80,49 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
         // 修改下载目录
         public IRelayCommand ChangeFolderCommand => new RelayCommand(async () =>
         {
+            StorageFolder Folder;
+
             while (true)
             {
                 // 选择文件夹
-                CommonOpenFileDialog dialog = new CommonOpenFileDialog()
+                FolderPickerDialog dialog = new FolderPickerDialog()
                 {
                     Title = ResourceService.GetLocalized("/Settings/SelectFolder"),
-                    IsFolderPicker = true,
-                    InitialDirectory = DownloadFolder.Path
+                    Path = DownloadFolder.Path
                 };
 
-                CommonFileDialogResult SelectResult = dialog.ShowDialog(WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow));
+                bool Result = dialog.ShowDialog(WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow));
 
-                if (SelectResult == CommonFileDialogResult.Ok)
+                if (Result && !string.IsNullOrEmpty(dialog.Path))
                 {
-                    StorageFolder Folder = await StorageFolder.GetFolderFromPathAsync(dialog.FileName);
+                    Folder = await StorageFolder.GetFolderFromPathAsync(dialog.Path);
 
-                    if (Folder is not null)
+                    bool CheckResult = IOHelper.GetFolderAuthorization(Folder, FileSystemRights.Write);
+
+                    if (CheckResult)
                     {
-                        bool CheckResult = IOHelper.GetFolderAuthorization(Folder, FileSystemRights.Write);
+                        DownloadFolder = Folder;
+                        await DownloadOptionsService.SetFolderAsync(DownloadFolder);
+                        break;
+                    }
+                    else
+                    {
+                        ContentDialogResult result = await new FolderAccessFailedDialog().ShowAsync();
 
-                        if (CheckResult)
+                        if (result == ContentDialogResult.Primary)
                         {
-                            DownloadFolder = Folder;
+                            continue;
+                        }
+                        else if (result == ContentDialogResult.Secondary)
+                        {
+                            DownloadFolder = DownloadOptionsService.DefaultFolder;
                             await DownloadOptionsService.SetFolderAsync(DownloadFolder);
                             break;
                         }
                         else
                         {
-                            ContentDialogResult result = await new FolderAccessFailedDialog().ShowAsync();
-
-                            if (result == ContentDialogResult.Primary)
-                            {
-                                continue;
-                            }
-                            else if (result == ContentDialogResult.Secondary)
-                            {
-                                DownloadFolder = DownloadOptionsService.DefaultFolder;
-                                await DownloadOptionsService.SetFolderAsync(DownloadFolder);
-                                break;
-                            }
-                            else
-                            {
-                                break;
-                            }
+                            break;
                         }
-                    }
-                    else
-                    {
-                        break;
                     }
                 }
                 else

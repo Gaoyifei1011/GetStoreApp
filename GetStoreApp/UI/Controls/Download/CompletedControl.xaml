@@ -264,8 +264,8 @@
                                     <TextBlock
                                         Grid.Column="0"
                                         Style="{StaticResource SubDownloadItemTextStyle}"
-                                        Text="{Binding ElementName=CompletedRoot, Path=Installing}"
-                                        ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=Installing}" />
+                                        Text="{Binding ElementName=CompletedRoot, Path=Installing, Mode=OneTime}"
+                                        ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=Installing, Mode=OneTime}" />
                                     <ProgressBar
                                         Grid.Column="1"
                                         IsIndeterminate="False"
@@ -283,8 +283,8 @@
                                         Grid.Column="2"
                                         x:Load="{x:Bind InstallError, Mode=OneWay}"
                                         Style="{StaticResource SubDownloadItemTextStyle}"
-                                        Text="{Binding ElementName=CompletedRoot, Path=InstallError}"
-                                        ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=InstallError}" />
+                                        Text="{Binding ElementName=CompletedRoot, Path=InstallError, Mode=OneTime}"
+                                        ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=InstallError, Mode=OneTime}" />
                                 </Grid>
                             </Grid>
 
@@ -302,11 +302,11 @@
                                         <StackPanel Orientation="Horizontal">
                                             <ContentControl IsEnabled="{x:Bind FileName, Converter={StaticResource InstallFileCheckConverter}}">
                                                 <Button
-                                                    Command="{Binding ElementName=CompletedRoot, Path=ViewModel.InstallCommand}"
+                                                    Command="{Binding ElementName=CompletedRoot, Path=ViewModel.InstallCommand, Mode=OneTime}"
                                                     CommandParameter="{Binding}"
                                                     IsEnabled="{x:Bind IsInstalling, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
                                                     Style="{StaticResource ButtonDownloadStyle}"
-                                                    ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=InstallToolTip}">
+                                                    ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=InstallToolTip, Mode=OneTime}">
                                                     <Button.Content>
                                                         <FontIcon Glyph="&#xF775;" Style="{StaticResource SettingsFluentStyle}" />
                                                     </Button.Content>
@@ -314,10 +314,10 @@
                                             </ContentControl>
 
                                             <Button
-                                                Command="{Binding ElementName=CompletedRoot, Path=ViewModel.OpenItemFolderCommand}"
+                                                Command="{Binding ElementName=CompletedRoot, Path=ViewModel.OpenItemFolderCommand, Mode=OneTime}"
                                                 CommandParameter="{x:Bind FilePath}"
                                                 Style="{StaticResource ButtonDownloadStyle}"
-                                                ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=OpenItemFolderToolTip}">
+                                                ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=OpenItemFolderToolTip, Mode=OneTime}">
                                                 <Button.Content>
                                                     <FontIcon Glyph="&#xE8da;" Style="{StaticResource SegoeFluentStyle}" />
                                                 </Button.Content>
@@ -325,7 +325,7 @@
                                         </StackPanel>
                                     </ContentControl>
 
-                                    <Button Style="{StaticResource ButtonDownloadStyle}" ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=ViewMore}">
+                                    <Button Style="{StaticResource ButtonDownloadStyle}" ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=ViewMore, Mode=OneTime}">
 
                                         <Button.Content>
                                             <FontIcon
@@ -337,23 +337,23 @@
                                         <Button.Flyout>
                                             <MenuFlyout Placement="Bottom">
                                                 <MenuFlyoutItem
-                                                    Command="{Binding ElementName=CompletedRoot, Path=ViewModel.DeleteCommand}"
+                                                    Command="{Binding ElementName=CompletedRoot, Path=ViewModel.DeleteCommand, Mode=OneTime}"
                                                     CommandParameter="{Binding}"
-                                                    Text="{Binding ElementName=CompletedRoot, Path=Delete}"
-                                                    ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=DeleteToolTip}" />
+                                                    Text="{Binding ElementName=CompletedRoot, Path=Delete, Mode=OneTime}"
+                                                    ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=DeleteToolTip, Mode=OneTime}" />
                                                 <MenuFlyoutItem
-                                                    Command="{Binding ElementName=CompletedRoot, Path=ViewModel.DeleteWithFileCommand}"
+                                                    Command="{Binding ElementName=CompletedRoot, Path=ViewModel.DeleteWithFileCommand, Mode=OneTime}"
                                                     CommandParameter="{Binding}"
                                                     IsEnabled="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}"
-                                                    Text="{Binding ElementName=CompletedRoot, Path=DeleteWithFile}"
-                                                    ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=DeleteWithFileToolTip}" />
+                                                    Text="{Binding ElementName=CompletedRoot, Path=DeleteWithFile, Mode=OneTime}"
+                                                    ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=DeleteWithFileToolTip, Mode=OneTime}" />
                                                 <MenuFlyoutSeparator />
                                                 <MenuFlyoutItem
-                                                    Command="{Binding ElementName=CompletedRoot, Path=ViewModel.FileInformationCommand}"
+                                                    Command="{Binding ElementName=CompletedRoot, Path=ViewModel.FileInformationCommand, Mode=OneTime}"
                                                     CommandParameter="{Binding}"
                                                     IsEnabled="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}"
-                                                    Text="{Binding ElementName=CompletedRoot, Path=FileInformation}"
-                                                    ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=FileInformation}">
+                                                    Text="{Binding ElementName=CompletedRoot, Path=FileInformation, Mode=OneTime}"
+                                                    ToolTipService.ToolTip="{Binding ElementName=CompletedRoot, Path=FileInformation, Mode=OneTime}">
                                                     <MenuFlyoutItem.Icon>
                                                         <FontIcon Glyph="&#xE946;" Style="{StaticResource SegoeFluentStyle}" />
                                                     </MenuFlyoutItem.Icon>

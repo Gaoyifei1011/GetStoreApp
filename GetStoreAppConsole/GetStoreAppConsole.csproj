@@ -7,16 +7,14 @@
     <Platforms>x86;x64</Platforms>
     <RuntimeIdentifiers>win10-x86;win10-x64</RuntimeIdentifiers>
     <PublishProfile>Properties\PublishProfiles\win10-$(Platform).pubxml</PublishProfile>
-    <PackageCertificateThumbprint>7F64DB0B0770C29C61E5F8DC60430B3DC390D99F</PackageCertificateThumbprint>
     <Version>0.6.6.0</Version>
     <FileVersion>0.6.6.0</FileVersion>
     <Copyright>高怡飞</Copyright>
-    <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <SignAssembly>False</SignAssembly>
     <DelaySign>False</DelaySign>
     <IncludeSymbols>False</IncludeSymbols>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <ImplicitUsings>disable</ImplicitUsings>
     <StartupObject>GetStoreAppConsole.Program</StartupObject>
     <ApplicationIcon>Assets\Logo\GetStoreAppConsole.ico</ApplicationIcon>
   </PropertyGroup>

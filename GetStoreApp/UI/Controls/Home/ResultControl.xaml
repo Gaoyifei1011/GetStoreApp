@@ -260,7 +260,7 @@
                             Grid.Column="1"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
-                            Command="{Binding ElementName=ResultRoot, Path=ViewModel.DownloadCommand}"
+                            Command="{Binding ElementName=ResultRoot, Path=ViewModel.DownloadCommand, Mode=OneTime}"
                             CommandParameter="{Binding}"
                             Content="{x:Bind FileName}"
                             Style="{StaticResource HyperlinkButtonStyle}"
@@ -287,23 +287,23 @@
                             Grid.Column="5"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
-                            Content="{Binding ElementName=ResultRoot, Path=Copy}"
+                            Content="{Binding ElementName=ResultRoot, Path=Copy, Mode=OneTime}"
                             IsEnabled="{Binding ElementName=ResultRoot, Path=ViewModel.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
                             Style="{StaticResource DropDownButtonStyle}"
-                            ToolTipService.ToolTip="{Binding ElementName=ResultRoot, Path=CopyOptionsToolTip}">
+                            ToolTipService.ToolTip="{Binding ElementName=ResultRoot, Path=CopyOptionsToolTip, Mode=OneTime}">
 
                             <DropDownButton.Flyout>
                                 <MenuFlyout Placement="Bottom">
                                     <MenuFlyoutItem
-                                        Command="{Binding ElementName=ResultRoot, Path=ViewModel.CopyLinkCommand}"
+                                        Command="{Binding ElementName=ResultRoot, Path=ViewModel.CopyLinkCommand, Mode=OneTime}"
                                         CommandParameter="{x:Bind FileLink}"
-                                        Text="{Binding ElementName=ResultRoot, Path=CopyLink}"
-                                        ToolTipService.ToolTip="{Binding ElementName=ResultRoot, Path=CopyLinkToolTip}" />
+                                        Text="{Binding ElementName=ResultRoot, Path=CopyLink, Mode=OneTime}"
+                                        ToolTipService.ToolTip="{Binding ElementName=ResultRoot, Path=CopyLinkToolTip, Mode=OneTime}" />
                                     <MenuFlyoutItem
-                                        Command="{Binding ElementName=ResultRoot, Path=ViewModel.CopyContentCommand}"
+                                        Command="{Binding ElementName=ResultRoot, Path=ViewModel.CopyContentCommand, Mode=OneTime}"
                                         CommandParameter="{Binding}"
-                                        Text="{Binding ElementName=ResultRoot, Path=CopyContent}"
-                                        ToolTipService.ToolTip="{Binding ElementName=ResultRoot, Path=CopyContentToolTip}" />
+                                        Text="{Binding ElementName=ResultRoot, Path=CopyContent, Mode=OneTime}"
+                                        ToolTipService.ToolTip="{Binding ElementName=ResultRoot, Path=CopyContentToolTip, Mode=OneTime}" />
                                 </MenuFlyout>
                             </DropDownButton.Flyout>
                         </DropDownButton>

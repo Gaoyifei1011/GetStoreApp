@@ -250,8 +250,8 @@
                                 <TextBlock
                                     Grid.Row="1"
                                     Style="{StaticResource SubDownloadItemTextStyle}"
-                                    Text="{Binding ElementName=DownloadingRoot, Path=WaitDownload}"
-                                    ToolTipService.ToolTip="{Binding ElementName=DownloadingRoot, Path=WaitDownload}"
+                                    Text="{Binding ElementName=DownloadingRoot, Path=WaitDownload, Mode=OneTime}"
+                                    ToolTipService.ToolTip="{Binding ElementName=DownloadingRoot, Path=WaitDownload, Mode=OneTime}"
                                     Visibility="{x:Bind DownloadFlag, Converter={StaticResource DownloadFlagConverter}, ConverterParameter=1}" />
                             </Grid>
 
@@ -265,20 +265,20 @@
                                 <StackPanel Orientation="Horizontal">
 
                                     <Button
-                                        Command="{Binding ElementName=DownloadingRoot, Path=ViewModel.PauseCommand}"
+                                        Command="{Binding ElementName=DownloadingRoot, Path=ViewModel.PauseCommand, Mode=OneTime}"
                                         CommandParameter="{Binding}"
                                         Style="{StaticResource ButtonDownloadStyle}"
-                                        ToolTipService.ToolTip="{Binding ElementName=DownloadingRoot, Path=PauseToolTip}">
+                                        ToolTipService.ToolTip="{Binding ElementName=DownloadingRoot, Path=PauseToolTip, Mode=OneTime}">
                                         <Button.Content>
                                             <FontIcon Glyph="&#xE769;" Style="{StaticResource SegoeFluentStyle}" />
                                         </Button.Content>
                                     </Button>
 
                                     <Button
-                                        Command="{Binding ElementName=DownloadingRoot, Path=ViewModel.DeleteCommand}"
+                                        Command="{Binding ElementName=DownloadingRoot, Path=ViewModel.DeleteCommand, Mode=OneTime}"
                                         CommandParameter="{Binding}"
                                         Style="{StaticResource ButtonDownloadStyle}"
-                                        ToolTipService.ToolTip="{Binding ElementName=DownloadingRoot, Path=DeleteToolTip}">
+                                        ToolTipService.ToolTip="{Binding ElementName=DownloadingRoot, Path=DeleteToolTip, Mode=OneTime}">
                                         <Button.Content>
                                             <FontIcon Glyph="&#xE711;" Style="{StaticResource SegoeFluentStyle}" />
                                         </Button.Content>

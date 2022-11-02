@@ -506,10 +506,8 @@
                                             Style="{TemplateBinding CloseButtonStyle}"
                                             ToolTipService.ToolTip="{TemplateBinding CloseButtonText}" />
                                     </Grid>
-
                                 </Grid>
                             </Border>
-
                         </Grid>
 
                         <VisualStateManager.VisualStateGroups>
@@ -580,7 +578,6 @@
                                         <Setter Target="CloseButton.IsTabStop" Value="True" />
                                         <Setter Target="LayoutRoot.Visibility" Value="Visible" />
                                         <Setter Target="BackgroundElement.TabFocusNavigation" Value="Cycle" />
-
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="DialogShowingWithoutSmokeLayer">
@@ -590,20 +587,16 @@
                                         <Setter Target="CloseButton.IsTabStop" Value="True" />
                                         <Setter Target="LayoutRoot.Visibility" Value="Visible" />
                                         <Setter Target="LayoutRoot.Background" Value="{x:Null}" />
-
                                     </VisualState.Setters>
                                 </VisualState>
-
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="DialogSizingStates">
                                 <VisualState x:Name="DefaultDialogSizing" />
                                 <VisualState x:Name="FullDialogSizing">
                                     <VisualState.Setters>
                                         <Setter Target="BackgroundElement.VerticalAlignment" Value="Stretch" />
-
                                     </VisualState.Setters>
                                 </VisualState>
-
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="ButtonsVisibilityStates">
                                 <VisualState x:Name="AllVisible">
@@ -611,13 +604,11 @@
                                         <Setter Target="FirstSpacer.Width" Value="{ThemeResource ContentDialogButtonSpacing}" />
                                         <Setter Target="SecondaryColumn.Width" Value="*" />
                                         <Setter Target="SecondaryButton.(Grid.Column)" Value="2" />
-
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="NoneVisible">
                                     <VisualState.Setters>
                                         <Setter Target="CommandSpace.Visibility" Value="Collapsed" />
-
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="PrimaryVisible">
@@ -625,7 +616,6 @@
                                         <Setter Target="PrimaryButton.(Grid.Column)" Value="4" />
                                         <Setter Target="SecondaryButton.Visibility" Value="Collapsed" />
                                         <Setter Target="CloseButton.Visibility" Value="Collapsed" />
-
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="SecondaryVisible">
@@ -633,73 +623,59 @@
                                         <Setter Target="SecondaryButton.(Grid.Column)" Value="4" />
                                         <Setter Target="PrimaryButton.Visibility" Value="Collapsed" />
                                         <Setter Target="CloseButton.Visibility" Value="Collapsed" />
-
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="CloseVisible">
                                     <VisualState.Setters>
                                         <Setter Target="PrimaryButton.Visibility" Value="Collapsed" />
                                         <Setter Target="SecondaryButton.Visibility" Value="Collapsed" />
-
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="PrimaryAndSecondaryVisible">
                                     <VisualState.Setters>
                                         <Setter Target="SecondaryButton.(Grid.Column)" Value="4" />
                                         <Setter Target="CloseButton.Visibility" Value="Collapsed" />
-
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="PrimaryAndCloseVisible">
                                     <VisualState.Setters>
                                         <Setter Target="SecondaryButton.Visibility" Value="Collapsed" />
-
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="SecondaryAndCloseVisible">
                                     <VisualState.Setters>
                                         <Setter Target="PrimaryButton.Visibility" Value="Collapsed" />
-
                                     </VisualState.Setters>
                                 </VisualState>
-
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="DefaultButtonStates">
                                 <VisualState x:Name="NoDefaultButton" />
                                 <VisualState x:Name="PrimaryAsDefaultButton">
                                     <VisualState.Setters>
                                         <Setter Target="PrimaryButton.Style" Value="{StaticResource AccentButtonStyle}" />
-
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="SecondaryAsDefaultButton">
                                     <VisualState.Setters>
                                         <Setter Target="SecondaryButton.Style" Value="{StaticResource AccentButtonStyle}" />
-
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="CloseAsDefaultButton">
                                     <VisualState.Setters>
                                         <Setter Target="CloseButton.Style" Value="{StaticResource AccentButtonStyle}" />
-
                                     </VisualState.Setters>
                                 </VisualState>
-
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="DialogBorderStates">
                                 <VisualState x:Name="NoBorder" />
                                 <VisualState x:Name="AccentColorBorder">
                                     <VisualState.Setters>
                                         <Setter Target="BackgroundElement.BorderBrush" Value="{ThemeResource SystemControlForegroundAccentBrush}" />
-
                                     </VisualState.Setters>
                                 </VisualState>
-
                             </VisualStateGroup>
-
                         </VisualStateManager.VisualStateGroups>
                     </Border>
-
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

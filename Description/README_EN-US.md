@@ -62,13 +62,10 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 > * [HtmlAgilityPack](http://html-agility-pack.net)&emsp;
 > * [Microsoft.Data.Sqlite.Core](https://docs.microsoft.com/dotnet/standard/data/sqlite)&emsp;
 > * [Microsoft.Extensions.Hosting](https://www.nuget.org/packages/Microsoft.Extensions.Hosting)&emsp;
-> * [Microsoft.Windows.CsWin32](https://github.com/Microsoft/CsWin32)&emsp;
 > * [Microsoft.Windows.CsWinRT](https://github.com/microsoft/cswinrt)&emsp;
 > * [Microsoft.Windows.SDK.BuildTools](https://www.nuget.org/packages/Microsoft.Windows.SDK.BuildTools)&emsp;
-> * [Microsoft.Windows.SDK.Contracts](https://aka.ms/WinSDKProjectURL)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Microsoft.Xaml.Behaviors.WinUI.Managed](https://www.nuget.org/packages/Microsoft.Xaml.Behaviors.WinUI.Managed)&emsp;
-> * [Microsoft-Windows10-APICodePack-Shell](https://github.com/bau-global/Windows-API-Code-Pack-1.1)&emsp;
 > * [PInvoke.User32](https://github.com/dotnet/pinvoke)&emsp;
 > * [SQLitePCLRaw.bundle_winsqlite3](https://github.com/ericsink/SQLitePCL.raw)&emsp;
 > * [System.Management](https://www.nuget.org/packages/System.Management)&emsp;

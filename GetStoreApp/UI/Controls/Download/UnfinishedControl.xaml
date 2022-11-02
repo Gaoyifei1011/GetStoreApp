@@ -216,15 +216,15 @@
                                 <TextBlock
                                     Grid.Row="1"
                                     Style="{StaticResource SubDownloadItemTextStyle}"
-                                    Text="{Binding ElementName=UnfinishedRoot, Path=PauseDownload}"
-                                    ToolTipService.ToolTip="{Binding ElementName=UnfinishedRoot, Path=PauseDownload}"
+                                    Text="{Binding ElementName=UnfinishedRoot, Path=PauseDownload, Mode=OneTime}"
+                                    ToolTipService.ToolTip="{Binding ElementName=UnfinishedRoot, Path=PauseDownload, Mode=OneTime}"
                                     Visibility="{x:Bind DownloadFlag, Converter={StaticResource DownloadFlagConverter}, ConverterParameter=2}" />
                                 <TextBlock
                                     Grid.Row="1"
                                     Foreground="{StaticResource SystemErrorTextColor}"
                                     Style="{StaticResource SubDownloadItemTextStyle}"
-                                    Text="{Binding ElementName=UnfinishedRoot, Path=InvalidLink}"
-                                    ToolTipService.ToolTip="{Binding ElementName=UnfinishedRoot, Path=InvalidLink}"
+                                    Text="{Binding ElementName=UnfinishedRoot, Path=InvalidLink, Mode=OneTime}"
+                                    ToolTipService.ToolTip="{Binding ElementName=UnfinishedRoot, Path=InvalidLink, Mode=OneTime}"
                                     Visibility="{x:Bind DownloadFlag, Converter={StaticResource DownloadFlagConverter}, ConverterParameter=0}" />
                             </Grid>
 
@@ -238,10 +238,10 @@
                                 <StackPanel Orientation="Horizontal">
 
                                     <Button
-                                        Command="{Binding ElementName=UnfinishedRoot, Path=ViewModel.ContinueCommand}"
+                                        Command="{Binding ElementName=UnfinishedRoot, Path=ViewModel.ContinueCommand, Mode=OneTime}"
                                         CommandParameter="{Binding}"
                                         Style="{StaticResource ButtonDownloadStyle}"
-                                        ToolTipService.ToolTip="{Binding ElementName=UnfinishedRoot, Path=ContinueToolTip}"
+                                        ToolTipService.ToolTip="{Binding ElementName=UnfinishedRoot, Path=ContinueToolTip, Mode=OneTime}"
                                         Visibility="{x:Bind DownloadFlag, Converter={StaticResource ContinueDownloadCheckConverter}}">
                                         <Button.Content>
                                             <FontIcon Glyph="&#xE74b;" Style="{StaticResource SegoeFluentStyle}" />
@@ -249,10 +249,10 @@
                                     </Button>
 
                                     <Button
-                                        Command="{Binding ElementName=UnfinishedRoot, Path=ViewModel.DeleteCommand}"
+                                        Command="{Binding ElementName=UnfinishedRoot, Path=ViewModel.DeleteCommand, Mode=OneTime}"
                                         CommandParameter="{Binding}"
                                         Style="{StaticResource ButtonDownloadStyle}"
-                                        ToolTipService.ToolTip="{Binding ElementName=UnfinishedRoot, Path=DeleteToolTip}">
+                                        ToolTipService.ToolTip="{Binding ElementName=UnfinishedRoot, Path=DeleteToolTip, Mode=OneTime}">
                                         <Button.Content>
                                             <FontIcon Glyph="&#xE711;" Style="{StaticResource SegoeFluentStyle}" />
                                         </Button.Content>

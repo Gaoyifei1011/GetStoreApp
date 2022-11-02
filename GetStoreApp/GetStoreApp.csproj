@@ -8,22 +8,17 @@
     <RuntimeIdentifiers>win10-x86;win10-x64</RuntimeIdentifiers>
     <PublishProfile>Properties\PublishProfiles\win10-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
-    <PackageCertificateThumbprint>7F64DB0B0770C29C61E5F8DC60430B3DC390D99F</PackageCertificateThumbprint>
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
     <ApplicationIcon>Assets\Logo\GetStoreApp.ico</ApplicationIcon>
     <Version>0.6.6.0</Version>
     <FileVersion>0.6.6.0</FileVersion>
     <Copyright>高怡飞</Copyright>
-    <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <StartupObject>GetStoreApp.Program</StartupObject>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <PackageIcon>GetStoreApp.png</PackageIcon>
-    <SignAssembly>False</SignAssembly>
-    <DelaySign>False</DelaySign>
-    <IncludeSymbols>False</IncludeSymbols>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
@@ -169,20 +164,20 @@
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.Core" Version="7.1.2" />
     <PackageReference Include="H.NotifyIcon.WinUI" Version="2.0.73" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
-    <PackageReference Include="Microsoft-Windows10-APICodePack-Shell" Version="1.1.8" />
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="6.0.10" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
-    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.104-beta">
-      <PrivateAssets>all</PrivateAssets>
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.0">
+      <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
-    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.0" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.755" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.5">
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
     <PackageReference Include="PInvoke.User32" Version="0.7.124" />
-    <PackageReference Include="SQLitePCLRaw.bundle_winsqlite3" Version="2.1.2" />
+    <PackageReference Include="SQLitePCLRaw.bundle_winsqlite3" Version="2.1.2">
+      <TreatAsUsed>true</TreatAsUsed>
+    </PackageReference>
     <PackageReference Include="System.Management" Version="6.0.0" />
     <PackageReference Include="WinUIEx" Version="1.8.0" />
 
@@ -478,6 +473,7 @@
     <Content Include="LICENSE">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <ProjectReference Include="..\GetStoreAppWindowsAPI\GetStoreAppWindowsAPI.csproj" />
     <Content Update="Assets\Images\CloudflareValidation.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

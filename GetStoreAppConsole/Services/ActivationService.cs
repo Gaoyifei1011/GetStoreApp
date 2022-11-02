@@ -1,5 +1,6 @@
 ﻿using GetStoreAppConsole.Contracts;
 using GetStoreAppConsole.Helpers;
+using System.Threading.Tasks;
 
 namespace GetStoreAppConsole.Services
 {
@@ -15,7 +16,7 @@ namespace GetStoreAppConsole.Services
         public async Task ActivateAsync()
         {
             await LanguageService.InitializeLanguageAsync();
-            await ResourceService.InitializeResourceAsync(LanguageService.DefaultConsoleLanguage,LanguageService.ConsoleLanguage);
+            await ResourceService.InitializeResourceAsync(LanguageService.DefaultConsoleLanguage, LanguageService.ConsoleLanguage);
         }
     }
 }

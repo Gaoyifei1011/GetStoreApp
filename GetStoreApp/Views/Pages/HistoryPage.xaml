@@ -452,20 +452,20 @@
                                     <HyperlinkButton
                                         Grid.Column="5"
                                         Margin="10,0,0,0"
-                                        Command="{Binding ElementName=HistoryRoot, Path=ViewModel.FillinCommand}"
+                                        Command="{Binding ElementName=HistoryRoot, Path=ViewModel.FillinCommand, Mode=OneTime}"
                                         CommandParameter="{Binding}"
-                                        Content="{Binding ElementName=HistoryRoot, Path=Fillin}"
+                                        Content="{Binding ElementName=HistoryRoot, Path=Fillin, Mode=OneTime}"
                                         IsEnabled="{Binding ElementName=HistoryRoot, Path=ViewModel.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
                                         Style="{StaticResource HyperlinkButtonStyle}"
-                                        ToolTipService.ToolTip="{Binding ElementName=HistoryRoot, Path=FillinToolTip}" />
+                                        ToolTipService.ToolTip="{Binding ElementName=HistoryRoot, Path=FillinToolTip, Mode=OneTime}" />
                                     <HyperlinkButton
                                         Grid.Column="6"
-                                        Command="{Binding ElementName=HistoryRoot, Path=ViewModel.CopyCommand}"
+                                        Command="{Binding ElementName=HistoryRoot, Path=ViewModel.CopyCommand, Mode=OneTime}"
                                         CommandParameter="{Binding}"
-                                        Content="{Binding ElementName=HistoryRoot, Path=Copy}"
+                                        Content="{Binding ElementName=HistoryRoot, Path=Copy, Mode=OneTime}"
                                         IsEnabled="{Binding ElementName=HistoryRoot, Path=ViewModel.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
                                         Style="{StaticResource HyperlinkButtonStyle}"
-                                        ToolTipService.ToolTip="{Binding ElementName=HistoryRoot, Path=CopyToolTip}" />
+                                        ToolTipService.ToolTip="{Binding ElementName=HistoryRoot, Path=CopyToolTip, Mode=OneTime}" />
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>

@@ -1,6 +1,9 @@
 ﻿using GetStoreAppConsole.Contracts;
 using GetStoreAppConsole.Helpers;
+using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Threading.Tasks;
 using Windows.Globalization;
 
 namespace GetStoreAppConsole.Services

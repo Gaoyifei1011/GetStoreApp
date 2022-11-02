@@ -1,5 +1,6 @@
 ﻿using GetStoreAppConsole.Contracts;
 using GetStoreAppConsole.Helpers;
+using System;
 using Windows.ApplicationModel;
 
 namespace GetStoreAppConsole.Services

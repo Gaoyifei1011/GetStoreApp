@@ -23,7 +23,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Description", "Description"
 		Description\README_ZH-CN.md = Description\README_ZH-CN.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetStoreAppConsole", "GetStoreAppConsole\GetStoreAppConsole.csproj", "{AFB8156D-6D57-4182-BBB7-A2723D04F7E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetStoreAppConsole", "GetStoreAppConsole\GetStoreAppConsole.csproj", "{AFB8156D-6D57-4182-BBB7-A2723D04F7E8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetStoreAppWindowsAPI", "GetStoreAppWindowsAPI\GetStoreAppWindowsAPI.csproj", "{40317A74-86EE-41A0-9E0C-8B9B3BA3E50C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,14 @@ Global
 		{AFB8156D-6D57-4182-BBB7-A2723D04F7E8}.Release|x64.Build.0 = Release|x64
 		{AFB8156D-6D57-4182-BBB7-A2723D04F7E8}.Release|x86.ActiveCfg = Release|x86
 		{AFB8156D-6D57-4182-BBB7-A2723D04F7E8}.Release|x86.Build.0 = Release|x86
+		{40317A74-86EE-41A0-9E0C-8B9B3BA3E50C}.Debug|x64.ActiveCfg = Debug|x64
+		{40317A74-86EE-41A0-9E0C-8B9B3BA3E50C}.Debug|x64.Build.0 = Debug|x64
+		{40317A74-86EE-41A0-9E0C-8B9B3BA3E50C}.Debug|x86.ActiveCfg = Debug|x86
+		{40317A74-86EE-41A0-9E0C-8B9B3BA3E50C}.Debug|x86.Build.0 = Debug|x86
+		{40317A74-86EE-41A0-9E0C-8B9B3BA3E50C}.Release|x64.ActiveCfg = Release|x64
+		{40317A74-86EE-41A0-9E0C-8B9B3BA3E50C}.Release|x64.Build.0 = Release|x64
+		{40317A74-86EE-41A0-9E0C-8B9B3BA3E50C}.Release|x86.ActiveCfg = Release|x86
+		{40317A74-86EE-41A0-9E0C-8B9B3BA3E50C}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -137,7 +137,7 @@
                                     Margin="10,0,0,0"
                                     VerticalAlignment="Center"
                                     Text="{x:Bind HistoryType, Converter={StaticResource TypeNameFormatConverter}}"
-                                    ToolTipService.ToolTip="{Binding HistoryType, Converter={StaticResource TypeNameFormatConverter}}" />
+                                    ToolTipService.ToolTip="{Binding HistoryType, Converter={StaticResource TypeNameFormatConverter}, Mode=OneTime}" />
                                 <TextBlock
                                     Grid.Column="1"
                                     Margin="10,0,0,0"
@@ -153,18 +153,18 @@
                                 <HyperlinkButton
                                     Grid.Column="3"
                                     Margin="10,0,0,0"
-                                    Command="{Binding ElementName=HistoryLiteRoot, Path=ViewModel.FillinCommand}"
+                                    Command="{Binding ElementName=HistoryLiteRoot, Path=ViewModel.FillinCommand, Mode=OneTime}"
                                     CommandParameter="{Binding}"
-                                    Content="{Binding ElementName=HistoryLiteRoot, Path=Fillin}"
+                                    Content="{Binding ElementName=HistoryLiteRoot, Path=Fillin, Mode=OneTime}"
                                     Style="{StaticResource HyperlinkButtonStyle}"
-                                    ToolTipService.ToolTip="{Binding ElementName=HistoryLiteRoot, Path=FillinToolTip}" />
+                                    ToolTipService.ToolTip="{Binding ElementName=HistoryLiteRoot, Path=FillinToolTip, Mode=OneTime}" />
                                 <HyperlinkButton
                                     Grid.Column="4"
-                                    Command="{Binding ElementName=HistoryLiteRoot, Path=ViewModel.CopyCommand}"
+                                    Command="{Binding ElementName=HistoryLiteRoot, Path=ViewModel.CopyCommand, Mode=OneTime}"
                                     CommandParameter="{Binding}"
-                                    Content="{Binding ElementName=HistoryLiteRoot, Path=Copy}"
+                                    Content="{Binding ElementName=HistoryLiteRoot, Path=Copy, Mode=OneTime}"
                                     Style="{StaticResource HyperlinkButtonStyle}"
-                                    ToolTipService.ToolTip="{Binding ElementName=HistoryLiteRoot, Path=CopyToolTip}" />
+                                    ToolTipService.ToolTip="{Binding ElementName=HistoryLiteRoot, Path=CopyToolTip, Mode=OneTime}" />
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

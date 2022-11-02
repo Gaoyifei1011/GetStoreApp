@@ -34,9 +34,9 @@
                             Padding="5,8"
                             HorizontalAlignment="Stretch"
                             HorizontalContentAlignment="Left"
-                            Content="{Binding Key}"
-                            NavigateUri="{Binding Value}"
-                            ToolTipService.ToolTip="{Binding Key, Converter={StaticResource AboutToolTipFormatConverter}, ConverterParameter=Reference}" />
+                            Content="{Binding Key, Mode=OneTime}"
+                            NavigateUri="{Binding Value, Mode=OneTime}"
+                            ToolTipService.ToolTip="{Binding Key, Converter={StaticResource AboutToolTipFormatConverter}, ConverterParameter=Reference, Mode=OneTime}" />
                     </DataTemplate>
                 </controls:AdaptiveGridView.ItemTemplate>
             </controls:AdaptiveGridView>

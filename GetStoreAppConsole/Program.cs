@@ -1,5 +1,7 @@
 ﻿using GetStoreAppConsole.Contracts;
 using GetStoreAppConsole.Helpers;
+using System;
+using System.Threading.Tasks;
 
 namespace GetStoreAppConsole
 {

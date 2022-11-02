@@ -1,4 +1,4 @@
-﻿using Windows.Win32.Foundation;
+﻿using System;
 using WinUIEx;
 
 namespace GetStoreApp.Helpers.Window
@@ -14,7 +14,7 @@ namespace GetStoreApp.Helpers.Window
         public static void ShowAppWindow()
         {
             // 将窗口置于前台前首先获取窗口句柄
-            HWND hwnd = (HWND)WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
+            IntPtr hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
 
             // 判断窗口状态是否处于最大化状态，如果是，直接最大化窗口
             if (PInvoke.User32.IsZoomed(hwnd))

@@ -68,7 +68,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
 
             InitializeLanguageList();
 
-            DefaultAppLanguage = LanguageList.Find(item => item.InternalName.Equals("en-US",StringComparison.OrdinalIgnoreCase));
+            DefaultAppLanguage = LanguageList.Find(item => item.InternalName.Equals("en-US", StringComparison.OrdinalIgnoreCase));
 
             (bool, LanguageModel) LanguageValueResult = await GetLanguageAsync();
 

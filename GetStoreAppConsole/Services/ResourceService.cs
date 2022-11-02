@@ -1,7 +1,9 @@
 ﻿using GetStoreAppConsole.Contracts;
 using GetStoreAppConsole.Strings;
+using System;
 using System.Globalization;
 using System.Resources;
+using System.Threading.Tasks;
 
 namespace GetStoreAppConsole.Services
 {

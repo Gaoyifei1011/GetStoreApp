@@ -2,6 +2,7 @@
 using GetStoreAppConsole.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace GetStoreAppConsole.Helpers
 {
@@ -30,7 +31,7 @@ namespace GetStoreAppConsole.Helpers
             ConfigureServices((context, services) =>
             {
                 services.AddSingleton<IActivationService, ActivationService>();
-                services.AddSingleton<IConfigStoreageService,ConfigStorageService>();
+                services.AddSingleton<IConfigStoreageService, ConfigStorageService>();
                 services.AddSingleton<IConsoleService, ConsoleService>();
                 services.AddSingleton<ILanguageService, LanguageService>();
                 services.AddSingleton<IResourceService, ResourceService>();

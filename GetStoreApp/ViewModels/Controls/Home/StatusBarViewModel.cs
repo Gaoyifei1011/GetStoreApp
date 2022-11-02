@@ -4,11 +4,12 @@ using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.Home;
+using GetStoreAppWindowsAPI.Controls.Taskbar;
+using GetStoreAppWindowsAPI.UI.Controls.Taskbar;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.WindowsAPICodePack.Taskbar;
+using System;
 using System.Collections.Generic;
-using Windows.Win32.Foundation;
 
 namespace GetStoreApp.ViewModels.Controls.Home
 {
@@ -18,7 +19,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         private TaskbarManager Taskbar { get; } = TaskbarManager.Instance;
 
-        private HWND hwnd = (HWND)WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
+        private IntPtr hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
 
         public List<StatusBarStateModel> StatusBarStateList => ResourceService.StatusBarStateList;
 

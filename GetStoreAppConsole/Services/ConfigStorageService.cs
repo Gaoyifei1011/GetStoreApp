@@ -1,4 +1,5 @@
 ﻿using GetStoreAppConsole.Contracts;
+using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace GetStoreAppConsole.Services

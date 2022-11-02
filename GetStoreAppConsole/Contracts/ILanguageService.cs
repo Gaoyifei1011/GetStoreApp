@@ -1,4 +1,7 @@
-﻿namespace GetStoreAppConsole.Contracts
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace GetStoreAppConsole.Contracts
 {
     public interface ILanguageService
     {
