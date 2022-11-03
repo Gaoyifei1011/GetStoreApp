@@ -13,9 +13,9 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
 {
     public class InstallModeViewModel : ObservableRecipient
     {
-        private IInstallModeService InstallModeService { get; } = IOCHelper.GetService<IInstallModeService>();
+        private IInstallModeService InstallModeService { get; } = ContainerHelper.GetInstance<IInstallModeService>();
 
-        private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
+        private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
 
         public List<InstallModeModel> InstallModeList => InstallModeService.InstallModeList;
 

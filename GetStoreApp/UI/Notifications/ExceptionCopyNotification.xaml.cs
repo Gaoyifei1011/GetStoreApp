@@ -8,9 +8,9 @@ namespace GetStoreApp.UI.Notifications
 {
     public sealed partial class ExceptionCopyNotification : StackPanel
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        public ExceptionCopyViewModel ViewModel { get; } = IOCHelper.GetService<ExceptionCopyViewModel>();
+        public ExceptionCopyViewModel ViewModel { get; } = ContainerHelper.GetInstance<ExceptionCopyViewModel>();
 
         public ExceptionCopyNotification(object[] notification)
         {

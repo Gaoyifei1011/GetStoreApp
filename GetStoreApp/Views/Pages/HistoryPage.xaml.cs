@@ -9,9 +9,9 @@ namespace GetStoreApp.Views.Pages
 {
     public sealed partial class HistoryPage : Page
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        public HistoryViewModel ViewModel { get; } = IOCHelper.GetService<HistoryViewModel>();
+        public HistoryViewModel ViewModel { get; } = ContainerHelper.GetInstance<HistoryViewModel>();
 
         public string Fillin => ResourceService.GetLocalized("/History/Fillin");
 

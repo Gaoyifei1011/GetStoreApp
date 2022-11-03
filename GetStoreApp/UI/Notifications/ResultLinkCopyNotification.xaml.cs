@@ -9,9 +9,9 @@ namespace GetStoreApp.UI.Notifications
 {
     public sealed partial class ResultLinkCopyNotification : StackPanel
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        public ResultLinkCopyViewModel ViewModel { get; } = IOCHelper.GetService<ResultLinkCopyViewModel>();
+        public ResultLinkCopyViewModel ViewModel { get; } = ContainerHelper.GetInstance<ResultLinkCopyViewModel>();
 
         public object[] Notification { get; }
 

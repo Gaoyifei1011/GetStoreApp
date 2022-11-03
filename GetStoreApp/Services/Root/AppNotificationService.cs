@@ -19,11 +19,11 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public class AppNotificationService : IAppNotificationService
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        public INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
+        public INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
 
-        public INotificationService NotificationService { get; } = IOCHelper.GetService<INotificationService>();
+        public INotificationService NotificationService { get; } = ContainerHelper.GetInstance<INotificationService>();
 
         ~AppNotificationService()
         {

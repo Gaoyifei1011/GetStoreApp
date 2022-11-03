@@ -28,15 +28,15 @@ namespace GetStoreApp.Services.Controls.Download
 
         private bool IsNetWorkConnected = true;
 
-        private IAria2Service Aria2Service { get; } = IOCHelper.GetService<IAria2Service>();
+        private IAria2Service Aria2Service { get; } = ContainerHelper.GetInstance<IAria2Service>();
 
-        private IDownloadDBService DownloadDBService { get; } = IOCHelper.GetService<IDownloadDBService>();
+        private IDownloadDBService DownloadDBService { get; } = ContainerHelper.GetInstance<IDownloadDBService>();
 
-        private IAppNotificationService AppNotificationService { get; } = IOCHelper.GetService<IAppNotificationService>();
+        private IAppNotificationService AppNotificationService { get; } = ContainerHelper.GetInstance<IAppNotificationService>();
 
-        private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
+        private IDownloadOptionsService DownloadOptionsService { get; } = ContainerHelper.GetInstance<IDownloadOptionsService>();
 
-        private INetWorkMonitorService NetWorkMonitorService { get; } = IOCHelper.GetService<INetWorkMonitorService>();
+        private INetWorkMonitorService NetWorkMonitorService { get; } = ContainerHelper.GetInstance<INetWorkMonitorService>();
 
         // 下载调度器
         private Timer DownloadSchedulerTimer { get; } = new Timer(1000);

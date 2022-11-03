@@ -11,7 +11,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
 {
     public class HistoryLiteConfigViewModel : ObservableRecipient
     {
-        private IHistoryLiteNumService HistoryLiteNumService { get; } = IOCHelper.GetService<IHistoryLiteNumService>();
+        private IHistoryLiteNumService HistoryLiteNumService { get; } = ContainerHelper.GetInstance<IHistoryLiteNumService>();
 
         public List<HistoryLiteNumModel> HistoryLiteNumList => HistoryLiteNumService.HistoryLiteNumList;
 

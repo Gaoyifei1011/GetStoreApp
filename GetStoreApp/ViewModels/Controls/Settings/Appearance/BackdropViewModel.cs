@@ -13,9 +13,9 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
 {
     public partial class BackdropViewModel : ObservableRecipient
     {
-        private IBackdropService BackdropService { get; } = IOCHelper.GetService<IBackdropService>();
+        private IBackdropService BackdropService { get; } = ContainerHelper.GetInstance<IBackdropService>();
 
-        private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
+        private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
 
         public List<BackdropModel> BackdropList => BackdropService.BackdropList;
 

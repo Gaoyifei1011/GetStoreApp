@@ -7,9 +7,9 @@ namespace GetStoreApp.UI.Controls.Home
 {
     public sealed partial class HistoryLiteControl : UserControl
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        public HistoryLiteViewModel ViewModel { get; } = IOCHelper.GetService<HistoryLiteViewModel>();
+        public HistoryLiteViewModel ViewModel { get; } = ContainerHelper.GetInstance<HistoryLiteViewModel>();
 
         public string Fillin => ResourceService.GetLocalized("/Home/Fillin");
 

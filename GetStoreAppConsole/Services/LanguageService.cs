@@ -13,7 +13,7 @@ namespace GetStoreAppConsole.Services
     /// </summary>
     public class LanguageService : ILanguageService
     {
-        private IConfigStoreageService ConfigStorageService { get; } = IOCHelper.GetService<IConfigStoreageService>();
+        private IConfigStoreageService ConfigStorageService { get; } = ContainerHelper.GetInstance<IConfigStoreageService>();
 
         private string SettingsKey { get; init; } = "AppLanguage";
 

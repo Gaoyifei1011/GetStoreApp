@@ -15,7 +15,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
     /// </summary>
     public class LanguageService : ILanguageService
     {
-        private IConfigStorageService ConfigStorageService { get; } = IOCHelper.GetService<IConfigStorageService>();
+        private IConfigStorageService ConfigStorageService { get; } = ContainerHelper.GetInstance<IConfigStorageService>();
 
         private string SettingsKey { get; init; } = "AppLanguage";
 

@@ -17,11 +17,11 @@ namespace GetStoreApp.ViewModels.Shell
 {
     public class TaskBarViewModel : ObservableRecipient
     {
-        private IAria2Service Aria2Service { get; } = IOCHelper.GetService<IAria2Service>();
+        private IAria2Service Aria2Service { get; } = ContainerHelper.GetInstance<IAria2Service>();
 
-        private IDownloadSchedulerService DownloadSchedulerService { get; } = IOCHelper.GetService<IDownloadSchedulerService>();
+        private IDownloadSchedulerService DownloadSchedulerService { get; } = ContainerHelper.GetInstance<IDownloadSchedulerService>();
 
-        private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
+        private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
 
         // 隐藏 / 显示窗口
         public IRelayCommand ShowOrHideWindowCommand => new RelayCommand(() =>

@@ -11,7 +11,7 @@ namespace GetStoreApp.Services.Controls.Settings.Experiment
     /// </summary>
     public class NetWorkMonitorService : INetWorkMonitorService
     {
-        private IConfigStorageService ConfigStorageService { get; } = IOCHelper.GetService<IConfigStorageService>();
+        private IConfigStorageService ConfigStorageService { get; } = ContainerHelper.GetInstance<IConfigStorageService>();
 
         private string SettingsKey { get; init; } = "NetWorkMonitorValue";
 

@@ -34,9 +34,9 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
         private DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
-        private IDownloadSchedulerService DownloadSchedulerService { get; } = IOCHelper.GetService<IDownloadSchedulerService>();
+        private IDownloadSchedulerService DownloadSchedulerService { get; } = ContainerHelper.GetInstance<IDownloadSchedulerService>();
 
-        private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
+        private IDownloadOptionsService DownloadOptionsService { get; } = ContainerHelper.GetInstance<IDownloadOptionsService>();
 
         private DispatcherTimer DownloadingTimer { get; } = new DispatcherTimer();
 

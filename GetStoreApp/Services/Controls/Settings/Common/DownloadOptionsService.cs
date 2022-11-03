@@ -16,9 +16,9 @@ namespace GetStoreApp.Services.Controls.Settings.Common
     /// </summary>
     public class DownloadOptionsService : IDownloadOptionsService
     {
-        private IConfigStorageService ConfigStorageService { get; } = IOCHelper.GetService<IConfigStorageService>();
+        private IConfigStorageService ConfigStorageService { get; } = ContainerHelper.GetInstance<IConfigStorageService>();
 
-        private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
         private string FolderSettingsKey { get; init; } = "DownloadFolder";
 

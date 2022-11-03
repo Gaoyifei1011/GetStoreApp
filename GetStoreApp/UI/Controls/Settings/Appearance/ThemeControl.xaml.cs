@@ -7,9 +7,9 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
 {
     public sealed partial class ThemeControl : UserControl
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        public ThemeViewModel ViewModel { get; } = IOCHelper.GetService<ThemeViewModel>();
+        public ThemeViewModel ViewModel { get; } = ContainerHelper.GetInstance<ThemeViewModel>();
 
         public ThemeControl()
         {

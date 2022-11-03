@@ -7,9 +7,9 @@ namespace GetStoreApp
 {
     public sealed partial class MainWindow : DesktopWindow
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        public MainWindowViewModel ViewModel { get; } = IOCHelper.GetService<MainWindowViewModel>();
+        public MainWindowViewModel ViewModel { get; } = ContainerHelper.GetInstance<MainWindowViewModel>();
 
         public MainWindow()
         {

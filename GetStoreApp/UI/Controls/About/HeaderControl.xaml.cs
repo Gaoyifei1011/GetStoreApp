@@ -7,9 +7,9 @@ namespace GetStoreApp.UI.Controls.About
 {
     public sealed partial class HeaderControl : UserControl
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        public HeaderViewModel ViewModel { get; } = IOCHelper.GetService<HeaderViewModel>();
+        public HeaderViewModel ViewModel { get; } = ContainerHelper.GetInstance<HeaderViewModel>();
 
         public HeaderControl()
         {

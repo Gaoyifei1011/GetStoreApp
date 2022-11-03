@@ -13,9 +13,9 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
 {
     public class ExperimentalConfigViewModel : ObservableRecipient
     {
-        private IAria2Service Aria2Service { get; } = IOCHelper.GetService<IAria2Service>();
+        private IAria2Service Aria2Service { get; } = ContainerHelper.GetInstance<IAria2Service>();
 
-        private INetWorkMonitorService NetWorkMonitorService = IOCHelper.GetService<INetWorkMonitorService>();
+        private INetWorkMonitorService NetWorkMonitorService = ContainerHelper.GetInstance<INetWorkMonitorService>();
 
         private DispatcherTimer DisplayTimer = new DispatcherTimer();
 

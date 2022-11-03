@@ -15,7 +15,7 @@ namespace GetStoreApp.Services.Controls.Download
     /// </summary>
     public class DownloadDBService : IDownloadDBService
     {
-        private IDataBaseService DataBaseService { get; } = IOCHelper.GetService<IDataBaseService>();
+        private IDataBaseService DataBaseService { get; } = ContainerHelper.GetInstance<IDataBaseService>();
 
         /// <summary>
         /// 检查是否有下载异常的记录，并将对应的下载状态值复原

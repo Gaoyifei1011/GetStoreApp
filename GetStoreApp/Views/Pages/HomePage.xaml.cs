@@ -9,9 +9,9 @@ namespace GetStoreApp.Views.Pages
 {
     public sealed partial class HomePage : Page
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        public HomeViewModel ViewModel { get; } = IOCHelper.GetService<HomeViewModel>();
+        public HomeViewModel ViewModel { get; } = ContainerHelper.GetInstance<HomeViewModel>();
 
         public HomePage()
         {

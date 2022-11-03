@@ -15,7 +15,7 @@ namespace GetStoreApp.ViewModels.Dialogs.Web
 {
     public class CoreWebView2FailedViewModel : ObservableRecipient
     {
-        private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
         public string ProcessFailedKind { get; set; }
 

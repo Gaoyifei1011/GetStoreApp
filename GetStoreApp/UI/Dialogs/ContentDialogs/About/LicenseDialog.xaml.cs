@@ -10,11 +10,11 @@ namespace GetStoreApp.UI.Dialogs.ContentDialogs.About
 {
     public sealed partial class LicenseDialog : ContentDialog
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        public IThemeService ThemeService { get; } = IOCHelper.GetService<IThemeService>();
+        public IThemeService ThemeService { get; } = ContainerHelper.GetInstance<IThemeService>();
 
-        public LicenseViewModel ViewModel { get; } = IOCHelper.GetService<LicenseViewModel>();
+        public LicenseViewModel ViewModel { get; } = ContainerHelper.GetInstance<LicenseViewModel>();
 
         public ElementTheme DialogTheme => (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
 

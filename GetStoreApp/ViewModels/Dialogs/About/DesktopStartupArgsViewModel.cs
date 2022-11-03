@@ -10,7 +10,7 @@ namespace GetStoreApp.ViewModels.Dialogs.About
 {
     public class DesktopStartupArgsViewModel : ObservableRecipient
     {
-        private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
         public string SampleShort { get; } = @"GetStoreApp.exe ""https://www.microsoft.com/store/productId/9WZDNCRFJBMP""";
 

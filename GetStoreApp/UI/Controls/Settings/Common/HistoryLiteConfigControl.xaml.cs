@@ -7,9 +7,9 @@ namespace GetStoreApp.UI.Controls.Settings.Common
 {
     public sealed partial class HistoryLiteConfigControl : UserControl
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        public HistoryLiteConfigViewModel ViewModel { get; } = IOCHelper.GetService<HistoryLiteConfigViewModel>();
+        public HistoryLiteConfigViewModel ViewModel { get; } = ContainerHelper.GetInstance<HistoryLiteConfigViewModel>();
 
         public HistoryLiteConfigControl()
         {

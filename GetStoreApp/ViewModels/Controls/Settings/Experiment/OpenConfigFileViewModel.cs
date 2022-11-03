@@ -12,7 +12,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Experiment
 {
     public class OpenConfigFileViewModel : ObservableRecipient
     {
-        private IAria2Service Aria2Service { get; } = IOCHelper.GetService<IAria2Service>();
+        private IAria2Service Aria2Service { get; } = ContainerHelper.GetInstance<IAria2Service>();
 
         [DllImport("shell32.dll", ExactSpelling = true)]
         private static extern void ILFree(IntPtr pidlList);

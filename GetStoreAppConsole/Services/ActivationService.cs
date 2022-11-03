@@ -6,9 +6,9 @@ namespace GetStoreAppConsole.Services
 {
     public class ActivationService : IActivationService
     {
-        private ILanguageService LanguageService { get; } = IOCHelper.GetService<ILanguageService>();
+        private ILanguageService LanguageService { get; } = ContainerHelper.GetInstance<ILanguageService>();
 
-        private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
         /// <summary>
         /// 初始化控制台设置

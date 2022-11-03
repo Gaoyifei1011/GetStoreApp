@@ -15,7 +15,7 @@ namespace GetStoreApp.Services.Controls.History
     /// </summary>
     public class HistoryDBService : IHistoryDBService
     {
-        private IDataBaseService DataBaseService { get; } = IOCHelper.GetService<IDataBaseService>();
+        private IDataBaseService DataBaseService { get; } = ContainerHelper.GetInstance<IDataBaseService>();
 
         /// <summary>
         /// 判断历史记录表是否为空

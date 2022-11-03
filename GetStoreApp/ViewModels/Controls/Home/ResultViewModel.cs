@@ -30,15 +30,15 @@ namespace GetStoreApp.ViewModels.Controls.Home
         // 临界区资源访问互斥锁
         private readonly object ResultDataListLock = new object();
 
-        private IDownloadDBService DownloadDBService { get; } = IOCHelper.GetService<IDownloadDBService>();
+        private IDownloadDBService DownloadDBService { get; } = ContainerHelper.GetInstance<IDownloadDBService>();
 
-        private IDownloadSchedulerService DownloadSchedulerService { get; } = IOCHelper.GetService<IDownloadSchedulerService>();
+        private IDownloadSchedulerService DownloadSchedulerService { get; } = ContainerHelper.GetInstance<IDownloadSchedulerService>();
 
-        private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
+        private IDownloadOptionsService DownloadOptionsService { get; } = ContainerHelper.GetInstance<IDownloadOptionsService>();
 
-        private INetWorkMonitorService NetWorkMonitorService { get; } = IOCHelper.GetService<INetWorkMonitorService>();
+        private INetWorkMonitorService NetWorkMonitorService { get; } = ContainerHelper.GetInstance<INetWorkMonitorService>();
 
-        private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
+        private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
 
         public ObservableCollection<ResultModel> ResultDataList { get; } = new ObservableCollection<ResultModel>();
 

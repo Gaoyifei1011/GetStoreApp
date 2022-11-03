@@ -7,7 +7,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
 {
     public class TopMostViewModel : ObservableRecipient
     {
-        private ITopMostService TopMostService { get; } = IOCHelper.GetService<ITopMostService>();
+        private ITopMostService TopMostService { get; } = ContainerHelper.GetInstance<ITopMostService>();
 
         private bool _topMostValue;
 

@@ -10,7 +10,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
 {
     public class ThemeViewModel : ObservableRecipient
     {
-        private IThemeService ThemeService { get; } = IOCHelper.GetService<IThemeService>();
+        private IThemeService ThemeService { get; } = ContainerHelper.GetInstance<IThemeService>();
 
         public List<ThemeModel> ThemeList => ThemeService.ThemeList;
 

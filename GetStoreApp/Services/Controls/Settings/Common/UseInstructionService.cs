@@ -11,7 +11,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
     /// </summary>
     public class UseInstructionService : IUseInstructionService
     {
-        private IConfigStorageService ConfigStorageService { get; } = IOCHelper.GetService<IConfigStorageService>();
+        private IConfigStorageService ConfigStorageService { get; } = ContainerHelper.GetInstance<IConfigStorageService>();
 
         private string SettingsKey { get; init; } = "UseInsVisValue";
 

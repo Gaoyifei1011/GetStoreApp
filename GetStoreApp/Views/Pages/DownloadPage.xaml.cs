@@ -8,9 +8,9 @@ namespace GetStoreApp.Views.Pages
 {
     public sealed partial class DownloadPage : Page
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        public DownloadViewModel ViewModel { get; } = IOCHelper.GetService<DownloadViewModel>();
+        public DownloadViewModel ViewModel { get; } = ContainerHelper.GetInstance<DownloadViewModel>();
 
         public DownloadPage()
         {

@@ -35,15 +35,15 @@ namespace GetStoreApp.ViewModels.Controls.Download
         // 获取UI主线程
         private DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
-        private IDownloadDBService DownloadDBService { get; } = IOCHelper.GetService<IDownloadDBService>();
+        private IDownloadDBService DownloadDBService { get; } = ContainerHelper.GetInstance<IDownloadDBService>();
 
-        private IAppNotificationService AppNotificationService { get; } = IOCHelper.GetService<IAppNotificationService>();
+        private IAppNotificationService AppNotificationService { get; } = ContainerHelper.GetInstance<IAppNotificationService>();
 
-        private IDownloadSchedulerService DownloadSchedulerService { get; } = IOCHelper.GetService<IDownloadSchedulerService>();
+        private IDownloadSchedulerService DownloadSchedulerService { get; } = ContainerHelper.GetInstance<IDownloadSchedulerService>();
 
-        private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
+        private IDownloadOptionsService DownloadOptionsService { get; } = ContainerHelper.GetInstance<IDownloadOptionsService>();
 
-        private IInstallModeService InstallModeService { get; } = IOCHelper.GetService<IInstallModeService>();
+        private IInstallModeService InstallModeService { get; } = ContainerHelper.GetInstance<IInstallModeService>();
 
         public ObservableCollection<CompletedModel> CompletedDataList { get; } = new ObservableCollection<CompletedModel>();
 

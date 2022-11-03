@@ -12,7 +12,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
     /// </summary>
     public class TopMostService : ITopMostService
     {
-        private IConfigStorageService ConfigStorageService { get; } = IOCHelper.GetService<IConfigStorageService>();
+        private IConfigStorageService ConfigStorageService { get; } = ContainerHelper.GetInstance<IConfigStorageService>();
 
         private string SettingsKey { get; init; } = "TopMostValue";
 

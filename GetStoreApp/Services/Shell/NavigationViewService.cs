@@ -17,8 +17,8 @@ namespace GetStoreApp.Services.Shell
     {
         private NavigationView _navigationView;
 
-        private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
-        private IPageService PageService { get; } = IOCHelper.GetService<IPageService>();
+        private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
+        private IPageService PageService { get; } = ContainerHelper.GetInstance<IPageService>();
 
         public IList<object> MenuItems => _navigationView.MenuItems;
 

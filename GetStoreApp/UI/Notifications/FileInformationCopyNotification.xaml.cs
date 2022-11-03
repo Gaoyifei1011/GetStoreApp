@@ -8,9 +8,9 @@ namespace GetStoreApp.UI.Notifications
 {
     public sealed partial class FileInformationCopyNotification : StackPanel
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        public FileInformationCopyViewModel ViewModel { get; } = IOCHelper.GetService<FileInformationCopyViewModel>();
+        public FileInformationCopyViewModel ViewModel { get; } = ContainerHelper.GetInstance<FileInformationCopyViewModel>();
 
         public FileInformationCopyNotification(object[] notification)
         {

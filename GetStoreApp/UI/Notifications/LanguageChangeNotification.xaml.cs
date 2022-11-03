@@ -8,9 +8,9 @@ namespace GetStoreApp.UI.Notifications
 {
     public sealed partial class LanguageChangeNotification : StackPanel
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        public LanguageChangeViewModel ViewModel { get; } = IOCHelper.GetService<LanguageChangeViewModel>();
+        public LanguageChangeViewModel ViewModel { get; } = ContainerHelper.GetInstance<LanguageChangeViewModel>();
 
         public LanguageChangeNotification(object[] notification)
         {

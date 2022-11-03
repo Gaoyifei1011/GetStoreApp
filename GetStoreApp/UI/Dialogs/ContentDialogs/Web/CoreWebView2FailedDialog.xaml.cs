@@ -11,11 +11,11 @@ namespace GetStoreApp.UI.Dialogs.ContentDialogs.Web
 {
     public sealed partial class CoreWebView2FailedDialog : ContentDialog
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        public IThemeService ThemeService { get; } = IOCHelper.GetService<IThemeService>();
+        public IThemeService ThemeService { get; } = ContainerHelper.GetInstance<IThemeService>();
 
-        public CoreWebView2FailedViewModel ViewModel { get; } = IOCHelper.GetService<CoreWebView2FailedViewModel>();
+        public CoreWebView2FailedViewModel ViewModel { get; } = ContainerHelper.GetInstance<CoreWebView2FailedViewModel>();
 
         public ElementTheme DialogTheme => (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
 

@@ -13,9 +13,9 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
 {
     public class RestartAppsViewModel : ObservableRecipient
     {
-        private IAria2Service Aria2Service { get; } = IOCHelper.GetService<IAria2Service>();
+        private IAria2Service Aria2Service { get; } = ContainerHelper.GetInstance<IAria2Service>();
 
-        private IDownloadSchedulerService DownloadSchedulerService { get; } = IOCHelper.GetService<IDownloadSchedulerService>();
+        private IDownloadSchedulerService DownloadSchedulerService { get; } = ContainerHelper.GetInstance<IDownloadSchedulerService>();
 
         // 重启应用
         public IRelayCommand RestartAppsCommand => new RelayCommand<ContentDialog>(async (dialog) =>

@@ -23,49 +23,49 @@ namespace GetStoreApp.Services.Root
     {
         private UIElement Shell = null;
 
-        private ActivationHandler<LaunchActivatedEventArgs> DefaultHandler { get; } = IOCHelper.GetService<ActivationHandler<LaunchActivatedEventArgs>>();
+        private ActivationHandler<LaunchActivatedEventArgs> DefaultHandler { get; } = ContainerHelper.GetInstance<ActivationHandler<LaunchActivatedEventArgs>>();
 
-        private IEnumerable<IActivationHandler> ActivationHandlers { get; } = IOCHelper.GetService<IEnumerable<IActivationHandler>>();
+        private IEnumerable<IActivationHandler> ActivationHandlers { get; } = ContainerHelper.GetInstance<IEnumerable<IActivationHandler>>();
 
-        private IAppNotificationService AppNotificationService { get; } = IOCHelper.GetService<IAppNotificationService>();
+        private IAppNotificationService AppNotificationService { get; } = ContainerHelper.GetInstance<IAppNotificationService>();
 
-        private IDataBaseService DataBaseService { get; } = IOCHelper.GetService<IDataBaseService>();
+        private IDataBaseService DataBaseService { get; } = ContainerHelper.GetInstance<IDataBaseService>();
 
-        private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        private IStartupArgsService StartupArgsService { get; } = IOCHelper.GetService<IStartupArgsService>();
+        private IStartupArgsService StartupArgsService { get; } = ContainerHelper.GetInstance<IStartupArgsService>();
 
-        private IAria2Service Aria2Service { get; } = IOCHelper.GetService<IAria2Service>();
+        private IAria2Service Aria2Service { get; } = ContainerHelper.GetInstance<IAria2Service>();
 
-        private IDownloadDBService DownloadDBService { get; } = IOCHelper.GetService<IDownloadDBService>();
+        private IDownloadDBService DownloadDBService { get; } = ContainerHelper.GetInstance<IDownloadDBService>();
 
-        private IDownloadSchedulerService DownloadSchedulerService { get; } = IOCHelper.GetService<IDownloadSchedulerService>();
+        private IDownloadSchedulerService DownloadSchedulerService { get; } = ContainerHelper.GetInstance<IDownloadSchedulerService>();
 
-        private IAppExitService AppExitService { get; } = IOCHelper.GetService<IAppExitService>();
+        private IAppExitService AppExitService { get; } = ContainerHelper.GetInstance<IAppExitService>();
 
-        private IInstallModeService InstallModeService { get; } = IOCHelper.GetService<IInstallModeService>();
+        private IInstallModeService InstallModeService { get; } = ContainerHelper.GetInstance<IInstallModeService>();
 
-        private IBackdropService BackdropService { get; } = IOCHelper.GetService<IBackdropService>();
+        private IBackdropService BackdropService { get; } = ContainerHelper.GetInstance<IBackdropService>();
 
-        private ILanguageService LanguageService { get; } = IOCHelper.GetService<ILanguageService>();
+        private ILanguageService LanguageService { get; } = ContainerHelper.GetInstance<ILanguageService>();
 
-        private IThemeService ThemeService { get; } = IOCHelper.GetService<IThemeService>();
+        private IThemeService ThemeService { get; } = ContainerHelper.GetInstance<IThemeService>();
 
-        private ITopMostService TopMostService { get; } = IOCHelper.GetService<ITopMostService>();
+        private ITopMostService TopMostService { get; } = ContainerHelper.GetInstance<ITopMostService>();
 
-        private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
+        private IDownloadOptionsService DownloadOptionsService { get; } = ContainerHelper.GetInstance<IDownloadOptionsService>();
 
-        private IHistoryLiteNumService HistoryLiteNumService { get; } = IOCHelper.GetService<IHistoryLiteNumService>();
+        private IHistoryLiteNumService HistoryLiteNumService { get; } = ContainerHelper.GetInstance<IHistoryLiteNumService>();
 
-        private ILinkFilterService LinkFilterService { get; } = IOCHelper.GetService<ILinkFilterService>();
+        private ILinkFilterService LinkFilterService { get; } = ContainerHelper.GetInstance<ILinkFilterService>();
 
-        private INotificationService NotificationService { get; } = IOCHelper.GetService<INotificationService>();
+        private INotificationService NotificationService { get; } = ContainerHelper.GetInstance<INotificationService>();
 
-        private IRegionService RegionService { get; } = IOCHelper.GetService<IRegionService>();
+        private IRegionService RegionService { get; } = ContainerHelper.GetInstance<IRegionService>();
 
-        private IUseInstructionService UseInstructionService { get; } = IOCHelper.GetService<IUseInstructionService>();
+        private IUseInstructionService UseInstructionService { get; } = ContainerHelper.GetInstance<IUseInstructionService>();
 
-        private INetWorkMonitorService NetWorkMonitorService { get; } = IOCHelper.GetService<INetWorkMonitorService>();
+        private INetWorkMonitorService NetWorkMonitorService { get; } = ContainerHelper.GetInstance<INetWorkMonitorService>();
 
         public async Task ActivateAsync(object activationArgs)
         {
@@ -75,7 +75,7 @@ namespace GetStoreApp.Services.Root
             // 新建导航视图的Frame窗口
             if (App.MainWindow.Content == null)
             {
-                Shell = IOCHelper.GetService<ShellPage>();
+                Shell = ContainerHelper.GetInstance<ShellPage>();
                 App.MainWindow.Content = Shell ?? new Frame();
             }
 

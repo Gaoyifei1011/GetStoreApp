@@ -15,7 +15,7 @@ namespace GetStoreApp.ViewModels.Dialogs.Download
 {
     public class FileInformationViewModel : ObservableRecipient
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
         public string FileName { get; set; }
 

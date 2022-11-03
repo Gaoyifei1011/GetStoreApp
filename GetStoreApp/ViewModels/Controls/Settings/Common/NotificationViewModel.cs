@@ -7,7 +7,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
 {
     public class NotificationViewModel : ObservableRecipient
     {
-        private INotificationService NotificationService { get; } = IOCHelper.GetService<INotificationService>();
+        private INotificationService NotificationService { get; } = ContainerHelper.GetInstance<INotificationService>();
 
         private bool _notification;
 

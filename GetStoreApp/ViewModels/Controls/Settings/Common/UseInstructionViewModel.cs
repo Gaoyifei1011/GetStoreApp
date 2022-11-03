@@ -7,7 +7,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
 {
     public class UseInstructionViewModel : ObservableRecipient
     {
-        private IUseInstructionService UseInstructionService { get; } = IOCHelper.GetService<IUseInstructionService>();
+        private IUseInstructionService UseInstructionService { get; } = ContainerHelper.GetInstance<IUseInstructionService>();
 
         private bool _useInsVisValue;
 

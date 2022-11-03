@@ -15,7 +15,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 {
     public class StatusBarViewModel : ObservableRecipient
     {
-        private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
         private TaskbarManager Taskbar { get; } = TaskbarManager.Instance;
 

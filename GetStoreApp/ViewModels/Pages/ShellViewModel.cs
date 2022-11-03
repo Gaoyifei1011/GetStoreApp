@@ -10,9 +10,9 @@ namespace GetStoreApp.ViewModels.Pages
 {
     public class ShellViewModel : ObservableRecipient
     {
-        public INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
+        public INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
 
-        public INavigationViewService NavigationViewService { get; } = IOCHelper.GetService<INavigationViewService>();
+        public INavigationViewService NavigationViewService { get; } = ContainerHelper.GetInstance<INavigationViewService>();
 
         private bool _isBackEnabled;
 

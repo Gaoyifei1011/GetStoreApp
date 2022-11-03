@@ -10,9 +10,9 @@ namespace GetStoreApp.Views.Pages
 {
     public sealed partial class SettingsPage : Page
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        public SettingsViewModel ViewModel { get; } = IOCHelper.GetService<SettingsViewModel>();
+        public SettingsViewModel ViewModel { get; } = ContainerHelper.GetInstance<SettingsViewModel>();
 
         public SettingsPage()
         {

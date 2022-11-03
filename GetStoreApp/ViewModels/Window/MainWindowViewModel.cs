@@ -18,13 +18,13 @@ namespace GetStoreApp.ViewModels.Window
 {
     public class MainWindowViewModel : ObservableRecipient
     {
-        private IAria2Service Aria2Service { get; } = IOCHelper.GetService<IAria2Service>();
+        private IAria2Service Aria2Service { get; } = ContainerHelper.GetInstance<IAria2Service>();
 
-        private IAppExitService AppExitService { get; } = IOCHelper.GetService<IAppExitService>();
+        private IAppExitService AppExitService { get; } = ContainerHelper.GetInstance<IAppExitService>();
 
-        private IDownloadSchedulerService DownloadSchedulerService { get; } = IOCHelper.GetService<IDownloadSchedulerService>();
+        private IDownloadSchedulerService DownloadSchedulerService { get; } = ContainerHelper.GetInstance<IDownloadSchedulerService>();
 
-        private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
+        private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
 
         /// <summary>
         /// 关闭窗口之后关闭其他服务

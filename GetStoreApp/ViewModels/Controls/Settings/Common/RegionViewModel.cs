@@ -9,7 +9,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
 {
     public class RegionViewModel : ObservableRecipient
     {
-        private IRegionService RegionService { get; } = IOCHelper.GetService<IRegionService>();
+        private IRegionService RegionService { get; } = ContainerHelper.GetInstance<IRegionService>();
 
         public List<RegionModel> RegionList => RegionService.RegionList;
 

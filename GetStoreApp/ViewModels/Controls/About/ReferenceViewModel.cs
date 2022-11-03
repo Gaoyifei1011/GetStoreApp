@@ -10,6 +10,7 @@ namespace GetStoreApp.ViewModels.Controls.About
         {
             {"Aira2","https://aria2.github.io" },
             {"Aria2.NET","https://github.com/rogerfar/Aria2.NET" },
+            {"Autofac","https://autofac.org" },
             { "CommandLineParser","https://github.com/commandlineparser/commandline"},
             {"CommunityToolkit.Mvvm","https://github.com/CommunityToolkit/WindowsCommunityToolkit" },
             {"CommunityToolkit.WinUI.Notifications","https://www.nuget.org/packages/CommunityToolkit.WinUI.Notifications" },
@@ -18,7 +19,6 @@ namespace GetStoreApp.ViewModels.Controls.About
             {"H.NotifyIcon.WinUI","https://github.com/HavenDV/H.NotifyIcon" },
             {"HtmlAgilityPack","http://html-agility-pack.net" },
             {"Microsoft.Data.Sqlite.Core","https://docs.microsoft.com/dotnet/standard/data/sqlite" },
-            {"Microsoft.Extensions.Hosting","https://www.nuget.org/packages/Microsoft.Extensions.Hosting" },
             {"Microsoft.Windows.CsWinRT","https://github.com/microsoft/cswinrt" },
             {"Microsoft.Windows.SDK.BuildTools","https://www.nuget.org/packages/Microsoft.Windows.SDK.BuildTools" },
             {"Microsoft.WindowsAppSDK","https://github.com/microsoft/windowsappsdk" },

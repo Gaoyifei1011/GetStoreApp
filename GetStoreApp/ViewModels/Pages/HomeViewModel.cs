@@ -11,9 +11,9 @@ namespace GetStoreApp.ViewModels.Pages
 {
     public class HomeViewModel : ObservableRecipient, INavigationAware
     {
-        private IUseInstructionService UseInstructionService { get; } = IOCHelper.GetService<IUseInstructionService>();
+        private IUseInstructionService UseInstructionService { get; } = ContainerHelper.GetInstance<IUseInstructionService>();
 
-        private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
+        private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
 
         private bool _useInsVisValue;
 

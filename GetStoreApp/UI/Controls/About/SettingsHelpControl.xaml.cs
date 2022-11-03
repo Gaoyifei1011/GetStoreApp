@@ -7,9 +7,9 @@ namespace GetStoreApp.UI.Controls.About
 {
     public sealed partial class SettingsHelpControl : UserControl
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        public SettingsHelpViewModel ViewModel { get; } = IOCHelper.GetService<SettingsHelpViewModel>();
+        public SettingsHelpViewModel ViewModel { get; } = ContainerHelper.GetInstance<SettingsHelpViewModel>();
 
         public SettingsHelpControl()
         {

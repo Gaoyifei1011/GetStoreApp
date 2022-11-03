@@ -6,7 +6,7 @@ namespace GetStoreApp.UI.Notifications
 {
     public sealed partial class NetWorkErrorNotification : StackPanel
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
         public NetWorkErrorNotification()
         {

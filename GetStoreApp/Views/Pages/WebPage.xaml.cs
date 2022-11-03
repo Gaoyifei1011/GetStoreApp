@@ -8,9 +8,9 @@ namespace GetStoreApp.Views.Pages
 {
     public sealed partial class WebPage : Page
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        public WebViewModel ViewModel { get; } = IOCHelper.GetService<WebViewModel>();
+        public WebViewModel ViewModel { get; } = ContainerHelper.GetInstance<WebViewModel>();
 
         public WebPage()
         {

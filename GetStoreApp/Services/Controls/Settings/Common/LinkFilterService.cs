@@ -11,7 +11,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
     /// </summary>
     public class LinkFilterService : ILinkFilterService
     {
-        private IConfigStorageService ConfigStorageService { get; } = IOCHelper.GetService<IConfigStorageService>();
+        private IConfigStorageService ConfigStorageService { get; } = ContainerHelper.GetInstance<IConfigStorageService>();
 
         private string StartWithESettingsKey { get; init; } = "StartsWithEFilterValue";
 

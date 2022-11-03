@@ -7,9 +7,9 @@ namespace GetStoreApp.UI.Controls.About
 {
     public sealed partial class ReferenceControl : UserControl
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        public ReferenceViewModel ViewModel { get; } = IOCHelper.GetService<ReferenceViewModel>();
+        public ReferenceViewModel ViewModel { get; } = ContainerHelper.GetInstance<ReferenceViewModel>();
 
         public ReferenceControl()
         {

@@ -13,10 +13,10 @@ namespace GetStoreAppConsole
 
         public static async Task Main(string[] args)
         {
-            IOCHelper.InitializeService();
+            ContainerHelper.InitializeContainer();
 
-            ActivationService = IOCHelper.GetService<IActivationService>();
-            ConsoleService = IOCHelper.GetService<IConsoleService>();
+            ActivationService = ContainerHelper.GetInstance<IActivationService>();
+            ConsoleService = ContainerHelper.GetInstance<IConsoleService>();
 
             await ActivationService.ActivateAsync();
             ConsoleService.InitializeDescription();

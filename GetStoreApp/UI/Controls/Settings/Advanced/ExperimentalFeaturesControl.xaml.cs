@@ -7,9 +7,9 @@ namespace GetStoreApp.UI.Controls.Settings.Advanced
 {
     public sealed partial class ExperimentalFeaturesControl : UserControl
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        public ExperimentalFeaturesViewModel ViewModel { get; } = IOCHelper.GetService<ExperimentalFeaturesViewModel>();
+        public ExperimentalFeaturesViewModel ViewModel { get; } = ContainerHelper.GetInstance<ExperimentalFeaturesViewModel>();
 
         public ExperimentalFeaturesControl()
         {

@@ -12,7 +12,7 @@ namespace GetStoreApp.Converters.Checks
     /// </summary>
     public class FileExistTextCheckConverter : IValueConverter
     {
-        private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {

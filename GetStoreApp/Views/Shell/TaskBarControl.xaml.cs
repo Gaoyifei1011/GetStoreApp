@@ -12,11 +12,11 @@ namespace GetStoreApp.Views.Shell
 {
     public sealed partial class TaskBarControl : TaskbarIcon
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        public IThemeService ThemeService { get; } = IOCHelper.GetService<IThemeService>();
+        public IThemeService ThemeService { get; } = ContainerHelper.GetInstance<IThemeService>();
 
-        public TaskBarViewModel ViewModel { get; } = IOCHelper.GetService<TaskBarViewModel>();
+        public TaskBarViewModel ViewModel { get; } = ContainerHelper.GetInstance<TaskBarViewModel>();
 
         public ElementTheme TrayTheme => (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
 

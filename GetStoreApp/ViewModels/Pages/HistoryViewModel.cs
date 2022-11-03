@@ -28,11 +28,11 @@ namespace GetStoreApp.ViewModels.Pages
         // 临界区资源访问互斥锁
         private readonly object HistoryDataListLock = new object();
 
-        private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        private IHistoryDBService HistoryDBService { get; } = IOCHelper.GetService<IHistoryDBService>();
+        private IHistoryDBService HistoryDBService { get; } = ContainerHelper.GetInstance<IHistoryDBService>();
 
-        private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
+        private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
 
         public List<TypeModel> TypeList => ResourceService.TypeList;
 

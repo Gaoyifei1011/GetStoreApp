@@ -12,9 +12,9 @@ namespace GetStoreApp.Converters.Formats
     /// </summary>
     public class FileNameToolTipFormatConverter : IValueConverter
     {
-        private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        private IDownloadOptionsService DownloadOptionsService { get; } = IOCHelper.GetService<IDownloadOptionsService>();
+        private IDownloadOptionsService DownloadOptionsService { get; } = ContainerHelper.GetInstance<IDownloadOptionsService>();
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {

@@ -14,9 +14,9 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
     /// </summary>
     public class ThemeService : IThemeService
     {
-        private IConfigStorageService ConfigStorageService { get; } = IOCHelper.GetService<IConfigStorageService>();
+        private IConfigStorageService ConfigStorageService { get; } = ContainerHelper.GetInstance<IConfigStorageService>();
 
-        private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
         private string SettingsKey { get; init; } = "AppTheme";
 

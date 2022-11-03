@@ -10,11 +10,11 @@ namespace GetStoreApp.UI.Dialogs.ContentDialogs.Settings
 {
     public sealed partial class RestartAppsDialog : ContentDialog
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        public IThemeService ThemeService { get; } = IOCHelper.GetService<IThemeService>();
+        public IThemeService ThemeService { get; } = ContainerHelper.GetInstance<IThemeService>();
 
-        public RestartAppsViewModel ViewModel { get; } = IOCHelper.GetService<RestartAppsViewModel>();
+        public RestartAppsViewModel ViewModel { get; } = ContainerHelper.GetInstance<RestartAppsViewModel>();
 
         public ElementTheme DialogTheme => (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
 

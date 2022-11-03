@@ -53,6 +53,7 @@
 
 > * [Aira2](https://aria2.github.io)&emsp;
 > * [Aria2.NET](https://github.com/rogerfar/Aria2.NET)&emsp;
+> * [Autofac](https://autofac.org)&emsp;
 > * [CommandLineParser](https://github.com/commandlineparser/commandline)&emsp;
 > * [CommunityToolkit.Mvvm](https://github.com/CommunityToolkit/WindowsCommunityToolkit)&emsp;
 > * [CommunityToolkit.WinUI.Notifications](https://www.nuget.org/packages/CommunityToolkit.WinUI.Notifications)&emsp;
@@ -61,7 +62,6 @@
 > * [H.NotifyIcon.WinUI](https://github.com/HavenDV/H.NotifyIcon)&emsp;
 > * [HtmlAgilityPack](http://html-agility-pack.net)&emsp;
 > * [Microsoft.Data.Sqlite.Core](https://docs.microsoft.com/dotnet/standard/data/sqlite)&emsp;
-> * [Microsoft.Extensions.Hosting](https://www.nuget.org/packages/Microsoft.Extensions.Hosting)&emsp;
 > * [Microsoft.Windows.CsWinRT](https://github.com/microsoft/cswinrt)&emsp;
 > * [Microsoft.Windows.SDK.BuildTools](https://www.nuget.org/packages/Microsoft.Windows.SDK.BuildTools)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;

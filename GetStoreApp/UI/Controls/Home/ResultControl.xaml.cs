@@ -7,9 +7,9 @@ namespace GetStoreApp.UI.Controls.Home
 {
     public sealed partial class ResultControl : UserControl
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        public ResultViewModel ViewModel { get; } = IOCHelper.GetService<ResultViewModel>();
+        public ResultViewModel ViewModel { get; } = ContainerHelper.GetInstance<ResultViewModel>();
 
         public string Copy => ResourceService.GetLocalized("/Home/Copy");
 

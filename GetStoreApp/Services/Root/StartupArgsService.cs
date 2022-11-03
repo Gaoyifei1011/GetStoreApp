@@ -11,7 +11,7 @@ namespace GetStoreApp.Services.Root
 {
     public class StartupArgsService : IStartupArgsService
     {
-        private IResourceService ResoureService = IOCHelper.GetService<IResourceService>();
+        private IResourceService ResoureService = ContainerHelper.GetInstance<IResourceService>();
 
         private readonly string CommandParameter = "getstoreapp:///";
 

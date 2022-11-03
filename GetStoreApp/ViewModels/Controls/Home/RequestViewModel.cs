@@ -18,15 +18,15 @@ namespace GetStoreApp.ViewModels.Controls.Home
 {
     public class RequestViewModel : ObservableRecipient
     {
-        private IRegionService RegionService { get; } = IOCHelper.GetService<IRegionService>();
+        private IRegionService RegionService { get; } = ContainerHelper.GetInstance<IRegionService>();
 
-        private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        private IStartupArgsService StartupArgsService { get; } = IOCHelper.GetService<IStartupArgsService>();
+        private IStartupArgsService StartupArgsService { get; } = ContainerHelper.GetInstance<IStartupArgsService>();
 
-        private IHistoryDBService HistoryDBService { get; } = IOCHelper.GetService<IHistoryDBService>();
+        private IHistoryDBService HistoryDBService { get; } = ContainerHelper.GetInstance<IHistoryDBService>();
 
-        private ILinkFilterService LinkFilterService { get; } = IOCHelper.GetService<ILinkFilterService>();
+        private ILinkFilterService LinkFilterService { get; } = ContainerHelper.GetInstance<ILinkFilterService>();
 
         public List<TypeModel> TypeList => ResourceService.TypeList;
 

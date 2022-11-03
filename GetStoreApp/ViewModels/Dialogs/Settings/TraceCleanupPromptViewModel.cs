@@ -17,9 +17,9 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
 {
     public class TraceCleanupPromptViewModel : ObservableRecipient
     {
-        private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        private ITraceCleanupService TraceCleanupService { get; } = IOCHelper.GetService<ITraceCleanupService>();
+        private ITraceCleanupService TraceCleanupService { get; } = ContainerHelper.GetInstance<ITraceCleanupService>();
 
         public List<TraceCleanupModel> TraceCleanupList { get; set; }
 

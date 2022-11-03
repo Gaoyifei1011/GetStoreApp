@@ -11,9 +11,9 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
 {
     public class LinkFilterViewModel : ObservableRecipient
     {
-        private ILinkFilterService LinkFilterService { get; } = IOCHelper.GetService<ILinkFilterService>();
+        private ILinkFilterService LinkFilterService { get; } = ContainerHelper.GetInstance<ILinkFilterService>();
 
-        private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
+        private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
 
         private bool _startsWithEFilterValue;
 

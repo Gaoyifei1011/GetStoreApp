@@ -17,13 +17,13 @@ namespace GetStoreApp
 {
     public partial class App : Application
     {
-        private IActivationService ActivationService { get; }
+        private IActivationService ActivationService { get; set; }
 
-        private IResourceService ResourceService { get; }
+        private IResourceService ResourceService { get; set; }
 
-        public IAria2Service Aria2Service { get; }
+        public IAria2Service Aria2Service { get; set; }
 
-        public IDownloadSchedulerService DownloadSchedulerService { get; }
+        public IDownloadSchedulerService DownloadSchedulerService { get; set; }
 
         public static WindowEx MainWindow { get; } = new MainWindow();
 
@@ -36,13 +36,6 @@ namespace GetStoreApp
         public App()
         {
             InitializeComponent();
-            IOCHelper.InitializeService();
-
-            ActivationService = IOCHelper.GetService<IActivationService>();
-            ResourceService = IOCHelper.GetService<IResourceService>();
-            Aria2Service = IOCHelper.GetService<IAria2Service>();
-            DownloadSchedulerService = IOCHelper.GetService<IDownloadSchedulerService>();
-
             UnhandledException += OnUnhandledException;
         }
 
@@ -52,6 +45,14 @@ namespace GetStoreApp
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
             base.OnLaunched(args);
+
+            ContainerHelper.InitializeContainer();
+
+            ActivationService = ContainerHelper.GetInstance<IActivationService>();
+            ResourceService = ContainerHelper.GetInstance<IResourceService>();
+            Aria2Service = ContainerHelper.GetInstance<IAria2Service>();
+            DownloadSchedulerService = ContainerHelper.GetInstance<IDownloadSchedulerService>();
+
             await RunSingleInstanceAppAsync();
             await ActivationService.ActivateAsync(args);
         }

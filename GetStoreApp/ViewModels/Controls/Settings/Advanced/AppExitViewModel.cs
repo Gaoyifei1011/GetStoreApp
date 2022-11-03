@@ -9,7 +9,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
 {
     public class AppExitViewModel : ObservableRecipient
     {
-        private IAppExitService AppExitService { get; } = IOCHelper.GetService<IAppExitService>();
+        private IAppExitService AppExitService { get; } = ContainerHelper.GetInstance<IAppExitService>();
 
         public List<AppExitModel> AppExitList => AppExitService.AppExitList;
 

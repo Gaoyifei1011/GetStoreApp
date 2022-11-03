@@ -8,9 +8,9 @@ namespace GetStoreApp.UI.Notifications
 {
     public sealed partial class DownloadCreateNotification : StackPanel
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        public DownloadCreateViewModel ViewModel { get; } = IOCHelper.GetService<DownloadCreateViewModel>();
+        public DownloadCreateViewModel ViewModel { get; } = ContainerHelper.GetInstance<DownloadCreateViewModel>();
 
         public DownloadCreateNotification(object[] notification)
         {

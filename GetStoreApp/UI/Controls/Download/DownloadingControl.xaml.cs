@@ -7,9 +7,9 @@ namespace GetStoreApp.UI.Controls.Download
 {
     public sealed partial class DownloadingControl : UserControl
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        public DownloadingViewModel ViewModel { get; } = IOCHelper.GetService<DownloadingViewModel>();
+        public DownloadingViewModel ViewModel { get; } = ContainerHelper.GetInstance<DownloadingViewModel>();
 
         public string WaitDownload => ResourceService.GetLocalized("/Download/WaitDownload");
 

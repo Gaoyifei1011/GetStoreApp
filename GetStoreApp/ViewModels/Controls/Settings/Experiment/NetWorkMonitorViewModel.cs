@@ -9,7 +9,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Experiment
 {
     public class NetWorkMonitorViewModel : ObservableRecipient
     {
-        private INetWorkMonitorService NetWorkMonitorService { get; } = IOCHelper.GetService<INetWorkMonitorService>();
+        private INetWorkMonitorService NetWorkMonitorService { get; } = ContainerHelper.GetInstance<INetWorkMonitorService>();
 
         private bool _netWorkMonitorValue;
 

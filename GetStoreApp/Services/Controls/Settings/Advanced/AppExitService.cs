@@ -13,9 +13,9 @@ namespace GetStoreApp.Services.Controls.Settings.Advanced
     /// </summary>
     public class AppExitService : IAppExitService
     {
-        private IConfigStorageService ConfigStorageService { get; } = IOCHelper.GetService<IConfigStorageService>();
+        private IConfigStorageService ConfigStorageService { get; } = ContainerHelper.GetInstance<IConfigStorageService>();
 
-        private IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
         private string SettingsKey { get; init; } = "AppExit";
 

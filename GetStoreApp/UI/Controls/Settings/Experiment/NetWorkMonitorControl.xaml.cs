@@ -7,9 +7,9 @@ namespace GetStoreApp.UI.Controls.Settings.Experiment
 {
     public sealed partial class NetWorkMonitorControl : UserControl
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        public NetWorkMonitorViewModel ViewModel { get; } = IOCHelper.GetService<NetWorkMonitorViewModel>();
+        public NetWorkMonitorViewModel ViewModel { get; } = ContainerHelper.GetInstance<NetWorkMonitorViewModel>();
 
         public NetWorkMonitorControl()
         {

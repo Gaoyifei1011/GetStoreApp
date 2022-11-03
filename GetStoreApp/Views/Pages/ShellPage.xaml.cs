@@ -13,11 +13,11 @@ namespace GetStoreApp.Views.Pages
 {
     public sealed partial class ShellPage : Page
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        public INotificationService NotificationService { get; } = IOCHelper.GetService<INotificationService>();
+        public INotificationService NotificationService { get; } = ContainerHelper.GetInstance<INotificationService>();
 
-        public ShellViewModel ViewModel { get; } = IOCHelper.GetService<ShellViewModel>();
+        public ShellViewModel ViewModel { get; } = ContainerHelper.GetInstance<ShellViewModel>();
 
         public ShellPage()
         {

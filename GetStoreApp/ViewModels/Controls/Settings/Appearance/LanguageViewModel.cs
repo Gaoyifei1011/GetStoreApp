@@ -16,9 +16,9 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
 {
     public class LanguageViewModel : ObservableRecipient
     {
-        private ILanguageService LanguageService { get; } = IOCHelper.GetService<ILanguageService>();
+        private ILanguageService LanguageService { get; } = ContainerHelper.GetInstance<ILanguageService>();
 
-        private INavigationService NavigationService { get; } = IOCHelper.GetService<INavigationService>();
+        private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
 
         public List<LanguageModel> LanguageList => LanguageService.LanguageList;
 

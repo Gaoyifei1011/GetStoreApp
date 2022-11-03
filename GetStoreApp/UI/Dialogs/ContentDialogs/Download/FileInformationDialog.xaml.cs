@@ -11,11 +11,11 @@ namespace GetStoreApp.UI.Dialogs.ContentDialogs.Download
 {
     public sealed partial class FileInformationDialog : ContentDialog
     {
-        public IResourceService ResourceService { get; } = IOCHelper.GetService<IResourceService>();
+        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        public IThemeService ThemeService { get; } = IOCHelper.GetService<IThemeService>();
+        public IThemeService ThemeService { get; } = ContainerHelper.GetInstance<IThemeService>();
 
-        public FileInformationViewModel ViewModel { get; } = IOCHelper.GetService<FileInformationViewModel>();
+        public FileInformationViewModel ViewModel { get; } = ContainerHelper.GetInstance<FileInformationViewModel>();
 
         public ElementTheme DialogTheme => (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
 
