@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using GetStoreAppConsole.Contracts;
+using GetStoreAppConsole.Extensions.DataType.Enums;
 using GetStoreAppConsole.Services;
 using System;
 using static PInvoke.User32;
@@ -29,7 +30,7 @@ namespace GetStoreAppConsole.Helpers
 
                 if (Result == MessageBoxResult.IDOK)
                 {
-                    Environment.Exit(1);
+                    Environment.Exit(Convert.ToInt32(AppExitCode.Failed));
                 }
             }
 

@@ -8,6 +8,7 @@ using GetStoreApp.Contracts.Services.Controls.Settings.Common;
 using GetStoreApp.Contracts.Services.Controls.Settings.Experiment;
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.History;
 using GetStoreApp.Services.Controls.Settings.Advanced;
@@ -76,7 +77,7 @@ namespace GetStoreApp.Helpers.Root
 
                 if (Result == MessageBoxResult.IDOK)
                 {
-                    Environment.Exit(1);
+                    Environment.Exit(Convert.ToInt32(AppExitCode.Failed));
                 }
             }
 

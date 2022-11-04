@@ -1,13 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Controls.Download;
 using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
+using GetStoreApp.Messages;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
 using GetStoreApp.ViewModels.Pages;
 using GetStoreApp.Views.Pages;
-using H.NotifyIcon;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
@@ -50,7 +52,7 @@ namespace GetStoreApp.ViewModels.Shell
         });
 
         // 退出应用
-        public IRelayCommand ExitCommand => new RelayCommand<TaskbarIcon>(async (appNotifyIcon) =>
+        public IRelayCommand ExitCommand => new RelayCommand(async () =>
         {
             // 下载队列存在任务时，弹出对话窗口确认是否要关闭窗口
             if (DownloadSchedulerService.DownloadingList.Count > 0 || DownloadSchedulerService.WaitingList.Count > 0)
@@ -67,15 +69,14 @@ namespace GetStoreApp.ViewModels.Shell
 
                     if (result == ContentDialogResult.Primary)
                     {
-                        await CloseApp(appNotifyIcon);
+                        await CloseApp();
                     }
-                    if (result == ContentDialogResult.Secondary)
+                    else if (result == ContentDialogResult.Secondary)
                     {
                         if (NavigationService.Frame.CurrentSourcePageType != typeof(DownloadPage))
                         {
                             NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
                         }
-                        return;
                     }
 
                     App.IsDialogOpening = false;
@@ -83,19 +84,19 @@ namespace GetStoreApp.ViewModels.Shell
             }
             else
             {
-                await CloseApp(appNotifyIcon);
+                await CloseApp();
             }
         });
 
         /// <summary>
         /// 关闭应用并释放所有资源
         /// </summary>
-        private async Task CloseApp(TaskbarIcon appTaskbarIcon)
+        private async Task CloseApp()
         {
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
             await Aria2Service.CloseAria2Async();
-            appTaskbarIcon.Dispose();
-            WindowHelper.CloseWindow();
+            WeakReferenceMessenger.Default.Send(new TrayIconDisposeMessage(true));
+            Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
         }
     }
 }

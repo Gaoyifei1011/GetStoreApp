@@ -5,7 +5,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:notifyicon="using:H.NotifyIcon"
-    x:Name="AppNotifyIcon"
     ContextMenuMode="PopupMenu"
     DoubleClickCommand="{x:Bind ViewModel.ShowOrHideWindowCommand}"
     IconSource="ms-appx:///Assets/Logo/GetStoreApp.ico"
@@ -31,7 +30,6 @@
             <MenuFlyoutSeparator />
             <MenuFlyoutItem
                 Command="{x:Bind ViewModel.ExitCommand}"
-                CommandParameter="{x:Bind AppNotifyIcon}"
                 Icon="Cancel"
                 Text="{x:Bind ResourceService.GetLocalized('Exit')}"
                 ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('Exit')}" />

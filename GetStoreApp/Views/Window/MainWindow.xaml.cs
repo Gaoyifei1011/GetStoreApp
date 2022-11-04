@@ -1,11 +1,11 @@
 ﻿using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.ViewModels.Window;
-using GetStoreApp.Views.Window;
+using WinUIEx;
 
 namespace GetStoreApp
 {
-    public sealed partial class MainWindow : DesktopWindow
+    public sealed partial class MainWindow : WindowEx
     {
         public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 

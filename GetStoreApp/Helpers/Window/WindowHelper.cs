@@ -1,5 +1,6 @@
 ﻿using System;
 using WinUIEx;
+using static PInvoke.User32;
 
 namespace GetStoreApp.Helpers.Window
 {
@@ -17,7 +18,7 @@ namespace GetStoreApp.Helpers.Window
             IntPtr hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
 
             // 判断窗口状态是否处于最大化状态，如果是，直接最大化窗口
-            if (PInvoke.User32.IsZoomed(hwnd))
+            if (IsZoomed(hwnd))
             {
                 App.MainWindow.Maximize();
             }
@@ -50,14 +51,6 @@ namespace GetStoreApp.Helpers.Window
         public static void SetAppTopMost(bool topMostValue)
         {
             App.MainWindow.IsAlwaysOnTop = topMostValue;
-        }
-
-        /// <summary>
-        /// 关闭应用窗口
-        /// </summary>
-        public static void CloseWindow()
-        {
-            App.MainWindow.Close();
         }
     }
 }

@@ -12,12 +12,6 @@ namespace GetStoreAppWindowsAPI.Dialogs.FileDialog.Native
             [MarshalAs(UnmanagedType.LPStruct)] Guid riid);
 
         /// <summary>
-        /// 获取一个前台窗口的句柄（用户当前工作的窗口）
-        /// </summary>
-        [DllImport("user32.dll")]
-        public static extern IntPtr GetForegroundWindow();
-
-        /// <summary>
         /// 0x800704C7
         /// </summary>
         public static int ERROR_CANCELLED { get; } = BitConverter.ToInt32(BitConverter.GetBytes(0x800704C7), 0);

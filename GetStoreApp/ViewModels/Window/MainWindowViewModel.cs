@@ -3,16 +3,18 @@ using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Controls.Download;
 using GetStoreApp.Contracts.Services.Controls.Settings.Advanced;
 using GetStoreApp.Contracts.Services.Shell;
-using GetStoreApp.Extensions.DataType.Events;
+using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
 using GetStoreApp.Messages;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
 using GetStoreApp.ViewModels.Pages;
 using GetStoreApp.Views.Pages;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
+using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Window
 {
@@ -29,18 +31,10 @@ namespace GetStoreApp.ViewModels.Window
         /// <summary>
         /// 关闭窗口之后关闭其他服务
         /// </summary>
-        public async void WindowClosed()
+        public async void WindowClosed(object sender, WindowEventArgs args)
         {
-            await DownloadSchedulerService.CloseDownloadSchedulerAsync();
-            await Aria2Service.CloseAria2Async();
-            WeakReferenceMessenger.Default.Send(new TrayIconDisposeMessage(true));
-        }
+            args.Handled = true;
 
-        /// <summary>
-        /// 关闭窗口时，如果还有正在下载的任务，弹出对话框询问
-        /// </summary>
-        public async void WindowClosing(object sender, WindowClosingEventArgs args)
-        {
             if (AppExitService.AppExit.InternalName == AppExitService.AppExitList[0].InternalName)
             {
                 WindowHelper.HideAppWindow();
@@ -59,7 +53,7 @@ namespace GetStoreApp.ViewModels.Window
 
                         if (result == ContentDialogResult.Primary)
                         {
-                            args.TryCloseWindow();
+                            await CloseApp();
                         }
                         else if (result == ContentDialogResult.Secondary)
                         {
@@ -74,9 +68,20 @@ namespace GetStoreApp.ViewModels.Window
                 }
                 else
                 {
-                    args.TryCloseWindow();
+                    await CloseApp();
                 }
             }
+        }
+
+        /// <summary>
+        /// 关闭应用并释放所有资源
+        /// </summary>
+        private async Task CloseApp()
+        {
+            await DownloadSchedulerService.CloseDownloadSchedulerAsync();
+            await Aria2Service.CloseAria2Async();
+            WeakReferenceMessenger.Default.Send(new TrayIconDisposeMessage(true));
+            Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
         }
     }
 }

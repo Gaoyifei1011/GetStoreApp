@@ -1,6 +1,7 @@
 ﻿using GetStoreAppWindowsAPI.Dialogs.FileDialog.Native;
 using System;
 using System.Runtime.InteropServices;
+using static PInvoke.User32;
 
 namespace GetStoreAppWindowsAPI.UI.Dialogs.FileDialog
 {
@@ -36,7 +37,7 @@ namespace GetStoreAppWindowsAPI.UI.Dialogs.FileDialog
             {
                 if (hwnd == IntPtr.Zero)
                 {
-                    hwnd = NativeMethods.GetForegroundWindow();
+                    hwnd = GetForegroundWindow();
                 }
 
                 FILEOPENDIALOGOPTIONS option = dialog.GetOptions();

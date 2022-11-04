@@ -1,4 +1,5 @@
 ﻿using GetStoreAppConsole.Contracts;
+using GetStoreAppConsole.Extensions.DataType.Enums;
 using GetStoreAppConsole.Helpers;
 using System;
 using System.Threading.Tasks;
@@ -24,7 +25,7 @@ namespace GetStoreAppConsole
             await Windows.System.Launcher.LaunchUriAsync(new Uri("getstoreapp://"));
 
             // 退出应用程序
-            Environment.Exit(0);
+            Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
         }
     }
 }

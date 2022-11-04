@@ -1,11 +1,18 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Controls.Download;
+using GetStoreApp.Contracts.Services.Controls.Settings.Advanced;
 using GetStoreApp.Contracts.Services.Root;
+using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
 using GetStoreApp.Messages;
+using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
+using GetStoreApp.ViewModels.Pages;
+using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Diagnostics;
@@ -47,14 +54,21 @@ namespace GetStoreApp
             base.OnLaunched(args);
 
             ContainerHelper.InitializeContainer();
+            InitializeService();
 
+            await RunSingleInstanceAppAsync();
+            await ActivationService.ActivateAsync(args);
+        }
+
+        /// <summary>
+        /// 初始化服务
+        /// </summary>
+        private void InitializeService()
+        {
             ActivationService = ContainerHelper.GetInstance<IActivationService>();
             ResourceService = ContainerHelper.GetInstance<IResourceService>();
             Aria2Service = ContainerHelper.GetInstance<IAria2Service>();
             DownloadSchedulerService = ContainerHelper.GetInstance<IDownloadSchedulerService>();
-
-            await RunSingleInstanceAppAsync();
-            await ActivationService.ActivateAsync(args);
         }
 
         /// <summary>
