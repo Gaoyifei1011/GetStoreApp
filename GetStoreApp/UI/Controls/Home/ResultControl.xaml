@@ -2,6 +2,7 @@
     x:Class="GetStoreApp.UI.Controls.Home.ResultControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:GetStoreApp.Views.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:formats="using:GetStoreApp.Converters.Formats"
     xmlns:home="using:GetStoreApp.Models.Controls.Home"
@@ -283,16 +284,15 @@
                             VerticalAlignment="Center"
                             Text="{x:Bind FileSize}"
                             ToolTipService.ToolTip="{x:Bind FileSize}" />
-                        <DropDownButton
+                        <controls:ResultDropDownButton
                             Grid.Column="5"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
                             Content="{Binding ElementName=ResultRoot, Path=Copy, Mode=OneTime}"
                             IsEnabled="{Binding ElementName=ResultRoot, Path=ViewModel.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
-                            Style="{StaticResource DropDownButtonStyle}"
                             ToolTipService.ToolTip="{Binding ElementName=ResultRoot, Path=CopyOptionsToolTip, Mode=OneTime}">
 
-                            <DropDownButton.Flyout>
+                            <controls:ResultDropDownButton.Flyout>
                                 <MenuFlyout Placement="Bottom">
                                     <MenuFlyoutItem
                                         Command="{Binding ElementName=ResultRoot, Path=ViewModel.CopyLinkCommand, Mode=OneTime}"
@@ -305,8 +305,8 @@
                                         Text="{Binding ElementName=ResultRoot, Path=CopyContent, Mode=OneTime}"
                                         ToolTipService.ToolTip="{Binding ElementName=ResultRoot, Path=CopyContentToolTip, Mode=OneTime}" />
                                 </MenuFlyout>
-                            </DropDownButton.Flyout>
-                        </DropDownButton>
+                            </controls:ResultDropDownButton.Flyout>
+                        </controls:ResultDropDownButton>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
