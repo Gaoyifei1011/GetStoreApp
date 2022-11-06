@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Controls.Settings.Appearance;
 using GetStoreApp.Helpers.Root;
+using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.Settings.Appearance;
 using System;
 using System.Collections.Generic;
@@ -28,6 +30,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
             {
                 await ThemeService.SetThemeAsync(Theme);
                 await ThemeService.SetAppThemeAsync();
+                WeakReferenceMessenger.Default.Send(new ThemeChangedMessage(Theme));
             });
 
         // 打开系统主题设置

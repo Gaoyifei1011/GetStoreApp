@@ -22,7 +22,7 @@ namespace GetStoreApp.Views.Pages
         public ShellPage()
         {
             InitializeComponent();
-            App.MainWindow.SetTitleBar(AppTitleBar);
+
             ViewModel.NavigationService.Frame = NavigationFrame;
             ViewModel.NavigationViewService.Initialize(NavigationViewControl);
 

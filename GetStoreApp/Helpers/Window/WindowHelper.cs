@@ -15,10 +15,10 @@ namespace GetStoreApp.Helpers.Window
         public static void ShowAppWindow()
         {
             // 将窗口置于前台前首先获取窗口句柄
-            IntPtr hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
+            IntPtr WindowHandle = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
 
             // 判断窗口状态是否处于最大化状态，如果是，直接最大化窗口
-            if (IsZoomed(hwnd))
+            if (IsZoomed(WindowHandle))
             {
                 App.MainWindow.Maximize();
             }

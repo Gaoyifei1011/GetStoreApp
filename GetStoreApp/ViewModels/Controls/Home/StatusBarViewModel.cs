@@ -19,7 +19,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         private TaskbarManager Taskbar { get; } = TaskbarManager.Instance;
 
-        private IntPtr hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
+        private IntPtr WindowHandle { get; } = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
 
         public List<StatusBarStateModel> StatusBarStateList => ResourceService.StatusBarStateList;
 
@@ -84,11 +84,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
             {
                 if (StatePrRingActValue)
                 {
-                    Taskbar.SetProgressState(TaskbarProgressBarState.Indeterminate, hwnd);
+                    Taskbar.SetProgressState(TaskbarProgressBarState.Indeterminate, WindowHandle);
                 }
                 else
                 {
-                    Taskbar.SetProgressState(TaskbarProgressBarState.NoProgress, hwnd);
+                    Taskbar.SetProgressState(TaskbarProgressBarState.NoProgress, WindowHandle);
                 }
             }
         }

@@ -71,7 +71,6 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
             if (App.MainWindow.Content is FrameworkElement frameworkElement)
             {
                 frameworkElement.RequestedTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme.InternalName);
-                TitleBarHelper.UpdateTitleBar((ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme.InternalName));
             }
             await Task.CompletedTask;
         }

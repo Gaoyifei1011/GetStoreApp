@@ -24,6 +24,7 @@ using GetStoreApp.UI.Controls.Settings.Advanced;
 using GetStoreApp.UI.Controls.Settings.Appearance;
 using GetStoreApp.UI.Controls.Settings.Common;
 using GetStoreApp.UI.Controls.Settings.Experiment;
+using GetStoreApp.UI.Controls.Shell;
 using GetStoreApp.UI.Controls.Web;
 using GetStoreApp.UI.Dialogs.ContentDialogs.About;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Download;
@@ -37,6 +38,7 @@ using GetStoreApp.ViewModels.Controls.Settings.Advanced;
 using GetStoreApp.ViewModels.Controls.Settings.Appearance;
 using GetStoreApp.ViewModels.Controls.Settings.Common;
 using GetStoreApp.ViewModels.Controls.Settings.Experiment;
+using GetStoreApp.ViewModels.Controls.Shell;
 using GetStoreApp.ViewModels.Controls.Web;
 using GetStoreApp.ViewModels.Dialogs.About;
 using GetStoreApp.ViewModels.Dialogs.Download;
@@ -59,7 +61,7 @@ namespace GetStoreApp.Helpers.Root
     /// </summary>
     public static class ContainerHelper
     {
-        public static IContainer Container { get; set; }
+        private static IContainer Container { get; set; }
 
         /// <summary>
         /// 获取已经在IOC容器注册类的实例
@@ -228,6 +230,10 @@ namespace GetStoreApp.Helpers.Root
             Builder.RegisterType<NetWorkMonitorViewModel>().InstancePerDependency();
             Builder.RegisterType<OpenConfigFIleControl>().InstancePerDependency();
             Builder.RegisterType<OpenConfigFileViewModel>().InstancePerDependency();
+
+            // 标题栏控件（MVVM）
+            Builder.RegisterType<AppTitleBarControl>().InstancePerDependency();
+            Builder.RegisterType<AppTitleBarViewModel>().InstancePerDependency();
 
             // 网页界面控件（MVVM）
             Builder.RegisterType<LoadFailedControl>().InstancePerDependency();

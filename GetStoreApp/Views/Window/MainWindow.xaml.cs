@@ -14,7 +14,6 @@ namespace GetStoreApp
         public MainWindow()
         {
             Content = null;
-            ExtendsContentIntoTitleBar = true;
             InitializeComponent();
         }
     }
