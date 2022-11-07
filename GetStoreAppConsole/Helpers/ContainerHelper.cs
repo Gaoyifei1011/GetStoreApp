@@ -2,8 +2,8 @@
 using GetStoreAppConsole.Contracts;
 using GetStoreAppConsole.Extensions.DataType.Enums;
 using GetStoreAppConsole.Services;
+using PInvoke;
 using System;
-using static PInvoke.User32;
 
 namespace GetStoreAppConsole.Helpers
 {
@@ -21,14 +21,14 @@ namespace GetStoreAppConsole.Helpers
         {
             if (!Container.IsRegistered<T>())
             {
-                MessageBoxResult Result = MessageBox(
+                User32.MessageBoxResult Result = User32.MessageBox(
                     WinRT.Interop.WindowNative.GetWindowHandle(IntPtr.Zero),
                     $"应用启动失败。\n{typeof(T)} 需要在ContainerHelper.cs中的InitializeContainer()方法中注册。",
                     "获取商店应用",
-                    MessageBoxOptions.MB_OK | MessageBoxOptions.MB_ICONERROR | MessageBoxOptions.MB_APPLMODAL | MessageBoxOptions.MB_TOPMOST
+                    User32.MessageBoxOptions.MB_OK | User32.MessageBoxOptions.MB_ICONERROR | User32.MessageBoxOptions.MB_APPLMODAL | User32.MessageBoxOptions.MB_TOPMOST
                     );
 
-                if (Result == MessageBoxResult.IDOK)
+                if (Result == User32.MessageBoxResult.IDOK)
                 {
                     Environment.Exit(Convert.ToInt32(AppExitCode.Failed));
                 }
@@ -45,7 +45,6 @@ namespace GetStoreAppConsole.Helpers
             ContainerBuilder Builder = new ContainerBuilder();
 
             Builder.RegisterType<ActivationService>().As<IActivationService>().SingleInstance();
-            Builder.RegisterType<ConfigStorageService>().As<IConfigStoreageService>().SingleInstance();
             Builder.RegisterType<ConsoleService>().As<IConsoleService>().SingleInstance();
             Builder.RegisterType<LanguageService>().As<ILanguageService>().SingleInstance();
             Builder.RegisterType<ResourceService>().As<IResourceService>().SingleInstance();

@@ -1,11 +1,11 @@
-﻿using GetStoreApp.Models.Controls.Home;
+﻿using GetStoreAppCore.Data;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GetStoreApp.Helpers.Controls.Home
+namespace GetStoreAppCore.Html
 {
     /// <summary>
     /// 网页请求
@@ -14,7 +14,7 @@ namespace GetStoreApp.Helpers.Controls.Home
     {
         private const string API = "https://store.rg-adguard.net/api/GetFiles";
 
-        private RequestModel HttpRequestResult;
+        private RequestData HttpRequestResult;
 
         // 数据的请求状态，0是正常状态，1是网络异常（WebException），2是超时异常（TimeOutException），3是其他异常（默认值）
         private int RequestId = 3;
@@ -25,7 +25,7 @@ namespace GetStoreApp.Helpers.Controls.Home
 
         private string RequestExceptionContent = string.Empty;
 
-        public async Task<RequestModel> HttpRequestAsync(string content)
+        public async Task<RequestData> HttpRequestAsync(string content)
         {
             try
             {
@@ -82,7 +82,7 @@ namespace GetStoreApp.Helpers.Controls.Home
             }
             finally
             {
-                HttpRequestResult = new RequestModel
+                HttpRequestResult = new RequestData
                 {
                     RequestId = RequestId,
                     RequestStatusCode = RequestStatusCode,

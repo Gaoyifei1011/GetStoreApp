@@ -38,7 +38,7 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
 
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
             await Aria2Service.CloseAria2Async();
-            WeakReferenceMessenger.Default.Send(new TrayIconDisposeMessage(true));
+            WeakReferenceMessenger.Default.Send(new WindowClosedMessage(true));
 
             // 重启应用
             AppInstance.Restart("");

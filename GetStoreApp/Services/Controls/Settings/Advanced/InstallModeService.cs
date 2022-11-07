@@ -2,6 +2,7 @@
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings.Advanced;
+using GetStoreAppCore.Settings;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,11 +14,9 @@ namespace GetStoreApp.Services.Controls.Settings.Advanced
     /// </summary>
     public class InstallModeService : IInstallModeService
     {
-        private IConfigStorageService ConfigStorageService { get; } = ContainerHelper.GetInstance<IConfigStorageService>();
-
         private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        private string SettingsKey { get; init; } = "InstallMode";
+        private string SettingsKey { get; init; } = ConfigStorage.ConfigKey["InstallModeKey"];
 
         public InstallModeModel DefaultInstallMode { get; set; }
 
@@ -42,7 +41,7 @@ namespace GetStoreApp.Services.Controls.Settings.Advanced
         /// </summary>
         private async Task<InstallModeModel> GetInstallModeAsync()
         {
-            string installMode = await ConfigStorageService.ReadSettingAsync<string>(SettingsKey);
+            string installMode = await ConfigStorage.ReadSettingAsync<string>(SettingsKey);
 
             if (string.IsNullOrEmpty(installMode))
             {
@@ -59,7 +58,7 @@ namespace GetStoreApp.Services.Controls.Settings.Advanced
         {
             InstallMode = installMode;
 
-            await ConfigStorageService.SaveSettingAsync(SettingsKey, installMode.InternalName);
+            await ConfigStorage.SaveSettingAsync(SettingsKey, installMode.InternalName);
         }
     }
 }

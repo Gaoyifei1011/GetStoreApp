@@ -2,6 +2,7 @@
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings.Common;
+using GetStoreAppCore.Settings;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,9 +13,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
     /// </summary>
     public class HistoryLiteNumService : IHistoryLiteNumService
     {
-        private IConfigStorageService ConfigStorageService { get; } = ContainerHelper.GetInstance<IConfigStorageService>();
-
-        private string SettingsKey { get; init; } = "HistoryLiteNum";
+        private string SettingsKey { get; init; } = ConfigStorage.ConfigKey["HistoryLiteNumKey"];
 
         private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
@@ -41,7 +40,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// </summary>
         private async Task<HistoryLiteNumModel> GetHistoryLiteNumAsync()
         {
-            int? historyLiteNumValue = await ConfigStorageService.ReadSettingAsync<int?>(SettingsKey);
+            int? historyLiteNumValue = await ConfigStorage.ReadSettingAsync<int?>(SettingsKey);
 
             if (!historyLiteNumValue.HasValue)
             {
@@ -58,7 +57,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         {
             HistoryLiteNum = historyLiteNum;
 
-            await ConfigStorageService.SaveSettingAsync(SettingsKey, historyLiteNum.HistoryLiteNumValue);
+            await ConfigStorage.SaveSettingAsync(SettingsKey, historyLiteNum.HistoryLiteNumValue);
         }
     }
 }

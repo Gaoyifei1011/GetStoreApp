@@ -1,6 +1,7 @@
 ﻿using GetStoreApp.Contracts.Services.Controls.Settings.Common;
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers.Root;
+using GetStoreAppCore.Settings;
 using System;
 using System.Threading.Tasks;
 
@@ -11,9 +12,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
     /// </summary>
     public class UseInstructionService : IUseInstructionService
     {
-        private IConfigStorageService ConfigStorageService { get; } = ContainerHelper.GetInstance<IConfigStorageService>();
-
-        private string SettingsKey { get; init; } = "UseInsVisValue";
+        private string SettingsKey { get; init; } = ConfigStorage.ConfigKey["UseInstructionKey"];
 
         private bool DefaultUseInsVisValue => true;
 
@@ -32,7 +31,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// </summary>
         private async Task<bool> GetUseInsVisValueAsync()
         {
-            bool? useInsVisValue = await ConfigStorageService.ReadSettingAsync<bool?>(SettingsKey);
+            bool? useInsVisValue = await ConfigStorage.ReadSettingAsync<bool?>(SettingsKey);
 
             if (!useInsVisValue.HasValue)
             {
@@ -49,7 +48,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         {
             UseInsVisValue = useInsVisValue;
 
-            await ConfigStorageService.SaveSettingAsync(SettingsKey, useInsVisValue);
+            await ConfigStorage.SaveSettingAsync(SettingsKey, useInsVisValue);
         }
     }
 }

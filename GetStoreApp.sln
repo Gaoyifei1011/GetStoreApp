@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetStoreAppConsole", "GetSt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetStoreAppWindowsAPI", "GetStoreAppWindowsAPI\GetStoreAppWindowsAPI.csproj", "{40317A74-86EE-41A0-9E0C-8B9B3BA3E50C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetStoreAppCore", "GetStoreAppCore\GetStoreAppCore.csproj", "{FFC70D18-28EF-408A-8751-13A0CD1EA3A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -71,6 +73,14 @@ Global
 		{40317A74-86EE-41A0-9E0C-8B9B3BA3E50C}.Release|x64.Build.0 = Release|x64
 		{40317A74-86EE-41A0-9E0C-8B9B3BA3E50C}.Release|x86.ActiveCfg = Release|x86
 		{40317A74-86EE-41A0-9E0C-8B9B3BA3E50C}.Release|x86.Build.0 = Release|x86
+		{FFC70D18-28EF-408A-8751-13A0CD1EA3A4}.Debug|x64.ActiveCfg = Debug|x64
+		{FFC70D18-28EF-408A-8751-13A0CD1EA3A4}.Debug|x64.Build.0 = Debug|x64
+		{FFC70D18-28EF-408A-8751-13A0CD1EA3A4}.Debug|x86.ActiveCfg = Debug|x86
+		{FFC70D18-28EF-408A-8751-13A0CD1EA3A4}.Debug|x86.Build.0 = Debug|x86
+		{FFC70D18-28EF-408A-8751-13A0CD1EA3A4}.Release|x64.ActiveCfg = Release|x64
+		{FFC70D18-28EF-408A-8751-13A0CD1EA3A4}.Release|x64.Build.0 = Release|x64
+		{FFC70D18-28EF-408A-8751-13A0CD1EA3A4}.Release|x86.ActiveCfg = Release|x86
+		{FFC70D18-28EF-408A-8751-13A0CD1EA3A4}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

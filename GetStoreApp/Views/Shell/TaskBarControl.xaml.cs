@@ -24,19 +24,14 @@ namespace GetStoreApp.Views.Shell
         {
             InitializeComponent();
 
-            WeakReferenceMessenger.Default.Register<TaskBarControl, TrayIconDisposeMessage>(this, (taskbarControl, trayIconDisposeMessage) =>
+            WeakReferenceMessenger.Default.Register<TaskBarControl, WindowClosedMessage>(this, (taskbarControl, windowClosedMessage) =>
             {
-                if (trayIconDisposeMessage.Value)
+                if (windowClosedMessage.Value)
                 {
                     Dispose();
+                    WeakReferenceMessenger.Default.UnregisterAll(this);
                 }
             });
-        }
-
-        // 控件被卸载时，关闭消息服务
-        public void TaskBarUnloaded(object sender, RoutedEventArgs args)
-        {
-            WeakReferenceMessenger.Default.UnregisterAll(this);
         }
     }
 }

@@ -2,7 +2,7 @@
 using System;
 using System.Diagnostics;
 
-namespace GetStoreAppWindowsAPI.UI.Controls.Taskbar
+namespace GetStoreAppWindowsAPI.Controls
 {
     /// <summary>
     /// 表示窗口任务栏的实例

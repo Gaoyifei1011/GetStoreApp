@@ -2,6 +2,7 @@
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings.Appearance;
+using GetStoreAppCore.Settings;
 using Microsoft.UI.Composition.SystemBackdrops;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,9 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
     /// </summary>
     public class BackdropService : IBackdropService
     {
-        private IConfigStorageService ConfigStorageService { get; } = ContainerHelper.GetInstance<IConfigStorageService>();
-
         private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        private string SettingsKey { get; init; } = "AppBackdrop";
+        private string SettingsKey { get; init; } = ConfigStorage.ConfigKey["BackdropKey"];
 
         private BackdropModel DefaultAppBackdrop { get; set; }
 
@@ -44,7 +43,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// </summary>
         private async Task<BackdropModel> GetBackdropAsync()
         {
-            string backdrop = await ConfigStorageService.ReadSettingAsync<string>(SettingsKey);
+            string backdrop = await ConfigStorage.ReadSettingAsync<string>(SettingsKey);
 
             if (string.IsNullOrEmpty(backdrop))
             {
@@ -61,7 +60,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         {
             AppBackdrop = backdrop;
 
-            await ConfigStorageService.SaveSettingAsync(SettingsKey, backdrop.InternalName);
+            await ConfigStorage.SaveSettingAsync(SettingsKey, backdrop.InternalName);
         }
 
         /// <summary>

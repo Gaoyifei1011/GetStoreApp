@@ -13,7 +13,6 @@ using GetStoreApp.Models.Controls.Home;
 using GetStoreApp.Models.Controls.Settings.Common;
 using GetStoreApp.Models.Notifications;
 using GetStoreApp.ViewModels.Pages;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media.Animation;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -79,7 +78,6 @@ namespace GetStoreApp.ViewModels.Controls.Home
         public HistoryLiteViewModel()
         {
             HistoryLiteItem = HistoryLiteNumService.HistoryLiteNum;
-            App.MainWindow.Closed += OnWindowClosed;
 
             WeakReferenceMessenger.Default.Register<HistoryLiteViewModel, HistoryMessage>(this, async (historyLiteViewModel, historyMessage) =>
             {
@@ -93,6 +91,14 @@ namespace GetStoreApp.ViewModels.Controls.Home
             {
                 HistoryLiteItem = historyLiteNumMessage.Value;
                 await GetHistoryLiteDataListAsync();
+            });
+
+            WeakReferenceMessenger.Default.Register<HistoryLiteViewModel, WindowClosedMessage>(this, (historyLiteViewModel, windowClosedMessage) =>
+            {
+                if (windowClosedMessage.Value)
+                {
+                    WeakReferenceMessenger.Default.UnregisterAll(this);
+                }
             });
         }
 
@@ -116,15 +122,6 @@ namespace GetStoreApp.ViewModels.Controls.Home
                     HistoryLiteDataList.Add(historyRawData);
                 }
             }
-        }
-
-        /// <summary>
-        /// 应用关闭后注销所有消息服务，释放所有资源
-        /// </summary>
-        private void OnWindowClosed(object sender, WindowEventArgs args)
-        {
-            WeakReferenceMessenger.Default.UnregisterAll(this);
-            App.MainWindow.Closed -= OnWindowClosed;
         }
     }
 }

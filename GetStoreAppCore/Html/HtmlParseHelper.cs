@@ -1,9 +1,9 @@
-﻿using GetStoreApp.Models.Controls.Home;
+﻿using GetStoreAppCore.Data;
 using HtmlAgilityPack;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GetStoreApp.Helpers.Controls.Home
+namespace GetStoreAppCore.Html
 {
     /// <summary>
     /// 网页解析
@@ -16,7 +16,7 @@ namespace GetStoreApp.Helpers.Controls.Home
         /// 初始化HtmlParseService类时添加HtmlReqeustService生成的字符串数据
         /// </summary>
         /// <param name="HttpRequestData">HtmlReqeustService生成的数据</param>
-        public HtmlParseHelper(RequestModel HttpRequestData)
+        public HtmlParseHelper(RequestData HttpRequestData)
         {
             HtmlDocument = new HtmlDocument();
 
@@ -37,9 +37,9 @@ namespace GetStoreApp.Helpers.Controls.Home
         /// 解析网页数据中包含的所有信息
         /// Parse all the information contained in the web page data
         /// </summary>
-        public List<ResultModel> HtmlParseLinks()
+        public List<ResultData> HtmlParseLinks()
         {
-            List<ResultModel> ResultDataList = new List<ResultModel>();
+            List<ResultData> ResultDataList = new List<ResultData>();
 
             HtmlNode RequestLinkNode = HtmlDocument.DocumentNode.SelectSingleNode("//table[@class='tftable' and @border='1' and @align='center']");
 
@@ -51,7 +51,7 @@ namespace GetStoreApp.Helpers.Controls.Home
             {
                 HtmlNodeCollection TdNodeList = htmlNode.ChildNodes;
 
-                ResultDataList.Add(new ResultModel
+                ResultDataList.Add(new ResultData
                 {
                     FileName = TdNodeList[0].InnerText,
                     FileLink = TdNodeList[0].SelectSingleNode("a").Attributes["href"].Value,

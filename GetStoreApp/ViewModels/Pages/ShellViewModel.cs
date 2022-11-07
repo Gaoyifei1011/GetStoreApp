@@ -12,7 +12,6 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
-using Microsoft.Win32;
 using System;
 using Windows.UI;
 using Windows.UI.ViewManagement;
@@ -161,7 +160,7 @@ namespace GetStoreApp.ViewModels.Pages
             {
                 if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[0].InternalName)
                 {
-                    SetBackgruondBrush(Convert.ToString(GetRegistryTheme()), BackdropService.AppBackdrop.InternalName);
+                    SetBackgruondBrush(Convert.ToString(RegistryHelper.GetRegistryAppTheme()), BackdropService.AppBackdrop.InternalName);
                 }
             });
         }
@@ -183,11 +182,11 @@ namespace GetStoreApp.ViewModels.Pages
                 }
                 else
                 {
-                    if (GetRegistryTheme() == ElementTheme.Light)
+                    if (RegistryHelper.GetRegistryAppTheme() == ElementTheme.Light)
                     {
                         AppBackgroundBrush = new SolidColorBrush(Color.FromArgb(255, 240, 243, 249));
                     }
-                    else if (GetRegistryTheme() == ElementTheme.Dark)
+                    else if (RegistryHelper.GetRegistryAppTheme() == ElementTheme.Dark)
                     {
                         AppBackgroundBrush = new SolidColorBrush(Color.FromArgb(255, 20, 20, 20));
                     }
@@ -197,18 +196,6 @@ namespace GetStoreApp.ViewModels.Pages
             {
                 AppBackgroundBrush = new SolidColorBrush(Colors.Transparent);
             }
-        }
-
-        /// <summary>
-        /// 获取系统注册表存储的应用主题值
-        /// </summary>
-        public static ElementTheme GetRegistryTheme()
-        {
-            RegistryKey PersonalizeKey = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize");
-
-            int value = Convert.ToInt32(PersonalizeKey.GetValue("AppsUseLightTheme", null));
-
-            return value == 0 ? ElementTheme.Dark : ElementTheme.Light;
         }
     }
 }

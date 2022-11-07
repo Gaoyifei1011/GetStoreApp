@@ -1,5 +1,5 @@
 ﻿using GetStoreAppConsole.Contracts;
-using GetStoreAppConsole.Helpers;
+using GetStoreAppCore.Settings;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -13,15 +13,13 @@ namespace GetStoreAppConsole.Services
     /// </summary>
     public class LanguageService : ILanguageService
     {
-        private IConfigStoreageService ConfigStorageService { get; } = ContainerHelper.GetInstance<IConfigStoreageService>();
-
-        private string SettingsKey { get; init; } = "AppLanguage";
+        private string SettingsKey { get; init; } = ConfigStorage.ConfigKey["LanguageKey"];
 
         public string DefaultConsoleLanguage { get; set; }
 
         public string ConsoleLanguage { get; set; }
 
-        private readonly IReadOnlyList<string> AppLanguagesList = ApplicationLanguages.ManifestLanguages;
+        private IReadOnlyList<string> AppLanguagesList { get; } = ApplicationLanguages.ManifestLanguages;
 
         public List<string> LanguageList { get; set; } = new List<string>();
 
@@ -70,7 +68,7 @@ namespace GetStoreAppConsole.Services
         /// </summary>
         public async Task<string> GetLanguageAsync()
         {
-            string language = await ConfigStorageService.ReadSettingAsync<string>(SettingsKey);
+            string language = await ConfigStorage.ReadSettingAsync<string>(SettingsKey);
 
             // 当前系统的语言值
             string CurrentSystemLanguage = CultureInfo.CurrentCulture.Parent.Name;

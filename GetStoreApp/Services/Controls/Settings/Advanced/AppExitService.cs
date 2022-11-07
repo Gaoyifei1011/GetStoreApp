@@ -2,6 +2,7 @@
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings.Advanced;
+using GetStoreAppCore.Settings;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,11 +14,9 @@ namespace GetStoreApp.Services.Controls.Settings.Advanced
     /// </summary>
     public class AppExitService : IAppExitService
     {
-        private IConfigStorageService ConfigStorageService { get; } = ContainerHelper.GetInstance<IConfigStorageService>();
-
         private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        private string SettingsKey { get; init; } = "AppExit";
+        private string SettingsKey { get; init; } = ConfigStorage.ConfigKey["ExitKey"];
 
         private AppExitModel DefaultAppExit { get; set; }
 
@@ -42,7 +41,7 @@ namespace GetStoreApp.Services.Controls.Settings.Advanced
         /// </summary>
         private async Task<AppExitModel> GetAppExitAsync()
         {
-            string appExit = await ConfigStorageService.ReadSettingAsync<string>(SettingsKey);
+            string appExit = await ConfigStorage.ReadSettingAsync<string>(SettingsKey);
 
             if (string.IsNullOrEmpty(appExit))
             {
@@ -59,7 +58,7 @@ namespace GetStoreApp.Services.Controls.Settings.Advanced
         {
             AppExit = appExit;
 
-            await ConfigStorageService.SaveSettingAsync(SettingsKey, appExit.InternalName);
+            await ConfigStorage.SaveSettingAsync(SettingsKey, appExit.InternalName);
         }
     }
 }

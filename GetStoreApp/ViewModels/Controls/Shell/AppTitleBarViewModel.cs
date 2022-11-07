@@ -9,7 +9,7 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.Win32;
+using PInvoke;
 using System;
 using Windows.Graphics;
 using Windows.UI;
@@ -65,7 +65,7 @@ namespace GetStoreApp.ViewModels.Controls.Shell
             {
                 if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[0].InternalName)
                 {
-                    SetTitleBarButtonColor(App.AppWindow.TitleBar, GetRegistryTheme());
+                    SetTitleBarButtonColor(App.AppWindow.TitleBar, RegistryHelper.GetRegistryAppTheme());
                 }
             });
         }
@@ -77,7 +77,7 @@ namespace GetStoreApp.ViewModels.Controls.Shell
         {
             if (theme == ThemeService.ThemeList[0].InternalName)
             {
-                SetTitleBarButtonColor(App.AppWindow.TitleBar, GetRegistryTheme());
+                SetTitleBarButtonColor(App.AppWindow.TitleBar, RegistryHelper.GetRegistryAppTheme());
             }
             else if (theme == ThemeService.ThemeList[1].InternalName)
             {
@@ -137,20 +137,8 @@ namespace GetStoreApp.ViewModels.Controls.Shell
         private static int GetActualPixel(double pixel)
         {
             var windowHandle = WindowNative.GetWindowHandle(App.MainWindow);
-            var currentDpi = PInvoke.User32.GetDpiForWindow(windowHandle);
+            var currentDpi = User32.GetDpiForWindow(windowHandle);
             return Convert.ToInt32(pixel * (currentDpi / 96.0));
-        }
-
-        /// <summary>
-        /// 获取系统注册表存储的应用主题值
-        /// </summary>
-        private ElementTheme GetRegistryTheme()
-        {
-            RegistryKey PersonalizeKey = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize");
-
-            int value = Convert.ToInt32(PersonalizeKey.GetValue("AppsUseLightTheme", null));
-
-            return value == 0 ? ElementTheme.Dark : ElementTheme.Light;
         }
     }
 }

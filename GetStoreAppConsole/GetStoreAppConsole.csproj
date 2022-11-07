@@ -3,6 +3,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
+    <SupportedOSPlatformVersion>10.0.18362.0</SupportedOSPlatformVersion>
     <RootNamespace>GetStoreAppConsole</RootNamespace>
     <Platforms>x86;x64</Platforms>
     <RuntimeIdentifiers>win10-x86;win10-x64</RuntimeIdentifiers>
@@ -11,8 +12,6 @@
     <FileVersion>0.6.6.0</FileVersion>
     <Copyright>高怡飞</Copyright>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
-    <SignAssembly>False</SignAssembly>
-    <DelaySign>False</DelaySign>
     <IncludeSymbols>False</IncludeSymbols>
     <ImplicitUsings>disable</ImplicitUsings>
     <StartupObject>GetStoreAppConsole.Program</StartupObject>
@@ -51,5 +50,9 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.4.0" />
     <PackageReference Include="PInvoke.User32" Version="0.7.124" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\GetStoreAppCore\GetStoreAppCore.csproj" />
   </ItemGroup>
 </Project>

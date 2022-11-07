@@ -15,7 +15,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Margin="30,15,30,0">
+        <Grid Grid.Row="0" Margin="30,15,30,5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -48,7 +48,6 @@
         <ScrollViewer
             x:Name="AboutScroll"
             Grid.Row="1"
-            Padding="0,5,0,0"
             HorizontalScrollBarVisibility="Disabled"
             HorizontalScrollMode="Disabled"
             VerticalScrollBarVisibility="Auto"

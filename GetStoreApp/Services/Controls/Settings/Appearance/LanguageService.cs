@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Contracts.Services.Controls.Settings.Appearance;
-using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings.Appearance;
+using GetStoreAppCore.Settings;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -15,9 +14,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
     /// </summary>
     public class LanguageService : ILanguageService
     {
-        private IConfigStorageService ConfigStorageService { get; } = ContainerHelper.GetInstance<IConfigStorageService>();
-
-        private string SettingsKey { get; init; } = "AppLanguage";
+        private string SettingsKey { get; init; } = ConfigStorage.ConfigKey["LanguageKey"];
 
         public LanguageModel DefaultAppLanguage { get; set; }
 
@@ -86,7 +83,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// </summary>
         private async Task<(bool, LanguageModel)> GetLanguageAsync()
         {
-            string language = await ConfigStorageService.ReadSettingAsync<string>(SettingsKey);
+            string language = await ConfigStorage.ReadSettingAsync<string>(SettingsKey);
 
             // 当前系统的语言值
             string CurrentSystemLanguage = CultureInfo.CurrentCulture.Parent.Name;
@@ -119,7 +116,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         {
             AppLanguage = language;
 
-            await ConfigStorageService.SaveSettingAsync(SettingsKey, language.InternalName);
+            await ConfigStorage.SaveSettingAsync(SettingsKey, language.InternalName);
 
             SetAppLanguage(language);
         }

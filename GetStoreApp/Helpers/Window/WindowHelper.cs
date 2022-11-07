@@ -1,6 +1,6 @@
-﻿using System;
+﻿using PInvoke;
+using System;
 using WinUIEx;
-using static PInvoke.User32;
 
 namespace GetStoreApp.Helpers.Window
 {
@@ -18,7 +18,7 @@ namespace GetStoreApp.Helpers.Window
             IntPtr WindowHandle = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
 
             // 判断窗口状态是否处于最大化状态，如果是，直接最大化窗口
-            if (IsZoomed(WindowHandle))
+            if (User32.IsZoomed(WindowHandle))
             {
                 App.MainWindow.Maximize();
             }

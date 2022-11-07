@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Contracts.Services.Controls.Settings.Common;
-using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Helpers.Root;
+using GetStoreAppCore.Settings;
 using System;
 using System.Threading.Tasks;
 
@@ -11,9 +10,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
     /// </summary>
     public class NotificatonService : INotificationService
     {
-        private IConfigStorageService ConfigStorageService { get; } = ContainerHelper.GetInstance<IConfigStorageService>();
-
-        private string SettingsKey { get; init; } = "AppNotification";
+        private string SettingsKey { get; init; } = ConfigStorage.ConfigKey["NotificationKey"];
 
         private bool DefaultAppNotification => true;
 
@@ -32,7 +29,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// </summary>
         private async Task<bool> GetNotificationAsync()
         {
-            bool? appNotification = await ConfigStorageService.ReadSettingAsync<bool?>(SettingsKey);
+            bool? appNotification = await ConfigStorage.ReadSettingAsync<bool?>(SettingsKey);
 
             if (!appNotification.HasValue)
             {
@@ -49,7 +46,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         {
             AppNotification = appNotification;
 
-            await ConfigStorageService.SaveSettingAsync(SettingsKey, appNotification);
+            await ConfigStorage.SaveSettingAsync(SettingsKey, appNotification);
         }
     }
 }

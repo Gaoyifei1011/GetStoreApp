@@ -39,6 +39,7 @@
 
         <AutoSuggestBox
             Grid.Column="2"
+            IsEnabled="{x:Bind ViewModel.IsGettingLinks, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
             IsSuggestionListOpen="False"
             PlaceholderText="{x:Bind ViewModel.LinkPlaceHolderText, Mode=OneWay}"
             Text="{x:Bind ViewModel.LinkText, Mode=TwoWay}">

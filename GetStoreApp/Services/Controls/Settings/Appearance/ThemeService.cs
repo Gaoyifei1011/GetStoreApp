@@ -2,6 +2,7 @@
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings.Appearance;
+using GetStoreAppCore.Settings;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
@@ -14,11 +15,9 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
     /// </summary>
     public class ThemeService : IThemeService
     {
-        private IConfigStorageService ConfigStorageService { get; } = ContainerHelper.GetInstance<IConfigStorageService>();
-
         private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        private string SettingsKey { get; init; } = "AppTheme";
+        private string SettingsKey { get; init; } = ConfigStorage.ConfigKey["ThemeKey"];
 
         private ThemeModel DefaultAppTheme { get; set; }
 
@@ -43,7 +42,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// </summary>
         private async Task<ThemeModel> GetThemeAsync()
         {
-            string theme = await ConfigStorageService.ReadSettingAsync<string>(SettingsKey);
+            string theme = await ConfigStorage.ReadSettingAsync<string>(SettingsKey);
 
             if (string.IsNullOrEmpty(theme))
             {
@@ -60,7 +59,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         {
             AppTheme = theme;
 
-            await ConfigStorageService.SaveSettingAsync(SettingsKey, theme.InternalName);
+            await ConfigStorage.SaveSettingAsync(SettingsKey, theme.InternalName);
         }
 
         /// <summary>

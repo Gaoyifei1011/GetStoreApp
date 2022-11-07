@@ -1,8 +1,8 @@
-﻿using GetStoreApp.Models.Controls.Home;
+﻿using GetStoreAppCore.Data;
 using HtmlAgilityPack;
 using System;
 
-namespace GetStoreApp.Helpers.Controls.Home
+namespace GetStoreAppCore.Html
 {
     /// <summary>
     /// 网页请求状态解析服务
@@ -11,7 +11,7 @@ namespace GetStoreApp.Helpers.Controls.Home
     {
         private HtmlDocument HtmlDocument { get; set; }
 
-        public int CheckRequestState(RequestModel HttpRequestData)
+        public int CheckRequestState(RequestData HttpRequestData)
         {
             // 服务器请求异常，返回状态值3
             if (HttpRequestData.RequestId != 0)

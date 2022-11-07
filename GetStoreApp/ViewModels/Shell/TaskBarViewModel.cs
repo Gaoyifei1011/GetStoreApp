@@ -95,7 +95,7 @@ namespace GetStoreApp.ViewModels.Shell
         {
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
             await Aria2Service.CloseAria2Async();
-            WeakReferenceMessenger.Default.Send(new TrayIconDisposeMessage(true));
+            WeakReferenceMessenger.Default.Send(new WindowClosedMessage(true));
             Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
         }
     }

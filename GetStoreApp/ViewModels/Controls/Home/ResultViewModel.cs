@@ -13,6 +13,7 @@ using GetStoreApp.Models.Controls.Home;
 using GetStoreApp.Models.Notifications;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
 using GetStoreApp.ViewModels.Pages;
+using GetStoreAppCore.Data;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
@@ -483,8 +484,6 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public ResultViewModel()
         {
-            App.MainWindow.Closed += OnWindowClosed;
-
             WeakReferenceMessenger.Default.Register<ResultViewModel, ResultControlVisableMessage>(this, (resultViewModel, resultControlVisableMessage) =>
             {
                 resultViewModel.ResultControlVisable = resultControlVisableMessage.Value;
@@ -504,22 +503,28 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
                 lock (ResultDataListLock)
                 {
-                    foreach (ResultModel resultItem in resultDataListMessage.Value)
+                    foreach (ResultData resultItem in resultDataListMessage.Value)
                     {
-                        resultItem.IsSelected = false;
-                        resultViewModel.ResultDataList.Add(resultItem);
+                        resultViewModel.ResultDataList.Add(new ResultModel
+                        {
+                            IsSelected = false,
+                            FileName = resultItem.FileName,
+                            FileLink = resultItem.FileLink,
+                            FileLinkExpireTime = resultItem.FileLinkExpireTime,
+                            FileSHA1 = resultItem.FileSHA1,
+                            FileSize = resultItem.FileSize
+                        });
                     }
                 }
             });
-        }
 
-        /// <summary>
-        /// 应用关闭后注销所有消息服务，释放所有资源
-        /// </summary>
-        private void OnWindowClosed(object sender, WindowEventArgs args)
-        {
-            WeakReferenceMessenger.Default.UnregisterAll(this);
-            App.MainWindow.Closed -= OnWindowClosed;
+            WeakReferenceMessenger.Default.Register<ResultViewModel, WindowClosedMessage>(this, (resultViewModel, windowClosedMessage) =>
+            {
+                if (windowClosedMessage.Value)
+                {
+                    WeakReferenceMessenger.Default.UnregisterAll(this);
+                }
+            });
         }
     }
 }

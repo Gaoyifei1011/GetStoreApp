@@ -3,20 +3,23 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
+    <SupportedOSPlatformVersion>10.0.18362.0</SupportedOSPlatformVersion>
     <RootNamespace>GetStoreApp</RootNamespace>
     <Platforms>x86;x64</Platforms>
     <RuntimeIdentifiers>win10-x86;win10-x64</RuntimeIdentifiers>
     <PublishProfile>Properties\PublishProfiles\win10-$(Platform).pubxml</PublishProfile>
-    <UseWinUI>true</UseWinUI>
-    <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
-    <ApplicationIcon>Assets\Logo\GetStoreApp.ico</ApplicationIcon>
     <Version>0.6.6.0</Version>
     <FileVersion>0.6.6.0</FileVersion>
     <Copyright>高怡飞</Copyright>
-    <GenerateTestArtifacts>True</GenerateTestArtifacts>
-    <StartupObject>GetStoreApp.Program</StartupObject>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <IncludeSymbols>False</IncludeSymbols>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <StartupObject>GetStoreApp.Program</StartupObject>
+    <ApplicationIcon>Assets\Logo\GetStoreApp.ico</ApplicationIcon>
+    <UseWinUI>true</UseWinUI>
+    <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <PackageIcon>GetStoreApp.png</PackageIcon>
   </PropertyGroup>
@@ -165,7 +168,6 @@
     </PackageReference>
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.Core" Version="7.1.2" />
     <PackageReference Include="H.NotifyIcon.WinUI" Version="2.0.73" />
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="6.0.10" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.0">
       <TreatAsUsed>true</TreatAsUsed>
@@ -480,6 +482,7 @@
     <Content Include="LICENSE">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <ProjectReference Include="..\GetStoreAppCore\GetStoreAppCore.csproj" />
     <ProjectReference Include="..\GetStoreAppWindowsAPI\GetStoreAppWindowsAPI.csproj" />
     <Content Update="Assets\Images\CloudflareValidation.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

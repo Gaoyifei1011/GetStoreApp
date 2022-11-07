@@ -8,7 +8,7 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings.Common;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Settings;
 using GetStoreApp.ViewModels.Pages;
-using GetStoreAppWindowsAPI.UI.Dialogs.FileDialog;
+using GetStoreAppWindowsAPI.Dialogs;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;

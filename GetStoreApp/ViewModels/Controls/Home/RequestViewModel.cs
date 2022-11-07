@@ -4,11 +4,12 @@ using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Controls.History;
 using GetStoreApp.Contracts.Services.Controls.Settings.Common;
 using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Helpers.Controls.Home;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.History;
 using GetStoreApp.Models.Controls.Home;
+using GetStoreAppCore.Data;
+using GetStoreAppCore.Html;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
@@ -118,13 +119,19 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             IsGettingLinks = false;
 
-            App.MainWindow.Closed += OnWindowClosed;
-
             WeakReferenceMessenger.Default.Register<RequestViewModel, FillinMessage>(this, (requestViewModel, fillinMessage) =>
             {
                 requestViewModel.SelectedType = TypeList.FindIndex(item => item.InternalName.Equals(fillinMessage.Value.HistoryType));
                 requestViewModel.SelectedChannel = ChannelList.FindIndex(item => item.InternalName.Equals(fillinMessage.Value.HistoryChannel));
                 requestViewModel.LinkText = fillinMessage.Value.HistoryLink;
+            });
+
+            WeakReferenceMessenger.Default.Register<RequestViewModel, WindowClosedMessage>(this, (requestViewModel, windowClosedMessage) =>
+            {
+                if (windowClosedMessage.Value)
+                {
+                    WeakReferenceMessenger.Default.UnregisterAll(this);
+                }
             });
         }
 
@@ -139,7 +146,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             IsGettingLinks = true;
 
-            List<ResultModel> ResultDataList = new List<ResultModel>();
+            List<ResultData> ResultDataList = new List<ResultData>();
 
             if (string.IsNullOrEmpty(LinkText))
             {
@@ -157,20 +164,19 @@ namespace GetStoreApp.ViewModels.Controls.Home
             WeakReferenceMessenger.Default.Send(new StatusBarStateMessage(0));
 
             // 生成请求的内容
-            GenerateContentHelper generateContentService = new GenerateContentHelper();
-            string content = generateContentService.GenerateContent(
+            string generateContent = new GenerateContentHelper().GenerateRequestContent(
                 TypeList[SelectedType].InternalName,
                 LinkText,
                 ChannelList[SelectedChannel].InternalName,
                 RegionService.AppRegion.ISO2);
 
             // 获取网页反馈回的原始数据
-            HtmlRequestHelper htmlRequestService = new HtmlRequestHelper();
-            RequestModel httpRequestData = await htmlRequestService.HttpRequestAsync(content);
+            HtmlRequestHelper htmlRequest = new HtmlRequestHelper();
+            RequestData httpRequestData = await htmlRequest.HttpRequestAsync(generateContent);
 
             // 检查服务器返回获取的状态
-            HtmlRequestStateHelper htmlRequestStateService = new HtmlRequestStateHelper();
-            int state = htmlRequestStateService.CheckRequestState(httpRequestData);
+            HtmlRequestStateHelper htmlRequestState = new HtmlRequestStateHelper();
+            int state = htmlRequestState.CheckRequestState(httpRequestData);
 
             // 设置结果控件的显示状态
             ResultControlVisable = state is 1 or 2;
@@ -180,11 +186,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
             // 成功状态下解析数据，并更新相应的历史记录
             if (state == 1)
             {
-                HtmlParseHelper htmlParseService = new HtmlParseHelper(httpRequestData);
+                HtmlParseHelper htmlParse = new HtmlParseHelper(httpRequestData);
 
-                CategoryId = htmlParseService.HtmlParseCID();
+                CategoryId = htmlParse.HtmlParseCID();
 
-                ResultDataList = htmlParseService.HtmlParseLinks();
+                ResultDataList = htmlParse.HtmlParseLinks();
 
                 ResultListFilter(ref ResultDataList);
 
@@ -227,7 +233,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             return Convert.ToInt64(TimeSpan.TotalSeconds);
         }
 
-        private void ResultListFilter(ref List<ResultModel> resultDataList)
+        private void ResultListFilter(ref List<ResultData> resultDataList)
         {
             // 按要求过滤列表内容
             if (LinkFilterService.StartWithEFilterValue)
@@ -244,15 +250,6 @@ namespace GetStoreApp.ViewModels.Controls.Home
             {
                 resultDataList.RemoveAll(item => item.FileName.EndsWith("blockmap", StringComparison.OrdinalIgnoreCase));
             }
-        }
-
-        /// <summary>
-        /// 应用关闭后注销所有消息服务，释放所有资源
-        /// </summary>
-        private void OnWindowClosed(object sender, WindowEventArgs args)
-        {
-            WeakReferenceMessenger.Default.UnregisterAll(this);
-            App.MainWindow.Closed -= OnWindowClosed;
         }
     }
 }

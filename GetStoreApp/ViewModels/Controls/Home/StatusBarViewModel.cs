@@ -4,9 +4,8 @@ using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.Home;
+using GetStoreAppWindowsAPI.Controls;
 using GetStoreAppWindowsAPI.Controls.Taskbar;
-using GetStoreAppWindowsAPI.UI.Controls.Taskbar;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -63,16 +62,24 @@ namespace GetStoreApp.ViewModels.Controls.Home
         {
             StateInfoText = ResourceService.GetLocalized("/Home/StatusInfoWelcome");
 
-            WeakReferenceMessenger.Default.Register(this, (MessageHandler<StatusBarViewModel, StatusBarStateMessage>)((statusbarViewModel, statusBarStateMessage) =>
+            WeakReferenceMessenger.Default.Register<StatusBarViewModel, StatusBarStateMessage>(this, (statusbarViewModel, statusBarStateMessage) =>
             {
                 statusbarViewModel.InfoBarSeverity = StatusBarStateList[statusBarStateMessage.Value].InfoBarSeverity;
                 statusbarViewModel.StateInfoText = StatusBarStateList[statusBarStateMessage.Value].StateInfoText;
                 statusbarViewModel.StatePrRingVisValue = StatusBarStateList[statusBarStateMessage.Value].StatePrRingVisValue;
                 statusbarViewModel.StatePrRingActValue = StatusBarStateList[statusBarStateMessage.Value].StatePrRingActValue;
-            }));
+            });
+
+            WeakReferenceMessenger.Default.Register<StatusBarViewModel, WindowClosedMessage>(this, (statusbarViewModel, windowClosedMessage) =>
+            {
+                if (windowClosedMessage.Value)
+                {
+                    PropertyChanged -= OnPropertyChanged;
+                    WeakReferenceMessenger.Default.UnregisterAll(this);
+                }
+            });
 
             PropertyChanged += OnPropertyChanged;
-            App.MainWindow.Closed += OnWindowClosed;
         }
 
         /// <summary>
@@ -91,16 +98,6 @@ namespace GetStoreApp.ViewModels.Controls.Home
                     Taskbar.SetProgressState(TaskbarProgressBarState.NoProgress, WindowHandle);
                 }
             }
-        }
-
-        /// <summary>
-        /// 应用关闭后注销所有消息服务，释放所有资源
-        /// </summary>
-        private void OnWindowClosed(object sender, WindowEventArgs args)
-        {
-            WeakReferenceMessenger.Default.UnregisterAll(this);
-            PropertyChanged -= OnPropertyChanged;
-            App.MainWindow.Closed -= OnWindowClosed;
         }
     }
 }

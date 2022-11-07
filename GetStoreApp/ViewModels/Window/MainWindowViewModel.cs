@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Controls.Download;
 using GetStoreApp.Contracts.Services.Controls.Settings.Advanced;
+using GetStoreApp.Contracts.Services.Controls.Settings.Appearance;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
@@ -24,6 +25,8 @@ namespace GetStoreApp.ViewModels.Window
 
         private IAppExitService AppExitService { get; } = ContainerHelper.GetInstance<IAppExitService>();
 
+        private IBackdropService BackdropService { get; } = ContainerHelper.GetInstance<IBackdropService>();
+
         private IDownloadSchedulerService DownloadSchedulerService { get; } = ContainerHelper.GetInstance<IDownloadSchedulerService>();
 
         private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
@@ -34,6 +37,7 @@ namespace GetStoreApp.ViewModels.Window
         public async void WindowClosed(object sender, WindowEventArgs args)
         {
             args.Handled = true;
+            await BackdropService.SetAppBackdropAsync();
 
             if (AppExitService.AppExit.InternalName == AppExitService.AppExitList[0].InternalName)
             {
@@ -80,7 +84,7 @@ namespace GetStoreApp.ViewModels.Window
         {
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
             await Aria2Service.CloseAria2Async();
-            WeakReferenceMessenger.Default.Send(new TrayIconDisposeMessage(true));
+            WeakReferenceMessenger.Default.Send(new WindowClosedMessage(true));
             Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
         }
     }

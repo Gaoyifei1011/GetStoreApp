@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Contracts.Services.Controls.Settings.Appearance;
-using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
+using GetStoreAppCore.Settings;
 using System;
 using System.Threading.Tasks;
 
@@ -12,9 +11,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
     /// </summary>
     public class TopMostService : ITopMostService
     {
-        private IConfigStorageService ConfigStorageService { get; } = ContainerHelper.GetInstance<IConfigStorageService>();
-
-        private string SettingsKey { get; init; } = "TopMostValue";
+        private string SettingsKey { get; init; } = ConfigStorage.ConfigKey["TopMostKey"];
 
         private bool DefaultTopMostValue => false;
 
@@ -33,7 +30,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// </summary>
         private async Task<bool> GetTopMostValueAsync()
         {
-            bool? topMostValue = await ConfigStorageService.ReadSettingAsync<bool?>(SettingsKey);
+            bool? topMostValue = await ConfigStorage.ReadSettingAsync<bool?>(SettingsKey);
 
             if (!topMostValue.HasValue)
             {
@@ -50,7 +47,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         {
             TopMostValue = topMostValue;
 
-            await ConfigStorageService.SaveSettingAsync(SettingsKey, topMostValue);
+            await ConfigStorage.SaveSettingAsync(SettingsKey, topMostValue);
         }
 
         /// <summary>
