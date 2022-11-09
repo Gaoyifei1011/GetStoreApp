@@ -41,7 +41,7 @@
 | 通过生成的链接下载文件          | 已完成（处于测试阶段）                            |
 | 下载完成后离线部署应用          | 已完成                                            |
 | 访问网页版对接下载接口          | 已完成                                            |
-| 控制台应用程序（快速下载并部署）| 计划中（预计0.7.0预览版本实现）                   |
+| 控制台应用程序（快速下载并部署）| 计划中（预计0.8.0预览版本实现）                   |
 | 程序性能优化                    | 计划中（预计1.0.0正式版本实现）                   |
 
 > * 目前该应用处于开发阶段，有部分功能尚未实现，目前仅提供基础的功能。此外我是c#的初学者，且本人时间较为紧张，只能利用自己的闲余时间开发，开发进度较为缓慢，请谅解。
@@ -65,7 +65,6 @@
 > * [Microsoft.Windows.SDK.BuildTools](https://www.nuget.org/packages/Microsoft.Windows.SDK.BuildTools)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Microsoft.Xaml.Behaviors.WinUI.Managed](https://www.nuget.org/packages/Microsoft.Xaml.Behaviors.WinUI.Managed)&emsp;
-> * [PInvoke.User32](https://github.com/dotnet/pinvoke)&emsp;
 > * [SQLitePCLRaw.bundle_winsqlite3](https://github.com/ericsink/SQLitePCL.raw)&emsp;
 > * [System.Management](https://www.nuget.org/packages/System.Management)&emsp;
 > * [Template Studio](https://github.com/microsoft/TemplateStudio)&emsp;

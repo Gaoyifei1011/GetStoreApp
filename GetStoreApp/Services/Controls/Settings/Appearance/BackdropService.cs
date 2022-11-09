@@ -7,6 +7,7 @@ using Microsoft.UI.Composition.SystemBackdrops;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Windows.UI;
 using WinUIEx;
 
 namespace GetStoreApp.Services.Controls.Settings.Appearance
@@ -72,8 +73,24 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
             {
                 "Mica" => new MicaSystemBackdrop() { Kind = MicaKind.Base },
                 "MicaAlt" => new MicaSystemBackdrop() { Kind = MicaKind.BaseAlt },
-                "Acrylic" => new AcrylicSystemBackdrop(),
-                _ => null
+                "Acrylic" => new AcrylicSystemBackdrop()
+                {
+                    LightTintColor = Color.FromArgb(255, 243, 243, 243),
+                    DarkTintColor = Color.FromArgb(255, 32, 32, 32),
+                    LightFallbackColor = Color.FromArgb(255, 243, 243, 243),
+                    DarkFallbackColor = Color.FromArgb(255, 32, 32, 32),
+                },
+                _ => new AcrylicSystemBackdrop()
+                {
+                    LightTintColor = Color.FromArgb(255, 240, 243, 249),
+                    DarkTintColor = Color.FromArgb(255, 20, 20, 20),
+                    LightFallbackColor = Color.FromArgb(255, 240, 243, 249),
+                    DarkFallbackColor = Color.FromArgb(255, 20, 20, 20),
+                    LightTintOpacity = 1,
+                    DarkTintOpacity = 1,
+                    LightLuminosityOpacity = 1,
+                    DarkLuminosityOpacity = 1,
+                }
             };
 
             await Task.CompletedTask;

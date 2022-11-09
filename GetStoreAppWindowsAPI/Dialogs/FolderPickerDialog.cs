@@ -1,5 +1,4 @@
 ﻿using GetStoreAppWindowsAPI.Dialogs.FileDialog.Native;
-using PInvoke;
 using System;
 using System.Runtime.InteropServices;
 
@@ -37,7 +36,7 @@ namespace GetStoreAppWindowsAPI.Dialogs
             {
                 if (hwnd == IntPtr.Zero)
                 {
-                    hwnd = User32.GetForegroundWindow();
+                    hwnd = PInvoke.User32.DllFunctions.GetForegroundWindow();
                 }
 
                 FILEOPENDIALOGOPTIONS option = dialog.GetOptions();
@@ -48,7 +47,7 @@ namespace GetStoreAppWindowsAPI.Dialogs
                 IShellItem item;
                 if (!string.IsNullOrEmpty(Path))
                 {
-                    item = NativeMethods.SHCreateItemFromParsingName(Path, IntPtr.Zero, typeof(IShellItem).GUID);
+                    item = PInvoke.Shell32.DllFunctions.SHCreateItemFromParsingName(Path, IntPtr.Zero, typeof(IShellItem).GUID);
 
                     dialog.SetFolder(item);
                 }

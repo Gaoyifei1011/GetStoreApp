@@ -1,9 +1,7 @@
-﻿using GetStoreApp.Extensions.DataType.Delegates;
-using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Models.Controls.Settings.Common;
+﻿using GetStoreApp.Models.Controls.Settings.Common;
+using GetStoreAppWindowsAPI.PInvoke.Kernel32;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Runtime.InteropServices;
 using System.Text;
 
 namespace GetStoreApp.Helpers.Root
@@ -19,12 +17,6 @@ namespace GetStoreApp.Helpers.Root
         private static readonly int _lcid;
         private static readonly int GEOCLASS_NATION = 0x10;
 
-        [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
-        private static extern int GetGeoInfo(int location, SYSGEOTYPE geoType, StringBuilder lpGeoData, int cchData, int langId);
-
-        [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
-        private static extern int EnumSystemGeoID(int geoClass, int parentGeoId, EnumGeoInfoProc lpGeoEnumProc);
-
         static GeographicalLocationHelper()
         {
             _geographicalLocations = new List<RegionModel>();
@@ -37,7 +29,7 @@ namespace GetStoreApp.Helpers.Root
         {
             if (_geographicalLocations.Count == 0)
             {
-                EnumSystemGeoID(GEOCLASS_NATION, 0, _callback);
+                DllFunctions.EnumSystemGeoID(GEOCLASS_NATION, 0, _callback);
 
                 foreach (int geoId in _geoIds)
                 {
@@ -67,12 +59,12 @@ namespace GetStoreApp.Helpers.Root
         {
             StringBuilder geoDataBuilder = new StringBuilder();
 
-            int bufferSize = GetGeoInfo(location, geoType, geoDataBuilder, 0, langId);
+            int bufferSize = DllFunctions.GetGeoInfo(location, geoType, geoDataBuilder, 0, langId);
 
             if (bufferSize > 0)
             {
                 geoDataBuilder.Capacity = bufferSize;
-                GetGeoInfo(location, geoType, geoDataBuilder, bufferSize, langId);
+                DllFunctions.GetGeoInfo(location, geoType, geoDataBuilder, bufferSize, langId);
             }
 
             return geoDataBuilder.ToString();

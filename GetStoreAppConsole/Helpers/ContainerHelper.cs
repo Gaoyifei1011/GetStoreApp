@@ -2,7 +2,7 @@
 using GetStoreAppConsole.Contracts;
 using GetStoreAppConsole.Extensions.DataType.Enums;
 using GetStoreAppConsole.Services;
-using PInvoke;
+using GetStoreAppWindowsAPI.PInvoke.User32;
 using System;
 
 namespace GetStoreAppConsole.Helpers
@@ -21,14 +21,14 @@ namespace GetStoreAppConsole.Helpers
         {
             if (!Container.IsRegistered<T>())
             {
-                User32.MessageBoxResult Result = User32.MessageBox(
+                MessageBoxResult Result = DllFunctions.MessageBox(
                     WinRT.Interop.WindowNative.GetWindowHandle(IntPtr.Zero),
                     $"应用启动失败。\n{typeof(T)} 需要在ContainerHelper.cs中的InitializeContainer()方法中注册。",
                     "获取商店应用",
-                    User32.MessageBoxOptions.MB_OK | User32.MessageBoxOptions.MB_ICONERROR | User32.MessageBoxOptions.MB_APPLMODAL | User32.MessageBoxOptions.MB_TOPMOST
+                    MessageBoxOptions.MB_OK | MessageBoxOptions.MB_ICONERROR | MessageBoxOptions.MB_APPLMODAL | MessageBoxOptions.MB_TOPMOST
                     );
 
-                if (Result == User32.MessageBoxResult.IDOK)
+                if (Result == MessageBoxResult.IDOK)
                 {
                     Environment.Exit(Convert.ToInt32(AppExitCode.Failed));
                 }

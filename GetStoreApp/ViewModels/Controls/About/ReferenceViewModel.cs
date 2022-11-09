@@ -22,7 +22,6 @@ namespace GetStoreApp.ViewModels.Controls.About
             {"Microsoft.Windows.SDK.BuildTools","https://www.nuget.org/packages/Microsoft.Windows.SDK.BuildTools" },
             {"Microsoft.WindowsAppSDK","https://github.com/microsoft/windowsappsdk" },
             {"Microsoft.Xaml.Behaviors.WinUI.Managed","https://www.nuget.org/packages/Microsoft.Xaml.Behaviors.WinUI.Managed" },
-            {"PInvoke.User32","https://github.com/dotnet/pinvoke" },
             {"SQLitePCLRaw.bundle_winsqlite3","https://github.com/ericsink/SQLitePCL.raw" },
             {"System.Management","https://www.nuget.org/packages/System.Management" },
             {"Template Studio","https://github.com/microsoft/TemplateStudio" },

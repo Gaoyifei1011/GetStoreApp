@@ -10,7 +10,6 @@ using GetStoreApp.Models.Controls.History;
 using GetStoreApp.Models.Controls.Home;
 using GetStoreAppCore.Data;
 using GetStoreAppCore.Html;
-using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

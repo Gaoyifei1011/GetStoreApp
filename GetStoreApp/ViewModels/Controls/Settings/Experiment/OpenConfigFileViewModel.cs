@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using GetStoreApp.Contracts.Services.Controls.Download;
 using GetStoreApp.Helpers.Root;
+using GetStoreAppWindowsAPI.PInvoke.Shell32;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -14,15 +15,6 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Experiment
     {
         private IAria2Service Aria2Service { get; } = ContainerHelper.GetInstance<IAria2Service>();
 
-        [DllImport("shell32.dll", ExactSpelling = true)]
-        private static extern void ILFree(IntPtr pidlList);
-
-        [DllImport("shell32.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
-        private static extern IntPtr ILCreateFromPathW(string pszPath);
-
-        [DllImport("shell32.dll", ExactSpelling = true)]
-        private static extern int SHOpenFolderAndSelectItems(IntPtr pidlList, uint cild, IntPtr children, uint dwFlags);
-
         // 打开配置文件目录
         public IRelayCommand OpenConfigFileCommand => new RelayCommand(async () =>
         {
@@ -33,16 +25,16 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Experiment
                 // 判断文件是否存在，文件存在则寻找对应的文件，不存在打开对应的目录；若目录不存在，则仅启动Explorer.exe进程，打开资源管理器的默认文件夹
                 if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
                 {
-                    IntPtr pidlList = ILCreateFromPathW(filePath);
+                    IntPtr pidlList = DllFunctions.ILCreateFromPath(filePath);
                     if (pidlList != IntPtr.Zero)
                     {
                         try
                         {
-                            Marshal.ThrowExceptionForHR(SHOpenFolderAndSelectItems(pidlList, 0, IntPtr.Zero, 0));
+                            Marshal.ThrowExceptionForHR(DllFunctions.SHOpenFolderAndSelectItems(pidlList, 0, IntPtr.Zero, 0));
                         }
                         finally
                         {
-                            ILFree(pidlList);
+                            DllFunctions.ILFree(pidlList);
                         }
                     }
                 }

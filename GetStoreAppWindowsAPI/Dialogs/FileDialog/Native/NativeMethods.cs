@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 
 namespace GetStoreAppWindowsAPI.Dialogs.FileDialog.Native
 {
     internal static class NativeMethods
     {
-        [DllImport("shell32.dll", ExactSpelling = true, CharSet = CharSet.Unicode, PreserveSig = false)]
-        public static extern IShellItem SHCreateItemFromParsingName(
-            string pszPath,
-            IntPtr pbc,
-            [MarshalAs(UnmanagedType.LPStruct)] Guid riid);
-
         /// <summary>
         /// 0x800704C7
         /// </summary>

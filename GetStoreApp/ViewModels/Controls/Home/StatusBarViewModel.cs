@@ -9,6 +9,7 @@ using GetStoreAppWindowsAPI.Controls.Taskbar;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
+using WinUIEx;
 
 namespace GetStoreApp.ViewModels.Controls.Home
 {
@@ -91,11 +92,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
             {
                 if (StatePrRingActValue)
                 {
-                    Taskbar.SetProgressState(TaskbarProgressBarState.Indeterminate, WindowHandle);
+                    Taskbar.SetProgressState(TaskbarProgressBarState.Indeterminate, WindowExtensions.GetWindowHandle(App.MainWindow));
                 }
                 else
                 {
-                    Taskbar.SetProgressState(TaskbarProgressBarState.NoProgress, WindowHandle);
+                    Taskbar.SetProgressState(TaskbarProgressBarState.NoProgress, WindowExtensions.GetWindowHandle(App.MainWindow));
                 }
             }
         }

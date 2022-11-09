@@ -9,12 +9,11 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using PInvoke;
 using System;
 using Windows.Graphics;
 using Windows.UI;
 using Windows.UI.ViewManagement;
-using WinRT.Interop;
+using WinUIEx;
 
 namespace GetStoreApp.ViewModels.Controls.Shell
 {
@@ -136,8 +135,7 @@ namespace GetStoreApp.ViewModels.Controls.Shell
         /// </summary>
         private static int GetActualPixel(double pixel)
         {
-            var windowHandle = WindowNative.GetWindowHandle(App.MainWindow);
-            var currentDpi = User32.GetDpiForWindow(windowHandle);
+            uint currentDpi = WindowExtensions.GetDpiForWindow(App.MainWindow);
             return Convert.ToInt32(pixel * (currentDpi / 96.0));
         }
     }

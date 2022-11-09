@@ -3,6 +3,7 @@ using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings.Common;
 using GetStoreAppCore.Settings;
+using GetStoreAppWindowsAPI.PInvoke.Shell32;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -40,15 +41,6 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         public int DownloadItem { get; set; }
 
         public DownloadModeModel DownloadMode { get; set; }
-
-        [DllImport("shell32.dll", ExactSpelling = true)]
-        private static extern void ILFree(IntPtr pidlList);
-
-        [DllImport("shell32.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
-        private static extern IntPtr ILCreateFromPathW(string pszPath);
-
-        [DllImport("shell32.dll", ExactSpelling = true)]
-        private static extern int SHOpenFolderAndSelectItems(IntPtr pidlList, uint cild, IntPtr children, uint dwFlags);
 
         /// <summary>
         /// 应用在初始化前获取设置存储的下载相关内容设置值，并创建默认下载目录
@@ -106,17 +98,17 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         {
             if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
             {
-                IntPtr pidlList = ILCreateFromPathW(filePath);
+                IntPtr pidlList = DllFunctions.ILCreateFromPath(filePath);
                 if (pidlList != IntPtr.Zero)
                 {
                     try
                     {
-                        Marshal.ThrowExceptionForHR(SHOpenFolderAndSelectItems(pidlList, 0, IntPtr.Zero, 0));
+                        Marshal.ThrowExceptionForHR(DllFunctions.SHOpenFolderAndSelectItems(pidlList, 0, IntPtr.Zero, 0));
                         await Task.CompletedTask;
                     }
                     finally
                     {
-                        ILFree(pidlList);
+                        DllFunctions.ILFree(pidlList);
                     }
                 }
             }

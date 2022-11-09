@@ -5,7 +5,6 @@ using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
 using GetStoreApp.Messages;
-using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
@@ -52,7 +51,9 @@ namespace GetStoreApp
 
             ContainerHelper.InitializeContainer();
             InitializeService();
-            InitializeAppWindow();
+
+            AppWindow = WindowExtensions.GetAppWindow(MainWindow);
+            AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
 
             await RunSingleInstanceAppAsync();
             await ActivationService.ActivateAsync(args);
@@ -67,17 +68,6 @@ namespace GetStoreApp
             ResourceService = ContainerHelper.GetInstance<IResourceService>();
             Aria2Service = ContainerHelper.GetInstance<IAria2Service>();
             DownloadSchedulerService = ContainerHelper.GetInstance<IDownloadSchedulerService>();
-        }
-
-        /// <summary>
-        /// 初始化应用的辅助窗口AppWindow
-        /// </summary>
-        private void InitializeAppWindow()
-        {
-            IntPtr WindowHandle = WinRT.Interop.WindowNative.GetWindowHandle(MainWindow);
-            WindowId WindowId = Win32Interop.GetWindowIdFromWindow(WindowHandle);
-            AppWindow = AppWindow.GetFromWindowId(WindowId);
-            AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
         }
 
         /// <summary>
@@ -128,7 +118,7 @@ namespace GetStoreApp
             MessageDialog dialog = new MessageDialog(ResourceService.GetLocalized("AppIsRunning"), ResourceService.GetLocalized("AppDisplayName"));
             dialog.Commands.Add(new UICommand(ResourceService.GetLocalized("OK")));
             dialog.DefaultCommandIndex = 0;
-            WinRT.Interop.InitializeWithWindow.Initialize(dialog, WinRT.Interop.WindowNative.GetWindowHandle(MainWindow));
+            WinRT.Interop.InitializeWithWindow.Initialize(dialog, WindowExtensions.GetWindowHandle(MainWindow));
             await dialog.ShowAsync();
         }
     }

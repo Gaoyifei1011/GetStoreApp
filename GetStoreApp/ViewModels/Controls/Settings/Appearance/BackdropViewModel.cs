@@ -1,11 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Controls.Settings.Appearance;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
-using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.Settings.Appearance;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml.Media.Animation;
@@ -44,7 +42,6 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
         {
             await BackdropService.SetBackdropAsync(Backdrop);
             await BackdropService.SetAppBackdropAsync();
-            WeakReferenceMessenger.Default.Send(new BackdropChangedMessage(Backdrop));
         });
 
         public BackdropViewModel()
