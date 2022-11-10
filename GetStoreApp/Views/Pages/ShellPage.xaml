@@ -24,6 +24,7 @@
 
     <Grid>
         <sc:AppTitleBarControl
+            x:Name="AppTitleBar"
             Height="45"
             Margin="{x:Bind NavigationViewControl.PaneDisplayMode, Converter={StaticResource AppTitleBarMarginConverter}, Mode=OneWay}"
             VerticalAlignment="Top" />

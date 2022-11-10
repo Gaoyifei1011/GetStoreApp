@@ -33,7 +33,7 @@ namespace GetStoreApp.Services.Root
 
         private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        private IStartupArgsService StartupArgsService { get; } = ContainerHelper.GetInstance<IStartupArgsService>();
+        private IStartupService StartupService { get; } = ContainerHelper.GetInstance<IStartupService>();
 
         private IAria2Service Aria2Service { get; } = ContainerHelper.GetInstance<IAria2Service>();
 
@@ -79,7 +79,6 @@ namespace GetStoreApp.Services.Root
                 App.MainWindow.Content = Shell ?? new Frame();
             }
 
-            // 根据activationArgs的ActivationHandlers或DefaultActivationHandler将导航到第一个页面
             await HandleActivationAsync(activationArgs);
 
             // 激活应用窗口
@@ -97,7 +96,7 @@ namespace GetStoreApp.Services.Root
             // 初始化应用资源，应用使用的语言信息和启动参数
             await LanguageService.InitializeLanguageAsync();
             await ResourceService.InitializeResourceAsync(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
-            await StartupArgsService.InitializeStartupArgsAsync();
+            await StartupService.InitializeStartupAsync();
 
             // 初始化数据库信息
             await DataBaseService.InitializeDataBaseAsync();

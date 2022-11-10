@@ -119,6 +119,7 @@
     <None Remove="UI\Dialogs\ContentDialogs\About\DesktopAppsDialog.xaml" />
     <None Remove="UI\Dialogs\ContentDialogs\About\DesktopStartupArgsDialog.xaml" />
     <None Remove="UI\Dialogs\ContentDialogs\About\LicenseDialog.xaml" />
+    <None Remove="UI\Dialogs\ContentDialogs\Common\AppRunningDialog.xaml" />
     
     <None Remove="UI\Dialogs\ContentDialogs\Common\ClosingWindowDialog.xaml" />
     <None Remove="UI\Dialogs\ContentDialogs\Common\DeletePromptDialog.xaml" />
@@ -493,6 +494,12 @@
     <Content Update="Assets\Logo\GetStoreApp.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="UI\Dialogs\ContentDialogs\Common\AppRunningDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <ProjectExtensions>

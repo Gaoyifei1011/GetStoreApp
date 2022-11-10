@@ -16,6 +16,16 @@ namespace GetStoreAppWindowsAPI.PInvoke.User32
         public static extern IntPtr GetForegroundWindow();
 
         /// <summary>
+        /// 确定窗口是否最大化
+        /// </summary>
+        /// <param name="hWnd">要测试的窗口的句柄</param>
+        /// <returns>如果缩放窗口，则返回值为非零。如果未缩放窗口，则返回值为零。</returns>
+        [DllImport(User32, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool IsZoomed(IntPtr hWnd);
+
+
+        /// <summary>
         /// 显示一个模式对话框，其中包含系统图标、一组按钮和一条简短的应用程序特定消息，例如状态或错误信息。 消息框返回一个整数值，该值指示用户单击的按钮。
         /// </summary>
         /// <param name="hWnd">要创建的消息框的所有者窗口的句柄。 如果此参数为 NULL，则消息框没有所有者窗口。</param>

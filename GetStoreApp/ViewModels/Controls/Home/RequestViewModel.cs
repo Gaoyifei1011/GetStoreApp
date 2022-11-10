@@ -22,7 +22,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 
-        private IStartupArgsService StartupArgsService { get; } = ContainerHelper.GetInstance<IStartupArgsService>();
+        private IStartupService StartupService { get; } = ContainerHelper.GetInstance<IStartupService>();
 
         private IHistoryDBService HistoryDBService { get; } = ContainerHelper.GetInstance<IHistoryDBService>();
 
@@ -106,11 +106,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public RequestViewModel()
         {
-            SelectedType = Convert.ToInt32(StartupArgsService.StartupArgs["TypeName"]) == -1 ? 0 : Convert.ToInt32(StartupArgsService.StartupArgs["TypeName"]);
+            SelectedType = Convert.ToInt32(StartupService.StartupArgs["TypeName"]) == -1 ? 0 : Convert.ToInt32(StartupService.StartupArgs["TypeName"]);
 
-            SelectedChannel = Convert.ToInt32(StartupArgsService.StartupArgs["ChannelName"]) == -1 ? 3 : Convert.ToInt32(StartupArgsService.StartupArgs["ChannelName"]);
+            SelectedChannel = Convert.ToInt32(StartupService.StartupArgs["ChannelName"]) == -1 ? 3 : Convert.ToInt32(StartupService.StartupArgs["ChannelName"]);
 
-            LinkText = StartupArgsService.StartupArgs["Link"] is null ? string.Empty : (string)StartupArgsService.StartupArgs["Link"];
+            LinkText = StartupService.StartupArgs["Link"] is null ? string.Empty : (string)StartupService.StartupArgs["Link"];
 
             SampleLink = SampleLinkList[0];
 

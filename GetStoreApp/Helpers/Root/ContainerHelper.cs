@@ -99,7 +99,7 @@ namespace GetStoreApp.Helpers.Root
             Builder.RegisterType<AppNotificationService>().As<IAppNotificationService>().SingleInstance();
             Builder.RegisterType<DataBaseService>().As<IDataBaseService>().SingleInstance();
             Builder.RegisterType<ResourceService>().As<IResourceService>().SingleInstance();
-            Builder.RegisterType<StartupArgsService>().As<IStartupArgsService>().SingleInstance();
+            Builder.RegisterType<StartupService>().As<IStartupService>().SingleInstance();
 
             Builder.RegisterType<Aria2Service>().As<IAria2Service>().SingleInstance();
             Builder.RegisterType<DownloadDBService>().As<IDownloadDBService>().SingleInstance();

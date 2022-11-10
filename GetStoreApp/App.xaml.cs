@@ -53,9 +53,12 @@ namespace GetStoreApp
             InitializeService();
 
             AppWindow = WindowExtensions.GetAppWindow(MainWindow);
-            AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
 
-            await RunSingleInstanceAppAsync();
+            if (InfoHelper.GetSystemVersion()["BuildNumber"] >= 22000)
+            {
+                AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
+            }
+
             await ActivationService.ActivateAsync(args);
         }
 
@@ -80,46 +83,6 @@ namespace GetStoreApp
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
             await Aria2Service.CloseAria2Async();
             WeakReferenceMessenger.Default.Send(new WindowClosedMessage(true));
-        }
-
-        /// <summary>
-        /// 应用程序只运行单个实例
-        /// </summary>
-        private async Task RunSingleInstanceAppAsync()
-        {
-            // 获取已经激活的参数
-            AppActivationArguments appArgs = AppInstance.GetCurrent().GetActivatedEventArgs();
-
-            // 获取或注册主实例
-            AppInstance mainInstance = AppInstance.FindOrRegisterForKey("Main");
-
-            // 如果主实例不是此当前实例
-            if (!mainInstance.IsCurrent)
-            {
-                // 将激活重定向到该实例
-                await mainInstance.RedirectActivationToAsync(appArgs);
-
-                // 然后退出实例并停止
-                Process.GetCurrentProcess().Kill();
-                return;
-            }
-
-            // 否则将注册激活重定向
-            AppInstance.GetCurrent().Activated += OnAppActivated;
-        }
-
-        /// <summary>
-        /// 关闭其他实例后，按照原来的状态显示已经打开的实例窗口
-        /// </summary>
-        private async void OnAppActivated(object sender, AppActivationArguments args)
-        {
-            WindowHelper.ShowAppWindow();
-
-            MessageDialog dialog = new MessageDialog(ResourceService.GetLocalized("AppIsRunning"), ResourceService.GetLocalized("AppDisplayName"));
-            dialog.Commands.Add(new UICommand(ResourceService.GetLocalized("OK")));
-            dialog.DefaultCommandIndex = 0;
-            WinRT.Interop.InitializeWithWindow.Initialize(dialog, WindowExtensions.GetWindowHandle(MainWindow));
-            await dialog.ShowAsync();
         }
     }
 }
