@@ -6,6 +6,7 @@ using GetStoreApp.Helpers.Window;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
 using Microsoft.UI.Dispatching;
 using Microsoft.Windows.AppLifecycle;
+using Microsoft.Windows.AppNotifications;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,7 +17,9 @@ namespace GetStoreApp.Services.Root
 {
     public class StartupService : IStartupService
     {
-        private IResourceService ResourceService = ContainerHelper.GetInstance<IResourceService>();
+        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
+
+        private IAppNotificationService AppNotificationService { get; } = ContainerHelper.GetInstance<IAppNotificationService>();
 
         private readonly string[] CommandLineArgs = Environment.GetCommandLineArgs().Where((source, index) => index != 0).ToArray();
 
@@ -87,6 +90,12 @@ namespace GetStoreApp.Services.Root
                         ShareTargetLaunch();
                         break;
                     }
+                // 从系统通知处启动
+                case ExtendedActivationKind.AppNotification:
+                    {
+                        AppNotificationService.HandleAppNotification((AppNotificationActivatedEventArgs)AppInstance.GetCurrent().GetActivatedEventArgs().Data);
+                        break;
+                    }
                 // 未知方式启动
                 default:
                     {
@@ -109,8 +118,8 @@ namespace GetStoreApp.Services.Root
                 App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
                 {
                     await new AppRunningDialog().ShowAsync();
+                    App.IsDialogOpening = false;
                 });
-                App.IsDialogOpening = false;
             }
         }
 

@@ -62,7 +62,7 @@ namespace GetStoreApp.ViewModels.Controls.Shell
         {
             dispatcherQueue.TryEnqueue(() =>
             {
-                if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[0].InternalName && InfoHelper.GetSystemVersion()["BuildNumber"] >= 22000)
+                if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[0].InternalName)
                 {
                     SetTitleBarButtonColor(App.AppWindow.TitleBar, RegistryHelper.GetRegistryAppTheme());
                 }
@@ -74,20 +74,17 @@ namespace GetStoreApp.ViewModels.Controls.Shell
         /// </summary>
         private void SetTitleBarColor(string theme)
         {
-            if (InfoHelper.GetSystemVersion()["BuildNumber"] >= 22000)
+            if (theme == ThemeService.ThemeList[0].InternalName)
             {
-                if (theme == ThemeService.ThemeList[0].InternalName)
-                {
-                    SetTitleBarButtonColor(App.AppWindow.TitleBar, RegistryHelper.GetRegistryAppTheme());
-                }
-                else if (theme == ThemeService.ThemeList[1].InternalName)
-                {
-                    SetTitleBarButtonColor(App.AppWindow.TitleBar, ElementTheme.Light);
-                }
-                else if (theme == ThemeService.ThemeList[2].InternalName)
-                {
-                    SetTitleBarButtonColor(App.AppWindow.TitleBar, ElementTheme.Dark);
-                }
+                SetTitleBarButtonColor(App.AppWindow.TitleBar, RegistryHelper.GetRegistryAppTheme());
+            }
+            else if (theme == ThemeService.ThemeList[1].InternalName)
+            {
+                SetTitleBarButtonColor(App.AppWindow.TitleBar, ElementTheme.Light);
+            }
+            else if (theme == ThemeService.ThemeList[2].InternalName)
+            {
+                SetTitleBarButtonColor(App.AppWindow.TitleBar, ElementTheme.Dark);
             }
         }
 
@@ -130,10 +127,7 @@ namespace GetStoreApp.ViewModels.Controls.Shell
         /// </summary>
         private void SetDragRectangles(int leftMargin, double actualWidth, double actualHeight)
         {
-            if (InfoHelper.GetSystemVersion()["BuildNumber"] >= 22000)
-            {
-                App.AppWindow.TitleBar.SetDragRectangles(new RectInt32[] { new RectInt32(leftMargin, 0, GetActualPixel(actualWidth), GetActualPixel(actualHeight)) });
-            }
+            App.AppWindow.TitleBar.SetDragRectangles(new RectInt32[] { new RectInt32(leftMargin, 0, GetActualPixel(actualWidth), GetActualPixel(actualHeight)) });
         }
 
         /// <summary>

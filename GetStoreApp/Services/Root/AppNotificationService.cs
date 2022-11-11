@@ -6,6 +6,7 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
 using GetStoreApp.ViewModels.Pages;
 using GetStoreApp.Views.Pages;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.Windows.AppNotifications;
 using System;
@@ -40,48 +41,49 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 处理应用通知后的响应事件
         /// </summary>
-        public async void OnNotificationInvoked(AppNotificationManager sender, AppNotificationActivatedEventArgs args)
+        public void OnNotificationInvoked(AppNotificationManager sender, AppNotificationActivatedEventArgs args)
         {
-            // 打开网络设置（不涉及到UI主线程）
-            if (ParseArguments(args.Argument)["AppNotifications"] == "CheckNetWorkConnection")
+            HandleAppNotification(args);
+        }
+
+        /// <summary>
+        /// 处理应用通知
+        /// </summary>
+        public void HandleAppNotification(AppNotificationActivatedEventArgs args)
+        {
+            App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
             {
-                await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
-            }
-            // 涉及到UI主线程
-            else
-            {
-                App.MainWindow.DispatcherQueue.TryEnqueue(() =>
+                // 先设置应用窗口的显示方式
+                WindowHelper.ShowAppWindow();
+
+                if (ParseArguments(args.Argument)["AppNotifications"] == "CheckNetWorkConnection")
                 {
-                    // 先设置应用窗口的显示方式
-                    WindowHelper.ShowAppWindow();
+                    await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
+                }
 
-                    // 根据点击通知获取到的参数来选择相应的操作
-                    if (ParseArguments(args.Argument)["AppNotifications"] == "DownloadingNow" && NavigationService.Frame.CurrentSourcePageType != typeof(DownloadPage))
+                if (ParseArguments(args.Argument)["AppNotifications"] == "DownloadingNow" && NavigationService.Frame.CurrentSourcePageType != typeof(DownloadPage))
+                {
+                    NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+                }
+
+                if (ParseArguments(args.Argument)["AppNotifications"] == "NotDownload" && NavigationService.Frame.CurrentSourcePageType != typeof(DownloadPage))
+                {
+                    NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+                }
+
+                if (ParseArguments(args.Argument)["AppNotifications"] == "ViewDownloadPage" && NavigationService.Frame.CurrentSourcePageType != typeof(DownloadPage))
+                {
+                    NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+                }
+
+                if (ParseArguments(args.Argument)["AppNotifications"] == "DownloadCompleted")
+                {
+                    if (NavigationService.Frame.CurrentSourcePageType != typeof(DownloadPage))
                     {
                         NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
                     }
-
-                    if (ParseArguments(args.Argument)["AppNotifications"] == "NotDownload" && NavigationService.Frame.CurrentSourcePageType != typeof(DownloadPage))
-                    {
-                        NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
-                    }
-
-                    if (ParseArguments(args.Argument)["AppNotifications"] == "ViewDownloadPage" && NavigationService.Frame.CurrentSourcePageType != typeof(DownloadPage))
-                    {
-                        NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
-                    }
-
-                    if (ParseArguments(args.Argument)["AppNotifications"] == "DownloadCompleted")
-                    {
-                        if (NavigationService.Frame.CurrentSourcePageType != typeof(DownloadPage))
-                        {
-                            NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
-                        }
-
-                        //App.NavigationArgs = "DownloadCompleted";
-                    }
-                });
-            }
+                }
+            });
         }
 
         /// <summary>

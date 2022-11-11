@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.UI.Xaml;
+using System.Threading.Tasks;
 
 namespace GetStoreApp.Contracts.Services.Root
 {
     public interface IActivationService
     {
-        Task ActivateAsync(object activationArgs);
+        Task ActivateAsync(LaunchActivatedEventArgs activationArgs);
     }
 }

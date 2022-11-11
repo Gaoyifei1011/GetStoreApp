@@ -1,17 +1,15 @@
-﻿using GetStoreApp.Activation;
-using GetStoreApp.Contracts.Activation;
-using GetStoreApp.Contracts.Services.Controls.Download;
+﻿using GetStoreApp.Contracts.Services.Controls.Download;
 using GetStoreApp.Contracts.Services.Controls.Settings.Advanced;
 using GetStoreApp.Contracts.Services.Controls.Settings.Appearance;
 using GetStoreApp.Contracts.Services.Controls.Settings.Common;
 using GetStoreApp.Contracts.Services.Controls.Settings.Experiment;
 using GetStoreApp.Contracts.Services.Root;
+using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Helpers.Root;
+using GetStoreApp.ViewModels.Pages;
 using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Root
@@ -22,10 +20,6 @@ namespace GetStoreApp.Services.Root
     public class ActivationService : IActivationService
     {
         private UIElement Shell = null;
-
-        private ActivationHandler<LaunchActivatedEventArgs> DefaultHandler { get; } = ContainerHelper.GetInstance<ActivationHandler<LaunchActivatedEventArgs>>();
-
-        private IEnumerable<IActivationHandler> ActivationHandlers { get; } = ContainerHelper.GetInstance<IEnumerable<IActivationHandler>>();
 
         private IAppNotificationService AppNotificationService { get; } = ContainerHelper.GetInstance<IAppNotificationService>();
 
@@ -67,7 +61,9 @@ namespace GetStoreApp.Services.Root
 
         private INetWorkMonitorService NetWorkMonitorService { get; } = ContainerHelper.GetInstance<INetWorkMonitorService>();
 
-        public async Task ActivateAsync(object activationArgs)
+        private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
+
+        public async Task ActivateAsync(LaunchActivatedEventArgs activationArgs)
         {
             // 在应用窗口激活前配置应用的设置
             await InitializeAsync();
@@ -79,7 +75,7 @@ namespace GetStoreApp.Services.Root
                 App.MainWindow.Content = Shell ?? new Frame();
             }
 
-            await HandleActivationAsync(activationArgs);
+            NavigationService.NavigateTo(typeof(HomeViewModel).FullName, activationArgs.Arguments, null, false);
 
             // 激活应用窗口
             App.MainWindow.Activate();
@@ -93,6 +89,9 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private async Task InitializeAsync()
         {
+            // 初始化应用通知服务
+            //AppNotificationService.Initialize();
+
             // 初始化应用资源，应用使用的语言信息和启动参数
             await LanguageService.InitializeLanguageAsync();
             await ResourceService.InitializeResourceAsync(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
@@ -119,27 +118,6 @@ namespace GetStoreApp.Services.Root
 
             // 实验功能设置配置
             await NetWorkMonitorService.InitializeNetWorkMonitorValueAsync();
-
-            // 初始化应用通知服务
-            AppNotificationService.Initialize();
-        }
-
-        /// <summary>
-        /// 根据activationArgs的ActivationHandlers或DefaultActivationHandler将导航到第一个页面
-        /// </summary>
-        private async Task HandleActivationAsync(object activationArgs)
-        {
-            IActivationHandler activationHandler = ActivationHandlers.FirstOrDefault(h => h.CanHandle(activationArgs));
-
-            if (activationHandler is not null)
-            {
-                await activationHandler.HandleAsync(activationArgs);
-            }
-
-            if (DefaultHandler.CanHandle(activationArgs))
-            {
-                await DefaultHandler.HandleAsync(activationArgs);
-            }
         }
 
         /// <summary>

@@ -69,11 +69,6 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// </summary>
         public async Task SetAppBackdropAsync()
         {
-            if(InfoHelper.GetSystemVersion()["BuildNumber"] < 22000)
-            {
-                return;
-            }
-
             App.MainWindow.Backdrop = AppBackdrop.InternalName switch
             {
                 "Mica" => new MicaSystemBackdrop() { Kind = MicaKind.Base },

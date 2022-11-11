@@ -310,7 +310,7 @@ namespace GetStoreApp.ViewModels.Pages
                     // 使用浏览器下载
                     else if (DownloadOptionsService.DownloadMode == DownloadOptionsService.DownloadModeList[1])
                     {
-                        await Windows.System.Launcher.LaunchUriAsync(new Uri(args.DownloadOperation.Uri));
+                        await global::Windows.System.Launcher.LaunchUriAsync(new Uri(args.DownloadOperation.Uri));
                     }
 
                     args.DownloadOperation.Cancel();

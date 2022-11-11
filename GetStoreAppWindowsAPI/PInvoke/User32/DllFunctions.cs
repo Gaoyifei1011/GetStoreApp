@@ -40,5 +40,39 @@ namespace GetStoreAppWindowsAPI.PInvoke.User32
         /// </returns>
         [DllImport(User32, SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern MessageBoxResult MessageBox(IntPtr hWnd, string lptext, string lpcaption, MessageBoxOptions options);
+
+        /// <summary>
+        /// 更改指定窗口的属性。 该函数还将指定偏移量处的32位（long类型）值设置到额外的窗口内存中。
+        /// </summary>
+        /// <param name="hWnd">窗口的句柄，间接地是窗口所属的类</param>
+        /// <param name="nIndex">要设置的值的从零开始的偏移量。 有效值的范围为零到额外窗口内存的字节数，减去整数的大小。</param>
+        /// <param name="newProc">新事件处理函数（回调函数）</param>
+        /// <returns>如果函数成功，则返回值是指定 32 位整数的上一个值。如果函数失败，则返回值为零。 </returns>
+        [DllImport(User32, EntryPoint = "SetWindowLong")]
+        public static extern IntPtr SetWindowLongPtr32(IntPtr hWnd, WindowLongIndexFlags nIndex, WinProc newProc);
+
+        /// <summary>
+        /// 更改指定窗口的属性。 该函数还将指定偏移量处的64位（long类型）值设置到额外的窗口内存中。
+        /// </summary>
+        /// <param name="hWnd">窗口的句柄，间接地是窗口所属的类</param>
+        /// <param name="nIndex">要设置的值的从零开始的偏移量。 有效值的范围为零到额外窗口内存的字节数，减去整数的大小。</param>
+        /// <param name="newProc">新事件处理函数（回调函数）</param>
+        /// <returns>如果函数成功，则返回值是指定偏移量的上一个值。如果函数失败，则返回值为零。 </returns>
+        [DllImport(User32, EntryPoint = "SetWindowLongPtr")]
+        public static extern IntPtr SetWindowLongPtr64(IntPtr hWnd, WindowLongIndexFlags nIndex, WinProc newProc);
+
+        /// <summary>
+        /// 将消息信息传递给指定的窗口过程。
+        /// </summary>
+        /// <param name="lpPrevWndFunc">
+        /// 上一个窗口过程。 如果通过调用设置为GWL_WNDPROC或DWL_DLGPROC的 nIndex 参数的 GetWindowLong 函数来获取此值，
+        /// 则它实际上是窗口或对话框过程的地址，或者仅对 CallWindowProc 有意义的特殊内部值。</param>
+        /// <param name="hWnd">用于接收消息的窗口过程的句柄。</param>
+        /// <param name="Msg">消息。</param>
+        /// <param name="wParam">其他的消息特定信息。 此参数的内容取决于 Msg 参数的值。</param>
+        /// <param name="lParam">其他的消息特定信息。 此参数的内容取决于 Msg 参数的值。</param>
+        /// <returns>返回值指定消息处理的结果，具体取决于发送的消息。</returns>
+        [DllImport(User32)]
+        public static extern IntPtr CallWindowProc(IntPtr lpPrevWndFunc, IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam);
     }
 }

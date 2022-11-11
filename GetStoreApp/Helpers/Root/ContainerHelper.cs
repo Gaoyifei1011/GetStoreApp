@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using GetStoreApp.Activation;
 using GetStoreApp.Contracts.Services.Controls.Download;
 using GetStoreApp.Contracts.Services.Controls.History;
 using GetStoreApp.Contracts.Services.Controls.Settings.Advanced;
@@ -50,8 +49,8 @@ using GetStoreApp.ViewModels.Shell;
 using GetStoreApp.ViewModels.Window;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.Views.Shell;
+using GetStoreApp.Views.Window;
 using GetStoreAppWindowsAPI.PInvoke.User32;
-using Microsoft.UI.Xaml;
 using System;
 using WinUIEx;
 
@@ -128,9 +127,6 @@ namespace GetStoreApp.Helpers.Root
             Builder.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
             Builder.RegisterType<NavigationViewService>().As<INavigationViewService>().InstancePerDependency();
             Builder.RegisterType<PageService>().As<IPageService>().SingleInstance();
-
-            // Default Activation Handler
-            Builder.RegisterType<DefaultActivationHandler>().As<ActivationHandler<LaunchActivatedEventArgs>>().InstancePerDependency();
 
             // 应用窗口（MVVM）
             Builder.RegisterType<MainWindow>().InstancePerDependency();

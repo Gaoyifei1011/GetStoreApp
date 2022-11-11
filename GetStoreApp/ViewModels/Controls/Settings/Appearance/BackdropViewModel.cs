@@ -17,7 +17,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
 
         private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
 
-        public List<BackdropModel> BackdropList => BackdropService.BackdropList;
+        public List<BackdropModel> BackdropList = new List<BackdropModel>();
 
         private BackdropModel _backdrop;
 
@@ -28,7 +28,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
             set { SetProperty(ref _backdrop, value); }
         }
 
-        public bool BackdropIsEnabled { get; }
+        public bool BackdropHelp { get; }
 
         // 背景色不可用时具体信息了解
         public IRelayCommand BackdropTipCommand => new RelayCommand(() =>
@@ -46,19 +46,21 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
 
         public BackdropViewModel()
         {
-            Backdrop = BackdropService.AppBackdrop;
-
             ulong BuildNumber = InfoHelper.GetSystemVersion()["BuildNumber"];
 
             if (BuildNumber < 22000)
             {
-                Backdrop = BackdropList[0];
-                BackdropIsEnabled = false;
+                BackdropHelp = true;
+                BackdropList.Add(BackdropService.BackdropList[0]);
+                BackdropList.Add(BackdropService.BackdropList[3]);
             }
             else
             {
-                BackdropIsEnabled = true;
+                BackdropHelp = false;
+                BackdropList = BackdropService.BackdropList;
             }
+
+            Backdrop = BackdropService.AppBackdrop;
         }
     }
 }

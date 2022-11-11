@@ -3,9 +3,12 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.ViewModels.Window;
 using WinUIEx;
 
-namespace GetStoreApp
+namespace GetStoreApp.Views.Window
 {
-    public sealed partial class MainWindow : WindowEx
+    /// <summary>
+    /// 应用主窗口
+    /// </summary>
+    public sealed partial class MainWindow : WASDKWindow
     {
         public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
 

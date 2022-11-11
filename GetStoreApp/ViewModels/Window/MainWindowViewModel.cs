@@ -2,16 +2,15 @@
 using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Controls.Download;
 using GetStoreApp.Contracts.Services.Controls.Settings.Advanced;
-using GetStoreApp.Contracts.Services.Controls.Settings.Appearance;
 using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Extensions.DataType.Events;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
 using GetStoreApp.Messages;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
 using GetStoreApp.ViewModels.Pages;
 using GetStoreApp.Views.Pages;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
@@ -25,8 +24,6 @@ namespace GetStoreApp.ViewModels.Window
 
         private IAppExitService AppExitService { get; } = ContainerHelper.GetInstance<IAppExitService>();
 
-        private IBackdropService BackdropService { get; } = ContainerHelper.GetInstance<IBackdropService>();
-
         private IDownloadSchedulerService DownloadSchedulerService { get; } = ContainerHelper.GetInstance<IDownloadSchedulerService>();
 
         private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
@@ -34,11 +31,8 @@ namespace GetStoreApp.ViewModels.Window
         /// <summary>
         /// 关闭窗口之后关闭其他服务
         /// </summary>
-        public async void WindowClosed(object sender, WindowEventArgs args)
+        public async void WindowClosing(object sender, WindowClosingEventArgs args)
         {
-            args.Handled = true;
-            await BackdropService.SetAppBackdropAsync();
-
             if (AppExitService.AppExit.InternalName == AppExitService.AppExitList[0].InternalName)
             {
                 WindowHelper.HideAppWindow();

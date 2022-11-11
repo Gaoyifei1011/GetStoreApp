@@ -42,7 +42,7 @@
             Command="{x:Bind ViewModel.BackdropTipCommand}"
             Style="{StaticResource ButtonInfoStyle}"
             ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/BackdropToolTip')}"
-            Visibility="{x:Bind ViewModel.BackdropIsEnabled, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Reverse}">
+            Visibility="{x:Bind ViewModel.BackdropHelp, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Button.Content>
                 <FontIcon
                     FontSize="16"
@@ -55,7 +55,6 @@
             Grid.Column="3"
             VerticalAlignment="Center"
             DisplayMemberPath="DisplayName"
-            IsEnabled="{x:Bind ViewModel.BackdropIsEnabled}"
             ItemsSource="{x:Bind ViewModel.BackdropList}"
             SelectedItem="{x:Bind ViewModel.Backdrop, Mode=TwoWay}"
             ToolTipService.ToolTip="{x:Bind ViewModel.Backdrop.DisplayName, Mode=OneWay}">

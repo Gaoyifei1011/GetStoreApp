@@ -3,29 +3,17 @@ using GetStoreApp.Contracts.Services.Controls.Download;
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
-using GetStoreApp.Helpers.Window;
 using GetStoreApp.Messages;
+using GetStoreApp.Views.Window;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
-using Microsoft.Windows.AppLifecycle;
 using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using Windows.UI.Popups;
 using WinUIEx;
 
 namespace GetStoreApp
 {
     public partial class App : Application
     {
-        private IActivationService ActivationService { get; set; }
-
-        private IResourceService ResourceService { get; set; }
-
-        public IAria2Service Aria2Service { get; set; }
-
-        public IDownloadSchedulerService DownloadSchedulerService { get; set; }
-
         public static WindowEx MainWindow { get; } = new MainWindow();
 
         public static AppWindow AppWindow { get; private set; }
@@ -40,6 +28,9 @@ namespace GetStoreApp
         {
             InitializeComponent();
             UnhandledException += OnUnhandledException;
+
+            ContainerHelper.InitializeContainer();
+            ContainerHelper.GetInstance<IAppNotificationService>().Initialize();
         }
 
         /// <summary>
@@ -49,28 +40,10 @@ namespace GetStoreApp
         {
             base.OnLaunched(args);
 
-            ContainerHelper.InitializeContainer();
-            InitializeService();
-
             AppWindow = WindowExtensions.GetAppWindow(MainWindow);
+            AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
 
-            if (InfoHelper.GetSystemVersion()["BuildNumber"] >= 22000)
-            {
-                AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
-            }
-
-            await ActivationService.ActivateAsync(args);
-        }
-
-        /// <summary>
-        /// 初始化服务
-        /// </summary>
-        private void InitializeService()
-        {
-            ActivationService = ContainerHelper.GetInstance<IActivationService>();
-            ResourceService = ContainerHelper.GetInstance<IResourceService>();
-            Aria2Service = ContainerHelper.GetInstance<IAria2Service>();
-            DownloadSchedulerService = ContainerHelper.GetInstance<IDownloadSchedulerService>();
+            await ContainerHelper.GetInstance<IActivationService>().ActivateAsync(args);
         }
 
         /// <summary>
@@ -80,8 +53,8 @@ namespace GetStoreApp
         {
             args.Handled = true;
 
-            await DownloadSchedulerService.CloseDownloadSchedulerAsync();
-            await Aria2Service.CloseAria2Async();
+            await ContainerHelper.GetInstance<IDownloadSchedulerService>().CloseDownloadSchedulerAsync();
+            await ContainerHelper.GetInstance<IAria2Service>().CloseAria2Async();
             WeakReferenceMessenger.Default.Send(new WindowClosedMessage(true));
         }
     }
