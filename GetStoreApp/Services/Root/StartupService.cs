@@ -2,9 +2,7 @@
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Extensions.CommandLine;
 using GetStoreApp.Helpers.Root;
-using GetStoreApp.Helpers.Window;
-using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
-using Microsoft.UI.Dispatching;
+using GetStoreAppWindowsAPI.PInvoke.User32;
 using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.AppNotifications;
 using System;
@@ -12,9 +10,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.DataTransfer.ShareTarget;
 
 namespace GetStoreApp.Services.Root
 {
+    /// <summary>
+    /// 应用启动服务
+    /// </summary>
     public class StartupService : IStartupService
     {
         private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
@@ -24,6 +27,8 @@ namespace GetStoreApp.Services.Root
         private readonly string[] CommandLineArgs = Environment.GetCommandLineArgs().Where((source, index) => index != 0).ToArray();
 
         private ExtendedActivationKind StartupKind;
+
+        private int NeedToSendMesage;
 
         // 应用启动时使用的参数
         public Dictionary<string, object> StartupArgs { get; set; } = new Dictionary<string, object>
@@ -39,8 +44,78 @@ namespace GetStoreApp.Services.Root
         public async Task InitializeStartupAsync()
         {
             StartupKind = AppInstance.GetCurrent().GetActivatedEventArgs().Kind;
+            await InitializeStartupKindAsync();
             await RunSingleInstanceAppAsync();
-            InitializeStartupArgs();
+        }
+
+        /// <summary>
+        /// 初始化启动命令方式
+        /// </summary>
+        private async Task InitializeStartupKindAsync()
+        {
+            switch (StartupKind)
+            {
+                // 正常方式启动（包括命令行）
+                case ExtendedActivationKind.Launch:
+                    {
+                        ParseStartupArgs();
+                        break;
+                    }
+                // 使用 Protocol协议启动
+                case ExtendedActivationKind.Protocol:
+                    {
+                        NeedToSendMesage = 0;
+                        break;
+                    }
+                // ToDo:使用共享目标方式启动
+                case ExtendedActivationKind.ShareTarget:
+                    {
+                        NeedToSendMesage = 1;
+                        ShareOperation shareOperation = (AppInstance.GetCurrent().GetActivatedEventArgs().Data as ShareTargetActivatedEventArgs).ShareOperation;
+                        shareOperation.ReportCompleted();
+                        StartupArgs["Link"] = Convert.ToString(await shareOperation.Data.GetUriAsync());
+                        break;
+                    }
+                // 从系统通知处启动
+                case ExtendedActivationKind.AppNotification:
+                    {
+                        AppNotificationService.HandleAppNotification((AppNotificationActivatedEventArgs)AppInstance.GetCurrent().GetActivatedEventArgs().Data);
+                        break;
+                    }
+                // 其他方式
+                default:
+                    {
+                        ParseStartupArgs();
+                        break;
+                    }
+            }
+        }
+
+        /// <summary>
+        /// 初始化启动命令参数
+        /// </summary>
+        private void ParseStartupArgs()
+        {
+            if (CommandLineArgs.Length == 0)
+            {
+                NeedToSendMesage = 0;
+                return;
+            }
+            else if (CommandLineArgs.Length == 1)
+            {
+                NeedToSendMesage = 1;
+                StartupArgs["Link"] = CommandLineArgs[0];
+            }
+            else
+            {
+                NeedToSendMesage = 1;
+                Parser.Default.ParseArguments<CommandOptions>(CommandLineArgs).WithParsed((options) =>
+                {
+                    StartupArgs["TypeName"] = ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(options.TypeName, StringComparison.OrdinalIgnoreCase));
+                    StartupArgs["ChannelName"] = ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(options.ChannelName, StringComparison.OrdinalIgnoreCase));
+                    StartupArgs["Link"] = options.Link;
+                });
+            }
         }
 
         /// <summary>
@@ -57,97 +132,24 @@ namespace GetStoreApp.Services.Root
             // 如果主实例不是此当前实例
             if (!mainInstance.IsCurrent)
             {
-                // 将激活重定向到该实例
+                // 将激活重定向到主实例
                 await mainInstance.RedirectActivationToAsync(appArgs);
+
+                App.MainWindow.Title = "WinUI Desktop";
+
+                // 向主实例发送数据
+                CopyDataStruct copyDataStruct;
+                copyDataStruct.dwData = NeedToSendMesage;
+                copyDataStruct.lpData = string.Format("{0} {1} {2}", StartupArgs["TypeName"], StartupArgs["ChannelName"], StartupArgs["Link"] is null ? "PlaceHolderText" : StartupArgs["Link"]);
+                copyDataStruct.cbData = System.Text.Encoding.Default.GetBytes(copyDataStruct.lpData).Length + 1;
+
+                // 向主进程发送消息
+                DllFunctions.SendMessage(DllFunctions.FindWindow(null, ResourceService.GetLocalized("AppDisplayName")), WindowMessage.WM_COPYDATA, 0, ref copyDataStruct);
 
                 // 然后退出实例并停止
                 Process.GetCurrentProcess().Kill();
                 return;
             }
-
-            // 否则将注册激活重定向
-            AppInstance.GetCurrent().Activated += OnAppActivated;
-        }
-
-        private void InitializeStartupArgs()
-        {
-            switch (StartupKind)
-            {
-                // 正常方式启动（包括命令行）
-                case ExtendedActivationKind.Launch:
-                    {
-                        NormalLaunch();
-                        break;
-                    }
-                // 使用 Protocol协议启动
-                case ExtendedActivationKind.Protocol:
-                    {
-                        break;
-                    }
-                // ToDo:使用共享任务方式启动
-                case ExtendedActivationKind.ShareTarget:
-                    {
-                        ShareTargetLaunch();
-                        break;
-                    }
-                // 从系统通知处启动
-                case ExtendedActivationKind.AppNotification:
-                    {
-                        AppNotificationService.HandleAppNotification((AppNotificationActivatedEventArgs)AppInstance.GetCurrent().GetActivatedEventArgs().Data);
-                        break;
-                    }
-                // 未知方式启动
-                default:
-                    {
-                        NormalLaunch();
-                        break;
-                    }
-            }
-        }
-
-        /// <summary>
-        /// 关闭其他实例后，按照原来的状态显示已经打开的实例窗口
-        /// </summary>
-        private void OnAppActivated(object sender, AppActivationArguments args)
-        {
-            WindowHelper.ShowAppWindow();
-
-            if (!App.IsDialogOpening)
-            {
-                App.IsDialogOpening = true;
-                App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
-                {
-                    await new AppRunningDialog().ShowAsync();
-                    App.IsDialogOpening = false;
-                });
-            }
-        }
-
-        // 正常方式启动应用
-        private void NormalLaunch()
-        {
-            if (CommandLineArgs.Length == 0)
-            {
-                return;
-            }
-            else if (CommandLineArgs.Length == 1)
-            {
-                StartupArgs["Link"] = CommandLineArgs[0];
-            }
-            else
-            {
-                Parser.Default.ParseArguments<CommandOptions>(CommandLineArgs).WithParsed((options) =>
-                {
-                    StartupArgs["TypeName"] = ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(options.TypeName, StringComparison.OrdinalIgnoreCase));
-                    StartupArgs["ChannelName"] = ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(options.ChannelName, StringComparison.OrdinalIgnoreCase));
-                    StartupArgs["Link"] = options.Link;
-                });
-            }
-        }
-
-        // 使用共享任务方式启动
-        private void ShareTargetLaunch()
-        {
         }
     }
 }

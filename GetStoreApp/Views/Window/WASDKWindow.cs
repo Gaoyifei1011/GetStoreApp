@@ -1,6 +1,12 @@
-﻿using GetStoreApp.Extensions.DataType.Events;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Extensions.DataType.Events;
+using GetStoreApp.Helpers.Window;
+using GetStoreApp.Messages;
+using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
 using GetStoreAppWindowsAPI.PInvoke.User32;
+using Microsoft.UI.Dispatching;
 using System;
+using System.Runtime.InteropServices;
 using WinUIEx;
 
 namespace GetStoreApp.Views.Window
@@ -49,6 +55,11 @@ namespace GetStoreApp.Views.Window
             oldWndProc = SetWindowLongPtr(Hwnd, WindowLongIndexFlags.GWL_WNDPROC, newWndProc);
         }
 
+        ~WASDKWindow()
+        {
+            WeakReferenceMessenger.Default.UnregisterAll(this);
+        }
+
         /// <summary>
         /// 更改指定窗口的属性
         /// </summary>
@@ -61,12 +72,13 @@ namespace GetStoreApp.Views.Window
         }
 
         /// <summary>
-        /// 新窗口处理事件
+        /// 窗口消息处理
         /// </summary>
         private IntPtr NewWindowProc(IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam)
         {
             switch (Msg)
             {
+                // 窗口关闭消息
                 case WindowMessage.WM_CLOSE:
                     {
                         if (Closing is not null)
@@ -77,6 +89,40 @@ namespace GetStoreApp.Views.Window
                                 Closing.Invoke(this, windowClosingEventArgs);
                             }
                             return IntPtr.Zero;
+                        }
+                        break;
+                    }
+                // 系统设置发生更改时的消息
+                case WindowMessage.WM_SETTINGCHANGE:
+                    {
+                        WeakReferenceMessenger.Default.Send(new SystemSettingsChnagedMessage(true));
+                        break;
+                    }
+                // 窗口接受其他数据消息
+                case WindowMessage.WM_COPYDATA:
+                    {
+                        CopyDataStruct copyDataStruct = (CopyDataStruct)Marshal.PtrToStructure(lParam, typeof(CopyDataStruct));
+
+                        // 没有任何命令参数，正常启动，应用可能被重复启动
+                        if (copyDataStruct.dwData == 0)
+                        {
+                            WindowHelper.ShowAppWindow();
+
+                            if (!App.IsDialogOpening)
+                            {
+                                App.IsDialogOpening = true;
+                                App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
+                                {
+                                    await new AppRunningDialog().ShowAsync();
+                                    App.IsDialogOpening = false;
+                                });
+                            }
+                        }
+                        // 获取应用的命令参数
+                        else
+                        {
+                            string[] startupArgs = copyDataStruct.lpData.Split(' ');
+                            WeakReferenceMessenger.Default.Send(new CommandMessage(startupArgs));
                         }
                         break;
                     }

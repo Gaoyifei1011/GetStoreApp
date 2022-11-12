@@ -32,20 +32,25 @@ namespace GetStoreApp.ViewModels.Controls.Shell
 
             SetDragRectangles(Convert.ToInt32(appTitleBar.Margin.Left), appTitleBar.ActualWidth, appTitleBar.ActualHeight);
 
-            uiSettings.ColorValuesChanged += OnColorValuesChanged;
-
             // 设置主题发生变化时修改标题栏按钮的主题
             WeakReferenceMessenger.Default.Register<AppTitleBarViewModel, ThemeChangedMessage>(this, (appTitleBarViewModel, themeChangedMessage) =>
             {
                 SetTitleBarColor(themeChangedMessage.Value.InternalName);
+            });
+
+            // 应用主题设置跟随系统发生变化时，当系统主题设置发生变化时修改标题栏按钮主题
+            WeakReferenceMessenger.Default.Register<AppTitleBarViewModel, SystemSettingsChnagedMessage>(this, (appTitleBarViewModel, systemSettingsChangedMessage) =>
+            {
+                if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[0].InternalName)
+                {
+                    SetTitleBarButtonColor(App.AppWindow.TitleBar, RegistryHelper.GetRegistryAppTheme());
+                }
             });
         });
 
         // 控件被卸载时，关闭所有事件，关闭消息服务
         public IRelayCommand UnLoadedCommand => new RelayCommand(() =>
         {
-            uiSettings.ColorValuesChanged -= OnColorValuesChanged;
-
             WeakReferenceMessenger.Default.UnregisterAll(this);
         });
 
@@ -54,20 +59,6 @@ namespace GetStoreApp.ViewModels.Controls.Shell
         {
             SetDragRectangles(Convert.ToInt32(appTitleBar.Margin.Left), appTitleBar.ActualWidth, appTitleBar.ActualHeight);
         });
-
-        /// <summary>
-        /// 应用主题设置跟随系统发生变化时，当系统主题设置发生变化时修改标题栏按钮主题
-        /// </summary>
-        private void OnColorValuesChanged(UISettings sender, object args)
-        {
-            dispatcherQueue.TryEnqueue(() =>
-            {
-                if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[0].InternalName)
-                {
-                    SetTitleBarButtonColor(App.AppWindow.TitleBar, RegistryHelper.GetRegistryAppTheme());
-                }
-            });
-        }
 
         /// <summary>
         /// 根据应用设置存储的主题值设置标题栏按钮的颜色

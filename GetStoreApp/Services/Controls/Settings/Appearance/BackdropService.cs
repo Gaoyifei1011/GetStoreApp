@@ -84,8 +84,8 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
                 {
                     LightTintColor = Color.FromArgb(255, 240, 243, 249),
                     DarkTintColor = Color.FromArgb(255, 20, 20, 20),
-                    LightFallbackColor = Color.FromArgb(255, 240, 243, 249),
-                    DarkFallbackColor = Color.FromArgb(255, 20, 20, 20),
+                    LightFallbackColor = Color.FromArgb(255, 243, 243, 243),
+                    DarkFallbackColor = Color.FromArgb(255, 32, 32, 32),
                     LightTintOpacity = 1,
                     DarkTintOpacity = 1,
                     LightLuminosityOpacity = 1,

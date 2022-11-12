@@ -14,9 +14,9 @@ namespace GetStoreApp
 {
     public partial class App : Application
     {
-        public static WindowEx MainWindow { get; } = new MainWindow();
-
         public static AppWindow AppWindow { get; private set; }
+
+        public static WindowEx MainWindow { get; } = new MainWindow();
 
         // 标志内容对话框是否处于正在打开状态。若是，则不再打开其他内容对话框，防止造成应用异常
         public static bool IsDialogOpening { get; set; } = false;

@@ -6,6 +6,7 @@ namespace GetStoreApp.Extensions.DataType.Events
     public class WindowClosingEventArgs : EventArgs
     {
         public WASDKWindow Window { get; private set; }
+
         public WindowClosingEventArgs(WASDKWindow window)
         {
             Window = window;

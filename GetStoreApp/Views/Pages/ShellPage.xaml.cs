@@ -7,13 +7,8 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
 using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Pages;
-using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
-using System;
-using System.Runtime.InteropServices;
-using Windows.UI;
 
 namespace GetStoreApp.Views.Pages
 {

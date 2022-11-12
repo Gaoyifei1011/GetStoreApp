@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.ViewModels.Window;
-using WinUIEx;
 
 namespace GetStoreApp.Views.Window
 {

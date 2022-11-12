@@ -127,7 +127,7 @@
     <value>背景色设置说明</value>
   </data>
   <data name="BackdropDescription" xml:space="preserve">
-    <value>Windows 10系统（版本号低于22000）暂不支持设置应用内背景色</value>
+    <value>Windows 10系统（版本号低于22000）不支持云母背景色</value>
   </data>
   <data name="BeginnerGuide" xml:space="preserve">
     <value>新手指南</value>

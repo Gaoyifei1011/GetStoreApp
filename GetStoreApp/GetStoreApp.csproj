@@ -23,7 +23,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <PackageIcon>GetStoreApp.png</PackageIcon>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <FileAlignment>512</FileAlignment>

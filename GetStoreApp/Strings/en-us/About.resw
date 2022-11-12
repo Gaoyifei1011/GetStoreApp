@@ -127,7 +127,7 @@
     <value>Backdrop settings instructions</value>
   </data>
   <data name="BackdropDescription" xml:space="preserve">
-    <value>Windows 10 (earlier than 22000) does not support setting the in-app backdrop</value>
+    <value>Windows 10 (earlier than 22000) does not support mica backdrop</value>
   </data>
   <data name="BeginnerGuide" xml:space="preserve">
     <value>Beginner's guide</value>

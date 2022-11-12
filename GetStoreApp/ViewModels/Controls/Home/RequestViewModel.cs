@@ -4,12 +4,16 @@ using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Controls.History;
 using GetStoreApp.Contracts.Services.Controls.Settings.Common;
 using GetStoreApp.Contracts.Services.Root;
+using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.History;
 using GetStoreApp.Models.Controls.Home;
+using GetStoreApp.ViewModels.Pages;
+using GetStoreApp.Views.Pages;
 using GetStoreAppCore.Data;
 using GetStoreAppCore.Html;
+using Microsoft.UI.Xaml.Media.Animation;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -27,6 +31,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
         private IHistoryDBService HistoryDBService { get; } = ContainerHelper.GetInstance<IHistoryDBService>();
 
         private ILinkFilterService LinkFilterService { get; } = ContainerHelper.GetInstance<ILinkFilterService>();
+
+        private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
 
         public List<TypeModel> TypeList => ResourceService.TypeList;
 
@@ -117,6 +123,18 @@ namespace GetStoreApp.ViewModels.Controls.Home
             LinkPlaceHolderText = SampleTitle + SampleLink;
 
             IsGettingLinks = false;
+
+            WeakReferenceMessenger.Default.Register<RequestViewModel, CommandMessage>(this, (rqeuestViewMdoel, commandMessage) =>
+            {
+                SelectedType = Convert.ToInt32(commandMessage.Value[0]) == -1 ? 0 : Convert.ToInt32(commandMessage.Value[0]);
+                SelectedChannel = Convert.ToInt32(commandMessage.Value[1]) == -1 ? 3 : Convert.ToInt32(commandMessage.Value[1]);
+                LinkText = commandMessage.Value[2] == "PlaceHolderText" ? string.Empty : commandMessage.Value[2];
+
+                if (NavigationService.Frame.CurrentSourcePageType != typeof(HomePage))
+                {
+                    NavigationService.NavigateTo(typeof(SettingsViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+                }
+            });
 
             WeakReferenceMessenger.Default.Register<RequestViewModel, FillinMessage>(this, (requestViewModel, fillinMessage) =>
             {

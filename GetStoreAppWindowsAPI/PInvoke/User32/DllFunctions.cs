@@ -10,6 +10,33 @@ namespace GetStoreAppWindowsAPI.PInvoke.User32
     {
         private const string User32 = "User32.dll";
 
+        /// <summary>
+        /// 将消息信息传递给指定的窗口过程。
+        /// </summary>
+        /// <param name="lpPrevWndFunc">
+        /// 上一个窗口过程。 如果通过调用设置为GWL_WNDPROC或DWL_DLGPROC的 nIndex 参数的 GetWindowLong 函数来获取此值，
+        /// 则它实际上是窗口或对话框过程的地址，或者仅对 CallWindowProc 有意义的特殊内部值。</param>
+        /// <param name="hWnd">用于接收消息的窗口过程的句柄。</param>
+        /// <param name="Msg">消息。</param>
+        /// <param name="wParam">其他的消息特定信息。 此参数的内容取决于 Msg 参数的值。</param>
+        /// <param name="lParam">其他的消息特定信息。 此参数的内容取决于 Msg 参数的值。</param>
+        /// <returns>返回值指定消息处理的结果，具体取决于发送的消息。</returns>
+        [DllImport(User32)]
+        public static extern IntPtr CallWindowProc(IntPtr lpPrevWndFunc, IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam);
+
+        /// <summary>
+        /// 检索顶级窗口的句柄，该窗口的类名称和窗口名称与指定的字符串匹配。 此函数不搜索子窗口。 此函数不执行区分大小写的搜索。
+        /// </summary>
+        /// <param name="lpClassName">
+        /// 类名或上一次对 RegisterClass 或 RegisterClassEx 函数的调用创建的类名或类原子。原子必须位于 lpClassName 的低序单词中;高阶单词必须为零。
+        /// 如果 lpClassName 指向字符串，则指定窗口类名。 类名可以是向 RegisterClass 或 RegisterClassEx 注册的任何名称，也可以是预定义控件类名称中的任何名称。
+        /// 如果 lpClassName 为 NULL，它将查找其标题与 lpWindowName 参数匹配的任何窗口。
+        /// </param>
+        /// <param name="lpWindowName">窗口名称 (窗口的标题) 。 如果此参数为 NULL，则所有窗口名称都匹配。</param>
+        /// <returns>如果函数成功，则返回值是具有指定类名和窗口名称的窗口的句柄。 如果函数失败，则返回值为 NULL。 </returns>
+        [DllImport(User32, EntryPoint = "FindWindow")]
+        public static extern int FindWindow(string lpClassName, string lpWindowName);
+
         /// <summary>检索前台窗口的句柄， (用户当前正在使用的窗口) 。 系统向创建前台窗口的线程分配略高于其他线程的优先级。</summary>
         /// <returns>返回值是前台窗口的句柄。 在某些情况下，前台窗口可以为 NULL ，例如窗口丢失激活时。</returns>
         [DllImport(User32, SetLastError = true, CharSet = CharSet.Unicode)]
@@ -23,7 +50,6 @@ namespace GetStoreAppWindowsAPI.PInvoke.User32
         [DllImport(User32, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool IsZoomed(IntPtr hWnd);
-
 
         /// <summary>
         /// 显示一个模式对话框，其中包含系统图标、一组按钮和一条简短的应用程序特定消息，例如状态或错误信息。 消息框返回一个整数值，该值指示用户单击的按钮。
@@ -40,6 +66,21 @@ namespace GetStoreAppWindowsAPI.PInvoke.User32
         /// </returns>
         [DllImport(User32, SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern MessageBoxResult MessageBox(IntPtr hWnd, string lptext, string lpcaption, MessageBoxOptions options);
+
+        /// <summary>
+        /// 将指定的消息发送到窗口或窗口。 SendMessage 函数调用指定窗口的窗口过程，在窗口过程处理消息之前不会返回。
+        /// </summary>
+        /// <param name="hWnd">
+        /// 窗口过程的句柄将接收消息。 如果此参数 HWND_BROADCAST ( (HWND) 0xffff) ，则会将消息发送到系统中的所有顶级窗口，
+        /// 包括已禁用或不可见的未所有者窗口、重叠窗口和弹出窗口;但消息不会发送到子窗口。消息发送受 UIPI 的约束。
+        /// 进程的线程只能将消息发送到较低或等于完整性级别的线程的消息队列。
+        /// </param>
+        /// <param name="wMsg">要发送的消息。</param>
+        /// <param name="wParam">其他的消息特定信息。</param>
+        /// <param name="lParam">其他的消息特定信息。</param>
+        /// <returns>返回值指定消息处理的结果;这取决于发送的消息。</returns>
+        [DllImport(User32, EntryPoint = "SendMessage")]
+        public static extern IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, int wParam, ref CopyDataStruct lParam);
 
         /// <summary>
         /// 更改指定窗口的属性。 该函数还将指定偏移量处的32位（long类型）值设置到额外的窗口内存中。
@@ -60,19 +101,5 @@ namespace GetStoreAppWindowsAPI.PInvoke.User32
         /// <returns>如果函数成功，则返回值是指定偏移量的上一个值。如果函数失败，则返回值为零。 </returns>
         [DllImport(User32, EntryPoint = "SetWindowLongPtr")]
         public static extern IntPtr SetWindowLongPtr64(IntPtr hWnd, WindowLongIndexFlags nIndex, WinProc newProc);
-
-        /// <summary>
-        /// 将消息信息传递给指定的窗口过程。
-        /// </summary>
-        /// <param name="lpPrevWndFunc">
-        /// 上一个窗口过程。 如果通过调用设置为GWL_WNDPROC或DWL_DLGPROC的 nIndex 参数的 GetWindowLong 函数来获取此值，
-        /// 则它实际上是窗口或对话框过程的地址，或者仅对 CallWindowProc 有意义的特殊内部值。</param>
-        /// <param name="hWnd">用于接收消息的窗口过程的句柄。</param>
-        /// <param name="Msg">消息。</param>
-        /// <param name="wParam">其他的消息特定信息。 此参数的内容取决于 Msg 参数的值。</param>
-        /// <param name="lParam">其他的消息特定信息。 此参数的内容取决于 Msg 参数的值。</param>
-        /// <returns>返回值指定消息处理的结果，具体取决于发送的消息。</returns>
-        [DllImport(User32)]
-        public static extern IntPtr CallWindowProc(IntPtr lpPrevWndFunc, IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam);
     }
 }

@@ -14,6 +14,7 @@ namespace GetStoreApp.UI.Dialogs.ContentDialogs.Common
         public IThemeService ThemeService { get; } = ContainerHelper.GetInstance<IThemeService>();
 
         public ElementTheme DialogTheme => (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
+
         public AppRunningDialog()
         {
             XamlRoot = App.MainWindow.Content.XamlRoot;
