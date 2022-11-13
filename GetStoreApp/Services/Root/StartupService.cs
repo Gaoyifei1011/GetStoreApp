@@ -1,6 +1,4 @@
-﻿using CommandLine;
-using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Extensions.CommandLine;
+﻿using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers.Root;
 using GetStoreAppWindowsAPI.PInvoke.User32;
 using Microsoft.Windows.AppLifecycle;
@@ -24,7 +22,7 @@ namespace GetStoreApp.Services.Root
 
         private IAppNotificationService AppNotificationService { get; } = ContainerHelper.GetInstance<IAppNotificationService>();
 
-        private readonly string[] CommandLineArgs = Environment.GetCommandLineArgs().Where((source, index) => index != 0).ToArray();
+        private readonly List<string> CommandLineArgs = Environment.GetCommandLineArgs().Where((source, index) => index != 0).ToList();
 
         private ExtendedActivationKind StartupKind;
 
@@ -79,7 +77,7 @@ namespace GetStoreApp.Services.Root
                 // 从系统通知处启动
                 case ExtendedActivationKind.AppNotification:
                     {
-                        AppNotificationService.HandleAppNotification((AppNotificationActivatedEventArgs)AppInstance.GetCurrent().GetActivatedEventArgs().Data);
+                        AppNotificationService.HandleAppNotification(AppInstance.GetCurrent().GetActivatedEventArgs().Data as AppNotificationActivatedEventArgs);
                         break;
                     }
                 // 其他方式
@@ -96,12 +94,12 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private void ParseStartupArgs()
         {
-            if (CommandLineArgs.Length == 0)
+            if (CommandLineArgs.Count == 0)
             {
                 NeedToSendMesage = 0;
                 return;
             }
-            else if (CommandLineArgs.Length == 1)
+            else if (CommandLineArgs.Count == 1)
             {
                 NeedToSendMesage = 1;
                 StartupArgs["Link"] = CommandLineArgs[0];
@@ -109,12 +107,19 @@ namespace GetStoreApp.Services.Root
             else
             {
                 NeedToSendMesage = 1;
-                Parser.Default.ParseArguments<CommandOptions>(CommandLineArgs).WithParsed((options) =>
+
+                if (CommandLineArgs.Count % 2 != 0)
                 {
-                    StartupArgs["TypeName"] = ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(options.TypeName, StringComparison.OrdinalIgnoreCase));
-                    StartupArgs["ChannelName"] = ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(options.ChannelName, StringComparison.OrdinalIgnoreCase));
-                    StartupArgs["Link"] = options.Link;
-                });
+                    return;
+                }
+
+                int TypeNameIndex = CommandLineArgs.FindIndex(item => item.Equals("-t", StringComparison.OrdinalIgnoreCase) || item.Equals("--type", StringComparison.OrdinalIgnoreCase));
+                int ChannelNameIndex = CommandLineArgs.FindIndex(item => item.Equals("-c", StringComparison.OrdinalIgnoreCase) || item.Equals("--channel", StringComparison.OrdinalIgnoreCase));
+                int LinkIndex = CommandLineArgs.FindIndex(item => item.Equals("-l", StringComparison.OrdinalIgnoreCase) || item.Equals("--link", StringComparison.OrdinalIgnoreCase));
+
+                StartupArgs["TypeName"] = TypeNameIndex == -1 ? StartupArgs["TypeName"] : ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(CommandLineArgs[TypeNameIndex + 1], StringComparison.OrdinalIgnoreCase));
+                StartupArgs["ChannelName"] = ChannelNameIndex == -1 ? StartupArgs["ChannelName"] : ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(CommandLineArgs[ChannelNameIndex + 1], StringComparison.OrdinalIgnoreCase));
+                StartupArgs["Link"] = LinkIndex == -1 ? StartupArgs["Link"] : CommandLineArgs[LinkIndex + 1];
             }
         }
 
@@ -144,7 +149,7 @@ namespace GetStoreApp.Services.Root
                 copyDataStruct.cbData = System.Text.Encoding.Default.GetBytes(copyDataStruct.lpData).Length + 1;
 
                 // 向主进程发送消息
-                DllFunctions.SendMessage(DllFunctions.FindWindow(null, ResourceService.GetLocalized("AppDisplayName")), WindowMessage.WM_COPYDATA, 0, ref copyDataStruct);
+                User32Library.SendMessage(User32Library.FindWindow(null, ResourceService.GetLocalized("AppDisplayName")), WindowMessage.WM_COPYDATA, 0, ref copyDataStruct);
 
                 // 然后退出实例并停止
                 Process.GetCurrentProcess().Kill();

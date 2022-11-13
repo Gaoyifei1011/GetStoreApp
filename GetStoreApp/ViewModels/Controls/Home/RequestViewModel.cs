@@ -132,7 +132,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
                 if (NavigationService.Frame.CurrentSourcePageType != typeof(HomePage))
                 {
-                    NavigationService.NavigateTo(typeof(SettingsViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+                    NavigationService.NavigateTo(typeof(HomeViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
                 }
             });
 

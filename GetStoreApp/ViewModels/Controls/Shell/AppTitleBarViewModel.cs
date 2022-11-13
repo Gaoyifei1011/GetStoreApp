@@ -21,10 +21,6 @@ namespace GetStoreApp.ViewModels.Controls.Shell
     {
         private IThemeService ThemeService { get; } = ContainerHelper.GetInstance<IThemeService>();
 
-        private DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-
-        private UISettings uiSettings = new UISettings();
-
         // 初始化自定义标题栏
         public IRelayCommand LoadedCommand => new RelayCommand<Grid>((appTitleBar) =>
         {

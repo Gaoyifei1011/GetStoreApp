@@ -3,7 +3,7 @@ using System.Text;
 
 namespace GetStoreAppWindowsAPI.PInvoke.Kernel32
 {
-    public static class DllFunctions
+    public static class Kernel32Library
     {
         private const string Kernel32 = "Kernel32.dll";
 
@@ -38,5 +38,34 @@ namespace GetStoreAppWindowsAPI.PInvoke.Kernel32
         /// </returns>
         [DllImport(Kernel32, SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern int GetGeoInfo(int location, SYSGEOTYPE geoType, StringBuilder lpGeoData, int cchData, int langId);
+
+        /// <summary>
+        /// 打开现有的本地进程对象。
+        /// </summary>
+        /// <param name="dwDesiredAccess">
+        /// 对进程对象的访问。根据进程的安全描述符检查此访问权限。此参数可以是一个或多个进程访问权限。
+        /// 如果调用方已启用SeDebugPrivilege 特权，则无论安全描述符的内容如何，都会授予请求的访问权限。</param>
+        /// <param name="bInheritHandle">如果此值为 TRUE，则此进程创建的进程将继承句柄。否则，进程不会继承此句柄。</param>
+        /// <param name="dwProcessId">
+        /// 要打开的本地进程的标识符。
+        /// 如果指定的进程是系统空闲进程 （0x00000000），则该函数将失败，最后一个错误代码为。
+        /// 如果指定的进程是系统进程或客户端服务器运行时子系统 （CSRSS） 进程之一，则此函数将失败，
+        /// 最后一个错误代码是因为它们的访问限制阻止用户级代码打开它们。ERROR_INVALID_PARAMETERERROR_ACCESS_DENIED
+        /// </param>
+        /// <returns>如果函数成功，则返回值是指定进程的打开句柄。如果函数失败，则返回值为 NULL。</returns>
+        [DllImport(Kernel32)]
+        public static extern int OpenProcess(EDesiredAccess dwDesiredAccess, bool bInheritHandle, int dwProcessId);
+
+        /// <summary>
+        /// 关闭打开的对象句柄。
+        /// </summary>
+        /// <param name="hObject">打开对象的有效句柄。</param>
+        /// <returns>
+        /// 如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。
+        /// 如果应用程序在调试器下运行，则如果函数收到无效的句柄值或伪句柄值，该函数将引发异常。
+        /// 如果两次关闭句柄，或者对 FindFirstFile 函数返回的句柄调用 CloseHandle，而不是调用 FindClose 函数，则可能会出现这种情况。
+        /// </returns>
+        [DllImport(Kernel32)]
+        public static extern int CloseHandle(int hObject);
     }
 }

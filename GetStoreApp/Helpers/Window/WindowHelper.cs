@@ -14,7 +14,7 @@ namespace GetStoreApp.Helpers.Window
         public static void ShowAppWindow()
         {
             // 判断窗口状态是否处于最大化状态，如果是，直接最大化窗口
-            if (DllFunctions.IsZoomed(WindowExtensions.GetWindowHandle(App.MainWindow)))
+            if (User32Library.IsZoomed(WindowExtensions.GetWindowHandle(App.MainWindow)))
             {
                 App.MainWindow.Maximize();
             }

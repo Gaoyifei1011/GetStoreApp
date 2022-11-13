@@ -162,11 +162,7 @@
     <PackageReference Include="Aria2.NET" Version="1.0.5" />
     
     <PackageReference Include="Autofac" Version="6.4.0" />
-    <PackageReference Include="CommandLineParser" Version="2.9.1" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
-    <PackageReference Include="CommunityToolkit.WinUI.Notifications" Version="7.1.2">
-      <TreatAsUsed>true</TreatAsUsed>
-    </PackageReference>
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.Core" Version="7.1.2" />
     <PackageReference Include="H.NotifyIcon.WinUI" Version="2.0.74" />
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.0" />
@@ -181,7 +177,6 @@
     <PackageReference Include="SQLitePCLRaw.bundle_winsqlite3" Version="2.1.2">
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
-    <PackageReference Include="System.Management" Version="7.0.0" />
     <PackageReference Include="WinUIEx" Version="1.8.0" />
 
     <Page Update="Styles\Button.xaml">

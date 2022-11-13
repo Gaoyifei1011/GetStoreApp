@@ -6,7 +6,7 @@ namespace GetStoreAppWindowsAPI.PInvoke.User32
     /// <summary>
     /// 从 User32.dll Windows库中导出的函数。
     /// </summary>
-    public static class DllFunctions
+    public static class User32Library
     {
         private const string User32 = "User32.dll";
 

@@ -1,7 +1,9 @@
-﻿using System;
+﻿using GetStoreAppWindowsAPI.PInvoke.Kernel32;
+using GetStoreAppWindowsAPI.PInvoke.NTdll;
+using System;
+using System.Collections;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Management;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.Helpers.Controls.Download
@@ -53,39 +55,61 @@ namespace GetStoreApp.Helpers.Controls.Download
         /// </summary>
         public static void KillProcessAndChildren(int processID)
         {
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" + processID);
-            ManagementObjectCollection moc = searcher.Get();
-
-            foreach (ManagementBaseObject mo in moc)
+            foreach (int childProcessId in GetChildProcessIds(processID))
             {
-                KillProcessAndChildren(Convert.ToInt32(mo["ProcessID"]));
-            }
-
-            try
-            {
-                Process process = Process.GetProcessById(processID);
-                if (!process.HasExited)
+                using (Process child = Process.GetProcessById(childProcessId))
                 {
-                    process.Kill();
+                    child.Kill();
                 }
             }
 
-            // 无法终止相关联的进程。
-            catch (Win32Exception)
+            using (Process thisProcess = Process.GetProcessById(processID))
             {
-                return;
+                thisProcess.Kill();
+            }
+        }
+
+        public static int[] GetChildProcessIds(int parentProcessId)
+        {
+            ArrayList myChildren = new ArrayList();
+            foreach (Process proc in Process.GetProcesses())
+            {
+                int currentProcessId = proc.Id;
+                proc.Dispose();
+                if (parentProcessId == GetParentProcessId(currentProcessId))
+                {
+                    // Add this one
+                    myChildren.Add(currentProcessId);
+                    // Add any of its children
+                    myChildren.AddRange(GetChildProcessIds(currentProcessId));
+                }
             }
 
-            // 不支持远程计算机上运行的进程调用 Kill()。 该方法仅对本地计算机上运行的进程可用。
-            catch (NotSupportedException)
+            return (int[])myChildren.ToArray(typeof(int));
+        }
+
+        public static int GetParentProcessId(int processId)
+        {
+            int ParentID = 0;
+            int hProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_QUERY_INFORMATION, false, processId);
+            if (hProcess != 0)
             {
-                return;
+                try
+                {
+                    PROCESS_BASIC_INFORMATION pbi = new PROCESS_BASIC_INFORMATION();
+                    int pSize = 0;
+                    if (-1 != NTdllLibrary.NtQueryInformationProcess(hProcess, PROCESSINFOCLASS.ProcessBasicInformation, ref pbi, pbi.Size, ref pSize))
+                    {
+                        ParentID = pbi.InheritedFromUniqueProcessId;
+                    }
+                }
+                finally
+                {
+                    Kernel32Library.CloseHandle(hProcess);
+                }
             }
-            // 没有与此 Process 对象关联的进程
-            catch (InvalidOperationException)
-            {
-                return;
-            }
+
+            return (ParentID);
         }
 
         /// <summary>

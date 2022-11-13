@@ -98,17 +98,17 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         {
             if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
             {
-                IntPtr pidlList = DllFunctions.ILCreateFromPath(filePath);
+                IntPtr pidlList = Shell32Library.ILCreateFromPath(filePath);
                 if (pidlList != IntPtr.Zero)
                 {
                     try
                     {
-                        Marshal.ThrowExceptionForHR(DllFunctions.SHOpenFolderAndSelectItems(pidlList, 0, IntPtr.Zero, 0));
+                        Marshal.ThrowExceptionForHR(Shell32Library.SHOpenFolderAndSelectItems(pidlList, 0, IntPtr.Zero, 0));
                         await Task.CompletedTask;
                     }
                     finally
                     {
-                        DllFunctions.ILFree(pidlList);
+                        Shell32Library.ILFree(pidlList);
                     }
                 }
             }

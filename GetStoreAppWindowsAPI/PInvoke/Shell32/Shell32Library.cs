@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace GetStoreAppWindowsAPI.PInvoke.Shell32
 {
-    public static class DllFunctions
+    public static class Shell32Library
     {
         private const string Shell32 = "shell32.dll";
 

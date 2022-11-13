@@ -22,10 +22,6 @@ namespace GetStoreApp.ViewModels.Pages
 
         public INavigationViewService NavigationViewService { get; } = ContainerHelper.GetInstance<INavigationViewService>();
 
-        private DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-
-        private UISettings uiSettings = new UISettings();
-
         private bool _isBackEnabled;
 
         public bool IsBackEnabled

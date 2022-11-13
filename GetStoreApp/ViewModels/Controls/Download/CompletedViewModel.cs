@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.WinUI;
 using GetStoreApp.Contracts.Services.Controls.Download;
 using GetStoreApp.Contracts.Services.Controls.Settings.Advanced;
 using GetStoreApp.Contracts.Services.Controls.Settings.Common;
@@ -467,11 +466,11 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// <summary>
         /// 订阅事件，下载中列表内容有完成项目时通知UI更改
         /// </summary>
-        private async void OnDownloadingListItemsChanged(object sender, ItemsChangedEventArgs<BackgroundModel> args)
+        private void OnDownloadingListItemsChanged(object sender, ItemsChangedEventArgs<BackgroundModel> args)
         {
             if (args.RemovedItems.Any(item => item.DownloadFlag == 4))
             {
-                await dispatcherQueue.EnqueueAsync(async () =>
+                dispatcherQueue.TryEnqueue(async () =>
                 {
                     foreach (BackgroundModel backgroundItem in args.RemovedItems)
                     {

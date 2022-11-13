@@ -36,7 +36,7 @@ namespace GetStoreAppWindowsAPI.Dialogs
             {
                 if (hwnd == IntPtr.Zero)
                 {
-                    hwnd = PInvoke.User32.DllFunctions.GetForegroundWindow();
+                    hwnd = PInvoke.User32.User32Library.GetForegroundWindow();
                 }
 
                 FILEOPENDIALOGOPTIONS option = dialog.GetOptions();
@@ -47,7 +47,7 @@ namespace GetStoreAppWindowsAPI.Dialogs
                 IShellItem item;
                 if (!string.IsNullOrEmpty(Path))
                 {
-                    item = PInvoke.Shell32.DllFunctions.SHCreateItemFromParsingName(Path, IntPtr.Zero, typeof(IShellItem).GUID);
+                    item = PInvoke.Shell32.Shell32Library.SHCreateItemFromParsingName(Path, IntPtr.Zero, typeof(IShellItem).GUID);
 
                     dialog.SetFolder(item);
                 }

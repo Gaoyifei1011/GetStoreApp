@@ -121,10 +121,17 @@
     <value>Check the network connection</value>
   </data>
   <data name="DownloadCompleted" xml:space="preserve">
-    <value>Download completed</value>
-  </data>
-  <data name="DownloadCompletedDescription" xml:space="preserve">
-    <value>All tasks have been downloaded.</value>
+    <value>&lt;toast launch="action=OpenApp"&gt;
+  &lt;visual&gt;
+    &lt;binding template="ToastGeneric"&gt;
+      &lt;text&gt;The app is in offline mode&lt;/text&gt;
+      &lt;text&gt;The network connection is abnormal, the tasks that are currently being downloaded have all been paused, please make sure that your network is connected before trying to download.&lt;/text&gt;
+    &lt;/binding&gt;
+  &lt;/visual&gt;
+  &lt;actions&gt;
+    &lt;action content="View download page" arguments="action=ViewDownloadPage"/&gt;
+  &lt;/actions&gt;
+&lt;/toast&gt;</value>
   </data>
   <data name="DownloadCreateFailed" xml:space="preserve">
     <value>The download task is created failed</value>
@@ -132,8 +139,19 @@
   <data name="DownloadCreateSuccessfully" xml:space="preserve">
     <value>The download task is created successfully</value>
   </data>
-  <data name="DownloadingAborted" xml:space="preserve">
-    <value>The network connection is abnormal, the tasks that are currently being downloaded have all been paused, please make sure that your network is connected before trying to download.</value>
+  <data name="DownloadingNowOfflineMode" xml:space="preserve">
+    <value>&lt;toast launch="action=OpenApp"&gt;
+  &lt;visual&gt;
+    &lt;binding template="ToastGeneric"&gt;
+      &lt;text&gt;The app is in offline mode&lt;/text&gt;
+      &lt;text&gt;The network connection is abnormal, the tasks that are currently being downloaded have all been paused, please make sure that your network is connected before trying to download.&lt;/text&gt;
+    &lt;/binding&gt;
+  &lt;/visual&gt;
+  &lt;actions&gt;
+    &lt;action content="View download page" arguments="action=ViewDownloadPage"/&gt;
+    &lt;action content="Check the network connection" arguments="action=CheckNetWorkConnection"/&gt;
+  &lt;/actions&gt;
+&lt;/toast&gt;</value>
   </data>
   <data name="ExceptionCopyFailed" xml:space="preserve">
     <value>Browser exception information replication failed. Please check the access permissions of the clipboard</value>
@@ -160,13 +178,23 @@
     <value>{0} history records has been successfully copied to the clipboard</value>
   </data>
   <data name="InstallError" xml:space="preserve">
-    <value>File {0} installation failed</value>
-  </data>
-  <data name="InstallErrorDescription" xml:space="preserve">
-    <value>Error message: {0}</value>
+    <value>&lt;toast launch="action=OpenApp"&gt;
+  &lt;visual&gt;
+    &lt;binding template="ToastGeneric"&gt;
+      &lt;text&gt;File {0} installation failed&lt;/text&gt;
+      &lt;text&gt;Error message: {1}&lt;/text&gt;
+    &lt;/binding&gt;
+  &lt;/visual&gt;
+&lt;/toast&gt;</value>
   </data>
   <data name="InstallSuccessfully" xml:space="preserve">
-    <value>File {0} was successfully installed</value>
+    <value>&lt;toast launch="action=OpenApp"&gt;
+  &lt;visual&gt;
+    &lt;binding template="ToastGeneric"&gt;
+      &lt;text&gt;File {0} was successfully installed&lt;/text&gt;
+    &lt;/binding&gt;
+  &lt;/visual&gt;
+&lt;/toast&gt;</value>
   </data>
   <data name="LanguageChangeFailed" xml:space="preserve">
     <value>Language setting modification failed, please try again</value>
@@ -177,11 +205,18 @@
   <data name="NetWorkError" xml:space="preserve">
     <value>The network connection is abnormal, please check your network connection before trying to download</value>
   </data>
-  <data name="NotDownload" xml:space="preserve">
-    <value>The network connection is abnormal, the app is in offline mode, please check your network connection.</value>
-  </data>
-  <data name="OfflineMode" xml:space="preserve">
-    <value>The app is in offline mode</value>
+  <data name="NotDownloadOfflineMode" xml:space="preserve">
+    <value>&lt;toast launch="action=OpenApp"&gt;
+  &lt;visual&gt;
+    &lt;binding template="ToastGeneric"&gt;
+      &lt;text&gt;The app is in offline mode&lt;/text&gt;
+      &lt;text&gt;The network connection is abnormal, the app is in offline mode, please check your network connection.&lt;/text&gt;
+    &lt;/binding&gt;
+  &lt;/visual&gt;
+  &lt;actions&gt;
+    &lt;action content="Check the network connection" arguments="action=CheckNetWorkConnection"/&gt;
+  &lt;/actions&gt;
+&lt;/toast&gt;</value>
   </data>
   <data name="ResultContentCopyFailed" xml:space="preserve">
     <value>The download record copy failed, check the access rights of the clipboard</value>
@@ -212,8 +247,5 @@
   </data>
   <data name="ResultLinkSelectedCopySuccessfully" xml:space="preserve">
     <value>{0} download links has been successfully copied to the clipboard</value>
-  </data>
-  <data name="ViewDownloadPage" xml:space="preserve">
-    <value>View download page</value>
   </data>
 </root>

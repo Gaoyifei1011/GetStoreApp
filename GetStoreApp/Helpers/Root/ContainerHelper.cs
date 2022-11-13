@@ -70,7 +70,7 @@ namespace GetStoreApp.Helpers.Root
         {
             if (!Container.IsRegistered<T>())
             {
-                MessageBoxResult Result = DllFunctions.MessageBox(
+                MessageBoxResult Result = User32Library.MessageBox(
                     WindowExtensions.GetWindowHandle(App.MainWindow),
                     $"应用启动失败。\n{typeof(T)} 需要在ContainerHelper.cs中的InitializeContainer()方法中注册。",
                     "获取商店应用",

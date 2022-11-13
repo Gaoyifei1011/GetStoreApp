@@ -19,6 +19,8 @@ namespace GetStoreApp.Views.Window
         private WinProc newWndProc = null;
         private IntPtr oldWndProc = IntPtr.Zero;
 
+        private DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+
         /// <summary>
         /// 是否扩展内容到标题栏
         /// </summary>
@@ -66,9 +68,9 @@ namespace GetStoreApp.Views.Window
         private IntPtr SetWindowLongPtr(IntPtr hWnd, WindowLongIndexFlags nIndex, WinProc newProc)
         {
             if (IntPtr.Size == 8)
-                return DllFunctions.SetWindowLongPtr64(hWnd, nIndex, newProc);
+                return User32Library.SetWindowLongPtr64(hWnd, nIndex, newProc);
             else
-                return DllFunctions.SetWindowLongPtr32(hWnd, nIndex, newProc);
+                return User32Library.SetWindowLongPtr32(hWnd, nIndex, newProc);
         }
 
         /// <summary>
@@ -111,7 +113,7 @@ namespace GetStoreApp.Views.Window
                             if (!App.IsDialogOpening)
                             {
                                 App.IsDialogOpening = true;
-                                App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
+                                dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
                                 {
                                     await new AppRunningDialog().ShowAsync();
                                     App.IsDialogOpening = false;
@@ -127,7 +129,7 @@ namespace GetStoreApp.Views.Window
                         break;
                     }
             }
-            return DllFunctions.CallWindowProc(oldWndProc, hWnd, Msg, wParam, lParam);
+            return User32Library.CallWindowProc(oldWndProc, hWnd, Msg, wParam, lParam);
         }
     }
 }

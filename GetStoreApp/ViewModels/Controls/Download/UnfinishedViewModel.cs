@@ -383,11 +383,11 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// <summary>
         /// 订阅事件，下载中列表内容有暂停下载或下载失败的项目时通知UI更改
         /// </summary>
-        private async void OnDownloadingListItemsChanged(object sender, ItemsChangedEventArgs<BackgroundModel> args)
+        private void OnDownloadingListItemsChanged(object sender, ItemsChangedEventArgs<BackgroundModel> args)
         {
             if (args.RemovedItems.Any(item => item.DownloadFlag == 0 || item.DownloadFlag == 2))
             {
-                await dispatcherQueue.EnqueueAsync(async () =>
+                dispatcherQueue.TryEnqueue(async () =>
                 {
                     foreach (BackgroundModel backgroundItem in args.RemovedItems)
                     {

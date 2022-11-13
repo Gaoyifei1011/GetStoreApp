@@ -29,7 +29,7 @@ namespace GetStoreApp.Helpers.Root
         {
             if (_geographicalLocations.Count == 0)
             {
-                DllFunctions.EnumSystemGeoID(GEOCLASS_NATION, 0, _callback);
+                Kernel32Library.EnumSystemGeoID(GEOCLASS_NATION, 0, _callback);
 
                 foreach (int geoId in _geoIds)
                 {
@@ -59,12 +59,12 @@ namespace GetStoreApp.Helpers.Root
         {
             StringBuilder geoDataBuilder = new StringBuilder();
 
-            int bufferSize = DllFunctions.GetGeoInfo(location, geoType, geoDataBuilder, 0, langId);
+            int bufferSize = Kernel32Library.GetGeoInfo(location, geoType, geoDataBuilder, 0, langId);
 
             if (bufferSize > 0)
             {
                 geoDataBuilder.Capacity = bufferSize;
-                DllFunctions.GetGeoInfo(location, geoType, geoDataBuilder, bufferSize, langId);
+                Kernel32Library.GetGeoInfo(location, geoType, geoDataBuilder, bufferSize, langId);
             }
 
             return geoDataBuilder.ToString();

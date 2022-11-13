@@ -25,16 +25,16 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Experiment
                 // 判断文件是否存在，文件存在则寻找对应的文件，不存在打开对应的目录；若目录不存在，则仅启动Explorer.exe进程，打开资源管理器的默认文件夹
                 if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
                 {
-                    IntPtr pidlList = DllFunctions.ILCreateFromPath(filePath);
+                    IntPtr pidlList = Shell32Library.ILCreateFromPath(filePath);
                     if (pidlList != IntPtr.Zero)
                     {
                         try
                         {
-                            Marshal.ThrowExceptionForHR(DllFunctions.SHOpenFolderAndSelectItems(pidlList, 0, IntPtr.Zero, 0));
+                            Marshal.ThrowExceptionForHR(Shell32Library.SHOpenFolderAndSelectItems(pidlList, 0, IntPtr.Zero, 0));
                         }
                         finally
                         {
-                            DllFunctions.ILFree(pidlList);
+                            Shell32Library.ILFree(pidlList);
                         }
                     }
                 }
