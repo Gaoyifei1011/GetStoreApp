@@ -1,10 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GetStoreApp.Contracts.Services.Controls.Settings.Common;
-using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Contracts.Services.Window;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.ViewModels.Pages;
+using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml.Media.Animation;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Common
@@ -37,7 +38,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
         public IRelayCommand LinkFilterInstructionCommand => new RelayCommand(() =>
         {
             App.NavigationArgs = AppNaviagtionArgs.SettingsHelp;
-            NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+            NavigationService.NavigateTo(typeof(AboutPage));
         });
 
         // 设置是否过滤以“.e”开头的文件

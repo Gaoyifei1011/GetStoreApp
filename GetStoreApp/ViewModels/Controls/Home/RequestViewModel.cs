@@ -4,7 +4,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Controls.History;
 using GetStoreApp.Contracts.Services.Controls.Settings.Common;
 using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Contracts.Services.Window;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.History;
@@ -130,9 +130,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 SelectedChannel = Convert.ToInt32(commandMessage.Value[1]) == -1 ? 3 : Convert.ToInt32(commandMessage.Value[1]);
                 LinkText = commandMessage.Value[2] == "PlaceHolderText" ? string.Empty : commandMessage.Value[2];
 
-                if (NavigationService.Frame.CurrentSourcePageType != typeof(HomePage))
+                if (NavigationService.GetCurrentPageType() != typeof(HomePage))
                 {
-                    NavigationService.NavigateTo(typeof(HomeViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+                    NavigationService.NavigateTo(typeof(HomePage));
                 }
             });
 

@@ -30,7 +30,6 @@ namespace GetStoreApp.Models.Controls.History
             set { SetValue(CurrentTimeStampProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for CreateTimeStamp.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CurrentTimeStampProperty =
             DependencyProperty.Register("CreateTimeStamp", typeof(string), typeof(HistoryModel), new PropertyMetadata(default(int)));
 
@@ -43,7 +42,6 @@ namespace GetStoreApp.Models.Controls.History
             set { SetValue(HistoryKeyProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for HistoryKey.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty HistoryKeyProperty =
             DependencyProperty.Register("HistoryKey", typeof(string), typeof(HistoryModel), new PropertyMetadata(string.Empty));
 
@@ -56,7 +54,6 @@ namespace GetStoreApp.Models.Controls.History
             set { SetValue(HistoryTypeProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for HistoryType.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty HistoryTypeProperty =
             DependencyProperty.Register("HistoryType", typeof(string), typeof(HistoryModel), new PropertyMetadata(string.Empty));
 
@@ -69,7 +66,6 @@ namespace GetStoreApp.Models.Controls.History
             set { SetValue(HistoryChannelProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for HistoryChannel.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty HistoryChannelProperty =
             DependencyProperty.Register("HistoryChannel", typeof(string), typeof(HistoryModel), new PropertyMetadata(string.Empty));
 
@@ -82,7 +78,6 @@ namespace GetStoreApp.Models.Controls.History
             set { SetValue(HistoryLinkProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for HistoryLink.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty HistoryLinkProperty =
             DependencyProperty.Register("HistoryLink", typeof(string), typeof(HistoryModel), new PropertyMetadata(string.Empty));
     }

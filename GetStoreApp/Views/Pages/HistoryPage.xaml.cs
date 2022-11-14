@@ -4,6 +4,7 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 
 namespace GetStoreApp.Views.Pages
 {
@@ -24,6 +25,18 @@ namespace GetStoreApp.Views.Pages
         public HistoryPage()
         {
             InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            ViewModel.OnNavigatedTo();
+        }
+
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            base.OnNavigatingFrom(e);
+            ViewModel.OnNavigatedFrom();
         }
 
         public void HistoryUnloaded(object sender, RoutedEventArgs args)

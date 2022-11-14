@@ -5,6 +5,7 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 
 namespace GetStoreApp.Views.Pages
 {
@@ -17,6 +18,18 @@ namespace GetStoreApp.Views.Pages
         public HomePage()
         {
             InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            ViewModel.OnNavigatedTo();
+        }
+
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            base.OnNavigatingFrom(e);
+            ViewModel.OnNavigatedFrom();
         }
 
         // 页面加载完成后如果有具体的要求，将页面滚动到指定位置

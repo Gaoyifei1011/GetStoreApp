@@ -30,7 +30,6 @@ namespace GetStoreApp.Models.Controls.Download
             set { SetValue(GIDProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for GID.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty GIDProperty =
             DependencyProperty.Register("GID", typeof(string), typeof(DownloadingModel), new PropertyMetadata(string.Empty));
 
@@ -43,7 +42,6 @@ namespace GetStoreApp.Models.Controls.Download
             set { SetValue(DownloadKeyProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for DownloadKey.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DownloadKeyProperty =
             DependencyProperty.Register("DownloadKey", typeof(string), typeof(DownloadingModel), new PropertyMetadata(string.Empty));
 
@@ -56,7 +54,6 @@ namespace GetStoreApp.Models.Controls.Download
             set { SetValue(FileNameProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for FileName.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FileNameProperty =
             DependencyProperty.Register("FileName", typeof(string), typeof(DownloadingModel), new PropertyMetadata(string.Empty));
 
@@ -69,7 +66,6 @@ namespace GetStoreApp.Models.Controls.Download
             set { SetValue(FileLinkProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for FileLink.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FileLinkProperty =
             DependencyProperty.Register("FileLink", typeof(string), typeof(DownloadingModel), new PropertyMetadata(string.Empty));
 
@@ -82,7 +78,6 @@ namespace GetStoreApp.Models.Controls.Download
             set { SetValue(FilePathProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for FilePath.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FilePathProperty =
             DependencyProperty.Register("FilePath", typeof(string), typeof(DownloadingModel), new PropertyMetadata(string.Empty));
 
@@ -95,7 +90,6 @@ namespace GetStoreApp.Models.Controls.Download
             set { SetValue(FileSHA1Property, value); }
         }
 
-        // Using a DependencyProperty as the backing store for FileSHA1.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FileSHA1Property =
             DependencyProperty.Register("FileSHA1", typeof(string), typeof(DownloadingModel), new PropertyMetadata(string.Empty));
 
@@ -108,7 +102,6 @@ namespace GetStoreApp.Models.Controls.Download
             set { SetValue(DownloadFlagProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for DownloadFlag.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DownloadFlagProperty =
             DependencyProperty.Register("DownloadFlag", typeof(int), typeof(DownloadingModel), new PropertyMetadata(string.Empty));
 
@@ -121,7 +114,6 @@ namespace GetStoreApp.Models.Controls.Download
             set { SetValue(TotalSizeProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for TotalSize.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TotalSizeProperty =
             DependencyProperty.Register("TotalSize", typeof(double), typeof(DownloadingModel), new PropertyMetadata(default(double)));
     }

@@ -4,7 +4,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Controls.Download;
 using GetStoreApp.Contracts.Services.Controls.Settings.Common;
 using GetStoreApp.Contracts.Services.Controls.Settings.Experiment;
-using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Contracts.Services.Window;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
@@ -13,6 +13,7 @@ using GetStoreApp.Models.Controls.Home;
 using GetStoreApp.Models.Notifications;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
 using GetStoreApp.ViewModels.Pages;
+using GetStoreApp.Views.Pages;
 using GetStoreAppCore.Data;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
@@ -273,7 +274,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                         }
                         else if (result == ContentDialogResult.Secondary)
                         {
-                            NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+                            NavigationService.NavigateTo(typeof(DownloadPage));
                         }
                         App.IsDialogOpening = false;
                     }
@@ -398,7 +399,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                                 }
                                 else if (result == ContentDialogResult.Secondary)
                                 {
-                                    NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+                                    NavigationService.NavigateTo(typeof(DownloadPage));
                                 }
                                 App.IsDialogOpening = false;
                             }
@@ -434,7 +435,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                                 }
                                 else if (result == ContentDialogResult.Secondary)
                                 {
-                                    NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+                                    NavigationService.NavigateTo(typeof(DownloadPage));
                                 }
                                 App.IsDialogOpening = false;
                             }

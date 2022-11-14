@@ -30,7 +30,6 @@ namespace GetStoreApp.Models.Controls.Home
             set { SetValue(FileNameProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for FileName.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FileNameProperty =
             DependencyProperty.Register("FileName", typeof(string), typeof(ResultModel), new PropertyMetadata(string.Empty));
 
@@ -43,7 +42,6 @@ namespace GetStoreApp.Models.Controls.Home
             set { SetValue(FileLinkProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for FileLink.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FileLinkProperty =
             DependencyProperty.Register("FileLink", typeof(string), typeof(ResultModel), new PropertyMetadata(string.Empty));
 
@@ -56,7 +54,6 @@ namespace GetStoreApp.Models.Controls.Home
             set { SetValue(FileLinkExpireTimeProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for FileLinkExpireTime.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FileLinkExpireTimeProperty =
             DependencyProperty.Register("FileLinkExpireTime", typeof(string), typeof(ResultModel), new PropertyMetadata(string.Empty));
 
@@ -69,7 +66,6 @@ namespace GetStoreApp.Models.Controls.Home
             set { SetValue(FileSHA1Property, value); }
         }
 
-        // Using a DependencyProperty as the backing store for FileSHA1.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FileSHA1Property =
             DependencyProperty.Register("FileSHA1", typeof(string), typeof(ResultModel), new PropertyMetadata(string.Empty));
 
@@ -82,7 +78,6 @@ namespace GetStoreApp.Models.Controls.Home
             set { SetValue(FileSizeProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for FileSize.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FileSizeProperty =
             DependencyProperty.Register("FileSize", typeof(string), typeof(ResultModel), new PropertyMetadata(string.Empty));
     }

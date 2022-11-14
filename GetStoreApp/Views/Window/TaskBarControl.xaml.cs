@@ -3,12 +3,12 @@ using GetStoreApp.Contracts.Services.Controls.Settings.Appearance;
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
-using GetStoreApp.ViewModels.Shell;
+using GetStoreApp.ViewModels.Window;
 using H.NotifyIcon;
 using Microsoft.UI.Xaml;
 using System;
 
-namespace GetStoreApp.Views.Shell
+namespace GetStoreApp.Views.Window
 {
     public sealed partial class TaskBarControl : TaskbarIcon
     {

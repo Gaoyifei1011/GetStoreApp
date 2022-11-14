@@ -3,7 +3,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.Views.Controls
 {
-    public sealed partial class ResultDropDownButton : DropDownButton
+    public partial class ResultDropDownButton : DropDownButton
     {
         public ResultDropDownButton()
         {

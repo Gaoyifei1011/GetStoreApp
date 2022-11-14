@@ -15,7 +15,7 @@ using Windows.UI;
 using Windows.UI.ViewManagement;
 using WinUIEx;
 
-namespace GetStoreApp.ViewModels.Controls.Shell
+namespace GetStoreApp.ViewModels.Controls.Window
 {
     public class AppTitleBarViewModel : ObservableRecipient
     {

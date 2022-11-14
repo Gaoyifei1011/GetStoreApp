@@ -1,15 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Contracts.Navigation;
 using GetStoreApp.Contracts.Services.Controls.Settings.Common;
-using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Contracts.Services.Window;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
+using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml.Media.Animation;
 
 namespace GetStoreApp.ViewModels.Pages
 {
-    public class HomeViewModel : ObservableRecipient, INavigationAware
+    public class HomeViewModel : ObservableRecipient
     {
         private IUseInstructionService UseInstructionService { get; } = ContainerHelper.GetInstance<IUseInstructionService>();
 
@@ -28,7 +28,7 @@ namespace GetStoreApp.ViewModels.Pages
         public IRelayCommand UseInstructionCommand => new RelayCommand(() =>
         {
             App.NavigationArgs = AppNaviagtionArgs.Instructions;
-            NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+            NavigationService.NavigateTo(typeof(AboutPage));
         });
 
         public HomeViewModel()
@@ -36,7 +36,7 @@ namespace GetStoreApp.ViewModels.Pages
             UseInsVisValue = UseInstructionService.UseInsVisValue;
         }
 
-        public void OnNavigatedTo(object parameter)
+        public void OnNavigatedTo()
         {
             UseInsVisValue = UseInstructionService.UseInsVisValue;
         }

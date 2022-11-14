@@ -4,7 +4,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Controls.History;
 using GetStoreApp.Contracts.Services.Controls.Settings.Common;
 using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Contracts.Services.Window;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
@@ -12,8 +12,7 @@ using GetStoreApp.Models.Controls.History;
 using GetStoreApp.Models.Controls.Home;
 using GetStoreApp.Models.Controls.Settings.Common;
 using GetStoreApp.Models.Notifications;
-using GetStoreApp.ViewModels.Pages;
-using Microsoft.UI.Xaml.Media.Animation;
+using GetStoreApp.Views.Pages;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -50,7 +49,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
         // 查看全部
         public IRelayCommand ViewAllCommand => new RelayCommand(() =>
         {
-            NavigationService.NavigateTo(typeof(HistoryViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+            NavigationService.NavigateTo(typeof(HistoryPage));
         });
 
         // 复制到剪贴板

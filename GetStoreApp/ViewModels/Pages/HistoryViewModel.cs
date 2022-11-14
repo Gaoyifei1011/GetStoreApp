@@ -1,10 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Navigation;
 using GetStoreApp.Contracts.Services.Controls.History;
 using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Contracts.Services.Window;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
@@ -12,6 +11,7 @@ using GetStoreApp.Models.Controls.History;
 using GetStoreApp.Models.Controls.Home;
 using GetStoreApp.Models.Notifications;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
+using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Pages
 {
-    public class HistoryViewModel : ObservableRecipient, INavigationAware
+    public class HistoryViewModel : ObservableRecipient
     {
         // 临界区资源访问互斥锁
         private readonly object HistoryDataListLock = new object();
@@ -269,7 +269,7 @@ namespace GetStoreApp.ViewModels.Pages
         {
             App.NavigationArgs = AppNaviagtionArgs.Home;
             WeakReferenceMessenger.Default.Send(new FillinMessage(historyItem));
-            NavigationService.NavigateTo(typeof(HomeViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+            NavigationService.NavigateTo(typeof(HomePage));
         });
 
         // 复制指定项目的内容
@@ -289,7 +289,7 @@ namespace GetStoreApp.ViewModels.Pages
         });
 
         // 导航到历史记录页面时，历史记录数据列表初始化，从数据库中存储的列表中加载
-        public async void OnNavigatedTo(object parameter)
+        public async void OnNavigatedTo()
         {
             await GetHistoryDataListAsync();
         }

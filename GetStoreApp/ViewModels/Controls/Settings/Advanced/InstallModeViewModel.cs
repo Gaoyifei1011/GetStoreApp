@@ -1,12 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GetStoreApp.Contracts.Services.Controls.Settings.Advanced;
-using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Contracts.Services.Window;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings.Advanced;
-using GetStoreApp.ViewModels.Pages;
-using Microsoft.UI.Xaml.Media.Animation;
+using GetStoreApp.Views.Pages;
 using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
@@ -32,7 +31,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
         public IRelayCommand InstallModeTipCommand => new RelayCommand(() =>
         {
             App.NavigationArgs = AppNaviagtionArgs.SettingsHelp;
-            NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+            NavigationService.NavigateTo(typeof(AboutPage));
         });
 
         // 应用安装方式设置

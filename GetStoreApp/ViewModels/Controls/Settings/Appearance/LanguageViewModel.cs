@@ -2,13 +2,14 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Controls.Settings.Appearance;
-using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Contracts.Services.Window;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.Settings.Appearance;
 using GetStoreApp.Models.Notifications;
 using GetStoreApp.ViewModels.Pages;
+using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml.Media.Animation;
 using System.Collections.Generic;
 
@@ -35,7 +36,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
         public IRelayCommand LanguageTipCommand => new RelayCommand(() =>
         {
             App.NavigationArgs = AppNaviagtionArgs.SettingsHelp;
-            NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+            NavigationService.NavigateTo(typeof(AboutPage));
         });
 
         // 应用默认语言修改

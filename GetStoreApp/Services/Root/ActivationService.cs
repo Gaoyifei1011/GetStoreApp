@@ -4,13 +4,11 @@ using GetStoreApp.Contracts.Services.Controls.Settings.Appearance;
 using GetStoreApp.Contracts.Services.Controls.Settings.Common;
 using GetStoreApp.Contracts.Services.Controls.Settings.Experiment;
 using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Contracts.Services.Shell;
 using GetStoreApp.Helpers.Root;
-using GetStoreApp.ViewModels.Pages;
-using GetStoreApp.Views.Pages;
+using GetStoreApp.Views.Window;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 using System.Threading.Tasks;
+using WinUIEx;
 
 namespace GetStoreApp.Services.Root
 {
@@ -19,10 +17,6 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public class ActivationService : IActivationService
     {
-        private UIElement Shell = null;
-
-        private IAppNotificationService AppNotificationService { get; } = ContainerHelper.GetInstance<IAppNotificationService>();
-
         private IDataBaseService DataBaseService { get; } = ContainerHelper.GetInstance<IDataBaseService>();
 
         private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
@@ -61,26 +55,20 @@ namespace GetStoreApp.Services.Root
 
         private INetWorkMonitorService NetWorkMonitorService { get; } = ContainerHelper.GetInstance<INetWorkMonitorService>();
 
-        private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
-
         public async Task ActivateAsync(LaunchActivatedEventArgs activationArgs)
         {
             // 在应用窗口激活前配置应用的设置
             await InitializeAsync();
 
-            // 新建导航视图的Frame窗口
-            if (App.MainWindow.Content == null)
-            {
-                Shell = ContainerHelper.GetInstance<ShellPage>();
-                App.MainWindow.Content = Shell ?? new Frame();
-            }
-
-            NavigationService.NavigateTo(typeof(HomeViewModel).FullName, activationArgs.Arguments, null, false);
-
             await StartupService.InitializeStartupAsync();
+
+            App.MainWindow = new MainWindow();
 
             // 激活应用窗口
             App.MainWindow.Activate();
+
+            App.AppWindow = WindowExtensions.GetAppWindow(App.MainWindow);
+            App.AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
 
             // 窗口激活后配置其他设置
             await StartupAsync();
@@ -91,9 +79,6 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private async Task InitializeAsync()
         {
-            // 初始化应用通知服务
-            //AppNotificationService.Initialize();
-
             // 初始化应用资源，应用使用的语言信息和启动参数
             await LanguageService.InitializeLanguageAsync();
             await ResourceService.InitializeResourceAsync(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);

@@ -1,14 +1,13 @@
 ﻿using GetStoreApp.Contracts.Services.Controls.Settings.Common;
 using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Contracts.Services.Window;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
-using GetStoreApp.ViewModels.Pages;
 using GetStoreApp.Views.Pages;
 using Microsoft.UI.Dispatching;
-using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.Windows.AppNotifications;
 using System;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace GetStoreApp.Services.Root
@@ -53,6 +52,11 @@ namespace GetStoreApp.Services.Root
         {
             dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
             {
+                while (NavigationService.NavigationFrame is null)
+                {
+                    await Task.Delay(500);
+                }
+
                 // 先设置应用窗口的显示方式
                 WindowHelper.ShowAppWindow();
 
@@ -69,33 +73,33 @@ namespace GetStoreApp.Services.Root
                         }
                     case "DownloadingNow":
                         {
-                            if (NavigationService.Frame.CurrentSourcePageType != typeof(DownloadPage))
+                            if (NavigationService.GetCurrentPageType() != typeof(DownloadPage))
                             {
-                                NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+                                NavigationService.NavigateTo(typeof(DownloadPage));
                             }
                             break;
                         }
                     case "NotDownload":
                         {
-                            if (NavigationService.Frame.CurrentSourcePageType != typeof(DownloadPage))
+                            if (NavigationService.GetCurrentPageType() != typeof(DownloadPage))
                             {
-                                NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+                                NavigationService.NavigateTo(typeof(DownloadPage));
                             }
                             break;
                         }
                     case "ViewDownloadPage":
                         {
-                            if (NavigationService.Frame.CurrentSourcePageType != typeof(DownloadPage))
+                            if (NavigationService.GetCurrentPageType() != typeof(DownloadPage))
                             {
-                                NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+                                NavigationService.NavigateTo(typeof(DownloadPage));
                             }
                             break;
                         }
                     case "DownloadCompleted":
                         {
-                            if (NavigationService.Frame.CurrentSourcePageType != typeof(DownloadPage))
+                            if (NavigationService.GetCurrentPageType() != typeof(DownloadPage))
                             {
-                                NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+                                NavigationService.NavigateTo(typeof(DownloadPage));
                             }
                             break;
                         }
@@ -132,6 +136,7 @@ namespace GetStoreApp.Services.Root
                         if (notificationContent[0] == "Downloading")
                         {
                             notification = new AppNotification(ResourceService.GetLocalized("/Notification/DownloadingNowOfflineMode"));
+                            notification.ExpiresOnReboot = true;
                             AppNotificationManager.Default.Show(notification);
                         }
 
@@ -139,6 +144,7 @@ namespace GetStoreApp.Services.Root
                         else if (notificationContent[0] == "NotDownload")
                         {
                             notification = new AppNotification(ResourceService.GetLocalized("/Notification/NotDownloadOfflineMode"));
+                            notification.ExpiresOnReboot = true;
                             AppNotificationManager.Default.Show(notification);
                         }
                         break;
@@ -148,6 +154,7 @@ namespace GetStoreApp.Services.Root
                 case "DownloadCompleted":
                     {
                         notification = new AppNotification(ResourceService.GetLocalized("/Notification/DownloadCompleted"));
+                        notification.ExpiresOnReboot = true;
                         AppNotificationManager.Default.Show(notification);
                         break;
                     }
@@ -164,11 +171,13 @@ namespace GetStoreApp.Services.Root
                         if (notificationContent[0] == "Successfully")
                         {
                             notification = new AppNotification(string.Format(ResourceService.GetLocalized("/Notification/InstallSuccessfully"), notificationContent[1]));
+                            notification.ExpiresOnReboot = true;
                             AppNotificationManager.Default.Show(notification);
                         }
                         else if (notificationContent[0] == "Error")
                         {
                             notification = new AppNotification(string.Format(ResourceService.GetLocalized("/Notification/InstallError"), notificationContent[1], notificationContent[2]));
+                            notification.ExpiresOnReboot = true;
                             AppNotificationManager.Default.Show(notification);
                         }
                         break;

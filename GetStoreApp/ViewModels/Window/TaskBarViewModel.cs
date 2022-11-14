@@ -2,20 +2,18 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Controls.Download;
-using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Contracts.Services.Window;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
 using GetStoreApp.Messages;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
-using GetStoreApp.ViewModels.Pages;
 using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media.Animation;
 using System;
 using System.Threading.Tasks;
 
-namespace GetStoreApp.ViewModels.Shell
+namespace GetStoreApp.ViewModels.Window
 {
     public class TaskBarViewModel : ObservableRecipient
     {
@@ -45,9 +43,9 @@ namespace GetStoreApp.ViewModels.Shell
             // 窗口置前端
             WindowHelper.ShowAppWindow();
 
-            if (NavigationService.Frame.CurrentSourcePageType != typeof(SettingsPage))
+            if (NavigationService.GetCurrentPageType() != typeof(SettingsPage))
             {
-                NavigationService.NavigateTo(typeof(SettingsViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+                NavigationService.NavigateTo(typeof(SettingsPage));
             }
         });
 
@@ -73,9 +71,9 @@ namespace GetStoreApp.ViewModels.Shell
                     }
                     else if (result == ContentDialogResult.Secondary)
                     {
-                        if (NavigationService.Frame.CurrentSourcePageType != typeof(DownloadPage))
+                        if (NavigationService.GetCurrentPageType() != typeof(DownloadPage))
                         {
-                            NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+                            NavigationService.NavigateTo(typeof(DownloadPage));
                         }
                     }
 

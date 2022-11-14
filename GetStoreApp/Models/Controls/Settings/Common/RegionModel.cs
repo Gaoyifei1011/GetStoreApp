@@ -11,7 +11,6 @@ namespace GetStoreApp.Models.Controls.Settings.Common
             set { SetValue(NationProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for Nation.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty NationProperty =
             DependencyProperty.Register("Nation", typeof(string), typeof(RegionModel), new PropertyMetadata(string.Empty));
 
@@ -21,7 +20,6 @@ namespace GetStoreApp.Models.Controls.Settings.Common
             set { SetValue(LatitudeProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for Latitude.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty LatitudeProperty =
             DependencyProperty.Register("Latitude", typeof(string), typeof(RegionModel), new PropertyMetadata(string.Empty));
 
@@ -31,7 +29,6 @@ namespace GetStoreApp.Models.Controls.Settings.Common
             set { SetValue(LongitudeProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for Longitude.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty LongitudeProperty =
             DependencyProperty.Register("Longitude", typeof(string), typeof(RegionModel), new PropertyMetadata(string.Empty));
 
@@ -41,7 +38,6 @@ namespace GetStoreApp.Models.Controls.Settings.Common
             set { SetValue(ISO2Property, value); }
         }
 
-        // Using a DependencyProperty as the backing store for ISO2.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ISO2Property =
             DependencyProperty.Register("ISO2", typeof(string), typeof(RegionModel), new PropertyMetadata(string.Empty));
 
@@ -51,7 +47,6 @@ namespace GetStoreApp.Models.Controls.Settings.Common
             set { SetValue(ISO3Property, value); }
         }
 
-        // Using a DependencyProperty as the backing store for ISO3.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ISO3Property =
             DependencyProperty.Register("ISO2", typeof(string), typeof(RegionModel), new PropertyMetadata(string.Empty));
 
@@ -61,7 +56,6 @@ namespace GetStoreApp.Models.Controls.Settings.Common
             set { SetValue(Rfc1766Property, value); }
         }
 
-        // Using a DependencyProperty as the backing store for Rfc1766.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty Rfc1766Property =
             DependencyProperty.Register("Rfc1766", typeof(string), typeof(RegionModel), new PropertyMetadata(string.Empty));
 
@@ -71,7 +65,6 @@ namespace GetStoreApp.Models.Controls.Settings.Common
             set { SetValue(LcidProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for Lcid.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty LcidProperty =
             DependencyProperty.Register("Lcid", typeof(string), typeof(RegionModel), new PropertyMetadata(string.Empty));
 
@@ -81,7 +74,6 @@ namespace GetStoreApp.Models.Controls.Settings.Common
             set { SetValue(FriendlyNameProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for FriendlyName.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FriendlyNameProperty =
             DependencyProperty.Register("FriendlyName", typeof(string), typeof(RegionModel), new PropertyMetadata(string.Empty));
 
@@ -91,7 +83,6 @@ namespace GetStoreApp.Models.Controls.Settings.Common
             set { SetValue(OfficialNameProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for OfficialName.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty OfficialNameProperty =
             DependencyProperty.Register("OfficialName", typeof(string), typeof(RegionModel), new PropertyMetadata(string.Empty));
 
@@ -101,7 +92,6 @@ namespace GetStoreApp.Models.Controls.Settings.Common
             set { SetValue(TimeZonesProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for TimeZones.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TimeZonesProperty =
             DependencyProperty.Register("TimeZones", typeof(string), typeof(RegionModel), new PropertyMetadata(string.Empty));
 
@@ -111,7 +101,6 @@ namespace GetStoreApp.Models.Controls.Settings.Common
             set { SetValue(OfficialLanguagesProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for OfficialLanguages.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty OfficialLanguagesProperty =
             DependencyProperty.Register("OfficialLanguages", typeof(string), typeof(RegionModel), new PropertyMetadata(string.Empty));
     }

@@ -6,7 +6,7 @@ using GetStoreApp.Contracts.Services.Controls.Settings.Appearance;
 using GetStoreApp.Contracts.Services.Controls.Settings.Common;
 using GetStoreApp.Contracts.Services.Controls.Settings.Experiment;
 using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Contracts.Services.Window;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.History;
@@ -15,7 +15,7 @@ using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Controls.Settings.Experiment;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Services.Shell;
+using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Controls.About;
 using GetStoreApp.UI.Controls.Download;
 using GetStoreApp.UI.Controls.Home;
@@ -23,8 +23,8 @@ using GetStoreApp.UI.Controls.Settings.Advanced;
 using GetStoreApp.UI.Controls.Settings.Appearance;
 using GetStoreApp.UI.Controls.Settings.Common;
 using GetStoreApp.UI.Controls.Settings.Experiment;
-using GetStoreApp.UI.Controls.Shell;
 using GetStoreApp.UI.Controls.Web;
+using GetStoreApp.UI.Controls.Window;
 using GetStoreApp.UI.Dialogs.ContentDialogs.About;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Download;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Settings;
@@ -37,18 +37,16 @@ using GetStoreApp.ViewModels.Controls.Settings.Advanced;
 using GetStoreApp.ViewModels.Controls.Settings.Appearance;
 using GetStoreApp.ViewModels.Controls.Settings.Common;
 using GetStoreApp.ViewModels.Controls.Settings.Experiment;
-using GetStoreApp.ViewModels.Controls.Shell;
 using GetStoreApp.ViewModels.Controls.Web;
+using GetStoreApp.ViewModels.Controls.Window;
 using GetStoreApp.ViewModels.Dialogs.About;
 using GetStoreApp.ViewModels.Dialogs.Download;
 using GetStoreApp.ViewModels.Dialogs.Settings;
 using GetStoreApp.ViewModels.Dialogs.Web;
 using GetStoreApp.ViewModels.Notifications;
 using GetStoreApp.ViewModels.Pages;
-using GetStoreApp.ViewModels.Shell;
 using GetStoreApp.ViewModels.Window;
 using GetStoreApp.Views.Pages;
-using GetStoreApp.Views.Shell;
 using GetStoreApp.Views.Window;
 using GetStoreAppWindowsAPI.PInvoke.User32;
 using System;
@@ -125,8 +123,6 @@ namespace GetStoreApp.Helpers.Root
             Builder.RegisterType<NetWorkMonitorService>().As<INetWorkMonitorService>().SingleInstance();
 
             Builder.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
-            Builder.RegisterType<NavigationViewService>().As<INavigationViewService>().InstancePerDependency();
-            Builder.RegisterType<PageService>().As<IPageService>().SingleInstance();
 
             // 应用窗口（MVVM）
             Builder.RegisterType<MainWindow>().InstancePerDependency();
@@ -143,8 +139,6 @@ namespace GetStoreApp.Helpers.Root
             Builder.RegisterType<HomeViewModel>().InstancePerDependency();
             Builder.RegisterType<SettingsPage>().InstancePerDependency();
             Builder.RegisterType<SettingsViewModel>().InstancePerDependency();
-            Builder.RegisterType<ShellPage>().InstancePerDependency();
-            Builder.RegisterType<ShellViewModel>().InstancePerDependency();
             Builder.RegisterType<WebPage>().InstancePerDependency();
             Builder.RegisterType<WebViewModel>().InstancePerDependency();
 

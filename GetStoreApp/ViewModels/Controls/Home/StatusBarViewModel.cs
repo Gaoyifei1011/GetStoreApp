@@ -19,8 +19,6 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         private TaskbarManager Taskbar { get; } = TaskbarManager.Instance;
 
-        private IntPtr WindowHandle { get; } = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
-
         public List<StatusBarStateModel> StatusBarStateList => ResourceService.StatusBarStateList;
 
         private InfoBarSeverity _infoSeverity = InfoBarSeverity.Informational;

@@ -2,15 +2,14 @@
 using CommunityToolkit.Mvvm.Input;
 using GetStoreApp.Contracts.Services.Controls.Settings.Common;
 using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Contracts.Services.Window;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings.Common;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Settings;
-using GetStoreApp.ViewModels.Pages;
+using GetStoreApp.Views.Pages;
 using GetStoreAppWindowsAPI.Dialogs;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media.Animation;
 using System;
 using System.Collections.Generic;
 using System.Security.AccessControl;
@@ -62,7 +61,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
         public IRelayCommand DownloadInstructionCommand => new RelayCommand(() =>
         {
             App.NavigationArgs = AppNaviagtionArgs.SettingsHelp;
-            NavigationService.NavigateTo(typeof(AboutViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+            NavigationService.NavigateTo(typeof(SettingsPage));
         });
 
         // 打开文件存放目录

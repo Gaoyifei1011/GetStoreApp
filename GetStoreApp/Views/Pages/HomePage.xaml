@@ -64,12 +64,12 @@
             </StackPanel>
         </ScrollViewer>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal">
+        <!--<StackPanel Grid.Row="2" Orientation="Horizontal">
             <Button Click="Button1_Click" Content="测试01" />
             <Button Click="Button2_Click" Content="测试02" />
             <Button Click="Button3_Click" Content="测试03" />
             <Button Click="Button4_Click" Content="测试04" />
             <Button Click="Button5_Click" Content="测试05" />
-        </StackPanel>
+        </StackPanel>-->
     </Grid>
 </Page>

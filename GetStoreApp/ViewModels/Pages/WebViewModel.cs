@@ -1,10 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Navigation;
 using GetStoreApp.Contracts.Services.Controls.Download;
 using GetStoreApp.Contracts.Services.Controls.Settings.Common;
-using GetStoreApp.Contracts.Services.Shell;
+using GetStoreApp.Contracts.Services.Window;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Controls.Web;
 using GetStoreApp.Helpers.Root;
@@ -13,6 +12,7 @@ using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Models.Notifications;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Web;
+using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.Web.WebView2.Core;
@@ -22,7 +22,7 @@ using Windows.Foundation;
 
 namespace GetStoreApp.ViewModels.Pages
 {
-    public class WebViewModel : ObservableRecipient, INavigationAware
+    public class WebViewModel : ObservableRecipient
     {
         private const string DefaultUrl = "https://store.rg-adguard.net/";
 
@@ -152,9 +152,6 @@ namespace GetStoreApp.ViewModels.Pages
             IsLoading = false;
         });
 
-        public void OnNavigatedTo(object parameter)
-        { }
-
         public void OnNavigatedFrom()
         {
             if (CoreWebView is not null)
@@ -262,7 +259,7 @@ namespace GetStoreApp.ViewModels.Pages
                                         }
                                         else if (result == ContentDialogResult.Secondary)
                                         {
-                                            NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+                                            NavigationService.NavigateTo(typeof(DownloadPage));
                                         }
                                         App.IsDialogOpening = false;
                                     }
@@ -298,7 +295,7 @@ namespace GetStoreApp.ViewModels.Pages
                                         }
                                         else if (result == ContentDialogResult.Secondary)
                                         {
-                                            NavigationService.NavigateTo(typeof(DownloadViewModel).FullName, null, new DrillInNavigationTransitionInfo(), false);
+                                            NavigationService.NavigateTo(typeof(DownloadPage));
                                         }
                                         App.IsDialogOpening = false;
                                     }

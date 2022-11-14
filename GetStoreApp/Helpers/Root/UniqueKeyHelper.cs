@@ -31,10 +31,9 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         private static string CalculateUniqueKey(string content)
         {
-            MD5 md5Hash = MD5.Create();
 
             // 将输入字符串转换为字节数组并计算哈希数据
-            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(content));
+            byte[] data = MD5.HashData(Encoding.UTF8.GetBytes(content));
 
             // 创建一个 Stringbuilder 来收集字节并创建字符串
             StringBuilder str = new StringBuilder();

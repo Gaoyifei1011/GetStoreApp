@@ -14,7 +14,6 @@ namespace GetStoreApp.Models.Controls.Settings.Common
             set { SetValue(HistoryLiteNumNameProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for HistoryLiteNumName.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty HistoryLiteNumNameProperty =
             DependencyProperty.Register("HistoryLiteNumName", typeof(string), typeof(HistoryLiteNumModel), new PropertyMetadata(string.Empty));
 
@@ -27,7 +26,6 @@ namespace GetStoreApp.Models.Controls.Settings.Common
             set { SetValue(HistoryLiteNumValueProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for HistoryLiteNumValue.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty HistoryLiteNumValueProperty =
             DependencyProperty.Register("HistoryLiteNum", typeof(int), typeof(HistoryLiteNumModel), new PropertyMetadata(default(int)));
     }

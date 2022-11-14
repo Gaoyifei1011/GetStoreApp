@@ -111,7 +111,7 @@
     <None Remove="UI\Controls\Settings\Experiment\NetWorkMonitorControl.xaml" />
     <None Remove="UI\Controls\Settings\Experiment\OpenConfigFIleControl.xaml" />
     
-    <None Remove="UI\Controls\Shell\AppTitleBarControl.xaml" />
+    <None Remove="UI\Controls\Window\AppTitleBarControl.xaml" />
     
     <None Remove="UI\Controls\Web\LoadFailedControl.xaml" />
     
@@ -145,6 +145,7 @@
     <None Remove="UI\Notifications\ResultContentCopyNotification.xaml" />
     <None Remove="UI\Notifications\ResultIDCopyNotification.xaml" />
     <None Remove="UI\Notifications\ResultLinkCopyNotification.xaml" />
+    <None Remove="Views\Controls\AdaptiveGridView.xaml" />
     <None Remove="Views\Controls\ResultDropDownButton.xaml" />
     
     <None Remove="Views\Pages\AboutPage.xaml" />
@@ -152,12 +153,10 @@
     <None Remove="Views\Pages\HistoryPage.xaml" />
     <None Remove="Views\Pages\HomePage.xaml" />
     <None Remove="Views\Pages\SettingsPage.xaml" />
-    <None Remove="Views\Pages\ShellPage.xaml" />
     <None Remove="Views\Pages\WebPage.xaml" />
 
-    <None Remove="Views\Shell\TaskbarControl.xaml" />
-
     <None Remove="Views\Window\MainWindow.xaml" />
+    <None Remove="Views\Window\TaskbarControl.xaml" />
     
     <PackageReference Include="Aria2.NET" Version="1.0.5" />
     
@@ -328,7 +327,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
-    <Page Update="UI\Controls\Shell\AppTitleBarControl.xaml">
+    <Page Update="UI\Controls\Window\AppTitleBarControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
@@ -436,14 +435,11 @@
     <Page Update="Views\Pages\SettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\Pages\ShellPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Update="Views\Pages\WebPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
-    <Page Update="Views\Shell\TaskBarControl.xaml">
+    <Page Update="Views\Window\TaskBarControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
@@ -492,6 +488,12 @@
     <Content Update="Assets\Logo\GetStoreApp.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\Controls\AdaptiveGridView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <ProjectExtensions>

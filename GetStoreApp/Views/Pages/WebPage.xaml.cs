@@ -3,6 +3,7 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 
 namespace GetStoreApp.Views.Pages
 {
@@ -15,6 +16,12 @@ namespace GetStoreApp.Views.Pages
         public WebPage()
         {
             InitializeComponent();
+        }
+
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            base.OnNavigatingFrom(e);
+            ViewModel.OnNavigatedFrom();
         }
 
         /// <summary>

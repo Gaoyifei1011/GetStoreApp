@@ -1,5 +1,5 @@
 ﻿<Grid
-    x:Class="GetStoreApp.UI.Controls.Shell.AppTitleBarControl"
+    x:Class="GetStoreApp.UI.Controls.Window.AppTitleBarControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -31,6 +31,6 @@
         Margin="36,2,0,0"
         VerticalAlignment="Center"
         Style="{StaticResource CaptionTextBlockStyle}"
-        Text="{x:Bind ResourceService.GetLocalized('/Shell/AppTitle')}"
+        Text="{x:Bind ResourceService.GetLocalized('/Window/AppTitle')}"
         TextWrapping="NoWrap" />
 </Grid>
