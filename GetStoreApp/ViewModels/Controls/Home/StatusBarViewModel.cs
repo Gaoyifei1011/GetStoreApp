@@ -7,7 +7,6 @@ using GetStoreApp.Models.Controls.Home;
 using GetStoreAppWindowsAPI.Controls;
 using GetStoreAppWindowsAPI.Controls.Taskbar;
 using Microsoft.UI.Xaml.Controls;
-using System;
 using System.Collections.Generic;
 using WinUIEx;
 

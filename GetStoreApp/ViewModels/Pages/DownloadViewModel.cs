@@ -8,7 +8,6 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
 using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media.Animation;
 
 namespace GetStoreApp.ViewModels.Pages
 {

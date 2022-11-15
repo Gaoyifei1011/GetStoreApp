@@ -55,7 +55,6 @@
 > * [Aria2.NET](https://github.com/rogerfar/Aria2.NET)&emsp;
 > * [Autofac](https://autofac.org)&emsp;
 > * [CommunityToolkit.Mvvm](https://github.com/CommunityToolkit/WindowsCommunityToolkit)&emsp;
-> * [CommunityToolkit.WinUI.UI.Controls.Core](https://github.com/CommunityToolkit/WindowsCommunityToolkit)&emsp;
 > * [H.NotifyIcon.WinUI](https://github.com/HavenDV/H.NotifyIcon)&emsp;
 > * [HtmlAgilityPack](http://html-agility-pack.net)&emsp;
 > * [Microsoft.Data.Sqlite.Core](https://docs.microsoft.com/dotnet/standard/data/sqlite)&emsp;
@@ -64,7 +63,6 @@
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Microsoft.Xaml.Behaviors.WinUI.Managed](https://www.nuget.org/packages/Microsoft.Xaml.Behaviors.WinUI.Managed)&emsp;
 > * [SQLitePCLRaw.bundle_winsqlite3](https://github.com/ericsink/SQLitePCL.raw)&emsp;
-> * [Template Studio](https://github.com/microsoft/TemplateStudio)&emsp;
 > * [WinUIEx](https://dotmorten.github.io/WinUIEx)&emsp;
 
 ------

@@ -12,7 +12,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 		LICENSE = LICENSE
 		README.md = README.md
-		TemplateStudio.xml = TemplateStudio.xml
 	EndProjectSection
 EndProject
 Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "GetStoreAppPackage", "GetStoreAppPackage\GetStoreAppPackage.wapproj", "{CA6C2DC4-C96D-4C23-AE18-FC7150BEF554}"

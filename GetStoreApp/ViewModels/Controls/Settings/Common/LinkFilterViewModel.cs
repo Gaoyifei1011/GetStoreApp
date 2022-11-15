@@ -4,9 +4,7 @@ using GetStoreApp.Contracts.Services.Controls.Settings.Common;
 using GetStoreApp.Contracts.Services.Window;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
-using GetStoreApp.ViewModels.Pages;
 using GetStoreApp.Views.Pages;
-using Microsoft.UI.Xaml.Media.Animation;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Common
 {

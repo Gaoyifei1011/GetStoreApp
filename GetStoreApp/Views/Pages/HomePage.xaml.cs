@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
-using GetStoreApp.Services.Root;
 using GetStoreApp.ViewModels.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -46,18 +45,22 @@ namespace GetStoreApp.Views.Pages
         {
             ContainerHelper.GetInstance<IAppNotificationService>().Show("DownloadAborted", "NotDownload");
         }
+
         private void Button2_Click(object sender, RoutedEventArgs e)
         {
             ContainerHelper.GetInstance<IAppNotificationService>().Show("DownloadAborted", "Downloading");
         }
+
         private void Button3_Click(object sender, RoutedEventArgs e)
         {
             ContainerHelper.GetInstance<IAppNotificationService>().Show("DownloadCompleted");
         }
+
         private void Button4_Click(object sender, RoutedEventArgs e)
         {
             ContainerHelper.GetInstance<IAppNotificationService>().Show("InstallApp", "Successfully", "文件01");
         }
+
         private void Button5_Click(object sender, RoutedEventArgs e)
         {
             ContainerHelper.GetInstance<IAppNotificationService>().Show("InstallApp", "Error", "文件02", "测试消息");

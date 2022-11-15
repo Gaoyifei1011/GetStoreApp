@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:WinUI="using:GetStoreApp.Views.Window"
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
-    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
@@ -18,7 +17,7 @@
     TaskBarIcon="Assets/Logo/GetStoreApp.ico"
     mc:Ignorable="d">
 
-    <Grid Unloaded="{x:Bind WindowUnloaded}">
+    <Grid>
         <i:Interaction.Behaviors>
             <ic:EventTriggerBehavior EventName="Loaded">
                 <ic:InvokeCommandAction Command="{x:Bind ViewModel.LoadedCommand}" />
@@ -115,7 +114,6 @@
             </Frame>
         </NavigationView>
 
-        <controls:InAppNotification x:Name="WindowNotification" Style="{StaticResource InAppNotificationsStyle}" />
         <window:TaskBarControl />
     </Grid>
 </WinUI:WASDKWindow>

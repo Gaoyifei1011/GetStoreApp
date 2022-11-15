@@ -13,9 +13,9 @@ namespace GetStoreApp.ViewModels.Notifications
             set { SetProperty(ref _copyState, value); }
         }
 
-        public void Initialize(bool notification)
+        public void Initialize(bool copyState)
         {
-            CopyState = notification;
+            CopyState = copyState;
         }
     }
 }

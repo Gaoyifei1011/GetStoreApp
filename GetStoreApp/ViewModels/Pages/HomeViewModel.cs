@@ -5,7 +5,6 @@ using GetStoreApp.Contracts.Services.Window;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Views.Pages;
-using Microsoft.UI.Xaml.Media.Animation;
 
 namespace GetStoreApp.ViewModels.Pages
 {

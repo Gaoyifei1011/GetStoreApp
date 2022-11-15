@@ -35,7 +35,6 @@ namespace GetStoreAppWindowsAPI.PInvoke.NTdll
         /// </summary>
         public int UniqueProcessId;
 
-
         public int Size
         {
             get

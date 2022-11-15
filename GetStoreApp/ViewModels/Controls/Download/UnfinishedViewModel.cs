@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.WinUI;
 using GetStoreApp.Contracts.Services.Controls.Download;
 using GetStoreApp.Contracts.Services.Controls.Settings.Common;
 using GetStoreApp.Contracts.Services.Controls.Settings.Experiment;
@@ -10,8 +9,8 @@ using GetStoreApp.Extensions.DataType.Events;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.Download;
-using GetStoreApp.Models.Notifications;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
+using GetStoreApp.UI.Notifications;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -72,10 +71,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 // 网络处于未连接状态，不再进行下载，显示通知
                 if (NetStatus == NetWorkStatus.None || NetStatus == NetWorkStatus.Unknown)
                 {
-                    WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
-                    {
-                        NotificationArgs = InAppNotificationArgs.NetWorkError,
-                    }));
+                    new NetWorkErrorNotification().Show();
                     return;
                 }
             }
@@ -247,10 +243,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 // 网络处于未连接状态，不再进行下载，显示通知
                 if (NetStatus == NetWorkStatus.None || NetStatus == NetWorkStatus.Unknown)
                 {
-                    WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
-                    {
-                        NotificationArgs = InAppNotificationArgs.NetWorkError,
-                    }));
+                    new NetWorkErrorNotification().Show();
                     return;
                 }
             }

@@ -5,13 +5,12 @@ using GetStoreApp.Contracts.Services.Controls.History;
 using GetStoreApp.Contracts.Services.Controls.Settings.Common;
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Contracts.Services.Window;
-using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.History;
 using GetStoreApp.Models.Controls.Home;
 using GetStoreApp.Models.Controls.Settings.Common;
-using GetStoreApp.Models.Notifications;
+using GetStoreApp.UI.Notifications;
 using GetStoreApp.Views.Pages;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -61,11 +60,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 historyItem.HistoryLink);
             CopyPasteHelper.CopyToClipBoard(CopyContent);
 
-            WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
-            {
-                NotificationArgs = InAppNotificationArgs.HistoryCopy,
-                NotificationValue = new object[] { true, false }
-            }));
+            new HistoryCopyNotification(true, false).Show();
         });
 
         // 填入到文本框

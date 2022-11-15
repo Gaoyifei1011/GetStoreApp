@@ -1,20 +1,17 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Controls.Download;
 using GetStoreApp.Contracts.Services.Controls.Settings.Common;
 using GetStoreApp.Contracts.Services.Window;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Controls.Web;
 using GetStoreApp.Helpers.Root;
-using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.Download;
-using GetStoreApp.Models.Notifications;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Web;
+using GetStoreApp.UI.Notifications;
 using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.Web.WebView2.Core;
 using System;
 using System.IO;
@@ -222,11 +219,7 @@ namespace GetStoreApp.ViewModels.Pages
                             case DuplicatedDataInfoArgs.None:
                                 {
                                     await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add");
-                                    WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
-                                    {
-                                        NotificationArgs = InAppNotificationArgs.DownloadCreate,
-                                        NotificationValue = new object[] { true }
-                                    }));
+                                    new DownloadCreateNotification(true).Show();
                                     break;
                                 }
 
@@ -250,11 +243,7 @@ namespace GetStoreApp.ViewModels.Pages
                                             finally
                                             {
                                                 await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                                WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
-                                                {
-                                                    NotificationArgs = InAppNotificationArgs.DownloadCreate,
-                                                    NotificationValue = new object[] { true }
-                                                }));
+                                                new DownloadCreateNotification(true).Show();
                                             }
                                         }
                                         else if (result == ContentDialogResult.Secondary)
@@ -286,11 +275,7 @@ namespace GetStoreApp.ViewModels.Pages
                                             finally
                                             {
                                                 await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                                WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
-                                                {
-                                                    NotificationArgs = InAppNotificationArgs.DownloadCreate,
-                                                    NotificationValue = new object[] { true }
-                                                }));
+                                                new DownloadCreateNotification(true).Show();
                                             }
                                         }
                                         else if (result == ContentDialogResult.Secondary)

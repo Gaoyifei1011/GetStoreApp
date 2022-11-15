@@ -1,16 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Controls.Settings.Appearance;
 using GetStoreApp.Contracts.Services.Window;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
-using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.Settings.Appearance;
-using GetStoreApp.Models.Notifications;
-using GetStoreApp.ViewModels.Pages;
+using GetStoreApp.UI.Notifications;
 using GetStoreApp.Views.Pages;
-using Microsoft.UI.Xaml.Media.Animation;
 using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
@@ -43,11 +39,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
         public IRelayCommand LanguageSelectCommand => new RelayCommand(async () =>
         {
             await LanguageService.SetLanguageAsync(Language);
-            WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
-            {
-                NotificationArgs = InAppNotificationArgs.LanguageSettings,
-                NotificationValue = new object[] { true }
-            }));
+            new LanguageChangeNotification(true).Show();
         });
 
         public LanguageViewModel()

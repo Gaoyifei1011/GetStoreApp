@@ -1,18 +1,85 @@
-﻿<StackPanel
+﻿<UserControl
     x:Class="GetStoreApp.UI.Notifications.ResultIDCopyNotification"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Loaded="{x:Bind NotificationLoaded}"
+    Unloaded="{x:Bind NotificationUnLoaded}"
     mc:Ignorable="d">
-    <TextBlock
-        x:Name="CopySuccess"
-        x:Load="{x:Bind ViewModel.CopyState, Mode=OneWay}"
-        Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
-        Text="{x:Bind ResourceService.GetLocalized('/Notification/ResultIDCopySuccessfully')}" />
-    <TextBlock
-        x:Name="CopyFailed"
-        x:Load="{x:Bind ViewModel.CopyState, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
-        Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
-        Text="{x:Bind ResourceService.GetLocalized('/Notification/ResultIDCopyFailed')}" />
-</StackPanel>
+
+    <UserControl.Resources>
+        <Storyboard x:Name="PopupIn" Completed="{x:Bind PopupInCompleted}">
+            <DoubleAnimation
+                Storyboard.TargetName="PopupContainer"
+                Storyboard.TargetProperty="Opacity"
+                From="0"
+                To="1"
+                Duration="00:00:00.5">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation
+                Storyboard.TargetName="PopupContainer"
+                Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                From="-10"
+                To="-100"
+                Duration="00:00:00.5">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard x:Name="PopupOut" Completed="{x:Bind PopupOutCompleted}">
+            <DoubleAnimation
+                Storyboard.TargetName="PopupContainer"
+                Storyboard.TargetProperty="Opacity"
+                From="1"
+                To="0"
+                Duration="00:00:00.5">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation
+                Storyboard.TargetName="PopupContainer"
+                Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                From="-100"
+                To="-10"
+                Duration="00:00:00.5">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+    </UserControl.Resources>
+
+    <StackPanel
+        Name="PopupContainer"
+        Padding="10"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Bottom"
+        Background="{ThemeResource TeachingTipBackgroundBrush}"
+        BorderBrush="{ThemeResource TeachingTipBorderBrush}"
+        BorderThickness="{ThemeResource TeachingTipContentBorderThicknessUntargeted}"
+        CornerRadius="{ThemeResource OverlayCornerRadius}"
+        Opacity="0">
+
+        <StackPanel.RenderTransform>
+            <TranslateTransform Y="-10" />
+        </StackPanel.RenderTransform>
+
+        <TextBlock
+            x:Name="CopySuccess"
+            x:Load="{x:Bind ViewModel.CopyState, Mode=OneWay}"
+            Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
+            Text="{x:Bind ResourceService.GetLocalized('/Notification/ResultIDCopySuccessfully')}" />
+        <TextBlock
+            x:Name="CopyFailed"
+            x:Load="{x:Bind ViewModel.CopyState, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
+            Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
+            Text="{x:Bind ResourceService.GetLocalized('/Notification/ResultIDCopyFailed')}" />
+    </StackPanel>
+</UserControl>

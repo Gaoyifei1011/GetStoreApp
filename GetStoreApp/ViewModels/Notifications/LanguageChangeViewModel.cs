@@ -13,9 +13,9 @@ namespace GetStoreApp.ViewModels.Notifications
             set { SetProperty(ref _setResult, value); }
         }
 
-        public void Initialize(bool notification)
+        public void Initialize(bool setResult)
         {
-            SetResult = notification;
+            SetResult = setResult;
         }
     }
 }

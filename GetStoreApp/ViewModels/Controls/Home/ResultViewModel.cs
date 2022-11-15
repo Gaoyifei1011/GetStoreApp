@@ -10,13 +10,11 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Models.Controls.Home;
-using GetStoreApp.Models.Notifications;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
-using GetStoreApp.ViewModels.Pages;
+using GetStoreApp.UI.Notifications;
 using GetStoreApp.Views.Pages;
 using GetStoreAppCore.Data;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media.Animation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -74,11 +72,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
         public IRelayCommand CopyIDCommand => new RelayCommand(() =>
         {
             CopyPasteHelper.CopyToClipBoard(CategoryId);
-            WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
-            {
-                NotificationArgs = InAppNotificationArgs.ResultIDCopy,
-                NotificationValue = new object[] { true }
-            }));
+            new ResultIDCopyNotification(true).Show();
         });
 
         // 进入多选模式
@@ -148,11 +142,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
 
-            WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
-            {
-                NotificationArgs = InAppNotificationArgs.ResultContentCopy,
-                NotificationValue = new object[] { true, true, SelectedResultDataList.Count }
-            }));
+            new ResultContentCopyNotification(true, true, SelectedResultDataList.Count).Show();
         });
 
         // 复制选定项目的链接
@@ -176,11 +166,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
 
-            WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
-            {
-                NotificationArgs = InAppNotificationArgs.ResultLinkCopy,
-                NotificationValue = new object[] { true, true, SelectedResultDataList.Count }
-            }));
+            new ResultLinkCopyNotification(true, true, SelectedResultDataList.Count).Show();
         });
 
         // 下载选定项目
@@ -194,10 +180,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 // 网络处于未连接状态，不再进行下载，显示通知
                 if (NetStatus == NetWorkStatus.None || NetStatus == NetWorkStatus.Unknown)
                 {
-                    WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
-                    {
-                        NotificationArgs = InAppNotificationArgs.NetWorkError,
-                    }));
+                    new NetWorkErrorNotification().Show();
                     return;
                 }
             }
@@ -281,14 +264,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 }
 
                 // 显示下载任务创建成功消息
-                if (IsDownloadSuccessfully)
-                {
-                    WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
-                    {
-                        NotificationArgs = InAppNotificationArgs.DownloadCreate,
-                        NotificationValue = new object[] { true }
-                    }));
-                }
+                new DownloadCreateNotification(IsDownloadSuccessfully).Show();
             }
 
             // 使用浏览器下载
@@ -330,10 +306,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 // 网络处于未连接状态，不再进行下载，显示通知
                 if (NetStatus == NetWorkStatus.None || NetStatus == NetWorkStatus.Unknown)
                 {
-                    WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
-                    {
-                        NotificationArgs = InAppNotificationArgs.NetWorkError,
-                    }));
+                    new NetWorkErrorNotification().Show();
                     return;
                 }
             }
@@ -362,11 +335,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                     case DuplicatedDataInfoArgs.None:
                         {
                             await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add");
-                            WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
-                            {
-                                NotificationArgs = InAppNotificationArgs.DownloadCreate,
-                                NotificationValue = new object[] { true }
-                            }));
+                            new DownloadCreateNotification(true).Show();
                             break;
                         }
 
@@ -390,11 +359,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                                     finally
                                     {
                                         await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                        WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
-                                        {
-                                            NotificationArgs = InAppNotificationArgs.DownloadCreate,
-                                            NotificationValue = new object[] { true }
-                                        }));
+                                        new DownloadCreateNotification(true).Show();
                                     }
                                 }
                                 else if (result == ContentDialogResult.Secondary)
@@ -426,11 +391,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                                     finally
                                     {
                                         await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                        WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
-                                        {
-                                            NotificationArgs = InAppNotificationArgs.DownloadCreate,
-                                            NotificationValue = new object[] { true }
-                                        }));
+                                        new DownloadCreateNotification(true).Show();
                                     }
                                 }
                                 else if (result == ContentDialogResult.Secondary)
@@ -456,11 +417,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
         {
             CopyPasteHelper.CopyToClipBoard(fileLink);
 
-            WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
-            {
-                NotificationArgs = InAppNotificationArgs.ResultLinkCopy,
-                NotificationValue = new object[] { true, false }
-            }));
+            new ResultLinkCopyNotification(true, false).Show();
         });
 
         // 复制指定项目的内容
@@ -475,11 +432,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             CopyPasteHelper.CopyToClipBoard(CopyContent);
 
-            WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel()
-            {
-                NotificationArgs = InAppNotificationArgs.ResultContentCopy,
-                NotificationValue = new object[] { true, false }
-            }));
+            new ResultContentCopyNotification(true, false).Show();
         });
 
         public ResultViewModel()

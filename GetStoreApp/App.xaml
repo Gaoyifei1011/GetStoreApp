@@ -18,7 +18,6 @@
                 <ResourceDictionary Source="ms-appx:///Styles/Grid.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/GridView.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/HyperlinkButton.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/InAppNotification.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/InfoBar.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/ListView.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/NavigationView.xaml" />

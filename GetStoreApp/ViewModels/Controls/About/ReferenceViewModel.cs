@@ -12,7 +12,6 @@ namespace GetStoreApp.ViewModels.Controls.About
             {"Aria2.NET","https://github.com/rogerfar/Aria2.NET" },
             {"Autofac","https://autofac.org" },
             {"CommunityToolkit.Mvvm","https://github.com/CommunityToolkit/WindowsCommunityToolkit" },
-            {"CommunityToolkit.WinUI.UI.Controls.Core","https://github.com/CommunityToolkit/WindowsCommunityToolkit" },
             {"H.NotifyIcon.WinUI","https://github.com/HavenDV/H.NotifyIcon" },
             {"HtmlAgilityPack","http://html-agility-pack.net" },
             {"Microsoft.Data.Sqlite.Core","https://docs.microsoft.com/dotnet/standard/data/sqlite" },
@@ -21,7 +20,6 @@ namespace GetStoreApp.ViewModels.Controls.About
             {"Microsoft.WindowsAppSDK","https://github.com/microsoft/windowsappsdk" },
             {"Microsoft.Xaml.Behaviors.WinUI.Managed","https://www.nuget.org/packages/Microsoft.Xaml.Behaviors.WinUI.Managed" },
             {"SQLitePCLRaw.bundle_winsqlite3","https://github.com/ericsink/SQLitePCL.raw" },
-            {"Template Studio","https://github.com/microsoft/TemplateStudio" },
             {"WinUIEx","https://dotmorten.github.io/WinUIEx" }
         };
     }

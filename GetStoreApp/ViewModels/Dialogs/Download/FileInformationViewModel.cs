@@ -1,13 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Converters.Formats;
-using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
-using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.Download;
-using GetStoreApp.Models.Notifications;
+using GetStoreApp.UI.Notifications;
 using Microsoft.UI.Xaml.Controls;
 using System.Text;
 
@@ -68,11 +65,7 @@ namespace GetStoreApp.ViewModels.Dialogs.Download
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
             dialog.Hide();
 
-            WeakReferenceMessenger.Default.Send(new InAppNotificationMessage(new InAppNotificationModel
-            {
-                NotificationArgs = InAppNotificationArgs.FileInformationCopy,
-                NotificationValue = new object[] { true }
-            }));
+            new FileInformationCopyNotification(true).Show();
         });
 
         // 关闭窗口

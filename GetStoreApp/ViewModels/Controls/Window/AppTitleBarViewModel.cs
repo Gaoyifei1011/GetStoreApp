@@ -5,14 +5,12 @@ using GetStoreApp.Contracts.Services.Controls.Settings.Appearance;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
 using Microsoft.UI;
-using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using Windows.Graphics;
 using Windows.UI;
-using Windows.UI.ViewManagement;
 using WinUIEx;
 
 namespace GetStoreApp.ViewModels.Controls.Window
