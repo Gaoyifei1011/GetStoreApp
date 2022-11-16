@@ -1,25 +1,52 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Extensions.DataType.Events;
 using GetStoreApp.Helpers.Window;
 using GetStoreApp.Messages;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
 using GetStoreAppWindowsAPI.PInvoke.User32;
+using GetStoreAppWindowsAPI.PInvoke.WindowsCore;
 using Microsoft.UI.Dispatching;
 using System;
 using System.Runtime.InteropServices;
-using WinUIEx;
+using WinRT.Interop;
 
 namespace GetStoreApp.Views.Window
 {
     /// <summary>
-    /// 为WindowEx窗口添加正在关闭窗口事件
+    /// Windows 应用 SDK窗口的扩展
     /// </summary>
-    public class WASDKWindow : WindowEx
+    public class WASDKWindow : Microsoft.UI.Xaml.Window
     {
         private WinProc newWndProc = null;
         private IntPtr oldWndProc = IntPtr.Zero;
 
         private DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+
+        /// <summary>
+        /// 窗口宽度
+        /// </summary>
+        public int Width
+        {
+            get { return ConvertPixelToEpx(Hwnd, GetWidthWin32(Hwnd)); }
+            set { SetWindowWidthWin32(Hwnd, ConvertEpxToPixel(Hwnd, value)); }
+        }
+
+        /// <summary>
+        /// 窗口高度
+        /// </summary>
+        public int Height
+        {
+            get { return ConvertPixelToEpx(Hwnd, GetHeightWin32(Hwnd)); }
+            set { SetWindowHeightWin32(Hwnd, ConvertEpxToPixel(Hwnd, value)); }
+        }
+
+        /// <summary>
+        /// 窗口标题
+        /// </summary>
+        public new string Title
+        {
+            get => base.Title;
+            set => base.Title = value;
+        }
 
         /// <summary>
         /// 是否扩展内容到标题栏
@@ -31,35 +58,40 @@ namespace GetStoreApp.Views.Window
         }
 
         /// <summary>
-        /// 窗口是否关闭的标志
+        /// 窗口最小宽度
         /// </summary>
-        public bool IsClosing { get; set; }
+        public int MinWidth { get; set; } = -1;
+
+        /// <summary>
+        /// 窗口最小高度
+        /// </summary>
+        public int MinHeight { get; set; } = -1;
+
+        /// <summary>
+        /// 窗口最大宽度
+        /// </summary>
+        public int MaxWidth { get; set; } = -1;
+
+        /// <summary>
+        /// 窗口最大高度
+        /// </summary>
+        public int MaxHeight { get; set; } = -1;
 
         /// <summary>
         /// 窗口句柄
         /// </summary>
         private IntPtr Hwnd { get; set; } = IntPtr.Zero;
 
-        /// <summary>
-        /// 窗口正在关闭事件
-        /// </summary>
-        public event EventHandler<WindowClosingEventArgs> Closing;
-
         public WASDKWindow()
         {
             // 获取窗口的句柄
-            Hwnd = WindowExtensions.GetWindowHandle(this);
+            Hwnd = WindowNative.GetWindowHandle(this);
             if (Hwnd == IntPtr.Zero)
             {
-                throw new NullReferenceException("The Window Handle is null.");
+                throw new NullReferenceException("窗口句柄不能为空");
             }
             newWndProc = new WinProc(NewWindowProc);
             oldWndProc = SetWindowLongPtr(Hwnd, WindowLongIndexFlags.GWL_WNDPROC, newWndProc);
-        }
-
-        ~WASDKWindow()
-        {
-            WeakReferenceMessenger.Default.UnregisterAll(this);
         }
 
         /// <summary>
@@ -80,24 +112,32 @@ namespace GetStoreApp.Views.Window
         {
             switch (Msg)
             {
-                // 窗口关闭消息
-                case WindowMessage.WM_CLOSE:
-                    {
-                        if (Closing is not null)
-                        {
-                            if (IsClosing == false)
-                            {
-                                WindowClosingEventArgs windowClosingEventArgs = new(this);
-                                Closing.Invoke(this, windowClosingEventArgs);
-                            }
-                            return IntPtr.Zero;
-                        }
-                        break;
-                    }
                 // 系统设置发生更改时的消息
                 case WindowMessage.WM_SETTINGCHANGE:
                     {
                         WeakReferenceMessenger.Default.Send(new SystemSettingsChnagedMessage(true));
+                        break;
+                    }
+                case WindowMessage.WM_GETMINMAXINFO:
+                    {
+                        MINMAXINFO minMaxInfo = Marshal.PtrToStructure<MINMAXINFO>(lParam);
+                        if (MinWidth >= 0)
+                        {
+                            minMaxInfo.ptMinTrackSize.x = ConvertEpxToPixel(hWnd, MinWidth);
+                        }
+                        if (MinHeight >= 0)
+                        {
+                            minMaxInfo.ptMinTrackSize.y = ConvertEpxToPixel(hWnd, MinHeight);
+                        }
+                        if (MaxWidth > 0)
+                        {
+                            minMaxInfo.ptMaxTrackSize.x = ConvertEpxToPixel(hWnd, MaxWidth);
+                        }
+                        if (MaxHeight > 0)
+                        {
+                            minMaxInfo.ptMaxTrackSize.y = ConvertEpxToPixel(hWnd, MaxHeight);
+                        }
+                        Marshal.StructureToPtr(minMaxInfo, lParam, true);
                         break;
                     }
                 // 窗口接受其他数据消息
@@ -130,6 +170,73 @@ namespace GetStoreApp.Views.Window
                     }
             }
             return User32Library.CallWindowProc(oldWndProc, hWnd, Msg, wParam, lParam);
+        }
+
+        /// <summary>
+        /// 获取Win32窗口宽度
+        /// </summary>
+        private int GetWidthWin32(IntPtr hwnd)
+        {
+            //Get the width
+            RECT rc;
+            User32Library.GetWindowRect(hwnd, out rc);
+            return rc.right - rc.left;
+        }
+
+        /// <summary>
+        /// 获取Win32窗口高度
+        /// </summary>
+        private int GetHeightWin32(IntPtr hwnd)
+        {
+            //Get the width
+            RECT rc;
+            User32Library.GetWindowRect(hwnd, out rc);
+            return rc.bottom - rc.top;
+        }
+
+        /// <summary>
+        /// 设置Win32窗口宽度
+        /// </summary>
+        private void SetWindowWidthWin32(IntPtr hwnd, int width)
+        {
+            int currentHeightInPixels = GetHeightWin32(hwnd);
+
+            User32Library.SetWindowPos(hwnd, SpecialWindowHandles.HWND_TOP,
+                                        0, 0, width, currentHeightInPixels,
+                                        SetWindowPosFlags.SWP_NOMOVE |
+                                        SetWindowPosFlags.SWP_NOACTIVATE);
+        }
+
+        /// <summary>
+        /// 设置Win32窗口高度
+        /// </summary>
+        private void SetWindowHeightWin32(IntPtr hwnd, int height)
+        {
+            int currentWidthInPixels = GetWidthWin32(hwnd);
+
+            User32Library.SetWindowPos(hwnd, SpecialWindowHandles.HWND_TOP,
+                                        0, 0, currentWidthInPixels, height,
+                                        SetWindowPosFlags.SWP_NOMOVE |
+                                        SetWindowPosFlags.SWP_NOACTIVATE);
+        }
+
+        public static int ConvertEpxToPixel(IntPtr hwnd, int effectivePixels)
+        {
+            float scalingFactor = GetScalingFactor(hwnd);
+            return (int)(effectivePixels * scalingFactor);
+        }
+
+        public static int ConvertPixelToEpx(IntPtr hwnd, int pixels)
+        {
+            float scalingFactor = GetScalingFactor(hwnd);
+            return (int)(pixels / scalingFactor);
+        }
+
+        public static float GetScalingFactor(IntPtr hwnd)
+        {
+            var dpi = User32Library.GetDpiForWindow(hwnd);
+            float scalingFactor = (float)dpi / 96;
+            return scalingFactor;
         }
     }
 }

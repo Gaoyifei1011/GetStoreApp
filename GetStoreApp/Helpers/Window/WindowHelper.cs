@@ -1,5 +1,6 @@
 ﻿using GetStoreAppWindowsAPI.PInvoke.User32;
-using WinUIEx;
+using System.Diagnostics;
+using WinRT.Interop;
 
 namespace GetStoreApp.Helpers.Window
 {
@@ -14,20 +15,20 @@ namespace GetStoreApp.Helpers.Window
         public static void ShowAppWindow()
         {
             // 判断窗口状态是否处于最大化状态，如果是，直接最大化窗口
-            if (User32Library.IsZoomed(WindowExtensions.GetWindowHandle(App.MainWindow)))
+            if (User32Library.IsZoomed(WindowNative.GetWindowHandle(App.MainWindow)))
             {
-                App.MainWindow.Maximize();
+                User32Library.ShowWindow(WindowNative.GetWindowHandle(App.MainWindow), WindowShowStyle.SW_MAXIMIZE);
             }
 
             // 其他状态下窗口还原显示状态
             else
             {
                 // 还原窗口（如果最小化）时
-                App.MainWindow.Restore();
+                User32Library.ShowWindow(WindowNative.GetWindowHandle(App.MainWindow), WindowShowStyle.SW_RESTORE);
             }
 
             // 将应用窗口设置到前台
-            App.MainWindow.BringToFront();
+            User32Library.SwitchToThisWindow(WindowNative.GetWindowHandle(App.MainWindow), true);
         }
 
         /// <summary>
@@ -37,7 +38,7 @@ namespace GetStoreApp.Helpers.Window
         {
             if (App.MainWindow.Visible)
             {
-                App.MainWindow.Hide();
+                User32Library.ShowWindow(WindowNative.GetWindowHandle(App.MainWindow), WindowShowStyle.SW_HIDE);
             }
         }
 
@@ -46,7 +47,11 @@ namespace GetStoreApp.Helpers.Window
         /// </summary>
         public static void SetAppTopMost(bool topMostValue)
         {
-            App.MainWindow.IsAlwaysOnTop = topMostValue;
+            if(topMostValue)
+            {
+                User32Library.SetWindowPos(WindowNative.GetWindowHandle(App.MainWindow), SpecialWindowHandles.HWND_TOPMOST, 0, 0, 0, 0,
+                SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOSIZE);
+            }
         }
     }
 }

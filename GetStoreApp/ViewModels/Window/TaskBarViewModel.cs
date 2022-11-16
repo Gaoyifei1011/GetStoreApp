@@ -94,6 +94,7 @@ namespace GetStoreApp.ViewModels.Window
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
             await Aria2Service.CloseAria2Async();
             WeakReferenceMessenger.Default.Send(new WindowClosedMessage(true));
+            BackdropHelper.ReleaseBackdrop();
             Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
         }
     }

@@ -63,7 +63,6 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Microsoft.Xaml.Behaviors.WinUI.Managed](https://www.nuget.org/packages/Microsoft.Xaml.Behaviors.WinUI.Managed)&emsp;
 > * [SQLitePCLRaw.bundle_winsqlite3](https://github.com/ericsink/SQLitePCL.raw)&emsp;
-> * [WinUIEx](https://dotmorten.github.io/WinUIEx)&emsp;
 
 ------
 

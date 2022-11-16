@@ -6,9 +6,13 @@ using GetStoreApp.Contracts.Services.Controls.Settings.Experiment;
 using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Views.Window;
+using Microsoft.UI;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using System;
+using System.IO;
 using System.Threading.Tasks;
-using WinUIEx;
+using WinRT.Interop;
 
 namespace GetStoreApp.Services.Root
 {
@@ -60,15 +64,19 @@ namespace GetStoreApp.Services.Root
             // 在应用窗口激活前配置应用的设置
             await InitializeAsync();
 
-            await StartupService.InitializeStartupAsync();
-
             App.MainWindow = new MainWindow();
+
+            await StartupService.InitializeStartupAsync();
 
             // 激活应用窗口
             App.MainWindow.Activate();
 
-            App.AppWindow = WindowExtensions.GetAppWindow(App.MainWindow);
+            nint WindowHandle = WindowNative.GetWindowHandle(App.MainWindow);
+            WindowId windowId = Win32Interop.GetWindowIdFromWindow(WindowHandle);
+
+            App.AppWindow = AppWindow.GetFromWindowId(windowId);
             App.AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
+            App.AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/GetStoreApp.ico"));
 
             // 窗口激活后配置其他设置
             await StartupAsync();

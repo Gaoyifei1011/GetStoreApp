@@ -4,10 +4,10 @@ using GetStoreApp.Contracts.Services.Root;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
+using GetStoreApp.Views.Window;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using System;
-using WinUIEx;
 
 namespace GetStoreApp
 {
@@ -15,7 +15,7 @@ namespace GetStoreApp
     {
         public static AppWindow AppWindow { get; set; }
 
-        public static WindowEx MainWindow { get; set; }
+        public static WASDKWindow MainWindow { get; set; }
 
         // 标志内容对话框是否处于正在打开状态。若是，则不再打开其他内容对话框，防止造成应用异常
         public static bool IsDialogOpening { get; set; } = false;

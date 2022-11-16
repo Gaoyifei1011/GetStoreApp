@@ -13,11 +13,11 @@
     Title="{x:Bind ResourceService.GetLocalized('AppDisplayName')}"
     MinWidth="600"
     MinHeight="768"
-    Closing="{x:Bind ViewModel.WindowClosing}"
-    TaskBarIcon="Assets/Logo/GetStoreApp.ico"
+    Activated="{x:Bind ViewModel.WindowActivated}"
+    Closed="{x:Bind ViewModel.WindowClosed}"
     mc:Ignorable="d">
 
-    <Grid>
+    <Grid Background="{x:Bind ViewModel.AppBackground, Mode=OneWay}">
         <i:Interaction.Behaviors>
             <ic:EventTriggerBehavior EventName="Loaded">
                 <ic:InvokeCommandAction Command="{x:Bind ViewModel.LoadedCommand}" />

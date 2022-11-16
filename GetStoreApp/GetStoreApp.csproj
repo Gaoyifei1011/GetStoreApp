@@ -163,7 +163,7 @@
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
     <PackageReference Include="H.NotifyIcon.WinUI" Version="2.0.74" />
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.0">
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.1">
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.755" />
@@ -174,7 +174,6 @@
     <PackageReference Include="SQLitePCLRaw.bundle_winsqlite3" Version="2.1.2">
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
-    <PackageReference Include="WinUIEx" Version="1.8.0" />
 
     <Page Update="Styles\Button.xaml">
       <Generator>MSBuild:Compile</Generator>

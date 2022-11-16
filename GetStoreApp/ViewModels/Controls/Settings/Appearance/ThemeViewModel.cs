@@ -30,7 +30,6 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
             {
                 await ThemeService.SetThemeAsync(Theme);
                 await ThemeService.SetAppThemeAsync();
-                WeakReferenceMessenger.Default.Send(new ThemeChangedMessage(Theme));
             });
 
         // 打开系统主题设置

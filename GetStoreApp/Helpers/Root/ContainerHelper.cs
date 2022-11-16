@@ -50,7 +50,7 @@ using GetStoreApp.Views.Pages;
 using GetStoreApp.Views.Window;
 using GetStoreAppWindowsAPI.PInvoke.User32;
 using System;
-using WinUIEx;
+using WinRT.Interop;
 
 namespace GetStoreApp.Helpers.Root
 {
@@ -69,7 +69,7 @@ namespace GetStoreApp.Helpers.Root
             if (!Container.IsRegistered<T>())
             {
                 MessageBoxResult Result = User32Library.MessageBox(
-                    WindowExtensions.GetWindowHandle(App.MainWindow),
+                    WindowNative.GetWindowHandle(App.MainWindow),
                     $"应用启动失败。\n{typeof(T)} 需要在ContainerHelper.cs中的InitializeContainer()方法中注册。",
                     "获取商店应用",
                     MessageBoxOptions.MB_OK | MessageBoxOptions.MB_ICONERROR | MessageBoxOptions.MB_APPLMODAL | MessageBoxOptions.MB_TOPMOST

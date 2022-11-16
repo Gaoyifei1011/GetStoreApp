@@ -3,21 +3,24 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Controls.Download;
 using GetStoreApp.Contracts.Services.Controls.Settings.Advanced;
+using GetStoreApp.Contracts.Services.Controls.Settings.Appearance;
 using GetStoreApp.Contracts.Services.Window;
 using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Extensions.DataType.Events;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Window;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
 using GetStoreApp.Views.Pages;
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Windows.UI;
 
 namespace GetStoreApp.ViewModels.Window
 {
@@ -29,7 +32,20 @@ namespace GetStoreApp.ViewModels.Window
 
         private IDownloadSchedulerService DownloadSchedulerService { get; } = ContainerHelper.GetInstance<IDownloadSchedulerService>();
 
+        private IThemeService ThemeService { get; } = ContainerHelper.GetInstance<IThemeService>();
+
+        private IBackdropService BackdropService { get; } = ContainerHelper.GetInstance<IBackdropService>();
+
         private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
+
+        private SolidColorBrush _appBackground;
+
+        public SolidColorBrush AppBackground
+        {
+            get { return _appBackground; }
+
+            set { SetProperty(ref _appBackground, value); }
+        }
 
         private Thickness _appTitleBarMargin;
 
@@ -101,6 +117,18 @@ namespace GetStoreApp.ViewModels.Window
                 NavigationDispalyMode = NavigationViewPaneDisplayMode.LeftMinimal;
                 AppTitleBarMargin = new Thickness(96, 0, 0, 0);
             }
+
+            // 应用背景色设置跟随系统发生变化时，当系统背景色设置发生变化时修改应用背景色
+            WeakReferenceMessenger.Default.Register<MainWindowViewModel, BackdropChangedMessage>(this, (appTitleBarViewModel, backdropChangedMessage) =>
+            {
+                SetAppBackground();
+            });
+
+            // 应用主题设置跟随系统发生变化时，当系统主题设置发生变化时修改修改应用背景色
+            WeakReferenceMessenger.Default.Register<MainWindowViewModel, SystemSettingsChnagedMessage>(this, (appTitleBarViewModel, systemSettingsChangedMessage) =>
+            {
+                SetAppBackground();
+            });
         });
 
         // 页面被卸载时，注销所有事件
@@ -157,10 +185,20 @@ namespace GetStoreApp.ViewModels.Window
         });
 
         /// <summary>
+        /// 设置窗口处于非激活状态时的背景色
+        /// </summary>
+        public void WindowActivated(object sender, WindowActivatedEventArgs args)
+        {
+            BackdropHelper.SetBackdropState(false, args);
+        }
+
+        /// <summary>
         /// 关闭窗口之后关闭其他服务
         /// </summary>
-        public async void WindowClosing(object sender, WindowClosingEventArgs args)
+        public async void WindowClosed(object sender, WindowEventArgs args)
         {
+            args.Handled = true;
+
             if (AppExitService.AppExit.InternalName == AppExitService.AppExitList[0].InternalName)
             {
                 WindowHelper.HideAppWindow();
@@ -241,6 +279,39 @@ namespace GetStoreApp.ViewModels.Window
         }
 
         /// <summary>
+        /// 设置应用背景色
+        /// </summary>
+        private void SetAppBackground()
+        {
+            if (BackdropService.AppBackdrop.InternalName == BackdropService.BackdropList[0].InternalName)
+            {
+                if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[0].InternalName)
+                {
+                    if (RegistryHelper.GetRegistryAppTheme() == ElementTheme.Light)
+                    {
+                        AppBackground = new SolidColorBrush(Color.FromArgb(255, 240, 243, 249));
+                    }
+                    else
+                    {
+                        AppBackground = new SolidColorBrush(Color.FromArgb(255, 20, 20, 20));
+                    }
+                }
+                else if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[1].InternalName)
+                {
+                    AppBackground = new SolidColorBrush(Color.FromArgb(255, 240, 243, 249));
+                }
+                else if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[2].InternalName)
+                {
+                    AppBackground = new SolidColorBrush(Color.FromArgb(255, 20, 20, 20));
+                }
+            }
+            else
+            {
+                AppBackground = new SolidColorBrush(Colors.Transparent);
+            }
+        }
+
+        /// <summary>
         /// 关闭应用并释放所有资源
         /// </summary>
         private async Task CloseApp()
@@ -248,6 +319,7 @@ namespace GetStoreApp.ViewModels.Window
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
             await Aria2Service.CloseAria2Async();
             WeakReferenceMessenger.Default.Send(new WindowClosedMessage(true));
+            BackdropHelper.ReleaseBackdrop();
             Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
         }
     }

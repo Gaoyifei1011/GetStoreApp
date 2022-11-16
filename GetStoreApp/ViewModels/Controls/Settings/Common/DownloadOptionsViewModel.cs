@@ -14,7 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.AccessControl;
 using Windows.Storage;
-using WinUIEx;
+using WinRT.Interop;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Common
 {
@@ -91,7 +91,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
                     Path = DownloadFolder.Path
                 };
 
-                bool Result = dialog.ShowDialog(WindowExtensions.GetWindowHandle(App.MainWindow));
+                bool Result = dialog.ShowDialog(WindowNative.GetWindowHandle(App.MainWindow));
 
                 if (Result && !string.IsNullOrEmpty(dialog.Path))
                 {

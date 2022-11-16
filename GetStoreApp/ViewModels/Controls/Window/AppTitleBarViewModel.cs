@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Contracts.Services.Controls.Settings.Appearance;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
+using GetStoreAppWindowsAPI.PInvoke.User32;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -11,7 +12,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using Windows.Graphics;
 using Windows.UI;
-using WinUIEx;
+using WinRT.Interop;
 
 namespace GetStoreApp.ViewModels.Controls.Window
 {
@@ -22,22 +23,18 @@ namespace GetStoreApp.ViewModels.Controls.Window
         // 初始化自定义标题栏
         public IRelayCommand LoadedCommand => new RelayCommand<Grid>((appTitleBar) =>
         {
-            SetTitleBarColor(ThemeService.AppTheme.InternalName);
+            SetTitleBarColor();
 
             SetDragRectangles(Convert.ToInt32(appTitleBar.Margin.Left), appTitleBar.ActualWidth, appTitleBar.ActualHeight);
 
-            // 设置主题发生变化时修改标题栏按钮的主题
-            WeakReferenceMessenger.Default.Register<AppTitleBarViewModel, ThemeChangedMessage>(this, (appTitleBarViewModel, themeChangedMessage) =>
-            {
-                SetTitleBarColor(themeChangedMessage.Value.InternalName);
-            });
+            ((FrameworkElement)App.MainWindow.Content).ActualThemeChanged += WindowThemeChanged;
 
             // 应用主题设置跟随系统发生变化时，当系统主题设置发生变化时修改标题栏按钮主题
             WeakReferenceMessenger.Default.Register<AppTitleBarViewModel, SystemSettingsChnagedMessage>(this, (appTitleBarViewModel, systemSettingsChangedMessage) =>
             {
                 if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[0].InternalName)
                 {
-                    SetTitleBarButtonColor(App.AppWindow.TitleBar, RegistryHelper.GetRegistryAppTheme());
+                    SetTitleBarButtonColor(RegistryHelper.GetRegistryAppTheme());
                 }
             });
         });
@@ -45,6 +42,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
         // 控件被卸载时，关闭所有事件，关闭消息服务
         public IRelayCommand UnLoadedCommand => new RelayCommand(() =>
         {
+            ((FrameworkElement)App.MainWindow.Content).ActualThemeChanged -= WindowThemeChanged;
             WeakReferenceMessenger.Default.UnregisterAll(this);
         });
 
@@ -55,29 +53,39 @@ namespace GetStoreApp.ViewModels.Controls.Window
         });
 
         /// <summary>
+        /// 设置主题发生变化时修改标题栏按钮的主题
+        /// </summary>
+        private void WindowThemeChanged(FrameworkElement sender, object args)
+        {
+            SetTitleBarColor();
+        }
+
+        /// <summary>
         /// 根据应用设置存储的主题值设置标题栏按钮的颜色
         /// </summary>
-        private void SetTitleBarColor(string theme)
+        private void SetTitleBarColor()
         {
-            if (theme == ThemeService.ThemeList[0].InternalName)
+            if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[0].InternalName)
             {
-                SetTitleBarButtonColor(App.AppWindow.TitleBar, RegistryHelper.GetRegistryAppTheme());
+                SetTitleBarButtonColor(RegistryHelper.GetRegistryAppTheme());
             }
-            else if (theme == ThemeService.ThemeList[1].InternalName)
+            else if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[1].InternalName)
             {
-                SetTitleBarButtonColor(App.AppWindow.TitleBar, ElementTheme.Light);
+                SetTitleBarButtonColor(ElementTheme.Light);
             }
-            else if (theme == ThemeService.ThemeList[2].InternalName)
+            else if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[2].InternalName)
             {
-                SetTitleBarButtonColor(App.AppWindow.TitleBar, ElementTheme.Dark);
+                SetTitleBarButtonColor(ElementTheme.Dark);
             }
         }
 
         /// <summary>
         /// 设置标题栏按钮的颜色
         /// </summary>
-        private void SetTitleBarButtonColor(AppWindowTitleBar bar, ElementTheme theme)
+        private void SetTitleBarButtonColor(ElementTheme theme)
         {
+            AppWindowTitleBar bar = App.AppWindow.TitleBar;
+
             switch (theme)
             {
                 case ElementTheme.Light:
@@ -120,7 +128,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
         /// </summary>
         private static int GetActualPixel(double pixel)
         {
-            uint currentDpi = WindowExtensions.GetDpiForWindow(App.MainWindow);
+            int currentDpi = User32Library.GetDpiForWindow(WindowNative.GetWindowHandle(App.MainWindow));
             return Convert.ToInt32(pixel * (currentDpi / 96.0));
         }
     }
