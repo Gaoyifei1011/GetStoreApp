@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Contracts.Services.Controls.Settings.Common;
+﻿using GetStoreApp.Contracts.Controls.Settings.Common;
 using GetStoreAppCore.Settings;
 using System;
 using System.Threading.Tasks;

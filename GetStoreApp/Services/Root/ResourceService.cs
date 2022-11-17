@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Contracts.Services.Root;
+﻿using GetStoreApp.Contracts.Root;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Models.Controls.Home;
 using GetStoreApp.Models.Controls.Settings.Advanced;

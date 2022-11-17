@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Contracts.Services.Window;
+﻿using GetStoreApp.Contracts.Window;
 using GetStoreApp.Models.Window;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;

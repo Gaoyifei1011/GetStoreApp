@@ -1,5 +1,5 @@
-﻿using GetStoreApp.Contracts.Services.Controls.Settings.Appearance;
-using GetStoreApp.Contracts.Services.Root;
+﻿using GetStoreApp.Contracts.Controls.Settings.Appearance;
+using GetStoreApp.Contracts.Root;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using Microsoft.UI.Xaml;

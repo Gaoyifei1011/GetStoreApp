@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Contracts.Services.Root;
+﻿using GetStoreApp.Contracts.Root;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.ViewModels.Controls.Settings.Advanced;
 using Microsoft.UI.Xaml.Controls;

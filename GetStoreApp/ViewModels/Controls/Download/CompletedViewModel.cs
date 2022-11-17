@@ -1,10 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Services.Controls.Download;
-using GetStoreApp.Contracts.Services.Controls.Settings.Advanced;
-using GetStoreApp.Contracts.Services.Controls.Settings.Common;
-using GetStoreApp.Contracts.Services.Root;
+using GetStoreApp.Contracts.Controls.Download;
+using GetStoreApp.Contracts.Controls.Settings.Advanced;
+using GetStoreApp.Contracts.Controls.Settings.Common;
+using GetStoreApp.Contracts.Root;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.DataType.Events;
 using GetStoreApp.Helpers.Root;

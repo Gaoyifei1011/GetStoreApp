@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Contracts.Services.Root;
+﻿using GetStoreApp.Contracts.Root;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Home;
 using GetStoreApp.ViewModels.Controls.Home;

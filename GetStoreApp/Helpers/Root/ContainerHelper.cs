@@ -1,12 +1,12 @@
 ﻿using Autofac;
-using GetStoreApp.Contracts.Services.Controls.Download;
-using GetStoreApp.Contracts.Services.Controls.History;
-using GetStoreApp.Contracts.Services.Controls.Settings.Advanced;
-using GetStoreApp.Contracts.Services.Controls.Settings.Appearance;
-using GetStoreApp.Contracts.Services.Controls.Settings.Common;
-using GetStoreApp.Contracts.Services.Controls.Settings.Experiment;
-using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Contracts.Services.Window;
+using GetStoreApp.Contracts.Controls.Download;
+using GetStoreApp.Contracts.Controls.History;
+using GetStoreApp.Contracts.Controls.Settings.Advanced;
+using GetStoreApp.Contracts.Controls.Settings.Appearance;
+using GetStoreApp.Contracts.Controls.Settings.Common;
+using GetStoreApp.Contracts.Controls.Settings.Experiment;
+using GetStoreApp.Contracts.Root;
+using GetStoreApp.Contracts.Window;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.History;
@@ -108,6 +108,7 @@ namespace GetStoreApp.Helpers.Root
             Builder.RegisterType<InstallModeService>().As<IInstallModeService>().SingleInstance();
             Builder.RegisterType<TraceCleanupService>().As<ITraceCleanupService>().SingleInstance();
 
+            Builder.RegisterType<AlwaysShowBackdropService>().As<IAlwaysShowBackdropService>().SingleInstance();
             Builder.RegisterType<BackdropService>().As<IBackdropService>().SingleInstance();
             Builder.RegisterType<LanguageService>().As<ILanguageService>().SingleInstance();
             Builder.RegisterType<ThemeService>().As<IThemeService>().SingleInstance();
@@ -192,6 +193,8 @@ namespace GetStoreApp.Helpers.Root
             Builder.RegisterType<TraceCleanupViewModel>().InstancePerDependency();
 
             // 外观
+            Builder.RegisterType<AlwaysShowBackdropControl>().InstancePerDependency();
+            Builder.RegisterType<AlwaysShowBackdropViewModel>().InstancePerDependency();
             Builder.RegisterType<BackdropControl>().InstancePerDependency();
             Builder.RegisterType<BackdropViewModel>().InstancePerDependency();
             Builder.RegisterType<LauguageControl>().InstancePerDependency();

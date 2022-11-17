@@ -1,10 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Services.Controls.Download;
-using GetStoreApp.Contracts.Services.Controls.Settings.Advanced;
-using GetStoreApp.Contracts.Services.Controls.Settings.Appearance;
-using GetStoreApp.Contracts.Services.Window;
+using GetStoreApp.Contracts.Controls.Download;
+using GetStoreApp.Contracts.Controls.Settings.Advanced;
+using GetStoreApp.Contracts.Controls.Settings.Appearance;
+using GetStoreApp.Contracts.Window;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
@@ -35,6 +35,8 @@ namespace GetStoreApp.ViewModels.Window
         private IThemeService ThemeService { get; } = ContainerHelper.GetInstance<IThemeService>();
 
         private IBackdropService BackdropService { get; } = ContainerHelper.GetInstance<IBackdropService>();
+
+        private IAlwaysShowBackdropService AlwaysShowBackdropService { get; } = ContainerHelper.GetInstance<IAlwaysShowBackdropService>();
 
         private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
 
@@ -102,7 +104,7 @@ namespace GetStoreApp.ViewModels.Window
             {"Settings",typeof(SettingsPage) }
         };
 
-        // 窗口加载完成时，初始化导航视图控件属性
+        // 窗口加载完成时，初始化导航视图控件属性和应用的背景色
         public IRelayCommand LoadedCommand => new RelayCommand(() =>
         {
             if (App.MainWindow.Width >= 768)
@@ -117,6 +119,10 @@ namespace GetStoreApp.ViewModels.Window
                 NavigationDispalyMode = NavigationViewPaneDisplayMode.LeftMinimal;
                 AppTitleBarMargin = new Thickness(96, 0, 0, 0);
             }
+
+            SetAppBackground();
+
+            ((FrameworkElement)App.MainWindow.Content).ActualThemeChanged += WindowThemeChanged;
 
             // 应用背景色设置跟随系统发生变化时，当系统背景色设置发生变化时修改应用背景色
             WeakReferenceMessenger.Default.Register<MainWindowViewModel, BackdropChangedMessage>(this, (appTitleBarViewModel, backdropChangedMessage) =>
@@ -155,10 +161,7 @@ namespace GetStoreApp.ViewModels.Window
         });
 
         // 当后退按钮收到交互（如单击或点击）时发生。
-        public IRelayCommand BackRequestedCommand => new RelayCommand(() =>
-        {
-            NavigationService.NavigationFrom();
-        });
+        public IRelayCommand BackRequestedCommand => new RelayCommand(NavigationService.NavigationFrom);
 
         // 当菜单中的项收到交互（如单击或点击）时发生。
         public IRelayCommand ItemInvokedCommand => new RelayCommand<NavigationViewItemInvokedEventArgs>((args) =>
@@ -189,7 +192,7 @@ namespace GetStoreApp.ViewModels.Window
         /// </summary>
         public void WindowActivated(object sender, WindowActivatedEventArgs args)
         {
-            BackdropHelper.SetBackdropState(false, args);
+            BackdropHelper.SetBackdropState(AlwaysShowBackdropService.AlwaysShowBackdropValue, args);
         }
 
         /// <summary>
@@ -237,6 +240,9 @@ namespace GetStoreApp.ViewModels.Window
             }
         }
 
+        /// <summary>
+        /// 导航控件加载完成后初始化内容
+        /// </summary>
         public void NavigationViewLoaded(object sender, RoutedEventArgs args)
         {
             NavigationView navigationView = sender as NavigationView;
@@ -276,6 +282,14 @@ namespace GetStoreApp.ViewModels.Window
             SelectedItem = NavigationService.NavigationItemList[0].NavigationItem;
             NavigationService.NavigateTo(typeof(HomePage));
             IsBackEnabled = NavigationService.CanGoBack();
+        }
+
+        /// <summary>
+        /// 设置主题发生变化时修改标题栏按钮的主题
+        /// </summary>
+        private void WindowThemeChanged(FrameworkElement sender, object args)
+        {
+            SetAppBackground();
         }
 
         /// <summary>

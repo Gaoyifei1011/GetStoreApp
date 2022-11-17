@@ -12,6 +12,7 @@ namespace GetStoreAppCore.Settings
         // 设置选项对应的键值
         public static Dictionary<string, string> ConfigKey = new Dictionary<string, string>()
         {
+            {"AlwaysShowBackdropKey","AlwaysShowBackdrop" },
             {"BackdropKey","AppBackdrop" },
             {"BlockMapFilterKey","BlockMapFilterValue" },
             {"DownloadFolderKey","DownloadFolder" },

@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Services.Controls.Settings.Appearance;
+using GetStoreApp.Contracts.Controls.Settings.Appearance;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
 using GetStoreAppWindowsAPI.PInvoke.User32;
@@ -12,6 +12,8 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using Windows.Graphics;
 using Windows.UI;
+using Windows.Win32;
+using Windows.Win32.Foundation;
 using WinRT.Interop;
 
 namespace GetStoreApp.ViewModels.Controls.Window

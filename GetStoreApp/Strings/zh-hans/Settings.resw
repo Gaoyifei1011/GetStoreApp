@@ -120,6 +120,18 @@
   <data name="Advanced" xml:space="preserve">
     <value>高级选项</value>
   </data>
+  <data name="AlwaysShowBackdrop" xml:space="preserve">
+    <value>始终显示背景色</value>
+  </data>
+  <data name="AlwaysShowBackdropDescription" xml:space="preserve">
+    <value>窗口失去焦点时不会回退为纯色</value>
+  </data>
+  <data name="AlwaysShowBackdropOffContent" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="AlwaysShowBackdropOnContent" xml:space="preserve">
+    <value>开启</value>
+  </data>
   <data name="Appearance" xml:space="preserve">
     <value>外观</value>
   </data>
@@ -133,7 +145,7 @@
     <value>使用应用安装程序安装</value>
   </data>
   <data name="Backdrop" xml:space="preserve">
-    <value>背景色</value>
+    <value>窗口背景材质</value>
   </data>
   <data name="BackdropAcrylic" xml:space="preserve">
     <value>亚克力</value>
@@ -316,7 +328,7 @@
     <value>过滤</value>
   </data>
   <data name="Theme" xml:space="preserve">
-    <value>应用程序主题</value>
+    <value>应用主题</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
     <value>深色</value>

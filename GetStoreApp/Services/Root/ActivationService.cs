@@ -1,9 +1,9 @@
-﻿using GetStoreApp.Contracts.Services.Controls.Download;
-using GetStoreApp.Contracts.Services.Controls.Settings.Advanced;
-using GetStoreApp.Contracts.Services.Controls.Settings.Appearance;
-using GetStoreApp.Contracts.Services.Controls.Settings.Common;
-using GetStoreApp.Contracts.Services.Controls.Settings.Experiment;
-using GetStoreApp.Contracts.Services.Root;
+﻿using GetStoreApp.Contracts.Controls.Download;
+using GetStoreApp.Contracts.Controls.Settings.Advanced;
+using GetStoreApp.Contracts.Controls.Settings.Appearance;
+using GetStoreApp.Contracts.Controls.Settings.Common;
+using GetStoreApp.Contracts.Controls.Settings.Experiment;
+using GetStoreApp.Contracts.Root;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Views.Window;
 using Microsoft.UI;
@@ -36,6 +36,8 @@ namespace GetStoreApp.Services.Root
         private IAppExitService AppExitService { get; } = ContainerHelper.GetInstance<IAppExitService>();
 
         private IInstallModeService InstallModeService { get; } = ContainerHelper.GetInstance<IInstallModeService>();
+
+        private IAlwaysShowBackdropService AlwaysShowBackdropService { get; } = ContainerHelper.GetInstance<IAlwaysShowBackdropService>();
 
         private IBackdropService BackdropService { get; } = ContainerHelper.GetInstance<IBackdropService>();
 
@@ -99,6 +101,7 @@ namespace GetStoreApp.Services.Root
             await AppExitService.InitializeAppExitAsync();
             await InstallModeService.InitializeInstallModeAsync();
 
+            await AlwaysShowBackdropService.InitializeAlwaysShowBackdropAsync();
             await BackdropService.InitializeBackdropAsync();
             await ThemeService.InitializeThemeAsync();
             await TopMostService.InitializeTopMostValueAsync();

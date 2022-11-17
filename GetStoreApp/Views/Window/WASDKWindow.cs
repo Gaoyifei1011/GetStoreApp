@@ -78,6 +78,11 @@ namespace GetStoreApp.Views.Window
         public int MaxHeight { get; set; } = -1;
 
         /// <summary>
+        /// 窗口是否关闭的标志
+        /// </summary>
+        public bool IsClosing { get; set; }
+
+        /// <summary>
         /// 窗口句柄
         /// </summary>
         private IntPtr Hwnd { get; set; } = IntPtr.Zero;
@@ -234,7 +239,7 @@ namespace GetStoreApp.Views.Window
 
         public static float GetScalingFactor(IntPtr hwnd)
         {
-            var dpi = User32Library.GetDpiForWindow(hwnd);
+            int dpi = User32Library.GetDpiForWindow(hwnd);
             float scalingFactor = (float)dpi / 96;
             return scalingFactor;
         }

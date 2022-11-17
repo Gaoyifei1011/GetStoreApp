@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Services.Controls.Download;
-using GetStoreApp.Contracts.Services.Root;
+using GetStoreApp.Contracts.Controls.Download;
+using GetStoreApp.Contracts.Root;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;

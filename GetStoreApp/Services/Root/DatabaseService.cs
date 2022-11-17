@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Contracts.Services.Root;
+﻿using GetStoreApp.Contracts.Root;
 using Microsoft.Data.Sqlite;
 using System;
 using System.IO;

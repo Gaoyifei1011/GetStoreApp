@@ -1,6 +1,6 @@
-﻿using GetStoreApp.Contracts.Services.Controls.Settings.Common;
-using GetStoreApp.Contracts.Services.Root;
-using GetStoreApp.Contracts.Services.Window;
+﻿using GetStoreApp.Contracts.Controls.Settings.Common;
+using GetStoreApp.Contracts.Root;
+using GetStoreApp.Contracts.Window;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.ViewModels.Window;
 

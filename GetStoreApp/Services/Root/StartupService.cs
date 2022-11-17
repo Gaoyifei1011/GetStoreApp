@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Contracts.Services.Root;
+﻿using GetStoreApp.Contracts.Root;
 using GetStoreApp.Helpers.Root;
 using GetStoreAppWindowsAPI.PInvoke.User32;
 using Microsoft.Windows.AppLifecycle;

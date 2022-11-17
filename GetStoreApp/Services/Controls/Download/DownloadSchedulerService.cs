@@ -1,7 +1,7 @@
-﻿using GetStoreApp.Contracts.Services.Controls.Download;
-using GetStoreApp.Contracts.Services.Controls.Settings.Common;
-using GetStoreApp.Contracts.Services.Controls.Settings.Experiment;
-using GetStoreApp.Contracts.Services.Root;
+﻿using GetStoreApp.Contracts.Controls.Download;
+using GetStoreApp.Contracts.Controls.Settings.Common;
+using GetStoreApp.Contracts.Controls.Settings.Experiment;
+using GetStoreApp.Contracts.Root;
 using GetStoreApp.Extensions.DataType.Collections;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;

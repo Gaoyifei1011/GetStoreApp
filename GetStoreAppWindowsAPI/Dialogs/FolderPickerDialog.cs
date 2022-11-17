@@ -1,5 +1,6 @@
 ﻿using GetStoreAppWindowsAPI.Dialogs.FileDialog.Native;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace GetStoreAppWindowsAPI.Dialogs
@@ -48,7 +49,6 @@ namespace GetStoreAppWindowsAPI.Dialogs
                 if (!string.IsNullOrEmpty(Path))
                 {
                     item = PInvoke.Shell32.Shell32Library.SHCreateItemFromParsingName(Path, IntPtr.Zero, typeof(IShellItem).GUID);
-
                     dialog.SetFolder(item);
                 }
 

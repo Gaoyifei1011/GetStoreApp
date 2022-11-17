@@ -1,6 +1,8 @@
-﻿using GetStoreAppWindowsAPI.PInvoke.User32;
-using System.Diagnostics;
+﻿using Windows.Win32.Foundation;
+using Windows.Win32;
+using Windows.Win32.UI.WindowsAndMessaging;
 using WinRT.Interop;
+using GetStoreAppWindowsAPI.PInvoke.User32;
 
 namespace GetStoreApp.Helpers.Window
 {
@@ -50,6 +52,11 @@ namespace GetStoreApp.Helpers.Window
             if(topMostValue)
             {
                 User32Library.SetWindowPos(WindowNative.GetWindowHandle(App.MainWindow), SpecialWindowHandles.HWND_TOPMOST, 0, 0, 0, 0,
+                SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOSIZE);
+            }
+            else
+            {
+                User32Library.SetWindowPos(WindowNative.GetWindowHandle(App.MainWindow), SpecialWindowHandles.HWND_NOTOPMOST, 0, 0, 0, 0,
                 SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOSIZE);
             }
         }

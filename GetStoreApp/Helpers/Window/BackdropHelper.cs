@@ -105,14 +105,14 @@ namespace GetStoreApp.Helpers.Window
         /// <summary>
         /// 设置窗口处于非激活状态时，窗口的状态
         /// </summary>
-        public static void SetBackdropState(bool enableState, WindowActivatedEventArgs args)
+        public static void SetBackdropState(bool alwaysShowBackdrop, WindowActivatedEventArgs args)
         {
             if (m_configurationSource == null)
             {
                 return;
             }
 
-            if (enableState)
+            if (alwaysShowBackdrop)
             {
                 m_configurationSource.IsInputActive = true;
             }

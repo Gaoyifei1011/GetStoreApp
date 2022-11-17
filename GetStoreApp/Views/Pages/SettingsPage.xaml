@@ -59,6 +59,8 @@
 
                 <appearance:BackdropControl />
 
+                <appearance:AlwaysShowBackdropControl />
+
                 <appearance:LauguageControl />
 
                 <appearance:TopMostControl />

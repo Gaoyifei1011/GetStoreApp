@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Contracts.Services.Controls.Settings.Appearance;
+﻿using GetStoreApp.Contracts.Controls.Settings.Appearance;
 using GetStoreApp.Models.Controls.Settings.Appearance;
 using GetStoreAppCore.Settings;
 using System;

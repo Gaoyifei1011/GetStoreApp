@@ -1,5 +1,5 @@
-﻿using GetStoreApp.Contracts.Services.Controls.Settings.Appearance;
-using GetStoreApp.Contracts.Services.Root;
+﻿using GetStoreApp.Contracts.Controls.Settings.Appearance;
+using GetStoreApp.Contracts.Root;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings.Appearance;
 using GetStoreAppCore.Settings;

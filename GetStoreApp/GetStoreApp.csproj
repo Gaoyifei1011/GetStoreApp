@@ -94,6 +94,7 @@
     <None Remove="UI\Controls\Settings\Advanced\ExperimentalFeaturesControl.xaml" />
     <None Remove="UI\Controls\Settings\Advanced\InstallModeControl.xaml" />
     <None Remove="UI\Controls\Settings\Advanced\TraceCleanupControl.xaml" />
+    <None Remove="UI\Controls\Settings\Appearance\AlwaysShowBackdropControl.xaml" />
     
     <None Remove="UI\Controls\Settings\Appearance\BackdropControl.xaml" />
     <None Remove="UI\Controls\Settings\Appearance\LanguageControl.xaml" />
@@ -159,7 +160,7 @@
     
     <PackageReference Include="Aria2.NET" Version="1.0.5" />
     
-    <PackageReference Include="Autofac" Version="6.4.0" />
+    <PackageReference Include="Autofac" Version="6.5.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
     <PackageReference Include="H.NotifyIcon.WinUI" Version="2.0.74" />
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.0" />
@@ -175,6 +176,11 @@
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
 
+    <TrimmerRootAssembly Include="Autofac" />
+    <TrimmerRootAssembly Include="CommunityToolkit.Mvvm" />
+    <TrimmerRootAssembly Include="Microsoft.Xaml.Interactivity" /> 
+    <TrimmerRootAssembly Include="Microsoft.Data.Sqlite" />
+    
     <Page Update="Styles\Button.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -482,6 +488,12 @@
     <Content Update="Assets\Logo\GetStoreApp.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="UI\Controls\Settings\Appearance\AlwaysShowBackdropControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <ItemGroup>

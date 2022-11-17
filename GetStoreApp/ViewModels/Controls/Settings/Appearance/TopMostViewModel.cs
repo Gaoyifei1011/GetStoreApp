@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Contracts.Services.Controls.Settings.Appearance;
+using GetStoreApp.Contracts.Controls.Settings.Appearance;
 using GetStoreApp.Helpers.Root;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Appearance

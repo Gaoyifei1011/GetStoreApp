@@ -1,4 +1,7 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
+using Microsoft.Win32;
+using Windows.Win32;
 
 namespace GetStoreApp.Helpers.Window
 {

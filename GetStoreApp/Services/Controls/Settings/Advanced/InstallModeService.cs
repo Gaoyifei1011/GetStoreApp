@@ -1,5 +1,5 @@
-﻿using GetStoreApp.Contracts.Services.Controls.Settings.Advanced;
-using GetStoreApp.Contracts.Services.Root;
+﻿using GetStoreApp.Contracts.Controls.Settings.Advanced;
+using GetStoreApp.Contracts.Root;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings.Advanced;
 using GetStoreAppCore.Settings;

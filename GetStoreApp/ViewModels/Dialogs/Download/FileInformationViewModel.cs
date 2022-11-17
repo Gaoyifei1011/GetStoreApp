@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Contracts.Services.Root;
+using GetStoreApp.Contracts.Root;
 using GetStoreApp.Converters.Formats;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;

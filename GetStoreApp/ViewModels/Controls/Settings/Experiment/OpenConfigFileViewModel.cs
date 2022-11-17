@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Contracts.Services.Controls.Download;
+using GetStoreApp.Contracts.Controls.Download;
 using GetStoreApp.Helpers.Root;
 using GetStoreAppWindowsAPI.PInvoke.Shell32;
 using System;

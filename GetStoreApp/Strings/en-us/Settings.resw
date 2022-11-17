@@ -120,6 +120,18 @@
   <data name="Advanced" xml:space="preserve">
     <value>Advanced Options</value>
   </data>
+  <data name="AlwaysShowBackdrop" xml:space="preserve">
+    <value>Always show backdrop</value>
+  </data>
+  <data name="AlwaysShowBackdropDescription" xml:space="preserve">
+    <value>The window does not fall back to a solid color when it loses focus</value>
+  </data>
+  <data name="AlwaysShowBackdropOffContent" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="AlwaysShowBackdropOnContent" xml:space="preserve">
+    <value>Opened</value>
+  </data>
   <data name="Appearance" xml:space="preserve">
     <value>Appearance</value>
   </data>
@@ -133,7 +145,7 @@
     <value>Install using the app installer</value>
   </data>
   <data name="Backdrop" xml:space="preserve">
-    <value>Backdrop Color</value>
+    <value>Window background material</value>
   </data>
   <data name="BackdropAcrylic" xml:space="preserve">
     <value>Acrylic</value>
@@ -316,7 +328,7 @@
     <value>filter</value>
   </data>
   <data name="Theme" xml:space="preserve">
-    <value>Application themes</value>
+    <value>Application theme</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
     <value>Dark</value>
