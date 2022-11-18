@@ -1,21 +1,23 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Contracts.Controls.Settings.Common;
-using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
+using GetStoreApp.Services.Controls.Settings.Common;
+using GetStoreApp.ViewModels.Base;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Common
 {
-    public class UseInstructionViewModel : ObservableRecipient
+    public sealed class UseInstructionViewModel : ViewModelBase
     {
-        private IUseInstructionService UseInstructionService { get; } = ContainerHelper.GetInstance<IUseInstructionService>();
-
         private bool _useInsVisValue;
 
         public bool UseInsVisValue
         {
             get { return _useInsVisValue; }
 
-            set { SetProperty(ref _useInsVisValue, value); }
+            set
+            {
+                _useInsVisValue = value;
+                OnPropertyChanged();
+            }
         }
 
         // “使用说明”按钮显示设置

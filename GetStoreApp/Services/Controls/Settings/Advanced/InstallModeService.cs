@@ -1,7 +1,5 @@
-﻿using GetStoreApp.Contracts.Controls.Settings.Advanced;
-using GetStoreApp.Contracts.Root;
-using GetStoreApp.Helpers.Root;
-using GetStoreApp.Models.Controls.Settings.Advanced;
+﻿using GetStoreApp.Models.Controls.Settings.Advanced;
+using GetStoreApp.Services.Root;
 using GetStoreAppCore.Settings;
 using System;
 using System.Collections.Generic;
@@ -12,22 +10,20 @@ namespace GetStoreApp.Services.Controls.Settings.Advanced
     /// <summary>
     /// 应用安装方式设置服务
     /// </summary>
-    public class InstallModeService : IInstallModeService
+    public static class InstallModeService
     {
-        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
+        private static string SettingsKey { get; } = ConfigStorage.ConfigKey["InstallModeKey"];
 
-        private string SettingsKey { get; init; } = ConfigStorage.ConfigKey["InstallModeKey"];
+        public static InstallModeModel DefaultInstallMode { get; set; }
 
-        public InstallModeModel DefaultInstallMode { get; set; }
+        public static InstallModeModel InstallMode { get; set; }
 
-        public InstallModeModel InstallMode { get; set; }
-
-        public List<InstallModeModel> InstallModeList { get; set; }
+        public static List<InstallModeModel> InstallModeList { get; set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的应用安装方式值
         /// </summary>
-        public async Task InitializeInstallModeAsync()
+        public static async Task InitializeInstallModeAsync()
         {
             InstallModeList = ResourceService.InstallModeList;
 
@@ -39,7 +35,7 @@ namespace GetStoreApp.Services.Controls.Settings.Advanced
         /// <summary>
         /// 获取设置存储的应用安装方式值，如果设置没有存储，使用默认值
         /// </summary>
-        private async Task<InstallModeModel> GetInstallModeAsync()
+        private static async Task<InstallModeModel> GetInstallModeAsync()
         {
             string installMode = await ConfigStorage.ReadSettingAsync<string>(SettingsKey);
 
@@ -54,7 +50,7 @@ namespace GetStoreApp.Services.Controls.Settings.Advanced
         /// <summary>
         /// 应用安装方式发生修改时修改设置存储的背景色值
         /// </summary>
-        public async Task SetInstallModeAsync(InstallModeModel installMode)
+        public static async Task SetInstallModeAsync(InstallModeModel installMode)
         {
             InstallMode = installMode;
 

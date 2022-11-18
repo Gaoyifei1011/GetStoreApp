@@ -6,9 +6,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="{x:Bind ResourceService.GetLocalized('/Dialog/InstallingNotifyTitle')}"
-    CloseButtonText="{x:Bind ResourceService.GetLocalized('/Dialog/OK')}"
-    Content="{x:Bind ResourceService.GetLocalized('/Dialog/InstallingNotifyContent')}"
+    xmlns:root="using:GetStoreApp.Services.Root"
+    Title="{x:Bind root:ResourceService.GetLocalized('/Dialog/InstallingNotifyTitle')}"
+    CloseButtonText="{x:Bind root:ResourceService.GetLocalized('/Dialog/OK')}"
+    Content="{x:Bind root:ResourceService.GetLocalized('/Dialog/InstallingNotifyContent')}"
     RequestedTheme="{x:Bind DialogTheme}"
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d">

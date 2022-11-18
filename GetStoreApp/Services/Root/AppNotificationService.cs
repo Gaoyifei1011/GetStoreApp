@@ -1,8 +1,6 @@
-﻿using GetStoreApp.Contracts.Controls.Settings.Common;
-using GetStoreApp.Contracts.Root;
-using GetStoreApp.Contracts.Window;
-using GetStoreApp.Helpers.Root;
-using GetStoreApp.Helpers.Window;
+﻿using GetStoreApp.Helpers.Window;
+using GetStoreApp.Services.Controls.Settings.Common;
+using GetStoreApp.Services.Window;
 using GetStoreApp.Views.Pages;
 using Microsoft.UI.Dispatching;
 using Microsoft.Windows.AppNotifications;
@@ -15,22 +13,11 @@ namespace GetStoreApp.Services.Root
     /// <summary>
     /// 应用通知服务
     /// </summary>
-    public class AppNotificationService : IAppNotificationService
+    public static class AppNotificationService
     {
-        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
+        private static DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
-        public INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
-
-        public INotificationService NotificationService { get; } = ContainerHelper.GetInstance<INotificationService>();
-
-        private DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-
-        ~AppNotificationService()
-        {
-            Unregister();
-        }
-
-        public void Initialize()
+        public static void Initialize()
         {
             AppNotificationManager.Default.NotificationInvoked += OnNotificationInvoked;
 
@@ -40,7 +27,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 处理应用通知后的响应事件
         /// </summary>
-        public void OnNotificationInvoked(AppNotificationManager sender, AppNotificationActivatedEventArgs args)
+        public static void OnNotificationInvoked(AppNotificationManager sender, AppNotificationActivatedEventArgs args)
         {
             HandleAppNotification(args);
         }
@@ -48,7 +35,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 处理应用通知
         /// </summary>
-        public void HandleAppNotification(AppNotificationActivatedEventArgs args)
+        public static void HandleAppNotification(AppNotificationActivatedEventArgs args)
         {
             dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
             {
@@ -114,7 +101,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 显示通知
         /// </summary>
-        public void Show(string notificationKey, params string[] notificationContent)
+        public static void Show(string notificationKey, params string[] notificationContent)
         {
             if (!NotificationService.AppNotification)
             {
@@ -190,7 +177,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 注销通知服务
         /// </summary>
-        public void Unregister()
+        public static void Unregister()
         {
             AppNotificationManager.Default.NotificationInvoked -= OnNotificationInvoked;
             AppNotificationManager.Default.Unregister();

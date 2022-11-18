@@ -1,7 +1,4 @@
-﻿using GetStoreApp.Contracts.Root;
-using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Root;
-using GetStoreApp.ViewModels.Pages;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -10,10 +7,6 @@ namespace GetStoreApp.Views.Pages
 {
     public sealed partial class HomePage : Page
     {
-        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
-
-        public HomeViewModel ViewModel { get; } = ContainerHelper.GetInstance<HomeViewModel>();
-
         public HomePage()
         {
             InitializeComponent();
@@ -41,29 +34,29 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private void Button1_Click(object sender, RoutedEventArgs e)
-        {
-            ContainerHelper.GetInstance<IAppNotificationService>().Show("DownloadAborted", "NotDownload");
-        }
+        //private void Button1_Click(object sender, RoutedEventArgs e)
+        //{
+        //    ContainerHelper.GetInstance<IAppNotificationService>().Show("DownloadAborted", "NotDownload");
+        //}
 
-        private void Button2_Click(object sender, RoutedEventArgs e)
-        {
-            ContainerHelper.GetInstance<IAppNotificationService>().Show("DownloadAborted", "Downloading");
-        }
+        //private void Button2_Click(object sender, RoutedEventArgs e)
+        //{
+        //    ContainerHelper.GetInstance<IAppNotificationService>().Show("DownloadAborted", "Downloading");
+        //}
 
-        private void Button3_Click(object sender, RoutedEventArgs e)
-        {
-            ContainerHelper.GetInstance<IAppNotificationService>().Show("DownloadCompleted");
-        }
+        //private void Button3_Click(object sender, RoutedEventArgs e)
+        //{
+        //    ContainerHelper.GetInstance<IAppNotificationService>().Show("DownloadCompleted");
+        //}
 
-        private void Button4_Click(object sender, RoutedEventArgs e)
-        {
-            ContainerHelper.GetInstance<IAppNotificationService>().Show("InstallApp", "Successfully", "文件01");
-        }
+        //private void Button4_Click(object sender, RoutedEventArgs e)
+        //{
+        //    ContainerHelper.GetInstance<IAppNotificationService>().Show("InstallApp", "Successfully", "文件01");
+        //}
 
-        private void Button5_Click(object sender, RoutedEventArgs e)
-        {
-            ContainerHelper.GetInstance<IAppNotificationService>().Show("InstallApp", "Error", "文件02", "测试消息");
-        }
+        //private void Button5_Click(object sender, RoutedEventArgs e)
+        //{
+        //    ContainerHelper.GetInstance<IAppNotificationService>().Show("InstallApp", "Error", "文件02", "测试消息");
+        //}
     }
 }

@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Contracts.Controls.Settings.Common;
-using GetStoreAppCore.Settings;
+﻿using GetStoreAppCore.Settings;
 using System;
 using System.Threading.Tasks;
 
@@ -8,18 +7,18 @@ namespace GetStoreApp.Services.Controls.Settings.Common
     /// <summary>
     /// 应用通知服务
     /// </summary>
-    public class NotificatonService : INotificationService
+    public static class NotificationService
     {
-        private string SettingsKey { get; init; } = ConfigStorage.ConfigKey["NotificationKey"];
+        private static string SettingsKey { get; } = ConfigStorage.ConfigKey["NotificationKey"];
 
-        private bool DefaultAppNotification => true;
+        private static bool DefaultAppNotification => true;
 
-        public bool AppNotification { get; set; }
+        public static bool AppNotification { get; set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的应用通知显示值
         /// </summary>
-        public async Task InitializeNotificationAsync()
+        public static async Task InitializeNotificationAsync()
         {
             AppNotification = await GetNotificationAsync();
         }
@@ -27,7 +26,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// <summary>
         /// 获取设置存储的应用通知显示值，如果设置没有存储，使用默认值
         /// </summary>
-        private async Task<bool> GetNotificationAsync()
+        private static async Task<bool> GetNotificationAsync()
         {
             bool? appNotification = await ConfigStorage.ReadSettingAsync<bool?>(SettingsKey);
 
@@ -42,7 +41,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// <summary>
         /// 应用通知显示发生修改时修改设置存储的使用说明按钮显示值
         /// </summary>
-        public async Task SetNotificationAsync(bool appNotification)
+        public static async Task SetNotificationAsync(bool appNotification)
         {
             AppNotification = appNotification;
 

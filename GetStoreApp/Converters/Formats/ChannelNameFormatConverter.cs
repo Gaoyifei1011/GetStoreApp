@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Contracts.Root;
-using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
 using System;
@@ -11,8 +10,6 @@ namespace GetStoreApp.Converters.Formats
     /// </summary>
     public class ChannelNameFormatConverter : IValueConverter
     {
-        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
-
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value == null)

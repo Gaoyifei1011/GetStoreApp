@@ -1,12 +1,12 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Controls.Download;
-using GetStoreApp.Contracts.Window;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
 using GetStoreApp.Messages;
+using GetStoreApp.Services.Controls.Download;
+using GetStoreApp.Services.Root;
+using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
 using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml.Controls;
@@ -15,14 +15,8 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Window
 {
-    public class TaskBarViewModel : ObservableRecipient
+    public sealed class TaskBarViewModel
     {
-        private IAria2Service Aria2Service { get; } = ContainerHelper.GetInstance<IAria2Service>();
-
-        private IDownloadSchedulerService DownloadSchedulerService { get; } = ContainerHelper.GetInstance<IDownloadSchedulerService>();
-
-        private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
-
         // 隐藏 / 显示窗口
         public IRelayCommand ShowOrHideWindowCommand => new RelayCommand(() =>
         {
@@ -94,6 +88,7 @@ namespace GetStoreApp.ViewModels.Window
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
             await Aria2Service.CloseAria2Async();
             WeakReferenceMessenger.Default.Send(new WindowClosedMessage(true));
+            AppNotificationService.Unregister();
             BackdropHelper.ReleaseBackdrop();
             Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
         }

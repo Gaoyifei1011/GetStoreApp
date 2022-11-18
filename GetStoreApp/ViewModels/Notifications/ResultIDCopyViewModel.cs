@@ -1,8 +1,8 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using GetStoreApp.ViewModels.Base;
 
 namespace GetStoreApp.ViewModels.Notifications
 {
-    public class ResultIDCopyViewModel : ObservableRecipient
+    public sealed class ResultIDCopyViewModel : ViewModelBase
     {
         private bool _copyState = false;
 
@@ -10,7 +10,11 @@ namespace GetStoreApp.ViewModels.Notifications
         {
             get { return _copyState; }
 
-            set { SetProperty(ref _copyState, value); }
+            set
+            {
+                _copyState = value;
+                OnPropertyChanged();
+            }
         }
 
         public void Initialize(bool copyState)

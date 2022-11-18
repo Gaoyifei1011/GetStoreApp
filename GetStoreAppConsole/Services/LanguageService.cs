@@ -1,5 +1,4 @@
-﻿using GetStoreAppConsole.Contracts;
-using GetStoreAppCore.Settings;
+﻿using GetStoreAppCore.Settings;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -11,22 +10,22 @@ namespace GetStoreAppConsole.Services
     /// <summary>
     /// 控制台语言服务
     /// </summary>
-    public class LanguageService : ILanguageService
+    public static class LanguageService
     {
-        private string SettingsKey { get; init; } = ConfigStorage.ConfigKey["LanguageKey"];
+        private static string SettingsKey { get; } = ConfigStorage.ConfigKey["LanguageKey"];
 
-        public string DefaultConsoleLanguage { get; set; }
+        public static string DefaultConsoleLanguage { get; set; }
 
-        public string ConsoleLanguage { get; set; }
+        public static string ConsoleLanguage { get; set; }
 
-        private IReadOnlyList<string> AppLanguagesList { get; } = ApplicationLanguages.ManifestLanguages;
+        private static IReadOnlyList<string> AppLanguagesList { get; } = ApplicationLanguages.ManifestLanguages;
 
-        public List<string> LanguageList { get; set; } = new List<string>();
+        public static List<string> LanguageList { get; set; } = new List<string>();
 
         /// <summary>
         /// 初始化控制台语言信息列表
         /// </summary>
-        private void InitializeLanguageList()
+        private static void InitializeLanguageList()
         {
             foreach (string applanguage in AppLanguagesList)
             {
@@ -39,7 +38,7 @@ namespace GetStoreAppConsole.Services
         /// <summary>
         /// 当设置中的键值为空时，判断当前系统语言是否存在于语言列表中
         /// </summary>
-        private bool IsExistsInLanguageList(string currentSystemLanguage)
+        private static bool IsExistsInLanguageList(string currentSystemLanguage)
         {
             foreach (string appLanguageItem in AppLanguagesList)
             {
@@ -54,7 +53,7 @@ namespace GetStoreAppConsole.Services
         /// <summary>
         /// 控制台在初始化前获取设置存储的语言值，如果设置值为空，设定默认的应用语言值
         /// </summary>
-        public async Task InitializeLanguageAsync()
+        public static async Task InitializeLanguageAsync()
         {
             InitializeLanguageList();
 
@@ -66,7 +65,7 @@ namespace GetStoreAppConsole.Services
         /// <summary>
         /// 获取设置存储的语言值，如果设置没有存储，使用默认值
         /// </summary>
-        public async Task<string> GetLanguageAsync()
+        public static async Task<string> GetLanguageAsync()
         {
             string language = await ConfigStorage.ReadSettingAsync<string>(SettingsKey);
 

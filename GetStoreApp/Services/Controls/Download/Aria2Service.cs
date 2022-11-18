@@ -1,5 +1,4 @@
 ﻿using Aria2NET;
-using GetStoreApp.Contracts.Controls.Download;
 using GetStoreApp.Extensions.DataType.Exceptions;
 using GetStoreApp.Helpers.Controls.Download;
 using GetStoreApp.Helpers.Root;
@@ -14,24 +13,24 @@ namespace GetStoreApp.Services.Controls.Download
     /// <summary>
     /// Aria2下载服务
     /// </summary>
-    public class Aria2Service : IAria2Service
+    public static class Aria2Service
     {
-        private string Aria2FilePath => Path.Combine(AppContext.BaseDirectory, string.Format(@"Aria2\{0}\Aria2Desktop.exe", InfoHelper.GetAppProcessorArchitecture()));
+        private static string Aria2FilePath => Path.Combine(AppContext.BaseDirectory, string.Format(@"Aria2\{0}\Aria2Desktop.exe", InfoHelper.GetAppProcessorArchitecture()));
 
-        private string DefaultAria2ConfPath => Path.Combine(AppContext.BaseDirectory, "Aria2\\Config\\aria2.conf");
+        private static string DefaultAria2ConfPath => Path.Combine(AppContext.BaseDirectory, "Aria2\\Config\\aria2.conf");
 
-        public string Aria2ConfPath => Path.Combine(ApplicationData.Current.LocalFolder.Path, "aria2.conf");
+        public static string Aria2ConfPath => Path.Combine(ApplicationData.Current.LocalFolder.Path, "aria2.conf");
 
-        private string Aria2Arguments { get; set; }
+        private static string Aria2Arguments { get; set; }
 
-        private string RPCServerLink => "http://127.0.0.1:6300/jsonrpc";
+        private static string RPCServerLink => "http://127.0.0.1:6300/jsonrpc";
 
-        private Aria2NetClient Aria2Client { get; set; }
+        private static Aria2NetClient Aria2Client { get; set; }
 
         /// <summary>
         /// 初始化Aria2配置文件
         /// </summary>
-        public async Task InitializeAria2ConfAsync()
+        public static async Task InitializeAria2ConfAsync()
         {
             try
             {
@@ -62,7 +61,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 初始化运行Aria2下载进程
         /// </summary>
-        public async Task StartAria2Async()
+        public static async Task StartAria2Async()
         {
             await Aria2ProcessHelper.RunAria2Async(Aria2FilePath, Aria2Arguments);
         }
@@ -70,7 +69,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 关闭Aria2进程
         /// </summary>
-        public async Task CloseAria2Async()
+        public static async Task CloseAria2Async()
         {
             Aria2ProcessHelper.KillProcessAndChildren(Aria2ProcessHelper.GetProcessID());
             await Task.CompletedTask;
@@ -79,7 +78,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 恢复配置文件默认值
         /// </summary>
-        public async Task RestoreDefaultAsync()
+        public static async Task RestoreDefaultAsync()
         {
             try
             {
@@ -110,7 +109,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 添加下载任务
         /// </summary>
-        public async Task<(bool, string)> AddUriAsync(string downloadLink, string folderPath)
+        public static async Task<(bool, string)> AddUriAsync(string downloadLink, string folderPath)
         {
             Aria2Client ??= new Aria2NetClient(RPCServerLink, null, null, 0);
 
@@ -142,7 +141,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 暂停下载选定的任务
         /// </summary>
-        public async Task<(bool, string)> PauseAsync(string GID)
+        public static async Task<(bool, string)> PauseAsync(string GID)
         {
             try
             {
@@ -168,7 +167,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 取消下载选定的任务
         /// </summary>
-        public async Task<(bool, string)> DeleteAsync(string GID)
+        public static async Task<(bool, string)> DeleteAsync(string GID)
         {
             try
             {
@@ -194,7 +193,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 汇报下载任务状态信息
         /// </summary>
-        public async Task<(bool, string, long, long, long)> TellStatusAsync(string GID)
+        public static async Task<(bool, string, long, long, long)> TellStatusAsync(string GID)
         {
             try
             {
@@ -222,7 +221,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 获取下载文件大小信息
         /// </summary>
-        public async Task<(bool, long)> GetFileSizeAsync(string GID)
+        public static async Task<(bool, long)> GetFileSizeAsync(string GID)
         {
             try
             {

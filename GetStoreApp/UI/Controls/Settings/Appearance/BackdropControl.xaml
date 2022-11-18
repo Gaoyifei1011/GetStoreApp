@@ -6,7 +6,13 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Appearance"
     mc:Ignorable="d">
+
+    <UserControl.DataContext>
+        <settingsViewModel:BackdropViewModel x:Name="ViewModel" />
+    </UserControl.DataContext>
 
     <Grid Style="{StaticResource CardGridStyle}">
         <Grid.ColumnDefinitions>
@@ -27,13 +33,13 @@
             <TextBlock
                 VerticalAlignment="Center"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="{x:Bind ResourceService.GetLocalized('/Settings/Backdrop')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/Backdrop')}" />
 
             <TextBlock
                 VerticalAlignment="Center"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                 Style="{StaticResource CaptionTextBlockStyle}"
-                Text="{x:Bind ResourceService.GetLocalized('/Settings/BackdropDescription')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/BackdropDescription')}" />
         </StackPanel>
 
         <Button
@@ -41,7 +47,7 @@
             VerticalAlignment="Center"
             Command="{x:Bind ViewModel.BackdropTipCommand}"
             Style="{StaticResource ButtonInfoStyle}"
-            ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/BackdropToolTip')}"
+            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Settings/BackdropToolTip')}"
             Visibility="{x:Bind ViewModel.BackdropHelp, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Button.Content>
                 <FontIcon
@@ -57,13 +63,7 @@
             DisplayMemberPath="DisplayName"
             ItemsSource="{x:Bind ViewModel.BackdropList}"
             SelectedItem="{x:Bind ViewModel.Backdrop, Mode=TwoWay}"
-            ToolTipService.ToolTip="{x:Bind ViewModel.Backdrop.DisplayName, Mode=OneWay}">
-
-            <i:Interaction.Behaviors>
-                <ic:EventTriggerBehavior EventName="SelectionChanged">
-                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.BackdropSelectCommand}" />
-                </ic:EventTriggerBehavior>
-            </i:Interaction.Behaviors>
-        </ComboBox>
+            SelectionChanged="{x:Bind ViewModel.OnSelectionChanged}"
+            ToolTipService.ToolTip="{x:Bind ViewModel.Backdrop.DisplayName, Mode=OneWay}" />
     </Grid>
 </UserControl>

@@ -1,16 +1,16 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Controls.Download;
-using GetStoreApp.Contracts.Controls.Settings.Advanced;
-using GetStoreApp.Contracts.Controls.Settings.Appearance;
-using GetStoreApp.Contracts.Window;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Window;
+using GetStoreApp.Services.Controls.Download;
+using GetStoreApp.Services.Controls.Settings.Advanced;
+using GetStoreApp.Services.Controls.Settings.Appearance;
+using GetStoreApp.Services.Root;
+using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
+using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
@@ -24,29 +24,19 @@ using Windows.UI;
 
 namespace GetStoreApp.ViewModels.Window
 {
-    public class MainWindowViewModel : ObservableRecipient
+    public sealed class MainWindowViewModel : ViewModelBase
     {
-        private IAria2Service Aria2Service { get; } = ContainerHelper.GetInstance<IAria2Service>();
-
-        private IAppExitService AppExitService { get; } = ContainerHelper.GetInstance<IAppExitService>();
-
-        private IDownloadSchedulerService DownloadSchedulerService { get; } = ContainerHelper.GetInstance<IDownloadSchedulerService>();
-
-        private IThemeService ThemeService { get; } = ContainerHelper.GetInstance<IThemeService>();
-
-        private IBackdropService BackdropService { get; } = ContainerHelper.GetInstance<IBackdropService>();
-
-        private IAlwaysShowBackdropService AlwaysShowBackdropService { get; } = ContainerHelper.GetInstance<IAlwaysShowBackdropService>();
-
-        private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
-
         private SolidColorBrush _appBackground;
 
         public SolidColorBrush AppBackground
         {
             get { return _appBackground; }
 
-            set { SetProperty(ref _appBackground, value); }
+            set
+            {
+                _appBackground = value;
+                OnPropertyChanged();
+            }
         }
 
         private Thickness _appTitleBarMargin;
@@ -55,7 +45,11 @@ namespace GetStoreApp.ViewModels.Window
         {
             get { return _appTitleBarMargin; }
 
-            set { SetProperty(ref _appTitleBarMargin, value); }
+            set
+            {
+                _appTitleBarMargin = value;
+                OnPropertyChanged();
+            }
         }
 
         private bool _isBackEnabled;
@@ -64,7 +58,11 @@ namespace GetStoreApp.ViewModels.Window
         {
             get { return _isBackEnabled; }
 
-            set { SetProperty(ref _isBackEnabled, value); }
+            set
+            {
+                _isBackEnabled = value;
+                OnPropertyChanged();
+            }
         }
 
         private bool _isPaneToggleButtonVisible;
@@ -73,7 +71,11 @@ namespace GetStoreApp.ViewModels.Window
         {
             get { return _isPaneToggleButtonVisible; }
 
-            set { SetProperty(ref _isPaneToggleButtonVisible, value); }
+            set
+            {
+                _isPaneToggleButtonVisible = value;
+                OnPropertyChanged();
+            }
         }
 
         private NavigationViewPaneDisplayMode _navigationDisplayMode;
@@ -82,7 +84,11 @@ namespace GetStoreApp.ViewModels.Window
         {
             get { return _navigationDisplayMode; }
 
-            set { SetProperty(ref _navigationDisplayMode, value); }
+            set
+            {
+                _navigationDisplayMode = value;
+                OnPropertyChanged();
+            }
         }
 
         private NavigationViewItem _selectedItem;
@@ -91,7 +97,11 @@ namespace GetStoreApp.ViewModels.Window
         {
             get { return _selectedItem; }
 
-            set { SetProperty(ref _selectedItem, value); }
+            set
+            {
+                _selectedItem = value;
+                OnPropertyChanged();
+            }
         }
 
         private Dictionary<string, Type> PageDict { get; } = new Dictionary<string, Type>()
@@ -104,93 +114,10 @@ namespace GetStoreApp.ViewModels.Window
             {"Settings",typeof(SettingsPage) }
         };
 
-        // 窗口加载完成时，初始化导航视图控件属性和应用的背景色
-        public IRelayCommand LoadedCommand => new RelayCommand(() =>
-        {
-            if (App.MainWindow.Width >= 768)
-            {
-                IsPaneToggleButtonVisible = false;
-                NavigationDispalyMode = NavigationViewPaneDisplayMode.Left;
-                AppTitleBarMargin = new Thickness(48, 0, 0, 0);
-            }
-            else
-            {
-                IsPaneToggleButtonVisible = true;
-                NavigationDispalyMode = NavigationViewPaneDisplayMode.LeftMinimal;
-                AppTitleBarMargin = new Thickness(96, 0, 0, 0);
-            }
-
-            SetAppBackground();
-
-            ((FrameworkElement)App.MainWindow.Content).ActualThemeChanged += WindowThemeChanged;
-
-            // 应用背景色设置跟随系统发生变化时，当系统背景色设置发生变化时修改应用背景色
-            WeakReferenceMessenger.Default.Register<MainWindowViewModel, BackdropChangedMessage>(this, (appTitleBarViewModel, backdropChangedMessage) =>
-            {
-                SetAppBackground();
-            });
-
-            // 应用主题设置跟随系统发生变化时，当系统主题设置发生变化时修改修改应用背景色
-            WeakReferenceMessenger.Default.Register<MainWindowViewModel, SystemSettingsChnagedMessage>(this, (appTitleBarViewModel, systemSettingsChangedMessage) =>
-            {
-                SetAppBackground();
-            });
-        });
-
-        // 页面被卸载时，注销所有事件
-        public IRelayCommand UnloadedCommand => new RelayCommand(() =>
-        {
-            WeakReferenceMessenger.Default.UnregisterAll(this);
-        });
-
-        // 窗口大小发生改变时，设置页面导航视图样式
-        public IRelayCommand SizeChangedCommand => new RelayCommand(() =>
-        {
-            if (App.MainWindow.Width >= 768)
-            {
-                IsPaneToggleButtonVisible = false;
-                NavigationDispalyMode = NavigationViewPaneDisplayMode.Left;
-                AppTitleBarMargin = new Thickness(48, 0, 0, 0);
-            }
-            else
-            {
-                IsPaneToggleButtonVisible = true;
-                NavigationDispalyMode = NavigationViewPaneDisplayMode.LeftMinimal;
-                AppTitleBarMargin = new Thickness(96, 0, 0, 0);
-            }
-        });
-
-        // 当后退按钮收到交互（如单击或点击）时发生。
-        public IRelayCommand BackRequestedCommand => new RelayCommand(NavigationService.NavigationFrom);
-
-        // 当菜单中的项收到交互（如单击或点击）时发生。
-        public IRelayCommand ItemInvokedCommand => new RelayCommand<NavigationViewItemInvokedEventArgs>((args) =>
-        {
-            NavigationModel navigationViewItem = NavigationService.NavigationItemList.Find(item => item.NavigationTag == Convert.ToString(args.InvokedItemContainer.Tag));
-            if (SelectedItem != navigationViewItem.NavigationItem)
-            {
-                NavigationService.NavigateTo(navigationViewItem.NavigationPage);
-            }
-        });
-
-        // 导航完成后发生
-        public IRelayCommand NavigatedCommand => new RelayCommand(() =>
-        {
-            Type CurrentPageType = NavigationService.GetCurrentPageType();
-            SelectedItem = NavigationService.NavigationItemList.Find(item => item.NavigationPage == CurrentPageType).NavigationItem;
-            IsBackEnabled = NavigationService.CanGoBack();
-        });
-
-        // 导航失败时发生
-        public IRelayCommand NavigationFailedCommand => new RelayCommand<NavigationFailedEventArgs>((args) =>
-        {
-            throw new Exception("页面" + args.SourcePageType.FullName + "加载失败");
-        });
-
         /// <summary>
         /// 设置窗口处于非激活状态时的背景色
         /// </summary>
-        public void WindowActivated(object sender, WindowActivatedEventArgs args)
+        public void OnWindowActivated(object sender, WindowActivatedEventArgs args)
         {
             BackdropHelper.SetBackdropState(AlwaysShowBackdropService.AlwaysShowBackdropValue, args);
         }
@@ -198,7 +125,7 @@ namespace GetStoreApp.ViewModels.Window
         /// <summary>
         /// 关闭窗口之后关闭其他服务
         /// </summary>
-        public async void WindowClosed(object sender, WindowEventArgs args)
+        public async void OnWindowClosed(object sender, WindowEventArgs args)
         {
             args.Handled = true;
 
@@ -240,12 +167,71 @@ namespace GetStoreApp.ViewModels.Window
             }
         }
 
-        /// <summary>
-        /// 导航控件加载完成后初始化内容
-        /// </summary>
-        public void NavigationViewLoaded(object sender, RoutedEventArgs args)
+        // 窗口大小发生改变时，设置页面导航视图样式
+        public void OnWindowSizeChanged(object sender, WindowSizeChangedEventArgs args)
         {
+            if (App.MainWindow.Width >= 768)
+            {
+                IsPaneToggleButtonVisible = false;
+                NavigationDispalyMode = NavigationViewPaneDisplayMode.Left;
+                AppTitleBarMargin = new Thickness(48, 0, 0, 0);
+            }
+            else
+            {
+                IsPaneToggleButtonVisible = true;
+                NavigationDispalyMode = NavigationViewPaneDisplayMode.LeftMinimal;
+                AppTitleBarMargin = new Thickness(96, 0, 0, 0);
+            }
+        }
+
+        // 当后退按钮收到交互（如单击或点击）时发生。
+        public void OnNavigationViewBackRequested(object sender, NavigationViewBackRequestedEventArgs args)
+        {
+            NavigationService.NavigationFrom();
+        }
+
+        /// <summary>
+        /// 当菜单中的项收到交互（如单击或点击）时发生。
+        /// </summary>
+        public void OnNavigationViewItemInvoked(object sender, NavigationViewItemInvokedEventArgs args)
+        {
+            NavigationModel navigationViewItem = NavigationService.NavigationItemList.Find(item => item.NavigationTag == Convert.ToString(args.InvokedItemContainer.Tag));
+            if (SelectedItem != navigationViewItem.NavigationItem)
+            {
+                NavigationService.NavigateTo(navigationViewItem.NavigationPage);
+            }
+        }
+
+        /// <summary>
+        /// 导航控件加载完成后初始化内容，初始化导航视图控件属性和应用的背景色。
+        /// </summary>
+        public void OnNavigationViewLoaded(object sender, RoutedEventArgs args)
+        {
+            // 初始化导航视图控件属性和应用的背景色。
+            if (App.MainWindow.Width >= 768)
+            {
+                IsPaneToggleButtonVisible = false;
+                NavigationDispalyMode = NavigationViewPaneDisplayMode.Left;
+                AppTitleBarMargin = new Thickness(48, 0, 0, 0);
+            }
+            else
+            {
+                IsPaneToggleButtonVisible = true;
+                NavigationDispalyMode = NavigationViewPaneDisplayMode.LeftMinimal;
+                AppTitleBarMargin = new Thickness(96, 0, 0, 0);
+            }
+
+            SetAppBackground();
+
+            ((FrameworkElement)App.MainWindow.Content).ActualThemeChanged += OnActualThemeChanged;
+
+            // 导航控件加载完成后初始化内容
             NavigationView navigationView = sender as NavigationView;
+
+            if(navigationView is null)
+            {
+                return;
+            }
 
             foreach (object item in navigationView.MenuItems)
             {
@@ -282,12 +268,44 @@ namespace GetStoreApp.ViewModels.Window
             SelectedItem = NavigationService.NavigationItemList[0].NavigationItem;
             NavigationService.NavigateTo(typeof(HomePage));
             IsBackEnabled = NavigationService.CanGoBack();
+
+            // 应用背景色设置跟随系统发生变化时，当系统背景色设置发生变化时修改应用背景色
+            WeakReferenceMessenger.Default.Register<MainWindowViewModel, BackdropChangedMessage>(this, (appTitleBarViewModel, backdropChangedMessage) =>
+            {
+                SetAppBackground();
+            });
+
+            // 应用主题设置跟随系统发生变化时，当系统主题设置发生变化时修改修改应用背景色
+            WeakReferenceMessenger.Default.Register<MainWindowViewModel, SystemSettingsChnagedMessage>(this, (appTitleBarViewModel, systemSettingsChangedMessage) =>
+            {
+                SetAppBackground();
+            });
+        }
+
+        // 页面被卸载时，注销所有事件
+        public void OnNavigationViewUnLoaded(object sender, RoutedEventArgs args)
+        {
+            WeakReferenceMessenger.Default.UnregisterAll(this);
+        }
+
+        // 导航完成后发生
+        public void OnFrameNavigated(object sender, NavigationEventArgs args)
+        {
+            Type CurrentPageType = NavigationService.GetCurrentPageType();
+            SelectedItem = NavigationService.NavigationItemList.Find(item => item.NavigationPage == CurrentPageType).NavigationItem;
+            IsBackEnabled = NavigationService.CanGoBack();
+        }
+
+        // 导航失败时发生
+        public void OnFrameNavgationFailed(object sender, NavigationFailedEventArgs args)
+        {
+            throw new Exception("页面" + args.SourcePageType.FullName + "加载失败");
         }
 
         /// <summary>
         /// 设置主题发生变化时修改标题栏按钮的主题
         /// </summary>
-        private void WindowThemeChanged(FrameworkElement sender, object args)
+        private void OnActualThemeChanged(FrameworkElement sender, object args)
         {
             SetAppBackground();
         }
@@ -333,6 +351,7 @@ namespace GetStoreApp.ViewModels.Window
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
             await Aria2Service.CloseAria2Async();
             WeakReferenceMessenger.Default.Send(new WindowClosedMessage(true));
+            AppNotificationService.Unregister();
             BackdropHelper.ReleaseBackdrop();
             Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
         }

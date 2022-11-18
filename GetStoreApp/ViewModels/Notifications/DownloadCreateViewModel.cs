@@ -1,8 +1,8 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using GetStoreApp.ViewModels.Base;
 
 namespace GetStoreApp.ViewModels.Notifications
 {
-    public class DownloadCreateViewModel : ObservableRecipient
+    public sealed class DownloadCreateViewModel : ViewModelBase
     {
         private bool _isDownloadCreated = false;
 
@@ -10,7 +10,11 @@ namespace GetStoreApp.ViewModels.Notifications
         {
             get { return _isDownloadCreated; }
 
-            set { SetProperty(ref _isDownloadCreated, value); }
+            set
+            {
+                _isDownloadCreated = value;
+                OnPropertyChanged();
+            }
         }
 
         public void Initialize(bool notification)

@@ -1,9 +1,8 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.About
 {
-    public class ThanksViewModel : ObservableRecipient
+    public sealed class ThanksViewModel
     {
         public Dictionary<string, string> ThanksDict => new Dictionary<string, string>
         {

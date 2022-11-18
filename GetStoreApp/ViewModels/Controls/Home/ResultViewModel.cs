@@ -1,17 +1,18 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Controls.Download;
-using GetStoreApp.Contracts.Controls.Settings.Common;
-using GetStoreApp.Contracts.Controls.Settings.Experiment;
-using GetStoreApp.Contracts.Window;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Models.Controls.Home;
+using GetStoreApp.Services.Controls.Download;
+using GetStoreApp.Services.Controls.Settings.Common;
+using GetStoreApp.Services.Controls.Settings.Experiment;
+using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
 using GetStoreApp.UI.Notifications;
+using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
 using GetStoreAppCore.Data;
 using Microsoft.UI.Xaml.Controls;
@@ -24,20 +25,10 @@ using System.Text;
 
 namespace GetStoreApp.ViewModels.Controls.Home
 {
-    public class ResultViewModel : ObservableRecipient
+    public sealed class ResultViewModel : ViewModelBase
     {
         // 临界区资源访问互斥锁
         private readonly object ResultDataListLock = new object();
-
-        private IDownloadDBService DownloadDBService { get; } = ContainerHelper.GetInstance<IDownloadDBService>();
-
-        private IDownloadSchedulerService DownloadSchedulerService { get; } = ContainerHelper.GetInstance<IDownloadSchedulerService>();
-
-        private IDownloadOptionsService DownloadOptionsService { get; } = ContainerHelper.GetInstance<IDownloadOptionsService>();
-
-        private INetWorkMonitorService NetWorkMonitorService { get; } = ContainerHelper.GetInstance<INetWorkMonitorService>();
-
-        private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
 
         public ObservableCollection<ResultModel> ResultDataList { get; } = new ObservableCollection<ResultModel>();
 
@@ -47,7 +38,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
         {
             get { return _resultCotnrolVisable; }
 
-            set { SetProperty(ref _resultCotnrolVisable, value); }
+            set
+            {
+                _resultCotnrolVisable = value;
+                OnPropertyChanged();
+            }
         }
 
         private string _categoryId;
@@ -56,7 +51,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
         {
             get { return _categoryId; }
 
-            set { SetProperty(ref _categoryId, value); }
+            set
+            {
+                _categoryId = value;
+                OnPropertyChanged();
+            }
         }
 
         private bool _isSelectMode = false;
@@ -65,7 +64,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
         {
             get { return _isSelectMode; }
 
-            set { SetProperty(ref _isSelectMode, value); }
+            set
+            {
+                _isSelectMode = value;
+                OnPropertyChanged();
+            }
         }
 
         // 复制CategoryID
@@ -283,18 +286,6 @@ namespace GetStoreApp.ViewModels.Controls.Home
             IsSelectMode = false;
         });
 
-        // 在多选模式下点击项目选择相应的条目
-        public IRelayCommand ItemClickCommand => new RelayCommand<ItemClickEventArgs>((args) =>
-        {
-            ResultModel resultItem = (ResultModel)args.ClickedItem;
-            int ClickedIndex = ResultDataList.IndexOf(resultItem);
-
-            lock (ResultDataListLock)
-            {
-                ResultDataList[ClickedIndex].IsSelected = !ResultDataList[ClickedIndex].IsSelected;
-            }
-        });
-
         // 根据设置存储的文件链接操作方式操作获取到的文件链接
         public IRelayCommand DownloadCommand => new RelayCommand<ResultModel>(async (resultItem) =>
         {
@@ -478,6 +469,20 @@ namespace GetStoreApp.ViewModels.Controls.Home
                     WeakReferenceMessenger.Default.UnregisterAll(this);
                 }
             });
+        }
+
+        /// <summary>
+        /// 在多选模式下点击项目选择相应的条目
+        /// </summary>
+        public void OnItemClick(object sender,ItemClickEventArgs args)
+        {
+            ResultModel resultItem = (ResultModel)args.ClickedItem;
+            int ClickedIndex = ResultDataList.IndexOf(resultItem);
+
+            lock (ResultDataListLock)
+            {
+                ResultDataList[ClickedIndex].IsSelected = !ResultDataList[ClickedIndex].IsSelected;
+            }
         }
     }
 }

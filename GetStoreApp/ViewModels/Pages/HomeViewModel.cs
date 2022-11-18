@@ -1,26 +1,26 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Contracts.Controls.Settings.Common;
-using GetStoreApp.Contracts.Window;
+﻿using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Root;
+using GetStoreApp.Services.Controls.Settings.Common;
+using GetStoreApp.Services.Window;
+using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
 
 namespace GetStoreApp.ViewModels.Pages
 {
-    public class HomeViewModel : ObservableRecipient
+    public sealed class HomeViewModel : ViewModelBase
     {
-        private IUseInstructionService UseInstructionService { get; } = ContainerHelper.GetInstance<IUseInstructionService>();
-
-        private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
-
         private bool _useInsVisValue;
 
         public bool UseInsVisValue
         {
             get { return _useInsVisValue; }
 
-            set { SetProperty(ref _useInsVisValue, value); }
+            set
+            {
+                _useInsVisValue = value;
+                OnPropertyChanged();
+            }
         }
 
         // 了解应用具体的使用说明

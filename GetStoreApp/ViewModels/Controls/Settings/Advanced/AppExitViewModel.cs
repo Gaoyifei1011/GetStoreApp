@@ -1,16 +1,15 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Contracts.Controls.Settings.Advanced;
-using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.Models.Controls.Settings.Advanced;
+using GetStoreApp.Services.Controls.Settings.Advanced;
+using GetStoreApp.ViewModels.Base;
+using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
 {
-    public class AppExitViewModel : ObservableRecipient
+    public sealed class AppExitViewModel : ViewModelBase
     {
-        private IAppExitService AppExitService { get; } = ContainerHelper.GetInstance<IAppExitService>();
-
         public List<AppExitModel> AppExitList => AppExitService.AppExitList;
 
         private AppExitModel _appExit;
@@ -19,18 +18,24 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
         {
             get { return _appExit; }
 
-            set { SetProperty(ref _appExit, value); }
+            set
+            {
+                _appExit = value;
+                OnPropertyChanged();
+            }
         }
-
-        // 应用退出方式设置
-        public IRelayCommand AppExitSelectCommand => new RelayCommand(async () =>
-        {
-            await AppExitService.SetAppExitAsync(AppExit);
-        });
 
         public AppExitViewModel()
         {
             AppExit = AppExitService.AppExit;
+        }
+
+        /// <summary>
+        /// 应用退出方式设置
+        /// </summary>
+        public async void OnSelectionChanged(object sender,SelectionChangedEventArgs args)
+        {
+            await AppExitService.SetAppExitAsync(AppExit);
         }
     }
 }

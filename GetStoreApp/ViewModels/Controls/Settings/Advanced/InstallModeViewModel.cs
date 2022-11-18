@@ -1,21 +1,18 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Contracts.Controls.Settings.Advanced;
-using GetStoreApp.Contracts.Window;
+﻿using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings.Advanced;
+using GetStoreApp.Services.Controls.Settings.Advanced;
+using GetStoreApp.Services.Window;
+using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
+using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
 {
-    public class InstallModeViewModel : ObservableRecipient
+    public sealed class InstallModeViewModel : ViewModelBase
     {
-        private IInstallModeService InstallModeService { get; } = ContainerHelper.GetInstance<IInstallModeService>();
-
-        private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
-
         public List<InstallModeModel> InstallModeList => InstallModeService.InstallModeList;
 
         private InstallModeModel _installMode;
@@ -24,7 +21,11 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
         {
             get { return _installMode; }
 
-            set { SetProperty(ref _installMode, value); }
+            set
+            {
+                _installMode = value;
+                OnPropertyChanged();
+            }
         }
 
         // 应用安装方式说明
@@ -34,15 +35,17 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
             NavigationService.NavigateTo(typeof(AboutPage));
         });
 
-        // 应用安装方式设置
-        public IRelayCommand InstallModeSelectCommand => new RelayCommand(async () =>
-        {
-            await InstallModeService.SetInstallModeAsync(InstallMode);
-        });
-
         public InstallModeViewModel()
         {
             InstallMode = InstallModeService.InstallMode;
+        }
+
+        /// <summary>
+        /// 应用安装方式设置
+        /// </summary>
+        public async void OnSelectionChanged(object sender,SelectionChangedEventArgs args)
+        {
+            await InstallModeService.SetInstallModeAsync(InstallMode);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Contracts.Window;
-using GetStoreApp.Models.Window;
+﻿using GetStoreApp.Models.Window;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
@@ -7,16 +6,16 @@ using System.Collections.Generic;
 
 namespace GetStoreApp.Services.Window
 {
-    public class NavigationService : INavigationService
+    public static class NavigationService
     {
-        public Frame NavigationFrame { get; set; }
+        public static Frame NavigationFrame { get; set; }
 
-        public List<NavigationModel> NavigationItemList { get; set; } = new List<NavigationModel>();
+        public static List<NavigationModel> NavigationItemList { get; set; } = new List<NavigationModel>();
 
         /// <summary>
         /// 页面向前导航
         /// </summary>
-        public void NavigateTo(Type navigationPageType)
+        public static void NavigateTo(Type navigationPageType)
         {
             if (NavigationItemList.Exists(item => item.NavigationPage == navigationPageType))
             {
@@ -27,7 +26,7 @@ namespace GetStoreApp.Services.Window
         /// <summary>
         /// 页面向后导航
         /// </summary>
-        public void NavigationFrom()
+        public static void NavigationFrom()
         {
             if (NavigationFrame.CanGoBack)
             {
@@ -38,12 +37,12 @@ namespace GetStoreApp.Services.Window
         /// <summary>
         /// 获取当前导航到的页
         /// </summary>
-        public Type GetCurrentPageType()
+        public static Type GetCurrentPageType()
         {
             return NavigationFrame.CurrentSourcePageType;
         }
 
-        public bool CanGoBack()
+        public static bool CanGoBack()
         {
             return NavigationFrame.CanGoBack;
         }

@@ -2,6 +2,7 @@
 using GetStoreApp.Helpers.Window;
 using GetStoreApp.Messages;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
+using GetStoreApp.ViewModels.Base;
 using GetStoreAppWindowsAPI.PInvoke.User32;
 using GetStoreAppWindowsAPI.PInvoke.WindowsCore;
 using Microsoft.UI.Dispatching;
@@ -56,6 +57,8 @@ namespace GetStoreApp.Views.Window
             get => base.ExtendsContentIntoTitleBar;
             set => base.ExtendsContentIntoTitleBar = value;
         }
+
+        public ViewModelBase DataContext { get; set; }
 
         /// <summary>
         /// 窗口最小宽度

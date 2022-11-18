@@ -6,7 +6,13 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Common"
     mc:Ignorable="d">
+
+    <UserControl.DataContext>
+        <settingsViewModel:DownloadOptionsViewModel x:Name="ViewModel" />
+    </UserControl.DataContext>
 
     <Expander Style="{StaticResource ExpanderSettingsStyle}">
         <Expander.Header>
@@ -31,20 +37,20 @@
                     <TextBlock
                         VerticalAlignment="Center"
                         Style="{StaticResource BodyTextBlockStyle}"
-                        Text="{x:Bind ResourceService.GetLocalized('/Settings/DownloadOptions')}" />
+                        Text="{x:Bind root:ResourceService.GetLocalized('/Settings/DownloadOptions')}" />
 
                     <TextBlock
                         VerticalAlignment="Center"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind ResourceService.GetLocalized('/Settings/DownloadOptionsDescription')}" />
+                        Text="{x:Bind root:ResourceService.GetLocalized('/Settings/DownloadOptionsDescription')}" />
                 </StackPanel>
 
                 <Button
                     Grid.Column="2"
                     Command="{x:Bind ViewModel.DownloadInstructionCommand}"
-                    Content="{x:Bind ResourceService.GetLocalized('/Settings/DownloadInstruction')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/DownloadInstruction')}" />
+                    Content="{x:Bind root:ResourceService.GetLocalized('/Settings/DownloadInstruction')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Settings/DownloadInstruction')}" />
             </Grid>
         </Expander.Header>
 
@@ -62,27 +68,27 @@
                             <TextBlock
                                 VerticalAlignment="Center"
                                 Style="{StaticResource BodyTextBlockStyle}"
-                                Text="{x:Bind ResourceService.GetLocalized('/Settings/DownloadFolder')}" />
+                                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/DownloadFolder')}" />
 
                             <HyperlinkButton
                                 Command="{x:Bind ViewModel.OpenFolderCommand}"
                                 Content="{x:Bind ViewModel.DownloadFolder.Path, Mode=OneWay}"
                                 Style="{StaticResource HyperlinkButtonStyle}"
-                                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/OpenFolderToolTip')}" />
+                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Settings/OpenFolderToolTip')}" />
                         </StackPanel>
 
                         <Button
                             Grid.Column="1"
                             Margin="6,0,6,0"
                             Command="{x:Bind ViewModel.UseDefaultFolderCommand}"
-                            Content="{x:Bind ResourceService.GetLocalized('/Settings/UseDefaultFolder')}"
-                            ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/UseDefaultFolder')}" />
+                            Content="{x:Bind root:ResourceService.GetLocalized('/Settings/UseDefaultFolder')}"
+                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Settings/UseDefaultFolder')}" />
 
                         <Button
                             Grid.Column="2"
                             Command="{x:Bind ViewModel.ChangeFolderCommand}"
-                            Content="{x:Bind ResourceService.GetLocalized('/Settings/ChangeFolder')}"
-                            ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/ChangeFolder')}" />
+                            Content="{x:Bind root:ResourceService.GetLocalized('/Settings/ChangeFolder')}"
+                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Settings/ChangeFolder')}" />
                     </Grid>
                 </StackPanel>
 
@@ -99,11 +105,11 @@
                             <TextBlock
                                 VerticalAlignment="Center"
                                 Style="{StaticResource BodyTextBlockStyle}"
-                                Text="{x:Bind ResourceService.GetLocalized('/Settings/DownloadItem')}" />
+                                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/DownloadItem')}" />
                             <TextBlock
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
-                                Text="{x:Bind ResourceService.GetLocalized('/Settings/DownloadItemDescription')}" />
+                                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/DownloadItemDescription')}" />
                         </StackPanel>
 
                         <ComboBox
@@ -111,14 +117,8 @@
                             VerticalAlignment="Center"
                             ItemsSource="{x:Bind ViewModel.DownloadItemList}"
                             SelectedItem="{x:Bind ViewModel.DownloadItem, Mode=TwoWay}"
-                            ToolTipService.ToolTip="{x:Bind ViewModel.DownloadItem, Mode=TwoWay}">
-
-                            <i:Interaction.Behaviors>
-                                <ic:EventTriggerBehavior EventName="SelectionChanged">
-                                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.DownloadItemCommand}" />
-                                </ic:EventTriggerBehavior>
-                            </i:Interaction.Behaviors>
-                        </ComboBox>
+                            SelectionChanged="{x:Bind ViewModel.OnDownloadItemSelectionChanged}"
+                            ToolTipService.ToolTip="{x:Bind ViewModel.DownloadItem, Mode=TwoWay}" />
                     </Grid>
                 </StackPanel>
 
@@ -135,11 +135,11 @@
                             <TextBlock
                                 VerticalAlignment="Center"
                                 Style="{StaticResource BodyTextBlockStyle}"
-                                Text="{x:Bind ResourceService.GetLocalized('/Settings/DownloadMode')}" />
+                                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/DownloadMode')}" />
                             <TextBlock
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
-                                Text="{x:Bind ResourceService.GetLocalized('/Settings/DownloadModeDescription')}" />
+                                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/DownloadModeDescription')}" />
                         </StackPanel>
 
                         <ComboBox
@@ -148,14 +148,8 @@
                             DisplayMemberPath="DisplayName"
                             ItemsSource="{x:Bind ViewModel.DownloadModeList}"
                             SelectedItem="{x:Bind ViewModel.DownloadMode, Mode=TwoWay}"
-                            ToolTipService.ToolTip="{x:Bind ViewModel.DownloadMode.DisplayName, Mode=TwoWay}">
-
-                            <i:Interaction.Behaviors>
-                                <ic:EventTriggerBehavior EventName="SelectionChanged">
-                                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.DownloadModeCommand}" />
-                                </ic:EventTriggerBehavior>
-                            </i:Interaction.Behaviors>
-                        </ComboBox>
+                            SelectionChanged="{x:Bind ViewModel.OnDownloadModeSelectionChanged}"
+                            ToolTipService.ToolTip="{x:Bind ViewModel.DownloadMode.DisplayName, Mode=TwoWay}" />
                     </Grid>
                 </StackPanel>
             </StackPanel>

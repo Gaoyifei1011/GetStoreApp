@@ -1,8 +1,8 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using GetStoreApp.ViewModels.Base;
 
 namespace GetStoreApp.ViewModels.Notifications
 {
-    public class HistoryCopyViewModel : ObservableRecipient
+    public sealed class HistoryCopyViewModel : ViewModelBase
     {
         private bool _copyState = false;
 
@@ -10,7 +10,11 @@ namespace GetStoreApp.ViewModels.Notifications
         {
             get { return _copyState; }
 
-            set { SetProperty(ref _copyState, value); }
+            set
+            {
+                _copyState = value;
+                OnPropertyChanged();
+            }
         }
 
         private bool _isMultiSelected = false;
@@ -19,7 +23,11 @@ namespace GetStoreApp.ViewModels.Notifications
         {
             get { return _isMultiSelected; }
 
-            set { SetProperty(ref _isMultiSelected, value); }
+            set
+            {
+                _isMultiSelected = value;
+                OnPropertyChanged();
+            }
         }
 
         public void Initialize(bool copyState, bool isMultiSelected)

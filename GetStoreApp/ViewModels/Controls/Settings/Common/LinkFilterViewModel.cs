@@ -1,26 +1,26 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Contracts.Controls.Settings.Common;
-using GetStoreApp.Contracts.Window;
+﻿using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Root;
+using GetStoreApp.Services.Controls.Settings.Common;
+using GetStoreApp.Services.Window;
+using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Common
 {
-    public class LinkFilterViewModel : ObservableRecipient
+    public sealed class LinkFilterViewModel : ViewModelBase
     {
-        private ILinkFilterService LinkFilterService { get; } = ContainerHelper.GetInstance<ILinkFilterService>();
-
-        private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
-
         private bool _startsWithEFilterValue;
 
         public bool StartsWithEFilterValue
         {
             get { return _startsWithEFilterValue; }
 
-            set { SetProperty(ref _startsWithEFilterValue, value); }
+            set
+            {
+                _startsWithEFilterValue = value;
+                OnPropertyChanged();
+            }
         }
 
         private bool _blockMapFilterValue;
@@ -29,7 +29,11 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
         {
             get { return _blockMapFilterValue; }
 
-            set { SetProperty(ref _blockMapFilterValue, value); }
+            set
+            {
+                _blockMapFilterValue = value;
+                OnPropertyChanged();
+            }
         }
 
         // 链接过滤说明

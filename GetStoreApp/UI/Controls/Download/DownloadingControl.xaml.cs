@@ -1,16 +1,10 @@
-﻿using GetStoreApp.Contracts.Root;
-using GetStoreApp.Helpers.Root;
-using GetStoreApp.ViewModels.Controls.Download;
+﻿using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.UI.Controls.Download
 {
     public sealed partial class DownloadingControl : UserControl
     {
-        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
-
-        public DownloadingViewModel ViewModel { get; } = ContainerHelper.GetInstance<DownloadingViewModel>();
-
         public string WaitDownload => ResourceService.GetLocalized("/Download/WaitDownload");
 
         public string PauseToolTip => ResourceService.GetLocalized("/Download/PauseToolTip");

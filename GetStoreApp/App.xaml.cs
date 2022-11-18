@@ -1,9 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Controls.Download;
-using GetStoreApp.Contracts.Root;
 using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
+using GetStoreApp.Services.Controls.Download;
+using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Window;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -28,8 +27,7 @@ namespace GetStoreApp
             InitializeComponent();
             UnhandledException += OnUnhandledException;
 
-            ContainerHelper.InitializeContainer();
-            ContainerHelper.GetInstance<IAppNotificationService>().Initialize();
+            AppNotificationService.Initialize();
         }
 
         /// <summary>
@@ -39,7 +37,7 @@ namespace GetStoreApp
         {
             base.OnLaunched(args);
 
-            await ContainerHelper.GetInstance<IActivationService>().ActivateAsync(args);
+            await ActivationService.ActivateAsync(args);
         }
 
         /// <summary>
@@ -49,8 +47,8 @@ namespace GetStoreApp
         {
             args.Handled = true;
 
-            await ContainerHelper.GetInstance<IDownloadSchedulerService>().CloseDownloadSchedulerAsync();
-            await ContainerHelper.GetInstance<IAria2Service>().CloseAria2Async();
+            await DownloadSchedulerService.CloseDownloadSchedulerAsync();
+            await Aria2Service.CloseAria2Async();
             WeakReferenceMessenger.Default.Send(new WindowClosedMessage(true));
         }
     }

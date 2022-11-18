@@ -1,8 +1,5 @@
-﻿using Windows.Win32.Foundation;
-using Windows.Win32;
-using Windows.Win32.UI.WindowsAndMessaging;
+﻿using GetStoreAppWindowsAPI.PInvoke.User32;
 using WinRT.Interop;
-using GetStoreAppWindowsAPI.PInvoke.User32;
 
 namespace GetStoreApp.Helpers.Window
 {
@@ -49,7 +46,7 @@ namespace GetStoreApp.Helpers.Window
         /// </summary>
         public static void SetAppTopMost(bool topMostValue)
         {
-            if(topMostValue)
+            if (topMostValue)
             {
                 User32Library.SetWindowPos(WindowNative.GetWindowHandle(App.MainWindow), SpecialWindowHandles.HWND_TOPMOST, 0, 0, 0, 0,
                 SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOSIZE);

@@ -1,11 +1,12 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+﻿using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.Helpers.Root;
+using GetStoreApp.ViewModels.Base;
 using System;
 
 namespace GetStoreApp.ViewModels.Controls.About
 {
-    public class HeaderViewModel : ObservableRecipient
+    public sealed class HeaderViewModel : ViewModelBase
     {
         private readonly ushort MajorVersion = InfoHelper.GetAppVersion()["MajorVersion"];
 
@@ -21,7 +22,11 @@ namespace GetStoreApp.ViewModels.Controls.About
         {
             get { return _appVersion; }
 
-            set { SetProperty(ref _appVersion, value); }
+            set
+            {
+                _appVersion = value;
+                OnPropertyChanged();
+            }
         }
 
         // 开发者个人信息

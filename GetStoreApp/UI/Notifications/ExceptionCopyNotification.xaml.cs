@@ -1,7 +1,4 @@
-﻿using GetStoreApp.Contracts.Root;
-using GetStoreApp.Helpers.Root;
-using GetStoreApp.ViewModels.Notifications;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using System;
@@ -11,10 +8,6 @@ namespace GetStoreApp.UI.Notifications
 {
     public sealed partial class ExceptionCopyNotification : UserControl
     {
-        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
-
-        public ExceptionCopyViewModel ViewModel { get; } = ContainerHelper.GetInstance<ExceptionCopyViewModel>();
-
         private Popup Popup { get; set; } = new Popup();
 
         private int Duration = 2000;

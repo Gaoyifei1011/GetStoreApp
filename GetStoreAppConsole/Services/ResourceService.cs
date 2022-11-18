@@ -1,5 +1,4 @@
-﻿using GetStoreAppConsole.Contracts;
-using GetStoreAppConsole.Strings;
+﻿using GetStoreAppConsole.Strings;
 using System;
 using System.Globalization;
 using System.Resources;
@@ -7,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace GetStoreAppConsole.Services
 {
-    public class ResourceService : IResourceService
+    public static class ResourceService
     {
-        private CultureInfo DefaultConsoleLanguage { get; set; }
+        private static CultureInfo DefaultConsoleLanguage { get; set; }
 
-        private CultureInfo CurrentConsoleLanguage { get; set; }
+        private static CultureInfo CurrentConsoleLanguage { get; set; }
 
-        private ResourceManager ResourceManager { get; } = new ResourceManager("GetStoreAppConsole.Strings.Resources", typeof(Resources).Assembly);
+        private static ResourceManager ResourceManager { get; } = new ResourceManager("GetStoreAppConsole.Strings.Resources", typeof(Resources).Assembly);
 
-        public async Task InitializeResourceAsync(string defaultConsoleLanguage, string currentConsoleLanguage)
+        public static async Task InitializeResourceAsync(string defaultConsoleLanguage, string currentConsoleLanguage)
         {
             DefaultConsoleLanguage = CultureInfo.GetCultureInfo(defaultConsoleLanguage);
             CurrentConsoleLanguage = CultureInfo.GetCultureInfo(currentConsoleLanguage);
@@ -26,7 +25,7 @@ namespace GetStoreAppConsole.Services
         /// <summary>
         /// UI字符串本地化
         /// </summary>
-        public string GetLocalized(string resource)
+        public static string GetLocalized(string resource)
         {
             try
             {

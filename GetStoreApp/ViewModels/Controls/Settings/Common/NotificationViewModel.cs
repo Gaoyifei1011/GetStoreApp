@@ -1,21 +1,23 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Contracts.Controls.Settings.Common;
-using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
+using GetStoreApp.Services.Controls.Settings.Common;
+using GetStoreApp.ViewModels.Base;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Common
 {
-    public class NotificationViewModel : ObservableRecipient
+    public sealed class NotificationViewModel : ViewModelBase
     {
-        private INotificationService NotificationService { get; } = ContainerHelper.GetInstance<INotificationService>();
-
         private bool _notification;
 
         public bool Notification
         {
             get { return _notification; }
 
-            set { SetProperty(ref _notification, value); }
+            set
+            {
+                _notification = value;
+                OnPropertyChanged();
+            }
         }
 
         // 设置是否开启应用通知

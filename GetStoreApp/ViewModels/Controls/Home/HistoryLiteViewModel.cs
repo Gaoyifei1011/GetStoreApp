@@ -1,49 +1,36 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Controls.History;
-using GetStoreApp.Contracts.Controls.Settings.Common;
-using GetStoreApp.Contracts.Root;
-using GetStoreApp.Contracts.Window;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.History;
 using GetStoreApp.Models.Controls.Home;
 using GetStoreApp.Models.Controls.Settings.Common;
+using GetStoreApp.Services.Controls.History;
+using GetStoreApp.Services.Controls.Settings.Common;
+using GetStoreApp.Services.Root;
+using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Notifications;
 using GetStoreApp.Views.Pages;
+using Microsoft.UI.Xaml;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Controls.Home
 {
-    public class HistoryLiteViewModel : ObservableRecipient
+    public sealed class HistoryLiteViewModel
     {
         // 临界区资源访问互斥锁
         private readonly object HistoryLiteDataListLock = new object();
 
         private HistoryLiteNumModel HistoryLiteItem { get; set; }
 
-        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
-
-        private IHistoryDBService HistoryDBService { get; } = ContainerHelper.GetInstance<IHistoryDBService>();
-
-        private IHistoryLiteNumService HistoryLiteNumService { get; } = ContainerHelper.GetInstance<IHistoryLiteNumService>();
-
-        private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
-
         public List<TypeModel> TypeList => ResourceService.TypeList;
 
         public List<ChannelModel> ChannelList => ResourceService.ChannelList;
 
         public ObservableCollection<HistoryModel> HistoryLiteDataList { get; } = new ObservableCollection<HistoryModel>();
-
-        // 列表初始化，可以从数据库获得的列表中加载
-        public IRelayCommand LoadedCommand => new RelayCommand(async () =>
-        {
-            await GetHistoryLiteDataListAsync();
-        });
 
         // 查看全部
         public IRelayCommand ViewAllCommand => new RelayCommand(() =>
@@ -94,6 +81,14 @@ namespace GetStoreApp.ViewModels.Controls.Home
                     WeakReferenceMessenger.Default.UnregisterAll(this);
                 }
             });
+        }
+
+        /// <summary>
+        /// 列表初始化，可以从数据库获得的列表中加载
+        /// </summary>
+        public async void OnLoaded(object sender, RoutedEventArgs args)
+        {
+            await GetHistoryLiteDataListAsync();
         }
 
         /// <summary>

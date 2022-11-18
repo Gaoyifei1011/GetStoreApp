@@ -6,8 +6,14 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:windowViewModel="using:GetStoreApp.ViewModels.Controls.Window"
     x:Name="AppTitleBar"
     mc:Ignorable="d">
+
+    <Grid.DataContext>
+        <windowViewModel:AppTitleBarViewModel x:Name="ViewModel" />
+    </Grid.DataContext>
 
     <i:Interaction.Behaviors>
         <ic:EventTriggerBehavior EventName="Loaded">
@@ -31,6 +37,6 @@
         Margin="36,2,0,0"
         VerticalAlignment="Center"
         Style="{StaticResource CaptionTextBlockStyle}"
-        Text="{x:Bind ResourceService.GetLocalized('/Window/AppTitle')}"
+        Text="{x:Bind root:ResourceService.GetLocalized('/Window/AppTitle')}"
         TextWrapping="NoWrap" />
 </Grid>

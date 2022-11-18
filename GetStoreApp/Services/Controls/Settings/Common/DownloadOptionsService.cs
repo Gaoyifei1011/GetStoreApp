@@ -1,7 +1,5 @@
-﻿using GetStoreApp.Contracts.Controls.Settings.Common;
-using GetStoreApp.Contracts.Root;
-using GetStoreApp.Helpers.Root;
-using GetStoreApp.Models.Controls.Settings.Common;
+﻿using GetStoreApp.Models.Controls.Settings.Common;
+using GetStoreApp.Services.Root;
 using GetStoreAppCore.Settings;
 using GetStoreAppWindowsAPI.PInvoke.Shell32;
 using System;
@@ -16,36 +14,34 @@ namespace GetStoreApp.Services.Controls.Settings.Common
     /// <summary>
     /// 应用下载设置服务
     /// </summary>
-    public class DownloadOptionsService : IDownloadOptionsService
+    public static class DownloadOptionsService
     {
-        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
+        private static string FolderSettingsKey { get; } = ConfigStorage.ConfigKey["DownloadFolderKey"];
 
-        private string FolderSettingsKey { get; init; } = ConfigStorage.ConfigKey["DownloadFolderKey"];
+        private static string DownloadItemSettingsKey { get; } = ConfigStorage.ConfigKey["DownloadItemKey"];
 
-        private string DownloadItemSettingsKey { get; init; } = ConfigStorage.ConfigKey["DownloadItemKey"];
+        private static string DownloadModeSettingsKey { get; } = ConfigStorage.ConfigKey["DownloadModeKey"];
 
-        private string DownloadModeSettingsKey { get; init; } = ConfigStorage.ConfigKey["DownloadModeKey"];
+        public static List<DownloadModeModel> DownloadModeList { get; set; }
 
-        public List<DownloadModeModel> DownloadModeList { get; set; }
+        public static List<int> DownloadItemList => new List<int>() { 1, 2, 3 };
 
-        public List<int> DownloadItemList => new List<int>() { 1, 2, 3 };
+        public static StorageFolder DefaultFolder { get; private set; }
 
-        public StorageFolder DefaultFolder { get; private set; }
+        private static int DefaultItem => 1;
 
-        private int DefaultItem => 1;
+        private static DownloadModeModel DefaultDownloadMode;
 
-        private DownloadModeModel DefaultDownloadMode;
+        public static StorageFolder DownloadFolder { get; set; }
 
-        public StorageFolder DownloadFolder { get; set; }
+        public static int DownloadItem { get; set; }
 
-        public int DownloadItem { get; set; }
-
-        public DownloadModeModel DownloadMode { get; set; }
+        public static DownloadModeModel DownloadMode { get; set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的下载相关内容设置值，并创建默认下载目录
         /// </summary>
-        public async Task InitializeAsync()
+        public static async Task InitializeAsync()
         {
             DownloadModeList = ResourceService.DownloadModeList;
 
@@ -65,7 +61,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// <summary>
         /// 获取设置存储的下载位置值，然后检查目录的读写权限。如果不能读取，使用默认的目录
         /// </summary>
-        private async Task<StorageFolder> GetFolderAsync()
+        private static async Task<StorageFolder> GetFolderAsync()
         {
             string folder = await ConfigStorage.ReadSettingAsync<string>(FolderSettingsKey);
 
@@ -81,7 +77,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// <summary>
         /// 安全访问目录（当目录不存在的时候直接创建目录）
         /// </summary>
-        public async Task OpenFolderAsync(StorageFolder folder)
+        public static async Task OpenFolderAsync(StorageFolder folder)
         {
             if (!Directory.Exists(folder.Path))
             {
@@ -94,7 +90,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// <summary>
         /// 在资源管理器中打开文件对应的目录，并选中该文件
         /// </summary>
-        public async Task OpenItemFolderAsync(string filePath)
+        public static async Task OpenItemFolderAsync(string filePath)
         {
             if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
             {
@@ -117,7 +113,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// <summary>
         /// 创建目录
         /// </summary>
-        public async Task CreateFolderAsync(string folderPath)
+        public static async Task CreateFolderAsync(string folderPath)
         {
             Directory.CreateDirectory(folderPath);
             await Task.CompletedTask;
@@ -126,7 +122,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// <summary>
         /// 获取设置存储的同时下载任务数值，如果设置没有存储，使用默认值
         /// </summary>
-        private async Task<int> GetItemAsync()
+        private static async Task<int> GetItemAsync()
         {
             int? downloadItemValue = await ConfigStorage.ReadSettingAsync<int?>(DownloadItemSettingsKey);
 
@@ -142,7 +138,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// 获取设置存储的下载方式值，如果设置没有存储，使用默认值
         /// </summary>
         /// <returns></returns>
-        private async Task<DownloadModeModel> GetModeAsync()
+        private static async Task<DownloadModeModel> GetModeAsync()
         {
             string downloadMode = await ConfigStorage.ReadSettingAsync<string>(DownloadModeSettingsKey);
 
@@ -157,7 +153,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// <summary>
         /// 下载位置发生修改时修改设置存储的下载位置值
         /// </summary>
-        public async Task SetFolderAsync(StorageFolder downloadFolder)
+        public static async Task SetFolderAsync(StorageFolder downloadFolder)
         {
             DownloadFolder = downloadFolder;
 
@@ -167,7 +163,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// <summary>
         /// 同时下载任务数发生修改时修改设置存储的同时下载任务数值
         /// </summary>
-        public async Task SetItemAsync(int downloadItem)
+        public static async Task SetItemAsync(int downloadItem)
         {
             DownloadItem = downloadItem;
 
@@ -177,7 +173,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// <summary>
         /// 下载方式设定值发送改变时修改涉嫌存储的下载方式设定值
         /// </summary>
-        public async Task SetModeAsync(DownloadModeModel downloadMode)
+        public static async Task SetModeAsync(DownloadModeModel downloadMode)
         {
             DownloadMode = downloadMode;
 

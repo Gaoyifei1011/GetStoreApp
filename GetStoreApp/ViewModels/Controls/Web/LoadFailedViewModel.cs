@@ -1,10 +1,10 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+﻿using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using System;
 
 namespace GetStoreApp.ViewModels.Controls.Web
 {
-    public class LoadFailedViewModel : ObservableRecipient
+    public sealed class LoadFailedViewModel
     {
         // 下载Webview2运行时
         public IRelayCommand DownloadWebView2Command => new RelayCommand(async () =>

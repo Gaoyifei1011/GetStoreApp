@@ -1,6 +1,5 @@
 ﻿using GetStoreAppWindowsAPI.Dialogs.FileDialog.Native;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace GetStoreAppWindowsAPI.Dialogs

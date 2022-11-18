@@ -1,17 +1,19 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Controls.Download;
-using GetStoreApp.Contracts.Controls.Settings.Common;
-using GetStoreApp.Contracts.Controls.Settings.Experiment;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.DataType.Events;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.Download;
+using GetStoreApp.Services.Controls.Download;
+using GetStoreApp.Services.Controls.Settings.Common;
+using GetStoreApp.Services.Controls.Settings.Experiment;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
 using GetStoreApp.UI.Notifications;
+using GetStoreApp.ViewModels.Base;
 using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -22,20 +24,12 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Controls.Download
 {
-    public class UnfinishedViewModel : ObservableRecipient
+    public sealed class UnfinishedViewModel : ViewModelBase
     {
         // 临界区资源访问互斥锁
         private readonly object UnfinishedDataListLock = new object();
 
         private DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-
-        private IDownloadDBService DownloadDBService { get; } = ContainerHelper.GetInstance<IDownloadDBService>();
-
-        private IDownloadSchedulerService DownloadSchedulerService { get; } = ContainerHelper.GetInstance<IDownloadSchedulerService>();
-
-        private IDownloadOptionsService DownloadOptionsService { get; } = ContainerHelper.GetInstance<IDownloadOptionsService>();
-
-        private INetWorkMonitorService NetWorkMonitorService { get; } = ContainerHelper.GetInstance<INetWorkMonitorService>();
 
         public ObservableCollection<UnfinishedModel> UnfinishedDataList { get; } = new ObservableCollection<UnfinishedModel>();
 
@@ -45,14 +39,12 @@ namespace GetStoreApp.ViewModels.Controls.Download
         {
             get { return _isSelectMode; }
 
-            set { SetProperty(ref _isSelectMode, value); }
+            set
+            {
+                _isSelectMode = value;
+                OnPropertyChanged();
+            }
         }
-
-        // 页面被卸载时，关闭消息服务
-        public IRelayCommand UnloadedCommand => new RelayCommand(() =>
-        {
-            WeakReferenceMessenger.Default.UnregisterAll(this);
-        });
 
         // 打开默认保存的文件夹
         public IRelayCommand OpenFolderCommand => new RelayCommand(async () =>
@@ -220,18 +212,6 @@ namespace GetStoreApp.ViewModels.Controls.Download
             IsSelectMode = false;
         });
 
-        // 在多选模式下点击项目选择相应的条目
-        public IRelayCommand ItemClickCommand => new RelayCommand<ItemClickEventArgs>((args) =>
-        {
-            UnfinishedModel resultItem = (UnfinishedModel)args.ClickedItem;
-            int ClickedIndex = UnfinishedDataList.IndexOf(resultItem);
-
-            lock (UnfinishedDataListLock)
-            {
-                UnfinishedDataList[ClickedIndex].IsSelected = !UnfinishedDataList[ClickedIndex].IsSelected;
-            }
-        });
-
         // 继续下载当前任务
         public IRelayCommand ContinueCommand => new RelayCommand<UnfinishedModel>(async (unfinishedItem) =>
         {
@@ -328,6 +308,62 @@ namespace GetStoreApp.ViewModels.Controls.Download
         }
 
         /// <summary>
+        /// 页面被卸载时，关闭消息服务
+        /// </summary>
+        public void OnUnloaded(object sender,RoutedEventArgs args)
+        {
+            WeakReferenceMessenger.Default.UnregisterAll(this);
+        }
+
+        /// <summary>
+        /// 在多选模式下点击项目选择相应的条目
+        /// </summary>
+        public void OnItemClick(object sender,ItemClickEventArgs args)
+        {
+            UnfinishedModel resultItem = (UnfinishedModel)args.ClickedItem;
+            int ClickedIndex = UnfinishedDataList.IndexOf(resultItem);
+
+            lock (UnfinishedDataListLock)
+            {
+                UnfinishedDataList[ClickedIndex].IsSelected = !UnfinishedDataList[ClickedIndex].IsSelected;
+            }
+        }
+
+        /// <summary>
+        /// 订阅事件，下载中列表内容有暂停下载或下载失败的项目时通知UI更改
+        /// </summary>
+        private void OnDownloadingListItemsChanged(object sender, ItemsChangedEventArgs<BackgroundModel> args)
+        {
+            if (args.RemovedItems.Any(item => item.DownloadFlag == 0 || item.DownloadFlag == 2))
+            {
+                dispatcherQueue.TryEnqueue(async () =>
+                {
+                    foreach (BackgroundModel backgroundItem in args.RemovedItems)
+                    {
+                        if (backgroundItem.DownloadFlag == 0 || backgroundItem.DownloadFlag == 2)
+                        {
+                            BackgroundModel item = await DownloadDBService.QueryWithKeyAsync(backgroundItem.DownloadKey);
+
+                            lock (UnfinishedDataListLock)
+                            {
+                                UnfinishedDataList.Add(new UnfinishedModel
+                                {
+                                    DownloadKey = item.DownloadKey,
+                                    FileName = item.FileName,
+                                    FilePath = item.FilePath,
+                                    FileLink = item.FileLink,
+                                    FileSHA1 = item.FileSHA1,
+                                    TotalSize = item.TotalSize,
+                                    DownloadFlag = item.DownloadFlag
+                                });
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        /// <summary>
         /// 从数据库中加载未下载完成和下载失败的数据
         /// </summary>
         private async Task GetUnfinishedDataListAsync()
@@ -370,40 +406,6 @@ namespace GetStoreApp.ViewModels.Controls.Download
                         DownloadFlag = downloadItem.DownloadFlag
                     });
                 }
-            }
-        }
-
-        /// <summary>
-        /// 订阅事件，下载中列表内容有暂停下载或下载失败的项目时通知UI更改
-        /// </summary>
-        private void OnDownloadingListItemsChanged(object sender, ItemsChangedEventArgs<BackgroundModel> args)
-        {
-            if (args.RemovedItems.Any(item => item.DownloadFlag == 0 || item.DownloadFlag == 2))
-            {
-                dispatcherQueue.TryEnqueue(async () =>
-                {
-                    foreach (BackgroundModel backgroundItem in args.RemovedItems)
-                    {
-                        if (backgroundItem.DownloadFlag == 0 || backgroundItem.DownloadFlag == 2)
-                        {
-                            BackgroundModel item = await DownloadDBService.QueryWithKeyAsync(backgroundItem.DownloadKey);
-
-                            lock (UnfinishedDataListLock)
-                            {
-                                UnfinishedDataList.Add(new UnfinishedModel
-                                {
-                                    DownloadKey = item.DownloadKey,
-                                    FileName = item.FileName,
-                                    FilePath = item.FilePath,
-                                    FileLink = item.FileLink,
-                                    FileSHA1 = item.FileSHA1,
-                                    TotalSize = item.TotalSize,
-                                    DownloadFlag = item.DownloadFlag
-                                });
-                            }
-                        }
-                    }
-                });
             }
         }
     }

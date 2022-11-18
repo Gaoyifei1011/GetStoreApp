@@ -1,18 +1,16 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Controls.Settings.Common;
-using GetStoreApp.Helpers.Root;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.Settings.Common;
+using GetStoreApp.Services.Controls.Settings.Common;
+using GetStoreApp.ViewModels.Base;
 using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Common
 {
-    public class HistoryLiteConfigViewModel : ObservableRecipient
+    public sealed class HistoryLiteConfigViewModel : ViewModelBase
     {
-        private IHistoryLiteNumService HistoryLiteNumService { get; } = ContainerHelper.GetInstance<IHistoryLiteNumService>();
-
         public List<HistoryLiteNumModel> HistoryLiteNumList => HistoryLiteNumService.HistoryLiteNumList;
 
         private HistoryLiteNumModel _historyLiteItem;
@@ -21,7 +19,11 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
         {
             get { return _historyLiteItem; }
 
-            set { SetProperty(ref _historyLiteItem, value); }
+            set
+            {
+                _historyLiteItem = value;
+                OnPropertyChanged();
+            }
         }
 
         // 主页面“历史记录”显示数目修改

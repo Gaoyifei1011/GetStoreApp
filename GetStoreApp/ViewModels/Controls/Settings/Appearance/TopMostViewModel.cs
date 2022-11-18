@@ -1,34 +1,42 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Contracts.Controls.Settings.Appearance;
-using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Services.Controls.Settings.Appearance;
+using GetStoreApp.ViewModels.Base;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
 {
-    public class TopMostViewModel : ObservableRecipient
+    public sealed class TopMostViewModel : ViewModelBase
     {
-        private ITopMostService TopMostService { get; } = ContainerHelper.GetInstance<ITopMostService>();
-
         private bool _topMostValue;
 
         public bool TopMostValue
         {
             get { return _topMostValue; }
 
-            set { SetProperty(ref _topMostValue, value); }
+            set
+            {
+                _topMostValue = value;
+                OnPropertyChanged();
+            }
         }
-
-        // 是否开启应用窗口置顶
-        public IRelayCommand TopMostCommand => new RelayCommand<bool>(async (topMostValue) =>
-        {
-            await TopMostService.SetTopMostValueAsync(topMostValue);
-            await TopMostService.SetAppTopMostAsync();
-            TopMostValue = topMostValue;
-        });
 
         public TopMostViewModel()
         {
             TopMostValue = TopMostService.TopMostValue;
+        }
+
+        /// <summary>
+        /// 是否开启应用窗口置顶
+        /// </summary>
+        public async void OnToggled(object sender, RoutedEventArgs args)
+        {
+            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
+            if (toggleSwitch is not null)
+            {
+                await TopMostService.SetTopMostValueAsync(toggleSwitch.IsOn);
+                await TopMostService.SetAppTopMostAsync();
+                TopMostValue = toggleSwitch.IsOn;
+            }
         }
     }
 }

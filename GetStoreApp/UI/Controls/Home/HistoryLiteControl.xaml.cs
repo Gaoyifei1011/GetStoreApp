@@ -1,16 +1,10 @@
-﻿using GetStoreApp.Contracts.Root;
-using GetStoreApp.Helpers.Root;
-using GetStoreApp.ViewModels.Controls.Home;
+﻿using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.UI.Controls.Home
 {
     public sealed partial class HistoryLiteControl : UserControl
     {
-        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
-
-        public HistoryLiteViewModel ViewModel { get; } = ContainerHelper.GetInstance<HistoryLiteViewModel>();
-
         public string Fillin => ResourceService.GetLocalized("/Home/Fillin");
 
         public string FillinToolTip => ResourceService.GetLocalized("/Home/FillinToolTip");

@@ -4,7 +4,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Advanced"
     mc:Ignorable="d">
+
+    <UserControl.DataContext>
+        <settingsViewModel:TraceCleanupViewModel x:Name="ViewModel" />
+    </UserControl.DataContext>
 
     <Grid Style="{StaticResource CardGridStyle}">
         <Grid.ColumnDefinitions>
@@ -24,20 +30,20 @@
             <TextBlock
                 VerticalAlignment="Center"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="{x:Bind ResourceService.GetLocalized('/Settings/TraceCleanup')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/TraceCleanup')}" />
 
             <TextBlock
                 VerticalAlignment="Center"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                 Style="{StaticResource CaptionTextBlockStyle}"
-                Text="{x:Bind ResourceService.GetLocalized('/Settings/TraceCleanupDescription')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/TraceCleanupDescription')}" />
         </StackPanel>
 
         <Button
             Grid.Column="2"
             MinWidth="100"
             Command="{x:Bind ViewModel.TraceCleanupCommand}"
-            Content="{x:Bind ResourceService.GetLocalized('/Settings/TraceClear')}"
-            ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/TraceClear')}" />
+            Content="{x:Bind root:ResourceService.GetLocalized('/Settings/TraceClear')}"
+            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Settings/TraceClear')}" />
     </Grid>
 </UserControl>

@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Contracts.Controls.Settings.Appearance;
-using GetStoreApp.Models.Controls.Settings.Appearance;
+﻿using GetStoreApp.Models.Controls.Settings.Appearance;
 using GetStoreAppCore.Settings;
 using System;
 using System.Collections.Generic;
@@ -12,22 +11,22 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
     /// <summary>
     /// 应用语言设置服务
     /// </summary>
-    public class LanguageService : ILanguageService
+    public static class LanguageService
     {
-        private string SettingsKey { get; init; } = ConfigStorage.ConfigKey["LanguageKey"];
+        private static string SettingsKey { get; } = ConfigStorage.ConfigKey["LanguageKey"];
 
-        public LanguageModel DefaultAppLanguage { get; set; }
+        public static LanguageModel DefaultAppLanguage { get; set; }
 
-        public LanguageModel AppLanguage { get; set; }
+        public static LanguageModel AppLanguage { get; set; }
 
-        private readonly IReadOnlyList<string> AppLanguagesList = ApplicationLanguages.ManifestLanguages;
+        private static readonly IReadOnlyList<string> AppLanguagesList = ApplicationLanguages.ManifestLanguages;
 
-        public List<LanguageModel> LanguageList { get; set; } = new List<LanguageModel>();
+        public static List<LanguageModel> LanguageList { get; set; } = new List<LanguageModel>();
 
         /// <summary>
         /// 初始化应用语言信息列表
         /// </summary>
-        private void InitializeLanguageList()
+        private static void InitializeLanguageList()
         {
             foreach (string applanguage in AppLanguagesList)
             {
@@ -44,7 +43,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// <summary>
         /// 当设置中的键值为空时，判断当前系统语言是否存在于语言列表中
         /// </summary>
-        private bool IsExistsInLanguageList(string currentSystemLanguage)
+        private static bool IsExistsInLanguageList(string currentSystemLanguage)
         {
             foreach (LanguageModel languageItem in LanguageList)
             {
@@ -59,7 +58,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// <summary>
         /// 应用在初始化前获取设置存储的语言值，如果设置值为空，设定默认的应用语言值
         /// </summary>
-        public async Task InitializeLanguageAsync()
+        public static async Task InitializeLanguageAsync()
         {
             bool IsSettingsValueEmpty = true;
 
@@ -81,7 +80,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// <summary>
         /// 获取设置存储的语言值，如果设置没有存储，使用默认值
         /// </summary>
-        private async Task<(bool, LanguageModel)> GetLanguageAsync()
+        private static async Task<(bool, LanguageModel)> GetLanguageAsync()
         {
             string language = await ConfigStorage.ReadSettingAsync<string>(SettingsKey);
 
@@ -112,7 +111,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// <summary>
         /// 语言发生修改时修改设置存储的语言值
         /// </summary>
-        public async Task SetLanguageAsync(LanguageModel language)
+        public static async Task SetLanguageAsync(LanguageModel language)
         {
             AppLanguage = language;
 
@@ -124,7 +123,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// <summary>
         /// 设置应用的语言值
         /// </summary>
-        private void SetAppLanguage(LanguageModel language)
+        private static void SetAppLanguage(LanguageModel language)
         {
             ApplicationLanguages.PrimaryLanguageOverride = language.InternalName;
         }

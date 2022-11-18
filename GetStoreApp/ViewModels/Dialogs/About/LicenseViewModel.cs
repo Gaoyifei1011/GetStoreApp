@@ -1,5 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+﻿using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
+using GetStoreApp.ViewModels.Base;
 using System;
 using System.IO;
 using Windows.Storage;
@@ -7,7 +8,7 @@ using Windows.Storage.Streams;
 
 namespace GetStoreApp.ViewModels.Dialogs.About
 {
-    public class LicenseViewModel : ObservableRecipient
+    public sealed class LicenseViewModel : ViewModelBase
     {
         private string _licenseText;
 
@@ -15,7 +16,11 @@ namespace GetStoreApp.ViewModels.Dialogs.About
         {
             get { return _licenseText; }
 
-            set { SetProperty(ref _licenseText, value); }
+            set
+            {
+                _licenseText = value;
+                OnPropertyChanged();
+            }
         }
 
         // 初始化许可证信息

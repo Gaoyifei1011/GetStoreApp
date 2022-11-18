@@ -4,7 +4,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Web"
     mc:Ignorable="d">
+
+    <UserControl.DataContext>
+        <settingsViewModel:LoadFailedViewModel x:Name="ViewModel" />
+    </UserControl.DataContext>
 
     <Grid HorizontalAlignment="Center">
 
@@ -26,13 +32,13 @@
                 HorizontalAlignment="Center"
                 FontSize="20"
                 FontWeight="SemiBold"
-                Text="{x:Bind ResourceService.GetLocalized('/Web/LoadFailedTitle')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('/Web/LoadFailedTitle')}" />
             <TextBlock
                 Grid.Row="1"
                 Margin="0,0,0,30"
                 HorizontalAlignment="Center"
                 FontSize="16"
-                Text="{x:Bind ResourceService.GetLocalized('/Web/LoadFailedDescription')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('/Web/LoadFailedDescription')}" />
         </Grid>
 
         <Grid Grid.Row="1">
@@ -47,17 +53,17 @@
                 Margin="0,0,0,8"
                 HorizontalAlignment="Left"
                 FontSize="16"
-                Text="{x:Bind ResourceService.GetLocalized('/Web/ProblemSolution')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('/Web/ProblemSolution')}" />
             <TextBlock
                 Grid.Row="1"
                 Margin="30,0,0,5"
                 HorizontalAlignment="Center"
-                Text="{x:Bind ResourceService.GetLocalized('/Web/Solution1')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('/Web/Solution1')}" />
             <TextBlock
                 Grid.Row="2"
                 Margin="30,0,0,0"
                 HorizontalAlignment="Left"
-                Text="{x:Bind ResourceService.GetLocalized('/Web/Solution2')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('/Web/Solution2')}" />
         </Grid>
 
         <Grid
@@ -75,15 +81,15 @@
                 Grid.Column="0"
                 HorizontalAlignment="Right"
                 Command="{x:Bind ViewModel.DownloadWebView2Command}"
-                Content="{x:Bind ResourceService.GetLocalized('/Web/DownloadWebView2')}"
+                Content="{x:Bind root:ResourceService.GetLocalized('/Web/DownloadWebView2')}"
                 Style="{StaticResource AccentButtonStyle}"
-                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/DownloadWebView2')}" />
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Web/DownloadWebView2')}" />
             <Button
                 Grid.Column="1"
                 HorizontalAlignment="Left"
                 Command="{x:Bind ViewModel.OpenWithBrowserCommand}"
-                Content="{x:Bind ResourceService.GetLocalized('/Web/OpenWithBrowser')}"
-                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/OpenWithBrowser')}" />
+                Content="{x:Bind root:ResourceService.GetLocalized('/Web/OpenWithBrowser')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Web/OpenWithBrowser')}" />
         </Grid>
     </Grid>
 </UserControl>

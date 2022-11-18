@@ -1,25 +1,18 @@
-﻿using GetStoreApp.Contracts.Controls.Download;
-using GetStoreApp.Contracts.Controls.History;
-using GetStoreApp.Contracts.Controls.Settings.Advanced;
-using GetStoreApp.Contracts.Controls.Settings.Common;
-using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
+using GetStoreApp.Services.Controls.Download;
+using GetStoreApp.Services.Controls.History;
+using GetStoreApp.Services.Controls.Settings.Common;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Controls.Settings.Advanced
 {
-    public class TraceCleanupService : ITraceCleanupService
+    public static class TraceCleanupService
     {
-        private IHistoryDBService HistoryDBService { get; } = ContainerHelper.GetInstance<IHistoryDBService>();
-
-        private IDownloadDBService DownloadDBService { get; } = ContainerHelper.GetInstance<IDownloadDBService>();
-
-        private IDownloadOptionsService DownloadOptionsService { get; } = ContainerHelper.GetInstance<IDownloadOptionsService>();
-
         /// <summary>
         /// 根据传入的清理选项清理应用痕迹
         /// </summary>
-        public async Task<bool> CleanAppTraceAsync(CleanArgs cleanupArgs)
+        public static async Task<bool> CleanAppTraceAsync(CleanArgs cleanupArgs)
         {
             switch (cleanupArgs)
             {

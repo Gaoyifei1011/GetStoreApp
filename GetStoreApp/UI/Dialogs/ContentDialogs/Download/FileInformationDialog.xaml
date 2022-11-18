@@ -4,13 +4,19 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behavior="using:GetStoreApp.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dialogViewModel="using:GetStoreApp.ViewModels.Dialogs.Download"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
     x:Name="FileInformationRoot"
     RequestedTheme="{x:Bind DialogTheme}"
     Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">
+
+    <ContentDialog.DataContext>
+        <dialogViewModel:FileInformationViewModel x:Name="ViewModel" />
+    </ContentDialog.DataContext>
 
     <i:Interaction.Behaviors>
         <behavior:ContentDialogBehavior />
@@ -30,7 +36,7 @@
             Padding="24,24,24,12"
             Background="{ThemeResource ContentDialogTopOverlay}">
 
-            <TextBlock Style="{StaticResource ContentDialogTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/Dialog/FileInformationTitle')}" />
+            <TextBlock Style="{StaticResource ContentDialogTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/FileInformationTitle')}" />
 
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -40,7 +46,7 @@
                 <TextBlock
                     Grid.Column="0"
                     Style="{StaticResource ContentDialogContentStyle}"
-                    Text="{x:Bind ResourceService.GetLocalized('/Dialog/FileName')}" />
+                    Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/FileName')}" />
                 <TextBlock
                     Grid.Column="1"
                     Style="{StaticResource ContentDialogContentStyle}"
@@ -57,7 +63,7 @@
                 <TextBlock
                     Grid.Column="0"
                     Style="{StaticResource ContentDialogContentStyle}"
-                    Text="{x:Bind ResourceService.GetLocalized('/Dialog/FilePath')}" />
+                    Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/FilePath')}" />
                 <TextBlock
                     Grid.Column="1"
                     Style="{StaticResource ContentDialogContentStyle}"
@@ -74,7 +80,7 @@
                 <TextBlock
                     Grid.Column="0"
                     Style="{StaticResource ContentDialogContentStyle}"
-                    Text="{x:Bind ResourceService.GetLocalized('/Dialog/FileSize')}" />
+                    Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/FileSize')}" />
                 <TextBlock
                     Grid.Column="1"
                     Style="{StaticResource ContentDialogContentStyle}"
@@ -91,7 +97,7 @@
                 <TextBlock
                     Grid.Column="0"
                     Style="{StaticResource ContentDialogContentStyle}"
-                    Text="{x:Bind ResourceService.GetLocalized('/Dialog/FileSHA1')}" />
+                    Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/FileSHA1')}" />
                 <TextBlock
                     x:Name="FileSHA1Info"
                     Grid.Column="1"
@@ -110,7 +116,7 @@
                     Width="20"
                     Height="20"
                     IsActive="True" />
-                <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind ResourceService.GetLocalized('/Dialog/CheckingFile')}" />
+                <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/CheckingFile')}" />
             </StackPanel>
 
             <Grid x:Name="FileChecked" x:Load="{x:Bind ViewModel.FileCheckState, Mode=OneWay}">
@@ -121,7 +127,7 @@
                 <TextBlock
                     Grid.Column="0"
                     Style="{StaticResource ContentDialogContentStyle}"
-                    Text="{x:Bind ResourceService.GetLocalized('/Dialog/CheckFileSHA1')}" />
+                    Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/CheckFileSHA1')}" />
                 <TextBlock
                     Grid.Column="1"
                     Style="{StaticResource ContentDialogContentStyle}"
@@ -144,17 +150,17 @@
                 HorizontalAlignment="Stretch"
                 Command="{x:Bind ViewModel.CopyFileInformationCommand}"
                 CommandParameter="{Binding ElementName=FileInformationRoot}"
-                Content="{x:Bind ResourceService.GetLocalized('/Dialog/CopyFileInformation')}"
+                Content="{x:Bind root:ResourceService.GetLocalized('/Dialog/CopyFileInformation')}"
                 IsEnabled="{x:Bind ViewModel.FileCheckState, Mode=OneWay}"
                 Style="{ThemeResource AccentButtonStyle}"
-                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Dialog/CopyFileInformation')}" />
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Dialog/CopyFileInformation')}" />
             <Button
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
                 Command="{x:Bind ViewModel.CloseWindowCommand}"
                 CommandParameter="{Binding ElementName=FileInformationRoot}"
-                Content="{x:Bind ResourceService.GetLocalized('/Dialog/CloseWindow')}"
-                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Dialog/CloseWindow')}" />
+                Content="{x:Bind root:ResourceService.GetLocalized('/Dialog/CloseWindow')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Dialog/CloseWindow')}" />
         </Grid>
     </Grid>
 </ContentDialog>

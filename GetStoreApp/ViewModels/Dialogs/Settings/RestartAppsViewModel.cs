@@ -1,9 +1,8 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Controls.Download;
-using GetStoreApp.Helpers.Root;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.Messages;
+using GetStoreApp.Services.Controls.Download;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.AppLifecycle;
 using System;
@@ -11,12 +10,8 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Dialogs.Settings
 {
-    public class RestartAppsViewModel : ObservableRecipient
+    public sealed class RestartAppsViewModel
     {
-        private IAria2Service Aria2Service { get; } = ContainerHelper.GetInstance<IAria2Service>();
-
-        private IDownloadSchedulerService DownloadSchedulerService { get; } = ContainerHelper.GetInstance<IDownloadSchedulerService>();
-
         // 重启应用
         public IRelayCommand RestartAppsCommand => new RelayCommand<ContentDialog>(async (dialog) =>
         {

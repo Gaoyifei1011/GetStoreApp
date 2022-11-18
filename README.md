@@ -60,7 +60,6 @@
 
 > * [Aira2](https://aria2.github.io)&emsp;
 > * [Aria2.NET](https://github.com/rogerfar/Aria2.NET)&emsp;
-> * [Autofac](https://autofac.org)&emsp;
 > * [CommunityToolkit.Mvvm](https://github.com/CommunityToolkit/WindowsCommunityToolkit)&emsp;
 > * [H.NotifyIcon.WinUI](https://github.com/HavenDV/H.NotifyIcon)&emsp;
 > * [HtmlAgilityPack](http://html-agility-pack.net)&emsp;

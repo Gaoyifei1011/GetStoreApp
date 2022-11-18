@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Contracts.Root;
-using Microsoft.Data.Sqlite;
+﻿using Microsoft.Data.Sqlite;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -10,20 +9,20 @@ namespace GetStoreApp.Services.Root
     /// <summary>
     /// 数据库基础服务
     /// </summary>
-    public class DataBaseService : IDataBaseService
+    public static class DataBaseService
     {
-        public string DBName => "GetStoreApp.db";
+        public static string DBName => "GetStoreApp.db";
 
-        public string HistoryTableName => "HISTORY";
+        public static string HistoryTableName => "HISTORY";
 
-        public string DownloadTableName => "DOWNLOAD";
+        public static string DownloadTableName => "DOWNLOAD";
 
-        public string DBpath => Path.Combine(ApplicationData.Current.LocalFolder.Path, "GetStoreApp.db");
+        public static string DBpath => Path.Combine(ApplicationData.Current.LocalFolder.Path, "GetStoreApp.db");
 
         /// <summary>
         /// 历史记录表不存在时，自动创建历史记录表
         /// </summary>
-        public async Task InitializeDataBaseAsync()
+        public static async Task InitializeDataBaseAsync()
         {
             // 创建数据库文件
             await ApplicationData.Current.LocalFolder.CreateFileAsync(DBName, CreationCollisionOption.OpenIfExists);
@@ -38,7 +37,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 初始化历史记录表
         /// </summary>
-        private async Task InitializeHistoryTableAsync()
+        private static async Task InitializeHistoryTableAsync()
         {
             // 文件不存在，取消操作
             if (!File.Exists(DBpath))
@@ -84,7 +83,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 下载记录表不存在时，初始化下载记录表
         /// </summary>
-        private async Task InitializeDownloadTableAsync()
+        private static async Task InitializeDownloadTableAsync()
         {
             // 文件不存在，取消操作
             if (!File.Exists(DBpath))

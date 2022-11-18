@@ -1,7 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Contracts.Controls.Download;
-using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
+using GetStoreApp.Services.Controls.Download;
 using GetStoreAppWindowsAPI.PInvoke.Shell32;
 using System;
 using System.Diagnostics;
@@ -11,10 +10,8 @@ using Windows.Storage;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Experiment
 {
-    public class OpenConfigFileViewModel : ObservableRecipient
+    public sealed class OpenConfigFileViewModel
     {
-        private IAria2Service Aria2Service { get; } = ContainerHelper.GetInstance<IAria2Service>();
-
         // 打开配置文件目录
         public IRelayCommand OpenConfigFileCommand => new RelayCommand(async () =>
         {

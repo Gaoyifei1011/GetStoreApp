@@ -1,23 +1,25 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Controls.Settings.Experiment;
-using GetStoreApp.Helpers.Root;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.Messages;
+using GetStoreApp.Services.Controls.Settings.Experiment;
+using GetStoreApp.ViewModels.Base;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Experiment
 {
-    public class NetWorkMonitorViewModel : ObservableRecipient
+    public sealed class NetWorkMonitorViewModel : ViewModelBase
     {
-        private INetWorkMonitorService NetWorkMonitorService { get; } = ContainerHelper.GetInstance<INetWorkMonitorService>();
-
         private bool _netWorkMonitorValue;
 
         public bool NetWorkMonitorValue
         {
             get { return _netWorkMonitorValue; }
 
-            set { SetProperty(ref _netWorkMonitorValue, value); }
+            set
+            {
+                _netWorkMonitorValue = value;
+                OnPropertyChanged();
+            }
         }
 
         // 控件被卸载时，关闭消息服务

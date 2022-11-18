@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Contracts.Controls.Settings.Common;
-using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings.Common;
 using GetStoreAppCore.Settings;
 using System;
@@ -13,20 +12,20 @@ namespace GetStoreApp.Services.Controls.Settings.Common
     /// <summary>
     /// 区域设置服务
     /// </summary>
-    public class RegionService : IRegionService
+    public static class RegionService
     {
-        private string SettingsKey { get; init; } = ConfigStorage.ConfigKey["RegionKey"];
+        private static string SettingsKey { get; } = ConfigStorage.ConfigKey["RegionKey"];
 
-        public List<RegionModel> RegionList => GeographicalLocationHelper.GetGeographicalLocations().OrderBy(item => item.FriendlyName).ToList();
+        public static List<RegionModel> RegionList => GeographicalLocationHelper.GetGeographicalLocations().OrderBy(item => item.FriendlyName).ToList();
 
-        private RegionModel DefaultAppRegion { get; set; }
+        private static RegionModel DefaultAppRegion { get; set; }
 
-        public RegionModel AppRegion { get; set; }
+        public static RegionModel AppRegion { get; set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的区域值
         /// </summary>
-        public async Task InitializeRegionAsync()
+        public static async Task InitializeRegionAsync()
         {
             DefaultAppRegion = RegionList.Find(item => item.ISO2 == RegionInfo.CurrentRegion.TwoLetterISORegionName);
 
@@ -36,7 +35,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// <summary>
         /// 获取设置存储的区域值，如果设置没有存储，使用默认值
         /// </summary>
-        private async Task<RegionModel> GetRegionAsync()
+        private static async Task<RegionModel> GetRegionAsync()
         {
             string region = await ConfigStorage.ReadSettingAsync<string>(SettingsKey);
 
@@ -51,7 +50,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// <summary>
         /// 应用区域发生修改时修改设置存储的主题值
         /// </summary>
-        public async Task SetRegionAsync(RegionModel region)
+        public static async Task SetRegionAsync(RegionModel region)
         {
             AppRegion = region;
 

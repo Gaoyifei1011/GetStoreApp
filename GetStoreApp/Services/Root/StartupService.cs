@@ -1,6 +1,4 @@
-﻿using GetStoreApp.Contracts.Root;
-using GetStoreApp.Helpers.Root;
-using GetStoreAppWindowsAPI.PInvoke.User32;
+﻿using GetStoreAppWindowsAPI.PInvoke.User32;
 using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.AppNotifications;
 using System;
@@ -16,20 +14,16 @@ namespace GetStoreApp.Services.Root
     /// <summary>
     /// 应用启动服务
     /// </summary>
-    public class StartupService : IStartupService
+    public static class StartupService
     {
-        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
+        private static readonly List<string> CommandLineArgs = Environment.GetCommandLineArgs().Where((source, index) => index != 0).ToList();
 
-        private IAppNotificationService AppNotificationService { get; } = ContainerHelper.GetInstance<IAppNotificationService>();
+        private static ExtendedActivationKind StartupKind;
 
-        private readonly List<string> CommandLineArgs = Environment.GetCommandLineArgs().Where((source, index) => index != 0).ToList();
-
-        private ExtendedActivationKind StartupKind;
-
-        private int NeedToSendMesage;
+        private static int NeedToSendMesage;
 
         // 应用启动时使用的参数
-        public Dictionary<string, object> StartupArgs { get; set; } = new Dictionary<string, object>
+        public static Dictionary<string, object> StartupArgs { get; set; } = new Dictionary<string, object>
         {
             {"TypeName",-1 },
             {"ChannelName",-1 },
@@ -39,7 +33,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 处理应用启动的方式
         /// </summary>
-        public async Task InitializeStartupAsync()
+        public static async Task InitializeStartupAsync()
         {
             StartupKind = AppInstance.GetCurrent().GetActivatedEventArgs().Kind;
             await InitializeStartupKindAsync();
@@ -49,7 +43,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 初始化启动命令方式
         /// </summary>
-        private async Task InitializeStartupKindAsync()
+        private static async Task InitializeStartupKindAsync()
         {
             switch (StartupKind)
             {
@@ -92,7 +86,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 初始化启动命令参数
         /// </summary>
-        private void ParseStartupArgs()
+        private static void ParseStartupArgs()
         {
             if (CommandLineArgs.Count == 0)
             {
@@ -126,7 +120,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 应用程序只运行单个实例
         /// </summary>
-        private async Task RunSingleInstanceAppAsync()
+        private static async Task RunSingleInstanceAppAsync()
         {
             // 获取已经激活的参数
             AppActivationArguments appArgs = AppInstance.GetCurrent().GetActivatedEventArgs();

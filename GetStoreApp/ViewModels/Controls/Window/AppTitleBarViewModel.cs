@@ -1,9 +1,9 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Controls.Settings.Appearance;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
+using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreAppWindowsAPI.PInvoke.User32;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
@@ -12,16 +12,12 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using Windows.Graphics;
 using Windows.UI;
-using Windows.Win32;
-using Windows.Win32.Foundation;
 using WinRT.Interop;
 
 namespace GetStoreApp.ViewModels.Controls.Window
 {
-    public class AppTitleBarViewModel : ObservableRecipient
+    public sealed class AppTitleBarViewModel
     {
-        private IThemeService ThemeService { get; } = ContainerHelper.GetInstance<IThemeService>();
-
         // 初始化自定义标题栏
         public IRelayCommand LoadedCommand => new RelayCommand<Grid>((appTitleBar) =>
         {

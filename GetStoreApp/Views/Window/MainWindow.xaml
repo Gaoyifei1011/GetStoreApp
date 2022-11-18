@@ -5,30 +5,24 @@
     xmlns:WinUI="using:GetStoreApp.Views.Window"
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:i="using:Microsoft.Xaml.Interactivity"
-    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:wc="using:GetStoreApp.UI.Controls.Window"
     xmlns:window="using:GetStoreApp.Views.Window"
-    Title="{x:Bind ResourceService.GetLocalized('AppDisplayName')}"
+    xmlns:windowViewModel="using:GetStoreApp.ViewModels.Window"
+    Title="{x:Bind root:ResourceService.GetLocalized('AppDisplayName')}"
     MinWidth="600"
     MinHeight="768"
-    Activated="{x:Bind ViewModel.WindowActivated}"
-    Closed="{x:Bind ViewModel.WindowClosed}"
+    Activated="{x:Bind ViewModel.OnWindowActivated}"
+    Closed="{x:Bind ViewModel.OnWindowClosed}"
+    SizeChanged="{x:Bind ViewModel.OnWindowSizeChanged}"
     mc:Ignorable="d">
 
+    <WinUI:WASDKWindow.DataContext>
+        <windowViewModel:MainWindowViewModel x:Name="ViewModel" />
+    </WinUI:WASDKWindow.DataContext>
+
     <Grid Background="{x:Bind ViewModel.AppBackground, Mode=OneWay}">
-        <i:Interaction.Behaviors>
-            <ic:EventTriggerBehavior EventName="Loaded">
-                <ic:InvokeCommandAction Command="{x:Bind ViewModel.LoadedCommand}" />
-            </ic:EventTriggerBehavior>
-            <ic:EventTriggerBehavior EventName="Unloaded">
-                <ic:InvokeCommandAction Command="{x:Bind ViewModel.UnloadedCommand}" />
-            </ic:EventTriggerBehavior>
-            <ic:EventTriggerBehavior EventName="SizeChanged">
-                <ic:InvokeCommandAction Command="{x:Bind ViewModel.SizeChangedCommand}" />
-            </ic:EventTriggerBehavior>
-        </i:Interaction.Behaviors>
 
         <wc:AppTitleBarControl
             Height="45"
@@ -36,46 +30,40 @@
             VerticalAlignment="Top" />
 
         <NavigationView
+            BackRequested="{x:Bind ViewModel.OnNavigationViewBackRequested}"
             IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
             IsPaneToggleButtonVisible="{x:Bind ViewModel.IsPaneToggleButtonVisible, Mode=OneWay}"
             IsSettingsVisible="False"
             IsTitleBarAutoPaddingEnabled="True"
-            Loaded="{x:Bind ViewModel.NavigationViewLoaded}"
+            ItemInvoked="{x:Bind ViewModel.OnNavigationViewItemInvoked}"
+            Loaded="{x:Bind ViewModel.OnNavigationViewLoaded}"
             OpenPaneLength="220"
             PaneDisplayMode="{x:Bind ViewModel.NavigationDispalyMode, Mode=OneWay}"
-            SelectedItem="{x:Bind ViewModel.SelectedItem, Mode=OneWay}">
-
-            <i:Interaction.Behaviors>
-                <ic:EventTriggerBehavior EventName="BackRequested">
-                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.BackRequestedCommand}" />
-                </ic:EventTriggerBehavior>
-                <ic:EventTriggerBehavior EventName="ItemInvoked">
-                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.ItemInvokedCommand}" />
-                </ic:EventTriggerBehavior>
-            </i:Interaction.Behaviors>
+            SelectedItem="{x:Bind ViewModel.SelectedItem, Mode=OneWay}"
+            Unloaded="{x:Bind ViewModel.OnNavigationViewUnLoaded}">
 
             <NavigationView.MenuItems>
-                <NavigationViewItemHeader Content="{x:Bind ResourceService.GetLocalized('/Window/Title')}" Foreground="{ThemeResource NavigationViewItemForeground}" />
+                <NavigationViewItemHeader Content="{x:Bind root:ResourceService.GetLocalized('/Window/Title')}" Foreground="{ThemeResource NavigationViewItemForeground}" />
 
-                <NavigationViewItem Content="{x:Bind ResourceService.GetLocalized('/Window/Home')}" Tag="Home">
+                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('/Window/Home')}" Tag="Home">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE80f;" Style="{StaticResource SegoeFluentStyle}" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
-                <NavigationViewItem Content="{x:Bind ResourceService.GetLocalized('/Window/History')}" Tag="History">
+                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('/Window/History')}" Tag="History">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xF738;" Style="{StaticResource SegoeFluentStyle}" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
-                <NavigationViewItem Content="{x:Bind ResourceService.GetLocalized('/Window/Download')}" Tag="Download">
+                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('/Window/Download')}" Tag="Download">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE896;" Style="{StaticResource SegoeFluentStyle}" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
-                <NavigationViewItem Content="{x:Bind ResourceService.GetLocalized('/Window/Web')}" Tag="Web">
+                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('/Window/Web')}" Tag="Web">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE774;" Style="{StaticResource SegoeFluentStyle}" />
                     </NavigationViewItem.Icon>
@@ -83,12 +71,12 @@
             </NavigationView.MenuItems>
 
             <NavigationView.FooterMenuItems>
-                <NavigationViewItem Content="{x:Bind ResourceService.GetLocalized('/Window/About')}" Tag="About">
+                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('/Window/About')}" Tag="About">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE946;" Style="{StaticResource SegoeFluentStyle}" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem Content="{x:Bind ResourceService.GetLocalized('/Window/Settings')}" Tag="Settings">
+                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('/Window/Settings')}" Tag="Settings">
                     <NavigationViewItem.Icon>
                         <AnimatedIcon>
                             <AnimatedIcon.Source>
@@ -102,16 +90,10 @@
                 </NavigationViewItem>
             </NavigationView.FooterMenuItems>
 
-            <Frame x:Name="WindowFrame">
-                <i:Interaction.Behaviors>
-                    <ic:EventTriggerBehavior EventName="Navigated">
-                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.NavigatedCommand}" />
-                    </ic:EventTriggerBehavior>
-                    <ic:EventTriggerBehavior EventName="NavigationFailed">
-                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.NavigationFailedCommand}" />
-                    </ic:EventTriggerBehavior>
-                </i:Interaction.Behaviors>
-            </Frame>
+            <Frame
+                x:Name="WindowFrame"
+                Navigated="{x:Bind ViewModel.OnFrameNavigated}"
+                NavigationFailed="{x:Bind ViewModel.OnFrameNavgationFailed}" />
         </NavigationView>
 
         <window:TaskBarControl />

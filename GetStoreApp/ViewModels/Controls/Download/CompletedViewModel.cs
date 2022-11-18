@@ -1,18 +1,19 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Controls.Download;
-using GetStoreApp.Contracts.Controls.Settings.Advanced;
-using GetStoreApp.Contracts.Controls.Settings.Common;
-using GetStoreApp.Contracts.Root;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.DataType.Events;
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.Download;
+using GetStoreApp.Services.Controls.Download;
+using GetStoreApp.Services.Controls.Settings.Advanced;
+using GetStoreApp.Services.Controls.Settings.Common;
+using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Download;
+using GetStoreApp.ViewModels.Base;
 using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -26,23 +27,13 @@ using Windows.Storage;
 
 namespace GetStoreApp.ViewModels.Controls.Download
 {
-    public class CompletedViewModel : ObservableRecipient
+    public sealed class CompletedViewModel : ViewModelBase
     {
         // 临界区资源访问互斥锁
         private readonly object CompletedDataListLock = new object();
 
         // 获取UI主线程
         private DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-
-        private IDownloadDBService DownloadDBService { get; } = ContainerHelper.GetInstance<IDownloadDBService>();
-
-        private IAppNotificationService AppNotificationService { get; } = ContainerHelper.GetInstance<IAppNotificationService>();
-
-        private IDownloadSchedulerService DownloadSchedulerService { get; } = ContainerHelper.GetInstance<IDownloadSchedulerService>();
-
-        private IDownloadOptionsService DownloadOptionsService { get; } = ContainerHelper.GetInstance<IDownloadOptionsService>();
-
-        private IInstallModeService InstallModeService { get; } = ContainerHelper.GetInstance<IInstallModeService>();
 
         public ObservableCollection<CompletedModel> CompletedDataList { get; } = new ObservableCollection<CompletedModel>();
 
@@ -52,14 +43,12 @@ namespace GetStoreApp.ViewModels.Controls.Download
         {
             get { return _isSelectMode; }
 
-            set { SetProperty(ref _isSelectMode, value); }
+            set
+            {
+                _isSelectMode = value;
+                OnPropertyChanged();
+            }
         }
-
-        // 页面被卸载时，关闭消息服务
-        public IRelayCommand UnloadedCommand => new RelayCommand(() =>
-        {
-            WeakReferenceMessenger.Default.UnregisterAll(this);
-        });
 
         // 打开默认保存的文件夹
         public IRelayCommand OpenFolderCommand => new RelayCommand(async () =>
@@ -238,18 +227,6 @@ namespace GetStoreApp.ViewModels.Controls.Download
         public IRelayCommand CancelCommand => new RelayCommand(() =>
         {
             IsSelectMode = false;
-        });
-
-        // 在多选模式下点击项目选择相应的条目
-        public IRelayCommand ItemClickCommand => new RelayCommand<ItemClickEventArgs>((args) =>
-        {
-            CompletedModel completedItem = (CompletedModel)args.ClickedItem;
-            int ClickedIndex = CompletedDataList.IndexOf(completedItem);
-
-            lock (CompletedDataListLock)
-            {
-                CompletedDataList[ClickedIndex].IsSelected = !CompletedDataList[ClickedIndex].IsSelected;
-            }
         });
 
         // 安装应用
@@ -431,6 +408,28 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
             // 订阅事件
             DownloadSchedulerService.DownloadingList.ItemsChanged += OnDownloadingListItemsChanged;
+        }
+
+        /// <summary>
+        /// 页面被卸载时，关闭消息服务
+        /// </summary>
+        public void OnUnloaded(object sender,RoutedEventArgs args)
+        {
+            WeakReferenceMessenger.Default.UnregisterAll(this);
+        }
+
+        /// <summary>
+        /// 在多选模式下点击项目选择相应的条目
+        /// </summary>
+        public void OnItemClick(object sender,ItemClickEventArgs args)
+        {
+            CompletedModel completedItem = (CompletedModel)args.ClickedItem;
+            int ClickedIndex = CompletedDataList.IndexOf(completedItem);
+
+            lock (CompletedDataListLock)
+            {
+                CompletedDataList[ClickedIndex].IsSelected = !CompletedDataList[ClickedIndex].IsSelected;
+            }
         }
 
         /// <summary>

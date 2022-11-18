@@ -1,6 +1,4 @@
-﻿using GetStoreApp.Contracts.Root;
-using GetStoreApp.Helpers.Root;
-using GetStoreApp.ViewModels.Notifications;
+﻿using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -11,10 +9,6 @@ namespace GetStoreApp.UI.Notifications
 {
     public sealed partial class ResultLinkCopyNotification : UserControl
     {
-        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
-
-        public ResultLinkCopyViewModel ViewModel { get; } = ContainerHelper.GetInstance<ResultLinkCopyViewModel>();
-
         private Popup Popup { get; set; } = new Popup();
 
         private int Duration = 2000;

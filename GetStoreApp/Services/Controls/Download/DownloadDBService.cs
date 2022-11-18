@@ -1,8 +1,6 @@
-﻿using GetStoreApp.Contracts.Controls.Download;
-using GetStoreApp.Contracts.Root;
-using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Models.Controls.Download;
+using GetStoreApp.Services.Root;
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
@@ -13,14 +11,12 @@ namespace GetStoreApp.Services.Controls.Download
     /// <summary>
     /// 下载记录数据库存储服务
     /// </summary>
-    public class DownloadDBService : IDownloadDBService
+    public static class DownloadDBService
     {
-        private IDataBaseService DataBaseService { get; } = ContainerHelper.GetInstance<IDataBaseService>();
-
         /// <summary>
         /// 检查是否有下载异常的记录，并将对应的下载状态值复原
         /// </summary>
-        public async Task InitializeDownloadDBAsync()
+        public static async Task InitializeDownloadDBAsync()
         {
             // 将处于等待下载状态的任务调整为暂停下载状态
             List<BackgroundModel> DownloadWaitingList = await QueryWithFlagAsync(1);
@@ -44,7 +40,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 直接添加下载记录数据，并返回下载记录添加是否成功的结果
         /// </summary>
-        public async Task<bool> AddAsync(BackgroundModel backgroundItem)
+        public static async Task<bool> AddAsync(BackgroundModel backgroundItem)
         {
             bool IsAddSuccessfully = false;
 
@@ -92,7 +88,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 存在重复的数据，只更新该记录的DownloadFlag（相当于执行重新下载步骤）
         /// </summary>
-        public async Task<bool> UpdateFlagAsync(string downloadKey, int downloadFlag)
+        public static async Task<bool> UpdateFlagAsync(string downloadKey, int downloadFlag)
         {
             bool IsUpdateSuccessfully = false;
 
@@ -135,7 +131,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 更新该记录对应的文件大小
         /// </summary>
-        public async Task<bool> UpdateFileSizeAsync(string downloadKey, double fileSize)
+        public static async Task<bool> UpdateFileSizeAsync(string downloadKey, double fileSize)
         {
             bool IsUpdateSuccessfully = false;
 
@@ -180,7 +176,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         /// <param name="downloadFlag">文件下载标志：0为下载失败，1为等待下载，2为暂停下载，3为正在下载，4为成功下载</param>
         /// <returns>返回指定下载标志记录列表</returns>
-        public async Task<List<BackgroundModel>> QueryWithFlagAsync(int downloadFlag)
+        public static async Task<List<BackgroundModel>> QueryWithFlagAsync(int downloadFlag)
         {
             List<BackgroundModel> DownloadRawList = new List<BackgroundModel>();
 
@@ -227,7 +223,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         /// <param name="downloadKey">文件下载对应的唯一键值</param>
         /// <returns>返回指定下载键值对应的具体信息</returns>
-        public async Task<BackgroundModel> QueryWithKeyAsync(string downloadKey)
+        public static async Task<BackgroundModel> QueryWithKeyAsync(string downloadKey)
         {
             BackgroundModel downloadRawModel = new BackgroundModel();
 
@@ -267,7 +263,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 检查是否存在相同键值的数据
         /// </summary>
-        public async Task<DuplicatedDataInfoArgs> CheckDuplicatedAsync(string downloadKey)
+        public static async Task<DuplicatedDataInfoArgs> CheckDuplicatedAsync(string downloadKey)
         {
             DuplicatedDataInfoArgs duplicatedDataInfo = DuplicatedDataInfoArgs.None;
 
@@ -311,7 +307,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 删除下载记录数据
         /// </summary>
-        public async Task<bool> DeleteAsync(string downloadKey)
+        public static async Task<bool> DeleteAsync(string downloadKey)
         {
             bool IsDeleteSuccessfully = true;
 
@@ -352,7 +348,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 删除选定的下载记录数据
         /// </summary>
-        public async Task<bool> DeleteSelectedAsync(List<BackgroundModel> selectedDownloadList)
+        public static async Task<bool> DeleteSelectedAsync(List<BackgroundModel> selectedDownloadList)
         {
             bool IsDeleteSuccessfully = true;
 
@@ -394,7 +390,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 清空下载记录数据（不清除正在下载和等待下载的数据）
         /// </summary>
-        public async Task<bool> ClearAsync()
+        public static async Task<bool> ClearAsync()
         {
             bool IsClearSuccessfully = true;
 

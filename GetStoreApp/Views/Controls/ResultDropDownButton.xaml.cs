@@ -1,4 +1,5 @@
 ﻿using Microsoft.UI.Input;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.Views.Controls
@@ -10,9 +11,9 @@ namespace GetStoreApp.Views.Controls
             InitializeComponent();
         }
 
-        public void SetCursor(InputCursor cursor)
+        public void ResultDropDownButtonLoaded(object sender, RoutedEventArgs args)
         {
-            ProtectedCursor = cursor;
+            ProtectedCursor = InputSystemCursor.Create(InputSystemCursorShape.Hand);
         }
     }
 }

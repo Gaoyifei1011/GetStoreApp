@@ -1,11 +1,11 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+﻿using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.UI.Dialogs.ContentDialogs.About;
 using System;
 
 namespace GetStoreApp.ViewModels.Controls.About
 {
-    public class InstructionsViewModel : ObservableRecipient
+    public sealed class InstructionsViewModel
     {
         // 桌面程序启动参数说明
         public IRelayCommand DesktopLaunchCommand => new RelayCommand(async () =>

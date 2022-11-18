@@ -6,7 +6,13 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Common"
     mc:Ignorable="d">
+
+    <UserControl.DataContext>
+        <settingsViewModel:HistoryLiteConfigViewModel x:Name="ViewModel" />
+    </UserControl.DataContext>
 
     <Grid Style="{StaticResource CardGridStyle}">
         <Grid.ColumnDefinitions>
@@ -26,13 +32,13 @@
             <TextBlock
                 VerticalAlignment="Center"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="{x:Bind ResourceService.GetLocalized('/Settings/HistoryLiteConfig')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/HistoryLiteConfig')}" />
 
             <TextBlock
                 VerticalAlignment="Center"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                 Style="{StaticResource CaptionTextBlockStyle}"
-                Text="{x:Bind ResourceService.GetLocalized('/Settings/HistoryLiteConfigDescription')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/HistoryLiteConfigDescription')}" />
         </StackPanel>
 
         <ComboBox

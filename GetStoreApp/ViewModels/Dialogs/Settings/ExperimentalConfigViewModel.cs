@@ -1,22 +1,18 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Controls.Download;
-using GetStoreApp.Contracts.Controls.Settings.Experiment;
-using GetStoreApp.Helpers.Root;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.Messages;
+using GetStoreApp.Services.Controls.Download;
+using GetStoreApp.Services.Controls.Settings.Experiment;
+using GetStoreApp.ViewModels.Base;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 
 namespace GetStoreApp.ViewModels.Dialogs.Settings
 {
-    public class ExperimentalConfigViewModel : ObservableRecipient
+    public sealed class ExperimentalConfigViewModel : ViewModelBase
     {
-        private IAria2Service Aria2Service { get; } = ContainerHelper.GetInstance<IAria2Service>();
-
-        private INetWorkMonitorService NetWorkMonitorService = ContainerHelper.GetInstance<INetWorkMonitorService>();
-
         private DispatcherTimer DisplayTimer = new DispatcherTimer();
 
         private int CountDown = 0;
@@ -27,7 +23,11 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
         {
             get { return _isMessageVisable; }
 
-            set { SetProperty(ref _isMessageVisable, value); }
+            set
+            {
+                _isMessageVisable = value;
+                OnPropertyChanged();
+            }
         }
 
         public ExperimentalConfigViewModel()

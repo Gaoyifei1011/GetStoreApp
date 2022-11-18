@@ -1,10 +1,8 @@
-﻿using GetStoreApp.Contracts.Controls.Download;
-using GetStoreApp.Contracts.Controls.Settings.Advanced;
-using GetStoreApp.Contracts.Controls.Settings.Appearance;
-using GetStoreApp.Contracts.Controls.Settings.Common;
-using GetStoreApp.Contracts.Controls.Settings.Experiment;
-using GetStoreApp.Contracts.Root;
-using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Services.Controls.Download;
+using GetStoreApp.Services.Controls.Settings.Advanced;
+using GetStoreApp.Services.Controls.Settings.Appearance;
+using GetStoreApp.Services.Controls.Settings.Common;
+using GetStoreApp.Services.Controls.Settings.Experiment;
 using GetStoreApp.Views.Window;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
@@ -19,49 +17,9 @@ namespace GetStoreApp.Services.Root
     /// <summary>
     /// 应用激活服务
     /// </summary>
-    public class ActivationService : IActivationService
+    public static class ActivationService
     {
-        private IDataBaseService DataBaseService { get; } = ContainerHelper.GetInstance<IDataBaseService>();
-
-        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
-
-        private IStartupService StartupService { get; } = ContainerHelper.GetInstance<IStartupService>();
-
-        private IAria2Service Aria2Service { get; } = ContainerHelper.GetInstance<IAria2Service>();
-
-        private IDownloadDBService DownloadDBService { get; } = ContainerHelper.GetInstance<IDownloadDBService>();
-
-        private IDownloadSchedulerService DownloadSchedulerService { get; } = ContainerHelper.GetInstance<IDownloadSchedulerService>();
-
-        private IAppExitService AppExitService { get; } = ContainerHelper.GetInstance<IAppExitService>();
-
-        private IInstallModeService InstallModeService { get; } = ContainerHelper.GetInstance<IInstallModeService>();
-
-        private IAlwaysShowBackdropService AlwaysShowBackdropService { get; } = ContainerHelper.GetInstance<IAlwaysShowBackdropService>();
-
-        private IBackdropService BackdropService { get; } = ContainerHelper.GetInstance<IBackdropService>();
-
-        private ILanguageService LanguageService { get; } = ContainerHelper.GetInstance<ILanguageService>();
-
-        private IThemeService ThemeService { get; } = ContainerHelper.GetInstance<IThemeService>();
-
-        private ITopMostService TopMostService { get; } = ContainerHelper.GetInstance<ITopMostService>();
-
-        private IDownloadOptionsService DownloadOptionsService { get; } = ContainerHelper.GetInstance<IDownloadOptionsService>();
-
-        private IHistoryLiteNumService HistoryLiteNumService { get; } = ContainerHelper.GetInstance<IHistoryLiteNumService>();
-
-        private ILinkFilterService LinkFilterService { get; } = ContainerHelper.GetInstance<ILinkFilterService>();
-
-        private INotificationService NotificationService { get; } = ContainerHelper.GetInstance<INotificationService>();
-
-        private IRegionService RegionService { get; } = ContainerHelper.GetInstance<IRegionService>();
-
-        private IUseInstructionService UseInstructionService { get; } = ContainerHelper.GetInstance<IUseInstructionService>();
-
-        private INetWorkMonitorService NetWorkMonitorService { get; } = ContainerHelper.GetInstance<INetWorkMonitorService>();
-
-        public async Task ActivateAsync(LaunchActivatedEventArgs activationArgs)
+        public static async Task ActivateAsync(LaunchActivatedEventArgs activationArgs)
         {
             // 在应用窗口激活前配置应用的设置
             await InitializeAsync();
@@ -87,7 +45,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 在应用窗口激活前配置应用的设置
         /// </summary>
-        private async Task InitializeAsync()
+        private static async Task InitializeAsync()
         {
             // 初始化应用资源，应用使用的语言信息和启动参数
             await LanguageService.InitializeLanguageAsync();
@@ -120,7 +78,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 窗口激活后配置其他设置
         /// </summary>
-        private async Task StartupAsync()
+        private static async Task StartupAsync()
         {
             // 设置应用主题
             await ThemeService.SetAppThemeAsync();

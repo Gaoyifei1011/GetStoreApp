@@ -1,32 +1,43 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Contracts.Controls.Settings.Appearance;
-using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
+using GetStoreApp.Services.Controls.Settings.Appearance;
+using GetStoreApp.ViewModels.Base;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
 {
-    public class AlwaysShowBackdropViewModel : ObservableRecipient
+    public sealed class AlwaysShowBackdropViewModel : ViewModelBase
     {
-        private IAlwaysShowBackdropService AlwaysShowBackdropService { get; } = ContainerHelper.GetInstance<IAlwaysShowBackdropService>();
-
         private bool _alwaysShowBackdropValue;
 
         public bool AlwaysShowBackdropValue
         {
             get { return _alwaysShowBackdropValue; }
 
-            set { SetProperty(ref _alwaysShowBackdropValue, value); }
+            set
+            {
+                _alwaysShowBackdropValue = value;
+                OnPropertyChanged();
+            }
         }
-
-        public IRelayCommand AlwaysShowBackdropCommand => new RelayCommand<bool>(async (alwaysShowBackdropValue) =>
-        {
-            await AlwaysShowBackdropService.SetAlwaysShowBackdropAsync(alwaysShowBackdropValue);
-            AlwaysShowBackdropValue = alwaysShowBackdropValue;
-        });
 
         public AlwaysShowBackdropViewModel()
         {
             AlwaysShowBackdropValue = AlwaysShowBackdropService.AlwaysShowBackdropValue;
+        }
+
+        /// <summary>
+        /// 开关按钮切换时修改相应设置
+        /// </summary>
+        public async void OnToggled(object sender,RoutedEventArgs args)
+        {
+            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
+            if (toggleSwitch is not null)
+            {
+                await AlwaysShowBackdropService.SetAlwaysShowBackdropAsync(toggleSwitch.IsOn);
+                AlwaysShowBackdropValue = toggleSwitch.IsOn;
+            }
         }
     }
 }

@@ -1,24 +1,22 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Controls.Settings.Appearance;
-using GetStoreApp.Contracts.Window;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.Settings.Appearance;
+using GetStoreApp.Services.Controls.Settings.Appearance;
+using GetStoreApp.Services.Window;
+using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
+using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
 {
-    public partial class BackdropViewModel : ObservableRecipient
+    public sealed class BackdropViewModel : ViewModelBase
     {
-        private IBackdropService BackdropService { get; } = ContainerHelper.GetInstance<IBackdropService>();
-
-        private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
-
-        public List<BackdropModel> BackdropList = new List<BackdropModel>();
+        public List<BackdropModel> BackdropList { get; } = new List<BackdropModel>();
 
         private BackdropModel _backdrop;
 
@@ -26,7 +24,11 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
         {
             get { return _backdrop; }
 
-            set { SetProperty(ref _backdrop, value); }
+            set
+            {
+                _backdrop = value;
+                OnPropertyChanged();
+            }
         }
 
         public bool BackdropHelp { get; }
@@ -36,14 +38,6 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
         {
             App.NavigationArgs = AppNaviagtionArgs.SettingsHelp;
             NavigationService.NavigateTo(typeof(SettingsPage));
-        });
-
-        // 背景色修改设置
-        public IRelayCommand BackdropSelectCommand => new RelayCommand(async () =>
-        {
-            await BackdropService.SetBackdropAsync(Backdrop);
-            await BackdropService.SetAppBackdropAsync();
-            WeakReferenceMessenger.Default.Send(new BackdropChangedMessage(Backdrop));
         });
 
         public BackdropViewModel()
@@ -63,6 +57,16 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
             }
 
             Backdrop = BackdropService.AppBackdrop;
+        }
+
+        /// <summary>
+        /// 背景色修改设置
+        /// </summary>
+        public async void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
+        {
+            await BackdropService.SetBackdropAsync(Backdrop);
+            await BackdropService.SetAppBackdropAsync();
+            WeakReferenceMessenger.Default.Send(new BackdropChangedMessage(Backdrop));
         }
     }
 }

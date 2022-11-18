@@ -1,16 +1,14 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Contracts.Controls.Settings.Common;
-using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.Models.Controls.Settings.Common;
+using GetStoreApp.Services.Controls.Settings.Common;
+using GetStoreApp.ViewModels.Base;
 using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Common
 {
-    public class RegionViewModel : ObservableRecipient
+    public sealed class RegionViewModel : ViewModelBase
     {
-        private IRegionService RegionService { get; } = ContainerHelper.GetInstance<IRegionService>();
-
         public List<RegionModel> RegionList => RegionService.RegionList;
 
         private RegionModel _region;
@@ -19,7 +17,11 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
         {
             get { return _region; }
 
-            set { SetProperty(ref _region, value); }
+            set
+            {
+                _region = value;
+                OnPropertyChanged();
+            }
         }
 
         // 应用在应用商店对应的区域选择

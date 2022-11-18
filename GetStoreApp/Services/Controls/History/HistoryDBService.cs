@@ -1,7 +1,5 @@
-﻿using GetStoreApp.Contracts.Controls.History;
-using GetStoreApp.Contracts.Root;
-using GetStoreApp.Helpers.Root;
-using GetStoreApp.Models.Controls.History;
+﻿using GetStoreApp.Models.Controls.History;
+using GetStoreApp.Services.Root;
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
@@ -13,14 +11,12 @@ namespace GetStoreApp.Services.Controls.History
     /// <summary>
     /// 历史记录数据库存储服务
     /// </summary>
-    public class HistoryDBService : IHistoryDBService
+    public static class HistoryDBService
     {
-        private IDataBaseService DataBaseService { get; } = ContainerHelper.GetInstance<IDataBaseService>();
-
         /// <summary>
         /// 判断历史记录表是否为空
         /// </summary>
-        private async Task<bool> IsTableEmptyAsync()
+        private static async Task<bool> IsTableEmptyAsync()
         {
             int HistoryTableCount = 0;
 
@@ -50,7 +46,7 @@ namespace GetStoreApp.Services.Controls.History
         /// <summary>
         /// 检查是否有相同键值的数据
         /// </summary>
-        private async Task<bool> CheckDuplicatedAsync(string historyKey)
+        private static async Task<bool> CheckDuplicatedAsync(string historyKey)
         {
             bool IsExists = false;
 
@@ -83,7 +79,7 @@ namespace GetStoreApp.Services.Controls.History
         /// <summary>
         /// 添加历史记录数据
         /// </summary>
-        public async Task AddAsync(HistoryModel historyItem)
+        public static async Task AddAsync(HistoryModel historyItem)
         {
             // 文件不存在，取消操作
             if (!File.Exists(DataBaseService.DBpath))
@@ -107,7 +103,7 @@ namespace GetStoreApp.Services.Controls.History
         /// <summary>
         /// 没有重复的数据，直接添加
         /// </summary>
-        private async Task AddDataAsync(HistoryModel historyItem)
+        private static async Task AddDataAsync(HistoryModel historyItem)
         {
             using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
             {
@@ -148,7 +144,7 @@ namespace GetStoreApp.Services.Controls.History
         /// <summary>
         /// 存在重复的数据，只更新该记录的时间戳
         /// </summary>
-        private async Task UpdateDataAsync(HistoryModel historyItem)
+        private static async Task UpdateDataAsync(HistoryModel historyItem)
         {
             using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
             {
@@ -190,7 +186,7 @@ namespace GetStoreApp.Services.Controls.History
         /// <param name="typeFilter"></param>
         /// <param name="channelFilter"></param>
         /// <returns>返回历史记录列表</returns>
-        public async Task<(List<HistoryModel>, bool, bool)> QueryAllAsync(bool timeSortOrder = false, string typeFilter = "None", string channelFilter = "None")
+        public static async Task<(List<HistoryModel>, bool, bool)> QueryAllAsync(bool timeSortOrder = false, string typeFilter = "None", string channelFilter = "None")
         {
             List<HistoryModel> HistoryRawList = new List<HistoryModel>();
 
@@ -241,7 +237,7 @@ namespace GetStoreApp.Services.Controls.History
         /// <summary>
         /// 根据选定的条件生成相应的SQL语句
         /// </summary>
-        private string GenerateSelectSQL(bool timeSortOrder, string typeFilter, string channelFilter)
+        private static string GenerateSelectSQL(bool timeSortOrder, string typeFilter, string channelFilter)
         {
             string SQL = string.Empty;
 
@@ -283,7 +279,7 @@ namespace GetStoreApp.Services.Controls.History
         /// <summary>
         /// 获取一定数量的历史记录数据
         /// </summary>
-        public async Task<List<HistoryModel>> QueryAsync(int value)
+        public static async Task<List<HistoryModel>> QueryAsync(int value)
         {
             List<HistoryModel> HistoryRawList = new List<HistoryModel>();
 
@@ -325,7 +321,7 @@ namespace GetStoreApp.Services.Controls.History
         /// <summary>
         /// 删除选定的历史记录数据
         /// </summary>
-        public async Task<bool> DeleteAsync(List<HistoryModel> selectedHistoryDataList)
+        public static async Task<bool> DeleteAsync(List<HistoryModel> selectedHistoryDataList)
         {
             bool IsDeleteSuccessfully = true;
 
@@ -368,7 +364,7 @@ namespace GetStoreApp.Services.Controls.History
         /// <summary>
         /// 清空历史记录数据
         /// </summary>
-        public async Task<bool> ClearAsync()
+        public static async Task<bool> ClearAsync()
         {
             bool IsClearSuccessfully = false;
 

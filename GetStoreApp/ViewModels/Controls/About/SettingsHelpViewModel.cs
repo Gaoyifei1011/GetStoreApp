@@ -1,10 +1,10 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+﻿using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using System;
 
 namespace GetStoreApp.ViewModels.Controls.About
 {
-    public class SettingsHelpViewModel : ObservableRecipient
+    public sealed class SettingsHelpViewModel
     {
         // 系统信息
         public IRelayCommand SystemInformationCommand => new RelayCommand(async () =>

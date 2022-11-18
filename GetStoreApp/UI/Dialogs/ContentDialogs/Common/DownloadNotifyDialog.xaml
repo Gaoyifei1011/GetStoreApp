@@ -6,12 +6,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="{x:Bind ResourceService.GetLocalized('/Dialog/DownloadNotifyTitle')}"
-    CloseButtonText="{x:Bind ResourceService.GetLocalized('/Dialog/CancelDownload')}"
+    xmlns:root="using:GetStoreApp.Services.Root"
+    Title="{x:Bind root:ResourceService.GetLocalized('/Dialog/DownloadNotifyTitle')}"
+    CloseButtonText="{x:Bind root:ResourceService.GetLocalized('/Dialog/CancelDownload')}"
     Content="{x:Bind DownloadNotifyContent}"
-    PrimaryButtonText="{x:Bind ResourceService.GetLocalized('/Dialog/Redownload')}"
+    PrimaryButtonText="{x:Bind root:ResourceService.GetLocalized('/Dialog/Redownload')}"
     RequestedTheme="{x:Bind DialogTheme}"
-    SecondaryButtonText="{x:Bind ResourceService.GetLocalized('/Dialog/ViewDownloadRecord')}"
+    SecondaryButtonText="{x:Bind root:ResourceService.GetLocalized('/Dialog/ViewDownloadRecord')}"
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d">
 

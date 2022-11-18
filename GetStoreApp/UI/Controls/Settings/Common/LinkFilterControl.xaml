@@ -6,7 +6,13 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Common"
     mc:Ignorable="d">
+
+    <UserControl.DataContext>
+        <settingsViewModel:LinkFilterViewModel x:Name="ViewModel" />
+    </UserControl.DataContext>
 
     <Expander Style="{StaticResource ExpanderSettingsStyle}">
         <Expander.Header>
@@ -31,20 +37,20 @@
                     <TextBlock
                         VerticalAlignment="Center"
                         Style="{StaticResource BodyTextBlockStyle}"
-                        Text="{x:Bind ResourceService.GetLocalized('/Settings/LinkFilter')}" />
+                        Text="{x:Bind root:ResourceService.GetLocalized('/Settings/LinkFilter')}" />
 
                     <TextBlock
                         VerticalAlignment="Center"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind ResourceService.GetLocalized('/Settings/LinkFilterDescription')}" />
+                        Text="{x:Bind root:ResourceService.GetLocalized('/Settings/LinkFilterDescription')}" />
                 </StackPanel>
 
                 <Button
                     Grid.Column="2"
                     Command="{x:Bind ViewModel.LinkFilterInstructionCommand}"
-                    Content="{x:Bind ResourceService.GetLocalized('/Settings/LinkFilterInstruction')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/LinkFilterInstruction')}" />
+                    Content="{x:Bind root:ResourceService.GetLocalized('/Settings/LinkFilterInstruction')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Settings/LinkFilterInstruction')}" />
             </Grid>
         </Expander.Header>
 
@@ -61,11 +67,11 @@
                             <TextBlock
                                 VerticalAlignment="Center"
                                 Style="{StaticResource BodyTextBlockStyle}"
-                                Text="{x:Bind ResourceService.GetLocalized('/Settings/StartsWithE')}" />
+                                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/StartsWithE')}" />
                             <TextBlock
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
-                                Text="{x:Bind ResourceService.GetLocalized('/Settings/StartsWithEDescription')}" />
+                                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/StartsWithEDescription')}" />
                         </StackPanel>
 
                         <ToggleSwitch
@@ -73,8 +79,8 @@
                             Grid.Column="1"
                             FlowDirection="RightToLeft"
                             IsOn="{x:Bind ViewModel.StartsWithEFilterValue, Mode=OneWay}"
-                            OffContent="{x:Bind ResourceService.GetLocalized('/Settings/StartsWithEOffContent')}"
-                            OnContent="{x:Bind ResourceService.GetLocalized('/Settings/StartsWithEOnContent')}">
+                            OffContent="{x:Bind root:ResourceService.GetLocalized('/Settings/StartsWithEOffContent')}"
+                            OnContent="{x:Bind root:ResourceService.GetLocalized('/Settings/StartsWithEOnContent')}">
 
                             <i:Interaction.Behaviors>
                                 <ic:EventTriggerBehavior EventName="Toggled">
@@ -98,11 +104,11 @@
                             <TextBlock
                                 VerticalAlignment="Center"
                                 Style="{StaticResource BodyTextBlockStyle}"
-                                Text="{x:Bind ResourceService.GetLocalized('/Settings/BlockMap')}" />
+                                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/BlockMap')}" />
                             <TextBlock
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
-                                Text="{x:Bind ResourceService.GetLocalized('/Settings/BlockMapDescription')}" />
+                                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/BlockMapDescription')}" />
                         </StackPanel>
 
                         <ToggleSwitch
@@ -110,8 +116,8 @@
                             Grid.Column="1"
                             FlowDirection="RightToLeft"
                             IsOn="{x:Bind ViewModel.BlockMapFilterValue, Mode=OneWay}"
-                            OffContent="{x:Bind ResourceService.GetLocalized('/Settings/BlockMapOffContent')}"
-                            OnContent="{x:Bind ResourceService.GetLocalized('/Settings/BlockMapOnContent')}">
+                            OffContent="{x:Bind root:ResourceService.GetLocalized('/Settings/BlockMapOffContent')}"
+                            OnContent="{x:Bind root:ResourceService.GetLocalized('/Settings/BlockMapOnContent')}">
 
                             <i:Interaction.Behaviors>
                                 <ic:EventTriggerBehavior EventName="Toggled">

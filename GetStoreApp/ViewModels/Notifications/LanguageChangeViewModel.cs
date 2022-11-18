@@ -1,8 +1,8 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using GetStoreApp.ViewModels.Base;
 
 namespace GetStoreApp.ViewModels.Notifications
 {
-    public class LanguageChangeViewModel : ObservableRecipient
+    public sealed class LanguageChangeViewModel : ViewModelBase
     {
         private bool _setResult = false;
 
@@ -10,7 +10,11 @@ namespace GetStoreApp.ViewModels.Notifications
         {
             get { return _setResult; }
 
-            set { SetProperty(ref _setResult, value); }
+            set
+            {
+                _setResult = value;
+                OnPropertyChanged();
+            }
         }
 
         public void Initialize(bool setResult)

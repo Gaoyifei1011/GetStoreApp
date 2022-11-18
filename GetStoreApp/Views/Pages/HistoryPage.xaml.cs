@@ -1,7 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Root;
-using GetStoreApp.Helpers.Root;
-using GetStoreApp.ViewModels.Pages;
+using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -10,10 +8,6 @@ namespace GetStoreApp.Views.Pages
 {
     public sealed partial class HistoryPage : Page
     {
-        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
-
-        public HistoryViewModel ViewModel { get; } = ContainerHelper.GetInstance<HistoryViewModel>();
-
         public string Fillin => ResourceService.GetLocalized("/History/Fillin");
 
         public string FillinToolTip => ResourceService.GetLocalized("/History/FillinToolTip");
@@ -31,12 +25,6 @@ namespace GetStoreApp.Views.Pages
         {
             base.OnNavigatedTo(e);
             ViewModel.OnNavigatedTo();
-        }
-
-        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
-        {
-            base.OnNavigatingFrom(e);
-            ViewModel.OnNavigatedFrom();
         }
 
         public void HistoryUnloaded(object sender, RoutedEventArgs args)

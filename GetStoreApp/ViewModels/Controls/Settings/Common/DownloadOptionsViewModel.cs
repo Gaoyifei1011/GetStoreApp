@@ -1,12 +1,13 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Contracts.Controls.Settings.Common;
-using GetStoreApp.Contracts.Root;
-using GetStoreApp.Contracts.Window;
+﻿using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings.Common;
+using GetStoreApp.Services.Controls.Settings.Common;
+using GetStoreApp.Services.Root;
+using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Settings;
+using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
 using GetStoreAppWindowsAPI.Dialogs;
 using Microsoft.UI.Xaml.Controls;
@@ -18,14 +19,8 @@ using WinRT.Interop;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Common
 {
-    public class DownloadOptionsViewModel : ObservableRecipient
+    public sealed class DownloadOptionsViewModel : ViewModelBase
     {
-        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
-
-        private IDownloadOptionsService DownloadOptionsService { get; } = ContainerHelper.GetInstance<IDownloadOptionsService>();
-
-        private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
-
         public List<int> DownloadItemList => DownloadOptionsService.DownloadItemList;
 
         public List<DownloadModeModel> DownloadModeList => DownloadOptionsService.DownloadModeList;
@@ -36,7 +31,11 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
         {
             get { return _downloadFolder; }
 
-            set { SetProperty(ref _downloadFolder, value); }
+            set
+            {
+                _downloadFolder = value;
+                OnPropertyChanged();
+            }
         }
 
         private int _downloadItem;
@@ -45,7 +44,11 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
         {
             get { return _downloadItem; }
 
-            set { SetProperty(ref _downloadItem, value); }
+            set
+            {
+                _downloadItem = value;
+                OnPropertyChanged();
+            }
         }
 
         private DownloadModeModel _downloadMode;
@@ -54,7 +57,11 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
         {
             get { return _downloadMode; }
 
-            set { SetProperty(ref _downloadMode, value); }
+            set
+            {
+                _downloadMode = value;
+                OnPropertyChanged();
+            }
         }
 
         // 下载管理说明
@@ -132,18 +139,6 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
             }
         });
 
-        // 修改同时下载文件数
-        public IRelayCommand DownloadItemCommand => new RelayCommand(async () =>
-        {
-            await DownloadOptionsService.SetItemAsync(DownloadItem);
-        });
-
-        // 修改下载文件的方式
-        public IRelayCommand DownloadModeCommand => new RelayCommand(async () =>
-        {
-            await DownloadOptionsService.SetModeAsync(DownloadMode);
-        });
-
         public DownloadOptionsViewModel()
         {
             DownloadFolder = DownloadOptionsService.DownloadFolder;
@@ -151,6 +146,22 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
             DownloadItem = DownloadOptionsService.DownloadItem;
 
             DownloadMode = DownloadOptionsService.DownloadMode;
+        }
+
+        /// <summary>
+        /// 修改同时下载文件数
+        /// </summary>
+        public async void OnDownloadItemSelectionChanged(object sender,SelectionChangedEventArgs args)
+        {
+            await DownloadOptionsService.SetItemAsync(DownloadItem);
+        }
+
+        /// <summary>
+        /// 修改下载文件的方式
+        /// </summary>
+        public async void OnDownloadModeSelectionChanged(object sender,SelectionChangedEventArgs args)
+        {
+            await DownloadOptionsService.SetModeAsync(DownloadMode);
         }
     }
 }

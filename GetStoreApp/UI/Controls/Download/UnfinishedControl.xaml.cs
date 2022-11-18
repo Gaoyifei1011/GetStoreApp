@@ -1,16 +1,10 @@
-﻿using GetStoreApp.Contracts.Root;
-using GetStoreApp.Helpers.Root;
-using GetStoreApp.ViewModels.Controls.Download;
+﻿using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.UI.Controls.Download
 {
     public sealed partial class UnfinishedControl : UserControl
     {
-        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
-
-        public UnfinishedViewModel ViewModel { get; } = ContainerHelper.GetInstance<UnfinishedViewModel>();
-
         public string PauseDownload => ResourceService.GetLocalized("/Download/PauseDownload");
 
         public string InvalidLink => ResourceService.GetLocalized("/Download/InvalidLink");

@@ -3,12 +3,16 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:i="using:Microsoft.Xaml.Interactivity"
-    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pageViewModel="using:GetStoreApp.ViewModels.Pages"
+    xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:wc="using:GetStoreApp.UI.Controls.Web"
     Unloaded="{x:Bind WebPageUnloaded}"
     mc:Ignorable="d">
+
+    <Page.DataContext>
+        <pageViewModel:WebViewModel x:Name="ViewModel" />
+    </Page.DataContext>
 
     <Grid>
         <Grid x:Name="LoadSuccess" x:Load="{x:Bind ViewModel.IsWebView2Installed}">
@@ -38,8 +42,8 @@
                     <AppBarButton
                         Command="{x:Bind ViewModel.BrowserBackCommand, Mode=OneWay}"
                         IsEnabled="{x:Bind ViewModel.CanGoBack, Mode=OneWay}"
-                        Label="{x:Bind ResourceService.GetLocalized('/Web/Back')}"
-                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/Back')}">
+                        Label="{x:Bind root:ResourceService.GetLocalized('/Web/Back')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Web/Back')}">
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE72b;" Style="{StaticResource SegoeFluentStyle}" />
                         </AppBarButton.Icon>
@@ -48,8 +52,8 @@
                     <AppBarButton
                         Command="{x:Bind ViewModel.BrowserForwardCommand, Mode=OneWay}"
                         IsEnabled="{x:Bind ViewModel.CanGoForward, Mode=OneWay}"
-                        Label="{x:Bind ResourceService.GetLocalized('/Web/Forward')}"
-                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/Forward')}">
+                        Label="{x:Bind root:ResourceService.GetLocalized('/Web/Forward')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Web/Forward')}">
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE72a;" Style="{StaticResource SegoeFluentStyle}" />
                         </AppBarButton.Icon>
@@ -58,8 +62,8 @@
                     <AppBarButton
                         Command="{x:Bind ViewModel.RefreshCommand}"
                         CommandParameter="{Binding ElementName=WebView}"
-                        Label="{x:Bind ResourceService.GetLocalized('/Web/Refresh')}"
-                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/Refresh')}">
+                        Label="{x:Bind root:ResourceService.GetLocalized('/Web/Refresh')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Web/Refresh')}">
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE72c;" Style="{StaticResource SegoeFluentStyle}" />
                         </AppBarButton.Icon>
@@ -88,11 +92,11 @@
                     <TextBlock
                         Grid.Column="1"
                         VerticalAlignment="Center"
-                        Text="{x:Bind ResourceService.GetLocalized('/Web/Title')}" />
+                        Text="{x:Bind root:ResourceService.GetLocalized('/Web/Title')}" />
                     <TextBlock
                         Grid.Column="2"
                         VerticalAlignment="Center"
-                        Text="{x:Bind ResourceService.GetLocalized('/Web/Loading')}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('/Web/Loading')}"
                         Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}" />
                 </Grid>
 
@@ -105,8 +109,8 @@
 
                     <AppBarButton
                         Command="{x:Bind ViewModel.OpenWithBrowserCommand}"
-                        Label="{x:Bind ResourceService.GetLocalized('/Web/OpenWithBrowser')}"
-                        ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Web/OpenWithBrowser')}">
+                        Label="{x:Bind root:ResourceService.GetLocalized('/Web/OpenWithBrowser')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Web/OpenWithBrowser')}">
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE774;" Style="{StaticResource SegoeFluentStyle}" />
                         </AppBarButton.Icon>
@@ -122,30 +126,12 @@
             <WebView2
                 x:Name="WebView"
                 Grid.Row="2"
-                Source="{x:Bind ViewModel.Source, Mode=OneWay}">
-
-                <i:Interaction.Behaviors>
-                    <ic:EventTriggerBehavior EventName="Loaded">
-                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.LoadedCommand}" />
-                    </ic:EventTriggerBehavior>
-
-                    <ic:EventTriggerBehavior EventName="CoreProcessFailed">
-                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.CoreProcessFailedCommand}" />
-                    </ic:EventTriggerBehavior>
-
-                    <ic:EventTriggerBehavior EventName="CoreWebView2Initialized">
-                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.CoreWebView2InitializedCommand}" CommandParameter="{Binding ElementName=WebView}" />
-                    </ic:EventTriggerBehavior>
-
-                    <ic:EventTriggerBehavior EventName="NavigationStarting">
-                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.NavigationStartingCommand}" />
-                    </ic:EventTriggerBehavior>
-
-                    <ic:EventTriggerBehavior EventName="NavigationCompleted">
-                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.NavigationCompletedCommand}" />
-                    </ic:EventTriggerBehavior>
-                </i:Interaction.Behaviors>
-            </WebView2>
+                CoreProcessFailed="{x:Bind ViewModel.OnCoreProcessFailed}"
+                CoreWebView2Initialized="{x:Bind ViewModel.OnCoreWebView2Initialized}"
+                Loaded="{x:Bind ViewModel.OnWebView2Loaded}"
+                NavigationCompleted="{x:Bind ViewModel.OnWebView2NavigationCompleted}"
+                NavigationStarting="{x:Bind ViewModel.OnWebView2NavigationStarting}"
+                Source="{x:Bind ViewModel.Source, Mode=OneWay}" />
         </Grid>
         <wc:LoadFailedControl
             x:Name="LoadFailed"

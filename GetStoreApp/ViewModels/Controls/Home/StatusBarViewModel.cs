@@ -1,9 +1,8 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Root;
-using GetStoreApp.Helpers.Root;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.Home;
+using GetStoreApp.Services.Root;
+using GetStoreApp.ViewModels.Base;
 using GetStoreAppWindowsAPI.Controls;
 using GetStoreAppWindowsAPI.Controls.Taskbar;
 using Microsoft.UI.Xaml.Controls;
@@ -12,10 +11,8 @@ using WinRT.Interop;
 
 namespace GetStoreApp.ViewModels.Controls.Home
 {
-    public class StatusBarViewModel : ObservableRecipient
+    public sealed class StatusBarViewModel : ViewModelBase
     {
-        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
-
         private TaskbarManager Taskbar { get; } = TaskbarManager.Instance;
 
         public List<StatusBarStateModel> StatusBarStateList => ResourceService.StatusBarStateList;
@@ -26,7 +23,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
         {
             get { return _infoSeverity; }
 
-            set { SetProperty(ref _infoSeverity, value); }
+            set
+            {
+                _infoSeverity = value;
+                OnPropertyChanged();
+            }
         }
 
         private string _stateInfoText;
@@ -35,7 +36,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
         {
             get { return _stateInfoText; }
 
-            set { SetProperty(ref _stateInfoText, value); }
+            set
+            {
+                _stateInfoText = value;
+                OnPropertyChanged();
+            }
         }
 
         private bool _statePrRingActValue = false;
@@ -44,7 +49,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
         {
             get { return _statePrRingActValue; }
 
-            set { SetProperty(ref _statePrRingActValue, value); }
+            set
+            {
+                _statePrRingActValue = value;
+                OnPropertyChanged();
+            }
         }
 
         private bool _statePrRingVisValue = false;
@@ -53,7 +62,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
         {
             get { return _statePrRingVisValue; }
 
-            set { SetProperty(ref _statePrRingVisValue, value); }
+            set
+            {
+                _statePrRingVisValue = value;
+                OnPropertyChanged();
+            }
         }
 
         public StatusBarViewModel()

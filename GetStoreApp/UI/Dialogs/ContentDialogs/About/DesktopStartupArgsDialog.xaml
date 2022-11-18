@@ -5,12 +5,18 @@
     xmlns:about="using:GetStoreApp.Models.Dialogs.CommonDialogs.About"
     xmlns:behavior="using:GetStoreApp.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dialogViewModel="using:GetStoreApp.ViewModels.Dialogs.About"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
     x:Name="DesktopStartupArgsRoot"
     RequestedTheme="{x:Bind DialogTheme}"
     Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">
+
+    <ContentDialog.DataContext>
+        <dialogViewModel:DesktopStartupArgsViewModel x:Name="ViewModel" />
+    </ContentDialog.DataContext>
 
     <i:Interaction.Behaviors>
         <behavior:ContentDialogBehavior />
@@ -33,12 +39,12 @@
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
             BorderThickness="{ThemeResource ContentDialogBorderWidth}">
 
-            <TextBlock Style="{StaticResource ContentDialogTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/Dialog/DesktopStartupArgsTitle')}" />
+            <TextBlock Style="{StaticResource ContentDialogTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/DesktopStartupArgsTitle')}" />
             <TextBlock
                 Margin="0"
                 Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind ResourceService.GetLocalized('/Dialog/DesktopStartupArgsDescription1')}" />
-            <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind ResourceService.GetLocalized('/Dialog/DesktopStartupArgsDescription2')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/DesktopStartupArgsDescription1')}" />
+            <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/DesktopStartupArgsDescription2')}" />
 
             <ListView
                 Margin="0,0,0,5"
@@ -67,26 +73,26 @@
                             Grid.Column="0"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
-                            Text="{x:Bind ResourceService.GetLocalized('/Dialog/ArgumentName')}"
-                            ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Dialog/ArgumentName')}" />
+                            Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/ArgumentName')}"
+                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Dialog/ArgumentName')}" />
                         <TextBlock
                             Grid.Column="1"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
-                            Text="{x:Bind ResourceService.GetLocalized('/Dialog/Argument')}"
-                            ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Dialog/Argument')}" />
+                            Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/Argument')}"
+                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Dialog/Argument')}" />
                         <TextBlock
                             Grid.Column="2"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
-                            Text="{x:Bind ResourceService.GetLocalized('/Dialog/IsRequired')}"
-                            ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Dialog/IsRequired')}" />
+                            Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/IsRequired')}"
+                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Dialog/IsRequired')}" />
                         <TextBlock
                             Grid.Column="3"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
-                            Text="{x:Bind ResourceService.GetLocalized('/Dialog/InputContent')}"
-                            ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Dialog/InputContent')}" />
+                            Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/InputContent')}"
+                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Dialog/InputContent')}" />
                     </Grid>
                 </ListView.Header>
 
@@ -139,7 +145,7 @@
                 FontSize="16"
                 FontWeight="Bold"
                 Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind ResourceService.GetLocalized('/Dialog/StartupArgsSample')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/StartupArgsSample')}" />
             <TextBlock
                 Margin="0"
                 Style="{StaticResource ContentDialogContentStyle}"
@@ -166,8 +172,8 @@
                 HorizontalAlignment="Stretch"
                 Command="{x:Bind ViewModel.CloswWindowCommand}"
                 CommandParameter="{Binding ElementName=DesktopStartupArgsRoot}"
-                Content="{x:Bind ResourceService.GetLocalized('/Dialog/CloseWindow')}"
-                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Dialog/CloseWindow')}" />
+                Content="{x:Bind root:ResourceService.GetLocalized('/Dialog/CloseWindow')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Dialog/CloseWindow')}" />
         </Grid>
     </Grid>
 </ContentDialog>

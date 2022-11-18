@@ -159,8 +159,6 @@
     <None Remove="Views\Window\TaskbarControl.xaml" />
     
     <PackageReference Include="Aria2.NET" Version="1.0.5" />
-    
-    <PackageReference Include="Autofac" Version="6.5.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
     <PackageReference Include="H.NotifyIcon.WinUI" Version="2.0.74" />
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.0" />
@@ -168,18 +166,13 @@
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.755" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.221109.1">
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.221116.1">
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
     <PackageReference Include="SQLitePCLRaw.bundle_winsqlite3" Version="2.1.2">
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
-
-    <TrimmerRootAssembly Include="Autofac" />
-    <TrimmerRootAssembly Include="CommunityToolkit.Mvvm" />
-    <TrimmerRootAssembly Include="Microsoft.Xaml.Interactivity" /> 
-    <TrimmerRootAssembly Include="Microsoft.Data.Sqlite" />
     
     <Page Update="Styles\Button.xaml">
       <Generator>MSBuild:Compile</Generator>

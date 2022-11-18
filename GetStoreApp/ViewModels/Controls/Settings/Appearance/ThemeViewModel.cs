@@ -1,19 +1,16 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Controls.Settings.Appearance;
-using GetStoreApp.Helpers.Root;
-using GetStoreApp.Messages;
+﻿using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.Models.Controls.Settings.Appearance;
+using GetStoreApp.Services.Controls.Settings.Appearance;
+using GetStoreApp.ViewModels.Base;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
 {
-    public class ThemeViewModel : ObservableRecipient
+    public sealed class ThemeViewModel : ViewModelBase
     {
-        private IThemeService ThemeService { get; } = ContainerHelper.GetInstance<IThemeService>();
-
         public List<ThemeModel> ThemeList => ThemeService.ThemeList;
 
         private ThemeModel _theme;
@@ -22,15 +19,12 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
         {
             get { return _theme; }
 
-            set { SetProperty(ref _theme, value); }
-        }
-
-        // 主题修改设置
-        public IRelayCommand ThemeSelectCommand => new RelayCommand(async () =>
+            set
             {
-                await ThemeService.SetThemeAsync(Theme);
-                await ThemeService.SetAppThemeAsync();
-            });
+                _theme = value;
+                OnPropertyChanged();
+            }
+        }
 
         // 打开系统主题设置
         public IRelayCommand SettingsColorCommand => new RelayCommand(async () =>
@@ -41,6 +35,15 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
         public ThemeViewModel()
         {
             Theme = ThemeService.AppTheme;
+        }
+
+        /// <summary>
+        /// 主题修改设置
+        /// </summary>
+        public async void OnSelectionChanged(object sender,SelectionChangedEventArgs args)
+        {
+            await ThemeService.SetThemeAsync(Theme);
+            await ThemeService.SetAppThemeAsync();
         }
     }
 }

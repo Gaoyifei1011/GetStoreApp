@@ -1,13 +1,13 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Controls.Download;
-using GetStoreApp.Contracts.Controls.Settings.Common;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Events;
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.Download;
+using GetStoreApp.Services.Controls.Download;
+using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
+using GetStoreApp.ViewModels.Base;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Controls.Download
 {
-    public class DownloadingViewModel : ObservableRecipient
+    public sealed class DownloadingViewModel : ViewModelBase
     {
         // 临界区资源访问互斥锁
         private readonly object IsUpdatingNowLock = new object();
@@ -33,10 +33,6 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
         private DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
-        private IDownloadSchedulerService DownloadSchedulerService { get; } = ContainerHelper.GetInstance<IDownloadSchedulerService>();
-
-        private IDownloadOptionsService DownloadOptionsService { get; } = ContainerHelper.GetInstance<IDownloadOptionsService>();
-
         private DispatcherTimer DownloadingTimer { get; } = new DispatcherTimer();
 
         public ObservableCollection<DownloadingModel> DownloadingDataList { get; } = new ObservableCollection<DownloadingModel>();
@@ -47,14 +43,12 @@ namespace GetStoreApp.ViewModels.Controls.Download
         {
             get { return _isSelectMode; }
 
-            set { SetProperty(ref _isSelectMode, value); }
+            set
+            {
+                _isSelectMode = value;
+                OnPropertyChanged();
+            }
         }
-
-        // 页面被卸载时，关闭消息服务
-        public IRelayCommand UnloadedCommand => new RelayCommand(() =>
-        {
-            WeakReferenceMessenger.Default.UnregisterAll(this);
-        });
 
         // 打开默认保存的文件夹
         public IRelayCommand OpenFolderCommand => new RelayCommand(async () =>
@@ -227,31 +221,6 @@ namespace GetStoreApp.ViewModels.Controls.Download
             IsSelectMode = false;
         });
 
-        // 在多选模式下点击项目选择相应的条目
-        public IRelayCommand ItemClickCommand => new RelayCommand<ItemClickEventArgs>(async (args) =>
-        {
-            while (IsUpdatingNow && IsInitializeFinished)
-            {
-                await Task.Delay(300);
-                continue;
-            }
-
-            lock (IsUpdatingNowLock)
-            {
-                IsUpdatingNow = true;
-            }
-
-            DownloadingModel downloadingItem = (DownloadingModel)args.ClickedItem;
-            int ClickedIndex = DownloadingDataList.IndexOf(downloadingItem);
-
-            DownloadingDataList[ClickedIndex].IsSelected = !DownloadingDataList[ClickedIndex].IsSelected;
-
-            lock (IsUpdatingNowLock)
-            {
-                IsUpdatingNow = false;
-            }
-        });
-
         // 暂停下载当前任务
         public IRelayCommand PauseCommand => new RelayCommand<DownloadingModel>(async (downloadingItem) =>
         {
@@ -351,7 +320,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     DownloadSchedulerService.WaitingList.ItemsChanged -= OnWaitingListItemsChanged;
 
                     // 关闭消息服务
-                    Messenger.UnregisterAll(this);
+                    WeakReferenceMessenger.Default.UnregisterAll(this);
                 }
 
                 // 切换到其他页面时，关闭监控
@@ -364,6 +333,41 @@ namespace GetStoreApp.ViewModels.Controls.Download
             // 订阅事件
             DownloadSchedulerService.DownloadingList.ItemsChanged += OnDownloadingListItemsChanged;
             DownloadSchedulerService.WaitingList.ItemsChanged += OnWaitingListItemsChanged;
+        }
+
+        /// <summary>
+        /// 页面被卸载时，关闭消息服务
+        /// </summary>
+        public void OnUnloaded(object sender, RoutedEventArgs args)
+        {
+            WeakReferenceMessenger.Default.UnregisterAll(this);
+        }
+
+        /// <summary>
+        /// 在多选模式下点击项目选择相应的条目
+        /// </summary>
+        public async void OnItemClick(object sender,ItemClickEventArgs args)
+        {
+            while (IsUpdatingNow && IsInitializeFinished)
+            {
+                await Task.Delay(300);
+                continue;
+            }
+
+            lock (IsUpdatingNowLock)
+            {
+                IsUpdatingNow = true;
+            }
+
+            DownloadingModel downloadingItem = (DownloadingModel)args.ClickedItem;
+            int ClickedIndex = DownloadingDataList.IndexOf(downloadingItem);
+
+            DownloadingDataList[ClickedIndex].IsSelected = !DownloadingDataList[ClickedIndex].IsSelected;
+
+            lock (IsUpdatingNowLock)
+            {
+                IsUpdatingNow = false;
+            }
         }
 
         /// <summary>

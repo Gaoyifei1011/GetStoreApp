@@ -4,12 +4,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behavior="using:GetStoreApp.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dialogViewModel="using:GetStoreApp.ViewModels.Dialogs.Settings"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
     x:Name="RestartAppsRoot"
     RequestedTheme="{x:Bind DialogTheme}"
     Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">
+
+    <ContentDialog.DataContext>
+        <dialogViewModel:RestartAppsViewModel x:Name="ViewModel" />
+    </ContentDialog.DataContext>
 
     <i:Interaction.Behaviors>
         <behavior:ContentDialogBehavior />
@@ -27,8 +33,8 @@
             Background="{ThemeResource ContentDialogTopOverlay}"
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
             BorderThickness="{ThemeResource ContentDialogBorderWidth}">
-            <TextBlock Style="{StaticResource ContentDialogTitleStyle}" Text="{x:Bind ResourceService.GetLocalized('/Dialog/Restart')}" />
-            <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind ResourceService.GetLocalized('/Dialog/RestartContent')}" />
+            <TextBlock Style="{StaticResource ContentDialogTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/Restart')}" />
+            <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/RestartContent')}" />
         </StackPanel>
 
         <Grid
@@ -45,16 +51,16 @@
                 HorizontalAlignment="Stretch"
                 Command="{x:Bind ViewModel.RestartAppsCommand}"
                 CommandParameter="{Binding ElementName=RestartAppsRoot}"
-                Content="{x:Bind ResourceService.GetLocalized('/Dialog/OK')}"
+                Content="{x:Bind root:ResourceService.GetLocalized('/Dialog/OK')}"
                 Style="{ThemeResource AccentButtonStyle}"
-                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Dialog/OK')}" />
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Dialog/OK')}" />
             <Button
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
                 Command="{x:Bind ViewModel.CloswWindowCommand}"
                 CommandParameter="{Binding ElementName=RestartAppsRoot}"
-                Content="{x:Bind ResourceService.GetLocalized('/Dialog/Cancel')}"
-                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Dialog/Cancel')}" />
+                Content="{x:Bind root:ResourceService.GetLocalized('/Dialog/Cancel')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Dialog/Cancel')}" />
         </Grid>
     </Grid>
 </ContentDialog>

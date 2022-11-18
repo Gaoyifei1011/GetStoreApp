@@ -1,16 +1,10 @@
-﻿using GetStoreApp.Contracts.Root;
-using GetStoreApp.Helpers.Root;
-using GetStoreApp.ViewModels.Controls.Home;
+﻿using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.UI.Controls.Home
 {
     public sealed partial class ResultControl : UserControl
     {
-        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
-
-        public ResultViewModel ViewModel { get; } = ContainerHelper.GetInstance<ResultViewModel>();
-
         public string Copy => ResourceService.GetLocalized("/Home/Copy");
 
         public string CopyOptionsToolTip => ResourceService.GetLocalized("/Home/CopyOptionsToolTip");

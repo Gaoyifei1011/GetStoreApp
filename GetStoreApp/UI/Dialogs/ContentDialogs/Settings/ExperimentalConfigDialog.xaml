@@ -4,13 +4,19 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behavior="using:GetStoreApp.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dialogViewModel="using:GetStoreApp.ViewModels.Dialogs.Settings"
     xmlns:experiment="using:GetStoreApp.UI.Controls.Settings.Experiment"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
     x:Name="ExperimentalConfigRoot"
     RequestedTheme="{x:Bind DialogTheme}"
     Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">
+
+    <ContentDialog.DataContext>
+        <dialogViewModel:ExperimentalConfigViewModel x:Name="ViewModel" />
+    </ContentDialog.DataContext>
 
     <i:Interaction.Behaviors>
         <behavior:ContentDialogBehavior />
@@ -37,12 +43,12 @@
                 <TextBlock
                     Grid.Column="0"
                     Style="{StaticResource ContentDialogTitleStyle}"
-                    Text="{x:Bind ResourceService.GetLocalized('/Dialog/ExperimentalFeatures')}" />
+                    Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/ExperimentalFeatures')}" />
                 <TextBlock
                     Grid.Column="1"
                     VerticalAlignment="Center"
                     Style="{StaticResource ContentDialogContentStyle}"
-                    Text="{x:Bind ResourceService.GetLocalized('/Dialog/RestoreDefaultSuccessfully')}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/RestoreDefaultSuccessfully')}"
                     Visibility="{x:Bind ViewModel.IsMessageVisable, Mode=OneWay}" />
             </Grid>
 
@@ -50,7 +56,7 @@
                 Margin="0"
                 IsClosable="False"
                 IsOpen="True"
-                Message="{x:Bind ResourceService.GetLocalized('/Dialog/ExperimentalWarning')}"
+                Message="{x:Bind root:ResourceService.GetLocalized('/Dialog/ExperimentalWarning')}"
                 Severity="Warning"
                 Style="{StaticResource ExperimentalInfoBarStyle}" />
 
@@ -60,13 +66,13 @@
 
             <NavigationViewItemSeparator />
 
-            <TextBlock Text="{x:Bind ResourceService.GetLocalized('/Dialog/ExperimentalFeaturesDescription')}" />
+            <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/ExperimentalFeaturesDescription')}" />
             <TextBlock
-                Text="{x:Bind ResourceService.GetLocalized('/Dialog/ExperimentalFeaturesDescription1')}"
+                Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/ExperimentalFeaturesDescription1')}"
                 TextAlignment="Justify"
                 TextWrapping="Wrap" />
             <TextBlock
-                Text="{x:Bind ResourceService.GetLocalized('/Dialog/ExperimentalFeaturesDescription2')}"
+                Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/ExperimentalFeaturesDescription2')}"
                 TextAlignment="Justify"
                 TextWrapping="Wrap" />
         </StackPanel>
@@ -85,16 +91,16 @@
                 HorizontalAlignment="Stretch"
                 Command="{x:Bind ViewModel.RestoreDefualtCommand}"
                 CommandParameter="{Binding ElementName=CoreWebView2FailedRoot}"
-                Content="{x:Bind ResourceService.GetLocalized('/Dialog/RestoreDefualt')}"
+                Content="{x:Bind root:ResourceService.GetLocalized('/Dialog/RestoreDefualt')}"
                 Style="{ThemeResource AccentButtonStyle}"
-                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Dialog/RestoreDefualt')}" />
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Dialog/RestoreDefualt')}" />
             <Button
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
                 Command="{x:Bind ViewModel.CloswWindowCommand}"
                 CommandParameter="{Binding ElementName=ExperimentalConfigRoot}"
-                Content="{x:Bind ResourceService.GetLocalized('/Dialog/CloseWindow')}"
-                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Dialog/CloseWindow')}" />
+                Content="{x:Bind root:ResourceService.GetLocalized('/Dialog/CloseWindow')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Dialog/CloseWindow')}" />
         </Grid>
     </Grid>
 </ContentDialog>

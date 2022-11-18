@@ -1,12 +1,12 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Controls.Settings.Advanced;
-using GetStoreApp.Contracts.Root;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Dialogs.CommonDialogs.Settings;
+using GetStoreApp.Services.Controls.Settings.Advanced;
+using GetStoreApp.Services.Root;
+using GetStoreApp.ViewModels.Base;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -15,12 +15,8 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Dialogs.Settings
 {
-    public class TraceCleanupPromptViewModel : ObservableRecipient
+    public sealed class TraceCleanupPromptViewModel : ViewModelBase
     {
-        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
-
-        private ITraceCleanupService TraceCleanupService { get; } = ContainerHelper.GetInstance<ITraceCleanupService>();
-
         public List<TraceCleanupModel> TraceCleanupList { get; set; }
 
         private bool _isFirstInitialize = true;
@@ -29,7 +25,11 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
         {
             get { return _isFirstInitialize; }
 
-            set { SetProperty(ref _isFirstInitialize, value); }
+            set
+            {
+                _isFirstInitialize = value;
+                OnPropertyChanged();
+            }
         }
 
         private bool _isSelected;
@@ -38,7 +38,11 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
         {
             get { return _isSelected; }
 
-            set { SetProperty(ref _isSelected, value); }
+            set
+            {
+                _isSelected = value;
+                OnPropertyChanged();
+            }
         }
 
         private bool _isCleaning = false;
@@ -47,7 +51,11 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
         {
             get { return _isCleaning; }
 
-            set { SetProperty(ref _isCleaning, value); }
+            set
+            {
+                _isCleaning = value;
+                OnPropertyChanged();
+            }
         }
 
         /// <summary>

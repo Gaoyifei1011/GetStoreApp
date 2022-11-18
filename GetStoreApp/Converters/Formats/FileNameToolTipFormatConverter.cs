@@ -1,6 +1,5 @@
-﻿using GetStoreApp.Contracts.Controls.Settings.Common;
-using GetStoreApp.Contracts.Root;
-using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Services.Controls.Settings.Common;
+using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
 using System;
@@ -12,10 +11,6 @@ namespace GetStoreApp.Converters.Formats
     /// </summary>
     public class FileNameToolTipFormatConverter : IValueConverter
     {
-        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
-
-        private IDownloadOptionsService DownloadOptionsService { get; } = ContainerHelper.GetInstance<IDownloadOptionsService>();
-
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value == null)

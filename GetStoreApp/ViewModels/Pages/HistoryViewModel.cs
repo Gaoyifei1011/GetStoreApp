@@ -1,16 +1,17 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Controls.History;
-using GetStoreApp.Contracts.Root;
-using GetStoreApp.Contracts.Window;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.History;
 using GetStoreApp.Models.Controls.Home;
+using GetStoreApp.Services.Controls.History;
+using GetStoreApp.Services.Root;
+using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
 using GetStoreApp.UI.Notifications;
+using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -22,16 +23,10 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Pages
 {
-    public class HistoryViewModel : ObservableRecipient
+    public sealed class HistoryViewModel : ViewModelBase
     {
         // 临界区资源访问互斥锁
         private readonly object HistoryDataListLock = new object();
-
-        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
-
-        private IHistoryDBService HistoryDBService { get; } = ContainerHelper.GetInstance<IHistoryDBService>();
-
-        private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
 
         public List<TypeModel> TypeList => ResourceService.TypeList;
 
@@ -45,7 +40,11 @@ namespace GetStoreApp.ViewModels.Pages
         {
             get { return _isSelectMode; }
 
-            set { SetProperty(ref _isSelectMode, value); }
+            set
+            {
+                _isSelectMode = value;
+                OnPropertyChanged();
+            }
         }
 
         private bool _isHistoryEmpty = true;
@@ -54,7 +53,11 @@ namespace GetStoreApp.ViewModels.Pages
         {
             get { return _isHistoryEmpty; }
 
-            set { SetProperty(ref _isHistoryEmpty, value); }
+            set
+            {
+                _isHistoryEmpty = value;
+                OnPropertyChanged();
+            }
         }
 
         private bool _isHistoryEmptyAfterFilter = true;
@@ -63,7 +66,11 @@ namespace GetStoreApp.ViewModels.Pages
         {
             get { return _isHistoryEmptyAfterFilter; }
 
-            set { SetProperty(ref _isHistoryEmptyAfterFilter, value); }
+            set
+            {
+                _isHistoryEmptyAfterFilter = value;
+                OnPropertyChanged();
+            }
         }
 
         /// <summary>
@@ -75,7 +82,11 @@ namespace GetStoreApp.ViewModels.Pages
         {
             get { return _timeSortOrder; }
 
-            set { SetProperty(ref _timeSortOrder, value); }
+            set
+            {
+                _timeSortOrder = value;
+                OnPropertyChanged();
+            }
         }
 
         private string _typeFilter = "None";
@@ -84,7 +95,11 @@ namespace GetStoreApp.ViewModels.Pages
         {
             get { return _typeFilter; }
 
-            set { SetProperty(ref _typeFilter, value); }
+            set
+            {
+                _typeFilter = value;
+                OnPropertyChanged();
+            }
         }
 
         private string _channelFilter = "None";
@@ -93,7 +108,11 @@ namespace GetStoreApp.ViewModels.Pages
         {
             get { return _channelFilter; }
 
-            set { SetProperty(ref _channelFilter, value); }
+            set
+            {
+                _channelFilter = value;
+                OnPropertyChanged();
+            }
         }
 
         // 进入多选模式
@@ -247,18 +266,6 @@ namespace GetStoreApp.ViewModels.Pages
             IsSelectMode = false;
         });
 
-        // 在多选模式下点击项目选择相应的条目
-        public IRelayCommand ItemClickCommand => new RelayCommand<ItemClickEventArgs>((args) =>
-        {
-            HistoryModel historyItem = (HistoryModel)args.ClickedItem;
-            int ClickedIndex = HistoryDataList.IndexOf(historyItem);
-
-            lock (HistoryDataListLock)
-            {
-                HistoryDataList[ClickedIndex].IsSelected = !HistoryDataList[ClickedIndex].IsSelected;
-            }
-        });
-
         // 填入指定项目的内容
         public IRelayCommand FillinCommand => new RelayCommand<HistoryModel>((historyItem) =>
         {
@@ -285,8 +292,19 @@ namespace GetStoreApp.ViewModels.Pages
             await GetHistoryDataListAsync();
         }
 
-        public void OnNavigatedFrom()
-        { }
+        /// <summary>
+        /// 在多选模式下点击项目选择相应的条目
+        /// </summary>
+        public void OnItemClick(object sender,ItemClickEventArgs args)
+        {
+            HistoryModel historyItem = (HistoryModel)args.ClickedItem;
+            int ClickedIndex = HistoryDataList.IndexOf(historyItem);
+
+            lock (HistoryDataListLock)
+            {
+                HistoryDataList[ClickedIndex].IsSelected = !HistoryDataList[ClickedIndex].IsSelected;
+            }
+        }
 
         /// <summary>
         /// 从数据库中加载数据

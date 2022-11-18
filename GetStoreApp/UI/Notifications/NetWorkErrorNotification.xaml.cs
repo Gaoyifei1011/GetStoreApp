@@ -1,6 +1,4 @@
-﻿using GetStoreApp.Contracts.Root;
-using GetStoreApp.Helpers.Root;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using System;
@@ -10,8 +8,6 @@ namespace GetStoreApp.UI.Notifications
 {
     public sealed partial class NetWorkErrorNotification : UserControl
     {
-        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
-
         private Popup Popup { get; set; } = new Popup();
 
         private int Duration = 2000;

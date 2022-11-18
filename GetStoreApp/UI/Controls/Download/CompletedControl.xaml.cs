@@ -1,16 +1,10 @@
-﻿using GetStoreApp.Contracts.Root;
-using GetStoreApp.Helpers.Root;
-using GetStoreApp.ViewModels.Controls.Download;
+﻿using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.UI.Controls.Download
 {
     public sealed partial class CompletedControl : UserControl
     {
-        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
-
-        public CompletedViewModel ViewModel { get; } = ContainerHelper.GetInstance<CompletedViewModel>();
-
         public string Installing => ResourceService.GetLocalized("/Download/Installing");
 
         public string InstallError => ResourceService.GetLocalized("/Download/InstallError");

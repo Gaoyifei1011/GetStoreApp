@@ -1,29 +1,29 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Controls.Settings.Common;
-using GetStoreApp.Contracts.Window;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
+using GetStoreApp.Services.Controls.Settings.Common;
+using GetStoreApp.Services.Window;
+using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.ViewModels.Pages
 {
-    public class DownloadViewModel : ObservableRecipient
+    public sealed class DownloadViewModel : ViewModelBase
     {
-        private IUseInstructionService UseInstructionService { get; } = ContainerHelper.GetInstance<IUseInstructionService>();
-
-        private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
-
         private bool _useInsVisValue;
 
         public bool UseInsVisValue
         {
             get { return _useInsVisValue; }
 
-            set { SetProperty(ref _useInsVisValue, value); }
+            set
+            {
+                _useInsVisValue = value;
+                OnPropertyChanged();
+            }
         }
 
         // 了解更多下载管理说明
@@ -42,11 +42,10 @@ namespace GetStoreApp.ViewModels.Pages
             NavigationService.NavigateTo(typeof(SettingsPage));
         });
 
-        // DownloadPivot选中项发生变化时，关闭离开页面的事件，开启要导航到的页面的事件，并更新新页面的数据
-        public IRelayCommand DownloadContentCommand => new RelayCommand<int>((value) =>
+        public DownloadViewModel()
         {
-            WeakReferenceMessenger.Default.Send(new PivotSelectionMessage(value));
-        });
+            UseInsVisValue = UseInstructionService.UseInsVisValue;
+        }
 
         // 初次加载页面时，开启下载中页面的所有事件，加载下载中页面的数据
         public void OnNavigatedTo()
@@ -61,9 +60,16 @@ namespace GetStoreApp.ViewModels.Pages
             WeakReferenceMessenger.Default.Send(new PivotSelectionMessage(-1));
         }
 
-        public DownloadViewModel()
+        /// <summary>
+        /// DownloadPivot选中项发生变化时，关闭离开页面的事件，开启要导航到的页面的事件，并更新新页面的数据
+        /// </summary>
+        public void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            UseInsVisValue = UseInstructionService.UseInsVisValue;
+            Pivot pivot = sender as Pivot;
+            if (pivot is not null)
+            {
+                WeakReferenceMessenger.Default.Send(new PivotSelectionMessage(pivot.SelectedIndex));
+            }
         }
     }
 }

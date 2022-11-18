@@ -6,7 +6,19 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Experiment"
     mc:Ignorable="d">
+
+    <UserControl.DataContext>
+        <settingsViewModel:NetWorkMonitorViewModel x:Name="ViewModel" />
+    </UserControl.DataContext>
+
+    <i:Interaction.Behaviors>
+        <ic:EventTriggerBehavior EventName="Unloaded">
+            <ic:InvokeCommandAction Command="{x:Bind ViewModel.UnloadedCommand}" />
+        </ic:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
 
     <Grid Style="{StaticResource CardGridStyle}">
         <Grid.ColumnDefinitions>
@@ -25,15 +37,15 @@
             Grid.Column="1"
             VerticalAlignment="Center"
             Style="{StaticResource BodyTextBlockStyle}"
-            Text="{x:Bind ResourceService.GetLocalized('/Settings/NetWorkMonitor')}" />
+            Text="{x:Bind root:ResourceService.GetLocalized('/Settings/NetWorkMonitor')}" />
 
         <ToggleSwitch
             Name="NetWorkMonitorToggleSwitch"
             Grid.Column="2"
             FlowDirection="RightToLeft"
             IsOn="{x:Bind ViewModel.NetWorkMonitorValue, Mode=OneWay}"
-            OffContent="{x:Bind ResourceService.GetLocalized('/Settings/NetWorkMonitorOffContent')}"
-            OnContent="{x:Bind ResourceService.GetLocalized('/Settings/NetWorkMonitorOnContent')}">
+            OffContent="{x:Bind root:ResourceService.GetLocalized('/Settings/NetWorkMonitorOffContent')}"
+            OnContent="{x:Bind root:ResourceService.GetLocalized('/Settings/NetWorkMonitorOnContent')}">
 
             <i:Interaction.Behaviors>
                 <ic:EventTriggerBehavior EventName="Toggled">

@@ -1,19 +1,18 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Contracts.Root;
+﻿using GetStoreApp.Contracts.Command;
 using GetStoreApp.Converters.Formats;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
+using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Notifications;
+using GetStoreApp.ViewModels.Base;
 using Microsoft.UI.Xaml.Controls;
 using System.Text;
 
 namespace GetStoreApp.ViewModels.Dialogs.Download
 {
-    public class FileInformationViewModel : ObservableRecipient
+    public sealed class FileInformationViewModel : ViewModelBase
     {
-        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
-
         public string FileName { get; set; }
 
         public string FilePath { get; set; }
@@ -30,7 +29,11 @@ namespace GetStoreApp.ViewModels.Dialogs.Download
         {
             get { return _fileCheckState; }
 
-            set { SetProperty(ref _fileCheckState, value); }
+            set
+            {
+                _fileCheckState = value;
+                OnPropertyChanged();
+            }
         }
 
         private string _checkFileSHA1;
@@ -39,7 +42,11 @@ namespace GetStoreApp.ViewModels.Dialogs.Download
         {
             get { return _checkFileSHA1; }
 
-            set { SetProperty(ref _checkFileSHA1, value); }
+            set
+            {
+                _checkFileSHA1 = value;
+                OnPropertyChanged();
+            }
         }
 
         // 获取文件的SHA1值

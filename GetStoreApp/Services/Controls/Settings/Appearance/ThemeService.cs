@@ -1,7 +1,5 @@
-﻿using GetStoreApp.Contracts.Controls.Settings.Appearance;
-using GetStoreApp.Contracts.Root;
-using GetStoreApp.Helpers.Root;
-using GetStoreApp.Models.Controls.Settings.Appearance;
+﻿using GetStoreApp.Models.Controls.Settings.Appearance;
+using GetStoreApp.Services.Root;
 using GetStoreAppCore.Settings;
 using Microsoft.UI.Xaml;
 using System;
@@ -13,22 +11,20 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
     /// <summary>
     /// 应用主题设置服务
     /// </summary>
-    public class ThemeService : IThemeService
+    public static class ThemeService
     {
-        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
+        private static string SettingsKey { get; } = ConfigStorage.ConfigKey["ThemeKey"];
 
-        private string SettingsKey { get; init; } = ConfigStorage.ConfigKey["ThemeKey"];
+        private static ThemeModel DefaultAppTheme { get; set; }
 
-        private ThemeModel DefaultAppTheme { get; set; }
+        public static ThemeModel AppTheme { get; set; }
 
-        public ThemeModel AppTheme { get; set; }
-
-        public List<ThemeModel> ThemeList { get; set; }
+        public static List<ThemeModel> ThemeList { get; set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的主题值
         /// </summary>
-        public async Task InitializeThemeAsync()
+        public static async Task InitializeThemeAsync()
         {
             ThemeList = ResourceService.ThemeList;
 
@@ -40,7 +36,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// <summary>
         /// 获取设置存储的主题值，如果设置没有存储，使用默认值
         /// </summary>
-        private async Task<ThemeModel> GetThemeAsync()
+        private static async Task<ThemeModel> GetThemeAsync()
         {
             string theme = await ConfigStorage.ReadSettingAsync<string>(SettingsKey);
 
@@ -55,7 +51,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// <summary>
         /// 应用主题发生修改时修改设置存储的主题值
         /// </summary>
-        public async Task SetThemeAsync(ThemeModel theme)
+        public static async Task SetThemeAsync(ThemeModel theme)
         {
             AppTheme = theme;
 
@@ -65,7 +61,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// <summary>
         /// 设置应用显示的主题
         /// </summary>
-        public async Task SetAppThemeAsync()
+        public static async Task SetAppThemeAsync()
         {
             if (App.MainWindow.Content is FrameworkElement frameworkElement)
             {

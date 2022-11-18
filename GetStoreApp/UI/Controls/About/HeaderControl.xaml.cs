@@ -1,16 +1,10 @@
-﻿using GetStoreApp.Contracts.Root;
-using GetStoreApp.Helpers.Root;
-using GetStoreApp.ViewModels.Controls.About;
+﻿using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.UI.Controls.About
 {
     public sealed partial class HeaderControl : UserControl
     {
-        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
-
-        public HeaderViewModel ViewModel { get; } = ContainerHelper.GetInstance<HeaderViewModel>();
-
         public HeaderControl()
         {
             InitializeComponent();

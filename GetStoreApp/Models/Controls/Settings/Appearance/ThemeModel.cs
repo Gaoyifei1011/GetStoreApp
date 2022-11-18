@@ -15,7 +15,7 @@ namespace GetStoreApp.Models.Controls.Settings.Appearance
         }
 
         public static readonly DependencyProperty DisplayNameProperty =
-            DependencyProperty.Register("DisplayName", typeof(string), typeof(BackdropModel), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register("DisplayName", typeof(string), typeof(ThemeModel), new PropertyMetadata(string.Empty));
 
         /// <summary>
         /// 应用主题设置内部名称
@@ -27,6 +27,6 @@ namespace GetStoreApp.Models.Controls.Settings.Appearance
         }
 
         public static readonly DependencyProperty InternalNameProperty =
-            DependencyProperty.Register("InternalName", typeof(string), typeof(BackdropModel), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register("InternalName", typeof(string), typeof(ThemeModel), new PropertyMetadata(string.Empty));
     }
 }

@@ -6,7 +6,13 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Advanced"
     mc:Ignorable="d">
+
+    <UserControl.DataContext>
+        <settingsViewModel:InstallModeViewModel x:Name="ViewModel" />
+    </UserControl.DataContext>
 
     <Grid VerticalAlignment="Center" Style="{StaticResource CardGridStyle}">
         <Grid.ColumnDefinitions>
@@ -27,13 +33,13 @@
             <TextBlock
                 VerticalAlignment="Center"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="{x:Bind ResourceService.GetLocalized('/Settings/InstallMode')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/InstallMode')}" />
 
             <TextBlock
                 VerticalAlignment="Center"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                 Style="{StaticResource CaptionTextBlockStyle}"
-                Text="{x:Bind ResourceService.GetLocalized('/Settings/InstallModeDescription')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/InstallModeDescription')}" />
         </StackPanel>
 
         <Button
@@ -41,7 +47,7 @@
             VerticalAlignment="Center"
             Command="{x:Bind ViewModel.InstallModeTipCommand}"
             Style="{StaticResource ButtonInfoStyle}"
-            ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/InstallModeToolTip')}">
+            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Settings/InstallModeToolTip')}">
             <Button.Content>
                 <FontIcon
                     FontSize="16"
@@ -57,13 +63,7 @@
             DisplayMemberPath="DisplayName"
             ItemsSource="{x:Bind ViewModel.InstallModeList}"
             SelectedItem="{x:Bind ViewModel.InstallMode, Mode=TwoWay}"
-            ToolTipService.ToolTip="{x:Bind ViewModel.InstallMode.DisplayName, Mode=OneWay}">
-
-            <i:Interaction.Behaviors>
-                <ic:EventTriggerBehavior EventName="SelectionChanged">
-                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.InstallModeSelectCommand}" />
-                </ic:EventTriggerBehavior>
-            </i:Interaction.Behaviors>
-        </ComboBox>
+            SelectionChanged="{x:Bind ViewModel.OnSelectionChanged}"
+            ToolTipService.ToolTip="{x:Bind ViewModel.InstallMode.DisplayName, Mode=OneWay}" />
     </Grid>
 </UserControl>

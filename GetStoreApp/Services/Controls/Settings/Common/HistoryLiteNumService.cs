@@ -1,7 +1,5 @@
-﻿using GetStoreApp.Contracts.Controls.Settings.Common;
-using GetStoreApp.Contracts.Root;
-using GetStoreApp.Helpers.Root;
-using GetStoreApp.Models.Controls.Settings.Common;
+﻿using GetStoreApp.Models.Controls.Settings.Common;
+using GetStoreApp.Services.Root;
 using GetStoreAppCore.Settings;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,22 +9,20 @@ namespace GetStoreApp.Services.Controls.Settings.Common
     /// <summary>
     /// 应用历史记录显示数量设置服务
     /// </summary>
-    public class HistoryLiteNumService : IHistoryLiteNumService
+    public static class HistoryLiteNumService
     {
-        private string SettingsKey { get; init; } = ConfigStorage.ConfigKey["HistoryLiteNumKey"];
+        private static string SettingsKey { get; } = ConfigStorage.ConfigKey["HistoryLiteNumKey"];
 
-        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
+        private static HistoryLiteNumModel DefaultHistoryLiteNum { get; set; }
 
-        private HistoryLiteNumModel DefaultHistoryLiteNum { get; set; }
+        public static HistoryLiteNumModel HistoryLiteNum { get; set; }
 
-        public HistoryLiteNumModel HistoryLiteNum { get; set; }
-
-        public List<HistoryLiteNumModel> HistoryLiteNumList { get; set; }
+        public static List<HistoryLiteNumModel> HistoryLiteNumList { get; set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的历史记录显示数量值
         /// </summary>
-        public async Task InitializeHistoryLiteNumAsync()
+        public static async Task InitializeHistoryLiteNumAsync()
         {
             HistoryLiteNumList = ResourceService.HistoryLiteNumList;
 
@@ -38,7 +34,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// <summary>
         /// 获取设置存储的主题值，如果设置没有存储，使用默认值
         /// </summary>
-        private async Task<HistoryLiteNumModel> GetHistoryLiteNumAsync()
+        private static async Task<HistoryLiteNumModel> GetHistoryLiteNumAsync()
         {
             int? historyLiteNumValue = await ConfigStorage.ReadSettingAsync<int?>(SettingsKey);
 
@@ -53,7 +49,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// <summary>
         /// 历史记录显示数量发生修改时修改设置存储的历史记录显示数量值
         /// </summary>
-        public async Task SetHistoryLiteNumAsync(HistoryLiteNumModel historyLiteNum)
+        public static async Task SetHistoryLiteNumAsync(HistoryLiteNumModel historyLiteNum)
         {
             HistoryLiteNum = historyLiteNum;
 

@@ -1,37 +1,27 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Controls.History;
-using GetStoreApp.Contracts.Controls.Settings.Common;
-using GetStoreApp.Contracts.Root;
-using GetStoreApp.Contracts.Window;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.History;
 using GetStoreApp.Models.Controls.Home;
+using GetStoreApp.Services.Controls.History;
+using GetStoreApp.Services.Controls.Settings.Common;
+using GetStoreApp.Services.Root;
+using GetStoreApp.Services.Window;
+using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
 using GetStoreAppCore.Data;
 using GetStoreAppCore.Html;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Controls.Home
 {
-    public class RequestViewModel : ObservableRecipient
+    public sealed class RequestViewModel : ViewModelBase
     {
-        private IRegionService RegionService { get; } = ContainerHelper.GetInstance<IRegionService>();
-
-        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
-
-        private IStartupService StartupService { get; } = ContainerHelper.GetInstance<IStartupService>();
-
-        private IHistoryDBService HistoryDBService { get; } = ContainerHelper.GetInstance<IHistoryDBService>();
-
-        private ILinkFilterService LinkFilterService { get; } = ContainerHelper.GetInstance<ILinkFilterService>();
-
-        private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
-
         public List<TypeModel> TypeList => ResourceService.TypeList;
 
         public List<ChannelModel> ChannelList => ResourceService.ChannelList;
@@ -54,7 +44,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
         {
             get { return _selectedType; }
 
-            set { SetProperty(ref _selectedType, value); }
+            set
+            {
+                _selectedType = value;
+                OnPropertyChanged();
+            }
         }
 
         private int _selectedChannel = 3;
@@ -63,7 +57,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
         {
             get { return _selectedChannel; }
 
-            set { SetProperty(ref _selectedChannel, value); }
+            set
+            {
+                _selectedChannel = value;
+                OnPropertyChanged();
+            }
         }
 
         private string _linkPlaceHolderText;
@@ -72,7 +70,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
         {
             get { return _linkPlaceHolderText; }
 
-            set { SetProperty(ref _linkPlaceHolderText, value); }
+            set
+            {
+                _linkPlaceHolderText = value;
+                OnPropertyChanged();
+            }
         }
 
         private string _linkText;
@@ -81,7 +83,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
         {
             get { return _linkText; }
 
-            set { SetProperty(ref _linkText, value); }
+            set
+            {
+                _linkText = value;
+                OnPropertyChanged();
+            }
         }
 
         private bool _isGettingLinks;
@@ -90,17 +96,12 @@ namespace GetStoreApp.ViewModels.Controls.Home
         {
             get { return _isGettingLinks; }
 
-            set { SetProperty(ref _isGettingLinks, value); }
+            set
+            {
+                _isGettingLinks = value;
+                OnPropertyChanged();
+            }
         }
-
-        // 类型选择后修改样例文本
-        public IRelayCommand TypeSelectCommand => new RelayCommand(() =>
-        {
-            SampleLink = SampleLinkList[SelectedType];
-            LinkPlaceHolderText = SampleTitle + SampleLink;
-
-            LinkText = string.Empty;
-        });
 
         // 获取链接
         public IRelayCommand GetLinksCommand => new RelayCommand(async () =>
@@ -148,6 +149,25 @@ namespace GetStoreApp.ViewModels.Controls.Home
                     WeakReferenceMessenger.Default.UnregisterAll(this);
                 }
             });
+        }
+
+        /// <summary>
+        /// 类型选择后修改样例文本
+        /// </summary>
+        public void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
+        {
+            SampleLink = SampleLinkList[SelectedType];
+            LinkPlaceHolderText = SampleTitle + SampleLink;
+
+            LinkText = string.Empty;
+        }
+
+        /// <summary>
+        /// 获取链接
+        /// </summary>
+        public async void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            await GetLinksAsync();
         }
 
         /// <summary>

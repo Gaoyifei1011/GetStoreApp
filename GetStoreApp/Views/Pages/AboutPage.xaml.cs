@@ -1,7 +1,4 @@
-﻿using GetStoreApp.Contracts.Root;
-using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Root;
-using GetStoreApp.ViewModels.Pages;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Windows.Foundation;
@@ -10,10 +7,6 @@ namespace GetStoreApp.Views.Pages
 {
     public sealed partial class AboutPage : Page
     {
-        public IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
-
-        public AboutViewModel ViewModel { get; } = ContainerHelper.GetInstance<AboutViewModel>();
-
         public AboutPage()
         {
             InitializeComponent();

@@ -1,16 +1,18 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Contracts.Controls.Download;
-using GetStoreApp.Contracts.Controls.Settings.Common;
-using GetStoreApp.Contracts.Window;
+﻿using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Controls.Web;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
+using GetStoreApp.Services.Controls.Download;
+using GetStoreApp.Services.Controls.Settings.Common;
+using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
 using GetStoreApp.UI.Dialogs.ContentDialogs.Web;
 using GetStoreApp.UI.Notifications;
+using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Web.WebView2.Core;
 using System;
@@ -19,17 +21,9 @@ using Windows.Foundation;
 
 namespace GetStoreApp.ViewModels.Pages
 {
-    public class WebViewModel : ObservableRecipient
+    public sealed class WebViewModel : ViewModelBase
     {
         private const string DefaultUrl = "https://store.rg-adguard.net/";
-
-        private IDownloadDBService DownloadDBService { get; } = ContainerHelper.GetInstance<IDownloadDBService>();
-
-        private IDownloadSchedulerService DownloadSchedulerService { get; } = ContainerHelper.GetInstance<IDownloadSchedulerService>();
-
-        private IDownloadOptionsService DownloadOptionsService { get; } = ContainerHelper.GetInstance<IDownloadOptionsService>();
-
-        private INavigationService NavigationService { get; } = ContainerHelper.GetInstance<INavigationService>();
 
         public bool IsWebView2Installed => WebView2Helper.IsInstalled();
 
@@ -41,7 +35,11 @@ namespace GetStoreApp.ViewModels.Pages
         {
             get { return _canGoBack; }
 
-            set { SetProperty(ref _canGoBack, value); }
+            set
+            {
+                _canGoBack = value;
+                OnPropertyChanged();
+            }
         }
 
         private bool _canGoForward = false;
@@ -50,7 +48,11 @@ namespace GetStoreApp.ViewModels.Pages
         {
             get { return _canGoForward; }
 
-            set { SetProperty(ref _canGoForward, value); }
+            set
+            {
+                _canGoForward = value;
+                OnPropertyChanged();
+            }
         }
 
         private Uri _source;
@@ -59,7 +61,11 @@ namespace GetStoreApp.ViewModels.Pages
         {
             get { return _source; }
 
-            set { SetProperty(ref _source, value); }
+            set
+            {
+                _source = value;
+                OnPropertyChanged();
+            }
         }
 
         private bool _isLoading = true;
@@ -68,44 +74,12 @@ namespace GetStoreApp.ViewModels.Pages
         {
             get { return _isLoading; }
 
-            set { SetProperty(ref _isLoading, value); }
+            set
+            {
+                _isLoading = value;
+                OnPropertyChanged();
+            }
         }
-
-        // 初始化页面信息
-        public IRelayCommand LoadedCommand => new RelayCommand(() =>
-        {
-            Source = new Uri(DefaultUrl);
-        });
-
-        /// <summary>
-        /// 浏览器内核进程发生异常时对应的事件
-        /// </summary>
-        public IRelayCommand CoreProcessFailedCommand => new RelayCommand<CoreWebView2ProcessFailedEventArgs>(async (args) =>
-        {
-            // 显示异常信息错误原因，弹出对话框
-            if (!App.IsDialogOpening)
-            {
-                App.IsDialogOpening = true;
-                await new CoreWebView2FailedDialog(args).ShowAsync();
-                App.IsDialogOpening = false;
-            }
-        });
-
-        /// <summary>
-        /// 初始化CoreWebView2对象
-        /// </summary>
-        public IRelayCommand CoreWebView2InitializedCommand => new RelayCommand<WebView2>((webView) =>
-        {
-            if (CoreWebView is null && webView.CoreWebView2 is not null)
-            {
-                CoreWebView = webView.CoreWebView2;
-
-                // 挂载对应的事件
-                CoreWebView.NewWindowRequested += OnNewWindowRequested;
-                CoreWebView.SourceChanged += OnSourceChanged;
-                CoreWebView.DownloadStarting += OnDownloadStarting;
-            }
-        });
 
         // 网页后退
         public IRelayCommand BrowserBackCommand => new RelayCommand(() =>
@@ -137,17 +111,61 @@ namespace GetStoreApp.ViewModels.Pages
             await Windows.System.Launcher.LaunchUriAsync(Source);
         });
 
-        // 页面开始导航
-        public IRelayCommand NavigationStartingCommand => new RelayCommand(() =>
+        /// <summary>
+        /// 浏览器内核进程发生异常时对应的事件
+        /// </summary>
+        public async void OnCoreProcessFailed(object sender, CoreWebView2ProcessFailedEventArgs args)
         {
-            IsLoading = true;
-        });
+            // 显示异常信息错误原因，弹出对话框
+            if (!App.IsDialogOpening)
+            {
+                App.IsDialogOpening = true;
+                await new CoreWebView2FailedDialog(args).ShowAsync();
+                App.IsDialogOpening = false;
+            }
+        }
 
-        // 页面完成导航
-        public IRelayCommand NavigationCompletedCommand => new RelayCommand(() =>
+        /// <summary>
+        /// 初始化CoreWebView2对象
+        /// </summary>
+        public void OnCoreWebView2Initialized(object sender, CoreWebView2InitializedEventArgs args)
+        {
+            WebView2 webView = sender as WebView2;
+
+            if (CoreWebView is null && webView.CoreWebView2 is not null)
+            {
+                CoreWebView = webView.CoreWebView2;
+
+                // 挂载对应的事件
+                CoreWebView.NewWindowRequested += OnNewWindowRequested;
+                CoreWebView.SourceChanged += OnSourceChanged;
+                CoreWebView.DownloadStarting += OnDownloadStarting;
+            }
+        }
+
+        /// <summary>
+        /// 初始化页面信息
+        /// </summary>
+        public void OnWebView2Loaded(object sender, RoutedEventArgs args)
+        {
+            Source = new Uri(DefaultUrl);
+        }
+
+        /// <summary>
+        /// 页面完成导航
+        /// </summary>
+        public void OnWebView2NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs args)
         {
             IsLoading = false;
-        });
+        }
+
+        /// <summary>
+        /// 页面开始导航
+        /// </summary>
+        public void OnWebView2NavigationStarting(object sender, CoreWebView2NavigationStartingEventArgs args)
+        {
+            IsLoading = true;
+        }
 
         public void OnNavigatedFrom()
         {

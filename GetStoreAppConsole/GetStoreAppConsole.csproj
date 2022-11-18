@@ -48,10 +48,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="6.5.0" />
-  </ItemGroup>
-  
-  <ItemGroup>
     <ProjectReference Include="..\GetStoreAppCore\GetStoreAppCore.csproj" />
     <ProjectReference Include="..\GetStoreAppWindowsAPI\GetStoreAppWindowsAPI.csproj" />
   </ItemGroup>

@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Contracts.Root;
-using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Models.Controls.Home;
 using GetStoreApp.Models.Controls.Settings.Advanced;
 using GetStoreApp.Models.Controls.Settings.Appearance;
@@ -17,39 +16,39 @@ namespace GetStoreApp.Services.Root
     /// <summary>
     /// 应用资源服务
     /// </summary>
-    public class ResourceService : IResourceService
+    public static class ResourceService
     {
-        private LanguageModel DefaultAppLanguage { get; set; }
+        private static LanguageModel DefaultAppLanguage { get; set; }
 
-        private LanguageModel CurrentAppLanguage { get; set; }
+        private static LanguageModel CurrentAppLanguage { get; set; }
 
-        private ResourceContext DefaultResourceContext { get; set; } = new ResourceContext();
+        private static ResourceContext DefaultResourceContext { get; set; } = new ResourceContext();
 
-        private ResourceContext CurrentResourceContext { get; set; } = new ResourceContext();
+        private static ResourceContext CurrentResourceContext { get; set; } = new ResourceContext();
 
-        private ResourceMap ResourceMap { get; } = ResourceManager.Current.MainResourceMap.GetSubtree("Resources");
+        private static ResourceMap ResourceMap { get; } = ResourceManager.Current.MainResourceMap.GetSubtree("Resources");
 
-        public List<TypeModel> TypeList { get; } = new List<TypeModel>();
+        public static List<TypeModel> TypeList { get; } = new List<TypeModel>();
 
-        public List<ChannelModel> ChannelList { get; } = new List<ChannelModel>();
+        public static List<ChannelModel> ChannelList { get; } = new List<ChannelModel>();
 
-        public List<StatusBarStateModel> StatusBarStateList { get; } = new List<StatusBarStateModel>();
+        public static List<StatusBarStateModel> StatusBarStateList { get; } = new List<StatusBarStateModel>();
 
-        public List<AppExitModel> AppExitList { get; } = new List<AppExitModel>();
+        public static List<AppExitModel> AppExitList { get; } = new List<AppExitModel>();
 
-        public List<BackdropModel> BackdropList { get; } = new List<BackdropModel>();
+        public static List<BackdropModel> BackdropList { get; } = new List<BackdropModel>();
 
-        public List<DownloadModeModel> DownloadModeList { get; } = new List<DownloadModeModel>();
+        public static List<DownloadModeModel> DownloadModeList { get; } = new List<DownloadModeModel>();
 
-        public List<HistoryLiteNumModel> HistoryLiteNumList { get; } = new List<HistoryLiteNumModel>();
+        public static List<HistoryLiteNumModel> HistoryLiteNumList { get; } = new List<HistoryLiteNumModel>();
 
-        public List<InstallModeModel> InstallModeList { get; } = new List<InstallModeModel>();
+        public static List<InstallModeModel> InstallModeList { get; } = new List<InstallModeModel>();
 
-        public List<ThemeModel> ThemeList { get; } = new List<ThemeModel>();
+        public static List<ThemeModel> ThemeList { get; } = new List<ThemeModel>();
 
-        public List<TraceCleanupModel> TraceCleanupList { get; } = new List<TraceCleanupModel>();
+        public static List<TraceCleanupModel> TraceCleanupList { get; } = new List<TraceCleanupModel>();
 
-        public async Task InitializeResourceAsync(LanguageModel defaultAppLanguage, LanguageModel currentAppLanguage)
+        public static async Task InitializeResourceAsync(LanguageModel defaultAppLanguage, LanguageModel currentAppLanguage)
         {
             DefaultAppLanguage = defaultAppLanguage;
             CurrentAppLanguage = currentAppLanguage;
@@ -73,7 +72,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 初始化类型列表
         /// </summary>
-        private void InitializeTypeList()
+        private static void InitializeTypeList()
         {
             TypeList.Add(new TypeModel
             {
@@ -107,7 +106,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 初始化通道信息列表
         /// </summary>
-        private void InitializeChannelList()
+        private static void InitializeChannelList()
         {
             ChannelList.Add(new ChannelModel
             {
@@ -141,7 +140,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 初始化状态栏信息列表
         /// </summary>
-        private void InitializeStatusBarStateList()
+        private static void InitializeStatusBarStateList()
         {
             StatusBarStateList.Add(new StatusBarStateModel
             {
@@ -176,7 +175,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 初始化应用退出内容列表
         /// </summary>
-        private void InitializeAppExitList()
+        private static void InitializeAppExitList()
         {
             AppExitList.Add(new AppExitModel
             {
@@ -193,7 +192,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 初始化应用背景色信息列表
         /// </summary>
-        private void InitializeBackdropList()
+        private static void InitializeBackdropList()
         {
             BackdropList.Add(new BackdropModel
             {
@@ -223,7 +222,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 初始化应用下载方式列表
         /// </summary>
-        private void InitializeDownloadModeList()
+        private static void InitializeDownloadModeList()
         {
             DownloadModeList.Add(new DownloadModeModel
             {
@@ -240,7 +239,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 初始化历史记录显示数量信息列表
         /// </summary>
-        private void InitializeHistoryLiteNumList()
+        private static void InitializeHistoryLiteNumList()
         {
             HistoryLiteNumList.Add(new HistoryLiteNumModel
             {
@@ -257,7 +256,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 初始化安装模式信息列表
         /// </summary>
-        private void InitializeInstallModeList()
+        private static void InitializeInstallModeList()
         {
             InstallModeList.Add(new InstallModeModel
             {
@@ -274,7 +273,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 初始化应用主题信息列表
         /// </summary>
-        private void InitializeThemeList()
+        private static void InitializeThemeList()
         {
             ThemeList.Add(new ThemeModel
             {
@@ -293,7 +292,7 @@ namespace GetStoreApp.Services.Root
             });
         }
 
-        private void InitializeTraceCleanupList()
+        private static void InitializeTraceCleanupList()
         {
             TraceCleanupList.Add(new TraceCleanupModel
             {
@@ -324,7 +323,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// UI字符串本地化
         /// </summary>
-        public string GetLocalized(string resource)
+        public static string GetLocalized(string resource)
         {
             try
             {

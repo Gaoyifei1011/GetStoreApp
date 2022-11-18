@@ -4,9 +4,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:notificationViewModel="using:GetStoreApp.ViewModels.Notifications"
+    xmlns:root="using:GetStoreApp.Services.Root"
     Loaded="{x:Bind NotificationLoaded}"
     Unloaded="{x:Bind NotificationUnLoaded}"
     mc:Ignorable="d">
+
+    <UserControl.DataContext>
+        <notificationViewModel:ResultIDCopyViewModel x:Name="ViewModel" />
+    </UserControl.DataContext>
 
     <UserControl.Resources>
         <Storyboard x:Name="PopupIn" Completed="{x:Bind PopupInCompleted}">
@@ -75,11 +81,11 @@
             x:Name="CopySuccess"
             x:Load="{x:Bind ViewModel.CopyState, Mode=OneWay}"
             Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
-            Text="{x:Bind ResourceService.GetLocalized('/Notification/ResultIDCopySuccessfully')}" />
+            Text="{x:Bind root:ResourceService.GetLocalized('/Notification/ResultIDCopySuccessfully')}" />
         <TextBlock
             x:Name="CopyFailed"
             x:Load="{x:Bind ViewModel.CopyState, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
             Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
-            Text="{x:Bind ResourceService.GetLocalized('/Notification/ResultIDCopyFailed')}" />
+            Text="{x:Bind root:ResourceService.GetLocalized('/Notification/ResultIDCopyFailed')}" />
     </StackPanel>
 </UserControl>

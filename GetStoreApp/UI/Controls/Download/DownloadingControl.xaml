@@ -5,23 +5,22 @@
     xmlns:converter="using:GetStoreApp.Converters.Formats"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:download="using:GetStoreApp.Models.Controls.Download"
-    xmlns:i="using:Microsoft.Xaml.Interactivity"
-    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:downloadViewModel="using:GetStoreApp.ViewModels.Controls.Download"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:sys="using:System"
     x:Name="DownloadingRoot"
+    Unloaded="{x:Bind ViewModel.OnUnloaded}"
     mc:Ignorable="d">
+
+    <UserControl.DataContext>
+        <downloadViewModel:DownloadingViewModel x:Name="ViewModel" />
+    </UserControl.DataContext>
 
     <UserControl.Resources>
         <converter:CheckBoxToolTipFormatConverter x:Name="CheckBoxToolTipFormatConverter" />
         <converter:DownloadProgressFormatConverter x:Name="DownloadProgressFormatConverter" />
     </UserControl.Resources>
-
-    <i:Interaction.Behaviors>
-        <ic:EventTriggerBehavior EventName="Unloaded">
-            <ic:InvokeCommandAction Command="{x:Bind ViewModel.UnloadedCommand}" />
-        </ic:EventTriggerBehavior>
-    </i:Interaction.Behaviors>
 
     <Grid Padding="0">
         <Grid.RowDefinitions>
@@ -51,7 +50,7 @@
             <TextBlock
                 Grid.Column="1"
                 VerticalAlignment="Center"
-                Text="{x:Bind ResourceService.GetLocalized('/Download/Operation')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('/Download/Operation')}" />
             <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
 
             <TextBlock
@@ -70,8 +69,8 @@
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.OpenFolderCommand}"
-                    Label="{x:Bind ResourceService.GetLocalized('/Download/OpenFolder')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/OpenFolderToolTip')}">
+                    Label="{x:Bind root:ResourceService.GetLocalized('/Download/OpenFolder')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Download/OpenFolderToolTip')}">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE8b7;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
@@ -80,8 +79,8 @@
                 <AppBarButton
                     Command="{x:Bind ViewModel.PauseAllCommand}"
                     IsEnabled="{x:Bind sys:Convert.ToBoolean(ViewModel.DownloadingDataList.Count), Mode=OneWay}"
-                    Label="{x:Bind ResourceService.GetLocalized('/Download/PauseAll')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/PauseAllToolTip')}">
+                    Label="{x:Bind root:ResourceService.GetLocalized('/Download/PauseAll')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Download/PauseAllToolTip')}">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE769;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
@@ -90,8 +89,8 @@
                 <AppBarButton
                     Command="{x:Bind ViewModel.SelectCommand}"
                     IsEnabled="{x:Bind sys:Convert.ToBoolean(ViewModel.DownloadingDataList.Count), Mode=OneWay}"
-                    Label="{x:Bind ResourceService.GetLocalized('/Download/Select')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SelectToolTip')}">
+                    Label="{x:Bind root:ResourceService.GetLocalized('/Download/Select')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Download/SelectToolTip')}">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE762;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
@@ -108,8 +107,8 @@
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.SelectAllCommand}"
-                    Label="{x:Bind ResourceService.GetLocalized('/Download/SelectAll')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SelectAll')}">
+                    Label="{x:Bind root:ResourceService.GetLocalized('/Download/SelectAll')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Download/SelectAll')}">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE8b3;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
@@ -117,8 +116,8 @@
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.SelectNoneCommand}"
-                    Label="{x:Bind ResourceService.GetLocalized('/Download/SelectNone')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/SelectNone')}">
+                    Label="{x:Bind root:ResourceService.GetLocalized('/Download/SelectNone')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Download/SelectNone')}">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE8e6;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
@@ -126,8 +125,8 @@
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.DeleteSelectedCommand}"
-                    Label="{x:Bind ResourceService.GetLocalized('/Download/DeleteSelected')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/DeleteSelectedToolTip')}">
+                    Label="{x:Bind root:ResourceService.GetLocalized('/Download/DeleteSelected')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Download/DeleteSelectedToolTip')}">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE74d;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
@@ -135,8 +134,8 @@
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.CancelCommand}"
-                    Label="{x:Bind ResourceService.GetLocalized('/Download/Cancel')}"
-                    ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/CancelToolTip')}">
+                    Label="{x:Bind root:ResourceService.GetLocalized('/Download/Cancel')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Download/CancelToolTip')}">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE711;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
@@ -152,9 +151,9 @@
             <TextBlock
                 Margin="0,10"
                 VerticalAlignment="Center"
-                Text="{x:Bind ResourceService.GetLocalized('/Download/DownloadingEmptyDescription')}"
+                Text="{x:Bind root:ResourceService.GetLocalized('/Download/DownloadingEmptyDescription')}"
                 TextAlignment="Center"
-                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Download/DownloadingEmptyDescription')}" />
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Download/DownloadingEmptyDescription')}" />
         </Grid>
 
         <ScrollViewer
@@ -168,16 +167,11 @@
             <ListView
                 Padding="30,0,30,30"
                 IsItemClickEnabled="{x:Bind ViewModel.IsSelectMode, Mode=OneWay}"
+                ItemClick="{x:Bind ViewModel.OnItemClick}"
                 ItemContainerStyle="{StaticResource ListPickerFlyoutPresenterItemStyle}"
                 ItemsSource="{x:Bind ViewModel.DownloadingDataList, Mode=OneWay}"
                 SelectionMode="None"
                 Visibility="{x:Bind ViewModel.DownloadingDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
-
-                <i:Interaction.Behaviors>
-                    <ic:EventTriggerBehavior EventName="ItemClick">
-                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.ItemClickCommand}" />
-                    </ic:EventTriggerBehavior>
-                </i:Interaction.Behaviors>
 
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="download:DownloadingModel">
@@ -196,7 +190,7 @@
                                 IsThreeState="False"
                                 Style="{StaticResource CheckBoxStyle}"
                                 ToolTipService.ToolTip="{x:Bind IsSelected, Converter={StaticResource CheckBoxToolTipFormatConverter}, ConverterParameter=Download, Mode=OneWay}"
-                                Visibility="{Binding ElementName=DownloadingRoot, Path=ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
+                                Visibility="{Binding ElementName=DownloadingRoot, Path=DataContext.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
 
                             <Grid
                                 Grid.Column="1"
@@ -260,12 +254,12 @@
                                 Margin="10,0,0,0"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
-                                IsEnabled="{Binding ElementName=DownloadingRoot, Path=ViewModel.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}">
+                                IsEnabled="{Binding ElementName=DownloadingRoot, Path=DataContext.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}">
 
                                 <StackPanel Orientation="Horizontal">
 
                                     <Button
-                                        Command="{Binding ElementName=DownloadingRoot, Path=ViewModel.PauseCommand, Mode=OneTime}"
+                                        Command="{Binding ElementName=DownloadingRoot, Path=DataContext.PauseCommand, Mode=OneTime}"
                                         CommandParameter="{Binding}"
                                         Style="{StaticResource ButtonDownloadStyle}"
                                         ToolTipService.ToolTip="{Binding ElementName=DownloadingRoot, Path=PauseToolTip, Mode=OneTime}">
@@ -275,7 +269,7 @@
                                     </Button>
 
                                     <Button
-                                        Command="{Binding ElementName=DownloadingRoot, Path=ViewModel.DeleteCommand, Mode=OneTime}"
+                                        Command="{Binding ElementName=DownloadingRoot, Path=DataContext.DeleteCommand, Mode=OneTime}"
                                         CommandParameter="{Binding}"
                                         Style="{StaticResource ButtonDownloadStyle}"
                                         ToolTipService.ToolTip="{Binding ElementName=DownloadingRoot, Path=DeleteToolTip, Mode=OneTime}">

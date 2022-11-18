@@ -1,11 +1,10 @@
-﻿using GetStoreApp.Contracts.Controls.Download;
-using GetStoreApp.Contracts.Controls.Settings.Common;
-using GetStoreApp.Contracts.Controls.Settings.Experiment;
-using GetStoreApp.Contracts.Root;
-using GetStoreApp.Extensions.DataType.Collections;
+﻿using GetStoreApp.Extensions.DataType.Collections;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
+using GetStoreApp.Services.Controls.Settings.Common;
+using GetStoreApp.Services.Controls.Settings.Experiment;
+using GetStoreApp.Services.Root;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,41 +15,31 @@ namespace GetStoreApp.Services.Controls.Download
     /// <summary>
     /// 下载调度服务
     /// </summary>
-    public class DownloadSchedulerService : IDownloadSchedulerService
+    public static class DownloadSchedulerService
     {
         // 临界区资源访问互斥锁
-        private readonly object IsUpdatingNowLock = new object();
+        private static readonly object IsUpdatingNowLock = new object();
 
-        private readonly object IsNetWorkConnectedLock = new object();
+        private static readonly object IsNetWorkConnectedLock = new object();
 
         // 标志信息是否在更新中
-        private bool IsUpdatingNow = false;
+        private static bool IsUpdatingNow = false;
 
-        private bool IsNetWorkConnected = true;
-
-        private IAria2Service Aria2Service { get; } = ContainerHelper.GetInstance<IAria2Service>();
-
-        private IDownloadDBService DownloadDBService { get; } = ContainerHelper.GetInstance<IDownloadDBService>();
-
-        private IAppNotificationService AppNotificationService { get; } = ContainerHelper.GetInstance<IAppNotificationService>();
-
-        private IDownloadOptionsService DownloadOptionsService { get; } = ContainerHelper.GetInstance<IDownloadOptionsService>();
-
-        private INetWorkMonitorService NetWorkMonitorService { get; } = ContainerHelper.GetInstance<INetWorkMonitorService>();
+        private static bool IsNetWorkConnected = true;
 
         // 下载调度器
-        private Timer DownloadSchedulerTimer { get; } = new Timer(1000);
+        private static Timer DownloadSchedulerTimer { get; } = new Timer(1000);
 
         // 下载中任务列表（带通知）
-        public NotifyList<BackgroundModel> DownloadingList { get; } = new NotifyList<BackgroundModel>();
+        public static NotifyList<BackgroundModel> DownloadingList { get; } = new NotifyList<BackgroundModel>();
 
         // 等待下载任务列表（带通知）
-        public NotifyList<BackgroundModel> WaitingList { get; } = new NotifyList<BackgroundModel>();
+        public static NotifyList<BackgroundModel> WaitingList { get; } = new NotifyList<BackgroundModel>();
 
         /// <summary>
         /// 先获取当前网络状态信息，然后初始化下载监控任务
         /// </summary>
-        public async Task InitializeDownloadSchedulerAsync()
+        public static async Task InitializeDownloadSchedulerAsync()
         {
             // 查看是否开启了网络监控服务
             if (NetWorkMonitorService.NetWorkMonitorValue)
@@ -73,7 +62,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 关闭下载监控任务
         /// </summary>
-        public async Task CloseDownloadSchedulerAsync()
+        public static async Task CloseDownloadSchedulerAsync()
         {
             DownloadSchedulerTimer.Stop();
             DownloadSchedulerTimer.Elapsed -= DownloadSchedulerTimerElapsed;
@@ -84,7 +73,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 添加下载任务
         /// </summary>
-        public async Task<bool> AddTaskAsync(BackgroundModel backgroundItem, string operation)
+        public static async Task<bool> AddTaskAsync(BackgroundModel backgroundItem, string operation)
         {
             // 有信息在更新时，等待操作
             while (IsUpdatingNow)
@@ -138,7 +127,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 继续下载任务
         /// </summary>
-        public async Task<bool> ContinueTaskAsync(BackgroundModel downloadItem)
+        public static async Task<bool> ContinueTaskAsync(BackgroundModel downloadItem)
         {
             // 有信息在更新时，等待操作
             while (IsUpdatingNow)
@@ -174,7 +163,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 暂停下载任务
         /// </summary>
-        public async Task<bool> PauseTaskAsync(string downloadKey, string gID, int downloadFlag)
+        public static async Task<bool> PauseTaskAsync(string downloadKey, string gID, int downloadFlag)
         {
             // 有信息在更新时，等待操作
             while (IsUpdatingNow)
@@ -241,7 +230,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 暂停全部下载任务
         /// </summary>
-        public async Task PauseAllTaskAsync()
+        public static async Task PauseAllTaskAsync()
         {
             // 有信息在更新时，等待操作
             while (IsUpdatingNow)
@@ -302,7 +291,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 删除下载任务
         /// </summary>
-        public async Task<bool> DeleteTaskAsync(string downloadKey, string gID, int downloadFlag)
+        public static async Task<bool> DeleteTaskAsync(string downloadKey, string gID, int downloadFlag)
         {
             // 有信息在更新时，等待操作
             while (IsUpdatingNow)
@@ -370,7 +359,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 定时计划添加下载任务，更新下载任务信息
         /// </summary>
-        private async void DownloadSchedulerTimerElapsed(object sender, ElapsedEventArgs args)
+        private static async void DownloadSchedulerTimerElapsed(object sender, ElapsedEventArgs args)
         {
             // 查看是否开启了网络监控服务
             if (NetWorkMonitorService.NetWorkMonitorValue)
@@ -404,7 +393,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 定时检查网络是否处于连接状态
         /// </summary>
-        private async Task ScheduledGetNetWorkAsync()
+        private static async Task ScheduledGetNetWorkAsync()
         {
             NetWorkStatus NetStatus = NetWorkHelper.GetNetWorkStatus();
 
@@ -449,7 +438,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 定时计划添加下载任务
         /// </summary>
-        private async Task ScheduledAddTaskAsync()
+        private static async Task ScheduledAddTaskAsync()
         {
             // 如果仍然存在等待下载的任务，并且当前正在下载的数量并未到达阈值时，开始下载
             while (WaitingList.Count > 0 && DownloadingList.Count < DownloadOptionsService.DownloadItem)
@@ -484,7 +473,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 定时计划更新下载队列信息
         /// </summary>
-        private async Task ScheduledUpdateStatusAsync()
+        private static async Task ScheduledUpdateStatusAsync()
         {
             // 当下载队列中仍然还存在下载任务时，更新正在下载的任务信息
             if (DownloadingList.Count > 0)

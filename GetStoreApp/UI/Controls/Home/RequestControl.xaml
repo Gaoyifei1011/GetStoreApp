@@ -3,10 +3,14 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:i="using:Microsoft.Xaml.Interactivity"
-    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:homeViewModel="using:GetStoreApp.ViewModels.Controls.Home"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
     mc:Ignorable="d">
+
+    <UserControl.DataContext>
+        <homeViewModel:RequestViewModel x:Name="ViewModel" />
+    </UserControl.DataContext>
 
     <Grid ColumnSpacing="6">
         <Grid.ColumnDefinitions>
@@ -21,14 +25,8 @@
             DisplayMemberPath="DisplayName"
             ItemsSource="{x:Bind ViewModel.TypeList}"
             SelectedIndex="{x:Bind ViewModel.SelectedType, Mode=TwoWay}"
-            ToolTipService.ToolTip="{x:Bind GetSelectedTypeName(ViewModel.SelectedType), Mode=OneWay}">
-
-            <i:Interaction.Behaviors>
-                <ic:EventTriggerBehavior EventName="SelectionChanged">
-                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.TypeSelectCommand}" />
-                </ic:EventTriggerBehavior>
-            </i:Interaction.Behaviors>
-        </ComboBox>
+            SelectionChanged="{x:Bind ViewModel.OnSelectionChanged}"
+            ToolTipService.ToolTip="{x:Bind GetSelectedTypeName(ViewModel.SelectedType), Mode=OneWay}" />
 
         <ComboBox
             Grid.Column="1"
@@ -42,22 +40,17 @@
             IsEnabled="{x:Bind ViewModel.IsGettingLinks, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
             IsSuggestionListOpen="False"
             PlaceholderText="{x:Bind ViewModel.LinkPlaceHolderText, Mode=OneWay}"
-            Text="{x:Bind ViewModel.LinkText, Mode=TwoWay}">
-            <i:Interaction.Behaviors>
-                <ic:EventTriggerBehavior EventName="QuerySubmitted">
-                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.GetLinksCommand}" />
-                </ic:EventTriggerBehavior>
-            </i:Interaction.Behaviors>
-        </AutoSuggestBox>
+            QuerySubmitted="{x:Bind ViewModel.OnQuerySubmitted}"
+            Text="{x:Bind ViewModel.LinkText, Mode=TwoWay}" />
 
         <Button
             Grid.Column="3"
             HorizontalAlignment="Center"
             VerticalAlignment="Bottom"
             Command="{x:Bind ViewModel.GetLinksCommand}"
-            Content="{x:Bind ResourceService.GetLocalized('/Home/GetLinks')}"
+            Content="{x:Bind root:ResourceService.GetLocalized('/Home/GetLinks')}"
             IsEnabled="{x:Bind ViewModel.IsGettingLinks, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
             Style="{StaticResource AccentButtonStyle}"
-            ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Home/GetLinks')}" />
+            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Home/GetLinks')}" />
     </Grid>
 </UserControl>

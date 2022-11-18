@@ -1,7 +1,7 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using GetStoreApp.Contracts.Root;
+﻿using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.Helpers.Root;
+using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Notifications;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Web.WebView2.Core;
@@ -10,10 +10,8 @@ using System.Text;
 
 namespace GetStoreApp.ViewModels.Dialogs.Web
 {
-    public class CoreWebView2FailedViewModel : ObservableRecipient
+    public sealed class CoreWebView2FailedViewModel
     {
-        private IResourceService ResourceService { get; } = ContainerHelper.GetInstance<IResourceService>();
-
         public string ProcessFailedKind { get; set; }
 
         public string Reason { get; set; }

@@ -7,9 +7,15 @@
     xmlns:common="using:GetStoreApp.UI.Controls.Settings.Common"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pageViewModel="using:GetStoreApp.ViewModels.Pages"
+    xmlns:root="using:GetStoreApp.Services.Root"
     Loaded="{x:Bind SettingsLoaded}"
     NavigationCacheMode="Required"
     mc:Ignorable="d">
+
+    <Page.DataContext>
+        <pageViewModel:SettingsViewModel x:Name="ViewModel" />
+    </Page.DataContext>
 
     <Grid Padding="0">
 
@@ -27,13 +33,13 @@
             <TextBlock
                 Grid.Column="0"
                 FontSize="26"
-                Text="{x:Bind ResourceService.GetLocalized('/Settings/Title')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/Title')}" />
 
             <Button
                 Grid.Column="1"
                 Command="{x:Bind ViewModel.RestartCommand}"
-                Content="{x:Bind ResourceService.GetLocalized('/Settings/RestartApp')}"
-                ToolTipService.ToolTip="{x:Bind ResourceService.GetLocalized('/Settings/RestartAppToolTip')}" />
+                Content="{x:Bind root:ResourceService.GetLocalized('/Settings/RestartApp')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Settings/RestartAppToolTip')}" />
         </Grid>
 
         <ScrollViewer
@@ -53,7 +59,7 @@
                     Margin="0,0,0,5"
                     FontSize="16"
                     Style="{StaticResource BodyTextBlockStyle}"
-                    Text="{x:Bind ResourceService.GetLocalized('/Settings/Appearance')}" />
+                    Text="{x:Bind root:ResourceService.GetLocalized('/Settings/Appearance')}" />
 
                 <appearance:ThemeControl />
 
@@ -69,7 +75,7 @@
                     Margin="0,5"
                     FontSize="16"
                     Style="{StaticResource BodyTextBlockStyle}"
-                    Text="{x:Bind ResourceService.GetLocalized('/Settings/General')}" />
+                    Text="{x:Bind root:ResourceService.GetLocalized('/Settings/General')}" />
 
                 <common:NotificationControl />
 
@@ -87,7 +93,7 @@
                     Margin="0,5"
                     FontSize="16"
                     Style="{StaticResource BodyTextBlockStyle}"
-                    Text="{x:Bind ResourceService.GetLocalized('/Settings/Advanced')}" />
+                    Text="{x:Bind root:ResourceService.GetLocalized('/Settings/Advanced')}" />
 
                 <advanced:InstallModeControl />
 

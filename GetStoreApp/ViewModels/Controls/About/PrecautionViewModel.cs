@@ -1,11 +1,11 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+﻿using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.UI.Dialogs.ContentDialogs.About;
 using System;
 
 namespace GetStoreApp.ViewModels.Controls.About
 {
-    public class PrecautionViewModel : ObservableRecipient
+    public sealed class PrecautionViewModel
     {
         // 区分传统桌面应用
         public IRelayCommand RecognizeCommand => new RelayCommand(async () =>

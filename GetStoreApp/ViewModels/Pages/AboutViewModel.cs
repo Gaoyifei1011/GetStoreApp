@@ -1,11 +1,11 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+﻿using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
 using GetStoreApp.UI.Dialogs.ContentDialogs.About;
 using System;
 
 namespace GetStoreApp.ViewModels.Pages
 {
-    public class AboutViewModel : ObservableRecipient
+    public sealed class AboutViewModel
     {
         // 查看更新日志
         public IRelayCommand ShowReleaseNotesCommand => new RelayCommand(async () =>

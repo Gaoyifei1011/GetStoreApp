@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
     Loaded="{x:Bind NotificationLoaded}"
     Unloaded="{x:Bind NotificationUnLoaded}"
     mc:Ignorable="d">
@@ -71,6 +72,6 @@
             <TranslateTransform Y="-10" />
         </StackPanel.RenderTransform>
 
-        <TextBlock Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}" Text="{x:Bind ResourceService.GetLocalized('/Notification/NetWorkError')}" />
+        <TextBlock Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}" Text="{x:Bind root:ResourceService.GetLocalized('/Notification/NetWorkError')}" />
     </StackPanel>
 </UserControl>

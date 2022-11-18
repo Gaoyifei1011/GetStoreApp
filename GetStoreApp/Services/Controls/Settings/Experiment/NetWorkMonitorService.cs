@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Contracts.Controls.Settings.Experiment;
-using GetStoreAppCore.Settings;
+﻿using GetStoreAppCore.Settings;
 using System;
 using System.Threading.Tasks;
 
@@ -8,18 +7,18 @@ namespace GetStoreApp.Services.Controls.Settings.Experiment
     /// <summary>
     /// 实验性功能：下载文件时开启网络监控状态
     /// </summary>
-    public class NetWorkMonitorService : INetWorkMonitorService
+    public static class NetWorkMonitorService
     {
-        private string SettingsKey { get; init; } = ConfigStorage.ConfigKey["NetWorkMonitorKey"];
+        private static string SettingsKey { get; } = ConfigStorage.ConfigKey["NetWorkMonitorKey"];
 
-        private bool DefaultNetWorkMonitorValue => true;
+        private static bool DefaultNetWorkMonitorValue => true;
 
-        public bool NetWorkMonitorValue { get; set; }
+        public static bool NetWorkMonitorValue { get; set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的网络监控开启值
         /// </summary>
-        public async Task InitializeNetWorkMonitorValueAsync()
+        public static async Task InitializeNetWorkMonitorValueAsync()
         {
             NetWorkMonitorValue = await GetNetWorkMonitorValueAsync();
         }
@@ -27,7 +26,7 @@ namespace GetStoreApp.Services.Controls.Settings.Experiment
         /// <summary>
         /// 获取设置存储的网络监控开启值，如果设置没有存储，使用默认值
         /// </summary>
-        private async Task<bool> GetNetWorkMonitorValueAsync()
+        private static async Task<bool> GetNetWorkMonitorValueAsync()
         {
             bool? netWorkMonitorValue = await ConfigStorage.ReadSettingAsync<bool?>(SettingsKey);
 
@@ -42,7 +41,7 @@ namespace GetStoreApp.Services.Controls.Settings.Experiment
         /// <summary>
         /// 网络监控开启值发生修改时修改设置存储的网络监控开启值
         /// </summary>
-        public async Task SetNetWorkMonitorValueAsync(bool netWorkMonitorValue)
+        public static async Task SetNetWorkMonitorValueAsync(bool netWorkMonitorValue)
         {
             NetWorkMonitorValue = netWorkMonitorValue;
 
@@ -52,7 +51,7 @@ namespace GetStoreApp.Services.Controls.Settings.Experiment
         /// <summary>
         /// 恢复默认网络监控开启值
         /// </summary>
-        public async Task RestoreDefaultValueAsync()
+        public static async Task RestoreDefaultValueAsync()
         {
             NetWorkMonitorValue = DefaultNetWorkMonitorValue;
 
