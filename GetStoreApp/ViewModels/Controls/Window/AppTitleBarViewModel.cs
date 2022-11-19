@@ -1,6 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Messages;
 using GetStoreApp.Services.Controls.Settings.Appearance;
@@ -18,42 +16,56 @@ namespace GetStoreApp.ViewModels.Controls.Window
 {
     public sealed class AppTitleBarViewModel
     {
-        // 初始化自定义标题栏
-        public IRelayCommand LoadedCommand => new RelayCommand<Grid>((appTitleBar) =>
+        /// <summary>
+        /// 初始化自定义标题栏
+        /// </summary>
+        public void OnLoaded(object sender, RoutedEventArgs args)
         {
-            SetTitleBarColor();
-
-            SetDragRectangles(Convert.ToInt32(appTitleBar.Margin.Left), appTitleBar.ActualWidth, appTitleBar.ActualHeight);
-
-            ((FrameworkElement)App.MainWindow.Content).ActualThemeChanged += WindowThemeChanged;
-
-            // 应用主题设置跟随系统发生变化时，当系统主题设置发生变化时修改标题栏按钮主题
-            WeakReferenceMessenger.Default.Register<AppTitleBarViewModel, SystemSettingsChnagedMessage>(this, (appTitleBarViewModel, systemSettingsChangedMessage) =>
+            Grid appTitleBar = sender as Grid;
+            if (appTitleBar is not null)
             {
-                if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[0].InternalName)
+                SetTitleBarColor();
+
+                SetDragRectangles(Convert.ToInt32(appTitleBar.Margin.Left), appTitleBar.ActualWidth, appTitleBar.ActualHeight);
+
+                ((FrameworkElement)App.MainWindow.Content).ActualThemeChanged += OnActualThemeChanged;
+
+                // 应用主题设置跟随系统发生变化时，当系统主题设置发生变化时修改标题栏按钮主题
+                WeakReferenceMessenger.Default.Register<AppTitleBarViewModel, SystemSettingsChnagedMessage>(this, (appTitleBarViewModel, systemSettingsChangedMessage) =>
                 {
-                    SetTitleBarButtonColor(RegistryHelper.GetRegistryAppTheme());
-                }
-            });
-        });
+                    if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[0].InternalName)
+                    {
+                        SetTitleBarButtonColor(RegistryHelper.GetRegistryAppTheme());
+                    }
+                });
+            }
+        }
 
-        // 控件被卸载时，关闭所有事件，关闭消息服务
-        public IRelayCommand UnLoadedCommand => new RelayCommand(() =>
+        /// <summary>
+        /// 控件大小发生变化时，修改拖动区域
+        /// </summary>
+        public void OnSizeChanged(object sender, RoutedEventArgs args)
         {
-            ((FrameworkElement)App.MainWindow.Content).ActualThemeChanged -= WindowThemeChanged;
+            Grid appTitleBar = sender as Grid;
+            if (appTitleBar is not null)
+            {
+                SetDragRectangles(Convert.ToInt32(appTitleBar.Margin.Left), appTitleBar.ActualWidth, appTitleBar.ActualHeight);
+            }
+        }
+
+        /// <summary>
+        /// 控件被卸载时，关闭所有事件，关闭消息服务
+        /// </summary>
+        public void OnUnloaded(object sender, RoutedEventArgs args)
+        {
+            ((FrameworkElement)App.MainWindow.Content).ActualThemeChanged -= OnActualThemeChanged;
             WeakReferenceMessenger.Default.UnregisterAll(this);
-        });
-
-        // 控件大小发生变化时，修改拖动区域
-        public IRelayCommand SizeChangedCommand => new RelayCommand<Grid>((appTitleBar) =>
-        {
-            SetDragRectangles(Convert.ToInt32(appTitleBar.Margin.Left), appTitleBar.ActualWidth, appTitleBar.ActualHeight);
-        });
+        }
 
         /// <summary>
         /// 设置主题发生变化时修改标题栏按钮的主题
         /// </summary>
-        private void WindowThemeChanged(FrameworkElement sender, object args)
+        private void OnActualThemeChanged(FrameworkElement sender, object args)
         {
             SetTitleBarColor();
         }

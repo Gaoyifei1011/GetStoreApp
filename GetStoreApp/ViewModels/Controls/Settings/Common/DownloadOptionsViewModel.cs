@@ -6,7 +6,7 @@ using GetStoreApp.Models.Controls.Settings.Common;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
-using GetStoreApp.UI.Dialogs.ContentDialogs.Settings;
+using GetStoreApp.UI.Dialogs.Settings;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
 using GetStoreAppWindowsAPI.Dialogs;
@@ -21,11 +21,11 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
 {
     public sealed class DownloadOptionsViewModel : ViewModelBase
     {
-        public List<int> DownloadItemList => DownloadOptionsService.DownloadItemList;
+        public List<int> DownloadItemList { get; } = DownloadOptionsService.DownloadItemList;
 
-        public List<DownloadModeModel> DownloadModeList => DownloadOptionsService.DownloadModeList;
+        public List<DownloadModeModel> DownloadModeList { get; } = DownloadOptionsService.DownloadModeList;
 
-        private StorageFolder _downloadFolder;
+        private StorageFolder _downloadFolder = DownloadOptionsService.DownloadFolder;
 
         public StorageFolder DownloadFolder
         {
@@ -38,7 +38,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
             }
         }
 
-        private int _downloadItem;
+        private int _downloadItem = DownloadOptionsService.DownloadItem;
 
         public int DownloadItem
         {
@@ -51,7 +51,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
             }
         }
 
-        private DownloadModeModel _downloadMode;
+        private DownloadModeModel _downloadMode = DownloadOptionsService.DownloadMode;
 
         public DownloadModeModel DownloadMode
         {
@@ -139,29 +139,26 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
             }
         });
 
-        public DownloadOptionsViewModel()
-        {
-            DownloadFolder = DownloadOptionsService.DownloadFolder;
-
-            DownloadItem = DownloadOptionsService.DownloadItem;
-
-            DownloadMode = DownloadOptionsService.DownloadMode;
-        }
-
         /// <summary>
         /// 修改同时下载文件数
         /// </summary>
-        public async void OnDownloadItemSelectionChanged(object sender,SelectionChangedEventArgs args)
+        public async void OnDownloadItemSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            await DownloadOptionsService.SetItemAsync(DownloadItem);
+            if (args.RemovedItems.Count > 0)
+            {
+                await DownloadOptionsService.SetItemAsync(DownloadItem);
+            }
         }
 
         /// <summary>
         /// 修改下载文件的方式
         /// </summary>
-        public async void OnDownloadModeSelectionChanged(object sender,SelectionChangedEventArgs args)
+        public async void OnDownloadModeSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            await DownloadOptionsService.SetModeAsync(DownloadMode);
+            if (args.RemovedItems.Count > 0)
+            {
+                await DownloadOptionsService.SetModeAsync(DownloadMode);
+            }
         }
     }
 }

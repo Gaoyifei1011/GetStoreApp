@@ -11,9 +11,9 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
 {
     public sealed class ThemeViewModel : ViewModelBase
     {
-        public List<ThemeModel> ThemeList => ThemeService.ThemeList;
+        public List<ThemeModel> ThemeList { get; } = ThemeService.ThemeList;
 
-        private ThemeModel _theme;
+        private ThemeModel _theme = ThemeService.AppTheme;
 
         public ThemeModel Theme
         {
@@ -32,18 +32,16 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
             await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:colors"));
         });
 
-        public ThemeViewModel()
-        {
-            Theme = ThemeService.AppTheme;
-        }
-
         /// <summary>
         /// 主题修改设置
         /// </summary>
-        public async void OnSelectionChanged(object sender,SelectionChangedEventArgs args)
+        public async void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            await ThemeService.SetThemeAsync(Theme);
-            await ThemeService.SetAppThemeAsync();
+            if (args.RemovedItems.Count > 0)
+            {
+                await ThemeService.SetThemeAsync(Theme);
+                await ThemeService.SetAppThemeAsync();
+            }
         }
     }
 }

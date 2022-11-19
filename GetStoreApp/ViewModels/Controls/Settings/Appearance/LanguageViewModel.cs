@@ -14,9 +14,9 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
 {
     public sealed class LanguageViewModel : ViewModelBase
     {
-        public List<LanguageModel> LanguageList => LanguageService.LanguageList;
+        public List<LanguageModel> LanguageList { get; } = LanguageService.LanguageList;
 
-        private LanguageModel _language;
+        private LanguageModel _language = LanguageService.AppLanguage;
 
         public LanguageModel Language
         {
@@ -36,18 +36,16 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
             NavigationService.NavigateTo(typeof(AboutPage));
         });
 
-        public LanguageViewModel()
-        {
-            Language = LanguageService.AppLanguage;
-        }
-
         /// <summary>
         /// 应用默认语言修改
         /// </summary>
         public async void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            await LanguageService.SetLanguageAsync(Language);
-            new LanguageChangeNotification(true).Show();
+            if (args.RemovedItems.Count > 0)
+            {
+                await LanguageService.SetLanguageAsync(Language);
+                new LanguageChangeNotification(true).Show();
+            }
         }
     }
 }

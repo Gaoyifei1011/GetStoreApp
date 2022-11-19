@@ -1,6 +1,6 @@
 ﻿using GetStoreApp.Contracts.Command;
 using GetStoreApp.Extensions.Command;
-using GetStoreApp.UI.Dialogs.ContentDialogs.About;
+using GetStoreApp.UI.Dialogs.About;
 using System;
 
 namespace GetStoreApp.ViewModels.Controls.About

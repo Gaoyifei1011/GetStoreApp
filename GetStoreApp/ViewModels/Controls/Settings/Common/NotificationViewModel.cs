@@ -1,13 +1,13 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Services.Controls.Settings.Common;
+﻿using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.ViewModels.Base;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Common
 {
     public sealed class NotificationViewModel : ViewModelBase
     {
-        private bool _notification;
+        private bool _notification = NotificationService.AppNotification;
 
         public bool Notification
         {
@@ -20,16 +20,17 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
             }
         }
 
-        // 设置是否开启应用通知
-        public IRelayCommand NotificationCommand => new RelayCommand<bool>(async (notification) =>
+        /// <summary>
+        /// 设置是否开启应用通知
+        /// </summary>
+        public async void OnToggled(object sender, RoutedEventArgs args)
         {
-            await NotificationService.SetNotificationAsync(notification);
-            Notification = notification;
-        });
-
-        public NotificationViewModel()
-        {
-            Notification = NotificationService.AppNotification;
+            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
+            if (toggleSwitch is not null)
+            {
+                await NotificationService.SetNotificationAsync(toggleSwitch.IsOn);
+                Notification = toggleSwitch.IsOn;
+            }
         }
     }
 }

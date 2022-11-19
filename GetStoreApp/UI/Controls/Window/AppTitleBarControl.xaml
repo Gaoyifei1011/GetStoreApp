@@ -3,29 +3,18 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:i="using:Microsoft.Xaml.Interactivity"
-    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:windowViewModel="using:GetStoreApp.ViewModels.Controls.Window"
     x:Name="AppTitleBar"
+    Loaded="{x:Bind ViewModel.OnLoaded}"
+    SizeChanged="{x:Bind ViewModel.OnSizeChanged}"
+    Unloaded="{x:Bind ViewModel.OnUnloaded}"
     mc:Ignorable="d">
 
     <Grid.DataContext>
         <windowViewModel:AppTitleBarViewModel x:Name="ViewModel" />
     </Grid.DataContext>
-
-    <i:Interaction.Behaviors>
-        <ic:EventTriggerBehavior EventName="Loaded">
-            <ic:InvokeCommandAction Command="{x:Bind ViewModel.LoadedCommand}" CommandParameter="{Binding ElementName=AppTitleBar}" />
-        </ic:EventTriggerBehavior>
-        <ic:EventTriggerBehavior EventName="UnLoaded">
-            <ic:InvokeCommandAction Command="{x:Bind ViewModel.UnLoadedCommand}" />
-        </ic:EventTriggerBehavior>
-        <ic:EventTriggerBehavior EventName="SizeChanged">
-            <ic:InvokeCommandAction Command="{x:Bind ViewModel.SizeChangedCommand}" CommandParameter="{Binding ElementName=AppTitleBar}" />
-        </ic:EventTriggerBehavior>
-    </i:Interaction.Behaviors>
 
     <Image
         Width="22"

@@ -9,7 +9,7 @@ using GetStoreApp.Models.Controls.Home;
 using GetStoreApp.Services.Controls.History;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
-using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
+using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
@@ -295,7 +295,7 @@ namespace GetStoreApp.ViewModels.Pages
         /// <summary>
         /// 在多选模式下点击项目选择相应的条目
         /// </summary>
-        public void OnItemClick(object sender,ItemClickEventArgs args)
+        public void OnItemClick(object sender, ItemClickEventArgs args)
         {
             HistoryModel historyItem = (HistoryModel)args.ClickedItem;
             int ClickedIndex = HistoryDataList.IndexOf(historyItem);

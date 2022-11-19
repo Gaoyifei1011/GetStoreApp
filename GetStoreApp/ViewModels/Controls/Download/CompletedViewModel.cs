@@ -9,8 +9,8 @@ using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Advanced;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
-using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
-using GetStoreApp.UI.Dialogs.ContentDialogs.Download;
+using GetStoreApp.UI.Dialogs.Common;
+using GetStoreApp.UI.Dialogs.Download;
 using GetStoreApp.ViewModels.Base;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
@@ -413,7 +413,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// <summary>
         /// 页面被卸载时，关闭消息服务
         /// </summary>
-        public void OnUnloaded(object sender,RoutedEventArgs args)
+        public void OnUnloaded(object sender, RoutedEventArgs args)
         {
             WeakReferenceMessenger.Default.UnregisterAll(this);
         }
@@ -421,7 +421,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// <summary>
         /// 在多选模式下点击项目选择相应的条目
         /// </summary>
-        public void OnItemClick(object sender,ItemClickEventArgs args)
+        public void OnItemClick(object sender, ItemClickEventArgs args)
         {
             CompletedModel completedItem = (CompletedModel)args.ClickedItem;
             int ClickedIndex = CompletedDataList.IndexOf(completedItem);

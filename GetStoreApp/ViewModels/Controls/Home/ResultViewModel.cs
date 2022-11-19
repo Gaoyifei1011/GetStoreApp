@@ -10,7 +10,7 @@ using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Controls.Settings.Experiment;
 using GetStoreApp.Services.Window;
-using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
+using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
@@ -474,7 +474,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
         /// <summary>
         /// 在多选模式下点击项目选择相应的条目
         /// </summary>
-        public void OnItemClick(object sender,ItemClickEventArgs args)
+        public void OnItemClick(object sender, ItemClickEventArgs args)
         {
             ResultModel resultItem = (ResultModel)args.ClickedItem;
             int ClickedIndex = ResultDataList.IndexOf(resultItem);

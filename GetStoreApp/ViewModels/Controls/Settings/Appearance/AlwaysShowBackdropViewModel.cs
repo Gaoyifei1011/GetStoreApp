@@ -1,6 +1,4 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Services.Controls.Settings.Appearance;
+﻿using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.ViewModels.Base;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -9,7 +7,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
 {
     public sealed class AlwaysShowBackdropViewModel : ViewModelBase
     {
-        private bool _alwaysShowBackdropValue;
+        private bool _alwaysShowBackdropValue = AlwaysShowBackdropService.AlwaysShowBackdropValue;
 
         public bool AlwaysShowBackdropValue
         {
@@ -22,15 +20,10 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
             }
         }
 
-        public AlwaysShowBackdropViewModel()
-        {
-            AlwaysShowBackdropValue = AlwaysShowBackdropService.AlwaysShowBackdropValue;
-        }
-
         /// <summary>
         /// 开关按钮切换时修改相应设置
         /// </summary>
-        public async void OnToggled(object sender,RoutedEventArgs args)
+        public async void OnToggled(object sender, RoutedEventArgs args)
         {
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch is not null)

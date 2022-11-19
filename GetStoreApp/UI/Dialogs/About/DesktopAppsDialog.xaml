@@ -1,0 +1,38 @@
+﻿<ContentDialog
+    x:Class="GetStoreApp.UI.Dialogs.About.DesktopAppsDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dialog="using:GetStoreApp.ViewModels.Dialogs.About"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
+    Title="{x:Bind root:ResourceService.GetLocalized('/Dialog/RecognizeDesktopApps')}"
+    CloseButtonText="{x:Bind root:ResourceService.GetLocalized('/Dialog/CloseWindow')}"
+    Loaded="{x:Bind ViewModel.OnLoaded}"
+    RequestedTheme="{x:Bind DialogTheme}"
+    Style="{StaticResource DefaultContentDialogStyle}"
+    mc:Ignorable="d">
+
+    <ContentDialog.DataContext>
+        <dialog:DesktopAppsViewModel x:Name="ViewModel" />
+    </ContentDialog.DataContext>
+
+    <ContentDialog.Resources>
+        <x:Double x:Key="ContentDialogMaxWidth">560</x:Double>
+    </ContentDialog.Resources>
+
+    <StackPanel>
+        <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/DesktopAppsContent1')}" />
+        <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/DesktopAppsContent2')}" />
+
+        <Border
+            HorizontalAlignment="Left"
+            BorderBrush="{StaticResource CardStrokeColorDefaultBrush}"
+            BorderThickness="2">
+            <Image
+                Width="463"
+                Height="107"
+                Source="ms-appx:///Assets/Images/DesktopApps.png" />
+        </Border>
+    </StackPanel>
+</ContentDialog>

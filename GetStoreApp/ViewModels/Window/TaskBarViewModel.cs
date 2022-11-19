@@ -7,7 +7,7 @@ using GetStoreApp.Messages;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
-using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
+using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml.Controls;
 using System;

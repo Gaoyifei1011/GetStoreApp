@@ -18,7 +18,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
     {
         public List<BackdropModel> BackdropList { get; } = new List<BackdropModel>();
 
-        private BackdropModel _backdrop;
+        private BackdropModel _backdrop = BackdropService.AppBackdrop;
 
         public BackdropModel Backdrop
         {
@@ -55,8 +55,6 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
                 BackdropHelp = false;
                 BackdropList = BackdropService.BackdropList;
             }
-
-            Backdrop = BackdropService.AppBackdrop;
         }
 
         /// <summary>
@@ -64,9 +62,12 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
         /// </summary>
         public async void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            await BackdropService.SetBackdropAsync(Backdrop);
-            await BackdropService.SetAppBackdropAsync();
-            WeakReferenceMessenger.Default.Send(new BackdropChangedMessage(Backdrop));
+            if (args.RemovedItems.Count > 0)
+            {
+                await BackdropService.SetBackdropAsync(Backdrop);
+                await BackdropService.SetAppBackdropAsync();
+                WeakReferenceMessenger.Default.Send(new BackdropChangedMessage(Backdrop));
+            }
         }
     }
 }

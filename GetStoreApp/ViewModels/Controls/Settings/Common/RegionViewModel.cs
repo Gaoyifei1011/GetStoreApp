@@ -1,17 +1,16 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Models.Controls.Settings.Common;
+﻿using GetStoreApp.Models.Controls.Settings.Common;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.ViewModels.Base;
+using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Common
 {
     public sealed class RegionViewModel : ViewModelBase
     {
-        public List<RegionModel> RegionList => RegionService.RegionList;
+        public List<RegionModel> RegionList { get; } = RegionService.RegionList;
 
-        private RegionModel _region;
+        private RegionModel _region = RegionService.AppRegion;
 
         public RegionModel Region
         {
@@ -24,15 +23,15 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
             }
         }
 
-        // 应用在应用商店对应的区域选择
-        public IRelayCommand RegionSelectCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 应用在应用商店对应的区域选择
+        /// </summary>
+        public async void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            await RegionService.SetRegionAsync(Region);
-        });
-
-        public RegionViewModel()
-        {
-            Region = RegionService.AppRegion;
+            if (args.RemovedItems.Count > 0)
+            {
+                await RegionService.SetRegionAsync(Region);
+            }
         }
     }
 }

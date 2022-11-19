@@ -5,12 +5,14 @@ using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Window;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Common
 {
     public sealed class LinkFilterViewModel : ViewModelBase
     {
-        private bool _startsWithEFilterValue;
+        private bool _startsWithEFilterValue = LinkFilterService.StartWithEFilterValue;
 
         public bool StartsWithEFilterValue
         {
@@ -23,7 +25,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
             }
         }
 
-        private bool _blockMapFilterValue;
+        private bool _blockMapFilterValue = LinkFilterService.BlockMapFilterValue;
 
         public bool BlockMapFilterValue
         {
@@ -43,24 +45,30 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
             NavigationService.NavigateTo(typeof(AboutPage));
         });
 
-        // 设置是否过滤以“.e”开头的文件
-        public IRelayCommand StartWithEFilterCommand => new RelayCommand<bool>(async (startWithEFilterValue) =>
+        /// <summary>
+        /// 设置是否过滤以“.e”开头的文件
+        /// </summary>
+        public async void OnStartWithEToggled(object sender, RoutedEventArgs args)
         {
-            await LinkFilterService.SetStartsWithEFilterValueAsync(startWithEFilterValue);
-            StartsWithEFilterValue = startWithEFilterValue;
-        });
+            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
+            if (toggleSwitch is not null)
+            {
+                await LinkFilterService.SetStartsWithEFilterValueAsync(toggleSwitch.IsOn);
+                StartsWithEFilterValue = toggleSwitch.IsOn;
+            }
+        }
 
-        // 设置是否过滤包块映射文件
-        public IRelayCommand BlockMapFilterCommand => new RelayCommand<bool>(async (blockMapFilterValue) =>
+        /// <summary>
+        /// 设置是否过滤包块映射文件
+        /// </summary>
+        public async void OnBlockMapToggled(object sender, RoutedEventArgs args)
         {
-            await LinkFilterService.SetBlockMapFilterValueAsync(blockMapFilterValue);
-            BlockMapFilterValue = blockMapFilterValue;
-        });
-
-        public LinkFilterViewModel()
-        {
-            StartsWithEFilterValue = LinkFilterService.StartWithEFilterValue;
-            BlockMapFilterValue = LinkFilterService.BlockMapFilterValue;
+            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
+            if (toggleSwitch is not null)
+            {
+                await LinkFilterService.SetBlockMapFilterValueAsync(toggleSwitch.IsOn);
+                BlockMapFilterValue = toggleSwitch.IsOn;
+            }
         }
     }
 }

@@ -169,7 +169,6 @@
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.221116.1">
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
-    <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
     <PackageReference Include="SQLitePCLRaw.bundle_winsqlite3" Version="2.1.2">
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
@@ -328,56 +327,56 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     
-    <Page Update="UI\Dialogs\ContentDialogs\About\CloudflareValidationDialog.xaml">
+    <Page Update="UI\Dialogs\About\CloudflareValidationDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Dialogs\ContentDialogs\About\DesktopAppsDialog.xaml">
+    <Page Update="UI\Dialogs\About\DesktopAppsDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Dialogs\ContentDialogs\About\DesktopStartupArgsDialog.xaml">
+    <Page Update="UI\Dialogs\About\DesktopStartupArgsDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Dialogs\ContentDialogs\About\LicenseDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-
-    <Page Update="UI\Dialogs\ContentDialogs\Common\AppRunningDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Dialogs\ContentDialogs\Common\ClosingWindowDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Dialogs\ContentDialogs\Common\DeletePromptDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Dialogs\ContentDialogs\Common\DownloadNotifyDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Dialogs\ContentDialogs\Common\SelectEmptyPromptDialog.xaml">
+    <Page Update="UI\Dialogs\About\LicenseDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
-    <Page Update="UI\Dialogs\ContentDialogs\Download\FileInformationDialog.xaml">
+    <Page Update="UI\Dialogs\Common\AppRunningDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Dialogs\ContentDialogs\Download\InstallingNotifyDialog.xaml">
+    <Page Update="UI\Dialogs\Common\ClosingWindowDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Dialogs\Common\DeletePromptDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Dialogs\Common\DownloadNotifyDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Dialogs\Common\SelectEmptyPromptDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+
+    <Page Update="UI\Dialogs\Download\FileInformationDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Dialogs\Download\InstallingNotifyDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     
-    <Page Update="UI\Dialogs\ContentDialogs\Settings\ExperimentalConfigDialog.xaml">
+    <Page Update="UI\Dialogs\Settings\ExperimentalConfigDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Dialogs\ContentDialogs\Settings\FolderAccessFailedDialog.xaml">
+    <Page Update="UI\Dialogs\Settings\FolderAccessFailedDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Dialogs\ContentDialogs\Settings\RestartAppsDialog.xaml">
+    <Page Update="UI\Dialogs\Settings\RestartAppsDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Dialogs\ContentDialogs\Settings\TraceCleanupPromptDialog.xaml">
+    <Page Update="UI\Dialogs\Settings\TraceCleanupPromptDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
-    <Page Update="UI\Dialogs\ContentDialogs\Web\CoreWebView2FailedDialog.xaml">
+    <Page Update="UI\Dialogs\Web\CoreWebView2FailedDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
@@ -493,6 +492,14 @@
     <Page Update="Views\Controls\AdaptiveGridView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UI\Dialogs\About\" />
+    <Folder Include="UI\Dialogs\Common\" />
+    <Folder Include="UI\Dialogs\Download\" />
+    <Folder Include="UI\Dialogs\Settings\" />
+    <Folder Include="UI\Dialogs\Web\" />
   </ItemGroup>
 
   <ProjectExtensions>

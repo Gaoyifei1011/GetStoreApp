@@ -9,7 +9,7 @@ using GetStoreApp.Services.Controls.Settings.Advanced;
 using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
-using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
+using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
 using Microsoft.UI;
@@ -228,7 +228,7 @@ namespace GetStoreApp.ViewModels.Window
             // 导航控件加载完成后初始化内容
             NavigationView navigationView = sender as NavigationView;
 
-            if(navigationView is null)
+            if (navigationView is null)
             {
                 return;
             }

@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using GetStoreApp.Helpers.Window;
 using GetStoreApp.Messages;
-using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
+using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.ViewModels.Base;
 using GetStoreAppWindowsAPI.PInvoke.User32;
 using GetStoreAppWindowsAPI.PInvoke.WindowsCore;

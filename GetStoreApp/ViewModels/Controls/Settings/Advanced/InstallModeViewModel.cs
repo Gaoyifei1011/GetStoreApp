@@ -43,7 +43,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
         /// <summary>
         /// 应用安装方式设置
         /// </summary>
-        public async void OnSelectionChanged(object sender,SelectionChangedEventArgs args)
+        public async void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
             await InstallModeService.SetInstallModeAsync(InstallMode);
         }

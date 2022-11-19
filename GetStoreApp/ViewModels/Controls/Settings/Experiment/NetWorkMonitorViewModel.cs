@@ -1,15 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
 using GetStoreApp.Messages;
 using GetStoreApp.Services.Controls.Settings.Experiment;
 using GetStoreApp.ViewModels.Base;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Experiment
 {
     public sealed class NetWorkMonitorViewModel : ViewModelBase
     {
-        private bool _netWorkMonitorValue;
+        private bool _netWorkMonitorValue = NetWorkMonitorService.NetWorkMonitorValue;
 
         public bool NetWorkMonitorValue
         {
@@ -22,23 +22,29 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Experiment
             }
         }
 
-        // 控件被卸载时，关闭消息服务
-        public IRelayCommand UnloadedCommand => new RelayCommand(() =>
+        /// <summary>
+        /// 控件被卸载时，关闭消息服务
+        /// </summary>
+        public void OnUnloaded(object sender, RoutedEventArgs args)
         {
             WeakReferenceMessenger.Default.UnregisterAll(this);
-        });
+        }
 
-        // 下载文件时“网络状态监控”开启设置
-        public IRelayCommand NetWorkMonitorCommand => new RelayCommand<bool>(async (netWorkMonitorValue) =>
+        /// <summary>
+        /// 下载文件时“网络状态监控”开启设置
+        /// </summary>
+        public async void OnToggled(object sender, RoutedEventArgs args)
         {
-            await NetWorkMonitorService.SetNetWorkMonitorValueAsync(netWorkMonitorValue);
-            NetWorkMonitorValue = netWorkMonitorValue;
-        });
+            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
+            if (toggleSwitch is not null)
+            {
+                await NetWorkMonitorService.SetNetWorkMonitorValueAsync(toggleSwitch.IsOn);
+                NetWorkMonitorValue = toggleSwitch.IsOn;
+            }
+        }
 
         public NetWorkMonitorViewModel()
         {
-            NetWorkMonitorValue = NetWorkMonitorService.NetWorkMonitorValue;
-
             WeakReferenceMessenger.Default.Register<NetWorkMonitorViewModel, RestoreDefaultMessage>(this, (netWorkMonitorViewModel, restoreDefaultMessage) =>
             {
                 if (restoreDefaultMessage.Value)

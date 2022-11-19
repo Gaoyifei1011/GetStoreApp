@@ -1,13 +1,13 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Services.Controls.Settings.Common;
+﻿using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.ViewModels.Base;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Common
 {
     public sealed class UseInstructionViewModel : ViewModelBase
     {
-        private bool _useInsVisValue;
+        private bool _useInsVisValue = UseInstructionService.UseInsVisValue;
 
         public bool UseInsVisValue
         {
@@ -20,16 +20,17 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
             }
         }
 
-        // “使用说明”按钮显示设置
-        public IRelayCommand UseInstructionCommand => new RelayCommand<bool>(async (useInsVisValue) =>
+        /// <summary>
+        /// “使用说明”按钮显示设置
+        /// </summary>
+        public async void OnToggled(object sender, RoutedEventArgs args)
         {
-            await UseInstructionService.SetUseInsVisValueAsync(useInsVisValue);
-            UseInsVisValue = useInsVisValue;
-        });
-
-        public UseInstructionViewModel()
-        {
-            UseInsVisValue = UseInstructionService.UseInsVisValue;
+            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
+            if (toggleSwitch is not null)
+            {
+                await UseInstructionService.SetUseInsVisValueAsync(toggleSwitch.IsOn);
+                UseInsVisValue = toggleSwitch.IsOn;
+            }
         }
     }
 }

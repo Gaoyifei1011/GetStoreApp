@@ -6,7 +6,10 @@ using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Base;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Shapes;
 using System.Text;
 
 namespace GetStoreApp.ViewModels.Dialogs.Download
@@ -49,13 +52,6 @@ namespace GetStoreApp.ViewModels.Dialogs.Download
             }
         }
 
-        // 获取文件的SHA1值
-        public IRelayCommand LoadedCommand => new RelayCommand(() =>
-        {
-            CheckFileSHA1 = IOHelper.GetFileSHA1(FilePath);
-            FileCheckState = true;
-        });
-
         // 复制文件信息
         public IRelayCommand CopyFileInformationCommand => new RelayCommand<ContentDialog>((dialog) =>
         {
@@ -80,6 +76,44 @@ namespace GetStoreApp.ViewModels.Dialogs.Download
         {
             dialog.Hide();
         });
+
+        /// <summary>
+        /// 对话框加载完成后让内容对话框的烟雾层背景（SmokeLayerBackground）覆盖到标题栏中，并获取文件的SHA1值
+        /// </summary>
+        public void OnLoaded(object sender, RoutedEventArgs args)
+        {
+            ContentDialog dialog = sender as ContentDialog;
+
+            if (dialog is not null)
+            {
+                DependencyObject parent = VisualTreeHelper.GetParent(dialog);
+
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+                {
+                    DependencyObject current = VisualTreeHelper.GetChild(parent, i);
+                    if (current is Rectangle { Name: "SmokeLayerBackground" } background)
+                    {
+                        background.Margin = new Thickness(0);
+                        background.RegisterPropertyChangedCallback(FrameworkElement.MarginProperty, OnMarginChanged);
+                        break;
+                    }
+                }
+            }
+
+            CheckFileSHA1 = IOHelper.GetFileSHA1(FilePath);
+            FileCheckState = true;
+        }
+
+        /// <summary>
+        /// 重置内容对话框烟雾背景距离顶栏的间隔
+        /// </summary>
+        private void OnMarginChanged(DependencyObject sender, DependencyProperty property)
+        {
+            if (property == FrameworkElement.MarginProperty)
+            {
+                sender.ClearValue(property);
+            }
+        }
 
         public void InitializeFileInformation(CompletedModel completedItem)
         {

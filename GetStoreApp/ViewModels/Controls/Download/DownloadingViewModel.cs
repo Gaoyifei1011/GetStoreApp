@@ -6,7 +6,7 @@ using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Common;
-using GetStoreApp.UI.Dialogs.ContentDialogs.Common;
+using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.ViewModels.Base;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
@@ -346,7 +346,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// <summary>
         /// 在多选模式下点击项目选择相应的条目
         /// </summary>
-        public async void OnItemClick(object sender,ItemClickEventArgs args)
+        public async void OnItemClick(object sender, ItemClickEventArgs args)
         {
             while (IsUpdatingNow && IsInitializeFinished)
             {

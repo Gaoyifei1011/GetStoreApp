@@ -1,6 +1,6 @@
 ﻿using GetStoreApp.Contracts.Command;
 using GetStoreApp.Extensions.Command;
-using GetStoreApp.UI.Dialogs.ContentDialogs.Settings;
+using GetStoreApp.UI.Dialogs.Settings;
 using System;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Advanced

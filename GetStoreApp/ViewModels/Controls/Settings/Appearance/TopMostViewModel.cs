@@ -7,7 +7,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
 {
     public sealed class TopMostViewModel : ViewModelBase
     {
-        private bool _topMostValue;
+        private bool _topMostValue = TopMostService.TopMostValue;
 
         public bool TopMostValue
         {
@@ -18,11 +18,6 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
                 _topMostValue = value;
                 OnPropertyChanged();
             }
-        }
-
-        public TopMostViewModel()
-        {
-            TopMostValue = TopMostService.TopMostValue;
         }
 
         /// <summary>
