@@ -1,9 +1,8 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Command;
+﻿using GetStoreApp.Contracts.Command;
 using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Helpers.Root;
-using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.History;
 using GetStoreApp.Models.Controls.Home;
 using GetStoreApp.Services.Controls.History;
@@ -256,7 +255,7 @@ namespace GetStoreApp.ViewModels.Pages
                     }
                 }
 
-                WeakReferenceMessenger.Default.Send(new HistoryMessage(true));
+                Messenger.Default.Send(true, MessageToken.History);
             }
         });
 
@@ -270,7 +269,7 @@ namespace GetStoreApp.ViewModels.Pages
         public IRelayCommand FillinCommand => new RelayCommand<HistoryModel>((historyItem) =>
         {
             App.NavigationArgs = AppNaviagtionArgs.Home;
-            WeakReferenceMessenger.Default.Send(new FillinMessage(historyItem));
+            Messenger.Default.Send(historyItem, MessageToken.Fillin);
             NavigationService.NavigateTo(typeof(HomePage));
         });
 

@@ -1,7 +1,7 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Command;
+﻿using GetStoreApp.Contracts.Command;
 using GetStoreApp.Extensions.Command;
-using GetStoreApp.Messages;
+using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Experiment;
 using GetStoreApp.ViewModels.Base;
@@ -45,7 +45,7 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
             }
             CountDown = 3;
 
-            WeakReferenceMessenger.Default.Send(new RestoreDefaultMessage(true));
+            Messenger.Default.Send(true, MessageToken.RestoreDefault);
         });
 
         // 关闭窗口

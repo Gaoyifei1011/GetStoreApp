@@ -1,8 +1,7 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Command;
+﻿using GetStoreApp.Contracts.Command;
 using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Messages;
+using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Window;
 using GetStoreApp.ViewModels.Base;
@@ -42,33 +41,31 @@ namespace GetStoreApp.ViewModels.Pages
             NavigationService.NavigateTo(typeof(SettingsPage));
         });
 
-        public DownloadViewModel()
-        {
-            UseInsVisValue = UseInstructionService.UseInsVisValue;
-        }
-
         // 初次加载页面时，开启下载中页面的所有事件，加载下载中页面的数据
         public void OnNavigatedTo()
         {
             UseInsVisValue = UseInstructionService.UseInsVisValue;
-            WeakReferenceMessenger.Default.Send(new PivotSelectionMessage(0));
+            Messenger.Default.Send(0, MessageToken.PivotSelection);
         }
 
         // 离开该页面时，关闭所有事件，并通知注销所有事件（防止内存泄露）
         public void OnNavigatedFrom()
         {
-            WeakReferenceMessenger.Default.Send(new PivotSelectionMessage(-1));
+            Messenger.Default.Send(-1, MessageToken.PivotSelection);
         }
 
         /// <summary>
         /// DownloadPivot选中项发生变化时，关闭离开页面的事件，开启要导航到的页面的事件，并更新新页面的数据
         /// </summary>
-        public void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        public void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            Pivot pivot = sender as Pivot;
-            if (pivot is not null)
+            if (args.RemovedItems.Count > 0)
             {
-                WeakReferenceMessenger.Default.Send(new PivotSelectionMessage(pivot.SelectedIndex));
+                Pivot pivot = sender as Pivot;
+                if (pivot is not null)
+                {
+                    Messenger.Default.Send(pivot.SelectedIndex, MessageToken.PivotSelection);
+                }
             }
         }
     }

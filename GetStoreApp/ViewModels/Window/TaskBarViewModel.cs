@@ -1,9 +1,8 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Command;
+﻿using GetStoreApp.Contracts.Command;
 using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Helpers.Window;
-using GetStoreApp.Messages;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
@@ -87,7 +86,7 @@ namespace GetStoreApp.ViewModels.Window
         {
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
             await Aria2Service.CloseAria2Async();
-            WeakReferenceMessenger.Default.Send(new WindowClosedMessage(true));
+            Messenger.Default.Send(true, MessageToken.WindowClosed);
             AppNotificationService.Unregister();
             BackdropHelper.ReleaseBackdrop();
             Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));

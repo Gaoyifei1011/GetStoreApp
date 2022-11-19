@@ -1,8 +1,8 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
-using GetStoreApp.Messages;
+using GetStoreApp.Models.Controls.Settings.Appearance;
 using GetStoreApp.Models.Window;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Advanced;
@@ -270,13 +270,13 @@ namespace GetStoreApp.ViewModels.Window
             IsBackEnabled = NavigationService.CanGoBack();
 
             // 应用背景色设置跟随系统发生变化时，当系统背景色设置发生变化时修改应用背景色
-            WeakReferenceMessenger.Default.Register<MainWindowViewModel, BackdropChangedMessage>(this, (appTitleBarViewModel, backdropChangedMessage) =>
+            Messenger.Default.Register<BackdropModel>(this, MessageToken.BackdropChanged, (backdropMessage) =>
             {
                 SetAppBackground();
             });
 
             // 应用主题设置跟随系统发生变化时，当系统主题设置发生变化时修改修改应用背景色
-            WeakReferenceMessenger.Default.Register<MainWindowViewModel, SystemSettingsChnagedMessage>(this, (appTitleBarViewModel, systemSettingsChangedMessage) =>
+            Messenger.Default.Register<bool>(this, MessageToken.SystemSettingsChanged, (systemSettingsChangedMessage) =>
             {
                 SetAppBackground();
             });
@@ -285,7 +285,7 @@ namespace GetStoreApp.ViewModels.Window
         // 页面被卸载时，注销所有事件
         public void OnNavigationViewUnLoaded(object sender, RoutedEventArgs args)
         {
-            WeakReferenceMessenger.Default.UnregisterAll(this);
+            Messenger.Default.Unregister(this);
         }
 
         // 导航完成后发生
@@ -350,7 +350,7 @@ namespace GetStoreApp.ViewModels.Window
         {
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
             await Aria2Service.CloseAria2Async();
-            WeakReferenceMessenger.Default.Send(new WindowClosedMessage(true));
+            Messenger.Default.Send(true, MessageToken.WindowClosed);
             AppNotificationService.Unregister();
             BackdropHelper.ReleaseBackdrop();
             Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));

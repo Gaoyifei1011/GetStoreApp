@@ -1,9 +1,8 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Command;
+﻿using GetStoreApp.Contracts.Command;
 using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Helpers.Root;
-using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.Settings.Appearance;
 using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Window;
@@ -66,7 +65,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
             {
                 await BackdropService.SetBackdropAsync(Backdrop);
                 await BackdropService.SetAppBackdropAsync();
-                WeakReferenceMessenger.Default.Send(new BackdropChangedMessage(Backdrop));
+                Messenger.Default.Send(Backdrop, MessageToken.BackdropChanged);
             }
         }
     }

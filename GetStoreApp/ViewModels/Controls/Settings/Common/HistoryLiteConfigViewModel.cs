@@ -1,5 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Messages;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Models.Controls.Settings.Common;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.ViewModels.Base;
@@ -33,7 +33,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
             if (args.RemovedItems.Count > 0)
             {
                 await HistoryLiteNumService.SetHistoryLiteNumAsync(HistoryLiteItem);
-                WeakReferenceMessenger.Default.Send(new HistoryLiteNumMessage(HistoryLiteItem));
+                Messenger.Default.Send(HistoryLiteItem, MessageToken.HistoryLiteNum);
             }
         }
     }

@@ -15,7 +15,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
     {
         public List<InstallModeModel> InstallModeList => InstallModeService.InstallModeList;
 
-        private InstallModeModel _installMode;
+        private InstallModeModel _installMode = InstallModeService.InstallMode;
 
         public InstallModeModel InstallMode
         {
@@ -35,17 +35,15 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
             NavigationService.NavigateTo(typeof(AboutPage));
         });
 
-        public InstallModeViewModel()
-        {
-            InstallMode = InstallModeService.InstallMode;
-        }
-
         /// <summary>
         /// 应用安装方式设置
         /// </summary>
         public async void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            await InstallModeService.SetInstallModeAsync(InstallMode);
+            if (args.RemovedItems.Count > 0)
+            {
+                await InstallModeService.SetInstallModeAsync(InstallMode);
+            }
         }
     }
 }

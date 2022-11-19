@@ -1,8 +1,8 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Command;
+﻿using GetStoreApp.Contracts.Command;
 using GetStoreApp.Extensions.Command;
+using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Helpers.Root;
-using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.History;
 using GetStoreApp.Models.Controls.Home;
 using GetStoreApp.Models.Controls.Settings.Common;
@@ -53,32 +53,32 @@ namespace GetStoreApp.ViewModels.Controls.Home
         // 填入到文本框
         public IRelayCommand FillinCommand => new RelayCommand<HistoryModel>((historyItem) =>
         {
-            WeakReferenceMessenger.Default.Send(new FillinMessage(historyItem));
+            Messenger.Default.Send(historyItem, MessageToken.Fillin);
         });
 
         public HistoryLiteViewModel()
         {
             HistoryLiteItem = HistoryLiteNumService.HistoryLiteNum;
 
-            WeakReferenceMessenger.Default.Register<HistoryLiteViewModel, HistoryMessage>(this, async (historyLiteViewModel, historyMessage) =>
+            Messenger.Default.Register<bool>(this, MessageToken.History, async (historyMessage) =>
             {
-                if (historyMessage.Value)
+                if (historyMessage)
                 {
                     await GetHistoryLiteDataListAsync();
                 }
             });
 
-            WeakReferenceMessenger.Default.Register<HistoryLiteViewModel, HistoryLiteNumMessage>(this, async (historyLiteViewModel, historyLiteNumMessage) =>
+            Messenger.Default.Register<HistoryLiteNumModel>(this, MessageToken.HistoryLiteNum, async (historyLiteNumMessage) =>
             {
-                HistoryLiteItem = historyLiteNumMessage.Value;
+                HistoryLiteItem = historyLiteNumMessage;
                 await GetHistoryLiteDataListAsync();
             });
 
-            WeakReferenceMessenger.Default.Register<HistoryLiteViewModel, WindowClosedMessage>(this, (historyLiteViewModel, windowClosedMessage) =>
+            Messenger.Default.Register<bool>(this, MessageToken.WindowClosed, (windowClosedMessage) =>
             {
-                if (windowClosedMessage.Value)
+                if (windowClosedMessage)
                 {
-                    WeakReferenceMessenger.Default.UnregisterAll(this);
+                    Messenger.Default.Unregister(this);
                 }
             });
         }

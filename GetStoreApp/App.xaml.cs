@@ -1,12 +1,10 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Messages;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Window;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
-using System;
 
 namespace GetStoreApp
 {
@@ -49,7 +47,7 @@ namespace GetStoreApp
 
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
             await Aria2Service.CloseAria2Async();
-            WeakReferenceMessenger.Default.Send(new WindowClosedMessage(true));
+            Messenger.Default.Send(true, MessageToken.WindowClosed);
         }
     }
 }

@@ -1,9 +1,8 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Command;
+﻿using GetStoreApp.Contracts.Command;
 using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.DataType.Events;
-using GetStoreApp.Messages;
+using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Advanced;
@@ -390,16 +389,16 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
         public CompletedViewModel()
         {
-            WeakReferenceMessenger.Default.Register<CompletedViewModel, PivotSelectionMessage>(this, async (completedViewModel, pivotSelectionMessage) =>
+            Messenger.Default.Register<int>(this, MessageToken.PivotSelection, async (pivotSelectionMessage) =>
             {
                 // 切换到已完成页面时，更新当前页面的数据
-                if (pivotSelectionMessage.Value == 2)
+                if (pivotSelectionMessage == 2)
                 {
                     await GetCompletedDataListAsync();
                 }
 
                 // 从下载页面离开时，关闭所有事件。
-                else if (pivotSelectionMessage.Value == -1)
+                else if (pivotSelectionMessage == -1)
                 {
                     // 取消订阅所有事件
                     DownloadSchedulerService.DownloadingList.ItemsChanged -= OnDownloadingListItemsChanged;
@@ -415,7 +414,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// </summary>
         public void OnUnloaded(object sender, RoutedEventArgs args)
         {
-            WeakReferenceMessenger.Default.UnregisterAll(this);
+            Messenger.Default.Unregister(this);
         }
 
         /// <summary>

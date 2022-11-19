@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+﻿using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -29,7 +29,7 @@ namespace GetStoreApp.Views.Pages
 
         public void HistoryUnloaded(object sender, RoutedEventArgs args)
         {
-            WeakReferenceMessenger.Default.UnregisterAll(this);
+            Messenger.Default.Unregister(this);
         }
 
         public string LocalizeHistoryCountInfo(int count)

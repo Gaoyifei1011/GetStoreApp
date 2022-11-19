@@ -1,7 +1,7 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Command;
+﻿using GetStoreApp.Contracts.Command;
 using GetStoreApp.Extensions.Command;
-using GetStoreApp.Messages;
+using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Services.Controls.Download;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -71,7 +71,7 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
 
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
             await Aria2Service.CloseAria2Async();
-            WeakReferenceMessenger.Default.Send(new WindowClosedMessage(true));
+            Messenger.Default.Send(true, MessageToken.WindowClosed);
 
             // 重启应用
             AppInstance.Restart("");

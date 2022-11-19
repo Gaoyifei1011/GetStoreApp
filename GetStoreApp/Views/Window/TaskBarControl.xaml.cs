@@ -1,5 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Messages;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Services.Controls.Settings.Appearance;
 using H.NotifyIcon;
 using Microsoft.UI.Xaml;
@@ -15,12 +15,12 @@ namespace GetStoreApp.Views.Window
         {
             InitializeComponent();
 
-            WeakReferenceMessenger.Default.Register<TaskBarControl, WindowClosedMessage>(this, (taskbarControl, windowClosedMessage) =>
+            Messenger.Default.Register<bool>(this, MessageToken.WindowClosed, (windowClosedMessage) =>
             {
-                if (windowClosedMessage.Value)
+                if (windowClosedMessage)
                 {
                     Dispose();
-                    WeakReferenceMessenger.Default.UnregisterAll(this);
+                    Messenger.Default.Unregister(this);
                 }
             });
         }

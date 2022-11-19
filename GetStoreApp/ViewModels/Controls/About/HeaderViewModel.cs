@@ -2,6 +2,7 @@
 using GetStoreApp.Extensions.Command;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.ViewModels.Base;
+using Microsoft.UI.Xaml;
 using System;
 
 namespace GetStoreApp.ViewModels.Controls.About
@@ -53,7 +54,10 @@ namespace GetStoreApp.ViewModels.Controls.About
             await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/releases"));
         });
 
-        public HeaderViewModel()
+        /// <summary>
+        /// 初始化应用版本信息
+        /// </summary>
+        public void OnLoaded(object sender, RoutedEventArgs args)
         {
             AppVersion = string.Format("{0}.{1}.{2}.{3}", MajorVersion, MinorVersion, BuildVersion, RevisionVersion);
         }

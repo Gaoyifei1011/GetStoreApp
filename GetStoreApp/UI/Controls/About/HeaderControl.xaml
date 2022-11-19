@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
+    Loaded="{x:Bind ViewModel.OnLoaded}"
     mc:Ignorable="d">
 
     <UserControl.DataContext>
@@ -40,7 +41,7 @@
             <TextBlock
                 Margin="0,0,0,10"
                 FontSize="15"
-                Text="{x:Bind LocalizeAppVersion(ViewModel.AppVersion)}" />
+                Text="{x:Bind LocalizeAppVersion(ViewModel.AppVersion), Mode=OneWay}" />
 
             <StackPanel Orientation="Horizontal">
 

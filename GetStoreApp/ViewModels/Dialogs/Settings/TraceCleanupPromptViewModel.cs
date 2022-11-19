@@ -1,8 +1,7 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Command;
+﻿using GetStoreApp.Contracts.Command;
 using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Messages;
+using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Models.Dialogs.CommonDialogs.Settings;
 using GetStoreApp.Services.Controls.Settings.Advanced;
 using GetStoreApp.Services.Root;
@@ -11,7 +10,6 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Shapes;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -149,7 +147,7 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
 
                 if (cleanupArgs == CleanArgs.History)
                 {
-                    WeakReferenceMessenger.Default.Send(new HistoryMessage(true));
+                    Messenger.Default.Send(true, MessageToken.History);
                 }
 
                 TraceCleanupList[TraceCleanupList.IndexOf(TraceCleanupList.First(item => item.InternalName == cleanupArgs))].IsCleanFailed = !CleanReusult;

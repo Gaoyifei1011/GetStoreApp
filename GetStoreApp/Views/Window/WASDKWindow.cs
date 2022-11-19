@@ -1,6 +1,6 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Helpers.Window;
-using GetStoreApp.Messages;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.ViewModels.Base;
 using GetStoreAppWindowsAPI.PInvoke.User32;
@@ -123,7 +123,7 @@ namespace GetStoreApp.Views.Window
                 // 系统设置发生更改时的消息
                 case WindowMessage.WM_SETTINGCHANGE:
                     {
-                        WeakReferenceMessenger.Default.Send(new SystemSettingsChnagedMessage(true));
+                        Messenger.Default.Send(true, MessageToken.SystemSettingsChanged);
                         break;
                     }
                 case WindowMessage.WM_GETMINMAXINFO:
@@ -172,7 +172,7 @@ namespace GetStoreApp.Views.Window
                         else
                         {
                             string[] startupArgs = copyDataStruct.lpData.Split(' ');
-                            WeakReferenceMessenger.Default.Send(new CommandMessage(startupArgs));
+                            Messenger.Default.Send(startupArgs, MessageToken.Command);
                         }
                         break;
                     }

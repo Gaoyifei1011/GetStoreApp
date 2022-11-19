@@ -1,5 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Messages;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Services.Controls.Settings.Experiment;
 using GetStoreApp.ViewModels.Base;
 using Microsoft.UI.Xaml;
@@ -27,7 +27,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Experiment
         /// </summary>
         public void OnUnloaded(object sender, RoutedEventArgs args)
         {
-            WeakReferenceMessenger.Default.UnregisterAll(this);
+            Messenger.Default.Unregister(this);
         }
 
         /// <summary>
@@ -45,9 +45,9 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Experiment
 
         public NetWorkMonitorViewModel()
         {
-            WeakReferenceMessenger.Default.Register<NetWorkMonitorViewModel, RestoreDefaultMessage>(this, (netWorkMonitorViewModel, restoreDefaultMessage) =>
+            Messenger.Default.Register<bool>(this, MessageToken.RestoreDefault, (restoreDefaultMessage) =>
             {
-                if (restoreDefaultMessage.Value)
+                if (restoreDefaultMessage)
                 {
                     NetWorkMonitorValue = NetWorkMonitorService.NetWorkMonitorValue;
                 }

@@ -1,8 +1,8 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Command;
+﻿using GetStoreApp.Contracts.Command;
 using GetStoreApp.Extensions.Command;
+using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.DataType.Events;
-using GetStoreApp.Messages;
+using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Common;
@@ -295,10 +295,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
             // Interval 获取或设置计时器刻度之间的时间段
             DownloadingTimer.Interval = new TimeSpan(0, 0, 1);
 
-            WeakReferenceMessenger.Default.Register<DownloadingViewModel, PivotSelectionMessage>(this, async (downloadingViewModel, pivotSelectionMessage) =>
+            Messenger.Default.Register<int>(this, MessageToken.PivotSelection, async (pivotSelectionMessage) =>
             {
                 // 切换到下载中页面时，开启监控。并更新当前页面的数据
-                if (pivotSelectionMessage.Value == 0)
+                if (pivotSelectionMessage == 0)
                 {
                     await GetDownloadingDataListAsync();
 
@@ -306,7 +306,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 }
 
                 // 从下载页面离开时，取消订阅所有事件。并注销所有消息服务
-                else if (pivotSelectionMessage.Value == -1)
+                else if (pivotSelectionMessage == -1)
                 {
                     if (DownloadingTimer.IsEnabled)
                     {
@@ -320,7 +320,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     DownloadSchedulerService.WaitingList.ItemsChanged -= OnWaitingListItemsChanged;
 
                     // 关闭消息服务
-                    WeakReferenceMessenger.Default.UnregisterAll(this);
+                    Messenger.Default.Unregister(this);
                 }
 
                 // 切换到其他页面时，关闭监控
@@ -340,7 +340,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// </summary>
         public void OnUnloaded(object sender, RoutedEventArgs args)
         {
-            WeakReferenceMessenger.Default.UnregisterAll(this);
+            Messenger.Default.Unregister(this);
         }
 
         /// <summary>

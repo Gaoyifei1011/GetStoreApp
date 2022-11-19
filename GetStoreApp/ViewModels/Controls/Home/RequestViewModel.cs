@@ -1,8 +1,8 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Command;
+﻿using GetStoreApp.Contracts.Command;
 using GetStoreApp.Extensions.Command;
+using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Helpers.Root;
-using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.History;
 using GetStoreApp.Models.Controls.Home;
 using GetStoreApp.Services.Controls.History;
@@ -123,11 +123,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             IsGettingLinks = false;
 
-            WeakReferenceMessenger.Default.Register<RequestViewModel, CommandMessage>(this, (rqeuestViewMdoel, commandMessage) =>
+            Messenger.Default.Register<string[]>(this, MessageToken.Command, (commandMessage) =>
             {
-                SelectedType = Convert.ToInt32(commandMessage.Value[0]) == -1 ? 0 : Convert.ToInt32(commandMessage.Value[0]);
-                SelectedChannel = Convert.ToInt32(commandMessage.Value[1]) == -1 ? 3 : Convert.ToInt32(commandMessage.Value[1]);
-                LinkText = commandMessage.Value[2] == "PlaceHolderText" ? string.Empty : commandMessage.Value[2];
+                SelectedType = Convert.ToInt32(commandMessage[0]) == -1 ? 0 : Convert.ToInt32(commandMessage[0]);
+                SelectedChannel = Convert.ToInt32(commandMessage[1]) == -1 ? 3 : Convert.ToInt32(commandMessage[1]);
+                LinkText = commandMessage[2] == "PlaceHolderText" ? string.Empty : commandMessage[2];
 
                 if (NavigationService.GetCurrentPageType() != typeof(HomePage))
                 {
@@ -135,18 +135,18 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 }
             });
 
-            WeakReferenceMessenger.Default.Register<RequestViewModel, FillinMessage>(this, (requestViewModel, fillinMessage) =>
+            Messenger.Default.Register<HistoryModel>(this, MessageToken.Fillin, (fillinMessage) =>
             {
-                requestViewModel.SelectedType = TypeList.FindIndex(item => item.InternalName.Equals(fillinMessage.Value.HistoryType));
-                requestViewModel.SelectedChannel = ChannelList.FindIndex(item => item.InternalName.Equals(fillinMessage.Value.HistoryChannel));
-                requestViewModel.LinkText = fillinMessage.Value.HistoryLink;
+                SelectedType = TypeList.FindIndex(item => item.InternalName.Equals(fillinMessage.HistoryType));
+                SelectedChannel = ChannelList.FindIndex(item => item.InternalName.Equals(fillinMessage.HistoryChannel));
+                LinkText = fillinMessage.HistoryLink;
             });
 
-            WeakReferenceMessenger.Default.Register<RequestViewModel, WindowClosedMessage>(this, (requestViewModel, windowClosedMessage) =>
+            Messenger.Default.Register<bool>(this, MessageToken.WindowClosed, (windowClosedMessage) =>
             {
-                if (windowClosedMessage.Value)
+                if (windowClosedMessage)
                 {
-                    WeakReferenceMessenger.Default.UnregisterAll(this);
+                    Messenger.Default.Unregister(this);
                 }
             });
         }
@@ -156,10 +156,13 @@ namespace GetStoreApp.ViewModels.Controls.Home
         /// </summary>
         public void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            SampleLink = SampleLinkList[SelectedType];
-            LinkPlaceHolderText = SampleTitle + SampleLink;
+            if (args.RemovedItems.Count > 0)
+            {
+                SampleLink = SampleLinkList[SelectedType];
+                LinkPlaceHolderText = SampleTitle + SampleLink;
 
-            LinkText = string.Empty;
+                LinkText = string.Empty;
+            }
         }
 
         /// <summary>
@@ -196,7 +199,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             string CurrentLink = LinkText;
 
             // 设置获取数据时的相关控件状态
-            WeakReferenceMessenger.Default.Send(new StatusBarStateMessage(0));
+            Messenger.Default.Send(0, MessageToken.StatusBarState);
 
             // 生成请求的内容
             string generateContent = new GenerateContentHelper().GenerateRequestContent(
@@ -231,17 +234,17 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
                 await UpdateHistoryAsync(CurrentType, CurrentChannel, CurrentLink);
 
-                WeakReferenceMessenger.Default.Send(new HistoryMessage(true));
+                Messenger.Default.Send(true, MessageToken.History);
             }
 
             // 发送消息
-            WeakReferenceMessenger.Default.Send(new StatusBarStateMessage(state));
+            Messenger.Default.Send(state, MessageToken.StatusBarState);
 
-            WeakReferenceMessenger.Default.Send(new ResultControlVisableMessage(ResultControlVisable));
+            Messenger.Default.Send(ResultControlVisable, MessageToken.ResultControlVisable);
 
-            WeakReferenceMessenger.Default.Send(new ResultCategoryIdMessage(CategoryId));
+            Messenger.Default.Send(CategoryId, MessageToken.ResultCategoryId);
 
-            WeakReferenceMessenger.Default.Send(new ResultDataListMessage(ResultDataList));
+            Messenger.Default.Send(ResultDataList, MessageToken.ResultDataList);
         }
 
         /// <summary>

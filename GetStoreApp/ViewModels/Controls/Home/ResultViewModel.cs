@@ -1,9 +1,8 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Contracts.Command;
+﻿using GetStoreApp.Contracts.Command;
 using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Helpers.Root;
-using GetStoreApp.Messages;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Models.Controls.Home;
 using GetStoreApp.Services.Controls.Download;
@@ -428,28 +427,29 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public ResultViewModel()
         {
-            WeakReferenceMessenger.Default.Register<ResultViewModel, ResultControlVisableMessage>(this, (resultViewModel, resultControlVisableMessage) =>
+            Messenger.Default.Register<bool>(this, MessageToken.ResultControlVisable, (resultControlVisableMessage) =>
             {
-                resultViewModel.ResultControlVisable = resultControlVisableMessage.Value;
+                ResultControlVisable = resultControlVisableMessage;
             });
 
-            WeakReferenceMessenger.Default.Register<ResultViewModel, ResultCategoryIdMessage>(this, (resultViewModel, resultCategoryIdMessage) =>
+            Messenger.Default.Register<string>(this, MessageToken.ResultCategoryId, (resultCategoryIdMessage) =>
             {
-                resultViewModel.CategoryId = resultCategoryIdMessage.Value;
+                CategoryId = resultCategoryIdMessage;
             });
 
-            WeakReferenceMessenger.Default.Register<ResultViewModel, ResultDataListMessage>(this, (resultViewModel, resultDataListMessage) =>
+            Messenger.Default.Register<List<ResultData>>(this, MessageToken.ResultDataList, (resultDataListMessage) =>
             {
                 lock (ResultDataListLock)
                 {
-                    resultViewModel.ResultDataList.Clear();
+                    ResultDataList.Clear();
                 }
 
                 lock (ResultDataListLock)
                 {
-                    foreach (ResultData resultItem in resultDataListMessage.Value)
+                    foreach (ResultData resultItem in resultDataListMessage)
+
                     {
-                        resultViewModel.ResultDataList.Add(new ResultModel
+                        ResultDataList.Add(new ResultModel
                         {
                             IsSelected = false,
                             FileName = resultItem.FileName,
@@ -462,11 +462,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 }
             });
 
-            WeakReferenceMessenger.Default.Register<ResultViewModel, WindowClosedMessage>(this, (resultViewModel, windowClosedMessage) =>
+            Messenger.Default.Register<bool>(this, MessageToken.WindowClosed, (windowClosedMessage) =>
             {
-                if (windowClosedMessage.Value)
+                if (windowClosedMessage)
                 {
-                    WeakReferenceMessenger.Default.UnregisterAll(this);
+                    Messenger.Default.Unregister(this);
                 }
             });
         }

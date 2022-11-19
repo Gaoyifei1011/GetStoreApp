@@ -28,7 +28,10 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
         /// </summary>
         public async void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            await AppExitService.SetAppExitAsync(AppExit);
+            if (args.RemovedItems.Count > 0)
+            {
+                await AppExitService.SetAppExitAsync(AppExit);
+            }
         }
     }
 }

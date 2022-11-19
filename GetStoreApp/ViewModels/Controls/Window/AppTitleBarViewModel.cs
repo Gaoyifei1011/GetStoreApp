@@ -1,6 +1,6 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Helpers.Root;
-using GetStoreApp.Messages;
 using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreAppWindowsAPI.PInvoke.User32;
 using Microsoft.UI;
@@ -31,7 +31,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
                 ((FrameworkElement)App.MainWindow.Content).ActualThemeChanged += OnActualThemeChanged;
 
                 // 应用主题设置跟随系统发生变化时，当系统主题设置发生变化时修改标题栏按钮主题
-                WeakReferenceMessenger.Default.Register<AppTitleBarViewModel, SystemSettingsChnagedMessage>(this, (appTitleBarViewModel, systemSettingsChangedMessage) =>
+                Messenger.Default.Register<bool>(this, MessageToken.SystemSettingsChanged, (systemSettingsChangedMessage) =>
                 {
                     if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[0].InternalName)
                     {
@@ -59,7 +59,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
         public void OnUnloaded(object sender, RoutedEventArgs args)
         {
             ((FrameworkElement)App.MainWindow.Content).ActualThemeChanged -= OnActualThemeChanged;
-            WeakReferenceMessenger.Default.UnregisterAll(this);
+            Messenger.Default.Unregister(this);
         }
 
         /// <summary>

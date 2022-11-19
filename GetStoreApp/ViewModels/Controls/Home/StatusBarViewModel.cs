@@ -1,5 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using GetStoreApp.Messages;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Models.Controls.Home;
 using GetStoreApp.Services.Root;
 using GetStoreApp.ViewModels.Base;
@@ -73,20 +73,20 @@ namespace GetStoreApp.ViewModels.Controls.Home
         {
             StateInfoText = ResourceService.GetLocalized("/Home/StatusInfoWelcome");
 
-            WeakReferenceMessenger.Default.Register<StatusBarViewModel, StatusBarStateMessage>(this, (statusbarViewModel, statusBarStateMessage) =>
+            Messenger.Default.Register<int>(this, MessageToken.StatusBarState, (statusBarStateMessage) =>
             {
-                statusbarViewModel.InfoBarSeverity = StatusBarStateList[statusBarStateMessage.Value].InfoBarSeverity;
-                statusbarViewModel.StateInfoText = StatusBarStateList[statusBarStateMessage.Value].StateInfoText;
-                statusbarViewModel.StatePrRingVisValue = StatusBarStateList[statusBarStateMessage.Value].StatePrRingVisValue;
-                statusbarViewModel.StatePrRingActValue = StatusBarStateList[statusBarStateMessage.Value].StatePrRingActValue;
+                InfoBarSeverity = StatusBarStateList[statusBarStateMessage].InfoBarSeverity;
+                StateInfoText = StatusBarStateList[statusBarStateMessage].StateInfoText;
+                StatePrRingVisValue = StatusBarStateList[statusBarStateMessage].StatePrRingVisValue;
+                StatePrRingActValue = StatusBarStateList[statusBarStateMessage].StatePrRingActValue;
             });
 
-            WeakReferenceMessenger.Default.Register<StatusBarViewModel, WindowClosedMessage>(this, (statusbarViewModel, windowClosedMessage) =>
+            Messenger.Default.Register<bool>(this, MessageToken.WindowClosed, (windowClosedMessage) =>
             {
-                if (windowClosedMessage.Value)
+                if (windowClosedMessage)
                 {
                     PropertyChanged -= OnPropertyChanged;
-                    WeakReferenceMessenger.Default.UnregisterAll(this);
+                    Messenger.Default.Unregister(this);
                 }
             });
 

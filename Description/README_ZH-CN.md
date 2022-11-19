@@ -53,7 +53,6 @@
 
 > * [Aira2](https://aria2.github.io)&emsp;
 > * [Aria2.NET](https://github.com/rogerfar/Aria2.NET)&emsp;
-> * [CommunityToolkit.Mvvm](https://github.com/CommunityToolkit/WindowsCommunityToolkit)&emsp;
 > * [H.NotifyIcon.WinUI](https://github.com/HavenDV/H.NotifyIcon)&emsp;
 > * [HtmlAgilityPack](http://html-agility-pack.net)&emsp;
 > * [Microsoft.Data.Sqlite.Core](https://docs.microsoft.com/dotnet/standard/data/sqlite)&emsp;
