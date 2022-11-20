@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Models.Controls.Settings.Advanced;
 using GetStoreApp.Services.Root;
-using GetStoreAppCore.Settings;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,7 +11,7 @@ namespace GetStoreApp.Services.Controls.Settings.Advanced
     /// </summary>
     public static class AppExitService
     {
-        private static string SettingsKey { get; } = ConfigStorage.ConfigKey["ExitKey"];
+        private static string SettingsKey { get; } = ConfigService.ConfigKey["ExitKey"];
 
         private static AppExitModel DefaultAppExit { get; set; }
 
@@ -37,7 +36,7 @@ namespace GetStoreApp.Services.Controls.Settings.Advanced
         /// </summary>
         private static async Task<AppExitModel> GetAppExitAsync()
         {
-            string appExit = await ConfigStorage.ReadSettingAsync<string>(SettingsKey);
+            string appExit = await ConfigService.ReadSettingAsync<string>(SettingsKey);
 
             if (string.IsNullOrEmpty(appExit))
             {
@@ -54,7 +53,7 @@ namespace GetStoreApp.Services.Controls.Settings.Advanced
         {
             AppExit = appExit;
 
-            await ConfigStorage.SaveSettingAsync(SettingsKey, appExit.InternalName);
+            await ConfigService.SaveSettingAsync(SettingsKey, appExit.InternalName);
         }
     }
 }

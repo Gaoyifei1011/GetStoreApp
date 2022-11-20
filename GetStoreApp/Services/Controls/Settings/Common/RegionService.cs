@@ -1,6 +1,6 @@
 ﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings.Common;
-using GetStoreAppCore.Settings;
+using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -14,7 +14,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
     /// </summary>
     public static class RegionService
     {
-        private static string SettingsKey { get; } = ConfigStorage.ConfigKey["RegionKey"];
+        private static string SettingsKey { get; } = ConfigService.ConfigKey["RegionKey"];
 
         public static List<RegionModel> RegionList => GeographicalLocationHelper.GetGeographicalLocations().OrderBy(item => item.FriendlyName).ToList();
 
@@ -37,7 +37,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// </summary>
         private static async Task<RegionModel> GetRegionAsync()
         {
-            string region = await ConfigStorage.ReadSettingAsync<string>(SettingsKey);
+            string region = await ConfigService.ReadSettingAsync<string>(SettingsKey);
 
             if (string.IsNullOrEmpty(region))
             {
@@ -54,7 +54,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         {
             AppRegion = region;
 
-            await ConfigStorage.SaveSettingAsync(SettingsKey, region.ISO2);
+            await ConfigService.SaveSettingAsync(SettingsKey, region.ISO2);
         }
     }
 }

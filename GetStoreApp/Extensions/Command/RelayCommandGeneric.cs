@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Contracts.Command;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
@@ -144,7 +143,6 @@ namespace GetStoreApp.Extensions.Command
         /// </summary>
         /// <param name="parameter">输入参数。</param>
         /// <exception cref="ArgumentException">抛出错误消息，以提供有关无效参数的信息。</exception>
-        [DoesNotReturn]
         internal static void ThrowArgumentExceptionForInvalidCommandArgument(object? parameter)
         {
             [MethodImpl(MethodImplOptions.NoInlining)]

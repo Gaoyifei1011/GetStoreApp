@@ -13,7 +13,6 @@ using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
-using GetStoreAppCore.Data;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -437,7 +436,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 CategoryId = resultCategoryIdMessage;
             });
 
-            Messenger.Default.Register<List<ResultData>>(this, MessageToken.ResultDataList, (resultDataListMessage) =>
+            Messenger.Default.Register<List<ResultModel>>(this, MessageToken.ResultDataList, (resultDataListMessage) =>
             {
                 lock (ResultDataListLock)
                 {
@@ -446,18 +445,10 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
                 lock (ResultDataListLock)
                 {
-                    foreach (ResultData resultItem in resultDataListMessage)
-
+                    foreach (ResultModel resultItem in resultDataListMessage)
                     {
-                        ResultDataList.Add(new ResultModel
-                        {
-                            IsSelected = false,
-                            FileName = resultItem.FileName,
-                            FileLink = resultItem.FileLink,
-                            FileLinkExpireTime = resultItem.FileLinkExpireTime,
-                            FileSHA1 = resultItem.FileSHA1,
-                            FileSize = resultItem.FileSize
-                        });
+                        resultItem.IsSelected = false;
+                        ResultDataList.Add(resultItem);
                     }
                 }
             });
@@ -476,7 +467,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
         /// </summary>
         public void OnItemClick(object sender, ItemClickEventArgs args)
         {
-            ResultModel resultItem = (ResultModel)args.ClickedItem;
+            Models.Controls.Home.ResultModel resultItem = (Models.Controls.Home.ResultModel)args.ClickedItem;
             int ClickedIndex = ResultDataList.IndexOf(resultItem);
 
             lock (ResultDataListLock)

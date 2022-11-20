@@ -1,4 +1,4 @@
-﻿using GetStoreAppWindowsAPI.PInvoke.User32;
+﻿using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.AppNotifications;
 using System;

@@ -9,7 +9,7 @@ using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Settings;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
-using GetStoreAppWindowsAPI.Dialogs;
+using GetStoreApp.WindowsAPI.Dialogs;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;

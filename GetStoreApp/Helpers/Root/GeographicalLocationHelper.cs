@@ -1,5 +1,5 @@
 ﻿using GetStoreApp.Models.Controls.Settings.Common;
-using GetStoreAppWindowsAPI.PInvoke.Kernel32;
+using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;

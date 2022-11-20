@@ -80,7 +80,7 @@ namespace GetStoreApp.ViewModels.Dialogs.Download
         /// <summary>
         /// 对话框加载完成后让内容对话框的烟雾层背景（SmokeLayerBackground）覆盖到标题栏中，并获取文件的SHA1值
         /// </summary>
-        public void OnLoaded(object sender, RoutedEventArgs args)
+        public async void OnLoaded(object sender, RoutedEventArgs args)
         {
             ContentDialog dialog = sender as ContentDialog;
 
@@ -100,7 +100,7 @@ namespace GetStoreApp.ViewModels.Dialogs.Download
                 }
             }
 
-            CheckFileSHA1 = IOHelper.GetFileSHA1(FilePath);
+            CheckFileSHA1 = await IOHelper.GetFileSHA1(FilePath);
             FileCheckState = true;
         }
 

@@ -160,6 +160,7 @@
     
     <PackageReference Include="Aria2.NET" Version="1.0.5" />
     <PackageReference Include="H.NotifyIcon.WinUI" Version="2.0.74" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.0" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.1">
       <TreatAsUsed>true</TreatAsUsed>
@@ -438,17 +439,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    
     <Content Include="Aria2\Config\aria2.conf" />
     <Content Include="Aria2\X64\Aria2Desktop.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -465,8 +455,6 @@
     <Content Include="LICENSE">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <ProjectReference Include="..\GetStoreAppCore\GetStoreAppCore.csproj" />
-    <ProjectReference Include="..\GetStoreAppWindowsAPI\GetStoreAppWindowsAPI.csproj" />
     <Content Update="Assets\Images\CloudflareValidation.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

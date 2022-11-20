@@ -1,4 +1,4 @@
-﻿using GetStoreAppCore.Settings;
+﻿using GetStoreApp.Services.Root;
 using System;
 using System.Threading.Tasks;
 
@@ -9,9 +9,9 @@ namespace GetStoreApp.Services.Controls.Settings.Common
     /// </summary>
     public static class LinkFilterService
     {
-        private static string StartWithESettingsKey { get; } = ConfigStorage.ConfigKey["StartsWithEFilterKey"];
+        private static string StartWithESettingsKey { get; } = ConfigService.ConfigKey["StartsWithEFilterKey"];
 
-        private static string BlockMapSettingsKey { get; } = ConfigStorage.ConfigKey["BlockMapFilterKey"];
+        private static string BlockMapSettingsKey { get; } = ConfigService.ConfigKey["BlockMapFilterKey"];
 
         private static bool DefaultLinkFilterValue => true;
 
@@ -34,7 +34,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// </summary>
         private static async Task<bool> GetStartWithEFilterValueAsync()
         {
-            bool? startWithEFilterValue = await ConfigStorage.ReadSettingAsync<bool?>(StartWithESettingsKey);
+            bool? startWithEFilterValue = await ConfigService.ReadSettingAsync<bool?>(StartWithESettingsKey);
 
             if (!startWithEFilterValue.HasValue)
             {
@@ -49,7 +49,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// </summary>
         private static async Task<bool> GetBlockMapFilterValueAsync()
         {
-            bool? blockMapFilterValue = await ConfigStorage.ReadSettingAsync<bool?>(BlockMapSettingsKey);
+            bool? blockMapFilterValue = await ConfigService.ReadSettingAsync<bool?>(BlockMapSettingsKey);
 
             if (!blockMapFilterValue.HasValue)
             {
@@ -66,7 +66,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         {
             StartWithEFilterValue = startWithEFilterValue;
 
-            await ConfigStorage.SaveSettingAsync(StartWithESettingsKey, startWithEFilterValue);
+            await ConfigService.SaveSettingAsync(StartWithESettingsKey, startWithEFilterValue);
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         {
             BlockMapFilterValue = blockMapFilterValue;
 
-            await ConfigStorage.SaveSettingAsync(BlockMapSettingsKey, blockMapFilterValue);
+            await ConfigService.SaveSettingAsync(BlockMapSettingsKey, blockMapFilterValue);
         }
     }
 }

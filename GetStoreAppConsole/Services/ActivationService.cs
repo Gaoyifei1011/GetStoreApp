@@ -11,6 +11,7 @@ namespace GetStoreAppConsole.Services
         {
             await LanguageService.InitializeLanguageAsync();
             await ResourceService.InitializeResourceAsync(LanguageService.DefaultConsoleLanguage, LanguageService.ConsoleLanguage);
+            await ResourceService.InitializeResourceAsync(LanguageService.DefaultConsoleLanguage, LanguageService.ConsoleLanguage);
         }
     }
 }

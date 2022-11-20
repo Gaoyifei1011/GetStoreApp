@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Models.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
-using GetStoreAppCore.Settings;
-using GetStoreAppWindowsAPI.PInvoke.Shell32;
+using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,11 +15,11 @@ namespace GetStoreApp.Services.Controls.Settings.Common
     /// </summary>
     public static class DownloadOptionsService
     {
-        private static string FolderSettingsKey { get; } = ConfigStorage.ConfigKey["DownloadFolderKey"];
+        private static string FolderSettingsKey { get; } = ConfigService.ConfigKey["DownloadFolderKey"];
 
-        private static string DownloadItemSettingsKey { get; } = ConfigStorage.ConfigKey["DownloadItemKey"];
+        private static string DownloadItemSettingsKey { get; } = ConfigService.ConfigKey["DownloadItemKey"];
 
-        private static string DownloadModeSettingsKey { get; } = ConfigStorage.ConfigKey["DownloadModeKey"];
+        private static string DownloadModeSettingsKey { get; } = ConfigService.ConfigKey["DownloadModeKey"];
 
         public static List<DownloadModeModel> DownloadModeList { get; set; }
 
@@ -63,7 +62,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// </summary>
         private static async Task<StorageFolder> GetFolderAsync()
         {
-            string folder = await ConfigStorage.ReadSettingAsync<string>(FolderSettingsKey);
+            string folder = await ConfigService.ReadSettingAsync<string>(FolderSettingsKey);
 
             if (string.IsNullOrEmpty(folder))
             {
@@ -124,7 +123,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// </summary>
         private static async Task<int> GetItemAsync()
         {
-            int? downloadItemValue = await ConfigStorage.ReadSettingAsync<int?>(DownloadItemSettingsKey);
+            int? downloadItemValue = await ConfigService.ReadSettingAsync<int?>(DownloadItemSettingsKey);
 
             if (!downloadItemValue.HasValue)
             {
@@ -140,7 +139,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// <returns></returns>
         private static async Task<DownloadModeModel> GetModeAsync()
         {
-            string downloadMode = await ConfigStorage.ReadSettingAsync<string>(DownloadModeSettingsKey);
+            string downloadMode = await ConfigService.ReadSettingAsync<string>(DownloadModeSettingsKey);
 
             if (string.IsNullOrEmpty(downloadMode))
             {
@@ -157,7 +156,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         {
             DownloadFolder = downloadFolder;
 
-            await ConfigStorage.SaveSettingAsync(FolderSettingsKey, downloadFolder.Path);
+            await ConfigService.SaveSettingAsync(FolderSettingsKey, downloadFolder.Path);
         }
 
         /// <summary>
@@ -167,7 +166,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         {
             DownloadItem = downloadItem;
 
-            await ConfigStorage.SaveSettingAsync(DownloadItemSettingsKey, downloadItem);
+            await ConfigService.SaveSettingAsync(DownloadItemSettingsKey, downloadItem);
         }
 
         /// <summary>
@@ -177,7 +176,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         {
             DownloadMode = downloadMode;
 
-            await ConfigStorage.SaveSettingAsync(DownloadModeSettingsKey, downloadMode.InternalName);
+            await ConfigService.SaveSettingAsync(DownloadModeSettingsKey, downloadMode.InternalName);
         }
     }
 }

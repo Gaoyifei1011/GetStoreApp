@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Helpers.Window;
 using GetStoreApp.Models.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
-using GetStoreAppCore.Settings;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,7 +12,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
     /// </summary>
     public static class BackdropService
     {
-        private static string SettingsKey { get; } = ConfigStorage.ConfigKey["BackdropKey"];
+        private static string SettingsKey { get; } = ConfigService.ConfigKey["BackdropKey"];
 
         private static BackdropModel DefaultAppBackdrop { get; set; }
 
@@ -38,7 +37,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// </summary>
         private static async Task<BackdropModel> GetBackdropAsync()
         {
-            string backdrop = await ConfigStorage.ReadSettingAsync<string>(SettingsKey);
+            string backdrop = await ConfigService.ReadSettingAsync<string>(SettingsKey);
 
             if (string.IsNullOrEmpty(backdrop))
             {
@@ -55,7 +54,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         {
             AppBackdrop = backdrop;
 
-            await ConfigStorage.SaveSettingAsync(SettingsKey, backdrop.InternalName);
+            await ConfigService.SaveSettingAsync(SettingsKey, backdrop.InternalName);
         }
 
         /// <summary>

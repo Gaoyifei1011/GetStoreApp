@@ -57,6 +57,7 @@
 > * [HtmlAgilityPack](http://html-agility-pack.net)&emsp;
 > * [Microsoft.Data.Sqlite.Core](https://docs.microsoft.com/dotnet/standard/data/sqlite)&emsp;
 > * [Microsoft.Windows.CsWinRT](https://github.com/microsoft/cswinrt)&emsp;
+> * [Microsoft.Windows.SDK.Contracts](https://aka.ms/WinSDKProjectURL)&emsp;
 > * [Microsoft.Windows.SDK.BuildTools](https://www.nuget.org/packages/Microsoft.Windows.SDK.BuildTools)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [SQLitePCLRaw.bundle_winsqlite3](https://github.com/ericsink/SQLitePCL.raw)&emsp;

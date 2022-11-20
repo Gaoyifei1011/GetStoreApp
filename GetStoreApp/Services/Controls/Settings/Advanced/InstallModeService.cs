@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Models.Controls.Settings.Advanced;
 using GetStoreApp.Services.Root;
-using GetStoreAppCore.Settings;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,7 +11,7 @@ namespace GetStoreApp.Services.Controls.Settings.Advanced
     /// </summary>
     public static class InstallModeService
     {
-        private static string SettingsKey { get; } = ConfigStorage.ConfigKey["InstallModeKey"];
+        private static string SettingsKey { get; } = ConfigService.ConfigKey["InstallModeKey"];
 
         public static InstallModeModel DefaultInstallMode { get; set; }
 
@@ -37,7 +36,7 @@ namespace GetStoreApp.Services.Controls.Settings.Advanced
         /// </summary>
         private static async Task<InstallModeModel> GetInstallModeAsync()
         {
-            string installMode = await ConfigStorage.ReadSettingAsync<string>(SettingsKey);
+            string installMode = await ConfigService.ReadSettingAsync<string>(SettingsKey);
 
             if (string.IsNullOrEmpty(installMode))
             {
@@ -54,7 +53,7 @@ namespace GetStoreApp.Services.Controls.Settings.Advanced
         {
             InstallMode = installMode;
 
-            await ConfigStorage.SaveSettingAsync(SettingsKey, installMode.InternalName);
+            await ConfigService.SaveSettingAsync(SettingsKey, installMode.InternalName);
         }
     }
 }

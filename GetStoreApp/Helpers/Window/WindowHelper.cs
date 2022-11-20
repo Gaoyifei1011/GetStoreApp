@@ -1,4 +1,4 @@
-﻿using GetStoreAppWindowsAPI.PInvoke.User32;
+﻿using GetStoreApp.WindowsAPI.PInvoke.User32;
 using WinRT.Interop;
 
 namespace GetStoreApp.Helpers.Window

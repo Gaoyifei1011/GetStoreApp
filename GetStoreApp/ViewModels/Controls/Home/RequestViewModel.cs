@@ -2,6 +2,7 @@
 using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
+using GetStoreApp.Helpers.Controls.Home;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.History;
 using GetStoreApp.Models.Controls.Home;
@@ -11,8 +12,6 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
-using GetStoreAppCore.Data;
-using GetStoreAppCore.Html;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -184,7 +183,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             IsGettingLinks = true;
 
-            List<ResultData> ResultDataList = new List<ResultData>();
+            List<ResultModel> ResultDataList = new List<ResultModel>();
 
             if (string.IsNullOrEmpty(LinkText))
             {
@@ -210,7 +209,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             // 获取网页反馈回的原始数据
             HtmlRequestHelper htmlRequest = new HtmlRequestHelper();
-            RequestData httpRequestData = await htmlRequest.HttpRequestAsync(generateContent);
+            RequestModel httpRequestData = await htmlRequest.HttpRequestAsync(generateContent);
 
             // 检查服务器返回获取的状态
             HtmlRequestStateHelper htmlRequestState = new HtmlRequestStateHelper();
@@ -271,7 +270,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             return Convert.ToInt64(TimeSpan.TotalSeconds);
         }
 
-        private void ResultListFilter(ref List<ResultData> resultDataList)
+        private void ResultListFilter(ref List<GetStoreApp.Models.Controls.Home.ResultModel> resultDataList)
         {
             // 按要求过滤列表内容
             if (LinkFilterService.StartWithEFilterValue)

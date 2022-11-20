@@ -1,5 +1,5 @@
 ﻿using GetStoreApp.Helpers.Window;
-using GetStoreAppCore.Settings;
+using GetStoreApp.Services.Root;
 using System;
 using System.Threading.Tasks;
 
@@ -10,7 +10,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
     /// </summary>
     public static class TopMostService
     {
-        private static string SettingsKey { get; } = ConfigStorage.ConfigKey["TopMostKey"];
+        private static string SettingsKey { get; } = ConfigService.ConfigKey["TopMostKey"];
 
         private static bool DefaultTopMostValue => false;
 
@@ -29,7 +29,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// </summary>
         private static async Task<bool> GetTopMostValueAsync()
         {
-            bool? topMostValue = await ConfigStorage.ReadSettingAsync<bool?>(SettingsKey);
+            bool? topMostValue = await ConfigService.ReadSettingAsync<bool?>(SettingsKey);
 
             if (!topMostValue.HasValue)
             {
@@ -46,7 +46,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         {
             TopMostValue = topMostValue;
 
-            await ConfigStorage.SaveSettingAsync(SettingsKey, topMostValue);
+            await ConfigService.SaveSettingAsync(SettingsKey, topMostValue);
         }
 
         /// <summary>

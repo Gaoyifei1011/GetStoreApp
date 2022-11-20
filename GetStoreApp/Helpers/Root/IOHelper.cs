@@ -1,10 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Security.AccessControl;
-using System.Security.Cryptography;
 using System.Security.Principal;
-using System.Text;
+using System.Threading.Tasks;
+using Windows.Security.Cryptography;
+using Windows.Security.Cryptography.Core;
 using Windows.Storage;
+using Windows.Storage.Streams;
 
 namespace GetStoreApp.Helpers.Root
 {
@@ -98,21 +100,38 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 获取文件的SHA1值
         /// </summary>
-        public static string GetFileSHA1(string filePath)
+        public static async Task<string> GetFileSHA1(string filePath)
         {
             try
             {
-                FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, 1024, FileOptions.Asynchronous);
-                SHA1 sha1 = SHA1.Create();
-                byte[] retval = sha1.ComputeHash(fileStream);
-                fileStream.Close();
+                HashAlgorithmProvider hashAlgorithmProvider = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Sha1);
 
-                StringBuilder stringBuilder = new StringBuilder();
-                for (int i = 0; i < retval.Length; i++)
+                StorageFile File = await StorageFile.GetFileFromPathAsync(filePath);
+                Stream stream = await File.OpenStreamForReadAsync();
+                IInputStream inputStream = stream.AsInputStream();
+                uint capacity = 100000000;
+                Windows.Storage.Streams.Buffer buffer = new Windows.Storage.Streams.Buffer(capacity);
+                CryptographicHash buffHash = hashAlgorithmProvider.CreateHash();
+
+                while (true)
                 {
-                    stringBuilder.Append(retval[i].ToString("x2"));
+                    await inputStream.ReadAsync(buffer, capacity, InputStreamOptions.None);
+                    if (buffer.Length > 0)
+                    {
+                        buffHash.Append(buffer);
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
-                return stringBuilder.ToString();
+
+                string hashText = CryptographicBuffer.EncodeToHexString(buffHash.GetValueAndReset()).ToLower();
+
+                inputStream.Dispose();
+                stream.Dispose();
+
+                return hashText;
             }
             catch (Exception)
             {

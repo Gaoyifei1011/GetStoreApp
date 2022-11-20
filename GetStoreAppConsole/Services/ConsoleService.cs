@@ -13,14 +13,19 @@ namespace GetStoreAppConsole.Services
         /// </summary>
         public static void InitializeDescription()
         {
-            Console.Title = ResourceService.GetLocalized("Title");
+            Console.Title = ResourceService.GetLocalized("/Console/Title");
 
-            Console.WriteLine(string.Format(ResourceService.GetLocalized("HeaderDescription1"), Package.Current.Id.Version.Major, Package.Current.Id.Version.Minor, Package.Current.Id.Version.Build, Package.Current.Id.Version.Revision) + LineBreaks);
-            Console.WriteLine(ResourceService.GetLocalized("HeaderDescription2"));
-            Console.WriteLine(ResourceService.GetLocalized("HeaderDescription3") + LineBreaks);
+            Console.WriteLine(string.Format(ResourceService.GetLocalized("/Console/HeaderDescription1"),
+                Package.Current.Id.Version.Major,
+                Package.Current.Id.Version.Minor,
+                Package.Current.Id.Version.Build,
+                Package.Current.Id.Version.Revision
+                ) + LineBreaks);
+            Console.WriteLine(ResourceService.GetLocalized("/Console/HeaderDescription2"));
+            Console.WriteLine(ResourceService.GetLocalized("/Console/HeaderDescription3") + LineBreaks);
 
-            Console.WriteLine(ResourceService.GetLocalized("UnfinishedNotification1"));
-            Console.WriteLine(ResourceService.GetLocalized("UnfinishedNotification2") + LineBreaks);
+            Console.WriteLine(ResourceService.GetLocalized("/Console/UnfinishedNotification1"));
+            Console.WriteLine(ResourceService.GetLocalized("/Console/UnfinishedNotification2") + LineBreaks);
         }
     }
 }

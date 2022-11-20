@@ -1,7 +1,7 @@
-﻿using GetStoreAppWindowsAPI.PInvoke.Kernel32;
-using GetStoreAppWindowsAPI.PInvoke.NTdll;
+﻿using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
+using GetStoreApp.WindowsAPI.PInvoke.NTdll;
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -69,23 +69,28 @@ namespace GetStoreApp.Helpers.Controls.Download
             }
         }
 
-        public static int[] GetChildProcessIds(int parentProcessId)
+        public static List<int> GetChildProcessIds(int parentProcessId)
         {
-            ArrayList myChildren = new ArrayList();
+            List<int> myChildrenProcessList = new List<int>();
             foreach (Process proc in Process.GetProcesses())
             {
+                if(proc is null)
+                {
+                    return new List<int>();
+                }
+
                 int currentProcessId = proc.Id;
                 proc.Dispose();
                 if (parentProcessId == GetParentProcessId(currentProcessId))
                 {
                     // Add this one
-                    myChildren.Add(currentProcessId);
+                    myChildrenProcessList.Add(currentProcessId);
                     // Add any of its children
-                    myChildren.AddRange(GetChildProcessIds(currentProcessId));
+                    myChildrenProcessList.AddRange(GetChildProcessIds(currentProcessId));
                 }
             }
 
-            return (int[])myChildren.ToArray(typeof(int));
+            return myChildrenProcessList;
         }
 
         public static int GetParentProcessId(int processId)

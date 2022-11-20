@@ -1,4 +1,4 @@
-﻿using GetStoreAppCore.Settings;
+﻿using GetStoreApp.Services.Root;
 using System;
 using System.Threading.Tasks;
 
@@ -9,7 +9,7 @@ namespace GetStoreApp.Services.Controls.Settings.Experiment
     /// </summary>
     public static class NetWorkMonitorService
     {
-        private static string SettingsKey { get; } = ConfigStorage.ConfigKey["NetWorkMonitorKey"];
+        private static string SettingsKey { get; } = ConfigService.ConfigKey["NetWorkMonitorKey"];
 
         private static bool DefaultNetWorkMonitorValue => true;
 
@@ -28,7 +28,7 @@ namespace GetStoreApp.Services.Controls.Settings.Experiment
         /// </summary>
         private static async Task<bool> GetNetWorkMonitorValueAsync()
         {
-            bool? netWorkMonitorValue = await ConfigStorage.ReadSettingAsync<bool?>(SettingsKey);
+            bool? netWorkMonitorValue = await ConfigService.ReadSettingAsync<bool?>(SettingsKey);
 
             if (!netWorkMonitorValue.HasValue)
             {
@@ -45,7 +45,7 @@ namespace GetStoreApp.Services.Controls.Settings.Experiment
         {
             NetWorkMonitorValue = netWorkMonitorValue;
 
-            await ConfigStorage.SaveSettingAsync(SettingsKey, netWorkMonitorValue);
+            await ConfigService.SaveSettingAsync(SettingsKey, netWorkMonitorValue);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace GetStoreApp.Services.Controls.Settings.Experiment
         {
             NetWorkMonitorValue = DefaultNetWorkMonitorValue;
 
-            await ConfigStorage.SaveSettingAsync(SettingsKey, DefaultNetWorkMonitorValue);
+            await ConfigService.SaveSettingAsync(SettingsKey, DefaultNetWorkMonitorValue);
         }
     }
 }

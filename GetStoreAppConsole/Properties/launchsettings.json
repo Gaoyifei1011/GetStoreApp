@@ -1,8 +1,0 @@
-﻿{
-  "profiles": {
-    "GetStoreAppConsole": {
-      "commandName": "MsixPackage",
-      "nativeDebugging": true
-    }
-  }
-}

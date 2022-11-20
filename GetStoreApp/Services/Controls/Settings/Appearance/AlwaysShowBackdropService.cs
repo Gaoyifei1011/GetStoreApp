@@ -1,11 +1,11 @@
-﻿using GetStoreAppCore.Settings;
+﻿using GetStoreApp.Services.Root;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Controls.Settings.Appearance
 {
     public static class AlwaysShowBackdropService
     {
-        private static string SettingsKey { get; } = ConfigStorage.ConfigKey["AlwaysShowBackdropKey"];
+        private static string SettingsKey { get; } = ConfigService.ConfigKey["AlwaysShowBackdropKey"];
 
         private static bool DefaultAlwaysShowBackdropValue = false;
 
@@ -24,7 +24,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// </summary>
         private static async Task<bool> GetAlwaysShowBackdropValueAsync()
         {
-            bool? alwaysShowBackdropValue = await ConfigStorage.ReadSettingAsync<bool?>(SettingsKey);
+            bool? alwaysShowBackdropValue = await ConfigService.ReadSettingAsync<bool?>(SettingsKey);
 
             if (!alwaysShowBackdropValue.HasValue)
             {
@@ -41,7 +41,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         {
             AlwaysShowBackdropValue = alwaysShowBackdropValue;
 
-            await ConfigStorage.SaveSettingAsync(SettingsKey, alwaysShowBackdropValue);
+            await ConfigService.SaveSettingAsync(SettingsKey, alwaysShowBackdropValue);
         }
     }
 }
