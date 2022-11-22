@@ -279,7 +279,10 @@
     <Page Update="UI\Controls\Settings\Advanced\TraceCleanupControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    
+
+    <Page Update="UI\Controls\Settings\Appearance\AlwaysShowBackdropControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="UI\Controls\Settings\Appearance\BackdropControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -408,6 +411,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
+    <Page Update="Views\Controls\AdaptiveGridView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\Controls\ResultDropDownButton.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -469,29 +475,15 @@
     </Content>
   </ItemGroup>
 
-  <ItemGroup>
-    <Page Update="UI\Controls\Settings\Appearance\AlwaysShowBackdropControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Views\Controls\AdaptiveGridView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="UI\Dialogs\About\" />
-    <Folder Include="UI\Dialogs\Common\" />
-    <Folder Include="UI\Dialogs\Download\" />
-    <Folder Include="UI\Dialogs\Settings\" />
-    <Folder Include="UI\Dialogs\Web\" />
-  </ItemGroup>
-
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties properties_4launchsettings_1json__JsonSchema="" />
     </VisualStudio>
   </ProjectExtensions>
+
+  <Target Name="_RemoveFrameworkReferences" BeforeTargets="_ConvertItems;_CalculateInputsForGenerateCurrentProjectAppxManifest">
+    <ItemGroup>
+      <FrameworkSdkReference Remove="@(FrameworkSdkReference)" Condition="$([System.String]::Copy('%(FrameworkSdkReference.SDKName)').StartsWith('Microsoft.VCLibs.140.00.'))" />
+    </ItemGroup>
+  </Target>
 </Project>
