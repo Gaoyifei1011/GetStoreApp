@@ -14,7 +14,7 @@
   <Identity
     Name="Gaoyifei1011.GetStoreApp"
     Publisher="CN=高怡飞"
-    Version="0.7.0.0" />
+    Version="0.7.0.1" />
 
   <Properties>
     <DisplayName>ms-resource:PackageDisplayName</DisplayName>
@@ -116,14 +116,7 @@
 
   <Extensions>
     <desktop2:Extension Category="windows.firewallRules">
-      <desktop2:FirewallRules Executable="Aria2/X64/Aria2Desktop.exe">
-        <desktop2:Rule Direction="in" IPProtocol="TCP" Profile="all"/>
-        <desktop2:Rule Direction="in" IPProtocol="UDP" Profile="all"/>
-      </desktop2:FirewallRules>
-    </desktop2:Extension>
-
-    <desktop2:Extension Category="windows.firewallRules">
-      <desktop2:FirewallRules Executable="Aria2/X86/Aria2Desktop.exe">
+      <desktop2:FirewallRules Executable="Aria2/Aria2c.exe">
         <desktop2:Rule Direction="in" IPProtocol="TCP" Profile="all"/>
         <desktop2:Rule Direction="in" IPProtocol="UDP" Profile="all"/>
       </desktop2:FirewallRules>

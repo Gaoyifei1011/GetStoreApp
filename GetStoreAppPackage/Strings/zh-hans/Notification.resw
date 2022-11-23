@@ -178,23 +178,13 @@
     <value>{0}条历史记录已经成功复制到剪贴板</value>
   </data>
   <data name="InstallError" xml:space="preserve">
-    <value>&lt;toast launch="action=OpenApp"&gt;
-  &lt;visual&gt;
-    &lt;binding template="ToastGeneric"&gt;
-      &lt;text&gt;文件 {0} 安装失败&lt;/text&gt;
-      &lt;text&gt;错误信息：{1}&lt;/text&gt;
-    &lt;/binding&gt;
-  &lt;/visual&gt;
-&lt;/toast&gt;</value>
+    <value>文件 {0} 安装失败</value>
+  </data>
+  <data name="InstallErrorInformation" xml:space="preserve">
+    <value>错误信息：{0}</value>
   </data>
   <data name="InstallSuccessfully" xml:space="preserve">
-    <value>&lt;toast launch="action=OpenApp"&gt;
-  &lt;visual&gt;
-    &lt;binding template="ToastGeneric"&gt;
-      &lt;text&gt;文件 {0} 已成功安装&lt;/text&gt;
-    &lt;/binding&gt;
-  &lt;/visual&gt;
-&lt;/toast&gt;</value>
+    <value>文件 {0} 已成功安装</value>
   </data>
   <data name="LanguageChangeFailed" xml:space="preserve">
     <value>语言设置修改失败，请重试</value>

@@ -1,4 +1,5 @@
-ï»¿using Microsoft.UI.Xaml;
+using GetStoreApp.Services.Root;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using System;
@@ -6,16 +7,23 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.UI.Notifications
 {
-    public sealed partial class ExceptionCopyNotification : UserControl
+    public sealed partial class InstallAppNotification : UserControl
     {
         private Popup Popup { get; set; } = new Popup();
 
         private int Duration = 2000;
 
-        public ExceptionCopyNotification(bool copyState, double? duration = null)
+        private string FileName;
+
+        private string ErrorMessage;
+
+        public InstallAppNotification(bool installAppState, string fileName, string errorMessage = null, double? duration = null)
         {
+            FileName = fileName;
+            ErrorMessage = errorMessage;
+
             InitializeComponent();
-            ViewModel.Initialize(copyState);
+            ViewModel.Initialize(installAppState, errorMessage);
 
             SetPopUpPlacement();
 
@@ -28,8 +36,23 @@ namespace GetStoreApp.UI.Notifications
             }
         }
 
+        public void InstallAppSuccessLoaded(object sender, RoutedEventArgs args)
+        {
+            InstallAppSuccess.Text = string.Format(ResourceService.GetLocalized("/Notification/InstallAppSuccess"), FileName);
+        }
+
+        public void InstallAppErrorLoaded(object sender, RoutedEventArgs args)
+        {
+            InstallAppError.Text = string.Format(ResourceService.GetLocalized("/Notification/InstallAppError"), FileName);
+        }
+
+        public void InstallAppErrorInformationLoaded(object sender, RoutedEventArgs args)
+        {
+            InstallAppErrorInformation.Text = string.Format(ResourceService.GetLocalized("/Notification/InstallAppErrorInformation"), ErrorMessage);
+        }
+
         /// <summary>
-        /// æ§ä»¶åŠ è½½å®Œæˆåæ˜¾ç¤ºåŠ¨ç”»ï¼ŒåŠ¨æ€è®¾ç½®æ§ä»¶ä½ç½®
+        /// ¿Ø¼ş¼ÓÔØÍê³ÉºóÏÔÊ¾¶¯»­£¬¶¯Ì¬ÉèÖÃ¿Ø¼şÎ»ÖÃ
         /// </summary>
         private void NotificationLoaded(object sender, RoutedEventArgs e)
         {
@@ -38,7 +61,7 @@ namespace GetStoreApp.UI.Notifications
         }
 
         /// <summary>
-        /// æ§ä»¶å¸è½½æ—¶ç§»é™¤ç›¸åº”çš„äº‹ä»¶
+        /// ¿Ø¼şĞ¶ÔØÊ±ÒÆ³ıÏàÓ¦µÄÊÂ¼ş
         /// </summary>
         private void NotificationUnLoaded(object sender, RoutedEventArgs e)
         {
@@ -46,7 +69,7 @@ namespace GetStoreApp.UI.Notifications
         }
 
         /// <summary>
-        /// çª—å£å¤§å°è°ƒæ•´æ—¶ä¿®æ”¹åº”ç”¨å†…é€šçŸ¥çš„ç›¸å¯¹ä½ç½®
+        /// ´°¿Ú´óĞ¡µ÷ÕûÊ±ĞŞ¸ÄÓ¦ÓÃÄÚÍ¨ÖªµÄÏà¶ÔÎ»ÖÃ
         /// </summary>
         private void NotificationPlaceChanged(object sender, WindowSizeChangedEventArgs args)
         {
@@ -54,7 +77,7 @@ namespace GetStoreApp.UI.Notifications
         }
 
         /// <summary>
-        /// åº”ç”¨å†…é€šçŸ¥åŠ è½½åŠ¨ç”»æ¼”ç¤ºå®Œæˆæ—¶å‘ç”Ÿ
+        /// Ó¦ÓÃÄÚÍ¨Öª¼ÓÔØ¶¯»­ÑİÊ¾Íê³ÉÊ±·¢Éú
         /// </summary>
         private async void PopupInCompleted(object sender, object e)
         {
@@ -63,7 +86,7 @@ namespace GetStoreApp.UI.Notifications
         }
 
         /// <summary>
-        /// åº”ç”¨å†…é€šçŸ¥åŠ è½½åŠ¨ç”»å¸è½½å®Œæˆæ—¶å‘ç”Ÿï¼Œå…³é—­æ§ä»¶
+        /// Ó¦ÓÃÄÚÍ¨Öª¼ÓÔØ¶¯»­Ğ¶ÔØÍê³ÉÊ±·¢Éú£¬¹Ø±Õ¿Ø¼ş
         /// </summary>
         public void PopupOutCompleted(object sender, object e)
         {
@@ -71,7 +94,7 @@ namespace GetStoreApp.UI.Notifications
         }
 
         /// <summary>
-        /// è®¾ç½®PopUpçš„æ˜¾ç¤ºä½ç½®
+        /// ÉèÖÃPopUpµÄÏÔÊ¾Î»ÖÃ
         /// </summary>
         private void SetPopUpPlacement()
         {
@@ -82,7 +105,7 @@ namespace GetStoreApp.UI.Notifications
         }
 
         /// <summary>
-        /// æ˜¾ç¤ºå¼¹çª—
+        /// ÏÔÊ¾µ¯´°
         /// </summary>
         public void Show()
         {

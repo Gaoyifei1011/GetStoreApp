@@ -14,6 +14,7 @@
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <IncludeSymbols>False</IncludeSymbols>
     <ImplicitUsings>disable</ImplicitUsings>
+    <DesktopCompatible>true</DesktopCompatible>
     <StartupObject>GetStoreApp.Program</StartupObject>
     <ApplicationIcon>Assets\Logo\GetStoreApp.ico</ApplicationIcon>
     <UseWinUI>true</UseWinUI>
@@ -40,13 +41,9 @@
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
-
+  
   <ItemGroup>
     <Manifest Include="$(ApplicationManifest)" />
-
-    <None Remove="Aria2\Config\aria2.conf" />
-    <None Remove="Aria2\X64\Aria2Desktop.exe" />
-    <None Remove="Aria2\X86\Aria2Desktop.exe" />
     
     <None Remove="Assets\GetStoreApp.png" />
     <None Remove="Assets\Images\CloudflareValidation.png" />
@@ -140,6 +137,7 @@
     <None Remove="UI\Notifications\ExceptionCopyNotification.xaml" />
     <None Remove="UI\Notifications\FileInformationCopyNotification.xaml" />
     <None Remove="UI\Notifications\HistoryCopyNotification.xaml" />
+    <None Remove="UI\Notifications\InstallAppNotification.xaml" />
     <None Remove="UI\Notifications\LanguageChangeNotification.xaml" />
     <None Remove="UI\Notifications\NetWorkErrorNotification.xaml" />
     <None Remove="UI\Notifications\ResultContentCopyNotification.xaml" />
@@ -445,12 +443,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     
-    <Content Include="Aria2\Config\aria2.conf" />
-    <Content Include="Aria2\X64\Aria2Desktop.exe">
+    <Content Include="Aria2\Aria2c.conf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Aria2\X86\Aria2Desktop.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    
+    <Content Include="Aria2\Aria2cX64.exe" Link="Aria2\Aria2c.exe">
+      <CopyToOutputDirectory Condition="'$(Platform)'=='x86'">Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory Condition="'$(Platform)'=='x64'">Always</CopyToOutputDirectory>
+    </Content>
+    
+    <Content Include="Aria2\Aria2cX86.exe" Link="Aria2\Aria2c.exe">
+      <CopyToOutputDirectory Condition="'$(Platform)'=='x86'">Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory Condition="'$(Platform)'=='x64'">Never</CopyToOutputDirectory>
     </Content>
     <Content Include="Fonts\Segoe Fluent Icons.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -475,15 +479,16 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="UI\Notifications\InstallAppNotification.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties properties_4launchsettings_1json__JsonSchema="" />
     </VisualStudio>
   </ProjectExtensions>
-
-  <Target Name="_RemoveFrameworkReferences" BeforeTargets="_ConvertItems;_CalculateInputsForGenerateCurrentProjectAppxManifest">
-    <ItemGroup>
-      <FrameworkSdkReference Remove="@(FrameworkSdkReference)" Condition="$([System.String]::Copy('%(FrameworkSdkReference.SDKName)').StartsWith('Microsoft.VCLibs.140.00.'))" />
-    </ItemGroup>
-  </Target>
 </Project>
+  

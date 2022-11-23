@@ -85,6 +85,9 @@ namespace GetStoreApp.UI.Notifications
             App.MainWindow.SizeChanged += NotificationPlaceChanged;
         }
 
+        /// <summary>
+        /// 控件卸载时移除相应的事件
+        /// </summary>
         private void NotificationUnLoaded(object sender, RoutedEventArgs e)
         {
             App.MainWindow.SizeChanged -= NotificationPlaceChanged;

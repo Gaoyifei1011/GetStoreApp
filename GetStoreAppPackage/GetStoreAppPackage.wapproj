@@ -40,23 +40,27 @@
     <AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
     <DisableXbfLineInfo>False</DisableXbfLineInfo>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
-    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
     <EntryPointProjectUniqueName>..\GetStoreApp\GetStoreApp.csproj</EntryPointProjectUniqueName>
     <AppxBundleAutoResourcePackageQualifiers>DXFeatureLevel</AppxBundleAutoResourcePackageQualifiers>
     <AppxDefaultResourceQualifiers>Language=EN-US;ZH-HANS</AppxDefaultResourceQualifiers>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
-    <AppxBundle>Never</AppxBundle>
+    <AppxBundle>Always</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <AppxBundle>Never</AppxBundle>
+    <AppxBundle>Always</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
-    <AppxBundle>Never</AppxBundle>
+    <AppxBundle>Always</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <AppxBundle>Never</AppxBundle>
+    <AppxBundle>Always</AppxBundle>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(WinUISDKReferences)'=='' and '$(TargetPlatformIdentifier)'=='UAP'">
+    <WinUISDKReferences>false</WinUISDKReferences>
+  </PropertyGroup>
+  
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
@@ -99,7 +103,8 @@
     <PRIResource Include="Strings\zh-hans\Window.resw" />
   </ItemGroup>
   <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.targets" />
-  <Target Name="MileProjectStompSourceProjectForWapProject" BeforeTargets="_ConvertItems">
+  <!--复制输出文件到安装包的根目录-->
+  <Target Name="GetStoreAppStompSourceProjectForWapProject" BeforeTargets="_ConvertItems">
     <ItemGroup>
       <!--
       Stomp all "SourceProject" values for all incoming dependencies to 
@@ -115,6 +120,25 @@
         <SourceProject>
         </SourceProject>
       </_FilteredNonWapProjProjectOutput>
+    </ItemGroup>
+  </Target>
+  <!--
+    This target removes the FrameworkSdkReferences from before the AppX package
+    targets manifest generation happens. This is part of the generic machinery 
+    that applies to every AppX. 
+  -->
+  <Target Name="GetStoreAppStripAllDependenciesFromPackageFirstManifest" BeforeTargets="_GenerateCurrentProjectAppxManifest">
+    <ItemGroup>
+      <FrameworkSdkReference Remove="@(FrameworkSdkReference)" Condition="$([System.String]::Copy('%(FrameworkSdkReference.SDKName)').StartsWith('Microsoft.VCLibs'))" />
+    </ItemGroup>
+  </Target>
+  <!--
+    This target removes the FrameworkSdkPackages from before the *desktop 
+    bridge* manifest generation happens. 
+  -->
+  <Target Name="GetStoreAppStripAllDependenciesFromPackageSecondManifest" BeforeTargets="_GenerateDesktopBridgeAppxManifest" DependsOnTargets="_ResolveVCLibDependencies">
+    <ItemGroup>
+      <FrameworkSdkPackage Remove="@(FrameworkSdkPackage)" Condition="$([System.String]::Copy('%(FrameworkSdkReference.SDKName)').StartsWith('Microsoft.VCLibs'))" />
     </ItemGroup>
   </Target>
 </Project>

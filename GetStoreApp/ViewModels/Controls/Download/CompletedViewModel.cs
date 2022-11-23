@@ -7,9 +7,9 @@ using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Advanced;
 using GetStoreApp.Services.Controls.Settings.Common;
-using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Dialogs.Download;
+using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Base;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
@@ -265,14 +265,14 @@ namespace GetStoreApp.ViewModels.Controls.Download
                         // 安装目标应用
                         DeploymentResult InstallResult = await packageManager.AddPackageAsync(new Uri(completedItem.FilePath), null, DeploymentOptions.None).AsTask(progressCallBack);
                         // 显示安装成功通知
-                        AppNotificationService.Show("InstallApp", "Successfully", Path.GetFileName(completedItem.FilePath));
+                        new InstallAppNotification(true, Path.GetFileName(completedItem.FilePath));
                     }
                     // 安装失败显示失败信息
                     catch (Exception e)
                     {
                         CompletedDataList[InstallIndex].InstallError = true;
                         // 显示安装失败通知
-                        AppNotificationService.Show("InstallApp", "Error", Path.GetFileName(completedItem.FilePath), e.Message);
+                        new InstallAppNotification(false, Path.GetFileName(completedItem.FilePath), e.Message);
                     }
                     // 恢复原来的安装信息显示（并延缓当前安装信息显示时间3秒）
                     finally

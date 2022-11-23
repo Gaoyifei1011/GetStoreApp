@@ -66,13 +66,5 @@ namespace GetStoreApp.Helpers.Root
         {
             return AppVersionDict;
         }
-
-        /// <summary>
-        /// 获取应用包的架构
-        /// </summary>
-        public static string GetAppProcessorArchitecture()
-        {
-            return Convert.ToString(Package.Current.Id.Architecture);
-        }
     }
 }
