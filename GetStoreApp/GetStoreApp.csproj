@@ -137,7 +137,6 @@
     <None Remove="UI\Notifications\ExceptionCopyNotification.xaml" />
     <None Remove="UI\Notifications\FileInformationCopyNotification.xaml" />
     <None Remove="UI\Notifications\HistoryCopyNotification.xaml" />
-    <None Remove="UI\Notifications\InstallAppNotification.xaml" />
     <None Remove="UI\Notifications\LanguageChangeNotification.xaml" />
     <None Remove="UI\Notifications\NetWorkErrorNotification.xaml" />
     <None Remove="UI\Notifications\ResultContentCopyNotification.xaml" />
@@ -152,18 +151,14 @@
     <None Remove="Views\Pages\HomePage.xaml" />
     <None Remove="Views\Pages\SettingsPage.xaml" />
     <None Remove="Views\Pages\WebPage.xaml" />
-
     <None Remove="Views\Window\MainWindow.xaml" />
-    <None Remove="Views\Window\TaskbarControl.xaml" />
     
     <PackageReference Include="Aria2.NET" Version="1.0.5" />
-    <PackageReference Include="H.NotifyIcon.WinUI" Version="2.0.74" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.0" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.1">
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.755" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.221116.1">
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
@@ -434,11 +429,6 @@
     <Page Update="Views\Pages\WebPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-
-    <Page Update="Views\Window\TaskBarControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-
     <Page Update="Views\Window\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -477,12 +467,6 @@
     <Content Update="Assets\Logo\GetStoreApp.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="UI\Notifications\InstallAppNotification.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
 
   <ProjectExtensions>

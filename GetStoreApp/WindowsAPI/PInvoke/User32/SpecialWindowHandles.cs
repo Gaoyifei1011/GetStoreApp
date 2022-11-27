@@ -3,7 +3,7 @@
 namespace GetStoreApp.WindowsAPI.PInvoke.User32
 {
     /// <summary>
-    /// Special window handles.
+    /// 检索窗口句柄状态
     /// </summary>
     public static class SpecialWindowHandles
     {

@@ -74,7 +74,7 @@ namespace GetStoreApp.Helpers.Controls.Download
             List<int> myChildrenProcessList = new List<int>();
             foreach (Process proc in Process.GetProcesses())
             {
-                if(proc is null)
+                if (proc is null)
                 {
                     return new List<int>();
                 }

@@ -178,13 +178,23 @@
     <value>{0} history records has been successfully copied to the clipboard</value>
   </data>
   <data name="InstallError" xml:space="preserve">
-    <value>File {0} installation failed</value>
-  </data>
-  <data name="InstallErrorInformation" xml:space="preserve">
-    <value>Error message: {0}</value>
+    <value>&lt;toast launch="action=OpenApp"&gt;
+  &lt;visual&gt;
+    &lt;binding template="ToastGeneric"&gt;
+      &lt;text&gt;File {0} installation failed&lt;/text&gt;
+      &lt;text&gt;Error message: {1}&lt;/text&gt;
+    &lt;/binding&gt;
+  &lt;/visual&gt;
+&lt;/toast&gt;</value>
   </data>
   <data name="InstallSuccessfully" xml:space="preserve">
-    <value>File {0} was successfully installed</value>
+    <value>&lt;toast launch="action=OpenApp"&gt;
+  &lt;visual&gt;
+    &lt;binding template="ToastGeneric"&gt;
+      &lt;text&gt;File {0} was successfully installed&lt;/text&gt;
+    &lt;/binding&gt;
+  &lt;/visual&gt;
+&lt;/toast&gt;</value>
   </data>
   <data name="LanguageChangeFailed" xml:space="preserve">
     <value>Language setting modification failed, please try again</value>

@@ -19,17 +19,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         [DllImport(Shell32, ExactSpelling = true, SetLastError = false)]
         public static extern void ILFree(IntPtr pidlList);
 
-        /// <summary>打开一个 Windows 资源管理器窗口，其中选定了特定文件夹中的指定项目。</summary>
-        /// <param name="pidlFolder">指向指定文件夹的完全限定项 ID 列表的指针。</param>
-        /// <param name="cidl">
-        /// 选择数组中的项计数 apidl。 如果 cidl 为零， 则 pidlFolder 必须指向描述要选择的单个项的完全指定的 ITEMIDLIST 。 此函数将打开父文件夹并选择该项目。
-        /// </param>
-        /// <param name="apidl">指向 PIDL 结构的数组的指针，每个结构都是在 pidlFolder 引用的目标文件夹中选择要选择的项。</param>
-        /// <param name="dwFlags">可选标志。</param>
-        /// <returns>如果此函数成功，则返回 S_OK。 否则，它将返回 HRESULT 错误代码。</returns>
-        [DllImport(Shell32, ExactSpelling = true)]
-        public static extern int SHOpenFolderAndSelectItems(IntPtr pidlFolder, uint cidl, IntPtr apidl, uint dwFlags);
-
         /// <summary>
         /// 从分析名称创建和初始化命令行管理程序项对象。
         /// </summary>
@@ -50,5 +39,38 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
             string pszPath,
             IntPtr pbc,
             [MarshalAs(UnmanagedType.LPStruct)] Guid riid);
+
+        /// <summary>
+        /// 向任务栏的状态区域发送消息。
+        /// </summary>
+        /// <param name="cmd">一个值，该值指定要由此函数执行的操作</param>
+        /// <param name="data">
+        /// 指向 NOTIFYICONDATA 结构的指针。 结构的内容取决于 cmd 的值。
+        /// 它可以定义一个图标以添加到通知区域，导致该图标显示通知，或标识要修改或删除的图标。
+        /// </param>
+        [DllImport(Shell32, CharSet = CharSet.Unicode)]
+        public static extern bool Shell_NotifyIcon(NotifyCommand cmd, [In] ref NotifyIconData data);
+
+        /// <summary>
+        /// 向任务栏的状态区域发送消息。
+        /// </summary>
+        /// <param name="cmd">一个值，该值指定要由此函数执行的操作</param>
+        /// <param name="data">
+        /// 指向 NOTIFYICONDATA 结构的指针。 结构的内容取决于 cmd 的值。
+        /// 它可以定义一个图标以添加到通知区域，导致该图标显示通知，或标识要修改或删除的图标。
+        /// </param>
+        //[DllImport(Shell32, EntryPoint = "Shell_NotifyIconW")]
+        //public static extern bool Shell_NotifyIcon(NotifyMessage dwMessage, [In] ref NOTIFYICONDATA data);
+
+        /// <summary>打开一个 Windows 资源管理器窗口，其中选定了特定文件夹中的指定项目。</summary>
+        /// <param name="pidlFolder">指向指定文件夹的完全限定项 ID 列表的指针。</param>
+        /// <param name="cidl">
+        /// 选择数组中的项计数 apidl。 如果 cidl 为零， 则 pidlFolder 必须指向描述要选择的单个项的完全指定的 ITEMIDLIST 。 此函数将打开父文件夹并选择该项目。
+        /// </param>
+        /// <param name="apidl">指向 PIDL 结构的数组的指针，每个结构都是在 pidlFolder 引用的目标文件夹中选择要选择的项。</param>
+        /// <param name="dwFlags">可选标志。</param>
+        /// <returns>如果此函数成功，则返回 S_OK。 否则，它将返回 HRESULT 错误代码。</returns>
+        [DllImport(Shell32, ExactSpelling = true)]
+        public static extern int SHOpenFolderAndSelectItems(IntPtr pidlFolder, uint cidl, IntPtr apidl, uint dwFlags);
     }
 }

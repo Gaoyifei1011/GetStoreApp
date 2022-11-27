@@ -44,6 +44,7 @@
     <EntryPointProjectUniqueName>..\GetStoreApp\GetStoreApp.csproj</EntryPointProjectUniqueName>
     <AppxBundleAutoResourcePackageQualifiers>DXFeatureLevel</AppxBundleAutoResourcePackageQualifiers>
     <AppxDefaultResourceQualifiers>Language=EN-US;ZH-HANS</AppxDefaultResourceQualifiers>
+    <UserSecretsId>ff1007a3-37e5-4856-a3d5-765555830f81</UserSecretsId>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
     <AppxBundle>Always</AppxBundle>
@@ -60,7 +61,6 @@
   <PropertyGroup Condition="'$(WinUISDKReferences)'=='' and '$(TargetPlatformIdentifier)'=='UAP'">
     <WinUISDKReferences>false</WinUISDKReferences>
   </PropertyGroup>
-  
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
