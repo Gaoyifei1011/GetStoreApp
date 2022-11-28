@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.DataTransfer.ShareTarget;
@@ -140,7 +141,7 @@ namespace GetStoreApp.Services.Root
                 CopyDataStruct copyDataStruct;
                 copyDataStruct.dwData = NeedToSendMesage;
                 copyDataStruct.lpData = string.Format("{0} {1} {2}", StartupArgs["TypeName"], StartupArgs["ChannelName"], StartupArgs["Link"] is null ? "PlaceHolderText" : StartupArgs["Link"]);
-                copyDataStruct.cbData = System.Text.Encoding.Default.GetBytes(copyDataStruct.lpData).Length + 1;
+                copyDataStruct.cbData = Encoding.Default.GetBytes(copyDataStruct.lpData).Length + 1;
 
                 // 向主进程发送消息
                 User32Library.SendMessage(User32Library.FindWindow(null, ResourceService.GetLocalized("AppDisplayName")), WindowMessage.WM_COPYDATA, 0, ref copyDataStruct);

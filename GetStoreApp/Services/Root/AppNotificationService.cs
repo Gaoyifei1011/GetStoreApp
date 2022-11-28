@@ -6,7 +6,7 @@ using Microsoft.UI.Dispatching;
 using Microsoft.Windows.AppNotifications;
 using System;
 using System.Threading.Tasks;
-using System.Web;
+using Windows.Foundation;
 
 namespace GetStoreApp.Services.Root
 {
@@ -15,8 +15,6 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public static class AppNotificationService
     {
-        private static DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-
         public static void Initialize()
         {
             AppNotificationManager.Default.NotificationInvoked += OnNotificationInvoked;
@@ -37,7 +35,7 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         public static void HandleAppNotification(AppNotificationActivatedEventArgs args)
         {
-            dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
+            App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
             {
                 while (NavigationService.NavigationFrame is null)
                 {
@@ -47,7 +45,7 @@ namespace GetStoreApp.Services.Root
                 // 先设置应用窗口的显示方式
                 WindowHelper.ShowAppWindow();
 
-                switch (HttpUtility.ParseQueryString(args.Argument)["action"])
+                switch (new WwwFormUrlDecoder(args.Argument).GetFirstValueByName("action"))
                 {
                     case "OpenApp":
                         {

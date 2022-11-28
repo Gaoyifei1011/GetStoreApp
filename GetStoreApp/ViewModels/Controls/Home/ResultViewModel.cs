@@ -467,7 +467,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
         /// </summary>
         public void OnItemClick(object sender, ItemClickEventArgs args)
         {
-            Models.Controls.Home.ResultModel resultItem = (Models.Controls.Home.ResultModel)args.ClickedItem;
+            ResultModel resultItem = (ResultModel)args.ClickedItem;
             int ClickedIndex = ResultDataList.IndexOf(resultItem);
 
             lock (ResultDataListLock)

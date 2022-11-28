@@ -8,7 +8,6 @@ namespace GetStoreApp.ViewModels.Controls.About
         public Dictionary<string, string> ReferenceDict => new Dictionary<string, string>
         {
             {"Aira2","https://aria2.github.io" },
-            {"Aria2.NET","https://github.com/rogerfar/Aria2.NET" },
             {"HtmlAgilityPack","http://html-agility-pack.net" },
             {"Microsoft.Data.Sqlite.Core","https://docs.microsoft.com/dotnet/standard/data/sqlite" },
             {"Microsoft.Windows.CsWinRT","https://github.com/microsoft/cswinrt" },

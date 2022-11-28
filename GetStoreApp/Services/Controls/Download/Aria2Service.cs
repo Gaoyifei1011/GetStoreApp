@@ -1,11 +1,13 @@
-﻿using Aria2NET;
-using GetStoreApp.Extensions.DataType.Exceptions;
+﻿using GetStoreApp.Extensions.DataType.Exceptions;
 using GetStoreApp.Helpers.Controls.Download;
 using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Windows.Data.Json;
 using Windows.Storage;
+using Windows.Web.Http;
 
 namespace GetStoreApp.Services.Controls.Download
 {
@@ -23,8 +25,6 @@ namespace GetStoreApp.Services.Controls.Download
         private static string Aria2Arguments { get; set; }
 
         private static string RPCServerLink => "http://127.0.0.1:6300/jsonrpc";
-
-        private static Aria2NetClient Aria2Client { get; set; }
 
         /// <summary>
         /// 初始化Aria2配置文件
@@ -108,10 +108,8 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 添加下载任务
         /// </summary>
-        public static async Task<(bool, string)> AddUriAsync(string downloadLink, string folderPath)
+        public static async Task<(bool, string)> NewAddUriAsync(string downloadLink, string folderPath)
         {
-            Aria2Client ??= new Aria2NetClient(RPCServerLink, null, null, 0);
-
             try
             {
                 // 判断下载进程是否存在
@@ -120,17 +118,73 @@ namespace GetStoreApp.Services.Controls.Download
                     throw new ProcessNotExistException();
                 }
 
-                string AddResult = await Aria2Client.AddUriAsync(
-                    new List<string> { downloadLink },
-                    new Dictionary<string, object> { { "dir", folderPath } },
-                    0);
+                // 创建AddUri Json字符串对象
+                JsonObject AddUriObject = new JsonObject();
 
-                return (true, AddResult);
+                // Aria2 请求的消息Id
+                AddUriObject["id"] = JsonValue.CreateStringValue(string.Empty);
+                // 固定值
+                AddUriObject["jsonrpc"] = JsonValue.CreateStringValue("2.0");
+                // Aria2 Json RPC对应的方法名
+                AddUriObject["method"] = JsonValue.CreateStringValue("aria2.addUri");
+
+                // 创建子参数Json字符串对象。
+                JsonObject SubParamObject = new JsonObject();
+                SubParamObject["dir"] = JsonValue.CreateStringValue(folderPath);
+
+                // 创建参数数组：
+                // 第一个参数为数组，是下载文件的Url
+                // 第二个参数是Json字符串对象，成员为下载参数
+                JsonArray ParamsArray = new JsonArray()
+                {
+                    new JsonArray(){ JsonValue.CreateStringValue(downloadLink) },
+                    SubParamObject
+                };
+
+                AddUriObject["params"] = ParamsArray;
+
+                // 将下载信息转换为Json字符串
+                string AddUriString = AddUriObject.Stringify();
+
+                // 使用Aria2 Json RPC接口添加下载任务指令
+                byte[] ContentBytes = Encoding.UTF8.GetBytes(AddUriString);
+
+                HttpStringContent httpContent = new HttpStringContent(AddUriString);
+                httpContent.Headers.ContentLength = Convert.ToUInt64(ContentBytes.Length);
+                httpContent.Headers.ContentType.CharSet = "utf-8";
+
+                // 添加超时设置（半分钟后停止获取）
+                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+                cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+                HttpClient httpClient = new HttpClient();
+                HttpResponseMessage response = await httpClient.PostAsync(new Uri(RPCServerLink), httpContent).AsTask(cancellationTokenSource.Token);
+
+                // 请求成功
+                if (response.IsSuccessStatusCode)
+                {
+                    string ResponseContent = await response.Content.ReadAsStringAsync();
+
+                    JsonObject ResultObject = JsonObject.Parse(ResponseContent);
+                    return (true, ResultObject.GetNamedString("result"));
+                }
+                // 请求失败
+                else
+                {
+                    throw new Exception();
+                }
             }
+            // 捕捉进程不存在异常
             catch (ProcessNotExistException)
             {
                 return (false, string.Empty);
             }
+            // 捕捉因访问超时引发的异常
+            catch (TaskCanceledException)
+            {
+                return (false, string.Empty);
+            }
+            // 其他异常
             catch (Exception)
             {
                 return (false, string.Empty);
@@ -140,7 +194,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 暂停下载选定的任务
         /// </summary>
-        public static async Task<(bool, string)> PauseAsync(string GID)
+        public static async Task<(bool, string)> NewPauseAsync(string GID)
         {
             try
             {
@@ -150,13 +204,66 @@ namespace GetStoreApp.Services.Controls.Download
                     throw new ProcessNotExistException();
                 }
 
-                string PauseResult = await Aria2Client.ForceRemoveAsync(GID);
-                return (true, PauseResult);
+                // 创建Pause Json字符串对象
+                JsonObject PauseObject = new JsonObject();
+
+                // Aria2 请求的消息Id
+                PauseObject["id"] = JsonValue.CreateStringValue(string.Empty);
+                // 固定值
+                PauseObject["jsonrpc"] = JsonValue.CreateStringValue("2.0");
+                // Aria2 Json RPC对应的方法名
+                PauseObject["method"] = JsonValue.CreateStringValue("aria2.forceRemove");
+
+                // 创建参数数组
+                JsonArray ParamsArray = new JsonArray()
+                {
+                    JsonValue.CreateStringValue(GID)
+                };
+
+                PauseObject["params"] = ParamsArray;
+
+                // 将暂停信息转换为Json字符串
+                string PauseString = PauseObject.Stringify();
+
+                // 使用Aria2 Json RPC接口添加暂停下载任务指令
+                byte[] ContentBytes = Encoding.UTF8.GetBytes(PauseString);
+
+                HttpStringContent httpContent = new HttpStringContent(PauseString);
+                httpContent.Headers.ContentLength = Convert.ToUInt64(ContentBytes.Length);
+                httpContent.Headers.ContentType.CharSet = "utf-8";
+
+                // 添加超时设置（半分钟后停止获取）
+                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+                cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+                HttpClient httpClient = new HttpClient();
+                HttpResponseMessage response = await httpClient.PostAsync(new Uri(RPCServerLink), httpContent).AsTask(cancellationTokenSource.Token);
+
+                // 请求成功
+                if (response.IsSuccessStatusCode)
+                {
+                    string ResponseContent = await response.Content.ReadAsStringAsync();
+
+                    JsonObject ResultObject = JsonObject.Parse(ResponseContent);
+                    return (true, ResultObject.GetNamedString("result"));
+                }
+                // 请求失败
+                else
+                {
+                    throw new Exception();
+                }
             }
+            // 捕捉进程不存在异常
             catch (ProcessNotExistException)
             {
                 return (false, string.Empty);
             }
+            // 捕捉因访问超时引发的异常
+            catch (TaskCanceledException)
+            {
+                return (false, string.Empty);
+            }
+            // 其他异常
             catch (Exception)
             {
                 return (false, string.Empty);
@@ -166,7 +273,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 取消下载选定的任务
         /// </summary>
-        public static async Task<(bool, string)> DeleteAsync(string GID)
+        public static async Task<(bool, string)> NewDeleteAsync(string GID)
         {
             try
             {
@@ -176,13 +283,66 @@ namespace GetStoreApp.Services.Controls.Download
                     throw new ProcessNotExistException();
                 }
 
-                string DeleteResult = await Aria2Client.ForceRemoveAsync(GID);
-                return (true, DeleteResult);
+                // 创建Delete Json字符串对象
+                JsonObject DeleteObject = new JsonObject();
+
+                // Aria2 请求的消息Id
+                DeleteObject["id"] = JsonValue.CreateStringValue(string.Empty);
+                // 固定值
+                DeleteObject["jsonrpc"] = JsonValue.CreateStringValue("2.0");
+                // Aria2 Json RPC对应的方法名
+                DeleteObject["method"] = JsonValue.CreateStringValue("aria2.forceRemove");
+
+                // 创建参数数组
+                JsonArray ParamsArray = new JsonArray()
+                {
+                    JsonValue.CreateStringValue(GID)
+                };
+
+                DeleteObject["params"] = ParamsArray;
+
+                // 将删除信息转换为Json字符串
+                string DeleteString = DeleteObject.Stringify();
+
+                // 使用Aria2 Json RPC接口添加暂停下载任务指令
+                byte[] ContentBytes = Encoding.UTF8.GetBytes(DeleteString);
+
+                HttpStringContent httpContent = new HttpStringContent(DeleteString);
+                httpContent.Headers.ContentLength = Convert.ToUInt64(ContentBytes.Length);
+                httpContent.Headers.ContentType.CharSet = "utf-8";
+
+                // 添加超时设置（半分钟后停止获取）
+                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+                cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+                HttpClient httpClient = new HttpClient();
+                HttpResponseMessage response = await httpClient.PostAsync(new Uri(RPCServerLink), httpContent).AsTask(cancellationTokenSource.Token);
+
+                // 请求成功
+                if (response.IsSuccessStatusCode)
+                {
+                    string ResponseContent = await response.Content.ReadAsStringAsync();
+
+                    JsonObject ResultObject = JsonObject.Parse(ResponseContent);
+                    return (true, ResultObject.GetNamedString("result"));
+                }
+                // 请求失败
+                else
+                {
+                    throw new Exception();
+                }
             }
+            // 捕捉进程不存在异常
             catch (ProcessNotExistException)
             {
                 return (false, string.Empty);
             }
+            // 捕捉因访问超时引发的异常
+            catch (TaskCanceledException)
+            {
+                return (false, string.Empty);
+            }
+            // 其他异常
             catch (Exception)
             {
                 return (false, string.Empty);
@@ -192,7 +352,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 汇报下载任务状态信息
         /// </summary>
-        public static async Task<(bool, string, long, long, long)> TellStatusAsync(string GID)
+        public static async Task<(bool, string, double, double, double)> NewTellStatusAsync(string GID)
         {
             try
             {
@@ -202,45 +362,89 @@ namespace GetStoreApp.Services.Controls.Download
                     throw new ProcessNotExistException();
                 }
 
-                DownloadStatusResult TellStatusResult = await Aria2Client.TellStatusAsync(GID);
+                // 创建TellStatus Json字符串对象
+                JsonObject TellStatusObject = new JsonObject();
 
-                return (true,
-                 TellStatusResult.Status, TellStatusResult.CompletedLength, TellStatusResult.TotalLength, TellStatusResult.DownloadSpeed);
-            }
-            catch (ProcessNotExistException)
-            {
-                return (false, string.Empty, default(long), default(long), default(long));
-            }
-            catch (Exception)
-            {
-                return (false, string.Empty, default(long), default(long), default(long));
-            }
-        }
+                // Aria2 请求的消息Id
+                TellStatusObject["id"] = JsonValue.CreateStringValue(string.Empty);
+                // 固定值
+                TellStatusObject["jsonrpc"] = JsonValue.CreateStringValue("2.0");
+                // Aria2 Json RPC对应的方法名
+                TellStatusObject["method"] = JsonValue.CreateStringValue("aria2.tellStatus");
 
-        /// <summary>
-        /// 获取下载文件大小信息
-        /// </summary>
-        public static async Task<(bool, long)> GetFileSizeAsync(string GID)
-        {
-            try
-            {
-                // 判断下载进程是否存在
-                if (!Aria2ProcessHelper.IsAria2ProcessExisted())
+                // 创建子参数数组
+                JsonArray SubParamArray = new JsonArray()
                 {
-                    throw new ProcessNotExistException();
+                    JsonValue.CreateStringValue("gid"),
+                    JsonValue.CreateStringValue("status"),
+                    JsonValue.CreateStringValue("totalLength"),
+                    JsonValue.CreateStringValue("completedLength"),
+                    JsonValue.CreateStringValue("downloadSpeed")
+                };
+
+                // 创建参数数组
+                // 第一个参数为数组，是要获取信息状态的Gid
+                // 第二个参数为数组，是获取的内容名称
+                JsonArray ParamsArray = new JsonArray()
+                {
+                    JsonValue.CreateStringValue(GID),
+                    SubParamArray
+                };
+
+                TellStatusObject["params"] = ParamsArray;
+
+                // 将获取状态信息转换为Json字符串
+                string TellStatusString = TellStatusObject.Stringify();
+
+                // 使用Aria2 Json RPC接口添加获取状态指令
+                byte[] ContentBytes = Encoding.UTF8.GetBytes(TellStatusString);
+
+                HttpStringContent httpContent = new HttpStringContent(TellStatusString);
+                httpContent.Headers.ContentLength = Convert.ToUInt64(ContentBytes.Length);
+                httpContent.Headers.ContentType.CharSet = "utf-8";
+
+                // 添加超时设置（半分钟后停止获取）
+                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+                cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+                HttpClient httpClient = new HttpClient();
+                HttpResponseMessage response = await httpClient.PostAsync(new Uri(RPCServerLink), httpContent).AsTask(cancellationTokenSource.Token);
+
+                // 请求成功
+                if (response.IsSuccessStatusCode)
+                {
+                    string ResponseContent = await response.Content.ReadAsStringAsync();
+
+                    JsonObject ResultObject = JsonObject.Parse(ResponseContent);
+                    JsonObject DownloadResultObject = ResultObject.GetNamedObject("result");
+
+                    return (true,
+                        DownloadResultObject.GetNamedString("status"),
+                        Convert.ToDouble(DownloadResultObject.GetNamedString("completedLength")),
+                        Convert.ToDouble(DownloadResultObject.GetNamedString("totalLength")),
+                        Convert.ToDouble(DownloadResultObject.GetNamedString("downloadSpeed"))
+                        );
                 }
-
-                DownloadStatusResult GetFileSizeResult = await Aria2Client.TellStatusAsync(GID);
-
-                return (true, GetFileSizeResult.TotalLength);
+                // 请求失败
+                else
+                {
+                    throw new Exception();
+                }
             }
+            // 捕捉进程不存在异常
             catch (ProcessNotExistException)
             {
-                return (false, default(long));
+                return (false, string.Empty, default(double), default(double), default(double));
             }
+            // 捕捉因访问超时引发的异常
+            catch (TaskCanceledException)
+            {
+                return (false, string.Empty, default(double), default(double), default(double));
+            }
+            // 其他异常
             catch (Exception)
             {
-                return (false, default(long));
+                return (false, string.Empty, default(double), default(double), default(double));
             }
         }
     }

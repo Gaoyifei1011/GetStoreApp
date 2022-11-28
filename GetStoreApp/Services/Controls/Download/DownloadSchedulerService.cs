@@ -198,7 +198,7 @@ namespace GetStoreApp.Services.Controls.Download
             else if (downloadFlag == 3)
             {
                 // 从下载进程中移除正在下载的任务
-                (bool, string) DeleteResult = await Aria2Service.PauseAsync(gID);
+                (bool, string) DeleteResult = await Aria2Service.NewPauseAsync(gID);
 
                 if (DeleteResult.Item1)
                 {
@@ -249,7 +249,7 @@ namespace GetStoreApp.Services.Controls.Download
             foreach (BackgroundModel backgroundItem in DownloadingList)
             {
                 // 从下载进程中移除正在下载的任务
-                (bool, string) DeleteResult = await Aria2Service.PauseAsync(backgroundItem.GID);
+                (bool, string) DeleteResult = await Aria2Service.NewPauseAsync(backgroundItem.GID);
 
                 if (DeleteResult.Item1)
                 {
@@ -326,7 +326,7 @@ namespace GetStoreApp.Services.Controls.Download
             else if (downloadFlag == 3)
             {
                 // 从下载进程中移除正在下载的任务
-                (bool, string) DeleteResult = await Aria2Service.DeleteAsync(gID);
+                (bool, string) DeleteResult = await Aria2Service.NewDeleteAsync(gID);
 
                 if (DeleteResult.Item1)
                 {
@@ -446,7 +446,7 @@ namespace GetStoreApp.Services.Controls.Download
                 // 获取列表中的第一个元素
                 BackgroundModel DownloadItem = WaitingList.FirstOrDefault();
 
-                (bool, string) AddResult = await Aria2Service.AddUriAsync(DownloadItem.FileLink, DownloadOptionsService.DownloadFolder.Path);
+                (bool, string) AddResult = await Aria2Service.NewAddUriAsync(DownloadItem.FileLink, DownloadOptionsService.DownloadFolder.Path);
 
                 if (AddResult.Item1 && DownloadItem is not null)
                 {
@@ -481,7 +481,7 @@ namespace GetStoreApp.Services.Controls.Download
                 // 先更新下载的任务信息
                 foreach (BackgroundModel downloadItem in DownloadingList)
                 {
-                    (bool, string, long, long, long) TellStatusResult = await Aria2Service.TellStatusAsync(downloadItem.GID);
+                    (bool, string, double, double, double) TellStatusResult = await Aria2Service.NewTellStatusAsync(downloadItem.GID);
 
                     if (TellStatusResult.Item1)
                     {

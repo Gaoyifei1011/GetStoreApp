@@ -20,8 +20,6 @@ namespace GetStoreApp.Views.Window
         private WinProc newWndProc = null;
         private IntPtr oldWndProc = IntPtr.Zero;
 
-        private DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-
         /// <summary>
         /// 窗口宽度
         /// </summary>
@@ -161,7 +159,7 @@ namespace GetStoreApp.Views.Window
                             if (!App.IsDialogOpening)
                             {
                                 App.IsDialogOpening = true;
-                                dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
+                                DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
                                 {
                                     await new AppRunningDialog().ShowAsync();
                                     App.IsDialogOpening = false;

@@ -52,7 +52,6 @@
 ### 项目引用（按英文首字母排序）
 
 > * [Aira2](https://aria2.github.io)&emsp;
-> * [Aria2.NET](https://github.com/rogerfar/Aria2.NET)&emsp;
 > * [HtmlAgilityPack](http://html-agility-pack.net)&emsp;
 > * [Microsoft.Data.Sqlite.Core](https://docs.microsoft.com/dotnet/standard/data/sqlite)&emsp;
 > * [Microsoft.Windows.CsWinRT](https://github.com/microsoft/cswinrt)&emsp;

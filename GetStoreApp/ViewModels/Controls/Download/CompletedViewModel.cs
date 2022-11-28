@@ -11,7 +11,6 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Dialogs.Download;
 using GetStoreApp.ViewModels.Base;
-using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -30,9 +29,6 @@ namespace GetStoreApp.ViewModels.Controls.Download
     {
         // 临界区资源访问互斥锁
         private readonly object CompletedDataListLock = new object();
-
-        // 获取UI主线程
-        private DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
         public ObservableCollection<CompletedModel> CompletedDataList { get; } = new ObservableCollection<CompletedModel>();
 
@@ -468,7 +464,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         {
             if (args.RemovedItems.Any(item => item.DownloadFlag == 4))
             {
-                dispatcherQueue.TryEnqueue(async () =>
+                App.MainWindow.DispatcherQueue.TryEnqueue(async () =>
                 {
                     foreach (BackgroundModel backgroundItem in args.RemovedItems)
                     {

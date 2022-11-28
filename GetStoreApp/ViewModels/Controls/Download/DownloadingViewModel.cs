@@ -8,7 +8,6 @@ using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.ViewModels.Base;
-using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -30,8 +29,6 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
         // 标志信息是否已经初始化完成
         private bool IsInitializeFinished = false;
-
-        private DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
         private DispatcherTimer DownloadingTimer { get; } = new DispatcherTimer();
 
@@ -481,7 +478,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             // 下载中列表添加项目时，更新UI
             if (args.AddedItems.Count > 0)
             {
-                dispatcherQueue.TryEnqueue(() =>
+                App.MainWindow.DispatcherQueue.TryEnqueue(() =>
                 {
                     foreach (BackgroundModel downloadItem in args.AddedItems)
                     {
@@ -503,7 +500,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             // 下载中列表删除项目时，更新UI
             if (args.RemovedItems.Count > 0)
             {
-                dispatcherQueue.TryEnqueue(() =>
+                App.MainWindow.DispatcherQueue.TryEnqueue(() =>
                 {
                     foreach (BackgroundModel backgroundItem in args.RemovedItems)
                     {
@@ -547,7 +544,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             // 等待列表添加项目时，更新UI
             if (args.AddedItems.Count > 0)
             {
-                dispatcherQueue.TryEnqueue(() =>
+                App.MainWindow.DispatcherQueue.TryEnqueue(() =>
                 {
                     foreach (BackgroundModel item in args.AddedItems)
                     {
@@ -568,7 +565,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             // 等待列表删除项目时，更新UI
             if (args.RemovedItems.Count > 0)
             {
-                dispatcherQueue.TryEnqueue(() =>
+                App.MainWindow.DispatcherQueue.TryEnqueue(() =>
                 {
                     foreach (BackgroundModel backgroundItem in args.RemovedItems)
                     {
