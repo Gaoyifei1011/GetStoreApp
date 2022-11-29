@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+﻿using Windows.Foundation;
 
 namespace GetStoreApp.WindowsAPI.PInvoke.WindowsCore
 {
@@ -24,7 +24,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.WindowsCore
 
         public static implicit operator POINT(Point point)
         {
-            return new POINT { x = point.X, y = point.Y };
+            return new POINT { x = (int)point.X, y = (int)point.Y };
         }
     }
 }

@@ -14,6 +14,7 @@ using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
+using GetStoreApp.WindowsAPI.PInvoke.UxTheme;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -287,6 +288,7 @@ namespace GetStoreApp.ViewModels.Window
             }
 
             SetAppBackground();
+            SetContextMenuTheme((FrameworkElement)App.MainWindow.Content);
 
             ((FrameworkElement)App.MainWindow.Content).ActualThemeChanged += OnActualThemeChanged;
 
@@ -373,6 +375,7 @@ namespace GetStoreApp.ViewModels.Window
         private void OnActualThemeChanged(FrameworkElement sender, object args)
         {
             SetAppBackground();
+            SetContextMenuTheme(sender);
         }
 
         /// <summary>
@@ -405,6 +408,59 @@ namespace GetStoreApp.ViewModels.Window
             else
             {
                 AppBackground = new SolidColorBrush(Colors.Transparent);
+            }
+        }
+
+        /// <summary>
+        /// 设置Win32 传统右键菜单的主题值
+        /// </summary>
+        /// 注意：Windows 10 1809（17763）和Windows 10 1903（18362）及更高的版本系统最终呈现的效果不同
+        /// Windows 10 1903（18362）有4个值，可以由用户单独指定传统右键菜单的主题值
+        /// Windows 10 1809（17763）只有2个值，设定为True时右键菜单主题值会根据系统变化，不能由用户单独指定
+        private void SetContextMenuTheme(FrameworkElement element)
+        {
+            switch (element.RequestedTheme)
+            {
+                case ElementTheme.Default:
+                    {
+                        if (InfoHelper.GetSystemVersion()["BuildNumber"] > 18362)
+                        {
+                            UxThemeLibrary.SetPreferredAppMode(PreferredAppMode.AllowDark);
+                        }
+                        else
+                        {
+                            UxThemeLibrary.AllowDarkModeForApp(true);
+                        }
+                        break;
+                    }
+                case ElementTheme.Light:
+                    {
+                        if (InfoHelper.GetSystemVersion()["BuildNumber"] > 18362)
+                        {
+                            UxThemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceLight);
+                        }
+                        else
+                        {
+                            UxThemeLibrary.AllowDarkModeForApp(false);
+                        }
+                        break;
+                    }
+                case ElementTheme.Dark:
+                    {
+                        if (InfoHelper.GetSystemVersion()["BuildNumber"] > 18362)
+                        {
+                            UxThemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceDark);
+                        }
+                        else
+                        {
+                            UxThemeLibrary.AllowDarkModeForApp(true);
+                        }
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
             }
         }
 

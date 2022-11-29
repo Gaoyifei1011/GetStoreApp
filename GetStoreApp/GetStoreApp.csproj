@@ -2,8 +2,8 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
-    <TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
-    <SupportedOSPlatformVersion>10.0.18362.0</SupportedOSPlatformVersion>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
     <RootNamespace>GetStoreApp</RootNamespace>
     <Platforms>x86;x64</Platforms>
     <RuntimeIdentifiers>win10-x86;win10-x64</RuntimeIdentifiers>
@@ -27,22 +27,32 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <Defineconstants>DISABLE_XAML_GENERATED_MAIN</Defineconstants>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <Defineconstants>DISABLE_XAML_GENERATED_MAIN</Defineconstants>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <Defineconstants>DISABLE_XAML_GENERATED_MAIN</Defineconstants>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <Defineconstants>DISABLE_XAML_GENERATED_MAIN</Defineconstants>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   
   <ItemGroup>
+    <!--不涉及到的程序集-->
+    <TrimmableAssembly Include="Microsoft.Windows.Widgets.Projection" />
+    <TrimmableAssembly Include="System.Console" />
+    <TrimmableAssembly Include="System.Memory" />
+    <TrimmableAssembly Include="System.Private.Xml" />
+    
     <Manifest Include="$(ApplicationManifest)" />
     
     <None Remove="Assets\GetStoreApp.png" />

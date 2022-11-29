@@ -63,7 +63,7 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 
 ### Download and installation considerations
 
-> * The program is built using the Windows Apps SDK, and it is recommended that your system version be Windows 11 (codename 21H2 / build 22000) or later, and the minimum version is Windows 10 (codename 1803 / build 18362) or later.
+> * The program is built using the Windows Apps SDK, and it is recommended that your system version be Windows 11 (codename 21H2 / build 22000) or later, and the minimum version is Windows 10 (codename 1809 / build 17763) or later.
 > * If your system is Windows 10, there are some limitations to app functionality:
     Setting the mica/mica alt/acrylic background color is not supported at this time
 > * [Release](https://github.com/Gaoyifei1011/GetStoreApp/releases) The binary installation file for the page has been packaged into a compressed package. Unzip the package and run the install.ps1 file in Powershell admin mode (if necessary) for a quick installation.
