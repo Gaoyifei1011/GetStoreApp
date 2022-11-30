@@ -8,8 +8,8 @@
     <Platforms>x86;x64</Platforms>
     <RuntimeIdentifiers>win10-x86;win10-x64</RuntimeIdentifiers>
     <PublishProfile>Properties\PublishProfiles\win10-$(Platform).pubxml</PublishProfile>
-    <Version>0.7.0.0</Version>
-    <FileVersion>0.7.0.0</FileVersion>
+    <Version>0.7.2.0</Version>
+    <FileVersion>0.7.2.0</FileVersion>
     <Copyright>高怡飞</Copyright>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <IncludeSymbols>False</IncludeSymbols>
@@ -22,7 +22,7 @@
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <PackageIcon>GetStoreApp.png</PackageIcon>
+    <PackageIcon>GetStoreApp.png</PackageIcon>  
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">

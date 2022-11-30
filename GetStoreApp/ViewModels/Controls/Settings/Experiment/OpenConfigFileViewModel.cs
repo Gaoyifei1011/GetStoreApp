@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using Windows.Storage;
+using Windows.System;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Experiment
 {
@@ -41,7 +42,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Experiment
 
                     if (Directory.Exists(FileFolderPath))
                     {
-                        await Windows.System.Launcher.LaunchFolderAsync(await StorageFolder.GetFolderFromPathAsync(FileFolderPath));
+                        await Launcher.LaunchFolderAsync(await StorageFolder.GetFolderFromPathAsync(FileFolderPath));
                     }
                     else
                     {
