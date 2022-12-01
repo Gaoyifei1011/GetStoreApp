@@ -25,7 +25,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public List<ChannelModel> ChannelList => ResourceService.ChannelList;
 
-        public static IReadOnlyList<string> SampleLinkList { get; } = new List<string>
+        public static List<string> SampleLinkList { get; } = new List<string>
         {
             "https://www.microsoft.com/store/productId/9NSWSBXN8K03",
             "9NKSQGP7F2NH",
@@ -37,9 +37,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         private string SampleLink { get; set; }
 
-        private int _selectedType;
+        private TypeModel _selectedType;
 
-        public int SelectedType
+        public TypeModel SelectedType
         {
             get { return _selectedType; }
 
@@ -50,9 +50,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
             }
         }
 
-        private int _selectedChannel = 3;
+        private ChannelModel _selectedChannel;
 
-        public int SelectedChannel
+        public ChannelModel SelectedChannel
         {
             get { return _selectedChannel; }
 
@@ -108,11 +108,27 @@ namespace GetStoreApp.ViewModels.Controls.Home
             await GetLinksAsync();
         });
 
+        // 类型修改选择后修改样例文本
+        public IRelayCommand TypeSelectCommand => new RelayCommand<string>((typeIndex) =>
+        {
+            SelectedType = TypeList[Convert.ToInt32(typeIndex)];
+            SampleLink = SampleLinkList[TypeList.FindIndex(item => item.InternalName == SelectedType.InternalName)];
+            LinkPlaceHolderText = SampleTitle + SampleLink;
+
+            LinkText = string.Empty;
+        });
+
+        // 通道选择修改
+        public IRelayCommand ChannelSelectCommand => new RelayCommand<string>((channelIndex) =>
+        {
+            SelectedChannel = ChannelList[Convert.ToInt32(channelIndex)];
+        });
+
         public RequestViewModel()
         {
-            SelectedType = Convert.ToInt32(StartupService.StartupArgs["TypeName"]) == -1 ? 0 : Convert.ToInt32(StartupService.StartupArgs["TypeName"]);
+            SelectedType = Convert.ToInt32(StartupService.StartupArgs["TypeName"]) == -1 ? TypeList[0] : TypeList[Convert.ToInt32(StartupService.StartupArgs["TypeName"])];
 
-            SelectedChannel = Convert.ToInt32(StartupService.StartupArgs["ChannelName"]) == -1 ? 3 : Convert.ToInt32(StartupService.StartupArgs["ChannelName"]);
+            SelectedChannel = Convert.ToInt32(StartupService.StartupArgs["ChannelName"]) == -1 ? ChannelList[3] : ChannelList[Convert.ToInt32(StartupService.StartupArgs["ChannelName"])];
 
             LinkText = StartupService.StartupArgs["Link"] is null ? string.Empty : (string)StartupService.StartupArgs["Link"];
 
@@ -124,8 +140,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             Messenger.Default.Register<string[]>(this, MessageToken.Command, (commandMessage) =>
             {
-                SelectedType = Convert.ToInt32(commandMessage[0]) == -1 ? 0 : Convert.ToInt32(commandMessage[0]);
-                SelectedChannel = Convert.ToInt32(commandMessage[1]) == -1 ? 3 : Convert.ToInt32(commandMessage[1]);
+                SelectedType = Convert.ToInt32(commandMessage[0]) == -1 ? TypeList[0] : TypeList[Convert.ToInt32(commandMessage[0])];
+                SelectedChannel = Convert.ToInt32(commandMessage[1]) == -1 ? ChannelList[3] : ChannelList[Convert.ToInt32(commandMessage[1])];
                 LinkText = commandMessage[2] == "PlaceHolderText" ? string.Empty : commandMessage[2];
 
                 if (NavigationService.GetCurrentPageType() != typeof(HomePage))
@@ -136,8 +152,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             Messenger.Default.Register<HistoryModel>(this, MessageToken.Fillin, (fillinMessage) =>
             {
-                SelectedType = TypeList.FindIndex(item => item.InternalName.Equals(fillinMessage.HistoryType));
-                SelectedChannel = ChannelList.FindIndex(item => item.InternalName.Equals(fillinMessage.HistoryChannel));
+                SelectedType = TypeList.Find(item => item.InternalName.Equals(fillinMessage.HistoryType));
+                SelectedChannel = ChannelList.Find(item => item.InternalName.Equals(fillinMessage.HistoryChannel));
                 LinkText = fillinMessage.HistoryLink;
             });
 
@@ -148,20 +164,6 @@ namespace GetStoreApp.ViewModels.Controls.Home
                     Messenger.Default.Unregister(this);
                 }
             });
-        }
-
-        /// <summary>
-        /// 类型选择后修改样例文本
-        /// </summary>
-        public void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
-        {
-            if (args.RemovedItems.Count > 0)
-            {
-                SampleLink = SampleLinkList[SelectedType];
-                LinkPlaceHolderText = SampleTitle + SampleLink;
-
-                LinkText = string.Empty;
-            }
         }
 
         /// <summary>
@@ -191,9 +193,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
             }
 
             // 记录当前选定的选项和填入的内容
-            int CurrentType = SelectedType;
+            int CurrentType = TypeList.FindIndex(item => item.InternalName == SelectedType.InternalName);
 
-            int CurrentChannel = SelectedChannel;
+            int CurrentChannel = ChannelList.FindIndex(item => item.InternalName == SelectedChannel.InternalName);
 
             string CurrentLink = LinkText;
 
@@ -202,9 +204,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             // 生成请求的内容
             string generateContent = new GenerateContentHelper().GenerateRequestContent(
-                TypeList[SelectedType].InternalName,
+                SelectedType.InternalName,
                 LinkText,
-                ChannelList[SelectedChannel].InternalName,
+                SelectedChannel.InternalName,
                 RegionService.AppRegion.ISO2);
 
             // 获取网页反馈回的原始数据

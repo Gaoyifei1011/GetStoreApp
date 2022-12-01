@@ -39,13 +39,29 @@
                 Text="{x:Bind root:ResourceService.GetLocalized('/Settings/AppExitDescription')}" />
         </StackPanel>
 
-        <ComboBox
+        <DropDownButton
             Grid.Column="2"
             VerticalAlignment="Center"
-            DisplayMemberPath="DisplayName"
-            ItemsSource="{x:Bind ViewModel.AppExitList}"
-            SelectedItem="{x:Bind ViewModel.AppExit, Mode=TwoWay}"
-            SelectionChanged="{x:Bind ViewModel.OnSelectionChanged}"
-            ToolTipService.ToolTip="{x:Bind ViewModel.AppExit.DisplayName, Mode=OneWay}" />
+            Content="{x:Bind ViewModel.AppExit.DisplayName, Mode=OneWay}"
+            ToolTipService.ToolTip="{x:Bind ViewModel.AppExit.DisplayName, Mode=OneWay}">
+            <DropDownButton.Flyout>
+                <MenuFlyout Placement="Bottom">
+                    <RadioMenuFlyoutItem
+                        Command="{x:Bind ViewModel.AppExitSelectCommand}"
+                        CommandParameter="0"
+                        GroupName="AppExitSetting"
+                        IsChecked="{x:Bind IsItemChecked(ViewModel.AppExit.InternalName, ViewModel.AppExitList[0].InternalName), Mode=OneWay}"
+                        Text="{x:Bind ViewModel.AppExitList[0].DisplayName}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.AppExitList[0].DisplayName}" />
+                    <RadioMenuFlyoutItem
+                        Command="{x:Bind ViewModel.AppExitSelectCommand}"
+                        CommandParameter="1"
+                        GroupName="AppExitSetting"
+                        IsChecked="{x:Bind IsItemChecked(ViewModel.AppExit.InternalName, ViewModel.AppExitList[1].InternalName), Mode=OneWay}"
+                        Text="{x:Bind ViewModel.AppExitList[1].DisplayName}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.AppExitList[1].DisplayName}" />
+                </MenuFlyout>
+            </DropDownButton.Flyout>
+        </DropDownButton>
     </Grid>
 </UserControl>

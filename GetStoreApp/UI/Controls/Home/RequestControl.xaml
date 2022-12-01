@@ -20,20 +20,83 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <ComboBox
+        <DropDownButton
             Grid.Column="0"
-            DisplayMemberPath="DisplayName"
-            ItemsSource="{x:Bind ViewModel.TypeList}"
-            SelectedIndex="{x:Bind ViewModel.SelectedType, Mode=TwoWay}"
-            SelectionChanged="{x:Bind ViewModel.OnSelectionChanged}"
-            ToolTipService.ToolTip="{x:Bind GetSelectedTypeName(ViewModel.SelectedType), Mode=OneWay}" />
+            VerticalAlignment="Center"
+            Content="{x:Bind ViewModel.SelectedType.DisplayName, Mode=OneWay}"
+            ToolTipService.ToolTip="{x:Bind ViewModel.SelectedType.DisplayName, Mode=OneWay}">
+            <DropDownButton.Flyout>
+                <MenuFlyout Placement="Bottom">
+                    <RadioMenuFlyoutItem
+                        Command="{x:Bind ViewModel.TypeSelectCommand}"
+                        CommandParameter="0"
+                        GroupName="TypeSelect"
+                        IsChecked="{x:Bind IsTypeItemChecked(ViewModel.SelectedType.InternalName, ViewModel.TypeList[0].InternalName), Mode=OneWay}"
+                        Text="{x:Bind ViewModel.TypeList[0].DisplayName}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.TypeList[0].DisplayName}" />
+                    <RadioMenuFlyoutItem
+                        Command="{x:Bind ViewModel.TypeSelectCommand}"
+                        CommandParameter="1"
+                        GroupName="TypeSelect"
+                        IsChecked="{x:Bind IsTypeItemChecked(ViewModel.SelectedType.InternalName, ViewModel.TypeList[1].InternalName), Mode=OneWay}"
+                        Text="{x:Bind ViewModel.TypeList[1].DisplayName}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.TypeList[1].DisplayName}" />
+                    <RadioMenuFlyoutItem
+                        Command="{x:Bind ViewModel.TypeSelectCommand}"
+                        CommandParameter="2"
+                        GroupName="TypeSelect"
+                        IsChecked="{x:Bind IsTypeItemChecked(ViewModel.SelectedType.InternalName, ViewModel.TypeList[2].InternalName), Mode=OneWay}"
+                        Text="{x:Bind ViewModel.TypeList[2].DisplayName}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.TypeList[2].DisplayName}" />
+                    <RadioMenuFlyoutItem
+                        Command="{x:Bind ViewModel.TypeSelectCommand}"
+                        CommandParameter="3"
+                        GroupName="TypeSelect"
+                        IsChecked="{x:Bind IsTypeItemChecked(ViewModel.SelectedType.InternalName, ViewModel.TypeList[3].InternalName), Mode=OneWay}"
+                        Text="{x:Bind ViewModel.TypeList[3].DisplayName}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.TypeList[3].DisplayName}" />
+                </MenuFlyout>
+            </DropDownButton.Flyout>
+        </DropDownButton>
 
-        <ComboBox
+        <DropDownButton
             Grid.Column="1"
-            DisplayMemberPath="DisplayName"
-            ItemsSource="{x:Bind ViewModel.ChannelList}"
-            SelectedIndex="{x:Bind ViewModel.SelectedChannel, Mode=TwoWay}"
-            ToolTipService.ToolTip="{x:Bind GetSelectedChannelName(ViewModel.SelectedChannel), Mode=OneWay}" />
+            VerticalAlignment="Center"
+            Content="{x:Bind ViewModel.SelectedChannel.DisplayName, Mode=OneWay}"
+            ToolTipService.ToolTip="{x:Bind ViewModel.SelectedChannel.DisplayName, Mode=OneWay}">
+            <DropDownButton.Flyout>
+                <MenuFlyout Placement="Bottom">
+                    <RadioMenuFlyoutItem
+                        Command="{x:Bind ViewModel.ChannelSelectCommand}"
+                        CommandParameter="0"
+                        GroupName="ChannelSelect"
+                        IsChecked="{x:Bind IsChannelItemChecked(ViewModel.SelectedChannel.InternalName, ViewModel.ChannelList[0].InternalName), Mode=OneWay}"
+                        Text="{x:Bind ViewModel.ChannelList[0].DisplayName}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.ChannelList[0].DisplayName}" />
+                    <RadioMenuFlyoutItem
+                        Command="{x:Bind ViewModel.ChannelSelectCommand}"
+                        CommandParameter="1"
+                        GroupName="ChannelSelect"
+                        IsChecked="{x:Bind IsChannelItemChecked(ViewModel.SelectedChannel.InternalName, ViewModel.ChannelList[1].InternalName), Mode=OneWay}"
+                        Text="{x:Bind ViewModel.ChannelList[1].DisplayName}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.ChannelList[1].DisplayName}" />
+                    <RadioMenuFlyoutItem
+                        Command="{x:Bind ViewModel.ChannelSelectCommand}"
+                        CommandParameter="2"
+                        GroupName="ChannelSelect"
+                        IsChecked="{x:Bind IsChannelItemChecked(ViewModel.SelectedChannel.InternalName, ViewModel.ChannelList[2].InternalName), Mode=OneWay}"
+                        Text="{x:Bind ViewModel.ChannelList[2].DisplayName}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.ChannelList[2].DisplayName}" />
+                    <RadioMenuFlyoutItem
+                        Command="{x:Bind ViewModel.ChannelSelectCommand}"
+                        CommandParameter="3"
+                        GroupName="ChannelSelect"
+                        IsChecked="{x:Bind IsChannelItemChecked(ViewModel.SelectedChannel.InternalName, ViewModel.ChannelList[3].InternalName), Mode=OneWay}"
+                        Text="{x:Bind ViewModel.ChannelList[3].DisplayName}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.ChannelList[3].DisplayName}" />
+                </MenuFlyout>
+            </DropDownButton.Flyout>
+        </DropDownButton>
 
         <AutoSuggestBox
             Grid.Column="2"

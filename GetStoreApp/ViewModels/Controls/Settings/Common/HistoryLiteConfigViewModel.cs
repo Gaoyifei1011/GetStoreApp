@@ -1,9 +1,11 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
+using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Models.Controls.Settings.Common;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.ViewModels.Base;
-using Microsoft.UI.Xaml.Controls;
+using System;
 using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Common
@@ -28,13 +30,11 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
         /// <summary>
         /// 主页面“历史记录”显示数目修改
         /// </summary>
-        public async void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
+        public IRelayCommand HistoryLiteSelectCommand => new RelayCommand<string>(async (historyLiteIndex) =>
         {
-            if (args.RemovedItems.Count > 0)
-            {
-                await HistoryLiteNumService.SetHistoryLiteNumAsync(HistoryLiteItem);
-                Messenger.Default.Send(HistoryLiteItem, MessageToken.HistoryLiteNum);
-            }
-        }
+            HistoryLiteItem = HistoryLiteNumList[Convert.ToInt32(historyLiteIndex)];
+            await HistoryLiteNumService.SetHistoryLiteNumAsync(HistoryLiteItem);
+            Messenger.Default.Send(HistoryLiteItem, MessageToken.HistoryLiteNum);
+        });
     }
 }

@@ -39,13 +39,29 @@
                 Text="{x:Bind root:ResourceService.GetLocalized('/Settings/HistoryLiteConfigDescription')}" />
         </StackPanel>
 
-        <ComboBox
-            Grid.Column="2"
+        <DropDownButton
+            Grid.Column="3"
             VerticalAlignment="Center"
-            DisplayMemberPath="HistoryLiteNumName"
-            ItemsSource="{x:Bind ViewModel.HistoryLiteNumList}"
-            SelectedItem="{x:Bind ViewModel.HistoryLiteItem, Mode=TwoWay}"
-            SelectionChanged="{x:Bind ViewModel.OnSelectionChanged}"
-            ToolTipService.ToolTip="{x:Bind ViewModel.HistoryLiteItem.HistoryLiteNumName, Mode=OneWay}" />
+            Content="{x:Bind ViewModel.HistoryLiteItem.HistoryLiteNumName, Mode=OneWay}"
+            ToolTipService.ToolTip="{x:Bind ViewModel.HistoryLiteItem.HistoryLiteNumName, Mode=OneWay}">
+            <DropDownButton.Flyout>
+                <MenuFlyout Placement="Bottom">
+                    <RadioMenuFlyoutItem
+                        Command="{x:Bind ViewModel.HistoryLiteSelectCommand}"
+                        CommandParameter="0"
+                        GroupName="HistoryLiteSetting"
+                        IsChecked="{x:Bind IsItemChecked(ViewModel.HistoryLiteItem.HistoryLiteNumValue, ViewModel.HistoryLiteNumList[0].HistoryLiteNumValue), Mode=OneWay}"
+                        Text="{x:Bind ViewModel.HistoryLiteNumList[0].HistoryLiteNumName}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.HistoryLiteNumList[0].HistoryLiteNumName}" />
+                    <RadioMenuFlyoutItem
+                        Command="{x:Bind ViewModel.HistoryLiteSelectCommand}"
+                        CommandParameter="1"
+                        GroupName="HistoryLiteSetting"
+                        IsChecked="{x:Bind IsItemChecked(ViewModel.HistoryLiteItem.HistoryLiteNumValue, ViewModel.HistoryLiteNumList[1].HistoryLiteNumValue), Mode=OneWay}"
+                        Text="{x:Bind ViewModel.HistoryLiteNumList[1].HistoryLiteNumName}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.HistoryLiteNumList[1].HistoryLiteNumName}" />
+                </MenuFlyout>
+            </DropDownButton.Flyout>
+        </DropDownButton>
     </Grid>
 </UserControl>

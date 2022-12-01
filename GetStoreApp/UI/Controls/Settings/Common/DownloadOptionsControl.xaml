@@ -110,13 +110,37 @@
                                 Text="{x:Bind root:ResourceService.GetLocalized('/Settings/DownloadItemDescription')}" />
                         </StackPanel>
 
-                        <ComboBox
+                        <DropDownButton
                             Grid.Column="1"
                             VerticalAlignment="Center"
-                            ItemsSource="{x:Bind ViewModel.DownloadItemList}"
-                            SelectedItem="{x:Bind ViewModel.DownloadItem, Mode=TwoWay}"
-                            SelectionChanged="{x:Bind ViewModel.OnDownloadItemSelectionChanged}"
-                            ToolTipService.ToolTip="{x:Bind ViewModel.DownloadItem, Mode=TwoWay}" />
+                            Content="{x:Bind ViewModel.DownloadItem, Mode=OneWay}"
+                            ToolTipService.ToolTip="{x:Bind ViewModel.DownloadItem, Mode=OneWay}">
+                            <DropDownButton.Flyout>
+                                <MenuFlyout Placement="Bottom">
+                                    <RadioMenuFlyoutItem
+                                        Command="{x:Bind ViewModel.DownloadItemSelectCommand}"
+                                        CommandParameter="1"
+                                        GroupName="DownloadItemSetting"
+                                        IsChecked="{x:Bind IsDownloadItemChecked(ViewModel.DownloadItem, 1), Mode=OneWay}"
+                                        Text="1"
+                                        ToolTipService.ToolTip="{x:Bind ViewModel.DownloadItem}" />
+                                    <RadioMenuFlyoutItem
+                                        Command="{x:Bind ViewModel.DownloadItemSelectCommand}"
+                                        CommandParameter="2"
+                                        GroupName="DownloadItemSetting"
+                                        IsChecked="{x:Bind IsDownloadItemChecked(ViewModel.DownloadItem, 2), Mode=OneWay}"
+                                        Text="2"
+                                        ToolTipService.ToolTip="2" />
+                                    <RadioMenuFlyoutItem
+                                        Command="{x:Bind ViewModel.DownloadItemSelectCommand}"
+                                        CommandParameter="3"
+                                        GroupName="DownloadItemSetting"
+                                        IsChecked="{x:Bind IsDownloadItemChecked(ViewModel.DownloadItem, 3), Mode=OneWay}"
+                                        Text="3"
+                                        ToolTipService.ToolTip="3" />
+                                </MenuFlyout>
+                            </DropDownButton.Flyout>
+                        </DropDownButton>
                     </Grid>
                 </StackPanel>
 
@@ -140,14 +164,30 @@
                                 Text="{x:Bind root:ResourceService.GetLocalized('/Settings/DownloadModeDescription')}" />
                         </StackPanel>
 
-                        <ComboBox
+                        <DropDownButton
                             Grid.Column="1"
                             VerticalAlignment="Center"
-                            DisplayMemberPath="DisplayName"
-                            ItemsSource="{x:Bind ViewModel.DownloadModeList}"
-                            SelectedItem="{x:Bind ViewModel.DownloadMode, Mode=TwoWay}"
-                            SelectionChanged="{x:Bind ViewModel.OnDownloadModeSelectionChanged}"
-                            ToolTipService.ToolTip="{x:Bind ViewModel.DownloadMode.DisplayName, Mode=TwoWay}" />
+                            Content="{x:Bind ViewModel.DownloadMode.DisplayName, Mode=OneWay}"
+                            ToolTipService.ToolTip="{x:Bind ViewModel.DownloadMode.DisplayName, Mode=OneWay}">
+                            <DropDownButton.Flyout>
+                                <MenuFlyout Placement="Bottom">
+                                    <RadioMenuFlyoutItem
+                                        Command="{x:Bind ViewModel.DownloadModeSelectCommand}"
+                                        CommandParameter="0"
+                                        GroupName="DownloadModeSetting"
+                                        IsChecked="{x:Bind IsDownloadModeChecked(ViewModel.DownloadMode.InternalName, ViewModel.DownloadModeList[0].InternalName), Mode=OneWay}"
+                                        Text="{x:Bind ViewModel.DownloadModeList[0].DisplayName}"
+                                        ToolTipService.ToolTip="{x:Bind ViewModel.DownloadModeList[0].DisplayName}" />
+                                    <RadioMenuFlyoutItem
+                                        Command="{x:Bind ViewModel.DownloadModeSelectCommand}"
+                                        CommandParameter="1"
+                                        GroupName="DownloadModeSetting"
+                                        IsChecked="{x:Bind IsDownloadModeChecked(ViewModel.DownloadMode.InternalName, ViewModel.DownloadModeList[1].InternalName), Mode=OneWay}"
+                                        Text="{x:Bind ViewModel.DownloadModeList[1].DisplayName}"
+                                        ToolTipService.ToolTip="{x:Bind ViewModel.DownloadModeList[1].DisplayName}" />
+                                </MenuFlyout>
+                            </DropDownButton.Flyout>
+                        </DropDownButton>
                     </Grid>
                 </StackPanel>
             </StackPanel>

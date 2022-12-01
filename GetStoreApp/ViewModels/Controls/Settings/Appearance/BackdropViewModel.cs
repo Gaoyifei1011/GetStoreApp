@@ -8,7 +8,7 @@ using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Window;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
-using Microsoft.UI.Xaml.Controls;
+using System;
 using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
@@ -39,6 +39,17 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
             NavigationService.NavigateTo(typeof(SettingsPage));
         });
 
+        /// <summary>
+        /// 背景色修改设置
+        /// </summary>
+        public IRelayCommand BackdropSelectCommand => new RelayCommand<string>(async (backdropIndex) =>
+        {
+            Backdrop = BackdropList[Convert.ToInt32(backdropIndex)];
+            await BackdropService.SetBackdropAsync(Backdrop);
+            await BackdropService.SetAppBackdropAsync();
+            Messenger.Default.Send(Backdrop, MessageToken.BackdropChanged);
+        });
+
         public BackdropViewModel()
         {
             ulong BuildNumber = InfoHelper.GetSystemVersion()["BuildNumber"];
@@ -53,19 +64,6 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
             {
                 BackdropHelp = false;
                 BackdropList = BackdropService.BackdropList;
-            }
-        }
-
-        /// <summary>
-        /// 背景色修改设置
-        /// </summary>
-        public async void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
-        {
-            if (args.RemovedItems.Count > 0)
-            {
-                await BackdropService.SetBackdropAsync(Backdrop);
-                await BackdropService.SetAppBackdropAsync();
-                Messenger.Default.Send(Backdrop, MessageToken.BackdropChanged);
             }
         }
     }

@@ -25,5 +25,15 @@ namespace GetStoreApp.UI.Controls.Home
         {
             return ChannelList[index].DisplayName;
         }
+
+        public bool IsTypeItemChecked(string selectedInternalName,string internalName)
+        {
+            return selectedInternalName == internalName;
+        }
+
+        public bool IsChannelItemChecked(string selectedInternalName, string internalName)
+        {
+            return selectedInternalName == internalName;
+        }
     }
 }

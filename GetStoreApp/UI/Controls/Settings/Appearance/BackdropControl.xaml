@@ -55,13 +55,43 @@
             </Button.Content>
         </Button>
 
-        <ComboBox
+        <DropDownButton
             Grid.Column="3"
             VerticalAlignment="Center"
-            DisplayMemberPath="DisplayName"
-            ItemsSource="{x:Bind ViewModel.BackdropList}"
-            SelectedItem="{x:Bind ViewModel.Backdrop, Mode=TwoWay}"
-            SelectionChanged="{x:Bind ViewModel.OnSelectionChanged}"
-            ToolTipService.ToolTip="{x:Bind ViewModel.Backdrop.DisplayName, Mode=OneWay}" />
+            Content="{x:Bind ViewModel.Backdrop.DisplayName, Mode=OneWay}"
+            ToolTipService.ToolTip="{x:Bind ViewModel.Backdrop.DisplayName, Mode=OneWay}">
+            <DropDownButton.Flyout>
+                <MenuFlyout Placement="Bottom">
+                    <RadioMenuFlyoutItem
+                        Command="{x:Bind ViewModel.BackdropSelectCommand}"
+                        CommandParameter="0"
+                        GroupName="BackdropSetting"
+                        IsChecked="{x:Bind IsItemChecked(ViewModel.Backdrop.InternalName, ViewModel.BackdropList[0].InternalName), Mode=OneWay}"
+                        Text="{x:Bind ViewModel.BackdropList[0].DisplayName}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.BackdropList[0].DisplayName}" />
+                    <RadioMenuFlyoutItem
+                        Command="{x:Bind ViewModel.BackdropSelectCommand}"
+                        CommandParameter="1"
+                        GroupName="BackdropSetting"
+                        IsChecked="{x:Bind IsItemChecked(ViewModel.Backdrop.InternalName, ViewModel.BackdropList[1].InternalName), Mode=OneWay}"
+                        Text="{x:Bind ViewModel.BackdropList[1].DisplayName}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.BackdropList[1].DisplayName}" />
+                    <RadioMenuFlyoutItem
+                        Command="{x:Bind ViewModel.BackdropSelectCommand}"
+                        CommandParameter="2"
+                        GroupName="BackdropSetting"
+                        IsChecked="{x:Bind IsItemChecked(ViewModel.Backdrop.InternalName, ViewModel.BackdropList[2].InternalName), Mode=OneWay}"
+                        Text="{x:Bind ViewModel.BackdropList[2].DisplayName}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.BackdropList[2].DisplayName}" />
+                    <RadioMenuFlyoutItem
+                        Command="{x:Bind ViewModel.BackdropSelectCommand}"
+                        CommandParameter="3"
+                        GroupName="BackdropSetting"
+                        IsChecked="{x:Bind IsItemChecked(ViewModel.Backdrop.InternalName, ViewModel.BackdropList[3].InternalName), Mode=OneWay}"
+                        Text="{x:Bind ViewModel.BackdropList[3].DisplayName}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.BackdropList[3].DisplayName}" />
+                </MenuFlyout>
+            </DropDownButton.Flyout>
+        </DropDownButton>
     </Grid>
 </UserControl>

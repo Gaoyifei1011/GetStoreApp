@@ -8,5 +8,10 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         {
             InitializeComponent();
         }
+
+        public bool IsItemChecked(int selectedIHistoryLiteNumValue, int historyLiteNumValue)
+        {
+            return selectedIHistoryLiteNumValue == historyLiteNumValue;
+        }
     }
 }

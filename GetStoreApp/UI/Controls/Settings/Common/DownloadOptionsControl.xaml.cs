@@ -8,5 +8,15 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         {
             InitializeComponent();
         }
+
+        public bool IsDownloadItemChecked(int selectedIndex, int index)
+        {
+            return selectedIndex == index;
+        }
+
+        public bool IsDownloadModeChecked(string selectedInternalName,string internalName)
+        {
+            return selectedInternalName == internalName;
+        }
     }
 }

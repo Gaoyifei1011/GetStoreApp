@@ -54,14 +54,29 @@
             </Button.Content>
         </Button>
 
-        <ComboBox
+        <DropDownButton
             Grid.Column="3"
-            Width="Auto"
             VerticalAlignment="Center"
-            DisplayMemberPath="DisplayName"
-            ItemsSource="{x:Bind ViewModel.InstallModeList}"
-            SelectedItem="{x:Bind ViewModel.InstallMode, Mode=TwoWay}"
-            SelectionChanged="{x:Bind ViewModel.OnSelectionChanged}"
-            ToolTipService.ToolTip="{x:Bind ViewModel.InstallMode.DisplayName, Mode=OneWay}" />
+            Content="{x:Bind ViewModel.InstallMode.DisplayName, Mode=OneWay}"
+            ToolTipService.ToolTip="{x:Bind ViewModel.InstallMode.DisplayName, Mode=OneWay}">
+            <DropDownButton.Flyout>
+                <MenuFlyout Placement="Bottom">
+                    <RadioMenuFlyoutItem
+                        Command="{x:Bind ViewModel.InstallModeSelectCommand}"
+                        CommandParameter="0"
+                        GroupName="InstallModeSetting"
+                        IsChecked="{x:Bind IsItemChecked(ViewModel.InstallMode.InternalName, ViewModel.InstallModeList[0].InternalName), Mode=OneWay}"
+                        Text="{x:Bind ViewModel.InstallModeList[0].DisplayName}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.InstallModeList[0].DisplayName}" />
+                    <RadioMenuFlyoutItem
+                        Command="{x:Bind ViewModel.InstallModeSelectCommand}"
+                        CommandParameter="1"
+                        GroupName="InstallModeSetting"
+                        IsChecked="{x:Bind IsItemChecked(ViewModel.InstallMode.InternalName, ViewModel.InstallModeList[1].InternalName), Mode=OneWay}"
+                        Text="{x:Bind ViewModel.InstallModeList[1].DisplayName}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.InstallModeList[1].DisplayName}" />
+                </MenuFlyout>
+            </DropDownButton.Flyout>
+        </DropDownButton>
     </Grid>
 </UserControl>

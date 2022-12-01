@@ -35,13 +35,11 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
         /// <summary>
         /// 主题修改设置
         /// </summary>
-        public async void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
+        public IRelayCommand ThemeSelectCommand => new RelayCommand<string>(async (themeIndex) =>
         {
-            if (args.RemovedItems.Count > 0)
-            {
-                await ThemeService.SetThemeAsync(Theme);
-                await ThemeService.SetAppThemeAsync();
-            }
-        }
+            Theme = ThemeList[Convert.ToInt32(themeIndex)];
+            await ThemeService.SetThemeAsync(Theme);
+            await ThemeService.SetAppThemeAsync();
+        });
     }
 }

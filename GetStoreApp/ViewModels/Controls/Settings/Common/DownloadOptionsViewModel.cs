@@ -21,8 +21,6 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
 {
     public sealed class DownloadOptionsViewModel : ViewModelBase
     {
-        public List<int> DownloadItemList { get; } = DownloadOptionsService.DownloadItemList;
-
         public List<DownloadModeModel> DownloadModeList { get; } = DownloadOptionsService.DownloadModeList;
 
         private StorageFolder _downloadFolder = DownloadOptionsService.DownloadFolder;
@@ -108,12 +106,6 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
 
                     if (CheckResult)
                     {
-                        DownloadFolder = Folder;
-                        await DownloadOptionsService.SetFolderAsync(DownloadFolder);
-                        break;
-                    }
-                    else
-                    {
                         ContentDialogResult result = await new FolderAccessFailedDialog().ShowAsync();
 
                         if (result == ContentDialogResult.Primary)
@@ -131,6 +123,12 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
                             break;
                         }
                     }
+                    else
+                    {
+                        DownloadFolder = Folder;
+                        await DownloadOptionsService.SetFolderAsync(DownloadFolder);
+                        break;
+                    }
                 }
                 else
                 {
@@ -142,23 +140,19 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
         /// <summary>
         /// 修改同时下载文件数
         /// </summary>
-        public async void OnDownloadItemSelectionChanged(object sender, SelectionChangedEventArgs args)
+        public IRelayCommand DownloadItemSelectCommand => new RelayCommand<string>(async (downloadItemIndex) =>
         {
-            if (args.RemovedItems.Count > 0)
-            {
-                await DownloadOptionsService.SetItemAsync(DownloadItem);
-            }
-        }
+            DownloadItem = Convert.ToInt32(downloadItemIndex);
+            await DownloadOptionsService.SetItemAsync(DownloadItem);
+        });
 
         /// <summary>
         /// 修改下载文件的方式
         /// </summary>
-        public async void OnDownloadModeSelectionChanged(object sender, SelectionChangedEventArgs args)
+        public IRelayCommand DownloadModeSelectCommand => new RelayCommand<string>(async (downloadModeIndex) =>
         {
-            if (args.RemovedItems.Count > 0)
-            {
-                await DownloadOptionsService.SetModeAsync(DownloadMode);
-            }
-        }
+            DownloadMode = DownloadModeList[Convert.ToInt32(downloadModeIndex)];
+            await DownloadOptionsService.SetModeAsync(DownloadMode);
+        });
     }
 }

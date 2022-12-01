@@ -8,5 +8,10 @@ namespace GetStoreApp.UI.Controls.Settings.Advanced
         {
             InitializeComponent();
         }
+
+        public bool IsItemChecked(string selectedInternalName,string internalName)
+        {
+            return selectedInternalName == internalName;
+        }
     }
 }

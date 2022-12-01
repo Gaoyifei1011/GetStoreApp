@@ -23,8 +23,6 @@ namespace GetStoreApp.Services.Controls.Settings.Common
 
         public static List<DownloadModeModel> DownloadModeList { get; set; }
 
-        public static List<int> DownloadItemList => new List<int>() { 1, 2, 3 };
-
         public static StorageFolder DefaultFolder { get; private set; }
 
         private static int DefaultItem => 1;
