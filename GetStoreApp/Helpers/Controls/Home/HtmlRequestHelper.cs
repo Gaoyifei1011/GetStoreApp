@@ -11,22 +11,22 @@ namespace GetStoreApp.Helpers.Controls.Home
     /// <summary>
     /// 网页请求
     /// </summary>
-    public class HtmlRequestHelper
+    public static class HtmlRequestHelper
     {
         private const string API = "https://store.rg-adguard.net/api/GetFiles";
 
-        private RequestModel HttpRequestResult;
+        private static RequestModel HttpRequestResult;
 
         // 数据的请求状态，0是正常状态，1是网络异常（WebException），2是超时异常（TimeOutException），3是其他异常（默认值）
-        private int RequestId = 3;
+        private static int RequestId = 3;
 
-        private string RequestStatusCode = string.Empty;
+        private static string RequestStatusCode = string.Empty;
 
-        private string RequestContent = string.Empty;
+        private static string RequestContent = string.Empty;
 
-        private string RequestExceptionContent = string.Empty;
+        private static string RequestExceptionContent = string.Empty;
 
-        public async Task<RequestModel> HttpRequestAsync(string content)
+        public static async Task<RequestModel> HttpRequestAsync(string content)
         {
             try
             {

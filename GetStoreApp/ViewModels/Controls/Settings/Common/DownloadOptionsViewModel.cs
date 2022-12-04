@@ -104,7 +104,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
 
                     bool CheckResult = IOHelper.GetFolderAuthorization(Folder, FileSystemRights.Write);
 
-                    if (CheckResult)
+                    if (!CheckResult)
                     {
                         ContentDialogResult result = await new FolderAccessFailedDialog().ShowAsync();
 

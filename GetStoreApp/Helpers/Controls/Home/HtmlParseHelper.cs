@@ -8,15 +8,15 @@ namespace GetStoreApp.Helpers.Controls.Home
     /// <summary>
     /// 网页解析
     /// </summary>
-    public class HtmlParseHelper
+    public static class HtmlParseHelper
     {
-        private HtmlDocument HtmlDocument { get; set; }
+        private static HtmlDocument HtmlDocument { get; set; }
 
         /// <summary>
         /// 初始化HtmlParseService类时添加HtmlReqeustService生成的字符串数据
         /// </summary>
         /// <param name="HttpRequestData">HtmlReqeustService生成的数据</param>
-        public HtmlParseHelper(RequestModel HttpRequestData)
+        public static void InitializeParseData(RequestModel HttpRequestData)
         {
             HtmlDocument = new HtmlDocument();
 
@@ -28,7 +28,7 @@ namespace GetStoreApp.Helpers.Controls.Home
         /// 解析网页数据中包含的CategoryID信息
         /// Parse the CategoryID information contained in the web page data
         /// </summary>
-        public string HtmlParseCID()
+        public static string HtmlParseCID()
         {
             return HtmlDocument.DocumentNode.SelectSingleNode("//i").InnerText;
         }
@@ -37,7 +37,7 @@ namespace GetStoreApp.Helpers.Controls.Home
         /// 解析网页数据中包含的所有信息
         /// Parse all the information contained in the web page data
         /// </summary>
-        public List<ResultModel> HtmlParseLinks()
+        public static List<ResultModel> HtmlParseLinks()
         {
             List<ResultModel> ResultDataList = new List<ResultModel>();
 

@@ -203,19 +203,17 @@ namespace GetStoreApp.ViewModels.Controls.Home
             Messenger.Default.Send(0, MessageToken.StatusBarState);
 
             // 生成请求的内容
-            string generateContent = new GenerateContentHelper().GenerateRequestContent(
+            string generateContent = GenerateContentHelper.GenerateRequestContent(
                 SelectedType.InternalName,
                 LinkText,
                 SelectedChannel.InternalName,
                 RegionService.AppRegion.ISO2);
 
             // 获取网页反馈回的原始数据
-            HtmlRequestHelper htmlRequest = new HtmlRequestHelper();
-            RequestModel httpRequestData = await htmlRequest.HttpRequestAsync(generateContent);
+            RequestModel httpRequestData = await HtmlRequestHelper.HttpRequestAsync(generateContent);
 
             // 检查服务器返回获取的状态
-            HtmlRequestStateHelper htmlRequestState = new HtmlRequestStateHelper();
-            int state = htmlRequestState.CheckRequestState(httpRequestData);
+            int state = HtmlRequestStateHelper.CheckRequestState(httpRequestData);
 
             // 设置结果控件的显示状态
             ResultControlVisable = state is 1 or 2;
@@ -225,11 +223,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
             // 成功状态下解析数据，并更新相应的历史记录
             if (state == 1)
             {
-                HtmlParseHelper htmlParse = new HtmlParseHelper(httpRequestData);
+                HtmlParseHelper.InitializeParseData(httpRequestData);
 
-                CategoryId = htmlParse.HtmlParseCID();
+                CategoryId = HtmlParseHelper.HtmlParseCID();
 
-                ResultDataList = htmlParse.HtmlParseLinks();
+                ResultDataList = HtmlParseHelper.HtmlParseLinks();
 
                 ResultListFilter(ref ResultDataList);
 
