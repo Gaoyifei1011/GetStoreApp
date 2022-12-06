@@ -117,6 +117,91 @@ namespace GetStoreApp.ViewModels.Window
             {"Settings",typeof(SettingsPage) }
         };
 
+        /// <summary>
+        /// 设置窗口处于非激活状态时的背景色
+        /// </summary>
+        public IRelayCommand ActivatedCommand => new RelayCommand<WindowActivatedEventArgs>((args) =>
+        {
+            BackdropHelper.SetBackdropState(AlwaysShowBackdropService.AlwaysShowBackdropValue, args);
+        });
+
+        /// <summary>
+        /// 关闭窗口之后关闭其他服务
+        /// </summary>
+        public IRelayCommand ClosedCommand => new RelayCommand<WindowEventArgs>(async (args) =>
+        {
+            args.Handled = true;
+
+            if (AppExitService.AppExit.InternalName == AppExitService.AppExitList[0].InternalName)
+            {
+                WindowHelper.HideAppWindow();
+            }
+            else
+            {
+                // 下载队列存在任务时，弹出对话窗口确认是否要关闭窗口
+                if (DownloadSchedulerService.DownloadingList.Count > 0 || DownloadSchedulerService.WaitingList.Count > 0)
+                {
+                    // 关闭窗口提示对话框是否已经处于打开状态，如果是，不再弹出
+                    if (!App.IsDialogOpening)
+                    {
+                        App.IsDialogOpening = true;
+
+                        ContentDialogResult result = await new ClosingWindowDialog().ShowAsync();
+
+                        if (result == ContentDialogResult.Primary)
+                        {
+                            await CloseApp();
+                        }
+                        else if (result == ContentDialogResult.Secondary)
+                        {
+                            if (NavigationService.GetCurrentPageType() != typeof(DownloadPage))
+                            {
+                                NavigationService.NavigateTo(typeof(DownloadPage));
+                            }
+                        }
+
+                        App.IsDialogOpening = false;
+                    }
+                }
+                else
+                {
+                    await CloseApp();
+                }
+            }
+        });
+
+        // 窗口大小发生改变时，设置页面导航视图样式
+        public IRelayCommand SizeChangedCommand => new RelayCommand<WindowSizeChangedEventArgs>((args) =>
+        {
+            if (App.MainWindow.Width >= 768)
+            {
+                IsPaneToggleButtonVisible = false;
+                NavigationDispalyMode = NavigationViewPaneDisplayMode.Left;
+                AppTitleBarMargin = new Thickness(48, 0, 0, 0);
+            }
+            else
+            {
+                IsPaneToggleButtonVisible = true;
+                NavigationDispalyMode = NavigationViewPaneDisplayMode.LeftMinimal;
+                AppTitleBarMargin = new Thickness(96, 0, 0, 0);
+            }
+        });
+
+        /// <summary>
+        /// 当菜单中的项收到交互（如单击或点击）时发生。
+        /// </summary>
+        public IRelayCommand NavigationItemCommand => new RelayCommand<object>((invokedItemTag) =>
+        {
+            if (invokedItemTag is not null)
+            {
+                NavigationModel navigationViewItem = NavigationService.NavigationItemList.Find(item => item.NavigationTag == Convert.ToString(invokedItemTag));
+                if (SelectedItem != navigationViewItem.NavigationItem)
+                {
+                    NavigationService.NavigateTo(navigationViewItem.NavigationPage);
+                }
+            }
+        });
+
         // 隐藏 / 显示窗口
         public IRelayCommand ShowOrHideWindowCommand => new RelayCommand(() =>
         {
@@ -132,6 +217,7 @@ namespace GetStoreApp.ViewModels.Window
             }
         });
 
+        // 打开设置
         public IRelayCommand SettingsCommand => new RelayCommand(() =>
         {
             // 窗口置前端
@@ -180,92 +266,10 @@ namespace GetStoreApp.ViewModels.Window
             }
         });
 
-        /// <summary>
-        /// 设置窗口处于非激活状态时的背景色
-        /// </summary>
-        public void OnWindowActivated(object sender, WindowActivatedEventArgs args)
-        {
-            BackdropHelper.SetBackdropState(AlwaysShowBackdropService.AlwaysShowBackdropValue, args);
-        }
-
-        /// <summary>
-        /// 关闭窗口之后关闭其他服务
-        /// </summary>
-        public async void OnWindowClosed(object sender, WindowEventArgs args)
-        {
-            args.Handled = true;
-
-            if (AppExitService.AppExit.InternalName == AppExitService.AppExitList[0].InternalName)
-            {
-                WindowHelper.HideAppWindow();
-            }
-            else
-            {
-                // 下载队列存在任务时，弹出对话窗口确认是否要关闭窗口
-                if (DownloadSchedulerService.DownloadingList.Count > 0 || DownloadSchedulerService.WaitingList.Count > 0)
-                {
-                    // 关闭窗口提示对话框是否已经处于打开状态，如果是，不再弹出
-                    if (!App.IsDialogOpening)
-                    {
-                        App.IsDialogOpening = true;
-
-                        ContentDialogResult result = await new ClosingWindowDialog().ShowAsync();
-
-                        if (result == ContentDialogResult.Primary)
-                        {
-                            await CloseApp();
-                        }
-                        else if (result == ContentDialogResult.Secondary)
-                        {
-                            if (NavigationService.GetCurrentPageType() != typeof(DownloadPage))
-                            {
-                                NavigationService.NavigateTo(typeof(DownloadPage));
-                            }
-                        }
-
-                        App.IsDialogOpening = false;
-                    }
-                }
-                else
-                {
-                    await CloseApp();
-                }
-            }
-        }
-
-        // 窗口大小发生改变时，设置页面导航视图样式
-        public void OnWindowSizeChanged(object sender, WindowSizeChangedEventArgs args)
-        {
-            if (App.MainWindow.Width >= 768)
-            {
-                IsPaneToggleButtonVisible = false;
-                NavigationDispalyMode = NavigationViewPaneDisplayMode.Left;
-                AppTitleBarMargin = new Thickness(48, 0, 0, 0);
-            }
-            else
-            {
-                IsPaneToggleButtonVisible = true;
-                NavigationDispalyMode = NavigationViewPaneDisplayMode.LeftMinimal;
-                AppTitleBarMargin = new Thickness(96, 0, 0, 0);
-            }
-        }
-
         // 当后退按钮收到交互（如单击或点击）时发生。
         public void OnNavigationViewBackRequested(object sender, NavigationViewBackRequestedEventArgs args)
         {
             NavigationService.NavigationFrom();
-        }
-
-        /// <summary>
-        /// 当菜单中的项收到交互（如单击或点击）时发生。
-        /// </summary>
-        public void OnNavigationViewItemInvoked(object sender, NavigationViewItemInvokedEventArgs args)
-        {
-            NavigationModel navigationViewItem = NavigationService.NavigationItemList.Find(item => item.NavigationTag == Convert.ToString(args.InvokedItemContainer.Tag));
-            if (SelectedItem != navigationViewItem.NavigationItem)
-            {
-                NavigationService.NavigateTo(navigationViewItem.NavigationPage);
-            }
         }
 
         /// <summary>

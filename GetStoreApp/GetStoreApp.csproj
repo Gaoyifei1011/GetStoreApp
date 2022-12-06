@@ -22,7 +22,7 @@
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <PackageIcon>GetStoreApp.png</PackageIcon>  
+    <PackageIcon>GetStoreApp.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
@@ -49,9 +49,6 @@
   <ItemGroup>
     <!--不涉及到的程序集-->
     <TrimmableAssembly Include="Microsoft.Windows.Widgets.Projection" />
-    <TrimmableAssembly Include="System.Console" />
-    <TrimmableAssembly Include="System.Memory" />
-    <TrimmableAssembly Include="System.Private.Xml" />
     
     <Manifest Include="$(ApplicationManifest)" />
     
@@ -153,6 +150,7 @@
     <None Remove="UI\Notifications\ResultIDCopyNotification.xaml" />
     <None Remove="UI\Notifications\ResultLinkCopyNotification.xaml" />
     <None Remove="Views\Controls\AdaptiveGridView.xaml" />
+    <None Remove="Views\Controls\NavigationViewMenuItem.xaml" />
     <None Remove="Views\Controls\ResultDropDownButton.xaml" />
     
     <None Remove="Views\Pages\AboutPage.xaml" />
@@ -474,6 +472,12 @@
     <Content Update="Assets\Logo\GetStoreApp.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Page Update="Views\Controls\NavigationViewMenuItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <ProjectExtensions>

@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:WinUI="using:GetStoreApp.Views.Window"
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
+    xmlns:controls="using:GetStoreApp.Views.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
@@ -12,9 +13,9 @@
     Title="{x:Bind root:ResourceService.GetLocalized('AppDisplayName')}"
     MinWidth="600"
     MinHeight="768"
-    Activated="{x:Bind ViewModel.OnWindowActivated}"
-    Closed="{x:Bind ViewModel.OnWindowClosed}"
-    SizeChanged="{x:Bind ViewModel.OnWindowSizeChanged}"
+    ActivatedCommand="{x:Bind ViewModel.ActivatedCommand}"
+    ClosedCommand="{x:Bind ViewModel.ClosedCommand}"
+    SizeChangedCommand="{x:Bind ViewModel.SizeChangedCommand}"
     mc:Ignorable="d">
 
     <WinUI:WASDKWindow.DataContext>
@@ -34,7 +35,6 @@
             IsPaneToggleButtonVisible="{x:Bind ViewModel.IsPaneToggleButtonVisible, Mode=OneWay}"
             IsSettingsVisible="False"
             IsTitleBarAutoPaddingEnabled="True"
-            ItemInvoked="{x:Bind ViewModel.OnNavigationViewItemInvoked}"
             Loaded="{x:Bind ViewModel.OnNavigationViewLoaded}"
             OpenPaneLength="220"
             PaneDisplayMode="{x:Bind ViewModel.NavigationDispalyMode, Mode=OneWay}"
@@ -44,39 +44,63 @@
             <NavigationView.MenuItems>
                 <NavigationViewItemHeader Content="{x:Bind root:ResourceService.GetLocalized('/Window/Title')}" Foreground="{ThemeResource NavigationViewItemForeground}" />
 
-                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('/Window/Home')}" Tag="Home">
-                    <NavigationViewItem.Icon>
+                <controls:NavigationViewMenuItem
+                    Command="{x:Bind ViewModel.NavigationItemCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
+                    Content="{x:Bind root:ResourceService.GetLocalized('/Window/Home')}"
+                    Tag="Home">
+                    <controls:NavigationViewMenuItem.Icon>
                         <FontIcon Glyph="&#xE80f;" Style="{StaticResource SegoeFluentStyle}" />
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
+                    </controls:NavigationViewMenuItem.Icon>
+                </controls:NavigationViewMenuItem>
 
-                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('/Window/History')}" Tag="History">
-                    <NavigationViewItem.Icon>
+                <controls:NavigationViewMenuItem
+                    Command="{x:Bind ViewModel.NavigationItemCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
+                    Content="{x:Bind root:ResourceService.GetLocalized('/Window/History')}"
+                    Tag="History">
+                    <controls:NavigationViewMenuItem.Icon>
                         <FontIcon Glyph="&#xF738;" Style="{StaticResource SegoeFluentStyle}" />
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
+                    </controls:NavigationViewMenuItem.Icon>
+                </controls:NavigationViewMenuItem>
 
-                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('/Window/Download')}" Tag="Download">
-                    <NavigationViewItem.Icon>
+                <controls:NavigationViewMenuItem
+                    Command="{x:Bind ViewModel.NavigationItemCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
+                    Content="{x:Bind root:ResourceService.GetLocalized('/Window/Download')}"
+                    Tag="Download">
+                    <controls:NavigationViewMenuItem.Icon>
                         <FontIcon Glyph="&#xE896;" Style="{StaticResource SegoeFluentStyle}" />
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
+                    </controls:NavigationViewMenuItem.Icon>
+                </controls:NavigationViewMenuItem>
 
-                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('/Window/Web')}" Tag="Web">
-                    <NavigationViewItem.Icon>
+                <controls:NavigationViewMenuItem
+                    Command="{x:Bind ViewModel.NavigationItemCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
+                    Content="{x:Bind root:ResourceService.GetLocalized('/Window/Web')}"
+                    Tag="Web">
+                    <controls:NavigationViewMenuItem.Icon>
                         <FontIcon Glyph="&#xE774;" Style="{StaticResource SegoeFluentStyle}" />
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
+                    </controls:NavigationViewMenuItem.Icon>
+                </controls:NavigationViewMenuItem>
             </NavigationView.MenuItems>
 
             <NavigationView.FooterMenuItems>
-                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('/Window/About')}" Tag="About">
-                    <NavigationViewItem.Icon>
+                <controls:NavigationViewMenuItem
+                    Command="{x:Bind ViewModel.NavigationItemCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
+                    Content="{x:Bind root:ResourceService.GetLocalized('/Window/About')}"
+                    Tag="About">
+                    <controls:NavigationViewMenuItem.Icon>
                         <FontIcon Glyph="&#xE946;" Style="{StaticResource SegoeFluentStyle}" />
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
-                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('/Window/Settings')}" Tag="Settings">
-                    <NavigationViewItem.Icon>
+                    </controls:NavigationViewMenuItem.Icon>
+                </controls:NavigationViewMenuItem>
+                <controls:NavigationViewMenuItem
+                    Command="{x:Bind ViewModel.NavigationItemCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
+                    Content="{x:Bind root:ResourceService.GetLocalized('/Window/Settings')}"
+                    Tag="Settings">
+                    <controls:NavigationViewMenuItem.Icon>
                         <AnimatedIcon>
                             <AnimatedIcon.Source>
                                 <animatedvisuals:AnimatedSettingsVisualSource />
@@ -85,8 +109,8 @@
                                 <FontIconSource FontFamily="{StaticResource SegoeFluentFontFamily}" Glyph="&#xE713;" />
                             </AnimatedIcon.FallbackIconSource>
                         </AnimatedIcon>
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
+                    </controls:NavigationViewMenuItem.Icon>
+                </controls:NavigationViewMenuItem>
             </NavigationView.FooterMenuItems>
 
             <Frame

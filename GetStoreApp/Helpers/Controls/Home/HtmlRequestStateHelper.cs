@@ -20,7 +20,7 @@ namespace GetStoreApp.Helpers.Controls.Home
             else
             {
                 // 成功下返回值为成功，否则返回警告
-                if (HttpRequestData.RequestContent.Contains("The links were successfully received from the Microsoft Store server.",StringComparison.Ordinal))
+                if (HttpRequestData.RequestContent.Contains("The links were successfully received from the Microsoft Store server.", StringComparison.Ordinal))
                 {
                     return 1;
                 }

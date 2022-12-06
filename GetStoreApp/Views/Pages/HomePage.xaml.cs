@@ -12,15 +12,15 @@ namespace GetStoreApp.Views.Pages
             InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs args)
         {
-            base.OnNavigatedTo(e);
+            base.OnNavigatedTo(args);
             ViewModel.OnNavigatedTo();
         }
 
-        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs args)
         {
-            base.OnNavigatingFrom(e);
+            base.OnNavigatingFrom(args);
             ViewModel.OnNavigatedFrom();
         }
 
@@ -33,30 +33,5 @@ namespace GetStoreApp.Views.Pages
                 App.NavigationArgs = AppNaviagtionArgs.None;
             }
         }
-
-        //private void Button1_Click(object sender, RoutedEventArgs e)
-        //{
-        //    ContainerHelper.GetInstance<IAppNotificationService>().Show("DownloadAborted", "NotDownload");
-        //}
-
-        //private void Button2_Click(object sender, RoutedEventArgs e)
-        //{
-        //    ContainerHelper.GetInstance<IAppNotificationService>().Show("DownloadAborted", "Downloading");
-        //}
-
-        //private void Button3_Click(object sender, RoutedEventArgs e)
-        //{
-        //    ContainerHelper.GetInstance<IAppNotificationService>().Show("DownloadCompleted");
-        //}
-
-        //private void Button4_Click(object sender, RoutedEventArgs e)
-        //{
-        //    ContainerHelper.GetInstance<IAppNotificationService>().Show("InstallApp", "Successfully", "文件01");
-        //}
-
-        //private void Button5_Click(object sender, RoutedEventArgs e)
-        //{
-        //    ContainerHelper.GetInstance<IAppNotificationService>().Show("InstallApp", "Error", "文件02", "测试消息");
-        //}
     }
 }

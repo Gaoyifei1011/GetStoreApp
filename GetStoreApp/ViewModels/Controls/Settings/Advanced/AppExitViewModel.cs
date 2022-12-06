@@ -3,7 +3,6 @@ using GetStoreApp.Extensions.Command;
 using GetStoreApp.Models.Controls.Settings.Advanced;
 using GetStoreApp.Services.Controls.Settings.Advanced;
 using GetStoreApp.ViewModels.Base;
-using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 

@@ -154,7 +154,7 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
             }
         }
 
-        private void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs args)
         {
             IsSelected = TraceCleanupList.Exists(item => item.IsSelected);
         }

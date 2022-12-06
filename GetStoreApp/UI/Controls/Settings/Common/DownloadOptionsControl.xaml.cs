@@ -14,7 +14,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
             return selectedIndex == index;
         }
 
-        public bool IsDownloadModeChecked(string selectedInternalName,string internalName)
+        public bool IsDownloadModeChecked(string selectedInternalName, string internalName)
         {
             return selectedInternalName == internalName;
         }

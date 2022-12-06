@@ -86,9 +86,9 @@ namespace GetStoreApp.Views.Controls
         }
 
         public static readonly DependencyProperty OneRowModeEnabledProperty =
-            DependencyProperty.Register("OneRowModeEnabled", typeof(bool), typeof(AdaptiveGridView), new PropertyMetadata(false, delegate (DependencyObject o, DependencyPropertyChangedEventArgs e)
+            DependencyProperty.Register("OneRowModeEnabled", typeof(bool), typeof(AdaptiveGridView), new PropertyMetadata(false, delegate (DependencyObject o, DependencyPropertyChangedEventArgs args)
             {
-                OnOneRowModeEnabledChanged(o, e.NewValue);
+                OnOneRowModeEnabledChanged(o, args.NewValue);
             }));
 
         /// <summary>
@@ -114,6 +114,15 @@ namespace GetStoreApp.Views.Controls
             Loaded += OnLoaded;
             Unloaded += OnUnloaded;
             UseLayoutRounding = false;
+        }
+
+        ~AdaptiveGridView()
+        {
+            SizeChanged -= OnSizeChanged;
+            ItemClick -= OnItemClick;
+            Items.VectorChanged -= ItemsOnVectorChanged;
+            Loaded -= OnLoaded;
+            Unloaded -= OnUnloaded;
         }
 
         /// <summary>准备指定的元素以显示指定的项。</summary>
@@ -195,39 +204,39 @@ namespace GetStoreApp.Views.Controls
             }
         }
 
-        private void OnItemClick(object sender, ItemClickEventArgs e)
+        private void OnItemClick(object sender, ItemClickEventArgs args)
         {
             ICommand itemClickCommand = ItemClickCommand;
-            if (itemClickCommand != null && itemClickCommand.CanExecute(e.ClickedItem))
+            if (itemClickCommand != null && itemClickCommand.CanExecute(args.ClickedItem))
             {
-                itemClickCommand.Execute(e.ClickedItem);
+                itemClickCommand.Execute(args.ClickedItem);
             }
         }
 
-        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        private void OnSizeChanged(object sender, SizeChangedEventArgs args)
         {
             if (HorizontalAlignment != HorizontalAlignment.Stretch)
             {
-                int num = CalculateColumns(e.PreviousSize.Width, DesiredWidth);
-                int num2 = CalculateColumns(e.NewSize.Width, DesiredWidth);
+                int num = CalculateColumns(args.PreviousSize.Width, DesiredWidth);
+                int num2 = CalculateColumns(args.NewSize.Width, DesiredWidth);
                 if (num != num2)
                 {
-                    RecalculateLayout(e.NewSize.Width);
+                    RecalculateLayout(args.NewSize.Width);
                 }
             }
-            else if (e.PreviousSize.Width != e.NewSize.Width)
+            else if (args.PreviousSize.Width != args.NewSize.Width)
             {
-                RecalculateLayout(e.NewSize.Width);
+                RecalculateLayout(args.NewSize.Width);
             }
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
+        private void OnLoaded(object sender, RoutedEventArgs args)
         {
             _isLoaded = true;
             DetermineOneRowMode();
         }
 
-        private void OnUnloaded(object sender, RoutedEventArgs e)
+        private void OnUnloaded(object sender, RoutedEventArgs args)
         {
             _isLoaded = false;
         }
@@ -255,7 +264,7 @@ namespace GetStoreApp.Views.Controls
                     itemsWrapGrid.Orientation = Orientation.Vertical;
                 }
 
-                SetBinding(FrameworkElement.MaxHeightProperty, binding);
+                SetBinding(MaxHeightProperty, binding);
                 _savedHorizontalScrollMode = ScrollViewer.GetHorizontalScrollMode(this);
                 _savedVerticalScrollMode = ScrollViewer.GetVerticalScrollMode(this);
                 _savedHorizontalScrollBarVisibility = ScrollViewer.GetHorizontalScrollBarVisibility(this);
@@ -268,7 +277,7 @@ namespace GetStoreApp.Views.Controls
                 return;
             }
 
-            ClearValue(FrameworkElement.MaxHeightProperty);
+            ClearValue(MaxHeightProperty);
             if (_needToRestoreScrollStates)
             {
                 _needToRestoreScrollStates = false;
@@ -303,13 +312,13 @@ namespace GetStoreApp.Views.Controls
             (d as AdaptiveGridView).DetermineOneRowMode();
         }
 
-        private static void DesiredWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void DesiredWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
         {
             AdaptiveGridView obj = d as AdaptiveGridView;
             obj.RecalculateLayout(obj.ActualWidth);
         }
 
-        private static void OnStretchContentForSingleRowPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnStretchContentForSingleRowPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
         {
             AdaptiveGridView obj = d as AdaptiveGridView;
             obj.RecalculateLayout(obj.ActualWidth);

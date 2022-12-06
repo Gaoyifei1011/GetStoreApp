@@ -31,7 +31,7 @@ namespace GetStoreApp.UI.Notifications
         /// <summary>
         /// 控件加载完成后显示动画，动态设置控件位置
         /// </summary>
-        private void NotificationLoaded(object sender, RoutedEventArgs e)
+        private void NotificationLoaded(object sender, RoutedEventArgs args)
         {
             PopupIn.Begin();
             App.MainWindow.SizeChanged += NotificationPlaceChanged;
@@ -40,7 +40,7 @@ namespace GetStoreApp.UI.Notifications
         /// <summary>
         /// 控件卸载时移除相应的事件
         /// </summary>
-        private void NotificationUnLoaded(object sender, RoutedEventArgs e)
+        private void NotificationUnLoaded(object sender, RoutedEventArgs args)
         {
             App.MainWindow.SizeChanged -= NotificationPlaceChanged;
         }

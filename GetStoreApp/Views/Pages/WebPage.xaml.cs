@@ -11,16 +11,16 @@ namespace GetStoreApp.Views.Pages
             InitializeComponent();
         }
 
-        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs args)
         {
-            base.OnNavigatingFrom(e);
+            base.OnNavigatingFrom(args);
             ViewModel.OnNavigatedFrom();
         }
 
         /// <summary>
         /// 关闭浏览器内核
         /// </summary>
-        private void WebPageUnloaded(object sender, RoutedEventArgs e)
+        private void WebPageUnloaded(object sender, RoutedEventArgs args)
         {
             if (WebView is not null)
             {

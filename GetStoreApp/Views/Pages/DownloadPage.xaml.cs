@@ -11,15 +11,15 @@ namespace GetStoreApp.Views.Pages
             InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs args)
         {
-            base.OnNavigatedTo(e);
+            base.OnNavigatedTo(args);
             ViewModel.OnNavigatedTo();
         }
 
-        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs args)
         {
-            base.OnNavigatingFrom(e);
+            base.OnNavigatingFrom(args);
             ViewModel.OnNavigatedFrom();
         }
 

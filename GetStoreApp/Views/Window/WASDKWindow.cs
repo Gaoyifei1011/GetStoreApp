@@ -3,11 +3,14 @@ using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Helpers.Window;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.ViewModels.Base;
+using GetStoreApp.Views.Controls;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using GetStoreApp.WindowsAPI.PInvoke.WindowsCore;
 using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml;
 using System;
 using System.Runtime.InteropServices;
+using System.Windows.Input;
 using WinRT.Interop;
 
 namespace GetStoreApp.Views.Window
@@ -88,8 +91,39 @@ namespace GetStoreApp.Views.Window
         /// </summary>
         private IntPtr Hwnd { get; set; } = IntPtr.Zero;
 
+        public ICommand ActivatedCommand
+        {
+            get { return (ICommand)Content.GetValue(ActivatedCommandProperty); }
+
+            set { Content.SetValue(ActivatedCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty ActivatedCommandProperty = DependencyProperty.Register("ActivatedCommand", typeof(ICommand), typeof(NavigationViewMenuItem), new PropertyMetadata(null));
+
+        public ICommand ClosedCommand
+        {
+            get { return (ICommand)Content.GetValue(ClosedCommandProperty); }
+
+            set { Content.SetValue(ClosedCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty ClosedCommandProperty = DependencyProperty.Register("ClosedCommand", typeof(ICommand), typeof(NavigationViewMenuItem), new PropertyMetadata(null));
+
+        public ICommand SizeChangedCommand
+        {
+            get { return (ICommand)Content.GetValue(SizeChangedCommandProperty); }
+
+            set { Content.SetValue(SizeChangedCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty SizeChangedCommandProperty = DependencyProperty.Register("SizeChangedCommand", typeof(ICommand), typeof(NavigationViewMenuItem), new PropertyMetadata(null));
+
         public WASDKWindow()
         {
+            Activated += OnActivated;
+            Closed += OnClosed;
+            SizeChanged += OnSizeChanged;
+
             // 获取窗口的句柄
             Hwnd = WindowNative.GetWindowHandle(this);
             if (Hwnd == IntPtr.Zero)
@@ -98,6 +132,35 @@ namespace GetStoreApp.Views.Window
             }
             newWndProc = new WinProc(NewWindowProc);
             oldWndProc = SetWindowLongPtr(Hwnd, WindowLongIndexFlags.GWL_WNDPROC, newWndProc);
+        }
+
+        ~WASDKWindow()
+        {
+            Activated -= OnActivated;
+        }
+
+        public void OnActivated(object sender, WindowActivatedEventArgs args)
+        {
+            if (ActivatedCommand is not null)
+            {
+                ActivatedCommand.Execute(args);
+            }
+        }
+
+        public void OnClosed(object sender, WindowEventArgs args)
+        {
+            if (ClosedCommand is not null)
+            {
+                ClosedCommand.Execute(args);
+            }
+        }
+
+        public void OnSizeChanged(object sender, WindowSizeChangedEventArgs args)
+        {
+            if (SizeChangedCommand is not null)
+            {
+                SizeChangedCommand.Execute(args);
+            }
         }
 
         /// <summary>
