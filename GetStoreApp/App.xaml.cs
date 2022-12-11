@@ -34,14 +34,13 @@ namespace GetStoreApp
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
             base.OnLaunched(args);
-
             await ActivationService.ActivateAsync(args);
         }
 
         /// <summary>
         /// 处理应用程序未知异常处理
         /// </summary>
-        private async void OnUnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs args)
+        private async void OnUnhandledException(object sender, UnhandledExceptionEventArgs args)
         {
             args.Handled = true;
 

@@ -11,7 +11,6 @@ namespace GetStoreApp.ViewModels.Controls.About
             {"HtmlAgilityPack","http://html-agility-pack.net" },
             {"Microsoft.Data.Sqlite.Core","https://docs.microsoft.com/dotnet/standard/data/sqlite" },
             {"Microsoft.Windows.CsWinRT","https://github.com/microsoft/cswinrt" },
-            {"Microsoft.Windows.SDK.Contracts","https://aka.ms/WinSDKProjectURL" },
             {"Microsoft.WindowsAppSDK","https://github.com/microsoft/windowsappsdk" },
             {"SQLitePCLRaw.bundle_winsqlite3","https://github.com/ericsink/SQLitePCL.raw" },
         };

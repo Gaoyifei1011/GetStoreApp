@@ -72,7 +72,6 @@
     <PRIResource Include="Strings\zh-hans\Console.resw" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GetStoreAppConsole\GetStoreAppConsole.csproj" />
     <ProjectReference Include="..\GetStoreApp\GetStoreApp.csproj">
       <PublishProfile>Properties\PublishProfiles\win10-$(Platform).pubxml</PublishProfile>
       <SkipGetTargetFrameworkProperties>True</SkipGetTargetFrameworkProperties>
@@ -106,35 +105,23 @@
   <!--复制输出文件到安装包的根目录-->
   <Target Name="GetStoreAppStompSourceProjectForWapProject" BeforeTargets="_ConvertItems">
     <ItemGroup>
-      <!--
-      Stomp all "SourceProject" values for all incoming dependencies to 
-      flatten the package. 
-    -->
+      <!--Stomp all "SourceProject" values for all incoming dependencies to flatten the package.-->
       <_TemporaryFilteredWapProjOutput Include="@(_FilteredNonWapProjProjectOutput)" />
       <_FilteredNonWapProjProjectOutput Remove="@(_TemporaryFilteredWapProjOutput)" />
       <_FilteredNonWapProjProjectOutput Include="@(_TemporaryFilteredWapProjOutput)">
-        <!--
-      Blank the SourceProject here to vend all files into the root of the
-      package.
-    -->
+        <!--Blank the SourceProject here to vend all files into the root of the package.-->
         <SourceProject>
         </SourceProject>
       </_FilteredNonWapProjProjectOutput>
     </ItemGroup>
   </Target>
-  <!--
-    This target removes the FrameworkSdkReferences from before the AppX package
-    targets manifest generation happens. This is part of the generic machinery 
-    that applies to every AppX. 
-  -->
+  <!--This target removes the FrameworkSdkReferences from before the AppX package targets manifest generation happens. This is part of the generic machinery that applies to every AppX.-->
   <Target Name="GetStoreAppStripAllDependenciesFromPackageFirstManifest" BeforeTargets="_GenerateCurrentProjectAppxManifest">
     <ItemGroup>
       <FrameworkSdkReference Remove="@(FrameworkSdkReference)" Condition="$([System.String]::Copy('%(FrameworkSdkReference.SDKName)').StartsWith('Microsoft.VCLibs'))" />
     </ItemGroup>
   </Target>
-  <!--
-    This target removes the FrameworkSdkPackages from before the *desktop 
-    bridge* manifest generation happens. 
+  <!--This target removes the FrameworkSdkPackages from before the desktop bridge manifest generation happens. 
   -->
   <Target Name="GetStoreAppStripAllDependenciesFromPackageSecondManifest" BeforeTargets="_GenerateDesktopBridgeAppxManifest" DependsOnTargets="_ResolveVCLibDependencies">
     <ItemGroup>
