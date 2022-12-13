@@ -47,9 +47,7 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static async Task InitializeAsync()
         {
-            // 初始化应用资源，应用使用的语言信息和启动参数
-            await LanguageService.InitializeLanguageAsync();
-            await ResourceService.InitializeResourceAsync(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
+            ResourceService.InitializeResourceList();
 
             // 初始化数据库信息
             await DataBaseService.InitializeDataBaseAsync();

@@ -320,6 +320,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// </summary>
         /// <param name="hWnd">窗口的句柄。</param>
         /// <param name="fAltTab">此参数的 TRUE 指示窗口正切换到使用 Alt/Ctl+Tab 键序列。 否则此参数应为 FALSE 。</param>
+        /// <returns>无</returns>
         [DllImport(User32, SetLastError = true)]
         public static extern void SwitchToThisWindow(IntPtr hWnd, bool fAltTab);
 

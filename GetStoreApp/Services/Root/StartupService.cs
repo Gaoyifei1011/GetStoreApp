@@ -4,7 +4,6 @@ using Microsoft.Windows.AppNotifications;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
@@ -17,8 +16,6 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public static class StartupService
     {
-        private static readonly List<string> CommandLineArgs = Environment.GetCommandLineArgs().Where((source, index) => index != 0).ToList();
-
         private static ExtendedActivationKind StartupKind;
 
         private static int NeedToSendMesage;
@@ -89,32 +86,32 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void ParseStartupArgs()
         {
-            if (CommandLineArgs.Count == 0)
+            if (Program.CommandLineArgs.Count == 0)
             {
                 NeedToSendMesage = 0;
                 return;
             }
-            else if (CommandLineArgs.Count == 1)
+            else if (Program.CommandLineArgs.Count == 1)
             {
                 NeedToSendMesage = 1;
-                StartupArgs["Link"] = CommandLineArgs[0];
+                StartupArgs["Link"] = Program.CommandLineArgs[0];
             }
             else
             {
                 NeedToSendMesage = 1;
 
-                if (CommandLineArgs.Count % 2 != 0)
+                if (Program.CommandLineArgs.Count % 2 != 0)
                 {
                     return;
                 }
 
-                int TypeNameIndex = CommandLineArgs.FindIndex(item => item.Equals("-t", StringComparison.OrdinalIgnoreCase) || item.Equals("--type", StringComparison.OrdinalIgnoreCase));
-                int ChannelNameIndex = CommandLineArgs.FindIndex(item => item.Equals("-c", StringComparison.OrdinalIgnoreCase) || item.Equals("--channel", StringComparison.OrdinalIgnoreCase));
-                int LinkIndex = CommandLineArgs.FindIndex(item => item.Equals("-l", StringComparison.OrdinalIgnoreCase) || item.Equals("--link", StringComparison.OrdinalIgnoreCase));
+                int TypeNameIndex = Program.CommandLineArgs.FindIndex(item => item.Equals("-t", StringComparison.OrdinalIgnoreCase) || item.Equals("--type", StringComparison.OrdinalIgnoreCase));
+                int ChannelNameIndex = Program.CommandLineArgs.FindIndex(item => item.Equals("-c", StringComparison.OrdinalIgnoreCase) || item.Equals("--channel", StringComparison.OrdinalIgnoreCase));
+                int LinkIndex = Program.CommandLineArgs.FindIndex(item => item.Equals("-l", StringComparison.OrdinalIgnoreCase) || item.Equals("--link", StringComparison.OrdinalIgnoreCase));
 
-                StartupArgs["TypeName"] = TypeNameIndex == -1 ? StartupArgs["TypeName"] : ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(CommandLineArgs[TypeNameIndex + 1], StringComparison.OrdinalIgnoreCase));
-                StartupArgs["ChannelName"] = ChannelNameIndex == -1 ? StartupArgs["ChannelName"] : ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(CommandLineArgs[ChannelNameIndex + 1], StringComparison.OrdinalIgnoreCase));
-                StartupArgs["Link"] = LinkIndex == -1 ? StartupArgs["Link"] : CommandLineArgs[LinkIndex + 1];
+                StartupArgs["TypeName"] = TypeNameIndex == -1 ? StartupArgs["TypeName"] : ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(Program.CommandLineArgs[TypeNameIndex + 1], StringComparison.OrdinalIgnoreCase));
+                StartupArgs["ChannelName"] = ChannelNameIndex == -1 ? StartupArgs["ChannelName"] : ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(Program.CommandLineArgs[ChannelNameIndex + 1], StringComparison.OrdinalIgnoreCase));
+                StartupArgs["Link"] = LinkIndex == -1 ? StartupArgs["Link"] : Program.CommandLineArgs[LinkIndex + 1];
             }
         }
 

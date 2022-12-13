@@ -8,6 +8,23 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         private const string Kernel32 = "Kernel32.dll";
 
         /// <summary>
+        /// 为调用进程分配一个新的控制台。
+        /// </summary>
+        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
+        [DllImport(Kernel32)]
+        public static extern bool AllocConsole();
+
+        /// <summary>
+        /// 将调用进程附加到指定进程的控制台作为客户端应用程序
+        /// </summary>
+        /// <param name="dwProcessId">
+        /// 将调用进程附加到指定进程的控制台作为客户端应用程序，默认值为ATTACH_PARENT_PROCESS = -1
+        /// </param>
+        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
+        [DllImport(Kernel32, EntryPoint = "AttachConsole", CharSet = CharSet.Unicode, SetLastError = true)]
+        public static extern bool AttachConsole(int dwProcessId = -1);
+
+        /// <summary>
         /// 关闭打开的对象句柄。
         /// </summary>
         /// <param name="hObject">打开对象的有效句柄。</param>
@@ -28,6 +45,13 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>如果成功，则返回非零值，否则返回 0。</returns>
         [DllImport(Kernel32, SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern int EnumSystemGeoID(int geoClass, int parentGeoId, EnumGeoInfoProc lpGeoEnumProc);
+
+        /// <summary>
+        /// 从其控制台中分离调用进程。
+        /// </summary>
+        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
+        [DllImport(Kernel32)]
+        public static extern bool FreeConsole();
 
         /// <summary>检索有关指定地理位置的信息。</summary>
         /// <param name="location">要获取信息的地理位置的标识符。可以通过调用 EnumSystemGeoID 来获取可用值。</param>

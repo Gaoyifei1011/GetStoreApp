@@ -16,6 +16,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
 
         /// <summary>释放 Shell 分配的 ITEMIDLIST 结构。</summary>
         /// <param name="pidl">指向要释放的 ITEMIDLIST 结构的指针。 此参数可以为 NULL。</param>
+        /// <returns>无</returns>
         [DllImport(Shell32, ExactSpelling = true, SetLastError = false)]
         public static extern void ILFree(IntPtr pidlList);
 
@@ -48,19 +49,12 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         /// 指向 NOTIFYICONDATA 结构的指针。 结构的内容取决于 cmd 的值。
         /// 它可以定义一个图标以添加到通知区域，导致该图标显示通知，或标识要修改或删除的图标。
         /// </param>
+        /// <returns>
+        /// 如果成功，则返回 TRUE ;否则返回 FALSE 。 如果 dwMessage 设置为 NIM_SETVERSION，则函数在成功更改版本时返回 TRUE ;
+        /// 如果请求的版本不受支持，则 返回 FALSE 。
+        /// </returns>
         [DllImport(Shell32, CharSet = CharSet.Unicode)]
         public static extern bool Shell_NotifyIcon(NotifyCommand cmd, [In] ref NotifyIconData data);
-
-        /// <summary>
-        /// 向任务栏的状态区域发送消息。
-        /// </summary>
-        /// <param name="cmd">一个值，该值指定要由此函数执行的操作</param>
-        /// <param name="data">
-        /// 指向 NOTIFYICONDATA 结构的指针。 结构的内容取决于 cmd 的值。
-        /// 它可以定义一个图标以添加到通知区域，导致该图标显示通知，或标识要修改或删除的图标。
-        /// </param>
-        //[DllImport(Shell32, EntryPoint = "Shell_NotifyIconW")]
-        //public static extern bool Shell_NotifyIcon(NotifyMessage dwMessage, [In] ref NOTIFYICONDATA data);
 
         /// <summary>打开一个 Windows 资源管理器窗口，其中选定了特定文件夹中的指定项目。</summary>
         /// <param name="pidlFolder">指向指定文件夹的完全限定项 ID 列表的指针。</param>
