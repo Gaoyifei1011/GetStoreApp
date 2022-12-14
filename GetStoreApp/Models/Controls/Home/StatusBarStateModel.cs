@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Models.Base;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.Models.Controls.Home
@@ -9,49 +8,21 @@ namespace GetStoreApp.Models.Controls.Home
         /// <summary>
         /// 信息状态栏严重程度值
         /// </summary>
-        public InfoBarSeverity InfoBarSeverity
-        {
-            get { return (InfoBarSeverity)GetValue(InfoBarSeverityProperty); }
-            set { SetValue(InfoBarSeverityProperty, value); }
-        }
-
-        public static readonly DependencyProperty InfoBarSeverityProperty =
-            DependencyProperty.Register("InfoBarSeverity", typeof(InfoBarSeverity), typeof(StatusBarStateModel), new PropertyMetadata(InfoBarSeverity.Informational));
+        public InfoBarSeverity InfoBarSeverity { get; set; }
 
         /// <summary>
         /// 信息状态栏文字内容
         /// </summary>
-        public string StateInfoText
-        {
-            get { return (string)GetValue(StateInfoTextProperty); }
-            set { SetValue(StateInfoTextProperty, value); }
-        }
-
-        public static readonly DependencyProperty StateInfoTextProperty =
-            DependencyProperty.Register("StateInfoText", typeof(string), typeof(StatusBarStateModel), new PropertyMetadata(string.Empty));
+        public string StateInfoText { get; set; }
 
         /// <summary>
         /// 信息状态栏进度环显示值
         /// </summary>
-        public bool StatePrRingVisValue
-        {
-            get { return (bool)GetValue(StatePrRingVisValueProperty); }
-            set { SetValue(StatePrRingVisValueProperty, value); }
-        }
-
-        public static readonly DependencyProperty StatePrRingVisValueProperty =
-            DependencyProperty.Register("StatePrRingVisValue", typeof(bool), typeof(StatusBarStateModel), new PropertyMetadata(default(bool)));
+        public bool StatePrRingVisValue { get; set; }
 
         /// <summary>
         /// 信息状态栏进度环激活值
         /// </summary>
-        public bool StatePrRingActValue
-        {
-            get { return (bool)GetValue(StatePrRingActValueProperty); }
-            set { SetValue(StatePrRingActValueProperty, value); }
-        }
-
-        public static readonly DependencyProperty StatePrRingActValueProperty =
-            DependencyProperty.Register("StatePrRingActValue", typeof(bool), typeof(StatusBarStateModel), new PropertyMetadata(default(bool)));
+        public bool StatePrRingActValue { get; set; }
     }
 }

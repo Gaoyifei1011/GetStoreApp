@@ -183,6 +183,9 @@
   <data name="DownloadDescription" xml:space="preserve">
     <value>下载说明</value>
   </data>
+  <data name="DownloadFailed" xml:space="preserve">
+    <value>下载失败</value>
+  </data>
   <data name="Downloading" xml:space="preserve">
     <value>正在下载</value>
   </data>
@@ -230,9 +233,6 @@
   </data>
   <data name="InstallValue" xml:space="preserve">
     <value>已安装{0}%</value>
-  </data>
-  <data name="InvalidLink" xml:space="preserve">
-    <value>该链接已失效</value>
   </data>
   <data name="LearnMore" xml:space="preserve">
     <value>了解更多</value>

@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Models.Base;
-using Microsoft.UI.Xaml;
 
 namespace GetStoreApp.Models.Controls.Settings.Common
 {
@@ -8,25 +7,11 @@ namespace GetStoreApp.Models.Controls.Settings.Common
         /// <summary>
         /// 主页面历史记录显示数量设置显示名称
         /// </summary>
-        public string HistoryLiteNumName
-        {
-            get { return (string)GetValue(HistoryLiteNumNameProperty); }
-            set { SetValue(HistoryLiteNumNameProperty, value); }
-        }
-
-        public static readonly DependencyProperty HistoryLiteNumNameProperty =
-            DependencyProperty.Register("HistoryLiteNumName", typeof(string), typeof(HistoryLiteNumModel), new PropertyMetadata(string.Empty));
+        public string HistoryLiteNumName { get; set; }
 
         /// <summary>
         /// 主页面历史记录显示数量设置内部名称
         /// </summary>
-        public int HistoryLiteNumValue
-        {
-            get { return (int)GetValue(HistoryLiteNumValueProperty); }
-            set { SetValue(HistoryLiteNumValueProperty, value); }
-        }
-
-        public static readonly DependencyProperty HistoryLiteNumValueProperty =
-            DependencyProperty.Register("HistoryLiteNum", typeof(int), typeof(HistoryLiteNumModel), new PropertyMetadata(default(int)));
+        public int HistoryLiteNumValue { get; set; }
     }
 }

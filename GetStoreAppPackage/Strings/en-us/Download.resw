@@ -183,6 +183,9 @@
   <data name="DownloadDescription" xml:space="preserve">
     <value>Download instructions</value>
   </data>
+  <data name="DownloadFailed" xml:space="preserve">
+    <value>Download Failed</value>
+  </data>
   <data name="Downloading" xml:space="preserve">
     <value>Downloading</value>
   </data>
@@ -230,9 +233,6 @@
   </data>
   <data name="InstallValue" xml:space="preserve">
     <value>{0}% Installed</value>
-  </data>
-  <data name="InvalidLink" xml:space="preserve">
-    <value>The link has been expired</value>
   </data>
   <data name="LearnMore" xml:space="preserve">
     <value>Learn more</value>

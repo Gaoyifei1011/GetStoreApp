@@ -1,7 +1,4 @@
-﻿using GetStoreApp.Models.Base;
-using Microsoft.UI.Xaml;
-
-namespace GetStoreApp.Models.Controls.Settings.Appearance
+﻿namespace GetStoreApp.Models.Controls.Settings.Appearance
 {
     public class LanguageModel
     {

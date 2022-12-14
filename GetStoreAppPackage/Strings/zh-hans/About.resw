@@ -147,18 +147,6 @@
   <data name="CheckNetwork" xml:space="preserve">
     <value>检查网络</value>
   </data>
-  <data name="CheckStep1" xml:space="preserve">
-    <value>1.不同地区的网络可能存在不同的状况。如果是因为网路连接超时引起的错误，您可以尝试重新获取。</value>
-  </data>
-  <data name="CheckStep2" xml:space="preserve">
-    <value>2.只有正确的链接才能获取应用安装包，请检查您输入的链接是否正确。</value>
-  </data>
-  <data name="CheckStep3" xml:space="preserve">
-    <value>3.应用需要联网功能才能发送获取请求。请检查您设备的网络情况，待到您设备的网络连接正常后尝试重新获取。</value>
-  </data>
-  <data name="CheckStep4" xml:space="preserve">
-    <value>4.如果网页开启了Cloudflare 5秒验证（防火墙），建议您使用网页版。网页版已经对接下载接口。</value>
-  </data>
   <data name="CheckUpdate" xml:space="preserve">
     <value>检查更新</value>
   </data>
@@ -210,11 +198,20 @@
   <data name="DownloadDescription4" xml:space="preserve">
     <value>下载服务在一些未知的情况下因为异常而关闭，如果您在下载文件的过程中遇到了下载服务尚未运行，建议您尝试重启应用。</value>
   </data>
-  <data name="ErrorSolution" xml:space="preserve">
-    <value>获取失败解决方案</value>
+  <data name="DownloadFailed" xml:space="preserve">
+    <value>下载失败</value>
   </data>
-  <data name="ErrorSolutionDescription" xml:space="preserve">
-    <value>如果信息提示栏的背景变成红色，那么就说明您的本次请求发生了错误。您可以通过信息状态栏的“查看”按钮获取相关信息。在了解了具体的错误原因后，您可以进行以下操作。</value>
+  <data name="DownloadFailedDescription" xml:space="preserve">
+    <value>当下载任务在未完成列表中，并且提示文字显示下载失败时，说明下载任务发生了错误。您可以尝试以下步骤修复应用下载。</value>
+  </data>
+  <data name="DownloadFailedStep1" xml:space="preserve">
+    <value>1.检查您设备的网络连接，具体操作请查看“获取失败”信息一栏。</value>
+  </data>
+  <data name="DownloadFailedStep2" xml:space="preserve">
+    <value>2.检查您默认选择的下载目录是否有写入权限，如果您选择的目录是不允许正常写入，那么下载任务就会发生异常。</value>
+  </data>
+  <data name="DownloadSettings" xml:space="preserve">
+    <value>下载设置</value>
   </data>
   <data name="HeaderDescription" xml:space="preserve">
     <value>欢迎大家下载获取商店应用，祝您使用愉快</value>
@@ -284,6 +281,24 @@
   </data>
   <data name="ReferenceToolTip" xml:space="preserve">
     <value>单击了解被引用开源项目的信息</value>
+  </data>
+  <data name="RequestFailed" xml:space="preserve">
+    <value>获取失败</value>
+  </data>
+  <data name="RequestFailedDescription" xml:space="preserve">
+    <value>如果信息提示栏的背景变成红色，那么就说明您的本次请求发生了错误。您可以通过信息状态栏的“查看”按钮获取相关信息。在了解了具体的错误原因后，您可以进行以下操作。</value>
+  </data>
+  <data name="RequestFailedStep1" xml:space="preserve">
+    <value>1.不同地区的网络可能存在不同的状况。如果是因为网路连接超时引起的错误，您可以尝试重新获取。</value>
+  </data>
+  <data name="RequestFailedStep2" xml:space="preserve">
+    <value>2.只有正确的链接才能获取应用安装包，请检查您输入的链接是否正确。</value>
+  </data>
+  <data name="RequestFailedStep3" xml:space="preserve">
+    <value>3.应用需要联网功能才能发送获取请求。请检查您设备的网络情况，待到您设备的网络连接正常后尝试重新获取。</value>
+  </data>
+  <data name="RequestFailedStep4" xml:space="preserve">
+    <value>4.如果网页开启了Cloudflare 5秒验证（防火墙），建议您使用网页版。网页版已经对接下载接口。</value>
   </data>
   <data name="SendFeedback" xml:space="preserve">
     <value>发送反馈</value>

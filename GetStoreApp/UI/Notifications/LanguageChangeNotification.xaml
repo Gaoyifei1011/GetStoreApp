@@ -7,6 +7,7 @@
     xmlns:notificationViewModel="using:GetStoreApp.ViewModels.Notifications"
     xmlns:root="using:GetStoreApp.Services.Root"
     Loaded="{x:Bind NotificationLoaded}"
+    RequestedTheme="{x:Bind NotificationTheme}"
     Unloaded="{x:Bind NotificationUnLoaded}"
     mc:Ignorable="d">
 

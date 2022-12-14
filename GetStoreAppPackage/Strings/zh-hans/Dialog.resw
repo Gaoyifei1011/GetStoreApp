@@ -252,12 +252,6 @@
   <data name="FileSize" xml:space="preserve">
     <value>文件大小：</value>
   </data>
-  <data name="FolderAccessFailedContent" xml:space="preserve">
-    <value>您没有选定文件夹的访问权限，请重新选择。</value>
-  </data>
-  <data name="FolderAccessFailedTitle" xml:space="preserve">
-    <value>文件夹访问失败</value>
-  </data>
   <data name="HistoryCleanError" xml:space="preserve">
     <value>历史记录在清理的过程中发生了错误，请检查历史记录访问权限。</value>
   </data>
@@ -315,9 +309,6 @@
   <data name="Redownload" xml:space="preserve">
     <value>重新下载</value>
   </data>
-  <data name="ReselectFolder" xml:space="preserve">
-    <value>重新选择</value>
-  </data>
   <data name="Restart" xml:space="preserve">
     <value>重启应用</value>
   </data>
@@ -347,12 +338,6 @@
   </data>
   <data name="Type" xml:space="preserve">
     <value>类型</value>
-  </data>
-  <data name="UndoChanges" xml:space="preserve">
-    <value>撤销更改</value>
-  </data>
-  <data name="UseDefaultFolder" xml:space="preserve">
-    <value>使用默认目录</value>
   </data>
   <data name="ViewDownloadRecord" xml:space="preserve">
     <value>查看下载记录</value>

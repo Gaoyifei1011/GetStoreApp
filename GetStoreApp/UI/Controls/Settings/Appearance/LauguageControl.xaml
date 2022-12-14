@@ -60,7 +60,7 @@
             VerticalAlignment="Center"
             DisplayMemberPath="DisplayName"
             ItemsSource="{x:Bind ViewModel.LanguageList}"
-            SelectedItem="{x:Bind ViewModel.Language, Mode=TwoWay}"
+            SelectedItem="{x:Bind ViewModel.Language, Mode=OneWay}"
             SelectionChanged="{x:Bind ViewModel.OnSelectionChanged}"
             ToolTipService.ToolTip="{x:Bind ViewModel.Language.DisplayName, Mode=OneWay}" />
     </Grid>

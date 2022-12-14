@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Services.Root;
+﻿using GetStoreApp.Services.Controls.Settings.Appearance;
+using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -9,6 +10,8 @@ namespace GetStoreApp.UI.Notifications
 {
     public sealed partial class HistoryCopyNotification : UserControl
     {
+        public ElementTheme NotificationTheme => (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
+
         private Popup Popup { get; set; } = new Popup();
 
         private int Duration = 2000;

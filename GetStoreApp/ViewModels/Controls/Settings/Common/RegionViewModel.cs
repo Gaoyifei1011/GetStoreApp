@@ -30,6 +30,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
         {
             if (args.RemovedItems.Count > 0)
             {
+                Region = args.AddedItems[0] as RegionModel;
                 await RegionService.SetRegionAsync(Region);
             }
         }

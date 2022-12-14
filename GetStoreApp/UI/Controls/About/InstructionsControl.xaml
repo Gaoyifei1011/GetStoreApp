@@ -43,12 +43,12 @@
 
                 <MenuFlyoutSeparator Margin="0,0,0,8" />
 
-                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/About/ErrorSolution')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/About/ErrorSolutionDescription')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/About/CheckStep1')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/About/CheckStep2')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/About/CheckStep3')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/About/CheckStep4')}" />
+                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/About/RequestFailed')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/About/RequestFailedDescription')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/About/RequestFailedStep1')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/About/RequestFailedStep2')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/About/RequestFailedStep3')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/About/RequestFailedStep4')}" />
 
                 <StackPanel Orientation="Horizontal">
                     <HyperlinkButton
@@ -68,6 +68,21 @@
                         Content="{x:Bind root:ResourceService.GetLocalized('/About/CloudflareValidation')}"
                         Style="{StaticResource AboutHyperlinkButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/About/CloudflareValidation')}" />
+                </StackPanel>
+
+                <MenuFlyoutSeparator Margin="0,0,0,8" />
+
+                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/About/DownloadFailed')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/About/DownloadFailedDescription')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/About/DownloadFailedStep1')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/About/DownloadFailedStep2')}" />
+
+                <StackPanel Orientation="Horizontal">
+                    <HyperlinkButton
+                        Command="{x:Bind ViewModel.DownloadSettingsCommand}"
+                        Content="{x:Bind root:ResourceService.GetLocalized('/About/DownloadSettings')}"
+                        Style="{StaticResource AboutHyperlinkButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/About/DownloadSettings')}" />
                 </StackPanel>
             </StackPanel>
         </Expander.Content>

@@ -1,19 +1,15 @@
 ﻿using GetStoreApp.Contracts.Command;
 using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings.Common;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
-using GetStoreApp.UI.Dialogs.Settings;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.Dialogs;
-using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
-using System.Security.AccessControl;
 using Windows.Storage;
 using WinRT.Interop;
 
@@ -85,55 +81,18 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
         // 修改下载目录
         public IRelayCommand ChangeFolderCommand => new RelayCommand(async () =>
         {
-            StorageFolder Folder;
-
-            while (true)
+            FolderPickerDialog dialog = new FolderPickerDialog()
             {
-                // 选择文件夹
-                FolderPickerDialog dialog = new FolderPickerDialog()
-                {
-                    Title = ResourceService.GetLocalized("/Settings/SelectFolder"),
-                    Path = DownloadFolder.Path
-                };
+                Title = ResourceService.GetLocalized("/Settings/SelectFolder"),
+                Path = DownloadFolder.Path
+            };
 
-                bool Result = dialog.ShowDialog(WindowNative.GetWindowHandle(App.MainWindow));
+            bool Result = dialog.ShowDialog(WindowNative.GetWindowHandle(App.MainWindow));
 
-                if (Result && !string.IsNullOrEmpty(dialog.Path))
-                {
-                    Folder = await StorageFolder.GetFolderFromPathAsync(dialog.Path);
-
-                    bool CheckResult = IOHelper.GetFolderAuthorization(Folder, FileSystemRights.Write);
-
-                    if (!CheckResult)
-                    {
-                        ContentDialogResult result = await new FolderAccessFailedDialog().ShowAsync();
-
-                        if (result == ContentDialogResult.Primary)
-                        {
-                            continue;
-                        }
-                        else if (result == ContentDialogResult.Secondary)
-                        {
-                            DownloadFolder = DownloadOptionsService.DefaultFolder;
-                            await DownloadOptionsService.SetFolderAsync(DownloadFolder);
-                            break;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        DownloadFolder = Folder;
-                        await DownloadOptionsService.SetFolderAsync(DownloadFolder);
-                        break;
-                    }
-                }
-                else
-                {
-                    break;
-                }
+            if(Result)
+            {
+                DownloadFolder = await StorageFolder.GetFolderFromPathAsync(dialog.Path);
+                await DownloadOptionsService.SetFolderAsync(DownloadFolder);
             }
         });
 

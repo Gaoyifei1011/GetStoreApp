@@ -147,18 +147,6 @@
   <data name="CheckNetwork" xml:space="preserve">
     <value>Check the network</value>
   </data>
-  <data name="CheckStep1" xml:space="preserve">
-    <value>1. Networks in different regions may have different conditions. If the error is caused by network connection timeout, you can try to retrieve it again.</value>
-  </data>
-  <data name="CheckStep2" xml:space="preserve">
-    <value>2. Only the correct link will get the app installation package, please check if the link you entered is correct.</value>
-  </data>
-  <data name="CheckStep3" xml:space="preserve">
-    <value>3. The app needs networking to send a get request. Check your device's network condition and wait until your device's network connection is working properly to try to regain it.</value>
-  </data>
-  <data name="CheckStep4" xml:space="preserve">
-    <value>4. If Cloudflare 5-second authentication (firewall) is enabled on the web page, we recommend that you use the web version. The web version has been docked with the download interface.</value>
-  </data>
   <data name="CheckUpdate" xml:space="preserve">
     <value>Check Update</value>
   </data>
@@ -213,11 +201,20 @@
   <data name="DownloadDescription4" xml:space="preserve">
     <value>The download service shuts down due to an exception in some unknown circumstances, and if you encounter a download service that is not running while downloading a file, we recommend that you try restarting the app.</value>
   </data>
-  <data name="ErrorSolution" xml:space="preserve">
-    <value>Request failed solution</value>
+  <data name="DownloadFailed" xml:space="preserve">
+    <value>Download failed</value>
   </data>
-  <data name="ErrorSolutionDescription" xml:space="preserve">
-    <value>If the background of the message bar turns red, it means that an error has occurred in your request. You can get information through the "View" button in the information status bar. After you understand the specific cause of the error, you can do the following.</value>
+  <data name="DownloadFailedDescription" xml:space="preserve">
+    <value>If the download task is in the incomplete list and the message text shows that the download failed, an error has occurred for the download task. You can try the following steps to fix app downloads.</value>
+  </data>
+  <data name="DownloadFailedStep1" xml:space="preserve">
+    <value>1. Check your device's network connection, please check the "Request Failed" column for specific operations.</value>
+  </data>
+  <data name="DownloadFailedStep2" xml:space="preserve">
+    <value>2. Check whether the download directory you select by default has write permissions, if the directory you select does not allow normal writing, the download task will be abnormal.</value>
+  </data>
+  <data name="DownloadSettings" xml:space="preserve">
+    <value>Download settings</value>
   </data>
   <data name="HeaderDescription" xml:space="preserve">
     <value>Welcome to download the GetStoreApp.Wish you a pleasant experience</value>
@@ -287,6 +284,24 @@
   </data>
   <data name="ReferenceToolTip" xml:space="preserve">
     <value>Click to learn about the referenced open source project</value>
+  </data>
+  <data name="RequestFailed" xml:space="preserve">
+    <value>Request failed</value>
+  </data>
+  <data name="RequestFailedDescription" xml:space="preserve">
+    <value>If the background of the message bar turns red, it means that an error has occurred in your request. You can get information through the "View" button in the information status bar. After you understand the specific cause of the error, you can do the following.</value>
+  </data>
+  <data name="RequestFailedStep1" xml:space="preserve">
+    <value>1. Networks in different regions may have different conditions. If the error is caused by network connection timeout, you can try to retrieve it again.</value>
+  </data>
+  <data name="RequestFailedStep2" xml:space="preserve">
+    <value>2. Only the correct link will get the app installation package, please check if the link you entered is correct.</value>
+  </data>
+  <data name="RequestFailedStep3" xml:space="preserve">
+    <value>3. The app needs networking to send a get request. Check your device's network condition and wait until your device's network connection is working properly to try to regain it.</value>
+  </data>
+  <data name="RequestFailedStep4" xml:space="preserve">
+    <value>4. If Cloudflare 5-second authentication (firewall) is enabled on the web page, we recommend that you use the web version. The web version has been docked with the download interface.</value>
   </data>
   <data name="SendFeedback" xml:space="preserve">
     <value>Send feedback</value>

@@ -252,12 +252,6 @@
   <data name="FileSize" xml:space="preserve">
     <value>File size: </value>
   </data>
-  <data name="FolderAccessFailedContent" xml:space="preserve">
-    <value>You do not have access to the selected folder. Please reselect it.</value>
-  </data>
-  <data name="FolderAccessFailedTitle" xml:space="preserve">
-    <value>Folder access failed</value>
-  </data>
   <data name="HistoryCleanError" xml:space="preserve">
     <value>An error occurred during the history cleaning process. Please check the history access permissions.</value>
   </data>
@@ -315,9 +309,6 @@
   <data name="Redownload" xml:space="preserve">
     <value>Re-download</value>
   </data>
-  <data name="ReselectFolder" xml:space="preserve">
-    <value>Reselect folder</value>
-  </data>
   <data name="Restart" xml:space="preserve">
     <value>Application restart</value>
   </data>
@@ -347,12 +338,6 @@
   </data>
   <data name="Type" xml:space="preserve">
     <value>Type</value>
-  </data>
-  <data name="UndoChanges" xml:space="preserve">
-    <value>Undo the changes</value>
-  </data>
-  <data name="UseDefaultFolder" xml:space="preserve">
-    <value>Use defualt folder</value>
   </data>
   <data name="ViewDownloadRecord" xml:space="preserve">
     <value>View your download history</value>

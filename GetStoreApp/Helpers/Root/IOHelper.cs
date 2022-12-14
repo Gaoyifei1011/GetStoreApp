@@ -1,7 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Security.AccessControl;
-using System.Security.Principal;
 using System.Threading.Tasks;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
@@ -12,59 +10,6 @@ namespace GetStoreApp.Helpers.Root
 {
     public static class IOHelper
     {
-        /// <summary>
-        /// 检查选定的目录是否有写入权限
-        /// </summary>
-        public static bool GetFolderAuthorization(StorageFolder folder, FileSystemRights accessRights)
-        {
-            bool CanWrite = false;
-
-            try
-            {
-                DirectoryInfo directoryInfo = new DirectoryInfo(folder.Path);
-                DirectorySecurity directorySecurity = directoryInfo.GetAccessControl();
-                AuthorizationRuleCollection collection = directorySecurity.GetAccessRules(true, true, typeof(NTAccount));
-
-                WindowsIdentity currentUser = WindowsIdentity.GetCurrent();
-                WindowsPrincipal principal = new WindowsPrincipal(currentUser);
-
-                foreach (AuthorizationRule rule in collection)
-                {
-                    if (rule is not FileSystemAccessRule fsAccessRule)
-                    {
-                        continue;
-                    }
-
-                    if ((fsAccessRule.FileSystemRights & accessRights) > 0)
-                    {
-                        NTAccount ntAccount = rule.IdentityReference as NTAccount;
-                        if (ntAccount == null)
-                        {
-                            continue;
-                        }
-
-                        if (principal.IsInRole(ntAccount.Value))
-                        {
-                            if (fsAccessRule.AccessControlType == AccessControlType.Deny)
-                            {
-                                CanWrite = false;
-                            }
-                            else
-                            {
-                                CanWrite = true;
-                            }
-                        }
-                    }
-                }
-            }
-            catch (UnauthorizedAccessException)
-            {
-                CanWrite = false;
-            }
-
-            return CanWrite;
-        }
-
         /// <summary>
         /// 清空文件夹
         /// </summary>

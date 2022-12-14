@@ -44,7 +44,7 @@
             VerticalAlignment="Center"
             DisplayMemberPath="FriendlyName"
             ItemsSource="{x:Bind ViewModel.RegionList}"
-            SelectedItem="{x:Bind ViewModel.Region, Mode=TwoWay}"
+            SelectedItem="{x:Bind ViewModel.Region, Mode=OneWay}"
             SelectionChanged="{x:Bind ViewModel.OnSelectionChanged}"
             ToolTipService.ToolTip="{x:Bind ViewModel.Region.FriendlyName, Mode=OneWay}" />
     </Grid>

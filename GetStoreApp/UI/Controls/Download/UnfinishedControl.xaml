@@ -215,10 +215,10 @@
                                     Visibility="{x:Bind DownloadFlag, Converter={StaticResource DownloadFlagConverter}, ConverterParameter=2}" />
                                 <TextBlock
                                     Grid.Row="1"
-                                    Foreground="{StaticResource SystemErrorTextColor}"
+                                    Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
                                     Style="{StaticResource SubDownloadItemTextStyle}"
-                                    Text="{Binding ElementName=UnfinishedRoot, Path=InvalidLink, Mode=OneTime}"
-                                    ToolTipService.ToolTip="{Binding ElementName=UnfinishedRoot, Path=InvalidLink, Mode=OneTime}"
+                                    Text="{Binding ElementName=UnfinishedRoot, Path=DownloadFailed, Mode=OneTime}"
+                                    ToolTipService.ToolTip="{Binding ElementName=UnfinishedRoot, Path=DownloadFailed, Mode=OneTime}"
                                     Visibility="{x:Bind DownloadFlag, Converter={StaticResource DownloadFlagConverter}, ConverterParameter=0}" />
                             </Grid>
 

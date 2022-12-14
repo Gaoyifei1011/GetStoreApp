@@ -7,7 +7,7 @@ namespace GetStoreApp.UI.Controls.Download
     {
         public string PauseDownload => ResourceService.GetLocalized("/Download/PauseDownload");
 
-        public string InvalidLink => ResourceService.GetLocalized("/Download/InvalidLink");
+        public string DownloadFailed => ResourceService.GetLocalized("/Download/DownloadFailed");
 
         public string ContinueToolTip => ResourceService.GetLocalized("/Download/ContinueToolTip");
 

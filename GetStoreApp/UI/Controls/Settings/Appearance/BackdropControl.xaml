@@ -63,6 +63,8 @@
             <DropDownButton.Flyout>
                 <MenuFlyout Placement="Bottom">
                     <RadioMenuFlyoutItem
+                        x:Name="BackdropValue0"
+                        x:Load="{x:Bind IsItemLoaded(0, ViewModel.BackdropList.Count)}"
                         Command="{x:Bind ViewModel.BackdropSelectCommand}"
                         CommandParameter="0"
                         GroupName="BackdropSetting"
@@ -70,6 +72,8 @@
                         Text="{x:Bind ViewModel.BackdropList[0].DisplayName}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.BackdropList[0].DisplayName}" />
                     <RadioMenuFlyoutItem
+                        x:Name="BackdropValue1"
+                        x:Load="{x:Bind IsItemLoaded(1, ViewModel.BackdropList.Count)}"
                         Command="{x:Bind ViewModel.BackdropSelectCommand}"
                         CommandParameter="1"
                         GroupName="BackdropSetting"
@@ -77,6 +81,8 @@
                         Text="{x:Bind ViewModel.BackdropList[1].DisplayName}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.BackdropList[1].DisplayName}" />
                     <RadioMenuFlyoutItem
+                        x:Name="BackdropValue2"
+                        x:Load="{x:Bind IsItemLoaded(2, ViewModel.BackdropList.Count)}"
                         Command="{x:Bind ViewModel.BackdropSelectCommand}"
                         CommandParameter="2"
                         GroupName="BackdropSetting"
@@ -84,6 +90,8 @@
                         Text="{x:Bind ViewModel.BackdropList[2].DisplayName}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.BackdropList[2].DisplayName}" />
                     <RadioMenuFlyoutItem
+                        x:Name="BackdropValue3"
+                        x:Load="{x:Bind IsItemLoaded(3, ViewModel.BackdropList.Count)}"
                         Command="{x:Bind ViewModel.BackdropSelectCommand}"
                         CommandParameter="3"
                         GroupName="BackdropSetting"

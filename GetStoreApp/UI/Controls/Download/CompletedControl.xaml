@@ -237,7 +237,7 @@
                                     <TextBlock
                                         x:Name="FileNotExist"
                                         x:Load="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}, ConverterParameter=Reverse}"
-                                        Foreground="{StaticResource SystemErrorTextColor}"
+                                        Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
                                         Style="{StaticResource SubDownloadItemTextStyle}"
                                         Text="{x:Bind FilePath, Converter={StaticResource FileExistTextCheckConverter}}"
                                         ToolTipService.ToolTip="{x:Bind FilePath, Converter={StaticResource FileExistTextCheckConverter}}" />

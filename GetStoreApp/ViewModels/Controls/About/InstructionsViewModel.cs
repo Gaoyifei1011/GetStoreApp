@@ -1,6 +1,9 @@
 ﻿using GetStoreApp.Contracts.Command;
 using GetStoreApp.Extensions.Command;
+using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.About;
+using GetStoreApp.Views.Pages;
 using System;
 
 namespace GetStoreApp.ViewModels.Controls.About
@@ -34,6 +37,13 @@ namespace GetStoreApp.ViewModels.Controls.About
         public IRelayCommand CloudflareValidationCommand => new RelayCommand(async () =>
         {
             await new CloudflareValidationDialog().ShowAsync();
+        });
+
+        // 下载设置
+        public IRelayCommand DownloadSettingsCommand => new RelayCommand(() =>
+        {
+            App.NavigationArgs = AppNaviagtionArgs.DownloadOptions;
+            NavigationService.NavigateTo(typeof(SettingsPage));
         });
     }
 }

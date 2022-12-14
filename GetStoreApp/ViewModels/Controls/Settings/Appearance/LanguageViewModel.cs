@@ -43,6 +43,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
         {
             if (args.RemovedItems.Count > 0)
             {
+                Language =  args.AddedItems[0] as LanguageModel;
                 await LanguageService.SetLanguageAsync(Language);
                 new LanguageChangeNotification(true).Show();
             }

@@ -1,26 +1,17 @@
 ﻿using GetStoreApp.Models.Base;
-using Microsoft.UI.Xaml;
 
 namespace GetStoreApp.Models.Controls.Settings.Common
 {
     public class DownloadModeModel : ModelBase
     {
-        public string DisplayName
-        {
-            get { return (string)GetValue(DisplayNameProperty); }
-            set { SetValue(DisplayNameProperty, value); }
-        }
+        /// <summary>
+        /// 下载模式设置显示名称
+        /// </summary>
+        public string DisplayName { get; set; }
 
-        public static readonly DependencyProperty DisplayNameProperty =
-            DependencyProperty.Register("DisplayName", typeof(string), typeof(DownloadModeModel), new PropertyMetadata(string.Empty));
-
-        public string InternalName
-        {
-            get { return (string)GetValue(InternalNameProperty); }
-            set { SetValue(InternalNameProperty, value); }
-        }
-
-        public static readonly DependencyProperty InternalNameProperty =
-            DependencyProperty.Register("InternalName", typeof(string), typeof(DownloadModeModel), new PropertyMetadata(string.Empty));
+        /// <summary>
+        /// 下载模式设置内部名称
+        /// </summary>
+        public string InternalName { get; set; }
     }
 }

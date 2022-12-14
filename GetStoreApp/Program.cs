@@ -27,16 +27,16 @@ namespace GetStoreApp
         /// 程序入口点
         /// </summary>
         [STAThread]
-        public static async Task Main(string[] args)
+        public static void Main(string[] args)
         {
             CommandLineArgs = args.ToList();
             IsDesktopProgram = CommandLineArgs.FindIndex(item => item.Equals("Console")) == -1;
 
+            InitializeProgramResourcesAsync().Wait();
+
             // 以桌面应用程序方式正常启动
             if (IsDesktopProgram)
             {
-                await InitializeProgramResourcesAsync();
-
                 ComWrappersSupport.InitializeComWrappers();
                 Application.Start((p) =>
                 {
@@ -70,7 +70,7 @@ namespace GetStoreApp
                 Console.WriteLine(ResourceService.GetLocalized("/Console/UnfinishedNotification1"));
                 Console.WriteLine(ResourceService.GetLocalized("/Console/UnfinishedNotification2") + LineBreaks);
 
-                await Windows.System.Launcher.LaunchUriAsync(new Uri("getstoreapp://"));
+                Windows.System.Launcher.LaunchUriAsync(new Uri("getstoreapp://")).GetAwaiter().GetResult();
 
                 Kernel32Library.FreeConsole();
 

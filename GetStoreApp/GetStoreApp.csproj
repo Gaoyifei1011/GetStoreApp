@@ -162,7 +162,7 @@
     <None Remove="Views\Window\MainWindow.xaml" />
     
     <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
-    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.1" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.1" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.221116.1">
       <TreatAsUsed>true</TreatAsUsed>
@@ -367,9 +367,6 @@
     <Page Update="UI\Dialogs\Settings\ExperimentalConfigDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Dialogs\Settings\FolderAccessFailedDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Update="UI\Dialogs\Settings\RestartAppsDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -410,6 +407,9 @@
     </Page>
 
     <Page Update="Views\Controls\AdaptiveGridView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Controls\NavigationViewMenuItem.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\Controls\ResultDropDownButton.xaml">
@@ -490,12 +490,6 @@
     <Content Update="Assets\Logo\GetStoreApp.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Page Update="Views\Controls\NavigationViewMenuItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
 
   <ProjectExtensions>

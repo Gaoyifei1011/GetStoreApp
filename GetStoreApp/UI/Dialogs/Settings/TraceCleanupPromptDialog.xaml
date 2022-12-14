@@ -52,7 +52,7 @@
                                 <TextBlock
                                     Margin="0,5,0,0"
                                     VerticalAlignment="Center"
-                                    Foreground="{ThemeResource SystemErrorTextColor}"
+                                    Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
                                     Text="{Binding ElementName=TraceCleanupRoot, Path=CleanFailed, Mode=OneTime}"
                                     ToolTipService.ToolTip="{x:Bind CleanFailedText}"
                                     Visibility="{x:Bind IsCleanFailed, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />

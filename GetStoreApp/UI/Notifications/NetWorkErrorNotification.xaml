@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     Loaded="{x:Bind NotificationLoaded}"
+    RequestedTheme="{x:Bind NotificationTheme}"
     Unloaded="{x:Bind NotificationUnLoaded}"
     mc:Ignorable="d">
 
