@@ -1,54 +1,96 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
-    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
-    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
-    <RootNamespace>GetStoreApp</RootNamespace>
-    <Platforms>x86;x64</Platforms>
-    <RuntimeIdentifiers>win10-x86;win10-x64</RuntimeIdentifiers>
-    <PublishProfile>Properties\PublishProfiles\win10-$(Platform).pubxml</PublishProfile>
-    <Version>0.7.2.0</Version>
-    <FileVersion>0.7.2.0</FileVersion>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <ApplicationIcon>Assets\Logo\GetStoreApp.ico</ApplicationIcon>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <Copyright>高怡飞</Copyright>
+    <DisableXbfLineInfo>False</DisableXbfLineInfo>
+    <Defineconstants>DISABLE_XAML_GENERATED_MAIN</Defineconstants>
+    <DesktopCompatible>true</DesktopCompatible>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <FileAlignment>512</FileAlignment>
+    <FileVersion>0.7.2.0</FileVersion>
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <IncludeSymbols>False</IncludeSymbols>
     <ImplicitUsings>disable</ImplicitUsings>
-    <DesktopCompatible>true</DesktopCompatible>
+    <LangVersion>latest</LangVersion>
+    <NoWin32Manifest>true</NoWin32Manifest>
+    <Optimize>True</Optimize>
+    <OutputType>WinExe</OutputType>
+    <PackageIcon>GetStoreApp.png</PackageIcon>
+    <Platforms>x86;x64</Platforms>
+    <PublishProfile>Properties\PublishProfiles\win10-$(Platform).pubxml</PublishProfile>
+    <PublishProtocol>FileSystem</PublishProtocol>
+    <PublishReadyToRun>False</PublishReadyToRun>
+    <PublishSingleFile>false</PublishSingleFile>
+    <PublishTrimmed>true</PublishTrimmed>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    <RootNamespace>GetStoreApp</RootNamespace>
+    <RuntimeIdentifiers>win10-x86;win10-x64</RuntimeIdentifiers>
     <StartupObject>GetStoreApp.Program</StartupObject>
-    <ApplicationIcon>Assets\Logo\GetStoreApp.ico</ApplicationIcon>
+    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+    <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <TrimMode>partial</TrimMode>
+    <Version>0.7.2.0</Version>
     <UseWinUI>true</UseWinUI>
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
-    <GenerateTestArtifacts>True</GenerateTestArtifacts>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-    <PackageIcon>GetStoreApp.png</PackageIcon>
-    <OutputType>WinExe</OutputType>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
-    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
-    <Defineconstants>DISABLE_XAML_GENERATED_MAIN</Defineconstants>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
-    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
-    <Defineconstants>DISABLE_XAML_GENERATED_MAIN</Defineconstants>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
-    <Defineconstants>DISABLE_XAML_GENERATED_MAIN</Defineconstants>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
-    <Defineconstants>DISABLE_XAML_GENERATED_MAIN</Defineconstants>
-    <FileAlignment>512</FileAlignment>
+    <WindowsPackageType>MSIX</WindowsPackageType>
   </PropertyGroup>
   
   <ItemGroup>
-    <!--不涉及到的程序集-->
-    <TrimmableAssembly Include="Microsoft.Windows.Widgets.Projection" />
+    <Content Include="Aria2\Aria2c.conf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Aria2\Aria2cX64.exe" Link="Aria2\Aria2c.exe">
+      <CopyToOutputDirectory Condition="'$(Platform)'=='x86'">Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory Condition="'$(Platform)'=='x64'">Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Aria2\Aria2cX86.exe" Link="Aria2\Aria2c.exe">
+      <CopyToOutputDirectory Condition="'$(Platform)'=='x86'">Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory Condition="'$(Platform)'=='x64'">Never</CopyToOutputDirectory>
+    </Content>
+    
+    <Content Update="Assets\Images\About.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Images\CloudflareValidation.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Images\DesktopApps.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Images\Download.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Images\History.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Images\Home.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Images\Settings.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Images\Web.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Logo\GetStoreApp.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Logo\GetStoreApp.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\Segoe Fluent Icons.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\Settings Fluent Icons.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="LICENSE">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     
     <Manifest Include="$(ApplicationManifest)" />
     
@@ -98,8 +140,8 @@
     <None Remove="UI\Controls\Settings\Advanced\ExperimentalFeaturesControl.xaml" />
     <None Remove="UI\Controls\Settings\Advanced\InstallModeControl.xaml" />
     <None Remove="UI\Controls\Settings\Advanced\TraceCleanupControl.xaml" />
-    <None Remove="UI\Controls\Settings\Appearance\AlwaysShowBackdropControl.xaml" />
     
+    <None Remove="UI\Controls\Settings\Appearance\AlwaysShowBackdropControl.xaml" />    
     <None Remove="UI\Controls\Settings\Appearance\BackdropControl.xaml" />
     <None Remove="UI\Controls\Settings\Appearance\LanguageControl.xaml" />
     <None Remove="UI\Controls\Settings\Appearance\ThemeControl.xaml" />
@@ -114,17 +156,17 @@
     
     <None Remove="UI\Controls\Settings\Experiment\NetWorkMonitorControl.xaml" />
     <None Remove="UI\Controls\Settings\Experiment\OpenConfigFIleControl.xaml" />
-    
-    <None Remove="UI\Controls\Window\AppTitleBarControl.xaml" />
-    
+
     <None Remove="UI\Controls\Web\LoadFailedControl.xaml" />
     
+    <None Remove="UI\Controls\Window\AppTitleBarControl.xaml" />
+
     <None Remove="UI\Dialogs\ContentDialogs\About\CloudflareValidationDialog.xaml" />
     <None Remove="UI\Dialogs\ContentDialogs\About\DesktopAppsDialog.xaml" />
     <None Remove="UI\Dialogs\ContentDialogs\About\DesktopStartupArgsDialog.xaml" />
     <None Remove="UI\Dialogs\ContentDialogs\About\LicenseDialog.xaml" />
+
     <None Remove="UI\Dialogs\ContentDialogs\Common\AppRunningDialog.xaml" />
-    
     <None Remove="UI\Dialogs\ContentDialogs\Common\ClosingWindowDialog.xaml" />
     <None Remove="UI\Dialogs\ContentDialogs\Common\DeletePromptDialog.xaml" />
     <None Remove="UI\Dialogs\ContentDialogs\Common\DownloadNotifyDialog.xaml" />
@@ -134,7 +176,6 @@
     <None Remove="UI\Dialogs\ContentDialogs\Download\InstallingNotifyDialog.xaml" />
     
     <None Remove="UI\Dialogs\ContentDialogs\Settings\ExperimentalConfigDialog.xaml" />
-    <None Remove="UI\Dialogs\ContentDialogs\Settings\FolderAccessFailedDialog.xaml" />
     <None Remove="UI\Dialogs\ContentDialogs\Settings\RestartAppsDialog.xaml" />
     <None Remove="UI\Dialogs\ContentDialogs\Settings\TraceCleanupPromptDialog.xaml" />
     
@@ -149,7 +190,10 @@
     <None Remove="UI\Notifications\ResultContentCopyNotification.xaml" />
     <None Remove="UI\Notifications\ResultIDCopyNotification.xaml" />
     <None Remove="UI\Notifications\ResultLinkCopyNotification.xaml" />
+    
     <None Remove="Views\Controls\AdaptiveGridView.xaml" />
+    
+    <None Remove="Views\Controls\ListViewRadioFlyoutItem.xaml" />
     <None Remove="Views\Controls\NavigationViewMenuItem.xaml" />
     <None Remove="Views\Controls\ResultDropDownButton.xaml" />
     
@@ -159,14 +203,13 @@
     <None Remove="Views\Pages\HomePage.xaml" />
     <None Remove="Views\Pages\SettingsPage.xaml" />
     <None Remove="Views\Pages\WebPage.xaml" />
+    
     <None Remove="Views\Window\MainWindow.xaml" />
     
     <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.1" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.1" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.221116.1">
-      <TreatAsUsed>true</TreatAsUsed>
-    </PackageReference>
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.221209.1" />
     <PackageReference Include="SQLitePCLRaw.bundle_winsqlite3" Version="2.1.3">
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
@@ -437,65 +480,14 @@
     <Page Update="Views\Window\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    
-    <Content Include="Aria2\Aria2c.conf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    
-    <Content Include="Aria2\Aria2cX64.exe" Link="Aria2\Aria2c.exe">
-      <CopyToOutputDirectory Condition="'$(Platform)'=='x86'">Never</CopyToOutputDirectory>
-      <CopyToOutputDirectory Condition="'$(Platform)'=='x64'">Always</CopyToOutputDirectory>
-    </Content>
-    
-    <Content Include="Aria2\Aria2cX86.exe" Link="Aria2\Aria2c.exe">
-      <CopyToOutputDirectory Condition="'$(Platform)'=='x86'">Always</CopyToOutputDirectory>
-      <CopyToOutputDirectory Condition="'$(Platform)'=='x64'">Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Fonts\Segoe Fluent Icons.ttf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Fonts\Settings Fluent Icons.ttf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="LICENSE">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Assets\Images\About.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Assets\Images\CloudflareValidation.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Assets\Images\DesktopApps.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Assets\Images\Download.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Assets\Images\History.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Assets\Images\Home.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Assets\Images\Settings.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Assets\Images\Web.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Assets\Logo\GetStoreApp.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Assets\Logo\GetStoreApp.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
 
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties properties_4launchsettings_1json__JsonSchema="" />
-    </VisualStudio>
-  </ProjectExtensions>
+    <TrimmableAssembly Include="Microsoft.Windows.Widgets.Projection" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Page Update="Views\Controls\ListViewRadioFlyoutItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
 </Project>
   

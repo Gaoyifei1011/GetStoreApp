@@ -142,7 +142,6 @@ namespace GetStoreApp.Extensions.SystemTray
 
                 const IconDataMembers members = IconDataMembers.Message | IconDataMembers.Icon | IconDataMembers.Tip;
 
-                //write initial configuration
                 var status = WriteIconData(ref iconData, NotifyCommand.NIM_ADD, members);
                 if (!status)
                 {
@@ -150,9 +149,6 @@ namespace GetStoreApp.Extensions.SystemTray
                     // 稍后再试一次，而不是引发异常。通常，如果稍后加载 windows shell，则会从 OnTaskbarCreated 重新调用此方法
                     return;
                 }
-
-                // 设置为最新版本
-                SetVersion();
 
                 IsTaskbarIconCreated = true;
             }
@@ -173,12 +169,6 @@ namespace GetStoreApp.Extensions.SystemTray
                 WriteIconData(ref iconData, NotifyCommand.NIM_DELETE, IconDataMembers.Message);
                 IsTaskbarIconCreated = false;
             }
-        }
-
-        private void SetVersion()
-        {
-            iconData.VersionOrTimeout = messageSink.Version;
-            bool status = Shell32Library.Shell_NotifyIcon(NotifyCommand.NIM_SETVERSION, ref iconData);
         }
 
         /// <summary>

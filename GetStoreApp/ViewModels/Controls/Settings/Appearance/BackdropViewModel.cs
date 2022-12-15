@@ -15,7 +15,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
 {
     public sealed class BackdropViewModel : ViewModelBase
     {
-        public List<BackdropModel> BackdropList { get; } = new List<BackdropModel>();
+        public List<BackdropModel> BackdropList { get; } = BackdropService.BackdropList;
 
         private BackdropModel _backdrop = BackdropService.AppBackdrop;
 
@@ -30,7 +30,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
             }
         }
 
-        public bool BackdropHelp { get; }
+        public bool CanUseMicaBackdrop { get; set; }
 
         // 背景色不可用时具体信息了解
         public IRelayCommand BackdropTipCommand => new RelayCommand(() =>
@@ -54,17 +54,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
         {
             ulong BuildNumber = InfoHelper.GetSystemVersion()["BuildNumber"];
 
-            if (BuildNumber < 22000)
-            {
-                BackdropHelp = true;
-                BackdropList.Add(BackdropService.BackdropList[0]);
-                BackdropList.Add(BackdropService.BackdropList[3]);
-            }
-            else
-            {
-                BackdropHelp = false;
-                BackdropList = BackdropService.BackdropList;
-            }
+            CanUseMicaBackdrop = BuildNumber >= 20000;
         }
     }
 }

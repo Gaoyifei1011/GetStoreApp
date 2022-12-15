@@ -38,7 +38,6 @@
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppInstallerUpdateFrequency>0</AppInstallerUpdateFrequency>
     <AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
-    <DisableXbfLineInfo>False</DisableXbfLineInfo>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
     <EntryPointProjectUniqueName>..\GetStoreApp\GetStoreApp.csproj</EntryPointProjectUniqueName>
@@ -47,16 +46,16 @@
     <UserSecretsId>ff1007a3-37e5-4856-a3d5-765555830f81</UserSecretsId>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
-    <AppxBundle>Always</AppxBundle>
+    <AppxBundle>Never</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <AppxBundle>Always</AppxBundle>
+    <AppxBundle>Never</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
-    <AppxBundle>Always</AppxBundle>
+    <AppxBundle>Never</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <AppxBundle>Always</AppxBundle>
+    <AppxBundle>Never</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(WinUISDKReferences)'=='' and '$(TargetPlatformIdentifier)'=='UAP'">
     <WinUISDKReferences>false</WinUISDKReferences>
@@ -68,8 +67,6 @@
     <Content Include="Package.appinstaller">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <PRIResource Include="Strings\en-us\Console.resw" />
-    <PRIResource Include="Strings\zh-hans\Console.resw" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GetStoreApp\GetStoreApp.csproj">
@@ -77,32 +74,7 @@
       <SkipGetTargetFrameworkProperties>True</SkipGetTargetFrameworkProperties>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <PRIResource Include="Strings\en-us\About.resw" />
-    <PRIResource Include="Strings\en-us\Console.resw" />
-    <PRIResource Include="Strings\en-us\Dialog.resw" />
-    <PRIResource Include="Strings\en-us\Download.resw" />
-    <PRIResource Include="Strings\en-us\History.resw" />
-    <PRIResource Include="Strings\en-us\Home.resw" />
-    <PRIResource Include="Strings\en-us\Notification.resw" />
-    <PRIResource Include="Strings\en-us\Resources.resw" />
-    <PRIResource Include="Strings\en-us\Settings.resw" />
-    <PRIResource Include="Strings\en-us\Web.resw" />
-    <PRIResource Include="Strings\en-us\Window.resw" />
-    <PRIResource Include="Strings\zh-hans\About.resw" />
-    <PRIResource Include="Strings\zh-hans\Console.resw" />
-    <PRIResource Include="Strings\zh-hans\Dialog.resw" />
-    <PRIResource Include="Strings\zh-hans\Download.resw" />
-    <PRIResource Include="Strings\zh-hans\History.resw" />
-    <PRIResource Include="Strings\zh-hans\Home.resw" />
-    <PRIResource Include="Strings\zh-hans\Notification.resw" />
-    <PRIResource Include="Strings\zh-hans\Resources.resw" />
-    <PRIResource Include="Strings\zh-hans\Settings.resw" />
-    <PRIResource Include="Strings\zh-hans\Web.resw" />
-    <PRIResource Include="Strings\zh-hans\Window.resw" />
-  </ItemGroup>
   <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.targets" />
-  <!--复制输出文件到安装包的根目录-->
   <Target Name="GetStoreAppStompSourceProjectForWapProject" BeforeTargets="_ConvertItems">
     <ItemGroup>
       <!--Stomp all "SourceProject" values for all incoming dependencies to flatten the package.-->
@@ -113,19 +85,6 @@
         <SourceProject>
         </SourceProject>
       </_FilteredNonWapProjProjectOutput>
-    </ItemGroup>
-  </Target>
-  <!--This target removes the FrameworkSdkReferences from before the AppX package targets manifest generation happens. This is part of the generic machinery that applies to every AppX.-->
-  <Target Name="GetStoreAppStripAllDependenciesFromPackageFirstManifest" BeforeTargets="_GenerateCurrentProjectAppxManifest">
-    <ItemGroup>
-      <FrameworkSdkReference Remove="@(FrameworkSdkReference)" Condition="$([System.String]::Copy('%(FrameworkSdkReference.SDKName)').StartsWith('Microsoft.VCLibs'))" />
-    </ItemGroup>
-  </Target>
-  <!--This target removes the FrameworkSdkPackages from before the desktop bridge manifest generation happens. 
-  -->
-  <Target Name="GetStoreAppStripAllDependenciesFromPackageSecondManifest" BeforeTargets="_GenerateDesktopBridgeAppxManifest" DependsOnTargets="_ResolveVCLibDependencies">
-    <ItemGroup>
-      <FrameworkSdkPackage Remove="@(FrameworkSdkPackage)" Condition="$([System.String]::Copy('%(FrameworkSdkReference.SDKName)').StartsWith('Microsoft.VCLibs'))" />
     </ItemGroup>
   </Target>
 </Project>
