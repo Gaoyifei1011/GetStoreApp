@@ -36,7 +36,7 @@ namespace GetStoreApp.Services.Root
 
             App.AppWindow = AppWindow.GetFromWindowId(windowId);
             App.AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
-            App.AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/Logo/GetStoreApp.ico"));
+            App.AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/GetStoreApp.ico"));
 
             // 窗口激活后配置其他设置
             await StartupAsync();

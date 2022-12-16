@@ -89,7 +89,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
 
             bool Result = dialog.ShowDialog(WindowNative.GetWindowHandle(App.MainWindow));
 
-            if(Result)
+            if (Result)
             {
                 DownloadFolder = await StorageFolder.GetFolderFromPathAsync(dialog.Path);
                 await DownloadOptionsService.SetFolderAsync(DownloadFolder);

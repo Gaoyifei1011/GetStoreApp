@@ -190,15 +190,12 @@
     <value>Download management instructions</value>
   </data>
   <data name="DownloadDescription1" xml:space="preserve">
-    <value>The app's built-in download capabilities are still in beta and may be unstable. If an error occurs during the download of the file, please switch the download option to "Download using the browser" in the settings and call the professional download tool through the browser to assist the download.</value>
-  </data>
-  <data name="DownloadDescription2" xml:space="preserve">
     <value>The download function of the application is not provided by the application itself, it uses the open source Aria2 download tool to download the file. Therefore, in the process of downloading the file, two files will appear on the local disk, one is the file name of the download file itself, and the other is the download file with the extension Aria2. The length of time the file is downloaded depends on your network connection speed.</value>
   </data>
-  <data name="DownloadDescription3" xml:space="preserve">
+  <data name="DownloadDescription2" xml:space="preserve">
     <value>The download link is time-sensitive, and a 404 error will appear if you visit the download link after a certain period of time. Therefore, the application does not support resuming downloads for applications that fail to download. If you have an incomplete download task that has been timed out, we recommend that you re-obtain the link before downloading.</value>
   </data>
-  <data name="DownloadDescription4" xml:space="preserve">
+  <data name="DownloadDescription3" xml:space="preserve">
     <value>The download service shuts down due to an exception in some unknown circumstances, and if you encounter a download service that is not running while downloading a file, we recommend that you try restarting the app.</value>
   </data>
   <data name="DownloadFailed" xml:space="preserve">

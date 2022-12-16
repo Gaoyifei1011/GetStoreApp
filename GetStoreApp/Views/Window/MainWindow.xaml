@@ -49,7 +49,7 @@
                     Content="{x:Bind root:ResourceService.GetLocalized('/Window/Home')}"
                     Tag="Home">
                     <controls:NavigationViewMenuItem.Icon>
-                        <ImageIcon Source="ms-appx:///Assets/Images/Home.png" />
+                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/Home.png" />
                     </controls:NavigationViewMenuItem.Icon>
                 </controls:NavigationViewMenuItem>
 
@@ -59,7 +59,7 @@
                     Content="{x:Bind root:ResourceService.GetLocalized('/Window/History')}"
                     Tag="History">
                     <controls:NavigationViewMenuItem.Icon>
-                        <ImageIcon Source="ms-appx:///Assets/Images/History.png" />
+                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/History.png" />
                     </controls:NavigationViewMenuItem.Icon>
                 </controls:NavigationViewMenuItem>
 
@@ -69,7 +69,7 @@
                     Content="{x:Bind root:ResourceService.GetLocalized('/Window/Download')}"
                     Tag="Download">
                     <controls:NavigationViewMenuItem.Icon>
-                        <ImageIcon Source="ms-appx:///Assets/Images/Download.png" />
+                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/Download.png" />
                     </controls:NavigationViewMenuItem.Icon>
                 </controls:NavigationViewMenuItem>
 
@@ -79,7 +79,7 @@
                     Content="{x:Bind root:ResourceService.GetLocalized('/Window/Web')}"
                     Tag="Web">
                     <controls:NavigationViewMenuItem.Icon>
-                        <ImageIcon Source="ms-appx:///Assets/Images/Web.png" />
+                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/Web.png" />
                     </controls:NavigationViewMenuItem.Icon>
                 </controls:NavigationViewMenuItem>
             </NavigationView.MenuItems>
@@ -91,7 +91,7 @@
                     Content="{x:Bind root:ResourceService.GetLocalized('/Window/About')}"
                     Tag="About">
                     <controls:NavigationViewMenuItem.Icon>
-                        <ImageIcon Source="ms-appx:///Assets/Images/About.png" />
+                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/About.png" />
                     </controls:NavigationViewMenuItem.Icon>
                 </controls:NavigationViewMenuItem>
                 <controls:NavigationViewMenuItem
@@ -100,7 +100,7 @@
                     Content="{x:Bind root:ResourceService.GetLocalized('/Window/Settings')}"
                     Tag="Settings">
                     <controls:NavigationViewMenuItem.Icon>
-                        <ImageIcon Source="ms-appx:///Assets/Images/Settings.png" />
+                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/Settings.png" />
                     </controls:NavigationViewMenuItem.Icon>
                 </controls:NavigationViewMenuItem>
             </NavigationView.FooterMenuItems>

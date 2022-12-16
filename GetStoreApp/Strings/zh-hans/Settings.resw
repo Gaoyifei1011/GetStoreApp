@@ -193,7 +193,7 @@
     <value>文件存放路径</value>
   </data>
   <data name="DownloadInApp" xml:space="preserve">
-    <value>使用应用内下载管理器下载（BETA）</value>
+    <value>使用应用内下载管理器下载</value>
   </data>
   <data name="DownloadInstruction" xml:space="preserve">
     <value>下载管理说明</value>

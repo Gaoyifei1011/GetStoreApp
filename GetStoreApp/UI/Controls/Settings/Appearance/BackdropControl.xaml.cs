@@ -1,5 +1,4 @@
 ﻿using Microsoft.UI.Xaml.Controls;
-using System.Collections.Generic;
 
 namespace GetStoreApp.UI.Controls.Settings.Appearance
 {
@@ -15,7 +14,7 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
             return selectedInternalName == internalName;
         }
 
-        public bool IsItemLoaded(int backdropIndex,int backdropListCount)
+        public bool IsItemLoaded(int backdropIndex, int backdropListCount)
         {
             return backdropIndex < backdropListCount;
         }

@@ -21,7 +21,7 @@
         Height="22"
         Margin="0,3,0,0"
         HorizontalAlignment="Left"
-        Source="ms-appx:///Assets/Logo/GetStoreApp.png" />
+        Source="ms-appx:///Assets/GetStoreApp.png" />
     <TextBlock
         Margin="36,2,0,0"
         VerticalAlignment="Center"

@@ -40,10 +40,9 @@ namespace GetStoreApp
                 ComWrappersSupport.InitializeComWrappers();
                 Application.Start((p) =>
                 {
-                    DispatcherQueueSynchronizationContext context = new DispatcherQueueSynchronizationContext(
-                        DispatcherQueue.GetForCurrentThread());
+                    DispatcherQueueSynchronizationContext context = new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread());
                     SynchronizationContext.SetSynchronizationContext(context);
-                    new App();
+                    new App(args);
                 });
             }
 

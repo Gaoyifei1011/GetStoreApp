@@ -13,7 +13,10 @@ namespace GetStoreApp.Views.Window
     /// </summary>
     public sealed partial class MainWindow : WASDKWindow
     {
-        public WindowsTrayIcon TrayIcon { get; set; } = new WindowsTrayIcon(Path.Combine(AppContext.BaseDirectory, "Assets/Logo/GetStoreApp.ico"), ResourceService.GetLocalized("AppDisplayName"));
+        public WindowsTrayIcon TrayIcon { get; set; } = new WindowsTrayIcon(
+            Path.Combine(AppContext.BaseDirectory, "Assets/GetStoreApp.ico"),
+            ResourceService.GetLocalized("AppDisplayName")
+            );
 
         public MainWindow()
         {

@@ -193,7 +193,7 @@
     <value>File storage path</value>
   </data>
   <data name="DownloadInApp" xml:space="preserve">
-    <value>Use the in-app download manager to download(BETA)</value>
+    <value>Use the in-app download manager to download</value>
   </data>
   <data name="DownloadInstruction" xml:space="preserve">
     <value>Download management instructions</value>
