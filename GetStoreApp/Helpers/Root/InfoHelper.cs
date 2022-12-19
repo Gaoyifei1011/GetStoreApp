@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
+using Windows.System;
 using Windows.System.Profile;
 
 namespace GetStoreApp.Helpers.Root
@@ -15,14 +17,10 @@ namespace GetStoreApp.Helpers.Root
 
         private static Dictionary<string, ushort> AppVersionDict { get; } = new Dictionary<string, ushort>();
 
-        static InfoHelper()
-        {
-            InitializeSystemVersion();
-
-            InitializeAppVersion();
-        }
-
-        private static void InitializeSystemVersion()
+        /// <summary>
+        /// 初始化系统版本信息
+        /// </summary>
+        public static async Task InitializeSystemVersionAsync()
         {
             ulong VersionInfo = ulong.Parse(SystemVersion);
 
@@ -35,9 +33,14 @@ namespace GetStoreApp.Helpers.Root
             SystemVersionDict.Add(nameof(MinorVersion), MinorVersion);
             SystemVersionDict.Add(nameof(BuildNumber), BuildNumber);
             SystemVersionDict.Add(nameof(BuildRevision), BuildRevision);
+
+            await Task.CompletedTask;
         }
 
-        private static void InitializeAppVersion()
+        /// <summary>
+        /// 初始化应用版本信息
+        /// </summary>
+        public static async Task InitializeAppVersionAsync()
         {
             ushort MajorVersion = Package.Current.Id.Version.Major;
             ushort MinorVersion = Package.Current.Id.Version.Minor;
@@ -48,6 +51,8 @@ namespace GetStoreApp.Helpers.Root
             AppVersionDict.Add(nameof(MinorVersion), MinorVersion);
             AppVersionDict.Add(nameof(BuildVersion), BuildVersion);
             AppVersionDict.Add(nameof(RevisionVersion), RevisionVersion);
+
+            await Task.CompletedTask;
         }
 
         /// <summary>
@@ -64,6 +69,14 @@ namespace GetStoreApp.Helpers.Root
         public static Dictionary<string, ushort> GetAppVersion()
         {
             return AppVersionDict;
+        }
+
+        /// <summary>
+        /// 获取当前应用的架构
+        /// </summary>
+        public static ProcessorArchitecture GetPackageArchitecture()
+        {
+            return Package.Current.Id.Architecture;
         }
     }
 }

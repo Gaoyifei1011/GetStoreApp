@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
@@ -86,6 +87,8 @@ namespace GetStoreApp
             // 初始化应用资源，应用使用的语言信息和启动参数
             await LanguageService.InitializeLanguageAsync();
             await ResourceService.InitializeResourceAsync(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
+            await InfoHelper.InitializeAppVersionAsync();
+            await InfoHelper.InitializeSystemVersionAsync();
         }
     }
 }

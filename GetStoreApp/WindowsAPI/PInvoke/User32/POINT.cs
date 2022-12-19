@@ -1,6 +1,6 @@
 ﻿using Windows.Foundation;
 
-namespace GetStoreApp.WindowsAPI.PInvoke.WindowsCore
+namespace GetStoreApp.WindowsAPI.PInvoke.User32
 {
     /// <summary>
     /// POINT 结构定义点的 x 坐标和 y 坐标。

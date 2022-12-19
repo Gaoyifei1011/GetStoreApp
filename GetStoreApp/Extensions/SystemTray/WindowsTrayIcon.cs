@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
-using GetStoreApp.WindowsAPI.PInvoke.WindowsCore;
 using System;
 using System.Runtime.InteropServices;
 

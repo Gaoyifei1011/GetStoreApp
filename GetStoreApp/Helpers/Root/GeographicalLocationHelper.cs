@@ -11,18 +11,15 @@ namespace GetStoreApp.Helpers.Root
     /// </summary>
     public static class GeographicalLocationHelper
     {
-        private static readonly List<RegionModel> _geographicalLocations;
-        private static readonly List<int> _geoIds;
+        private static readonly List<RegionModel> _geographicalLocations = new List<RegionModel>();
+        private static readonly List<int> _geoIds = new List<int>();
         private static readonly EnumGeoInfoProc _callback;
-        private static readonly int _lcid;
+        private static readonly int _lcid = CultureInfo.CurrentCulture.LCID;
         private static readonly int GEOCLASS_NATION = 0x10;
 
         static GeographicalLocationHelper()
         {
-            _geographicalLocations = new List<RegionModel>();
-            _geoIds = new List<int>();
             _callback = EnumGeoInfoCallback;
-            _lcid = CultureInfo.CurrentCulture.LCID;
         }
 
         public static IEnumerable<RegionModel> GetGeographicalLocations()
@@ -33,29 +30,18 @@ namespace GetStoreApp.Helpers.Root
 
                 foreach (int geoId in _geoIds)
                 {
-                    RegionModel location = new RegionModel
+                    _geographicalLocations.Add(new RegionModel
                     {
-                        Nation = GetGeoInfoA(geoId, SYSGEOTYPE.GEO_NATION, _lcid),
-                        Latitude = GetGeoInfoA(geoId, SYSGEOTYPE.GEO_LATITUDE, _lcid),
-                        Longitude = GetGeoInfoA(geoId, SYSGEOTYPE.GEO_LONGITUDE, _lcid),
-                        ISO2 = GetGeoInfoA(geoId, SYSGEOTYPE.GEO_ISO2, _lcid),
-                        ISO3 = GetGeoInfoA(geoId, SYSGEOTYPE.GEO_ISO3, _lcid),
-                        Rfc1766 = GetGeoInfoA(geoId, SYSGEOTYPE.GEO_RFC1766, _lcid),
-                        Lcid = GetGeoInfoA(geoId, SYSGEOTYPE.GEO_LCID, _lcid),
-                        FriendlyName = GetGeoInfoA(geoId, SYSGEOTYPE.GEO_FRIENDLYNAME, _lcid),
-                        OfficialName = GetGeoInfoA(geoId, SYSGEOTYPE.GEO_OFFICIALNAME, _lcid),
-                        TimeZones = GetGeoInfoA(geoId, SYSGEOTYPE.GEO_TIMEZONES, _lcid),
-                        OfficialLanguages = GetGeoInfoA(geoId, SYSGEOTYPE.GEO_OFFICIALLANGUAGES, _lcid)
-                    };
-
-                    _geographicalLocations.Add(location);
+                        ISO2 = GetGeoInfo(geoId, SYSGEOTYPE.GEO_ISO2, _lcid),
+                        FriendlyName = GetGeoInfo(geoId, SYSGEOTYPE.GEO_FRIENDLYNAME, _lcid)
+                    });
                 }
             }
 
             return _geographicalLocations;
         }
 
-        private static string GetGeoInfoA(int location, SYSGEOTYPE geoType, int langId)
+        private static string GetGeoInfo(int location, SYSGEOTYPE geoType, int langId)
         {
             StringBuilder geoDataBuilder = new StringBuilder();
 

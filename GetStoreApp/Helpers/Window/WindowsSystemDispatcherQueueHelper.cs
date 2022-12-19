@@ -1,38 +1,30 @@
-﻿using System.Runtime.InteropServices;
+﻿using GetStoreApp.WindowsAPI.PInvoke.CoreMessaging;
+using System.Runtime.InteropServices;
+using Windows.System;
 
 namespace GetStoreApp.Helpers.Window
 {
     public class WindowsSystemDispatcherQueueHelper
     {
-        [StructLayout(LayoutKind.Sequential)]
-        private struct DispatcherQueueOptions
-        {
-            internal int dwSize;
-            internal int threadType;
-            internal int apartmentType;
-        }
-
-        [DllImport("CoreMessaging.dll")]
-        private static extern int CreateDispatcherQueueController([In] DispatcherQueueOptions options, [In, Out, MarshalAs(UnmanagedType.IUnknown)] ref object dispatcherQueueController);
-
         private object m_dispatcherQueueController = null;
 
         public void EnsureWindowsSystemDispatcherQueueController()
         {
-            if (Windows.System.DispatcherQueue.GetForCurrentThread() != null)
+            if (DispatcherQueue.GetForCurrentThread() is not null)
             {
-                // one already exists, so we'll just use it.
                 return;
             }
 
             if (m_dispatcherQueueController == null)
             {
-                DispatcherQueueOptions options;
-                options.dwSize = Marshal.SizeOf(typeof(DispatcherQueueOptions));
-                options.threadType = 2;    // DQTYPE_THREAD_CURRENT
-                options.apartmentType = 2; // DQTAT_COM_STA
+                DispatcherQueueOptions options = new DispatcherQueueOptions()
+                {
+                    dwSize = Marshal.SizeOf(typeof(DispatcherQueueOptions)),
+                    threadType = 2,
+                    apartmentType = 2
+                };
 
-                CreateDispatcherQueueController(options, ref m_dispatcherQueueController);
+                CoreMessagingLibrary.CreateDispatcherQueueController(options, ref m_dispatcherQueueController);
             }
         }
     }

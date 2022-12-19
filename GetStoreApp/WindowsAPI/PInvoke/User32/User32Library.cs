@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.WindowsAPI.PInvoke.Shell32;
-using GetStoreApp.WindowsAPI.PInvoke.WindowsCore;
 using System;
 using System.Runtime.InteropServices;
 
@@ -268,7 +267,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="newProc">新事件处理函数（回调函数）</param>
         /// <returns>如果函数成功，则返回值是指定 32 位整数的上一个值。如果函数失败，则返回值为零。 </returns>
         [DllImport(User32, EntryPoint = "SetWindowLong")]
-        public static extern IntPtr SetWindowLongPtr32(IntPtr hWnd, WindowLongIndexFlags nIndex, WinProc newProc);
+        public static extern IntPtr SetWindowLong(IntPtr hWnd, WindowLongIndexFlags nIndex, WinProc newProc);
 
         /// <summary>
         /// 更改指定窗口的属性。 该函数还将指定偏移量处的64位（long类型）值设置到额外的窗口内存中。
@@ -278,7 +277,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="newProc">新事件处理函数（回调函数）</param>
         /// <returns>如果函数成功，则返回值是指定偏移量的上一个值。如果函数失败，则返回值为零。 </returns>
         [DllImport(User32, EntryPoint = "SetWindowLongPtr")]
-        public static extern IntPtr SetWindowLongPtr64(IntPtr hWnd, WindowLongIndexFlags nIndex, WinProc newProc);
+        public static extern IntPtr SetWindowLongPtr(IntPtr hWnd, WindowLongIndexFlags nIndex, WinProc newProc);
 
         /// <summary>
         /// 更改子窗口、弹出窗口或顶级窗口的大小、位置和 Z 顺序。 这些窗口根据屏幕上的外观进行排序。 最上面的窗口接收最高排名，是 Z 顺序中的第一个窗口。

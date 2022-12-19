@@ -1,4 +1,4 @@
-﻿namespace GetStoreApp.WindowsAPI.PInvoke.WindowsCore
+﻿namespace GetStoreApp.WindowsAPI.PInvoke.User32
 {
     /// <summary>
     /// RECT 结构按其左上角和右下角的坐标定义矩形。

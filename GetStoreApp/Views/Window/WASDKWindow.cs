@@ -1,16 +1,17 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Controls;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
-using GetStoreApp.WindowsAPI.PInvoke.WindowsCore;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using System;
 using System.Runtime.InteropServices;
 using System.Windows.Input;
+using Windows.System;
 using WinRT.Interop;
 
 namespace GetStoreApp.Views.Window
@@ -168,10 +169,18 @@ namespace GetStoreApp.Views.Window
         /// </summary>
         private IntPtr SetWindowLongPtr(IntPtr hWnd, WindowLongIndexFlags nIndex, WinProc newProc)
         {
-            if (IntPtr.Size == 8)
-                return User32Library.SetWindowLongPtr64(hWnd, nIndex, newProc);
+            if (InfoHelper.GetPackageArchitecture() == ProcessorArchitecture.X64)
+            {
+                return User32Library.SetWindowLongPtr(hWnd, nIndex, newProc);
+            }
+            else if (InfoHelper.GetPackageArchitecture() == ProcessorArchitecture.X86)
+            {
+                return User32Library.SetWindowLong(hWnd, nIndex, newProc);
+            }
             else
-                return User32Library.SetWindowLongPtr32(hWnd, nIndex, newProc);
+            {
+                return IntPtr.Zero;
+            }
         }
 
         /// <summary>
@@ -222,7 +231,7 @@ namespace GetStoreApp.Views.Window
                             if (!App.IsDialogOpening)
                             {
                                 App.IsDialogOpening = true;
-                                DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
+                                DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, async () =>
                                 {
                                     await new AppRunningDialog().ShowAsync();
                                     App.IsDialogOpening = false;

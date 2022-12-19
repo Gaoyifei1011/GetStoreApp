@@ -19,7 +19,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
 
         public static LanguageModel AppLanguage { get; set; }
 
-        private static readonly IReadOnlyList<string> AppLanguagesList = ApplicationLanguages.ManifestLanguages;
+        private static IReadOnlyList<string> AppLanguagesList { get; } = ApplicationLanguages.ManifestLanguages;
 
         public static List<LanguageModel> LanguageList { get; set; } = new List<LanguageModel>();
 

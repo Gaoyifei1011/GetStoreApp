@@ -17,6 +17,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.Web.WebView2.Core;
 using System;
 using System.IO;
+using System.Threading;
 using Windows.Foundation;
 
 namespace GetStoreApp.ViewModels.Pages
@@ -171,9 +172,16 @@ namespace GetStoreApp.ViewModels.Pages
         {
             if (CoreWebView is not null)
             {
-                CoreWebView.NewWindowRequested -= OnNewWindowRequested;
-                CoreWebView.SourceChanged -= OnSourceChanged;
-                CoreWebView.DownloadStarting -= OnDownloadStarting;
+                try
+                {
+                    CoreWebView.NewWindowRequested -= OnNewWindowRequested;
+                    CoreWebView.SourceChanged -= OnSourceChanged;
+                    CoreWebView.DownloadStarting -= OnDownloadStarting;
+                }
+                catch (Exception)
+                {
+                    return;
+                }
             }
         }
 
@@ -202,11 +210,11 @@ namespace GetStoreApp.ViewModels.Pages
         {
             Deferral deferral = args.GetDeferral();
 
-            System.Threading.SynchronizationContext.Current.Post(async (_) =>
+            SynchronizationContext.Current.Post(async (_) =>
             {
                 using (deferral)
                 {
-                    // Hide the default download dialog.
+                    // 隐藏默认的下载对话框
                     args.Handled = true;
 
                     // 使用应用内提供的下载方式（链接是通过网页抓取的，无法获得SHA1）
@@ -310,7 +318,7 @@ namespace GetStoreApp.ViewModels.Pages
                     // 使用浏览器下载
                     else if (DownloadOptionsService.DownloadMode == DownloadOptionsService.DownloadModeList[1])
                     {
-                        await global::Windows.System.Launcher.LaunchUriAsync(new Uri(args.DownloadOperation.Uri));
+                        await Windows.System.Launcher.LaunchUriAsync(new Uri(args.DownloadOperation.Uri));
                     }
 
                     args.DownloadOperation.Cancel();
