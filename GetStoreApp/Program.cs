@@ -10,16 +10,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.ApplicationModel;
 using WinRT;
 
 namespace GetStoreApp
 {
     public class Program
     {
-        // 换行符
-        private static string LineBreaks = "\r\n";
-
         private static bool IsDesktopProgram = true;
 
         public static List<string> CommandLineArgs { get; set; }
@@ -38,12 +34,14 @@ namespace GetStoreApp
             // 以桌面应用程序方式正常启动
             if (IsDesktopProgram)
             {
+                StartupService.InitializeDesktopStartupAsync().Wait();
+
                 ComWrappersSupport.InitializeComWrappers();
                 Application.Start((p) =>
                 {
                     DispatcherQueueSynchronizationContext context = new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread());
                     SynchronizationContext.SetSynchronizationContext(context);
-                    new App(args);
+                    new App();
                 });
             }
 
@@ -56,21 +54,7 @@ namespace GetStoreApp
                     Kernel32Library.AllocConsole();
                 }
 
-                Console.Title = ResourceService.GetLocalized("/Console/Title");
-
-                Console.WriteLine(string.Format(ResourceService.GetLocalized("/Console/HeaderDescription1"),
-                    Package.Current.Id.Version.Major,
-                    Package.Current.Id.Version.Minor,
-                    Package.Current.Id.Version.Build,
-                    Package.Current.Id.Version.Revision
-                    ) + LineBreaks);
-                Console.WriteLine(ResourceService.GetLocalized("/Console/HeaderDescription2"));
-                Console.WriteLine(ResourceService.GetLocalized("/Console/HeaderDescription3") + LineBreaks);
-
-                Console.WriteLine(ResourceService.GetLocalized("/Console/UnfinishedNotification1"));
-                Console.WriteLine(ResourceService.GetLocalized("/Console/UnfinishedNotification2") + LineBreaks);
-
-                Windows.System.Launcher.LaunchUriAsync(new Uri("getstoreapp://")).GetAwaiter().GetResult();
+                StartupService.InitializeConsoleStartupAsync().Wait();
 
                 Kernel32Library.FreeConsole();
 

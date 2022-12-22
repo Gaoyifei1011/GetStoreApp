@@ -1,6 +1,6 @@
 ﻿using GetStoreApp.WindowsAPI.Controls.Taskbar;
 using System;
-using System.Diagnostics;
+using WinRT.Interop;
 
 namespace GetStoreApp.WindowsAPI.Controls
 {
@@ -110,10 +110,7 @@ namespace GetStoreApp.WindowsAPI.Controls
             {
                 if (_ownerHandle == IntPtr.Zero)
                 {
-                    Process currentProcess = Process.GetCurrentProcess();
-
-                    if (currentProcess != null && currentProcess.MainWindowHandle != IntPtr.Zero)
-                        _ownerHandle = currentProcess.MainWindowHandle;
+                    _ownerHandle = WindowNative.GetWindowHandle(App.MainWindow);
                 }
 
                 return _ownerHandle;

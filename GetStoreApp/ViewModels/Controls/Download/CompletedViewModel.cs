@@ -11,17 +11,19 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Dialogs.Download;
 using GetStoreApp.ViewModels.Base;
+using GetStoreApp.WindowsAPI.PInvoke.Shell32;
+using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Management.Deployment;
 using Windows.Storage;
+using WinRT.Interop;
 
 namespace GetStoreApp.ViewModels.Controls.Download
 {
@@ -232,13 +234,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 if (InstallModeService.InstallMode.InternalName == InstallModeService.InstallModeList[0].InternalName)
                 {
-                    ProcessStartInfo Info = new ProcessStartInfo
-                    {
-                        FileName = completedItem.FilePath,
-                        UseShellExecute = true
-                    };
-
-                    Process.Start(Info);
+                    Shell32Library.ShellExecute(WindowNative.GetWindowHandle(App.MainWindow), string.Empty, completedItem.FilePath, string.Empty, string.Empty, WindowShowStyle.SW_SHOWNORMAL);
                 }
 
                 // 直接安装
@@ -303,7 +299,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     }
                     else
                     {
-                        Process.Start("explorer.exe");
+                        Shell32Library.ShellExecute(WindowNative.GetWindowHandle(App.MainWindow), "open", "explorer.exe", "", "", WindowShowStyle.SW_SHOWNORMAL);
                     }
                 }
             }

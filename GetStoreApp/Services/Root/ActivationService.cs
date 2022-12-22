@@ -26,8 +26,6 @@ namespace GetStoreApp.Services.Root
 
             App.MainWindow = new MainWindow();
 
-            await StartupService.InitializeStartupAsync();
-
             // 激活应用窗口
             App.MainWindow.Activate();
 

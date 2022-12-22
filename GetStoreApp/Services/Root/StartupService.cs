@@ -1,9 +1,9 @@
-﻿using GetStoreApp.WindowsAPI.PInvoke.User32;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.AppNotifications;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
@@ -29,13 +29,23 @@ namespace GetStoreApp.Services.Root
         };
 
         /// <summary>
-        /// 处理应用启动的方式
+        /// 处理桌面应用启动的方式
         /// </summary>
-        public static async Task InitializeStartupAsync()
+        public static async Task InitializeDesktopStartupAsync()
         {
             StartupKind = AppInstance.GetCurrent().GetActivatedEventArgs().Kind;
             await InitializeStartupKindAsync();
             await RunSingleInstanceAppAsync();
+        }
+
+        /// <summary>
+        /// 处理控制台应用启动的方式
+        /// </summary>
+        public static async Task InitializeConsoleStartupAsync()
+        {
+            ConsoleService.InitializeDescription();
+            await Windows.System.Launcher.LaunchUriAsync(new Uri("getstoreapp://"));
+            await Task.CompletedTask;
         }
 
         /// <summary>
@@ -132,8 +142,6 @@ namespace GetStoreApp.Services.Root
                 // 将激活重定向到主实例
                 await mainInstance.RedirectActivationToAsync(appArgs);
 
-                App.MainWindow.Title = "WinUI Desktop";
-
                 // 向主实例发送数据
                 CopyDataStruct copyDataStruct;
                 copyDataStruct.dwData = NeedToSendMesage;
@@ -144,8 +152,7 @@ namespace GetStoreApp.Services.Root
                 User32Library.SendMessage(User32Library.FindWindow(null, ResourceService.GetLocalized("AppDisplayName")), WindowMessage.WM_COPYDATA, 0, ref copyDataStruct);
 
                 // 然后退出实例并停止
-                Process.GetCurrentProcess().Kill();
-                return;
+                Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
             }
         }
     }

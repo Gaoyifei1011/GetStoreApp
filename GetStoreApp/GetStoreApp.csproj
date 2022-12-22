@@ -61,12 +61,6 @@
     <Content Update="Assets\ControlIcon\About.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="Assets\Images\CloudflareValidation.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Assets\Images\DesktopApps.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Update="Assets\ControlIcon\Download.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -82,6 +76,12 @@
     <Content Update="Assets\ControlIcon\Web.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Update="Assets\Images\CloudflareValidation.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Images\DesktopApps.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>    
     <Content Include="Fonts\Segoe Fluent Icons.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

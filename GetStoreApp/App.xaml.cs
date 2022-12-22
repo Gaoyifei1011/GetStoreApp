@@ -20,7 +20,7 @@ namespace GetStoreApp
         // 导航页面后使用到的参数
         public static AppNaviagtionArgs NavigationArgs { get; set; } = AppNaviagtionArgs.None;
 
-        public App(string[] args)
+        public App()
         {
             InitializeComponent();
             UnhandledException += OnUnhandledException;
