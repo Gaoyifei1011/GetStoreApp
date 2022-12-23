@@ -10,7 +10,7 @@
     <DesktopCompatible>true</DesktopCompatible>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <FileAlignment>512</FileAlignment>
-    <FileVersion>0.7.2.0</FileVersion>
+    <FileVersion>0.7.3.0</FileVersion>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <IncludeSymbols>False</IncludeSymbols>
     <ImplicitUsings>disable</ImplicitUsings>
@@ -33,7 +33,7 @@
     <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <TrimMode>partial</TrimMode>
-    <Version>0.7.2.0</Version>
+    <Version>0.7.3.0</Version>
     <UseWinUI>true</UseWinUI>
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
     <WindowsPackageType>MSIX</WindowsPackageType>
