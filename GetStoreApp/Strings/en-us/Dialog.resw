@@ -351,4 +351,25 @@
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
   </data>
+  <data name="ConsoleStartupArgsDescription1" xml:space="preserve">
+    <value>There are two ways to start the console program, parameter mode and parameterless mode</value>
+  </data>
+  <data name="ConsoleStartupArgsDescription2" xml:space="preserve">
+    <value>There are parameter modes that can be selected by entering parameters to obtain the type and channel name, and fill in the corresponding links to quickly obtain them</value>
+  </data>
+  <data name="ConsoleStartupArgsDescription3" xml:space="preserve">
+    <value>Some parameters are optional and are replaced by default parameters if they are mistyped</value>
+  </data>
+  <data name="ConsoleStartupArgsDescription4" xml:space="preserve">
+    <value>The parameterless mode is quickly obtained by asking</value>
+  </data>
+  <data name="ConsoleStartupArgsTitle" xml:space="preserve">
+    <value>Console program parameter description</value>
+  </data>
+  <data name="ParameterlessMode" xml:space="preserve">
+    <value>Parameterless mode</value>
+  </data>
+  <data name="ParameterMode" xml:space="preserve">
+    <value>Parameter mode</value>
+  </data>
 </root>

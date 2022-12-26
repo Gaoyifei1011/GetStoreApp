@@ -177,6 +177,10 @@ namespace GetStoreApp.Views.Window
             {
                 return User32Library.SetWindowLong(hWnd, nIndex, newProc);
             }
+            else if (InfoHelper.GetPackageArchitecture() == ProcessorArchitecture.Arm64)
+            {
+                return User32Library.SetWindowLongPtr(hWnd, nIndex, newProc);
+            }
             else
             {
                 return IntPtr.Zero;

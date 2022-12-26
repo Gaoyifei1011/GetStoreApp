@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
@@ -53,6 +54,13 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         [DllImport(Kernel32)]
         public static extern bool FreeConsole();
 
+        /// <summary>
+        /// 检索与调用进程关联的控制台所使用的窗口句柄。
+        /// </summary>
+        /// <returns>返回值是与调用进程关联的控制台所使用的窗口的句柄; 如果没有此类关联的控制台，则为 NULL 。</returns>
+        [DllImport(Kernel32)]
+        public static extern IntPtr GetConsoleWindow();
+
         /// <summary>检索有关指定地理位置的信息。</summary>
         /// <param name="location">要获取信息的地理位置的标识符。可以通过调用 EnumSystemGeoID 来获取可用值。</param>
         /// <param name="geoType">
@@ -91,5 +99,14 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>如果函数成功，则返回值是指定进程的打开句柄。如果函数失败，则返回值为 NULL。</returns>
         [DllImport(Kernel32)]
         public static extern int OpenProcess(EDesiredAccess dwDesiredAccess, bool bInheritHandle, int dwProcessId);
+
+        /// <summary>
+        /// 终止指定的进程及其所有线程。
+        /// </summary>
+        /// <param name="hProcess">要终止的进程句柄。</param>
+        /// <param name="uExitCode">进程和线程因此调用而终止的退出代码。</param>
+        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
+        [DllImport(Kernel32, CharSet = CharSet.Unicode)]
+        public static extern int TerminateProcess(IntPtr hProcess, uint uExitCode);
     }
 }

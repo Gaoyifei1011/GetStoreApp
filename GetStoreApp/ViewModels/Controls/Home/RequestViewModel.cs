@@ -126,11 +126,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public RequestViewModel()
         {
-            SelectedType = Convert.ToInt32(StartupService.StartupArgs["TypeName"]) == -1 ? TypeList[0] : TypeList[Convert.ToInt32(StartupService.StartupArgs["TypeName"])];
+            SelectedType = Convert.ToInt32(DesktopLaunchService.LaunchArgs["TypeName"]) == -1 ? TypeList[0] : TypeList[Convert.ToInt32(DesktopLaunchService.LaunchArgs["TypeName"])];
 
-            SelectedChannel = Convert.ToInt32(StartupService.StartupArgs["ChannelName"]) == -1 ? ChannelList[3] : ChannelList[Convert.ToInt32(StartupService.StartupArgs["ChannelName"])];
+            SelectedChannel = Convert.ToInt32(DesktopLaunchService.LaunchArgs["ChannelName"]) == -1 ? ChannelList[3] : ChannelList[Convert.ToInt32(DesktopLaunchService.LaunchArgs["ChannelName"])];
 
-            LinkText = StartupService.StartupArgs["Link"] is null ? string.Empty : (string)StartupService.StartupArgs["Link"];
+            LinkText = DesktopLaunchService.LaunchArgs["Link"] is null ? string.Empty : (string)DesktopLaunchService.LaunchArgs["Link"];
 
             SampleLink = SampleLinkList[0];
 

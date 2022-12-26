@@ -12,16 +12,16 @@ using Windows.ApplicationModel.DataTransfer.ShareTarget;
 namespace GetStoreApp.Services.Root
 {
     /// <summary>
-    /// 应用启动服务
+    /// 桌面应用启动服务
     /// </summary>
-    public static class StartupService
+    public static class DesktopLaunchService
     {
         private static ExtendedActivationKind StartupKind;
 
         private static int NeedToSendMesage;
 
         // 应用启动时使用的参数
-        public static Dictionary<string, object> StartupArgs { get; set; } = new Dictionary<string, object>
+        public static Dictionary<string, object> LaunchArgs { get; set; } = new Dictionary<string, object>
         {
             {"TypeName",-1 },
             {"ChannelName",-1 },
@@ -31,21 +31,11 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 处理桌面应用启动的方式
         /// </summary>
-        public static async Task InitializeDesktopStartupAsync()
+        public static async Task InitializeLaunchAsync()
         {
             StartupKind = AppInstance.GetCurrent().GetActivatedEventArgs().Kind;
             await InitializeStartupKindAsync();
             await RunSingleInstanceAppAsync();
-        }
-
-        /// <summary>
-        /// 处理控制台应用启动的方式
-        /// </summary>
-        public static async Task InitializeConsoleStartupAsync()
-        {
-            ConsoleService.InitializeDescription();
-            await Windows.System.Launcher.LaunchUriAsync(new Uri("getstoreapp://"));
-            await Task.CompletedTask;
         }
 
         /// <summary>
@@ -58,7 +48,7 @@ namespace GetStoreApp.Services.Root
                 // 正常方式启动（包括命令行）
                 case ExtendedActivationKind.Launch:
                     {
-                        ParseStartupArgs();
+                        ParseLaunchArgs();
                         break;
                     }
                 // 使用 Protocol协议启动
@@ -73,7 +63,7 @@ namespace GetStoreApp.Services.Root
                         NeedToSendMesage = 1;
                         ShareOperation shareOperation = (AppInstance.GetCurrent().GetActivatedEventArgs().Data as ShareTargetActivatedEventArgs).ShareOperation;
                         shareOperation.ReportCompleted();
-                        StartupArgs["Link"] = Convert.ToString(await shareOperation.Data.GetUriAsync());
+                        LaunchArgs["Link"] = Convert.ToString(await shareOperation.Data.GetUriAsync());
                         break;
                     }
                 // 从系统通知处启动
@@ -85,16 +75,16 @@ namespace GetStoreApp.Services.Root
                 // 其他方式
                 default:
                     {
-                        ParseStartupArgs();
+                        ParseLaunchArgs();
                         break;
                     }
             }
         }
 
         /// <summary>
-        /// 初始化启动命令参数
+        /// 解析启动命令参数
         /// </summary>
-        private static void ParseStartupArgs()
+        private static void ParseLaunchArgs()
         {
             if (Program.CommandLineArgs.Count == 0)
             {
@@ -104,7 +94,7 @@ namespace GetStoreApp.Services.Root
             else if (Program.CommandLineArgs.Count == 1)
             {
                 NeedToSendMesage = 1;
-                StartupArgs["Link"] = Program.CommandLineArgs[0];
+                LaunchArgs["Link"] = Program.CommandLineArgs[0];
             }
             else
             {
@@ -119,9 +109,9 @@ namespace GetStoreApp.Services.Root
                 int ChannelNameIndex = Program.CommandLineArgs.FindIndex(item => item.Equals("-c", StringComparison.OrdinalIgnoreCase) || item.Equals("--channel", StringComparison.OrdinalIgnoreCase));
                 int LinkIndex = Program.CommandLineArgs.FindIndex(item => item.Equals("-l", StringComparison.OrdinalIgnoreCase) || item.Equals("--link", StringComparison.OrdinalIgnoreCase));
 
-                StartupArgs["TypeName"] = TypeNameIndex == -1 ? StartupArgs["TypeName"] : ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(Program.CommandLineArgs[TypeNameIndex + 1], StringComparison.OrdinalIgnoreCase));
-                StartupArgs["ChannelName"] = ChannelNameIndex == -1 ? StartupArgs["ChannelName"] : ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(Program.CommandLineArgs[ChannelNameIndex + 1], StringComparison.OrdinalIgnoreCase));
-                StartupArgs["Link"] = LinkIndex == -1 ? StartupArgs["Link"] : Program.CommandLineArgs[LinkIndex + 1];
+                LaunchArgs["TypeName"] = TypeNameIndex == -1 ? LaunchArgs["TypeName"] : ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(Program.CommandLineArgs[TypeNameIndex + 1], StringComparison.OrdinalIgnoreCase));
+                LaunchArgs["ChannelName"] = ChannelNameIndex == -1 ? LaunchArgs["ChannelName"] : ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(Program.CommandLineArgs[ChannelNameIndex + 1], StringComparison.OrdinalIgnoreCase));
+                LaunchArgs["Link"] = LinkIndex == -1 ? LaunchArgs["Link"] : Program.CommandLineArgs[LinkIndex + 1];
             }
         }
 
@@ -145,7 +135,7 @@ namespace GetStoreApp.Services.Root
                 // 向主实例发送数据
                 CopyDataStruct copyDataStruct;
                 copyDataStruct.dwData = NeedToSendMesage;
-                copyDataStruct.lpData = string.Format("{0} {1} {2}", StartupArgs["TypeName"], StartupArgs["ChannelName"], StartupArgs["Link"] is null ? "PlaceHolderText" : StartupArgs["Link"]);
+                copyDataStruct.lpData = string.Format("{0} {1} {2}", LaunchArgs["TypeName"], LaunchArgs["ChannelName"], LaunchArgs["Link"] is null ? "PlaceHolderText" : LaunchArgs["Link"]);
                 copyDataStruct.cbData = Encoding.Default.GetBytes(copyDataStruct.lpData).Length + 1;
 
                 // 向主进程发送消息

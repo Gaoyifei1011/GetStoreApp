@@ -2,7 +2,6 @@
 using GetStoreApp.WindowsAPI.PInvoke.NTdll;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -57,15 +56,31 @@ namespace GetStoreApp.Helpers.Controls.Download
         {
             foreach (int childProcessId in GetChildProcessIds(processID))
             {
-                using (Process child = Process.GetProcessById(childProcessId))
+                int childProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_ALL_ACCESS, false, processID);
+                if (childProcess != 0)
                 {
-                    child.Kill();
+                    try
+                    {
+                        Kernel32Library.TerminateProcess(childProcess, 0);
+                    }
+                    finally
+                    {
+                        Kernel32Library.CloseHandle(childProcess);
+                    }
                 }
             }
 
-            using (Process thisProcess = Process.GetProcessById(processID))
+            int thisProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_ALL_ACCESS, false, processID);
+            if (thisProcess != 0)
             {
-                thisProcess.Kill();
+                try
+                {
+                    Kernel32Library.TerminateProcess(thisProcess, 0);
+                }
+                finally
+                {
+                    Kernel32Library.CloseHandle(thisProcess);
+                }
             }
         }
 
@@ -83,9 +98,9 @@ namespace GetStoreApp.Helpers.Controls.Download
                 proc.Dispose();
                 if (parentProcessId == GetParentProcessId(currentProcessId))
                 {
-                    // Add this one
+                    // 添加自身
                     myChildrenProcessList.Add(currentProcessId);
-                    // Add any of its children
+                    // 添加和其自身有关的所有子进程
                     myChildrenProcessList.AddRange(GetChildProcessIds(currentProcessId));
                 }
             }
@@ -134,20 +149,7 @@ namespace GetStoreApp.Helpers.Controls.Download
                     return false;
                 }
             }
-            // 无法终止相关联的进程。
-            catch (Win32Exception)
-            {
-                return false;
-            }
-
-            // 不支持远程计算机上运行的进程调用 Kill()。 该方法仅对本地计算机上运行的进程可用。
-            catch (NotSupportedException)
-            {
-                return false;
-            }
-
-            // 没有与此 Process 对象关联的进程
-            catch (InvalidOperationException)
+            catch (Exception)
             {
                 return false;
             }

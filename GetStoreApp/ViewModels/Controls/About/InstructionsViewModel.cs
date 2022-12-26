@@ -17,8 +17,9 @@ namespace GetStoreApp.ViewModels.Controls.About
         });
 
         // 控制台程序启动参数说明
-        public IRelayCommand ConsoleLaunchCommand => new RelayCommand(() =>
+        public IRelayCommand ConsoleLaunchCommand => new RelayCommand(async () =>
         {
+            await new ConsoleStartupArgsDialog().ShowAsync();
         });
 
         // 检查网络

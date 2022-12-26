@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ChannelInformation" xml:space="preserve">
+    <value>There are four channels for download links: 1. Fast, 2. Slow, 3. Release Preview, and 4. Official Version</value>
+  </data>
+  <data name="ExitPrompt" xml:space="preserve">
+    <value>Are you sure want to quit?</value>
+  </data>
   <data name="HeaderDescription1" xml:space="preserve">
     <value>Get the Store app (console) version: {0}.{1}.{2}.{3}</value>
   </data>
@@ -126,13 +132,22 @@
   <data name="HeaderDescription3" xml:space="preserve">
     <value>For more information, navigate to the "About" page of the application and learn about it in the "Usage Instructions" module.</value>
   </data>
+  <data name="InputLink" xml:space="preserve">
+    <value>Please enter the corresponding link:</value>
+  </data>
+  <data name="ParameterError" xml:space="preserve">
+    <value>The parameters you inputed are incorrect, please check the parameters you inputed</value>
+  </data>
+  <data name="SelectChannel" xml:space="preserve">
+    <value>Please enter the channel you want to select (the default is production):</value>
+  </data>
+  <data name="SelectType" xml:space="preserve">
+    <value>Please enter the type you want to select (default selection URL (link)):</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>GetStoreApp (Dev)</value>
   </data>
-  <data name="UnfinishedNotification1" xml:space="preserve">
-    <value>The current console program is under development and is currently only used as a placeholder.</value>
-  </data>
-  <data name="UnfinishedNotification2" xml:space="preserve">
-    <value>The program redirects to the desktop app.</value>
+  <data name="TypeInformation" xml:space="preserve">
+    <value>There are four types of acquisition apps:1. URL (link), 2.ProductID, 3.PackageFamilyName, 4.CategoryID</value>
   </data>
 </root>

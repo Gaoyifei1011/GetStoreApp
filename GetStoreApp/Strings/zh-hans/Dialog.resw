@@ -351,4 +351,25 @@
   <data name="Yes" xml:space="preserve">
     <value>是</value>
   </data>
+  <data name="ConsoleStartupArgsDescription1" xml:space="preserve">
+    <value>控制台程序有两种启动方式，有参数模式和无参数模式</value>
+  </data>
+  <data name="ConsoleStartupArgsDescription2" xml:space="preserve">
+    <value>有参数模式可以通过输入参数选定好想要获取到类型、通道名称，填入相应的链接即可快速获取</value>
+  </data>
+  <data name="ConsoleStartupArgsDescription3" xml:space="preserve">
+    <value>部分参数为可选参数，在缺省或输入错误时会使用默认参数代替</value>
+  </data>
+  <data name="ConsoleStartupArgsDescription4" xml:space="preserve">
+    <value>无参数模式会通过询问的方式来快速获取</value>
+  </data>
+  <data name="ConsoleStartupArgsTitle" xml:space="preserve">
+    <value>控制台程序参数说明</value>
+  </data>
+  <data name="ParameterlessMode" xml:space="preserve">
+    <value>无参数模式</value>
+  </data>
+  <data name="ParameterMode" xml:space="preserve">
+    <value>有参数模式</value>
+  </data>
 </root>

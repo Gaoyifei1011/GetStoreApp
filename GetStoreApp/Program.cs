@@ -27,14 +27,14 @@ namespace GetStoreApp
         public static void Main(string[] args)
         {
             CommandLineArgs = args.ToList();
-            IsDesktopProgram = CommandLineArgs.FindIndex(item => item.Equals("Console")) == -1;
+            IsDesktopProgram = GetAppExecuteMode();
 
             InitializeProgramResourcesAsync().Wait();
 
             // 以桌面应用程序方式正常启动
             if (IsDesktopProgram)
             {
-                StartupService.InitializeDesktopStartupAsync().Wait();
+                DesktopLaunchService.InitializeLaunchAsync().Wait();
 
                 ComWrappersSupport.InitializeComWrappers();
                 Application.Start((p) =>
@@ -54,13 +54,21 @@ namespace GetStoreApp
                     Kernel32Library.AllocConsole();
                 }
 
-                StartupService.InitializeConsoleStartupAsync().Wait();
+                ConsoleLaunchService.InitializeConsoleStartupAsync().Wait();
 
                 Kernel32Library.FreeConsole();
 
                 // 退出应用程序
                 Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
             }
+        }
+
+        /// <summary>
+        /// 检查命令参数是否以桌面方式启动
+        /// </summary>
+        public static bool GetAppExecuteMode()
+        {
+            return CommandLineArgs.Count == 0 || !CommandLineArgs[0].Equals("Console", StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>
