@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Services.Root;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
 using System;
 
@@ -14,7 +13,7 @@ namespace GetStoreApp.Converters.Formats
         {
             if (value == null)
             {
-                return DependencyProperty.UnsetValue;
+                return string.Empty;
             }
 
             return string.Format("{0}{1}", ResourceService.GetLocalized("/Download/Progress"), value);
@@ -22,7 +21,7 @@ namespace GetStoreApp.Converters.Formats
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            throw new NotImplementedException();
+            return default;
         }
     }
 }

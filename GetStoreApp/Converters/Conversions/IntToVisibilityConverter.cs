@@ -13,7 +13,7 @@ namespace GetStoreApp.Converters.Conversions
         {
             if (value == null)
             {
-                return DependencyProperty.UnsetValue;
+                return Visibility.Collapsed;
             }
 
             int result = System.Convert.ToInt32(value);
@@ -31,7 +31,7 @@ namespace GetStoreApp.Converters.Conversions
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            throw new NotImplementedException();
+            return default;
         }
     }
 }

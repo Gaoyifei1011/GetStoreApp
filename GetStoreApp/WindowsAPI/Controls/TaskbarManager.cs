@@ -1,6 +1,6 @@
-﻿using GetStoreApp.WindowsAPI.Controls.Taskbar;
+﻿using GetStoreApp.Views.Window;
+using GetStoreApp.WindowsAPI.Controls.Taskbar;
 using System;
-using WinRT.Interop;
 
 namespace GetStoreApp.WindowsAPI.Controls
 {
@@ -110,7 +110,7 @@ namespace GetStoreApp.WindowsAPI.Controls
             {
                 if (_ownerHandle == IntPtr.Zero)
                 {
-                    _ownerHandle = WindowNative.GetWindowHandle(App.MainWindow);
+                    _ownerHandle = MainWindow.GetMainWindowHandle();
                 }
 
                 return _ownerHandle;

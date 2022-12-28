@@ -3,8 +3,10 @@ using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Extensions.SystemTray;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
+using Microsoft.UI.Xaml;
 using System;
 using System.IO;
+using WinRT.Interop;
 
 namespace GetStoreApp.Views.Window
 {
@@ -18,9 +20,13 @@ namespace GetStoreApp.Views.Window
             ResourceService.GetLocalized("AppDisplayName")
             );
 
+        // 获取当前窗口的实例
+        public new static MainWindow Current { get; private set; }
+
         public MainWindow()
         {
             InitializeComponent();
+            Current = this;
             NavigationService.NavigationFrame = WindowFrame;
             InitializeTrayIcon();
 
@@ -34,6 +40,39 @@ namespace GetStoreApp.Views.Window
             });
         }
 
+        /// <summary>
+        /// 获取MainWindow的窗口句柄
+        /// </summary>
+        public static IntPtr GetMainWindowHandle()
+        {
+            if(Current is not null)
+            {
+                return WindowNative.GetWindowHandle(Current);
+            }
+            else
+            {
+                throw new ApplicationException(ResourceService.GetLocalized("IsMainWindowInitialized"));
+            }
+        }
+
+        /// <summary>
+        /// 获取MainWindow的XamlRoot
+        /// </summary>
+        public static XamlRoot GetMainWindowXamlRoot()
+        {
+            if (Current.Content.XamlRoot is not null)
+            {
+                return Current.Content.XamlRoot;
+            }
+            else
+            {
+                throw new ApplicationException(ResourceService.GetLocalized("IsMainWindowInitialized"));
+            }
+        }
+
+        /// <summary>
+        /// 初始化任务栏图标和右键菜单
+        /// </summary>
         private void InitializeTrayIcon()
         {
             TrayIcon.InitializeTrayMenu();

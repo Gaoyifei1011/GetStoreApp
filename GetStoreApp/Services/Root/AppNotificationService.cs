@@ -2,6 +2,7 @@
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Window;
 using GetStoreApp.Views.Pages;
+using GetStoreApp.Views.Window;
 using Microsoft.UI.Dispatching;
 using Microsoft.Windows.AppNotifications;
 using System;
@@ -35,7 +36,7 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         public static void HandleAppNotification(AppNotificationActivatedEventArgs args)
         {
-            App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
+            MainWindow.Current.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
             {
                 while (NavigationService.NavigationFrame is null)
                 {

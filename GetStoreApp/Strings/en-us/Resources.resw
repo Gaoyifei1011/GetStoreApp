@@ -171,4 +171,7 @@
   <data name="OK" xml:space="preserve">
     <value>OK</value>
   </data>
+  <data name="IsMainWindowInitialized" xml:space="preserve">
+    <value>Is the Content of MainWindow already initialized?</value>
+  </data>
 </root>

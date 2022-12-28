@@ -40,6 +40,12 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    
     <Content Include="Aria2\Aria2c.conf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -91,6 +97,11 @@
     <Content Include="LICENSE">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     
     <Manifest Include="$(ApplicationManifest)" />
     
@@ -374,6 +385,9 @@
     <Page Update="UI\Dialogs\About\CloudflareValidationDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Update="UI\Dialogs\About\ConsoleStartupArgsDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="UI\Dialogs\About\DesktopAppsDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -482,12 +496,6 @@
     </Page>
 
     <TrimmableAssembly Include="Microsoft.Windows.Widgets.Projection" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Page Update="UI\Dialogs\About\ConsoleStartupArgsDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
 </Project>
   

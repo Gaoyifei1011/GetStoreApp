@@ -270,7 +270,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             return Convert.ToInt64(TimeSpan.TotalSeconds);
         }
 
-        private void ResultListFilter(ref List<GetStoreApp.Models.Controls.Home.ResultModel> resultDataList)
+        private void ResultListFilter(ref List<ResultModel> resultDataList)
         {
             // 按要求过滤列表内容
             if (LinkFilterService.StartWithEFilterValue)

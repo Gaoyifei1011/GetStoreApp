@@ -2,6 +2,7 @@
 using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Controls.Settings.Appearance;
+using GetStoreApp.Views.Window;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
@@ -10,7 +11,6 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using Windows.Graphics;
 using Windows.UI;
-using WinRT.Interop;
 
 namespace GetStoreApp.ViewModels.Controls.Window
 {
@@ -28,7 +28,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
 
                 SetDragRectangles(Convert.ToInt32(appTitleBar.Margin.Left), appTitleBar.ActualWidth, appTitleBar.ActualHeight);
 
-                ((FrameworkElement)App.MainWindow.Content).ActualThemeChanged += OnActualThemeChanged;
+                ((FrameworkElement)MainWindow.Current.Content).ActualThemeChanged += OnActualThemeChanged;
 
                 // 应用主题设置跟随系统发生变化时，当系统主题设置发生变化时修改标题栏按钮主题
                 Messenger.Default.Register<bool>(this, MessageToken.SystemSettingsChanged, (systemSettingsChangedMessage) =>
@@ -58,7 +58,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
         /// </summary>
         public void OnUnloaded(object sender, RoutedEventArgs args)
         {
-            ((FrameworkElement)App.MainWindow.Content).ActualThemeChanged -= OnActualThemeChanged;
+            ((FrameworkElement)MainWindow.Current.Content).ActualThemeChanged -= OnActualThemeChanged;
             Messenger.Default.Unregister(this);
         }
 
@@ -138,7 +138,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
         /// </summary>
         private static int GetActualPixel(double pixel)
         {
-            int currentDpi = User32Library.GetDpiForWindow(WindowNative.GetWindowHandle(App.MainWindow));
+            int currentDpi = User32Library.GetDpiForWindow(MainWindow.GetMainWindowHandle());
             return Convert.ToInt32(pixel * (currentDpi / 96.0));
         }
     }

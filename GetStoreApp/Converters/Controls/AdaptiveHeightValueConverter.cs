@@ -6,6 +6,9 @@ using System.Linq;
 
 namespace GetStoreApp.Converters.Controls
 {
+    /// <summary>
+    /// 适应性网格视图高度值计算转换器
+    /// </summary>
     internal class AdaptiveHeightValueConverter : IValueConverter
     {
         private Thickness thickness = new Thickness(0, 0, 4, 4);
@@ -26,7 +29,7 @@ namespace GetStoreApp.Converters.Controls
                     return value;
                 }
 
-                double.TryParse(value.ToString(), out double height);
+                double.TryParse(System.Convert.ToString(value), out double height);
 
                 var padding = gridView.Padding;
                 var margin = GetItemMargin(gridView, DefaultItemMargin);
@@ -40,7 +43,7 @@ namespace GetStoreApp.Converters.Controls
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            throw new NotImplementedException();
+            return default;
         }
 
         internal static Thickness GetItemMargin(GridView view, Thickness fallback = default)

@@ -1,5 +1,4 @@
-﻿using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Data;
+﻿using Microsoft.UI.Xaml.Data;
 using System;
 
 namespace GetStoreApp.Converters.Checks
@@ -13,7 +12,7 @@ namespace GetStoreApp.Converters.Checks
         {
             if (value == null)
             {
-                return DependencyProperty.UnsetValue;
+                return false;
             }
 
             string result = System.Convert.ToString(value);
@@ -33,7 +32,7 @@ namespace GetStoreApp.Converters.Checks
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            throw new NotImplementedException();
+            return default;
         }
     }
 }

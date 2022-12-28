@@ -11,6 +11,7 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Dialogs.Download;
 using GetStoreApp.ViewModels.Base;
+using GetStoreApp.Views.Window;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml;
@@ -23,7 +24,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.Management.Deployment;
 using Windows.Storage;
-using WinRT.Interop;
 
 namespace GetStoreApp.ViewModels.Controls.Download
 {
@@ -234,7 +234,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 if (InstallModeService.InstallMode.InternalName == InstallModeService.InstallModeList[0].InternalName)
                 {
-                    Shell32Library.ShellExecute(WindowNative.GetWindowHandle(App.MainWindow), string.Empty, completedItem.FilePath, string.Empty, string.Empty, WindowShowStyle.SW_SHOWNORMAL);
+                    Shell32Library.ShellExecute(MainWindow.GetMainWindowHandle(), string.Empty, completedItem.FilePath, string.Empty, string.Empty, WindowShowStyle.SW_SHOWNORMAL);
                 }
 
                 // 直接安装
@@ -299,7 +299,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     }
                     else
                     {
-                        Shell32Library.ShellExecute(WindowNative.GetWindowHandle(App.MainWindow), "open", "explorer.exe", "", "", WindowShowStyle.SW_SHOWNORMAL);
+                        Shell32Library.ShellExecute(MainWindow.GetMainWindowHandle(), "open", "explorer.exe", "", "", WindowShowStyle.SW_SHOWNORMAL);
                     }
                 }
             }
@@ -460,7 +460,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         {
             if (args.RemovedItems.Any(item => item.DownloadFlag == 4))
             {
-                App.MainWindow.DispatcherQueue.TryEnqueue(async () =>
+                MainWindow.Current.DispatcherQueue.TryEnqueue(async () =>
                 {
                     foreach (BackgroundModel backgroundItem in args.RemovedItems)
                     {

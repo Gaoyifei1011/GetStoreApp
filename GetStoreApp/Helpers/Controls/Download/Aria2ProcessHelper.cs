@@ -118,7 +118,7 @@ namespace GetStoreApp.Helpers.Controls.Download
                 {
                     PROCESS_BASIC_INFORMATION pbi = new PROCESS_BASIC_INFORMATION();
                     int pSize = 0;
-                    if (-1 != NTdllLibrary.NtQueryInformationProcess(hProcess, PROCESSINFOCLASS.ProcessBasicInformation, ref pbi, pbi.Size, ref pSize))
+                    if (NTdllLibrary.NtQueryInformationProcess(hProcess, PROCESSINFOCLASS.ProcessBasicInformation, ref pbi, pbi.Size, ref pSize) != -1)
                     {
                         ParentID = pbi.InheritedFromUniqueProcessId;
                     }

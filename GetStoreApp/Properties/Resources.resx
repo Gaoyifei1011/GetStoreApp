@@ -117,67 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AskContinue" xml:space="preserve">
-    <value>Do you want to try to get it again? (Make sure to enter "Y", exit entering other characters)</value>
-  </data>
-  <data name="ChannelInformation" xml:space="preserve">
-    <value>There are four channels for download links: 1. Fast, 2. Slow, 3. Release Preview, and 4. Official Version</value>
-  </data>
-  <data name="ExitPrompt" xml:space="preserve">
-    <value>Are you sure want to quit?</value>
-  </data>
-  <data name="FileName" xml:space="preserve">
-    <value>File name</value>
-  </data>
-  <data name="FileSize" xml:space="preserve">
-    <value>File size</value>
-  </data>
-  <data name="GetCompleted" xml:space="preserve">
-    <value>Get completed</value>
-  </data>
-  <data name="GettingNow" xml:space="preserve">
-    <value>Queries are being made from the servers in the Microsoft Store, please be patient</value>
-  </data>
-  <data name="HeaderDescription1" xml:space="preserve">
-    <value>Get the Store app (console) version: {0}.{1}.{2}.{3}</value>
-  </data>
-  <data name="HeaderDescription2" xml:space="preserve">
-    <value>Get the Store app (console program) to quickly query and download the installation package for Microsoft Store apps.</value>
-  </data>
-  <data name="HeaderDescription3" xml:space="preserve">
-    <value>For more information, navigate to the "About" page of the application and learn about it in the "Usage Instructions" module.</value>
-  </data>
-  <data name="InputLink" xml:space="preserve">
-    <value>Please enter the corresponding link:</value>
-  </data>
-  <data name="None" xml:space="preserve">
-    <value>None</value>
-  </data>
-  <data name="ParameterError" xml:space="preserve">
-    <value>The parameters you inputed are incorrect, please check the parameters you inputed</value>
-  </data>
-  <data name="RequestError" xml:space="preserve">
-    <value>An error occurred in fetching data from the servers of the Microsoft Store, please check your network before trying to get it again</value>
-  </data>
-  <data name="RequestFailed" xml:space="preserve">
-    <value>The server returns empty data. You may not have entered the correct link, or the service does not support the build of this product</value>
-  </data>
-  <data name="RequestSuccessfully" xml:space="preserve">
-    <value>These links were successfully received from the servers of the Microsoft Store</value>
-  </data>
-  <data name="SelectChannel" xml:space="preserve">
-    <value>Please enter the channel you want to select (the default is production):</value>
-  </data>
-  <data name="SelectType" xml:space="preserve">
-    <value>Please enter the type you want to select (default selection URL (link)):</value>
-  </data>
-  <data name="SerialNumber" xml:space="preserve">
-    <value>Serial number</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>GetStoreApp (Dev)</value>
-  </data>
-  <data name="TypeInformation" xml:space="preserve">
-    <value>There are four types of acquisition apps:1. URL (link), 2.ProductID, 3.PackageFamilyName, 4.CategoryID</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Lengths" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\resources\lengths.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

@@ -56,11 +56,6 @@ namespace GetStoreApp.Services.Root
             DefaultResourceContext.QualifierValues["Language"] = DefaultAppLanguage.InternalName;
             CurrentResourceContext.QualifierValues["Language"] = CurrentAppLanguage.InternalName;
 
-            await Task.CompletedTask;
-        }
-
-        public static void InitializeResourceList()
-        {
             InitializeTypeList();
             InitializeChannelList();
             InitializeStatusBarStateList();
@@ -71,6 +66,8 @@ namespace GetStoreApp.Services.Root
             InitializeInstallModeList();
             InitializeThemeList();
             InitializeTraceCleanupList();
+
+            await Task.CompletedTask;
         }
 
         /// <summary>

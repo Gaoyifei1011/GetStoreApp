@@ -7,11 +7,11 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
+using GetStoreApp.Views.Window;
 using GetStoreApp.WindowsAPI.Dialogs;
 using System;
 using System.Collections.Generic;
 using Windows.Storage;
-using WinRT.Interop;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Common
 {
@@ -87,7 +87,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
                 Path = DownloadFolder.Path
             };
 
-            bool Result = dialog.ShowDialog(WindowNative.GetWindowHandle(App.MainWindow));
+            bool Result = dialog.ShowDialog(MainWindow.GetMainWindowHandle());
 
             if (Result)
             {

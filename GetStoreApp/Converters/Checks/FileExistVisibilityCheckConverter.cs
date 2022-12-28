@@ -14,7 +14,7 @@ namespace GetStoreApp.Converters.Checks
         {
             if (value == null)
             {
-                return DependencyProperty.UnsetValue;
+                return Visibility.Collapsed;
             }
 
             string FilePath = System.Convert.ToString(value);
@@ -46,7 +46,7 @@ namespace GetStoreApp.Converters.Checks
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            throw new NotImplementedException();
+            return default;
         }
     }
 }

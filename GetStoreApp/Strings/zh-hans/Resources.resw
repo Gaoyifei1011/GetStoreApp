@@ -138,6 +138,9 @@
   <data name="Fast" xml:space="preserve">
     <value>快速</value>
   </data>
+  <data name="IsMainWindowInitialized" xml:space="preserve">
+    <value>是否已经初始化MainWindow的Content？</value>
+  </data>
   <data name="OK" xml:space="preserve">
     <value>确定</value>
   </data>

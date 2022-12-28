@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Services.Controls.Settings.Appearance;
+using GetStoreApp.Views.Window;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Web.WebView2.Core;
@@ -12,7 +13,7 @@ namespace GetStoreApp.UI.Dialogs.Web
 
         public CoreWebView2FailedDialog(CoreWebView2ProcessFailedEventArgs args)
         {
-            XamlRoot = App.MainWindow.Content.XamlRoot;
+            XamlRoot = MainWindow.GetMainWindowXamlRoot();
             InitializeComponent();
             ViewModel.InitializeFailedInformation(args);
         }

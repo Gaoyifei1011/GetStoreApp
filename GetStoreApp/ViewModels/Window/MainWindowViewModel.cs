@@ -14,6 +14,7 @@ using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
+using GetStoreApp.Views.Window;
 using GetStoreApp.WindowsAPI.PInvoke.UxTheme;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
@@ -173,7 +174,7 @@ namespace GetStoreApp.ViewModels.Window
         // 窗口大小发生改变时，设置页面导航视图样式
         public IRelayCommand SizeChangedCommand => new RelayCommand<WindowSizeChangedEventArgs>((args) =>
         {
-            if (App.MainWindow.Width >= 768)
+            if (MainWindow.Current.Width >= 768)
             {
                 IsPaneToggleButtonVisible = false;
                 NavigationDispalyMode = NavigationViewPaneDisplayMode.Left;
@@ -206,7 +207,7 @@ namespace GetStoreApp.ViewModels.Window
         public IRelayCommand ShowOrHideWindowCommand => new RelayCommand(() =>
         {
             // 隐藏窗口
-            if (App.MainWindow.Visible)
+            if (MainWindow.Current.Visible)
             {
                 WindowHelper.HideAppWindow();
             }
@@ -278,7 +279,7 @@ namespace GetStoreApp.ViewModels.Window
         public void OnNavigationViewLoaded(object sender, RoutedEventArgs args)
         {
             // 初始化导航视图控件属性和应用的背景色。
-            if (App.MainWindow.Width >= 768)
+            if (MainWindow.Current.Width >= 768)
             {
                 IsPaneToggleButtonVisible = false;
                 NavigationDispalyMode = NavigationViewPaneDisplayMode.Left;
@@ -292,9 +293,9 @@ namespace GetStoreApp.ViewModels.Window
             }
 
             SetAppBackground();
-            SetContextMenuTheme((FrameworkElement)App.MainWindow.Content);
+            SetContextMenuTheme((FrameworkElement)MainWindow.Current.Content);
 
-            ((FrameworkElement)App.MainWindow.Content).ActualThemeChanged += OnActualThemeChanged;
+            ((FrameworkElement)MainWindow.Current.Content).ActualThemeChanged += OnActualThemeChanged;
 
             // 导航控件加载完成后初始化内容
             NavigationView navigationView = sender as NavigationView;

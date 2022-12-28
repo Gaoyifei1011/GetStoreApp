@@ -256,7 +256,7 @@
     <value>已成功从微软商店的服务器中接收到这些链接</value>
   </data>
   <data name="StatusInfoWarning" xml:space="preserve">
-    <value>服务器返回空数据。您可能没有输入正确的链接，或者服务不支持此产品的生成。</value>
+    <value>服务器返回空数据。您可能没有输入正确的链接，或者服务不支持此产品的生成</value>
   </data>
   <data name="StatusInfoWelcome" xml:space="preserve">
     <value>欢迎使用获取商店应用APP</value>

@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
+using GetStoreApp.Views.Window;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -14,7 +15,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
 
         public TraceCleanupPromptDialog()
         {
-            XamlRoot = App.MainWindow.Content.XamlRoot;
+            XamlRoot = MainWindow.GetMainWindowXamlRoot();
             InitializeComponent();
             ViewModel.InitializeTraceCleanupList();
         }

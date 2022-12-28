@@ -1,6 +1,11 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.Console;
+using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
+using GetStoreApp.Services.Controls.Download;
+using GetStoreApp.Services.Controls.Settings.Advanced;
 using GetStoreApp.Services.Controls.Settings.Appearance;
+using GetStoreApp.Services.Controls.Settings.Common;
+using GetStoreApp.Services.Controls.Settings.Experiment;
 using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using Microsoft.UI.Dispatching;
@@ -16,7 +21,7 @@ namespace GetStoreApp
 {
     public class Program
     {
-        private static bool IsDesktopProgram = true;
+        public static bool IsDesktopProgram { get; set; } = true;
 
         public static List<string> CommandLineArgs { get; set; }
 
@@ -53,7 +58,7 @@ namespace GetStoreApp
                 {
                     Kernel32Library.AllocConsole();
                 }
-
+                Console.WriteLine(CharExtension.GetStringDisplayLengthEx("你好字符串"));
                 ConsoleLaunchService.InitializeConsoleStartupAsync().Wait();
 
                 Kernel32Library.FreeConsole();
@@ -79,8 +84,36 @@ namespace GetStoreApp
             // 初始化应用资源，应用使用的语言信息和启动参数
             await LanguageService.InitializeLanguageAsync();
             await ResourceService.InitializeResourceAsync(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
+
+            await RegionService.InitializeRegionAsync();
+            await LinkFilterService.InitializeLinkFilterValueAsnyc();
+
             await InfoHelper.InitializeAppVersionAsync();
             await InfoHelper.InitializeSystemVersionAsync();
+
+            if (IsDesktopProgram)
+            {
+                // 初始化数据库信息
+                await DataBaseService.InitializeDataBaseAsync();
+                await DownloadDBService.InitializeDownloadDBAsync();
+
+                // 初始化应用配置信息
+                await AppExitService.InitializeAppExitAsync();
+                await InstallModeService.InitializeInstallModeAsync();
+
+                await AlwaysShowBackdropService.InitializeAlwaysShowBackdropAsync();
+                await BackdropService.InitializeBackdropAsync();
+                await ThemeService.InitializeThemeAsync();
+                await TopMostService.InitializeTopMostValueAsync();
+
+                await DownloadOptionsService.InitializeAsync();
+                await HistoryLiteNumService.InitializeHistoryLiteNumAsync();
+                await NotificationService.InitializeNotificationAsync();
+                await UseInstructionService.InitializeUseInsVisValueAsync();
+
+                // 实验功能设置配置
+                await NetWorkMonitorService.InitializeNetWorkMonitorValueAsync();
+            }
         }
     }
 }

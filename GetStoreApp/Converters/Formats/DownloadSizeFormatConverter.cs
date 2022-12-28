@@ -1,5 +1,4 @@
-﻿using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Data;
+﻿using Microsoft.UI.Xaml.Data;
 using System;
 using System.Collections.Generic;
 
@@ -21,7 +20,7 @@ namespace GetStoreApp.Converters.Formats
         {
             if (value == null)
             {
-                return DependencyProperty.UnsetValue;
+                return string.Empty;
             }
 
             double result = System.Convert.ToDouble(value);
@@ -46,7 +45,7 @@ namespace GetStoreApp.Converters.Formats
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            throw new NotImplementedException();
+            return default;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Models.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
+using GetStoreApp.Views.Window;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
@@ -62,7 +63,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// </summary>
         public static async Task SetAppThemeAsync()
         {
-            if (App.MainWindow.Content is FrameworkElement frameworkElement)
+            if (MainWindow.Current.Content is FrameworkElement frameworkElement)
             {
                 frameworkElement.RequestedTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme.InternalName);
             }

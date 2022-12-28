@@ -117,11 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AskContinue" xml:space="preserve">
+    <value>您是否想要尝试重新获取？（确定输入“Y”，退出输入其他字符）</value>
+  </data>
   <data name="ChannelInformation" xml:space="preserve">
     <value>下载链接共有四种通道：1.快速、2.慢速、3.发布预览、4.正式版</value>
   </data>
   <data name="ExitPrompt" xml:space="preserve">
     <value>您确定要退出吗？</value>
+  </data>
+  <data name="FileName" xml:space="preserve">
+    <value>文件名称</value>
+  </data>
+  <data name="FileSize" xml:space="preserve">
+    <value>文件大小</value>
+  </data>
+  <data name="GetCompleted" xml:space="preserve">
+    <value>获取完成</value>
+  </data>
+  <data name="GettingNow" xml:space="preserve">
+    <value>正在从微软商店的服务器中进行查询，请耐心等待</value>
   </data>
   <data name="HeaderDescription1" xml:space="preserve">
     <value>获取商店应用（控制台程序）版本：{0}.{1}.{2}.{3}</value>
@@ -135,14 +150,29 @@
   <data name="InputLink" xml:space="preserve">
     <value>请输入对应的链接：</value>
   </data>
+  <data name="None" xml:space="preserve">
+    <value>无</value>
+  </data>
   <data name="ParameterError" xml:space="preserve">
     <value>您输入的参数有误，请检查您输入的参数</value>
+  </data>
+  <data name="RequestError" xml:space="preserve">
+    <value>从微软商店的服务器中获取数据发生了错误，请检查您的网络后再尝试重新获取</value>
+  </data>
+  <data name="RequestFailed" xml:space="preserve">
+    <value>服务器返回空数据。您可能没有输入正确的链接，或者服务不支持此产品的生成</value>
+  </data>
+  <data name="RequestSuccessfully" xml:space="preserve">
+    <value>已成功从微软商店的服务器中接收到这些链接</value>
   </data>
   <data name="SelectChannel" xml:space="preserve">
     <value>请输入您要选择的通道（默认选择正式版）：</value>
   </data>
   <data name="SelectType" xml:space="preserve">
     <value>请输入您要选择的类型（默认选择URL（链接））：</value>
+  </data>
+  <data name="SerialNumber" xml:space="preserve">
+    <value>序号</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>获取商店应用 (Dev)</value>

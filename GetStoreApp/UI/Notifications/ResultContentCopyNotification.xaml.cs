@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
+using GetStoreApp.Views.Window;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -31,7 +32,7 @@ namespace GetStoreApp.UI.Notifications
             SetPopUpPlacement();
 
             Popup.Child = this;
-            Popup.XamlRoot = App.MainWindow.Content.XamlRoot;
+            Popup.XamlRoot = MainWindow.GetMainWindowXamlRoot();
 
             if (duration.HasValue)
             {
@@ -85,7 +86,7 @@ namespace GetStoreApp.UI.Notifications
         private void NotificationLoaded(object sender, RoutedEventArgs args)
         {
             PopupIn.Begin();
-            App.MainWindow.SizeChanged += NotificationPlaceChanged;
+            MainWindow.Current.SizeChanged += NotificationPlaceChanged;
         }
 
         /// <summary>
@@ -93,7 +94,7 @@ namespace GetStoreApp.UI.Notifications
         /// </summary>
         private void NotificationUnLoaded(object sender, RoutedEventArgs args)
         {
-            App.MainWindow.SizeChanged -= NotificationPlaceChanged;
+            MainWindow.Current.SizeChanged -= NotificationPlaceChanged;
         }
 
         /// <summary>
@@ -126,8 +127,8 @@ namespace GetStoreApp.UI.Notifications
         /// </summary>
         private void SetPopUpPlacement()
         {
-            Width = App.MainWindow.Bounds.Width;
-            Height = App.MainWindow.Bounds.Height;
+            Width = MainWindow.Current.Bounds.Width;
+            Height = MainWindow.Current.Bounds.Height;
 
             Popup.VerticalOffset = 75;
         }

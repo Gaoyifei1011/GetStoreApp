@@ -256,7 +256,7 @@
     <value>The links were successfully received from the Microsoft Store server</value>
   </data>
   <data name="StatusInfoWarning" xml:space="preserve">
-    <value>The server returns empty data. You may not have entered the correct link, or the service may not support the generation of this product.</value>
+    <value>The server returns empty data. You may not have entered the correct link, or the service may not support the generation of this product</value>
   </data>
   <data name="StatusInfoWelcome" xml:space="preserve">
     <value>Welcome to use GetStoreApp</value>

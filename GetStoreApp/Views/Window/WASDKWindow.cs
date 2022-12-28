@@ -2,6 +2,7 @@
 using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
+using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Controls;
@@ -129,7 +130,7 @@ namespace GetStoreApp.Views.Window
             Hwnd = WindowNative.GetWindowHandle(this);
             if (Hwnd == IntPtr.Zero)
             {
-                throw new NullReferenceException("窗口句柄不能为空");
+                throw new NullReferenceException(ResourceService.GetLocalized("IsMainWindowInitialized"));
             }
             newWndProc = new WinProc(NewWindowProc);
             oldWndProc = SetWindowLongPtr(Hwnd, WindowLongIndexFlags.GWL_WNDPROC, newWndProc);

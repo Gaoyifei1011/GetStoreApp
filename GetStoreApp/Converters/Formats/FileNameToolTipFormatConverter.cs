@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
 using System;
 
@@ -15,7 +14,7 @@ namespace GetStoreApp.Converters.Formats
         {
             if (value == null)
             {
-                return DependencyProperty.UnsetValue;
+                return string.Empty;
             }
 
             if (DownloadOptionsService.DownloadMode.InternalName == DownloadOptionsService.DownloadModeList[0].InternalName)
@@ -34,7 +33,7 @@ namespace GetStoreApp.Converters.Formats
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            throw new NotImplementedException();
+            return default;
         }
     }
 }

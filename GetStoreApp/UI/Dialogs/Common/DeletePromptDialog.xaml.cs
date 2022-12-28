@@ -1,6 +1,7 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
+using GetStoreApp.Views.Window;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -15,7 +16,7 @@ namespace GetStoreApp.UI.Dialogs.Common
 
         public DeletePromptDialog(DeleteArgs deletePrompt)
         {
-            XamlRoot = App.MainWindow.Content.XamlRoot;
+            XamlRoot = MainWindow.GetMainWindowXamlRoot();
 
             switch (deletePrompt)
             {

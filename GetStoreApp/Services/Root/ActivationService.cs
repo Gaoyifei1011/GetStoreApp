@@ -1,8 +1,5 @@
 ﻿using GetStoreApp.Services.Controls.Download;
-using GetStoreApp.Services.Controls.Settings.Advanced;
 using GetStoreApp.Services.Controls.Settings.Appearance;
-using GetStoreApp.Services.Controls.Settings.Common;
-using GetStoreApp.Services.Controls.Settings.Experiment;
 using GetStoreApp.Views.Window;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
@@ -10,7 +7,6 @@ using Microsoft.UI.Xaml;
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using WinRT.Interop;
 
 namespace GetStoreApp.Services.Root
 {
@@ -21,15 +17,12 @@ namespace GetStoreApp.Services.Root
     {
         public static async Task ActivateAsync(LaunchActivatedEventArgs activationArgs)
         {
-            // 在应用窗口激活前配置应用的设置
-            await InitializeAsync();
-
             App.MainWindow = new MainWindow();
 
             // 激活应用窗口
             App.MainWindow.Activate();
 
-            nint WindowHandle = WindowNative.GetWindowHandle(App.MainWindow);
+            nint WindowHandle = MainWindow.GetMainWindowHandle();
             WindowId windowId = Win32Interop.GetWindowIdFromWindow(WindowHandle);
 
             App.AppWindow = AppWindow.GetFromWindowId(windowId);
@@ -38,37 +31,6 @@ namespace GetStoreApp.Services.Root
 
             // 窗口激活后配置其他设置
             await StartupAsync();
-        }
-
-        /// <summary>
-        /// 在应用窗口激活前配置应用的设置
-        /// </summary>
-        private static async Task InitializeAsync()
-        {
-            ResourceService.InitializeResourceList();
-
-            // 初始化数据库信息
-            await DataBaseService.InitializeDataBaseAsync();
-            await DownloadDBService.InitializeDownloadDBAsync();
-
-            // 初始化应用配置信息
-            await AppExitService.InitializeAppExitAsync();
-            await InstallModeService.InitializeInstallModeAsync();
-
-            await AlwaysShowBackdropService.InitializeAlwaysShowBackdropAsync();
-            await BackdropService.InitializeBackdropAsync();
-            await ThemeService.InitializeThemeAsync();
-            await TopMostService.InitializeTopMostValueAsync();
-
-            await DownloadOptionsService.InitializeAsync();
-            await HistoryLiteNumService.InitializeHistoryLiteNumAsync();
-            await LinkFilterService.InitializeLinkFilterValueAsnyc();
-            await NotificationService.InitializeNotificationAsync();
-            await RegionService.InitializeRegionAsync();
-            await UseInstructionService.InitializeUseInsVisValueAsync();
-
-            // 实验功能设置配置
-            await NetWorkMonitorService.InitializeNetWorkMonitorValueAsync();
         }
 
         /// <summary>

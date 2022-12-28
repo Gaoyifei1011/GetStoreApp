@@ -37,7 +37,7 @@ namespace GetStoreApp.Services.Root
             Console.CancelKeyPress += OnConsoleCancelKeyPress;
             InitializeIntroduction();
             InitializeRequestContent();
-            await Task.CompletedTask;
+            await RequestService.GetLinksAsync();
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 控制台程序运行时初始化介绍信息
         /// </summary>
-        public static void InitializeIntroduction()
+        private static void InitializeIntroduction()
         {
             Console.Title = ResourceService.GetLocalized("/Console/Title");
 
@@ -90,9 +90,9 @@ namespace GetStoreApp.Services.Root
         }
 
         /// <summary>
-        /// 初始化请求前要输入的信息
+        /// 初始化请求链接前要输入的信息
         /// </summary>
-        public static void InitializeRequestContent()
+        private static void InitializeRequestContent()
         {
             if (GetLaunchMode() == ConsoleLaunchModeArgs.WithoutQuery)
             {
@@ -101,6 +101,7 @@ namespace GetStoreApp.Services.Root
             }
             else
             {
+                // 选择类型
                 Console.WriteLine(ResourceService.GetLocalized("/Console/TypeInformation"));
                 Console.Write(ResourceService.GetLocalized("/Console/SelectType"));
                 int typeIndex;
@@ -117,6 +118,7 @@ namespace GetStoreApp.Services.Root
                     typeIndex = 1;
                 }
 
+                // 选择通道
                 Console.WriteLine(ResourceService.GetLocalized("/Console/ChannelInformation"));
                 Console.Write(ResourceService.GetLocalized("/Console/SelectChannel"));
                 int channelIndex;
@@ -133,6 +135,7 @@ namespace GetStoreApp.Services.Root
                     channelIndex = 4;
                 }
 
+                // 输入链接
                 Console.Write(ResourceService.GetLocalized("/Console/InputLink"));
                 string link = Console.ReadLine();
 
@@ -143,7 +146,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 获取控制台应用的启动方式
         /// </summary>
-        public static ConsoleLaunchModeArgs GetLaunchMode()
+        private static ConsoleLaunchModeArgs GetLaunchMode()
         {
             if (Program.CommandLineArgs.Count == 1)
             {
@@ -158,7 +161,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 解析启动命令参数
         /// </summary>
-        public static void ParseLaunchArgs()
+        private static void ParseLaunchArgs()
         {
             if (Program.CommandLineArgs.Count == 2)
             {

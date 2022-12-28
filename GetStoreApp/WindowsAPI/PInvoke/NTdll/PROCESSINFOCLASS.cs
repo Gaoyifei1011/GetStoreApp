@@ -8,7 +8,7 @@
         ProcessBasicInformation = 0,
 
         /// <summary>
-        /// 检索一个 DWORD_PTR 值，该值是进程的调试器的端口号。 非零值指示进程在环 3 调试器的控制下运行。
+        /// 检索一个 DWORD_PTR 值，该值是进程的调试器的端口号。 非零值指示进程在ring 3 调试器的控制下运行。
         /// </summary>
         ProcessDebugPort = 7,
 

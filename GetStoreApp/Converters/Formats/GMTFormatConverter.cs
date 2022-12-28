@@ -1,5 +1,4 @@
-﻿using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Data;
+﻿using Microsoft.UI.Xaml.Data;
 using System;
 
 namespace GetStoreApp.Converters.Formats
@@ -13,7 +12,7 @@ namespace GetStoreApp.Converters.Formats
         {
             if (value == null)
             {
-                return DependencyProperty.UnsetValue;
+                return string.Empty;
             }
 
             string RawDataTime = System.Convert.ToString(value);

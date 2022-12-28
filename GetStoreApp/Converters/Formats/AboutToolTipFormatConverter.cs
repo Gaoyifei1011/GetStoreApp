@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Services.Root;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
 using System;
 
@@ -14,7 +13,7 @@ namespace GetStoreApp.Converters.Formats
         {
             if (value == null || parameter == null)
             {
-                return DependencyProperty.UnsetValue;
+                return string.Empty;
             }
 
             string param = System.Convert.ToString(parameter);
@@ -35,7 +34,7 @@ namespace GetStoreApp.Converters.Formats
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            throw new NotImplementedException();
+            return default;
         }
     }
 }
