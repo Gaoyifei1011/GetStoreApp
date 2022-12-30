@@ -10,7 +10,12 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
         // 实验功能设置
         public IRelayCommand ConfigCommand => new RelayCommand(async () =>
         {
-            await new ExperimentalConfigDialog().ShowAsync();
+            if (!App.IsDialogOpening)
+            {
+                App.IsDialogOpening = true;
+                await new ExperimentalConfigDialog().ShowAsync();
+                App.IsDialogOpening = false;
+            }
         });
     }
 }

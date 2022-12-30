@@ -189,7 +189,12 @@ namespace GetStoreApp.ViewModels.Pages
 
             if (SelectedHistoryDataList.Count == 0)
             {
-                await new SelectEmptyPromptDialog().ShowAsync();
+                if (!App.IsDialogOpening)
+                {
+                    App.IsDialogOpening = true;
+                    await new SelectEmptyPromptDialog().ShowAsync();
+                    App.IsDialogOpening = false;
+                }
                 return;
             };
 
@@ -216,7 +221,12 @@ namespace GetStoreApp.ViewModels.Pages
             // 没有选中任何内容时显示空提示对话框
             if (SelectedHistoryDataList.Count == 0)
             {
-                await new SelectEmptyPromptDialog().ShowAsync();
+                if (!App.IsDialogOpening)
+                {
+                    App.IsDialogOpening = true;
+                    await new SelectEmptyPromptDialog().ShowAsync();
+                    App.IsDialogOpening = false;
+                }
                 return;
             };
 

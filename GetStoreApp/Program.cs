@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Extensions.Console;
-using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Advanced;
@@ -58,7 +57,6 @@ namespace GetStoreApp
                 {
                     Kernel32Library.AllocConsole();
                 }
-                Console.WriteLine(CharExtension.GetStringDisplayLengthEx("你好字符串"));
                 ConsoleLaunchService.InitializeConsoleStartupAsync().Wait();
 
                 Kernel32Library.FreeConsole();

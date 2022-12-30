@@ -178,7 +178,12 @@ namespace GetStoreApp.ViewModels.Controls.Download
             // 没有选中任何内容时显示空提示对话框
             if (SelectedDownloadingDataList.Count == 0)
             {
-                await new SelectEmptyPromptDialog().ShowAsync();
+                if (!App.IsDialogOpening)
+                {
+                    App.IsDialogOpening = true;
+                    await new SelectEmptyPromptDialog().ShowAsync();
+                    App.IsDialogOpening = false;
+                }
                 return;
             }
 

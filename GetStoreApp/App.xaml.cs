@@ -24,7 +24,7 @@ namespace GetStoreApp
         {
             InitializeComponent();
             UnhandledException += OnUnhandledException;
-            
+
             AppNotificationService.Initialize();
         }
 

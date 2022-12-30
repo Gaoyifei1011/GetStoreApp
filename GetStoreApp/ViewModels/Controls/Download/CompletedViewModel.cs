@@ -108,7 +108,12 @@ namespace GetStoreApp.ViewModels.Controls.Download
             // 没有选中任何内容时显示空提示对话框
             if (SelectedCompletedDataList.Count == 0)
             {
-                await new SelectEmptyPromptDialog().ShowAsync();
+                if (!App.IsDialogOpening)
+                {
+                    App.IsDialogOpening = true;
+                    await new SelectEmptyPromptDialog().ShowAsync();
+                    App.IsDialogOpening = false;
+                }
                 return;
             }
 
@@ -125,28 +130,34 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
 
             // 删除时显示删除确认对话框
-            ContentDialogResult result = await new DeletePromptDialog(DeleteArgs.Download).ShowAsync();
-
-            if (result == ContentDialogResult.Primary)
+            if (!App.IsDialogOpening)
             {
-                IsSelectMode = false;
+                App.IsDialogOpening = true;
+                ContentDialogResult result = await new DeletePromptDialog(DeleteArgs.Download).ShowAsync();
 
-                bool DeleteSelectedResult = await DownloadDBService.DeleteSelectedAsync(SelectedCompletedDataList);
-
-                lock (CompletedDataListLock)
+                if (result == ContentDialogResult.Primary)
                 {
-                    foreach (BackgroundModel backgroundItem in SelectedCompletedDataList)
+                    IsSelectMode = false;
+
+                    bool DeleteSelectedResult = await DownloadDBService.DeleteSelectedAsync(SelectedCompletedDataList);
+
+                    lock (CompletedDataListLock)
                     {
-                        try
+                        foreach (BackgroundModel backgroundItem in SelectedCompletedDataList)
                         {
-                            CompletedDataList.Remove(CompletedDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey));
-                        }
-                        catch (Exception)
-                        {
-                            continue;
+                            try
+                            {
+                                CompletedDataList.Remove(CompletedDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey));
+                            }
+                            catch (Exception)
+                            {
+                                continue;
+                            }
                         }
                     }
                 }
+
+                App.IsDialogOpening = false;
             }
         });
 
@@ -168,7 +179,12 @@ namespace GetStoreApp.ViewModels.Controls.Download
             // 没有选中任何内容时显示空提示对话框
             if (SelectedCompletedDataList.Count == 0)
             {
-                await new SelectEmptyPromptDialog().ShowAsync();
+                if (!App.IsDialogOpening)
+                {
+                    App.IsDialogOpening = true;
+                    await new SelectEmptyPromptDialog().ShowAsync();
+                    App.IsDialogOpening = false;
+                }
                 return;
             }
 
@@ -185,38 +201,44 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
 
             // 删除时显示删除确认对话框
-            ContentDialogResult result = await new DeletePromptDialog(DeleteArgs.DownloadWithFile).ShowAsync();
-
-            if (result == ContentDialogResult.Primary)
+            if (!App.IsDialogOpening)
             {
-                IsSelectMode = false;
+                App.IsDialogOpening = true;
+                ContentDialogResult result = await new DeletePromptDialog(DeleteArgs.DownloadWithFile).ShowAsync();
 
-                foreach (BackgroundModel item in SelectedCompletedDataList)
+                if (result == ContentDialogResult.Primary)
                 {
-                    // 删除文件
-                    try
+                    IsSelectMode = false;
+
+                    foreach (BackgroundModel item in SelectedCompletedDataList)
                     {
-                        if (File.Exists(item.FilePath))
+                        // 删除文件
+                        try
                         {
-                            File.Delete(item.FilePath);
-                        }
-
-                        // 删除记录
-                        bool DeleteResult = await DownloadDBService.DeleteAsync(item.DownloadKey);
-
-                        if (DeleteResult)
-                        {
-                            lock (CompletedDataListLock)
+                            if (File.Exists(item.FilePath))
                             {
-                                CompletedDataList.Remove(CompletedDataList.First(item => item.DownloadKey == item.DownloadKey));
+                                File.Delete(item.FilePath);
+                            }
+
+                            // 删除记录
+                            bool DeleteResult = await DownloadDBService.DeleteAsync(item.DownloadKey);
+
+                            if (DeleteResult)
+                            {
+                                lock (CompletedDataListLock)
+                                {
+                                    CompletedDataList.Remove(CompletedDataList.First(item => item.DownloadKey == item.DownloadKey));
+                                }
                             }
                         }
-                    }
-                    catch (Exception)
-                    {
-                        continue;
+                        catch (Exception)
+                        {
+                            continue;
+                        }
                     }
                 }
+
+                App.IsDialogOpening = false;
             }
         });
 
@@ -376,7 +398,12 @@ namespace GetStoreApp.ViewModels.Controls.Download
         // 查看文件信息
         public IRelayCommand FileInformationCommand => new RelayCommand<CompletedModel>(async (completedItem) =>
         {
-            await new FileInformationDialog(completedItem).ShowAsync();
+            if (!App.IsDialogOpening)
+            {
+                App.IsDialogOpening = true;
+                await new FileInformationDialog(completedItem).ShowAsync();
+                App.IsDialogOpening = false;
+            }
         });
 
         public CompletedViewModel()

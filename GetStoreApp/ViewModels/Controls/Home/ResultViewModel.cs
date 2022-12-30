@@ -125,7 +125,12 @@ namespace GetStoreApp.ViewModels.Controls.Home
             // 内容为空时显示空提示对话框
             if (SelectedResultDataList.Count == 0)
             {
-                await new SelectEmptyPromptDialog().ShowAsync();
+                if (!App.IsDialogOpening)
+                {
+                    App.IsDialogOpening = true;
+                    await new SelectEmptyPromptDialog().ShowAsync();
+                    App.IsDialogOpening = false;
+                }
                 return;
             };
 
@@ -154,7 +159,12 @@ namespace GetStoreApp.ViewModels.Controls.Home
             // 内容为空时显示空提示对话框
             if (SelectedResultDataList.Count == 0)
             {
-                await new SelectEmptyPromptDialog().ShowAsync();
+                if (!App.IsDialogOpening)
+                {
+                    App.IsDialogOpening = true;
+                    await new SelectEmptyPromptDialog().ShowAsync();
+                    App.IsDialogOpening = false;
+                }
                 return;
             };
 
@@ -191,7 +201,12 @@ namespace GetStoreApp.ViewModels.Controls.Home
             // 内容为空时显示空提示对话框
             if (SelectedResultDataList.Count == 0)
             {
-                await new SelectEmptyPromptDialog().ShowAsync();
+                if (!App.IsDialogOpening)
+                {
+                    App.IsDialogOpening = true;
+                    await new SelectEmptyPromptDialog().ShowAsync();
+                    App.IsDialogOpening = false;
+                }
                 return;
             };
 

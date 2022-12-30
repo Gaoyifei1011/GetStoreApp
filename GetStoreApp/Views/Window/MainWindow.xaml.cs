@@ -45,7 +45,7 @@ namespace GetStoreApp.Views.Window
         /// </summary>
         public static IntPtr GetMainWindowHandle()
         {
-            if(Current is not null)
+            if (Current is not null)
             {
                 return WindowNative.GetWindowHandle(Current);
             }
