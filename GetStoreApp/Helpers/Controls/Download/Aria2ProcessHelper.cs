@@ -84,6 +84,9 @@ namespace GetStoreApp.Helpers.Controls.Download
             }
         }
 
+        /// <summary>
+        /// 获取所有的子进程ID
+        /// </summary>
         public static List<int> GetChildProcessIds(int parentProcessId)
         {
             List<int> myChildrenProcessList = new List<int>();
@@ -108,6 +111,9 @@ namespace GetStoreApp.Helpers.Controls.Download
             return myChildrenProcessList;
         }
 
+        /// <summary>
+        /// 获取父进程ID
+        /// </summary>
         public static int GetParentProcessId(int processId)
         {
             int ParentID = 0;

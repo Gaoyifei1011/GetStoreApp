@@ -322,7 +322,7 @@ namespace GetStoreApp.Services.Root
         }
 
         /// <summary>
-        /// UI字符串本地化
+        /// 字符串本地化
         /// </summary>
         public static string GetLocalized(string resource)
         {

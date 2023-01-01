@@ -85,9 +85,10 @@ namespace GetStoreApp
 
             await RegionService.InitializeRegionAsync();
             await LinkFilterService.InitializeLinkFilterValueAsnyc();
+            await DownloadOptionsService.InitializeAsync();
 
-            await InfoHelper.InitializeAppVersionAsync();
-            await InfoHelper.InitializeSystemVersionAsync();
+            InfoHelper.InitializeAppVersion();
+            InfoHelper.InitializeSystemVersion();
 
             if (IsDesktopProgram)
             {
@@ -104,7 +105,6 @@ namespace GetStoreApp
                 await ThemeService.InitializeThemeAsync();
                 await TopMostService.InitializeTopMostValueAsync();
 
-                await DownloadOptionsService.InitializeAsync();
                 await HistoryLiteNumService.InitializeHistoryLiteNumAsync();
                 await NotificationService.InitializeNotificationAsync();
                 await UseInstructionService.InitializeUseInsVisValueAsync();

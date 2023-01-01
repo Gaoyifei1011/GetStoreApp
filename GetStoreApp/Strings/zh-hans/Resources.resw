@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppDescription" xml:space="preserve">
-    <value>获取商店应用 (Dev)</value>
+    <value>获取商店应用</value>
   </data>
   <data name="AppDisplayName" xml:space="preserve">
-    <value>获取商店应用 (Dev)</value>
+    <value>获取商店应用</value>
   </data>
   <data name="AppIsRunning" xml:space="preserve">
     <value>应用程序正在运行中。</value>
@@ -145,7 +145,7 @@
     <value>确定</value>
   </data>
   <data name="PackageDisplayName" xml:space="preserve">
-    <value>获取商店应用 (Dev)</value>
+    <value>获取商店应用</value>
   </data>
   <data name="PackageFamilyName" xml:space="preserve">
     <value>PackageFamilyName</value>

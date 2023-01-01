@@ -98,8 +98,8 @@ namespace GetStoreApp.Services.Shell
                             Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine(ResourceService.GetLocalized("/Console/RequestSuccessfully"));
                             Console.ResetColor();
-                            RequestState = true;
-                            // 解析内容并打印输出
+                            RequestState = false;
+                            await ParseService.ParseDataAsync(httpRequestData);
                             break;
                         }
                     case 2:
@@ -144,56 +144,36 @@ namespace GetStoreApp.Services.Shell
         /// </summary>
         private static void PrintRequestFailedData()
         {
-            int Column1EmptyLength = 10;
-            int Column2EmptyLength = 15;
-
-            string FileNameHeader = ResourceService.GetLocalized("/Console/FileName");
-            string FileSizeHeader = ResourceService.GetLocalized("/Console/FileSIze");
-            string None = ResourceService.GetLocalized("/Console/None");
             string SerialNumberHeader = ResourceService.GetLocalized("/Console/SerialNumber");
+            string FileNameHeader = ResourceService.GetLocalized("/Console/FileName");
+            string FileSizeHeader = ResourceService.GetLocalized("/Console/FileSize");
+            string None = ResourceService.GetLocalized("/Console/None");
 
-            int FileNameHeaderLength = CharExtension.GetStringDisplayLengthEx(FileNameHeader);
-            int NoneLength = CharExtension.GetStringDisplayLength(None);
             int SerialNumberHeaderLength = CharExtension.GetStringDisplayLengthEx(SerialNumberHeader);
+            int FileNameHeaderLength = CharExtension.GetStringDisplayLengthEx(FileNameHeader);
+            int FileSizeHeaderLength = CharExtension.GetStringDisplayLengthEx(FileSizeHeader);
+            int NoneLength = CharExtension.GetStringDisplayLength(None);
+
+            int SerialNumberColumnLength = (SerialNumberHeaderLength > "1".Length ? SerialNumberHeaderLength : "1".Length) + 3;
+            int FileNameColumnLength = (FileNameHeaderLength > NoneLength ? FileNameHeaderLength : NoneLength) + 3;
 
             Console.Write(ConsoleLaunchService.LineBreaks);
+            Console.WriteLine(ResourceService.GetLocalized("/Console/ResultDataList"));
 
-            Console.Write(SerialNumberHeader);
-            if (SerialNumberHeaderLength < Column1EmptyLength)
-            {
-                Console.Write(new string(' ', Column1EmptyLength - SerialNumberHeaderLength));
-            }
-
-            Console.Write(FileNameHeader);
-            if (SerialNumberHeaderLength < Column2EmptyLength)
-            {
-                Console.Write(new string(' ', Column2EmptyLength - FileNameHeaderLength));
-            }
+            // 打印标题
+            Console.Write(SerialNumberHeader + new string(ConsoleLaunchService.RowSplitCharacter, SerialNumberColumnLength - SerialNumberHeaderLength));
+            Console.Write(FileNameHeader + new string(ConsoleLaunchService.RowSplitCharacter, FileNameColumnLength - FileNameHeaderLength));
             Console.Write(FileSizeHeader + ConsoleLaunchService.LineBreaks);
 
-            Console.Write(new string('-', CharExtension.GetStringDisplayLengthEx(SerialNumberHeader)).PadRight(Column1EmptyLength));
-            Console.Write(new string('-', CharExtension.GetStringDisplayLengthEx(FileNameHeader)).PadRight(Column2EmptyLength));
-            Console.Write(new string('-', CharExtension.GetStringDisplayLengthEx(FileSizeHeader)) + ConsoleLaunchService.LineBreaks);
+            // 打印标题与内容的分割线
+            Console.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, SerialNumberHeaderLength).PadRight(SerialNumberColumnLength));
+            Console.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, FileNameHeaderLength).PadRight(FileNameColumnLength));
+            Console.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, FileSizeHeaderLength) + ConsoleLaunchService.LineBreaks);
 
-            if (SerialNumberHeaderLength < Column1EmptyLength)
-            {
-                Console.Write("1" + new string(' ', Column1EmptyLength - 1));
-            }
-            else
-            {
-                Console.Write("1" + new string(' ', SerialNumberHeaderLength - 1));
-            }
-
-            if (FileNameHeaderLength < Column2EmptyLength)
-            {
-                Console.Write(None + new string(' ', Column2EmptyLength - NoneLength));
-            }
-            else
-            {
-                Console.Write(None + new string(' ', FileNameHeaderLength - NoneLength));
-            }
-
-            Console.WriteLine(ResourceService.GetLocalized("/Console/None") + ConsoleLaunchService.LineBreaks);
+            // 输出内容
+            Console.Write("1" + new string(ConsoleLaunchService.RowSplitCharacter, SerialNumberColumnLength - 1));
+            Console.Write(None + new string(ConsoleLaunchService.RowSplitCharacter, FileNameColumnLength - NoneLength));
+            Console.Write(None + ConsoleLaunchService.LineBreaks);
         }
     }
 }

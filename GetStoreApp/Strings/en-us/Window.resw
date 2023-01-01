@@ -121,7 +121,7 @@
     <value>About</value>
   </data>
   <data name="AppTitle" xml:space="preserve">
-    <value>GetStoreApp (Dev)</value>
+    <value>GetStoreApp</value>
   </data>
   <data name="Download" xml:space="preserve">
     <value>Download Management</value>

@@ -121,7 +121,7 @@
     <value>关于</value>
   </data>
   <data name="AppTitle" xml:space="preserve">
-    <value>获取商店应用 (Dev)</value>
+    <value>获取商店应用</value>
   </data>
   <data name="Download" xml:space="preserve">
     <value>下载管理</value>

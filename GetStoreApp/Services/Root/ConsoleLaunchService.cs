@@ -14,10 +14,16 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public static class ConsoleLaunchService
     {
-        /// <summary>
-        /// 换行符
-        /// </summary>
+        // 换行符
         public static string LineBreaks = "\r\n";
+
+        // 行分隔符
+        public static char RowSplitCharacter = ' ';
+
+        // 列分隔符
+        public static char ColumnSplitCharacter = '-';
+
+        public static bool IsAppRunning = true;
 
         /// <summary>
         /// 应用启动时使用的参数
@@ -38,6 +44,8 @@ namespace GetStoreApp.Services.Root
             InitializeIntroduction();
             InitializeRequestContent();
             await RequestService.GetLinksAsync();
+
+            Console.WriteLine(LineBreaks + ResourceService.GetLocalized("/Console/ApplicationExit"));
         }
 
         /// <summary>
@@ -67,6 +75,9 @@ namespace GetStoreApp.Services.Root
                 }
                 if (Result == MessageBoxResult.IDOK)
                 {
+                    Console.WriteLine(LineBreaks + ResourceService.GetLocalized("/Console/ApplicationExit"));
+                    IsAppRunning = false;
+                    DownloadService.StopDownloadFile();
                     Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
                 }
             }

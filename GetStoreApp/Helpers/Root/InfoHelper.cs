@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.System;
 using Windows.System.Profile;
@@ -20,7 +19,7 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 初始化系统版本信息
         /// </summary>
-        public static async Task InitializeSystemVersionAsync()
+        public static void InitializeSystemVersion()
         {
             ulong VersionInfo = ulong.Parse(SystemVersion);
 
@@ -33,14 +32,12 @@ namespace GetStoreApp.Helpers.Root
             SystemVersionDict.Add(nameof(MinorVersion), MinorVersion);
             SystemVersionDict.Add(nameof(BuildNumber), BuildNumber);
             SystemVersionDict.Add(nameof(BuildRevision), BuildRevision);
-
-            await Task.CompletedTask;
         }
 
         /// <summary>
         /// 初始化应用版本信息
         /// </summary>
-        public static async Task InitializeAppVersionAsync()
+        public static void InitializeAppVersion()
         {
             ushort MajorVersion = Package.Current.Id.Version.Major;
             ushort MinorVersion = Package.Current.Id.Version.Minor;
@@ -51,8 +48,6 @@ namespace GetStoreApp.Helpers.Root
             AppVersionDict.Add(nameof(MinorVersion), MinorVersion);
             AppVersionDict.Add(nameof(BuildVersion), BuildVersion);
             AppVersionDict.Add(nameof(RevisionVersion), RevisionVersion);
-
-            await Task.CompletedTask;
         }
 
         /// <summary>
