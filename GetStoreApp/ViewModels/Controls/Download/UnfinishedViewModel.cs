@@ -161,11 +161,11 @@ namespace GetStoreApp.ViewModels.Controls.Download
             // 没有选中任何内容时显示空提示对话框
             if (SelectedUnfinishedDataList.Count == 0)
             {
-                if (!App.IsDialogOpening)
+                if (!App.Current.IsDialogOpening)
                 {
-                    App.IsDialogOpening = true;
+                    App.Current.IsDialogOpening = true;
                     await new SelectEmptyPromptDialog().ShowAsync();
-                    App.IsDialogOpening = false;
+                    App.Current.IsDialogOpening = false;
                 }
                 return;
             }

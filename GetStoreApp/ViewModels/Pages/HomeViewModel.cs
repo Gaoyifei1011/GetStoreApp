@@ -26,7 +26,7 @@ namespace GetStoreApp.ViewModels.Pages
         // 了解应用具体的使用说明
         public IRelayCommand UseInstructionCommand => new RelayCommand(() =>
         {
-            App.NavigationArgs = AppNaviagtionArgs.Instructions;
+            App.Current.NavigationArgs = AppNaviagtionArgs.Instructions;
             NavigationService.NavigateTo(typeof(AboutPage));
         });
 

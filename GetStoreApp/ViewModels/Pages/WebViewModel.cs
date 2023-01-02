@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using System.Threading;
 using Windows.Foundation;
+using Windows.Storage;
 
 namespace GetStoreApp.ViewModels.Pages
 {
@@ -112,17 +113,22 @@ namespace GetStoreApp.ViewModels.Pages
             await Windows.System.Launcher.LaunchUriAsync(Source);
         });
 
+        public IRelayCommand OpenCacheFolderCommand => new RelayCommand(async () =>
+        {
+            await Windows.System.Launcher.LaunchFolderAsync(await StorageFolder.GetFolderFromPathAsync(Path.Combine(ApplicationData.Current.LocalFolder.Path, "EbWebView")));
+        });
+
         /// <summary>
         /// 浏览器内核进程发生异常时对应的事件
         /// </summary>
         public async void OnCoreProcessFailed(object sender, CoreWebView2ProcessFailedEventArgs args)
         {
             // 显示异常信息错误原因，弹出对话框
-            if (!App.IsDialogOpening)
+            if (!App.Current.IsDialogOpening)
             {
-                App.IsDialogOpening = true;
+                App.Current.IsDialogOpening = true;
                 await new CoreWebView2FailedDialog(args).ShowAsync();
-                App.IsDialogOpening = false;
+                App.Current.IsDialogOpening = false;
             }
         }
 
@@ -251,9 +257,9 @@ namespace GetStoreApp.ViewModels.Pages
 
                             case DuplicatedDataInfoArgs.Unfinished:
                                 {
-                                    if (!App.IsDialogOpening)
+                                    if (!App.Current.IsDialogOpening)
                                     {
-                                        App.IsDialogOpening = true;
+                                        App.Current.IsDialogOpening = true;
 
                                         ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Unfinished).ShowAsync();
 
@@ -276,16 +282,16 @@ namespace GetStoreApp.ViewModels.Pages
                                         {
                                             NavigationService.NavigateTo(typeof(DownloadPage));
                                         }
-                                        App.IsDialogOpening = false;
+                                        App.Current.IsDialogOpening = false;
                                     }
                                     break;
                                 }
 
                             case DuplicatedDataInfoArgs.Completed:
                                 {
-                                    if (!App.IsDialogOpening)
+                                    if (!App.Current.IsDialogOpening)
                                     {
-                                        App.IsDialogOpening = true;
+                                        App.Current.IsDialogOpening = true;
 
                                         ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Completed).ShowAsync();
 
@@ -308,7 +314,7 @@ namespace GetStoreApp.ViewModels.Pages
                                         {
                                             NavigationService.NavigateTo(typeof(DownloadPage));
                                         }
-                                        App.IsDialogOpening = false;
+                                        App.Current.IsDialogOpening = false;
                                     }
                                     break;
                                 }

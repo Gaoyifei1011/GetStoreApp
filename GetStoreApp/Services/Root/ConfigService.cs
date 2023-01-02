@@ -7,7 +7,7 @@ namespace GetStoreApp.Services.Root
     public static class ConfigService
     {
         // 设置选项对应的键值
-        public static Dictionary<string, string> ConfigKey = new Dictionary<string, string>()
+        public static Dictionary<string, string> ConfigKey { get; } = new Dictionary<string, string>()
         {
             {"AlwaysShowBackdropKey","AlwaysShowBackdrop" },
             {"BackdropKey","AppBackdrop" },

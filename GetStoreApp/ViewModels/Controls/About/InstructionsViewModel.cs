@@ -13,22 +13,22 @@ namespace GetStoreApp.ViewModels.Controls.About
         // 桌面程序启动参数说明
         public IRelayCommand DesktopLaunchCommand => new RelayCommand(async () =>
         {
-            if (!App.IsDialogOpening)
+            if (!App.Current.IsDialogOpening)
             {
-                App.IsDialogOpening = true;
+                App.Current.IsDialogOpening = true;
                 await new DesktopStartupArgsDialog().ShowAsync();
-                App.IsDialogOpening = false;
+                App.Current.IsDialogOpening = false;
             }
         });
 
         // 控制台程序启动参数说明
         public IRelayCommand ConsoleLaunchCommand => new RelayCommand(async () =>
         {
-            if (!App.IsDialogOpening)
+            if (!App.Current.IsDialogOpening)
             {
-                App.IsDialogOpening = true;
+                App.Current.IsDialogOpening = true;
                 await new ConsoleStartupArgsDialog().ShowAsync();
-                App.IsDialogOpening = false;
+                App.Current.IsDialogOpening = false;
             }
         });
 
@@ -47,18 +47,18 @@ namespace GetStoreApp.ViewModels.Controls.About
         // Cloudflare 5秒验证信息
         public IRelayCommand CloudflareValidationCommand => new RelayCommand(async () =>
         {
-            if (!App.IsDialogOpening)
+            if (!App.Current.IsDialogOpening)
             {
-                App.IsDialogOpening = true;
+                App.Current.IsDialogOpening = true;
                 await new CloudflareValidationDialog().ShowAsync();
-                App.IsDialogOpening = false;
+                App.Current.IsDialogOpening = false;
             }
         });
 
         // 下载设置
         public IRelayCommand DownloadSettingsCommand => new RelayCommand(() =>
         {
-            App.NavigationArgs = AppNaviagtionArgs.DownloadOptions;
+            App.Current.NavigationArgs = AppNaviagtionArgs.DownloadOptions;
             NavigationService.NavigateTo(typeof(SettingsPage));
         });
     }

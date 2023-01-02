@@ -105,7 +105,8 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Background="Transparent"
-                    DefaultLabelPosition="Right">
+                    DefaultLabelPosition="Right"
+                    Style="{StaticResource CommandBarStyle}">
 
                     <AppBarButton
                         Command="{x:Bind ViewModel.OpenWithBrowserCommand}"
@@ -115,6 +116,21 @@
                             <FontIcon Glyph="&#xE774;" Style="{StaticResource SegoeFluentStyle}" />
                         </AppBarButton.Icon>
                     </AppBarButton>
+                    <CommandBar.SecondaryCommands>
+                        <AppBarButton
+                            Command="{x:Bind ViewModel.OpenCacheFolderCommand}"
+                            Label="{x:Bind root:ResourceService.GetLocalized('/Web/OpenCacheFolder')}"
+                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Web/OpenCacheFolder')}">
+                            <AppBarButton.Icon>
+                                <FontIcon Glyph="&#xE8b7;" Style="{StaticResource SegoeFluentStyle}" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton Label="{x:Bind root:ResourceService.GetLocalized('/Web/ClearWebCache')}" ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Web/ClearWebCache')}">
+                            <AppBarButton.Icon>
+                                <FontIcon Glyph="&#xE74d;" Style="{StaticResource SegoeFluentStyle}" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                    </CommandBar.SecondaryCommands>
                 </CommandBar>
             </Grid>
 

@@ -120,6 +120,9 @@
   <data name="Back" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="ClearWebCache" xml:space="preserve">
+    <value>Clean up the browser cache</value>
+  </data>
   <data name="DownloadWebView2" xml:space="preserve">
     <value>Download the WebView2 runtime</value>
   </data>
@@ -134,6 +137,9 @@
   </data>
   <data name="Loading" xml:space="preserve">
     <value>(Loading)</value>
+  </data>
+  <data name="OpenCacheFolder" xml:space="preserve">
+    <value>Open the cache folder</value>
   </data>
   <data name="OpenWithBrowser" xml:space="preserve">
     <value>Open With Browser</value>

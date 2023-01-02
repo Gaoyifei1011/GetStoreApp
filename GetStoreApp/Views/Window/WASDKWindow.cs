@@ -143,26 +143,17 @@ namespace GetStoreApp.Views.Window
 
         public void OnActivated(object sender, WindowActivatedEventArgs args)
         {
-            if (ActivatedCommand is not null)
-            {
-                ActivatedCommand.Execute(args);
-            }
+            ActivatedCommand?.Execute(args);
         }
 
         public void OnClosed(object sender, WindowEventArgs args)
         {
-            if (ClosedCommand is not null)
-            {
-                ClosedCommand.Execute(args);
-            }
+            ClosedCommand?.Execute(args);
         }
 
         public void OnSizeChanged(object sender, WindowSizeChangedEventArgs args)
         {
-            if (SizeChangedCommand is not null)
-            {
-                SizeChangedCommand.Execute(args);
-            }
+            SizeChangedCommand?.Execute(args);
         }
 
         /// <summary>
@@ -233,13 +224,13 @@ namespace GetStoreApp.Views.Window
                         {
                             WindowHelper.ShowAppWindow();
 
-                            if (!App.IsDialogOpening)
+                            if (!App.Current.IsDialogOpening)
                             {
-                                App.IsDialogOpening = true;
+                                App.Current.IsDialogOpening = true;
                                 DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, async () =>
                                 {
                                     await new AppRunningDialog().ShowAsync();
-                                    App.IsDialogOpening = false;
+                                    App.Current.IsDialogOpening = false;
                                 });
                             }
                         }
@@ -261,8 +252,7 @@ namespace GetStoreApp.Views.Window
         private int GetWidthWin32(IntPtr hwnd)
         {
             //Get the width
-            RECT rc;
-            User32Library.GetWindowRect(hwnd, out rc);
+            User32Library.GetWindowRect(hwnd, out RECT rc);
             return rc.right - rc.left;
         }
 
@@ -272,8 +262,7 @@ namespace GetStoreApp.Views.Window
         private int GetHeightWin32(IntPtr hwnd)
         {
             //Get the width
-            RECT rc;
-            User32Library.GetWindowRect(hwnd, out rc);
+            User32Library.GetWindowRect(hwnd, out RECT rc);
             return rc.bottom - rc.top;
         }
 

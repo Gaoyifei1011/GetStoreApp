@@ -313,12 +313,6 @@ namespace GetStoreApp.Services.Root
                 InternalName = CleanArgs.LocalFile,
                 CleanFailedText = GetLocalized("/Dialog/LocalFileCleanError")
             });
-            TraceCleanupList.Add(new TraceCleanupModel
-            {
-                DisplayName = GetLocalized("/Dialog/WebCache"),
-                InternalName = CleanArgs.WebCache,
-                CleanFailedText = GetLocalized("/Dialog/WebCacheCleanError")
-            });
         }
 
         /// <summary>

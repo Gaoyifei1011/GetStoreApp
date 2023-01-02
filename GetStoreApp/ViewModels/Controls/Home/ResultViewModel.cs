@@ -125,11 +125,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
             // 内容为空时显示空提示对话框
             if (SelectedResultDataList.Count == 0)
             {
-                if (!App.IsDialogOpening)
+                if (!App.Current.IsDialogOpening)
                 {
-                    App.IsDialogOpening = true;
+                    App.Current.IsDialogOpening = true;
                     await new SelectEmptyPromptDialog().ShowAsync();
-                    App.IsDialogOpening = false;
+                    App.Current.IsDialogOpening = false;
                 }
                 return;
             };
@@ -159,11 +159,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
             // 内容为空时显示空提示对话框
             if (SelectedResultDataList.Count == 0)
             {
-                if (!App.IsDialogOpening)
+                if (!App.Current.IsDialogOpening)
                 {
-                    App.IsDialogOpening = true;
+                    App.Current.IsDialogOpening = true;
                     await new SelectEmptyPromptDialog().ShowAsync();
-                    App.IsDialogOpening = false;
+                    App.Current.IsDialogOpening = false;
                 }
                 return;
             };
@@ -201,11 +201,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
             // 内容为空时显示空提示对话框
             if (SelectedResultDataList.Count == 0)
             {
-                if (!App.IsDialogOpening)
+                if (!App.Current.IsDialogOpening)
                 {
-                    App.IsDialogOpening = true;
+                    App.Current.IsDialogOpening = true;
                     await new SelectEmptyPromptDialog().ShowAsync();
-                    App.IsDialogOpening = false;
+                    App.Current.IsDialogOpening = false;
                 }
                 return;
             };
@@ -247,9 +247,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
                 if (duplicatedList.Count > 0)
                 {
-                    if (!App.IsDialogOpening)
+                    if (!App.Current.IsDialogOpening)
                     {
-                        App.IsDialogOpening = true;
+                        App.Current.IsDialogOpening = true;
 
                         ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.MultiRecord).ShowAsync();
 
@@ -275,7 +275,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                         {
                             NavigationService.NavigateTo(typeof(DownloadPage));
                         }
-                        App.IsDialogOpening = false;
+                        App.Current.IsDialogOpening = false;
                     }
                 }
 
@@ -345,9 +345,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
                     case DuplicatedDataInfoArgs.Unfinished:
                         {
-                            if (!App.IsDialogOpening)
+                            if (!App.Current.IsDialogOpening)
                             {
-                                App.IsDialogOpening = true;
+                                App.Current.IsDialogOpening = true;
 
                                 ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Unfinished).ShowAsync();
 
@@ -370,16 +370,16 @@ namespace GetStoreApp.ViewModels.Controls.Home
                                 {
                                     NavigationService.NavigateTo(typeof(DownloadPage));
                                 }
-                                App.IsDialogOpening = false;
+                                App.Current.IsDialogOpening = false;
                             }
                             break;
                         }
 
                     case DuplicatedDataInfoArgs.Completed:
                         {
-                            if (!App.IsDialogOpening)
+                            if (!App.Current.IsDialogOpening)
                             {
-                                App.IsDialogOpening = true;
+                                App.Current.IsDialogOpening = true;
 
                                 ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Completed).ShowAsync();
 
@@ -402,7 +402,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                                 {
                                     NavigationService.NavigateTo(typeof(DownloadPage));
                                 }
-                                App.IsDialogOpening = false;
+                                App.Current.IsDialogOpening = false;
                             }
                             break;
                         }

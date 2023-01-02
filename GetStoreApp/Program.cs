@@ -25,7 +25,7 @@ namespace GetStoreApp
         public static List<string> CommandLineArgs { get; set; }
 
         /// <summary>
-        /// 程序入口点
+        /// 应用程序的主入口点
         /// </summary>
         [STAThread]
         public static void Main(string[] args)
@@ -69,7 +69,7 @@ namespace GetStoreApp
         /// <summary>
         /// 检查命令参数是否以桌面方式启动
         /// </summary>
-        public static bool GetAppExecuteMode()
+        private static bool GetAppExecuteMode()
         {
             return CommandLineArgs.Count == 0 || !CommandLineArgs[0].Equals("Console", StringComparison.OrdinalIgnoreCase);
         }
@@ -77,7 +77,7 @@ namespace GetStoreApp
         /// <summary>
         /// 加载应用程序所需的资源
         /// </summary>
-        public static async Task InitializeProgramResourcesAsync()
+        private static async Task InitializeProgramResourcesAsync()
         {
             // 初始化应用资源，应用使用的语言信息和启动参数
             await LanguageService.InitializeLanguageAsync();

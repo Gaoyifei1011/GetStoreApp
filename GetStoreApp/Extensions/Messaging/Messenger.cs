@@ -23,10 +23,7 @@ namespace GetStoreApp.Extensions.Messaging
         {
             get
             {
-                if (_defaultInstance == null)
-                {
-                    _defaultInstance = new Messenger();
-                }
+                _defaultInstance ??= new Messenger();
 
                 return _defaultInstance;
             }
@@ -126,19 +123,13 @@ namespace GetStoreApp.Extensions.Messaging
 
             if (receiveDerivedMessagesToo)
             {
-                if (_recipientsOfSubclassesAction == null)
-                {
-                    _recipientsOfSubclassesAction = new Dictionary<Type, List<WeakActionAndToken>>();
-                }
+                _recipientsOfSubclassesAction ??= new Dictionary<Type, List<WeakActionAndToken>>();
 
                 recipients = _recipientsOfSubclassesAction;
             }
             else
             {
-                if (_recipientsStrictAction == null)
-                {
-                    _recipientsStrictAction = new Dictionary<Type, List<WeakActionAndToken>>();
-                }
+                _recipientsStrictAction ??= new Dictionary<Type, List<WeakActionAndToken>>();
 
                 recipients = _recipientsStrictAction;
             }
@@ -332,9 +323,7 @@ namespace GetStoreApp.Extensions.Messaging
 
                 foreach (var item in listClone)
                 {
-                    var executeAction = item.Action as IExecuteWithObject;
-
-                    if (executeAction != null
+                    if (item.Action is IExecuteWithObject executeAction
                         && item.Action.IsAlive
                         && item.Action.Target != null
                         && (messageTargetType == null
@@ -395,9 +384,7 @@ namespace GetStoreApp.Extensions.Messaging
             {
                 foreach (var item in lists[messageType])
                 {
-                    var weakActionCasted = item.Action as WeakAction<TMessage>;
-
-                    if (weakActionCasted != null
+                    if (item.Action is WeakAction<TMessage> weakActionCasted
                         && recipient == weakActionCasted.Target
                         && (action == null
                             || action == weakActionCasted.Action))
@@ -428,9 +415,7 @@ namespace GetStoreApp.Extensions.Messaging
             {
                 foreach (WeakActionAndToken item in lists[messageType])
                 {
-                    var weakActionCasted = item.Action as WeakAction<TMessage>;
-
-                    if (weakActionCasted != null
+                    if (item.Action is WeakAction<TMessage> weakActionCasted
                         && recipient == weakActionCasted.Target
                         && (action == null
                             || action == weakActionCasted.Action)
@@ -457,7 +442,7 @@ namespace GetStoreApp.Extensions.Messaging
             {
                 // Clone to protect from people registering in a "receive message" method
                 // Bug correction Messaging BL0008.002
-                var listClone = _recipientsOfSubclassesAction.Keys.Take(_recipientsOfSubclassesAction.Count()).ToList();
+                var listClone = _recipientsOfSubclassesAction.Keys.Take(_recipientsOfSubclassesAction.Count).ToList();
 
                 foreach (var type in listClone)
                 {
@@ -476,9 +461,9 @@ namespace GetStoreApp.Extensions.Messaging
 
             if (_recipientsStrictAction != null)
             {
-                if (_recipientsStrictAction.ContainsKey(messageType))
+                if (_recipientsStrictAction.TryGetValue(messageType, out List<WeakActionAndToken> value))
                 {
-                    var list = _recipientsStrictAction[messageType];
+                    var list = value;
                     SendToList(message, list, messageTargetType, token);
                 }
             }

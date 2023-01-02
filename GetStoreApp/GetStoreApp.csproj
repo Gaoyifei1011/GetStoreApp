@@ -122,6 +122,7 @@
     
     <None Remove="Styles\Button.xaml" />
     <None Remove="Styles\Checkbox.xaml" />
+    <None Remove="Styles\CommandBar.xaml" />
     <None Remove="Styles\ContentDialog.xaml" />
     <None Remove="Styles\Converter.xaml" />
     <None Remove="Styles\DropDownButton.xaml" />
@@ -503,6 +504,12 @@
     </Page>
 
     <TrimmableAssembly Include="Microsoft.Windows.Widgets.Projection" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Page Update="Styles\CommandBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>
   

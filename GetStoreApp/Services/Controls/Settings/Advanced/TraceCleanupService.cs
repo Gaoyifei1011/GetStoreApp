@@ -19,7 +19,6 @@ namespace GetStoreApp.Services.Controls.Settings.Advanced
                 case CleanArgs.History: return await HistoryDBService.ClearAsync();
                 case CleanArgs.Download: return await DownloadDBService.ClearAsync();
                 case CleanArgs.LocalFile: return IOHelper.CleanFolder(DownloadOptionsService.DefaultFolder);
-                case CleanArgs.WebCache: return true;
                 default: return true;
             }
         }

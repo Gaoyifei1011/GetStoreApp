@@ -189,11 +189,11 @@ namespace GetStoreApp.ViewModels.Pages
 
             if (SelectedHistoryDataList.Count == 0)
             {
-                if (!App.IsDialogOpening)
+                if (!App.Current.IsDialogOpening)
                 {
-                    App.IsDialogOpening = true;
+                    App.Current.IsDialogOpening = true;
                     await new SelectEmptyPromptDialog().ShowAsync();
-                    App.IsDialogOpening = false;
+                    App.Current.IsDialogOpening = false;
                 }
                 return;
             };
@@ -221,11 +221,11 @@ namespace GetStoreApp.ViewModels.Pages
             // 没有选中任何内容时显示空提示对话框
             if (SelectedHistoryDataList.Count == 0)
             {
-                if (!App.IsDialogOpening)
+                if (!App.Current.IsDialogOpening)
                 {
-                    App.IsDialogOpening = true;
+                    App.Current.IsDialogOpening = true;
                     await new SelectEmptyPromptDialog().ShowAsync();
-                    App.IsDialogOpening = false;
+                    App.Current.IsDialogOpening = false;
                 }
                 return;
             };
@@ -278,7 +278,7 @@ namespace GetStoreApp.ViewModels.Pages
         // 填入指定项目的内容
         public IRelayCommand FillinCommand => new RelayCommand<HistoryModel>((historyItem) =>
         {
-            App.NavigationArgs = AppNaviagtionArgs.Home;
+            App.Current.NavigationArgs = AppNaviagtionArgs.Home;
             Messenger.Default.Send(historyItem, MessageToken.Fillin);
             NavigationService.NavigateTo(typeof(HomePage));
         });

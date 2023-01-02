@@ -28,7 +28,7 @@ namespace GetStoreApp.ViewModels.Pages
         // 了解更多下载管理说明
         public IRelayCommand LearnMoreCommand => new RelayCommand<TeachingTip>((downloadTeachingTip) =>
         {
-            App.NavigationArgs = AppNaviagtionArgs.SettingsHelp;
+            App.Current.NavigationArgs = AppNaviagtionArgs.SettingsHelp;
             downloadTeachingTip.IsOpen = false;
             NavigationService.NavigateTo(typeof(AboutPage));
         });
@@ -36,7 +36,7 @@ namespace GetStoreApp.ViewModels.Pages
         // 打开应用“下载设置”
         public IRelayCommand DownloadSettingsCommand => new RelayCommand<TeachingTip>((downloadTeachingTip) =>
         {
-            App.NavigationArgs = AppNaviagtionArgs.DownloadOptions;
+            App.Current.NavigationArgs = AppNaviagtionArgs.DownloadOptions;
             downloadTeachingTip.IsOpen = false;
             NavigationService.NavigateTo(typeof(SettingsPage));
         });

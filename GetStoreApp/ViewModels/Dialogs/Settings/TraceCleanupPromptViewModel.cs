@@ -2,7 +2,6 @@
 using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
-using GetStoreApp.Helpers.Controls.Web;
 using GetStoreApp.Models.Dialogs.CommonDialogs.Settings;
 using GetStoreApp.Services.Controls.Settings.Advanced;
 using GetStoreApp.Services.Root;
@@ -126,14 +125,6 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
         {
             foreach (TraceCleanupModel traceCleanupItem in ResourceService.TraceCleanupList)
             {
-                if (traceCleanupItem.InternalName == CleanArgs.WebCache)
-                {
-                    if (!WebView2Helper.IsInstalled())
-                    {
-                        continue;
-                    }
-                }
-
                 traceCleanupItem.IsSelected = false;
                 traceCleanupItem.IsCleanFailed = false;
                 traceCleanupItem.PropertyChanged += OnPropertyChanged;

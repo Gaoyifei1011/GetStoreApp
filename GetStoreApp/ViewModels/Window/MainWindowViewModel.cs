@@ -143,9 +143,9 @@ namespace GetStoreApp.ViewModels.Window
                 if (DownloadSchedulerService.DownloadingList.Count > 0 || DownloadSchedulerService.WaitingList.Count > 0)
                 {
                     // 关闭窗口提示对话框是否已经处于打开状态，如果是，不再弹出
-                    if (!App.IsDialogOpening)
+                    if (!App.Current.IsDialogOpening)
                     {
-                        App.IsDialogOpening = true;
+                        App.Current.IsDialogOpening = true;
 
                         ContentDialogResult result = await new ClosingWindowDialog().ShowAsync();
 
@@ -161,7 +161,7 @@ namespace GetStoreApp.ViewModels.Window
                             }
                         }
 
-                        App.IsDialogOpening = false;
+                        App.Current.IsDialogOpening = false;
                     }
                 }
                 else
@@ -203,70 +203,6 @@ namespace GetStoreApp.ViewModels.Window
             }
         });
 
-        // 隐藏 / 显示窗口
-        public IRelayCommand ShowOrHideWindowCommand => new RelayCommand(() =>
-        {
-            // 隐藏窗口
-            if (MainWindow.Current.Visible)
-            {
-                WindowHelper.HideAppWindow();
-            }
-            // 显示窗口
-            else
-            {
-                WindowHelper.ShowAppWindow();
-            }
-        });
-
-        // 打开设置
-        public IRelayCommand SettingsCommand => new RelayCommand(() =>
-        {
-            // 窗口置前端
-            WindowHelper.ShowAppWindow();
-
-            if (NavigationService.GetCurrentPageType() != typeof(SettingsPage))
-            {
-                NavigationService.NavigateTo(typeof(SettingsPage));
-            }
-        });
-
-        // 退出应用
-        public IRelayCommand ExitCommand => new RelayCommand(async () =>
-        {
-            // 下载队列存在任务时，弹出对话窗口确认是否要关闭窗口
-            if (DownloadSchedulerService.DownloadingList.Count > 0 || DownloadSchedulerService.WaitingList.Count > 0)
-            {
-                // 窗口置前端
-                WindowHelper.ShowAppWindow();
-
-                // 关闭窗口提示对话框是否已经处于打开状态，如果是，不再弹出
-                if (!App.IsDialogOpening)
-                {
-                    App.IsDialogOpening = true;
-
-                    ContentDialogResult result = await new ClosingWindowDialog().ShowAsync();
-
-                    if (result == ContentDialogResult.Primary)
-                    {
-                        await CloseApp();
-                    }
-                    else if (result == ContentDialogResult.Secondary)
-                    {
-                        if (NavigationService.GetCurrentPageType() != typeof(DownloadPage))
-                        {
-                            NavigationService.NavigateTo(typeof(DownloadPage));
-                        }
-                    }
-
-                    App.IsDialogOpening = false;
-                }
-            }
-            else
-            {
-                await CloseApp();
-            }
-        });
-
         // 当后退按钮收到交互（如单击或点击）时发生。
         public void OnNavigationViewBackRequested(object sender, NavigationViewBackRequestedEventArgs args)
         {
@@ -298,9 +234,8 @@ namespace GetStoreApp.ViewModels.Window
             ((FrameworkElement)MainWindow.Current.Content).ActualThemeChanged += OnActualThemeChanged;
 
             // 导航控件加载完成后初始化内容
-            NavigationView navigationView = sender as NavigationView;
 
-            if (navigationView is null)
+            if (sender is not NavigationView navigationView)
             {
                 return;
             }
@@ -371,7 +306,7 @@ namespace GetStoreApp.ViewModels.Window
         // 导航失败时发生
         public void OnFrameNavgationFailed(object sender, NavigationFailedEventArgs args)
         {
-            throw new Exception("页面" + args.SourcePageType.FullName + "加载失败");
+            throw new Exception(string.Format(ResourceService.GetLocalized("/Window/NavigationFailed"), args.SourcePageType.FullName));
         }
 
         /// <summary>

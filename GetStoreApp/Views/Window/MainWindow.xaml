@@ -7,8 +7,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:viewModel="using:GetStoreApp.ViewModels.Window"
     xmlns:wc="using:GetStoreApp.UI.Controls.Window"
-    xmlns:windowViewModel="using:GetStoreApp.ViewModels.Window"
     Title="{x:Bind root:ResourceService.GetLocalized('AppDisplayName')}"
     MinWidth="600"
     MinHeight="768"
@@ -18,7 +18,7 @@
     mc:Ignorable="d">
 
     <WinUI:WASDKWindow.DataContext>
-        <windowViewModel:MainWindowViewModel x:Name="ViewModel" />
+        <viewModel:MainWindowViewModel x:Name="ViewModel" />
     </WinUI:WASDKWindow.DataContext>
 
     <Grid Background="{x:Bind ViewModel.AppBackground, Mode=OneWay}">

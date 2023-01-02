@@ -94,7 +94,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
         /// </summary>
         private void SetTitleBarButtonColor(ElementTheme theme)
         {
-            AppWindowTitleBar bar = App.AppWindow.TitleBar;
+            AppWindowTitleBar bar = App.Current.AppWindow.TitleBar;
 
             switch (theme)
             {
@@ -130,7 +130,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
         /// </summary>
         private void SetDragRectangles(int leftMargin, double actualWidth, double actualHeight)
         {
-            App.AppWindow.TitleBar.SetDragRectangles(new RectInt32[] { new RectInt32(leftMargin, 0, GetActualPixel(actualWidth), GetActualPixel(actualHeight)) });
+            App.Current.AppWindow.TitleBar.SetDragRectangles(new RectInt32[] { new RectInt32(leftMargin, 0, GetActualPixel(actualWidth), GetActualPixel(actualHeight)) });
         }
 
         /// <summary>

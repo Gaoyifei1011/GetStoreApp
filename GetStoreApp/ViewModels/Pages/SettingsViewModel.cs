@@ -10,11 +10,11 @@ namespace GetStoreApp.ViewModels.Pages
         // 打开重启应用确认的窗口对话框
         public IRelayCommand RestartCommand = new RelayCommand(async () =>
         {
-            if (!App.IsDialogOpening)
+            if (!App.Current.IsDialogOpening)
             {
-                App.IsDialogOpening = true;
+                App.Current.IsDialogOpening = true;
                 await new RestartAppsDialog().ShowAsync();
-                App.IsDialogOpening = false;
+                App.Current.IsDialogOpening = false;
             }
         });
     }

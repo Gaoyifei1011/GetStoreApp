@@ -41,7 +41,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
         // 链接过滤说明
         public IRelayCommand LinkFilterInstructionCommand => new RelayCommand(() =>
         {
-            App.NavigationArgs = AppNaviagtionArgs.SettingsHelp;
+            App.Current.NavigationArgs = AppNaviagtionArgs.SettingsHelp;
             NavigationService.NavigateTo(typeof(AboutPage));
         });
 
