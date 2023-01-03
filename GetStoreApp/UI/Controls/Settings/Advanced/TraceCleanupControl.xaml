@@ -17,6 +17,7 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
         <FontIcon
@@ -41,6 +42,20 @@
 
         <Button
             Grid.Column="2"
+            VerticalAlignment="Center"
+            Command="{x:Bind ViewModel.TraceCleanupTipCommand}"
+            Style="{StaticResource ButtonInfoStyle}"
+            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Settings/TraceCleanupToolTip')}">
+            <Button.Content>
+                <FontIcon
+                    FontSize="16"
+                    Glyph="&#xE946;"
+                    Style="{StaticResource SegoeFluentStyle}" />
+            </Button.Content>
+        </Button>
+
+        <Button
+            Grid.Column="3"
             MinWidth="100"
             Command="{x:Bind ViewModel.TraceCleanupCommand}"
             Content="{x:Bind root:ResourceService.GetLocalized('/Settings/TraceClear')}"

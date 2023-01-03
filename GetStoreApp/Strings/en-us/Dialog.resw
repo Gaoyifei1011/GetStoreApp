@@ -345,9 +345,6 @@
   <data name="WebCache" xml:space="preserve">
     <value>Web page cache cleanup</value>
   </data>
-  <data name="WebCacheCleanError" xml:space="preserve">
-    <value>Web page cache cleanup failed</value>
-  </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
   </data>

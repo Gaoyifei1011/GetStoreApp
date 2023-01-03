@@ -211,6 +211,7 @@
     <None Remove="UI\Notifications\ResultContentCopyNotification.xaml" />
     <None Remove="UI\Notifications\ResultIDCopyNotification.xaml" />
     <None Remove="UI\Notifications\ResultLinkCopyNotification.xaml" />
+    <None Remove="UI\Notifications\WebCacheCleanNotification.xaml" />
     
     <None Remove="Views\Controls\AdaptiveGridView.xaml" />
     <None Remove="Views\Controls\NavigationViewMenuItem.xaml" />
@@ -237,6 +238,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Styles\Checkbox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\CommandBar.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Styles\ContentDialog.xaml">
@@ -470,6 +474,9 @@
     <Page Update="UI\Notifications\ResultLinkCopyNotification.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Update="UI\Notifications\WebCacheCleanNotification.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
 
     <Page Update="Views\Controls\AdaptiveGridView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -504,12 +511,6 @@
     </Page>
 
     <TrimmableAssembly Include="Microsoft.Windows.Widgets.Projection" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Page Update="Styles\CommandBar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
 </Project>
   

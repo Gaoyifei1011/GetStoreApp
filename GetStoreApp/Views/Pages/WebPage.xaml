@@ -125,7 +125,11 @@
                                 <FontIcon Glyph="&#xE8b7;" Style="{StaticResource SegoeFluentStyle}" />
                             </AppBarButton.Icon>
                         </AppBarButton>
-                        <AppBarButton Label="{x:Bind root:ResourceService.GetLocalized('/Web/ClearWebCache')}" ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Web/ClearWebCache')}">
+                        <AppBarButton
+                            Command="{x:Bind ViewModel.ClearWebCacheCommand}"
+                            IsEnabled="{x:Bind ViewModel.IsEnabled, Mode=OneWay}"
+                            Label="{x:Bind root:ResourceService.GetLocalized('/Web/ClearWebCache')}"
+                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Web/ClearWebCache')}">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE74d;" Style="{StaticResource SegoeFluentStyle}" />
                             </AppBarButton.Icon>

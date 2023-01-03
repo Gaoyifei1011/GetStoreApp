@@ -363,6 +363,9 @@
   <data name="TraceCleanupDescription" xml:space="preserve">
     <value>Clean up all traces of use within the app</value>
   </data>
+  <data name="TraceCleanupToolTip" xml:space="preserve">
+    <value>Help</value>
+  </data>
   <data name="TraceClear" xml:space="preserve">
     <value>Select what you want to clean</value>
   </data>

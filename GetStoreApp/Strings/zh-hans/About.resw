@@ -336,6 +336,15 @@
   <data name="Title" xml:space="preserve">
     <value>关于</value>
   </data>
+  <data name="TraceCleanup" xml:space="preserve">
+    <value>痕迹清理说明</value>
+  </data>
+  <data name="TraceCleanupDescription1" xml:space="preserve">
+    <value>因为网页缓存清理需要WebView2运行时保持运行，所以网页缓存清理的位置在“访问网页版-(标题栏)查看更多-清理网页缓存”</value>
+  </data>
+  <data name="TraceCleanupDescription2" xml:space="preserve">
+    <value>浏览器运行期间可能存在部分缓存无法正常清理。此时需要打开网页的缓存文件夹“访问网页版-(标题栏)查看更多-打开缓存文件夹”，待到网页完全关闭后手动清理即可</value>
+  </data>
   <data name="TroubleShoot" xml:space="preserve">
     <value>疑难解答</value>
   </data>

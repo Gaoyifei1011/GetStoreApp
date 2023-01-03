@@ -363,6 +363,9 @@
   <data name="TraceCleanupDescription" xml:space="preserve">
     <value>清理应用内使用过的所有痕迹</value>
   </data>
+  <data name="TraceCleanupToolTip" xml:space="preserve">
+    <value>帮助</value>
+  </data>
   <data name="TraceClear" xml:space="preserve">
     <value>选择要清理的内容</value>
   </data>

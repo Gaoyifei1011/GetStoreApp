@@ -24,6 +24,8 @@ namespace GetStoreApp
 
         public static List<string> CommandLineArgs { get; set; }
 
+        public static App ApplicationRoot { get; set; }
+
         /// <summary>
         /// 应用程序的主入口点
         /// </summary>
@@ -45,7 +47,7 @@ namespace GetStoreApp
                 {
                     DispatcherQueueSynchronizationContext context = new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread());
                     SynchronizationContext.SetSynchronizationContext(context);
-                    new App();
+                    ApplicationRoot = new App();
                 });
             }
 

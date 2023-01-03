@@ -83,6 +83,19 @@ namespace GetStoreApp.ViewModels.Pages
             }
         }
 
+        private bool _isEnabled = false;
+
+        public bool IsEnabled
+        {
+            get { return _isEnabled; }
+
+            set
+            {
+                _isEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+
         // 网页后退
         public IRelayCommand BrowserBackCommand => new RelayCommand(() =>
         {
@@ -113,9 +126,17 @@ namespace GetStoreApp.ViewModels.Pages
             await Windows.System.Launcher.LaunchUriAsync(Source);
         });
 
+        // 打开缓存文件夹
         public IRelayCommand OpenCacheFolderCommand => new RelayCommand(async () =>
         {
             await Windows.System.Launcher.LaunchFolderAsync(await StorageFolder.GetFolderFromPathAsync(Path.Combine(ApplicationData.Current.LocalFolder.Path, "EbWebView")));
+        });
+
+        // 清理网页缓存
+        public IRelayCommand ClearWebCacheCommand => new RelayCommand(async () =>
+        {
+            await CoreWebView.CallDevToolsProtocolMethodAsync("Network.clearBrowserCache", "{}");
+            new WebCacheCleanNotification(true).Show();
         });
 
         /// <summary>
@@ -147,6 +168,8 @@ namespace GetStoreApp.ViewModels.Pages
                 CoreWebView.NewWindowRequested += OnNewWindowRequested;
                 CoreWebView.SourceChanged += OnSourceChanged;
                 CoreWebView.DownloadStarting += OnDownloadStarting;
+
+                IsEnabled = true;
             }
         }
 
@@ -250,8 +273,8 @@ namespace GetStoreApp.ViewModels.Pages
                         {
                             case DuplicatedDataInfoArgs.None:
                                 {
-                                    await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add");
-                                    new DownloadCreateNotification(true).Show();
+                                    bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add");
+                                    new DownloadCreateNotification(AddResult).Show();
                                     break;
                                 }
 
@@ -274,8 +297,8 @@ namespace GetStoreApp.ViewModels.Pages
                                             }
                                             finally
                                             {
-                                                await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                                new DownloadCreateNotification(true).Show();
+                                                bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
+                                                new DownloadCreateNotification(AddResult).Show();
                                             }
                                         }
                                         else if (result == ContentDialogResult.Secondary)
@@ -306,8 +329,8 @@ namespace GetStoreApp.ViewModels.Pages
                                             }
                                             finally
                                             {
-                                                await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                                new DownloadCreateNotification(true).Show();
+                                                bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
+                                                new DownloadCreateNotification(AddResult).Show();
                                             }
                                         }
                                         else if (result == ContentDialogResult.Secondary)

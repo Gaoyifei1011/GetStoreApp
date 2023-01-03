@@ -251,4 +251,10 @@
   <data name="ResultLinkSelectedCopySuccessfully" xml:space="preserve">
     <value>{0}条下载链接已经成功复制到剪贴板</value>
   </data>
+  <data name="WebCacheCleanChangeFailed" xml:space="preserve">
+    <value>网页缓存清理失败</value>
+  </data>
+  <data name="WebCacheCleanSuccessfully" xml:space="preserve">
+    <value>网页缓存清理成功</value>
+  </data>
 </root>

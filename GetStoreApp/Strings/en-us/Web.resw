@@ -121,7 +121,7 @@
     <value>Back</value>
   </data>
   <data name="ClearWebCache" xml:space="preserve">
-    <value>Clean up the browser cache</value>
+    <value>Clean up the web cache</value>
   </data>
   <data name="DownloadWebView2" xml:space="preserve">
     <value>Download the WebView2 runtime</value>

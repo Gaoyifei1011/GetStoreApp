@@ -338,8 +338,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 {
                     case DuplicatedDataInfoArgs.None:
                         {
-                            await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add");
-                            new DownloadCreateNotification(true).Show();
+                            bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add");
+                            new DownloadCreateNotification(AddResult).Show();
                             break;
                         }
 
@@ -362,8 +362,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
                                     }
                                     finally
                                     {
-                                        await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                        new DownloadCreateNotification(true).Show();
+                                        bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
+                                        new DownloadCreateNotification(AddResult).Show();
                                     }
                                 }
                                 else if (result == ContentDialogResult.Secondary)
@@ -394,8 +394,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
                                     }
                                     finally
                                     {
-                                        await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                        new DownloadCreateNotification(true).Show();
+                                        bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
+                                        new DownloadCreateNotification(AddResult).Show();
                                     }
                                 }
                                 else if (result == ContentDialogResult.Secondary)

@@ -251,4 +251,10 @@
   <data name="ResultLinkSelectedCopySuccessfully" xml:space="preserve">
     <value>{0} download links has been successfully copied to the clipboard</value>
   </data>
+  <data name="WebCacheCleanChangeFailed" xml:space="preserve">
+    <value>Web page cache cleanup failed</value>
+  </data>
+  <data name="WebCacheCleanSuccessfully" xml:space="preserve">
+    <value>Web page cache cleanup successfully</value>
+  </data>
 </root>

@@ -121,7 +121,7 @@
     <value>返回</value>
   </data>
   <data name="ClearWebCache" xml:space="preserve">
-    <value>清理浏览器缓存</value>
+    <value>清理网页缓存</value>
   </data>
   <data name="DownloadWebView2" xml:space="preserve">
     <value>下载 WebView2 运行时</value>

@@ -345,9 +345,6 @@
   <data name="WebCache" xml:space="preserve">
     <value>网页缓存清理</value>
   </data>
-  <data name="WebCacheCleanError" xml:space="preserve">
-    <value>网页缓存清理失败</value>
-  </data>
   <data name="Yes" xml:space="preserve">
     <value>是</value>
   </data>
