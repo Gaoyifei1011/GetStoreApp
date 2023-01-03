@@ -32,7 +32,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
         // 语言设置说明
         public IRelayCommand LanguageTipCommand => new RelayCommand(() =>
         {
-            App.Current.NavigationArgs = AppNaviagtionArgs.SettingsHelp;
+            Program.ApplicationRoot.NavigationArgs = AppNaviagtionArgs.SettingsHelp;
             NavigationService.NavigateTo(typeof(AboutPage));
         });
 

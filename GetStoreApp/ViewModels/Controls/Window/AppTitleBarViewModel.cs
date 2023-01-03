@@ -28,7 +28,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
 
                 SetDragRectangles(Convert.ToInt32(appTitleBar.Margin.Left), appTitleBar.ActualWidth, appTitleBar.ActualHeight);
 
-                ((FrameworkElement)MainWindow.Current.Content).ActualThemeChanged += OnActualThemeChanged;
+                ((FrameworkElement)Program.ApplicationRoot.MainWindow.Content).ActualThemeChanged += OnActualThemeChanged;
 
                 // 应用主题设置跟随系统发生变化时，当系统主题设置发生变化时修改标题栏按钮主题
                 Messenger.Default.Register<bool>(this, MessageToken.SystemSettingsChanged, (systemSettingsChangedMessage) =>
@@ -58,7 +58,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
         /// </summary>
         public void OnUnloaded(object sender, RoutedEventArgs args)
         {
-            ((FrameworkElement)MainWindow.Current.Content).ActualThemeChanged -= OnActualThemeChanged;
+            ((FrameworkElement)Program.ApplicationRoot.MainWindow.Content).ActualThemeChanged -= OnActualThemeChanged;
             Messenger.Default.Unregister(this);
         }
 
@@ -94,7 +94,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
         /// </summary>
         private void SetTitleBarButtonColor(ElementTheme theme)
         {
-            AppWindowTitleBar bar = App.Current.AppWindow.TitleBar;
+            AppWindowTitleBar bar = Program.ApplicationRoot.AppWindow.TitleBar;
 
             switch (theme)
             {
@@ -130,7 +130,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
         /// </summary>
         private void SetDragRectangles(int leftMargin, double actualWidth, double actualHeight)
         {
-            App.Current.AppWindow.TitleBar.SetDragRectangles(new RectInt32[] { new RectInt32(leftMargin, 0, GetActualPixel(actualWidth), GetActualPixel(actualHeight)) });
+            Program.ApplicationRoot.AppWindow.TitleBar.SetDragRectangles(new RectInt32[] { new RectInt32(leftMargin, 0, GetActualPixel(actualWidth), GetActualPixel(actualHeight)) });
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
         /// </summary>
         private static int GetActualPixel(double pixel)
         {
-            int currentDpi = User32Library.GetDpiForWindow(MainWindow.GetMainWindowHandle());
+            int currentDpi = User32Library.GetDpiForWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
             return Convert.ToInt32(pixel * (currentDpi / 96.0));
         }
     }

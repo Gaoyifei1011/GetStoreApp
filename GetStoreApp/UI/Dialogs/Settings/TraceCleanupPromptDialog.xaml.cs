@@ -15,7 +15,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
 
         public TraceCleanupPromptDialog()
         {
-            XamlRoot = MainWindow.GetMainWindowXamlRoot();
+            XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
             InitializeComponent();
             ViewModel.InitializeTraceCleanupList();
         }

@@ -143,9 +143,9 @@ namespace GetStoreApp.ViewModels.Window
                 if (DownloadSchedulerService.DownloadingList.Count > 0 || DownloadSchedulerService.WaitingList.Count > 0)
                 {
                     // 关闭窗口提示对话框是否已经处于打开状态，如果是，不再弹出
-                    if (!App.Current.IsDialogOpening)
+                    if (!Program.ApplicationRoot.IsDialogOpening)
                     {
-                        App.Current.IsDialogOpening = true;
+                        Program.ApplicationRoot.IsDialogOpening = true;
 
                         ContentDialogResult result = await new ClosingWindowDialog().ShowAsync();
 
@@ -161,7 +161,7 @@ namespace GetStoreApp.ViewModels.Window
                             }
                         }
 
-                        App.Current.IsDialogOpening = false;
+                        Program.ApplicationRoot.IsDialogOpening = false;
                     }
                 }
                 else
@@ -174,7 +174,7 @@ namespace GetStoreApp.ViewModels.Window
         // 窗口大小发生改变时，设置页面导航视图样式
         public IRelayCommand SizeChangedCommand => new RelayCommand<WindowSizeChangedEventArgs>((args) =>
         {
-            if (MainWindow.Current.Width >= 768)
+            if (Program.ApplicationRoot.MainWindow.Width >= 768)
             {
                 IsPaneToggleButtonVisible = false;
                 NavigationDispalyMode = NavigationViewPaneDisplayMode.Left;
@@ -215,7 +215,7 @@ namespace GetStoreApp.ViewModels.Window
         public void OnNavigationViewLoaded(object sender, RoutedEventArgs args)
         {
             // 初始化导航视图控件属性和应用的背景色。
-            if (MainWindow.Current.Width >= 768)
+            if (Program.ApplicationRoot.MainWindow.Width >= 768)
             {
                 IsPaneToggleButtonVisible = false;
                 NavigationDispalyMode = NavigationViewPaneDisplayMode.Left;
@@ -229,9 +229,9 @@ namespace GetStoreApp.ViewModels.Window
             }
 
             SetAppBackground();
-            SetContextMenuTheme((FrameworkElement)MainWindow.Current.Content);
+            SetContextMenuTheme((FrameworkElement)Program.ApplicationRoot.MainWindow.Content);
 
-            ((FrameworkElement)MainWindow.Current.Content).ActualThemeChanged += OnActualThemeChanged;
+            ((FrameworkElement)Program.ApplicationRoot.MainWindow.Content).ActualThemeChanged += OnActualThemeChanged;
 
             // 导航控件加载完成后初始化内容
 

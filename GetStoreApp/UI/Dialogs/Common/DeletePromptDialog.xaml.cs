@@ -16,7 +16,7 @@ namespace GetStoreApp.UI.Dialogs.Common
 
         public DeletePromptDialog(DeleteArgs deletePrompt)
         {
-            XamlRoot = MainWindow.GetMainWindowXamlRoot();
+            XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
 
             switch (deletePrompt)
             {

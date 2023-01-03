@@ -61,7 +61,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
         // 下载管理说明
         public IRelayCommand DownloadInstructionCommand => new RelayCommand(() =>
         {
-            App.Current.NavigationArgs = AppNaviagtionArgs.SettingsHelp;
+            Program.ApplicationRoot.NavigationArgs = AppNaviagtionArgs.SettingsHelp;
             NavigationService.NavigateTo(typeof(AboutPage));
         });
 
@@ -87,7 +87,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
                 Path = DownloadFolder.Path
             };
 
-            bool Result = dialog.ShowDialog(MainWindow.GetMainWindowHandle());
+            bool Result = dialog.ShowDialog(Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
 
             if (Result)
             {

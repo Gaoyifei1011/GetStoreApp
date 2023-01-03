@@ -16,11 +16,11 @@ namespace GetStoreApp.ViewModels.Pages
         // 查看许可证
         public IRelayCommand ShowLicenseCommand => new RelayCommand(async () =>
         {
-            if (!App.Current.IsDialogOpening)
+            if (!Program.ApplicationRoot.IsDialogOpening)
             {
-                App.Current.IsDialogOpening = true;
+                Program.ApplicationRoot.IsDialogOpening = true;
                 await new LicenseDialog().ShowAsync();
-                App.Current.IsDialogOpening = false;
+                Program.ApplicationRoot.IsDialogOpening = false;
             }
         });
     }

@@ -63,7 +63,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// </summary>
         public static async Task SetAppThemeAsync()
         {
-            if (MainWindow.Current.Content is FrameworkElement frameworkElement)
+            if (Program.ApplicationRoot.MainWindow.Content is FrameworkElement frameworkElement)
             {
                 frameworkElement.RequestedTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme.InternalName);
             }

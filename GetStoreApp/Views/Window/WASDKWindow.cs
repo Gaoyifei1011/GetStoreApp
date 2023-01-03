@@ -224,13 +224,13 @@ namespace GetStoreApp.Views.Window
                         {
                             WindowHelper.ShowAppWindow();
 
-                            if (!App.Current.IsDialogOpening)
+                            if (!Program.ApplicationRoot.IsDialogOpening)
                             {
-                                App.Current.IsDialogOpening = true;
+                                Program.ApplicationRoot.IsDialogOpening = true;
                                 DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, async () =>
                                 {
                                     await new AppRunningDialog().ShowAsync();
-                                    App.Current.IsDialogOpening = false;
+                                    Program.ApplicationRoot.IsDialogOpening = false;
                                 });
                             }
                         }

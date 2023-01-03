@@ -12,7 +12,7 @@ namespace GetStoreApp.UI.Dialogs.About
 
         public LicenseDialog()
         {
-            XamlRoot = MainWindow.GetMainWindowXamlRoot();
+            XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
             InitializeComponent();
         }
     }

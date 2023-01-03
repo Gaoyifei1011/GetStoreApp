@@ -16,7 +16,7 @@ namespace GetStoreApp.UI.Dialogs.Common
 
         public DownloadNotifyDialog(DuplicatedDataInfoArgs duplicatedDataInfo)
         {
-            XamlRoot = MainWindow.GetMainWindowXamlRoot();
+            XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
 
             switch (duplicatedDataInfo)
             {

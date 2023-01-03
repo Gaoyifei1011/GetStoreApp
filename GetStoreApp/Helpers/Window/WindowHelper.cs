@@ -14,20 +14,20 @@ namespace GetStoreApp.Helpers.Window
         public static void ShowAppWindow()
         {
             // 判断窗口状态是否处于最大化状态，如果是，直接最大化窗口
-            if (User32Library.IsZoomed(MainWindow.GetMainWindowHandle()))
+            if (User32Library.IsZoomed(Program.ApplicationRoot.MainWindow.GetMainWindowHandle()))
             {
-                User32Library.ShowWindow(MainWindow.GetMainWindowHandle(), WindowShowStyle.SW_MAXIMIZE);
+                User32Library.ShowWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), WindowShowStyle.SW_MAXIMIZE);
             }
 
             // 其他状态下窗口还原显示状态
             else
             {
                 // 还原窗口（如果最小化）时
-                User32Library.ShowWindow(MainWindow.GetMainWindowHandle(), WindowShowStyle.SW_RESTORE);
+                User32Library.ShowWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), WindowShowStyle.SW_RESTORE);
             }
 
             // 将应用窗口设置到前台
-            User32Library.SwitchToThisWindow(MainWindow.GetMainWindowHandle(), true);
+            User32Library.SwitchToThisWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), true);
         }
 
         /// <summary>
@@ -35,9 +35,9 @@ namespace GetStoreApp.Helpers.Window
         /// </summary>
         public static void HideAppWindow()
         {
-            if (MainWindow.Current.Visible)
+            if (Program.ApplicationRoot.MainWindow.Visible)
             {
-                User32Library.ShowWindow(MainWindow.GetMainWindowHandle(), WindowShowStyle.SW_HIDE);
+                User32Library.ShowWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), WindowShowStyle.SW_HIDE);
             }
         }
 
@@ -48,12 +48,12 @@ namespace GetStoreApp.Helpers.Window
         {
             if (topMostValue)
             {
-                User32Library.SetWindowPos(MainWindow.GetMainWindowHandle(), SpecialWindowHandles.HWND_TOPMOST, 0, 0, 0, 0,
+                User32Library.SetWindowPos(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), SpecialWindowHandles.HWND_TOPMOST, 0, 0, 0, 0,
                 SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOSIZE);
             }
             else
             {
-                User32Library.SetWindowPos(MainWindow.GetMainWindowHandle(), SpecialWindowHandles.HWND_NOTOPMOST, 0, 0, 0, 0,
+                User32Library.SetWindowPos(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), SpecialWindowHandles.HWND_NOTOPMOST, 0, 0, 0, 0,
                 SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOSIZE);
             }
         }

@@ -12,7 +12,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
 
         public RestartAppsDialog()
         {
-            XamlRoot = MainWindow.GetMainWindowXamlRoot();
+            XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
             InitializeComponent();
         }
     }

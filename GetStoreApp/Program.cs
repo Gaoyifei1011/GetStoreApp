@@ -24,7 +24,9 @@ namespace GetStoreApp
 
         public static List<string> CommandLineArgs { get; set; }
 
+        // 应用程序实例
         public static App ApplicationRoot { get; set; }
+
 
         /// <summary>
         /// 应用程序的主入口点
@@ -43,7 +45,7 @@ namespace GetStoreApp
                 DesktopLaunchService.InitializeLaunchAsync().Wait();
 
                 ComWrappersSupport.InitializeComWrappers();
-                Application.Start((p) =>
+                Application.Start((param) =>
                 {
                     DispatcherQueueSynchronizationContext context = new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread());
                     SynchronizationContext.SetSynchronizationContext(context);

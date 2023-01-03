@@ -102,11 +102,11 @@ namespace GetStoreApp.ViewModels.Controls.Home
             {
                 if (StatePrRingActValue)
                 {
-                    Taskbar.SetProgressState(TaskbarProgressBarState.Indeterminate, MainWindow.GetMainWindowHandle());
+                    Taskbar.SetProgressState(TaskbarProgressBarState.Indeterminate, Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
                 }
                 else
                 {
-                    Taskbar.SetProgressState(TaskbarProgressBarState.NoProgress, MainWindow.GetMainWindowHandle());
+                    Taskbar.SetProgressState(TaskbarProgressBarState.NoProgress, Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
                 }
             }
         }

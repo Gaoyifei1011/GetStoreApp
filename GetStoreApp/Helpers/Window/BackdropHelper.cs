@@ -25,7 +25,7 @@ namespace GetStoreApp.Helpers.Window
 
                 // 挂接策略对象
                 m_configurationSource = new SystemBackdropConfiguration();
-                ((FrameworkElement)MainWindow.Current.Content).ActualThemeChanged += WindowThemeChanged;
+                ((FrameworkElement)Program.ApplicationRoot.MainWindow.Content).ActualThemeChanged += WindowThemeChanged;
 
                 // 初始化配置状态
                 m_configurationSource.IsInputActive = true;
@@ -35,7 +35,7 @@ namespace GetStoreApp.Helpers.Window
 
                 // 启用系统背景色
                 // 注意： 请确保使用“using:WinRT;”来支持 Window.As<...>() 调用。
-                m_micaController.AddSystemBackdropTarget(MainWindow.Current.As<Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop>());
+                m_micaController.AddSystemBackdropTarget(Program.ApplicationRoot.MainWindow.As<Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop>());
                 m_micaController.SetSystemBackdropConfiguration(m_configurationSource);
                 return true; // 成功
             }
@@ -55,7 +55,7 @@ namespace GetStoreApp.Helpers.Window
 
                 // 挂接策略对象
                 m_configurationSource = new SystemBackdropConfiguration();
-                ((FrameworkElement)MainWindow.Current.Content).ActualThemeChanged += WindowThemeChanged;
+                ((FrameworkElement)Program.ApplicationRoot.MainWindow.Content).ActualThemeChanged += WindowThemeChanged;
 
                 // 初始化配置状态
                 m_configurationSource.IsInputActive = true;
@@ -65,7 +65,7 @@ namespace GetStoreApp.Helpers.Window
 
                 // 启用系统背景色
                 // 注意： 请确保使用“using:WinRT;”来支持 Window.As<...>() 调用。
-                m_micaController.AddSystemBackdropTarget(MainWindow.Current.As<Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop>());
+                m_micaController.AddSystemBackdropTarget(Program.ApplicationRoot.MainWindow.As<Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop>());
                 m_micaController.SetSystemBackdropConfiguration(m_configurationSource);
                 return true; // 成功
             }
@@ -85,7 +85,7 @@ namespace GetStoreApp.Helpers.Window
 
                 // 挂接策略对象
                 m_configurationSource = new SystemBackdropConfiguration();
-                ((FrameworkElement)MainWindow.Current.Content).ActualThemeChanged += WindowThemeChanged;
+                ((FrameworkElement)Program.ApplicationRoot.MainWindow.Content).ActualThemeChanged += WindowThemeChanged;
 
                 // 初始化配置状态
                 m_configurationSource.IsInputActive = true;
@@ -95,7 +95,7 @@ namespace GetStoreApp.Helpers.Window
 
                 // 启用系统背景色
                 // 注意： 请确保使用“using:WinRT;”来支持 Window.As<...>() 调用。
-                m_acrylicController.AddSystemBackdropTarget(MainWindow.Current.As<Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop>());
+                m_acrylicController.AddSystemBackdropTarget(Program.ApplicationRoot.MainWindow.As<Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop>());
                 m_acrylicController.SetSystemBackdropConfiguration(m_configurationSource);
                 return true; // 成功
             }
@@ -138,7 +138,7 @@ namespace GetStoreApp.Helpers.Window
                 m_acrylicController = null;
             }
 
-            ((FrameworkElement)MainWindow.Current.Content).ActualThemeChanged -= WindowThemeChanged;
+            ((FrameworkElement)Program.ApplicationRoot.MainWindow.Content).ActualThemeChanged -= WindowThemeChanged;
             m_configurationSource = null;
         }
 
@@ -152,7 +152,7 @@ namespace GetStoreApp.Helpers.Window
 
         private static void SetConfigurationSourceTheme()
         {
-            switch (((FrameworkElement)MainWindow.Current.Content).ActualTheme)
+            switch (((FrameworkElement)Program.ApplicationRoot.MainWindow.Content).ActualTheme)
             {
                 case ElementTheme.Dark: m_configurationSource.Theme = SystemBackdropTheme.Dark; break;
                 case ElementTheme.Light: m_configurationSource.Theme = SystemBackdropTheme.Light; break;

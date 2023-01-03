@@ -161,11 +161,11 @@ namespace GetStoreApp.ViewModels.Controls.Download
             // 没有选中任何内容时显示空提示对话框
             if (SelectedUnfinishedDataList.Count == 0)
             {
-                if (!App.Current.IsDialogOpening)
+                if (!Program.ApplicationRoot.IsDialogOpening)
                 {
-                    App.Current.IsDialogOpening = true;
+                    Program.ApplicationRoot.IsDialogOpening = true;
                     await new SelectEmptyPromptDialog().ShowAsync();
-                    App.Current.IsDialogOpening = false;
+                    Program.ApplicationRoot.IsDialogOpening = false;
                 }
                 return;
             }
@@ -338,7 +338,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         {
             if (args.RemovedItems.Any(item => item.DownloadFlag == 0 || item.DownloadFlag == 2))
             {
-                MainWindow.Current.DispatcherQueue.TryEnqueue(async () =>
+                Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(async () =>
                 {
                     foreach (BackgroundModel backgroundItem in args.RemovedItems)
                     {

@@ -110,7 +110,7 @@ namespace GetStoreApp.WindowsAPI.Controls
             {
                 if (_ownerHandle == IntPtr.Zero)
                 {
-                    _ownerHandle = MainWindow.GetMainWindowHandle();
+                    _ownerHandle = Program.ApplicationRoot.MainWindow.GetMainWindowHandle();
                 }
 
                 return _ownerHandle;

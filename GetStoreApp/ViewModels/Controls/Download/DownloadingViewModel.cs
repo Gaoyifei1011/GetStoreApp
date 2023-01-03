@@ -178,11 +178,11 @@ namespace GetStoreApp.ViewModels.Controls.Download
             // 没有选中任何内容时显示空提示对话框
             if (SelectedDownloadingDataList.Count == 0)
             {
-                if (!App.Current.IsDialogOpening)
+                if (!Program.ApplicationRoot.IsDialogOpening)
                 {
-                    App.Current.IsDialogOpening = true;
+                    Program.ApplicationRoot.IsDialogOpening = true;
                     await new SelectEmptyPromptDialog().ShowAsync();
-                    App.Current.IsDialogOpening = false;
+                    Program.ApplicationRoot.IsDialogOpening = false;
                 }
                 return;
             }
@@ -484,7 +484,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             // 下载中列表添加项目时，更新UI
             if (args.AddedItems.Count > 0)
             {
-                MainWindow.Current.DispatcherQueue.TryEnqueue(() =>
+                Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
                 {
                     foreach (BackgroundModel downloadItem in args.AddedItems)
                     {
@@ -506,7 +506,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             // 下载中列表删除项目时，更新UI
             if (args.RemovedItems.Count > 0)
             {
-                MainWindow.Current.DispatcherQueue.TryEnqueue(() =>
+                Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
                 {
                     foreach (BackgroundModel backgroundItem in args.RemovedItems)
                     {
@@ -550,7 +550,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             // 等待列表添加项目时，更新UI
             if (args.AddedItems.Count > 0)
             {
-                MainWindow.Current.DispatcherQueue.TryEnqueue(() =>
+                Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
                 {
                     foreach (BackgroundModel item in args.AddedItems)
                     {
@@ -571,7 +571,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             // 等待列表删除项目时，更新UI
             if (args.RemovedItems.Count > 0)
             {
-                MainWindow.Current.DispatcherQueue.TryEnqueue(() =>
+                Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
                 {
                     foreach (BackgroundModel backgroundItem in args.RemovedItems)
                     {

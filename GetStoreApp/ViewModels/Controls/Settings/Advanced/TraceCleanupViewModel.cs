@@ -13,18 +13,18 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
         // 痕迹清理说明
         public IRelayCommand TraceCleanupTipCommand => new RelayCommand(() =>
         {
-            App.Current.NavigationArgs = AppNaviagtionArgs.SettingsHelp;
+            Program.ApplicationRoot.NavigationArgs = AppNaviagtionArgs.SettingsHelp;
             NavigationService.NavigateTo(typeof(AboutPage));
         });
 
         // 清理应用内使用的所有痕迹
         public IRelayCommand TraceCleanupCommand = new RelayCommand(async () =>
         {
-            if (!App.Current.IsDialogOpening)
+            if (!Program.ApplicationRoot.IsDialogOpening)
             {
-                App.Current.IsDialogOpening = true;
+                Program.ApplicationRoot.IsDialogOpening = true;
                 await new TraceCleanupPromptDialog().ShowAsync();
-                App.Current.IsDialogOpening = false;
+                Program.ApplicationRoot.IsDialogOpening = false;
             }
         });
     }

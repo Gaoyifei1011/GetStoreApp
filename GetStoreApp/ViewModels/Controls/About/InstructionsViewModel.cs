@@ -13,22 +13,22 @@ namespace GetStoreApp.ViewModels.Controls.About
         // 桌面程序启动参数说明
         public IRelayCommand DesktopLaunchCommand => new RelayCommand(async () =>
         {
-            if (!App.Current.IsDialogOpening)
+            if (!Program.ApplicationRoot.IsDialogOpening)
             {
-                App.Current.IsDialogOpening = true;
+                Program.ApplicationRoot.IsDialogOpening = true;
                 await new DesktopStartupArgsDialog().ShowAsync();
-                App.Current.IsDialogOpening = false;
+                Program.ApplicationRoot.IsDialogOpening = false;
             }
         });
 
         // 控制台程序启动参数说明
         public IRelayCommand ConsoleLaunchCommand => new RelayCommand(async () =>
         {
-            if (!App.Current.IsDialogOpening)
+            if (!Program.ApplicationRoot.IsDialogOpening)
             {
-                App.Current.IsDialogOpening = true;
+                Program.ApplicationRoot.IsDialogOpening = true;
                 await new ConsoleStartupArgsDialog().ShowAsync();
-                App.Current.IsDialogOpening = false;
+                Program.ApplicationRoot.IsDialogOpening = false;
             }
         });
 
@@ -47,18 +47,18 @@ namespace GetStoreApp.ViewModels.Controls.About
         // Cloudflare 5秒验证信息
         public IRelayCommand CloudflareValidationCommand => new RelayCommand(async () =>
         {
-            if (!App.Current.IsDialogOpening)
+            if (!Program.ApplicationRoot.IsDialogOpening)
             {
-                App.Current.IsDialogOpening = true;
+                Program.ApplicationRoot.IsDialogOpening = true;
                 await new CloudflareValidationDialog().ShowAsync();
-                App.Current.IsDialogOpening = false;
+                Program.ApplicationRoot.IsDialogOpening = false;
             }
         });
 
         // 下载设置
         public IRelayCommand DownloadSettingsCommand => new RelayCommand(() =>
         {
-            App.Current.NavigationArgs = AppNaviagtionArgs.DownloadOptions;
+            Program.ApplicationRoot.NavigationArgs = AppNaviagtionArgs.DownloadOptions;
             NavigationService.NavigateTo(typeof(SettingsPage));
         });
     }

@@ -18,7 +18,7 @@ namespace GetStoreApp.Views.Pages
             double CurrentScrollPosition = AboutScroll.VerticalOffset;
             Point CurrentPoint = new Point(0, (int)CurrentScrollPosition);
 
-            switch (App.Current.NavigationArgs)
+            switch (Program.ApplicationRoot.NavigationArgs)
             {
                 case AppNaviagtionArgs.Instructions:
                     {
@@ -36,7 +36,7 @@ namespace GetStoreApp.Views.Pages
                     break;
             }
 
-            App.Current.NavigationArgs = AppNaviagtionArgs.None;
+            Program.ApplicationRoot.NavigationArgs = AppNaviagtionArgs.None;
         }
     }
 }

@@ -145,11 +145,11 @@ namespace GetStoreApp.ViewModels.Pages
         public async void OnCoreProcessFailed(object sender, CoreWebView2ProcessFailedEventArgs args)
         {
             // 显示异常信息错误原因，弹出对话框
-            if (!App.Current.IsDialogOpening)
+            if (!Program.ApplicationRoot.IsDialogOpening)
             {
-                App.Current.IsDialogOpening = true;
+                Program.ApplicationRoot.IsDialogOpening = true;
                 await new CoreWebView2FailedDialog(args).ShowAsync();
-                App.Current.IsDialogOpening = false;
+                Program.ApplicationRoot.IsDialogOpening = false;
             }
         }
 
@@ -280,9 +280,9 @@ namespace GetStoreApp.ViewModels.Pages
 
                             case DuplicatedDataInfoArgs.Unfinished:
                                 {
-                                    if (!App.Current.IsDialogOpening)
+                                    if (!Program.ApplicationRoot.IsDialogOpening)
                                     {
-                                        App.Current.IsDialogOpening = true;
+                                        Program.ApplicationRoot.IsDialogOpening = true;
 
                                         ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Unfinished).ShowAsync();
 
@@ -305,16 +305,16 @@ namespace GetStoreApp.ViewModels.Pages
                                         {
                                             NavigationService.NavigateTo(typeof(DownloadPage));
                                         }
-                                        App.Current.IsDialogOpening = false;
+                                        Program.ApplicationRoot.IsDialogOpening = false;
                                     }
                                     break;
                                 }
 
                             case DuplicatedDataInfoArgs.Completed:
                                 {
-                                    if (!App.Current.IsDialogOpening)
+                                    if (!Program.ApplicationRoot.IsDialogOpening)
                                     {
-                                        App.Current.IsDialogOpening = true;
+                                        Program.ApplicationRoot.IsDialogOpening = true;
 
                                         ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Completed).ShowAsync();
 
@@ -337,7 +337,7 @@ namespace GetStoreApp.ViewModels.Pages
                                         {
                                             NavigationService.NavigateTo(typeof(DownloadPage));
                                         }
-                                        App.Current.IsDialogOpening = false;
+                                        Program.ApplicationRoot.IsDialogOpening = false;
                                     }
                                     break;
                                 }

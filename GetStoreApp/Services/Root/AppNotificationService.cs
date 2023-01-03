@@ -36,7 +36,7 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         public static void HandleAppNotification(AppNotificationActivatedEventArgs args)
         {
-            MainWindow.Current.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
+            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
             {
                 while (NavigationService.NavigationFrame is null)
                 {

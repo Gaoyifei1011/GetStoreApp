@@ -47,7 +47,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Experiment
                     }
                     else
                     {
-                        Shell32Library.ShellExecute(MainWindow.GetMainWindowHandle(), "open", "explorer.exe", "", "", WindowShowStyle.SW_SHOWNORMAL);
+                        Shell32Library.ShellExecute(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), "open", "explorer.exe", "", "", WindowShowStyle.SW_SHOWNORMAL);
                     }
                 }
             }

@@ -18,7 +18,8 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
         // 重启应用
         public IRelayCommand RestartAppsCommand => new RelayCommand<ContentDialog>(async (dialog) =>
         {
-            await RestartAppsAsync(dialog);
+            dialog.Hide();
+            await RestartAppsAsync();
         });
 
         // 取消重启应用
@@ -65,10 +66,8 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
         /// <summary>
         /// 重启应用，并关闭Aria2下载服务
         /// </summary>
-        private async Task RestartAppsAsync(ContentDialog dialog)
+        private async Task RestartAppsAsync()
         {
-            dialog.Hide();
-
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
             await Aria2Service.CloseAria2Async();
             Messenger.Default.Send(true, MessageToken.WindowClosed);

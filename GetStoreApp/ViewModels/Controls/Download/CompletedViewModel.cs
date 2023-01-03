@@ -108,11 +108,11 @@ namespace GetStoreApp.ViewModels.Controls.Download
             // 没有选中任何内容时显示空提示对话框
             if (SelectedCompletedDataList.Count == 0)
             {
-                if (!App.Current.IsDialogOpening)
+                if (!Program.ApplicationRoot.IsDialogOpening)
                 {
-                    App.Current.IsDialogOpening = true;
+                    Program.ApplicationRoot.IsDialogOpening = true;
                     await new SelectEmptyPromptDialog().ShowAsync();
-                    App.Current.IsDialogOpening = false;
+                    Program.ApplicationRoot.IsDialogOpening = false;
                 }
                 return;
             }
@@ -120,19 +120,19 @@ namespace GetStoreApp.ViewModels.Controls.Download
             // 当前任务正在安装时，不进行其他任何操作
             if (SelectedCompletedDataList.Exists(item => item.IsInstalling == true))
             {
-                if (!App.Current.IsDialogOpening)
+                if (!Program.ApplicationRoot.IsDialogOpening)
                 {
-                    App.Current.IsDialogOpening = true;
+                    Program.ApplicationRoot.IsDialogOpening = true;
                     await new InstallingNotifyDialog().ShowAsync();
-                    App.Current.IsDialogOpening = false;
+                    Program.ApplicationRoot.IsDialogOpening = false;
                 }
                 return;
             }
 
             // 删除时显示删除确认对话框
-            if (!App.Current.IsDialogOpening)
+            if (!Program.ApplicationRoot.IsDialogOpening)
             {
-                App.Current.IsDialogOpening = true;
+                Program.ApplicationRoot.IsDialogOpening = true;
                 ContentDialogResult result = await new DeletePromptDialog(DeleteArgs.Download).ShowAsync();
 
                 if (result == ContentDialogResult.Primary)
@@ -157,7 +157,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     }
                 }
 
-                App.Current.IsDialogOpening = false;
+                Program.ApplicationRoot.IsDialogOpening = false;
             }
         });
 
@@ -179,11 +179,11 @@ namespace GetStoreApp.ViewModels.Controls.Download
             // 没有选中任何内容时显示空提示对话框
             if (SelectedCompletedDataList.Count == 0)
             {
-                if (!App.Current.IsDialogOpening)
+                if (!Program.ApplicationRoot.IsDialogOpening)
                 {
-                    App.Current.IsDialogOpening = true;
+                    Program.ApplicationRoot.IsDialogOpening = true;
                     await new SelectEmptyPromptDialog().ShowAsync();
-                    App.Current.IsDialogOpening = false;
+                    Program.ApplicationRoot.IsDialogOpening = false;
                 }
                 return;
             }
@@ -191,19 +191,19 @@ namespace GetStoreApp.ViewModels.Controls.Download
             // 当前任务正在安装时，不进行其他任何操作
             if (SelectedCompletedDataList.Exists(item => item.IsInstalling == true))
             {
-                if (!App.Current.IsDialogOpening)
+                if (!Program.ApplicationRoot.IsDialogOpening)
                 {
-                    App.Current.IsDialogOpening = true;
+                    Program.ApplicationRoot.IsDialogOpening = true;
                     await new InstallingNotifyDialog().ShowAsync();
-                    App.Current.IsDialogOpening = false;
+                    Program.ApplicationRoot.IsDialogOpening = false;
                 }
                 return;
             }
 
             // 删除时显示删除确认对话框
-            if (!App.Current.IsDialogOpening)
+            if (!Program.ApplicationRoot.IsDialogOpening)
             {
-                App.Current.IsDialogOpening = true;
+                Program.ApplicationRoot.IsDialogOpening = true;
                 ContentDialogResult result = await new DeletePromptDialog(DeleteArgs.DownloadWithFile).ShowAsync();
 
                 if (result == ContentDialogResult.Primary)
@@ -238,7 +238,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     }
                 }
 
-                App.Current.IsDialogOpening = false;
+                Program.ApplicationRoot.IsDialogOpening = false;
             }
         });
 
@@ -256,7 +256,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 if (InstallModeService.InstallMode.InternalName == InstallModeService.InstallModeList[0].InternalName)
                 {
-                    Shell32Library.ShellExecute(MainWindow.GetMainWindowHandle(), string.Empty, completedItem.FilePath, string.Empty, string.Empty, WindowShowStyle.SW_SHOWNORMAL);
+                    Shell32Library.ShellExecute(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), string.Empty, completedItem.FilePath, string.Empty, string.Empty, WindowShowStyle.SW_SHOWNORMAL);
                 }
 
                 // 直接安装
@@ -321,7 +321,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     }
                     else
                     {
-                        Shell32Library.ShellExecute(MainWindow.GetMainWindowHandle(), "open", "explorer.exe", "", "", WindowShowStyle.SW_SHOWNORMAL);
+                        Shell32Library.ShellExecute(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), "open", "explorer.exe", "", "", WindowShowStyle.SW_SHOWNORMAL);
                     }
                 }
             }
@@ -334,11 +334,11 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 if (completedItem.IsInstalling == true)
                 {
-                    if (!App.Current.IsDialogOpening)
+                    if (!Program.ApplicationRoot.IsDialogOpening)
                     {
-                        App.Current.IsDialogOpening = true;
+                        Program.ApplicationRoot.IsDialogOpening = true;
                         await new InstallingNotifyDialog().ShowAsync();
-                        App.Current.IsDialogOpening = false;
+                        Program.ApplicationRoot.IsDialogOpening = false;
                     }
                     return;
                 }
@@ -362,11 +362,11 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 if (completedItem.IsInstalling == true)
                 {
-                    if (!App.Current.IsDialogOpening)
+                    if (!Program.ApplicationRoot.IsDialogOpening)
                     {
-                        App.Current.IsDialogOpening = true;
+                        Program.ApplicationRoot.IsDialogOpening = true;
                         await new InstallingNotifyDialog().ShowAsync();
-                        App.Current.IsDialogOpening = false;
+                        Program.ApplicationRoot.IsDialogOpening = false;
                     }
                     return;
                 }
@@ -398,11 +398,11 @@ namespace GetStoreApp.ViewModels.Controls.Download
         // 查看文件信息
         public IRelayCommand FileInformationCommand => new RelayCommand<CompletedModel>(async (completedItem) =>
         {
-            if (!App.Current.IsDialogOpening)
+            if (!Program.ApplicationRoot.IsDialogOpening)
             {
-                App.Current.IsDialogOpening = true;
+                Program.ApplicationRoot.IsDialogOpening = true;
                 await new FileInformationDialog(completedItem).ShowAsync();
-                App.Current.IsDialogOpening = false;
+                Program.ApplicationRoot.IsDialogOpening = false;
             }
         });
 
@@ -487,7 +487,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         {
             if (args.RemovedItems.Any(item => item.DownloadFlag == 4))
             {
-                MainWindow.Current.DispatcherQueue.TryEnqueue(async () =>
+                Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(async () =>
                 {
                     foreach (BackgroundModel backgroundItem in args.RemovedItems)
                     {

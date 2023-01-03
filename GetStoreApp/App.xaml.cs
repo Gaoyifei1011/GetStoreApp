@@ -14,7 +14,7 @@ namespace GetStoreApp
     {
         public AppWindow AppWindow { get; set; }
 
-        public WASDKWindow MainWindow { get; set; }
+        public MainWindow MainWindow { get; set; }
 
         public WindowsTrayIcon TrayIcon { get; set; }
 
@@ -26,15 +26,10 @@ namespace GetStoreApp
         // 导航页面后使用到的参数
         public AppNaviagtionArgs NavigationArgs { get; set; } = AppNaviagtionArgs.None;
 
-        // 获取当前应用的实例
-        public new static App Current { get; private set; }
-
         public App()
         {
             InitializeComponent();
-            Current = this;
             UnhandledException += ViewModel.OnUnhandledException;
-
             AppNotificationService.Initialize();
         }
 
@@ -52,7 +47,7 @@ namespace GetStoreApp
         }
 
         /// <summary>
-        /// 初始化应用的MainWindow
+        /// 初始化应用的主窗口
         /// </summary>
         private void InitializeMainWindow()
         {
@@ -65,7 +60,7 @@ namespace GetStoreApp
         /// </summary>
         private void InitializeAppWindow()
         {
-            WindowId windowId = Win32Interop.GetWindowIdFromWindow(Views.Window.MainWindow.GetMainWindowHandle());
+            WindowId windowId = Win32Interop.GetWindowIdFromWindow(MainWindow.GetMainWindowHandle());
 
             AppWindow = AppWindow.GetFromWindowId(windowId);
             AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;

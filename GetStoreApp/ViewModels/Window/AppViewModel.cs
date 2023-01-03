@@ -22,7 +22,7 @@ namespace GetStoreApp.ViewModels.Window
         public IRelayCommand ShowOrHideWindowCommand => new RelayCommand(() =>
         {
             // 隐藏窗口
-            if (MainWindow.Current.Visible)
+            if (Program.ApplicationRoot.MainWindow.Visible)
             {
                 WindowHelper.HideAppWindow();
             }
@@ -55,9 +55,9 @@ namespace GetStoreApp.ViewModels.Window
                 WindowHelper.ShowAppWindow();
 
                 // 关闭窗口提示对话框是否已经处于打开状态，如果是，不再弹出
-                if (!App.Current.IsDialogOpening)
+                if (!Program.ApplicationRoot.IsDialogOpening)
                 {
-                    App.Current.IsDialogOpening = true;
+                    Program.ApplicationRoot.IsDialogOpening = true;
 
                     ContentDialogResult result = await new ClosingWindowDialog().ShowAsync();
 
@@ -73,7 +73,7 @@ namespace GetStoreApp.ViewModels.Window
                         }
                     }
 
-                    App.Current.IsDialogOpening = false;
+                    Program.ApplicationRoot.IsDialogOpening = false;
                 }
             }
             else
