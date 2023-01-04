@@ -254,7 +254,7 @@ namespace GetStoreApp.Extensions.Messaging
 
         private static void CleanupList(IDictionary<Type, List<WeakActionAndToken>> lists)
         {
-            if (lists == null)
+            if (lists is null)
             {
                 return;
             }
@@ -265,7 +265,7 @@ namespace GetStoreApp.Extensions.Messaging
                 var recipientsToRemove = new List<WeakActionAndToken>();
                 foreach (var item in list.Value)
                 {
-                    if (item.Action == null
+                    if (item.Action is null
                         || !item.Action.IsAlive)
                     {
                         recipientsToRemove.Add(item);
@@ -277,7 +277,7 @@ namespace GetStoreApp.Extensions.Messaging
                     list.Value.Remove(recipient);
                 }
 
-                if (list.Value.Count == 0)
+                if (list.Value.Count is 0)
                 {
                     listsToRemove.Add(list.Key);
                 }
@@ -291,8 +291,8 @@ namespace GetStoreApp.Extensions.Messaging
 
         private static bool Implements(Type instanceType, Type interfaceType)
         {
-            if (interfaceType == null
-                || instanceType == null)
+            if (interfaceType is null
+                || instanceType is null)
             {
                 return false;
             }
@@ -326,10 +326,10 @@ namespace GetStoreApp.Extensions.Messaging
                     if (item.Action is IExecuteWithObject executeAction
                         && item.Action.IsAlive
                         && item.Action.Target != null
-                        && (messageTargetType == null
+                        && (messageTargetType is null
                             || item.Action.Target.GetType() == messageTargetType
                             || Implements(item.Action.Target.GetType(), messageTargetType))
-                        && ((item.Token == null && token == null)
+                        && ((item.Token is null && token is null)
                             || item.Token != null && item.Token.Equals(token)))
                     {
                         executeAction.ExecuteWithObject(message);
@@ -340,9 +340,9 @@ namespace GetStoreApp.Extensions.Messaging
 
         private static void UnregisterFromLists(object recipient, Dictionary<Type, List<WeakActionAndToken>> lists)
         {
-            if (recipient == null
-                || lists == null
-                || lists.Count == 0)
+            if (recipient is null
+                || lists is null
+                || lists.Count is 0)
             {
                 return;
             }
@@ -372,9 +372,9 @@ namespace GetStoreApp.Extensions.Messaging
         {
             var messageType = typeof(TMessage);
 
-            if (recipient == null
-                || lists == null
-                || lists.Count == 0
+            if (recipient is null
+                || lists is null
+                || lists.Count is 0
                 || !lists.ContainsKey(messageType))
             {
                 return;
@@ -386,7 +386,7 @@ namespace GetStoreApp.Extensions.Messaging
                 {
                     if (item.Action is WeakAction<TMessage> weakActionCasted
                         && recipient == weakActionCasted.Target
-                        && (action == null
+                        && (action is null
                             || action == weakActionCasted.Action))
                     {
                         item.Action.MarkForDeletion();
@@ -403,9 +403,9 @@ namespace GetStoreApp.Extensions.Messaging
         {
             Type messageType = typeof(TMessage);
 
-            if (recipient == null
-                || lists == null
-                || lists.Count == 0
+            if (recipient is null
+                || lists is null
+                || lists.Count is 0
                 || !lists.ContainsKey(messageType))
             {
                 return;
@@ -417,9 +417,9 @@ namespace GetStoreApp.Extensions.Messaging
                 {
                     if (item.Action is WeakAction<TMessage> weakActionCasted
                         && recipient == weakActionCasted.Target
-                        && (action == null
+                        && (action is null
                             || action == weakActionCasted.Action)
-                        && (token == null
+                        && (token is null
                             || token.Equals(item.Token)))
                     {
                         item.Action.MarkForDeletion();

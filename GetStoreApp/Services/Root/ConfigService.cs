@@ -30,7 +30,7 @@ namespace GetStoreApp.Services.Root
 
         public static async Task<T> ReadSettingAsync<T>(string key)
         {
-            if (ApplicationData.Current.LocalSettings.Values[key] == null)
+            if (ApplicationData.Current.LocalSettings.Values[key] is null)
             {
                 return default;
             }

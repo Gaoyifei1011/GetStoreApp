@@ -13,11 +13,11 @@
         {
             get
             {
-                if (_taskbarList == null)
+                if (_taskbarList is null)
                 {
                     lock (_syncLock)
                     {
-                        if (_taskbarList == null)
+                        if (_taskbarList is null)
                         {
                             _taskbarList = (ITaskbarList4)new CTaskbarList();
                             _taskbarList.HrInit();

@@ -132,6 +132,9 @@
   <data name="Home" xml:space="preserve">
     <value>主页</value>
   </data>
+  <data name="JumpListGroupName" xml:space="preserve">
+    <value>历史记录</value>
+  </data>
   <data name="NavigationFailed" xml:space="preserve">
     <value>页面{0}导航失败</value>
   </data>

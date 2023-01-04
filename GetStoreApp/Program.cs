@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Extensions.SystemTray;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Advanced;
@@ -14,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.UI.StartScreen;
 using WinRT;
 
 namespace GetStoreApp
@@ -26,7 +28,6 @@ namespace GetStoreApp
 
         // 应用程序实例
         public static App ApplicationRoot { get; set; }
-
 
         /// <summary>
         /// 应用程序的主入口点
@@ -75,7 +76,7 @@ namespace GetStoreApp
         /// </summary>
         private static bool GetAppExecuteMode()
         {
-            return CommandLineArgs.Count == 0 || !CommandLineArgs[0].Equals("Console", StringComparison.OrdinalIgnoreCase);
+            return CommandLineArgs.Count is 0 || !CommandLineArgs[0].Equals("Console", StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>
@@ -87,12 +88,19 @@ namespace GetStoreApp
             await LanguageService.InitializeLanguageAsync();
             await ResourceService.InitializeResourceAsync(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
 
+            // 初始化通用设置选项（桌面应用程序和控制台应用程序）
+            await ResourceService.LocalizeReosurceAsync();
             await RegionService.InitializeRegionAsync();
             await LinkFilterService.InitializeLinkFilterValueAsnyc();
             await DownloadOptionsService.InitializeAsync();
 
+            // 初始化应用版本和系统版本信息
             InfoHelper.InitializeAppVersion();
             InfoHelper.InitializeSystemVersion();
+
+            // 初始化应用任务跳转列表信息
+            AppJumpList.GroupName = ResourceService.GetLocalized("/Window/JumpListGroupName");
+            AppJumpList.GroupKind = JumpListSystemGroupKind.Recent;
 
             if (IsDesktopProgram)
             {

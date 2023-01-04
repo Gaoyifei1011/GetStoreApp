@@ -288,7 +288,7 @@ namespace GetStoreApp.Services.Controls.Download
                 {
                     int downloadFlag = Convert.ToInt32(Query.GetString(6));
 
-                    if (downloadFlag == 4)
+                    if (downloadFlag is 4)
                     {
                         duplicatedDataInfo = DuplicatedDataInfoArgs.Completed;
                     }

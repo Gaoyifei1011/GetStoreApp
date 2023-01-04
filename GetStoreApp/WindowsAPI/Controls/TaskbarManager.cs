@@ -26,11 +26,11 @@ namespace GetStoreApp.WindowsAPI.Controls
         {
             get
             {
-                if (_instance == null)
+                if (_instance is null)
                 {
                     lock (_syncLock)
                     {
-                        if (_instance == null)
+                        if (_instance is null)
                             _instance = new TaskbarManager();
                     }
                 }

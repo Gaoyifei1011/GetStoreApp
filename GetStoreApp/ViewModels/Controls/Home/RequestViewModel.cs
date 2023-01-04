@@ -2,6 +2,7 @@
 using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
+using GetStoreApp.Extensions.SystemTray;
 using GetStoreApp.Helpers.Controls.Home;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.History;
@@ -16,6 +17,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Windows.UI.StartScreen;
 
 namespace GetStoreApp.ViewModels.Controls.Home
 {
@@ -233,6 +235,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
                 await UpdateHistoryAsync(CurrentType, CurrentChannel, CurrentLink);
 
+                await UpdateTaskbarJumpListAsync(CurrentType, CurrentChannel, CurrentLink);
+
                 Messenger.Default.Send(true, MessageToken.History);
             }
 
@@ -247,7 +251,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
         }
 
         /// <summary>
-        /// 更新历史记录，包括主页历史记录内容和数据库中的内容
+        /// 更新历史记录，包括主页历史记录内容、数据库中的内容和任务栏跳转列表中的内容
         /// </summary>
         private async Task UpdateHistoryAsync(int currentType, int currentChannel, string currentLink)
         {
@@ -264,15 +268,25 @@ namespace GetStoreApp.ViewModels.Controls.Home
             });
         }
 
-        private long GenerateTimeStamp()
+        /// <summary>
+        /// 更新应用任务栏跳转列表内容
+        /// </summary>
+        private async Task UpdateTaskbarJumpListAsync(int currentType, int currentChannel, string currentLink)
         {
-            TimeSpan TimeSpan = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0);
-            return Convert.ToInt64(TimeSpan.TotalSeconds);
+            if (Program.ApplicationRoot.TaskbarJumpList is not null)
+            {
+                JumpListItem jumpListItem = JumpListItem.CreateWithArguments(string.Format("JumpList {0} {1} {2}", TypeList[currentType].ShortName, ChannelList[currentChannel].ShortName, currentLink), currentLink);
+                jumpListItem.GroupName = AppJumpList.GroupName;
+                Program.ApplicationRoot.TaskbarJumpList.Items.Add(jumpListItem);
+                await Program.ApplicationRoot.TaskbarJumpList.SaveAsync();
+            }
         }
 
+        /// <summary>
+        /// 按设置选项设置的内容过滤列表
+        /// </summary>
         private void ResultListFilter(ref List<ResultModel> resultDataList)
         {
-            // 按要求过滤列表内容
             if (LinkFilterService.StartWithEFilterValue)
             {
                 resultDataList.RemoveAll(item =>
@@ -287,6 +301,15 @@ namespace GetStoreApp.ViewModels.Controls.Home
             {
                 resultDataList.RemoveAll(item => item.FileName.EndsWith("blockmap", StringComparison.OrdinalIgnoreCase));
             }
+        }
+
+        /// <summary>
+        /// 生成时间戳
+        /// </summary>
+        private long GenerateTimeStamp()
+        {
+            TimeSpan TimeSpan = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0);
+            return Convert.ToInt64(TimeSpan.TotalSeconds);
         }
     }
 }

@@ -2,6 +2,7 @@
 using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
+using GetStoreApp.Extensions.SystemTray;
 using GetStoreApp.Helpers.Window;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Appearance;
@@ -9,10 +10,10 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.Views.Pages;
-using GetStoreApp.Views.Window;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;
+using Windows.UI.StartScreen;
 
 namespace GetStoreApp.ViewModels.Window
 {
@@ -116,6 +117,33 @@ namespace GetStoreApp.ViewModels.Window
 
             // 启动Aria2下载服务（该服务会在后台长时间运行）
             await Aria2Service.StartAria2Async();
+        }
+
+        /// <summary>
+        /// 移除用户主动删除的条目
+        /// </summary>
+        public void RemoveUnusedItems()
+        {
+            // 如果某一条目被用户主动删除，应用初始化时则自动删除该条目
+            for (int index = 0; index < Program.ApplicationRoot.TaskbarJumpList.Items.Count; index++)
+            {
+                if (Program.ApplicationRoot.TaskbarJumpList.Items[index].RemovedByUser)
+                {
+                    Program.ApplicationRoot.TaskbarJumpList.Items.RemoveAt(index);
+                    index--;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 更新跳转列表组名
+        /// </summary>
+        public void UpdateJumpListGroupName()
+        {
+            foreach (JumpListItem jumpListItem in Program.ApplicationRoot.TaskbarJumpList.Items)
+            {
+                jumpListItem.GroupName = AppJumpList.GroupName;
+            }
         }
 
         /// <summary>

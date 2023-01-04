@@ -12,7 +12,7 @@ namespace GetStoreApp.Converters.Checks
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value == null)
+            if (value is null)
             {
                 return Visibility.Collapsed;
             }
@@ -20,7 +20,7 @@ namespace GetStoreApp.Converters.Checks
             string FilePath = System.Convert.ToString(value);
             string param = System.Convert.ToString(parameter);
 
-            if (param == "Reverse")
+            if (param is "Reverse")
             {
                 if (File.Exists(FilePath))
                 {

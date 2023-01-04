@@ -11,7 +11,7 @@ namespace GetStoreApp.Converters.Conversions
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value == null)
+            if (value is null)
             {
                 return Visibility.Collapsed;
             }
@@ -19,9 +19,9 @@ namespace GetStoreApp.Converters.Conversions
             int result = System.Convert.ToInt32(value);
             string param = System.Convert.ToString(parameter);
 
-            if (!string.IsNullOrEmpty(param) && param == "Reverse")
+            if (!string.IsNullOrEmpty(param) && param is "Reverse")
             {
-                return result == 0 ? Visibility.Visible : Visibility.Collapsed;
+                return result is 0 ? Visibility.Visible : Visibility.Collapsed;
             }
             else
             {

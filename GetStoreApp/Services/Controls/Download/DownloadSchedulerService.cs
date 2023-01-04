@@ -46,7 +46,7 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 NetWorkStatus NetStatus = NetWorkHelper.GetNetWorkStatus();
 
-                if (NetStatus == NetWorkStatus.None || NetStatus == NetWorkStatus.Unknown)
+                if (NetStatus is NetWorkStatus.None || NetStatus is NetWorkStatus.Unknown)
                 {
                     IsNetWorkConnected = false;
                     AppNotificationService.Show("DownloadAborted", "NotDownload");
@@ -90,7 +90,7 @@ namespace GetStoreApp.Services.Controls.Download
 
             bool Result = false;
 
-            if (operation == "Add")
+            if (operation is "Add")
             {
                 // 在数据库中添加下载信息，并获取添加成功的结果
                 bool AddResult = await DownloadDBService.AddAsync(backgroundItem);
@@ -103,7 +103,7 @@ namespace GetStoreApp.Services.Controls.Download
                 }
             }
             // 存在重复的下载记录
-            else if (operation == "Update")
+            else if (operation is "Update")
             {
                 bool UpdateResult = await DownloadDBService.UpdateFlagAsync(backgroundItem.DownloadKey, 1);
 
@@ -181,7 +181,7 @@ namespace GetStoreApp.Services.Controls.Download
             bool Result = true;
 
             // 处于等待下载状态时，从等待下载列表中移除
-            if (downloadFlag == 1)
+            if (downloadFlag is 1)
             {
                 try
                 {
@@ -195,7 +195,7 @@ namespace GetStoreApp.Services.Controls.Download
             }
 
             // 处于正在下载状态时，从正在下载列表中移除
-            else if (downloadFlag == 3)
+            else if (downloadFlag is 3)
             {
                 // 从下载进程中移除正在下载的任务
                 (bool, string) DeleteResult = await Aria2Service.NewPauseAsync(gID);
@@ -309,7 +309,7 @@ namespace GetStoreApp.Services.Controls.Download
             bool Result = true;
 
             // 处于等待下载状态时，从等待下载列表中移除
-            if (downloadFlag == 1)
+            if (downloadFlag is 1)
             {
                 try
                 {
@@ -323,7 +323,7 @@ namespace GetStoreApp.Services.Controls.Download
             }
 
             // 处于正在下载状态时，从正在下载列表中移除
-            else if (downloadFlag == 3)
+            else if (downloadFlag is 3)
             {
                 // 从下载进程中移除正在下载的任务
                 (bool, string) DeleteResult = await Aria2Service.NewDeleteAsync(gID);

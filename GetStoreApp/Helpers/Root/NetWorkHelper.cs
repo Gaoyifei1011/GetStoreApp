@@ -21,7 +21,7 @@ namespace GetStoreApp.Helpers.Root
             // 定义当前可用的连接级别
             NetworkConnectivityLevel networkConnectivityLevel = connectionProfile.GetNetworkConnectivityLevel();
 
-            if (networkConnectivityLevel == NetworkConnectivityLevel.None)
+            if (networkConnectivityLevel is NetworkConnectivityLevel.None)
             {
                 return NetWorkStatus.None;
             }
@@ -29,7 +29,7 @@ namespace GetStoreApp.Helpers.Root
             // 获取一个值，该值指示连接配置文件是否为 WWAN (移动) 连接
             if (connectionProfile.IsWwanConnectionProfile)
             {
-                if (connectionProfile.WwanConnectionProfileDetails == null)
+                if (connectionProfile.WwanConnectionProfileDetails is null)
                 {
                     return NetWorkStatus.Unknown;
                 }

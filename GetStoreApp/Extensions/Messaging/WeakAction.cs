@@ -43,7 +43,7 @@ namespace GetStoreApp.Extensions.Messaging
         {
             get
             {
-                if (_reference == null)
+                if (_reference is null)
                 {
                     return false;
                 }
@@ -59,7 +59,7 @@ namespace GetStoreApp.Extensions.Messaging
         {
             get
             {
-                if (_reference == null)
+                if (_reference is null)
                 {
                     return null;
                 }

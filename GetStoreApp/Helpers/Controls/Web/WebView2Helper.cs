@@ -14,7 +14,7 @@ namespace GetStoreApp.Helpers.Controls.Web
             {
                 string WebView2Version = CoreWebView2Environment.GetAvailableBrowserVersionString(browserExecutableFolder: default);
 
-                if (string.IsNullOrEmpty(WebView2Version) || WebView2Version == "0.0.0.0")
+                if (string.IsNullOrEmpty(WebView2Version) || WebView2Version is "0.0.0.0")
                 {
                     return false;
                 }

@@ -21,10 +21,10 @@ namespace GetStoreApp.Converters.Controls
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value != null)
+            if (value is not null)
             {
                 var gridView = (GridView)parameter;
-                if (gridView == null)
+                if (gridView is null)
                 {
                     return value;
                 }

@@ -11,7 +11,7 @@ namespace GetStoreApp.Converters.Formats
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value == null && parameter == null)
+            if (value is null && parameter is null)
             {
                 return string.Empty;
             }

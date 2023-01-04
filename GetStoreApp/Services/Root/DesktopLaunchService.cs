@@ -100,18 +100,30 @@ namespace GetStoreApp.Services.Root
             {
                 NeedToSendMesage = 1;
 
-                if (Program.CommandLineArgs.Count % 2 != 0)
+                // 跳转列表启动的参数
+                if (Program.CommandLineArgs[0] == "JumpList")
                 {
-                    return;
+                    LaunchArgs["TypeName"] = ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(Program.CommandLineArgs[1], StringComparison.OrdinalIgnoreCase));
+                    LaunchArgs["ChannelName"] = ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(Program.CommandLineArgs[2], StringComparison.OrdinalIgnoreCase));
+                    LaunchArgs["Link"] = Program.CommandLineArgs[3];
                 }
 
-                int TypeNameIndex = Program.CommandLineArgs.FindIndex(item => item.Equals("-t", StringComparison.OrdinalIgnoreCase) || item.Equals("--type", StringComparison.OrdinalIgnoreCase));
-                int ChannelNameIndex = Program.CommandLineArgs.FindIndex(item => item.Equals("-c", StringComparison.OrdinalIgnoreCase) || item.Equals("--channel", StringComparison.OrdinalIgnoreCase));
-                int LinkIndex = Program.CommandLineArgs.FindIndex(item => item.Equals("-l", StringComparison.OrdinalIgnoreCase) || item.Equals("--link", StringComparison.OrdinalIgnoreCase));
+                // 正常启动的参数
+                else
+                {
+                    if (Program.CommandLineArgs.Count % 2 != 0)
+                    {
+                        return;
+                    }
 
-                LaunchArgs["TypeName"] = TypeNameIndex == -1 ? LaunchArgs["TypeName"] : ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(Program.CommandLineArgs[TypeNameIndex + 1], StringComparison.OrdinalIgnoreCase));
-                LaunchArgs["ChannelName"] = ChannelNameIndex == -1 ? LaunchArgs["ChannelName"] : ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(Program.CommandLineArgs[ChannelNameIndex + 1], StringComparison.OrdinalIgnoreCase));
-                LaunchArgs["Link"] = LinkIndex == -1 ? LaunchArgs["Link"] : Program.CommandLineArgs[LinkIndex + 1];
+                    int TypeNameIndex = Program.CommandLineArgs.FindIndex(item => item.Equals("-t", StringComparison.OrdinalIgnoreCase) || item.Equals("--type", StringComparison.OrdinalIgnoreCase));
+                    int ChannelNameIndex = Program.CommandLineArgs.FindIndex(item => item.Equals("-c", StringComparison.OrdinalIgnoreCase) || item.Equals("--channel", StringComparison.OrdinalIgnoreCase));
+                    int LinkIndex = Program.CommandLineArgs.FindIndex(item => item.Equals("-l", StringComparison.OrdinalIgnoreCase) || item.Equals("--link", StringComparison.OrdinalIgnoreCase));
+
+                    LaunchArgs["TypeName"] = TypeNameIndex == -1 ? LaunchArgs["TypeName"] : ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(Program.CommandLineArgs[TypeNameIndex + 1], StringComparison.OrdinalIgnoreCase));
+                    LaunchArgs["ChannelName"] = ChannelNameIndex == -1 ? LaunchArgs["ChannelName"] : ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(Program.CommandLineArgs[ChannelNameIndex + 1], StringComparison.OrdinalIgnoreCase));
+                    LaunchArgs["Link"] = LinkIndex == -1 ? LaunchArgs["Link"] : Program.CommandLineArgs[LinkIndex + 1];
+                }
             }
         }
 

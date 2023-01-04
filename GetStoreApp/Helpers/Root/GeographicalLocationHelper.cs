@@ -24,7 +24,7 @@ namespace GetStoreApp.Helpers.Root
 
         public static IEnumerable<RegionModel> GetGeographicalLocations()
         {
-            if (_geographicalLocations.Count == 0)
+            if (_geographicalLocations.Count is 0)
             {
                 Kernel32Library.EnumSystemGeoID(GEOCLASS_NATION, 0, _callback);
 

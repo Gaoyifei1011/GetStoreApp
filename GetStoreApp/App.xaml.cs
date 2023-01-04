@@ -6,7 +6,10 @@ using GetStoreApp.Views.Window;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using System;
 using System.IO;
+using System.Threading.Tasks;
+using Windows.UI.StartScreen;
 
 namespace GetStoreApp
 {
@@ -17,6 +20,8 @@ namespace GetStoreApp
         public MainWindow MainWindow { get; set; }
 
         public WindowsTrayIcon TrayIcon { get; set; }
+
+        public JumpList TaskbarJumpList { get; set; }
 
         public AppViewModel ViewModel { get; } = new AppViewModel();
 
@@ -43,6 +48,7 @@ namespace GetStoreApp
             InitializeMainWindow();
             InitializeAppWindow();
             InitializeTrayIcon();
+            await InitializeJumpListAsync();
             await ViewModel.StartupAsync();
         }
 
@@ -64,7 +70,7 @@ namespace GetStoreApp
 
             AppWindow = AppWindow.GetFromWindowId(windowId);
             AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
-            AppWindow.SetIcon(Path.Combine(System.AppContext.BaseDirectory, "Assets/GetStoreApp.ico"));
+            AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/GetStoreApp.ico"));
         }
 
         /// <summary>
@@ -73,7 +79,7 @@ namespace GetStoreApp
         private void InitializeTrayIcon()
         {
             TrayIcon = new WindowsTrayIcon(
-                Path.Combine(System.AppContext.BaseDirectory, "Assets/GetStoreApp.ico"),
+                Path.Combine(AppContext.BaseDirectory, "Assets/GetStoreApp.ico"),
                 ResourceService.GetLocalized("AppDisplayName")
             );
 
@@ -116,6 +122,21 @@ namespace GetStoreApp
                         }
                 }
             };
+        }
+
+        /// <summary>
+        /// 初始化任务栏的跳转列表
+        /// </summary>
+        private async Task InitializeJumpListAsync()
+        {
+            if (JumpList.IsSupported())
+            {
+                TaskbarJumpList = await JumpList.LoadCurrentAsync();
+                TaskbarJumpList.SystemGroupKind = AppJumpList.GroupKind;
+                ViewModel.RemoveUnusedItems();
+                ViewModel.UpdateJumpListGroupName();
+                await TaskbarJumpList.SaveAsync();
+            }
         }
     }
 }

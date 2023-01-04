@@ -108,7 +108,7 @@ namespace GetStoreApp.Helpers.Window
         /// </summary>
         public static void SetBackdropState(bool alwaysShowBackdrop, WindowActivatedEventArgs args)
         {
-            if (m_configurationSource == null)
+            if (m_configurationSource is null)
             {
                 return;
             }

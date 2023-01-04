@@ -18,6 +18,8 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public static class ResourceService
     {
+        private static bool IsInitialized { get; set; } = false;
+
         private static LanguageModel DefaultAppLanguage { get; set; }
 
         private static LanguageModel CurrentAppLanguage { get; set; }
@@ -48,6 +50,11 @@ namespace GetStoreApp.Services.Root
 
         public static List<TraceCleanupModel> TraceCleanupList { get; } = new List<TraceCleanupModel>();
 
+        /// <summary>
+        /// 初始化应用本地化资源
+        /// </summary>
+        /// <param name="defaultAppLanguage">默认语言名称</param>
+        /// <param name="currentAppLanguage">当前语言名称</param>
         public static async Task InitializeResourceAsync(LanguageModel defaultAppLanguage, LanguageModel currentAppLanguage)
         {
             DefaultAppLanguage = defaultAppLanguage;
@@ -56,6 +63,15 @@ namespace GetStoreApp.Services.Root
             DefaultResourceContext.QualifierValues["Language"] = DefaultAppLanguage.InternalName;
             CurrentResourceContext.QualifierValues["Language"] = CurrentAppLanguage.InternalName;
 
+            IsInitialized = true;
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// 初始化必备应用本地化信息
+        /// </summary>
+        public static async Task LocalizeReosurceAsync()
+        {
             InitializeTypeList();
             InitializeChannelList();
             InitializeStatusBarStateList();
@@ -303,6 +319,12 @@ namespace GetStoreApp.Services.Root
             });
             TraceCleanupList.Add(new TraceCleanupModel
             {
+                DisplayName = GetLocalized("/Dialog/JumpList"),
+                InternalName = CleanArgs.JumpList,
+                CleanFailedText = GetLocalized("/Dialog/JumpListCleanError")
+            });
+            TraceCleanupList.Add(new TraceCleanupModel
+            {
                 DisplayName = GetLocalized("/Dialog/DownloadRecord"),
                 InternalName = CleanArgs.Download,
                 CleanFailedText = GetLocalized("/Dialog/DownloadCleanError")
@@ -320,20 +342,27 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         public static string GetLocalized(string resource)
         {
-            try
-            {
-                return ResourceMap.GetValue(resource, CurrentResourceContext).ValueAsString;
-            }
-            catch (NullReferenceException)
+            if (IsInitialized)
             {
                 try
                 {
-                    return ResourceMap.GetValue(resource, DefaultResourceContext).ValueAsString;
+                    return ResourceMap.GetValue(resource, CurrentResourceContext).ValueAsString;
                 }
                 catch (NullReferenceException)
                 {
-                    return resource;
+                    try
+                    {
+                        return ResourceMap.GetValue(resource, DefaultResourceContext).ValueAsString;
+                    }
+                    catch (NullReferenceException)
+                    {
+                        return resource;
+                    }
                 }
+            }
+            else
+            {
+                throw new ApplicationException("Have you forgot to initialize app's resources?");
             }
         }
     }

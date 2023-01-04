@@ -15,7 +15,7 @@ namespace GetStoreApp.Helpers.Root
 
             int value = Convert.ToInt32(PersonalizeKey.GetValue("AppsUseLightTheme", null));
 
-            return value == 0 ? ElementTheme.Dark : ElementTheme.Light;
+            return value is 0 ? ElementTheme.Dark : ElementTheme.Light;
         }
     }
 }

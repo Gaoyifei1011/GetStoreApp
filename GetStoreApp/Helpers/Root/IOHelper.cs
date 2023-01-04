@@ -80,7 +80,7 @@ namespace GetStoreApp.Helpers.Root
             }
             catch (Exception)
             {
-                return null;
+                return string.Empty;
             }
         }
     }

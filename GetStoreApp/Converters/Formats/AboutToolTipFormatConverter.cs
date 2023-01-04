@@ -11,18 +11,18 @@ namespace GetStoreApp.Converters.Formats
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value == null || parameter == null)
+            if (value is null || parameter is null)
             {
                 return string.Empty;
             }
 
             string param = System.Convert.ToString(parameter);
 
-            if (param == "Reference")
+            if (param is "Reference")
             {
                 return string.Format("{0}\n{1}", value, ResourceService.GetLocalized("/About/ReferenceToolTip"));
             }
-            else if (param == "Thanks")
+            else if (param is "Thanks")
             {
                 return string.Format("{0}\n{1}", value, ResourceService.GetLocalized("/About/ThanksToolTip"));
             }

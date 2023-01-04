@@ -132,6 +132,9 @@
   <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>
+  <data name="JumpListGroupName" xml:space="preserve">
+    <value>History Record</value>
+  </data>
   <data name="NavigationFailed" xml:space="preserve">
     <value>Page {0} navigation failed</value>
   </data>

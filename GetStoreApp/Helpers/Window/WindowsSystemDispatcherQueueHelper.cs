@@ -15,7 +15,7 @@ namespace GetStoreApp.Helpers.Window
                 return;
             }
 
-            if (m_dispatcherQueueController == null)
+            if (m_dispatcherQueueController is null)
             {
                 DispatcherQueueOptions options = new DispatcherQueueOptions()
                 {

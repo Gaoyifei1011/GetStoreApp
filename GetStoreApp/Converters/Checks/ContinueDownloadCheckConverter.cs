@@ -11,14 +11,14 @@ namespace GetStoreApp.Converters.Checks
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value == null)
+            if (value is null)
             {
                 return Visibility.Collapsed;
             }
 
             int result = System.Convert.ToInt32(value);
 
-            return result == 2 ? Visibility.Visible : Visibility.Collapsed;
+            return result is 2 ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

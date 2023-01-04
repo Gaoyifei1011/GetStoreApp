@@ -369,4 +369,10 @@
   <data name="ParameterMode" xml:space="preserve">
     <value>Parameter mode</value>
   </data>
+  <data name="JumpList" xml:space="preserve">
+    <value>Taskbar right-click menu record</value>
+  </data>
+  <data name="JumpListCleanError" xml:space="preserve">
+    <value>The taskbar right-click menu record failed to cleanup, please manually clean the right-click menu record</value>
+  </data>
 </root>

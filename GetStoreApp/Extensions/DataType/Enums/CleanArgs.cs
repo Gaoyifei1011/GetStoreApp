@@ -3,7 +3,8 @@
     public enum CleanArgs
     {
         History = 0,
-        Download = 1,
-        LocalFile = 2
+        JumpList = 1,
+        Download = 2,
+        LocalFile = 3
     }
 }
