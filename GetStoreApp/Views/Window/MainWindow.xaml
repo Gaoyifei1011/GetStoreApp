@@ -9,7 +9,7 @@
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:viewModel="using:GetStoreApp.ViewModels.Window"
     xmlns:wc="using:GetStoreApp.UI.Controls.Window"
-    Title="{x:Bind root:ResourceService.GetLocalized('AppDisplayName')}"
+    Title="{x:Bind root:ResourceService.GetLocalized('Resources/AppDisplayName')}"
     MinWidth="600"
     MinHeight="768"
     ActivatedCommand="{x:Bind ViewModel.ActivatedCommand}"
@@ -41,12 +41,12 @@
             Unloaded="{x:Bind ViewModel.OnNavigationViewUnLoaded}">
 
             <NavigationView.MenuItems>
-                <NavigationViewItemHeader Content="{x:Bind root:ResourceService.GetLocalized('/Window/Title')}" Foreground="{ThemeResource NavigationViewItemForeground}" />
+                <NavigationViewItemHeader Content="{x:Bind root:ResourceService.GetLocalized('Window/Title')}" Foreground="{ThemeResource NavigationViewItemForeground}" />
 
                 <controls:NavigationViewMenuItem
                     Command="{x:Bind ViewModel.NavigationItemCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('/Window/Home')}"
+                    Content="{x:Bind root:ResourceService.GetLocalized('Window/Home')}"
                     Tag="Home">
                     <controls:NavigationViewMenuItem.Icon>
                         <ImageIcon Source="ms-appx:///Assets/ControlIcon/Home.png" />
@@ -56,7 +56,7 @@
                 <controls:NavigationViewMenuItem
                     Command="{x:Bind ViewModel.NavigationItemCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('/Window/History')}"
+                    Content="{x:Bind root:ResourceService.GetLocalized('Window/History')}"
                     Tag="History">
                     <controls:NavigationViewMenuItem.Icon>
                         <ImageIcon Source="ms-appx:///Assets/ControlIcon/History.png" />
@@ -66,7 +66,7 @@
                 <controls:NavigationViewMenuItem
                     Command="{x:Bind ViewModel.NavigationItemCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('/Window/Download')}"
+                    Content="{x:Bind root:ResourceService.GetLocalized('Window/Download')}"
                     Tag="Download">
                     <controls:NavigationViewMenuItem.Icon>
                         <ImageIcon Source="ms-appx:///Assets/ControlIcon/Download.png" />
@@ -76,7 +76,7 @@
                 <controls:NavigationViewMenuItem
                     Command="{x:Bind ViewModel.NavigationItemCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('/Window/Web')}"
+                    Content="{x:Bind root:ResourceService.GetLocalized('Window/Web')}"
                     Tag="Web">
                     <controls:NavigationViewMenuItem.Icon>
                         <ImageIcon Source="ms-appx:///Assets/ControlIcon/Web.png" />
@@ -88,7 +88,7 @@
                 <controls:NavigationViewMenuItem
                     Command="{x:Bind ViewModel.NavigationItemCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('/Window/About')}"
+                    Content="{x:Bind root:ResourceService.GetLocalized('Window/About')}"
                     Tag="About">
                     <controls:NavigationViewMenuItem.Icon>
                         <ImageIcon Source="ms-appx:///Assets/ControlIcon/About.png" />
@@ -97,7 +97,7 @@
                 <controls:NavigationViewMenuItem
                     Command="{x:Bind ViewModel.NavigationItemCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('/Window/Settings')}"
+                    Content="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}"
                     Tag="Settings">
                     <controls:NavigationViewMenuItem.Icon>
                         <ImageIcon Source="ms-appx:///Assets/ControlIcon/Settings.png" />

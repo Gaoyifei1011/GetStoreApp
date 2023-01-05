@@ -5,13 +5,13 @@ namespace GetStoreApp.UI.Controls.Download
 {
     public sealed partial class UnfinishedControl : UserControl
     {
-        public string PauseDownload => ResourceService.GetLocalized("/Download/PauseDownload");
+        public string PauseDownload => ResourceService.GetLocalized("Download/PauseDownload");
 
-        public string DownloadFailed => ResourceService.GetLocalized("/Download/DownloadFailed");
+        public string DownloadFailed => ResourceService.GetLocalized("Download/DownloadFailed");
 
-        public string ContinueToolTip => ResourceService.GetLocalized("/Download/ContinueToolTip");
+        public string ContinueToolTip => ResourceService.GetLocalized("Download/ContinueToolTip");
 
-        public string DeleteToolTip => ResourceService.GetLocalized("/Download/DeleteToolTip");
+        public string DeleteToolTip => ResourceService.GetLocalized("Download/DeleteToolTip");
 
         public UnfinishedControl()
         {
@@ -22,11 +22,11 @@ namespace GetStoreApp.UI.Controls.Download
         {
             if (count == 0)
             {
-                return ResourceService.GetLocalized("/Download/UnfinishedEmpty");
+                return ResourceService.GetLocalized("Download/UnfinishedEmpty");
             }
             else
             {
-                return string.Format(ResourceService.GetLocalized("/Download/UnfinishedCountInfo"), count);
+                return string.Format(ResourceService.GetLocalized("Download/UnfinishedCountInfo"), count);
             }
         }
     }

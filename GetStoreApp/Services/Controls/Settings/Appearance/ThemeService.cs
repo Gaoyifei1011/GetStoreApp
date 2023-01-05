@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Models.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Views.Window;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;

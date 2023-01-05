@@ -2,7 +2,6 @@
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Window;
 using GetStoreApp.Views.Pages;
-using GetStoreApp.Views.Window;
 using Microsoft.UI.Dispatching;
 using Microsoft.Windows.AppNotifications;
 using System;

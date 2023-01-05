@@ -31,13 +31,13 @@
             <TextBlock
                 VerticalAlignment="Center"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/Language')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('Settings/Language')}" />
 
             <TextBlock
                 VerticalAlignment="Center"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                 Style="{StaticResource CaptionTextBlockStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/LanguageDescription')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('Settings/LanguageDescription')}" />
         </StackPanel>
 
         <Button
@@ -45,7 +45,7 @@
             VerticalAlignment="Center"
             Command="{x:Bind ViewModel.LanguageTipCommand}"
             Style="{StaticResource ButtonInfoStyle}"
-            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Settings/LanguageToolTip')}">
+            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/LanguageToolTip')}">
             <Button.Content>
                 <FontIcon
                     FontSize="16"

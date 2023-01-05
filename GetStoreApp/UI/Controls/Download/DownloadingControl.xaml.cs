@@ -5,11 +5,11 @@ namespace GetStoreApp.UI.Controls.Download
 {
     public sealed partial class DownloadingControl : UserControl
     {
-        public string WaitDownload => ResourceService.GetLocalized("/Download/WaitDownload");
+        public string WaitDownload => ResourceService.GetLocalized("Download/WaitDownload");
 
-        public string PauseToolTip => ResourceService.GetLocalized("/Download/PauseToolTip");
+        public string PauseToolTip => ResourceService.GetLocalized("Download/PauseToolTip");
 
-        public string DeleteToolTip => ResourceService.GetLocalized("/Download/DeleteToolTip");
+        public string DeleteToolTip => ResourceService.GetLocalized("Download/DeleteToolTip");
 
         public DownloadingControl()
         {
@@ -20,11 +20,11 @@ namespace GetStoreApp.UI.Controls.Download
         {
             if (count == 0)
             {
-                return ResourceService.GetLocalized("/Download/DownloadingEmpty");
+                return ResourceService.GetLocalized("Download/DownloadingEmpty");
             }
             else
             {
-                return string.Format(ResourceService.GetLocalized("/Download/DownloadingCountInfo"), count);
+                return string.Format(ResourceService.GetLocalized("Download/DownloadingCountInfo"), count);
             }
         }
     }

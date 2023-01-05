@@ -36,7 +36,7 @@
             <TextBlock
                 Margin="0,0,0,10"
                 FontSize="30"
-                Text="{x:Bind root:ResourceService.GetLocalized('AppDisplayName')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('Resources/AppDisplayName')}" />
 
             <TextBlock
                 Margin="0,0,0,10"
@@ -48,14 +48,14 @@
                 <TextBlock
                     VerticalAlignment="Center"
                     FontSize="15"
-                    Text="{x:Bind root:ResourceService.GetLocalized('/About/Developer')}" />
+                    Text="{x:Bind root:ResourceService.GetLocalized('About/Developer')}" />
 
                 <HyperlinkButton
                     VerticalAlignment="Center"
                     Command="{x:Bind ViewModel.DeveloperDescriptionCommand}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('/About/DeveloperName')}"
+                    Content="{x:Bind root:ResourceService.GetLocalized('About/DeveloperName')}"
                     Style="{StaticResource HyperlinkButtonStyle}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/About/DeveloperNameToolTip')}" />
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/DeveloperNameToolTip')}" />
             </StackPanel>
         </StackPanel>
 
@@ -68,21 +68,21 @@
             <Button
                 MinWidth="150"
                 Command="{x:Bind ViewModel.ProjectDescriptionCommand}"
-                Content="{x:Bind root:ResourceService.GetLocalized('/About/ProjectHomePage')}"
+                Content="{x:Bind root:ResourceService.GetLocalized('About/ProjectHomePage')}"
                 Style="{StaticResource AccentButtonStyle}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/About/ProjectHomePage')}" />
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/ProjectHomePage')}" />
 
             <Button
                 MinWidth="150"
                 Command="{x:Bind ViewModel.SendFeedbackCommand}"
-                Content="{x:Bind root:ResourceService.GetLocalized('/About/SendFeedback')}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/About/SendFeedback')}" />
+                Content="{x:Bind root:ResourceService.GetLocalized('About/SendFeedback')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/SendFeedback')}" />
 
             <Button
                 MinWidth="150"
                 Command="{x:Bind ViewModel.CheckUpdateCommand}"
-                Content="{x:Bind root:ResourceService.GetLocalized('/About/CheckUpdate')}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/About/CheckUpdate')}" />
+                Content="{x:Bind root:ResourceService.GetLocalized('About/CheckUpdate')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/CheckUpdate')}" />
         </StackPanel>
     </Grid>
 </UserControl>

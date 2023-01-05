@@ -82,11 +82,11 @@
             x:Name="DownloadCreateSuccess"
             x:Load="{x:Bind ViewModel.IsDownloadCreated, Mode=OneWay}"
             Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
-            Text="{x:Bind root:ResourceService.GetLocalized('/Notification/DownloadCreateSuccessfully')}" />
+            Text="{x:Bind root:ResourceService.GetLocalized('Notification/DownloadCreateSuccessfully')}" />
         <TextBlock
             x:Name="DownloadCreateFailed"
             x:Load="{x:Bind ViewModel.IsDownloadCreated, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
             Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
-            Text="{x:Bind root:ResourceService.GetLocalized('/Notification/DownloadCreateFailed')}" />
+            Text="{x:Bind root:ResourceService.GetLocalized('Notification/DownloadCreateFailed')}" />
     </StackPanel>
 </UserControl>

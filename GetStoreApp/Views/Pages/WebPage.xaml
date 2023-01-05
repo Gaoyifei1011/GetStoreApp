@@ -42,8 +42,8 @@
                     <AppBarButton
                         Command="{x:Bind ViewModel.BrowserBackCommand, Mode=OneWay}"
                         IsEnabled="{x:Bind ViewModel.CanGoBack, Mode=OneWay}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('/Web/Back')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Web/Back')}">
+                        Label="{x:Bind root:ResourceService.GetLocalized('Web/Back')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Web/Back')}">
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE72b;" Style="{StaticResource SegoeFluentStyle}" />
                         </AppBarButton.Icon>
@@ -52,8 +52,8 @@
                     <AppBarButton
                         Command="{x:Bind ViewModel.BrowserForwardCommand, Mode=OneWay}"
                         IsEnabled="{x:Bind ViewModel.CanGoForward, Mode=OneWay}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('/Web/Forward')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Web/Forward')}">
+                        Label="{x:Bind root:ResourceService.GetLocalized('Web/Forward')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Web/Forward')}">
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE72a;" Style="{StaticResource SegoeFluentStyle}" />
                         </AppBarButton.Icon>
@@ -62,8 +62,8 @@
                     <AppBarButton
                         Command="{x:Bind ViewModel.RefreshCommand}"
                         CommandParameter="{Binding ElementName=WebView}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('/Web/Refresh')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Web/Refresh')}">
+                        Label="{x:Bind root:ResourceService.GetLocalized('Web/Refresh')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Web/Refresh')}">
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE72c;" Style="{StaticResource SegoeFluentStyle}" />
                         </AppBarButton.Icon>
@@ -92,11 +92,11 @@
                     <TextBlock
                         Grid.Column="1"
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('/Web/Title')}" />
+                        Text="{x:Bind root:ResourceService.GetLocalized('Web/Title')}" />
                     <TextBlock
                         Grid.Column="2"
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('/Web/Loading')}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Web/Loading')}"
                         Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}" />
                 </Grid>
 
@@ -110,8 +110,8 @@
 
                     <AppBarButton
                         Command="{x:Bind ViewModel.OpenWithBrowserCommand}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('/Web/OpenWithBrowser')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Web/OpenWithBrowser')}">
+                        Label="{x:Bind root:ResourceService.GetLocalized('Web/OpenWithBrowser')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Web/OpenWithBrowser')}">
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE774;" Style="{StaticResource SegoeFluentStyle}" />
                         </AppBarButton.Icon>
@@ -119,8 +119,8 @@
                     <CommandBar.SecondaryCommands>
                         <AppBarButton
                             Command="{x:Bind ViewModel.OpenCacheFolderCommand}"
-                            Label="{x:Bind root:ResourceService.GetLocalized('/Web/OpenCacheFolder')}"
-                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Web/OpenCacheFolder')}">
+                            Label="{x:Bind root:ResourceService.GetLocalized('Web/OpenCacheFolder')}"
+                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Web/OpenCacheFolder')}">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE8b7;" Style="{StaticResource SegoeFluentStyle}" />
                             </AppBarButton.Icon>
@@ -128,8 +128,8 @@
                         <AppBarButton
                             Command="{x:Bind ViewModel.ClearWebCacheCommand}"
                             IsEnabled="{x:Bind ViewModel.IsEnabled, Mode=OneWay}"
-                            Label="{x:Bind root:ResourceService.GetLocalized('/Web/ClearWebCache')}"
-                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Web/ClearWebCache')}">
+                            Label="{x:Bind root:ResourceService.GetLocalized('Web/ClearWebCache')}"
+                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Web/ClearWebCache')}">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE74d;" Style="{StaticResource SegoeFluentStyle}" />
                             </AppBarButton.Icon>

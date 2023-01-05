@@ -1,5 +1,4 @@
 using GetStoreApp.Services.Controls.Settings.Appearance;
-using GetStoreApp.Views.Window;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;

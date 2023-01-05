@@ -29,7 +29,7 @@ namespace GetStoreApp.Services.Shell
         {
             while (true)
             {
-                Console.WriteLine(ResourceService.GetLocalized("/Console/DownloadFile"));
+                Console.WriteLine(ResourceService.GetLocalized("Console/DownloadFile"));
                 List<string> IndexList = Console.ReadLine().Split(',').ToList();
                 try
                 {
@@ -51,11 +51,11 @@ namespace GetStoreApp.Services.Shell
                             string IndexItem = IndexList[index];
                             if (ConsoleLaunchService.IsAppRunning)
                             {
-                                Console.WriteLine(ResourceService.GetLocalized("/Console/DownloadingInformation"), index + 1, IndexList.Count);
+                                Console.WriteLine(ResourceService.GetLocalized("Console/DownloadingInformation"), index + 1, IndexList.Count);
                                 await DownloadFileAsync(ParseService.ResultDataList[Convert.ToInt32(IndexItem) - 1].FileLink);
                             }
                         }
-                        Console.WriteLine(ResourceService.GetLocalized("/Console/DownloadCompleted"));
+                        Console.WriteLine(ResourceService.GetLocalized("Console/DownloadCompleted"));
                         string InputString = Console.ReadLine();
                         if (InputString == "Y" || InputString == "y")
                         {
@@ -63,14 +63,14 @@ namespace GetStoreApp.Services.Shell
                         }
                         else
                         {
-                            Console.WriteLine(ResourceService.GetLocalized("/Console/OpenFolder"));
+                            Console.WriteLine(ResourceService.GetLocalized("Console/OpenFolder"));
                             await OpenDownloadFolderAsync();
                             break;
                         }
                     }
                     else
                     {
-                        Console.WriteLine(ResourceService.GetLocalized("/Console/SerialNumberOutRange"));
+                        Console.WriteLine(ResourceService.GetLocalized("Console/SerialNumberOutRange"));
                         string InputString = Console.ReadLine();
                         if (InputString == "Y" || InputString == "y")
                         {
@@ -84,7 +84,7 @@ namespace GetStoreApp.Services.Shell
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine(ResourceService.GetLocalized("/Console/SerialNumberError"));
+                    Console.WriteLine(ResourceService.GetLocalized("Console/SerialNumberError"));
                     string InputString = Console.ReadLine();
                     if (InputString == "Y" || InputString == "y")
                     {

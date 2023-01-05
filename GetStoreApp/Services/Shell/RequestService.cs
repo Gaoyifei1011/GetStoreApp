@@ -87,7 +87,7 @@ namespace GetStoreApp.Services.Shell
                 Console.SetCursorPosition(0, Console.CursorTop);
                 Console.Write(new string(' ', Console.WindowWidth));
                 Console.SetCursorPosition(0, Console.CursorTop);
-                Console.WriteLine(ResourceService.GetLocalized("/Console/GetCompleted"));
+                Console.WriteLine(ResourceService.GetLocalized("Console/GetCompleted"));
 
                 int state = HtmlRequestStateHelper.CheckRequestState(httpRequestData);
 
@@ -96,7 +96,7 @@ namespace GetStoreApp.Services.Shell
                     case 1:
                         {
                             Console.ForegroundColor = ConsoleColor.Green;
-                            Console.WriteLine(ResourceService.GetLocalized("/Console/RequestSuccessfully"));
+                            Console.WriteLine(ResourceService.GetLocalized("Console/RequestSuccessfully"));
                             Console.ResetColor();
                             RequestState = false;
                             await ParseService.ParseDataAsync(httpRequestData);
@@ -105,10 +105,10 @@ namespace GetStoreApp.Services.Shell
                     case 2:
                         {
                             Console.ForegroundColor = ConsoleColor.Yellow;
-                            Console.WriteLine(ResourceService.GetLocalized("/Console/RequestFailed"));
+                            Console.WriteLine(ResourceService.GetLocalized("Console/RequestFailed"));
                             Console.ResetColor();
                             PrintRequestFailedData();
-                            Console.WriteLine(ResourceService.GetLocalized("/Console/AskContinue"));
+                            Console.WriteLine(ResourceService.GetLocalized("Console/AskContinue"));
                             string RegainString = Console.ReadLine();
                             RequestState = RegainString == "Y" || RegainString == "y";
                             break;
@@ -116,9 +116,9 @@ namespace GetStoreApp.Services.Shell
                     case 3:
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine(ResourceService.GetLocalized("/Console/RequestError"));
+                            Console.WriteLine(ResourceService.GetLocalized("Console/RequestError"));
                             Console.ResetColor();
-                            Console.WriteLine(ResourceService.GetLocalized("/Console/AskContinue"));
+                            Console.WriteLine(ResourceService.GetLocalized("Console/AskContinue"));
                             string RegainString = Console.ReadLine();
                             RequestState = RegainString == "Y" || RegainString == "y";
                             break;
@@ -135,7 +135,7 @@ namespace GetStoreApp.Services.Shell
             Console.SetCursorPosition(0, Console.CursorTop);
             Console.Write(new string(' ', Console.WindowWidth));
             Console.SetCursorPosition(0, Console.CursorTop);
-            Console.Write(ResourceService.GetLocalized("/Console/GettingNow") + new string('.', ElapsedTime % 4));
+            Console.Write(ResourceService.GetLocalized("Console/GettingNow") + new string('.', ElapsedTime % 4));
             ElapsedTime++;
         }
 
@@ -144,10 +144,10 @@ namespace GetStoreApp.Services.Shell
         /// </summary>
         private static void PrintRequestFailedData()
         {
-            string SerialNumberHeader = ResourceService.GetLocalized("/Console/SerialNumber");
-            string FileNameHeader = ResourceService.GetLocalized("/Console/FileName");
-            string FileSizeHeader = ResourceService.GetLocalized("/Console/FileSize");
-            string None = ResourceService.GetLocalized("/Console/None");
+            string SerialNumberHeader = ResourceService.GetLocalized("Console/SerialNumber");
+            string FileNameHeader = ResourceService.GetLocalized("Console/FileName");
+            string FileSizeHeader = ResourceService.GetLocalized("Console/FileSize");
+            string None = ResourceService.GetLocalized("Console/None");
 
             int SerialNumberHeaderLength = CharExtension.GetStringDisplayLengthEx(SerialNumberHeader);
             int FileNameHeaderLength = CharExtension.GetStringDisplayLengthEx(FileNameHeader);
@@ -158,7 +158,7 @@ namespace GetStoreApp.Services.Shell
             int FileNameColumnLength = (FileNameHeaderLength > NoneLength ? FileNameHeaderLength : NoneLength) + 3;
 
             Console.Write(ConsoleLaunchService.LineBreaks);
-            Console.WriteLine(ResourceService.GetLocalized("/Console/ResultDataList"));
+            Console.WriteLine(ResourceService.GetLocalized("Console/ResultDataList"));
 
             // 打印标题
             Console.Write(SerialNumberHeader + new string(ConsoleLaunchService.RowSplitCharacter, SerialNumberColumnLength - SerialNumberHeaderLength));

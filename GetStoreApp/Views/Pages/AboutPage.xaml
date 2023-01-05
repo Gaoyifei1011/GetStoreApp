@@ -30,22 +30,22 @@
             <TextBlock
                 Grid.Column="0"
                 FontSize="26"
-                Text="{x:Bind root:ResourceService.GetLocalized('/About/Title')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('About/Title')}" />
 
             <DropDownButton
                 Grid.Column="1"
-                Content="{x:Bind root:ResourceService.GetLocalized('/About/Others')}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/About/OthersToolTip')}">
+                Content="{x:Bind root:ResourceService.GetLocalized('About/Others')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/OthersToolTip')}">
                 <DropDownButton.Flyout>
                     <MenuFlyout Placement="Bottom">
                         <MenuFlyoutItem
                             Command="{x:Bind ViewModel.ShowReleaseNotesCommand}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('/About/ShowReleaseNotes')}"
-                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/About/ShowReleaseNotesToolTip')}" />
+                            Text="{x:Bind root:ResourceService.GetLocalized('About/ShowReleaseNotes')}"
+                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/ShowReleaseNotesToolTip')}" />
                         <MenuFlyoutItem
                             Command="{x:Bind ViewModel.ShowLicenseCommand}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('/About/ShowLicense')}"
-                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/About/ShowLicenseToolTip')}" />
+                            Text="{x:Bind root:ResourceService.GetLocalized('About/ShowLicense')}"
+                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/ShowLicenseToolTip')}" />
                     </MenuFlyout>
                 </DropDownButton.Flyout>
             </DropDownButton>

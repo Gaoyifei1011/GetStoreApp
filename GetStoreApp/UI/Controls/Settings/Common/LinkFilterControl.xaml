@@ -35,20 +35,20 @@
                     <TextBlock
                         VerticalAlignment="Center"
                         Style="{StaticResource BodyTextBlockStyle}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('/Settings/LinkFilter')}" />
+                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/LinkFilter')}" />
 
                     <TextBlock
                         VerticalAlignment="Center"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('/Settings/LinkFilterDescription')}" />
+                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/LinkFilterDescription')}" />
                 </StackPanel>
 
                 <Button
                     Grid.Column="2"
                     Command="{x:Bind ViewModel.LinkFilterInstructionCommand}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('/Settings/LinkFilterInstruction')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Settings/LinkFilterInstruction')}" />
+                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/LinkFilterInstruction')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/LinkFilterInstruction')}" />
             </Grid>
         </Expander.Header>
 
@@ -65,11 +65,11 @@
                             <TextBlock
                                 VerticalAlignment="Center"
                                 Style="{StaticResource BodyTextBlockStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/StartsWithE')}" />
+                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/StartsWithE')}" />
                             <TextBlock
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/StartsWithEDescription')}" />
+                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/StartsWithEDescription')}" />
                         </StackPanel>
 
                         <ToggleSwitch
@@ -77,8 +77,8 @@
                             Grid.Column="1"
                             FlowDirection="RightToLeft"
                             IsOn="{x:Bind ViewModel.StartsWithEFilterValue, Mode=OneWay}"
-                            OffContent="{x:Bind root:ResourceService.GetLocalized('/Settings/StartsWithEOffContent')}"
-                            OnContent="{x:Bind root:ResourceService.GetLocalized('/Settings/StartsWithEOnContent')}"
+                            OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/StartsWithEOffContent')}"
+                            OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/StartsWithEOnContent')}"
                             Toggled="{x:Bind ViewModel.OnStartWithEToggled}" />
                     </Grid>
                 </StackPanel>
@@ -96,11 +96,11 @@
                             <TextBlock
                                 VerticalAlignment="Center"
                                 Style="{StaticResource BodyTextBlockStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/BlockMap')}" />
+                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMap')}" />
                             <TextBlock
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/BlockMapDescription')}" />
+                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapDescription')}" />
                         </StackPanel>
 
                         <ToggleSwitch
@@ -108,8 +108,8 @@
                             Grid.Column="1"
                             FlowDirection="RightToLeft"
                             IsOn="{x:Bind ViewModel.BlockMapFilterValue, Mode=OneWay}"
-                            OffContent="{x:Bind root:ResourceService.GetLocalized('/Settings/BlockMapOffContent')}"
-                            OnContent="{x:Bind root:ResourceService.GetLocalized('/Settings/BlockMapOnContent')}"
+                            OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapOffContent')}"
+                            OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapOnContent')}"
                             Toggled="{x:Bind ViewModel.OnBlockMapToggled}" />
                     </Grid>
                 </StackPanel>

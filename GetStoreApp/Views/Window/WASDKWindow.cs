@@ -130,7 +130,7 @@ namespace GetStoreApp.Views.Window
             Hwnd = WindowNative.GetWindowHandle(this);
             if (Hwnd == IntPtr.Zero)
             {
-                throw new NullReferenceException(ResourceService.GetLocalized("IsMainWindowInitialized"));
+                throw new NullReferenceException(ResourceService.GetLocalized("Resources/WindowHandleInitializeFailed"));
             }
             newWndProc = new WinProc(NewWindowProc);
             oldWndProc = SetWindowLongPtr(Hwnd, WindowLongIndexFlags.GWL_WNDPROC, newWndProc);

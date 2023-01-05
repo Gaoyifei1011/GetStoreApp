@@ -151,7 +151,7 @@ namespace GetStoreApp.Services.Root
                 copyDataStruct.cbData = Encoding.Default.GetBytes(copyDataStruct.lpData).Length + 1;
 
                 // 向主进程发送消息
-                User32Library.SendMessage(User32Library.FindWindow(null, ResourceService.GetLocalized("AppDisplayName")), WindowMessage.WM_COPYDATA, 0, ref copyDataStruct);
+                User32Library.SendMessage(User32Library.FindWindow(null, ResourceService.GetLocalized("Resources/AppDisplayName")), WindowMessage.WM_COPYDATA, 0, ref copyDataStruct);
 
                 // 然后退出实例并停止
                 Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));

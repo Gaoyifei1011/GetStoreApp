@@ -30,13 +30,13 @@
             <TextBlock
                 VerticalAlignment="Center"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/AppExit')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('Settings/AppExit')}" />
 
             <TextBlock
                 VerticalAlignment="Center"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                 Style="{StaticResource CaptionTextBlockStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/AppExitDescription')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('Settings/AppExitDescription')}" />
         </StackPanel>
 
         <DropDownButton

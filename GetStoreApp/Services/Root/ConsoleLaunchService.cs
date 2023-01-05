@@ -45,7 +45,7 @@ namespace GetStoreApp.Services.Root
             InitializeRequestContent();
             await RequestService.GetLinksAsync();
 
-            Console.WriteLine(LineBreaks + ResourceService.GetLocalized("/Console/ApplicationExit"));
+            Console.WriteLine(LineBreaks + ResourceService.GetLocalized("Console/ApplicationExit"));
         }
 
         /// <summary>
@@ -62,20 +62,20 @@ namespace GetStoreApp.Services.Root
                 if (ConsoleHandle != IntPtr.Zero)
                 {
                     Result = User32Library.MessageBox(ConsoleHandle,
-                        ResourceService.GetLocalized("/Console/ExitPrompt"),
-                        ResourceService.GetLocalized("AppDisplayName"),
+                        ResourceService.GetLocalized("Console/ExitPrompt"),
+                        ResourceService.GetLocalized("Resources/AppDisplayName"),
                         MessageBoxOptions.MB_OKCANCEL | MessageBoxOptions.MB_ICONINFORMATION);
                 }
                 else
                 {
                     Result = User32Library.MessageBox(IntPtr.Zero,
-                        ResourceService.GetLocalized("/Console/ExitPrompt"),
-                        ResourceService.GetLocalized("AppDisplayName"),
+                        ResourceService.GetLocalized("Console/ExitPrompt"),
+                        ResourceService.GetLocalized("Resources/AppDisplayName"),
                         MessageBoxOptions.MB_OKCANCEL | MessageBoxOptions.MB_ICONINFORMATION);
                 }
                 if (Result == MessageBoxResult.IDOK)
                 {
-                    Console.WriteLine(LineBreaks + ResourceService.GetLocalized("/Console/ApplicationExit"));
+                    Console.WriteLine(LineBreaks + ResourceService.GetLocalized("Console/ApplicationExit"));
                     IsAppRunning = false;
                     DownloadService.StopDownloadFile();
                     Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
@@ -88,16 +88,16 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeIntroduction()
         {
-            Console.Title = ResourceService.GetLocalized("/Console/Title");
+            Console.Title = ResourceService.GetLocalized("Console/Title");
 
-            Console.WriteLine(string.Format(ResourceService.GetLocalized("/Console/HeaderDescription1"),
+            Console.WriteLine(string.Format(ResourceService.GetLocalized("Console/HeaderDescription1"),
                 Package.Current.Id.Version.Major,
                 Package.Current.Id.Version.Minor,
                 Package.Current.Id.Version.Build,
                 Package.Current.Id.Version.Revision
                 ) + LineBreaks);
-            Console.WriteLine(ResourceService.GetLocalized("/Console/HeaderDescription2"));
-            Console.WriteLine(ResourceService.GetLocalized("/Console/HeaderDescription3") + LineBreaks);
+            Console.WriteLine(ResourceService.GetLocalized("Console/HeaderDescription2"));
+            Console.WriteLine(ResourceService.GetLocalized("Console/HeaderDescription3") + LineBreaks);
         }
 
         /// <summary>
@@ -113,8 +113,8 @@ namespace GetStoreApp.Services.Root
             else
             {
                 // 选择类型
-                Console.WriteLine(ResourceService.GetLocalized("/Console/TypeInformation"));
-                Console.Write(ResourceService.GetLocalized("/Console/SelectType"));
+                Console.WriteLine(ResourceService.GetLocalized("Console/TypeInformation"));
+                Console.Write(ResourceService.GetLocalized("Console/SelectType"));
                 int typeIndex;
                 try
                 {
@@ -130,8 +130,8 @@ namespace GetStoreApp.Services.Root
                 }
 
                 // 选择通道
-                Console.WriteLine(ResourceService.GetLocalized("/Console/ChannelInformation"));
-                Console.Write(ResourceService.GetLocalized("/Console/SelectChannel"));
+                Console.WriteLine(ResourceService.GetLocalized("Console/ChannelInformation"));
+                Console.Write(ResourceService.GetLocalized("Console/SelectChannel"));
                 int channelIndex;
                 try
                 {
@@ -147,7 +147,7 @@ namespace GetStoreApp.Services.Root
                 }
 
                 // 输入链接
-                Console.Write(ResourceService.GetLocalized("/Console/InputLink"));
+                Console.Write(ResourceService.GetLocalized("Console/InputLink"));
                 string link = Console.ReadLine();
 
                 RequestService.InitializeQueryData(typeIndex, channelIndex, link);
@@ -182,7 +182,7 @@ namespace GetStoreApp.Services.Root
             {
                 if (Program.CommandLineArgs.Count % 2 != 1)
                 {
-                    Console.WriteLine(ResourceService.GetLocalized("/Console/ParameterError"));
+                    Console.WriteLine(ResourceService.GetLocalized("Console/ParameterError"));
                     return;
                 }
 

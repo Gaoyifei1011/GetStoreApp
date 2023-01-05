@@ -4,12 +4,13 @@ using GetStoreApp.Models.Controls.Settings.Advanced;
 using GetStoreApp.Models.Controls.Settings.Appearance;
 using GetStoreApp.Models.Controls.Settings.Common;
 using GetStoreApp.Models.Dialogs.CommonDialogs.Settings;
+using GetStoreApp.Properties;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Resources.Core;
+using Microsoft.Windows.ApplicationModel.Resources;
 
 namespace GetStoreApp.Services.Root
 {
@@ -24,11 +25,11 @@ namespace GetStoreApp.Services.Root
 
         private static LanguageModel CurrentAppLanguage { get; set; }
 
-        private static ResourceContext DefaultResourceContext { get; set; } = new ResourceContext();
+        private static ResourceManager ResourceManager { get; set; } = new ResourceManager();
 
-        private static ResourceContext CurrentResourceContext { get; set; } = new ResourceContext();
+        private static ResourceContext DefaultResourceContext { get; set; }
 
-        private static ResourceMap ResourceMap { get; } = ResourceManager.Current.MainResourceMap.GetSubtree("Resources");
+        private static ResourceContext CurrentResourceContext { get; set; }
 
         public static List<TypeModel> TypeList { get; } = new List<TypeModel>();
 
@@ -59,6 +60,9 @@ namespace GetStoreApp.Services.Root
         {
             DefaultAppLanguage = defaultAppLanguage;
             CurrentAppLanguage = currentAppLanguage;
+
+            DefaultResourceContext = ResourceManager.CreateResourceContext();
+            CurrentResourceContext = ResourceManager.CreateResourceContext();
 
             DefaultResourceContext.QualifierValues["Language"] = DefaultAppLanguage.InternalName;
             CurrentResourceContext.QualifierValues["Language"] = CurrentAppLanguage.InternalName;
@@ -93,28 +97,28 @@ namespace GetStoreApp.Services.Root
         {
             TypeList.Add(new TypeModel
             {
-                DisplayName = GetLocalized("URL"),
+                DisplayName = GetLocalized("Resources/URL"),
                 InternalName = "url",
                 ShortName = "url"
             });
 
             TypeList.Add(new TypeModel
             {
-                DisplayName = GetLocalized("ProductID"),
+                DisplayName = GetLocalized("Resources/ProductID"),
                 InternalName = "ProductId",
                 ShortName = "pid"
             });
 
             TypeList.Add(new TypeModel
             {
-                DisplayName = GetLocalized("PackageFamilyName"),
+                DisplayName = GetLocalized("Resources/PackageFamilyName"),
                 InternalName = "PackageFamilyName",
                 ShortName = "pfn"
             });
 
             TypeList.Add(new TypeModel
             {
-                DisplayName = GetLocalized("CategoryID"),
+                DisplayName = GetLocalized("Resources/CategoryID"),
                 InternalName = "CategoryId",
                 ShortName = "cid"
             });
@@ -127,28 +131,28 @@ namespace GetStoreApp.Services.Root
         {
             ChannelList.Add(new ChannelModel
             {
-                DisplayName = GetLocalized("Fast"),
+                DisplayName = GetLocalized("Resources/Fast"),
                 InternalName = "WIF",
                 ShortName = "wif"
             });
 
             ChannelList.Add(new ChannelModel
             {
-                DisplayName = GetLocalized("Slow"),
+                DisplayName = GetLocalized("Resources/Slow"),
                 InternalName = "WIS",
                 ShortName = "wis"
             });
 
             ChannelList.Add(new ChannelModel
             {
-                DisplayName = GetLocalized("RP"),
+                DisplayName = GetLocalized("Resources/RP"),
                 InternalName = "RP",
                 ShortName = "rp"
             });
 
             ChannelList.Add(new ChannelModel
             {
-                DisplayName = GetLocalized("Retail"),
+                DisplayName = GetLocalized("Resources/Retail"),
                 InternalName = "Retail",
                 ShortName = "rt"
             });
@@ -162,28 +166,28 @@ namespace GetStoreApp.Services.Root
             StatusBarStateList.Add(new StatusBarStateModel
             {
                 InfoBarSeverity = InfoBarSeverity.Informational,
-                StateInfoText = GetLocalized("/Home/StatusInfoGetting"),
+                StateInfoText = GetLocalized("Home/StatusInfoGetting"),
                 StatePrRingActValue = true,
                 StatePrRingVisValue = true
             });
             StatusBarStateList.Add(new StatusBarStateModel
             {
                 InfoBarSeverity = InfoBarSeverity.Success,
-                StateInfoText = GetLocalized("/Home/StatusInfoSuccess"),
+                StateInfoText = GetLocalized("Home/StatusInfoSuccess"),
                 StatePrRingActValue = false,
                 StatePrRingVisValue = false
             });
             StatusBarStateList.Add(new StatusBarStateModel
             {
                 InfoBarSeverity = InfoBarSeverity.Warning,
-                StateInfoText = GetLocalized("/Home/StatusInfoWarning"),
+                StateInfoText = GetLocalized("Home/StatusInfoWarning"),
                 StatePrRingActValue = false,
                 StatePrRingVisValue = false
             });
             StatusBarStateList.Add(new StatusBarStateModel
             {
                 InfoBarSeverity = InfoBarSeverity.Error,
-                StateInfoText = GetLocalized("/Home/StatusInfoError"),
+                StateInfoText = GetLocalized("Home/StatusInfoError"),
                 StatePrRingActValue = false,
                 StatePrRingVisValue = false
             });
@@ -196,12 +200,12 @@ namespace GetStoreApp.Services.Root
         {
             AppExitList.Add(new AppExitModel
             {
-                DisplayName = GetLocalized("/Settings/HideToTray"),
+                DisplayName = GetLocalized("Settings/HideToTray"),
                 InternalName = "HideToTray"
             });
             AppExitList.Add(new AppExitModel
             {
-                DisplayName = GetLocalized("/Settings/CloseApp"),
+                DisplayName = GetLocalized("Settings/CloseApp"),
                 InternalName = "CloseApp"
             });
         }
@@ -213,25 +217,25 @@ namespace GetStoreApp.Services.Root
         {
             BackdropList.Add(new BackdropModel
             {
-                DisplayName = GetLocalized("/Settings/BackdropDefault"),
+                DisplayName = GetLocalized("Settings/BackdropDefault"),
                 InternalName = "Default"
             });
 
             BackdropList.Add(new BackdropModel
             {
-                DisplayName = GetLocalized("/Settings/BackdropMica"),
+                DisplayName = GetLocalized("Settings/BackdropMica"),
                 InternalName = "Mica"
             });
 
             BackdropList.Add(new BackdropModel
             {
-                DisplayName = GetLocalized("/Settings/BackdropMicaAlt"),
+                DisplayName = GetLocalized("Settings/BackdropMicaAlt"),
                 InternalName = "MicaAlt"
             });
 
             BackdropList.Add(new BackdropModel
             {
-                DisplayName = GetLocalized("/Settings/BackdropAcrylic"),
+                DisplayName = GetLocalized("Settings/BackdropAcrylic"),
                 InternalName = "Acrylic"
             });
         }
@@ -243,12 +247,12 @@ namespace GetStoreApp.Services.Root
         {
             DownloadModeList.Add(new DownloadModeModel
             {
-                DisplayName = GetLocalized("/Settings/DownloadInApp"),
+                DisplayName = GetLocalized("Settings/DownloadInApp"),
                 InternalName = "DownloadInApp"
             });
             DownloadModeList.Add(new DownloadModeModel
             {
-                DisplayName = GetLocalized("/Settings/DownloadWithBrowser"),
+                DisplayName = GetLocalized("Settings/DownloadWithBrowser"),
                 InternalName = "DownloadWithBrowser"
             });
         }
@@ -260,12 +264,12 @@ namespace GetStoreApp.Services.Root
         {
             HistoryLiteNumList.Add(new HistoryLiteNumModel
             {
-                HistoryLiteNumName = GetLocalized("/Settings/HistoryLiteNumMin"),
+                HistoryLiteNumName = GetLocalized("Settings/HistoryLiteNumMin"),
                 HistoryLiteNumValue = 3
             });
             HistoryLiteNumList.Add(new HistoryLiteNumModel
             {
-                HistoryLiteNumName = GetLocalized("/Settings/HistoryLiteNumMax"),
+                HistoryLiteNumName = GetLocalized("Settings/HistoryLiteNumMax"),
                 HistoryLiteNumValue = 5
             });
         }
@@ -277,12 +281,12 @@ namespace GetStoreApp.Services.Root
         {
             InstallModeList.Add(new InstallModeModel
             {
-                DisplayName = GetLocalized("/Settings/AppInstall"),
+                DisplayName = GetLocalized("Settings/AppInstall"),
                 InternalName = "AppInstall"
             });
             InstallModeList.Add(new InstallModeModel
             {
-                DisplayName = GetLocalized("/Settings/CodeInstall"),
+                DisplayName = GetLocalized("Settings/CodeInstall"),
                 InternalName = "CodeInstall"
             });
         }
@@ -294,17 +298,17 @@ namespace GetStoreApp.Services.Root
         {
             ThemeList.Add(new ThemeModel
             {
-                DisplayName = GetLocalized("/Settings/ThemeDefault"),
+                DisplayName = GetLocalized("Settings/ThemeDefault"),
                 InternalName = Convert.ToString(ElementTheme.Default)
             });
             ThemeList.Add(new ThemeModel
             {
-                DisplayName = GetLocalized("/Settings/ThemeLight"),
+                DisplayName = GetLocalized("Settings/ThemeLight"),
                 InternalName = Convert.ToString(ElementTheme.Light)
             });
             ThemeList.Add(new ThemeModel
             {
-                DisplayName = GetLocalized("/Settings/ThemeDark"),
+                DisplayName = GetLocalized("Settings/ThemeDark"),
                 InternalName = Convert.ToString(ElementTheme.Dark)
             });
         }
@@ -313,27 +317,27 @@ namespace GetStoreApp.Services.Root
         {
             TraceCleanupList.Add(new TraceCleanupModel
             {
-                DisplayName = GetLocalized("/Dialog/HistoryRecord"),
+                DisplayName = GetLocalized("Dialog/HistoryRecord"),
                 InternalName = CleanArgs.History,
-                CleanFailedText = GetLocalized("/Dialog/HistoryCleanError")
+                CleanFailedText = GetLocalized("Dialog/HistoryCleanError")
             });
             TraceCleanupList.Add(new TraceCleanupModel
             {
-                DisplayName = GetLocalized("/Dialog/JumpList"),
+                DisplayName = GetLocalized("Dialog/JumpList"),
                 InternalName = CleanArgs.JumpList,
-                CleanFailedText = GetLocalized("/Dialog/JumpListCleanError")
+                CleanFailedText = GetLocalized("Dialog/JumpListCleanError")
             });
             TraceCleanupList.Add(new TraceCleanupModel
             {
-                DisplayName = GetLocalized("/Dialog/DownloadRecord"),
+                DisplayName = GetLocalized("Dialog/DownloadRecord"),
                 InternalName = CleanArgs.Download,
-                CleanFailedText = GetLocalized("/Dialog/DownloadCleanError")
+                CleanFailedText = GetLocalized("Dialog/DownloadCleanError")
             });
             TraceCleanupList.Add(new TraceCleanupModel
             {
-                DisplayName = GetLocalized("/Dialog/LocalFile"),
+                DisplayName = GetLocalized("Dialog/LocalFile"),
                 InternalName = CleanArgs.LocalFile,
-                CleanFailedText = GetLocalized("/Dialog/LocalFileCleanError")
+                CleanFailedText = GetLocalized("Dialog/LocalFileCleanError")
             });
         }
 
@@ -346,15 +350,15 @@ namespace GetStoreApp.Services.Root
             {
                 try
                 {
-                    return ResourceMap.GetValue(resource, CurrentResourceContext).ValueAsString;
+                    return ResourceManager.MainResourceMap.GetValue(resource, CurrentResourceContext).ValueAsString;
                 }
-                catch (NullReferenceException)
+                catch (Exception)
                 {
                     try
                     {
-                        return ResourceMap.GetValue(resource, DefaultResourceContext).ValueAsString;
+                        return ResourceManager.MainResourceMap.GetValue(resource, DefaultResourceContext).ValueAsString;
                     }
-                    catch (NullReferenceException)
+                    catch (Exception)
                     {
                         return resource;
                     }
@@ -362,7 +366,7 @@ namespace GetStoreApp.Services.Root
             }
             else
             {
-                throw new ApplicationException("Have you forgot to initialize app's resources?");
+                throw new ApplicationException(Resources.ResourcesInitializeFailed);
             }
         }
     }

@@ -12,7 +12,7 @@ namespace GetStoreApp.UI.Controls.About
 
         private string LocalizeAppVersion(string appVersion)
         {
-            return string.Format(ResourceService.GetLocalized("/About/AppVersion"), appVersion);
+            return string.Format(ResourceService.GetLocalized("About/AppVersion"), appVersion);
         }
     }
 }

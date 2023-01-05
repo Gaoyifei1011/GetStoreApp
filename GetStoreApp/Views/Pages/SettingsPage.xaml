@@ -33,13 +33,13 @@
             <TextBlock
                 Grid.Column="0"
                 FontSize="26"
-                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/Title')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('Settings/Title')}" />
 
             <Button
                 Grid.Column="1"
                 Command="{x:Bind ViewModel.RestartCommand}"
-                Content="{x:Bind root:ResourceService.GetLocalized('/Settings/RestartApp')}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Settings/RestartAppToolTip')}" />
+                Content="{x:Bind root:ResourceService.GetLocalized('Settings/RestartApp')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/RestartAppToolTip')}" />
         </Grid>
 
         <ScrollViewer
@@ -59,7 +59,7 @@
                     Margin="0,0,0,5"
                     FontSize="16"
                     Style="{StaticResource BodyTextBlockStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('/Settings/Appearance')}" />
+                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/Appearance')}" />
 
                 <appearance:ThemeControl />
 
@@ -75,7 +75,7 @@
                     Margin="0,5"
                     FontSize="16"
                     Style="{StaticResource BodyTextBlockStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('/Settings/General')}" />
+                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/General')}" />
 
                 <common:NotificationControl />
 
@@ -93,7 +93,7 @@
                     Margin="0,5"
                     FontSize="16"
                     Style="{StaticResource BodyTextBlockStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('/Settings/Advanced')}" />
+                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/Advanced')}" />
 
                 <advanced:InstallModeControl />
 

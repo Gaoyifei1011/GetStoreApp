@@ -14,24 +14,24 @@
 
     <Expander Style="{StaticResource ExpanderAboutStyle}">
         <Expander.Header>
-            <TextBlock Style="{StaticResource ExpanderHeaderStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/About/Precaution')}" />
+            <TextBlock Style="{StaticResource ExpanderHeaderStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/Precaution')}" />
         </Expander.Header>
 
         <Expander.Content>
             <StackPanel Margin="14,0,10,0">
 
-                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/About/PaidApps')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/About/PaidAppsDescription')}" />
+                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/PaidApps')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/PaidAppsDescription')}" />
                 <MenuFlyoutSeparator Margin="0,0,0,8" />
 
-                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/About/DesktopApps')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/About/DesktopAppsDescription')}" />
+                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/DesktopApps')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/DesktopAppsDescription')}" />
 
                 <HyperlinkButton
                     Command="{x:Bind ViewModel.RecognizeCommand}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('/About/RecognizeDesktopApps')}"
+                    Content="{x:Bind root:ResourceService.GetLocalized('About/RecognizeDesktopApps')}"
                     Style="{StaticResource AboutHyperlinkButtonStyle}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/About/RecognizeDesktopApps')}" />
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/RecognizeDesktopApps')}" />
             </StackPanel>
         </Expander.Content>
     </Expander>

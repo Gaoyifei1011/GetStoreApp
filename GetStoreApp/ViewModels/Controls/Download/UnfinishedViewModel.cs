@@ -11,7 +11,6 @@ using GetStoreApp.Services.Controls.Settings.Experiment;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Base;
-using GetStoreApp.Views.Window;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;

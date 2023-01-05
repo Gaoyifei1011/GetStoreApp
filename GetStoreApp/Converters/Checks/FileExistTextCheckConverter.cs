@@ -21,11 +21,11 @@ namespace GetStoreApp.Converters.Checks
 
             if (File.Exists(FilePath))
             {
-                return ResourceService.GetLocalized("/Download/CompleteDownload");
+                return ResourceService.GetLocalized("Download/CompleteDownload");
             }
             else
             {
-                return ResourceService.GetLocalized("/Download/FileNotExist");
+                return ResourceService.GetLocalized("Download/FileNotExist");
             }
         }
 

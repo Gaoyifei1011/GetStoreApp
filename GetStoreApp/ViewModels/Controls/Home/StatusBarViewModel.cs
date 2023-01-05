@@ -3,7 +3,6 @@ using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Models.Controls.Home;
 using GetStoreApp.Services.Root;
 using GetStoreApp.ViewModels.Base;
-using GetStoreApp.Views.Window;
 using GetStoreApp.WindowsAPI.Controls;
 using GetStoreApp.WindowsAPI.Controls.Taskbar;
 using Microsoft.UI.Xaml.Controls;
@@ -71,7 +70,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public StatusBarViewModel()
         {
-            StateInfoText = ResourceService.GetLocalized("/Home/StatusInfoWelcome");
+            StateInfoText = ResourceService.GetLocalized("Home/StatusInfoWelcome");
 
             Messenger.Default.Register<int>(this, MessageToken.StatusBarState, (statusBarStateMessage) =>
             {

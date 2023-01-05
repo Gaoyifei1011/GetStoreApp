@@ -7,7 +7,6 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
-using GetStoreApp.Views.Window;
 using GetStoreApp.WindowsAPI.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -83,7 +82,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
         {
             FolderPickerDialog dialog = new FolderPickerDialog()
             {
-                Title = ResourceService.GetLocalized("/Settings/SelectFolder"),
+                Title = ResourceService.GetLocalized("Settings/SelectFolder"),
                 Path = DownloadFolder.Path
             };
 

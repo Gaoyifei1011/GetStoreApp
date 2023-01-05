@@ -47,7 +47,7 @@
             <TextBlock
                 Grid.Column="1"
                 VerticalAlignment="Center"
-                Text="{x:Bind root:ResourceService.GetLocalized('/Home/SearchResult')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('Home/SearchResult')}" />
 
             <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
 
@@ -62,7 +62,7 @@
             <TextBlock
                 Grid.Column="3"
                 VerticalAlignment="Center"
-                Text="{x:Bind root:ResourceService.GetLocalized('/Home/SearchResultEmpty')}"
+                Text="{x:Bind root:ResourceService.GetLocalized('Home/SearchResultEmpty')}"
                 Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}" />
 
             <CommandBar
@@ -76,8 +76,8 @@
                 <AppBarButton
                     Command="{x:Bind ViewModel.CopyIDCommand}"
                     IsEnabled="{x:Bind system:Convert.ToBoolean(ViewModel.ResultDataList.Count), Mode=OneWay}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('/Home/CopyID')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Home/CopyIDToolTip')}">
+                    Label="{x:Bind root:ResourceService.GetLocalized('Home/CopyID')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/CopyIDToolTip')}">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE8c8;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
@@ -86,8 +86,8 @@
                 <AppBarButton
                     Command="{x:Bind ViewModel.SelectCommand}"
                     IsEnabled="{x:Bind system:Convert.ToBoolean(ViewModel.ResultDataList.Count), Mode=OneWay}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('/Home/Select')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Home/SelectToolTip')}">
+                    Label="{x:Bind root:ResourceService.GetLocalized('Home/Select')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/SelectToolTip')}">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE762;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
@@ -104,8 +104,8 @@
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.SelectAllCommand}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('/Home/SelectAll')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Home/SelectAll')}">
+                    Label="{x:Bind root:ResourceService.GetLocalized('Home/SelectAll')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/SelectAll')}">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE8b3;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
@@ -113,14 +113,14 @@
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.SelectNoneCommand}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('/Home/SelectNone')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Home/SelectNone')}">
+                    Label="{x:Bind root:ResourceService.GetLocalized('Home/SelectNone')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/SelectNone')}">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE8e6;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
 
-                <AppBarButton Label="{x:Bind root:ResourceService.GetLocalized('/Home/CopyOptions')}" ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Home/CopyOptionsToolTip')}">
+                <AppBarButton Label="{x:Bind root:ResourceService.GetLocalized('Home/CopyOptions')}" ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/CopyOptionsToolTip')}">
 
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE8c8;" Style="{StaticResource SegoeFluentStyle}" />
@@ -130,20 +130,20 @@
                         <MenuFlyout Placement="Bottom">
                             <MenuFlyoutItem
                                 Command="{x:Bind ViewModel.CopySelectedLinkCommand}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('/Home/CopySelectedLink')}"
-                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Home/CopySelectedLinkToolTip')}" />
+                                Text="{x:Bind root:ResourceService.GetLocalized('Home/CopySelectedLink')}"
+                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/CopySelectedLinkToolTip')}" />
                             <MenuFlyoutItem
                                 Command="{x:Bind ViewModel.CopySelectedCommand}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('/Home/CopySelectedContent')}"
-                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Home/CopySelectedContentToolTip')}" />
+                                Text="{x:Bind root:ResourceService.GetLocalized('Home/CopySelectedContent')}"
+                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/CopySelectedContentToolTip')}" />
                         </MenuFlyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.DownloadSelectedCommand}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('/Home/DownloadSelected')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Home/DownloadSelected')}">
+                    Label="{x:Bind root:ResourceService.GetLocalized('Home/DownloadSelected')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/DownloadSelected')}">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE74b;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
@@ -151,8 +151,8 @@
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.CancelCommand}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('/Home/Cancel')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Home/CancelToolTip')}">
+                    Label="{x:Bind root:ResourceService.GetLocalized('Home/Cancel')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/CancelToolTip')}">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE711;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
@@ -190,41 +190,41 @@
                         Width="50"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('/Home/Select')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Home/Select')}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Home/Select')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/Select')}"
                         Visibility="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
                     <TextBlock
                         Grid.Column="1"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('/Home/FileName')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Home/FileName')}" />
+                        Text="{x:Bind root:ResourceService.GetLocalized('Home/FileName')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/FileName')}" />
                     <TextBlock
                         Grid.Column="2"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('/Home/LinkExpireTime')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Home/LinkExpireTime')}" />
+                        Text="{x:Bind root:ResourceService.GetLocalized('Home/LinkExpireTime')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/LinkExpireTime')}" />
                     <TextBlock
                         Grid.Column="3"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('/Home/FileSHA1')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Home/FileSHA1')}" />
+                        Text="{x:Bind root:ResourceService.GetLocalized('Home/FileSHA1')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/FileSHA1')}" />
                     <TextBlock
                         Grid.Column="4"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('/Home/FileSize')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Home/FileSize')}" />
+                        Text="{x:Bind root:ResourceService.GetLocalized('Home/FileSize')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/FileSize')}" />
                     <TextBlock
                         Grid.Column="5"
                         Grid.ColumnSpan="2"
                         Margin="10,0,0,0"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('/History/Options')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/History/OptionsToolTip')}" />
+                        Text="{x:Bind root:ResourceService.GetLocalized('History/Options')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/OptionsToolTip')}" />
                 </Grid>
             </ListView.Header>
 

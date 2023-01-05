@@ -8,13 +8,13 @@ namespace GetStoreApp.Views.Pages
 {
     public sealed partial class HistoryPage : Page
     {
-        public string Fillin => ResourceService.GetLocalized("/History/Fillin");
+        public string Fillin => ResourceService.GetLocalized("History/Fillin");
 
-        public string FillinToolTip => ResourceService.GetLocalized("/History/FillinToolTip");
+        public string FillinToolTip => ResourceService.GetLocalized("History/FillinToolTip");
 
-        public string Copy => ResourceService.GetLocalized("/History/Copy");
+        public string Copy => ResourceService.GetLocalized("History/Copy");
 
-        public string CopyToolTip => ResourceService.GetLocalized("/History/CopyToolTip");
+        public string CopyToolTip => ResourceService.GetLocalized("History/CopyToolTip");
 
         public HistoryPage()
         {
@@ -36,11 +36,11 @@ namespace GetStoreApp.Views.Pages
         {
             if (count == 0)
             {
-                return ResourceService.GetLocalized("/History/HistoryEmpty");
+                return ResourceService.GetLocalized("History/HistoryEmpty");
             }
             else
             {
-                return string.Format(ResourceService.GetLocalized("/History/HistoryCountInfo"), count);
+                return string.Format(ResourceService.GetLocalized("History/HistoryCountInfo"), count);
             }
         }
     }

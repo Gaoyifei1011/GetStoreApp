@@ -14,7 +14,6 @@ using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
-using GetStoreApp.Views.Window;
 using GetStoreApp.WindowsAPI.PInvoke.UxTheme;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;

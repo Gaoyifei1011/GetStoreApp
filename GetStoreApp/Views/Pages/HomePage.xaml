@@ -32,14 +32,14 @@
             <TextBlock
                 Grid.Column="0"
                 FontSize="26"
-                Text="{x:Bind root:ResourceService.GetLocalized('/Home/Title')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('Home/Title')}" />
 
             <Button
                 Grid.Column="1"
                 VerticalAlignment="Center"
                 Command="{x:Bind ViewModel.UseInstructionCommand}"
-                Content="{x:Bind root:ResourceService.GetLocalized('/Home/UseInstruction')}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Home/UseInstructionToolTip')}"
+                Content="{x:Bind root:ResourceService.GetLocalized('Home/UseInstruction')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/UseInstructionToolTip')}"
                 Visibility="{x:Bind ViewModel.UseInsVisValue, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
         </Grid>
 
@@ -56,9 +56,9 @@
                 Padding="0,0,0,30"
                 Spacing="3">
 
-                <TextBlock Style="{StaticResource TitleDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/Home/TitleDescription1')}" />
+                <TextBlock Style="{StaticResource TitleDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Home/TitleDescription1')}" />
 
-                <TextBlock Style="{StaticResource TitleDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/Home/TitleDescription2')}" />
+                <TextBlock Style="{StaticResource TitleDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Home/TitleDescription2')}" />
 
                 <hc:RequestControl />
 

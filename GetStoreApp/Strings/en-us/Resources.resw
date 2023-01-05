@@ -171,7 +171,10 @@
   <data name="OK" xml:space="preserve">
     <value>OK</value>
   </data>
-  <data name="IsMainWindowInitialized" xml:space="preserve">
-    <value>Is the Content of MainWindow already initialized?</value>
+  <data name="WindowContentInitializeFailed" xml:space="preserve">
+    <value>Window content initialization failed, window content is empty</value>
+  </data>
+  <data name="WindowHandleInitializeFailed" xml:space="preserve">
+    <value>Window handle initialization failed, window handle is a null pointer</value>
   </data>
 </root>

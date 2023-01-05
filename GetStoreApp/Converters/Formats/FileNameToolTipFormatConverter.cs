@@ -19,11 +19,11 @@ namespace GetStoreApp.Converters.Formats
 
             if (DownloadOptionsService.DownloadMode.InternalName == DownloadOptionsService.DownloadModeList[0].InternalName)
             {
-                return string.Format("{0}\n{1}", value, ResourceService.GetLocalized("/Home/ClickToDownload"));
+                return string.Format("{0}\n{1}", value, ResourceService.GetLocalized("Home/ClickToDownload"));
             }
             else if (DownloadOptionsService.DownloadMode.InternalName == DownloadOptionsService.DownloadModeList[1].InternalName)
             {
-                return string.Format("{0}\n{1}", value, ResourceService.GetLocalized("/Home/ClickToAccess"));
+                return string.Format("{0}\n{1}", value, ResourceService.GetLocalized("Home/ClickToAccess"));
             }
             else
             {

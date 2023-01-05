@@ -29,13 +29,13 @@
             Grid.Column="1"
             VerticalAlignment="Center"
             Style="{StaticResource BodyTextBlockStyle}"
-            Text="{x:Bind root:ResourceService.GetLocalized('/Settings/OpenConfigFile')}" />
+            Text="{x:Bind root:ResourceService.GetLocalized('Settings/OpenConfigFile')}" />
 
         <HyperlinkButton
             Grid.Column="2"
             Command="{x:Bind ViewModel.OpenConfigFileCommand}"
             Style="{StaticResource ExperimentalHyperlinkButtonStyle}"
-            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Settings/OpenConfigFolder')}">
+            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/OpenConfigFolder')}">
             <HyperlinkButton.Content>
                 <FontIcon FontFamily="{StaticResource SegoeFluentFontFamily}" Glyph="&#xE8a7;" />
             </HyperlinkButton.Content>

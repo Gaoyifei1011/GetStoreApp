@@ -27,10 +27,10 @@ namespace GetStoreApp.ViewModels.Dialogs.Web
         public IRelayCommand CopyExceptionCommand => new RelayCommand<ContentDialog>((dialog) =>
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine(ResourceService.GetLocalized("/Dialog/ProcessFailedKind") + ProcessFailedKind);
-            stringBuilder.AppendLine(ResourceService.GetLocalized("/Dialog/Reason") + Reason);
-            stringBuilder.AppendLine(ResourceService.GetLocalized("/Dialog/ExitCode") + ExitCode);
-            stringBuilder.AppendLine(ResourceService.GetLocalized("/Dialog/ProcessDescription") + ProcessDescription);
+            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/ProcessFailedKind") + ProcessFailedKind);
+            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/Reason") + Reason);
+            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/ExitCode") + ExitCode);
+            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/ProcessDescription") + ProcessDescription);
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
             dialog.Hide();

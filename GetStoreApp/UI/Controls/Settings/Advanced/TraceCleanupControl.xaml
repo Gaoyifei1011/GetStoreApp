@@ -31,13 +31,13 @@
             <TextBlock
                 VerticalAlignment="Center"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/TraceCleanup')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('Settings/TraceCleanup')}" />
 
             <TextBlock
                 VerticalAlignment="Center"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                 Style="{StaticResource CaptionTextBlockStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/TraceCleanupDescription')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('Settings/TraceCleanupDescription')}" />
         </StackPanel>
 
         <Button
@@ -45,7 +45,7 @@
             VerticalAlignment="Center"
             Command="{x:Bind ViewModel.TraceCleanupTipCommand}"
             Style="{StaticResource ButtonInfoStyle}"
-            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Settings/TraceCleanupToolTip')}">
+            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/TraceCleanupToolTip')}">
             <Button.Content>
                 <FontIcon
                     FontSize="16"
@@ -58,7 +58,7 @@
             Grid.Column="3"
             MinWidth="100"
             Command="{x:Bind ViewModel.TraceCleanupCommand}"
-            Content="{x:Bind root:ResourceService.GetLocalized('/Settings/TraceClear')}"
-            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Settings/TraceClear')}" />
+            Content="{x:Bind root:ResourceService.GetLocalized('Settings/TraceClear')}"
+            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/TraceClear')}" />
     </Grid>
 </UserControl>

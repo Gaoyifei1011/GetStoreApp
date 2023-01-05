@@ -49,7 +49,7 @@
             <TextBlock
                 Grid.Column="1"
                 VerticalAlignment="Center"
-                Text="{x:Bind root:ResourceService.GetLocalized('/Download/Operation')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('Download/Operation')}" />
             <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
 
             <TextBlock
@@ -68,8 +68,8 @@
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.OpenFolderCommand}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('/Download/OpenFolder')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Download/OpenFolderToolTip')}">
+                    Label="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolder')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolderToolTip')}">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE8b7;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
@@ -78,8 +78,8 @@
                 <AppBarButton
                     Command="{x:Bind ViewModel.ContinueAllCommand}"
                     IsEnabled="{x:Bind sys:Convert.ToBoolean(ViewModel.UnfinishedDataList.Count), Mode=OneWay}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('/Download/ContinueAll')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Download/ContinueAllToolTip')}">
+                    Label="{x:Bind root:ResourceService.GetLocalized('Download/ContinueAll')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/ContinueAllToolTip')}">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE74b;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
@@ -88,8 +88,8 @@
                 <AppBarButton
                     Command="{x:Bind ViewModel.SelectCommand}"
                     IsEnabled="{x:Bind sys:Convert.ToBoolean(ViewModel.UnfinishedDataList.Count), Mode=OneWay}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('/Download/Select')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Download/SelectToolTip')}">
+                    Label="{x:Bind root:ResourceService.GetLocalized('Download/Select')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/SelectToolTip')}">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE762;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
@@ -106,8 +106,8 @@
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.SelectAllCommand}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('/Download/SelectAll')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Download/SelectAll')}">
+                    Label="{x:Bind root:ResourceService.GetLocalized('Download/SelectAll')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/SelectAll')}">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE8b3;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
@@ -115,8 +115,8 @@
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.SelectNoneCommand}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('/Download/SelectNone')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Download/SelectNone')}">
+                    Label="{x:Bind root:ResourceService.GetLocalized('Download/SelectNone')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/SelectNone')}">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE8e6;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
@@ -124,8 +124,8 @@
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.DeleteSelectedCommand}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('/Download/DeleteSelected')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Download/DeleteSelectedToolTip')}">
+                    Label="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelected')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedToolTip')}">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE74d;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
@@ -133,8 +133,8 @@
 
                 <AppBarButton
                     Command="{x:Bind ViewModel.CancelCommand}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('/Download/Cancel')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Download/CancelToolTip')}">
+                    Label="{x:Bind root:ResourceService.GetLocalized('Download/Cancel')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/CancelToolTip')}">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE711;" Style="{StaticResource SegoeFluentStyle}" />
                     </AppBarButton.Icon>
@@ -150,9 +150,9 @@
             <TextBlock
                 Margin="0,10"
                 VerticalAlignment="Center"
-                Text="{x:Bind root:ResourceService.GetLocalized('/Download/UnfinishedEmptyDescription')}"
+                Text="{x:Bind root:ResourceService.GetLocalized('Download/UnfinishedEmptyDescription')}"
                 TextAlignment="Center"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Download/UnfinishedEmptyDescription')}" />
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/UnfinishedEmptyDescription')}" />
         </Grid>
 
         <ScrollViewer

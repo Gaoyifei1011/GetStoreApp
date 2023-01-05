@@ -82,11 +82,11 @@
             x:Name="CopySuccess"
             x:Load="{x:Bind ViewModel.CopyState, Mode=OneWay}"
             Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
-            Text="{x:Bind root:ResourceService.GetLocalized('/Notification/ResultIDCopySuccessfully')}" />
+            Text="{x:Bind root:ResourceService.GetLocalized('Notification/ResultIDCopySuccessfully')}" />
         <TextBlock
             x:Name="CopyFailed"
             x:Load="{x:Bind ViewModel.CopyState, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
             Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
-            Text="{x:Bind root:ResourceService.GetLocalized('/Notification/ResultIDCopyFailed')}" />
+            Text="{x:Bind root:ResourceService.GetLocalized('Notification/ResultIDCopyFailed')}" />
     </StackPanel>
 </UserControl>

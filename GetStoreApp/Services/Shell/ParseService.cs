@@ -65,7 +65,7 @@ namespace GetStoreApp.Services.Shell
         /// </summary>
         private static void PrintCategoryID()
         {
-            Console.Write(ResourceService.GetLocalized("/Console/CategoryID") + CategoryId + ConsoleLaunchService.LineBreaks);
+            Console.Write(ResourceService.GetLocalized("Console/CategoryID") + CategoryId + ConsoleLaunchService.LineBreaks);
         }
 
         /// <summary>
@@ -73,9 +73,9 @@ namespace GetStoreApp.Services.Shell
         /// </summary>
         private static void PrintResultList()
         {
-            string SerialNumberHeader = ResourceService.GetLocalized("/Console/SerialNumber");
-            string FileNameHeader = ResourceService.GetLocalized("/Console/FileName");
-            string FileSizeHeader = ResourceService.GetLocalized("/Console/FileSize");
+            string SerialNumberHeader = ResourceService.GetLocalized("Console/SerialNumber");
+            string FileNameHeader = ResourceService.GetLocalized("Console/FileName");
+            string FileSizeHeader = ResourceService.GetLocalized("Console/FileSize");
 
             int SerialNumberHeaderLength = CharExtension.GetStringDisplayLengthEx(SerialNumberHeader);
             int FileNameHeaderLength = CharExtension.GetStringDisplayLengthEx(FileNameHeader);
@@ -91,7 +91,7 @@ namespace GetStoreApp.Services.Shell
             int FileNameColumnLength = ((FileNameHeaderLength > FileNameContentMaxLength) ? FileNameHeaderLength : FileNameContentMaxLength) + 3;
 
             Console.Write(ConsoleLaunchService.LineBreaks);
-            Console.WriteLine(ResourceService.GetLocalized("/Console/ResultDataList"));
+            Console.WriteLine(ResourceService.GetLocalized("Console/ResultDataList"));
 
             // 打印标题
             Console.Write(SerialNumberHeader + new string(ConsoleLaunchService.RowSplitCharacter, SerialNumberColumnLength - SerialNumberHeaderLength));

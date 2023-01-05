@@ -8,7 +8,6 @@ using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.ViewModels.Base;
-using GetStoreApp.Views.Window;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;

@@ -31,13 +31,13 @@
             <TextBlock
                 VerticalAlignment="Center"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/Backdrop')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('Settings/Backdrop')}" />
 
             <TextBlock
                 VerticalAlignment="Center"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                 Style="{StaticResource CaptionTextBlockStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/BackdropDescription')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('Settings/BackdropDescription')}" />
         </StackPanel>
 
         <Button
@@ -45,7 +45,7 @@
             VerticalAlignment="Center"
             Command="{x:Bind ViewModel.BackdropTipCommand}"
             Style="{StaticResource ButtonInfoStyle}"
-            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Settings/BackdropToolTip')}"
+            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/BackdropToolTip')}"
             Visibility="{x:Bind ViewModel.CanUseMicaBackdrop, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Reverse}">
             <Button.Content>
                 <FontIcon

@@ -26,6 +26,6 @@
         Margin="36,2,0,0"
         VerticalAlignment="Center"
         Style="{StaticResource CaptionTextBlockStyle}"
-        Text="{x:Bind root:ResourceService.GetLocalized('/Window/AppTitle')}"
+        Text="{x:Bind root:ResourceService.GetLocalized('Window/AppTitle')}"
         TextWrapping="NoWrap" />
 </Grid>

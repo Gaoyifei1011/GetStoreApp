@@ -80,14 +80,14 @@ namespace GetStoreApp
         {
             TrayIcon = new WindowsTrayIcon(
                 Path.Combine(AppContext.BaseDirectory, "Assets/GetStoreApp.ico"),
-                ResourceService.GetLocalized("AppDisplayName")
+                ResourceService.GetLocalized("Resources/AppDisplayName")
             );
 
             TrayIcon.InitializeTrayMenu();
-            TrayIcon.AddMenuItemText(1, ResourceService.GetLocalized("ShowOrHideWindow"));
-            TrayIcon.AddMenuItemText(2, ResourceService.GetLocalized("Settings"));
+            TrayIcon.AddMenuItemText(1, ResourceService.GetLocalized("Resources/ShowOrHideWindow"));
+            TrayIcon.AddMenuItemText(2, ResourceService.GetLocalized("Resources/Settings"));
             TrayIcon.AddMenuItemSeperator();
-            TrayIcon.AddMenuItemText(3, ResourceService.GetLocalized("Exit"));
+            TrayIcon.AddMenuItemText(3, ResourceService.GetLocalized("Resources/Exit"));
 
             TrayIcon.DoubleClick = () =>
             {

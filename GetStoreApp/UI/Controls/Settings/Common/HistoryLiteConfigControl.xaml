@@ -30,13 +30,13 @@
             <TextBlock
                 VerticalAlignment="Center"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/HistoryLiteConfig')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('Settings/HistoryLiteConfig')}" />
 
             <TextBlock
                 VerticalAlignment="Center"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                 Style="{StaticResource CaptionTextBlockStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/HistoryLiteConfigDescription')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('Settings/HistoryLiteConfigDescription')}" />
         </StackPanel>
 
         <DropDownButton

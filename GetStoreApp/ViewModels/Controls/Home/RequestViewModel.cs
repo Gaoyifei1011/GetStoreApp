@@ -35,7 +35,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             "d58c3a5f-ca63-4435-842c-7814b5ff91b7"
         };
 
-        private string SampleTitle => ResourceService.GetLocalized("/Home/SampleTitle");
+        private string SampleTitle => ResourceService.GetLocalized("Home/SampleTitle");
 
         private string SampleLink { get; set; }
 
@@ -277,6 +277,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             {
                 JumpListItem jumpListItem = JumpListItem.CreateWithArguments(string.Format("JumpList {0} {1} {2}", TypeList[currentType].ShortName, ChannelList[currentChannel].ShortName, currentLink), currentLink);
                 jumpListItem.GroupName = AppJumpList.GroupName;
+                jumpListItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/History.png");
                 Program.ApplicationRoot.TaskbarJumpList.Items.Add(jumpListItem);
                 await Program.ApplicationRoot.TaskbarJumpList.SaveAsync();
             }

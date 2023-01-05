@@ -56,14 +56,14 @@ namespace GetStoreApp.ViewModels.Dialogs.Download
         public IRelayCommand CopyFileInformationCommand => new RelayCommand<ContentDialog>((dialog) =>
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine(ResourceService.GetLocalized("/Dialog/FileName") + FileName);
-            stringBuilder.AppendLine(ResourceService.GetLocalized("/Dialog/FilePath") + FilePath);
-            stringBuilder.AppendLine(ResourceService.GetLocalized("/Dialog/FileSize") + FileSize);
+            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileName") + FileName);
+            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FilePath") + FilePath);
+            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileSize") + FileSize);
             if (FileSHA1Load)
             {
-                stringBuilder.AppendLine(ResourceService.GetLocalized("/Dialog/FileSHA1") + FileSHA1);
+                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileSHA1") + FileSHA1);
             }
-            stringBuilder.AppendLine(ResourceService.GetLocalized("/Dialog/CheckFileSHA1") + CheckFileSHA1);
+            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/CheckFileSHA1") + CheckFileSHA1);
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
             dialog.Hide();

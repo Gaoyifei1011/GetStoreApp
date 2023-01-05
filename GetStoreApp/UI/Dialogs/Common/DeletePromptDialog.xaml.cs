@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Views.Window;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;

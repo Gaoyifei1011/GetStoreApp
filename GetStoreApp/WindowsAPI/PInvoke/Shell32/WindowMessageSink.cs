@@ -1,4 +1,5 @@
-﻿using GetStoreApp.WindowsAPI.PInvoke.User32;
+﻿using GetStoreApp.Services.Root;
+using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;
 using System.ComponentModel;
 
@@ -104,7 +105,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
 
             if (MessageWindowHandle == IntPtr.Zero)
             {
-                throw new Win32Exception("消息窗口句柄不是有效的指针");
+                throw new Win32Exception(ResourceService.GetLocalized("Resources/WindowHandleInitializeFailed"));
             }
         }
 

@@ -31,13 +31,13 @@
             <TextBlock
                 VerticalAlignment="Center"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/Theme')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('Settings/Theme')}" />
 
             <TextBlock
                 VerticalAlignment="Center"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                 Style="{StaticResource CaptionTextBlockStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/ThemeDescription')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('Settings/ThemeDescription')}" />
         </StackPanel>
 
         <HyperlinkButton
@@ -45,8 +45,8 @@
             Margin="0,0,6,0"
             VerticalAlignment="Center"
             Command="{x:Bind ViewModel.SettingsColorCommand}"
-            Content="{x:Bind root:ResourceService.GetLocalized('/Settings/WindowsColorSettings')}"
-            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Settings/WindowsColorSettings')}" />
+            Content="{x:Bind root:ResourceService.GetLocalized('Settings/WindowsColorSettings')}"
+            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/WindowsColorSettings')}" />
 
         <DropDownButton
             Grid.Column="3"

@@ -30,13 +30,13 @@
             <TextBlock
                 VerticalAlignment="Center"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/Region')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('Settings/Region')}" />
 
             <TextBlock
                 VerticalAlignment="Center"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                 Style="{StaticResource CaptionTextBlockStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/RegionDescription')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('Settings/RegionDescription')}" />
         </StackPanel>
 
         <ComboBox

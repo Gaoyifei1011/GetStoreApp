@@ -99,7 +99,7 @@ namespace GetStoreApp
             InfoHelper.InitializeSystemVersion();
 
             // 初始化应用任务跳转列表信息
-            AppJumpList.GroupName = ResourceService.GetLocalized("/Window/JumpListGroupName");
+            AppJumpList.GroupName = ResourceService.GetLocalized("Window/JumpListGroupName");
             AppJumpList.GroupKind = JumpListSystemGroupKind.Recent;
 
             if (IsDesktopProgram)

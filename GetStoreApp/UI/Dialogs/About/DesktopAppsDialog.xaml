@@ -6,8 +6,8 @@
     xmlns:dialog="using:GetStoreApp.ViewModels.Dialogs.About"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    Title="{x:Bind root:ResourceService.GetLocalized('/Dialog/RecognizeDesktopApps')}"
-    CloseButtonText="{x:Bind root:ResourceService.GetLocalized('/Dialog/CloseWindow')}"
+    Title="{x:Bind root:ResourceService.GetLocalized('Dialog/RecognizeDesktopApps')}"
+    CloseButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseWindow')}"
     Loaded="{x:Bind ViewModel.OnLoaded}"
     RequestedTheme="{x:Bind DialogTheme}"
     Style="{StaticResource DefaultContentDialogStyle}"
@@ -22,8 +22,8 @@
     </ContentDialog.Resources>
 
     <StackPanel>
-        <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/DesktopAppsContent1')}" />
-        <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/DesktopAppsContent2')}" />
+        <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Dialog/DesktopAppsContent1')}" />
+        <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Dialog/DesktopAppsContent2')}" />
 
         <Border
             HorizontalAlignment="Left"

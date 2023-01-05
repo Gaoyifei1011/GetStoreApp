@@ -37,7 +37,7 @@ namespace GetStoreApp.Views.Window
 
             return MainWindowHandle != IntPtr.Zero
                 ? MainWindowHandle
-                : throw new ApplicationException(ResourceService.GetLocalized("IsMainWindowInitialized"));
+                : throw new ApplicationException(ResourceService.GetLocalized("Resources/WindowHandleInitializeFailed"));
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace GetStoreApp.Views.Window
         {
             return Content.XamlRoot is not null
                 ? Content.XamlRoot
-                : throw new ApplicationException(ResourceService.GetLocalized("IsMainWindowInitialized"));
+                : throw new ApplicationException(ResourceService.GetLocalized("Resources/WindowContentInitializeFailed"));
         }
     }
 }

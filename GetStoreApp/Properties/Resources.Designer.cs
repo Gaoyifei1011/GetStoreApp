@@ -69,5 +69,14 @@ namespace GetStoreApp.Properties {
                 return ((byte[])(obj));
             }
         }
+        
+        /// <summary>
+        ///   查找类似 Have you forgot to initialize app&apos;s resources? 的本地化字符串。
+        /// </summary>
+        public static string ResourcesInitializeFailed {
+            get {
+                return ResourceManager.GetString("ResourcesInitializeFailed", resourceCulture);
+            }
+        }
     }
 }

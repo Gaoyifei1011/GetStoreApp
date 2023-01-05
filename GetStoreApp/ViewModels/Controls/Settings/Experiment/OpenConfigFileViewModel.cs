@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Contracts.Command;
 using GetStoreApp.Extensions.Command;
 using GetStoreApp.Services.Controls.Download;
-using GetStoreApp.Views.Window;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;

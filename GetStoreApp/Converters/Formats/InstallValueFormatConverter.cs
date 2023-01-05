@@ -16,7 +16,7 @@ namespace GetStoreApp.Converters.Formats
                 return string.Empty;
             }
 
-            return string.Format(ResourceService.GetLocalized("/Download/InstallValue"), value);
+            return string.Format(ResourceService.GetLocalized("Download/InstallValue"), value);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

@@ -2,7 +2,6 @@
 using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Controls.Settings.Appearance;
-using GetStoreApp.Views.Window;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;

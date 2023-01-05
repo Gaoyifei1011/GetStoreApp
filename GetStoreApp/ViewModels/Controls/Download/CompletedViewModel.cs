@@ -11,7 +11,6 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Dialogs.Download;
 using GetStoreApp.ViewModels.Base;
-using GetStoreApp.Views.Window;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml;

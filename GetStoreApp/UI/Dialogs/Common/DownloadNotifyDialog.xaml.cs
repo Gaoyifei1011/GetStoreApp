@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Views.Window;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -20,9 +19,9 @@ namespace GetStoreApp.UI.Dialogs.Common
 
             switch (duplicatedDataInfo)
             {
-                case DuplicatedDataInfoArgs.Unfinished: DownloadNotifyContent = ResourceService.GetLocalized("/Dialog/DownloadUnfinishedContent"); break;
-                case DuplicatedDataInfoArgs.Completed: DownloadNotifyContent = ResourceService.GetLocalized("/Dialog/DownloadCompletedContent"); break;
-                case DuplicatedDataInfoArgs.MultiRecord: DownloadNotifyContent = ResourceService.GetLocalized("/Dialog/DownloadMultiRecordContent"); break;
+                case DuplicatedDataInfoArgs.Unfinished: DownloadNotifyContent = ResourceService.GetLocalized("Dialog/DownloadUnfinishedContent"); break;
+                case DuplicatedDataInfoArgs.Completed: DownloadNotifyContent = ResourceService.GetLocalized("Dialog/DownloadCompletedContent"); break;
+                case DuplicatedDataInfoArgs.MultiRecord: DownloadNotifyContent = ResourceService.GetLocalized("Dialog/DownloadMultiRecordContent"); break;
             }
 
             InitializeComponent();

@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Views.Window;
-using GetStoreApp.WindowsAPI.Controls.Taskbar;
+﻿using GetStoreApp.WindowsAPI.Controls.Taskbar;
 using System;
 
 namespace GetStoreApp.WindowsAPI.Controls

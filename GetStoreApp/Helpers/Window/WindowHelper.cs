@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Views.Window;
-using GetStoreApp.WindowsAPI.PInvoke.User32;
+﻿using GetStoreApp.WindowsAPI.PInvoke.User32;
 
 namespace GetStoreApp.Helpers.Window
 {

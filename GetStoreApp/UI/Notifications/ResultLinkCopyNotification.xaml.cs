@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Views.Window;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -44,7 +43,7 @@ namespace GetStoreApp.UI.Notifications
         {
             if (IsMultiSelected)
             {
-                CopySelectedSuccess.Text = string.Format(ResourceService.GetLocalized("/Notification/ResultLinkSelectedCopySuccessfully"), Count);
+                CopySelectedSuccess.Text = string.Format(ResourceService.GetLocalized("Notification/ResultLinkSelectedCopySuccessfully"), Count);
             }
         }
 
@@ -52,7 +51,7 @@ namespace GetStoreApp.UI.Notifications
         {
             if (IsMultiSelected)
             {
-                CopySelectedFailed.Text = string.Format(ResourceService.GetLocalized("/Notification/ResultLinkSelectedCopyFailed"), Count);
+                CopySelectedFailed.Text = string.Format(ResourceService.GetLocalized("Notification/ResultLinkSelectedCopyFailed"), Count);
             }
         }
 

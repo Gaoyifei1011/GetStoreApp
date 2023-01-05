@@ -31,13 +31,13 @@
             <TextBlock
                 VerticalAlignment="Center"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/InstallMode')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('Settings/InstallMode')}" />
 
             <TextBlock
                 VerticalAlignment="Center"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                 Style="{StaticResource CaptionTextBlockStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('/Settings/InstallModeDescription')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('Settings/InstallModeDescription')}" />
         </StackPanel>
 
         <Button
@@ -45,7 +45,7 @@
             VerticalAlignment="Center"
             Command="{x:Bind ViewModel.InstallModeTipCommand}"
             Style="{StaticResource ButtonInfoStyle}"
-            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Settings/InstallModeToolTip')}">
+            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/InstallModeToolTip')}">
             <Button.Content>
                 <FontIcon
                     FontSize="16"

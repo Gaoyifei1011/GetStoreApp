@@ -20,11 +20,11 @@ namespace GetStoreApp.Converters.Formats
 
             if (param is "Reference")
             {
-                return string.Format("{0}\n{1}", value, ResourceService.GetLocalized("/About/ReferenceToolTip"));
+                return string.Format("{0}\n{1}", value, ResourceService.GetLocalized("About/ReferenceToolTip"));
             }
             else if (param is "Thanks")
             {
-                return string.Format("{0}\n{1}", value, ResourceService.GetLocalized("/About/ThanksToolTip"));
+                return string.Format("{0}\n{1}", value, ResourceService.GetLocalized("About/ThanksToolTip"));
             }
             else
             {

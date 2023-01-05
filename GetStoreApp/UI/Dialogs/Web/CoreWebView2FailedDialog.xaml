@@ -37,7 +37,7 @@
                 <TextBlock
                     Grid.Column="0"
                     Style="{StaticResource ContentDialogTitleStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/CoreWebView2FailedTitle')}" />
+                    Text="{x:Bind root:ResourceService.GetLocalized('Dialog/CoreWebView2FailedTitle')}" />
             </Grid>
 
             <Grid>
@@ -48,7 +48,7 @@
                 <TextBlock
                     Grid.Column="0"
                     Style="{StaticResource ContentDialogContentStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/ProcessFailedKind')}" />
+                    Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ProcessFailedKind')}" />
                 <TextBlock
                     Grid.Column="1"
                     Style="{StaticResource ContentDialogContentStyle}"
@@ -65,7 +65,7 @@
                 <TextBlock
                     Grid.Column="0"
                     Style="{StaticResource ContentDialogContentStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/Reason')}" />
+                    Text="{x:Bind root:ResourceService.GetLocalized('Dialog/Reason')}" />
                 <TextBlock
                     Grid.Column="1"
                     Style="{StaticResource ContentDialogContentStyle}"
@@ -82,7 +82,7 @@
                 <TextBlock
                     Grid.Column="0"
                     Style="{StaticResource ContentDialogContentStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/ExitCode')}" />
+                    Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ExitCode')}" />
                 <TextBlock
                     Grid.Column="1"
                     Style="{StaticResource ContentDialogContentStyle}"
@@ -99,7 +99,7 @@
                 <TextBlock
                     Grid.Column="0"
                     Style="{StaticResource ContentDialogContentStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('/Dialog/ProcessDescription')}" />
+                    Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ProcessDescription')}" />
                 <TextBlock
                     Grid.Column="1"
                     Style="{StaticResource ContentDialogContentStyle}"
@@ -123,16 +123,16 @@
                 HorizontalAlignment="Stretch"
                 Command="{x:Bind ViewModel.CopyExceptionCommand}"
                 CommandParameter="{Binding ElementName=CoreWebView2FailedRoot}"
-                Content="{x:Bind root:ResourceService.GetLocalized('/Dialog/CopyException')}"
+                Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CopyException')}"
                 Style="{ThemeResource AccentButtonStyle}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Dialog/CopyException')}" />
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Dialog/CopyException')}" />
             <Button
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
                 Command="{x:Bind ViewModel.CloswWindowCommand}"
                 CommandParameter="{Binding ElementName=CoreWebView2FailedRoot}"
-                Content="{x:Bind root:ResourceService.GetLocalized('/Dialog/CloseWindow')}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('/Dialog/CloseWindow')}" />
+                Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseWindow')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseWindow')}" />
         </Grid>
     </Grid>
 </ContentDialog>

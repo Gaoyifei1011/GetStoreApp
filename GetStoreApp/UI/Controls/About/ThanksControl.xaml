@@ -22,7 +22,7 @@
         <Expander.Header>
             <TextBlock
                 Style="{StaticResource ExpanderHeaderStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('/About/Thanks')}"
+                Text="{x:Bind root:ResourceService.GetLocalized('About/Thanks')}"
                 TextWrapping="Wrap" />
         </Expander.Header>
         <Expander.Content>
@@ -30,7 +30,7 @@
                 <TextBlock
                     Margin="5,0,0,3"
                     Style="{StaticResource ExpanderContentTitleStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('/About/ThanksDescription')}" />
+                    Text="{x:Bind root:ResourceService.GetLocalized('About/ThanksDescription')}" />
                 <controls:AdaptiveGridView
                     Padding="0"
                     HorizontalAlignment="Stretch"

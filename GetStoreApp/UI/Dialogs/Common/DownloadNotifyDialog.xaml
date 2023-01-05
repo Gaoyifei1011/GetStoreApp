@@ -6,13 +6,13 @@
     xmlns:dialog="using:GetStoreApp.ViewModels.Dialogs.Common"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    Title="{x:Bind root:ResourceService.GetLocalized('/Dialog/DownloadNotifyTitle')}"
-    CloseButtonText="{x:Bind root:ResourceService.GetLocalized('/Dialog/CancelDownload')}"
+    Title="{x:Bind root:ResourceService.GetLocalized('Dialog/DownloadNotifyTitle')}"
+    CloseButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CancelDownload')}"
     Content="{x:Bind DownloadNotifyContent}"
     Loaded="{x:Bind ViewModel.OnLoaded}"
-    PrimaryButtonText="{x:Bind root:ResourceService.GetLocalized('/Dialog/Redownload')}"
+    PrimaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/Redownload')}"
     RequestedTheme="{x:Bind DialogTheme}"
-    SecondaryButtonText="{x:Bind root:ResourceService.GetLocalized('/Dialog/ViewDownloadRecord')}"
+    SecondaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/ViewDownloadRecord')}"
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d">
 

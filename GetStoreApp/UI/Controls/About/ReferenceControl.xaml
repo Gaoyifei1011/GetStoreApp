@@ -20,7 +20,7 @@
 
     <Expander Style="{StaticResource ExpanderAboutStyle}">
         <Expander.Header>
-            <TextBlock Style="{StaticResource ExpanderHeaderStyle}" Text="{x:Bind root:ResourceService.GetLocalized('/About/Reference')}" />
+            <TextBlock Style="{StaticResource ExpanderHeaderStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/Reference')}" />
         </Expander.Header>
         <Expander.Content>
             <controls:AdaptiveGridView
