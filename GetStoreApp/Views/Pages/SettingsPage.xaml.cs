@@ -18,7 +18,7 @@ namespace GetStoreApp.Views.Pages
             double CurrentScrollPosition = SettingsScroll.VerticalOffset;
             Point CurrentPoint = new Point(0, (int)CurrentScrollPosition);
 
-            if (Program.ApplicationRoot.NavigationArgs == AppNaviagtionArgs.DownloadOptions)
+            if (Program.ApplicationRoot.NavigationArgs is AppNaviagtionArgs.DownloadOptions)
             {
                 Point TargetPosition = DownloadOptions.TransformToVisual(SettingsScroll).TransformPoint(CurrentPoint);
                 SettingsScroll.ChangeView(null, TargetPosition.Y, null);

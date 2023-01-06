@@ -57,7 +57,7 @@ namespace GetStoreApp.Helpers.Controls.Download
             foreach (int childProcessId in GetChildProcessIds(processID))
             {
                 int childProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_ALL_ACCESS, false, processID);
-                if (childProcess != 0)
+                if (childProcess is not 0)
                 {
                     try
                     {
@@ -71,7 +71,7 @@ namespace GetStoreApp.Helpers.Controls.Download
             }
 
             int thisProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_ALL_ACCESS, false, processID);
-            if (thisProcess != 0)
+            if (thisProcess is not 0)
             {
                 try
                 {
@@ -118,13 +118,13 @@ namespace GetStoreApp.Helpers.Controls.Download
         {
             int ParentID = 0;
             int hProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_QUERY_INFORMATION, false, processId);
-            if (hProcess != 0)
+            if (hProcess is not 0)
             {
                 try
                 {
                     PROCESS_BASIC_INFORMATION pbi = new PROCESS_BASIC_INFORMATION();
                     int pSize = 0;
-                    if (NTdllLibrary.NtQueryInformationProcess(hProcess, PROCESSINFOCLASS.ProcessBasicInformation, ref pbi, pbi.Size, ref pSize) != -1)
+                    if (NTdllLibrary.NtQueryInformationProcess(hProcess, PROCESSINFOCLASS.ProcessBasicInformation, ref pbi, pbi.Size, ref pSize) is not -1)
                     {
                         ParentID = pbi.InheritedFromUniqueProcessId;
                     }

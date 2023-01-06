@@ -49,7 +49,7 @@ namespace GetStoreApp.Converters.Controls
         internal static Thickness GetItemMargin(GridView view, Thickness fallback = default)
         {
             var setter = view.ItemContainerStyle?.Setters.OfType<Setter>().FirstOrDefault(s => s.Property == FrameworkElement.MarginProperty);
-            if (setter != null)
+            if (setter is not null)
             {
                 return (Thickness)setter.Value;
             }
@@ -58,7 +58,7 @@ namespace GetStoreApp.Converters.Controls
                 if (view.Items.Count > 0)
                 {
                     var container = (GridViewItem)view.ContainerFromIndex(0);
-                    if (container != null)
+                    if (container is not null)
                     {
                         return container.Margin;
                     }

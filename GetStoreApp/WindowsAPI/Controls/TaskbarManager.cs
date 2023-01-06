@@ -1,4 +1,5 @@
-﻿using GetStoreApp.WindowsAPI.Controls.Taskbar;
+﻿using GetStoreApp.Helpers.Root;
+using GetStoreApp.WindowsAPI.Controls.Taskbar;
 using System;
 
 namespace GetStoreApp.WindowsAPI.Controls
@@ -43,7 +44,7 @@ namespace GetStoreApp.WindowsAPI.Controls
         /// </summary>
         public static bool IsPlatformSupported
         {
-            get { return Environment.OSVersion.Platform == PlatformID.Win32NT && Environment.OSVersion.Version.CompareTo(new Version(6, 1)) >= 0; }
+            get { return InfoHelper.GetDeviceFamily() is "Windows.Desktop" && InfoHelper.GetSystemVersion()["BuildNumber"] > 7600; }
         }
 
         /// <summary>

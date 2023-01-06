@@ -118,20 +118,20 @@ namespace GetStoreApp.Helpers.Window
             }
             else
             {
-                m_configurationSource.IsInputActive = args.WindowActivationState != WindowActivationState.Deactivated;
+                m_configurationSource.IsInputActive = args.WindowActivationState is not WindowActivationState.Deactivated;
             }
         }
 
         public static void ReleaseBackdrop()
         {
             // 确保任何云母/丙烯酸控制器被处置，这样它就不会试图使用这个关闭的窗口。
-            if (m_micaController != null)
+            if (m_micaController is not null)
             {
                 m_micaController.Dispose();
                 m_micaController = null;
             }
 
-            if (m_acrylicController != null)
+            if (m_acrylicController is not null)
             {
                 m_acrylicController.Dispose();
                 m_acrylicController = null;
@@ -143,7 +143,7 @@ namespace GetStoreApp.Helpers.Window
 
         private static void WindowThemeChanged(FrameworkElement sender, object args)
         {
-            if (m_configurationSource != null)
+            if (m_configurationSource is not null)
             {
                 SetConfigurationSourceTheme();
             }

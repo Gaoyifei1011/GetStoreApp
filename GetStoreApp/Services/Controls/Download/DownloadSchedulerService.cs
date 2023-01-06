@@ -398,7 +398,7 @@ namespace GetStoreApp.Services.Controls.Download
             NetWorkStatus NetStatus = NetWorkHelper.GetNetWorkStatus();
 
             // 网络处于未连接状态，暂停所有任务
-            if (NetStatus == NetWorkStatus.None || NetStatus == NetWorkStatus.Unknown)
+            if (NetStatus is NetWorkStatus.None || NetStatus is NetWorkStatus.Unknown)
             {
                 // 如果网络处于正在连接状态，修改当前网络状态并发送通知
                 if (IsNetWorkConnected)
@@ -486,7 +486,7 @@ namespace GetStoreApp.Services.Controls.Download
                     if (TellStatusResult.Item1)
                     {
                         // 当下载任务处于活动状态时，更新下载任务信息
-                        if (TellStatusResult.Item2 == "active")
+                        if (TellStatusResult.Item2 is "active")
                         {
                             downloadItem.FinishedSize = TellStatusResult.Item3;
                             downloadItem.TotalSize = TellStatusResult.Item4;
@@ -494,7 +494,7 @@ namespace GetStoreApp.Services.Controls.Download
                         }
 
                         // 当下载任务处于完成状态时，将当前任务标记为完成状态
-                        else if (TellStatusResult.Item2 == "complete")
+                        else if (TellStatusResult.Item2 is "complete")
                         {
                             downloadItem.DownloadFlag = 4;
                             downloadItem.GID = string.Empty;
@@ -507,7 +507,7 @@ namespace GetStoreApp.Services.Controls.Download
                         }
 
                         // 当下载任务处于错误状态时，将当前任务标记为错误状态
-                        else if (TellStatusResult.Item2 == "error")
+                        else if (TellStatusResult.Item2 is "error")
                         {
                             downloadItem.DownloadFlag = 0;
                             downloadItem.GID = string.Empty;
@@ -530,10 +530,10 @@ namespace GetStoreApp.Services.Controls.Download
                 }
 
                 // 正在下载列表中删除掉不是处于下载状态的任务
-                DownloadingList.RemoveAll(item => item.DownloadFlag != 3);
+                DownloadingList.RemoveAll(item => item.DownloadFlag is not 3);
 
                 // 下载完成后发送通知
-                if (DownloadingList.Count == 0 && WaitingList.Count == 0)
+                if (DownloadingList.Count is 0 && WaitingList.Count is 0)
                 {
                     AppNotificationService.Show("DownloadCompleted");
                 }

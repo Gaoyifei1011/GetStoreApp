@@ -27,7 +27,7 @@ namespace GetStoreApp.Views.Pages
         // 页面加载完成后如果有具体的要求，将页面滚动到指定位置
         public void HomeLoaded(object sender, RoutedEventArgs args)
         {
-            if (Program.ApplicationRoot.NavigationArgs == AppNaviagtionArgs.Home)
+            if (Program.ApplicationRoot.NavigationArgs is AppNaviagtionArgs.Home)
             {
                 HomeScroll.ChangeView(null, 0, null);
                 Program.ApplicationRoot.NavigationArgs = AppNaviagtionArgs.None;

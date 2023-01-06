@@ -185,9 +185,9 @@ namespace GetStoreApp.ViewModels.Pages
         // 复制选定项目的内容
         public IRelayCommand CopySelectedCommand => new RelayCommand(async () =>
         {
-            List<HistoryModel> SelectedHistoryDataList = HistoryDataList.Where(item => item.IsSelected == true).ToList();
+            List<HistoryModel> SelectedHistoryDataList = HistoryDataList.Where(item => item.IsSelected is true).ToList();
 
-            if (SelectedHistoryDataList.Count == 0)
+            if (SelectedHistoryDataList.Count is 0)
             {
                 if (!Program.ApplicationRoot.IsDialogOpening)
                 {
@@ -216,10 +216,10 @@ namespace GetStoreApp.ViewModels.Pages
         // 删除选定的项目
         public IRelayCommand DeleteCommand => new RelayCommand(async () =>
         {
-            List<HistoryModel> SelectedHistoryDataList = HistoryDataList.Where(item => item.IsSelected == true).ToList();
+            List<HistoryModel> SelectedHistoryDataList = HistoryDataList.Where(item => item.IsSelected is true).ToList();
 
             // 没有选中任何内容时显示空提示对话框
-            if (SelectedHistoryDataList.Count == 0)
+            if (SelectedHistoryDataList.Count is 0)
             {
                 if (!Program.ApplicationRoot.IsDialogOpening)
                 {
@@ -233,7 +233,7 @@ namespace GetStoreApp.ViewModels.Pages
             // 删除时显示删除确认对话框
             ContentDialogResult result = await new DeletePromptDialog(DeleteArgs.History).ShowAsync();
 
-            if (result == ContentDialogResult.Primary)
+            if (result is ContentDialogResult.Primary)
             {
                 IsSelectMode = false;
 
@@ -251,9 +251,9 @@ namespace GetStoreApp.ViewModels.Pages
                     }
                 }
 
-                if (HistoryDataList.Count == 0)
+                if (HistoryDataList.Count is 0)
                 {
-                    if (TypeFilter == "None" || ChannelFilter == "None")
+                    if (TypeFilter is "None" || ChannelFilter is "None")
                     {
                         IsHistoryEmpty = true;
                         IsHistoryEmptyAfterFilter = false;

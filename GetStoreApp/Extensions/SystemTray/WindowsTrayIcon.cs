@@ -113,15 +113,15 @@ namespace GetStoreApp.Extensions.SystemTray
         /// </summary>
         private void OnMouseEventReceived(MouseEvent mouseEvent)
         {
-            if (mouseEvent == MouseEvent.IconLeftMouseUp)
+            if (mouseEvent is MouseEvent.IconLeftMouseUp)
             {
                 LeftClick?.Invoke();
             }
-            else if (mouseEvent == MouseEvent.IconRightMouseUp)
+            else if (mouseEvent is MouseEvent.IconRightMouseUp)
             {
                 RightClick?.Invoke();
             }
-            else if (mouseEvent == MouseEvent.IconDoubleClick)
+            else if (mouseEvent is MouseEvent.IconDoubleClick)
             {
                 DoubleClick?.Invoke();
             }

@@ -9,7 +9,6 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using Windows.Graphics;
-using Windows.UI;
 
 namespace GetStoreApp.ViewModels.Controls.Window
 {
@@ -101,9 +100,9 @@ namespace GetStoreApp.ViewModels.Controls.Window
                     {
                         bar.ButtonBackgroundColor = Colors.Transparent;
                         bar.ButtonForegroundColor = Colors.Black;
-                        bar.ButtonHoverBackgroundColor = Color.FromArgb(255, 233, 233, 233);
+                        bar.ButtonHoverBackgroundColor = ColorHelper.FromArgb(255, 233, 233, 233);
                         bar.ButtonHoverForegroundColor = Colors.Black;
-                        bar.ButtonPressedBackgroundColor = Color.FromArgb(255, 237, 237, 237);
+                        bar.ButtonPressedBackgroundColor = ColorHelper.FromArgb(255, 237, 237, 237);
                         bar.ButtonPressedForegroundColor = Colors.Black;
                         bar.ButtonInactiveBackgroundColor = Colors.Transparent;
                         bar.ButtonInactiveForegroundColor = Colors.Gray;
@@ -113,9 +112,9 @@ namespace GetStoreApp.ViewModels.Controls.Window
                     {
                         bar.ButtonBackgroundColor = Colors.Transparent;
                         bar.ButtonForegroundColor = Colors.White;
-                        bar.ButtonHoverBackgroundColor = Color.FromArgb(255, 45, 45, 45);
+                        bar.ButtonHoverBackgroundColor = ColorHelper.FromArgb(255, 45, 45, 45);
                         bar.ButtonHoverForegroundColor = Colors.White;
-                        bar.ButtonPressedBackgroundColor = Color.FromArgb(255, 40, 40, 40);
+                        bar.ButtonPressedBackgroundColor = ColorHelper.FromArgb(255, 40, 40, 40);
                         bar.ButtonPressedForegroundColor = Colors.White;
                         bar.ButtonInactiveBackgroundColor = Colors.Transparent;
                         bar.ButtonInactiveForegroundColor = Colors.Gray;

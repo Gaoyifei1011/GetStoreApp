@@ -41,7 +41,7 @@ namespace GetStoreApp.Extensions.Messaging
         /// </summary>
         public new void Execute()
         {
-            if (_action != null
+            if (_action is not null
                 && IsAlive)
             {
                 _action(default(T));
@@ -55,7 +55,7 @@ namespace GetStoreApp.Extensions.Messaging
         /// <param name="parameter">A parameter to be passed to the action.</param>
         public void Execute(T parameter)
         {
-            if (_action != null
+            if (_action is not null
                 && IsAlive)
             {
                 _action(parameter);

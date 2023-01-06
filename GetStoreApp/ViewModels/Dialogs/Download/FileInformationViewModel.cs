@@ -120,7 +120,7 @@ namespace GetStoreApp.ViewModels.Dialogs.Download
             FileName = completedItem.FileName;
             FilePath = completedItem.FilePath;
             FileSize = System.Convert.ToString(new DownloadSizeFormatConverter().Convert(completedItem.TotalSize, null, null, null));
-            if (FileSHA1 == "WebDownloadUnknown")
+            if (FileSHA1 is "WebDownloadUnknown")
             {
                 FileSHA1Load = false;
             }

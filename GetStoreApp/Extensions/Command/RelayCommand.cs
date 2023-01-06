@@ -62,7 +62,7 @@ namespace GetStoreApp.Extensions.Command
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool CanExecute(object? parameter)
         {
-            return canExecute?.Invoke() != false;
+            return canExecute?.Invoke() is not false;
         }
 
         /// <inheritdoc/>

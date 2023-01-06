@@ -23,7 +23,6 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Windows.UI;
 
 namespace GetStoreApp.ViewModels.Window
 {
@@ -148,11 +147,11 @@ namespace GetStoreApp.ViewModels.Window
 
                         ContentDialogResult result = await new ClosingWindowDialog().ShowAsync();
 
-                        if (result == ContentDialogResult.Primary)
+                        if (result is ContentDialogResult.Primary)
                         {
                             await CloseApp();
                         }
-                        else if (result == ContentDialogResult.Secondary)
+                        else if (result is ContentDialogResult.Secondary)
                         {
                             if (NavigationService.GetCurrentPageType() != typeof(DownloadPage))
                             {
@@ -326,22 +325,22 @@ namespace GetStoreApp.ViewModels.Window
             {
                 if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[0].InternalName)
                 {
-                    if (RegistryHelper.GetRegistryAppTheme() == ElementTheme.Light)
+                    if (RegistryHelper.GetRegistryAppTheme() is ElementTheme.Light)
                     {
-                        AppBackground = new SolidColorBrush(Color.FromArgb(255, 240, 243, 249));
+                        AppBackground = new SolidColorBrush(ColorHelper.FromArgb(255, 240, 243, 249));
                     }
                     else
                     {
-                        AppBackground = new SolidColorBrush(Color.FromArgb(255, 20, 20, 20));
+                        AppBackground = new SolidColorBrush(ColorHelper.FromArgb(255, 20, 20, 20));
                     }
                 }
                 else if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[1].InternalName)
                 {
-                    AppBackground = new SolidColorBrush(Color.FromArgb(255, 240, 243, 249));
+                    AppBackground = new SolidColorBrush(ColorHelper.FromArgb(255, 240, 243, 249));
                 }
                 else if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[2].InternalName)
                 {
-                    AppBackground = new SolidColorBrush(Color.FromArgb(255, 20, 20, 20));
+                    AppBackground = new SolidColorBrush(ColorHelper.FromArgb(255, 20, 20, 20));
                 }
             }
             else

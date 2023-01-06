@@ -40,7 +40,7 @@ namespace GetStoreApp.Services.Controls.History
 
                 await db.CloseAsync();
             }
-            return Convert.ToBoolean(HistoryTableCount == 0);
+            return Convert.ToBoolean(HistoryTableCount is 0);
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace GetStoreApp.Services.Controls.History
             }
 
             // 判断经过过滤后历史记录表是否为空
-            bool IsHistoryEmptyAfterFilter = HistoryRawList.Count == 0;
+            bool IsHistoryEmptyAfterFilter = HistoryRawList.Count is 0;
 
             return (HistoryRawList, IsHistoryEmpty, IsHistoryEmptyAfterFilter);
         }
@@ -241,11 +241,11 @@ namespace GetStoreApp.Services.Controls.History
         {
             string SQL = string.Empty;
 
-            if (typeFilter == "None" && channelFilter == "None")
+            if (typeFilter is "None" && channelFilter is "None")
             {
                 SQL = string.Format("SELECT * FROM {0} ORDER BY TIMESTAMP", DataBaseService.HistoryTableName);
             }
-            else if (typeFilter != "None" && channelFilter != "None")
+            else if (typeFilter is not "None" && channelFilter is not "None")
             {
                 SQL = string.Format("SELECT * FROM {0} WHERE TYPE = '{1}' AND CHANNEL = '{2}' ORDER BY TIMESTAMP",
                     DataBaseService.HistoryTableName,
@@ -253,14 +253,14 @@ namespace GetStoreApp.Services.Controls.History
                     channelFilter
                     );
             }
-            else if (typeFilter != "None")
+            else if (typeFilter is not "None")
             {
                 SQL = string.Format("SELECT * FROM {0} WHERE TYPE = '{1}' ORDER BY TIMESTAMP",
                     DataBaseService.HistoryTableName,
                     typeFilter
                     );
             }
-            else if (channelFilter != "None")
+            else if (channelFilter is not "None")
             {
                 SQL = string.Format("SELECT * FROM {0} WHERE CHANNEL = '{1}' ORDER BY TIMESTAMP",
                     DataBaseService.HistoryTableName,

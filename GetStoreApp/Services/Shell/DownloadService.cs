@@ -57,7 +57,7 @@ namespace GetStoreApp.Services.Shell
                         }
                         Console.WriteLine(ResourceService.GetLocalized("Console/DownloadCompleted"));
                         string InputString = Console.ReadLine();
-                        if (InputString == "Y" || InputString == "y")
+                        if (InputString is "Y" || InputString is "y")
                         {
                             continue;
                         }
@@ -72,7 +72,7 @@ namespace GetStoreApp.Services.Shell
                     {
                         Console.WriteLine(ResourceService.GetLocalized("Console/SerialNumberOutRange"));
                         string InputString = Console.ReadLine();
-                        if (InputString == "Y" || InputString == "y")
+                        if (InputString is "Y" || InputString is "y")
                         {
                             continue;
                         }
@@ -86,7 +86,7 @@ namespace GetStoreApp.Services.Shell
                 {
                     Console.WriteLine(ResourceService.GetLocalized("Console/SerialNumberError"));
                     string InputString = Console.ReadLine();
-                    if (InputString == "Y" || InputString == "y")
+                    if (InputString is "Y" || InputString is "y")
                     {
                         continue;
                     }

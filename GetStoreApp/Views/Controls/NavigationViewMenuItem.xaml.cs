@@ -39,7 +39,7 @@ namespace GetStoreApp.Views.Controls
         private void OnTapped(object sender, TappedRoutedEventArgs args)
         {
             ICommand clickCommand = Command;
-            if (clickCommand != null)
+            if (clickCommand is not null)
             {
                 clickCommand.Execute(CommandParameter);
             }

@@ -58,7 +58,7 @@ namespace GetStoreApp.Helpers.Root
 
         private static bool EnumGeoInfoCallback(int geoId)
         {
-            if (geoId != 0)
+            if (geoId is not 0)
             {
                 _geoIds.Add(geoId);
                 return true;

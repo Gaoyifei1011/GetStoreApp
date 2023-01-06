@@ -25,7 +25,7 @@ namespace GetStoreApp.Converters.Conversions
             }
             else
             {
-                return result != 0 ? Visibility.Visible : Visibility.Collapsed;
+                return result is not 0 ? Visibility.Visible : Visibility.Collapsed;
             }
         }
 

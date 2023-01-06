@@ -11,7 +11,7 @@ namespace GetStoreApp.Helpers.Controls.Home
         public static int CheckRequestState(RequestModel HttpRequestData)
         {
             // 服务器请求异常，返回状态值3
-            if (HttpRequestData.RequestId != 0)
+            if (HttpRequestData.RequestId is not 0)
             {
                 return 3;
             }

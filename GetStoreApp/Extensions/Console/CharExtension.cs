@@ -1240,7 +1240,7 @@ namespace GetStoreApp.Extensions.Console
         public static bool IsWideDisplayCharEx(char c)
         {
             int index = c;
-            return (Lengths[index / 8] & (1 << (index % 8))) != 0;
+            return (Lengths[index / 8] & (1 << (index % 8))) is not 0;
         }
 
         /// <summary>

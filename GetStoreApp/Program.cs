@@ -29,6 +29,8 @@ namespace GetStoreApp
         // 应用程序实例
         public static App ApplicationRoot { get; set; }
 
+        public static bool IsAppLaunched { get; set; } = false;
+
         /// <summary>
         /// 应用程序的主入口点
         /// </summary>
@@ -43,6 +45,7 @@ namespace GetStoreApp
             // 以桌面应用程序方式正常启动
             if (IsDesktopProgram)
             {
+                AppNotificationService.Initialize();
                 DesktopLaunchService.InitializeLaunchAsync().Wait();
 
                 ComWrappersSupport.InitializeComWrappers();

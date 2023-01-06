@@ -35,11 +35,10 @@ namespace GetStoreApp
         {
             InitializeComponent();
             UnhandledException += ViewModel.OnUnhandledException;
-            AppNotificationService.Initialize();
         }
 
         /// <summary>
-        /// 处理应用启动
+        /// 应用启动后执行其他操作
         /// </summary>
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
@@ -50,6 +49,9 @@ namespace GetStoreApp
             InitializeTrayIcon();
             await InitializeJumpListAsync();
             await ViewModel.StartupAsync();
+
+            Program.IsAppLaunched = true;
+            await ViewModel.HandleAppNotificationAsync();
         }
 
         /// <summary>

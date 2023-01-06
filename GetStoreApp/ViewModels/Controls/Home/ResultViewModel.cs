@@ -120,10 +120,10 @@ namespace GetStoreApp.ViewModels.Controls.Home
         // 复制选定项目的内容
         public IRelayCommand CopySelectedCommand => new RelayCommand(async () =>
         {
-            List<ResultModel> SelectedResultDataList = ResultDataList.Where(item => item.IsSelected == true).ToList();
+            List<ResultModel> SelectedResultDataList = ResultDataList.Where(item => item.IsSelected is true).ToList();
 
             // 内容为空时显示空提示对话框
-            if (SelectedResultDataList.Count == 0)
+            if (SelectedResultDataList.Count is 0)
             {
                 if (!Program.ApplicationRoot.IsDialogOpening)
                 {
@@ -154,10 +154,10 @@ namespace GetStoreApp.ViewModels.Controls.Home
         // 复制选定项目的链接
         public IRelayCommand CopySelectedLinkCommand => new RelayCommand(async () =>
         {
-            List<ResultModel> SelectedResultDataList = ResultDataList.Where(item => item.IsSelected == true).ToList();
+            List<ResultModel> SelectedResultDataList = ResultDataList.Where(item => item.IsSelected is true).ToList();
 
             // 内容为空时显示空提示对话框
-            if (SelectedResultDataList.Count == 0)
+            if (SelectedResultDataList.Count is 0)
             {
                 if (!Program.ApplicationRoot.IsDialogOpening)
                 {
@@ -189,17 +189,17 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 NetWorkStatus NetStatus = NetWorkHelper.GetNetWorkStatus();
 
                 // 网络处于未连接状态，不再进行下载，显示通知
-                if (NetStatus == NetWorkStatus.None || NetStatus == NetWorkStatus.Unknown)
+                if (NetStatus is NetWorkStatus.None || NetStatus is NetWorkStatus.Unknown)
                 {
                     new NetWorkErrorNotification().Show();
                     return;
                 }
             }
 
-            List<ResultModel> SelectedResultDataList = ResultDataList.Where(item => item.IsSelected == true).ToList();
+            List<ResultModel> SelectedResultDataList = ResultDataList.Where(item => item.IsSelected is true).ToList();
 
             // 内容为空时显示空提示对话框
-            if (SelectedResultDataList.Count == 0)
+            if (SelectedResultDataList.Count is 0)
             {
                 if (!Program.ApplicationRoot.IsDialogOpening)
                 {
@@ -234,7 +234,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
                     DuplicatedDataInfoArgs CheckResult = await DownloadDBService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
 
-                    if (CheckResult == DuplicatedDataInfoArgs.None)
+                    if (CheckResult is DuplicatedDataInfoArgs.None)
                     {
                         await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add");
                         IsDownloadSuccessfully = true;
@@ -253,7 +253,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
                         ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.MultiRecord).ShowAsync();
 
-                        if (result == ContentDialogResult.Primary)
+                        if (result is ContentDialogResult.Primary)
                         {
                             foreach (BackgroundModel backgroundItem in duplicatedList)
                             {
@@ -271,7 +271,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                                 }
                             }
                         }
-                        else if (result == ContentDialogResult.Secondary)
+                        else if (result is ContentDialogResult.Secondary)
                         {
                             NavigationService.NavigateTo(typeof(DownloadPage));
                         }
@@ -308,7 +308,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 NetWorkStatus NetStatus = NetWorkHelper.GetNetWorkStatus();
 
                 // 网络处于未连接状态，不再进行下载，显示通知
-                if (NetStatus == NetWorkStatus.None || NetStatus == NetWorkStatus.Unknown)
+                if (NetStatus is NetWorkStatus.None || NetStatus is NetWorkStatus.Unknown)
                 {
                     new NetWorkErrorNotification().Show();
                     return;
@@ -351,7 +351,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
                                 ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Unfinished).ShowAsync();
 
-                                if (result == ContentDialogResult.Primary)
+                                if (result is ContentDialogResult.Primary)
                                 {
                                     try
                                     {
@@ -366,7 +366,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                                         new DownloadCreateNotification(AddResult).Show();
                                     }
                                 }
-                                else if (result == ContentDialogResult.Secondary)
+                                else if (result is ContentDialogResult.Secondary)
                                 {
                                     NavigationService.NavigateTo(typeof(DownloadPage));
                                 }
@@ -383,7 +383,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
                                 ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Completed).ShowAsync();
 
-                                if (result == ContentDialogResult.Primary)
+                                if (result is ContentDialogResult.Primary)
                                 {
                                     try
                                     {
@@ -398,7 +398,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                                         new DownloadCreateNotification(AddResult).Show();
                                     }
                                 }
-                                else if (result == ContentDialogResult.Secondary)
+                                else if (result is ContentDialogResult.Secondary)
                                 {
                                     NavigationService.NavigateTo(typeof(DownloadPage));
                                 }

@@ -57,7 +57,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 NetWorkStatus NetStatus = NetWorkHelper.GetNetWorkStatus();
 
                 // 网络处于未连接状态，不再进行下载，显示通知
-                if (NetStatus == NetWorkStatus.None || NetStatus == NetWorkStatus.Unknown)
+                if (NetStatus is NetWorkStatus.None || NetStatus is NetWorkStatus.Unknown)
                 {
                     new NetWorkErrorNotification().Show();
                     return;
@@ -66,7 +66,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
             List<BackgroundModel> PauseList = new List<BackgroundModel>();
 
-            foreach (UnfinishedModel unfinishedItem in UnfinishedDataList.Where(item => item.DownloadFlag == 2))
+            foreach (UnfinishedModel unfinishedItem in UnfinishedDataList.Where(item => item.DownloadFlag is 2))
             {
                 PauseList.Add(new BackgroundModel
                 {
@@ -148,7 +148,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         {
             List<BackgroundModel> SelectedUnfinishedDataList = new List<BackgroundModel>();
 
-            foreach (UnfinishedModel unfinishedItem in UnfinishedDataList.Where(item => item.IsSelected == true))
+            foreach (UnfinishedModel unfinishedItem in UnfinishedDataList.Where(item => item.IsSelected is true))
             {
                 SelectedUnfinishedDataList.Add(new BackgroundModel
                 {
@@ -158,7 +158,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
 
             // 没有选中任何内容时显示空提示对话框
-            if (SelectedUnfinishedDataList.Count == 0)
+            if (SelectedUnfinishedDataList.Count is 0)
             {
                 if (!Program.ApplicationRoot.IsDialogOpening)
                 {
@@ -222,14 +222,14 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 NetWorkStatus NetStatus = NetWorkHelper.GetNetWorkStatus();
 
                 // 网络处于未连接状态，不再进行下载，显示通知
-                if (NetStatus == NetWorkStatus.None || NetStatus == NetWorkStatus.Unknown)
+                if (NetStatus is NetWorkStatus.None || NetStatus is NetWorkStatus.Unknown)
                 {
                     new NetWorkErrorNotification().Show();
                     return;
                 }
             }
 
-            if (unfinishedItem.DownloadFlag == 2)
+            if (unfinishedItem.DownloadFlag is 2)
             {
                 bool ContinueResult = await DownloadSchedulerService.ContinueTaskAsync(new BackgroundModel
                 {
@@ -291,13 +291,13 @@ namespace GetStoreApp.ViewModels.Controls.Download
             Messenger.Default.Register<int>(this, MessageToken.PivotSelection, async (pivotSelectionMessage) =>
             {
                 // 切换到已完成页面时，更新当前页面的数据
-                if (pivotSelectionMessage == 1)
+                if (pivotSelectionMessage is 1)
                 {
                     await GetUnfinishedDataListAsync();
                 }
 
                 // 从下载页面离开时，关闭所有事件。
-                else if (pivotSelectionMessage == -1)
+                else if (pivotSelectionMessage is -1)
                 {
                     // 取消订阅所有事件
                     DownloadSchedulerService.DownloadingList.ItemsChanged -= OnDownloadingListItemsChanged;
@@ -335,13 +335,13 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// </summary>
         private void OnDownloadingListItemsChanged(object sender, ItemsChangedEventArgs<BackgroundModel> args)
         {
-            if (args.RemovedItems.Any(item => item.DownloadFlag == 0 || item.DownloadFlag == 2))
+            if (args.RemovedItems.Any(item => item.DownloadFlag is 0 || item.DownloadFlag is 2))
             {
                 Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(async () =>
                 {
                     foreach (BackgroundModel backgroundItem in args.RemovedItems)
                     {
-                        if (backgroundItem.DownloadFlag == 0 || backgroundItem.DownloadFlag == 2)
+                        if (backgroundItem.DownloadFlag is 0 || backgroundItem.DownloadFlag is 2)
                         {
                             BackgroundModel item = await DownloadDBService.QueryWithKeyAsync(backgroundItem.DownloadKey);
 

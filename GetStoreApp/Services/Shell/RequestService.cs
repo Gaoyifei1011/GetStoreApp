@@ -46,9 +46,9 @@ namespace GetStoreApp.Services.Shell
         /// </summary>
         public static void InitializeWithoutQueryData()
         {
-            SelectedType = Convert.ToInt32(ConsoleLaunchService.LaunchArgs["TypeName"]) == -1 ? TypeList[0] : TypeList[Convert.ToInt32(ConsoleLaunchService.LaunchArgs["TypeName"])];
+            SelectedType = Convert.ToInt32(ConsoleLaunchService.LaunchArgs["TypeName"]) is -1 ? TypeList[0] : TypeList[Convert.ToInt32(ConsoleLaunchService.LaunchArgs["TypeName"])];
 
-            SelectedChannel = Convert.ToInt32(ConsoleLaunchService.LaunchArgs["ChannelName"]) == -1 ? ChannelList[0] : ChannelList[Convert.ToInt32(ConsoleLaunchService.LaunchArgs["ChannelName"])];
+            SelectedChannel = Convert.ToInt32(ConsoleLaunchService.LaunchArgs["ChannelName"]) is -1 ? ChannelList[0] : ChannelList[Convert.ToInt32(ConsoleLaunchService.LaunchArgs["ChannelName"])];
 
             LinkText = ConsoleLaunchService.LaunchArgs["Link"] is null ? string.Empty : Convert.ToString(ConsoleLaunchService.LaunchArgs["Link"]);
         }
@@ -110,7 +110,7 @@ namespace GetStoreApp.Services.Shell
                             PrintRequestFailedData();
                             Console.WriteLine(ResourceService.GetLocalized("Console/AskContinue"));
                             string RegainString = Console.ReadLine();
-                            RequestState = RegainString == "Y" || RegainString == "y";
+                            RequestState = RegainString is "Y" || RegainString is "y";
                             break;
                         }
                     case 3:
@@ -120,7 +120,7 @@ namespace GetStoreApp.Services.Shell
                             Console.ResetColor();
                             Console.WriteLine(ResourceService.GetLocalized("Console/AskContinue"));
                             string RegainString = Console.ReadLine();
-                            RequestState = RegainString == "Y" || RegainString == "y";
+                            RequestState = RegainString is "Y" || RegainString is "y";
                             break;
                         }
                 }

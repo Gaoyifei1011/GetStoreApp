@@ -74,7 +74,7 @@ namespace GetStoreApp.Extensions.Messaging
         /// </summary>
         public void Execute()
         {
-            if (_action != null
+            if (_action is not null
                 && IsAlive)
             {
                 _action();

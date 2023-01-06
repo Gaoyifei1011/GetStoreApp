@@ -11,6 +11,8 @@ using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.Windows.AppLifecycle;
+using Microsoft.Windows.AppNotifications;
 using System;
 using System.Threading.Tasks;
 using Windows.UI.StartScreen;
@@ -62,11 +64,11 @@ namespace GetStoreApp.ViewModels.Window
 
                     ContentDialogResult result = await new ClosingWindowDialog().ShowAsync();
 
-                    if (result == ContentDialogResult.Primary)
+                    if (result is ContentDialogResult.Primary)
                     {
                         await CloseApp();
                     }
-                    else if (result == ContentDialogResult.Secondary)
+                    else if (result is ContentDialogResult.Secondary)
                     {
                         if (NavigationService.GetCurrentPageType() != typeof(DownloadPage))
                         {
@@ -143,6 +145,17 @@ namespace GetStoreApp.ViewModels.Window
             foreach (JumpListItem jumpListItem in Program.ApplicationRoot.TaskbarJumpList.Items)
             {
                 jumpListItem.GroupName = AppJumpList.GroupName;
+            }
+        }
+
+        /// <summary>
+        /// 处理应用通知
+        /// </summary>
+        public async Task HandleAppNotificationAsync()
+        {
+            if (DesktopLaunchService.StartupKind is ExtendedActivationKind.AppNotification)
+            {
+                await AppNotificationService.HandleAppNotificationAsync(AppInstance.GetCurrent().GetActivatedEventArgs().Data as AppNotificationActivatedEventArgs, false);
             }
         }
 

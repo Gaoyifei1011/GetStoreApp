@@ -172,10 +172,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 IsUpdatingNow = true;
             }
 
-            List<DownloadingModel> SelectedDownloadingDataList = DownloadingDataList.Where(item => item.IsSelected == true).ToList();
+            List<DownloadingModel> SelectedDownloadingDataList = DownloadingDataList.Where(item => item.IsSelected is true).ToList();
 
             // 没有选中任何内容时显示空提示对话框
-            if (SelectedDownloadingDataList.Count == 0)
+            if (SelectedDownloadingDataList.Count is 0)
             {
                 if (!Program.ApplicationRoot.IsDialogOpening)
                 {
@@ -300,7 +300,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             Messenger.Default.Register<int>(this, MessageToken.PivotSelection, async (pivotSelectionMessage) =>
             {
                 // 切换到下载中页面时，开启监控。并更新当前页面的数据
-                if (pivotSelectionMessage == 0)
+                if (pivotSelectionMessage is 0)
                 {
                     await GetDownloadingDataListAsync();
 
@@ -308,7 +308,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 }
 
                 // 从下载页面离开时，取消订阅所有事件。并注销所有消息服务
-                else if (pivotSelectionMessage == -1)
+                else if (pivotSelectionMessage is -1)
                 {
                     if (DownloadingTimer.IsEnabled)
                     {
@@ -487,7 +487,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 {
                     foreach (BackgroundModel downloadItem in args.AddedItems)
                     {
-                        DownloadingDataList.Insert(DownloadingDataList.Count(item => item.DownloadFlag == 3),
+                        DownloadingDataList.Insert(DownloadingDataList.Count(item => item.DownloadFlag is 3),
                             new DownloadingModel
                             {
                                 DownloadKey = downloadItem.DownloadKey,
@@ -511,7 +511,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     {
                         try
                         {
-                            DownloadingDataList.Remove(DownloadingDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey && item.DownloadFlag == 3));
+                            DownloadingDataList.Remove(DownloadingDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey && item.DownloadFlag is 3));
                         }
                         catch (Exception)
                         {
@@ -576,7 +576,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     {
                         try
                         {
-                            DownloadingDataList.Remove(DownloadingDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey && item.DownloadFlag == 1));
+                            DownloadingDataList.Remove(DownloadingDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey && item.DownloadFlag is 1));
                         }
                         catch (Exception)
                         {

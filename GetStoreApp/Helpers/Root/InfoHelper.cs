@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using Windows.ApplicationModel;
 using Windows.System;
 using Windows.System.Profile;
@@ -48,6 +49,12 @@ namespace GetStoreApp.Helpers.Root
             AppVersionDict.Add(nameof(MinorVersion), MinorVersion);
             AppVersionDict.Add(nameof(BuildVersion), BuildVersion);
             AppVersionDict.Add(nameof(RevisionVersion), RevisionVersion);
+        }
+
+        public static string GetDeviceFamily()
+        {
+            Debug.WriteLine(AnalyticsInfo.VersionInfo.DeviceFamily);
+            return AnalyticsInfo.VersionInfo.DeviceFamily;
         }
 
         /// <summary>

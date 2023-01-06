@@ -161,15 +161,15 @@ namespace GetStoreApp.Views.Window
         /// </summary>
         private IntPtr SetWindowLongPtr(IntPtr hWnd, WindowLongIndexFlags nIndex, WinProc newProc)
         {
-            if (InfoHelper.GetPackageArchitecture() == ProcessorArchitecture.X64)
+            if (InfoHelper.GetPackageArchitecture() is ProcessorArchitecture.X64)
             {
                 return User32Library.SetWindowLongPtr(hWnd, nIndex, newProc);
             }
-            else if (InfoHelper.GetPackageArchitecture() == ProcessorArchitecture.X86)
+            else if (InfoHelper.GetPackageArchitecture() is ProcessorArchitecture.X86)
             {
                 return User32Library.SetWindowLong(hWnd, nIndex, newProc);
             }
-            else if (InfoHelper.GetPackageArchitecture() == ProcessorArchitecture.Arm64)
+            else if (InfoHelper.GetPackageArchitecture() is ProcessorArchitecture.Arm64)
             {
                 return User32Library.SetWindowLongPtr(hWnd, nIndex, newProc);
             }
@@ -220,7 +220,7 @@ namespace GetStoreApp.Views.Window
                         CopyDataStruct copyDataStruct = (CopyDataStruct)Marshal.PtrToStructure(lParam, typeof(CopyDataStruct));
 
                         // 没有任何命令参数，正常启动，应用可能被重复启动
-                        if (copyDataStruct.dwData == 0)
+                        if (copyDataStruct.dwData is 0)
                         {
                             WindowHelper.ShowAppWindow();
 

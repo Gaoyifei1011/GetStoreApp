@@ -25,7 +25,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         {
             HistoryLiteNumList = ResourceService.HistoryLiteNumList;
 
-            DefaultHistoryLiteNum = HistoryLiteNumList.Find(item => item.HistoryLiteNumValue == 3);
+            DefaultHistoryLiteNum = HistoryLiteNumList.Find(item => item.HistoryLiteNumValue is 3);
 
             HistoryLiteNum = await GetHistoryLiteNumAsync();
         }

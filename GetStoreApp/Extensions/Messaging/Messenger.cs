@@ -315,7 +315,7 @@ namespace GetStoreApp.Extensions.Messaging
             Type messageTargetType,
             object token)
         {
-            if (list != null)
+            if (list is not null)
             {
                 // Clone to protect from people registering in a "receive message" method
                 // Bug correction Messaging BL0004.007
@@ -325,12 +325,12 @@ namespace GetStoreApp.Extensions.Messaging
                 {
                     if (item.Action is IExecuteWithObject executeAction
                         && item.Action.IsAlive
-                        && item.Action.Target != null
+                        && item.Action.Target is not null
                         && (messageTargetType is null
                             || item.Action.Target.GetType() == messageTargetType
                             || Implements(item.Action.Target.GetType(), messageTargetType))
                         && ((item.Token is null && token is null)
-                            || item.Token != null && item.Token.Equals(token)))
+                            || item.Token is not null && item.Token.Equals(token)))
                     {
                         executeAction.ExecuteWithObject(message);
                     }
@@ -355,7 +355,7 @@ namespace GetStoreApp.Extensions.Messaging
                     {
                         var weakAction = item.Action;
 
-                        if (weakAction != null
+                        if (weakAction is not null
                             && recipient == weakAction.Target)
                         {
                             weakAction.MarkForDeletion();
@@ -438,7 +438,7 @@ namespace GetStoreApp.Extensions.Messaging
         {
             var messageType = typeof(TMessage);
 
-            if (_recipientsOfSubclassesAction != null)
+            if (_recipientsOfSubclassesAction is not null)
             {
                 // Clone to protect from people registering in a "receive message" method
                 // Bug correction Messaging BL0008.002
@@ -459,7 +459,7 @@ namespace GetStoreApp.Extensions.Messaging
                 }
             }
 
-            if (_recipientsStrictAction != null)
+            if (_recipientsStrictAction is not null)
             {
                 if (_recipientsStrictAction.TryGetValue(messageType, out List<WeakActionAndToken> value))
                 {

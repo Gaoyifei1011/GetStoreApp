@@ -32,7 +32,7 @@ namespace GetStoreApp.UI.Controls.Download
 
         public string LocalizeCompletedCountInfo(int count)
         {
-            if (count == 0)
+            if (count is 0)
             {
                 return ResourceService.GetLocalized("Download/CompletedEmpty");
             }

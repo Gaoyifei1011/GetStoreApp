@@ -95,7 +95,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         {
             List<BackgroundModel> SelectedCompletedDataList = new List<BackgroundModel>();
 
-            foreach (CompletedModel completedItem in CompletedDataList.Where(item => item.IsSelected == true))
+            foreach (CompletedModel completedItem in CompletedDataList.Where(item => item.IsSelected is true))
             {
                 SelectedCompletedDataList.Add(new BackgroundModel
                 {
@@ -105,7 +105,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
 
             // 没有选中任何内容时显示空提示对话框
-            if (SelectedCompletedDataList.Count == 0)
+            if (SelectedCompletedDataList.Count is 0)
             {
                 if (!Program.ApplicationRoot.IsDialogOpening)
                 {
@@ -117,7 +117,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
 
             // 当前任务正在安装时，不进行其他任何操作
-            if (SelectedCompletedDataList.Exists(item => item.IsInstalling == true))
+            if (SelectedCompletedDataList.Exists(item => item.IsInstalling is true))
             {
                 if (!Program.ApplicationRoot.IsDialogOpening)
                 {
@@ -134,7 +134,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 Program.ApplicationRoot.IsDialogOpening = true;
                 ContentDialogResult result = await new DeletePromptDialog(DeleteArgs.Download).ShowAsync();
 
-                if (result == ContentDialogResult.Primary)
+                if (result is ContentDialogResult.Primary)
                 {
                     IsSelectMode = false;
 
@@ -165,7 +165,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         {
             List<BackgroundModel> SelectedCompletedDataList = new List<BackgroundModel>();
 
-            foreach (CompletedModel completedItem in CompletedDataList.Where(item => item.IsSelected == true))
+            foreach (CompletedModel completedItem in CompletedDataList.Where(item => item.IsSelected is true))
             {
                 SelectedCompletedDataList.Add(new BackgroundModel
                 {
@@ -176,7 +176,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
 
             // 没有选中任何内容时显示空提示对话框
-            if (SelectedCompletedDataList.Count == 0)
+            if (SelectedCompletedDataList.Count is 0)
             {
                 if (!Program.ApplicationRoot.IsDialogOpening)
                 {
@@ -188,7 +188,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
 
             // 当前任务正在安装时，不进行其他任何操作
-            if (SelectedCompletedDataList.Exists(item => item.IsInstalling == true))
+            if (SelectedCompletedDataList.Exists(item => item.IsInstalling is true))
             {
                 if (!Program.ApplicationRoot.IsDialogOpening)
                 {
@@ -205,7 +205,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 Program.ApplicationRoot.IsDialogOpening = true;
                 ContentDialogResult result = await new DeletePromptDialog(DeleteArgs.DownloadWithFile).ShowAsync();
 
-                if (result == ContentDialogResult.Primary)
+                if (result is ContentDialogResult.Primary)
                 {
                     IsSelectMode = false;
 
@@ -331,7 +331,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         {
             if (completedItem is not null)
             {
-                if (completedItem.IsInstalling == true)
+                if (completedItem.IsInstalling is true)
                 {
                     if (!Program.ApplicationRoot.IsDialogOpening)
                     {
@@ -359,7 +359,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         {
             if (completedItem is not null)
             {
-                if (completedItem.IsInstalling == true)
+                if (completedItem.IsInstalling is true)
                 {
                     if (!Program.ApplicationRoot.IsDialogOpening)
                     {
@@ -410,13 +410,13 @@ namespace GetStoreApp.ViewModels.Controls.Download
             Messenger.Default.Register<int>(this, MessageToken.PivotSelection, async (pivotSelectionMessage) =>
             {
                 // 切换到已完成页面时，更新当前页面的数据
-                if (pivotSelectionMessage == 2)
+                if (pivotSelectionMessage is 2)
                 {
                     await GetCompletedDataListAsync();
                 }
 
                 // 从下载页面离开时，关闭所有事件。
-                else if (pivotSelectionMessage == -1)
+                else if (pivotSelectionMessage is -1)
                 {
                     // 取消订阅所有事件
                     DownloadSchedulerService.DownloadingList.ItemsChanged -= OnDownloadingListItemsChanged;
@@ -484,13 +484,13 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// </summary>
         private void OnDownloadingListItemsChanged(object sender, ItemsChangedEventArgs<BackgroundModel> args)
         {
-            if (args.RemovedItems.Any(item => item.DownloadFlag == 4))
+            if (args.RemovedItems.Any(item => item.DownloadFlag is 4))
             {
                 Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(async () =>
                 {
                     foreach (BackgroundModel backgroundItem in args.RemovedItems)
                     {
-                        if (backgroundItem.DownloadFlag == 4)
+                        if (backgroundItem.DownloadFlag is 4)
                         {
                             BackgroundModel item = await DownloadDBService.QueryWithKeyAsync(backgroundItem.DownloadKey);
 

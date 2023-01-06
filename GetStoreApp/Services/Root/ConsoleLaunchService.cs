@@ -55,7 +55,7 @@ namespace GetStoreApp.Services.Root
         {
             args.Cancel = true;
             MessageBoxResult Result;
-            if (args.SpecialKey == ConsoleSpecialKey.ControlC)
+            if (args.SpecialKey is ConsoleSpecialKey.ControlC)
             {
                 IntPtr ConsoleHandle = Kernel32Library.GetConsoleWindow();
 
@@ -73,7 +73,7 @@ namespace GetStoreApp.Services.Root
                         ResourceService.GetLocalized("Resources/AppDisplayName"),
                         MessageBoxOptions.MB_OKCANCEL | MessageBoxOptions.MB_ICONINFORMATION);
                 }
-                if (Result == MessageBoxResult.IDOK)
+                if (Result is MessageBoxResult.IDOK)
                 {
                     Console.WriteLine(LineBreaks + ResourceService.GetLocalized("Console/ApplicationExit"));
                     IsAppRunning = false;
@@ -105,7 +105,7 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeRequestContent()
         {
-            if (GetLaunchMode() == ConsoleLaunchModeArgs.WithoutQuery)
+            if (GetLaunchMode() is ConsoleLaunchModeArgs.WithoutQuery)
             {
                 ParseLaunchArgs();
                 RequestService.InitializeWithoutQueryData();
@@ -159,7 +159,7 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static ConsoleLaunchModeArgs GetLaunchMode()
         {
-            if (Program.CommandLineArgs.Count == 1)
+            if (Program.CommandLineArgs.Count is 1)
             {
                 return ConsoleLaunchModeArgs.NeedQuery;
             }
@@ -174,13 +174,13 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void ParseLaunchArgs()
         {
-            if (Program.CommandLineArgs.Count == 2)
+            if (Program.CommandLineArgs.Count is 2)
             {
                 LaunchArgs["Link"] = Program.CommandLineArgs[1];
             }
             else
             {
-                if (Program.CommandLineArgs.Count % 2 != 1)
+                if (Program.CommandLineArgs.Count % 2 is not 1)
                 {
                     Console.WriteLine(ResourceService.GetLocalized("Console/ParameterError"));
                     return;
@@ -190,9 +190,9 @@ namespace GetStoreApp.Services.Root
                 int ChannelNameIndex = Program.CommandLineArgs.FindIndex(item => item.Equals("-c", StringComparison.OrdinalIgnoreCase) || item.Equals("--channel", StringComparison.OrdinalIgnoreCase));
                 int LinkIndex = Program.CommandLineArgs.FindIndex(item => item.Equals("-l", StringComparison.OrdinalIgnoreCase) || item.Equals("--link", StringComparison.OrdinalIgnoreCase));
 
-                LaunchArgs["TypeName"] = TypeNameIndex == -1 ? LaunchArgs["TypeName"] : ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(Program.CommandLineArgs[TypeNameIndex + 1], StringComparison.OrdinalIgnoreCase));
-                LaunchArgs["ChannelName"] = ChannelNameIndex == -1 ? LaunchArgs["ChannelName"] : ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(Program.CommandLineArgs[ChannelNameIndex + 1], StringComparison.OrdinalIgnoreCase));
-                LaunchArgs["Link"] = LinkIndex == -1 ? LaunchArgs["Link"] : Program.CommandLineArgs[LinkIndex + 1];
+                LaunchArgs["TypeName"] = TypeNameIndex is -1 ? LaunchArgs["TypeName"] : ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(Program.CommandLineArgs[TypeNameIndex + 1], StringComparison.OrdinalIgnoreCase));
+                LaunchArgs["ChannelName"] = ChannelNameIndex is -1 ? LaunchArgs["ChannelName"] : ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(Program.CommandLineArgs[ChannelNameIndex + 1], StringComparison.OrdinalIgnoreCase));
+                LaunchArgs["Link"] = LinkIndex is -1 ? LaunchArgs["Link"] : Program.CommandLineArgs[LinkIndex + 1];
             }
         }
     }

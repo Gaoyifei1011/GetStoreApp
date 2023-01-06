@@ -7,10 +7,10 @@ using GetStoreApp.Models.Dialogs.CommonDialogs.Settings;
 using GetStoreApp.Properties;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.Windows.ApplicationModel.Resources;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Windows.ApplicationModel.Resources;
 
 namespace GetStoreApp.Services.Root
 {
@@ -25,11 +25,11 @@ namespace GetStoreApp.Services.Root
 
         private static LanguageModel CurrentAppLanguage { get; set; }
 
-        private static ResourceManager ResourceManager { get; set; } = new ResourceManager();
-
         private static ResourceContext DefaultResourceContext { get; set; }
 
         private static ResourceContext CurrentResourceContext { get; set; }
+
+        private static ResourceManager ResourceManager { get; } = new ResourceManager();
 
         public static List<TypeModel> TypeList { get; } = new List<TypeModel>();
 

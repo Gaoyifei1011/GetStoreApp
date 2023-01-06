@@ -173,7 +173,7 @@ namespace GetStoreApp.Views.Controls
             }
 
             int num = CalculateColumns(containerWidth, DesiredWidth);
-            if (Items != null && Items.Count > 0 && Items.Count < num && StretchContentForSingleRow)
+            if (Items is not null && Items.Count > 0 && Items.Count < num && StretchContentForSingleRow)
             {
                 num = Items.Count;
             }
@@ -207,7 +207,7 @@ namespace GetStoreApp.Views.Controls
         private void OnItemClick(object sender, ItemClickEventArgs args)
         {
             ICommand itemClickCommand = ItemClickCommand;
-            if (itemClickCommand != null && itemClickCommand.CanExecute(args.ClickedItem))
+            if (itemClickCommand is not null && itemClickCommand.CanExecute(args.ClickedItem))
             {
                 itemClickCommand.Execute(args.ClickedItem);
             }
@@ -215,7 +215,7 @@ namespace GetStoreApp.Views.Controls
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs args)
         {
-            if (HorizontalAlignment != HorizontalAlignment.Stretch)
+            if (HorizontalAlignment is not HorizontalAlignment.Stretch)
             {
                 int num = CalculateColumns(args.PreviousSize.Width, DesiredWidth);
                 int num2 = CalculateColumns(args.NewSize.Width, DesiredWidth);
@@ -258,7 +258,7 @@ namespace GetStoreApp.Views.Controls
                     Converter = new AdaptiveHeightValueConverter(),
                     ConverterParameter = this
                 };
-                if (itemsWrapGrid != null)
+                if (itemsWrapGrid is not null)
                 {
                     _savedOrientation = itemsWrapGrid.Orientation;
                     itemsWrapGrid.Orientation = Orientation.Vertical;
@@ -281,7 +281,7 @@ namespace GetStoreApp.Views.Controls
             if (_needToRestoreScrollStates)
             {
                 _needToRestoreScrollStates = false;
-                if (itemsWrapGrid != null)
+                if (itemsWrapGrid is not null)
                 {
                     itemsWrapGrid.Orientation = _savedOrientation;
                 }
@@ -296,7 +296,7 @@ namespace GetStoreApp.Views.Controls
         private void RecalculateLayout(double containerWidth)
         {
             Panel itemsPanelRoot = ItemsPanelRoot;
-            double num = ((itemsPanelRoot != null) ? (itemsPanelRoot.Margin.Left + itemsPanelRoot.Margin.Right) : 0.0);
+            double num = (itemsPanelRoot is not null) ? (itemsPanelRoot.Margin.Left + itemsPanelRoot.Margin.Right) : 0.0;
             double num2 = Padding.Left + Padding.Right;
             double num3 = BorderThickness.Left + BorderThickness.Right;
             containerWidth = containerWidth - num2 - num - num3;
@@ -327,7 +327,7 @@ namespace GetStoreApp.Views.Controls
         private static int CalculateColumns(double containerWidth, double itemWidth)
         {
             int num = (int)Math.Round(containerWidth / itemWidth);
-            if (num == 0)
+            if (num is 0)
             {
                 num = 1;
             }

@@ -286,7 +286,7 @@ namespace GetStoreApp.ViewModels.Pages
 
                                         ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Unfinished).ShowAsync();
 
-                                        if (result == ContentDialogResult.Primary)
+                                        if (result is ContentDialogResult.Primary)
                                         {
                                             try
                                             {
@@ -301,7 +301,7 @@ namespace GetStoreApp.ViewModels.Pages
                                                 new DownloadCreateNotification(AddResult).Show();
                                             }
                                         }
-                                        else if (result == ContentDialogResult.Secondary)
+                                        else if (result is ContentDialogResult.Secondary)
                                         {
                                             NavigationService.NavigateTo(typeof(DownloadPage));
                                         }
@@ -318,7 +318,7 @@ namespace GetStoreApp.ViewModels.Pages
 
                                         ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Completed).ShowAsync();
 
-                                        if (result == ContentDialogResult.Primary)
+                                        if (result is ContentDialogResult.Primary)
                                         {
                                             try
                                             {
@@ -333,7 +333,7 @@ namespace GetStoreApp.ViewModels.Pages
                                                 new DownloadCreateNotification(AddResult).Show();
                                             }
                                         }
-                                        else if (result == ContentDialogResult.Secondary)
+                                        else if (result is ContentDialogResult.Secondary)
                                         {
                                             NavigationService.NavigateTo(typeof(DownloadPage));
                                         }

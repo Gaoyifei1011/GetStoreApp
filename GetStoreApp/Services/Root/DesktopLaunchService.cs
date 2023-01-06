@@ -16,7 +16,7 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public static class DesktopLaunchService
     {
-        private static ExtendedActivationKind StartupKind;
+        public static ExtendedActivationKind StartupKind;
 
         private static int NeedToSendMesage;
 
@@ -69,7 +69,7 @@ namespace GetStoreApp.Services.Root
                 // 从系统通知处启动
                 case ExtendedActivationKind.AppNotification:
                     {
-                        AppNotificationService.HandleAppNotification(AppInstance.GetCurrent().GetActivatedEventArgs().Data as AppNotificationActivatedEventArgs);
+                        await AppNotificationService.HandleAppNotificationAsync(AppInstance.GetCurrent().GetActivatedEventArgs().Data as AppNotificationActivatedEventArgs, true);
                         break;
                     }
                 // 其他方式
@@ -86,12 +86,12 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void ParseLaunchArgs()
         {
-            if (Program.CommandLineArgs.Count == 0)
+            if (Program.CommandLineArgs.Count is 0)
             {
                 NeedToSendMesage = 0;
                 return;
             }
-            else if (Program.CommandLineArgs.Count == 1)
+            else if (Program.CommandLineArgs.Count is 1)
             {
                 NeedToSendMesage = 1;
                 LaunchArgs["Link"] = Program.CommandLineArgs[0];
@@ -101,7 +101,7 @@ namespace GetStoreApp.Services.Root
                 NeedToSendMesage = 1;
 
                 // 跳转列表启动的参数
-                if (Program.CommandLineArgs[0] == "JumpList")
+                if (Program.CommandLineArgs[0] is "JumpList")
                 {
                     LaunchArgs["TypeName"] = ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(Program.CommandLineArgs[1], StringComparison.OrdinalIgnoreCase));
                     LaunchArgs["ChannelName"] = ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(Program.CommandLineArgs[2], StringComparison.OrdinalIgnoreCase));
@@ -111,7 +111,7 @@ namespace GetStoreApp.Services.Root
                 // 正常启动的参数
                 else
                 {
-                    if (Program.CommandLineArgs.Count % 2 != 0)
+                    if (Program.CommandLineArgs.Count % 2 is not 0)
                     {
                         return;
                     }
@@ -120,9 +120,9 @@ namespace GetStoreApp.Services.Root
                     int ChannelNameIndex = Program.CommandLineArgs.FindIndex(item => item.Equals("-c", StringComparison.OrdinalIgnoreCase) || item.Equals("--channel", StringComparison.OrdinalIgnoreCase));
                     int LinkIndex = Program.CommandLineArgs.FindIndex(item => item.Equals("-l", StringComparison.OrdinalIgnoreCase) || item.Equals("--link", StringComparison.OrdinalIgnoreCase));
 
-                    LaunchArgs["TypeName"] = TypeNameIndex == -1 ? LaunchArgs["TypeName"] : ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(Program.CommandLineArgs[TypeNameIndex + 1], StringComparison.OrdinalIgnoreCase));
-                    LaunchArgs["ChannelName"] = ChannelNameIndex == -1 ? LaunchArgs["ChannelName"] : ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(Program.CommandLineArgs[ChannelNameIndex + 1], StringComparison.OrdinalIgnoreCase));
-                    LaunchArgs["Link"] = LinkIndex == -1 ? LaunchArgs["Link"] : Program.CommandLineArgs[LinkIndex + 1];
+                    LaunchArgs["TypeName"] = TypeNameIndex is -1 ? LaunchArgs["TypeName"] : ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(Program.CommandLineArgs[TypeNameIndex + 1], StringComparison.OrdinalIgnoreCase));
+                    LaunchArgs["ChannelName"] = ChannelNameIndex is -1 ? LaunchArgs["ChannelName"] : ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(Program.CommandLineArgs[ChannelNameIndex + 1], StringComparison.OrdinalIgnoreCase));
+                    LaunchArgs["Link"] = LinkIndex is -1 ? LaunchArgs["Link"] : Program.CommandLineArgs[LinkIndex + 1];
                 }
             }
         }

@@ -138,14 +138,14 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
         /// </summary>
         private async Task TraceCleanupAsync()
         {
-            List<CleanArgs> SelectedCleanList = new List<CleanArgs>(TraceCleanupList.Where(item => item.IsSelected == true).Select(item => item.InternalName));
+            List<CleanArgs> SelectedCleanList = new List<CleanArgs>(TraceCleanupList.Where(item => item.IsSelected is true).Select(item => item.InternalName));
 
             foreach (CleanArgs cleanupArgs in SelectedCleanList)
             {
                 // 清理并反馈回结果，修改相应的状态信息
                 bool CleanReusult = await TraceCleanupService.CleanAppTraceAsync(cleanupArgs);
 
-                if (cleanupArgs == CleanArgs.History)
+                if (cleanupArgs is CleanArgs.History)
                 {
                     Messenger.Default.Send(true, MessageToken.History);
                 }

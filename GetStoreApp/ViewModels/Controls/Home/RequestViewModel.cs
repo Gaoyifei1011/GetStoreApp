@@ -128,9 +128,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public RequestViewModel()
         {
-            SelectedType = Convert.ToInt32(DesktopLaunchService.LaunchArgs["TypeName"]) == -1 ? TypeList[0] : TypeList[Convert.ToInt32(DesktopLaunchService.LaunchArgs["TypeName"])];
+            SelectedType = Convert.ToInt32(DesktopLaunchService.LaunchArgs["TypeName"]) is -1 ? TypeList[0] : TypeList[Convert.ToInt32(DesktopLaunchService.LaunchArgs["TypeName"])];
 
-            SelectedChannel = Convert.ToInt32(DesktopLaunchService.LaunchArgs["ChannelName"]) == -1 ? ChannelList[3] : ChannelList[Convert.ToInt32(DesktopLaunchService.LaunchArgs["ChannelName"])];
+            SelectedChannel = Convert.ToInt32(DesktopLaunchService.LaunchArgs["ChannelName"]) is -1 ? ChannelList[3] : ChannelList[Convert.ToInt32(DesktopLaunchService.LaunchArgs["ChannelName"])];
 
             LinkText = DesktopLaunchService.LaunchArgs["Link"] is null ? string.Empty : (string)DesktopLaunchService.LaunchArgs["Link"];
 
@@ -142,9 +142,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             Messenger.Default.Register<string[]>(this, MessageToken.Command, (commandMessage) =>
             {
-                SelectedType = Convert.ToInt32(commandMessage[0]) == -1 ? TypeList[0] : TypeList[Convert.ToInt32(commandMessage[0])];
-                SelectedChannel = Convert.ToInt32(commandMessage[1]) == -1 ? ChannelList[3] : ChannelList[Convert.ToInt32(commandMessage[1])];
-                LinkText = commandMessage[2] == "PlaceHolderText" ? string.Empty : commandMessage[2];
+                SelectedType = Convert.ToInt32(commandMessage[0]) is -1 ? TypeList[0] : TypeList[Convert.ToInt32(commandMessage[0])];
+                SelectedChannel = Convert.ToInt32(commandMessage[1]) is -1 ? ChannelList[3] : ChannelList[Convert.ToInt32(commandMessage[1])];
+                LinkText = commandMessage[2] is "PlaceHolderText" ? string.Empty : commandMessage[2];
 
                 if (NavigationService.GetCurrentPageType() != typeof(HomePage))
                 {
@@ -223,7 +223,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             IsGettingLinks = false;
 
             // 成功状态下解析数据，并更新相应的历史记录
-            if (state == 1)
+            if (state is 1)
             {
                 HtmlParseHelper.InitializeParseData(httpRequestData);
 

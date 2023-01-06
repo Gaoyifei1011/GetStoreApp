@@ -34,7 +34,7 @@ namespace GetStoreApp.Views.Pages
 
         public string LocalizeHistoryCountInfo(int count)
         {
-            if (count == 0)
+            if (count is 0)
             {
                 return ResourceService.GetLocalized("History/HistoryEmpty");
             }

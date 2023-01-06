@@ -20,7 +20,7 @@ namespace GetStoreApp.UI.Controls.Download
 
         public string LocalizeUnfinishedCountInfo(int count)
         {
-            if (count == 0)
+            if (count is 0)
             {
                 return ResourceService.GetLocalized("Download/UnfinishedEmpty");
             }
