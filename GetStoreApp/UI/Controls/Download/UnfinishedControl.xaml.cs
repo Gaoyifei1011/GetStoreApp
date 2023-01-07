@@ -5,13 +5,13 @@ namespace GetStoreApp.UI.Controls.Download
 {
     public sealed partial class UnfinishedControl : UserControl
     {
-        public string PauseDownload => ResourceService.GetLocalized("Download/PauseDownload");
+        public string PauseDownload { get; } = ResourceService.GetLocalized("Download/PauseDownload");
 
-        public string DownloadFailed => ResourceService.GetLocalized("Download/DownloadFailed");
+        public string DownloadFailed { get; } = ResourceService.GetLocalized("Download/DownloadFailed");
 
-        public string ContinueToolTip => ResourceService.GetLocalized("Download/ContinueToolTip");
+        public string ContinueToolTip { get; } = ResourceService.GetLocalized("Download/ContinueToolTip");
 
-        public string DeleteToolTip => ResourceService.GetLocalized("Download/DeleteToolTip");
+        public string DeleteToolTip { get; } = ResourceService.GetLocalized("Download/DeleteToolTip");
 
         public UnfinishedControl()
         {

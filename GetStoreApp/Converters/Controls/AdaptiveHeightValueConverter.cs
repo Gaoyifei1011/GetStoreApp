@@ -64,7 +64,7 @@ namespace GetStoreApp.Converters.Controls
                     }
                 }
 
-                // Use the default thickness for a GridViewItem
+                // 使用GridViewItem的默认厚度
                 return fallback;
             }
         }

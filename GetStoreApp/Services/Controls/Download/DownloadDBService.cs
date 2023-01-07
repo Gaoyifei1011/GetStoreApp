@@ -20,19 +20,11 @@ namespace GetStoreApp.Services.Controls.Download
         {
             // 将处于等待下载状态的任务调整为暂停下载状态
             List<BackgroundModel> DownloadWaitingList = await QueryWithFlagAsync(1);
-
-            foreach (BackgroundModel backgroundItem in DownloadWaitingList)
-            {
-                await UpdateFlagAsync(backgroundItem.DownloadKey, 2);
-            }
+            DownloadWaitingList.ForEach(async backgroundItem => await UpdateFlagAsync(backgroundItem.DownloadKey, 2));
 
             // 将正在下载状态的任务调整为暂停下载状态
             List<BackgroundModel> DownloadingList = await QueryWithFlagAsync(3);
-
-            foreach (BackgroundModel backgroundItem in DownloadingList)
-            {
-                await UpdateFlagAsync(backgroundItem.DownloadKey, 2);
-            }
+            DownloadingList.ForEach(async backgroundItem => await UpdateFlagAsync(backgroundItem.DownloadKey, 2));
 
             await Task.CompletedTask;
         }
@@ -365,14 +357,14 @@ namespace GetStoreApp.Services.Controls.Download
 
                         try
                         {
-                            foreach (BackgroundModel backgroundItem in selectedDownloadList)
+                            selectedDownloadList.ForEach(async (backgroundItem) =>
                             {
                                 DeleteCommand.CommandText = string.Format("DELETE FROM {0} WHERE DOWNLOADKEY = '{1}'",
                                     DataBaseService.DownloadTableName,
                                     backgroundItem.DownloadKey
                                     );
                                 await DeleteCommand.ExecuteNonQueryAsync();
-                            }
+                            });
                             await transaction.CommitAsync();
                         }
                         catch (Exception)

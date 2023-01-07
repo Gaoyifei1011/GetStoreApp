@@ -191,16 +191,16 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool IsZoomed(IntPtr hWnd);
 
-        ///// <summary>
-        ///// 加载图标、游标、动画游标或位图。
-        ///// </summary>
-        ///// <param name="hinst">DLL 或可执行文件 (.exe 模块的句柄) ，其中包含要加载的图像。</param>
-        ///// <param name="lpszName">要加载的图像。</param>
-        ///// <param name="type">要加载的图像的类型。</param>
-        ///// <param name="cx">图标或光标的宽度（以像素为单位）。</param>
-        ///// <param name="cy">图标或光标的高度（以像素为单位）。</param>
-        ///// <param name="fuLoad">此参数可使用以下一个或多个值。</param>
-        ///// <returns>如果函数成功，则返回值是新加载的图像的句柄。如果函数失败，则返回值为 NULL。</returns>
+        /// <summary>
+        /// 加载图标、游标、动画游标或位图。
+        /// </summary>
+        /// <param name="hinst">DLL 或可执行文件 (.exe 模块的句柄) ，其中包含要加载的图像。</param>
+        /// <param name="lpszName">要加载的图像。</param>
+        /// <param name="type">要加载的图像的类型。</param>
+        /// <param name="cx">图标或光标的宽度（以像素为单位）。</param>
+        /// <param name="cy">图标或光标的高度（以像素为单位）。</param>
+        /// <param name="fuLoad">此参数可使用以下一个或多个值。</param>
+        /// <returns>如果函数成功，则返回值是新加载的图像的句柄。如果函数失败，则返回值为 NULL。</returns>
         [DllImport(User32, SetLastError = true, CharSet = CharSet.Auto)]
         public static extern IntPtr LoadImage(IntPtr hinst, string lpszName, ImageType type, int cx, int cy, LoadImageFlags fuLoad);
 

@@ -13,7 +13,6 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 清空文件夹
         /// </summary>
-        /// <param name="folder"></param>
         public static bool CleanFolder(StorageFolder folder)
         {
             try
@@ -45,7 +44,7 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 获取文件的SHA1值
         /// </summary>
-        public static async Task<string> GetFileSHA1(string filePath)
+        public static async Task<string> GetFileSHA1Async(string filePath)
         {
             try
             {

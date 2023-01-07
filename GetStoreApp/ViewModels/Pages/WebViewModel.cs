@@ -27,7 +27,7 @@ namespace GetStoreApp.ViewModels.Pages
     {
         private const string DefaultUrl = "https://store.rg-adguard.net/";
 
-        public bool IsWebView2Installed => WebView2Helper.IsInstalled();
+        public bool IsWebView2Installed { get; } = WebView2Helper.IsInstalled();
 
         private CoreWebView2 CoreWebView { get; set; }
 

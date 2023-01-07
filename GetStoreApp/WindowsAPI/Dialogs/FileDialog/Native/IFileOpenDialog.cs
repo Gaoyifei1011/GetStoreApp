@@ -23,42 +23,42 @@ namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog.Native
 
         void SetOptions([In] FILEOPENDIALOGOPTIONS fos);
 
-        FILEOPENDIALOGOPTIONS GetOptions(); // not fully defined
+        FILEOPENDIALOGOPTIONS GetOptions();
 
-        void SetDefaultFolder(); // not fully defined
+        void SetDefaultFolder();
 
         void SetFolder(IShellItem psi);
 
-        void GetFolder(); // not fully defined
+        void GetFolder();
 
-        void GetCurrentSelection(); // not fully defined
+        void GetCurrentSelection();
 
-        void SetFileName();  // not fully defined
+        void SetFileName();
 
-        void GetFileName();  // not fully defined
+        void GetFileName();
 
         void SetTitle([In, MarshalAs(UnmanagedType.LPWStr)] string pszTitle);
 
-        void SetOkButtonLabel(); // not fully defined
+        void SetOkButtonLabel();
 
-        void SetFileNameLabel(); // not fully defined
+        void SetFileNameLabel();
 
         void GetResult(out IShellItem ppsi);
 
-        void AddPlace(); // not fully defined
+        void AddPlace();
 
-        void SetDefaultExtension(); // not fully defined
+        void SetDefaultExtension();
 
-        void Close(); // not fully defined
+        void Close();
 
-        void SetClientGuid();  // not fully defined
+        void SetClientGuid();
 
         void ClearClientData();
 
-        void SetFilter(); // not fully defined
+        void SetFilter();
 
-        void GetResults(); // not fully defined
+        void GetResults();
 
-        void GetSelectedItems(); // not fully defined
+        void GetSelectedItems();
     }
 }

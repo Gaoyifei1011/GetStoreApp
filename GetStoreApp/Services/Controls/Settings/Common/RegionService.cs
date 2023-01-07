@@ -16,7 +16,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
     {
         private static string SettingsKey { get; } = ConfigService.ConfigKey["RegionKey"];
 
-        public static List<RegionModel> RegionList => GeographicalLocationHelper.GetGeographicalLocations().OrderBy(item => item.FriendlyName).ToList();
+        public static List<RegionModel> RegionList { get; } = GeographicalLocationHelper.GetGeographicalLocations().OrderBy(item => item.FriendlyName).ToList();
 
         private static RegionModel DefaultAppRegion { get; set; }
 

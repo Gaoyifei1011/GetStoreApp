@@ -2,7 +2,9 @@
 
 namespace GetStoreApp.WindowsAPI.PInvoke.User32
 {
-    /// <summary>The menu item state in <see cref="MENUITEMINFO" />.</summary>
+    /// <summary>
+    /// <see cref="MENUITEMINFO" />中的菜单项状态。
+    /// </summary>
     [Flags]
     public enum MenuItemState
     {

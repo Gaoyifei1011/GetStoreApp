@@ -11,7 +11,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
     {
         private static string SettingsKey { get; } = ConfigService.ConfigKey["UseInstructionKey"];
 
-        private static bool DefaultUseInsVisValue => true;
+        private static bool DefaultUseInsVisValue { get; } = true;
 
         public static bool UseInsVisValue { get; set; }
 

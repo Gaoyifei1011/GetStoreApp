@@ -26,7 +26,6 @@ namespace GetStoreApp.Helpers.Controls.Home
 
         /// <summary>
         /// 解析网页数据中包含的CategoryID信息
-        /// Parse the CategoryID information contained in the web page data
         /// </summary>
         public static string HtmlParseCID()
         {
@@ -35,7 +34,6 @@ namespace GetStoreApp.Helpers.Controls.Home
 
         /// <summary>
         /// 解析网页数据中包含的所有信息
-        /// Parse all the information contained in the web page data
         /// </summary>
         public static List<ResultModel> HtmlParseLinks()
         {

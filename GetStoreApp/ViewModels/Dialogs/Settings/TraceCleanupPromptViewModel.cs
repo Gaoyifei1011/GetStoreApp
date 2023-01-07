@@ -63,12 +63,9 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
         public IRelayCommand CleanupNowCommand => new RelayCommand(async () =>
         {
             IsFirstInitialize = false;
-            foreach (TraceCleanupModel traceCleanupItem in TraceCleanupList)
-            {
-                traceCleanupItem.IsCleanFailed = false;
-            }
+            TraceCleanupList.ForEach(traceCleanupItem => traceCleanupItem.IsCleanFailed = false);
             IsCleaning = true;
-            await TraceCleanupAsync();
+            TraceCleanup();
             await Task.Delay(1000);
             IsCleaning = false;
         });
@@ -76,10 +73,7 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
         // 关闭窗口
         public IRelayCommand CloseWindowCommand => new RelayCommand<ContentDialog>((dialog) =>
         {
-            foreach (TraceCleanupModel traceCleanupItem in TraceCleanupList)
-            {
-                traceCleanupItem.PropertyChanged -= OnPropertyChanged;
-            }
+            TraceCleanupList.ForEach(traceCleanupItem => traceCleanupItem.PropertyChanged -= OnPropertyChanged);
             dialog.Hide();
         });
 
@@ -123,24 +117,24 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
         /// </summary>
         public void InitializeTraceCleanupList()
         {
-            foreach (TraceCleanupModel traceCleanupItem in ResourceService.TraceCleanupList)
+            ResourceService.TraceCleanupList.ForEach(traceCleanupItem =>
             {
                 traceCleanupItem.IsSelected = false;
                 traceCleanupItem.IsCleanFailed = false;
                 traceCleanupItem.PropertyChanged += OnPropertyChanged;
 
                 TraceCleanupList.Add(traceCleanupItem);
-            }
+            });
         }
 
         /// <summary>
         /// 痕迹清理
         /// </summary>
-        private async Task TraceCleanupAsync()
+        private void TraceCleanup()
         {
             List<CleanArgs> SelectedCleanList = new List<CleanArgs>(TraceCleanupList.Where(item => item.IsSelected is true).Select(item => item.InternalName));
 
-            foreach (CleanArgs cleanupArgs in SelectedCleanList)
+            SelectedCleanList.ForEach(async cleanupArgs =>
             {
                 // 清理并反馈回结果，修改相应的状态信息
                 bool CleanReusult = await TraceCleanupService.CleanAppTraceAsync(cleanupArgs);
@@ -151,7 +145,7 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
                 }
 
                 TraceCleanupList[TraceCleanupList.IndexOf(TraceCleanupList.First(item => item.InternalName == cleanupArgs))].IsCleanFailed = !CleanReusult;
-            }
+            });
         }
 
         private void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs args)

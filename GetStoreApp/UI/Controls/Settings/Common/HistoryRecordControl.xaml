@@ -1,0 +1,170 @@
+﻿<UserControl
+    x:Class="GetStoreApp.UI.Controls.Settings.Common.HistoryRecordControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Common"
+    mc:Ignorable="d">
+
+    <UserControl.DataContext>
+        <settingsViewModel:HistoryRecordViewModel x:Name="ViewModel" />
+    </UserControl.DataContext>
+
+
+    <Expander Style="{StaticResource ExpanderSettingsStyle}">
+        <Expander.Header>
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <FontIcon
+                    Grid.Column="0"
+                    FontFamily="{StaticResource SegoeFluentFontFamily}"
+                    Glyph="&#xF738;"
+                    Style="{StaticResource FontIconStyle}" />
+
+                <StackPanel
+                    Grid.Column="1"
+                    Margin="0,12"
+                    Orientation="Vertical">
+
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/HistoryRecord')}" />
+
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/HistoryRecordDescription')}" />
+                </StackPanel>
+            </Grid>
+        </Expander.Header>
+
+        <Expander.Content>
+            <StackPanel Padding="43,6,16,4" HorizontalAlignment="Stretch">
+                <StackPanel>
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Orientation="Vertical">
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Style="{StaticResource BodyTextBlockStyle}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/HistoryLite')}" />
+
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/HistoryLiteDescription')}" />
+                        </StackPanel>
+
+                        <DropDownButton
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Content="{x:Bind ViewModel.HistoryLiteItem.HistoryLiteNumName, Mode=OneWay}"
+                            ToolTipService.ToolTip="{x:Bind ViewModel.HistoryLiteItem.HistoryLiteNumName, Mode=OneWay}">
+                            <DropDownButton.Flyout>
+                                <MenuFlyout Placement="Bottom">
+                                    <RadioMenuFlyoutItem
+                                        Command="{x:Bind ViewModel.HistoryLiteSelectCommand}"
+                                        CommandParameter="0"
+                                        GroupName="HistoryLiteSetting"
+                                        IsChecked="{x:Bind IsHistoryLiteItemChecked(ViewModel.HistoryLiteItem.HistoryLiteNumValue, ViewModel.HistoryLiteNumList[0].HistoryLiteNumValue), Mode=OneWay}"
+                                        Text="{x:Bind ViewModel.HistoryLiteNumList[0].HistoryLiteNumName}"
+                                        ToolTipService.ToolTip="{x:Bind ViewModel.HistoryLiteNumList[0].HistoryLiteNumName}" />
+                                    <RadioMenuFlyoutItem
+                                        Command="{x:Bind ViewModel.HistoryLiteSelectCommand}"
+                                        CommandParameter="1"
+                                        GroupName="HistoryLiteSetting"
+                                        IsChecked="{x:Bind IsHistoryLiteItemChecked(ViewModel.HistoryLiteItem.HistoryLiteNumValue, ViewModel.HistoryLiteNumList[1].HistoryLiteNumValue), Mode=OneWay}"
+                                        Text="{x:Bind ViewModel.HistoryLiteNumList[1].HistoryLiteNumName}"
+                                        ToolTipService.ToolTip="{x:Bind ViewModel.HistoryLiteNumList[1].HistoryLiteNumName}" />
+                                </MenuFlyout>
+                            </DropDownButton.Flyout>
+                        </DropDownButton>
+                    </Grid>
+                </StackPanel>
+
+                <MenuFlyoutSeparator Margin="0,4,0,4" />
+
+                <StackPanel Margin="0,0,0,6">
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Orientation="Vertical">
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Style="{StaticResource BodyTextBlockStyle}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/HistoryJumpList')}" />
+
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/HistoryJumpListDescription')}" />
+                        </StackPanel>
+
+                        <DropDownButton
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Content="{x:Bind ViewModel.HistoryJumpListItem.HistoryJumpListNumName, Mode=OneWay}"
+                            ToolTipService.ToolTip="{x:Bind ViewModel.HistoryJumpListItem.HistoryJumpListNumName, Mode=OneWay}">
+                            <DropDownButton.Flyout>
+                                <MenuFlyout Placement="Bottom">
+                                    <RadioMenuFlyoutItem
+                                        Command="{x:Bind ViewModel.HistoryJumpListSelectCommand}"
+                                        CommandParameter="0"
+                                        GroupName="HistoryJumpListSetting"
+                                        IsChecked="{x:Bind IsHistoryJumpListItemChecked(ViewModel.HistoryJumpListItem.HistoryJumpListNumValue, ViewModel.HistoryJumpListNumList[0].HistoryJumpListNumValue), Mode=OneWay}"
+                                        Text="{x:Bind ViewModel.HistoryJumpListNumList[0].HistoryJumpListNumName}"
+                                        ToolTipService.ToolTip="{x:Bind ViewModel.HistoryJumpListNumList[0].HistoryJumpListNumName}" />
+                                    <RadioMenuFlyoutItem
+                                        Command="{x:Bind ViewModel.HistoryJumpListSelectCommand}"
+                                        CommandParameter="1"
+                                        GroupName="HistoryJumpListSetting"
+                                        IsChecked="{x:Bind IsHistoryJumpListItemChecked(ViewModel.HistoryJumpListItem.HistoryJumpListNumValue, ViewModel.HistoryJumpListNumList[1].HistoryJumpListNumValue), Mode=OneWay}"
+                                        Text="{x:Bind ViewModel.HistoryJumpListNumList[1].HistoryJumpListNumName}"
+                                        ToolTipService.ToolTip="{x:Bind ViewModel.HistoryJumpListNumList[1].HistoryJumpListNumName}" />
+                                    <RadioMenuFlyoutItem
+                                        Command="{x:Bind ViewModel.HistoryJumpListSelectCommand}"
+                                        CommandParameter="2"
+                                        GroupName="HistoryJumpListSetting"
+                                        IsChecked="{x:Bind IsHistoryJumpListItemChecked(ViewModel.HistoryJumpListItem.HistoryJumpListNumValue, ViewModel.HistoryJumpListNumList[2].HistoryJumpListNumValue), Mode=OneWay}"
+                                        Text="{x:Bind ViewModel.HistoryJumpListNumList[2].HistoryJumpListNumName}"
+                                        ToolTipService.ToolTip="{x:Bind ViewModel.HistoryJumpListNumList[2].HistoryJumpListNumName}" />
+                                    <RadioMenuFlyoutItem
+                                        Command="{x:Bind ViewModel.HistoryJumpListSelectCommand}"
+                                        CommandParameter="3"
+                                        GroupName="HistoryJumpListSetting"
+                                        IsChecked="{x:Bind IsHistoryJumpListItemChecked(ViewModel.HistoryJumpListItem.HistoryJumpListNumValue, ViewModel.HistoryJumpListNumList[3].HistoryJumpListNumValue), Mode=OneWay}"
+                                        Text="{x:Bind ViewModel.HistoryJumpListNumList[3].HistoryJumpListNumName}"
+                                        ToolTipService.ToolTip="{x:Bind ViewModel.HistoryJumpListNumList[3].HistoryJumpListNumName}" />
+                                    <RadioMenuFlyoutItem
+                                        Command="{x:Bind ViewModel.HistoryJumpListSelectCommand}"
+                                        CommandParameter="4"
+                                        GroupName="HistoryJumpListSetting"
+                                        IsChecked="{x:Bind IsHistoryJumpListItemChecked(ViewModel.HistoryJumpListItem.HistoryJumpListNumValue, ViewModel.HistoryJumpListNumList[4].HistoryJumpListNumValue), Mode=OneWay}"
+                                        Text="{x:Bind ViewModel.HistoryJumpListNumList[4].HistoryJumpListNumName}"
+                                        ToolTipService.ToolTip="{x:Bind ViewModel.HistoryJumpListNumList[4].HistoryJumpListNumName}" />
+                                </MenuFlyout>
+                            </DropDownButton.Flyout>
+                        </DropDownButton>
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+        </Expander.Content>
+    </Expander>
+</UserControl>

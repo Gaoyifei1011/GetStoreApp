@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.WindowsAPI.Dialogs.FileDialog.Native;
-using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;
 using System.Runtime.InteropServices;
 
@@ -41,31 +40,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
             string pszPath,
             IntPtr pbc,
             [MarshalAs(UnmanagedType.LPStruct)] Guid riid);
-
-        /// <summary>
-        /// 对指定文件执行操作。
-        /// </summary>
-        /// <param name="hwnd">用于显示 UI 或错误消息的父窗口的句柄。 如果操作未与窗口关联，则此值可以为 NULL 。</param>
-        /// <param name="lpOperation">指向 null 终止字符串的指针，在本例中称为 谓词，用于指定要执行的操作。</param>
-        /// <param name="lpFile">
-        /// 指向 null 终止字符串的指针，该字符串指定要对其执行指定谓词的文件或对象。
-        /// 若要指定 Shell 命名空间对象，请传递完全限定分析名称。
-        /// </param>
-        /// <param name="lpParameters">如果 lpFile 指定可执行文件，则此参数是指向 一个 null 终止的字符串的指针，该字符串指定要传递给应用程序的参数。</param>
-        /// <param name="lpDirectory">指向 null 终止字符串的指针，指定操作的默认 (工作) 目录。 如果此值为 NULL，则使用当前工作目录。</param>
-        /// <param name="nShowCmd">
-        /// 指定在打开应用程序时如何显示它的标志。 如果 lpFile 指定文档文件，则标志将直接传递给关联的应用程序。
-        /// 由应用程序决定如何处理它。
-        /// </param>
-        /// <returns>如果函数成功，则返回大于 32 的值。 如果函数失败，它将返回一个错误值，该值指示失败的原因。</returns>
-        [DllImport(Shell32, CharSet = CharSet.Unicode)]
-        public static extern IntPtr ShellExecute(
-            IntPtr hwnd,
-            string lpOperation,
-            string lpFile,
-            string lpParameters,
-            string lpDirectory,
-            WindowShowStyle nShowCmd);
 
         /// <summary>
         /// 向任务栏的状态区域发送消息。

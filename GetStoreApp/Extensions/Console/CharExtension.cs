@@ -19,6 +19,7 @@ namespace GetStoreApp.Extensions.Console
 
         /// <summary>
         /// 获取该字符在控制台显示的实际宽度
+        /// TODO:调整一下代码结构
         /// </summary>
         public static int GetCharDisplayLength(char c)
         {

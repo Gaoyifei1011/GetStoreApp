@@ -16,15 +16,15 @@ namespace GetStoreApp.Services.Controls.Download
     /// </summary>
     public static class Aria2Service
     {
-        private static string Aria2FilePath => Path.Combine(AppContext.BaseDirectory, @"Aria2\Aria2c.exe");
+        private static string Aria2FilePath { get; } = Path.Combine(AppContext.BaseDirectory, @"Aria2\Aria2c.exe");
 
-        private static string DefaultAria2ConfPath => Path.Combine(AppContext.BaseDirectory, @"Aria2\Aria2c.conf");
+        private static string DefaultAria2ConfPath { get; } = Path.Combine(AppContext.BaseDirectory, @"Aria2\Aria2c.conf");
 
-        public static string Aria2ConfPath => Path.Combine(ApplicationData.Current.LocalFolder.Path, "Aria2.conf");
+        public static string Aria2ConfPath { get; } = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Aria2.conf");
 
         private static string Aria2Arguments { get; set; }
 
-        private static string RPCServerLink => "http://127.0.0.1:6300/jsonrpc";
+        private static string RPCServerLink { get; } = "http://127.0.0.1:6300/jsonrpc";
 
         /// <summary>
         /// 初始化Aria2配置文件

@@ -149,7 +149,7 @@ namespace GetStoreApp.ViewModels.Window
 
                         if (result is ContentDialogResult.Primary)
                         {
-                            await CloseApp();
+                            await CloseAppAsync();
                         }
                         else if (result is ContentDialogResult.Secondary)
                         {
@@ -164,7 +164,7 @@ namespace GetStoreApp.ViewModels.Window
                 }
                 else
                 {
-                    await CloseApp();
+                    await CloseAppAsync();
                 }
             }
         });
@@ -405,7 +405,7 @@ namespace GetStoreApp.ViewModels.Window
         /// <summary>
         /// 关闭应用并释放所有资源
         /// </summary>
-        private async Task CloseApp()
+        private async Task CloseAppAsync()
         {
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
             await Aria2Service.CloseAria2Async();

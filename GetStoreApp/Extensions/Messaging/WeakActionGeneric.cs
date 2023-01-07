@@ -4,20 +4,18 @@ using System;
 namespace GetStoreApp.Extensions.Messaging
 {
     /// <summary>
-    /// Stores an Action without causing a hard reference
-    /// to be created to the Action's owner. The owner can be garbage collected at any time.
+    /// 存储一个Action，但不会导致创建一个指向Action所有者的硬引用。所有者可以在任何时候被垃圾收集。
     /// </summary>
-    /// <typeparam name="T">The type of the Action's parameter.</typeparam>
-    ////[ClassInfo(typeof(Messenger))]
+    /// <typeparam name="T">Action参数的类型。</typeparam>
     public class WeakAction<T> : WeakAction, IExecuteWithObject
     {
         private readonly Action<T> _action;
 
         /// <summary>
-        /// Initializes a new instance of the WeakAction class.
+        /// 初始化WeakAction类的一个新实例。
         /// </summary>
-        /// <param name="target">The action's owner.</param>
-        /// <param name="action">The action that will be associated to this instance.</param>
+        /// <param name="target">Action的所有者。</param>
+        /// <param name="action">将与此实例关联的操作。</param>
         public WeakAction(object target, Action<T> action)
             : base(target, null)
         {
@@ -25,7 +23,7 @@ namespace GetStoreApp.Extensions.Messaging
         }
 
         /// <summary>
-        /// Gets the Action associated to this instance.
+        /// 获取与此实例关联的操作。
         /// </summary>
         public new Action<T> Action
         {
@@ -36,8 +34,7 @@ namespace GetStoreApp.Extensions.Messaging
         }
 
         /// <summary>
-        /// Executes the action. This only happens if the action's owner
-        /// is still alive. The action's parameter is set to default(T).
+        /// 执行操作。只有当动作的所有者仍然活着时才会发生这种情况。动作的参数被设置为default(T)。
         /// </summary>
         public new void Execute()
         {
@@ -49,10 +46,9 @@ namespace GetStoreApp.Extensions.Messaging
         }
 
         /// <summary>
-        /// Executes the action. This only happens if the action's owner
-        /// is still alive.
+        /// 执行操作。只有当动作的所有者仍然活着时才会发生这种情况。
         /// </summary>
-        /// <param name="parameter">A parameter to be passed to the action.</param>
+        /// <param name="parameter">要传递给操作的参数。</param>
         public void Execute(T parameter)
         {
             if (_action is not null
@@ -63,13 +59,9 @@ namespace GetStoreApp.Extensions.Messaging
         }
 
         /// <summary>
-        /// Executes the action with a parameter of type object. This parameter
-        /// will be casted to T. This method implements <see cref="IExecuteWithObject.ExecuteWithObject" />
-        /// and can be useful if you store multiple WeakAction{T} instances but don't know in advance
-        /// what type T represents.
+        /// 使用object类型的参数执行操作。此参数将转换为T。此方法实现了<see cref="IExecuteWithObject" />。如果你存储了多个WeakAction{T}实例，但事先不知道类型T代表什么，这个方法很有用。
         /// </summary>
-        /// <param name="parameter">The parameter that will be passed to the action after
-        /// being casted to T.</param>
+        /// <param name="parameter">转换为T后将传递给操作的参数。</param>
         public void ExecuteWithObject(object parameter)
         {
             var parameterCasted = (T)parameter;

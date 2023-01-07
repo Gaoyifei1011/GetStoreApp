@@ -5,7 +5,7 @@ namespace GetStoreApp.ViewModels.Controls.About
     public sealed class ReferenceViewModel
     {
         //项目引用信息
-        public Dictionary<string, string> ReferenceDict => new Dictionary<string, string>
+        public Dictionary<string, string> ReferenceDict { get; } = new Dictionary<string, string>
         {
             {"Aira2","https://aria2.github.io" },
             {"HtmlAgilityPack","http://html-agility-pack.net" },

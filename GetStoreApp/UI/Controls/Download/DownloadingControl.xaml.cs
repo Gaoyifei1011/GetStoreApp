@@ -5,11 +5,11 @@ namespace GetStoreApp.UI.Controls.Download
 {
     public sealed partial class DownloadingControl : UserControl
     {
-        public string WaitDownload => ResourceService.GetLocalized("Download/WaitDownload");
+        public string WaitDownload { get; } = ResourceService.GetLocalized("Download/WaitDownload");
 
-        public string PauseToolTip => ResourceService.GetLocalized("Download/PauseToolTip");
+        public string PauseToolTip { get; } = ResourceService.GetLocalized("Download/PauseToolTip");
 
-        public string DeleteToolTip => ResourceService.GetLocalized("Download/DeleteToolTip");
+        public string DeleteToolTip { get; } = ResourceService.GetLocalized("Download/DeleteToolTip");
 
         public DownloadingControl()
         {

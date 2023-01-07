@@ -338,7 +338,7 @@ namespace GetStoreApp.Services.Controls.History
 
                         try
                         {
-                            foreach (HistoryModel historyItem in selectedHistoryDataList)
+                            selectedHistoryDataList.ForEach(async historyItem =>
                             {
                                 DeleteCommand.CommandText = string.Format("DELETE FROM {0} WHERE HISTORYKEY = '{1}'",
                                     DataBaseService.HistoryTableName,
@@ -346,7 +346,7 @@ namespace GetStoreApp.Services.Controls.History
                                     );
 
                                 await DeleteCommand.ExecuteNonQueryAsync();
-                            }
+                            });
                             await transaction.CommitAsync();
                         }
                         catch (Exception)

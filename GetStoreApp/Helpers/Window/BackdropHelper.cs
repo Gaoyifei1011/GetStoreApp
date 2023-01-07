@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Composition.SystemBackdrops;
+﻿using Microsoft.UI.Composition;
+using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
 using WinRT;
 
@@ -34,7 +35,7 @@ namespace GetStoreApp.Helpers.Window
 
                 // 启用系统背景色
                 // 注意： 请确保使用“using:WinRT;”来支持 Window.As<...>() 调用。
-                m_micaController.AddSystemBackdropTarget(Program.ApplicationRoot.MainWindow.As<Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop>());
+                m_micaController.AddSystemBackdropTarget(Program.ApplicationRoot.MainWindow.As<ICompositionSupportsSystemBackdrop>());
                 m_micaController.SetSystemBackdropConfiguration(m_configurationSource);
                 return true; // 成功
             }
@@ -64,7 +65,7 @@ namespace GetStoreApp.Helpers.Window
 
                 // 启用系统背景色
                 // 注意： 请确保使用“using:WinRT;”来支持 Window.As<...>() 调用。
-                m_micaController.AddSystemBackdropTarget(Program.ApplicationRoot.MainWindow.As<Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop>());
+                m_micaController.AddSystemBackdropTarget(Program.ApplicationRoot.MainWindow.As<ICompositionSupportsSystemBackdrop>());
                 m_micaController.SetSystemBackdropConfiguration(m_configurationSource);
                 return true; // 成功
             }
@@ -94,7 +95,7 @@ namespace GetStoreApp.Helpers.Window
 
                 // 启用系统背景色
                 // 注意： 请确保使用“using:WinRT;”来支持 Window.As<...>() 调用。
-                m_acrylicController.AddSystemBackdropTarget(Program.ApplicationRoot.MainWindow.As<Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop>());
+                m_acrylicController.AddSystemBackdropTarget(Program.ApplicationRoot.MainWindow.As<ICompositionSupportsSystemBackdrop>());
                 m_acrylicController.SetSystemBackdropConfiguration(m_configurationSource);
                 return true; // 成功
             }

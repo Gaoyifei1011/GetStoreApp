@@ -23,9 +23,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
 {
     public sealed class RequestViewModel : ViewModelBase
     {
-        public List<TypeModel> TypeList => ResourceService.TypeList;
+        public List<TypeModel> TypeList { get; } = ResourceService.TypeList;
 
-        public List<ChannelModel> ChannelList => ResourceService.ChannelList;
+        public List<ChannelModel> ChannelList { get; } = ResourceService.ChannelList;
 
         public static List<string> SampleLinkList { get; } = new List<string>
         {
@@ -35,7 +35,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             "d58c3a5f-ca63-4435-842c-7814b5ff91b7"
         };
 
-        private string SampleTitle => ResourceService.GetLocalized("Home/SampleTitle");
+        private string SampleTitle { get; } = ResourceService.GetLocalized("Home/SampleTitle");
 
         private string SampleLink { get; set; }
 
@@ -275,10 +275,41 @@ namespace GetStoreApp.ViewModels.Controls.Home
         {
             if (Program.ApplicationRoot.TaskbarJumpList is not null)
             {
-                JumpListItem jumpListItem = JumpListItem.CreateWithArguments(string.Format("JumpList {0} {1} {2}", TypeList[currentType].ShortName, ChannelList[currentChannel].ShortName, currentLink), currentLink);
-                jumpListItem.GroupName = AppJumpList.GroupName;
-                jumpListItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/History.png");
-                Program.ApplicationRoot.TaskbarJumpList.Items.Add(jumpListItem);
+                int isDuplicatedIndex = -1;
+
+                for (int index = 0; index < Program.ApplicationRoot.TaskbarJumpList.Items.Count; index++)
+                {
+                    JumpListItem item = Program.ApplicationRoot.TaskbarJumpList.Items[index];
+                    if (item.DisplayName == currentLink)
+                    {
+                        isDuplicatedIndex = index;
+                    }
+                }
+
+                // 无重复元素，直接添加
+                if (isDuplicatedIndex is -1)
+                {
+                    if (HistoryRecordService.HistoryJumpListNum.HistoryJumpListNumValue is not "Unlimited")
+                    {
+                        int count = Convert.ToInt32(HistoryRecordService.HistoryJumpListNum.HistoryJumpListNumValue);
+
+                        while (Program.ApplicationRoot.TaskbarJumpList.Items.Count >= count)
+                        {
+                            Program.ApplicationRoot.TaskbarJumpList.Items.RemoveAt(0);
+                        }
+                    }
+                    JumpListItem jumpListItem = JumpListItem.CreateWithArguments(string.Format("JumpList {0} {1} {2}", TypeList[currentType].ShortName, ChannelList[currentChannel].ShortName, currentLink), currentLink);
+                    jumpListItem.GroupName = AppJumpList.GroupName;
+                    jumpListItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/History.png");
+                    Program.ApplicationRoot.TaskbarJumpList.Items.Add(jumpListItem);
+                }
+                // 有重复元素，移动到最后一位
+                else
+                {
+                    Program.ApplicationRoot.TaskbarJumpList.Items.Add(Program.ApplicationRoot.TaskbarJumpList.Items[isDuplicatedIndex]);
+                    Program.ApplicationRoot.TaskbarJumpList.Items.RemoveAt(isDuplicatedIndex);
+                }
+
                 await Program.ApplicationRoot.TaskbarJumpList.SaveAsync();
             }
         }

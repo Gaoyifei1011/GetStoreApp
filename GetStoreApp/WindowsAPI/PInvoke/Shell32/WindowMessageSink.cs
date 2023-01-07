@@ -48,7 +48,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         /// <summary>
         ///基础图标的版本。定义如何解释传入消息。
         /// </summary>
-        public byte Version => 0x4;
+        public byte Version { get; } = 0x4;
 
         /// <summary>
         /// 如果用户在任务栏图标区域内单击或移动，则触发。

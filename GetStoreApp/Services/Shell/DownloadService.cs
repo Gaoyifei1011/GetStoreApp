@@ -16,7 +16,7 @@ namespace GetStoreApp.Services.Shell
     /// </summary>
     public static class DownloadService
     {
-        private static string Aria2FilePath => Path.Combine(AppContext.BaseDirectory, @"Aria2\Aria2c.exe");
+        private static string Aria2FilePath { get; } = Path.Combine(AppContext.BaseDirectory, @"Aria2\Aria2c.exe");
 
         private static bool IsFileDownloading;
 

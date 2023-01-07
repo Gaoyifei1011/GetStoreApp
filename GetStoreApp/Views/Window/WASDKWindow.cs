@@ -169,7 +169,7 @@ namespace GetStoreApp.Views.Window
             {
                 return User32Library.SetWindowLong(hWnd, nIndex, newProc);
             }
-            else if (InfoHelper.GetPackageArchitecture() is ProcessorArchitecture.Arm64)
+            else if (InfoHelper.GetPackageArchitecture() is ProcessorArchitecture.Arm64 && InfoHelper.GetSystemVersion()["BuildNumber"] > 18362)
             {
                 return User32Library.SetWindowLongPtr(hWnd, nIndex, newProc);
             }

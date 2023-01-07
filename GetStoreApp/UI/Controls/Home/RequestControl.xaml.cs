@@ -7,9 +7,9 @@ namespace GetStoreApp.UI.Controls.Home
 {
     public sealed partial class RequestControl : UserControl
     {
-        public List<TypeModel> TypeList => ResourceService.TypeList;
+        public List<TypeModel> TypeList { get; } = ResourceService.TypeList;
 
-        public List<ChannelModel> ChannelList => ResourceService.ChannelList;
+        public List<ChannelModel> ChannelList { get; } = ResourceService.ChannelList;
 
         public RequestControl()
         {

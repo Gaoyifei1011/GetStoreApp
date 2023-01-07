@@ -136,7 +136,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             StringBuilder stringBuilder = new StringBuilder();
 
-            foreach (ResultModel resultItem in SelectedResultDataList)
+            SelectedResultDataList.ForEach(resultItem =>
             {
                 stringBuilder.AppendLine(string.Format("[\n{0}\n{1}\n{2}\n{3}\n]",
                     resultItem.FileName,
@@ -144,7 +144,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                     resultItem.FileSHA1,
                     resultItem.FileSize)
                     );
-            }
+            });
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
 
@@ -170,10 +170,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             StringBuilder stringBuilder = new StringBuilder();
 
-            foreach (ResultModel resultItem in SelectedResultDataList)
-            {
-                stringBuilder.AppendLine(string.Format("{0}", resultItem.FileLink));
-            }
+            SelectedResultDataList.ForEach(resultItem => { stringBuilder.AppendLine(string.Format("{0}", resultItem.FileLink)); });
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
 
@@ -217,7 +214,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
                 bool IsDownloadSuccessfully = false;
 
-                foreach (ResultModel resultItem in SelectedResultDataList)
+                SelectedResultDataList.ForEach(async resultItem =>
                 {
                     string DownloadFilePath = string.Format("{0}\\{1}", DownloadOptionsService.DownloadFolder.Path, resultItem.FileName);
 
@@ -243,7 +240,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                     {
                         duplicatedList.Add(backgroundItem);
                     }
-                }
+                });
 
                 if (duplicatedList.Count > 0)
                 {
@@ -286,10 +283,10 @@ namespace GetStoreApp.ViewModels.Controls.Home
             // 使用浏览器下载
             else if (DownloadOptionsService.DownloadMode == DownloadOptionsService.DownloadModeList[1])
             {
-                foreach (ResultModel resultItem in SelectedResultDataList)
+                SelectedResultDataList.ForEach(async resultItem =>
                 {
                     await Windows.System.Launcher.LaunchUriAsync(new Uri(resultItem.FileLink));
-                }
+                });
             }
         });
 

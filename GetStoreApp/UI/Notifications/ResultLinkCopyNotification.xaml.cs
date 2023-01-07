@@ -10,7 +10,7 @@ namespace GetStoreApp.UI.Notifications
 {
     public sealed partial class ResultLinkCopyNotification : UserControl
     {
-        public ElementTheme NotificationTheme => (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
+        public ElementTheme NotificationTheme { get; } = (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
 
         private Popup Popup { get; set; } = new Popup();
 

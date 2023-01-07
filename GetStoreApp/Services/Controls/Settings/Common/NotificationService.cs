@@ -11,7 +11,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
     {
         private static string SettingsKey { get; } = ConfigService.ConfigKey["NotificationKey"];
 
-        private static bool DefaultAppNotification => true;
+        private static bool DefaultAppNotification { get; } = true;
 
         public static bool AppNotification { get; set; }
 

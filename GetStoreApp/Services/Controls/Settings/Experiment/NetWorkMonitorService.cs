@@ -11,7 +11,7 @@ namespace GetStoreApp.Services.Controls.Settings.Experiment
     {
         private static string SettingsKey { get; } = ConfigService.ConfigKey["NetWorkMonitorKey"];
 
-        private static bool DefaultNetWorkMonitorValue => true;
+        private static bool DefaultNetWorkMonitorValue { get; } = true;
 
         public static bool NetWorkMonitorValue { get; set; }
 

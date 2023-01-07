@@ -57,7 +57,7 @@ namespace GetStoreApp.Services.Root
                         NeedToSendMesage = 0;
                         break;
                     }
-                // ToDo:使用共享目标方式启动
+                // 使用共享目标方式启动
                 case ExtendedActivationKind.ShareTarget:
                     {
                         NeedToSendMesage = 1;

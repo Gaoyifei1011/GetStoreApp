@@ -8,13 +8,13 @@ namespace GetStoreApp.Views.Pages
 {
     public sealed partial class HistoryPage : Page
     {
-        public string Fillin => ResourceService.GetLocalized("History/Fillin");
+        public string Fillin { get; } = ResourceService.GetLocalized("History/Fillin");
 
-        public string FillinToolTip => ResourceService.GetLocalized("History/FillinToolTip");
+        public string FillinToolTip { get; } = ResourceService.GetLocalized("History/FillinToolTip");
 
-        public string Copy => ResourceService.GetLocalized("History/Copy");
+        public string Copy { get; } = ResourceService.GetLocalized("History/Copy");
 
-        public string CopyToolTip => ResourceService.GetLocalized("History/CopyToolTip");
+        public string CopyToolTip { get; } = ResourceService.GetLocalized("History/CopyToolTip");
 
         public HistoryPage()
         {

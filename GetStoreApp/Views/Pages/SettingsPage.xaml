@@ -81,9 +81,9 @@
 
                 <common:UseInstructionControl />
 
-                <common:HistoryLiteConfigControl />
-
                 <common:RegionControl />
+
+                <common:HistoryRecordControl />
 
                 <common:LinkFilterControl />
 

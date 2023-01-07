@@ -7,7 +7,7 @@ namespace GetStoreApp.UI.Dialogs.Download
 {
     public sealed partial class InstallingNotifyDialog : ContentDialog
     {
-        public ElementTheme DialogTheme => (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
+        public ElementTheme DialogTheme { get; } = (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
 
         public InstallingNotifyDialog()
         {

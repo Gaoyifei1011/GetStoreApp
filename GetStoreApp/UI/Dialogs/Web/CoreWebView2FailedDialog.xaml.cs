@@ -8,7 +8,7 @@ namespace GetStoreApp.UI.Dialogs.Web
 {
     public sealed partial class CoreWebView2FailedDialog : ContentDialog
     {
-        public ElementTheme DialogTheme => (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
+        public ElementTheme DialogTheme { get; } = (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
 
         public CoreWebView2FailedDialog(CoreWebView2ProcessFailedEventArgs args)
         {

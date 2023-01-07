@@ -11,13 +11,13 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public static class DataBaseService
     {
-        public static string DBName => "GetStoreApp.db";
+        public static string DBName { get; } = "GetStoreApp.db";
 
-        public static string HistoryTableName => "HISTORY";
+        public static string HistoryTableName { get; } = "HISTORY";
 
-        public static string DownloadTableName => "DOWNLOAD";
+        public static string DownloadTableName { get; } = "DOWNLOAD";
 
-        public static string DBpath => Path.Combine(ApplicationData.Current.LocalFolder.Path, "GetStoreApp.db");
+        public static string DBpath { get; } = Path.Combine(ApplicationData.Current.LocalFolder.Path, "GetStoreApp.db");
 
         /// <summary>
         /// 历史记录表不存在时，自动创建历史记录表

@@ -7,7 +7,7 @@ namespace GetStoreApp.UI.Dialogs.Common
 {
     public sealed partial class AppRunningDialog : ContentDialog
     {
-        public ElementTheme DialogTheme => (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
+        public ElementTheme DialogTheme { get; } = (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
 
         public AppRunningDialog()
         {

@@ -188,6 +188,7 @@ namespace GetStoreApp.Views.Controls
             return containerWidth / num - itemMargin.Left - itemMargin.Right;
         }
 
+        /// <summary>
         /// 每当应用程序代码或内部进程（如重建布局传递）调用 ApplyTemplate 时调用。简单来说，这意味着在应用中显示 UI 元素之前调用该方法。重写此方法以影响类的默认后模板逻辑。
         /// </summary>
         protected override void OnApplyTemplate()

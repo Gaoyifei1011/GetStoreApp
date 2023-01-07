@@ -4,7 +4,7 @@ namespace GetStoreApp.ViewModels.Controls.About
 {
     public sealed class ThanksViewModel
     {
-        public Dictionary<string, string> ThanksDict => new Dictionary<string, string>
+        public Dictionary<string, string> ThanksDict { get; } = new Dictionary<string, string>
         {
             {"AndromedaMelody","https://github.com/AndromedaMelody" },
             {"飞翔","https://fionlen.azurewebsites.net/"},

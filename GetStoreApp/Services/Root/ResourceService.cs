@@ -45,6 +45,8 @@ namespace GetStoreApp.Services.Root
 
         public static List<HistoryLiteNumModel> HistoryLiteNumList { get; } = new List<HistoryLiteNumModel>();
 
+        public static List<HistoryJumpListNumModel> HistoryJumpListNumList { get; } = new List<HistoryJumpListNumModel>();
+
         public static List<InstallModeModel> InstallModeList { get; } = new List<InstallModeModel>();
 
         public static List<ThemeModel> ThemeList { get; } = new List<ThemeModel>();
@@ -83,6 +85,7 @@ namespace GetStoreApp.Services.Root
             InitializeBackdropList();
             InitializeDownloadModeList();
             InitializeHistoryLiteNumList();
+            InitializeHistoryJumpListNumList();
             InitializeInstallModeList();
             InitializeThemeList();
             InitializeTraceCleanupList();
@@ -258,19 +261,51 @@ namespace GetStoreApp.Services.Root
         }
 
         /// <summary>
-        /// 初始化历史记录显示数量信息列表
+        /// 初始化主页面历史记录显示数量信息列表
         /// </summary>
         private static void InitializeHistoryLiteNumList()
         {
             HistoryLiteNumList.Add(new HistoryLiteNumModel
             {
-                HistoryLiteNumName = GetLocalized("Settings/HistoryLiteNumMin"),
+                HistoryLiteNumName = GetLocalized("Settings/HistoryLite3Items"),
                 HistoryLiteNumValue = 3
             });
             HistoryLiteNumList.Add(new HistoryLiteNumModel
             {
-                HistoryLiteNumName = GetLocalized("Settings/HistoryLiteNumMax"),
+                HistoryLiteNumName = GetLocalized("Settings/HistoryLite5Items"),
                 HistoryLiteNumValue = 5
+            });
+        }
+
+        /// <summary>
+        /// 初始化任务栏右键跳转列表历史记录显示数量信息列表
+        /// </summary>
+        private static void InitializeHistoryJumpListNumList()
+        {
+            HistoryJumpListNumList.Add(new HistoryJumpListNumModel
+            {
+                HistoryJumpListNumName = GetLocalized("Settings/HistoryJumpList3Items"),
+                HistoryJumpListNumValue = "3"
+            });
+            HistoryJumpListNumList.Add(new HistoryJumpListNumModel
+            {
+                HistoryJumpListNumName = GetLocalized("Settings/HistoryJumpList5Items"),
+                HistoryJumpListNumValue = "5"
+            });
+            HistoryJumpListNumList.Add(new HistoryJumpListNumModel
+            {
+                HistoryJumpListNumName = GetLocalized("Settings/HistoryJumpList7Items"),
+                HistoryJumpListNumValue = "7"
+            });
+            HistoryJumpListNumList.Add(new HistoryJumpListNumModel
+            {
+                HistoryJumpListNumName = GetLocalized("Settings/HistoryJumpList9Items"),
+                HistoryJumpListNumValue = "9"
+            });
+            HistoryJumpListNumList.Add(new HistoryJumpListNumModel
+            {
+                HistoryJumpListNumName = GetLocalized("Settings/HistoryJumpListUnlimited"),
+                HistoryJumpListNumValue = "Unlimited"
             });
         }
 

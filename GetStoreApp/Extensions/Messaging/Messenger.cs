@@ -101,12 +101,10 @@ namespace GetStoreApp.Extensions.Messaging
         /// </summary>
         /// <typeparam name="TMessage">收信人注册的消息类型。</typeparam>
         /// <param name="recipient">准备接收消息的收信人。</param>
-        /// <param name="token">A token for a messaging channel. If a recipient registers
-        /// using a token, and a sender sends a message using the same token, then this
-        /// message will be delivered to the recipient. Other recipients who did not
-        /// use a token when registering (or who used a different token) will not
-        /// get the message. Similarly, messages sent without any token, or with a different
-        /// token, will not be delivered to that recipient.</param>
+        /// <param name="token">
+        /// 消息传递通道的令牌。如果收件人使用令牌注册，并且发件人使用相同的令牌发送邮件，则此邮件将传递给收件人。
+        /// 注册时未使用令牌（或使用其他令牌）的其他收件人将不会收到该消息。同样，在没有任何令牌或具有不同令牌的情况下发送的邮件将不会传递给该收件人。
+        /// </param>
         /// <param name="receiveDerivedMessagesToo">
         /// 如果为 true，则派生自 TMessage 的消息类型也将传输给接收方。例如，如果 SendOrderMessage 和 ExecuteOrderMessage 派生自 OrderMessage，
         /// 则注册 OrderMessage 并将 receiveDerivedMessagesToo 设置为 true 会将 SendOrderMessage 和 ExecuteOrderMessage 发送给注册的收件人。
@@ -317,8 +315,8 @@ namespace GetStoreApp.Extensions.Messaging
         {
             if (list is not null)
             {
-                // Clone to protect from people registering in a "receive message" method
-                // Bug correction Messaging BL0004.007
+                // 克隆以防止人们在“接收消息”方法中注册
+                // 错误修正消息BL0004.007
                 var listClone = list.Take(list.Count()).ToList();
 
                 foreach (var item in listClone)
@@ -440,8 +438,8 @@ namespace GetStoreApp.Extensions.Messaging
 
             if (_recipientsOfSubclassesAction is not null)
             {
-                // Clone to protect from people registering in a "receive message" method
-                // Bug correction Messaging BL0008.002
+                // 克隆以防止人们在“接收消息”方法中注册
+                // 错误修正消息BL0008.002
                 var listClone = _recipientsOfSubclassesAction.Keys.Take(_recipientsOfSubclassesAction.Count).ToList();
 
                 foreach (var type in listClone)

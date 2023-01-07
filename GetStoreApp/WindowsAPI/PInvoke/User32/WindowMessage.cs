@@ -26,57 +26,72 @@
         WM_COMMAND = 0x0111,
 
         /// <summary>
-        /// The WM_MOUSEMOVE message is posted to a window when the cursor moves. If the mouse is not captured, the message is posted to the window that contains the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+        /// 当光标移动时，WM_MOUSEMOVE消息被发送到窗口。如果没有捕获鼠标，则将消息发送到包含光标的窗口。否则，消息将被发送到捕获了鼠标的窗口。
         /// </summary>
         WM_MOUSEMOVE = 0x0200,
 
         /// <summary>
-        /// The WM_LBUTTONDOWN message is posted when the user presses the left mouse button while the cursor is in the client area of a window. If the mouse is not captured, the message is posted to the window beneath the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+        /// WM_LBUTTONDOWN消息是当用户按下鼠标左键，而光标位于窗口的客户端区域时发出的。如果没有捕获鼠标，则消息将被发送到光标下方的窗口。
+        /// 否则，消息将被发送到捕获了鼠标的窗口。
         /// </summary>
         WM_LBUTTONDOWN = 0x0201,
 
         /// <summary>
-        /// The WM_LBUTTONUP message is posted when the user releases the left mouse button while the cursor is in the client area of a window. If the mouse is not captured, the message is posted to the window beneath the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+        /// WM_LBUTTONUP消息是在用户释放鼠标左键时发出的，而光标位于窗口的客户端区域。如果没有捕获鼠标，则消息将被发送到光标下方的窗口。
+        /// 否则，消息将被发送到捕获了鼠标的窗口。
         /// </summary>
         WM_LBUTTONUP = 0x0202,
 
         /// <summary>
-        /// The WM_LBUTTONDBLCLK message is posted when the user double-clicks the left mouse button while the cursor is in the client area of a window. If the mouse is not captured, the message is posted to the window beneath the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+        /// WM_LBUTTONDBLCLK消息是在用户双击鼠标左键时发出的，而光标位于窗口的客户端区域。如果没有捕获鼠标，则消息将被发送到光标下方的窗口。
+        /// 否则，消息将被发送到捕获了鼠标的窗口。
         /// </summary>
         WM_LBUTTONDBLCLK = 0x0203,
 
         /// <summary>
-        /// The WM_RBUTTONDOWN message is posted when the user presses the right mouse button while the cursor is in the client area of a window. If the mouse is not captured, the message is posted to the window beneath the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+        /// WM_RBUTTONDOWN消息是当用户在窗口的客户端区域按下鼠标右键时发出的。如果没有捕获鼠标，则消息将被发送到光标下方的窗口。
+        /// 否则，消息将被发送到捕获了鼠标的窗口。
         /// </summary>
         WM_RBUTTONDOWN = 0x0204,
 
         /// <summary>
-        /// The WM_RBUTTONUP message is posted when the user releases the right mouse button while the cursor is in the client area of a window. If the mouse is not captured, the message is posted to the window beneath the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+        /// WM_RBUTTONUP消息是在用户释放鼠标右键时发出的，而光标位于窗口的客户端区域。如果没有捕获鼠标，则消息将被发送到光标下方的窗口。
+        /// 否则，消息将被发送到捕获了鼠标的窗口。
         /// </summary>
         WM_RBUTTONUP = 0x0205,
 
         /// <summary>
-        /// The WM_RBUTTONDBLCLK message is posted when the user double-clicks the right mouse button while the cursor is in the client area of a window. If the mouse is not captured, the message is posted to the window beneath the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+        /// 当用户在窗口的客户端区域内双击鼠标右键时，WM_RBUTTONDBLCLK消息将被发布。如果没有捕获鼠标，则消息将被发送到光标下方的窗口。
+        /// 否则，消息将被发送到捕获了鼠标的窗口。
         /// </summary>
         WM_RBUTTONDBLCLK = 0x0206,
 
         /// <summary>
-        /// The WM_MBUTTONDOWN message is posted when the user presses the middle mouse button while the cursor is in the client area of a window. If the mouse is not captured, the message is posted to the window beneath the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+        /// WM_MBUTTONDOWN消息是当用户在窗口的客户端区域按下鼠标中键时发出的。如果没有捕获鼠标，则消息将被发送到光标下方的窗口。
+        /// 否则，消息将被发送到捕获了鼠标的窗口。
         /// </summary>
         WM_MBUTTONDOWN = 0x0207,
 
         /// <summary>
-        /// The WM_MBUTTONUP message is posted when the user releases the middle mouse button while the cursor is in the client area of a window. If the mouse is not captured, the message is posted to the window beneath the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+        /// WM_MBUTTONUP消息是在用户释放鼠标中键时发出的，而光标位于窗口的客户端区域。如果没有捕获鼠标，则消息将被发送到光标下方的窗口。
+        /// 否则，消息将被发送到捕获了鼠标的窗口。
         /// </summary>
         WM_MBUTTONUP = 0x0208,
 
         /// <summary>
-        /// The WM_MBUTTONDBLCLK message is posted when the user double-clicks the middle mouse button while the cursor is in the client area of a window. If the mouse is not captured, the message is posted to the window beneath the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+        /// WM_MBUTTONDBLCLK消息是当用户双击鼠标中间按钮，而光标位于窗口的客户端区域时发出的。如果没有捕获鼠标，则消息将被发送到光标下方的窗口。
+        /// 否则，消息将被发送到捕获了鼠标的窗口。
         /// </summary>
         WM_MBUTTONDBLCLK = 0x0209,
 
+        /// <summary>
+        /// WM_DPICHANGED消息是当窗口的有效点数 (dpi) 更改时发送。 DPI 是窗口的规模因子。 有多个事件可能导致 DPI 更改。
+        /// </summary>
         WM_DPICHANGED = 0x02E0,
 
+        /// <summary>
+        /// WM_USER用于定义专用窗口类使用的专用消息
+        /// </summary>
         WM_USER = 0x0400,
 
         WM_TRAY_CALLBACK_MESSAGE = 0x0401

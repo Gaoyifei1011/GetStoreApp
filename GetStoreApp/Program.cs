@@ -120,7 +120,7 @@ namespace GetStoreApp
                 await ThemeService.InitializeThemeAsync();
                 await TopMostService.InitializeTopMostValueAsync();
 
-                await HistoryLiteNumService.InitializeHistoryLiteNumAsync();
+                await HistoryRecordService.InitializeAsync();
                 await NotificationService.InitializeNotificationAsync();
                 await UseInstructionService.InitializeUseInsVisValueAsync();
 

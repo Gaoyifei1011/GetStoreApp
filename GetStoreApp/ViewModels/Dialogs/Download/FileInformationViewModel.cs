@@ -100,7 +100,7 @@ namespace GetStoreApp.ViewModels.Dialogs.Download
                 }
             }
 
-            CheckFileSHA1 = await IOHelper.GetFileSHA1(FilePath);
+            CheckFileSHA1 = await IOHelper.GetFileSHA1Async(FilePath);
             FileCheckState = true;
         }
 

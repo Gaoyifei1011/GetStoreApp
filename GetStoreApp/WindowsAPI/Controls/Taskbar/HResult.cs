@@ -1,7 +1,7 @@
 ﻿namespace GetStoreApp.WindowsAPI.Controls.Taskbar
 {
     /// <summary>
-    /// HRESULT Wrapper
+    /// HRESULT 包装器
     /// </summary>
     public enum HResult
     {
@@ -51,7 +51,7 @@
         NoObject = unchecked((int)0x800401E5),
 
         /// <summary>
-        /// Win32 Error code: ERROR_CANCELLED
+        /// Win32错误码：ERROR_CANCELLED
         /// </summary>
         Win32ErrorCanceled = 1223,
 
@@ -61,12 +61,12 @@
         Canceled = unchecked((int)0x800704C7),
 
         /// <summary>
-        /// The requested resource is in use
+        /// 请求的资源正在被使用
         /// </summary>
         ResourceInUse = unchecked((int)0x800700AA),
 
         /// <summary>
-        /// The requested resources is read-only.
+        /// 请求的资源被拒绝访问
         /// </summary>
         AccessDenied = unchecked((int)0x80030005)
     }

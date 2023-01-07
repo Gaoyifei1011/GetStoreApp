@@ -13,7 +13,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
 
         private static string BlockMapSettingsKey { get; } = ConfigService.ConfigKey["BlockMapFilterKey"];
 
-        private static bool DefaultLinkFilterValue => true;
+        private static bool DefaultLinkFilterValue { get; } = true;
 
         public static bool StartWithEFilterValue { get; set; }
 

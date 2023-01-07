@@ -188,7 +188,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
             IsSelectMode = false;
 
-            foreach (DownloadingModel downloadingItem in SelectedDownloadingDataList)
+            SelectedDownloadingDataList.ForEach(async downloadingItem =>
             {
                 bool DeleteResult = await DownloadSchedulerService.DeleteTaskAsync(downloadingItem.DownloadKey, downloadingItem.GID, downloadingItem.DownloadFlag);
 
@@ -208,7 +208,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                         File.Delete(tempFileAria2Path);
                     }
                 }
-            }
+            });
 
             // 信息更新完毕时，允许其他操作开始执行
             lock (IsUpdatingNowLock)
@@ -384,20 +384,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
             DownloadingDataList.Clear();
 
-            foreach (BackgroundModel item in DownloadSchedulerService.DownloadingList)
-            {
-                DownloadingDataList.Add(new DownloadingModel
-                {
-                    DownloadKey = item.DownloadKey,
-                    FileName = item.FileName,
-                    FileLink = item.FileLink,
-                    FilePath = item.FilePath,
-                    FileSHA1 = item.FileSHA1,
-                    TotalSize = item.TotalSize,
-                    DownloadFlag = item.DownloadFlag
-                });
-            }
-            foreach (BackgroundModel downloadItem in DownloadSchedulerService.WaitingList)
+            DownloadSchedulerService.DownloadingList.ForEach(downloadItem =>
             {
                 DownloadingDataList.Add(new DownloadingModel
                 {
@@ -409,7 +396,21 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     TotalSize = downloadItem.TotalSize,
                     DownloadFlag = downloadItem.DownloadFlag
                 });
-            }
+            });
+
+            DownloadSchedulerService.WaitingList.ForEach(downloadItem =>
+            {
+                DownloadingDataList.Add(new DownloadingModel
+                {
+                    DownloadKey = downloadItem.DownloadKey,
+                    FileName = downloadItem.FileName,
+                    FileLink = downloadItem.FileLink,
+                    FilePath = downloadItem.FilePath,
+                    FileSHA1 = downloadItem.FileSHA1,
+                    TotalSize = downloadItem.TotalSize,
+                    DownloadFlag = downloadItem.DownloadFlag
+                });
+            });
 
             lock (IsUpdatingNowLock)
             {
@@ -551,17 +552,17 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
                 {
-                    foreach (BackgroundModel item in args.AddedItems)
+                    foreach (BackgroundModel downloadItem in args.AddedItems)
                     {
                         DownloadingDataList.Add(new DownloadingModel
                         {
-                            DownloadKey = item.DownloadKey,
-                            FileName = item.FileName,
-                            FileLink = item.FileLink,
-                            FilePath = item.FilePath,
-                            FileSHA1 = item.FileSHA1,
-                            TotalSize = item.TotalSize,
-                            DownloadFlag = item.DownloadFlag
+                            DownloadKey = downloadItem.DownloadKey,
+                            FileName = downloadItem.FileName,
+                            FileLink = downloadItem.FileLink,
+                            FilePath = downloadItem.FilePath,
+                            FileSHA1 = downloadItem.FileSHA1,
+                            TotalSize = downloadItem.TotalSize,
+                            DownloadFlag = downloadItem.DownloadFlag
                         });
                     }
                 });

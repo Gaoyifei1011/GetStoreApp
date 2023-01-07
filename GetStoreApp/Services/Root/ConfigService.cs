@@ -17,6 +17,7 @@ namespace GetStoreApp.Services.Root
             {"DownloadModeKey","DownloadMode" },
             {"ExitKey","AppExit" },
             {"HistoryLiteNumKey","HistoryLiteNum" },
+            {"HistoryJumpListNumKey","HistoryJumpListNum" },
             {"InstallModeKey","InstallMode" },
             {"LanguageKey","AppLanguage" },
             {"NetWorkMonitorKey","NetWorkMonitorValue" },

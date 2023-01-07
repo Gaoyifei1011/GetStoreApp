@@ -5,16 +5,16 @@ namespace GetStoreApp.UI.Controls.Home
 {
     public sealed partial class ResultControl : UserControl
     {
-        public string Copy => ResourceService.GetLocalized("Home/Copy");
+        public string Copy { get; } = ResourceService.GetLocalized("Home/Copy");
 
-        public string CopyOptionsToolTip => ResourceService.GetLocalized("Home/CopyOptionsToolTip");
+        public string CopyOptionsToolTip { get; } = ResourceService.GetLocalized("Home/CopyOptionsToolTip");
 
-        public string CopyLink => ResourceService.GetLocalized("Home/CopyLink");
-        public string CopyLinkToolTip => ResourceService.GetLocalized("Home/CopyLinkToolTip");
+        public string CopyLink { get; } = ResourceService.GetLocalized("Home/CopyLink");
+        public string CopyLinkToolTip { get; } = ResourceService.GetLocalized("Home/CopyLinkToolTip");
 
-        public string CopyContent => ResourceService.GetLocalized("Home/CopyContent");
+        public string CopyContent { get; } = ResourceService.GetLocalized("Home/CopyContent");
 
-        public string CopyContentToolTip => ResourceService.GetLocalized("Home/CopyContentToolTip");
+        public string CopyContentToolTip { get; } = ResourceService.GetLocalized("Home/CopyContentToolTip");
 
         public ResultControl()
         {

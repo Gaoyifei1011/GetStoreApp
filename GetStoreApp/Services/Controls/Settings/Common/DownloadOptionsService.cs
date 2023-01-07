@@ -25,9 +25,9 @@ namespace GetStoreApp.Services.Controls.Settings.Common
 
         public static StorageFolder DefaultFolder { get; private set; }
 
-        private static int DefaultItem => 1;
+        private static int DefaultItem { get; } = 1;
 
-        private static DownloadModeModel DefaultDownloadMode;
+        private static DownloadModeModel DefaultDownloadMode { get; set; }
 
         public static StorageFolder DownloadFolder { get; set; }
 
@@ -56,6 +56,15 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         }
 
         /// <summary>
+        /// 创建目录
+        /// </summary>
+        public static async Task CreateFolderAsync(string folderPath)
+        {
+            Directory.CreateDirectory(folderPath);
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
         /// 获取设置存储的下载位置值，然后检查目录的读写权限。如果不能读取，使用默认的目录
         /// </summary>
         private static async Task<StorageFolder> GetFolderAsync()
@@ -69,51 +78,6 @@ namespace GetStoreApp.Services.Controls.Settings.Common
             }
 
             return await StorageFolder.GetFolderFromPathAsync(folder);
-        }
-
-        /// <summary>
-        /// 安全访问目录（当目录不存在的时候直接创建目录）
-        /// </summary>
-        public static async Task OpenFolderAsync(StorageFolder folder)
-        {
-            if (!Directory.Exists(folder.Path))
-            {
-                await CreateFolderAsync(folder.Path);
-            }
-
-            await Windows.System.Launcher.LaunchFolderAsync(folder);
-        }
-
-        /// <summary>
-        /// 在资源管理器中打开文件对应的目录，并选中该文件
-        /// </summary>
-        public static async Task OpenItemFolderAsync(string filePath)
-        {
-            if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
-            {
-                IntPtr pidlList = Shell32Library.ILCreateFromPath(filePath);
-                if (pidlList != IntPtr.Zero)
-                {
-                    try
-                    {
-                        Marshal.ThrowExceptionForHR(Shell32Library.SHOpenFolderAndSelectItems(pidlList, 0, IntPtr.Zero, 0));
-                        await Task.CompletedTask;
-                    }
-                    finally
-                    {
-                        Shell32Library.ILFree(pidlList);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 创建目录
-        /// </summary>
-        public static async Task CreateFolderAsync(string folderPath)
-        {
-            Directory.CreateDirectory(folderPath);
-            await Task.CompletedTask;
         }
 
         /// <summary>
@@ -175,6 +139,42 @@ namespace GetStoreApp.Services.Controls.Settings.Common
             DownloadMode = downloadMode;
 
             await ConfigService.SaveSettingAsync(DownloadModeSettingsKey, downloadMode.InternalName);
+        }
+
+        /// <summary>
+        /// 安全访问目录（当目录不存在的时候直接创建目录）
+        /// </summary>
+        public static async Task OpenFolderAsync(StorageFolder folder)
+        {
+            if (!Directory.Exists(folder.Path))
+            {
+                await CreateFolderAsync(folder.Path);
+            }
+
+            await Windows.System.Launcher.LaunchFolderAsync(folder);
+        }
+
+        /// <summary>
+        /// 在资源管理器中打开文件对应的目录，并选中该文件
+        /// </summary>
+        public static async Task OpenItemFolderAsync(string filePath)
+        {
+            if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
+            {
+                IntPtr pidlList = Shell32Library.ILCreateFromPath(filePath);
+                if (pidlList != IntPtr.Zero)
+                {
+                    try
+                    {
+                        Marshal.ThrowExceptionForHR(Shell32Library.SHOpenFolderAndSelectItems(pidlList, 0, IntPtr.Zero, 0));
+                        await Task.CompletedTask;
+                    }
+                    finally
+                    {
+                        Shell32Library.ILFree(pidlList);
+                    }
+                }
+            }
         }
     }
 }

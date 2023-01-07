@@ -73,7 +73,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
 
             if (IsSettingsValueEmpty)
             {
-                SetAppLanguage(AppLanguage);
+                await SetAppLanguageAsync(AppLanguage);
             }
         }
 
@@ -116,16 +116,16 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
             AppLanguage = language;
 
             await ConfigService.SaveSettingAsync(SettingsKey, language.InternalName);
-
-            SetAppLanguage(language);
         }
 
         /// <summary>
         /// 设置应用的语言值
         /// </summary>
-        private static void SetAppLanguage(LanguageModel language)
+        public static async Task SetAppLanguageAsync(LanguageModel language)
         {
             ApplicationLanguages.PrimaryLanguageOverride = language.InternalName;
+
+            await Task.CompletedTask;
         }
     }
 }

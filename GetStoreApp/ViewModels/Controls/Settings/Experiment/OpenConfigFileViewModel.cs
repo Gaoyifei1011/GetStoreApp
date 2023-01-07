@@ -2,8 +2,8 @@
 using GetStoreApp.Extensions.Command;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
-using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using Windows.Storage;
@@ -46,7 +46,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Experiment
                     }
                     else
                     {
-                        Shell32Library.ShellExecute(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), "open", "explorer.exe", "", "", WindowShowStyle.SW_SHOWNORMAL);
+                        Process.Start("explorer.exe");
                     }
                 }
             }

@@ -3,10 +3,8 @@
 namespace GetStoreApp.Extensions.Messaging
 {
     /// <summary>
-    /// Stores an <see cref="Action" /> without causing a hard reference
-    /// to be created to the Action's owner. The owner can be garbage collected at any time.
+    /// 存储一个 <see cref="Action" /> ,而不会导致对Action的所有者创建硬引用。所有者可以在任何时候被垃圾收集。
     /// </summary>
-    ////[ClassInfo(typeof(Messenger))]
     public class WeakAction
     {
         private readonly Action _action;
@@ -14,10 +12,10 @@ namespace GetStoreApp.Extensions.Messaging
         private WeakReference _reference;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WeakAction" /> class.
+        /// 初始化<see cref="WeakAction" />类的一个新实例。
         /// </summary>
-        /// <param name="target">The action's owner.</param>
-        /// <param name="action">The action that will be associated to this instance.</param>
+        /// <param name="target">Action的所有者。</param>
+        /// <param name="action">将与此实例关联的操作。</param>
         public WeakAction(object target, Action action)
         {
             _reference = new WeakReference(target);
@@ -25,7 +23,7 @@ namespace GetStoreApp.Extensions.Messaging
         }
 
         /// <summary>
-        /// Gets the Action associated to this instance.
+        /// 获取与此实例关联的操作。
         /// </summary>
         public Action Action
         {
@@ -36,8 +34,7 @@ namespace GetStoreApp.Extensions.Messaging
         }
 
         /// <summary>
-        /// Gets a value indicating whether the Action's owner is still alive, or if it was collected
-        /// by the Garbage Collector already.
+        /// 获取一个值，该值指示动作的所有者是否仍然存活，或者它是否已经被垃圾回收器收集。
         /// </summary>
         public bool IsAlive
         {
@@ -53,7 +50,7 @@ namespace GetStoreApp.Extensions.Messaging
         }
 
         /// <summary>
-        /// Gets the Action's owner. This object is stored as a <see cref="WeakReference" />.
+        /// 获取动作的所有者。该对象存储为<see cref="WeakReference" />。
         /// </summary>
         public object Target
         {
@@ -69,8 +66,7 @@ namespace GetStoreApp.Extensions.Messaging
         }
 
         /// <summary>
-        /// Executes the action. This only happens if the action's owner
-        /// is still alive.
+        /// 执行操作。只有当动作的所有者仍然活着时才会发生这种情况。
         /// </summary>
         public void Execute()
         {
@@ -82,7 +78,7 @@ namespace GetStoreApp.Extensions.Messaging
         }
 
         /// <summary>
-        /// Sets the reference that this instance stores to null.
+        /// 将此实例存储的引用设置为空。
         /// </summary>
         public void MarkForDeletion()
         {

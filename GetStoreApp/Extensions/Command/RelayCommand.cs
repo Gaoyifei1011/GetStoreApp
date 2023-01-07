@@ -68,7 +68,7 @@ namespace GetStoreApp.Extensions.Command
         /// <inheritdoc/>
         public void Execute(object? parameter)
         {
-            this.execute();
+            execute();
         }
     }
 }

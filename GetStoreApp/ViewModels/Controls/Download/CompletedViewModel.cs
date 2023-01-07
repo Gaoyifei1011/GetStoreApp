@@ -11,13 +11,12 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Dialogs.Download;
 using GetStoreApp.ViewModels.Base;
-using GetStoreApp.WindowsAPI.PInvoke.Shell32;
-using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -209,18 +208,18 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 {
                     IsSelectMode = false;
 
-                    foreach (BackgroundModel item in SelectedCompletedDataList)
+                    foreach (BackgroundModel completedItem in SelectedCompletedDataList)
                     {
                         // 删除文件
                         try
                         {
-                            if (File.Exists(item.FilePath))
+                            if (File.Exists(completedItem.FilePath))
                             {
-                                File.Delete(item.FilePath);
+                                File.Delete(completedItem.FilePath);
                             }
 
                             // 删除记录
-                            bool DeleteResult = await DownloadDBService.DeleteAsync(item.DownloadKey);
+                            bool DeleteResult = await DownloadDBService.DeleteAsync(completedItem.DownloadKey);
 
                             if (DeleteResult)
                             {
@@ -255,7 +254,13 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 if (InstallModeService.InstallMode.InternalName == InstallModeService.InstallModeList[0].InternalName)
                 {
-                    Shell32Library.ShellExecute(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), string.Empty, completedItem.FilePath, string.Empty, string.Empty, WindowShowStyle.SW_SHOWNORMAL);
+                    ProcessStartInfo Info = new ProcessStartInfo
+                    {
+                        FileName = completedItem.FilePath,
+                        UseShellExecute = true
+                    };
+
+                    Process.Start(Info);
                 }
 
                 // 直接安装
@@ -320,7 +325,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     }
                     else
                     {
-                        Shell32Library.ShellExecute(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), "open", "explorer.exe", "", "", WindowShowStyle.SW_SHOWNORMAL);
+                        Process.Start("explorer.exe");
                     }
                 }
             }

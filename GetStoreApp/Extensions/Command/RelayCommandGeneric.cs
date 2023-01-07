@@ -93,7 +93,7 @@ namespace GetStoreApp.Extensions.Command
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Execute(T? parameter)
         {
-            this.execute(parameter);
+            execute(parameter);
         }
 
         /// <inheritdoc/>

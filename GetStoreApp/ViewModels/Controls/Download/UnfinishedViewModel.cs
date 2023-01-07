@@ -80,9 +80,9 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 });
             }
 
-            foreach (BackgroundModel item in PauseList)
+            foreach (BackgroundModel unfinishedItem in PauseList)
             {
-                bool ContinueResult = await DownloadSchedulerService.ContinueTaskAsync(item);
+                bool ContinueResult = await DownloadSchedulerService.ContinueTaskAsync(unfinishedItem);
 
                 if (ContinueResult)
                 {
@@ -380,7 +380,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
             lock (UnfinishedDataListLock)
             {
-                foreach (BackgroundModel downloadItem in PauseDownloadRawList)
+                PauseDownloadRawList.ForEach(downloadItem =>
                 {
                     UnfinishedDataList.Add(new UnfinishedModel
                     {
@@ -392,9 +392,9 @@ namespace GetStoreApp.ViewModels.Controls.Download
                         TotalSize = downloadItem.TotalSize,
                         DownloadFlag = downloadItem.DownloadFlag
                     });
-                }
+                });
 
-                foreach (BackgroundModel downloadItem in FailureDownloadRawList)
+                FailureDownloadRawList.ForEach(downloadItem =>
                 {
                     UnfinishedDataList.Add(new UnfinishedModel
                     {
@@ -406,7 +406,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                         TotalSize = downloadItem.TotalSize,
                         DownloadFlag = downloadItem.DownloadFlag
                     });
-                }
+                });
             }
         }
     }

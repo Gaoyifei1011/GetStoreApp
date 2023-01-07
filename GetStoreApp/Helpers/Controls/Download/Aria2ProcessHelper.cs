@@ -54,33 +54,17 @@ namespace GetStoreApp.Helpers.Controls.Download
         /// </summary>
         public static void KillProcessAndChildren(int processID)
         {
-            foreach (int childProcessId in GetChildProcessIds(processID))
+            GetChildProcessIds(processID).ForEach(childProcessId =>
             {
-                int childProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_ALL_ACCESS, false, processID);
-                if (childProcess is not 0)
+                using (Process child = Process.GetProcessById(childProcessId))
                 {
-                    try
-                    {
-                        Kernel32Library.TerminateProcess(childProcess, 0);
-                    }
-                    finally
-                    {
-                        Kernel32Library.CloseHandle(childProcess);
-                    }
+                    child.Kill();
                 }
-            }
+            });
 
-            int thisProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_ALL_ACCESS, false, processID);
-            if (thisProcess is not 0)
+            using (Process thisProcess = Process.GetProcessById(processID))
             {
-                try
-                {
-                    Kernel32Library.TerminateProcess(thisProcess, 0);
-                }
-                finally
-                {
-                    Kernel32Library.CloseHandle(thisProcess);
-                }
+                thisProcess.Kill();
             }
         }
 

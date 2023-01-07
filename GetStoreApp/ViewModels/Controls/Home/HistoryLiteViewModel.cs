@@ -26,9 +26,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         private HistoryLiteNumModel HistoryLiteItem { get; set; }
 
-        public List<TypeModel> TypeList => ResourceService.TypeList;
+        public List<TypeModel> TypeList { get; } = ResourceService.TypeList;
 
-        public List<ChannelModel> ChannelList => ResourceService.ChannelList;
+        public List<ChannelModel> ChannelList { get; } = ResourceService.ChannelList;
 
         public ObservableCollection<HistoryModel> HistoryLiteDataList { get; } = new ObservableCollection<HistoryModel>();
 
@@ -58,7 +58,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public HistoryLiteViewModel()
         {
-            HistoryLiteItem = HistoryLiteNumService.HistoryLiteNum;
+            HistoryLiteItem = HistoryRecordService.HistoryLiteNum;
 
             Messenger.Default.Register<bool>(this, MessageToken.History, async (historyMessage) =>
             {
@@ -106,10 +106,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             lock (HistoryLiteDataListLock)
             {
-                foreach (HistoryModel historyRawData in HistoryRawList)
-                {
-                    HistoryLiteDataList.Add(historyRawData);
-                }
+                HistoryRawList.ForEach(HistoryLiteDataList.Add);
             }
         }
     }

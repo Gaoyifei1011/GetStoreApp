@@ -12,7 +12,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
     {
         private static string SettingsKey { get; } = ConfigService.ConfigKey["TopMostKey"];
 
-        private static bool DefaultTopMostValue => false;
+        private static bool DefaultTopMostValue { get; } = false;
 
         public static bool TopMostValue { get; set; }
 

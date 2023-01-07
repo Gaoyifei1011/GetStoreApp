@@ -16,7 +16,7 @@
         GEO_LATITUDE = 0x0002,
 
         /// <summary>
-        ///
+        /// 位置所在的经度。 此值存储在浮点数中。
         /// </summary>
         GEO_LONGITUDE = 0x0003,
 

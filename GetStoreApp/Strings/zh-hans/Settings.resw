@@ -231,17 +231,44 @@
   <data name="HideToTray" xml:space="preserve">
     <value>最小化到系统托盘</value>
   </data>
-  <data name="HistoryLiteConfig" xml:space="preserve">
-    <value>主页面“历史记录”显示数目</value>
+  <data name="HistoryJumpList" xml:space="preserve">
+    <value>任务栏“历史记录”显示数目</value>
   </data>
-  <data name="HistoryLiteConfigDescription" xml:space="preserve">
-    <value>应用启动后在主页面打开时最多显示的“历史记录”条目数量</value>
+  <data name="HistoryJumpList3Items" xml:space="preserve">
+    <value>3条</value>
   </data>
-  <data name="HistoryLiteNumMax" xml:space="preserve">
+  <data name="HistoryJumpList5Items" xml:space="preserve">
     <value>5条</value>
   </data>
-  <data name="HistoryLiteNumMin" xml:space="preserve">
+  <data name="HistoryJumpList7Items" xml:space="preserve">
+    <value>7条</value>
+  </data>
+  <data name="HistoryJumpList9Items" xml:space="preserve">
+    <value>9条</value>
+  </data>
+  <data name="HistoryJumpListDescription" xml:space="preserve">
+    <value>任务栏右键跳转列表最多显示的“历史记录”条目数量</value>
+  </data>
+  <data name="HistoryJumpListUnlimited" xml:space="preserve">
+    <value>无限制</value>
+  </data>
+  <data name="HistoryLite" xml:space="preserve">
+    <value>主页面“历史记录”显示数目</value>
+  </data>
+  <data name="HistoryLite3Items" xml:space="preserve">
     <value>3条</value>
+  </data>
+  <data name="HistoryLite5Items" xml:space="preserve">
+    <value>5条</value>
+  </data>
+  <data name="HistoryLiteDescription" xml:space="preserve">
+    <value>应用启动后在主页面打开时最多显示的“历史记录”条目数量</value>
+  </data>
+  <data name="HistoryRecord" xml:space="preserve">
+    <value>历史记录</value>
+  </data>
+  <data name="HistoryRecordDescription" xml:space="preserve">
+    <value>应用程序历史记录设置</value>
   </data>
   <data name="InstallMode" xml:space="preserve">
     <value>应用安装方式</value>

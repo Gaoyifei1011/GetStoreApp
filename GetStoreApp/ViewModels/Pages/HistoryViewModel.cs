@@ -27,9 +27,9 @@ namespace GetStoreApp.ViewModels.Pages
         // 临界区资源访问互斥锁
         private readonly object HistoryDataListLock = new object();
 
-        public List<TypeModel> TypeList => ResourceService.TypeList;
+        public List<TypeModel> TypeList { get; } = ResourceService.TypeList;
 
-        public List<ChannelModel> ChannelList => ResourceService.ChannelList;
+        public List<ChannelModel> ChannelList { get; } = ResourceService.ChannelList;
 
         public ObservableCollection<HistoryModel> HistoryDataList { get; } = new ObservableCollection<HistoryModel>();
 
@@ -200,13 +200,13 @@ namespace GetStoreApp.ViewModels.Pages
 
             StringBuilder stringBuilder = new StringBuilder();
 
-            foreach (HistoryModel selectedHistoryData in SelectedHistoryDataList)
+            SelectedHistoryDataList.ForEach(selectedHistoryData =>
             {
                 stringBuilder.AppendLine(string.Format("{0}\t{1}\t{2}",
-                    TypeList.Find(i => i.InternalName.Equals(selectedHistoryData.HistoryType)).DisplayName,
-                    ChannelList.Find(i => i.InternalName.Equals(selectedHistoryData.HistoryChannel)).DisplayName,
-                    selectedHistoryData.HistoryLink));
-            }
+                TypeList.Find(i => i.InternalName.Equals(selectedHistoryData.HistoryType)).DisplayName,
+                ChannelList.Find(i => i.InternalName.Equals(selectedHistoryData.HistoryChannel)).DisplayName,
+                selectedHistoryData.HistoryLink));
+            });
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
 
@@ -244,10 +244,7 @@ namespace GetStoreApp.ViewModels.Pages
                     // 确保线程安全
                     lock (HistoryDataListLock)
                     {
-                        foreach (HistoryModel historyItem in SelectedHistoryDataList)
-                        {
-                            HistoryDataList.Remove(historyItem);
-                        }
+                        SelectedHistoryDataList.ForEach(historyItem => HistoryDataList.Remove(historyItem));
                     }
                 }
 
@@ -339,10 +336,7 @@ namespace GetStoreApp.ViewModels.Pages
             // 保证线程安全
             lock (HistoryDataListLock)
             {
-                foreach (HistoryModel historyRawData in HistoryRawList)
-                {
-                    HistoryDataList.Add(historyRawData);
-                }
+                HistoryRawList.ForEach(HistoryDataList.Add);
             }
         }
     }
