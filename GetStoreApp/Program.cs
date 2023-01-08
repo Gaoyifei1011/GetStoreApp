@@ -8,6 +8,7 @@ using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Controls.Settings.Experiment;
 using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
+using GetStoreApp.WindowsAPI.PInvoke.WinUI;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using System;
@@ -20,6 +21,9 @@ using WinRT;
 
 namespace GetStoreApp
 {
+    /// <summary>
+    /// 应用程序类，程序入口
+    /// </summary>
     public class Program
     {
         public static bool IsDesktopProgram { get; set; } = true;
@@ -48,6 +52,7 @@ namespace GetStoreApp
                 AppNotificationService.Initialize();
                 DesktopLaunchService.InitializeLaunchAsync().Wait();
 
+                WinUILibrary.XamlCheckProcessRequirements();
                 ComWrappersSupport.InitializeComWrappers();
                 Application.Start((param) =>
                 {

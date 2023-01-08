@@ -82,7 +82,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GetStoreApp\GetStoreApp.csproj">
-      <PublishProfile>Properties\PublishProfiles\win10-$(Platform).pubxml</PublishProfile>
       <SkipGetTargetFrameworkProperties>True</SkipGetTargetFrameworkProperties>
     </ProjectReference>
   </ItemGroup>

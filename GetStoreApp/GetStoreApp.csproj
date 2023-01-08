@@ -1,8 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <AnalysisLevel>latest</AnalysisLevel>
     <ApplicationIcon>Assets\GetStoreApp.ico</ApplicationIcon>
     <ApplicationManifest>App.manifest</ApplicationManifest>
+    <AssemblyName>GetStoreApp</AssemblyName>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <Copyright>高怡飞</Copyright>
@@ -16,11 +18,11 @@
     <IncludeSymbols>False</IncludeSymbols>
     <ImplicitUsings>disable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
     <Optimize>True</Optimize>
     <OutputType>WinExe</OutputType>
     <PackageIcon>Assets\GetStoreApp.png</PackageIcon>
     <Platforms>x86;x64;ARM64</Platforms>
-    <PublishProfile>Properties\PublishProfiles\win10-$(Platform).pubxml</PublishProfile>
     <PublishProtocol>FileSystem</PublishProtocol>
     <PublishReadyToRun>True</PublishReadyToRun>
     <PublishSingleFile>false</PublishSingleFile>
@@ -28,15 +30,50 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <RootNamespace>GetStoreApp</RootNamespace>
     <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
+    <SignAssembly>False</SignAssembly>
     <StartupObject>GetStoreApp.Program</StartupObject>
     <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
     <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <TrimMode>partial</TrimMode>
     <Version>0.8.0.1</Version>
+    <UseWindowsForms>False</UseWindowsForms>
     <UseWinUI>true</UseWinUI>
+    <UseWPF>False</UseWPF>
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
     <WindowsPackageType>MSIX</WindowsPackageType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Platform)'=='x86'">
+    <SelfContained>true</SelfContained>
+    <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Platform)'=='x64'">
+    <SelfContained>true</SelfContained>
+    <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Platform)'=='ARM64'">
+    <SelfContained>true</SelfContained>
+    <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <DebugType>portable</DebugType>
   </PropertyGroup>
   
   <ItemGroup>
@@ -51,18 +88,18 @@
     </Content>
     <Content Include="Aria2\Aria2cARM64.exe" Link="Aria2\Aria2c.exe">
       <CopyToOutputDirectory Condition="'$(Platform)'=='x86'">Never</CopyToOutputDirectory>
-      <CopyToOutputDirectory Condition="'$(Platform)'=='ARM64'">Always</CopyToOutputDirectory>
       <CopyToOutputDirectory Condition="'$(Platform)'=='x64'">Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory Condition="'$(Platform)'=='ARM64'">Always</CopyToOutputDirectory>
     </Content>    
     <Content Include="Aria2\Aria2cX64.exe" Link="Aria2\Aria2c.exe">
       <CopyToOutputDirectory Condition="'$(Platform)'=='x86'">Never</CopyToOutputDirectory>
-      <CopyToOutputDirectory Condition="'$(Platform)'=='ARM64'">Never</CopyToOutputDirectory>
       <CopyToOutputDirectory Condition="'$(Platform)'=='x64'">Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory Condition="'$(Platform)'=='ARM64'">Never</CopyToOutputDirectory>
     </Content>
     <Content Include="Aria2\Aria2cX86.exe" Link="Aria2\Aria2c.exe">
       <CopyToOutputDirectory Condition="'$(Platform)'=='x86'">Always</CopyToOutputDirectory>
-      <CopyToOutputDirectory Condition="'$(Platform)'=='ARM64'">Never</CopyToOutputDirectory>
       <CopyToOutputDirectory Condition="'$(Platform)'=='x64'">Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory Condition="'$(Platform)'=='ARM64'">Never</CopyToOutputDirectory>
     </Content>
 
     <Content Update="Assets\GetStoreApp.ico">

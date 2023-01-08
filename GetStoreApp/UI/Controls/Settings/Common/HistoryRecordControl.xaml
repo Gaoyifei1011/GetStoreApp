@@ -12,7 +12,6 @@
         <settingsViewModel:HistoryRecordViewModel x:Name="ViewModel" />
     </UserControl.DataContext>
 
-
     <Expander Style="{StaticResource ExpanderSettingsStyle}">
         <Expander.Header>
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
