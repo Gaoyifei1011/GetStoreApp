@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Models.Controls.Settings.Advanced;
+﻿using GetStoreApp.Extensions.DataType.Constant;
+using GetStoreApp.Models.Controls.Settings.Advanced;
 using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace GetStoreApp.Services.Controls.Settings.Advanced
     /// </summary>
     public static class AppExitService
     {
-        private static string SettingsKey { get; } = ConfigService.ConfigKey["ExitKey"];
+        private static string SettingsKey { get; } = ConfigKey.ExitKey;
 
         private static AppExitModel DefaultAppExit { get; set; }
 

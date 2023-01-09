@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Models.Controls.Settings.Appearance;
+﻿using GetStoreApp.Extensions.DataType.Constant;
+using GetStoreApp.Models.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
     /// </summary>
     public static class LanguageService
     {
-        private static string SettingsKey { get; } = ConfigService.ConfigKey["LanguageKey"];
+        private static string SettingsKey { get; } = ConfigKey.LanguageKey;
 
         public static LanguageModel DefaultAppLanguage { get; set; }
 

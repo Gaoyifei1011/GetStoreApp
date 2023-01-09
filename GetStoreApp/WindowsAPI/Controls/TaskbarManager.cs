@@ -44,7 +44,7 @@ namespace GetStoreApp.WindowsAPI.Controls
         /// </summary>
         public static bool IsPlatformSupported
         {
-            get { return InfoHelper.GetDeviceFamily() is "Windows.Desktop" && InfoHelper.GetSystemVersion()["BuildNumber"] > 7600; }
+            get { return InfoHelper.GetDeviceFamily() is "Windows.Desktop" && InfoHelper.GetSystemVersion().BuildNumber > 7600; }
         }
 
         /// <summary>

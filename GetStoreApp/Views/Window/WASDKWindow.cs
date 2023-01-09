@@ -26,24 +26,6 @@ namespace GetStoreApp.Views.Window
         private IntPtr oldWndProc = IntPtr.Zero;
 
         /// <summary>
-        /// 窗口宽度
-        /// </summary>
-        public int Width
-        {
-            get { return ConvertPixelToEpx(Hwnd, GetWidthWin32(Hwnd)); }
-            set { SetWindowWidthWin32(Hwnd, ConvertEpxToPixel(Hwnd, value)); }
-        }
-
-        /// <summary>
-        /// 窗口高度
-        /// </summary>
-        public int Height
-        {
-            get { return ConvertPixelToEpx(Hwnd, GetHeightWin32(Hwnd)); }
-            set { SetWindowHeightWin32(Hwnd, ConvertEpxToPixel(Hwnd, value)); }
-        }
-
-        /// <summary>
         /// 窗口标题
         /// </summary>
         public new string Title
@@ -169,7 +151,7 @@ namespace GetStoreApp.Views.Window
             {
                 return User32Library.SetWindowLong(hWnd, nIndex, newProc);
             }
-            else if (InfoHelper.GetPackageArchitecture() is ProcessorArchitecture.Arm64 && InfoHelper.GetSystemVersion()["BuildNumber"] > 18362)
+            else if (InfoHelper.GetPackageArchitecture() is ProcessorArchitecture.Arm64)
             {
                 return User32Library.SetWindowLongPtr(hWnd, nIndex, newProc);
             }
@@ -246,62 +228,10 @@ namespace GetStoreApp.Views.Window
             return User32Library.CallWindowProc(oldWndProc, hWnd, Msg, wParam, lParam);
         }
 
-        /// <summary>
-        /// 获取Win32窗口宽度
-        /// </summary>
-        private int GetWidthWin32(IntPtr hwnd)
-        {
-            //Get the width
-            User32Library.GetWindowRect(hwnd, out RECT rc);
-            return rc.right - rc.left;
-        }
-
-        /// <summary>
-        /// 获取Win32窗口高度
-        /// </summary>
-        private int GetHeightWin32(IntPtr hwnd)
-        {
-            //Get the width
-            User32Library.GetWindowRect(hwnd, out RECT rc);
-            return rc.bottom - rc.top;
-        }
-
-        /// <summary>
-        /// 设置Win32窗口宽度
-        /// </summary>
-        private void SetWindowWidthWin32(IntPtr hwnd, int width)
-        {
-            int currentHeightInPixels = GetHeightWin32(hwnd);
-
-            User32Library.SetWindowPos(hwnd, SpecialWindowHandles.HWND_TOP,
-                                        0, 0, width, currentHeightInPixels,
-                                        SetWindowPosFlags.SWP_NOMOVE |
-                                        SetWindowPosFlags.SWP_NOACTIVATE);
-        }
-
-        /// <summary>
-        /// 设置Win32窗口高度
-        /// </summary>
-        private void SetWindowHeightWin32(IntPtr hwnd, int height)
-        {
-            int currentWidthInPixels = GetWidthWin32(hwnd);
-
-            User32Library.SetWindowPos(hwnd, SpecialWindowHandles.HWND_TOP,
-                                        0, 0, currentWidthInPixels, height,
-                                        SetWindowPosFlags.SWP_NOMOVE |
-                                        SetWindowPosFlags.SWP_NOACTIVATE);
-        }
-
         public static int ConvertEpxToPixel(IntPtr hwnd, int effectivePixels)
         {
             float scalingFactor = GetScalingFactor(hwnd);
             return (int)(effectivePixels * scalingFactor);
-        }
-
-        public static int ConvertPixelToEpx(IntPtr hwnd, int pixels)
-        {
-            float scalingFactor = GetScalingFactor(hwnd);
-            return (int)(pixels / scalingFactor);
         }
 
         public static float GetScalingFactor(IntPtr hwnd)

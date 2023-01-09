@@ -78,8 +78,8 @@ namespace GetStoreApp.UI.Notifications
         /// </summary>
         private void SetPopUpPlacement()
         {
-            Width = Program.ApplicationRoot.MainWindow.Bounds.Width;
-            Height = Program.ApplicationRoot.MainWindow.Bounds.Height;
+            Width = Program.ApplicationRoot.AppWindow.Size.Width;
+            Height = Program.ApplicationRoot.AppWindow.Size.Height;
 
             Popup.VerticalOffset = 75;
         }

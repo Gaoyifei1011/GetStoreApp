@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Models.Controls.Settings.Common;
+﻿using GetStoreApp.Extensions.DataType.Constant;
+using GetStoreApp.Models.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using System;
@@ -15,11 +16,11 @@ namespace GetStoreApp.Services.Controls.Settings.Common
     /// </summary>
     public static class DownloadOptionsService
     {
-        private static string FolderSettingsKey { get; } = ConfigService.ConfigKey["DownloadFolderKey"];
+        private static string FolderSettingsKey { get; } = ConfigKey.DownloadFolderKey;
 
-        private static string DownloadItemSettingsKey { get; } = ConfigService.ConfigKey["DownloadItemKey"];
+        private static string DownloadItemSettingsKey { get; } = ConfigKey.DownloadItemKey;
 
-        private static string DownloadModeSettingsKey { get; } = ConfigService.ConfigKey["DownloadModeKey"];
+        private static string DownloadModeSettingsKey { get; } = ConfigKey.DownloadModeKey;
 
         public static List<DownloadModeModel> DownloadModeList { get; set; }
 

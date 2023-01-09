@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using GetStoreApp.Extensions.DataType.Struct;
+using System.Collections.Generic;
 using Windows.ApplicationModel;
 using Windows.System;
 using Windows.System.Profile;
@@ -11,66 +11,58 @@ namespace GetStoreApp.Helpers.Root
     /// </summary>
     public static class InfoHelper
     {
-        private static readonly string SystemVersion = AnalyticsInfo.VersionInfo.DeviceFamilyVersion;
+        private static AppVersion AppVersion;
+
+        private static SystemVersion SystemVersion;
 
         private static Dictionary<string, ulong> SystemVersionDict { get; } = new Dictionary<string, ulong>();
-
-        private static Dictionary<string, ushort> AppVersionDict { get; } = new Dictionary<string, ushort>();
-
-        /// <summary>
-        /// 初始化系统版本信息
-        /// </summary>
-        public static void InitializeSystemVersion()
-        {
-            ulong VersionInfo = ulong.Parse(SystemVersion);
-
-            ulong MajorVersion = (VersionInfo & 0xFFFF000000000000L) >> 48;
-            ulong MinorVersion = (VersionInfo & 0x0000FFFF00000000L) >> 32;
-            ulong BuildNumber = (VersionInfo & 0x00000000FFFF0000L) >> 16;
-            ulong BuildRevision = VersionInfo & 0x000000000000FFFFL;
-
-            SystemVersionDict.Add(nameof(MajorVersion), MajorVersion);
-            SystemVersionDict.Add(nameof(MinorVersion), MinorVersion);
-            SystemVersionDict.Add(nameof(BuildNumber), BuildNumber);
-            SystemVersionDict.Add(nameof(BuildRevision), BuildRevision);
-        }
 
         /// <summary>
         /// 初始化应用版本信息
         /// </summary>
         public static void InitializeAppVersion()
         {
-            ushort MajorVersion = Package.Current.Id.Version.Major;
-            ushort MinorVersion = Package.Current.Id.Version.Minor;
-            ushort BuildVersion = Package.Current.Id.Version.Build;
-            ushort RevisionVersion = Package.Current.Id.Version.Revision;
-
-            AppVersionDict.Add(nameof(MajorVersion), MajorVersion);
-            AppVersionDict.Add(nameof(MinorVersion), MinorVersion);
-            AppVersionDict.Add(nameof(BuildVersion), BuildVersion);
-            AppVersionDict.Add(nameof(RevisionVersion), RevisionVersion);
+            AppVersion.MajorVersion = Package.Current.Id.Version.Major;
+            AppVersion.MinorVersion = Package.Current.Id.Version.Minor;
+            AppVersion.BuildVersion = Package.Current.Id.Version.Build;
+            AppVersion.RevisionVersion = Package.Current.Id.Version.Revision;
         }
 
+        /// <summary>
+        /// 初始化系统版本信息
+        /// </summary>
+        public static void InitializeSystemVersion()
+        {
+            ulong VersionInfo = ulong.Parse(AnalyticsInfo.VersionInfo.DeviceFamilyVersion);
+
+            SystemVersion.MajorVersion = (VersionInfo & 0xFFFF000000000000L) >> 48;
+            SystemVersion.MinorVersion = (VersionInfo & 0x0000FFFF00000000L) >> 32;
+            SystemVersion.BuildNumber = (VersionInfo & 0x00000000FFFF0000L) >> 16;
+            SystemVersion.BuildRevision = VersionInfo & 0x000000000000FFFFL;
+        }
+
+        /// <summary>
+        /// 获取表示应用程序正在运行的设备类型
+        /// </summary>
         public static string GetDeviceFamily()
         {
-            Debug.WriteLine(AnalyticsInfo.VersionInfo.DeviceFamily);
             return AnalyticsInfo.VersionInfo.DeviceFamily;
         }
 
         /// <summary>
-        /// 获取系统版本
+        /// 获取应用版本信息
         /// </summary>
-        public static Dictionary<string, ulong> GetSystemVersion()
+        public static AppVersion GetAppVersion()
         {
-            return SystemVersionDict;
+            return AppVersion;
         }
 
         /// <summary>
-        /// 获取应用版本
+        /// 获取系统版本信息
         /// </summary>
-        public static Dictionary<string, ushort> GetAppVersion()
+        public static SystemVersion GetSystemVersion()
         {
-            return AppVersionDict;
+            return SystemVersion;
         }
 
         /// <summary>

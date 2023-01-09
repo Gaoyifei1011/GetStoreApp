@@ -46,11 +46,12 @@ namespace GetStoreApp
 
             InitializeMainWindow();
             InitializeAppWindow();
+            Program.IsAppLaunched = true;
+            await ViewModel.ActivateAsync();
+
             InitializeTrayIcon();
             await InitializeJumpListAsync();
             await ViewModel.StartupAsync();
-
-            Program.IsAppLaunched = true;
             await ViewModel.HandleAppNotificationAsync();
         }
 
@@ -60,7 +61,6 @@ namespace GetStoreApp
         private void InitializeMainWindow()
         {
             MainWindow = new MainWindow();
-            MainWindow.Activate();
         }
 
         /// <summary>
@@ -69,10 +69,7 @@ namespace GetStoreApp
         private void InitializeAppWindow()
         {
             WindowId windowId = Win32Interop.GetWindowIdFromWindow(MainWindow.GetMainWindowHandle());
-
             AppWindow = AppWindow.GetFromWindowId(windowId);
-            AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
-            AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/GetStoreApp.ico"));
         }
 
         /// <summary>

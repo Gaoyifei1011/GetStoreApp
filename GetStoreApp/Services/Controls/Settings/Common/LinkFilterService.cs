@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Services.Root;
+﻿using GetStoreApp.Extensions.DataType.Constant;
+using GetStoreApp.Services.Root;
 using System;
 using System.Threading.Tasks;
 
@@ -9,9 +10,9 @@ namespace GetStoreApp.Services.Controls.Settings.Common
     /// </summary>
     public static class LinkFilterService
     {
-        private static string StartWithESettingsKey { get; } = ConfigService.ConfigKey["StartsWithEFilterKey"];
+        private static string StartWithESettingsKey { get; } = ConfigKey.StartsWithEFilterKey;
 
-        private static string BlockMapSettingsKey { get; } = ConfigService.ConfigKey["BlockMapFilterKey"];
+        private static string BlockMapSettingsKey { get; } = ConfigKey.BlockMapFilterKey;
 
         private static bool DefaultLinkFilterValue { get; } = true;
 

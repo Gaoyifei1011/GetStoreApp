@@ -9,13 +9,13 @@ namespace GetStoreApp.ViewModels.Controls.About
 {
     public sealed class HeaderViewModel : ViewModelBase
     {
-        private readonly ushort MajorVersion = InfoHelper.GetAppVersion()["MajorVersion"];
+        private readonly ushort MajorVersion = InfoHelper.GetAppVersion().MajorVersion;
 
-        private readonly ushort MinorVersion = InfoHelper.GetAppVersion()["MinorVersion"];
+        private readonly ushort MinorVersion = InfoHelper.GetAppVersion().MinorVersion;
 
-        private readonly ushort BuildVersion = InfoHelper.GetAppVersion()["BuildVersion"];
+        private readonly ushort BuildVersion = InfoHelper.GetAppVersion().BuildVersion;
 
-        private readonly ushort RevisionVersion = InfoHelper.GetAppVersion()["RevisionVersion"];
+        private readonly ushort RevisionVersion = InfoHelper.GetAppVersion().RevisionVersion;
 
         private string _appVersion;
 

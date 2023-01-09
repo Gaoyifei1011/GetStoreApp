@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Models.Controls.Settings.Common;
+﻿using GetStoreApp.Extensions.DataType.Constant;
+using GetStoreApp.Models.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,9 @@ namespace GetStoreApp.Services.Controls.Settings.Common
     /// </summary>
     public static class HistoryRecordService
     {
-        private static string HistoryLiteSettingsKey { get; } = ConfigService.ConfigKey["HistoryLiteNumKey"];
+        private static string HistoryLiteSettingsKey { get; } = ConfigKey.HistoryLiteNumKey;
 
-        private static string HistoryJumpListSettingsKey { get; } = ConfigService.ConfigKey["HistoryJumpListNumKey"];
+        private static string HistoryJumpListSettingsKey { get; } = ConfigKey.HistoryJumpListNumKey;
 
         private static HistoryLiteNumModel DefaultHistoryLiteNum { get; set; }
 

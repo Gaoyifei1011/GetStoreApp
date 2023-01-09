@@ -9,7 +9,6 @@
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:viewModel="using:GetStoreApp.ViewModels.Window"
     xmlns:wc="using:GetStoreApp.UI.Controls.Window"
-    Title="{x:Bind root:ResourceService.GetLocalized('Resources/AppDisplayName')}"
     MinWidth="600"
     MinHeight="768"
     ActivatedCommand="{x:Bind ViewModel.ActivatedCommand}"
@@ -30,13 +29,14 @@
 
         <NavigationView
             BackRequested="{x:Bind ViewModel.OnNavigationViewBackRequested}"
+            CompactModeThresholdWidth="768"
+            ExpandedModeThresholdWidth="768"
             IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
             IsPaneToggleButtonVisible="{x:Bind ViewModel.IsPaneToggleButtonVisible, Mode=OneWay}"
             IsSettingsVisible="False"
             IsTitleBarAutoPaddingEnabled="True"
             Loaded="{x:Bind ViewModel.OnNavigationViewLoaded}"
             OpenPaneLength="220"
-            PaneDisplayMode="{x:Bind ViewModel.NavigationDispalyMode, Mode=OneWay}"
             SelectedItem="{x:Bind ViewModel.SelectedItem, Mode=OneWay}"
             Unloaded="{x:Bind ViewModel.OnNavigationViewUnLoaded}">
 

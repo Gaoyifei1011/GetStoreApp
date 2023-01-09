@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Extensions.DataType.Constant;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
 using System;
@@ -14,7 +15,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
     /// </summary>
     public static class RegionService
     {
-        private static string SettingsKey { get; } = ConfigService.ConfigKey["RegionKey"];
+        private static string SettingsKey { get; } = ConfigKey.RegionKey;
 
         public static List<RegionModel> RegionList { get; } = GeographicalLocationHelper.GetGeographicalLocations().OrderBy(item => item.FriendlyName).ToList();
 

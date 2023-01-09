@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Helpers.Window;
+﻿using GetStoreApp.Extensions.DataType.Constant;
+using GetStoreApp.Helpers.Window;
 using GetStoreApp.Models.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
 using System;
@@ -12,7 +13,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
     /// </summary>
     public static class BackdropService
     {
-        private static string SettingsKey { get; } = ConfigService.ConfigKey["BackdropKey"];
+        private static string SettingsKey { get; } = ConfigKey.BackdropKey;
 
         private static BackdropModel DefaultAppBackdrop { get; set; }
 

@@ -22,7 +22,7 @@ namespace GetStoreApp.Helpers.Window
             else
             {
                 // 还原窗口（如果最小化）时
-                User32Library.ShowWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), WindowShowStyle.SW_RESTORE);
+                Program.ApplicationRoot.AppWindow.Show();
             }
 
             // 将应用窗口设置到前台
@@ -34,9 +34,9 @@ namespace GetStoreApp.Helpers.Window
         /// </summary>
         public static void HideAppWindow()
         {
-            if (Program.ApplicationRoot.MainWindow.Visible)
+            if (Program.ApplicationRoot.AppWindow.IsVisible)
             {
-                User32Library.ShowWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), WindowShowStyle.SW_HIDE);
+                Program.ApplicationRoot.AppWindow.Hide();
             }
         }
 

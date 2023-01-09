@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Services.Root;
+﻿using GetStoreApp.Extensions.DataType.Constant;
+using GetStoreApp.Services.Root;
 using System;
 using System.Threading.Tasks;
 
@@ -9,7 +10,7 @@ namespace GetStoreApp.Services.Controls.Settings.Experiment
     /// </summary>
     public static class NetWorkMonitorService
     {
-        private static string SettingsKey { get; } = ConfigService.ConfigKey["NetWorkMonitorKey"];
+        private static string SettingsKey { get; } = ConfigKey.NetWorkMonitorKey;
 
         private static bool DefaultNetWorkMonitorValue { get; } = true;
 

@@ -1,11 +1,12 @@
-﻿using GetStoreApp.Services.Root;
+﻿using GetStoreApp.Extensions.DataType.Constant;
+using GetStoreApp.Services.Root;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Controls.Settings.Appearance
 {
     public static class AlwaysShowBackdropService
     {
-        private static string SettingsKey { get; } = ConfigService.ConfigKey["AlwaysShowBackdropKey"];
+        private static string SettingsKey { get; } = ConfigKey.AlwaysShowBackdropKey;
 
         private static bool DefaultAlwaysShowBackdropValue = false;
 

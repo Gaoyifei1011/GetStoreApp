@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Helpers.Window;
+﻿using GetStoreApp.Extensions.DataType.Constant;
+using GetStoreApp.Helpers.Window;
 using GetStoreApp.Services.Root;
 using System;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
     /// </summary>
     public static class TopMostService
     {
-        private static string SettingsKey { get; } = ConfigService.ConfigKey["TopMostKey"];
+        private static string SettingsKey { get; } = ConfigKey.TopMostKey;
 
         private static bool DefaultTopMostValue { get; } = false;
 

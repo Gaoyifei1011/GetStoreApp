@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Contracts.Command;
 using GetStoreApp.Extensions.Command;
+using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Extensions.SystemTray;
@@ -14,7 +15,9 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.AppNotifications;
 using System;
+using System.IO;
 using System.Threading.Tasks;
+using Windows.Graphics;
 using Windows.UI.StartScreen;
 
 namespace GetStoreApp.ViewModels.Window
@@ -25,7 +28,7 @@ namespace GetStoreApp.ViewModels.Window
         public IRelayCommand ShowOrHideWindowCommand => new RelayCommand(() =>
         {
             // 隐藏窗口
-            if (Program.ApplicationRoot.MainWindow.Visible)
+            if (Program.ApplicationRoot.AppWindow.IsVisible)
             {
                 WindowHelper.HideAppWindow();
             }
@@ -98,6 +101,27 @@ namespace GetStoreApp.ViewModels.Window
         }
 
         /// <summary>
+        /// 窗口激活前进行配置
+        /// </summary>
+        public async Task ActivateAsync()
+        {
+            Program.ApplicationRoot.AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
+
+            int? WindowWidth = await ConfigService.ReadSettingAsync<int?>(ConfigKey.WindowWidthKey);
+            int? WindowHeight = await ConfigService.ReadSettingAsync<int?>(ConfigKey.WindowHeightKey);
+            int? WindowPositionXAxis = await ConfigService.ReadSettingAsync<int?>(ConfigKey.WindowPositionXAxisKey);
+            int? WindowPositionYAxis = await ConfigService.ReadSettingAsync<int?>(ConfigKey.WindowPositionYAxisKey);
+
+            if (WindowWidth.HasValue && WindowHeight.HasValue && WindowPositionXAxis.HasValue && WindowPositionYAxis.HasValue)
+            {
+                Program.ApplicationRoot.AppWindow.Resize(new SizeInt32(WindowWidth.Value, WindowHeight.Value));
+            }
+            Program.ApplicationRoot.AppWindow.Title = ResourceService.GetLocalized("Resources/AppDisplayName");
+            Program.ApplicationRoot.AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/GetStoreApp.ico"));
+            Program.ApplicationRoot.AppWindow.Show();
+        }
+
+        /// <summary>
         /// 窗口激活后配置其他设置
         /// </summary>
         public async Task StartupAsync()
@@ -164,12 +188,24 @@ namespace GetStoreApp.ViewModels.Window
         /// </summary>
         private async Task CloseAppAsync()
         {
+            await SaveWindowInformationAsync();
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
             await Aria2Service.CloseAria2Async();
-            Messenger.Default.Send(true, MessageToken.WindowClosed);
+            Program.ApplicationRoot.TrayIcon.Dispose();
             AppNotificationService.Unregister();
             BackdropHelper.ReleaseBackdrop();
             Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
+        }
+
+        /// <summary>
+        /// 关闭窗口时保存窗口的大小和位置信息
+        /// </summary>
+        private async Task SaveWindowInformationAsync()
+        {
+            await ConfigService.SaveSettingAsync(ConfigKey.WindowWidthKey, Program.ApplicationRoot.AppWindow.Size.Width);
+            await ConfigService.SaveSettingAsync(ConfigKey.WindowHeightKey, Program.ApplicationRoot.AppWindow.Size.Height);
+            await ConfigService.SaveSettingAsync(ConfigKey.WindowPositionXAxisKey, Program.ApplicationRoot.AppWindow.Position.X);
+            await ConfigService.SaveSettingAsync(ConfigKey.WindowPositionYAxisKey, Program.ApplicationRoot.AppWindow.Position.Y);
         }
     }
 }

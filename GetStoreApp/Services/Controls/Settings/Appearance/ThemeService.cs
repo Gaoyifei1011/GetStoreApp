@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Models.Controls.Settings.Appearance;
+﻿using GetStoreApp.Extensions.DataType.Constant;
+using GetStoreApp.Models.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using System;
@@ -12,7 +13,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
     /// </summary>
     public static class ThemeService
     {
-        private static string SettingsKey { get; } = ConfigService.ConfigKey["ThemeKey"];
+        private static string SettingsKey { get; } = ConfigKey.ThemeKey;
 
         private static ThemeModel DefaultAppTheme { get; set; }
 

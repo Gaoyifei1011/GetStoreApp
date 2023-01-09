@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Contracts.Command;
 using GetStoreApp.Extensions.Command;
+using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Helpers.Root;
@@ -76,19 +77,6 @@ namespace GetStoreApp.ViewModels.Window
             set
             {
                 _isPaneToggleButtonVisible = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private NavigationViewPaneDisplayMode _navigationDisplayMode;
-
-        public NavigationViewPaneDisplayMode NavigationDispalyMode
-        {
-            get { return _navigationDisplayMode; }
-
-            set
-            {
-                _navigationDisplayMode = value;
                 OnPropertyChanged();
             }
         }
@@ -172,17 +160,18 @@ namespace GetStoreApp.ViewModels.Window
         // 窗口大小发生改变时，设置页面导航视图样式
         public IRelayCommand SizeChangedCommand => new RelayCommand<WindowSizeChangedEventArgs>((args) =>
         {
-            if (Program.ApplicationRoot.MainWindow.Width >= 768)
+            if(Program.IsAppLaunched)
             {
-                IsPaneToggleButtonVisible = false;
-                NavigationDispalyMode = NavigationViewPaneDisplayMode.Left;
-                AppTitleBarMargin = new Thickness(48, 0, 0, 0);
-            }
-            else
-            {
-                IsPaneToggleButtonVisible = true;
-                NavigationDispalyMode = NavigationViewPaneDisplayMode.LeftMinimal;
-                AppTitleBarMargin = new Thickness(96, 0, 0, 0);
+                if (Program.ApplicationRoot.AppWindow.Size.Width >= 768)
+                {
+                    IsPaneToggleButtonVisible = false;
+                    AppTitleBarMargin = new Thickness(48, 0, 0, 0);
+                }
+                else
+                {
+                    IsPaneToggleButtonVisible = true;
+                    AppTitleBarMargin = new Thickness(96, 0, 0, 0);
+                }
             }
         });
 
@@ -212,17 +201,15 @@ namespace GetStoreApp.ViewModels.Window
         /// </summary>
         public void OnNavigationViewLoaded(object sender, RoutedEventArgs args)
         {
-            // 初始化导航视图控件属性和应用的背景色。
-            if (Program.ApplicationRoot.MainWindow.Width >= 768)
+            //初始化导航视图控件属性和应用的背景色。
+            if (Program.ApplicationRoot.AppWindow.Size.Width >= 768)
             {
                 IsPaneToggleButtonVisible = false;
-                NavigationDispalyMode = NavigationViewPaneDisplayMode.Left;
                 AppTitleBarMargin = new Thickness(48, 0, 0, 0);
             }
             else
             {
                 IsPaneToggleButtonVisible = true;
-                NavigationDispalyMode = NavigationViewPaneDisplayMode.LeftMinimal;
                 AppTitleBarMargin = new Thickness(96, 0, 0, 0);
             }
 
@@ -361,7 +348,7 @@ namespace GetStoreApp.ViewModels.Window
             {
                 case ElementTheme.Default:
                     {
-                        if (InfoHelper.GetSystemVersion()["BuildNumber"] > 18362)
+                        if (InfoHelper.GetSystemVersion().BuildNumber > 18362)
                         {
                             UxThemeLibrary.SetPreferredAppMode(PreferredAppMode.AllowDark);
                         }
@@ -373,7 +360,7 @@ namespace GetStoreApp.ViewModels.Window
                     }
                 case ElementTheme.Light:
                     {
-                        if (InfoHelper.GetSystemVersion()["BuildNumber"] > 18362)
+                        if (InfoHelper.GetSystemVersion().BuildNumber > 18362)
                         {
                             UxThemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceLight);
                         }
@@ -385,7 +372,7 @@ namespace GetStoreApp.ViewModels.Window
                     }
                 case ElementTheme.Dark:
                     {
-                        if (InfoHelper.GetSystemVersion()["BuildNumber"] > 18362)
+                        if (InfoHelper.GetSystemVersion().BuildNumber > 18362)
                         {
                             UxThemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceDark);
                         }
@@ -407,12 +394,24 @@ namespace GetStoreApp.ViewModels.Window
         /// </summary>
         private async Task CloseAppAsync()
         {
+            await SaveWindowInformationAsync();
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
             await Aria2Service.CloseAria2Async();
-            Messenger.Default.Send(true, MessageToken.WindowClosed);
+            Program.ApplicationRoot.TrayIcon.Dispose();
             AppNotificationService.Unregister();
             BackdropHelper.ReleaseBackdrop();
             Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
+        }
+
+        /// <summary>
+        /// 关闭窗口时保存窗口的大小和位置信息
+        /// </summary>
+        private async Task SaveWindowInformationAsync()
+        {
+            await ConfigService.SaveSettingAsync(ConfigKey.WindowWidthKey, Program.ApplicationRoot.AppWindow.Size.Width);
+            await ConfigService.SaveSettingAsync(ConfigKey.WindowHeightKey, Program.ApplicationRoot.AppWindow.Size.Height);
+            await ConfigService.SaveSettingAsync(ConfigKey.WindowPositionXAxisKey, Program.ApplicationRoot.AppWindow.Position.X);
+            await ConfigService.SaveSettingAsync(ConfigKey.WindowPositionYAxisKey, Program.ApplicationRoot.AppWindow.Position.Y);
         }
     }
 }

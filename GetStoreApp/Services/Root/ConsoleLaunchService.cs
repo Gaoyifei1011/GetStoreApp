@@ -1,11 +1,11 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Shell;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Windows.ApplicationModel;
 
 namespace GetStoreApp.Services.Root
 {
@@ -91,10 +91,10 @@ namespace GetStoreApp.Services.Root
             Console.Title = ResourceService.GetLocalized("Console/Title");
 
             Console.WriteLine(string.Format(ResourceService.GetLocalized("Console/HeaderDescription1"),
-                Package.Current.Id.Version.Major,
-                Package.Current.Id.Version.Minor,
-                Package.Current.Id.Version.Build,
-                Package.Current.Id.Version.Revision
+                InfoHelper.GetAppVersion().MajorVersion,
+                InfoHelper.GetAppVersion().MinorVersion,
+                InfoHelper.GetAppVersion().BuildVersion,
+                InfoHelper.GetAppVersion().RevisionVersion
                 ) + LineBreaks);
             Console.WriteLine(ResourceService.GetLocalized("Console/HeaderDescription2"));
             Console.WriteLine(ResourceService.GetLocalized("Console/HeaderDescription3") + LineBreaks);

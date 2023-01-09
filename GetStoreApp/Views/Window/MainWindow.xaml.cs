@@ -17,15 +17,6 @@ namespace GetStoreApp.Views.Window
         {
             InitializeComponent();
             NavigationService.NavigationFrame = WindowFrame;
-
-            Messenger.Default.Register<bool>(this, MessageToken.WindowClosed, (windowClosedMessage) =>
-            {
-                if (windowClosedMessage)
-                {
-                    Program.ApplicationRoot.TrayIcon.Dispose();
-                    Messenger.Default.Unregister(this);
-                }
-            });
         }
 
         /// <summary>
