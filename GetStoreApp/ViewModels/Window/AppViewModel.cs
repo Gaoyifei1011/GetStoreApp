@@ -11,6 +11,7 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.Views.Pages;
+using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.AppNotifications;
@@ -107,15 +108,25 @@ namespace GetStoreApp.ViewModels.Window
         {
             Program.ApplicationRoot.AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
 
+            bool? IsWindowMaximized = await ConfigService.ReadSettingAsync<bool?>(ConfigKey.IsWindowMaximizedKey);
             int? WindowWidth = await ConfigService.ReadSettingAsync<int?>(ConfigKey.WindowWidthKey);
             int? WindowHeight = await ConfigService.ReadSettingAsync<int?>(ConfigKey.WindowHeightKey);
             int? WindowPositionXAxis = await ConfigService.ReadSettingAsync<int?>(ConfigKey.WindowPositionXAxisKey);
             int? WindowPositionYAxis = await ConfigService.ReadSettingAsync<int?>(ConfigKey.WindowPositionYAxisKey);
 
-            if (WindowWidth.HasValue && WindowHeight.HasValue && WindowPositionXAxis.HasValue && WindowPositionYAxis.HasValue)
+            if (IsWindowMaximized.HasValue && IsWindowMaximized.Value == true)
             {
-                Program.ApplicationRoot.AppWindow.Resize(new SizeInt32(WindowWidth.Value, WindowHeight.Value));
+                User32Library.ShowWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), WindowShowStyle.SW_MAXIMIZE);
             }
+            else
+            {
+                if (WindowWidth.HasValue && WindowHeight.HasValue && WindowPositionXAxis.HasValue && WindowPositionYAxis.HasValue)
+                {
+                    Program.ApplicationRoot.AppWindow.Resize(new SizeInt32(WindowWidth.Value, WindowHeight.Value));
+                    Program.ApplicationRoot.AppWindow.Move(new PointInt32(WindowPositionXAxis.Value, WindowPositionYAxis.Value));
+                }
+            }
+
             Program.ApplicationRoot.AppWindow.Title = ResourceService.GetLocalized("Resources/AppDisplayName");
             Program.ApplicationRoot.AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/GetStoreApp.ico"));
             Program.ApplicationRoot.AppWindow.Show();
@@ -186,7 +197,7 @@ namespace GetStoreApp.ViewModels.Window
         /// <summary>
         /// 关闭应用并释放所有资源
         /// </summary>
-        private async Task CloseAppAsync()
+        public async Task CloseAppAsync()
         {
             await SaveWindowInformationAsync();
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
@@ -202,6 +213,7 @@ namespace GetStoreApp.ViewModels.Window
         /// </summary>
         private async Task SaveWindowInformationAsync()
         {
+            await ConfigService.SaveSettingAsync(ConfigKey.IsWindowMaximizedKey, WindowHelper.IsWindowMaximized());
             await ConfigService.SaveSettingAsync(ConfigKey.WindowWidthKey, Program.ApplicationRoot.AppWindow.Size.Width);
             await ConfigService.SaveSettingAsync(ConfigKey.WindowHeightKey, Program.ApplicationRoot.AppWindow.Size.Height);
             await ConfigService.SaveSettingAsync(ConfigKey.WindowPositionXAxisKey, Program.ApplicationRoot.AppWindow.Position.X);

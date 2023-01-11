@@ -99,14 +99,5 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>如果函数成功，则返回值是指定进程的打开句柄。如果函数失败，则返回值为 NULL。</returns>
         [DllImport(Kernel32)]
         public static extern int OpenProcess(EDesiredAccess dwDesiredAccess, bool bInheritHandle, int dwProcessId);
-
-        /// <summary>
-        /// 终止指定的进程及其所有线程。
-        /// </summary>
-        /// <param name="hProcess">要终止的进程句柄。</param>
-        /// <param name="uExitCode">进程和线程因此调用而终止的退出代码。</param>
-        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
-        [DllImport(Kernel32, CharSet = CharSet.Unicode)]
-        public static extern int TerminateProcess(IntPtr hProcess, uint uExitCode);
     }
 }

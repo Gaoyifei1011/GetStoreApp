@@ -151,6 +151,7 @@
                 Command="{x:Bind ViewModel.CloseWindowCommand}"
                 CommandParameter="{Binding ElementName=FileInformationRoot}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseWindow')}"
+                IsEnabled="{x:Bind ViewModel.FileCheckState, Mode=OneWay}"
                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseWindow')}" />
         </Grid>
     </Grid>

@@ -25,6 +25,8 @@
 
         public const string InstallModeKey = "InstallMode";
 
+        public const string IsWindowMaximizedKey = "IsWindowMaximized";
+
         public const string LanguageKey = "AppLanguage";
 
         public const string NetWorkMonitorKey = "NetWorkMonitorValue";

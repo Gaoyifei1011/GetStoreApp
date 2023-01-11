@@ -162,16 +162,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         public static extern IntPtr GetForegroundWindow();
 
         /// <summary>
-        /// 检索指定窗口的边界矩形的尺寸。 尺寸以相对于屏幕左上角的屏幕坐标提供。
-        /// </summary>
-        /// <param name="hWnd">窗口的句柄。</param>
-        /// <param name="lpRect">指向 RECT 结构的指针，用于接收窗口左上角和右下角的屏幕坐标。</param>
-        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
-        [DllImport(nameof(User32), SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
-
-        /// <summary>
         /// 在菜单中的指定位置插入新菜单项。
         /// </summary>
         /// <param name="hMenu">插入新菜单项的菜单的句柄。</param>

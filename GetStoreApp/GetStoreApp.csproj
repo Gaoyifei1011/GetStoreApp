@@ -46,7 +46,7 @@
 
   <PropertyGroup Condition="'$(Platform)'=='x86'">
     <SelfContained>true</SelfContained>
-    <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+    <RuntimeIdentifier>win10-x86</RuntimeIdentifier>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Platform)'=='x64'">
     <SelfContained>true</SelfContained>
@@ -54,7 +54,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Platform)'=='ARM64'">
     <SelfContained>true</SelfContained>
-    <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+    <RuntimeIdentifier>win10-arm64</RuntimeIdentifier>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
@@ -264,10 +264,10 @@
     <None Remove="Views\Window\MainWindow.xaml" />
     
     <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
-    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.1" />
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.2" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.1" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.221209.1" />
-    <PackageReference Include="SQLitePCLRaw.bundle_winsqlite3" Version="2.1.3">
+    <PackageReference Include="SQLitePCLRaw.bundle_winsqlite3" Version="2.1.4">
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
     

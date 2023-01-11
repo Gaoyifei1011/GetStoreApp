@@ -8,12 +8,20 @@ namespace GetStoreApp.Helpers.Window
     public static class WindowHelper
     {
         /// <summary>
+        /// 判断窗口是否最大化
+        /// </summary>
+        public static bool IsWindowMaximized()
+        {
+            return User32Library.IsZoomed(Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
+        }
+
+        /// <summary>
         /// 显示窗口
         /// </summary>
         public static void ShowAppWindow()
         {
             // 判断窗口状态是否处于最大化状态，如果是，直接最大化窗口
-            if (User32Library.IsZoomed(Program.ApplicationRoot.MainWindow.GetMainWindowHandle()))
+            if (IsWindowMaximized())
             {
                 User32Library.ShowWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), WindowShowStyle.SW_MAXIMIZE);
             }

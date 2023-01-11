@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Contracts.Command;
 using GetStoreApp.Extensions.Command;
-using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Helpers.Root;
@@ -23,7 +22,6 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Window
 {
@@ -137,7 +135,7 @@ namespace GetStoreApp.ViewModels.Window
 
                         if (result is ContentDialogResult.Primary)
                         {
-                            await CloseAppAsync();
+                            await Program.ApplicationRoot.ViewModel.CloseAppAsync();
                         }
                         else if (result is ContentDialogResult.Secondary)
                         {
@@ -152,7 +150,7 @@ namespace GetStoreApp.ViewModels.Window
                 }
                 else
                 {
-                    await CloseAppAsync();
+                    await Program.ApplicationRoot.ViewModel.CloseAppAsync();
                 }
             }
         });
@@ -160,7 +158,7 @@ namespace GetStoreApp.ViewModels.Window
         // 窗口大小发生改变时，设置页面导航视图样式
         public IRelayCommand SizeChangedCommand => new RelayCommand<WindowSizeChangedEventArgs>((args) =>
         {
-            if(Program.IsAppLaunched)
+            if (Program.IsAppLaunched)
             {
                 if (Program.ApplicationRoot.AppWindow.Size.Width >= 768)
                 {
@@ -387,31 +385,6 @@ namespace GetStoreApp.ViewModels.Window
                         break;
                     }
             }
-        }
-
-        /// <summary>
-        /// 关闭应用并释放所有资源
-        /// </summary>
-        private async Task CloseAppAsync()
-        {
-            await SaveWindowInformationAsync();
-            await DownloadSchedulerService.CloseDownloadSchedulerAsync();
-            await Aria2Service.CloseAria2Async();
-            Program.ApplicationRoot.TrayIcon.Dispose();
-            AppNotificationService.Unregister();
-            BackdropHelper.ReleaseBackdrop();
-            Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
-        }
-
-        /// <summary>
-        /// 关闭窗口时保存窗口的大小和位置信息
-        /// </summary>
-        private async Task SaveWindowInformationAsync()
-        {
-            await ConfigService.SaveSettingAsync(ConfigKey.WindowWidthKey, Program.ApplicationRoot.AppWindow.Size.Width);
-            await ConfigService.SaveSettingAsync(ConfigKey.WindowHeightKey, Program.ApplicationRoot.AppWindow.Size.Height);
-            await ConfigService.SaveSettingAsync(ConfigKey.WindowPositionXAxisKey, Program.ApplicationRoot.AppWindow.Position.X);
-            await ConfigService.SaveSettingAsync(ConfigKey.WindowPositionYAxisKey, Program.ApplicationRoot.AppWindow.Position.Y);
         }
     }
 }
