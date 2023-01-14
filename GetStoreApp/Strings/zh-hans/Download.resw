@@ -205,12 +205,9 @@
     <value>下载说明</value>
   </data>
   <data name="ExplanContent1" xml:space="preserve">
-    <value>下载功能正在处于测试阶段，可能存在不稳定现象。如果在下载过程中出现错误建议您使用浏览器调用专业的下载工具进行下载。</value>
-  </data>
-  <data name="ExplanContent2" xml:space="preserve">
     <value>下载链接具有时效性，该应用暂不支持下载失败的应用恢复下载。</value>
   </data>
-  <data name="ExplanContent3" xml:space="preserve">
+  <data name="ExplanContent2" xml:space="preserve">
     <value>如果遇到下载服务因为异常而退出，建议重启应用后再尝试下载。</value>
   </data>
   <data name="FileInformation" xml:space="preserve">

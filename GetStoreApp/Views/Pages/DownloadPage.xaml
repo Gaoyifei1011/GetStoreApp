@@ -29,7 +29,6 @@
                 <StackPanel Spacing="5">
                     <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Download/ExplanContent1')}" TextWrapping="Wrap" />
                     <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Download/ExplanContent2')}" TextWrapping="Wrap" />
-                    <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Download/ExplanContent3')}" TextWrapping="Wrap" />
                     <StackPanel
                         HorizontalAlignment="Right"
                         Orientation="Horizontal"

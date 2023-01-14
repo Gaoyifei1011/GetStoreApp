@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Models.Controls.Home;
-using HtmlAgilityPack;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace GetStoreApp.Helpers.Controls.Home
 {
@@ -10,18 +9,18 @@ namespace GetStoreApp.Helpers.Controls.Home
     /// </summary>
     public static class HtmlParseHelper
     {
-        private static HtmlDocument HtmlDocument { get; set; }
+        private static Regex CIDRegex = new Regex(@"<i>(.*?)<\/i>", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
+        private static Regex ResultDataListRegex = new Regex(@"<tr\sstyle=\\?""background-color:rgba\(\d{3},\s\d{3},\s\d{3},\s0.8\)\\?"">\s{0,}<td>\s{0,}<a\shref=\\?""(.*?)\\?""\srel=\\?""noreferrer\\?"">(.*?)<\/a>\s{0,}<\/td>\s{0,}<td\salign=\\?""center\\?"">(.*?GMT)<\/td>\s{0,}<td\salign=\\?""center\\?"">(.*?)<\/td>\s{0,}<td\salign=\\?""center\\?"">(.*?)<\/td>\s{0,}<\/tr>", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
+        private static string ParseContent = string.Empty;
 
         /// <summary>
-        /// 初始化HtmlParseService类时添加HtmlReqeustService生成的字符串数据
+        /// 初始化HtmlParseService类时添加HtmlReqeustHelper生成的字符串数据
         /// </summary>
-        /// <param name="HttpRequestData">HtmlReqeustService生成的数据</param>
         public static void InitializeParseData(RequestModel HttpRequestData)
         {
-            HtmlDocument = new HtmlDocument();
-
-            // 添加网页请求返回的具体内容
-            HtmlDocument.LoadHtml(HttpRequestData.RequestContent);
+            ParseContent = HttpRequestData.RequestContent;
         }
 
         /// <summary>
@@ -29,7 +28,20 @@ namespace GetStoreApp.Helpers.Controls.Home
         /// </summary>
         public static string HtmlParseCID()
         {
-            return HtmlDocument.DocumentNode.SelectSingleNode("//i").InnerText;
+            if (!string.IsNullOrEmpty(ParseContent))
+            {
+                MatchCollection CIDCollection = CIDRegex.Matches(ParseContent);
+                if (CIDCollection.Count > 0)
+                {
+                    GroupCollection CIDGroups = CIDCollection[0].Groups;
+
+                    if (CIDGroups.Count > 0)
+                    {
+                        return CIDGroups[1].Value;
+                    }
+                }
+            }
+            return string.Empty;
         }
 
         /// <summary>
@@ -39,26 +51,27 @@ namespace GetStoreApp.Helpers.Controls.Home
         {
             List<ResultModel> ResultDataList = new List<ResultModel>();
 
-            HtmlNode RequestLinkNode = HtmlDocument.DocumentNode.SelectSingleNode("//table[@class='tftable' and @border='1' and @align='center']");
-
-            IEnumerable<HtmlNode> RequestLinkNodeList = RequestLinkNode
-                 .Descendants("tr")
-                 .Where(x => x.Attributes.Contains("style"));
-
-            foreach (HtmlNode htmlNode in RequestLinkNodeList)
+            if (!string.IsNullOrEmpty(ParseContent))
             {
-                HtmlNodeCollection TdNodeList = htmlNode.ChildNodes;
+                MatchCollection ResultDataListCollection = ResultDataListRegex.Matches(ParseContent);
 
-                ResultDataList.Add(new ResultModel
+                foreach (Match matchItem in ResultDataListCollection)
                 {
-                    FileName = TdNodeList[0].InnerText,
-                    FileLink = TdNodeList[0].SelectSingleNode("a").Attributes["href"].Value,
-                    FileLinkExpireTime = TdNodeList[1].InnerText,
-                    FileSHA1 = TdNodeList[2].InnerText,
-                    FileSize = TdNodeList[3].InnerText
-                });
-            }
+                    GroupCollection ResultDataListGroups = matchItem.Groups;
 
+                    if (ResultDataListGroups.Count == 6)
+                    {
+                        ResultModel resultData = new ResultModel();
+                        resultData.FileLink = ResultDataListGroups[1].Value;
+                        resultData.FileName = ResultDataListGroups[2].Value;
+                        resultData.FileLinkExpireTime = ResultDataListGroups[3].Value;
+                        resultData.FileSHA1 = ResultDataListGroups[4].Value;
+                        resultData.FileSize = ResultDataListGroups[5].Value;
+
+                        ResultDataList.Add(resultData);
+                    }
+                }
+            }
             return ResultDataList;
         }
     }

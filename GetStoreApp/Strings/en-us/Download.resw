@@ -205,12 +205,9 @@
     <value>Download instructions</value>
   </data>
   <data name="ExplanContent1" xml:space="preserve">
-    <value>The download feature is in beta and may be unstable. If the current download file is large or an error occurs during the application re-download process, it is recommended to modify the download default options, and then use a professional download tool to assist the download.</value>
-  </data>
-  <data name="ExplanContent2" xml:space="preserve">
     <value>The download link is time-sensitive, and the app does not currently support resuming downloads for apps that fail to download.</value>
   </data>
-  <data name="ExplanContent3" xml:space="preserve">
+  <data name="ExplanContent2" xml:space="preserve">
     <value>If you encounter a download service that quits because of an exception, we recommend restarting the app before trying to download.</value>
   </data>
   <data name="FileInformation" xml:space="preserve">

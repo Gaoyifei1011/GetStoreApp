@@ -222,7 +222,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             IsGettingLinks = false;
 
-            // 成功状态下解析数据，并更新相应的历史记录
+            // 成功状态下解析数据
             if (state is 1)
             {
                 HtmlParseHelper.InitializeParseData(httpRequestData);
@@ -232,10 +232,6 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 ResultDataList = HtmlParseHelper.HtmlParseLinks();
 
                 ResultListFilter(ref ResultDataList);
-
-                await UpdateHistoryAsync(CurrentType, CurrentChannel, CurrentLink);
-
-                await UpdateTaskbarJumpListAsync(CurrentType, CurrentChannel, CurrentLink);
 
                 Messenger.Default.Send(true, MessageToken.History);
             }
@@ -248,6 +244,13 @@ namespace GetStoreApp.ViewModels.Controls.Home
             Messenger.Default.Send(CategoryId, MessageToken.ResultCategoryId);
 
             Messenger.Default.Send(ResultDataList, MessageToken.ResultDataList);
+
+            if (state is 1)
+            {
+                await UpdateHistoryAsync(CurrentType, CurrentChannel, CurrentLink);
+
+                await UpdateTaskbarJumpListAsync(CurrentType, CurrentChannel, CurrentLink);
+            }
         }
 
         /// <summary>

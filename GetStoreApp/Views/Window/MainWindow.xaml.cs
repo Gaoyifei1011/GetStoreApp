@@ -1,6 +1,4 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Extensions.Messaging;
-using GetStoreApp.Services.Root;
+﻿using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
 using Microsoft.UI.Xaml;
 using System;
