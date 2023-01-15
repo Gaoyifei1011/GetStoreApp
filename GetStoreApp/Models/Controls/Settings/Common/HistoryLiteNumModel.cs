@@ -1,8 +1,9 @@
-﻿using GetStoreApp.Models.Base;
-
-namespace GetStoreApp.Models.Controls.Settings.Common
+﻿namespace GetStoreApp.Models.Controls.Settings.Common
 {
-    public class HistoryLiteNumModel : ModelBase
+    /// <summary>
+    /// 主页面历史记录显示数量设置数据模型
+    /// </summary>
+    public class HistoryLiteNumModel
     {
         /// <summary>
         /// 主页面历史记录显示数量设置显示名称

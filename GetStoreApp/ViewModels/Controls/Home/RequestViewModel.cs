@@ -21,6 +21,9 @@ using Windows.UI.StartScreen;
 
 namespace GetStoreApp.ViewModels.Controls.Home
 {
+    /// <summary>
+    /// 主页面：请求用户控件视图模型
+    /// </summary>
     public sealed class RequestViewModel : ViewModelBase
     {
         public List<TypeModel> TypeList { get; } = ResourceService.TypeList;

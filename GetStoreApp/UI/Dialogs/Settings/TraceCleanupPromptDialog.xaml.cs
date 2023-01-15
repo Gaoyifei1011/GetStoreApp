@@ -6,6 +6,9 @@ using System;
 
 namespace GetStoreApp.UI.Dialogs.Settings
 {
+    /// <summary>
+    /// 痕迹清理对话框视图
+    /// </summary>
     public sealed partial class TraceCleanupPromptDialog : ContentDialog
     {
         public ElementTheme DialogTheme { get; } = (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);

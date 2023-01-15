@@ -13,6 +13,9 @@ using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
 {
+    /// <summary>
+    /// 设置页面：窗口背景材质设置用户控件视图模型
+    /// </summary>
     public sealed class BackdropViewModel : ViewModelBase
     {
         public List<BackdropModel> BackdropList { get; } = BackdropService.BackdropList;

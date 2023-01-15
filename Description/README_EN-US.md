@@ -51,7 +51,6 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 ### Project References (Sort by alphabetical order)
 
 > * [Aira2](https://aria2.github.io)&emsp;
-> * [HtmlAgilityPack](http://html-agility-pack.net)&emsp;
 > * [Microsoft.Data.Sqlite.Core](https://docs.microsoft.com/dotnet/standard/data/sqlite)&emsp;
 > * [Microsoft.Windows.CsWinRT](https://github.com/microsoft/cswinrt)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;

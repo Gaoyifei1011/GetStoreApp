@@ -6,6 +6,9 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace GetStoreApp.Views.Pages
 {
+    /// <summary>
+    /// 历史记录页面
+    /// </summary>
     public sealed partial class HistoryPage : Page
     {
         public string Fillin { get; } = ResourceService.GetLocalized("History/Fillin");
@@ -32,6 +35,9 @@ namespace GetStoreApp.Views.Pages
             Messenger.Default.Unregister(this);
         }
 
+        /// <summary>
+        /// 本地化历史记录数量统计信息
+        /// </summary>
         public string LocalizeHistoryCountInfo(int count)
         {
             if (count is 0)

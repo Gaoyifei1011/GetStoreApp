@@ -5,6 +5,9 @@ using Windows.Foundation;
 
 namespace GetStoreApp.Views.Pages
 {
+    /// <summary>
+    /// 关于页面
+    /// </summary>
     public sealed partial class AboutPage : Page
     {
         public AboutPage()
@@ -12,7 +15,9 @@ namespace GetStoreApp.Views.Pages
             InitializeComponent();
         }
 
-        // 页面加载完成后如果有具体的要求，将页面滚动到指定位置
+        /// <summary>
+        /// 页面加载完成后如果有具体的要求，将页面滚动到指定位置
+        /// </summary>
         public void AboutLoaded(object sender, RoutedEventArgs args)
         {
             double CurrentScrollPosition = AboutScroll.VerticalOffset;

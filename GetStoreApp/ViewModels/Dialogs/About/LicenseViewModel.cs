@@ -9,6 +9,9 @@ using Windows.Storage.Streams;
 
 namespace GetStoreApp.ViewModels.Dialogs.About
 {
+    /// <summary>
+    /// 应用许可证对话框视图模型
+    /// </summary>
     public sealed class LicenseViewModel : ViewModelBase
     {
         private string _licenseText;

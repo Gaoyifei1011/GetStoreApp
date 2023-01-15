@@ -1,8 +1,9 @@
-﻿using GetStoreApp.Models.Base;
-
-namespace GetStoreApp.Models.Controls.Settings.Common
+﻿namespace GetStoreApp.Models.Controls.Settings.Common
 {
-    public class DownloadModeModel : ModelBase
+    /// <summary>
+    /// 下载模式设置数据模型
+    /// </summary>
+    public class DownloadModeModel
     {
         /// <summary>
         /// 下载模式设置显示名称

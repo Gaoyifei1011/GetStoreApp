@@ -5,6 +5,9 @@ using System;
 
 namespace GetStoreApp.UI.Dialogs.Common
 {
+    /// <summary>
+    /// 应用程序正在运行中对话框视图
+    /// </summary>
     public sealed partial class AppRunningDialog : ContentDialog
     {
         public ElementTheme DialogTheme { get; } = (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);

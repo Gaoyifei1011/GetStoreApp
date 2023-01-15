@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
@@ -18,7 +17,7 @@ using WinRT.Interop;
 namespace GetStoreApp.Views.Window
 {
     /// <summary>
-    /// Windows 应用 SDK窗口的扩展
+    /// Windows 应用 SDK窗口的扩展类
     /// </summary>
     public class WASDKWindow : Microsoft.UI.Xaml.Window
     {
@@ -143,21 +142,13 @@ namespace GetStoreApp.Views.Window
         /// </summary>
         private IntPtr SetWindowLongPtr(IntPtr hWnd, WindowLongIndexFlags nIndex, WinProc newProc)
         {
-            if (InfoHelper.GetPackageArchitecture() is ProcessorArchitecture.X64)
-            {
-                return User32Library.SetWindowLongPtr(hWnd, nIndex, newProc);
-            }
-            else if (InfoHelper.GetPackageArchitecture() is ProcessorArchitecture.X86)
-            {
-                return User32Library.SetWindowLong(hWnd, nIndex, newProc);
-            }
-            else if (InfoHelper.GetPackageArchitecture() is ProcessorArchitecture.Arm64)
+            if (IntPtr.Size == 8)
             {
                 return User32Library.SetWindowLongPtr(hWnd, nIndex, newProc);
             }
             else
             {
-                return IntPtr.Zero;
+                return User32Library.SetWindowLongPtr(hWnd, nIndex, newProc);
             }
         }
 

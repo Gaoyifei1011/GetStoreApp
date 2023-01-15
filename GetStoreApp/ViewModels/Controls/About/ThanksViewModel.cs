@@ -2,6 +2,9 @@
 
 namespace GetStoreApp.ViewModels.Controls.About
 {
+    /// <summary>
+    /// 关于页面：感谢用户控件视图模型
+    /// </summary>
     public sealed class ThanksViewModel
     {
         public Dictionary<string, string> ThanksDict { get; } = new Dictionary<string, string>

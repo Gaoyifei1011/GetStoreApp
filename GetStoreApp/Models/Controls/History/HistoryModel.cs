@@ -2,6 +2,9 @@
 
 namespace GetStoreApp.Models.Controls.History
 {
+    /// <summary>
+    /// 历史记录数据模型
+    /// </summary>
     public class HistoryModel : ModelBase
     {
         /// <summary>

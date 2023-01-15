@@ -3,7 +3,7 @@
 namespace GetStoreApp.Helpers.Window
 {
     /// <summary>
-    /// 应用窗口设置
+    /// 应用窗口辅助类
     /// </summary>
     public static class WindowHelper
     {

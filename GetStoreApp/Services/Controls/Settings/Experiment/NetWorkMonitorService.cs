@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace GetStoreApp.Services.Controls.Settings.Experiment
 {
     /// <summary>
-    /// 实验性功能：下载文件时开启网络监控状态
+    /// 实验性功能：下载文件时开启网络监控状态设置服务
     /// </summary>
     public static class NetWorkMonitorService
     {

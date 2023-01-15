@@ -2,6 +2,9 @@
 
 namespace GetStoreApp.ViewModels.Notifications
 {
+    /// <summary>
+    /// 请求结果CategoryID复制成功后应用内通知视图模型
+    /// </summary>
     public sealed class ResultIDCopyViewModel : ViewModelBase
     {
         private bool _copyState = false;

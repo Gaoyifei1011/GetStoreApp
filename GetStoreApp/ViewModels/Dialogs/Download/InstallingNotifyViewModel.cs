@@ -5,6 +5,9 @@ using Microsoft.UI.Xaml.Shapes;
 
 namespace GetStoreApp.ViewModels.Dialogs.Download
 {
+    /// <summary>
+    /// 应用安装提示对话框视图模型
+    /// </summary>
     public sealed class InstallingNotifyViewModel
     {
         /// <summary>

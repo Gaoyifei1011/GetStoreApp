@@ -2,6 +2,9 @@
 
 namespace GetStoreApp.Models.Controls.Home
 {
+    /// <summary>
+    /// 网页请求返回结果的数据模型
+    /// </summary>
     public class ResultModel : ModelBase
     {
         /// <summary>

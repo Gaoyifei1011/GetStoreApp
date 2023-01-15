@@ -19,6 +19,9 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Controls.Home
 {
+    /// <summary>
+    /// 主页面：部分历史记录用户控件视图模型
+    /// </summary>
     public sealed class HistoryLiteViewModel
     {
         // 临界区资源访问互斥锁

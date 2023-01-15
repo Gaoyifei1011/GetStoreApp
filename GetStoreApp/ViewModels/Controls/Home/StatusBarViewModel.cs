@@ -10,6 +10,9 @@ using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Home
 {
+    /// <summary>
+    /// 主页面：状态栏用户控件视图模型
+    /// </summary>
     public sealed class StatusBarViewModel : ViewModelBase
     {
         private TaskbarManager Taskbar { get; } = TaskbarManager.Instance;

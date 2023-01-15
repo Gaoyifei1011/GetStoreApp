@@ -70,8 +70,8 @@
             <StackPanel VerticalAlignment="Top" Orientation="Horizontal">
                 <Button
                     x:Name="TeachingTipButton"
+                    Click="{x:Bind TeachingTipClicked}"
                     Content="{x:Bind root:ResourceService.GetLocalized('Download/DownloadDescription')}"
-                    Tapped="{x:Bind TeachingTipTapped}"
                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DownloadDescription')}"
                     Visibility="{x:Bind ViewModel.UseInsVisValue, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
             </StackPanel>

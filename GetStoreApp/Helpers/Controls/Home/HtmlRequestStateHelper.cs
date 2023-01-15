@@ -4,10 +4,13 @@ using System;
 namespace GetStoreApp.Helpers.Controls.Home
 {
     /// <summary>
-    /// 网页请求状态解析服务
+    /// 网页请求状态解析辅助类
     /// </summary>
     public static class HtmlRequestStateHelper
     {
+        /// <summary>
+        /// 检查请求后的状态信息
+        /// </summary>
         public static int CheckRequestState(RequestModel HttpRequestData)
         {
             // 服务器请求异常，返回状态值3

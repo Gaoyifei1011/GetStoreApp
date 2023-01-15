@@ -2,6 +2,9 @@
 
 namespace GetStoreApp.Models.Controls.Download
 {
+    /// <summary>
+    /// 未下载完成文件信息数据模型
+    /// </summary>
     public class UnfinishedModel : ModelBase
     {
         /// <summary>

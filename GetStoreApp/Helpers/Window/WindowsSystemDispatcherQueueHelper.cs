@@ -4,6 +4,9 @@ using Windows.System;
 
 namespace GetStoreApp.Helpers.Window
 {
+    /// <summary>
+    /// 线程调度器辅助类
+    /// </summary>
     public class WindowsSystemDispatcherQueueHelper
     {
         private object m_dispatcherQueueController = null;

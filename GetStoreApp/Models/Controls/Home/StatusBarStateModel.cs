@@ -1,9 +1,11 @@
-﻿using GetStoreApp.Models.Base;
-using Microsoft.UI.Xaml.Controls;
+﻿using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.Models.Controls.Home
 {
-    public class StatusBarStateModel : ModelBase
+    /// <summary>
+    /// 已下载完成文件信息数据模型
+    /// </summary>
+    public class StatusBarStateModel
     {
         /// <summary>
         /// 信息状态栏严重程度值

@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Controls.Settings.Advanced
 {
+    /// <summary>
+    /// 痕迹清理服务
+    /// </summary>
     public static class TraceCleanupService
     {
         /// <summary>

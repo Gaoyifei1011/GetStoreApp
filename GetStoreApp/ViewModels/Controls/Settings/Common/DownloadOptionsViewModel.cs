@@ -14,6 +14,9 @@ using Windows.Storage;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Common
 {
+    /// <summary>
+    /// 设置页面：下载管理设置用户控件视图模型
+    /// </summary>
     public sealed class DownloadOptionsViewModel : ViewModelBase
     {
         public List<DownloadModeModel> DownloadModeList { get; } = DownloadOptionsService.DownloadModeList;
@@ -95,18 +98,14 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
             }
         });
 
-        /// <summary>
-        /// 修改同时下载文件数
-        /// </summary>
+        // 修改同时下载文件数
         public IRelayCommand DownloadItemSelectCommand => new RelayCommand<string>(async (downloadItemIndex) =>
         {
             DownloadItem = Convert.ToInt32(downloadItemIndex);
             await DownloadOptionsService.SetItemAsync(DownloadItem);
         });
 
-        /// <summary>
-        /// 修改下载文件的方式
-        /// </summary>
+        // 修改下载文件的方式
         public IRelayCommand DownloadModeSelectCommand => new RelayCommand<string>(async (downloadModeIndex) =>
         {
             DownloadMode = DownloadModeList[Convert.ToInt32(downloadModeIndex)];

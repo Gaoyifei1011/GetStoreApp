@@ -348,6 +348,9 @@ namespace GetStoreApp.Services.Root
             });
         }
 
+        /// <summary>
+        /// 初始化痕迹清理列表
+        /// </summary>
         private static void InitializeTraceCleanupList()
         {
             TraceCleanupList.Add(new TraceCleanupModel

@@ -17,6 +17,6 @@
     mc:Ignorable="d">
 
     <ContentDialog.DataContext>
-        <dialog:AppRunningViewModel x:Name="ViewModel" />
+        <dialog:ClosingWindowViewModel x:Name="ViewModel" />
     </ContentDialog.DataContext>
 </ContentDialog>

@@ -3,6 +3,9 @@ using System;
 
 namespace GetStoreApp.Models.Controls.Download
 {
+    /// <summary>
+    /// 正在下载文件信息数据模型
+    /// </summary>
     public class DownloadingModel : ModelBase
     {
         /*

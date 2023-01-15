@@ -5,6 +5,9 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
 {
+    /// <summary>
+    /// 设置页面：窗口置顶设置用户控件视图模型
+    /// </summary>
     public sealed class TopMostViewModel : ViewModelBase
     {
         private bool _topMostValue = TopMostService.TopMostValue;

@@ -6,6 +6,9 @@ using System.Collections.Generic;
 
 namespace GetStoreApp.Services.Window
 {
+    /// <summary>
+    /// 应用导航服务
+    /// </summary>
     public static class NavigationService
     {
         public static Frame NavigationFrame { get; set; }
@@ -42,6 +45,9 @@ namespace GetStoreApp.Services.Window
             return NavigationFrame.CurrentSourcePageType;
         }
 
+        /// <summary>
+        /// 检查当前页面是否能向后导航
+        /// </summary>
         public static bool CanGoBack()
         {
             return NavigationFrame.CanGoBack;

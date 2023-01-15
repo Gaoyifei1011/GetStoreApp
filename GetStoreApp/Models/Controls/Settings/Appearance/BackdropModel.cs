@@ -1,8 +1,9 @@
-﻿using GetStoreApp.Models.Base;
-
-namespace GetStoreApp.Models.Controls.Settings.Appearance
+﻿namespace GetStoreApp.Models.Controls.Settings.Appearance
 {
-    public class BackdropModel : ModelBase
+    /// <summary>
+    /// 应用背景色设置数据模型
+    /// </summary>
+    public class BackdropModel
     {
         /// <summary>
         /// 应用背景色设置显示名称

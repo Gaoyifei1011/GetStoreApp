@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 namespace GetStoreApp.ViewModels.Base
 {
     /// <summary>
-    /// 该ViewModelModelBase类实现了InotifyPropertyChanged接口用于通知UI更新
+    /// 该视图模型基类实现了InotifyPropertyChanged接口用于通知UI更新
     /// </summary>
     public class ViewModelBase : INotifyPropertyChanged
     {

@@ -4,6 +4,9 @@ using System;
 
 namespace GetStoreApp.ViewModels.Controls.Web
 {
+    /// <summary>
+    /// 访问网页版页面：网页初始化失败用户控件视图模型
+    /// </summary>
     public sealed class LoadFailedViewModel
     {
         // 下载Webview2运行时

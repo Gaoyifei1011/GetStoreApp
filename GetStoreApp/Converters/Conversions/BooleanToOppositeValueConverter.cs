@@ -3,11 +3,11 @@ using System;
 
 namespace GetStoreApp.Converters.Conversions
 {
+    /// <summary>
+    /// 布尔值取反转换器
+    /// </summary>
     public class BooleanToOppositeValueConverter : IValueConverter
     {
-        /// <summary>
-        /// 布尔值取反转换器
-        /// </summary>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value is null)

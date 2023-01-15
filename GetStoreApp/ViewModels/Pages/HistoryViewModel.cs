@@ -22,6 +22,9 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Pages
 {
+    /// <summary>
+    /// 历史记录页面数据模型
+    /// </summary>
     public sealed class HistoryViewModel : ViewModelBase
     {
         // 临界区资源访问互斥锁
@@ -292,7 +295,9 @@ namespace GetStoreApp.ViewModels.Pages
             new HistoryCopyNotification(true, false).Show();
         });
 
-        // 导航到历史记录页面时，历史记录数据列表初始化，从数据库中存储的列表中加载
+        /// <summary>
+        /// 导航到历史记录页面时，历史记录数据列表初始化，从数据库中存储的列表中加载
+        /// </summary>
         public async void OnNavigatedTo()
         {
             await GetHistoryDataListAsync();

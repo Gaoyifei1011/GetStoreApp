@@ -6,6 +6,9 @@ using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Common
 {
+    /// <summary>
+    /// 设置页面：应用在应用商店对应的区域设置用户控件视图模型
+    /// </summary>
     public sealed class RegionViewModel : ViewModelBase
     {
         public List<RegionModel> RegionList { get; } = RegionService.RegionList;

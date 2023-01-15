@@ -1,21 +1,17 @@
 ﻿using GetStoreApp.Extensions.DataType.Struct;
-using System.Collections.Generic;
 using Windows.ApplicationModel;
-using Windows.System;
 using Windows.System.Profile;
 
 namespace GetStoreApp.Helpers.Root
 {
     /// <summary>
-    /// 系统版本和应用版本信息
+    /// 系统版本和应用版本信息辅助类
     /// </summary>
     public static class InfoHelper
     {
         private static AppVersion AppVersion;
 
         private static SystemVersion SystemVersion;
-
-        private static Dictionary<string, ulong> SystemVersionDict { get; } = new Dictionary<string, ulong>();
 
         /// <summary>
         /// 初始化应用版本信息
@@ -63,14 +59,6 @@ namespace GetStoreApp.Helpers.Root
         public static SystemVersion GetSystemVersion()
         {
             return SystemVersion;
-        }
-
-        /// <summary>
-        /// 获取当前应用的架构
-        /// </summary>
-        public static ProcessorArchitecture GetPackageArchitecture()
-        {
-            return Package.Current.Id.Architecture;
         }
     }
 }

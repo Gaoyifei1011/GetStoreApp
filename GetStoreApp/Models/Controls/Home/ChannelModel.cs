@@ -1,8 +1,9 @@
-﻿using GetStoreApp.Models.Base;
-
-namespace GetStoreApp.Models.Controls.Home
+﻿namespace GetStoreApp.Models.Controls.Home
 {
-    public class ChannelModel : ModelBase
+    /// <summary>
+    /// 通道类型数据模型
+    /// </summary>
+    public class ChannelModel
     {
         /// <summary>
         /// 获取应用通道显示名称

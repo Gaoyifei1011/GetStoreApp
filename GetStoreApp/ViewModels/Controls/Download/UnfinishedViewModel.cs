@@ -22,6 +22,9 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Controls.Download
 {
+    /// <summary>
+    /// 下载页面：未下载完成用户控件视图模型
+    /// </summary>
     public sealed class UnfinishedViewModel : ViewModelBase
     {
         // 临界区资源访问互斥锁

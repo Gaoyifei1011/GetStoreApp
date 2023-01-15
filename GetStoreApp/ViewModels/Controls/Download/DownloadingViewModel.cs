@@ -19,6 +19,9 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Controls.Download
 {
+    /// <summary>
+    /// 下载页面：正在下载完成用户控件视图模型
+    /// </summary>
     public sealed class DownloadingViewModel : ViewModelBase
     {
         // 临界区资源访问互斥锁

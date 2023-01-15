@@ -5,6 +5,9 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace GetStoreApp.Views.Pages
 {
+    /// <summary>
+    /// 主页面
+    /// </summary>
     public sealed partial class HomePage : Page
     {
         public HomePage()
@@ -24,7 +27,9 @@ namespace GetStoreApp.Views.Pages
             ViewModel.OnNavigatedFrom();
         }
 
-        // 页面加载完成后如果有具体的要求，将页面滚动到指定位置
+        /// <summary>
+        /// 页面加载完成后如果有具体的要求，将页面滚动到指定位置
+        /// </summary>
         public void HomeLoaded(object sender, RoutedEventArgs args)
         {
             if (Program.ApplicationRoot.NavigationArgs is AppNaviagtionArgs.Home)

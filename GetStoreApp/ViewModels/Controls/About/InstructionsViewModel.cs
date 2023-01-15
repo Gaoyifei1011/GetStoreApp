@@ -8,6 +8,9 @@ using System;
 
 namespace GetStoreApp.ViewModels.Controls.About
 {
+    /// <summary>
+    /// 关于页面：使用说明控件视图模型
+    /// </summary>
     public sealed class InstructionsViewModel
     {
         // 桌面程序启动参数说明

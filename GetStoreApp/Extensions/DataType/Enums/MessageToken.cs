@@ -1,5 +1,8 @@
 ﻿namespace GetStoreApp.Extensions.DataType.Enums
 {
+    /// <summary>
+    /// 消息令牌枚举值
+    /// </summary>
     public enum MessageToken
     {
         BackdropChanged = 0,

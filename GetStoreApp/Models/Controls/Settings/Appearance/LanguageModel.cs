@@ -1,5 +1,8 @@
 ﻿namespace GetStoreApp.Models.Controls.Settings.Appearance
 {
+    /// <summary>
+    /// 应用语言设置数据模型
+    /// </summary>
     public class LanguageModel
     {
         /// <summary>

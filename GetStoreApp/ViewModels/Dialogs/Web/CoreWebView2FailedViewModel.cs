@@ -13,6 +13,9 @@ using System.Text;
 
 namespace GetStoreApp.ViewModels.Dialogs.Web
 {
+    /// <summary>
+    /// 浏览器内核初始化失败错误信息对话框视图模型
+    /// </summary>
     public sealed class CoreWebView2FailedViewModel
     {
         public string ProcessFailedKind { get; set; }
@@ -44,6 +47,9 @@ namespace GetStoreApp.ViewModels.Dialogs.Web
             dialog.Hide();
         });
 
+        /// <summary>
+        /// 初始化错误信息
+        /// </summary>
         public void InitializeFailedInformation(CoreWebView2ProcessFailedEventArgs args)
         {
             ProcessFailedKind = Convert.ToString(args.ProcessFailedKind);

@@ -1,5 +1,8 @@
 ﻿namespace GetStoreApp.Models.Controls.Settings.Advanced
 {
+    /// <summary>
+    /// 应用安装方式设置数据模型
+    /// </summary>
     public class InstallModeModel
     {
         /// <summary>

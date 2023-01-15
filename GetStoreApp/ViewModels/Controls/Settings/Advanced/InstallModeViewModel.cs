@@ -11,6 +11,9 @@ using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
 {
+    /// <summary>
+    /// 设置页面：应用安装方式设置用户控件视图模型
+    /// </summary>
     public sealed class InstallModeViewModel : ViewModelBase
     {
         public List<InstallModeModel> InstallModeList => InstallModeService.InstallModeList;
@@ -35,9 +38,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
             NavigationService.NavigateTo(typeof(AboutPage));
         });
 
-        /// <summary>
-        /// 应用安装方式设置
-        /// </summary>
+        // 应用安装方式设置
         public IRelayCommand InstallModeSelectCommand => new RelayCommand<string>(async (installModeIndex) =>
         {
             InstallMode = InstallModeList[Convert.ToInt32(installModeIndex)];

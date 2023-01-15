@@ -10,6 +10,9 @@ using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Dialogs.About
 {
+    /// <summary>
+    /// 桌面程序参数对话框视图模型
+    /// </summary>
     public sealed class DesktopStartupArgsViewModel
     {
         public string SampleShort { get; } = @"GetStoreApp.exe ""https://www.microsoft.com/store/productId/9WZDNCRFJBMP""";

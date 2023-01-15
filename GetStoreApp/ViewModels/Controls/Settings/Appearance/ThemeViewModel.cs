@@ -8,6 +8,9 @@ using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
 {
+    /// <summary>
+    /// 设置页面：应用主题设置用户控件视图模型
+    /// </summary>
     public sealed class ThemeViewModel : ViewModelBase
     {
         public List<ThemeModel> ThemeList { get; } = ThemeService.ThemeList;
@@ -31,9 +34,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
             await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:colors"));
         });
 
-        /// <summary>
-        /// 主题修改设置
-        /// </summary>
+        // 主题修改设置
         public IRelayCommand ThemeSelectCommand => new RelayCommand<string>(async (themeIndex) =>
         {
             Theme = ThemeList[Convert.ToInt32(themeIndex)];

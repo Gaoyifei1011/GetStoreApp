@@ -13,6 +13,9 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Dialogs.Settings
 {
+    /// <summary>
+    /// 应用重启对话框视图模型
+    /// </summary>
     public sealed class RestartAppsViewModel
     {
         // 重启应用
@@ -73,7 +76,7 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
             Messenger.Default.Send(true, MessageToken.WindowClosed);
 
             // 重启应用
-            AppInstance.Restart("");
+            AppInstance.Restart(string.Empty);
         }
     }
 }

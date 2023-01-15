@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace GetStoreApp.UI.Controls.Home
 {
+    /// <summary>
+    /// 主页面：请求用户控件视图
+    /// </summary>
     public sealed partial class RequestControl : UserControl
     {
         public List<TypeModel> TypeList { get; } = ResourceService.TypeList;
@@ -14,16 +17,6 @@ namespace GetStoreApp.UI.Controls.Home
         public RequestControl()
         {
             InitializeComponent();
-        }
-
-        public string GetSelectedTypeName(int index)
-        {
-            return TypeList[index].DisplayName;
-        }
-
-        public string GetSelectedChannelName(int index)
-        {
-            return ChannelList[index].DisplayName;
         }
 
         public bool IsTypeItemChecked(string selectedInternalName, string internalName)

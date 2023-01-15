@@ -5,6 +5,9 @@ using WinRT;
 
 namespace GetStoreApp.Helpers.Window
 {
+    /// <summary>
+    /// 应用背景色辅助类
+    /// </summary>
     public static class BackdropHelper
     {
         private static WindowsSystemDispatcherQueueHelper m_wsdqHelper;
@@ -25,7 +28,7 @@ namespace GetStoreApp.Helpers.Window
 
                 // 挂接策略对象
                 m_configurationSource = new SystemBackdropConfiguration();
-                ((FrameworkElement)Program.ApplicationRoot.MainWindow.Content).ActualThemeChanged += WindowThemeChanged;
+                ((FrameworkElement)Program.ApplicationRoot.MainWindow.Content).ActualThemeChanged += OnActualThemeChanged;
 
                 // 初始化配置状态
                 m_configurationSource.IsInputActive = true;
@@ -55,7 +58,7 @@ namespace GetStoreApp.Helpers.Window
 
                 // 挂接策略对象
                 m_configurationSource = new SystemBackdropConfiguration();
-                ((FrameworkElement)Program.ApplicationRoot.MainWindow.Content).ActualThemeChanged += WindowThemeChanged;
+                ((FrameworkElement)Program.ApplicationRoot.MainWindow.Content).ActualThemeChanged += OnActualThemeChanged;
 
                 // 初始化配置状态
                 m_configurationSource.IsInputActive = true;
@@ -85,7 +88,7 @@ namespace GetStoreApp.Helpers.Window
 
                 // 挂接策略对象
                 m_configurationSource = new SystemBackdropConfiguration();
-                ((FrameworkElement)Program.ApplicationRoot.MainWindow.Content).ActualThemeChanged += WindowThemeChanged;
+                ((FrameworkElement)Program.ApplicationRoot.MainWindow.Content).ActualThemeChanged += OnActualThemeChanged;
 
                 // 初始化配置状态
                 m_configurationSource.IsInputActive = true;
@@ -123,6 +126,9 @@ namespace GetStoreApp.Helpers.Window
             }
         }
 
+        /// <summary>
+        /// 关闭应用的背景色
+        /// </summary>
         public static void ReleaseBackdrop()
         {
             // 确保任何云母/丙烯酸控制器被处置，这样它就不会试图使用这个关闭的窗口。
@@ -138,11 +144,14 @@ namespace GetStoreApp.Helpers.Window
                 m_acrylicController = null;
             }
 
-            ((FrameworkElement)Program.ApplicationRoot.MainWindow.Content).ActualThemeChanged -= WindowThemeChanged;
+            ((FrameworkElement)Program.ApplicationRoot.MainWindow.Content).ActualThemeChanged -= OnActualThemeChanged;
             m_configurationSource = null;
         }
 
-        private static void WindowThemeChanged(FrameworkElement sender, object args)
+        /// <summary>
+        /// 窗口主题色变化时修改背景色的主题色
+        /// </summary>
+        private static void OnActualThemeChanged(FrameworkElement sender, object args)
         {
             if (m_configurationSource is not null)
             {
@@ -150,6 +159,9 @@ namespace GetStoreApp.Helpers.Window
             }
         }
 
+        /// <summary>
+        /// 设置窗口的主题色
+        /// </summary>
         private static void SetConfigurationSourceTheme()
         {
             switch (((FrameworkElement)Program.ApplicationRoot.MainWindow.Content).ActualTheme)

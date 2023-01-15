@@ -5,6 +5,9 @@ using Microsoft.UI.Xaml.Shapes;
 
 namespace GetStoreApp.ViewModels.Dialogs.About
 {
+    /// <summary>
+    /// Cloudflare 5秒验证对话框视图模型
+    /// </summary>
     public sealed class CloudflareValidationViewModel
     {
         /// <summary>

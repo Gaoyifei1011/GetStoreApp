@@ -3,7 +3,6 @@
     /// <summary>
     /// 此接口适用于 <see cref="WeakAction{T}" /> 类，如果您存储多个 WeakAction{T} 实例但事先不知道 T 代表什么类型，则此接口非常有用。
     /// </summary>
-    ////[ClassInfo(typeof(Messenger))]
     public interface IExecuteWithObject
     {
         /// <summary>

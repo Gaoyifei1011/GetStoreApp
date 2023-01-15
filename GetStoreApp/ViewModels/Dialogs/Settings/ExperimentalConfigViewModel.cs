@@ -13,6 +13,9 @@ using System;
 
 namespace GetStoreApp.ViewModels.Dialogs.Settings
 {
+    /// <summary>
+    /// 实验性功能配置对话框视图模型
+    /// </summary>
     public sealed class ExperimentalConfigViewModel : ViewModelBase
     {
         private DispatcherTimer DisplayTimer = new DispatcherTimer();

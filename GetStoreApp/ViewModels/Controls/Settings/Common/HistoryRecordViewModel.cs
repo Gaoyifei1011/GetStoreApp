@@ -10,6 +10,9 @@ using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Common
 {
+    /// <summary>
+    /// 设置页面：历史记录设置用户控件视图模型
+    /// </summary>
     public sealed class HistoryRecordViewModel : ViewModelBase
     {
         public List<HistoryLiteNumModel> HistoryLiteNumList { get; } = HistoryRecordService.HistoryLiteNumList;
@@ -42,9 +45,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
             }
         }
 
-        /// <summary>
-        /// 主页面“历史记录”显示数目修改
-        /// </summary>
+        // 主页面“历史记录”显示数目修改
         public IRelayCommand HistoryLiteSelectCommand => new RelayCommand<string>(async (historyLiteIndex) =>
         {
             HistoryLiteItem = HistoryLiteNumList[Convert.ToInt32(historyLiteIndex)];
@@ -52,9 +53,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
             Messenger.Default.Send(HistoryLiteItem, MessageToken.HistoryLiteNum);
         });
 
-        /// <summary>
-        /// 任务栏右键菜单列表“历史记录”显示数目修改
-        /// </summary>
+        // 任务栏右键菜单列表“历史记录”显示数目修改
         public IRelayCommand HistoryJumpListSelectCommand => new RelayCommand<string>(async (historyJumpListIndex) =>
         {
             HistoryJumpListItem = HistoryJumpListNumList[Convert.ToInt32(historyJumpListIndex)];

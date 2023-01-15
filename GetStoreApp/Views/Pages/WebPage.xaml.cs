@@ -4,6 +4,9 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace GetStoreApp.Views.Pages
 {
+    /// <summary>
+    /// 访问网页版页面
+    /// </summary>
     public sealed partial class WebPage : Page
     {
         public WebPage()

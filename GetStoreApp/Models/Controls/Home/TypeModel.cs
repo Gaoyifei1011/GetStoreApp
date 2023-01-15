@@ -1,8 +1,9 @@
-﻿using GetStoreApp.Models.Base;
-
-namespace GetStoreApp.Models.Controls.Home
+﻿namespace GetStoreApp.Models.Controls.Home
 {
-    public class TypeModel : ModelBase
+    /// <summary>
+    /// 应用类型数据模型
+    /// </summary>
+    public class TypeModel
     {
         /// <summary>
         /// 获取应用类型显示名称

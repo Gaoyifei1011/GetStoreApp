@@ -5,6 +5,9 @@ using System.Runtime.InteropServices;
 
 namespace GetStoreApp.Extensions.SystemTray
 {
+    /// <summary>
+    /// 任务栏托盘图标
+    /// </summary>
     public class WindowsTrayIcon : IDisposable
     {
         private readonly object lockObject = new object();
@@ -17,7 +20,7 @@ namespace GetStoreApp.Extensions.SystemTray
         private bool IsDisposed;
 
         /// <summary>
-        /// 从任务栏图标接收消息。
+        /// 从任务栏图标接收消息
         /// </summary>
         private readonly WindowMessageSink messageSink;
 

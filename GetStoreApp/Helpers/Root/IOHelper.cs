@@ -8,10 +8,13 @@ using Windows.Storage.Streams;
 
 namespace GetStoreApp.Helpers.Root
 {
+    /// <summary>
+    /// 输入输出辅助类
+    /// </summary>
     public static class IOHelper
     {
         /// <summary>
-        /// 清空文件夹
+        /// 清空缓存文件夹
         /// </summary>
         public static bool CleanFolder(StorageFolder folder)
         {

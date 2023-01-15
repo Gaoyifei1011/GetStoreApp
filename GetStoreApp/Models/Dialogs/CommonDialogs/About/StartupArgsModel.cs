@@ -1,26 +1,27 @@
-﻿using GetStoreApp.Models.Base;
-
-namespace GetStoreApp.Models.Dialogs.CommonDialogs.About
+﻿namespace GetStoreApp.Models.Dialogs.CommonDialogs.About
 {
-    public class StartupArgsModel : ModelBase
+    /// <summary>
+    /// 应用启动参数数据模型
+    /// </summary>
+    public class StartupArgsModel
     {
         /// <summary>
-        /// 参数名称
+        /// 应用启动参数名称
         /// </summary>
         public string ArgumentName { get; set; }
 
         /// <summary>
-        /// 具体参数
+        /// 具体的应用启动参数
         /// </summary>
         public string Argument { get; set; }
 
         /// <summary>
-        /// 参数是否必需要输入
+        /// 应用启动参数是否必需要输入
         /// </summary>
         public string IsRequired { get; set; }
 
         /// <summary>
-        /// 参数具体内容
+        /// 应用启动参数具体内容
         /// </summary>
         public string ArgumentContent { get; set; }
     }

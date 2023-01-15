@@ -1,11 +1,12 @@
 ﻿using GetStoreApp.Models.Controls.Home;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace GetStoreApp.Helpers.Controls.Home
 {
     /// <summary>
-    /// 网页解析
+    /// 网页解析辅助类
     /// </summary>
     public static class HtmlParseHelper
     {
@@ -55,7 +56,7 @@ namespace GetStoreApp.Helpers.Controls.Home
             {
                 MatchCollection ResultDataListCollection = ResultDataListRegex.Matches(ParseContent);
 
-                foreach (Match matchItem in ResultDataListCollection)
+                foreach (Match matchItem in ResultDataListCollection.Cast<Match>())
                 {
                     GroupCollection ResultDataListGroups = matchItem.Groups;
 

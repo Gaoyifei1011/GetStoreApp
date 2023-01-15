@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.UI.Notifications
 {
+    /// <summary>
+    /// 请求结果链接复制成功后应用内通知视图
+    /// </summary>
     public sealed partial class ResultLinkCopyNotification : UserControl
     {
         public ElementTheme NotificationTheme { get; } = (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);

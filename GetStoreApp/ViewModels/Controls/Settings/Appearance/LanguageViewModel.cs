@@ -12,6 +12,9 @@ using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
 {
+    /// <summary>
+    /// 设置页面：界面语言设置用户控件视图模型
+    /// </summary>
     public sealed class LanguageViewModel : ViewModelBase
     {
         public List<LanguageModel> LanguageList { get; } = LanguageService.LanguageList;
@@ -36,9 +39,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
             NavigationService.NavigateTo(typeof(AboutPage));
         });
 
-        /// <summary>
-        /// 应用默认语言修改
-        /// </summary>
+        // 应用默认语言修改
         public async void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
             if (args.RemovedItems.Count > 0)

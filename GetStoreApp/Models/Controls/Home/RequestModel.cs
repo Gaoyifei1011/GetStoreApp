@@ -1,8 +1,9 @@
-﻿using GetStoreApp.Models.Base;
-
-namespace GetStoreApp.Models.Controls.Home
+﻿namespace GetStoreApp.Models.Controls.Home
 {
-    public class RequestModel : ModelBase
+    /// <summary>
+    /// 网页请求数据模型
+    /// </summary>
+    public class RequestModel
     {
         /// <summary>
         /// 网页请求返回的ID值

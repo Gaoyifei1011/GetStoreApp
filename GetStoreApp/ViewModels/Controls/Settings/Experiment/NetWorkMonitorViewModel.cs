@@ -7,6 +7,9 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Experiment
 {
+    /// <summary>
+    /// 实验性功能：网络监控状态设置用户控件视图模型
+    /// </summary>
     public sealed class NetWorkMonitorViewModel : ViewModelBase
     {
         private bool _netWorkMonitorValue = NetWorkMonitorService.NetWorkMonitorValue;

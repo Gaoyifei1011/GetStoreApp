@@ -25,6 +25,9 @@ using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Window
 {
+    /// <summary>
+    /// 应用主窗口数据模型
+    /// </summary>
     public sealed class MainWindowViewModel : ViewModelBase
     {
         private SolidColorBrush _appBackground;
@@ -102,17 +105,13 @@ namespace GetStoreApp.ViewModels.Window
             {"Settings",typeof(SettingsPage) }
         };
 
-        /// <summary>
-        /// 设置窗口处于非激活状态时的背景色
-        /// </summary>
+        // 设置窗口处于非激活状态时的背景色
         public IRelayCommand ActivatedCommand => new RelayCommand<WindowActivatedEventArgs>((args) =>
         {
             BackdropHelper.SetBackdropState(AlwaysShowBackdropService.AlwaysShowBackdropValue, args);
         });
 
-        /// <summary>
-        /// 关闭窗口之后关闭其他服务
-        /// </summary>
+        // 关闭窗口之后关闭其他服务
         public IRelayCommand ClosedCommand => new RelayCommand<WindowEventArgs>(async (args) =>
         {
             args.Handled = true;
@@ -173,9 +172,7 @@ namespace GetStoreApp.ViewModels.Window
             }
         });
 
-        /// <summary>
-        /// 当菜单中的项收到交互（如单击或点击）时发生。
-        /// </summary>
+        // 当菜单中的项收到交互（如单击或点击）时发生
         public IRelayCommand NavigationItemCommand => new RelayCommand<object>((invokedItemTag) =>
         {
             if (invokedItemTag is not null)
@@ -188,14 +185,16 @@ namespace GetStoreApp.ViewModels.Window
             }
         });
 
-        // 当后退按钮收到交互（如单击或点击）时发生。
+        /// <summary>
+        /// 当后退按钮收到交互（如单击或点击）时发生
+        /// </summary>
         public void OnNavigationViewBackRequested(object sender, NavigationViewBackRequestedEventArgs args)
         {
             NavigationService.NavigationFrom();
         }
 
         /// <summary>
-        /// 导航控件加载完成后初始化内容，初始化导航视图控件属性和应用的背景色。
+        /// 导航控件加载完成后初始化内容，初始化导航视图控件属性和应用的背景色
         /// </summary>
         public void OnNavigationViewLoaded(object sender, RoutedEventArgs args)
         {
@@ -272,13 +271,17 @@ namespace GetStoreApp.ViewModels.Window
             });
         }
 
-        // 页面被卸载时，注销所有事件
+        /// <summary>
+        /// 页面被卸载时，注销所有事件
+        /// </summary>
         public void OnNavigationViewUnLoaded(object sender, RoutedEventArgs args)
         {
             Messenger.Default.Unregister(this);
         }
 
-        // 导航完成后发生
+        /// <summary>
+        /// 导航完成后发生
+        /// </summary>
         public void OnFrameNavigated(object sender, NavigationEventArgs args)
         {
             Type CurrentPageType = NavigationService.GetCurrentPageType();
@@ -286,7 +289,9 @@ namespace GetStoreApp.ViewModels.Window
             IsBackEnabled = NavigationService.CanGoBack();
         }
 
-        // 导航失败时发生
+        /// <summary>
+        /// 导航失败时发生
+        /// </summary>
         public void OnFrameNavgationFailed(object sender, NavigationFailedEventArgs args)
         {
             throw new Exception(string.Format(ResourceService.GetLocalized("/Window/NavigationFailed"), args.SourcePageType.FullName));

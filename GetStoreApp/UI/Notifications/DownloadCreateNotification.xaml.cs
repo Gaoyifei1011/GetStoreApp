@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.UI.Notifications
 {
+    /// <summary>
+    /// 下载任务创建成功后应用内通知视图
+    /// </summary>
     public sealed partial class DownloadCreateNotification : UserControl
     {
         public ElementTheme NotificationTheme { get; } = (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);

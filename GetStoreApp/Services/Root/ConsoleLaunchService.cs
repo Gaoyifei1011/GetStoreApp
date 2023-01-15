@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace GetStoreApp.Services.Root
 {
     /// <summary>
-    /// 控制台应用启动方式
+    /// 控制台应用启动方式服务
     /// </summary>
     public static class ConsoleLaunchService
     {

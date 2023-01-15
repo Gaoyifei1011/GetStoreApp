@@ -8,6 +8,9 @@ using GetStoreApp.Views.Pages;
 
 namespace GetStoreApp.ViewModels.Pages
 {
+    /// <summary>
+    /// 主页面视图模型
+    /// </summary>
     public sealed class HomeViewModel : ViewModelBase
     {
         private bool _useInsVisValue;

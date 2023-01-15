@@ -9,7 +9,7 @@ using Windows.Web.Http.Headers;
 namespace GetStoreApp.Helpers.Controls.Home
 {
     /// <summary>
-    /// 网页请求
+    /// 网页请求辅助类
     /// </summary>
     public static class HtmlRequestHelper
     {
@@ -26,6 +26,9 @@ namespace GetStoreApp.Helpers.Controls.Home
 
         private static string RequestExceptionContent = string.Empty;
 
+        /// <summary>
+        /// 发送网页请求并获取结果
+        /// </summary>
         public static async Task<RequestModel> HttpRequestAsync(string content)
         {
             try

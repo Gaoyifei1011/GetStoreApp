@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace GetStoreApp.Helpers.Controls.Download
 {
     /// <summary>
-    /// Aria2进程服务
+    /// Aria2进程服务辅助类
     /// </summary>
     public static class Aria2ProcessHelper
     {

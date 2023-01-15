@@ -5,6 +5,9 @@ using Microsoft.UI.Xaml.Shapes;
 
 namespace GetStoreApp.ViewModels.Dialogs.Common
 {
+    /// <summary>
+    /// 应用程序正在运行中对话框视图模型
+    /// </summary>
     public sealed class AppRunningViewModel
     {
         /// <summary>

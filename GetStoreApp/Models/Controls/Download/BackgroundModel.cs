@@ -1,5 +1,8 @@
 ﻿namespace GetStoreApp.Models.Controls.Download
 {
+    /// <summary>
+    /// 正在下载文件信息后台数据模型
+    /// </summary>
     public class BackgroundModel
     {
         /// <summary>

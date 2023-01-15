@@ -23,6 +23,9 @@ using Windows.UI.StartScreen;
 
 namespace GetStoreApp.ViewModels.Window
 {
+    /// <summary>
+    /// 应用类数据模型
+    /// </summary>
     public sealed class AppViewModel
     {
         // 隐藏 / 显示窗口

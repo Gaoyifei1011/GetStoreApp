@@ -5,6 +5,9 @@ using Microsoft.UI.Xaml.Shapes;
 
 namespace GetStoreApp.ViewModels.Dialogs.About
 {
+    /// <summary>
+    /// 如何识别传统桌面应用对话框视图模型
+    /// </summary>
     public sealed class DesktopAppsViewModel
     {
         /// <summary>

@@ -23,6 +23,9 @@ using Windows.Storage;
 
 namespace GetStoreApp.ViewModels.Pages
 {
+    /// <summary>
+    /// 访问网页版数据模型
+    /// </summary>
     public sealed class WebViewModel : ViewModelBase
     {
         private const string DefaultUrl = "https://store.rg-adguard.net/";

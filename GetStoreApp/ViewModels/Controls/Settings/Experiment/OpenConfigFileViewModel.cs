@@ -11,6 +11,9 @@ using Windows.System;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Experiment
 {
+    /// <summary>
+    /// 实验性功能：打开Aria2配置文件用户控件视图模型
+    /// </summary>
     public sealed class OpenConfigFileViewModel
     {
         // 打开配置文件目录

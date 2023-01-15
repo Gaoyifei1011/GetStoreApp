@@ -3,6 +3,9 @@ using System;
 
 namespace GetStoreApp.Helpers.Controls.Web
 {
+    /// <summary>
+    /// WebView2辅助类
+    /// </summary>
     public static class WebView2Helper
     {
         /// <summary>

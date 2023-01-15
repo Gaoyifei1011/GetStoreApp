@@ -1,8 +1,9 @@
-﻿using GetStoreApp.Models.Base;
-
-namespace GetStoreApp.Models.Controls.Settings.Appearance
+﻿namespace GetStoreApp.Models.Controls.Settings.Appearance
 {
-    public class ThemeModel : ModelBase
+    /// <summary>
+    /// 应用主题设置数据模型
+    /// </summary>
+    public class ThemeModel
     {
         /// <summary>
         /// 应用主题设置显示名称

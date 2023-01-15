@@ -5,7 +5,6 @@ namespace GetStoreApp.Contracts.Messaging
     /// <summary>
     /// 信使是一个允许对象交换消息的类。
     /// </summary>
-    ////[ClassInfo(typeof(Messenger))]
     public interface IMessenger
     {
         /// <summary>

@@ -8,6 +8,9 @@ using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
 {
+    /// <summary>
+    /// 设置页面：应用关闭方式设置用户控件视图模型
+    /// </summary>
     public sealed class AppExitViewModel : ViewModelBase
     {
         public List<AppExitModel> AppExitList { get; } = AppExitService.AppExitList;
@@ -25,9 +28,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
             }
         }
 
-        /// <summary>
-        /// 应用退出方式设置
-        /// </summary>
+        // 应用退出方式设置
         public IRelayCommand AppExitSelectCommand => new RelayCommand<string>(async (appExitIndex) =>
         {
             AppExit = AppExitList[Convert.ToInt32(appExitIndex)];

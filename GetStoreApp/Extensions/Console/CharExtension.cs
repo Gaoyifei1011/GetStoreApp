@@ -3,7 +3,7 @@
 namespace GetStoreApp.Extensions.Console
 {
     /// <summary>
-    /// 字符类型扩展
+    /// 字符类型扩展方法
     /// </summary>
     public static class CharExtension
     {
@@ -18,8 +18,7 @@ namespace GetStoreApp.Extensions.Console
         }
 
         /// <summary>
-        /// 获取该字符在控制台显示的实际宽度
-        /// TODO:调整一下代码结构
+        /// 获取该字符在控制台显示的实际宽度（二叉树遍历）
         /// </summary>
         public static int GetCharDisplayLength(char c)
         {

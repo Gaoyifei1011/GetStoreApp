@@ -25,6 +25,9 @@ using Windows.Storage;
 
 namespace GetStoreApp.ViewModels.Controls.Download
 {
+    /// <summary>
+    /// 下载页面：已下载完成用户控件视图模型
+    /// </summary>
     public sealed class CompletedViewModel : ViewModelBase
     {
         // 临界区资源访问互斥锁

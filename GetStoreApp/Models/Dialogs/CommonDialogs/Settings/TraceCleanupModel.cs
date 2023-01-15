@@ -3,6 +3,9 @@ using GetStoreApp.Models.Base;
 
 namespace GetStoreApp.Models.Dialogs.CommonDialogs.Settings
 {
+    /// <summary>
+    /// 清理选项数据模型
+    /// </summary>
     public class TraceCleanupModel : ModelBase
     {
         /// <summary>

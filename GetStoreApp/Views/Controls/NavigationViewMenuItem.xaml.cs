@@ -5,6 +5,9 @@ using System.Windows.Input;
 
 namespace GetStoreApp.Views.Controls
 {
+    /// <summary>
+    /// 附带命令的导航控件项的容器
+    /// </summary>
     public sealed partial class NavigationViewMenuItem : NavigationViewItem
     {
         public ICommand Command
@@ -36,6 +39,9 @@ namespace GetStoreApp.Views.Controls
             Tapped -= OnTapped;
         }
 
+        /// <summary>
+        /// 点击导航控件项时触发命令
+        /// </summary>
         private void OnTapped(object sender, TappedRoutedEventArgs args)
         {
             ICommand clickCommand = Command;

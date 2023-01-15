@@ -5,13 +5,15 @@ using Windows.Storage.Streams;
 namespace GetStoreApp.Helpers.Root
 {
     /// <summary>
-    /// 生成唯一键值
+    /// 唯一键值生成辅助类
     /// </summary>
     public static class UniqueKeyHelper
     {
+        /// <summary>
+        ///  拼接并生成唯一的历史记录MD5值
+        /// </summary>
         public static string GenerateHistoryKey(string typeName, string channelName, string currentLink)
         {
-            // 拼接准备要生成唯一的MD5值的内容
             string Content = string.Format("{0} {1} {2}", typeName, channelName, currentLink);
 
             return CalculateUniqueKey(Content);

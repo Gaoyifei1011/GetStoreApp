@@ -14,6 +14,9 @@ using System.Text;
 
 namespace GetStoreApp.ViewModels.Dialogs.Download
 {
+    /// <summary>
+    /// 文件信息对话框视图模型
+    /// </summary>
     public sealed class FileInformationViewModel : ViewModelBase
     {
         public string FileName { get; set; }
@@ -115,6 +118,9 @@ namespace GetStoreApp.ViewModels.Dialogs.Download
             }
         }
 
+        /// <summary>
+        /// 初始化文件信息
+        /// </summary>
         public void InitializeFileInformation(CompletedModel completedItem)
         {
             FileName = completedItem.FileName;

@@ -8,7 +8,7 @@ using System.Text;
 namespace GetStoreApp.Helpers.Root
 {
     /// <summary>
-    /// Windows 支持的国家/地区列表
+    /// Windows 支持的国家 / 地区列表辅助类
     /// </summary>
     public static class GeographicalLocationHelper
     {

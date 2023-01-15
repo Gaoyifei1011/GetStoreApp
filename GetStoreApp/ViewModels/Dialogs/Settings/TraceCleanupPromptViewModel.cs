@@ -16,6 +16,9 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Dialogs.Settings
 {
+    /// <summary>
+    /// 痕迹清理对话框视图模型
+    /// </summary>
     public sealed class TraceCleanupPromptViewModel : ViewModelBase
     {
         public List<TraceCleanupModel> TraceCleanupList { get; set; } = new List<TraceCleanupModel>();

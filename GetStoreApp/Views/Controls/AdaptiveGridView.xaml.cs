@@ -70,7 +70,6 @@ namespace GetStoreApp.Views.Controls
         /// </summary>
         private double ItemWidth
         {
-            get { return (double)GetValue(ItemWidthProperty); }
             set { SetValue(ItemWidthProperty, value); }
         }
 

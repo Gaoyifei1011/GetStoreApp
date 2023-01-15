@@ -4,6 +4,9 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace GetStoreApp.Views.Pages
 {
+    /// <summary>
+    /// 下载页面
+    /// </summary>
     public sealed partial class DownloadPage : Page
     {
         public DownloadPage()
@@ -23,7 +26,7 @@ namespace GetStoreApp.Views.Pages
             ViewModel.OnNavigatedFrom();
         }
 
-        public void TeachingTipTapped(object sender, RoutedEventArgs args)
+        public void TeachingTipClicked(object sender, RoutedEventArgs args)
         {
             DownloadTeachingTip.IsOpen = true;
         }

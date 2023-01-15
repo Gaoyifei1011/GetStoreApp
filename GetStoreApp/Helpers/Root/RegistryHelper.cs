@@ -4,6 +4,9 @@ using System;
 
 namespace GetStoreApp.Helpers.Root
 {
+    /// <summary>
+    /// 注册表读写辅助类
+    /// </summary>
     public static class RegistryHelper
     {
         /// <summary>

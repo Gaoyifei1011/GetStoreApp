@@ -5,6 +5,9 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Common
 {
+    /// <summary>
+    /// 设置页面：应用通知设置用户控件视图模型
+    /// </summary>
     public sealed class NotificationViewModel : ViewModelBase
     {
         private bool _notification = NotificationService.AppNotification;

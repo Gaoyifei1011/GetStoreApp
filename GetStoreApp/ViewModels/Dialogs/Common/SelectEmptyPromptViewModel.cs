@@ -5,6 +5,9 @@ using Microsoft.UI.Xaml.Shapes;
 
 namespace GetStoreApp.ViewModels.Dialogs.Common
 {
+    /// <summary>
+    /// 项目选择为空时提示对话框视图模型
+    /// </summary>
     public sealed class SelectEmptyPromptViewModel
     {
         /// <summary>

@@ -12,6 +12,9 @@ using Windows.Graphics;
 
 namespace GetStoreApp.ViewModels.Controls.Window
 {
+    /// <summary>
+    /// 应用标题栏用户控件视图模型
+    /// </summary>
     public sealed class AppTitleBarViewModel
     {
         /// <summary>

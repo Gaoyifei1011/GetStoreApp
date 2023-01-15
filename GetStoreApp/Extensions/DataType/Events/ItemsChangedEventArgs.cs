@@ -9,6 +9,7 @@ namespace GetStoreApp.Extensions.DataType.Events
     public class ItemsChangedEventArgs<T> : EventArgs
     {
         public IList<T> RemovedItems { get; private set; }
+
         public IList<T> AddedItems { get; private set; }
 
         public ItemsChangedEventArgs(IList<T> removedItems, IList<T> addItems)

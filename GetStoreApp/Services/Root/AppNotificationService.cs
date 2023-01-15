@@ -18,6 +18,9 @@ namespace GetStoreApp.Services.Root
     {
         private static AppNotificationManager AppNotificationManager { get; } = AppNotificationManager.Default;
 
+        /// <summary>
+        /// 初始化应用通知
+        /// </summary>
         public static void Initialize()
         {
             AppNotificationManager.NotificationInvoked += OnNotificationInvoked;
@@ -198,7 +201,7 @@ namespace GetStoreApp.Services.Root
         }
 
         /// <summary>
-        /// 注销通知服务
+        /// 注销应用通知
         /// </summary>
         public static void Unregister()
         {

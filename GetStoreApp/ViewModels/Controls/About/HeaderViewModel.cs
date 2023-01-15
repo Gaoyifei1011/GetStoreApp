@@ -7,6 +7,9 @@ using System;
 
 namespace GetStoreApp.ViewModels.Controls.About
 {
+    /// <summary>
+    /// 关于页面：顶部栏用户控件视图模型
+    /// </summary>
     public sealed class HeaderViewModel : ViewModelBase
     {
         private readonly ushort MajorVersion = InfoHelper.GetAppVersion().MajorVersion;

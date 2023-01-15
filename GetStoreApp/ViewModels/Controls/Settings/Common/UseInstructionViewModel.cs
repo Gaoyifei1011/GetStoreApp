@@ -5,6 +5,9 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Common
 {
+    /// <summary>
+    /// 设置页面：使用说明按钮显示设置用户控件视图模型
+    /// </summary>
     public sealed class UseInstructionViewModel : ViewModelBase
     {
         private bool _useInsVisValue = UseInstructionService.UseInsVisValue;

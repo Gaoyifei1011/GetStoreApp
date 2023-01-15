@@ -7,6 +7,9 @@ using System;
 
 namespace GetStoreApp.UI.Dialogs.Common
 {
+    /// <summary>
+    /// 重复下载提示对话框视图
+    /// </summary>
     public sealed partial class DownloadNotifyDialog : ContentDialog
     {
         public ElementTheme DialogTheme { get; } = (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);

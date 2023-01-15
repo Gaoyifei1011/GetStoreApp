@@ -5,6 +5,9 @@ using System;
 
 namespace GetStoreApp.ViewModels.Pages
 {
+    /// <summary>
+    /// 关于页面视图模型
+    /// </summary>
     public sealed class AboutViewModel
     {
         // 查看更新日志

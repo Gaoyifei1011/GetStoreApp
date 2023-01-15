@@ -10,6 +10,9 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.ViewModels.Pages
 {
+    /// <summary>
+    /// 下载页面视图模型
+    /// </summary>
     public sealed class DownloadViewModel : ViewModelBase
     {
         private bool _useInsVisValue;
@@ -41,14 +44,18 @@ namespace GetStoreApp.ViewModels.Pages
             NavigationService.NavigateTo(typeof(SettingsPage));
         });
 
-        // 初次加载页面时，开启下载中页面的所有事件，加载下载中页面的数据
+        /// <summary>
+        /// 初次加载页面时，开启下载中页面的所有事件，加载下载中页面的数据
+        /// </summary>
         public void OnNavigatedTo()
         {
             UseInsVisValue = UseInstructionService.UseInsVisValue;
             Messenger.Default.Send(0, MessageToken.PivotSelection);
         }
 
-        // 离开该页面时，关闭所有事件，并通知注销所有事件（防止内存泄露）
+        /// <summary>
+        /// 离开该页面时，关闭所有事件，并通知注销所有事件（防止内存泄露）
+        /// </summary>
         public void OnNavigatedFrom()
         {
             Messenger.Default.Send(-1, MessageToken.PivotSelection);

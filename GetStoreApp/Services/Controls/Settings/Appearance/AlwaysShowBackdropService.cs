@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Controls.Settings.Appearance
 {
+    /// <summary>
+    /// 始终显示背景色设置服务
+    /// </summary>
     public static class AlwaysShowBackdropService
     {
         private static string SettingsKey { get; } = ConfigKey.AlwaysShowBackdropKey;

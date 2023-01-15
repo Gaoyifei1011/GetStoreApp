@@ -4,6 +4,9 @@ using System;
 
 namespace GetStoreApp.ViewModels.Controls.About
 {
+    /// <summary>
+    /// 关于页面：设置选项说明用户控件视图模型
+    /// </summary>
     public sealed class SettingsHelpViewModel
     {
         // 系统信息

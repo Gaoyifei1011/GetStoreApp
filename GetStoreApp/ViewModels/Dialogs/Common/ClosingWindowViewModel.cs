@@ -5,6 +5,9 @@ using Microsoft.UI.Xaml.Shapes;
 
 namespace GetStoreApp.ViewModels.Dialogs.Common
 {
+    /// <summary>
+    /// 任务下载中提示对话框视图
+    /// </summary>
     public sealed class ClosingWindowViewModel
     {
         /// <summary>
