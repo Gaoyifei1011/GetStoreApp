@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.Sqlite;
+using SQLitePCL;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -26,6 +27,9 @@ namespace GetStoreApp.Services.Root
         {
             // 创建数据库文件
             await ApplicationData.Current.LocalFolder.CreateFileAsync(DBName, CreationCollisionOption.OpenIfExists);
+
+            // 使用自定义Sqlite版本
+            raw.SetProvider(new SQLite3Provider_winsqlite3());
 
             // 初始化历史记录表
             await InitializeHistoryTableAsync();

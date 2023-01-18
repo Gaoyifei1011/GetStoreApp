@@ -108,7 +108,13 @@
             <Frame
                 x:Name="WindowFrame"
                 Navigated="{x:Bind ViewModel.OnFrameNavigated}"
-                NavigationFailed="{x:Bind ViewModel.OnFrameNavgationFailed}" />
+                NavigationFailed="{x:Bind ViewModel.OnFrameNavgationFailed}">
+                <Frame.ContentTransitions>
+                    <TransitionCollection>
+                        <NavigationThemeTransition />
+                    </TransitionCollection>
+                </Frame.ContentTransitions>
+            </Frame>
         </NavigationView>
     </Grid>
 </WinUI:WASDKWindow>

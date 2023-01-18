@@ -10,7 +10,7 @@ namespace GetStoreApp.ViewModels.Controls.About
         public Dictionary<string, string> ThanksDict { get; } = new Dictionary<string, string>
         {
             {"AndromedaMelody","https://github.com/AndromedaMelody" },
-            {"飞翔","https://fionlen.azurewebsites.net/"},
+            {"飞翔","https://fionlen.azurewebsites.net"},
             {"MouriNaruto","https://github.com/MouriNaruto" },
             {"TaylorShi","https://github.com/TaylorShi" }
         };

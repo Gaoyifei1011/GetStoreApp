@@ -50,7 +50,7 @@ namespace GetStoreApp.ViewModels.Dialogs.About
                 }
             }
 
-            StorageFile LicenseFile = await StorageFile.GetFileFromPathAsync(System.IO.Path.Combine(AppContext.BaseDirectory, "LICENSE"));
+            StorageFile LicenseFile = await StorageFile.GetFileFromPathAsync(System.IO.Path.Combine(AppContext.BaseDirectory, @"Assets\LICENSE"));
 
             IBuffer buffer = await FileIO.ReadBufferAsync(LicenseFile);
             DataReader reader = DataReader.FromBuffer(buffer);

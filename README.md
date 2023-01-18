@@ -26,16 +26,16 @@
 ### 应用截图
 
 #### <p align="center">应用成功获取界面</p>
-![image](https://user-images.githubusercontent.com/49179966/190880785-3df61d85-2134-41c1-bb94-6cd9a91cf1e5.png)
+![image](https://user-images.githubusercontent.com/49179966/213072610-b0acba12-bb60-43cb-b5b1-a0270cd3b7f1.png)
 #### <p align="center">历史记录</p>
-![image](https://user-images.githubusercontent.com/49179966/190880908-fe88b95f-28e9-4081-8ad0-95fbf8b36295.png)
-#### <p align="center">下载界面</p>
-![image](https://user-images.githubusercontent.com/49179966/190880969-07aba750-0c0a-474b-ab73-69176c25145e.png)
-![image](https://user-images.githubusercontent.com/49179966/190880987-71946b4e-6267-4315-b0e7-a68349ff1f56.png)
-#### <p align="center">网页界面</p>
-![image](https://user-images.githubusercontent.com/49179966/190880935-c4efdcbf-f8ef-44e3-906b-27357be25795.png)
+![image](https://user-images.githubusercontent.com/49179966/213072877-d1be2dc7-f351-4607-809d-f23134b18ca9.png)
+#### <p align="center">下载管理</p>
+![image](https://user-images.githubusercontent.com/49179966/213073804-83c985f2-4917-4b5f-8c3b-f49c94b8c5a1.png)
+![image](https://user-images.githubusercontent.com/49179966/213074001-02fca36d-65a1-493f-abf1-0b087e51e2fc.png)
+#### <p align="center">访问网页版</p>
+![image](https://user-images.githubusercontent.com/49179966/213074325-54989cde-4a2e-4876-8c31-67532d0614f9.png)
 #### <p align="center">应用说明</p>
-![image](https://user-images.githubusercontent.com/49179966/190880798-eb849860-589b-4f24-9112-09514cfd1964.png)
+![image](https://user-images.githubusercontent.com/49179966/213076697-4a3e45f1-3474-4fde-8f72-06a0fc79b65c.png)
 
 ------
 
@@ -49,18 +49,21 @@
 | 下载完成后离线部署应用          | 已完成                                            |
 | 访问网页版对接下载接口          | 已完成                                            |
 | 控制台应用程序（快速下载）      | 已完成                                            |
-| 程序性能优化                    | 计划中（预计1.0.0正式版本实现）                   |
+| 程序性能优化                    | 已完成                                            |
 
-> * 我是c#的初学者，且本人时间较为紧张，只能利用自己的闲余时间开发，开发进度较为缓慢，请谅解。
+程序所有功能都已开发完成
+
 ------
 
 ### 项目引用（按英文首字母排序）
 
 > * [Aira2](https://aria2.github.io)&emsp;
 > * [Microsoft.Data.Sqlite.Core](https://docs.microsoft.com/dotnet/standard/data/sqlite)&emsp;
-> * [Microsoft.Windows.CsWinRT](https://github.com/microsoft/cswinrt)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
-> * [SQLitePCLRaw.bundle_winsqlite3](https://github.com/ericsink/SQLitePCL.raw)&emsp;
+> * [SQLitePCLRaw.core](https://github.com/ericsink/SQLitePCL.raw)&emsp;
+> * [SQLitePCLRaw.provider.winsqlite3](https://github.com/ericsink/SQLitePCL.raw)&emsp;
+
+[学习过程中参考或使用的代码](https://github.com/Gaoyifei1011/GetStoreApp/blob/master/Description/StudyReferenceCode.md)&emsp;
 
 ------
 
@@ -79,7 +82,7 @@
 #### <p align="center">必须安装的工具</p>
 
 > * [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com/) 
-> * .NET桌面开发（Visual Studio Installer中安装，.NET SDK 版本 6.0）
+> * .NET桌面开发（Visual Studio Installer中安装，.NET SDK 版本 7.0）
 > * [Microsoft Edge WebView2 运行时](https://developer.microsoft.com/zh-cn/microsoft-edge/webview2/) （推荐安装）
 
 #### <p align="center">编译步骤</p>
@@ -99,12 +102,21 @@
 > * README_(对应的语言).md文件中添加的语言截图替换为您熟悉的语言的应用截图。
 > * 完成上面所述的翻译步骤，确保所有步骤能够顺利运行。
 > * 打开GetStoreAppPackage打包项目，找到Package.appxmanifest文件，右键该文件，点击查看代码，找到Resources标签，根据模板添加相对应的语言，例如“<Resource Language="EN-US"/>”。
-> * 打开项目的Strings文件夹，并创建您使用的语言，比如（English(United States)）文件夹名称为en-us，具体可以参考表示语言(文化)代码与国家地区对照表）。
+> * 打开GetStoreApp项目的Strings文件夹，并创建您使用的语言，比如（English(United States)）文件夹名称为en-us，具体可以参考表示语言(文化)代码与国家地区对照表）。
 > * 打开子文件夹下的resw文件，对每一个名称进行翻译。
 > * 编译运行代码并测试您的语言，应用在初次打开的时候如果没有您使用的语言默认显示English(United States)，需要在设置中动态调整。
 > * 完成上述步骤后创建PR，然后将修改的内容提交到本项目，等待合并即可。
 
 ------
 
-## 项目 Star 数量统计趋势图
+### 感谢（按英文首字母排序）
+
+> * [AndromedaMelody](https://github.com/AndromedaMelody)&emsp;
+> * [飞翔](https://fionlen.azurewebsites.net)&emsp;
+> * [MouriNaruto](https://github.com/MouriNaruto)&emsp;
+> * [TaylorShi](https://github.com/TaylorShi)&emsp;
+
+------
+
+### 项目 Star 数量统计趋势图
 [![Stargazers over time](https://starchart.cc/Gaoyifei1011/GetStoreApp.svg)](https://starchart.cc/Gaoyifei1011/GetStoreApp)

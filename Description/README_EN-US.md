@@ -19,16 +19,16 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 ### Screenshot of the app
 
 #### <p align="center">The app successfully gets the interface</p>
-![image](https://user-images.githubusercontent.com/49179966/190880888-ecba0107-3d5a-4b16-a3ec-e47eb7f9f166.png)
-#### <p align="center">History Records</p>
-![image](https://user-images.githubusercontent.com/49179966/190880874-bdbd173d-333e-4409-af1c-e3fe9d596bb5.png)
-#### <p align="center">Download Page</p>
-![image](https://user-images.githubusercontent.com/49179966/190881022-38955a18-fa97-4ba2-ad43-a57c2cc9d383.png)
-![image](https://user-images.githubusercontent.com/49179966/190881042-78c3facc-4d10-48e8-b631-7c59427cea43.png)
-#### <p align="center">Web Page</p>
-![image](https://user-images.githubusercontent.com/49179966/190880867-2a96f02c-9073-4179-8689-32dd1aeef507.png)
+![image](https://user-images.githubusercontent.com/49179966/213074717-14e491c7-bdf9-4bfd-a156-f9ba7d041bcd.png)
+#### <p align="center">History Record</p>
+![image](https://user-images.githubusercontent.com/49179966/213074809-7097acca-0403-42de-8c6b-b843b068f252.png)
+#### <p align="center">Download Management</p>
+![image](https://user-images.githubusercontent.com/49179966/213075014-8141a1ca-c589-43c1-ab6d-68dd5215feea.png)
+![image](https://user-images.githubusercontent.com/49179966/213075091-bd934848-12ce-4d25-b7a8-e0e7a32334d5.png)
+#### <p align="center">Access Webpage</p>
+![image](https://user-images.githubusercontent.com/49179966/213075241-5ee74c5b-303e-452e-8b06-64b683e86f2e.png)
 #### <p align="center">Application Descriptions</p>
-![image](https://user-images.githubusercontent.com/49179966/190881054-4d6c5d5b-2bbc-4d51-a98e-5adcc3d5a5eb.png)
+![image](https://user-images.githubusercontent.com/49179966/213076832-3010fa9b-73eb-4f99-a974-e4b2c915d5b0.png)
 
 ------
 
@@ -42,9 +42,9 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 | Deploy the app offline after the download is complete    | Completed                                                                                                          |
 | Access the web version of the docking download interface | Completed                                                                                                          |
 | Console applications (quickly download)                  | Completed                                                                                                          |
-| Program performance optimization                         | Planning (Expected to be implemented in version 1.0.0)                                                             |
+| Program performance optimization                         | Completed                                                                                                          |
 
-> * I am a beginner in C#, and I am more time-constrained, I can only use my spare time to develop, the development progress is relatively slow, please understand.
+All the content of the program has been developed
 
 ------
 
@@ -52,9 +52,11 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 
 > * [Aira2](https://aria2.github.io)&emsp;
 > * [Microsoft.Data.Sqlite.Core](https://docs.microsoft.com/dotnet/standard/data/sqlite)&emsp;
-> * [Microsoft.Windows.CsWinRT](https://github.com/microsoft/cswinrt)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
-> * [SQLitePCLRaw.bundle_winsqlite3](https://github.com/ericsink/SQLitePCL.raw)&emsp;
+> * [SQLitePCLRaw.core](https://github.com/ericsink/SQLitePCL.raw)&emsp;
+> * [SQLitePCLRaw.provider.winsqlite3](https://github.com/ericsink/SQLitePCL.raw)&emsp;
+
+[Code referenced or used during the learning process](https://github.com/Gaoyifei1011/GetStoreApp/blob/master/Description/StudyReferenceCode.md)&emsp;
 
 ------
 
@@ -73,7 +75,7 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 #### <p align="center">Tools that must be installed</p>
 
 > * [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com/) 
-> * . NET Desktop Development (Installed in Visual Studio Installer, .NET SDK Version 6.0)
+> * . NET Desktop Development (Installed in Visual Studio Installer, .NET SDK Version 7.0)
 > * [Microsoft Edge WebView2 Runtime](https://developer.microsoft.com/zh-cn/microsoft-edge/webview2/) £¨install recommendedly£©
 
 #### <p align="center">Compilation steps</p>
@@ -93,12 +95,21 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 > * README_ (corresponding language).The language screenshot added in the md file is replaced with the app screenshot in the language you are familiar with.
 > * Complete the translation steps described above to ensure that all steps run smoothly.
 > * Open the GetStoreAppPackage packaging project, find the Package.appxmanifest file, right-click the file, click View Code, find the Sources tab, and add the corresponding language according to the template, such as "<Resource Language="EN-US"/>".
-> * Open the Strings folder of the project and create the language you are using, for example ( English (United States) folder name is en-us , you can refer to the Table of Indicating Language (Culture) Codes and Countries and Regions)
+> * Open the Strings folder of the GetStoreApp project and create the language you are using, for example ( English (United States) folder name is en-us , you can refer to the Table of Indicating Language (Culture) Codes and Countries and Regions)
 > * Open the resw file under the subfolder and translate each name.
 > * Compile and run the code and test your language, when the application is first opened if there is no language you use to display English (United States) by default, it needs to be dynamically adjusted in the settings.
 > * Create a PR after completing the above steps, then submit the modified content to this project and wait for the merge.
 
 ------
 
-## Trend chart of project Star quantity statistics
+### Thanks (Sort by alphabetical order)
+
+> * [AndromedaMelody](https://github.com/AndromedaMelody)&emsp;
+> * [·ÉÏè](https://fionlen.azurewebsites.net)&emsp;
+> * [MouriNaruto](https://github.com/MouriNaruto)&emsp;
+> * [TaylorShi](https://github.com/TaylorShi)&emsp;
+
+------
+
+### Trend chart of project Star quantity statistics
 [![Stargazers over time](https://starchart.cc/Gaoyifei1011/GetStoreApp.svg)](https://starchart.cc/Gaoyifei1011/GetStoreApp)

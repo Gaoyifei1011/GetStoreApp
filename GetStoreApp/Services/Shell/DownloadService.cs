@@ -30,9 +30,10 @@ namespace GetStoreApp.Services.Shell
             while (true)
             {
                 Console.WriteLine(ResourceService.GetLocalized("Console/DownloadFile"));
-                List<string> IndexList = Console.ReadLine().Split(',').ToList();
+
                 try
                 {
+                    List<string> IndexList = Console.ReadLine().Split(',').ToList();
                     bool CheckResult = true;
                     foreach (string indexItem in IndexList)
                     {

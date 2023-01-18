@@ -12,9 +12,9 @@ namespace GetStoreApp.ViewModels.Controls.About
         {
             {"Aira2","https://aria2.github.io" },
             {"Microsoft.Data.Sqlite.Core","https://docs.microsoft.com/dotnet/standard/data/sqlite" },
-            {"Microsoft.Windows.CsWinRT","https://github.com/microsoft/cswinrt" },
             {"Microsoft.WindowsAppSDK","https://github.com/microsoft/windowsappsdk" },
-            {"SQLitePCLRaw.bundle_winsqlite3","https://github.com/ericsink/SQLitePCL.raw" },
+            {"SQLitePCLRaw.core","https://github.com/ericsink/SQLitePCL.raw" },
+            {"SQLitePCLRaw.provider.winsqlite3","https://github.com/ericsink/SQLitePCL.raw" },
         };
     }
 }

@@ -20,6 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Description", "Description"
 	ProjectSection(SolutionItems) = preProject
 		Description\README_EN-US.md = Description\README_EN-US.md
 		Description\README_ZH-CN.md = Description\README_ZH-CN.md
+		Description\StudyReferenceCode.md = Description\StudyReferenceCode.md
 	EndProjectSection
 EndProject
 Global

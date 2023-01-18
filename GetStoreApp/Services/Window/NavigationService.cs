@@ -13,6 +13,8 @@ namespace GetStoreApp.Services.Window
     {
         public static Frame NavigationFrame { get; set; }
 
+        private static DrillInNavigationTransitionInfo NavigationTransition { get; } = new DrillInNavigationTransitionInfo();
+
         public static List<NavigationModel> NavigationItemList { get; set; } = new List<NavigationModel>();
 
         /// <summary>
@@ -22,7 +24,7 @@ namespace GetStoreApp.Services.Window
         {
             if (NavigationItemList.Exists(item => item.NavigationPage == navigationPageType))
             {
-                NavigationFrame.Navigate(NavigationItemList.Find(item => item.NavigationPage == navigationPageType).NavigationPage, null, new DrillInNavigationTransitionInfo());
+                NavigationFrame.Navigate(NavigationItemList.Find(item => item.NavigationPage == navigationPageType).NavigationPage, null, NavigationTransition);
             }
         }
 

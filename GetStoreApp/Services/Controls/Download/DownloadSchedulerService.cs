@@ -66,6 +66,7 @@ namespace GetStoreApp.Services.Controls.Download
         {
             DownloadSchedulerTimer.Stop();
             DownloadSchedulerTimer.Elapsed -= DownloadSchedulerTimerElapsed;
+            DownloadSchedulerTimer.Dispose();
 
             await Task.CompletedTask;
         }

@@ -62,7 +62,7 @@ namespace GetStoreApp
                 });
             }
 
-            // 以控制台方式启动程序
+            // 以控制台程序方式启动
             else
             {
                 bool AttachResult = Kernel32Library.AttachConsole();
@@ -73,7 +73,7 @@ namespace GetStoreApp
                 ConsoleLaunchService.InitializeConsoleStartupAsync().Wait();
 
                 Kernel32Library.FreeConsole();
-
+                
                 // 退出应用程序
                 Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
             }
