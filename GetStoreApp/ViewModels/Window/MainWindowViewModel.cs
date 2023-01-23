@@ -154,24 +154,6 @@ namespace GetStoreApp.ViewModels.Window
             }
         });
 
-        // 窗口大小发生改变时，设置页面导航视图样式
-        public IRelayCommand SizeChangedCommand => new RelayCommand<WindowSizeChangedEventArgs>((args) =>
-        {
-            if (Program.IsAppLaunched)
-            {
-                if (Program.ApplicationRoot.AppWindow.Size.Width >= 768)
-                {
-                    IsPaneToggleButtonVisible = false;
-                    AppTitleBarMargin = new Thickness(48, 0, 0, 0);
-                }
-                else
-                {
-                    IsPaneToggleButtonVisible = true;
-                    AppTitleBarMargin = new Thickness(96, 0, 0, 0);
-                }
-            }
-        });
-
         // 当菜单中的项收到交互（如单击或点击）时发生
         public IRelayCommand NavigationItemCommand => new RelayCommand<object>((invokedItemTag) =>
         {
@@ -193,23 +175,26 @@ namespace GetStoreApp.ViewModels.Window
             NavigationService.NavigationFrom();
         }
 
+        // 导航视图显示的样式发生改变时发生
+        public void OnDisplayModeChanged(object sender, NavigationViewDisplayModeChangedEventArgs args)
+        {
+            if (args.DisplayMode == NavigationViewDisplayMode.Minimal)
+            {
+                IsPaneToggleButtonVisible = true;
+                AppTitleBarMargin = new Thickness(96, 0, 0, 0);
+            }
+            else
+            {
+                IsPaneToggleButtonVisible = false;
+                AppTitleBarMargin = new Thickness(48, 0, 0, 0);
+            }
+        }
+
         /// <summary>
         /// 导航控件加载完成后初始化内容，初始化导航视图控件属性和应用的背景色
         /// </summary>
         public void OnNavigationViewLoaded(object sender, RoutedEventArgs args)
         {
-            //初始化导航视图控件属性和应用的背景色。
-            if (Program.ApplicationRoot.AppWindow.Size.Width >= 768)
-            {
-                IsPaneToggleButtonVisible = false;
-                AppTitleBarMargin = new Thickness(48, 0, 0, 0);
-            }
-            else
-            {
-                IsPaneToggleButtonVisible = true;
-                AppTitleBarMargin = new Thickness(96, 0, 0, 0);
-            }
-
             SetAppBackground();
             SetContextMenuTheme((FrameworkElement)Program.ApplicationRoot.MainWindow.Content);
 
@@ -217,9 +202,21 @@ namespace GetStoreApp.ViewModels.Window
 
             // 导航控件加载完成后初始化内容
 
-            if (sender is not NavigationView navigationView)
+            if (sender is not NavigationView navigationView || sender is null)
             {
                 return;
+            }
+
+            //初始化导航视图控件属性和应用的背景色
+            if (navigationView.DisplayMode == NavigationViewDisplayMode.Minimal)
+            {
+                IsPaneToggleButtonVisible = true;
+                AppTitleBarMargin = new Thickness(96, 0, 0, 0);
+            }
+            else
+            {
+                IsPaneToggleButtonVisible = false;
+                AppTitleBarMargin = new Thickness(48, 0, 0, 0);
             }
 
             foreach (object item in navigationView.MenuItems)

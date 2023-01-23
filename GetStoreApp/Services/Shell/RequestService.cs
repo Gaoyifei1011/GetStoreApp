@@ -152,7 +152,7 @@ namespace GetStoreApp.Services.Shell
             int SerialNumberHeaderLength = CharExtension.GetStringDisplayLengthEx(SerialNumberHeader);
             int FileNameHeaderLength = CharExtension.GetStringDisplayLengthEx(FileNameHeader);
             int FileSizeHeaderLength = CharExtension.GetStringDisplayLengthEx(FileSizeHeader);
-            int NoneLength = CharExtension.GetStringDisplayLength(None);
+            int NoneLength = CharExtension.GetStringDisplayLengthEx(None);
 
             int SerialNumberColumnLength = (SerialNumberHeaderLength > "1".Length ? SerialNumberHeaderLength : "1".Length) + 3;
             int FileNameColumnLength = (FileNameHeaderLength > NoneLength ? FileNameHeaderLength : NoneLength) + 3;

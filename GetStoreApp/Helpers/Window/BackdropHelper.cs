@@ -131,7 +131,7 @@ namespace GetStoreApp.Helpers.Window
         /// </summary>
         public static void ReleaseBackdrop()
         {
-            // 确保任何云母/丙烯酸控制器被处置，这样它就不会试图使用这个关闭的窗口。
+            // 确保任何云母/亚克力控制器被处置，这样它就不会试图使用这个关闭的窗口。
             if (m_micaController is not null)
             {
                 m_micaController.Dispose();

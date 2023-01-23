@@ -13,7 +13,6 @@
     MinHeight="768"
     ActivatedCommand="{x:Bind ViewModel.ActivatedCommand}"
     ClosedCommand="{x:Bind ViewModel.ClosedCommand}"
-    SizeChangedCommand="{x:Bind ViewModel.SizeChangedCommand}"
     mc:Ignorable="d">
 
     <WinUI:WASDKWindow.DataContext>
@@ -30,6 +29,7 @@
         <NavigationView
             BackRequested="{x:Bind ViewModel.OnNavigationViewBackRequested}"
             CompactModeThresholdWidth="768"
+            DisplayModeChanged="{x:Bind ViewModel.OnDisplayModeChanged}"
             ExpandedModeThresholdWidth="768"
             IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
             IsPaneToggleButtonVisible="{x:Bind ViewModel.IsPaneToggleButtonVisible, Mode=OneWay}"

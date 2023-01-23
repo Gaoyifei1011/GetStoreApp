@@ -92,20 +92,10 @@ namespace GetStoreApp.Views.Window
 
         public static readonly DependencyProperty ClosedCommandProperty = DependencyProperty.Register("ClosedCommand", typeof(ICommand), typeof(NavigationViewMenuItem), new PropertyMetadata(null));
 
-        public ICommand SizeChangedCommand
-        {
-            get { return (ICommand)Content.GetValue(SizeChangedCommandProperty); }
-
-            set { Content.SetValue(SizeChangedCommandProperty, value); }
-        }
-
-        public static readonly DependencyProperty SizeChangedCommandProperty = DependencyProperty.Register("SizeChangedCommand", typeof(ICommand), typeof(NavigationViewMenuItem), new PropertyMetadata(null));
-
         public WASDKWindow()
         {
             Activated += OnActivated;
             Closed += OnClosed;
-            SizeChanged += OnSizeChanged;
 
             // 获取窗口的句柄
             Hwnd = WindowNative.GetWindowHandle(this);
@@ -130,11 +120,6 @@ namespace GetStoreApp.Views.Window
         public void OnClosed(object sender, WindowEventArgs args)
         {
             ClosedCommand?.Execute(args);
-        }
-
-        public void OnSizeChanged(object sender, WindowSizeChangedEventArgs args)
-        {
-            SizeChangedCommand?.Execute(args);
         }
 
         /// <summary>

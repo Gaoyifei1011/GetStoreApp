@@ -51,7 +51,7 @@ namespace GetStoreApp
             {
                 AppNotificationService.Initialize();
                 DesktopLaunchService.InitializeLaunchAsync().Wait();
-
+                
                 WinUILibrary.XamlCheckProcessRequirements();
                 ComWrappersSupport.InitializeComWrappers();
                 Application.Start((param) =>
