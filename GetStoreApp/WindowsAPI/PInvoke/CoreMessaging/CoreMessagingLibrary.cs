@@ -13,7 +13,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.CoreMessaging
         /// <param name="options">创建的 DispatcherQueueController 的线程关联和 COM 单元的类型。</param>
         /// <param name="dispatcherQueueController">创建的调度程序队列控制器。DispatcherQueueController 是 WinRT 对象。</param>
         /// <returns>成功创建返回S_OK ;否则为失败代码。</returns>
-        [DllImport(CoreMessaging)]
+        [DllImport(CoreMessaging, CharSet = CharSet.Ansi, EntryPoint = "CreateDispatcherQueueController", SetLastError = false)]
         public static extern int CreateDispatcherQueueController([In] DispatcherQueueOptions options, [In, Out, MarshalAs(UnmanagedType.IUnknown)] ref object dispatcherQueueController);
     }
 }

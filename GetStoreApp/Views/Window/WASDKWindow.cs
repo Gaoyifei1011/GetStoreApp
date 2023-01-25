@@ -133,7 +133,7 @@ namespace GetStoreApp.Views.Window
             }
             else
             {
-                return User32Library.SetWindowLongPtr(hWnd, nIndex, newProc);
+                return User32Library.SetWindowLong(hWnd, nIndex, newProc);
             }
         }
 

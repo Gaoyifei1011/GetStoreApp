@@ -22,7 +22,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="wParam">其他的消息特定信息。 此参数的内容取决于 Msg 参数的值。</param>
         /// <param name="lParam">其他的消息特定信息。 此参数的内容取决于 Msg 参数的值。</param>
         /// <returns>返回值指定消息处理的结果，具体取决于发送的消息。</returns>
-        [DllImport(User32)]
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "CallWindowProc", SetLastError = false)]
         public static extern IntPtr CallWindowProc(IntPtr lpPrevWndFunc, IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// 还可以使用 InsertMenu 函数插入菜单项和 AppendMenu 函数来追加菜单项。
         /// </summary>
         /// <returns>如果函数成功，则返回值是新创建的菜单的句柄。如果函数失败，则返回值为 NULL。</returns>
-        [DllImport(User32, EntryPoint = "CreatePopupMenu", CharSet = CharSet.Auto)]
+        [DllImport(User32, CharSet = CharSet.Auto, EntryPoint = "CreatePopupMenu", SetLastError = false)]
         public static extern IntPtr CreatePopupMenu();
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// 此消息在返回之前由此函数发送到创建的窗口。
         /// </param>
         /// <returns>如果函数成功，则返回值是新窗口的句柄。如果函数失败，则返回值为 NULL。</returns>
-        [DllImport(User32, SetLastError = true, EntryPoint = "CreateWindowExW", CharSet = CharSet.Unicode)]
+        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "CreateWindowExW", SetLastError = true)]
         public static extern IntPtr CreateWindowEx(
            int dwExStyle,
            string lpClassName,
@@ -104,7 +104,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="wParam">其他消息信息。 此参数的内容取决于 Msg 参数的值。</param>
         /// <param name="lParam">其他消息信息。 此参数的内容取决于 Msg 参数的值。</param>
         /// <returns>返回值是消息处理的结果，取决于消息。</returns>
-        [DllImport(User32)]
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "DefWindowProc", SetLastError = false)]
         public static extern IntPtr DefWindowProc(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// </summary>
         /// <param name="hMenu">要销毁的菜单的句柄。</param>
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
-        [DllImport(User32, SetLastError = true)]
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "DestroyMenu", SetLastError = true)]
         public static extern bool DestroyMenu(IntPtr hMenu);
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// </summary>
         /// <param name="hwnd">要销毁的窗口的句柄。</param>
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
-        [DllImport(User32, CharSet = CharSet.Unicode, SetLastError = true)]
+        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "DestroyWindow", SetLastError = true)]
         public static extern bool DestroyWindow(IntPtr hwnd);
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// </summary>
         /// <param name="hwnd">要获取相关信息的窗口。</param>
         /// <returns>窗口的 DPI，无效 的 hwnd 值将导致返回值 0。</returns>
-        [DllImport(User32)]
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "GetDpiForWindow", SetLastError = false)]
         public static extern int GetDpiForWindow(IntPtr hwnd);
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// </summary>
         /// <param name="lpPoint">指向接收光标屏幕坐标的 POINT 结构的指针。</param>
         /// <returns>如果成功，则返回非零值，否则返回零。 </returns>
-        [DllImport(User32)]
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "GetCursorPos", SetLastError = false)]
         public static extern bool GetCursorPos(out POINT lpPoint);
 
         /// <summary>
@@ -153,12 +153,12 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// </param>
         /// <param name="lpWindowName">窗口名称 (窗口的标题) 。 如果此参数为 NULL，则所有窗口名称都匹配。</param>
         /// <returns>如果函数成功，则返回值是具有指定类名和窗口名称的窗口的句柄。 如果函数失败，则返回值为 NULL。 </returns>
-        [DllImport(User32, EntryPoint = "FindWindow")]
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "FindWindow", SetLastError = false)]
         public static extern int FindWindow(string lpClassName, string lpWindowName);
 
         /// <summary>检索前台窗口的句柄， (用户当前正在使用的窗口) 。 系统向创建前台窗口的线程分配略高于其他线程的优先级。</summary>
         /// <returns>返回值是前台窗口的句柄。 在某些情况下，前台窗口可以为 NULL ，例如窗口丢失激活时。</returns>
-        [DllImport(User32, SetLastError = true, CharSet = CharSet.Unicode)]
+        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "GetForegroundWindow", SetLastError = true)]
         public static extern IntPtr GetForegroundWindow();
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="fByPosition">控制项的含义。 如果此参数为 FALSE， 则项 为菜单项标识符。 否则，它是菜单项位置。 </param>
         /// <param name="lpmii">指向 MENUITEMINFO 结构的指针，其中包含有关新菜单项的信息。</param>
         /// <returns>如果该函数成功，则返回值为非零值。 如果函数失败，则返回值为零。</returns>
-        [DllImport("User32.dll")]
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "InsertMenuItem", SetLastError = false)]
         public static extern bool InsertMenuItem(IntPtr hMenu, int uItem, bool fByPosition, [In] ref MENUITEMINFO lpmii);
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// </summary>
         /// <param name="hWnd">要测试的窗口的句柄</param>
         /// <returns>如果缩放窗口，则返回值为非零。如果未缩放窗口，则返回值为零。</returns>
-        [DllImport(User32, SetLastError = true)]
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "IsZoomed", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool IsZoomed(IntPtr hWnd);
 
@@ -191,7 +191,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="cy">图标或光标的高度（以像素为单位）。</param>
         /// <param name="fuLoad">此参数可使用以下一个或多个值。</param>
         /// <returns>如果函数成功，则返回值是新加载的图像的句柄。如果函数失败，则返回值为 NULL。</returns>
-        [DllImport(User32, SetLastError = true, CharSet = CharSet.Auto)]
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "LoadImage", SetLastError = true)]
         public static extern IntPtr LoadImage(IntPtr hinst, string lpszName, ImageType type, int cx, int cy, LoadImageFlags fuLoad);
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// 如果函数失败，则返回值为零。
         /// 如果函数成功，则返回值为 MessageBoxResult 的枚举值之一。
         /// </returns>
-        [DllImport(User32, SetLastError = true, CharSet = CharSet.Unicode)]
+        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "MessageBox", SetLastError = true)]
         public static extern MessageBoxResult MessageBox(IntPtr hWnd, string lptext, string lpcaption, MessageBoxOptions options);
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// </summary>
         /// <param name="lpWndClass">指向 WNDCLASS 结构的指针。 在将结构传递给函数之前，必须用相应的类属性填充结构。</param>
         /// <return>如果函数成功，则返回值是唯一标识所注册类的类原子。 如果函数失败，则返回值为零。</return>
-        [DllImport(User32, EntryPoint = "RegisterClassW", SetLastError = true)]
+        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "RegisterClassW", SetLastError = true)]
         public static extern short RegisterClass(ref WindowClass lpWndClass);
 
         /// <summary>
@@ -223,7 +223,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// </summary>
         /// <param name="lpString">要注册的消息。</param>
         /// <returns>如果成功注册消息，则返回值是范围0xC000到0xFFFF的消息标识符。如果函数失败，则返回值为零。</returns>
-        [DllImport(User32, EntryPoint = "RegisterWindowMessageW")]
+        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "RegisterWindowMessageW", SetLastError = false)]
         public static extern uint RegisterWindowMessage([MarshalAs(UnmanagedType.LPWStr)] string lpString);
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="wParam">其他的消息特定信息。</param>
         /// <param name="lParam">其他的消息特定信息。</param>
         /// <returns>返回值指定消息处理的结果;这取决于发送的消息。</returns>
-        [DllImport(User32, EntryPoint = "SendMessage")]
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SendMessage", SetLastError = false)]
         public static extern IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, int wParam, ref CopyDataStruct lParam);
 
         /// <summary>
@@ -246,7 +246,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// </summary>
         /// <param name="hWnd">应激活并带到前台的窗口的句柄。</param>
         /// <returns>如果窗口被带到前台，则返回值为非零。如果未将窗口带到前台，则返回值为零。</returns>
-        [DllImport(User32)]
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SetForegroundWindow", SetLastError = false)]
         public static extern bool SetForegroundWindow(IntPtr hWnd);
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="nIndex">要设置的值的从零开始的偏移量。 有效值的范围为零到额外窗口内存的字节数，减去整数的大小。</param>
         /// <param name="newProc">新事件处理函数（回调函数）</param>
         /// <returns>如果函数成功，则返回值是指定 32 位整数的上一个值。如果函数失败，则返回值为零。 </returns>
-        [DllImport(User32, EntryPoint = "SetWindowLong")]
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SetWindowLong", SetLastError = false)]
         public static extern IntPtr SetWindowLong(IntPtr hWnd, WindowLongIndexFlags nIndex, WinProc newProc);
 
         /// <summary>
@@ -266,7 +266,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="nIndex">要设置的值的从零开始的偏移量。 有效值的范围为零到额外窗口内存的字节数，减去整数的大小。</param>
         /// <param name="newProc">新事件处理函数（回调函数）</param>
         /// <returns>如果函数成功，则返回值是指定偏移量的上一个值。如果函数失败，则返回值为零。 </returns>
-        [DllImport(User32, EntryPoint = "SetWindowLongPtr")]
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SetWindowLongPtr", SetLastError = false)]
         public static extern IntPtr SetWindowLongPtr(IntPtr hWnd, WindowLongIndexFlags nIndex, WinProc newProc);
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="cy">窗口的新高度（以像素为单位）。</param>
         /// <param name="uFlags">窗口大小调整和定位标志。</param>
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 </returns>
-        [DllImport(User32, SetLastError = true)]
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SetWindowPos", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool SetWindowPos(
             IntPtr hWnd,
@@ -300,18 +300,9 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// 否则，首次调用 ShowWindow 时，该值应该是 WinMain 函数在其 nCmdShow 参数中获取的值。
         /// </param>
         /// <returns>如果窗口以前可见，则返回值为非零。如果窗口之前已隐藏，则返回值为零。</returns>
-        [DllImport(User32)]
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "ShowWindow", SetLastError = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool ShowWindow(IntPtr hWnd, WindowShowStyle nCmdShow);
-
-        /// <summary>
-        /// 将焦点切换到指定的窗口，并将其带到前台。
-        /// </summary>
-        /// <param name="hWnd">窗口的句柄。</param>
-        /// <param name="fAltTab">此参数的 TRUE 指示窗口正切换到使用 Alt/Ctl+Tab 键序列。 否则此参数应为 FALSE 。</param>
-        /// <returns>无</returns>
-        [DllImport(User32, SetLastError = true)]
-        public static extern void SwitchToThisWindow(IntPtr hWnd, bool fAltTab);
 
         /// <summary>
         /// 在指定位置显示快捷菜单，并跟踪快捷菜单上的项选择。 快捷菜单可在屏幕上的任意位置显示。
@@ -328,12 +319,12 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// 如果在 uFlags 参数中指定TPM_NONOTIFY，函数不会将消息发送到 hWnd 标识的窗口。 但是，仍必须在 hWnd 中传递窗口句柄。
         /// 它可以是应用程序的任何窗口句柄。
         /// </param>
-        /// <param name="prcRect"></param>
+        /// <param name="prcRect">无</param>
         /// <returns>
         /// 如果在 uFlags 参数中指定TPM_RETURNCMD，则返回值是用户选择的项的菜单项标识符。 如果用户取消菜单而不进行选择，或者发生错误，则返回值为零。
         /// 如果未在 uFlags 参数中指定TPM_RETURNCMD，则如果函数成功且失败，则返回值为零。
         /// </returns>
-        [DllImport(User32)]
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "TrackPopupMenu", SetLastError = false)]
         public static extern int TrackPopupMenu(IntPtr hMenu, TrackPopupMenuFlags uFlags, int x, int y, int reserved, IntPtr hwnd, IntPtr prcRect);
     }
 }

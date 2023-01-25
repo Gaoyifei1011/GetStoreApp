@@ -34,7 +34,7 @@ namespace GetStoreApp.Helpers.Window
             }
 
             // 将应用窗口设置到前台
-            User32Library.SwitchToThisWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), true);
+            User32Library.SetForegroundWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
         }
 
         /// <summary>

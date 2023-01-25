@@ -11,13 +11,13 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         /// <summary>返回与指定文件路径关联的 ITEMIDLIST 结构。</summary>
         /// <param name="pszPath">指向包含路径的 null 终止 Unicode 字符串的指针。 此字符串长度不应超过 MAX_PATH 个字符，包括终止 null 字符。</param>
         /// <returns>返回指向对应于路径的 ITEMIDLIST 结构的指针。</returns>
-        [DllImport(Shell32, EntryPoint = "ILCreateFromPathW", SetLastError = true)]
+        [DllImport(Shell32, CharSet = CharSet.Unicode, EntryPoint = "ILCreateFromPathW", SetLastError = true)]
         public static extern IntPtr ILCreateFromPath([MarshalAs(UnmanagedType.LPWStr)] string pszPath);
 
         /// <summary>释放 Shell 分配的 ITEMIDLIST 结构。</summary>
         /// <param name="pidl">指向要释放的 ITEMIDLIST 结构的指针。 此参数可以为 NULL。</param>
         /// <returns>无</returns>
-        [DllImport(Shell32, ExactSpelling = true, SetLastError = false)]
+        [DllImport(Shell32, CharSet = CharSet.Ansi, EntryPoint = "ILFree", ExactSpelling = true, SetLastError = false)]
         public static extern void ILFree(IntPtr pidlList);
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         /// </param>
         /// <param name="riid">对接口的 IID 的引用，以通过ppv（通常为IID_IShellItem或IID_IShellItem2）进行检索。</param>
         /// <returns>此方法成功返回时，包含riid 中请求的接口指针。这通常是IShellItem或IShellItem2。</returns>
-        [DllImport(Shell32, ExactSpelling = true, CharSet = CharSet.Unicode, PreserveSig = false)]
+        [DllImport(Shell32, CharSet = CharSet.Unicode, EntryPoint = "SHCreateItemFromParsingName", ExactSpelling = true, PreserveSig = false, SetLastError = false)]
         internal static extern IShellItem SHCreateItemFromParsingName(
             string pszPath,
             IntPtr pbc,
@@ -53,7 +53,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         /// 如果成功，则返回 TRUE ;否则返回 FALSE 。 如果 dwMessage 设置为 NIM_SETVERSION，则函数在成功更改版本时返回 TRUE ;
         /// 如果请求的版本不受支持，则 返回 FALSE 。
         /// </returns>
-        [DllImport(Shell32, CharSet = CharSet.Unicode)]
+        [DllImport(Shell32, CharSet = CharSet.Unicode, EntryPoint = "Shell_NotifyIcon", SetLastError = false)]
         public static extern bool Shell_NotifyIcon(NotifyCommand cmd, [In] ref NotifyIconData data);
 
         /// <summary>打开一个 Windows 资源管理器窗口，其中选定了特定文件夹中的指定项目。</summary>
@@ -64,7 +64,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         /// <param name="apidl">指向 PIDL 结构的数组的指针，每个结构都是在 pidlFolder 引用的目标文件夹中选择要选择的项。</param>
         /// <param name="dwFlags">可选标志。</param>
         /// <returns>如果此函数成功，则返回 S_OK。 否则，它将返回 HRESULT 错误代码。</returns>
-        [DllImport(Shell32, ExactSpelling = true)]
+        [DllImport(Shell32, CharSet = CharSet.Ansi, EntryPoint = "SHOpenFolderAndSelectItems", ExactSpelling = true, SetLastError = false)]
         public static extern int SHOpenFolderAndSelectItems(IntPtr pidlFolder, uint cidl, IntPtr apidl, uint dwFlags);
     }
 }

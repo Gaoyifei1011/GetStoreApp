@@ -13,6 +13,7 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
+using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -153,6 +154,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 {
                     NavigationService.NavigateTo(typeof(HomePage));
                 }
+
+                User32Library.SetForegroundWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
             });
 
             Messenger.Default.Register<HistoryModel>(this, MessageToken.Fillin, (fillinMessage) =>

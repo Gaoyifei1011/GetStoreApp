@@ -244,7 +244,7 @@
     <value>Link filtering instructions</value>
   </data>
   <data name="Maintenance" xml:space="preserve">
-    <value>Subsequent updates / maintenance</value>
+    <value>Subsequent maintenance</value>
   </data>
   <data name="MaintenanceDescription" xml:space="preserve">
     <value>View the project schedule</value>

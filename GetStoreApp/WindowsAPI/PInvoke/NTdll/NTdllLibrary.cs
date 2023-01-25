@@ -19,7 +19,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.NTdll
         /// 指向函数返回所请求信息大小的变量的指针。 如果函数成功，则这是 由 ProcessInformation 参数指向的缓冲区中写入的信息的大小，
         /// ( 如果缓冲区太小，则这是成功接收信息所需的最小缓冲区大小) 。</param>
         /// <returns>该函数返回 NTSTATUS 成功或错误代码。</returns>
-        [DllImport(NtDll)]
+        [DllImport(NtDll, CharSet = CharSet.Ansi, EntryPoint = "NtQueryInformationProcess", SetLastError = false)]
         public static extern int NtQueryInformationProcess(int processHandle, PROCESSINFOCLASS processInformationClass, ref PROCESS_BASIC_INFORMATION processInformation, int processInformationLength, ref int returnLength);
     }
 }

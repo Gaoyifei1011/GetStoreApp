@@ -241,7 +241,7 @@
     <value>链接过滤说明</value>
   </data>
   <data name="Maintenance" xml:space="preserve">
-    <value>后续的更新 / 维护</value>
+    <value>后续的维护</value>
   </data>
   <data name="MaintenanceDescription" xml:space="preserve">
     <value>查看项目计划表</value>
