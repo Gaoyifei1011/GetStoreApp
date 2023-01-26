@@ -14,7 +14,7 @@
     <EnableMsixTooling>false</EnableMsixTooling>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <FileAlignment>512</FileAlignment>
-    <FileVersion>1.1.122.0</FileVersion>
+    <FileVersion>1.1.126.0</FileVersion>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
     <IncludeSymbols>False</IncludeSymbols>
@@ -28,7 +28,7 @@
     <PublishProtocol>FileSystem</PublishProtocol>
     <PublishReadyToRun>True</PublishReadyToRun>
     <!--调试时需要设置该选项为false-->
-    <!--<PublishSingleFile>true</PublishSingleFile>-->
+    <PublishSingleFile>true</PublishSingleFile>
     <PublishTrimmed>true</PublishTrimmed>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <RootNamespace>GetStoreApp</RootNamespace>
@@ -40,7 +40,7 @@
     <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <TrimMode>partial</TrimMode>
-    <Version>1.1.122.0</Version>
+    <Version>1.1.126.0</Version>
     <UseWindowsForms>False</UseWindowsForms>
     <UseWinUI>true</UseWinUI>
     <UseWPF>False</UseWPF>
@@ -264,9 +264,11 @@
     <None Remove="Views\Window\MainWindow.xaml" />
     
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.2" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.221209.1" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.755" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.230118.102" />
     <PackageReference Include="SQLitePCLRaw.core" Version="2.1.4" />
     <PackageReference Include="SQLitePCLRaw.provider.winsqlite3" Version="2.1.4" />
+    <PackageReference Include="System.Memory" Version="4.5.5" />
     
     <Page Update="Styles\Button.xaml">
       <Generator>MSBuild:Compile</Generator>

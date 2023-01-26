@@ -59,19 +59,22 @@
 
 > * [Aira2](https://aria2.github.io)&emsp;
 > * [Microsoft.Data.Sqlite.Core](https://docs.microsoft.com/dotnet/standard/data/sqlite)&emsp;
+> * [Microsoft.Windows.SDK.BuildTools*](https://aka.ms/WinSDKProjectURL)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [SQLitePCLRaw.core](https://github.com/ericsink/SQLitePCL.raw)&emsp;
 > * [SQLitePCLRaw.provider.winsqlite3](https://github.com/ericsink/SQLitePCL.raw)&emsp;
+> * [System.Memory*](https://dot.net)&emsp;
 
+标记"*"的是第三方库引用的内容  
 [学习过程中参考或使用的代码](https://github.com/Gaoyifei1011/GetStoreApp/blob/master/Description/StudyReferenceCode.md)&emsp;
 
 ------
 
 ### 下载与安装注意事项
 
-> * 该程序使用的是Windows 应用 SDK构建的，建议您的系统版本为Windows 11（代号 21H2 / 内部版本号 22000）或更高版本，最低版本为Windows 10（代号1803 / 内部版本号18362）或更高版本。
+> * 该程序使用的是Windows 应用 SDK构建的，建议您的系统版本为Windows 11（代号 21H2 / 内部版本号 22000）或更高版本，最低版本为Windows 10（代号1809 / 内部版本号17763）或更高版本。
 > * 如果您的系统是Windows 10，应用功能存在一些限制：
-    暂不支持设置云母/云母Alt/亚克力背景色
+    不支持设置云母/云母Alt背景色
 > * [Release](https://github.com/Gaoyifei1011/GetStoreApp/releases)页面的二进制安装文件已经打包成压缩包。请解压压缩包并使用Powershell管理员模式（必要情况下）运行install.ps1文件方可实现快速安装。
 > * 自行下载项目源代码并编译。（请仔细阅读下面的项目编译步骤）
 

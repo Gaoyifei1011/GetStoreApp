@@ -52,10 +52,13 @@ All the content of the program has been developed
 
 > * [Aira2](https://aria2.github.io)&emsp;
 > * [Microsoft.Data.Sqlite.Core](https://docs.microsoft.com/dotnet/standard/data/sqlite)&emsp;
+> * [Microsoft.Windows.SDK.BuildTools*](https://aka.ms/WinSDKProjectURL)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [SQLitePCLRaw.core](https://github.com/ericsink/SQLitePCL.raw)&emsp;
 > * [SQLitePCLRaw.provider.winsqlite3](https://github.com/ericsink/SQLitePCL.raw)&emsp;
+> * [System.Memory*](https://dot.net)&emsp;
 
+The "*" marked is the content referenced by the third-party library  
 [Code referenced or used during the learning process](https://github.com/Gaoyifei1011/GetStoreApp/blob/master/Description/StudyReferenceCode.md)&emsp;
 
 ------
@@ -64,7 +67,7 @@ All the content of the program has been developed
 
 > * The program is built using the Windows Apps SDK, and it is recommended that your system version be Windows 11 (codename 21H2 / build 22000) or later, and the minimum version is Windows 10 (codename 1809 / build 17763) or later.
 > * If your system is Windows 10, there are some limitations to app functionality:
-    Setting the mica/mica alt/acrylic background color is not supported at this time
+    Setting the mica/mica alt background color is not supported
 > * [Release](https://github.com/Gaoyifei1011/GetStoreApp/releases) The binary installation file for the page has been packaged into a compressed package. Unzip the package and run the install.ps1 file in Powershell admin mode (if necessary) for a quick installation.
 > * Download and compile the project source code yourself. (Please read the project compilation steps below carefully)
 

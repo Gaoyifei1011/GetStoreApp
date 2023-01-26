@@ -279,6 +279,9 @@
   <data name="Reference" xml:space="preserve">
     <value>Project references (Sort by alphabetical order)</value>
   </data>
+  <data name="ReferenceTip" xml:space="preserve">
+    <value>The "*" marked is the content referenced by the third-party library</value>
+  </data>
   <data name="ReferenceToolTip" xml:space="preserve">
     <value>Click to learn about the referenced open source project</value>
   </data>

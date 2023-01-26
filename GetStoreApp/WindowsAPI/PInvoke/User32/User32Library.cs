@@ -143,19 +143,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "GetCursorPos", SetLastError = false)]
         public static extern bool GetCursorPos(out POINT lpPoint);
 
-        /// <summary>
-        /// 检索顶级窗口的句柄，该窗口的类名称和窗口名称与指定的字符串匹配。 此函数不搜索子窗口。 此函数不执行区分大小写的搜索。
-        /// </summary>
-        /// <param name="lpClassName">
-        /// 类名或上一次对 RegisterClass 或 RegisterClassEx 函数的调用创建的类名或类原子。原子必须位于 lpClassName 的低序单词中;高阶单词必须为零。
-        /// 如果 lpClassName 指向字符串，则指定窗口类名。 类名可以是向 RegisterClass 或 RegisterClassEx 注册的任何名称，也可以是预定义控件类名称中的任何名称。
-        /// 如果 lpClassName 为 NULL，它将查找其标题与 lpWindowName 参数匹配的任何窗口。
-        /// </param>
-        /// <param name="lpWindowName">窗口名称 (窗口的标题) 。 如果此参数为 NULL，则所有窗口名称都匹配。</param>
-        /// <returns>如果函数成功，则返回值是具有指定类名和窗口名称的窗口的句柄。 如果函数失败，则返回值为 NULL。 </returns>
-        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "FindWindow", SetLastError = false)]
-        public static extern int FindWindow(string lpClassName, string lpWindowName);
-
         /// <summary>检索前台窗口的句柄， (用户当前正在使用的窗口) 。 系统向创建前台窗口的线程分配略高于其他线程的优先级。</summary>
         /// <returns>返回值是前台窗口的句柄。 在某些情况下，前台窗口可以为 NULL ，例如窗口丢失激活时。</returns>
         [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "GetForegroundWindow", SetLastError = true)]

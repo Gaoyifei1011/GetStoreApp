@@ -4,6 +4,7 @@ using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.AppNotifications;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
@@ -150,11 +151,19 @@ namespace GetStoreApp.Services.Root
                 copyDataStruct.lpData = string.Format("{0} {1} {2}", LaunchArgs["TypeName"], LaunchArgs["ChannelName"], LaunchArgs["Link"] is null ? "PlaceHolderText" : LaunchArgs["Link"]);
                 copyDataStruct.cbData = Encoding.Default.GetBytes(copyDataStruct.lpData).Length + 1;
 
-                // 向主进程发送消息
-                User32Library.SendMessage(User32Library.FindWindow(null, ResourceService.GetLocalized("Resources/AppDisplayName")), WindowMessage.WM_COPYDATA, 0, ref copyDataStruct);
+                Process[] GetStoreAppProcess = Process.GetProcessesByName("GetStoreApp");
 
-                // 然后退出实例并停止
-                Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
+                foreach (Process process in GetStoreAppProcess)
+                {
+                    if (process.MainWindowHandle != IntPtr.Zero)
+                    {
+                        // 向主进程发送消息
+                        User32Library.SendMessage(process.MainWindowHandle, WindowMessage.WM_COPYDATA, 0, ref copyDataStruct);
+
+                        // 然后退出实例并停止
+                        Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
+                    }
+                }
             }
         }
     }

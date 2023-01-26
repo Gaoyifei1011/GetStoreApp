@@ -14,4 +14,5 @@
 > * [Null.ConsoleEx](https://github.com/SlimeNull/Null.ConsoleEx)&emsp;
 > * [P/Invoke](https://github.com/dotnet/pinvoke)&emsp;
 > * [TaskbarManager](https://blog.csdn.net/weixin_30521161/article/details/96964128)&emsp;
+> * [UWP InAppNotification(Popup)](https://www.cnblogs.com/MzwCat/p/7748033.html)&emsp;
 > * [YDKK.Windows.NotifyIcon](https://github.com/YDKK/YDKK.Windows.NotifyIcon)&emsp;
