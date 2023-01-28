@@ -38,11 +38,11 @@ namespace GetStoreApp.Helpers.Root
         }
 
         /// <summary>
-        /// 获取表示应用程序正在运行的设备类型
+        /// 获取应用安装根目录
         /// </summary>
-        public static string GetDeviceFamily()
+        public static string GetAppInstalledLocation()
         {
-            return AnalyticsInfo.VersionInfo.DeviceFamily;
+            return Package.Current.InstalledLocation.Path;
         }
 
         /// <summary>
@@ -51,6 +51,14 @@ namespace GetStoreApp.Helpers.Root
         public static AppVersion GetAppVersion()
         {
             return AppVersion;
+        }
+
+        /// <summary>
+        /// 获取表示应用程序正在运行的设备类型
+        /// </summary>
+        public static string GetDeviceFamily()
+        {
+            return AnalyticsInfo.VersionInfo.DeviceFamily;
         }
 
         /// <summary>

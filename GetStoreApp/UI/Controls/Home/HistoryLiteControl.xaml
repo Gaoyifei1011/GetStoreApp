@@ -78,6 +78,10 @@
                     SelectionMode="None"
                     Visibility="{x:Bind ViewModel.HistoryLiteDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
 
+                    <ItemsControl.ItemContainerTransitions>
+                        <TransitionCollection />
+                    </ItemsControl.ItemContainerTransitions>
+
                     <ListView.Header>
                         <Grid Height="35" Padding="6,0,0,0">
                             <Grid.ColumnDefinitions>

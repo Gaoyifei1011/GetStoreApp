@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
+using System.Text;
 
 namespace GetStoreApp.Models.Controls.Settings.Common
 {
@@ -38,7 +39,7 @@ namespace GetStoreApp.Models.Controls.Settings.Common
         public string Rfc1766 { get; set; }
 
         /// <summary>
-        /// 使用 <see cref="Kernel32Library.GetGeoInfo(int, SYSGEOTYPE, System.Text.StringBuilder, int, int)" /> 派生的区域设置标识符。
+        /// 使用 <see cref="Kernel32Library.GetGeoInfo(int, SYSGEOTYPE, StringBuilder, int, int)" /> 派生的区域设置标识符。
         /// </summary>
         public string Lcid { get; set; }
 

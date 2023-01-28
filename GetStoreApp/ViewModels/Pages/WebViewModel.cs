@@ -20,6 +20,7 @@ using System.IO;
 using System.Threading;
 using Windows.Foundation;
 using Windows.Storage;
+using Windows.System;
 
 namespace GetStoreApp.ViewModels.Pages
 {
@@ -126,13 +127,13 @@ namespace GetStoreApp.ViewModels.Pages
         // 在浏览器中打开
         public IRelayCommand OpenWithBrowserCommand => new RelayCommand(async () =>
         {
-            await Windows.System.Launcher.LaunchUriAsync(Source);
+            await Launcher.LaunchUriAsync(Source);
         });
 
         // 打开缓存文件夹
         public IRelayCommand OpenCacheFolderCommand => new RelayCommand(async () =>
         {
-            await Windows.System.Launcher.LaunchFolderAsync(await StorageFolder.GetFolderFromPathAsync(Path.Combine(ApplicationData.Current.LocalFolder.Path, "EbWebView")));
+            await Launcher.LaunchFolderAsync(await StorageFolder.GetFolderFromPathAsync(string.Format(@"{0}\{1}", ApplicationData.Current.LocalFolder.Path, "EbWebView")));
         });
 
         // 清理网页缓存
@@ -293,10 +294,8 @@ namespace GetStoreApp.ViewModels.Pages
                                         {
                                             try
                                             {
-                                                if (File.Exists(backgroundItem.FilePath))
-                                                {
-                                                    File.Delete(backgroundItem.FilePath);
-                                                }
+                                                StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
+                                                await ExistedFile.DeleteAsync();
                                             }
                                             finally
                                             {
@@ -325,10 +324,8 @@ namespace GetStoreApp.ViewModels.Pages
                                         {
                                             try
                                             {
-                                                if (File.Exists(backgroundItem.FilePath))
-                                                {
-                                                    File.Delete(backgroundItem.FilePath);
-                                                }
+                                                StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
+                                                await ExistedFile.DeleteAsync();
                                             }
                                             finally
                                             {
@@ -350,7 +347,7 @@ namespace GetStoreApp.ViewModels.Pages
                     // 使用浏览器下载
                     else if (DownloadOptionsService.DownloadMode == DownloadOptionsService.DownloadModeList[1])
                     {
-                        await Windows.System.Launcher.LaunchUriAsync(new Uri(args.DownloadOperation.Uri));
+                        await Launcher.LaunchUriAsync(new Uri(args.DownloadOperation.Uri));
                     }
 
                     args.DownloadOperation.Cancel();

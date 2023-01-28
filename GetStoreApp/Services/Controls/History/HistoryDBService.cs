@@ -3,7 +3,6 @@ using GetStoreApp.Services.Root;
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Controls.History
@@ -20,7 +19,7 @@ namespace GetStoreApp.Services.Controls.History
         {
             int HistoryTableCount = 0;
 
-            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
+            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBFile.Path}"))
             {
                 await db.OpenAsync();
 
@@ -50,7 +49,7 @@ namespace GetStoreApp.Services.Controls.History
         {
             bool IsExists = false;
 
-            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
+            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBFile.Path}"))
             {
                 await db.OpenAsync();
 
@@ -81,12 +80,6 @@ namespace GetStoreApp.Services.Controls.History
         /// </summary>
         public static async Task AddAsync(HistoryModel historyItem)
         {
-            // 文件不存在，取消操作
-            if (!File.Exists(DataBaseService.DBpath))
-            {
-                return;
-            }
-
             bool CheckResult = await CheckDuplicatedAsync(historyItem.HistoryKey);
 
             // 如果存在相同的行数据，只更新TimeStamp值，没有，添加数据
@@ -105,7 +98,7 @@ namespace GetStoreApp.Services.Controls.History
         /// </summary>
         private static async Task AddDataAsync(HistoryModel historyItem)
         {
-            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
+            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBFile.Path}"))
             {
                 await db.OpenAsync();
 
@@ -146,7 +139,7 @@ namespace GetStoreApp.Services.Controls.History
         /// </summary>
         private static async Task UpdateDataAsync(HistoryModel historyItem)
         {
-            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
+            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBFile.Path}"))
             {
                 await db.OpenAsync();
 
@@ -199,7 +192,7 @@ namespace GetStoreApp.Services.Controls.History
             }
 
             // 从数据库中获取数据
-            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
+            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBFile.Path}"))
             {
                 await db.OpenAsync();
 
@@ -283,7 +276,7 @@ namespace GetStoreApp.Services.Controls.History
         {
             List<HistoryModel> HistoryRawList = new List<HistoryModel>();
 
-            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
+            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBFile.Path}"))
             {
                 await db.OpenAsync();
 
@@ -325,7 +318,7 @@ namespace GetStoreApp.Services.Controls.History
         {
             bool IsDeleteSuccessfully = true;
 
-            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
+            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBFile.Path}"))
             {
                 await db.OpenAsync();
 
@@ -368,7 +361,7 @@ namespace GetStoreApp.Services.Controls.History
         {
             bool IsClearSuccessfully = false;
 
-            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
+            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBFile.Path}"))
             {
                 await db.OpenAsync();
 

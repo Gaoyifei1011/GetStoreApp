@@ -2,6 +2,7 @@
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;
 using System.ComponentModel;
+using Windows.Foundation;
 
 namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
 {
@@ -74,7 +75,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         private void CreateMessageWindow()
         {
             // 为窗口生成唯一 ID
-            WindowId = "GetStoreApp" + Guid.NewGuid();
+            WindowId = "GetStoreApp" + GuidHelper.CreateNewGuid();
 
             // 注册窗口消息处理程序
             messageHandler = OnWindowMessageReceived;

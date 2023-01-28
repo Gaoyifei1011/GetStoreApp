@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.SystemTray;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using GetStoreApp.ViewModels.Window;
 using GetStoreApp.Views.Window;
@@ -7,7 +8,6 @@ using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using Windows.UI.StartScreen;
 
@@ -78,7 +78,7 @@ namespace GetStoreApp
         private void InitializeTrayIcon()
         {
             TrayIcon = new WindowsTrayIcon(
-                Path.Combine(AppContext.BaseDirectory, "Assets/GetStoreApp.ico"),
+                string.Format(@"{0}\{1}", InfoHelper.GetAppInstalledLocation(), @"Assets\GetStoreApp.ico"),
                 ResourceService.GetLocalized("Resources/AppDisplayName")
             );
 

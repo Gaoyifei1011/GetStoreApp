@@ -336,6 +336,10 @@
                         SelectionMode="None"
                         Visibility="{x:Bind ViewModel.IsHistoryEmptyAfterFilter, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}">
 
+                        <ItemsControl.ItemContainerTransitions>
+                            <TransitionCollection />
+                        </ItemsControl.ItemContainerTransitions>
+
                         <ListView.Header>
                             <Grid
                                 Height="35"

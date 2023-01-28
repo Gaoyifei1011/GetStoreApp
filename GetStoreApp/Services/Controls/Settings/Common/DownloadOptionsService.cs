@@ -8,6 +8,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.System;
 
 namespace GetStoreApp.Services.Controls.Settings.Common
 {
@@ -43,9 +44,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         {
             DownloadModeList = ResourceService.DownloadModeList;
 
-            await CreateFolderAsync(Path.Combine(ApplicationData.Current.LocalCacheFolder.Path, "Downloads"));
-
-            DefaultFolder = await StorageFolder.GetFolderFromPathAsync(Path.Combine(ApplicationData.Current.LocalCacheFolder.Path, "Downloads"));
+            DefaultFolder = await ApplicationData.Current.LocalCacheFolder.CreateFolderAsync("Downloads", CreationCollisionOption.OpenIfExists);
 
             DefaultDownloadMode = DownloadModeList.Find(item => item.InternalName.Equals("DownloadInApp", StringComparison.OrdinalIgnoreCase));
 
@@ -54,15 +53,6 @@ namespace GetStoreApp.Services.Controls.Settings.Common
             DownloadItem = await GetItemAsync();
 
             DownloadMode = await GetModeAsync();
-        }
-
-        /// <summary>
-        /// 创建目录
-        /// </summary>
-        public static async Task CreateFolderAsync(string folderPath)
-        {
-            Directory.CreateDirectory(folderPath);
-            await Task.CompletedTask;
         }
 
         /// <summary>
@@ -149,10 +139,10 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         {
             if (!Directory.Exists(folder.Path))
             {
-                await CreateFolderAsync(folder.Path);
+                Directory.CreateDirectory(folder.Path);
             }
 
-            await Windows.System.Launcher.LaunchFolderAsync(folder);
+            await Launcher.LaunchFolderAsync(folder);
         }
 
         /// <summary>

@@ -36,7 +36,7 @@ namespace GetStoreApp.Services.Controls.Download
         {
             bool IsAddSuccessfully = false;
 
-            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
+            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBFile.Path}"))
             {
                 await db.OpenAsync();
 
@@ -84,7 +84,7 @@ namespace GetStoreApp.Services.Controls.Download
         {
             bool IsUpdateSuccessfully = false;
 
-            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
+            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBFile.Path}"))
             {
                 await db.OpenAsync();
 
@@ -127,7 +127,7 @@ namespace GetStoreApp.Services.Controls.Download
         {
             bool IsUpdateSuccessfully = false;
 
-            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
+            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBFile.Path}"))
             {
                 await db.OpenAsync();
 
@@ -173,7 +173,7 @@ namespace GetStoreApp.Services.Controls.Download
             List<BackgroundModel> DownloadRawList = new List<BackgroundModel>();
 
             // 从数据库中获取数据
-            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
+            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBFile.Path}"))
             {
                 await db.OpenAsync();
 
@@ -220,7 +220,7 @@ namespace GetStoreApp.Services.Controls.Download
             BackgroundModel downloadRawModel = new BackgroundModel();
 
             // 从数据库中获取数据
-            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
+            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBFile.Path}"))
             {
                 await db.OpenAsync();
 
@@ -260,7 +260,7 @@ namespace GetStoreApp.Services.Controls.Download
             DuplicatedDataInfoArgs duplicatedDataInfo = DuplicatedDataInfoArgs.None;
 
             // 从数据库中获取数据
-            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
+            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBFile.Path}"))
             {
                 await db.OpenAsync();
 
@@ -303,7 +303,7 @@ namespace GetStoreApp.Services.Controls.Download
         {
             bool IsDeleteSuccessfully = true;
 
-            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
+            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBFile.Path}"))
             {
                 await db.OpenAsync();
 
@@ -344,7 +344,7 @@ namespace GetStoreApp.Services.Controls.Download
         {
             bool IsDeleteSuccessfully = true;
 
-            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
+            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBFile.Path}"))
             {
                 await db.OpenAsync();
 
@@ -386,7 +386,7 @@ namespace GetStoreApp.Services.Controls.Download
         {
             bool IsClearSuccessfully = true;
 
-            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBpath}"))
+            using (SqliteConnection db = new SqliteConnection($"Filename={DataBaseService.DBFile.Path}"))
             {
                 await db.OpenAsync();
 

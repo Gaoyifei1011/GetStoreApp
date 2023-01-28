@@ -238,11 +238,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 ResultDataList = HtmlParseHelper.HtmlParseLinks();
 
                 ResultListFilter(ref ResultDataList);
-
-                Messenger.Default.Send(true, MessageToken.History);
             }
 
-            // 发送消息
+            // 发送消息，显示结果
             Messenger.Default.Send(state, MessageToken.StatusBarState);
 
             Messenger.Default.Send(ResultControlVisable, MessageToken.ResultControlVisable);
@@ -251,11 +249,14 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             Messenger.Default.Send(ResultDataList, MessageToken.ResultDataList);
 
+            // 成功状态下更新历史记录
             if (state is 1)
             {
                 await UpdateHistoryAsync(CurrentType, CurrentChannel, CurrentLink);
 
                 await UpdateTaskbarJumpListAsync(CurrentType, CurrentChannel, CurrentLink);
+
+                Messenger.Default.Send(true, MessageToken.History);
             }
         }
 

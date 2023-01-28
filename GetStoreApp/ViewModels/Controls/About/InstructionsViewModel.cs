@@ -5,6 +5,7 @@ using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.About;
 using GetStoreApp.Views.Pages;
 using System;
+using Windows.System;
 
 namespace GetStoreApp.ViewModels.Controls.About
 {
@@ -38,13 +39,13 @@ namespace GetStoreApp.ViewModels.Controls.About
         // 检查网络
         public IRelayCommand CheckNetWorkCommand => new RelayCommand(async () =>
         {
-            await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
+            await Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
         });
 
         // 疑难解答
         public IRelayCommand TroubleShootCommand => new RelayCommand(async () =>
         {
-            await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:troubleshoot"));
+            await Launcher.LaunchUriAsync(new Uri("ms-settings:troubleshoot"));
         });
 
         // Cloudflare 5秒验证信息

@@ -1,4 +1,5 @@
-﻿using GetStoreApp.ViewModels.Base;
+﻿using GetStoreApp.Helpers.Root;
+using GetStoreApp.ViewModels.Base;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
@@ -50,7 +51,7 @@ namespace GetStoreApp.ViewModels.Dialogs.About
                 }
             }
 
-            StorageFile LicenseFile = await StorageFile.GetFileFromPathAsync(System.IO.Path.Combine(AppContext.BaseDirectory, @"Assets\LICENSE"));
+            StorageFile LicenseFile = await StorageFile.GetFileFromPathAsync(string.Format(@"{0}\{1}", InfoHelper.GetAppInstalledLocation(), @"Assets\LICENSE"));
 
             IBuffer buffer = await FileIO.ReadBufferAsync(LicenseFile);
             DataReader reader = DataReader.FromBuffer(buffer);

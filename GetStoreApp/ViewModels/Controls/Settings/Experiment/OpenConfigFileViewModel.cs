@@ -3,7 +3,6 @@ using GetStoreApp.Extensions.Command;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using Windows.Storage;
@@ -49,7 +48,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Experiment
                     }
                     else
                     {
-                        Process.Start("explorer.exe");
+                        await Launcher.LaunchFolderPathAsync(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
                     }
                 }
             }

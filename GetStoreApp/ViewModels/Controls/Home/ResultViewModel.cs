@@ -17,9 +17,10 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Text;
+using Windows.Storage;
+using Windows.System;
 
 namespace GetStoreApp.ViewModels.Controls.Home
 {
@@ -259,10 +260,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
                             {
                                 try
                                 {
-                                    if (File.Exists(backgroundItem.FilePath))
-                                    {
-                                        File.Delete(backgroundItem.FilePath);
-                                    }
+                                    StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
+                                    await ExistedFile.DeleteAsync();
                                 }
                                 finally
                                 {
@@ -288,7 +287,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             {
                 SelectedResultDataList.ForEach(async resultItem =>
                 {
-                    await Windows.System.Launcher.LaunchUriAsync(new Uri(resultItem.FileLink));
+                    await Launcher.LaunchUriAsync(new Uri(resultItem.FileLink));
                 });
             }
         });
@@ -355,10 +354,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
                                 {
                                     try
                                     {
-                                        if (File.Exists(backgroundItem.FilePath))
-                                        {
-                                            File.Delete(backgroundItem.FilePath);
-                                        }
+                                        StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
+                                        await ExistedFile.DeleteAsync();
                                     }
                                     finally
                                     {
@@ -387,10 +384,8 @@ namespace GetStoreApp.ViewModels.Controls.Home
                                 {
                                     try
                                     {
-                                        if (File.Exists(backgroundItem.FilePath))
-                                        {
-                                            File.Delete(backgroundItem.FilePath);
-                                        }
+                                        StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
+                                        await ExistedFile.DeleteAsync();
                                     }
                                     finally
                                     {
@@ -412,7 +407,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             // 使用浏览器下载
             else if (DownloadOptionsService.DownloadMode == DownloadOptionsService.DownloadModeList[1])
             {
-                await Windows.System.Launcher.LaunchUriAsync(new Uri(resultItem.FileLink));
+                await Launcher.LaunchUriAsync(new Uri(resultItem.FileLink));
             }
         });
 

@@ -4,6 +4,7 @@ using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Extensions.SystemTray;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Appearance;
@@ -16,7 +17,6 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.AppNotifications;
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using Windows.Graphics;
 using Windows.UI.StartScreen;
@@ -131,7 +131,7 @@ namespace GetStoreApp.ViewModels.Window
             }
 
             Program.ApplicationRoot.AppWindow.Title = ResourceService.GetLocalized("Resources/AppDisplayName");
-            Program.ApplicationRoot.AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/GetStoreApp.ico"));
+            Program.ApplicationRoot.AppWindow.SetIcon(string.Format(@"{0}\{1}", InfoHelper.GetAppInstalledLocation(), "Assets/GetStoreApp.ico"));
             Program.ApplicationRoot.AppWindow.Show();
         }
 

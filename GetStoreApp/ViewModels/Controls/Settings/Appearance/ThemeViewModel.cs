@@ -5,6 +5,7 @@ using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.ViewModels.Base;
 using System;
 using System.Collections.Generic;
+using Windows.System;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
 {
@@ -31,7 +32,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
         // 打开系统主题设置
         public IRelayCommand SettingsColorCommand => new RelayCommand(async () =>
         {
-            await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:colors"));
+            await Launcher.LaunchUriAsync(new Uri("ms-settings:colors"));
         });
 
         // 主题修改设置

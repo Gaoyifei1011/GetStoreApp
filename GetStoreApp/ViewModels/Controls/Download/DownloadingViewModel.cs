@@ -13,9 +13,9 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace GetStoreApp.ViewModels.Controls.Download
 {
@@ -197,19 +197,21 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
                 if (DeleteResult)
                 {
-                    // 删除文件
-                    string tempFilePath = downloadingItem.FilePath;
-                    string tempFileAria2Path = string.Format("{0}.{1}", downloadingItem.FilePath, "aria2");
-
-                    if (File.Exists(tempFilePath))
+                    // 删除下载文件
+                    try
                     {
-                        File.Delete(tempFilePath);
+                        StorageFile TempFile = await StorageFile.GetFileFromPathAsync(downloadingItem.FilePath);
+                        await TempFile.DeleteAsync();
                     }
+                    finally { }
 
-                    if (File.Exists(tempFileAria2Path))
+                    // 删除Aria2后缀下载信息记录文件
+                    try
                     {
-                        File.Delete(tempFileAria2Path);
+                        StorageFile TempAria2File = await StorageFile.GetFileFromPathAsync(string.Format("{0}.{1}", downloadingItem.FilePath, "aria2"));
+                        await TempAria2File.DeleteAsync();
                     }
+                    finally { }
                 }
             });
 
@@ -271,19 +273,21 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
             if (DeleteResult)
             {
-                // 删除文件
-                string tempFilePath = downloadingItem.FilePath;
-                string tempFileAria2Path = string.Format("{0}.{1}", downloadingItem.FilePath, "aria2");
-
-                if (File.Exists(tempFilePath))
+                // 删除下载文件
+                try
                 {
-                    File.Delete(tempFilePath);
+                    StorageFile TempFile = await StorageFile.GetFileFromPathAsync(downloadingItem.FilePath);
+                    await TempFile.DeleteAsync();
                 }
+                finally { }
 
-                if (File.Exists(tempFileAria2Path))
+                // 删除Aria2后缀下载信息记录文件
+                try
                 {
-                    File.Delete(tempFileAria2Path);
+                    StorageFile TempAria2File = await StorageFile.GetFileFromPathAsync(string.Format("{0}.{1}", downloadingItem.FilePath, "aria2"));
+                    await TempAria2File.DeleteAsync();
                 }
+                finally { }
             }
 
             // 信息更新完毕时，允许其他操作开始执行

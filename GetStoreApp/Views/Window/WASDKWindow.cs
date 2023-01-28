@@ -207,7 +207,7 @@ namespace GetStoreApp.Views.Window
         public static int ConvertEpxToPixel(IntPtr hwnd, int effectivePixels)
         {
             float scalingFactor = GetScalingFactor(hwnd);
-            return (int)(effectivePixels * scalingFactor);
+            return Convert.ToInt32(effectivePixels * scalingFactor);
         }
 
         public static float GetScalingFactor(IntPtr hwnd)

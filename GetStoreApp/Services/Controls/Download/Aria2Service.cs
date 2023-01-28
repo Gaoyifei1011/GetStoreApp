@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Exceptions;
 using GetStoreApp.Helpers.Controls.Download;
+using GetStoreApp.Helpers.Root;
 using System;
 using System.IO;
 using System.Text;
@@ -16,11 +17,15 @@ namespace GetStoreApp.Services.Controls.Download
     /// </summary>
     public static class Aria2Service
     {
-        private static string Aria2FilePath { get; } = Path.Combine(AppContext.BaseDirectory, @"Aria2\Aria2c.exe");
+        private static string Aria2FilePath { get; } = string.Format(@"{0}\{1}", InfoHelper.GetAppInstalledLocation(), @"Aria2\Aria2c.exe");
 
-        private static string DefaultAria2ConfPath { get; } = Path.Combine(AppContext.BaseDirectory, @"Aria2\Aria2c.conf");
+        private static string DefaultAria2ConfPath { get; } = string.Format(@"{0}\{1}", InfoHelper.GetAppInstalledLocation(), @"Aria2\Aria2c.conf");
 
-        public static string Aria2ConfPath { get; } = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Aria2.conf");
+        public static string Aria2ConfPath { get; } = string.Format(@"{0}\{1}", ApplicationData.Current.LocalFolder.Path, "Aria2.conf");
+
+        public static StorageFile DefaultAria2ConfFile { get; set; }
+
+        public static StorageFile Aria2ConfFile { get; set; }
 
         private static string Aria2Arguments { get; set; }
 

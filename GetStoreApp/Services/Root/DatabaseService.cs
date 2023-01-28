@@ -1,7 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using SQLitePCL;
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
 
@@ -12,13 +11,11 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public static class DataBaseService
     {
-        public static string DBName { get; } = "GetStoreApp.db";
-
         public static string HistoryTableName { get; } = "HISTORY";
 
         public static string DownloadTableName { get; } = "DOWNLOAD";
 
-        public static string DBpath { get; } = Path.Combine(ApplicationData.Current.LocalFolder.Path, "GetStoreApp.db");
+        public static StorageFile DBFile { get; set; }
 
         /// <summary>
         /// 历史记录表不存在时，自动创建历史记录表
@@ -26,7 +23,7 @@ namespace GetStoreApp.Services.Root
         public static async Task InitializeDataBaseAsync()
         {
             // 创建数据库文件
-            await ApplicationData.Current.LocalFolder.CreateFileAsync(DBName, CreationCollisionOption.OpenIfExists);
+            DBFile = await ApplicationData.Current.LocalFolder.CreateFileAsync("GetStoreApp.db", CreationCollisionOption.OpenIfExists);
 
             // 使用自定义Sqlite版本
             raw.SetProvider(new SQLite3Provider_winsqlite3());
@@ -43,14 +40,8 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static async Task InitializeHistoryTableAsync()
         {
-            // 文件不存在，取消操作
-            if (!File.Exists(DBpath))
-            {
-                return;
-            }
-
             // 创建历史记录表
-            using (SqliteConnection db = new SqliteConnection($"Filename={DBpath}"))
+            using (SqliteConnection db = new SqliteConnection($"Filename={DBFile.Path}"))
             {
                 await db.OpenAsync();
 
@@ -89,14 +80,8 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static async Task InitializeDownloadTableAsync()
         {
-            // 文件不存在，取消操作
-            if (!File.Exists(DBpath))
-            {
-                return;
-            }
-
             // 创建下载记录表
-            using (SqliteConnection db = new SqliteConnection($"Filename={DBpath}"))
+            using (SqliteConnection db = new SqliteConnection($"Filename={DBFile.Path}"))
             {
                 await db.OpenAsync();
 

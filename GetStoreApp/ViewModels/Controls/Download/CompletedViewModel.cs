@@ -16,12 +16,12 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Management.Deployment;
 using Windows.Storage;
+using Windows.System;
 
 namespace GetStoreApp.ViewModels.Controls.Download
 {
@@ -216,12 +216,14 @@ namespace GetStoreApp.ViewModels.Controls.Download
                         // 删除文件
                         try
                         {
-                            if (File.Exists(completedItem.FilePath))
-                            {
-                                File.Delete(completedItem.FilePath);
-                            }
+                            StorageFile CompletedDownloadFile = await StorageFile.GetFileFromPathAsync(completedItem.FilePath);
+                            await CompletedDownloadFile.DeleteAsync();
+                        }
+                        finally { }
 
-                            // 删除记录
+                        // 删除记录
+                        try
+                        {
                             bool DeleteResult = await DownloadDBService.DeleteAsync(completedItem.DownloadKey);
 
                             if (DeleteResult)
@@ -232,10 +234,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                                 }
                             }
                         }
-                        catch (Exception)
-                        {
-                            continue;
-                        }
+                        finally { }
                     }
                 }
 
@@ -257,13 +256,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 if (InstallModeService.InstallMode.InternalName == InstallModeService.InstallModeList[0].InternalName)
                 {
-                    ProcessStartInfo Info = new ProcessStartInfo
-                    {
-                        FileName = completedItem.FilePath,
-                        UseShellExecute = true
-                    };
-
-                    Process.Start(Info);
+                    await Launcher.LaunchFileAsync(await StorageFile.GetFileFromPathAsync(completedItem.FilePath));
                 }
 
                 // 直接安装
@@ -313,7 +306,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 filePath = filePath.Replace(@"\\", @"\");
 
-                // 判断文件是否存在，文件存在则寻找对应的文件，不存在打开对应的目录；若目录不存在，则仅启动Explorer.exe进程，打开资源管理器的默认文件夹
+                // 判断文件是否存在，文件存在则寻找对应的文件，不存在打开对应的目录；若目录不存在，则仅启动资源管理器并打开桌面目录
                 if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
                 {
                     await DownloadOptionsService.OpenItemFolderAsync(filePath);
@@ -324,11 +317,11 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
                     if (Directory.Exists(FileFolderPath))
                     {
-                        await Windows.System.Launcher.LaunchFolderAsync(await StorageFolder.GetFolderFromPathAsync(FileFolderPath));
+                        await Launcher.LaunchFolderAsync(await StorageFolder.GetFolderFromPathAsync(FileFolderPath));
                     }
                     else
                     {
-                        Process.Start("explorer.exe");
+                        await Launcher.LaunchFolderPathAsync(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
                     }
                 }
             }
@@ -378,13 +371,17 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     return;
                 }
 
+                // 删除文件
                 try
                 {
-                    if (File.Exists(completedItem.FilePath))
-                    {
-                        File.Delete(completedItem.FilePath);
-                    }
+                    StorageFile CompletedDownloadFile = await StorageFile.GetFileFromPathAsync(completedItem.FilePath);
+                    await CompletedDownloadFile.DeleteAsync();
+                }
+                finally { }
 
+                // 删除记录
+                try
+                {
                     bool DeleteResult = await DownloadDBService.DeleteAsync(completedItem.DownloadKey);
 
                     if (DeleteResult)
@@ -395,10 +392,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                         }
                     }
                 }
-                catch (Exception)
-                {
-                    return;
-                }
+                finally { }
             }
         });
 

@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Helpers.Controls.Download;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
 using System;
@@ -16,7 +17,7 @@ namespace GetStoreApp.Services.Shell
     /// </summary>
     public static class DownloadService
     {
-        private static string Aria2FilePath { get; } = Path.Combine(AppContext.BaseDirectory, @"Aria2\Aria2c.exe");
+        private static string Aria2FilePath { get; } = string.Format(@"{0}\{1}", InfoHelper.GetAppInstalledLocation(), @"Aria2\Aria2c.exe");
 
         private static bool IsFileDownloading;
 

@@ -28,7 +28,7 @@
     <PublishProtocol>FileSystem</PublishProtocol>
     <PublishReadyToRun>True</PublishReadyToRun>
     <!--调试时需要设置该选项为false-->
-    <PublishSingleFile>true</PublishSingleFile>
+    <PublishSingleFile>false</PublishSingleFile>
     <PublishTrimmed>true</PublishTrimmed>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <RootNamespace>GetStoreApp</RootNamespace>

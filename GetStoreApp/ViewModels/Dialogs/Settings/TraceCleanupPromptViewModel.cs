@@ -11,6 +11,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Shapes;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -151,7 +152,7 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
             });
         }
 
-        private void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs args)
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
             IsSelected = TraceCleanupList.Exists(item => item.IsSelected);
         }

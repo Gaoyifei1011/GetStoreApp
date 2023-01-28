@@ -10,6 +10,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Shapes;
+using System;
 using System.Text;
 
 namespace GetStoreApp.ViewModels.Dialogs.Download
@@ -125,7 +126,7 @@ namespace GetStoreApp.ViewModels.Dialogs.Download
         {
             FileName = completedItem.FileName;
             FilePath = completedItem.FilePath;
-            FileSize = System.Convert.ToString(new DownloadSizeFormatConverter().Convert(completedItem.TotalSize, null, null, null));
+            FileSize = Convert.ToString(new DownloadSizeFormatConverter().Convert(completedItem.TotalSize, null, null, null));
             if (FileSHA1 is "WebDownloadUnknown")
             {
                 FileSHA1Load = false;

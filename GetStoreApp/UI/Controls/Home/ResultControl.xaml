@@ -169,6 +169,10 @@
             SelectionMode="None"
             Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
 
+            <ItemsControl.ItemContainerTransitions>
+                <TransitionCollection />
+            </ItemsControl.ItemContainerTransitions>
+
             <ListView.Header>
                 <Grid
                     Height="35"

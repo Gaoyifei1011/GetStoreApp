@@ -16,9 +16,9 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace GetStoreApp.ViewModels.Controls.Download
 {
@@ -176,23 +176,25 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
             foreach (BackgroundModel backgroundItem in SelectedUnfinishedDataList)
             {
+                // 删除下载文件
                 try
                 {
-                    // 删除文件
-                    string tempFilePath = backgroundItem.FilePath;
-                    string tempFileAria2Path = string.Format("{0}.{1}", backgroundItem.FilePath, "aria2");
+                    StorageFile TempFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
+                    await TempFile.DeleteAsync();
+                }
+                finally { }
 
-                    if (File.Exists(tempFilePath))
-                    {
-                        File.Delete(tempFilePath);
-                    }
+                // 删除Aria2后缀下载信息记录文件
+                try
+                {
+                    StorageFile TempAria2File = await StorageFile.GetFileFromPathAsync(string.Format("{0}.{1}", backgroundItem.FilePath, "aria2"));
+                    await TempAria2File.DeleteAsync();
+                }
+                finally { }
 
-                    if (File.Exists(tempFileAria2Path))
-                    {
-                        File.Delete(tempFileAria2Path);
-                    }
-
-                    // 删除记录
+                // 删除记录
+                try
+                {
                     bool DeleteResult = await DownloadDBService.DeleteAsync(backgroundItem.DownloadKey);
 
                     if (DeleteResult)
@@ -203,10 +205,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                         }
                     }
                 }
-                catch (Exception)
-                {
-                    continue;
-                }
+                finally { }
             }
         });
 
@@ -257,22 +256,25 @@ namespace GetStoreApp.ViewModels.Controls.Download
         // 删除当前任务
         public IRelayCommand DeleteCommand => new RelayCommand<UnfinishedModel>(async (unfinishedItem) =>
         {
+            // 删除下载文件
             try
             {
-                // 删除文件
-                string tempFilePath = unfinishedItem.FilePath;
-                string tempFileAria2Path = string.Format("{0}.{1}", unfinishedItem.FilePath, "aria2");
+                StorageFile TempFile = await StorageFile.GetFileFromPathAsync(unfinishedItem.FilePath);
+                await TempFile.DeleteAsync();
+            }
+            finally { }
 
-                if (File.Exists(tempFilePath))
-                {
-                    File.Delete(tempFilePath);
-                }
+            // 删除Aria2后缀下载信息记录文件
+            try
+            {
+                StorageFile TempAria2File = await StorageFile.GetFileFromPathAsync(string.Format("{0}.{1}", unfinishedItem.FilePath, "aria2"));
+                await TempAria2File.DeleteAsync();
+            }
+            finally { }
 
-                if (File.Exists(tempFileAria2Path))
-                {
-                    File.Delete(tempFileAria2Path);
-                }
-
+            // 删除记录
+            try
+            {
                 bool DeleteResult = await DownloadDBService.DeleteAsync(unfinishedItem.DownloadKey);
 
                 if (DeleteResult)
@@ -283,10 +285,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     }
                 }
             }
-            catch (Exception)
-            {
-                return;
-            }
+            finally { }
         });
 
         public UnfinishedViewModel()

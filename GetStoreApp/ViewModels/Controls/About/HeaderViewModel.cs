@@ -4,6 +4,7 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.ViewModels.Base;
 using Microsoft.UI.Xaml;
 using System;
+using Windows.System;
 
 namespace GetStoreApp.ViewModels.Controls.About
 {
@@ -36,25 +37,25 @@ namespace GetStoreApp.ViewModels.Controls.About
         // 开发者个人信息
         public IRelayCommand DeveloperDescriptionCommand => new RelayCommand(async () =>
         {
-            await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011"));
+            await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011"));
         });
 
         // 项目主页
         public IRelayCommand ProjectDescriptionCommand => new RelayCommand(async () =>
         {
-            await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp"));
+            await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp"));
         });
 
         // 发送反馈
         public IRelayCommand SendFeedbackCommand => new RelayCommand(async () =>
         {
-            await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/issues"));
+            await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/issues"));
         });
 
         // 检查更新
         public IRelayCommand CheckUpdateCommand => new RelayCommand(async () =>
         {
-            await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/releases"));
+            await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/releases"));
         });
 
         /// <summary>
