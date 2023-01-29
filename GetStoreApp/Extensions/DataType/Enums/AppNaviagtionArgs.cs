@@ -7,8 +7,9 @@
     {
         None = 0,
         Home = 1,
-        Instructions = 2,
-        SettingsHelp = 3,
-        DownloadOptions = 4,
+        History = 2,
+        Instructions = 3,
+        SettingsHelp = 4,
+        DownloadOptions = 5,
     }
 }

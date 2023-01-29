@@ -16,7 +16,6 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Management.Deployment;
@@ -252,49 +251,58 @@ namespace GetStoreApp.ViewModels.Controls.Download
         public IRelayCommand InstallCommand => new RelayCommand<CompletedModel>(async (completedItem) =>
         {
             // 使用应用安装程序安装
-            if (!string.IsNullOrEmpty(completedItem.FilePath) && File.Exists(completedItem.FilePath))
+            if (!string.IsNullOrEmpty(completedItem.FilePath))
             {
-                if (InstallModeService.InstallMode.InternalName == InstallModeService.InstallModeList[0].InternalName)
+                try
                 {
-                    await Launcher.LaunchFileAsync(await StorageFile.GetFileFromPathAsync(completedItem.FilePath));
+                    StorageFile CompletedFile = await StorageFile.GetFileFromPathAsync(completedItem.FilePath);
+
+                    if (InstallModeService.InstallMode.InternalName == InstallModeService.InstallModeList[0].InternalName)
+                    {
+                        await Launcher.LaunchFileAsync(CompletedFile);
+                    }
+
+                    // 直接安装
+                    else if (InstallModeService.InstallMode.InternalName == InstallModeService.InstallModeList[1].InternalName)
+                    {
+                        // 标记安装状态
+                        int InstallIndex = CompletedDataList.IndexOf(CompletedDataList.First(item => item.DownloadKey == completedItem.DownloadKey));
+                        CompletedDataList[InstallIndex].IsInstalling = true;
+
+                        PackageManager packageManager = new PackageManager();
+
+                        // 更新安装进度
+                        Progress<DeploymentProgress> progressCallBack = new Progress<DeploymentProgress>((installProgress) =>
+                        {
+                            CompletedDataList[InstallIndex].InstallValue = installProgress.percentage;
+                        });
+
+                        try
+                        {
+                            // 安装目标应用
+                            DeploymentResult InstallResult = await packageManager.AddPackageAsync(new Uri(completedItem.FilePath), null, DeploymentOptions.None).AsTask(progressCallBack);
+                            // 显示安装成功通知
+                            AppNotificationService.Show("InstallApp", "Successfully", CompletedFile.Name);
+                        }
+                        // 安装失败显示失败信息
+                        catch (Exception e)
+                        {
+                            CompletedDataList[InstallIndex].InstallError = true;
+                            // 显示安装失败通知
+                            AppNotificationService.Show("InstallApp", "Error", CompletedFile.Name, e.Message);
+                        }
+                        // 恢复原来的安装信息显示（并延缓当前安装信息显示时间1秒）
+                        finally
+                        {
+                            await Task.Delay(1000);
+                            CompletedDataList[InstallIndex].IsInstalling = false;
+                            CompletedDataList[InstallIndex].InstallError = false;
+                        }
+                    }
                 }
-
-                // 直接安装
-                else if (InstallModeService.InstallMode.InternalName == InstallModeService.InstallModeList[1].InternalName)
+                catch (Exception)
                 {
-                    // 标记安装状态
-                    int InstallIndex = CompletedDataList.IndexOf(CompletedDataList.First(item => item.DownloadKey == completedItem.DownloadKey));
-                    CompletedDataList[InstallIndex].IsInstalling = true;
-
-                    PackageManager packageManager = new PackageManager();
-
-                    // 更新安装进度
-                    Progress<DeploymentProgress> progressCallBack = new Progress<DeploymentProgress>((installProgress) =>
-                    {
-                        CompletedDataList[InstallIndex].InstallValue = installProgress.percentage;
-                    });
-
-                    try
-                    {
-                        // 安装目标应用
-                        DeploymentResult InstallResult = await packageManager.AddPackageAsync(new Uri(completedItem.FilePath), null, DeploymentOptions.None).AsTask(progressCallBack);
-                        // 显示安装成功通知
-                        AppNotificationService.Show("InstallApp", "Successfully", Path.GetFileName(completedItem.FilePath));
-                    }
-                    // 安装失败显示失败信息
-                    catch (Exception e)
-                    {
-                        CompletedDataList[InstallIndex].InstallError = true;
-                        // 显示安装失败通知
-                        AppNotificationService.Show("InstallApp", "Error", Path.GetFileName(completedItem.FilePath), e.Message);
-                    }
-                    // 恢复原来的安装信息显示（并延缓当前安装信息显示时间3秒）
-                    finally
-                    {
-                        await Task.Delay(3000);
-                        CompletedDataList[InstallIndex].IsInstalling = false;
-                        CompletedDataList[InstallIndex].InstallError = false;
-                    }
+                    return;
                 }
             }
         });
@@ -306,23 +314,25 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 filePath = filePath.Replace(@"\\", @"\");
 
-                // 判断文件是否存在，文件存在则寻找对应的文件，不存在打开对应的目录；若目录不存在，则仅启动资源管理器并打开桌面目录
-                if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
+                // 定位文件，若定位失败，则仅启动资源管理器并打开桌面目录
+                if (!string.IsNullOrEmpty(filePath))
                 {
-                    await DownloadOptionsService.OpenItemFolderAsync(filePath);
-                }
-                else
-                {
-                    string FileFolderPath = Path.GetDirectoryName(filePath);
-
-                    if (Directory.Exists(FileFolderPath))
+                    try
                     {
-                        await Launcher.LaunchFolderAsync(await StorageFolder.GetFolderFromPathAsync(FileFolderPath));
+                        StorageFile file = await StorageFile.GetFileFromPathAsync(filePath);
+                        StorageFolder folder = await file.GetParentAsync();
+                        FolderLauncherOptions options = new FolderLauncherOptions();
+                        options.ItemsToSelect.Add(file);
+                        await Launcher.LaunchFolderAsync(folder, options);
                     }
-                    else
+                    catch (Exception)
                     {
                         await Launcher.LaunchFolderPathAsync(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
                     }
+                }
+                else
+                {
+                    await Launcher.LaunchFolderPathAsync(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
                 }
             }
         });

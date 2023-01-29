@@ -10,7 +10,7 @@
     xmlns:pageViewModel="using:GetStoreApp.ViewModels.Pages"
     xmlns:root="using:GetStoreApp.Services.Root"
     Loaded="{x:Bind SettingsLoaded}"
-    NavigationCacheMode="Required"
+    NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
     <Page.DataContext>

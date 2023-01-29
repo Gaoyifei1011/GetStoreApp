@@ -278,9 +278,8 @@ namespace GetStoreApp.ViewModels.Pages
         // 填入指定项目的内容
         public IRelayCommand FillinCommand => new RelayCommand<HistoryModel>((historyItem) =>
         {
-            Program.ApplicationRoot.NavigationArgs = AppNaviagtionArgs.Home;
             Messenger.Default.Send(historyItem, MessageToken.Fillin);
-            NavigationService.NavigateTo(typeof(HomePage));
+            NavigationService.NavigateTo(typeof(HomePage), AppNaviagtionArgs.Home);
         });
 
         // 复制指定项目的内容

@@ -1,0 +1,20 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="MenuFlyoutLightThemeBursh" Color="#FFF3F3F3" />
+    <SolidColorBrush x:Key="MenuFlyoutDarkThemeBursh" Color="#FF141414" />
+
+    <Style
+        x:Key="AdaptiveFlyoutLightPresenter"
+        BasedOn="{StaticResource DefaultMenuFlyoutPresenterStyle}"
+        TargetType="MenuFlyoutPresenter">
+        <Setter Property="RequestedTheme" Value="Light" />
+        <Setter Property="Background" Value="{StaticResource MenuFlyoutLightThemeBursh}" />
+    </Style>
+    <Style
+        x:Key="AdaptiveFlyoutDarkPresenter"
+        BasedOn="{StaticResource DefaultMenuFlyoutPresenterStyle}"
+        TargetType="MenuFlyoutPresenter">
+        <Setter Property="RequestedTheme" Value="Dark" />
+        <Setter Property="Background" Value="{StaticResource MenuFlyoutDarkThemeBursh}" />
+    </Style>
+</ResourceDictionary>

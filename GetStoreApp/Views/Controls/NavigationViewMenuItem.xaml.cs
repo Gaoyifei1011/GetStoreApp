@@ -8,7 +8,7 @@ namespace GetStoreApp.Views.Controls
     /// <summary>
     /// 附带命令的导航控件项的容器
     /// </summary>
-    public sealed partial class NavigationViewMenuItem : NavigationViewItem
+    public partial class NavigationViewMenuItem : NavigationViewItem
     {
         public ICommand Command
         {

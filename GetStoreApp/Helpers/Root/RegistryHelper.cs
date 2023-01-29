@@ -1,5 +1,5 @@
-﻿using Microsoft.UI.Xaml;
-using Microsoft.Win32;
+﻿using GetStoreApp.WindowsAPI.PInvoke.Advapi32;
+using Microsoft.UI.Xaml;
 using System;
 
 namespace GetStoreApp.Helpers.Root
@@ -14,11 +14,19 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         public static ElementTheme GetRegistryAppTheme()
         {
-            RegistryKey PersonalizeKey = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize");
+            IntPtr hKey = IntPtr.Zero;
 
-            int value = Convert.ToInt32(PersonalizeKey.GetValue("AppsUseLightTheme", null));
+            if (Advapi32Library.RegOpenKeyEx(ReservedKeyHandles.HKEY_CURRENT_USER, @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", 0, RegistryAccessRights.KEY_READ, ref hKey) == 0)
+            {
+                int dataSize = 4;
+                byte[] data = new byte[dataSize];
 
-            return value is 0 ? ElementTheme.Dark : ElementTheme.Light;
+                if (Advapi32Library.RegQueryValueEx(hKey, "AppsUseLightTheme", IntPtr.Zero, IntPtr.Zero, data, ref dataSize) == 0)
+                {
+                    return data[0] is 0 ? ElementTheme.Dark : ElementTheme.Light;
+                }
+            }
+            return default;
         }
     }
 }

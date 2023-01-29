@@ -100,8 +100,9 @@
   </Extensions>
   
   <Capabilities>
-    <rescap:Capability Name="runFullTrust" />
     <Capability Name="internetClient" />
+    <rescap:Capability Name="runFullTrust" />
     <rescap:Capability Name="packageManagement" />
+    <rescap:Capability Name="broadFileSystemAccess" />
   </Capabilities>
 </Package>

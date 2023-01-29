@@ -1,6 +1,8 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
+using System;
 using Windows.Foundation;
 
 namespace GetStoreApp.Views.Pages
@@ -10,9 +12,24 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class AboutPage : Page
     {
+        private AppNaviagtionArgs AboutNavigationArgs { get; set; } = AppNaviagtionArgs.None;
+
         public AboutPage()
         {
             InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs args)
+        {
+            base.OnNavigatedTo(args);
+            if(args.Parameter is not null)
+            {
+                AboutNavigationArgs = (AppNaviagtionArgs)Enum.Parse(typeof(AppNaviagtionArgs), Convert.ToString(args.Parameter));
+            }
+            else
+            {
+                AboutNavigationArgs = AppNaviagtionArgs.None;
+            }
         }
 
         /// <summary>
@@ -23,7 +40,7 @@ namespace GetStoreApp.Views.Pages
             double CurrentScrollPosition = AboutScroll.VerticalOffset;
             Point CurrentPoint = new Point(0, (int)CurrentScrollPosition);
 
-            switch (Program.ApplicationRoot.NavigationArgs)
+            switch (AboutNavigationArgs)
             {
                 case AppNaviagtionArgs.Instructions:
                     {
@@ -38,10 +55,11 @@ namespace GetStoreApp.Views.Pages
                         break;
                     }
                 default:
-                    break;
+                    {
+                        AboutScroll.ChangeView(null, 0, null);
+                        break;
+                    }
             }
-
-            Program.ApplicationRoot.NavigationArgs = AppNaviagtionArgs.None;
         }
     }
 }

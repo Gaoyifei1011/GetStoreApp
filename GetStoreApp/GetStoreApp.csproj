@@ -170,6 +170,7 @@
     <None Remove="Styles\HyperlinkButton.xaml" />
     <None Remove="Styles\InfoBar.xaml" />
     <None Remove="Styles\ListView.xaml" />
+    <None Remove="Styles\MenuFlyout.xaml" />
     <None Remove="Styles\NavigationView.xaml" />
     <None Remove="Styles\Pivot.xaml" />
     <None Remove="Styles\TeachingTip.xaml" />
@@ -251,6 +252,7 @@
     <None Remove="UI\Notifications\WebCacheCleanNotification.xaml" />
     
     <None Remove="Views\Controls\AdaptiveGridView.xaml" />
+    <None Remove="Views\Controls\AdaptiveMenuFlyout.xaml" />
     <None Remove="Views\Controls\NavigationViewMenuItem.xaml" />
     <None Remove="Views\Controls\ResultDropDownButton.xaml" />
     
@@ -307,6 +309,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Styles\ListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\MenuFlyout.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Styles\NavigationView.xaml">
@@ -515,6 +520,9 @@
     </Page>
 
     <Page Update="Views\Controls\AdaptiveGridView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Controls\AdaptiveMenuFlyout.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\Controls\NavigationViewMenuItem.xaml">

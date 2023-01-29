@@ -291,7 +291,7 @@ namespace GetStoreApp.ViewModels.Window
         /// </summary>
         public void OnFrameNavgationFailed(object sender, NavigationFailedEventArgs args)
         {
-            throw new Exception(string.Format(ResourceService.GetLocalized("/Window/NavigationFailed"), args.SourcePageType.FullName));
+            throw new ApplicationException(string.Format(ResourceService.GetLocalized("/Window/NavigationFailed"), args.SourcePageType.FullName));
         }
 
         /// <summary>

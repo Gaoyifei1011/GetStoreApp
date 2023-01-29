@@ -2,6 +2,7 @@
     x:Class="GetStoreApp.UI.Controls.Settings.Appearance.BackdropControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:GetStoreApp.Views.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
@@ -61,7 +62,7 @@
             Content="{x:Bind ViewModel.Backdrop.DisplayName, Mode=OneWay}"
             ToolTipService.ToolTip="{x:Bind ViewModel.Backdrop.DisplayName, Mode=OneWay}">
             <DropDownButton.Flyout>
-                <MenuFlyout Placement="Bottom">
+                <controls:AdaptiveMenuFlyout>
                     <RadioMenuFlyoutItem
                         Command="{x:Bind ViewModel.BackdropSelectCommand}"
                         CommandParameter="0"
@@ -92,7 +93,7 @@
                         IsChecked="{x:Bind IsItemChecked(ViewModel.Backdrop.InternalName, ViewModel.BackdropList[3].InternalName), Mode=OneWay}"
                         Text="{x:Bind ViewModel.BackdropList[3].DisplayName}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.BackdropList[3].DisplayName}" />
-                </MenuFlyout>
+                </controls:AdaptiveMenuFlyout>
             </DropDownButton.Flyout>
         </DropDownButton>
     </Grid>

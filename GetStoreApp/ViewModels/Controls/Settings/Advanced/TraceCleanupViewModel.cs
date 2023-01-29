@@ -16,8 +16,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
         // 痕迹清理说明
         public IRelayCommand TraceCleanupTipCommand => new RelayCommand(() =>
         {
-            Program.ApplicationRoot.NavigationArgs = AppNaviagtionArgs.SettingsHelp;
-            NavigationService.NavigateTo(typeof(AboutPage));
+            NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
         });
 
         // 清理应用内使用的所有痕迹

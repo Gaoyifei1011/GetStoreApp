@@ -20,11 +20,11 @@ namespace GetStoreApp.Services.Window
         /// <summary>
         /// 页面向前导航
         /// </summary>
-        public static void NavigateTo(Type navigationPageType)
+        public static void NavigateTo(Type navigationPageType, object parameter = null)
         {
             if (NavigationItemList.Exists(item => item.NavigationPage == navigationPageType))
             {
-                NavigationFrame.Navigate(NavigationItemList.Find(item => item.NavigationPage == navigationPageType).NavigationPage, null, NavigationTransition);
+                NavigationFrame.Navigate(NavigationItemList.Find(item => item.NavigationPage == navigationPageType).NavigationPage, parameter, NavigationTransition);
             }
         }
 

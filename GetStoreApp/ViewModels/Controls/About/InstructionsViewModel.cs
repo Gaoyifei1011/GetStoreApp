@@ -62,8 +62,7 @@ namespace GetStoreApp.ViewModels.Controls.About
         // 下载设置
         public IRelayCommand DownloadSettingsCommand => new RelayCommand(() =>
         {
-            Program.ApplicationRoot.NavigationArgs = AppNaviagtionArgs.DownloadOptions;
-            NavigationService.NavigateTo(typeof(SettingsPage));
+            NavigationService.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.DownloadOptions);
         });
     }
 }

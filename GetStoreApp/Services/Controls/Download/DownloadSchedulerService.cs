@@ -412,7 +412,7 @@ namespace GetStoreApp.Services.Controls.Download
                     // 发送通知
                     if (DownloadingList.Any() || WaitingList.Any())
                     {
-                        AppNotificationService.Show("DownloadAborted", "Downloading");
+                        AppNotificationService.Show("DownloadAborted", "DownloadingNow");
                     }
                     else
                     {

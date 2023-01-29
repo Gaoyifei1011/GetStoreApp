@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:check="using:GetStoreApp.Converters.Checks"
+    xmlns:controls="using:GetStoreApp.Views.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:download="using:GetStoreApp.Models.Controls.Download"
     xmlns:downloadViewModel="using:GetStoreApp.ViewModels.Controls.Download"
@@ -123,7 +124,7 @@
                     </AppBarButton.Icon>
 
                     <AppBarButton.Flyout>
-                        <MenuFlyout Placement="Bottom">
+                        <controls:AdaptiveMenuFlyout>
                             <MenuFlyoutItem
                                 Command="{x:Bind ViewModel.DeleteSelectedCommand}"
                                 Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelected')}"
@@ -133,7 +134,7 @@
                                 Command="{x:Bind ViewModel.DeleteSelectedWithFileCommand}"
                                 Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedWithFile')}"
                                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedWithFileToolTip')}" />
-                        </MenuFlyout>
+                        </controls:AdaptiveMenuFlyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
 
@@ -329,7 +330,7 @@
                                         </Button.Content>
 
                                         <Button.Flyout>
-                                            <MenuFlyout Placement="Bottom">
+                                            <controls:AdaptiveMenuFlyout>
                                                 <MenuFlyoutItem
                                                     Command="{Binding ElementName=CompletedRoot, Path=DataContext.DeleteCommand, Mode=OneTime}"
                                                     CommandParameter="{Binding}"
@@ -352,7 +353,7 @@
                                                         <FontIcon Glyph="&#xE946;" Style="{StaticResource SegoeFluentStyle}" />
                                                     </MenuFlyoutItem.Icon>
                                                 </MenuFlyoutItem>
-                                            </MenuFlyout>
+                                            </controls:AdaptiveMenuFlyout>
                                         </Button.Flyout>
                                     </Button>
                                 </StackPanel>

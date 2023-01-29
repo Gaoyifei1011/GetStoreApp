@@ -29,8 +29,7 @@ namespace GetStoreApp.ViewModels.Pages
         // 了解应用具体的使用说明
         public IRelayCommand UseInstructionCommand => new RelayCommand(() =>
         {
-            Program.ApplicationRoot.NavigationArgs = AppNaviagtionArgs.Instructions;
-            NavigationService.NavigateTo(typeof(AboutPage));
+            NavigationService.NavigateTo(typeof(AboutPage),AppNaviagtionArgs.Instructions);
         });
 
         public HomeViewModel()
@@ -42,8 +41,5 @@ namespace GetStoreApp.ViewModels.Pages
         {
             UseInsVisValue = UseInstructionService.UseInsVisValue;
         }
-
-        public void OnNavigatedFrom()
-        { }
     }
 }

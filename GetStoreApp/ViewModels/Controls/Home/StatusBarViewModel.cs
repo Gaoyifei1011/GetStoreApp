@@ -7,6 +7,7 @@ using GetStoreApp.WindowsAPI.Controls;
 using GetStoreApp.WindowsAPI.Controls.Taskbar;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace GetStoreApp.ViewModels.Controls.Home
 {
@@ -98,7 +99,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
         /// <summary>
         /// 圆环动画状态修改时修改任务栏的动画显示
         /// </summary>
-        private void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs args)
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
             if (args.PropertyName == nameof(StatePrRingActValue))
             {

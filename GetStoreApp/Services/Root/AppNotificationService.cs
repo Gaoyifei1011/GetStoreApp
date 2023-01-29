@@ -146,7 +146,7 @@ namespace GetStoreApp.Services.Root
                         }
 
                         // 有任务处于正在下载状态时被迫中断显示相应的通知
-                        if (notificationContent[0] is "Downloading")
+                        if (notificationContent[0] is "DownloadingNow")
                         {
                             notification = new AppNotification(ResourceService.GetLocalized("/Notification/DownloadingNowOfflineMode"));
                             notification.ExpiresOnReboot = true;

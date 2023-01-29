@@ -127,7 +127,7 @@
                     </AppBarButton.Icon>
 
                     <AppBarButton.Flyout>
-                        <MenuFlyout Placement="Bottom">
+                        <controls:AdaptiveMenuFlyout>
                             <MenuFlyoutItem
                                 Command="{x:Bind ViewModel.CopySelectedLinkCommand}"
                                 Text="{x:Bind root:ResourceService.GetLocalized('Home/CopySelectedLink')}"
@@ -136,7 +136,7 @@
                                 Command="{x:Bind ViewModel.CopySelectedCommand}"
                                 Text="{x:Bind root:ResourceService.GetLocalized('Home/CopySelectedContent')}"
                                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/CopySelectedContentToolTip')}" />
-                        </MenuFlyout>
+                        </controls:AdaptiveMenuFlyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
 
@@ -292,11 +292,12 @@
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
                             Content="{Binding ElementName=ResultRoot, Path=Copy, Mode=OneTime}"
+                            Cursor="Hand"
                             IsEnabled="{Binding ElementName=ResultRoot, Path=DataContext.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
                             ToolTipService.ToolTip="{Binding ElementName=ResultRoot, Path=CopyOptionsToolTip, Mode=OneTime}">
 
                             <controls:ResultDropDownButton.Flyout>
-                                <MenuFlyout Placement="Bottom">
+                                <controls:AdaptiveMenuFlyout>
                                     <MenuFlyoutItem
                                         Command="{Binding ElementName=ResultRoot, Path=DataContext.CopyLinkCommand, Mode=OneTime}"
                                         CommandParameter="{x:Bind FileLink}"
@@ -307,7 +308,7 @@
                                         CommandParameter="{Binding}"
                                         Text="{Binding ElementName=ResultRoot, Path=CopyContent, Mode=OneTime}"
                                         ToolTipService.ToolTip="{Binding ElementName=ResultRoot, Path=CopyContentToolTip, Mode=OneTime}" />
-                                </MenuFlyout>
+                                </controls:AdaptiveMenuFlyout>
                             </controls:ResultDropDownButton.Flyout>
                         </controls:ResultDropDownButton>
                     </Grid>

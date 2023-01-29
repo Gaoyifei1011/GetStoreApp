@@ -1,6 +1,8 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
+using System;
 using Windows.Foundation;
 
 namespace GetStoreApp.Views.Pages
@@ -10,9 +12,24 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class SettingsPage : Page
     {
+        private AppNaviagtionArgs SettingNavigationArgs { get; set; } = AppNaviagtionArgs.None;
+
         public SettingsPage()
         {
             InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs args)
+        {
+            base.OnNavigatedTo(args);
+            if (args.Parameter is not null)
+            {
+                SettingNavigationArgs = (AppNaviagtionArgs)Enum.Parse(typeof(AppNaviagtionArgs), Convert.ToString(args.Parameter));
+            }
+            else
+            {
+                SettingNavigationArgs = AppNaviagtionArgs.None;
+            }
         }
 
         /// <summary>
@@ -23,12 +40,14 @@ namespace GetStoreApp.Views.Pages
             double CurrentScrollPosition = SettingsScroll.VerticalOffset;
             Point CurrentPoint = new Point(0, (int)CurrentScrollPosition);
 
-            if (Program.ApplicationRoot.NavigationArgs is AppNaviagtionArgs.DownloadOptions)
+            if (SettingNavigationArgs is AppNaviagtionArgs.DownloadOptions)
             {
                 Point TargetPosition = DownloadOptions.TransformToVisual(SettingsScroll).TransformPoint(CurrentPoint);
                 SettingsScroll.ChangeView(null, TargetPosition.Y, null);
-
-                Program.ApplicationRoot.NavigationArgs = AppNaviagtionArgs.None;
+            }
+            else
+            {
+                SettingsScroll.ChangeView(null, 0, null);
             }
         }
     }

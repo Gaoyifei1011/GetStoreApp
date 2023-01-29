@@ -35,8 +35,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
         // 语言设置说明
         public IRelayCommand LanguageTipCommand => new RelayCommand(() =>
         {
-            Program.ApplicationRoot.NavigationArgs = AppNaviagtionArgs.SettingsHelp;
-            NavigationService.NavigateTo(typeof(AboutPage));
+            NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
         });
 
         // 应用默认语言修改

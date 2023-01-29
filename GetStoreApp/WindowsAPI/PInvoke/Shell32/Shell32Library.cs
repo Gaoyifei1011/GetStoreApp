@@ -8,18 +8,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
     {
         private const string Shell32 = "shell32.dll";
 
-        /// <summary>返回与指定文件路径关联的 ITEMIDLIST 结构。</summary>
-        /// <param name="pszPath">指向包含路径的 null 终止 Unicode 字符串的指针。 此字符串长度不应超过 MAX_PATH 个字符，包括终止 null 字符。</param>
-        /// <returns>返回指向对应于路径的 ITEMIDLIST 结构的指针。</returns>
-        [DllImport(Shell32, CharSet = CharSet.Unicode, EntryPoint = "ILCreateFromPathW", SetLastError = true)]
-        public static extern IntPtr ILCreateFromPath([MarshalAs(UnmanagedType.LPWStr)] string pszPath);
-
-        /// <summary>释放 Shell 分配的 ITEMIDLIST 结构。</summary>
-        /// <param name="pidl">指向要释放的 ITEMIDLIST 结构的指针。 此参数可以为 NULL。</param>
-        /// <returns>无</returns>
-        [DllImport(Shell32, CharSet = CharSet.Ansi, EntryPoint = "ILFree", ExactSpelling = true, SetLastError = false)]
-        public static extern void ILFree(IntPtr pidlList);
-
         /// <summary>
         /// 从分析名称创建和初始化命令行管理程序项对象。
         /// </summary>
@@ -55,16 +43,5 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         /// </returns>
         [DllImport(Shell32, CharSet = CharSet.Unicode, EntryPoint = "Shell_NotifyIcon", SetLastError = false)]
         public static extern bool Shell_NotifyIcon(NotifyCommand cmd, [In] ref NotifyIconData data);
-
-        /// <summary>打开一个 Windows 资源管理器窗口，其中选定了特定文件夹中的指定项目。</summary>
-        /// <param name="pidlFolder">指向指定文件夹的完全限定项 ID 列表的指针。</param>
-        /// <param name="cidl">
-        /// 选择数组中的项计数 apidl。 如果 cidl 为零， 则 pidlFolder 必须指向描述要选择的单个项的完全指定的 ITEMIDLIST 。 此函数将打开父文件夹并选择该项目。
-        /// </param>
-        /// <param name="apidl">指向 PIDL 结构的数组的指针，每个结构都是在 pidlFolder 引用的目标文件夹中选择要选择的项。</param>
-        /// <param name="dwFlags">可选标志。</param>
-        /// <returns>如果此函数成功，则返回 S_OK。 否则，它将返回 HRESULT 错误代码。</returns>
-        [DllImport(Shell32, CharSet = CharSet.Ansi, EntryPoint = "SHOpenFolderAndSelectItems", ExactSpelling = true, SetLastError = false)]
-        public static extern int SHOpenFolderAndSelectItems(IntPtr pidlFolder, uint cidl, IntPtr apidl, uint dwFlags);
     }
 }

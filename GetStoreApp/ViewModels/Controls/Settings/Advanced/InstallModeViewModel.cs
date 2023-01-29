@@ -34,8 +34,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
         // 应用安装方式说明
         public IRelayCommand InstallModeTipCommand => new RelayCommand(() =>
         {
-            Program.ApplicationRoot.NavigationArgs = AppNaviagtionArgs.SettingsHelp;
-            NavigationService.NavigateTo(typeof(AboutPage));
+            NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
         });
 
         // 应用安装方式设置

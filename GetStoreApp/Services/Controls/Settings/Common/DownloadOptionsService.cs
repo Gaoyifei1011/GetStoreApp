@@ -1,11 +1,9 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Models.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
-using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.System;
@@ -62,13 +60,15 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         {
             string folder = await ConfigService.ReadSettingAsync<string>(FolderSettingsKey);
 
-            if (string.IsNullOrEmpty(folder))
+            try
+            {
+                return await StorageFolder.GetFolderFromPathAsync(folder);
+            }
+            catch (Exception)
             {
                 await SetFolderAsync(DefaultFolder);
                 return DefaultFolder;
             }
-
-            return await StorageFolder.GetFolderFromPathAsync(folder);
         }
 
         /// <summary>
@@ -143,29 +143,6 @@ namespace GetStoreApp.Services.Controls.Settings.Common
             }
 
             await Launcher.LaunchFolderAsync(folder);
-        }
-
-        /// <summary>
-        /// 在资源管理器中打开文件对应的目录，并选中该文件
-        /// </summary>
-        public static async Task OpenItemFolderAsync(string filePath)
-        {
-            if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
-            {
-                IntPtr pidlList = Shell32Library.ILCreateFromPath(filePath);
-                if (pidlList != IntPtr.Zero)
-                {
-                    try
-                    {
-                        Marshal.ThrowExceptionForHR(Shell32Library.SHOpenFolderAndSelectItems(pidlList, 0, IntPtr.Zero, 0));
-                        await Task.CompletedTask;
-                    }
-                    finally
-                    {
-                        Shell32Library.ILFree(pidlList);
-                    }
-                }
-            }
         }
     }
 }

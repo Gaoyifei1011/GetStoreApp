@@ -2,6 +2,7 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
+using System;
 
 namespace GetStoreApp.Views.Pages
 {
@@ -10,6 +11,8 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class HomePage : Page
     {
+        private AppNaviagtionArgs HomeNavigationArgs { get; set; } = AppNaviagtionArgs.None;
+
         public HomePage()
         {
             InitializeComponent();
@@ -19,12 +22,14 @@ namespace GetStoreApp.Views.Pages
         {
             base.OnNavigatedTo(args);
             ViewModel.OnNavigatedTo();
-        }
-
-        protected override void OnNavigatingFrom(NavigatingCancelEventArgs args)
-        {
-            base.OnNavigatingFrom(args);
-            ViewModel.OnNavigatedFrom();
+            if (args.Parameter is not null)
+            {
+                HomeNavigationArgs = (AppNaviagtionArgs)Enum.Parse(typeof(AppNaviagtionArgs), Convert.ToString(args.Parameter));
+            }
+            else
+            {
+                HomeNavigationArgs = AppNaviagtionArgs.None;
+            }
         }
 
         /// <summary>
@@ -32,10 +37,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         public void HomeLoaded(object sender, RoutedEventArgs args)
         {
-            if (Program.ApplicationRoot.NavigationArgs is AppNaviagtionArgs.Home)
+            if (HomeNavigationArgs is AppNaviagtionArgs.Home)
             {
                 HomeScroll.ChangeView(null, 0, null);
-                Program.ApplicationRoot.NavigationArgs = AppNaviagtionArgs.None;
             }
         }
     }

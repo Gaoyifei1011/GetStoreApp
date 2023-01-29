@@ -133,7 +133,14 @@ namespace GetStoreApp.ViewModels.Pages
         // 打开缓存文件夹
         public IRelayCommand OpenCacheFolderCommand => new RelayCommand(async () =>
         {
-            await Launcher.LaunchFolderAsync(await StorageFolder.GetFolderFromPathAsync(string.Format(@"{0}\{1}", ApplicationData.Current.LocalFolder.Path, "EbWebView")));
+            try
+            {
+                await Launcher.LaunchFolderAsync(await StorageFolder.GetFolderFromPathAsync(string.Format(@"{0}\{1}", ApplicationData.Current.LocalFolder.Path, "EbWebView")));
+            }
+            catch (Exception)
+            {
+                await Launcher.LaunchFolderAsync(ApplicationData.Current.LocalFolder);
+            }
         });
 
         // 清理网页缓存

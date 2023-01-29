@@ -28,9 +28,6 @@ namespace GetStoreApp
         // 标志内容对话框是否处于正在打开状态。若是，则不再打开其他内容对话框，防止造成应用异常
         public bool IsDialogOpening { get; set; } = false;
 
-        // 导航页面后使用到的参数
-        public AppNaviagtionArgs NavigationArgs { get; set; } = AppNaviagtionArgs.None;
-
         public App()
         {
             InitializeComponent();
@@ -43,6 +40,7 @@ namespace GetStoreApp
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
             base.OnLaunched(args);
+            await ResourceDictionaryHelper.InitializeResourceDictionaryAsync();
 
             InitializeMainWindow();
             InitializeAppWindow();

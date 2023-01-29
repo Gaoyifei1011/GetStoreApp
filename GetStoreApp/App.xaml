@@ -5,14 +5,15 @@
 
     <Application.Resources>
         <ResourceDictionary>
+            <!--  资源字典顺序发生变化时，需要修改ResourceDictionaryHelper静态类的资源字典顺序  -->
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+                <ResourceDictionary Source="ms-appx:///Styles/Converter.xaml" />
 
                 <ResourceDictionary Source="ms-appx:///Styles/Button.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Checkbox.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/CommandBar.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/ContentDialog.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/Converter.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/DropDownButton.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Expander.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/FontIcon.xaml" />
@@ -21,6 +22,7 @@
                 <ResourceDictionary Source="ms-appx:///Styles/HyperlinkButton.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/InfoBar.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/ListView.xaml" />
+                <ResourceDictionary Source="ms-appx:///Styles/MenuFlyout.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/NavigationView.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Pivot.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/TeachingTip.xaml" />

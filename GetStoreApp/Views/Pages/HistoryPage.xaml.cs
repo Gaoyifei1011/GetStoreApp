@@ -1,8 +1,9 @@
-﻿using GetStoreApp.Extensions.Messaging;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
+using System;
 
 namespace GetStoreApp.Views.Pages
 {
@@ -19,6 +20,8 @@ namespace GetStoreApp.Views.Pages
 
         public string CopyToolTip { get; } = ResourceService.GetLocalized("History/CopyToolTip");
 
+        public AppNaviagtionArgs HistoryNavigationArgs { get; set; } = AppNaviagtionArgs.None;
+
         public HistoryPage()
         {
             InitializeComponent();
@@ -28,11 +31,25 @@ namespace GetStoreApp.Views.Pages
         {
             base.OnNavigatedTo(args);
             ViewModel.OnNavigatedTo();
+            if (args.Parameter is not null)
+            {
+                HistoryNavigationArgs = (AppNaviagtionArgs)Enum.Parse(typeof(AppNaviagtionArgs), Convert.ToString(args.Parameter));
+            }
+            else
+            {
+                HistoryNavigationArgs = AppNaviagtionArgs.None;
+            }
         }
 
-        public void HistoryUnloaded(object sender, RoutedEventArgs args)
+        /// <summary>
+        /// 页面加载完成后如果有具体的要求，将页面滚动到指定位置
+        /// </summary>
+        public void HistoryPageLoaded(object sender, RoutedEventArgs args)
         {
-            Messenger.Default.Unregister(this);
+            if (HistoryNavigationArgs == AppNaviagtionArgs.History)
+            {
+                HistoryScroll.ChangeView(null, 0, null);
+            }
         }
 
         /// <summary>
