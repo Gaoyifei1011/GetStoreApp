@@ -30,14 +30,26 @@
                     <HyperlinkButton
                         Command="{x:Bind ViewModel.DesktopLaunchCommand}"
                         Content="{x:Bind root:ResourceService.GetLocalized('About/DesktopLaunch')}"
-                        Style="{StaticResource AboutHyperlinkButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/DesktopLaunch')}" />
+                        Style="{StaticResource AboutHyperlinkButtonStyle}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind root:ResourceService.GetLocalized('About/DesktopLaunch')}"
+                                Placement="Mouse"
+                                VerticalOffset="10" />
+                        </ToolTipService.ToolTip>
+                    </HyperlinkButton>
 
                     <HyperlinkButton
                         Command="{x:Bind ViewModel.ConsoleLaunchCommand}"
                         Content="{x:Bind root:ResourceService.GetLocalized('About/ConsoleLaunch')}"
-                        Style="{StaticResource AboutHyperlinkButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/ConsoleLaunch')}" />
+                        Style="{StaticResource AboutHyperlinkButtonStyle}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind root:ResourceService.GetLocalized('About/ConsoleLaunch')}"
+                                Placement="Mouse"
+                                VerticalOffset="10" />
+                        </ToolTipService.ToolTip>
+                    </HyperlinkButton>
                 </StackPanel>
 
                 <MenuFlyoutSeparator Margin="0,0,0,8" />
@@ -53,20 +65,38 @@
                     <HyperlinkButton
                         Command="{x:Bind ViewModel.CheckNetWorkCommand}"
                         Content="{x:Bind root:ResourceService.GetLocalized('About/CheckNetwork')}"
-                        Style="{StaticResource AboutHyperlinkButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/CheckNetwork')}" />
+                        Style="{StaticResource AboutHyperlinkButtonStyle}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind root:ResourceService.GetLocalized('About/CheckNetwork')}"
+                                Placement="Mouse"
+                                VerticalOffset="10" />
+                        </ToolTipService.ToolTip>
+                    </HyperlinkButton>
 
                     <HyperlinkButton
                         Command="{x:Bind ViewModel.TroubleShootCommand}"
                         Content="{x:Bind root:ResourceService.GetLocalized('About/TroubleShoot')}"
-                        Style="{StaticResource AboutHyperlinkButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/TroubleShoot')}" />
+                        Style="{StaticResource AboutHyperlinkButtonStyle}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind root:ResourceService.GetLocalized('About/TroubleShoot')}"
+                                Placement="Mouse"
+                                VerticalOffset="10" />
+                        </ToolTipService.ToolTip>
+                    </HyperlinkButton>
 
                     <HyperlinkButton
                         Command="{x:Bind ViewModel.CloudflareValidationCommand}"
                         Content="{x:Bind root:ResourceService.GetLocalized('About/CloudflareValidation')}"
-                        Style="{StaticResource AboutHyperlinkButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/CloudflareValidation')}" />
+                        Style="{StaticResource AboutHyperlinkButtonStyle}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind root:ResourceService.GetLocalized('About/CloudflareValidation')}"
+                                Placement="Mouse"
+                                VerticalOffset="10" />
+                        </ToolTipService.ToolTip>
+                    </HyperlinkButton>
                 </StackPanel>
 
                 <MenuFlyoutSeparator Margin="0,0,0,8" />
@@ -80,8 +110,14 @@
                     <HyperlinkButton
                         Command="{x:Bind ViewModel.DownloadSettingsCommand}"
                         Content="{x:Bind root:ResourceService.GetLocalized('About/DownloadSettings')}"
-                        Style="{StaticResource AboutHyperlinkButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/DownloadSettings')}" />
+                        Style="{StaticResource AboutHyperlinkButtonStyle}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind root:ResourceService.GetLocalized('About/DownloadSettings')}"
+                                Placement="Mouse"
+                                VerticalOffset="10" />
+                        </ToolTipService.ToolTip>
+                    </HyperlinkButton>
                 </StackPanel>
             </StackPanel>
         </Expander.Content>

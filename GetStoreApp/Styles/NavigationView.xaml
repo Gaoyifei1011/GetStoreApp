@@ -37,7 +37,10 @@
                                     Style="{StaticResource NavigationBackButtonNormalStyle}"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.BackButtonVisibility}">
                                     <ToolTipService.ToolTip>
-                                        <ToolTip x:Name="NavigationViewBackButtonToolTip" />
+                                        <ToolTip
+                                            x:Name="NavigationViewBackButtonToolTip"
+                                            Placement="Mouse"
+                                            VerticalOffset="10" />
                                     </ToolTipService.ToolTip>
                                 </Button>
                                 <Button
@@ -45,7 +48,10 @@
                                     VerticalAlignment="Top"
                                     Style="{StaticResource NavigationBackButtonNormalStyle}">
                                     <ToolTipService.ToolTip>
-                                        <ToolTip x:Name="NavigationViewCloseButtonToolTip" />
+                                        <ToolTip
+                                            x:Name="NavigationViewCloseButtonToolTip"
+                                            Placement="Mouse"
+                                            VerticalOffset="10" />
                                     </ToolTipService.ToolTip>
                                 </Button>
                                 <Button

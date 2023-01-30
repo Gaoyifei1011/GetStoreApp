@@ -180,8 +180,14 @@
                                             ElementSoundMode="FocusOnly"
                                             IsEnabled="{TemplateBinding IsPrimaryButtonEnabled}"
                                             IsTabStop="False"
-                                            Style="{TemplateBinding PrimaryButtonStyle}"
-                                            ToolTipService.ToolTip="{TemplateBinding PrimaryButtonText}" />
+                                            Style="{TemplateBinding PrimaryButtonStyle}">
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip
+                                                    Content="{TemplateBinding PrimaryButtonText}"
+                                                    Placement="Mouse"
+                                                    VerticalOffset="10" />
+                                            </ToolTipService.ToolTip>
+                                        </Button>
                                         <Button
                                             x:Name="SecondaryButton"
                                             HorizontalAlignment="Stretch"
@@ -189,8 +195,14 @@
                                             ElementSoundMode="FocusOnly"
                                             IsEnabled="{TemplateBinding IsSecondaryButtonEnabled}"
                                             IsTabStop="False"
-                                            Style="{TemplateBinding SecondaryButtonStyle}"
-                                            ToolTipService.ToolTip="{TemplateBinding SecondaryButtonText}" />
+                                            Style="{TemplateBinding SecondaryButtonStyle}">
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip
+                                                    Content="{TemplateBinding SecondaryButtonText}"
+                                                    Placement="Mouse"
+                                                    VerticalOffset="10" />
+                                            </ToolTipService.ToolTip>
+                                        </Button>
                                         <Button
                                             x:Name="CloseButton"
                                             Grid.Column="4"
@@ -198,8 +210,14 @@
                                             Content="{TemplateBinding CloseButtonText}"
                                             ElementSoundMode="FocusOnly"
                                             IsTabStop="False"
-                                            Style="{TemplateBinding CloseButtonStyle}"
-                                            ToolTipService.ToolTip="{TemplateBinding CloseButtonText}" />
+                                            Style="{TemplateBinding CloseButtonStyle}">
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip
+                                                    Content="{TemplateBinding CloseButtonText}"
+                                                    Placement="Mouse"
+                                                    VerticalOffset="10" />
+                                            </ToolTipService.ToolTip>
+                                        </Button>
                                     </Grid>
                                 </Grid>
                             </Border>
@@ -485,8 +503,14 @@
                                             ElementSoundMode="FocusOnly"
                                             IsEnabled="{TemplateBinding IsPrimaryButtonEnabled}"
                                             IsTabStop="False"
-                                            Style="{TemplateBinding PrimaryButtonStyle}"
-                                            ToolTipService.ToolTip="{TemplateBinding PrimaryButtonText}" />
+                                            Style="{TemplateBinding PrimaryButtonStyle}">
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip
+                                                    Content="{TemplateBinding PrimaryButtonText}"
+                                                    Placement="Mouse"
+                                                    VerticalOffset="10" />
+                                            </ToolTipService.ToolTip>
+                                        </Button>
                                         <Button
                                             x:Name="SecondaryButton"
                                             HorizontalAlignment="Stretch"
@@ -494,8 +518,14 @@
                                             ElementSoundMode="FocusOnly"
                                             IsEnabled="{TemplateBinding IsSecondaryButtonEnabled}"
                                             IsTabStop="False"
-                                            Style="{TemplateBinding SecondaryButtonStyle}"
-                                            ToolTipService.ToolTip="{TemplateBinding SecondaryButtonText}" />
+                                            Style="{TemplateBinding SecondaryButtonStyle}">
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip
+                                                    Content="{TemplateBinding SecondaryButtonText}"
+                                                    Placement="Mouse"
+                                                    VerticalOffset="10" />
+                                            </ToolTipService.ToolTip>
+                                        </Button>
                                         <Button
                                             x:Name="CloseButton"
                                             Grid.Column="4"
@@ -503,8 +533,14 @@
                                             Content="{TemplateBinding CloseButtonText}"
                                             ElementSoundMode="FocusOnly"
                                             IsTabStop="False"
-                                            Style="{TemplateBinding CloseButtonStyle}"
-                                            ToolTipService.ToolTip="{TemplateBinding CloseButtonText}" />
+                                            Style="{TemplateBinding CloseButtonStyle}">
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip
+                                                    Content="{TemplateBinding CloseButtonText}"
+                                                    Placement="Mouse"
+                                                    VerticalOffset="10" />
+                                            </ToolTipService.ToolTip>
+                                        </Button>
                                     </Grid>
                                 </Grid>
                             </Border>

@@ -24,8 +24,14 @@
                 <HyperlinkButton
                     Command="{x:Bind ViewModel.SystemInformationCommand}"
                     Content="{x:Bind root:ResourceService.GetLocalized('About/SystemInformation')}"
-                    Style="{StaticResource AboutHyperlinkButtonStyle}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/SystemInformation')}" />
+                    Style="{StaticResource AboutHyperlinkButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('About/SystemInformation')}"
+                            Placement="Mouse"
+                            VerticalOffset="10" />
+                    </ToolTipService.ToolTip>
+                </HyperlinkButton>
                 <MenuFlyoutSeparator Margin="0,0,0,8" />
 
                 <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/Language')}" />
@@ -34,8 +40,14 @@
                 <HyperlinkButton
                     Command="{x:Bind ViewModel.AppInformationCommand}"
                     Content="{x:Bind root:ResourceService.GetLocalized('About/AppInformation')}"
-                    Style="{StaticResource AboutHyperlinkButtonStyle}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/AppInformation')}" />
+                    Style="{StaticResource AboutHyperlinkButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('About/AppInformation')}"
+                            Placement="Mouse"
+                            VerticalOffset="10" />
+                    </ToolTipService.ToolTip>
+                </HyperlinkButton>
                 <MenuFlyoutSeparator Margin="0,0,0,8" />
 
                 <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/LinkFilter')}" />
@@ -46,14 +58,26 @@
                     <HyperlinkButton
                         Command="{x:Bind ViewModel.StartsWithECommand}"
                         Content="{x:Bind root:ResourceService.GetLocalized('About/StartsWithEButton')}"
-                        Style="{StaticResource AboutHyperlinkButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/StartsWithEButton')}" />
+                        Style="{StaticResource AboutHyperlinkButtonStyle}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind root:ResourceService.GetLocalized('About/StartsWithEButton')}"
+                                Placement="Mouse"
+                                VerticalOffset="10" />
+                        </ToolTipService.ToolTip>
+                    </HyperlinkButton>
 
                     <HyperlinkButton
                         Command="{x:Bind ViewModel.BlockMapCommand}"
                         Content="{x:Bind root:ResourceService.GetLocalized('About/BlockMapButton')}"
-                        Style="{StaticResource AboutHyperlinkButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/BlockMapButton')}" />
+                        Style="{StaticResource AboutHyperlinkButtonStyle}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind root:ResourceService.GetLocalized('About/BlockMapButton')}"
+                                Placement="Mouse"
+                                VerticalOffset="10" />
+                        </ToolTipService.ToolTip>
+                    </HyperlinkButton>
                 </StackPanel>
 
                 <MenuFlyoutSeparator Margin="0,0,0,8" />

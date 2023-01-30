@@ -4,7 +4,6 @@ using GetStoreApp.Helpers.Window;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.ViewModels.Base;
-using GetStoreApp.Views.Controls;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
@@ -42,6 +41,9 @@ namespace GetStoreApp.Views.Window
             set => base.ExtendsContentIntoTitleBar = value;
         }
 
+        /// <summary>
+        /// 窗口类参与数据绑定时的数据上下文
+        /// </summary>
         public ViewModelBase DataContext { get; set; }
 
         /// <summary>
@@ -81,7 +83,7 @@ namespace GetStoreApp.Views.Window
             set { Content.SetValue(ActivatedCommandProperty, value); }
         }
 
-        public static readonly DependencyProperty ActivatedCommandProperty = DependencyProperty.Register("ActivatedCommand", typeof(ICommand), typeof(NavigationViewMenuItem), new PropertyMetadata(null));
+        public static readonly DependencyProperty ActivatedCommandProperty = DependencyProperty.Register("ActivatedCommand", typeof(ICommand), typeof(UIElement), new PropertyMetadata(null));
 
         public ICommand ClosedCommand
         {
@@ -90,7 +92,7 @@ namespace GetStoreApp.Views.Window
             set { Content.SetValue(ClosedCommandProperty, value); }
         }
 
-        public static readonly DependencyProperty ClosedCommandProperty = DependencyProperty.Register("ClosedCommand", typeof(ICommand), typeof(NavigationViewMenuItem), new PropertyMetadata(null));
+        public static readonly DependencyProperty ClosedCommandProperty = DependencyProperty.Register("ClosedCommand", typeof(ICommand), typeof(UIElement), new PropertyMetadata(null));
 
         public WASDKWindow()
         {

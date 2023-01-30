@@ -47,7 +47,8 @@
                     Command="{x:Bind ViewModel.NavigationItemCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
                     Content="{x:Bind root:ResourceService.GetLocalized('Window/Home')}"
-                    Tag="Home">
+                    Tag="Home"
+                    ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/Home')}">
                     <controls:NavigationViewMenuItem.Icon>
                         <ImageIcon Source="ms-appx:///Assets/ControlIcon/Home.png" />
                     </controls:NavigationViewMenuItem.Icon>
@@ -57,7 +58,8 @@
                     Command="{x:Bind ViewModel.NavigationItemCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
                     Content="{x:Bind root:ResourceService.GetLocalized('Window/History')}"
-                    Tag="History">
+                    Tag="History"
+                    ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/History')}">
                     <controls:NavigationViewMenuItem.Icon>
                         <ImageIcon Source="ms-appx:///Assets/ControlIcon/History.png" />
                     </controls:NavigationViewMenuItem.Icon>
@@ -67,7 +69,8 @@
                     Command="{x:Bind ViewModel.NavigationItemCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
                     Content="{x:Bind root:ResourceService.GetLocalized('Window/Download')}"
-                    Tag="Download">
+                    Tag="Download"
+                    ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/Download')}">
                     <controls:NavigationViewMenuItem.Icon>
                         <ImageIcon Source="ms-appx:///Assets/ControlIcon/Download.png" />
                     </controls:NavigationViewMenuItem.Icon>
@@ -77,7 +80,8 @@
                     Command="{x:Bind ViewModel.NavigationItemCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
                     Content="{x:Bind root:ResourceService.GetLocalized('Window/Web')}"
-                    Tag="Web">
+                    Tag="Web"
+                    ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/Web')}">
                     <controls:NavigationViewMenuItem.Icon>
                         <ImageIcon Source="ms-appx:///Assets/ControlIcon/Web.png" />
                     </controls:NavigationViewMenuItem.Icon>
@@ -89,7 +93,8 @@
                     Command="{x:Bind ViewModel.NavigationItemCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
                     Content="{x:Bind root:ResourceService.GetLocalized('Window/About')}"
-                    Tag="About">
+                    Tag="About"
+                    ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/About')}">
                     <controls:NavigationViewMenuItem.Icon>
                         <ImageIcon Source="ms-appx:///Assets/ControlIcon/About.png" />
                     </controls:NavigationViewMenuItem.Icon>
@@ -98,7 +103,8 @@
                     Command="{x:Bind ViewModel.NavigationItemCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
                     Content="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}"
-                    Tag="Settings">
+                    Tag="Settings"
+                    ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}">
                     <controls:NavigationViewMenuItem.Icon>
                         <ImageIcon Source="ms-appx:///Assets/ControlIcon/Settings.png" />
                     </controls:NavigationViewMenuItem.Icon>

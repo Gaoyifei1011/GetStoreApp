@@ -124,7 +124,7 @@
                                         GroupName="DownloadItemSetting"
                                         IsChecked="{x:Bind IsDownloadItemChecked(ViewModel.DownloadItem, 1), Mode=OneWay}"
                                         Text="1"
-                                        ToolTipService.ToolTip="{x:Bind ViewModel.DownloadItem}" />
+                                        ToolTipService.ToolTip="1" />
                                     <RadioMenuFlyoutItem
                                         Command="{x:Bind ViewModel.DownloadItemSelectCommand}"
                                         CommandParameter="2"

@@ -14,7 +14,7 @@
     <EnableMsixTooling>false</EnableMsixTooling>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <FileAlignment>512</FileAlignment>
-    <FileVersion>1.1.126.0</FileVersion>
+    <FileVersion>1.1.129.0</FileVersion>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
     <IncludeSymbols>False</IncludeSymbols>
@@ -40,7 +40,7 @@
     <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <TrimMode>partial</TrimMode>
-    <Version>1.1.126.0</Version>
+    <Version>1.1.129.0</Version>
     <UseWindowsForms>False</UseWindowsForms>
     <UseWinUI>true</UseWinUI>
     <UseWPF>False</UseWPF>
@@ -253,8 +253,8 @@
     
     <None Remove="Views\Controls\AdaptiveGridView.xaml" />
     <None Remove="Views\Controls\AdaptiveMenuFlyout.xaml" />
+    <None Remove="Views\Controls\HyperlinkDPButton.xaml" />
     <None Remove="Views\Controls\NavigationViewMenuItem.xaml" />
-    <None Remove="Views\Controls\ResultDropDownButton.xaml" />
     
     <None Remove="Views\Pages\AboutPage.xaml" />
     <None Remove="Views\Pages\DownloadPage.xaml" />
@@ -266,11 +266,9 @@
     <None Remove="Views\Window\MainWindow.xaml" />
     
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.2" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.755" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.230118.102" />
     <PackageReference Include="SQLitePCLRaw.core" Version="2.1.4" />
     <PackageReference Include="SQLitePCLRaw.provider.winsqlite3" Version="2.1.4" />
-    <PackageReference Include="System.Memory" Version="4.5.5" />
     
     <Page Update="Styles\Button.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -528,7 +526,7 @@
     <Page Update="Views\Controls\NavigationViewMenuItem.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\Controls\ResultDropDownButton.xaml">
+    <Page Update="Views\Controls\HyperlinkDPButton.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
 

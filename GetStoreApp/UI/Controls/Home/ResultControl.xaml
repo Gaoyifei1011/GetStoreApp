@@ -287,7 +287,7 @@
                             VerticalAlignment="Center"
                             Text="{x:Bind FileSize}"
                             ToolTipService.ToolTip="{x:Bind FileSize}" />
-                        <controls:ResultDropDownButton
+                        <controls:HyperlinkDPButton
                             Grid.Column="5"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
@@ -296,7 +296,7 @@
                             IsEnabled="{Binding ElementName=ResultRoot, Path=DataContext.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
                             ToolTipService.ToolTip="{Binding ElementName=ResultRoot, Path=CopyOptionsToolTip, Mode=OneTime}">
 
-                            <controls:ResultDropDownButton.Flyout>
+                            <controls:HyperlinkDPButton.Flyout>
                                 <controls:AdaptiveMenuFlyout>
                                     <MenuFlyoutItem
                                         Command="{Binding ElementName=ResultRoot, Path=DataContext.CopyLinkCommand, Mode=OneTime}"
@@ -309,8 +309,8 @@
                                         Text="{Binding ElementName=ResultRoot, Path=CopyContent, Mode=OneTime}"
                                         ToolTipService.ToolTip="{Binding ElementName=ResultRoot, Path=CopyContentToolTip, Mode=OneTime}" />
                                 </controls:AdaptiveMenuFlyout>
-                            </controls:ResultDropDownButton.Flyout>
-                        </controls:ResultDropDownButton>
+                            </controls:HyperlinkDPButton.Flyout>
+                        </controls:HyperlinkDPButton>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

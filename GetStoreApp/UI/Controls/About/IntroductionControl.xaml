@@ -35,8 +35,14 @@
                 <HyperlinkButton
                     Command="{x:Bind ViewModel.MaintenanceCommand}"
                     Content="{x:Bind root:ResourceService.GetLocalized('About/MaintenanceDescription')}"
-                    Style="{StaticResource AboutHyperlinkButtonStyle}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/MaintenanceDescription')}" />
+                    Style="{StaticResource AboutHyperlinkButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('About/MaintenanceDescription')}"
+                            Placement="Mouse"
+                            VerticalOffset="10" />
+                    </ToolTipService.ToolTip>
+                </HyperlinkButton>
             </StackPanel>
         </Expander.Content>
     </Expander>
