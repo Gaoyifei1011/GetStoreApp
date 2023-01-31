@@ -2,12 +2,13 @@
     x:Class="GetStoreApp.UI.Controls.Home.ResultControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:GetStoreApp.Views.Controls"
+    xmlns:basicInput="using:GetStoreApp.Views.CustomControls.BasicInput"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:formats="using:GetStoreApp.Converters.Formats"
     xmlns:home="using:GetStoreApp.Models.Controls.Home"
     xmlns:homeViewModel="using:GetStoreApp.ViewModels.Controls.Home"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:system="using:System"
     x:Name="ResultRoot"
@@ -73,25 +74,27 @@
                 Background="Transparent"
                 DefaultLabelPosition="Right">
 
-                <AppBarButton
+                <menusAndToolbars:ExtendedAppBarButton
                     Command="{x:Bind ViewModel.CopyIDCommand}"
+                    Cursor="Hand"
                     IsEnabled="{x:Bind system:Convert.ToBoolean(ViewModel.ResultDataList.Count), Mode=OneWay}"
                     Label="{x:Bind root:ResourceService.GetLocalized('Home/CopyID')}"
                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/CopyIDToolTip')}">
-                    <AppBarButton.Icon>
+                    <menusAndToolbars:ExtendedAppBarButton.Icon>
                         <FontIcon Glyph="&#xE8c8;" Style="{StaticResource SegoeFluentStyle}" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
+                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                </menusAndToolbars:ExtendedAppBarButton>
 
-                <AppBarButton
+                <menusAndToolbars:ExtendedAppBarButton
                     Command="{x:Bind ViewModel.SelectCommand}"
+                    Cursor="Hand"
                     IsEnabled="{x:Bind system:Convert.ToBoolean(ViewModel.ResultDataList.Count), Mode=OneWay}"
                     Label="{x:Bind root:ResourceService.GetLocalized('Home/Select')}"
                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/SelectToolTip')}">
-                    <AppBarButton.Icon>
+                    <menusAndToolbars:ExtendedAppBarButton.Icon>
                         <FontIcon Glyph="&#xE762;" Style="{StaticResource SegoeFluentStyle}" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
+                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                </menusAndToolbars:ExtendedAppBarButton>
             </CommandBar>
 
             <CommandBar
@@ -102,32 +105,37 @@
                 Background="Transparent"
                 DefaultLabelPosition="Right">
 
-                <AppBarButton
+                <menusAndToolbars:ExtendedAppBarButton
                     Command="{x:Bind ViewModel.SelectAllCommand}"
+                    Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('Home/SelectAll')}"
                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/SelectAll')}">
-                    <AppBarButton.Icon>
+                    <menusAndToolbars:ExtendedAppBarButton.Icon>
                         <FontIcon Glyph="&#xE8b3;" Style="{StaticResource SegoeFluentStyle}" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
+                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                </menusAndToolbars:ExtendedAppBarButton>
 
-                <AppBarButton
+                <menusAndToolbars:ExtendedAppBarButton
                     Command="{x:Bind ViewModel.SelectNoneCommand}"
+                    Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('Home/SelectNone')}"
                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/SelectNone')}">
-                    <AppBarButton.Icon>
+                    <menusAndToolbars:ExtendedAppBarButton.Icon>
                         <FontIcon Glyph="&#xE8e6;" Style="{StaticResource SegoeFluentStyle}" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
+                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                </menusAndToolbars:ExtendedAppBarButton>
 
-                <AppBarButton Label="{x:Bind root:ResourceService.GetLocalized('Home/CopyOptions')}" ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/CopyOptionsToolTip')}">
+                <menusAndToolbars:ExtendedAppBarButton
+                    Cursor="Hand"
+                    Label="{x:Bind root:ResourceService.GetLocalized('Home/CopyOptions')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/CopyOptionsToolTip')}">
 
-                    <AppBarButton.Icon>
+                    <menusAndToolbars:ExtendedAppBarButton.Icon>
                         <FontIcon Glyph="&#xE8c8;" Style="{StaticResource SegoeFluentStyle}" />
-                    </AppBarButton.Icon>
+                    </menusAndToolbars:ExtendedAppBarButton.Icon>
 
-                    <AppBarButton.Flyout>
-                        <controls:AdaptiveMenuFlyout>
+                    <menusAndToolbars:ExtendedAppBarButton.Flyout>
+                        <menusAndToolbars:AdaptiveMenuFlyout>
                             <MenuFlyoutItem
                                 Command="{x:Bind ViewModel.CopySelectedLinkCommand}"
                                 Text="{x:Bind root:ResourceService.GetLocalized('Home/CopySelectedLink')}"
@@ -136,27 +144,29 @@
                                 Command="{x:Bind ViewModel.CopySelectedCommand}"
                                 Text="{x:Bind root:ResourceService.GetLocalized('Home/CopySelectedContent')}"
                                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/CopySelectedContentToolTip')}" />
-                        </controls:AdaptiveMenuFlyout>
-                    </AppBarButton.Flyout>
-                </AppBarButton>
+                        </menusAndToolbars:AdaptiveMenuFlyout>
+                    </menusAndToolbars:ExtendedAppBarButton.Flyout>
+                </menusAndToolbars:ExtendedAppBarButton>
 
-                <AppBarButton
+                <menusAndToolbars:ExtendedAppBarButton
                     Command="{x:Bind ViewModel.DownloadSelectedCommand}"
+                    Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('Home/DownloadSelected')}"
                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/DownloadSelected')}">
-                    <AppBarButton.Icon>
+                    <menusAndToolbars:ExtendedAppBarButton.Icon>
                         <FontIcon Glyph="&#xE74b;" Style="{StaticResource SegoeFluentStyle}" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
+                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                </menusAndToolbars:ExtendedAppBarButton>
 
-                <AppBarButton
+                <menusAndToolbars:ExtendedAppBarButton
                     Command="{x:Bind ViewModel.CancelCommand}"
+                    Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('Home/Cancel')}"
                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/CancelToolTip')}">
-                    <AppBarButton.Icon>
+                    <menusAndToolbars:ExtendedAppBarButton.Icon>
                         <FontIcon Glyph="&#xE711;" Style="{StaticResource SegoeFluentStyle}" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
+                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                </menusAndToolbars:ExtendedAppBarButton>
             </CommandBar>
         </Grid>
 
@@ -287,7 +297,7 @@
                             VerticalAlignment="Center"
                             Text="{x:Bind FileSize}"
                             ToolTipService.ToolTip="{x:Bind FileSize}" />
-                        <controls:HyperlinkDPButton
+                        <basicInput:ExtendedDropDownButton
                             Grid.Column="5"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
@@ -296,8 +306,8 @@
                             IsEnabled="{Binding ElementName=ResultRoot, Path=DataContext.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
                             ToolTipService.ToolTip="{Binding ElementName=ResultRoot, Path=CopyOptionsToolTip, Mode=OneTime}">
 
-                            <controls:HyperlinkDPButton.Flyout>
-                                <controls:AdaptiveMenuFlyout>
+                            <basicInput:ExtendedDropDownButton.Flyout>
+                                <menusAndToolbars:AdaptiveMenuFlyout>
                                     <MenuFlyoutItem
                                         Command="{Binding ElementName=ResultRoot, Path=DataContext.CopyLinkCommand, Mode=OneTime}"
                                         CommandParameter="{x:Bind FileLink}"
@@ -308,9 +318,9 @@
                                         CommandParameter="{Binding}"
                                         Text="{Binding ElementName=ResultRoot, Path=CopyContent, Mode=OneTime}"
                                         ToolTipService.ToolTip="{Binding ElementName=ResultRoot, Path=CopyContentToolTip, Mode=OneTime}" />
-                                </controls:AdaptiveMenuFlyout>
-                            </controls:HyperlinkDPButton.Flyout>
-                        </controls:HyperlinkDPButton>
+                                </menusAndToolbars:AdaptiveMenuFlyout>
+                            </basicInput:ExtendedDropDownButton.Flyout>
+                        </basicInput:ExtendedDropDownButton>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

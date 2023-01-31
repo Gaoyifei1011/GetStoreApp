@@ -110,6 +110,7 @@
                                 Foreground="{TemplateBinding Foreground}"
                                 IsAccessKeyScope="True"
                                 Style="{ThemeResource EllipsisButton}"
+                                ToolTipService.Placement="Bottom"
                                 Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CommandBarTemplateSettings.EffectiveOverflowButtonVisibility}">
                                 <FontIcon
                                     x:Name="EllipsisIcon"

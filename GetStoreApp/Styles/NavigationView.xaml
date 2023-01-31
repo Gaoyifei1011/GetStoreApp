@@ -39,8 +39,8 @@
                                     <ToolTipService.ToolTip>
                                         <ToolTip
                                             x:Name="NavigationViewBackButtonToolTip"
-                                            Placement="Mouse"
-                                            VerticalOffset="10" />
+                                            Placement="Bottom"
+                                            VerticalOffset="20" />
                                     </ToolTipService.ToolTip>
                                 </Button>
                                 <Button
@@ -50,8 +50,8 @@
                                     <ToolTipService.ToolTip>
                                         <ToolTip
                                             x:Name="NavigationViewCloseButtonToolTip"
-                                            Placement="Mouse"
-                                            VerticalOffset="10" />
+                                            Placement="Bottom"
+                                            VerticalOffset="20" />
                                     </ToolTipService.ToolTip>
                                 </Button>
                                 <Button

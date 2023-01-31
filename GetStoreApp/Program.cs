@@ -51,7 +51,7 @@ namespace GetStoreApp
             {
                 AppNotificationService.Initialize();
                 DesktopLaunchService.InitializeLaunchAsync().Wait();
-                
+
                 WinUILibrary.XamlCheckProcessRequirements();
                 ComWrappersSupport.InitializeComWrappers();
                 Application.Start((param) =>
@@ -73,7 +73,7 @@ namespace GetStoreApp
                 ConsoleLaunchService.InitializeConsoleStartupAsync().Wait();
 
                 Kernel32Library.FreeConsole();
-                
+
                 // 退出应用程序
                 Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
             }

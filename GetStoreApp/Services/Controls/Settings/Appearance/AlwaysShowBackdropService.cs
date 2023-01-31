@@ -34,7 +34,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
             {
                 return DefaultAlwaysShowBackdropValue;
             }
-            
+
             return alwaysShowBackdropValue.Value;
         }
 

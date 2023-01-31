@@ -10,31 +10,31 @@ namespace GetStoreApp.Helpers.Root
     {
         public static ResourceDictionary ButtonResourceDict { get; set; }
 
-        public static ResourceDictionary CheckboxResourceDict { get;set; }
+        public static ResourceDictionary CheckboxResourceDict { get; set; }
 
-        public static ResourceDictionary CommandBarResourceDict { get;set; }
+        public static ResourceDictionary CommandBarResourceDict { get; set; }
 
-        public static ResourceDictionary ContentDialogResourceDict { get;set; }
+        public static ResourceDictionary ContentDialogResourceDict { get; set; }
 
-        public static ResourceDictionary DropDownButtonResourceDict { get;set; }
+        public static ResourceDictionary DropDownButtonResourceDict { get; set; }
 
-        public static ResourceDictionary ExpanderResourceDict { get;set; }
+        public static ResourceDictionary ExpanderResourceDict { get; set; }
 
-        public static ResourceDictionary FontIconResourceDict { get;set; }
+        public static ResourceDictionary FontIconResourceDict { get; set; }
 
-        public static ResourceDictionary GridResourceDict { get;set; }
+        public static ResourceDictionary GridResourceDict { get; set; }
 
         public static ResourceDictionary GridViewResourceDict { get; set; }
 
-        public static ResourceDictionary HyperlinkButtonResourceDict { get;set; }
+        public static ResourceDictionary HyperlinkButtonResourceDict { get; set; }
 
-        public static ResourceDictionary InfoBarResourceDict { get;set; }
+        public static ResourceDictionary InfoBarResourceDict { get; set; }
 
-        public static ResourceDictionary ListViewResourceDict { get;set; }
+        public static ResourceDictionary ListViewResourceDict { get; set; }
 
-        public static ResourceDictionary MenuFlyoutResourceDict { get;set; }
+        public static ResourceDictionary MenuFlyoutResourceDict { get; set; }
 
-        public static ResourceDictionary NavigationViewResourceDict { get;set; }
+        public static ResourceDictionary NavigationViewResourceDict { get; set; }
 
         public static ResourceDictionary PivotResourceDict { get; set; }
 

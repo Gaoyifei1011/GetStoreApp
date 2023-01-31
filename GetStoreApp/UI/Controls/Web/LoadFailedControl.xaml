@@ -86,8 +86,8 @@
                 <ToolTipService.ToolTip>
                     <ToolTip
                         Content="{x:Bind root:ResourceService.GetLocalized('Web/DownloadWebView2')}"
-                        Placement="Mouse"
-                        VerticalOffset="10" />
+                        Placement="Bottom"
+                        VerticalOffset="20" />
                 </ToolTipService.ToolTip>
             </Button>
             <Button
@@ -98,8 +98,8 @@
                 <ToolTipService.ToolTip>
                     <ToolTip
                         Content="{x:Bind root:ResourceService.GetLocalized('Web/OpenWithBrowser')}"
-                        Placement="Mouse"
-                        VerticalOffset="10" />
+                        Placement="Bottom"
+                        VerticalOffset="20" />
                 </ToolTipService.ToolTip>
             </Button>
         </Grid>

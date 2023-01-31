@@ -2,20 +2,20 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
-namespace GetStoreApp.Views.Controls
+namespace GetStoreApp.Views.CustomControls.BasicInput
 {
     /// <summary>
-    /// 修改后的DropButton按钮，拥有HyperlinkButton的样式
+    /// 扩展后的DropButton按钮，可以设置指针位于控件上时显示的游标
     /// </summary>
-    public partial class HyperlinkDPButton : DropDownButton
+    public partial class ExtendedDropDownButton : DropDownButton
     {
-        public HyperlinkDPButton()
+        public ExtendedDropDownButton()
         {
             InitializeComponent();
             Loaded += OnLoaded;
         }
 
-        ~HyperlinkDPButton()
+        ~ExtendedDropDownButton()
         {
             Loaded -= OnLoaded;
         }
@@ -28,7 +28,7 @@ namespace GetStoreApp.Views.Controls
 
         // Using a DependencyProperty as the backing store for Cursor.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CursorProperty =
-            DependencyProperty.Register("Cursor", typeof(InputSystemCursorShape), typeof(HyperlinkDPButton), new PropertyMetadata(InputSystemCursorShape.Arrow));
+            DependencyProperty.Register("Cursor", typeof(InputSystemCursorShape), typeof(ExtendedDropDownButton), new PropertyMetadata(InputSystemCursorShape.Arrow));
 
         private void OnLoaded(object sender, RoutedEventArgs args)
         {

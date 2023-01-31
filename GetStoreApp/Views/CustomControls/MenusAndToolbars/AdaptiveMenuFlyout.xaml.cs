@@ -3,7 +3,7 @@ using GetStoreApp.Services.Controls.Settings.Appearance;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
-namespace GetStoreApp.Views.Controls
+namespace GetStoreApp.Views.CustomControls.MenusAndToolbars
 {
     /// <summary>
     /// 自适应系统主题变化的菜单浮动控件

@@ -36,13 +36,28 @@
                         <Button
                             Command="{x:Bind ViewModel.LearnMoreCommand}"
                             CommandParameter="{x:Bind DownloadTeachingTip}"
-                            Content="{x:Bind root:ResourceService.GetLocalized('Download/LearnMore')}"
-                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/LearnMore')}" />
+                            Content="{x:Bind root:ResourceService.GetLocalized('Download/LearnMore')}">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    Content="{x:Bind root:ResourceService.GetLocalized('Download/LearnMore')}"
+                                    Placement="Bottom"
+                                    VerticalOffset="20" />
+                            </ToolTipService.ToolTip>
+                        </Button>
+
                         <Button
                             Command="{x:Bind ViewModel.DownloadSettingsCommand}"
                             CommandParameter="{x:Bind DownloadTeachingTip}"
-                            Content="{x:Bind root:ResourceService.GetLocalized('Download/OpenSettings')}"
-                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/OpenSettings')}" />
+                            Content="{x:Bind root:ResourceService.GetLocalized('Download/OpenSettings')}">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    Content="{x:Bind root:ResourceService.GetLocalized('Download/OpenSettings')}"
+                                    Placement="Bottom"
+                                    VerticalOffset="20" />
+                            </ToolTipService.ToolTip>
+                        </Button>
                     </StackPanel>
                 </StackPanel>
             </TeachingTip.Content>
@@ -72,8 +87,15 @@
                     x:Name="TeachingTipButton"
                     Click="{x:Bind TeachingTipClicked}"
                     Content="{x:Bind root:ResourceService.GetLocalized('Download/DownloadDescription')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DownloadDescription')}"
-                    Visibility="{x:Bind ViewModel.UseInsVisValue, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
+                    Visibility="{x:Bind ViewModel.UseInsVisValue, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('Download/DownloadDescription')}"
+                            Placement="Bottom"
+                            VerticalOffset="20" />
+                    </ToolTipService.ToolTip>
+                </Button>
             </StackPanel>
         </Pivot.RightHeader>
     </Pivot>

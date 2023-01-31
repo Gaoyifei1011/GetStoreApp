@@ -2,9 +2,9 @@
     x:Class="GetStoreApp.UI.Controls.Settings.Common.DownloadOptionsControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:GetStoreApp.Views.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Common"
     mc:Ignorable="d">
@@ -117,7 +117,7 @@
                             Content="{x:Bind ViewModel.DownloadItem, Mode=OneWay}"
                             ToolTipService.ToolTip="{x:Bind ViewModel.DownloadItem, Mode=OneWay}">
                             <DropDownButton.Flyout>
-                                <controls:AdaptiveMenuFlyout>
+                                <menusAndToolbars:AdaptiveMenuFlyout>
                                     <RadioMenuFlyoutItem
                                         Command="{x:Bind ViewModel.DownloadItemSelectCommand}"
                                         CommandParameter="1"
@@ -139,7 +139,7 @@
                                         IsChecked="{x:Bind IsDownloadItemChecked(ViewModel.DownloadItem, 3), Mode=OneWay}"
                                         Text="3"
                                         ToolTipService.ToolTip="3" />
-                                </controls:AdaptiveMenuFlyout>
+                                </menusAndToolbars:AdaptiveMenuFlyout>
                             </DropDownButton.Flyout>
                         </DropDownButton>
                     </Grid>
@@ -171,7 +171,7 @@
                             Content="{x:Bind ViewModel.DownloadMode.DisplayName, Mode=OneWay}"
                             ToolTipService.ToolTip="{x:Bind ViewModel.DownloadMode.DisplayName, Mode=OneWay}">
                             <DropDownButton.Flyout>
-                                <controls:AdaptiveMenuFlyout>
+                                <menusAndToolbars:AdaptiveMenuFlyout>
                                     <RadioMenuFlyoutItem
                                         Command="{x:Bind ViewModel.DownloadModeSelectCommand}"
                                         CommandParameter="0"
@@ -186,7 +186,7 @@
                                         IsChecked="{x:Bind IsDownloadModeChecked(ViewModel.DownloadMode.InternalName, ViewModel.DownloadModeList[1].InternalName), Mode=OneWay}"
                                         Text="{x:Bind ViewModel.DownloadModeList[1].DisplayName}"
                                         ToolTipService.ToolTip="{x:Bind ViewModel.DownloadModeList[1].DisplayName}" />
-                                </controls:AdaptiveMenuFlyout>
+                                </menusAndToolbars:AdaptiveMenuFlyout>
                             </DropDownButton.Flyout>
                         </DropDownButton>
                     </Grid>

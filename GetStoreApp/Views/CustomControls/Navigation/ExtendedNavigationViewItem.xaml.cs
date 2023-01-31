@@ -4,12 +4,12 @@ using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using System.Windows.Input;
 
-namespace GetStoreApp.Views.Controls
+namespace GetStoreApp.Views.CustomControls.Navigation
 {
     /// <summary>
     /// 附带命令的导航控件项的容器
     /// </summary>
-    public partial class NavigationViewMenuItem : NavigationViewItem
+    public partial class ExtendedNavigationViewItem : NavigationViewItem
     {
         public ICommand Command
         {
@@ -18,7 +18,7 @@ namespace GetStoreApp.Views.Controls
             set { SetValue(CommandProperty, value); }
         }
 
-        public static readonly DependencyProperty CommandProperty = DependencyProperty.Register("ActivatedCommand", typeof(ICommand), typeof(NavigationViewMenuItem), new PropertyMetadata(null));
+        public static readonly DependencyProperty CommandProperty = DependencyProperty.Register("ActivatedCommand", typeof(ICommand), typeof(ExtendedNavigationViewItem), new PropertyMetadata(null));
 
         public object CommandParameter
         {
@@ -27,7 +27,7 @@ namespace GetStoreApp.Views.Controls
             set { SetValue(CommandParameterProperty, value); }
         }
 
-        public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register("CommandParameter", typeof(object), typeof(NavigationViewMenuItem), new PropertyMetadata(null));
+        public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register("CommandParameter", typeof(object), typeof(ExtendedNavigationViewItem), new PropertyMetadata(null));
 
         public string ToolTip
         {
@@ -37,16 +37,16 @@ namespace GetStoreApp.Views.Controls
 
         // Using a DependencyProperty as the backing store for ToolTip.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ToolTipProperty =
-            DependencyProperty.Register("ToolTip", typeof(string), typeof(NavigationViewMenuItem), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register("ToolTip", typeof(string), typeof(ExtendedNavigationViewItem), new PropertyMetadata(string.Empty));
 
-        public NavigationViewMenuItem()
+        public ExtendedNavigationViewItem()
         {
             InitializeComponent();
             Loaded += OnLoaded;
             Tapped += OnTapped;
         }
 
-        ~NavigationViewMenuItem()
+        ~ExtendedNavigationViewItem()
         {
             Loaded -= OnLoaded;
             Tapped -= OnTapped;
@@ -58,9 +58,9 @@ namespace GetStoreApp.Views.Controls
             {
                 ToolTip NavigationItemToolTip = new ToolTip();
                 NavigationItemToolTip.Content = string.Format("{0} ", ToolTip);
-                NavigationItemToolTip.Placement = PlacementMode.Mouse;
-                NavigationItemToolTip.VerticalOffset = 10;
-                ToolTipService.SetToolTip(this,NavigationItemToolTip);
+                NavigationItemToolTip.Placement = PlacementMode.Bottom;
+                NavigationItemToolTip.VerticalOffset = 20;
+                ToolTipService.SetToolTip(this, NavigationItemToolTip);
             }
         }
 

@@ -22,7 +22,7 @@ namespace GetStoreApp.Views.Pages
         protected override void OnNavigatedTo(NavigationEventArgs args)
         {
             base.OnNavigatedTo(args);
-            if(args.Parameter is not null)
+            if (args.Parameter is not null)
             {
                 AboutNavigationArgs = (AppNaviagtionArgs)Enum.Parse(typeof(AppNaviagtionArgs), Convert.ToString(args.Parameter));
             }

@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Extensions.SystemTray;
+﻿using GetStoreApp.Extensions.SystemTray;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using GetStoreApp.ViewModels.Window;

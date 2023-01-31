@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
     xmlns:pageViewModel="using:GetStoreApp.ViewModels.Pages"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:wc="using:GetStoreApp.UI.Controls.Web"
@@ -39,53 +40,59 @@
                     Background="Transparent"
                     DefaultLabelPosition="Right">
 
-                    <AppBarButton
+                    <menusAndToolbars:ExtendedAppBarButton
                         Command="{x:Bind ViewModel.BrowserBackCommand, Mode=OneWay}"
+                        Cursor="Hand"
                         IsEnabled="{x:Bind ViewModel.CanGoBack, Mode=OneWay}"
                         Label="{x:Bind root:ResourceService.GetLocalized('Web/Back')}">
-                        <AppBarButton.Icon>
+
+                        <menusAndToolbars:ExtendedAppBarButton.Icon>
                             <FontIcon Glyph="&#xE72b;" Style="{StaticResource SegoeFluentStyle}" />
-                        </AppBarButton.Icon>
+                        </menusAndToolbars:ExtendedAppBarButton.Icon>
 
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 Content="{x:Bind root:ResourceService.GetLocalized('Web/Back')}"
-                                Placement="Mouse"
-                                VerticalOffset="10" />
+                                Placement="Bottom"
+                                VerticalOffset="25" />
                         </ToolTipService.ToolTip>
-                    </AppBarButton>
+                    </menusAndToolbars:ExtendedAppBarButton>
 
-                    <AppBarButton
+                    <menusAndToolbars:ExtendedAppBarButton
                         Command="{x:Bind ViewModel.BrowserForwardCommand, Mode=OneWay}"
+                        Cursor="Hand"
                         IsEnabled="{x:Bind ViewModel.CanGoForward, Mode=OneWay}"
                         Label="{x:Bind root:ResourceService.GetLocalized('Web/Forward')}">
-                        <AppBarButton.Icon>
+
+                        <menusAndToolbars:ExtendedAppBarButton.Icon>
                             <FontIcon Glyph="&#xE72a;" Style="{StaticResource SegoeFluentStyle}" />
-                        </AppBarButton.Icon>
+                        </menusAndToolbars:ExtendedAppBarButton.Icon>
 
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 Content="{x:Bind root:ResourceService.GetLocalized('Web/Forward')}"
-                                Placement="Mouse"
-                                VerticalOffset="10" />
+                                Placement="Bottom"
+                                VerticalOffset="25" />
                         </ToolTipService.ToolTip>
-                    </AppBarButton>
+                    </menusAndToolbars:ExtendedAppBarButton>
 
-                    <AppBarButton
+                    <menusAndToolbars:ExtendedAppBarButton
                         Command="{x:Bind ViewModel.RefreshCommand}"
                         CommandParameter="{Binding ElementName=WebView}"
+                        Cursor="Hand"
                         Label="{x:Bind root:ResourceService.GetLocalized('Web/Refresh')}">
-                        <AppBarButton.Icon>
+
+                        <menusAndToolbars:ExtendedAppBarButton.Icon>
                             <FontIcon Glyph="&#xE72c;" Style="{StaticResource SegoeFluentStyle}" />
-                        </AppBarButton.Icon>
+                        </menusAndToolbars:ExtendedAppBarButton.Icon>
 
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 Content="{x:Bind root:ResourceService.GetLocalized('Web/Refresh')}"
-                                Placement="Mouse"
-                                VerticalOffset="10" />
+                                Placement="Bottom"
+                                VerticalOffset="25" />
                         </ToolTipService.ToolTip>
-                    </AppBarButton>
+                    </menusAndToolbars:ExtendedAppBarButton>
                 </CommandBar>
 
                 <Grid
@@ -126,20 +133,26 @@
                     DefaultLabelPosition="Right"
                     Style="{StaticResource CommandBarStyle}">
 
-                    <AppBarButton Command="{x:Bind ViewModel.OpenWithBrowserCommand}" Label="{x:Bind root:ResourceService.GetLocalized('Web/OpenWithBrowser')}">
-                        <AppBarButton.Icon>
+                    <menusAndToolbars:ExtendedAppBarButton
+                        Command="{x:Bind ViewModel.OpenWithBrowserCommand}"
+                        Cursor="Hand"
+                        Label="{x:Bind root:ResourceService.GetLocalized('Web/OpenWithBrowser')}">
+
+                        <menusAndToolbars:ExtendedAppBarButton.Icon>
                             <FontIcon Glyph="&#xE774;" Style="{StaticResource SegoeFluentStyle}" />
-                        </AppBarButton.Icon>
+                        </menusAndToolbars:ExtendedAppBarButton.Icon>
 
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 Content="{x:Bind root:ResourceService.GetLocalized('Web/OpenWithBrowser')}"
-                                Placement="Mouse"
-                                VerticalOffset="10" />
+                                Placement="Bottom"
+                                VerticalOffset="25" />
                         </ToolTipService.ToolTip>
-                    </AppBarButton>
+                    </menusAndToolbars:ExtendedAppBarButton>
+
                     <CommandBar.SecondaryCommands>
                         <AppBarButton Command="{x:Bind ViewModel.OpenCacheFolderCommand}" Label="{x:Bind root:ResourceService.GetLocalized('Web/OpenCacheFolder')}">
+
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE8b7;" Style="{StaticResource SegoeFluentStyle}" />
                             </AppBarButton.Icon>
@@ -147,14 +160,16 @@
                             <ToolTipService.ToolTip>
                                 <ToolTip
                                     Content="{x:Bind root:ResourceService.GetLocalized('Web/OpenCacheFolder')}"
-                                    Placement="Mouse"
-                                    VerticalOffset="10" />
+                                    Placement="Bottom"
+                                    VerticalOffset="20" />
                             </ToolTipService.ToolTip>
                         </AppBarButton>
+
                         <AppBarButton
                             Command="{x:Bind ViewModel.ClearWebCacheCommand}"
                             IsEnabled="{x:Bind ViewModel.IsEnabled, Mode=OneWay}"
                             Label="{x:Bind root:ResourceService.GetLocalized('Web/ClearWebCache')}">
+
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE74d;" Style="{StaticResource SegoeFluentStyle}" />
                             </AppBarButton.Icon>
@@ -162,8 +177,8 @@
                             <ToolTipService.ToolTip>
                                 <ToolTip
                                     Content="{x:Bind root:ResourceService.GetLocalized('Web/ClearWebCache')}"
-                                    Placement="Mouse"
-                                    VerticalOffset="10" />
+                                    Placement="Bottom"
+                                    VerticalOffset="20" />
                             </ToolTipService.ToolTip>
                         </AppBarButton>
                     </CommandBar.SecondaryCommands>

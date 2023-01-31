@@ -38,7 +38,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
         // 查看全部
         public IRelayCommand ViewAllCommand => new RelayCommand(() =>
         {
-            NavigationService.NavigateTo(typeof(HistoryPage),AppNaviagtionArgs.History);
+            NavigationService.NavigateTo(typeof(HistoryPage), AppNaviagtionArgs.History);
         });
 
         // 复制到剪贴板

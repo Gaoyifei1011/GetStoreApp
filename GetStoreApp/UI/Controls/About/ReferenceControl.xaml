@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:aboutViewModel="using:GetStoreApp.ViewModels.Controls.About"
-    xmlns:controls="using:GetStoreApp.Views.Controls"
+    xmlns:collections="using:GetStoreApp.Views.CustomControls.Collections"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:format="using:GetStoreApp.Converters.Formats"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -24,7 +24,7 @@
         </Expander.Header>
         <Expander.Content>
             <StackPanel>
-                <controls:AdaptiveGridView
+                <collections:AdaptiveGridView
                     Margin="9,0"
                     Padding="0"
                     HorizontalAlignment="Stretch"
@@ -35,7 +35,7 @@
                     OneRowModeEnabled="False"
                     SelectionMode="None"
                     StretchContentForSingleRow="True">
-                    <controls:AdaptiveGridView.ItemTemplate>
+                    <collections:AdaptiveGridView.ItemTemplate>
                         <DataTemplate>
                             <HyperlinkButton
                                 Padding="5,8"
@@ -43,16 +43,17 @@
                                 HorizontalContentAlignment="Left"
                                 Content="{Binding Key, Mode=OneTime}"
                                 NavigateUri="{Binding Value, Mode=OneTime}">
+
                                 <ToolTipService.ToolTip>
                                     <ToolTip
                                         Content="{Binding Key, Converter={StaticResource AboutToolTipFormatConverter}, ConverterParameter=Reference, Mode=OneTime}"
-                                        Placement="Mouse"
-                                        VerticalOffset="10" />
+                                        Placement="Bottom"
+                                        VerticalOffset="25" />
                                 </ToolTipService.ToolTip>
                             </HyperlinkButton>
                         </DataTemplate>
-                    </controls:AdaptiveGridView.ItemTemplate>
-                </controls:AdaptiveGridView>
+                    </collections:AdaptiveGridView.ItemTemplate>
+                </collections:AdaptiveGridView>
                 <TextBlock Margin="14,5,0,5" Text="{x:Bind root:ResourceService.GetLocalized('About/ReferenceTip')}" />
             </StackPanel>
         </Expander.Content>

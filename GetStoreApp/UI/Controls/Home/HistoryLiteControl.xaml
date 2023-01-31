@@ -7,6 +7,7 @@
     xmlns:history="using:GetStoreApp.Models.Controls.History"
     xmlns:homeViewModel="using:GetStoreApp.ViewModels.Controls.Home"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
     xmlns:root="using:GetStoreApp.Services.Root"
     x:Name="HistoryLiteRoot"
     Loaded="{x:Bind ViewModel.OnLoaded}"
@@ -51,14 +52,15 @@
                     Background="Transparent"
                     DefaultLabelPosition="Right">
 
-                    <AppBarButton
+                    <menusAndToolbars:ExtendedAppBarButton
                         Command="{x:Bind ViewModel.ViewAllCommand}"
+                        Cursor="Hand"
                         Label="{x:Bind root:ResourceService.GetLocalized('Home/ViewAll')}"
                         ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/ViewAllToolTip')}">
-                        <AppBarButton.Icon>
+                        <menusAndToolbars:ExtendedAppBarButton.Icon>
                             <FontIcon Glyph="&#xE890;" Style="{StaticResource SegoeFluentStyle}" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
+                        </menusAndToolbars:ExtendedAppBarButton.Icon>
+                    </menusAndToolbars:ExtendedAppBarButton>
                 </CommandBar>
             </Grid>
         </Expander.Header>

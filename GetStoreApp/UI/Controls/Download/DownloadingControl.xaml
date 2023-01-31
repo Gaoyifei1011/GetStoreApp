@@ -7,6 +7,7 @@
     xmlns:download="using:GetStoreApp.Models.Controls.Download"
     xmlns:downloadViewModel="using:GetStoreApp.ViewModels.Controls.Download"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:sys="using:System"
     x:Name="DownloadingRoot"
@@ -67,34 +68,37 @@
                 Background="Transparent"
                 DefaultLabelPosition="Right">
 
-                <AppBarButton
+                <menusAndToolbars:ExtendedAppBarButton
                     Command="{x:Bind ViewModel.OpenFolderCommand}"
+                    Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolder')}"
                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolderToolTip')}">
-                    <AppBarButton.Icon>
+                    <menusAndToolbars:ExtendedAppBarButton.Icon>
                         <FontIcon Glyph="&#xE8b7;" Style="{StaticResource SegoeFluentStyle}" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
+                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                </menusAndToolbars:ExtendedAppBarButton>
 
-                <AppBarButton
+                <menusAndToolbars:ExtendedAppBarButton
                     Command="{x:Bind ViewModel.PauseAllCommand}"
+                    Cursor="Hand"
                     IsEnabled="{x:Bind sys:Convert.ToBoolean(ViewModel.DownloadingDataList.Count), Mode=OneWay}"
                     Label="{x:Bind root:ResourceService.GetLocalized('Download/PauseAll')}"
                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/PauseAllToolTip')}">
-                    <AppBarButton.Icon>
+                    <menusAndToolbars:ExtendedAppBarButton.Icon>
                         <FontIcon Glyph="&#xE769;" Style="{StaticResource SegoeFluentStyle}" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
+                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                </menusAndToolbars:ExtendedAppBarButton>
 
-                <AppBarButton
+                <menusAndToolbars:ExtendedAppBarButton
                     Command="{x:Bind ViewModel.SelectCommand}"
+                    Cursor="Hand"
                     IsEnabled="{x:Bind sys:Convert.ToBoolean(ViewModel.DownloadingDataList.Count), Mode=OneWay}"
                     Label="{x:Bind root:ResourceService.GetLocalized('Download/Select')}"
                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/SelectToolTip')}">
-                    <AppBarButton.Icon>
+                    <menusAndToolbars:ExtendedAppBarButton.Icon>
                         <FontIcon Glyph="&#xE762;" Style="{StaticResource SegoeFluentStyle}" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
+                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                </menusAndToolbars:ExtendedAppBarButton>
             </CommandBar>
 
             <CommandBar
@@ -105,41 +109,45 @@
                 Background="Transparent"
                 DefaultLabelPosition="Right">
 
-                <AppBarButton
+                <menusAndToolbars:ExtendedAppBarButton
                     Command="{x:Bind ViewModel.SelectAllCommand}"
+                    Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('Download/SelectAll')}"
                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/SelectAll')}">
-                    <AppBarButton.Icon>
+                    <menusAndToolbars:ExtendedAppBarButton.Icon>
                         <FontIcon Glyph="&#xE8b3;" Style="{StaticResource SegoeFluentStyle}" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
+                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                </menusAndToolbars:ExtendedAppBarButton>
 
-                <AppBarButton
+                <menusAndToolbars:ExtendedAppBarButton
                     Command="{x:Bind ViewModel.SelectNoneCommand}"
+                    Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('Download/SelectNone')}"
                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/SelectNone')}">
-                    <AppBarButton.Icon>
+                    <menusAndToolbars:ExtendedAppBarButton.Icon>
                         <FontIcon Glyph="&#xE8e6;" Style="{StaticResource SegoeFluentStyle}" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
+                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                </menusAndToolbars:ExtendedAppBarButton>
 
-                <AppBarButton
+                <menusAndToolbars:ExtendedAppBarButton
                     Command="{x:Bind ViewModel.DeleteSelectedCommand}"
+                    Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelected')}"
                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedToolTip')}">
-                    <AppBarButton.Icon>
+                    <menusAndToolbars:ExtendedAppBarButton.Icon>
                         <FontIcon Glyph="&#xE74d;" Style="{StaticResource SegoeFluentStyle}" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
+                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                </menusAndToolbars:ExtendedAppBarButton>
 
-                <AppBarButton
+                <menusAndToolbars:ExtendedAppBarButton
                     Command="{x:Bind ViewModel.CancelCommand}"
+                    Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('Download/Cancel')}"
                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/CancelToolTip')}">
-                    <AppBarButton.Icon>
+                    <menusAndToolbars:ExtendedAppBarButton.Icon>
                         <FontIcon Glyph="&#xE711;" Style="{StaticResource SegoeFluentStyle}" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
+                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                </menusAndToolbars:ExtendedAppBarButton>
             </CommandBar>
         </Grid>
 

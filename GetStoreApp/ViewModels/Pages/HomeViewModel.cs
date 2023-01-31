@@ -29,7 +29,7 @@ namespace GetStoreApp.ViewModels.Pages
         // 了解应用具体的使用说明
         public IRelayCommand UseInstructionCommand => new RelayCommand(() =>
         {
-            NavigationService.NavigateTo(typeof(AboutPage),AppNaviagtionArgs.Instructions);
+            NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.Instructions);
         });
 
         public HomeViewModel()

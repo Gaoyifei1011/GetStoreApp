@@ -184,8 +184,8 @@
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
                                                     Content="{TemplateBinding PrimaryButtonText}"
-                                                    Placement="Mouse"
-                                                    VerticalOffset="10" />
+                                                    Placement="Bottom"
+                                                    VerticalOffset="20" />
                                             </ToolTipService.ToolTip>
                                         </Button>
                                         <Button
@@ -199,8 +199,8 @@
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
                                                     Content="{TemplateBinding SecondaryButtonText}"
-                                                    Placement="Mouse"
-                                                    VerticalOffset="10" />
+                                                    Placement="Bottom"
+                                                    VerticalOffset="20" />
                                             </ToolTipService.ToolTip>
                                         </Button>
                                         <Button
@@ -214,8 +214,8 @@
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
                                                     Content="{TemplateBinding CloseButtonText}"
-                                                    Placement="Mouse"
-                                                    VerticalOffset="10" />
+                                                    Placement="Bottom"
+                                                    VerticalOffset="20" />
                                             </ToolTipService.ToolTip>
                                         </Button>
                                     </Grid>
@@ -507,8 +507,8 @@
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
                                                     Content="{TemplateBinding PrimaryButtonText}"
-                                                    Placement="Mouse"
-                                                    VerticalOffset="10" />
+                                                    Placement="Bottom"
+                                                    VerticalOffset="20" />
                                             </ToolTipService.ToolTip>
                                         </Button>
                                         <Button
@@ -522,8 +522,8 @@
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
                                                     Content="{TemplateBinding SecondaryButtonText}"
-                                                    Placement="Mouse"
-                                                    VerticalOffset="10" />
+                                                    Placement="Bottom"
+                                                    VerticalOffset="20" />
                                             </ToolTipService.ToolTip>
                                         </Button>
                                         <Button
@@ -537,8 +537,8 @@
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
                                                     Content="{TemplateBinding CloseButtonText}"
-                                                    Placement="Mouse"
-                                                    VerticalOffset="10" />
+                                                    Placement="Bottom"
+                                                    VerticalOffset="20" />
                                             </ToolTipService.ToolTip>
                                         </Button>
                                     </Grid>

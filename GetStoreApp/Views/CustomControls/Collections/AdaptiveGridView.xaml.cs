@@ -6,7 +6,7 @@ using System;
 using System.Windows.Input;
 using Windows.Foundation.Collections;
 
-namespace GetStoreApp.Views.Controls
+namespace GetStoreApp.Views.CustomControls.Collections
 {
     /// <summary>
     /// 自适应窗口宽度的网格控件
@@ -296,7 +296,7 @@ namespace GetStoreApp.Views.Controls
         private void RecalculateLayout(double containerWidth)
         {
             Panel itemsPanelRoot = ItemsPanelRoot;
-            double num = (itemsPanelRoot is not null) ? (itemsPanelRoot.Margin.Left + itemsPanelRoot.Margin.Right) : 0.0;
+            double num = itemsPanelRoot is not null ? itemsPanelRoot.Margin.Left + itemsPanelRoot.Margin.Right : 0.0;
             double num2 = Padding.Left + Padding.Right;
             double num3 = BorderThickness.Left + BorderThickness.Right;
             containerWidth = containerWidth - num2 - num - num3;

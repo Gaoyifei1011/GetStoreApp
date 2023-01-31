@@ -14,7 +14,7 @@
     <EnableMsixTooling>false</EnableMsixTooling>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <FileAlignment>512</FileAlignment>
-    <FileVersion>1.1.129.0</FileVersion>
+    <FileVersion>1.1.131.0</FileVersion>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
     <IncludeSymbols>False</IncludeSymbols>
@@ -28,7 +28,7 @@
     <PublishProtocol>FileSystem</PublishProtocol>
     <PublishReadyToRun>True</PublishReadyToRun>
     <!--调试时需要设置该选项为false-->
-    <PublishSingleFile>false</PublishSingleFile>
+    <PublishSingleFile>true</PublishSingleFile>
     <PublishTrimmed>true</PublishTrimmed>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <RootNamespace>GetStoreApp</RootNamespace>
@@ -40,7 +40,7 @@
     <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <TrimMode>partial</TrimMode>
-    <Version>1.1.129.0</Version>
+    <Version>1.1.131.0</Version>
     <UseWindowsForms>False</UseWindowsForms>
     <UseWinUI>true</UseWinUI>
     <UseWPF>False</UseWPF>
@@ -250,11 +250,11 @@
     <None Remove="UI\Notifications\ResultIDCopyNotification.xaml" />
     <None Remove="UI\Notifications\ResultLinkCopyNotification.xaml" />
     <None Remove="UI\Notifications\WebCacheCleanNotification.xaml" />
-    
-    <None Remove="Views\Controls\AdaptiveGridView.xaml" />
-    <None Remove="Views\Controls\AdaptiveMenuFlyout.xaml" />
-    <None Remove="Views\Controls\HyperlinkDPButton.xaml" />
-    <None Remove="Views\Controls\NavigationViewMenuItem.xaml" />
+    <None Remove="Views\CustomControls\BasicInput\ExtendedDropDownButton.xaml" />
+    <None Remove="Views\CustomControls\Collections\AdaptiveGridView.xaml" />
+    <None Remove="Views\CustomControls\MenusAndToolbars\AdaptiveMenuFlyout.xaml" />
+    <None Remove="Views\CustomControls\MenusAndToolbars\ExtendedAppBarButton.xaml" />
+    <None Remove="Views\CustomControls\Navigation\ExtendedNavigationViewItem.xaml" />
     
     <None Remove="Views\Pages\AboutPage.xaml" />
     <None Remove="Views\Pages\DownloadPage.xaml" />
@@ -517,16 +517,19 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
-    <Page Update="Views\Controls\AdaptiveGridView.xaml">
+    <Page Update="Views\CustomControls\BasicInput\ExtendedDropDownButton.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\Controls\AdaptiveMenuFlyout.xaml">
+    <Page Update="Views\CustomControls\Collections\AdaptiveGridView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\Controls\NavigationViewMenuItem.xaml">
+    <Page Update="Views\CustomControls\MenusAndToolbars\AdaptiveMenuFlyout.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\Controls\HyperlinkDPButton.xaml">
+    <Page Update="Views\CustomControls\MenusAndToolbars\ExtendedAppBarButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\CustomControls\Navigation\ExtendedNavigationViewItem.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
