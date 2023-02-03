@@ -28,7 +28,7 @@
     <PublishProtocol>FileSystem</PublishProtocol>
     <PublishReadyToRun>True</PublishReadyToRun>
     <!--调试时需要设置该选项为false-->
-    <PublishSingleFile>true</PublishSingleFile>
+    <PublishSingleFile>false</PublishSingleFile>
     <PublishTrimmed>true</PublishTrimmed>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <RootNamespace>GetStoreApp</RootNamespace>
@@ -250,6 +250,8 @@
     <None Remove="UI\Notifications\ResultIDCopyNotification.xaml" />
     <None Remove="UI\Notifications\ResultLinkCopyNotification.xaml" />
     <None Remove="UI\Notifications\WebCacheCleanNotification.xaml" />
+    <None Remove="Views\CustomControls\BasicInput\ExtendedButton.xaml" />
+    <None Remove="Views\CustomControls\BasicInput\ExtendedCheckBox.xaml" />
     <None Remove="Views\CustomControls\BasicInput\ExtendedDropDownButton.xaml" />
     <None Remove="Views\CustomControls\Collections\AdaptiveGridView.xaml" />
     <None Remove="Views\CustomControls\MenusAndToolbars\AdaptiveMenuFlyout.xaml" />
@@ -517,6 +519,12 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
+    <Page Update="Views\CustomControls\BasicInput\ExtendedButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\CustomControls\BasicInput\ExtendedCheckBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\CustomControls\BasicInput\ExtendedDropDownButton.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

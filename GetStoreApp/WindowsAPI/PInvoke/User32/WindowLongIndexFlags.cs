@@ -25,7 +25,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         GWLP_ID = GWL_ID,
 
         /// <summary>
-        /// 设置新的 窗口样式。
+        /// 设置新的窗口样式。
         /// </summary>
         GWL_STYLE = -16,
 

@@ -55,11 +55,18 @@
                     <menusAndToolbars:ExtendedAppBarButton
                         Command="{x:Bind ViewModel.ViewAllCommand}"
                         Cursor="Hand"
-                        Label="{x:Bind root:ResourceService.GetLocalized('Home/ViewAll')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/ViewAllToolTip')}">
+                        Label="{x:Bind root:ResourceService.GetLocalized('Home/ViewAll')}">
+
                         <menusAndToolbars:ExtendedAppBarButton.Icon>
                             <FontIcon Glyph="&#xE890;" Style="{StaticResource SegoeFluentStyle}" />
                         </menusAndToolbars:ExtendedAppBarButton.Icon>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind root:ResourceService.GetLocalized('Home/ViewAllToolTip')}"
+                                Placement="Bottom"
+                                VerticalOffset="25" />
+                        </ToolTipService.ToolTip>
                     </menusAndToolbars:ExtendedAppBarButton>
                 </CommandBar>
             </Grid>
@@ -97,28 +104,59 @@
                                 Grid.Column="0"
                                 Margin="10,0,0,0"
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Home/Type')}"
-                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/Type')}" />
+                                Text="{x:Bind root:ResourceService.GetLocalized('Home/Type')}">
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        Content="{x:Bind root:ResourceService.GetLocalized('Home/Type')}"
+                                        Placement="Bottom"
+                                        VerticalOffset="20" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
+
                             <TextBlock
                                 Grid.Column="1"
                                 Margin="10,0,0,0"
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Home/Channel')}"
-                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/Channel')}" />
+                                Text="{x:Bind root:ResourceService.GetLocalized('Home/Channel')}">
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        Content="{x:Bind root:ResourceService.GetLocalized('Home/Channel')}"
+                                        Placement="Bottom"
+                                        VerticalOffset="20" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
+
                             <TextBlock
                                 Grid.Column="2"
                                 Margin="10,0,0,0"
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Home/Link')}"
-                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/Link')}" />
+                                Text="{x:Bind root:ResourceService.GetLocalized('Home/Link')}">
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        Content="{x:Bind root:ResourceService.GetLocalized('Home/Link')}"
+                                        Placement="Bottom"
+                                        VerticalOffset="20" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
+
                             <TextBlock
                                 Grid.Column="3"
                                 Grid.ColumnSpan="2"
                                 Margin="10,0,0,0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Home/Options')}"
-                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/OptionsToolTip')}" />
+                                Text="{x:Bind root:ResourceService.GetLocalized('Home/Options')}">
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        Content="{x:Bind root:ResourceService.GetLocalized('Home/OptionsToolTip')}"
+                                        Placement="Bottom"
+                                        VerticalOffset="20" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
                         </Grid>
                     </ListView.Header>
 
@@ -141,35 +179,74 @@
                                     Grid.Column="0"
                                     Margin="10,0,0,0"
                                     VerticalAlignment="Center"
-                                    Text="{x:Bind HistoryType, Converter={StaticResource TypeNameFormatConverter}}"
-                                    ToolTipService.ToolTip="{Binding HistoryType, Converter={StaticResource TypeNameFormatConverter}, Mode=OneTime}" />
+                                    Text="{x:Bind HistoryType, Converter={StaticResource TypeNameFormatConverter}}">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="{Binding HistoryType, Converter={StaticResource TypeNameFormatConverter}, Mode=OneTime}"
+                                            Placement="Bottom"
+                                            VerticalOffset="20" />
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
+
                                 <TextBlock
                                     Grid.Column="1"
                                     Margin="10,0,0,0"
                                     VerticalAlignment="Center"
-                                    Text="{x:Bind HistoryChannel, Converter={StaticResource ChannelNameFormatConverter}}"
-                                    ToolTipService.ToolTip="{x:Bind HistoryChannel, Converter={StaticResource ChannelNameFormatConverter}}" />
+                                    Text="{x:Bind HistoryChannel, Converter={StaticResource ChannelNameFormatConverter}}">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="{x:Bind HistoryChannel, Converter={StaticResource ChannelNameFormatConverter}}"
+                                            Placement="Bottom"
+                                            VerticalOffset="20" />
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
+
                                 <TextBlock
                                     Grid.Column="2"
                                     Margin="10,0,0,0"
                                     VerticalAlignment="Center"
-                                    Text="{x:Bind HistoryLink}"
-                                    ToolTipService.ToolTip="{x:Bind HistoryLink}" />
+                                    Text="{x:Bind HistoryLink}">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="{x:Bind HistoryLink}"
+                                            Placement="Bottom"
+                                            VerticalOffset="20" />
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
+
                                 <HyperlinkButton
                                     Grid.Column="3"
                                     Margin="10,0,0,0"
                                     Command="{Binding ElementName=HistoryLiteRoot, Path=DataContext.FillinCommand, Mode=OneTime}"
                                     CommandParameter="{Binding}"
                                     Content="{Binding ElementName=HistoryLiteRoot, Path=Fillin, Mode=OneTime}"
-                                    Style="{StaticResource HyperlinkButtonStyle}"
-                                    ToolTipService.ToolTip="{Binding ElementName=HistoryLiteRoot, Path=FillinToolTip, Mode=OneTime}" />
+                                    Style="{StaticResource HyperlinkButtonStyle}">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="{Binding ElementName=HistoryLiteRoot, Path=FillinToolTip, Mode=OneTime}"
+                                            Placement="Bottom"
+                                            VerticalOffset="25" />
+                                    </ToolTipService.ToolTip>
+                                </HyperlinkButton>
+
                                 <HyperlinkButton
                                     Grid.Column="4"
                                     Command="{Binding ElementName=HistoryLiteRoot, Path=DataContext.CopyCommand, Mode=OneTime}"
                                     CommandParameter="{Binding}"
                                     Content="{Binding ElementName=HistoryLiteRoot, Path=Copy, Mode=OneTime}"
-                                    Style="{StaticResource HyperlinkButtonStyle}"
-                                    ToolTipService.ToolTip="{Binding ElementName=HistoryLiteRoot, Path=CopyToolTip, Mode=OneTime}" />
+                                    Style="{StaticResource HyperlinkButtonStyle}">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="{Binding ElementName=HistoryLiteRoot, Path=CopyToolTip, Mode=OneTime}"
+                                            Placement="Bottom"
+                                            VerticalOffset="25" />
+                                    </ToolTipService.ToolTip>
+                                </HyperlinkButton>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

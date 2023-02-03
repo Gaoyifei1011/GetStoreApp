@@ -2,6 +2,7 @@
     x:Class="GetStoreApp.UI.Controls.Download.CompletedControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:basicInput="using:GetStoreApp.Views.CustomControls.BasicInput"
     xmlns:check="using:GetStoreApp.Converters.Checks"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:download="using:GetStoreApp.Models.Controls.Download"
@@ -256,10 +257,11 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <CheckBox
+                            <basicInput:ExtendedCheckBox
                                 Grid.Column="0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
+                                Cursor="Hand"
                                 IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
                                 IsThreeState="False"
                                 Style="{StaticResource CheckBoxStyle}"
@@ -269,9 +271,9 @@
                                     <ToolTip
                                         Content="{x:Bind IsSelected, Converter={StaticResource CheckBoxToolTipFormatConverter}, ConverterParameter=Download, Mode=OneWay}"
                                         Placement="Bottom"
-                                        VerticalOffset="20" />
+                                        VerticalOffset="25" />
                                 </ToolTipService.ToolTip>
-                            </CheckBox>
+                            </basicInput:ExtendedCheckBox>
 
                             <Grid
                                 Grid.Column="1"
@@ -419,61 +421,63 @@
 
                                         <StackPanel Orientation="Horizontal">
                                             <ContentControl IsEnabled="{x:Bind FileName, Converter={StaticResource InstallFileCheckConverter}}">
-                                                <Button
+                                                <basicInput:ExtendedButton
                                                     Command="{Binding ElementName=CompletedRoot, Path=DataContext.InstallCommand, Mode=OneTime}"
                                                     CommandParameter="{Binding}"
+                                                    Cursor="Hand"
                                                     IsEnabled="{x:Bind IsInstalling, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
                                                     Style="{StaticResource ButtonDownloadStyle}">
 
-                                                    <Button.Content>
+                                                    <basicInput:ExtendedButton.Content>
                                                         <FontIcon Glyph="&#xF775;" Style="{StaticResource SettingsFluentStyle}" />
-                                                    </Button.Content>
+                                                    </basicInput:ExtendedButton.Content>
 
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip
                                                             Content="{Binding ElementName=CompletedRoot, Path=InstallToolTip, Mode=OneTime}"
                                                             Placement="Bottom"
-                                                            VerticalOffset="20" />
+                                                            VerticalOffset="25" />
                                                     </ToolTipService.ToolTip>
-                                                </Button>
+                                                </basicInput:ExtendedButton>
                                             </ContentControl>
 
-                                            <Button
+                                            <basicInput:ExtendedButton
                                                 Command="{Binding ElementName=CompletedRoot, Path=DataContext.OpenItemFolderCommand, Mode=OneTime}"
                                                 CommandParameter="{x:Bind FilePath}"
+                                                Cursor="Hand"
                                                 Style="{StaticResource ButtonDownloadStyle}">
 
-                                                <Button.Content>
+                                                <basicInput:ExtendedButton.Content>
                                                     <FontIcon Glyph="&#xE8da;" Style="{StaticResource SegoeFluentStyle}" />
-                                                </Button.Content>
+                                                </basicInput:ExtendedButton.Content>
 
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip
                                                         Content="{Binding ElementName=CompletedRoot, Path=OpenItemFolderToolTip, Mode=OneTime}"
                                                         Placement="Bottom"
-                                                        VerticalOffset="20" />
+                                                        VerticalOffset="25" />
                                                 </ToolTipService.ToolTip>
-                                            </Button>
+                                            </basicInput:ExtendedButton>
                                         </StackPanel>
                                     </ContentControl>
 
-                                    <Button Style="{StaticResource ButtonDownloadStyle}">
+                                    <basicInput:ExtendedButton Cursor="Hand" Style="{StaticResource ButtonDownloadStyle}">
 
-                                        <Button.Content>
+                                        <basicInput:ExtendedButton.Content>
                                             <FontIcon
                                                 FontSize="16"
                                                 Glyph="&#xE712;"
                                                 Style="{StaticResource SegoeFluentStyle}" />
-                                        </Button.Content>
+                                        </basicInput:ExtendedButton.Content>
 
                                         <ToolTipService.ToolTip>
                                             <ToolTip
                                                 Content="{Binding ElementName=CompletedRoot, Path=ViewMore, Mode=OneTime}"
                                                 Placement="Bottom"
-                                                VerticalOffset="20" />
+                                                VerticalOffset="25" />
                                         </ToolTipService.ToolTip>
 
-                                        <Button.Flyout>
+                                        <basicInput:ExtendedButton.Flyout>
                                             <menusAndToolbars:AdaptiveMenuFlyout>
                                                 <MenuFlyoutItem
                                                     Command="{Binding ElementName=CompletedRoot, Path=DataContext.DeleteCommand, Mode=OneTime}"
@@ -519,8 +523,8 @@
                                                     </ToolTipService.ToolTip>
                                                 </MenuFlyoutItem>
                                             </menusAndToolbars:AdaptiveMenuFlyout>
-                                        </Button.Flyout>
-                                    </Button>
+                                        </basicInput:ExtendedButton.Flyout>
+                                    </basicInput:ExtendedButton>
                                 </StackPanel>
                             </ContentControl>
                         </Grid>

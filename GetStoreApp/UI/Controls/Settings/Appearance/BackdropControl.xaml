@@ -2,6 +2,7 @@
     x:Class="GetStoreApp.UI.Controls.Settings.Appearance.BackdropControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:basicinput="using:GetStoreApp.Views.CustomControls.BasicInput"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
@@ -41,26 +42,41 @@
                 Text="{x:Bind root:ResourceService.GetLocalized('Settings/BackdropDescription')}" />
         </StackPanel>
 
-        <Button
+        <basicinput:ExtendedButton
             Grid.Column="2"
             VerticalAlignment="Center"
             Command="{x:Bind ViewModel.BackdropTipCommand}"
+            Cursor="Hand"
             Style="{StaticResource ButtonInfoStyle}"
-            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/BackdropToolTip')}"
             Visibility="{x:Bind ViewModel.CanUseMicaBackdrop, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Reverse}">
-            <Button.Content>
+
+            <basicinput:ExtendedButton.Content>
                 <FontIcon
                     FontSize="16"
                     Glyph="&#xE946;"
                     Style="{StaticResource SegoeFluentStyle}" />
-            </Button.Content>
-        </Button>
+            </basicinput:ExtendedButton.Content>
+
+            <ToolTipService.ToolTip>
+                <ToolTip
+                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/BackdropToolTip')}"
+                    Placement="Bottom"
+                    VerticalOffset="25" />
+            </ToolTipService.ToolTip>
+        </basicinput:ExtendedButton>
 
         <DropDownButton
             Grid.Column="3"
             VerticalAlignment="Center"
-            Content="{x:Bind ViewModel.Backdrop.DisplayName, Mode=OneWay}"
-            ToolTipService.ToolTip="{x:Bind ViewModel.Backdrop.DisplayName, Mode=OneWay}">
+            Content="{x:Bind ViewModel.Backdrop.DisplayName, Mode=OneWay}">
+
+            <ToolTipService.ToolTip>
+                <ToolTip
+                    Content="{x:Bind ViewModel.Backdrop.DisplayName, Mode=OneWay}"
+                    Placement="Bottom"
+                    VerticalOffset="20" />
+            </ToolTipService.ToolTip>
+
             <DropDownButton.Flyout>
                 <menusAndToolbars:AdaptiveMenuFlyout>
                     <RadioMenuFlyoutItem
@@ -68,31 +84,62 @@
                         CommandParameter="0"
                         GroupName="BackdropSetting"
                         IsChecked="{x:Bind IsItemChecked(ViewModel.Backdrop.InternalName, ViewModel.BackdropList[0].InternalName), Mode=OneWay}"
-                        Text="{x:Bind ViewModel.BackdropList[0].DisplayName}"
-                        ToolTipService.ToolTip="{x:Bind ViewModel.BackdropList[0].DisplayName}" />
+                        Text="{x:Bind ViewModel.BackdropList[0].DisplayName}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind ViewModel.BackdropList[0].DisplayName}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+                    </RadioMenuFlyoutItem>
+
                     <RadioMenuFlyoutItem
                         Command="{x:Bind ViewModel.BackdropSelectCommand}"
                         CommandParameter="1"
                         GroupName="BackdropSetting"
                         IsChecked="{x:Bind IsItemChecked(ViewModel.Backdrop.InternalName, ViewModel.BackdropList[1].InternalName), Mode=OneWay}"
                         Text="{x:Bind ViewModel.BackdropList[1].DisplayName}"
-                        ToolTipService.ToolTip="{x:Bind ViewModel.BackdropList[1].DisplayName}"
-                        Visibility="{x:Bind ViewModel.CanUseMicaBackdrop, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        Visibility="{x:Bind ViewModel.CanUseMicaBackdrop, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind ViewModel.BackdropList[1].DisplayName}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+                    </RadioMenuFlyoutItem>
+
                     <RadioMenuFlyoutItem
                         Command="{x:Bind ViewModel.BackdropSelectCommand}"
                         CommandParameter="2"
                         GroupName="BackdropSetting"
                         IsChecked="{x:Bind IsItemChecked(ViewModel.Backdrop.InternalName, ViewModel.BackdropList[2].InternalName), Mode=OneWay}"
                         Text="{x:Bind ViewModel.BackdropList[2].DisplayName}"
-                        ToolTipService.ToolTip="{x:Bind ViewModel.BackdropList[2].DisplayName}"
-                        Visibility="{x:Bind ViewModel.CanUseMicaBackdrop, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        Visibility="{x:Bind ViewModel.CanUseMicaBackdrop, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind ViewModel.BackdropList[2].DisplayName}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+                    </RadioMenuFlyoutItem>
+
                     <RadioMenuFlyoutItem
                         Command="{x:Bind ViewModel.BackdropSelectCommand}"
                         CommandParameter="3"
                         GroupName="BackdropSetting"
                         IsChecked="{x:Bind IsItemChecked(ViewModel.Backdrop.InternalName, ViewModel.BackdropList[3].InternalName), Mode=OneWay}"
-                        Text="{x:Bind ViewModel.BackdropList[3].DisplayName}"
-                        ToolTipService.ToolTip="{x:Bind ViewModel.BackdropList[3].DisplayName}" />
+                        Text="{x:Bind ViewModel.BackdropList[3].DisplayName}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind ViewModel.BackdropList[3].DisplayName}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+                    </RadioMenuFlyoutItem>
                 </menusAndToolbars:AdaptiveMenuFlyout>
             </DropDownButton.Flyout>
         </DropDownButton>

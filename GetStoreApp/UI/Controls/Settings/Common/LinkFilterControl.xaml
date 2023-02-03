@@ -48,8 +48,15 @@
                 <Button
                     Grid.Column="2"
                     Command="{x:Bind ViewModel.LinkFilterInstructionCommand}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/LinkFilterInstruction')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/LinkFilterInstruction')}" />
+                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/LinkFilterInstruction')}">
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('Settings/LinkFilterInstruction')}"
+                            Placement="Bottom"
+                            VerticalOffset="20" />
+                    </ToolTipService.ToolTip>
+                </Button>
             </Grid>
         </Expander.Header>
 

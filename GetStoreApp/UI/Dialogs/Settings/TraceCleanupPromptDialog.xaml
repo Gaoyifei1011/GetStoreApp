@@ -54,8 +54,15 @@
                                     VerticalAlignment="Center"
                                     Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
                                     Text="{Binding ElementName=TraceCleanupRoot, Path=CleanFailed, Mode=OneTime}"
-                                    ToolTipService.ToolTip="{x:Bind CleanFailedText}"
-                                    Visibility="{x:Bind IsCleanFailed, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
+                                    Visibility="{x:Bind IsCleanFailed, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="{x:Bind CleanFailedText}"
+                                            Placement="Bottom"
+                                            VerticalOffset="20" />
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
                             </ContentControl>
                         </StackPanel>
                     </DataTemplate>
@@ -91,15 +98,30 @@
                     Command="{x:Bind ViewModel.CleanupNowCommand}"
                     Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CleanupNow')}"
                     IsEnabled="{x:Bind ViewModel.IsSelected, Mode=OneWay}"
-                    Style="{ThemeResource AccentButtonStyle}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Dialog/CleanupNow')}" />
+                    Style="{ThemeResource AccentButtonStyle}">
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CleanupNow')}"
+                            Placement="Bottom"
+                            VerticalOffset="20" />
+                    </ToolTipService.ToolTip>
+                </Button>
+
                 <Button
                     Grid.Column="1"
                     HorizontalAlignment="Stretch"
                     Command="{x:Bind ViewModel.CloseWindowCommand}"
                     CommandParameter="{Binding ElementName=TraceCleanupRoot}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseWindow')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseWindow')}" />
+                    Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseWindow')}">
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseWindow')}"
+                            Placement="Bottom"
+                            VerticalOffset="20" />
+                    </ToolTipService.ToolTip>
+                </Button>
             </Grid>
         </ContentControl>
     </Grid>

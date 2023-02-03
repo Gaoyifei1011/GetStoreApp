@@ -16,10 +16,17 @@
         IsOpen="True"
         Message="{x:Bind ViewModel.StateInfoText, Mode=OneWay}"
         Severity="{x:Bind ViewModel.InfoBarSeverity, Mode=OneWay}"
-        Style="{StaticResource InfoBarStyle}"
-        ToolTipService.ToolTip="{x:Bind ViewModel.StateInfoText, Mode=OneWay}">
+        Style="{StaticResource InfoBarStyle}">
+
         <InfoBar.Content>
             <ProgressRing IsIndeterminate="{x:Bind ViewModel.StatePrRingActValue, Mode=OneWay}" Visibility="{x:Bind ViewModel.StatePrRingVisValue, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
         </InfoBar.Content>
+
+        <ToolTipService.ToolTip>
+            <ToolTip
+                Content="{x:Bind ViewModel.StateInfoText, Mode=OneWay}"
+                Placement="Bottom"
+                VerticalOffset="20" />
+        </ToolTipService.ToolTip>
     </InfoBar>
 </UserControl>

@@ -7,7 +7,7 @@ using System.Windows.Input;
 namespace GetStoreApp.Views.CustomControls.Navigation
 {
     /// <summary>
-    /// 附带命令的导航控件项的容器
+    /// 扩展后的导航控件项，附带命令绑定
     /// </summary>
     public partial class ExtendedNavigationViewItem : NavigationViewItem
     {

@@ -1,8 +1,8 @@
-<GridView
-    x:Class="GetStoreApp.Views.CustomControls.Collections.AdaptiveGridView"
+<Button
+    x:Class="GetStoreApp.Views.CustomControls.BasicInput.ExtendedButton"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    ItemContainerStyle="{StaticResource DefaultGridViewItemStyle}"
+    Style="{StaticResource DefaultButtonStyle}"
     mc:Ignorable="d" />

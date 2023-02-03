@@ -1,21 +1,21 @@
-锘縰sing Microsoft.UI.Input;
+using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.Views.CustomControls.BasicInput
 {
     /// <summary>
-    /// 鎵╁睍鍚庣殑涓嬫媺鎸夐挳锛屽彲浠ヨ缃寚閽堜綅浜庢帶浠朵笂鏃舵樉绀虹殑娓告爣
+    /// 扩展后的按钮，可以设置指针位于控件上时显示的游标
     /// </summary>
-    public partial class ExtendedDropDownButton : DropDownButton
+    public sealed partial class ExtendedButton : Button
     {
-        public ExtendedDropDownButton()
+        public ExtendedButton()
         {
             InitializeComponent();
             Loaded += OnLoaded;
         }
 
-        ~ExtendedDropDownButton()
+        ~ExtendedButton()
         {
             Loaded -= OnLoaded;
         }

@@ -56,8 +56,26 @@
                 Grid.Column="3"
                 VerticalAlignment="Center"
                 Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
-                <TextBlock Text="{x:Bind LocalizeCategoryId(ViewModel.CategoryId), Mode=OneWay}" ToolTipService.ToolTip="{x:Bind ViewModel.CategoryId, Mode=OneWay}" />
-                <TextBlock Text="{x:Bind LocalizeResultCountInfo(ViewModel.ResultDataList.Count), Mode=OneWay}" ToolTipService.ToolTip="{x:Bind LocalizeResultCountInfo(ViewModel.ResultDataList.Count), Mode=OneWay}" />
+
+                <TextBlock Text="{x:Bind LocalizeCategoryId(ViewModel.CategoryId), Mode=OneWay}">
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind ViewModel.CategoryId, Mode=OneWay}"
+                            Placement="Bottom"
+                            VerticalOffset="20" />
+                    </ToolTipService.ToolTip>
+                </TextBlock>
+
+                <TextBlock Text="{x:Bind LocalizeResultCountInfo(ViewModel.ResultDataList.Count), Mode=OneWay}">
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind LocalizeResultCountInfo(ViewModel.ResultDataList.Count), Mode=OneWay}"
+                            Placement="Bottom"
+                            VerticalOffset="20" />
+                    </ToolTipService.ToolTip>
+                </TextBlock>
             </StackPanel>
 
             <TextBlock
@@ -78,22 +96,35 @@
                     Command="{x:Bind ViewModel.CopyIDCommand}"
                     Cursor="Hand"
                     IsEnabled="{x:Bind system:Convert.ToBoolean(ViewModel.ResultDataList.Count), Mode=OneWay}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('Home/CopyID')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/CopyIDToolTip')}">
+                    Label="{x:Bind root:ResourceService.GetLocalized('Home/CopyID')}">
                     <menusAndToolbars:ExtendedAppBarButton.Icon>
                         <FontIcon Glyph="&#xE8c8;" Style="{StaticResource SegoeFluentStyle}" />
                     </menusAndToolbars:ExtendedAppBarButton.Icon>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('Home/CopyIDToolTip')}"
+                            Placement="Bottom"
+                            VerticalOffset="25" />
+                    </ToolTipService.ToolTip>
                 </menusAndToolbars:ExtendedAppBarButton>
 
                 <menusAndToolbars:ExtendedAppBarButton
                     Command="{x:Bind ViewModel.SelectCommand}"
                     Cursor="Hand"
                     IsEnabled="{x:Bind system:Convert.ToBoolean(ViewModel.ResultDataList.Count), Mode=OneWay}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('Home/Select')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/SelectToolTip')}">
+                    Label="{x:Bind root:ResourceService.GetLocalized('Home/Select')}">
+
                     <menusAndToolbars:ExtendedAppBarButton.Icon>
                         <FontIcon Glyph="&#xE762;" Style="{StaticResource SegoeFluentStyle}" />
                     </menusAndToolbars:ExtendedAppBarButton.Icon>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('Home/SelectToolTip')}"
+                            Placement="Bottom"
+                            VerticalOffset="25" />
+                    </ToolTipService.ToolTip>
                 </menusAndToolbars:ExtendedAppBarButton>
             </CommandBar>
 
@@ -108,42 +139,71 @@
                 <menusAndToolbars:ExtendedAppBarButton
                     Command="{x:Bind ViewModel.SelectAllCommand}"
                     Cursor="Hand"
-                    Label="{x:Bind root:ResourceService.GetLocalized('Home/SelectAll')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/SelectAll')}">
+                    Label="{x:Bind root:ResourceService.GetLocalized('Home/SelectAll')}">
+
                     <menusAndToolbars:ExtendedAppBarButton.Icon>
                         <FontIcon Glyph="&#xE8b3;" Style="{StaticResource SegoeFluentStyle}" />
                     </menusAndToolbars:ExtendedAppBarButton.Icon>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('Home/SelectAll')}"
+                            Placement="Bottom"
+                            VerticalOffset="25" />
+                    </ToolTipService.ToolTip>
                 </menusAndToolbars:ExtendedAppBarButton>
 
                 <menusAndToolbars:ExtendedAppBarButton
                     Command="{x:Bind ViewModel.SelectNoneCommand}"
                     Cursor="Hand"
-                    Label="{x:Bind root:ResourceService.GetLocalized('Home/SelectNone')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/SelectNone')}">
+                    Label="{x:Bind root:ResourceService.GetLocalized('Home/SelectNone')}">
+
                     <menusAndToolbars:ExtendedAppBarButton.Icon>
                         <FontIcon Glyph="&#xE8e6;" Style="{StaticResource SegoeFluentStyle}" />
                     </menusAndToolbars:ExtendedAppBarButton.Icon>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('Home/SelectNone')}"
+                            Placement="Bottom"
+                            VerticalOffset="25" />
+                    </ToolTipService.ToolTip>
                 </menusAndToolbars:ExtendedAppBarButton>
 
-                <menusAndToolbars:ExtendedAppBarButton
-                    Cursor="Hand"
-                    Label="{x:Bind root:ResourceService.GetLocalized('Home/CopyOptions')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/CopyOptionsToolTip')}">
+                <menusAndToolbars:ExtendedAppBarButton Cursor="Hand" Label="{x:Bind root:ResourceService.GetLocalized('Home/CopyOptions')}">
 
                     <menusAndToolbars:ExtendedAppBarButton.Icon>
                         <FontIcon Glyph="&#xE8c8;" Style="{StaticResource SegoeFluentStyle}" />
                     </menusAndToolbars:ExtendedAppBarButton.Icon>
 
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('Home/CopyOptionsToolTip')}"
+                            Placement="Bottom"
+                            VerticalOffset="25" />
+                    </ToolTipService.ToolTip>
+
                     <menusAndToolbars:ExtendedAppBarButton.Flyout>
                         <menusAndToolbars:AdaptiveMenuFlyout>
-                            <MenuFlyoutItem
-                                Command="{x:Bind ViewModel.CopySelectedLinkCommand}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Home/CopySelectedLink')}"
-                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/CopySelectedLinkToolTip')}" />
-                            <MenuFlyoutItem
-                                Command="{x:Bind ViewModel.CopySelectedCommand}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Home/CopySelectedContent')}"
-                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/CopySelectedContentToolTip')}" />
+                            <MenuFlyoutItem Command="{x:Bind ViewModel.CopySelectedLinkCommand}" Text="{x:Bind root:ResourceService.GetLocalized('Home/CopySelectedLink')}">
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        Content="{x:Bind root:ResourceService.GetLocalized('Home/CopySelectedLinkToolTip')}"
+                                        Placement="Bottom"
+                                        VerticalOffset="20" />
+                                </ToolTipService.ToolTip>
+                            </MenuFlyoutItem>
+
+                            <MenuFlyoutItem Command="{x:Bind ViewModel.CopySelectedCommand}" Text="{x:Bind root:ResourceService.GetLocalized('Home/CopySelectedContent')}">
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        Content="{x:Bind root:ResourceService.GetLocalized('Home/CopySelectedContentToolTip')}"
+                                        Placement="Bottom"
+                                        VerticalOffset="20" />
+                                </ToolTipService.ToolTip>
+                            </MenuFlyoutItem>
                         </menusAndToolbars:AdaptiveMenuFlyout>
                     </menusAndToolbars:ExtendedAppBarButton.Flyout>
                 </menusAndToolbars:ExtendedAppBarButton>
@@ -151,21 +211,35 @@
                 <menusAndToolbars:ExtendedAppBarButton
                     Command="{x:Bind ViewModel.DownloadSelectedCommand}"
                     Cursor="Hand"
-                    Label="{x:Bind root:ResourceService.GetLocalized('Home/DownloadSelected')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/DownloadSelected')}">
+                    Label="{x:Bind root:ResourceService.GetLocalized('Home/DownloadSelected')}">
+
                     <menusAndToolbars:ExtendedAppBarButton.Icon>
                         <FontIcon Glyph="&#xE74b;" Style="{StaticResource SegoeFluentStyle}" />
                     </menusAndToolbars:ExtendedAppBarButton.Icon>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('Home/DownloadSelected')}"
+                            Placement="Bottom"
+                            VerticalOffset="25" />
+                    </ToolTipService.ToolTip>
                 </menusAndToolbars:ExtendedAppBarButton>
 
                 <menusAndToolbars:ExtendedAppBarButton
                     Command="{x:Bind ViewModel.CancelCommand}"
                     Cursor="Hand"
-                    Label="{x:Bind root:ResourceService.GetLocalized('Home/Cancel')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/CancelToolTip')}">
+                    Label="{x:Bind root:ResourceService.GetLocalized('Home/Cancel')}">
+
                     <menusAndToolbars:ExtendedAppBarButton.Icon>
                         <FontIcon Glyph="&#xE711;" Style="{StaticResource SegoeFluentStyle}" />
                     </menusAndToolbars:ExtendedAppBarButton.Icon>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('Home/CancelToolTip')}"
+                            Placement="Bottom"
+                            VerticalOffset="25" />
+                    </ToolTipService.ToolTip>
                 </menusAndToolbars:ExtendedAppBarButton>
             </CommandBar>
         </Grid>
@@ -205,40 +279,87 @@
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
                         Text="{x:Bind root:ResourceService.GetLocalized('Home/Select')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/Select')}"
-                        Visibility="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
+                        Visibility="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind root:ResourceService.GetLocalized('Home/Select')}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
+
                     <TextBlock
                         Grid.Column="1"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Home/FileName')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/FileName')}" />
+                        Text="{x:Bind root:ResourceService.GetLocalized('Home/FileName')}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind root:ResourceService.GetLocalized('Home/FileName')}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
+
                     <TextBlock
                         Grid.Column="2"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Home/LinkExpireTime')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/LinkExpireTime')}" />
+                        Text="{x:Bind root:ResourceService.GetLocalized('Home/LinkExpireTime')}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind root:ResourceService.GetLocalized('Home/LinkExpireTime')}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
+
                     <TextBlock
                         Grid.Column="3"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Home/FileSHA1')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/FileSHA1')}" />
+                        Text="{x:Bind root:ResourceService.GetLocalized('Home/FileSHA1')}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind root:ResourceService.GetLocalized('Home/FileSHA1')}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
+
                     <TextBlock
                         Grid.Column="4"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Home/FileSize')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Home/FileSize')}" />
+                        Text="{x:Bind root:ResourceService.GetLocalized('Home/FileSize')}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind root:ResourceService.GetLocalized('Home/FileSize')}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
+
                     <TextBlock
                         Grid.Column="5"
                         Grid.ColumnSpan="2"
                         Margin="10,0,0,0"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('History/Options')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/OptionsToolTip')}" />
+                        Text="{x:Bind root:ResourceService.GetLocalized('History/Options')}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind root:ResourceService.GetLocalized('History/OptionsToolTip')}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
                 </Grid>
             </ListView.Header>
 
@@ -259,17 +380,26 @@
                             <ColumnDefinition Width="80" />
                         </Grid.ColumnDefinitions>
 
-                        <CheckBox
+                        <basicInput:ExtendedCheckBox
                             Grid.Column="0"
                             Width="50"
                             Margin="10,0,0,0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
+                            Cursor="Hand"
                             IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
                             IsThreeState="False"
                             Style="{StaticResource CheckBoxStyle}"
-                            ToolTipService.ToolTip="{Binding IsSelected, Converter={StaticResource CheckBoxToolTipFormatConverter}, ConverterParameter=Home, Mode=OneWay}"
-                            Visibility="{Binding ElementName=ResultRoot, Path=DataContext.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
+                            Visibility="{Binding ElementName=ResultRoot, Path=DataContext.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    Content="{Binding IsSelected, Converter={StaticResource CheckBoxToolTipFormatConverter}, ConverterParameter=Home, Mode=OneWay}"
+                                    Placement="Bottom"
+                                    VerticalOffset="25" />
+                            </ToolTipService.ToolTip>
+                        </basicInput:ExtendedCheckBox>
+
                         <HyperlinkButton
                             Grid.Column="1"
                             Margin="10,0,0,0"
@@ -277,26 +407,58 @@
                             Command="{Binding ElementName=ResultRoot, Path=DataContext.DownloadCommand, Mode=OneTime}"
                             CommandParameter="{Binding}"
                             Content="{x:Bind FileName}"
-                            Style="{StaticResource HyperlinkButtonStyle}"
-                            ToolTipService.ToolTip="{x:Bind FileName, Converter={StaticResource FileNameToolTipFormatConverter}}" />
+                            Style="{StaticResource HyperlinkButtonStyle}">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    Content="{x:Bind FileName, Converter={StaticResource FileNameToolTipFormatConverter}}"
+                                    Placement="Bottom"
+                                    VerticalOffset="25" />
+                            </ToolTipService.ToolTip>
+                        </HyperlinkButton>
+
                         <TextBlock
                             Grid.Column="2"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
-                            Text="{x:Bind FileLinkExpireTime, Converter={StaticResource GMTFormatConverter}}"
-                            ToolTipService.ToolTip="{x:Bind FileLinkExpireTime, Converter={StaticResource GMTFormatConverter}}" />
+                            Text="{x:Bind FileLinkExpireTime, Converter={StaticResource GMTFormatConverter}}">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    Content="{x:Bind FileLinkExpireTime, Converter={StaticResource GMTFormatConverter}}"
+                                    Placement="Bottom"
+                                    VerticalOffset="20" />
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
+
                         <TextBlock
                             Grid.Column="3"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
-                            Text="{x:Bind FileSHA1}"
-                            ToolTipService.ToolTip="{x:Bind FileSHA1}" />
+                            Text="{x:Bind FileSHA1}">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    Content="{x:Bind FileSHA1}"
+                                    Placement="Bottom"
+                                    VerticalOffset="20" />
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
+
                         <TextBlock
                             Grid.Column="4"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
-                            Text="{x:Bind FileSize}"
-                            ToolTipService.ToolTip="{x:Bind FileSize}" />
+                            Text="{x:Bind FileSize}">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    Content="{x:Bind FileSize}"
+                                    Placement="Bottom"
+                                    VerticalOffset="20" />
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
+
                         <basicInput:ExtendedDropDownButton
                             Grid.Column="5"
                             Margin="10,0,0,0"
@@ -304,20 +466,42 @@
                             Content="{Binding ElementName=ResultRoot, Path=Copy, Mode=OneTime}"
                             Cursor="Hand"
                             IsEnabled="{Binding ElementName=ResultRoot, Path=DataContext.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
-                            ToolTipService.ToolTip="{Binding ElementName=ResultRoot, Path=CopyOptionsToolTip, Mode=OneTime}">
+                            Style="{StaticResource DropDownButtonStyle}">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    Content="{Binding ElementName=ResultRoot, Path=CopyOptionsToolTip, Mode=OneTime}"
+                                    Placement="Bottom"
+                                    VerticalOffset="25" />
+                            </ToolTipService.ToolTip>
 
                             <basicInput:ExtendedDropDownButton.Flyout>
                                 <menusAndToolbars:AdaptiveMenuFlyout>
                                     <MenuFlyoutItem
                                         Command="{Binding ElementName=ResultRoot, Path=DataContext.CopyLinkCommand, Mode=OneTime}"
                                         CommandParameter="{x:Bind FileLink}"
-                                        Text="{Binding ElementName=ResultRoot, Path=CopyLink, Mode=OneTime}"
-                                        ToolTipService.ToolTip="{Binding ElementName=ResultRoot, Path=CopyLinkToolTip, Mode=OneTime}" />
+                                        Text="{Binding ElementName=ResultRoot, Path=CopyLink, Mode=OneTime}">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip
+                                                Content="{Binding ElementName=ResultRoot, Path=CopyLinkToolTip, Mode=OneTime}"
+                                                Placement="Bottom"
+                                                VerticalOffset="20" />
+                                        </ToolTipService.ToolTip>
+                                    </MenuFlyoutItem>
+
                                     <MenuFlyoutItem
                                         Command="{Binding ElementName=ResultRoot, Path=DataContext.CopyContentCommand, Mode=OneTime}"
                                         CommandParameter="{Binding}"
-                                        Text="{Binding ElementName=ResultRoot, Path=CopyContent, Mode=OneTime}"
-                                        ToolTipService.ToolTip="{Binding ElementName=ResultRoot, Path=CopyContentToolTip, Mode=OneTime}" />
+                                        Text="{Binding ElementName=ResultRoot, Path=CopyContent, Mode=OneTime}">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip
+                                                Content="{Binding ElementName=ResultRoot, Path=CopyContentToolTip, Mode=OneTime}"
+                                                Placement="Bottom"
+                                                VerticalOffset="20" />
+                                        </ToolTipService.ToolTip>
+                                    </MenuFlyoutItem>
                                 </menusAndToolbars:AdaptiveMenuFlyout>
                             </basicInput:ExtendedDropDownButton.Flyout>
                         </basicInput:ExtendedDropDownButton>

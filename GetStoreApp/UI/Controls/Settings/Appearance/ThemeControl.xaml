@@ -46,14 +46,28 @@
             Margin="0,0,6,0"
             VerticalAlignment="Center"
             Command="{x:Bind ViewModel.SettingsColorCommand}"
-            Content="{x:Bind root:ResourceService.GetLocalized('Settings/WindowsColorSettings')}"
-            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/WindowsColorSettings')}" />
+            Content="{x:Bind root:ResourceService.GetLocalized('Settings/WindowsColorSettings')}">
+
+            <ToolTipService.ToolTip>
+                <ToolTip
+                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/WindowsColorSettings')}"
+                    Placement="Bottom"
+                    VerticalOffset="25" />
+            </ToolTipService.ToolTip>
+        </HyperlinkButton>
 
         <DropDownButton
             Grid.Column="3"
             VerticalAlignment="Center"
-            Content="{x:Bind ViewModel.Theme.DisplayName, Mode=OneWay}"
-            ToolTipService.ToolTip="{x:Bind ViewModel.Theme.DisplayName, Mode=OneWay}">
+            Content="{x:Bind ViewModel.Theme.DisplayName, Mode=OneWay}">
+
+            <ToolTipService.ToolTip>
+                <ToolTip
+                    Content="{x:Bind ViewModel.Theme.DisplayName, Mode=OneWay}"
+                    Placement="Bottom"
+                    VerticalOffset="20" />
+            </ToolTipService.ToolTip>
+
             <DropDownButton.Flyout>
                 <menusAndToolbars:AdaptiveMenuFlyout>
                     <RadioMenuFlyoutItem
@@ -61,22 +75,45 @@
                         CommandParameter="0"
                         GroupName="ThemeSetting"
                         IsChecked="{x:Bind IsItemChecked(ViewModel.Theme.InternalName, ViewModel.ThemeList[0].InternalName), Mode=OneWay}"
-                        Text="{x:Bind ViewModel.ThemeList[0].DisplayName}"
-                        ToolTipService.ToolTip="{x:Bind ViewModel.ThemeList[0].DisplayName}" />
+                        Text="{x:Bind ViewModel.ThemeList[0].DisplayName}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind ViewModel.ThemeList[0].DisplayName}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+                    </RadioMenuFlyoutItem>
+
                     <RadioMenuFlyoutItem
                         Command="{x:Bind ViewModel.ThemeSelectCommand}"
                         CommandParameter="1"
                         GroupName="ThemeSetting"
                         IsChecked="{x:Bind IsItemChecked(ViewModel.Theme.InternalName, ViewModel.ThemeList[1].InternalName), Mode=OneWay}"
-                        Text="{x:Bind ViewModel.ThemeList[1].DisplayName}"
-                        ToolTipService.ToolTip="{x:Bind ViewModel.ThemeList[1].DisplayName}" />
+                        Text="{x:Bind ViewModel.ThemeList[1].DisplayName}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind ViewModel.ThemeList[1].DisplayName}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+                    </RadioMenuFlyoutItem>
+
                     <RadioMenuFlyoutItem
                         Command="{x:Bind ViewModel.ThemeSelectCommand}"
                         CommandParameter="2"
                         GroupName="ThemeSetting"
                         IsChecked="{x:Bind IsItemChecked(ViewModel.Theme.InternalName, ViewModel.ThemeList[2].InternalName), Mode=OneWay}"
-                        Text="{x:Bind ViewModel.ThemeList[2].DisplayName}"
-                        ToolTipService.ToolTip="{x:Bind ViewModel.ThemeList[2].DisplayName}" />
+                        Text="{x:Bind ViewModel.ThemeList[2].DisplayName}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind ViewModel.ThemeList[2].DisplayName}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+                    </RadioMenuFlyoutItem>
                 </menusAndToolbars:AdaptiveMenuFlyout>
             </DropDownButton.Flyout>
         </DropDownButton>

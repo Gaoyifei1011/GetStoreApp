@@ -45,7 +45,14 @@
             DisplayMemberPath="FriendlyName"
             ItemsSource="{x:Bind ViewModel.RegionList}"
             SelectedItem="{x:Bind ViewModel.Region, Mode=OneWay}"
-            SelectionChanged="{x:Bind ViewModel.OnSelectionChanged}"
-            ToolTipService.ToolTip="{x:Bind ViewModel.Region.FriendlyName, Mode=OneWay}" />
+            SelectionChanged="{x:Bind ViewModel.OnSelectionChanged}">
+
+            <ToolTipService.ToolTip>
+                <ToolTip
+                    Content="{x:Bind ViewModel.Region.FriendlyName, Mode=OneWay}"
+                    Placement="Bottom"
+                    VerticalOffset="20" />
+            </ToolTipService.ToolTip>
+        </ComboBox>
     </Grid>
 </UserControl>

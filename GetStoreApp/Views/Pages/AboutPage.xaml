@@ -38,8 +38,7 @@
             <basicInput:ExtendedDropDownButton
                 Grid.Column="1"
                 Content="{x:Bind root:ResourceService.GetLocalized('About/Others')}"
-                Cursor="Hand"
-                Style="{StaticResource DefaultDropDownButtonStyle}">
+                Cursor="Hand">
 
                 <ToolTipService.ToolTip>
                     <ToolTip

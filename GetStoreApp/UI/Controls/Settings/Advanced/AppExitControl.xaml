@@ -43,8 +43,15 @@
         <DropDownButton
             Grid.Column="2"
             VerticalAlignment="Center"
-            Content="{x:Bind ViewModel.AppExit.DisplayName, Mode=OneWay}"
-            ToolTipService.ToolTip="{x:Bind ViewModel.AppExit.DisplayName, Mode=OneWay}">
+            Content="{x:Bind ViewModel.AppExit.DisplayName, Mode=OneWay}">
+
+            <ToolTipService.ToolTip>
+                <ToolTip
+                    Content="{x:Bind ViewModel.AppExit.DisplayName, Mode=OneWay}"
+                    Placement="Bottom"
+                    VerticalOffset="20" />
+            </ToolTipService.ToolTip>
+
             <DropDownButton.Flyout>
                 <menusAndToolbars:AdaptiveMenuFlyout>
                     <RadioMenuFlyoutItem
@@ -52,15 +59,30 @@
                         CommandParameter="0"
                         GroupName="AppExitSetting"
                         IsChecked="{x:Bind IsItemChecked(ViewModel.AppExit.InternalName, ViewModel.AppExitList[0].InternalName), Mode=OneWay}"
-                        Text="{x:Bind ViewModel.AppExitList[0].DisplayName}"
-                        ToolTipService.ToolTip="{x:Bind ViewModel.AppExitList[0].DisplayName}" />
+                        Text="{x:Bind ViewModel.AppExitList[0].DisplayName}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind ViewModel.AppExitList[0].DisplayName}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+                    </RadioMenuFlyoutItem>
+
                     <RadioMenuFlyoutItem
                         Command="{x:Bind ViewModel.AppExitSelectCommand}"
                         CommandParameter="1"
                         GroupName="AppExitSetting"
                         IsChecked="{x:Bind IsItemChecked(ViewModel.AppExit.InternalName, ViewModel.AppExitList[1].InternalName), Mode=OneWay}"
-                        Text="{x:Bind ViewModel.AppExitList[1].DisplayName}"
-                        ToolTipService.ToolTip="{x:Bind ViewModel.AppExitList[1].DisplayName}" />
+                        Text="{x:Bind ViewModel.AppExitList[1].DisplayName}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind ViewModel.AppExitList[1].DisplayName}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+                    </RadioMenuFlyoutItem>
                 </menusAndToolbars:AdaptiveMenuFlyout>
             </DropDownButton.Flyout>
         </DropDownButton>

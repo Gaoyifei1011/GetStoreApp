@@ -143,16 +143,30 @@
                 CommandParameter="{Binding ElementName=FileInformationRoot}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CopyFileInformation')}"
                 IsEnabled="{x:Bind ViewModel.FileCheckState, Mode=OneWay}"
-                Style="{ThemeResource AccentButtonStyle}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Dialog/CopyFileInformation')}" />
+                Style="{ThemeResource AccentButtonStyle}">
+
+                <ToolTipService.ToolTip>
+                    <ToolTip
+                        Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CopyFileInformation')}"
+                        Placement="Bottom"
+                        VerticalOffset="20" />
+                </ToolTipService.ToolTip>
+            </Button>
             <Button
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
                 Command="{x:Bind ViewModel.CloseWindowCommand}"
                 CommandParameter="{Binding ElementName=FileInformationRoot}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseWindow')}"
-                IsEnabled="{x:Bind ViewModel.FileCheckState, Mode=OneWay}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseWindow')}" />
+                IsEnabled="{x:Bind ViewModel.FileCheckState, Mode=OneWay}">
+
+                <ToolTipService.ToolTip>
+                    <ToolTip
+                        Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseWindow')}"
+                        Placement="Bottom"
+                        VerticalOffset="20" />
+                </ToolTipService.ToolTip>
+            </Button>
         </Grid>
     </Grid>
 </ContentDialog>

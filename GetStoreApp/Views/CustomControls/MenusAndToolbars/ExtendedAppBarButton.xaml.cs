@@ -4,6 +4,9 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.Views.CustomControls.MenusAndToolbars
 {
+    /// <summary>
+    /// 扩展后的在 AppBar 中的模板化按钮，可以设置指针位于控件上时显示的游标
+    /// </summary>
     public sealed partial class ExtendedAppBarButton : AppBarButton
     {
         public ExtendedAppBarButton()

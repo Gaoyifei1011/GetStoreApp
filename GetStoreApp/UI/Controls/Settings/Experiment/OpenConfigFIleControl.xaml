@@ -34,11 +34,18 @@
         <HyperlinkButton
             Grid.Column="2"
             Command="{x:Bind ViewModel.OpenConfigFileCommand}"
-            Style="{StaticResource ExperimentalHyperlinkButtonStyle}"
-            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/OpenConfigFolder')}">
+            Style="{StaticResource ExperimentalHyperlinkButtonStyle}">
+
             <HyperlinkButton.Content>
                 <FontIcon FontFamily="{StaticResource SegoeFluentFontFamily}" Glyph="&#xE8a7;" />
             </HyperlinkButton.Content>
+
+            <ToolTipService.ToolTip>
+                <ToolTip
+                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/OpenConfigFolder')}"
+                    Placement="Bottom"
+                    VerticalOffset="25" />
+            </ToolTipService.ToolTip>
         </HyperlinkButton>
     </Grid>
 </UserControl>

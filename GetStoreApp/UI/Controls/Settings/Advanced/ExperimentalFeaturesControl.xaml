@@ -43,7 +43,14 @@
             Grid.Column="2"
             MinWidth="100"
             Command="{x:Bind ViewModel.ConfigCommand}"
-            Content="{x:Bind root:ResourceService.GetLocalized('Settings/Config')}"
-            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/Config')}" />
+            Content="{x:Bind root:ResourceService.GetLocalized('Settings/Config')}">
+
+            <ToolTipService.ToolTip>
+                <ToolTip
+                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/Config')}"
+                    Placement="Bottom"
+                    VerticalOffset="20" />
+            </ToolTipService.ToolTip>
+        </Button>
     </Grid>
 </UserControl>
