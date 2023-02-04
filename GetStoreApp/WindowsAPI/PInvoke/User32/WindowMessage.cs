@@ -6,6 +6,9 @@
     public enum WindowMessage : int
     {
         WM_DESTROY = 0x0002,
+
+        WM_SIZE = 0x0005,
+
         WM_CLOSE = 0x0010,
 
         /// <summary>
@@ -23,7 +26,15 @@
         /// </summary>
         WM_COPYDATA = 0x004A,
 
+        /// <summary>
+        /// 当用户从菜单中选择命令项、控件将通知消息发送到其父窗口或翻译快捷键击时发送。
+        /// </summary>
         WM_COMMAND = 0x0111,
+
+        /// <summary>
+        /// 当用户从 “窗口 ”菜单中选择命令时，窗口会收到此消息， (以前称为系统或控件菜单) ，或者当用户选择最大化按钮、最小化按钮、还原按钮或关闭按钮时。
+        /// </summary>
+        WM_SYSCOMMAND = 0x0112,
 
         /// <summary>
         /// 当光标移动时，WM_MOUSEMOVE消息被发送到窗口。如果没有捕获鼠标，则将消息发送到包含光标的窗口。否则，消息将被发送到捕获了鼠标的窗口。

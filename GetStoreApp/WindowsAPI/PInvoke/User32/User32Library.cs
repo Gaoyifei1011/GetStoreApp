@@ -1,6 +1,7 @@
 ﻿using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using System;
 using System.Runtime.InteropServices;
+using Windows.Graphics;
 
 namespace GetStoreApp.WindowsAPI.PInvoke.User32
 {
@@ -128,20 +129,23 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         public static extern bool DestroyWindow(IntPtr hwnd);
 
         /// <summary>
-        /// 返回指定窗口的每英寸点 (dpi) 值。
-        /// </summary>
-        /// <param name="hwnd">要获取相关信息的窗口。</param>
-        /// <returns>窗口的 DPI，无效 的 hwnd 值将导致返回值 0。</returns>
-        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "GetDpiForWindow", SetLastError = false)]
-        public static extern int GetDpiForWindow(IntPtr hwnd);
-
-        /// <summary>
         /// 检索鼠标光标的位置（以屏幕坐标为单位）。
         /// </summary>
         /// <param name="lpPoint">指向接收光标屏幕坐标的 POINT 结构的指针。</param>
         /// <returns>如果成功，则返回非零值，否则返回零。 </returns>
         [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "GetCursorPos", SetLastError = false)]
         public static extern bool GetCursorPos(out POINT lpPoint);
+
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "GetCursorPos", SetLastError = false)]
+        public static extern bool GetCursorPos(out PointInt32 lpPoint);
+
+        /// <summary>
+        /// 返回指定窗口的每英寸点 (dpi) 值。
+        /// </summary>
+        /// <param name="hwnd">要获取相关信息的窗口。</param>
+        /// <returns>窗口的 DPI，无效 的 hwnd 值将导致返回值 0。</returns>
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "GetDpiForWindow", SetLastError = false)]
+        public static extern int GetDpiForWindow(IntPtr hwnd);
 
         /// <summary>检索前台窗口的句柄， (用户当前正在使用的窗口) 。 系统向创建前台窗口的线程分配略高于其他线程的优先级。</summary>
         /// <returns>返回值是前台窗口的句柄。 在某些情况下，前台窗口可以为 NULL ，例如窗口丢失激活时。</returns>
@@ -167,6 +171,15 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "IsZoomed", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool IsZoomed(IntPtr hWnd);
+
+        /// <summary>
+        /// 确定窗口是否最小化
+        /// </summary>
+        /// <param name="hWnd">要测试的窗口的句柄</param>
+        /// <returns>如果窗口已最小化，返回值为非零；如果窗口未最小化，返回值为零。</returns>
+        [DllImport(nameof(User32), SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool IsIconic(IntPtr hWnd);
 
         /// <summary>
         /// 加载图标、游标、动画游标或位图。
@@ -228,6 +241,9 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SendMessage", SetLastError = false)]
         public static extern IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, int wParam, ref CopyDataStruct lParam);
 
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SendMessage", SetLastError = false)]
+        public static extern IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, int wParam, IntPtr lParam);
+
         /// <summary>
         /// 将创建指定窗口的线程引入前台并激活窗口。 键盘输入将定向到窗口，并为用户更改各种视觉提示。 系统向创建前台窗口的线程分配略高于其他线程的优先级。
         /// </summary>
@@ -244,7 +260,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="newProc">新事件处理函数（回调函数）</param>
         /// <returns>如果函数成功，则返回值是指定 32 位整数的上一个值。如果函数失败，则返回值为零。 </returns>
         [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SetWindowLong", SetLastError = false)]
-        public static extern IntPtr SetWindowLong(IntPtr hWnd, WindowLongIndexFlags nIndex, WinProc newProc);
+        public static extern IntPtr SetWindowLong(IntPtr hWnd, WindowLongIndexFlags nIndex, WindowProc newProc);
 
         /// <summary>
         /// 更改指定窗口的属性。 该函数还将指定偏移量处的64位（long类型）值设置到额外的窗口内存中。
@@ -254,7 +270,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="newProc">新事件处理函数（回调函数）</param>
         /// <returns>如果函数成功，则返回值是指定偏移量的上一个值。如果函数失败，则返回值为零。 </returns>
         [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SetWindowLongPtr", SetLastError = false)]
-        public static extern IntPtr SetWindowLongPtr(IntPtr hWnd, WindowLongIndexFlags nIndex, WinProc newProc);
+        public static extern IntPtr SetWindowLongPtr(IntPtr hWnd, WindowLongIndexFlags nIndex, WindowProc newProc);
 
         /// <summary>
         /// 更改子窗口、弹出窗口或顶级窗口的大小、位置和 Z 顺序。 这些窗口根据屏幕上的外观进行排序。 最上面的窗口接收最高排名，是 Z 顺序中的第一个窗口。

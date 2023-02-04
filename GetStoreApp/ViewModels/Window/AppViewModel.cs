@@ -10,10 +10,8 @@ using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
-using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
-using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.AppNotifications;
 using System;
@@ -32,7 +30,7 @@ namespace GetStoreApp.ViewModels.Window
         public IRelayCommand ShowOrHideWindowCommand => new RelayCommand(() =>
         {
             // 隐藏窗口
-            if (Program.ApplicationRoot.AppWindow.IsVisible)
+            if (WindowHelper.IsWindowVisible())
             {
                 WindowHelper.HideAppWindow();
             }
@@ -56,41 +54,7 @@ namespace GetStoreApp.ViewModels.Window
         });
 
         // 退出应用
-        public IRelayCommand ExitCommand => new RelayCommand(async () =>
-        {
-            // 下载队列存在任务时，弹出对话窗口确认是否要关闭窗口
-            if (DownloadSchedulerService.DownloadingList.Count > 0 || DownloadSchedulerService.WaitingList.Count > 0)
-            {
-                // 窗口置前端
-                WindowHelper.ShowAppWindow();
-
-                // 关闭窗口提示对话框是否已经处于打开状态，如果是，不再弹出
-                if (!Program.ApplicationRoot.IsDialogOpening)
-                {
-                    Program.ApplicationRoot.IsDialogOpening = true;
-
-                    ContentDialogResult result = await new ClosingWindowDialog().ShowAsync();
-
-                    if (result is ContentDialogResult.Primary)
-                    {
-                        await CloseAppAsync();
-                    }
-                    else if (result is ContentDialogResult.Secondary)
-                    {
-                        if (NavigationService.GetCurrentPageType() != typeof(DownloadPage))
-                        {
-                            NavigationService.NavigateTo(typeof(DownloadPage));
-                        }
-                    }
-
-                    Program.ApplicationRoot.IsDialogOpening = false;
-                }
-            }
-            else
-            {
-                await CloseAppAsync();
-            }
-        });
+        public IRelayCommand ExitCommand => new RelayCommand(Program.ApplicationRoot.MainWindow.Close);
 
         /// <summary>
         /// 处理应用程序未知异常处理
@@ -109,8 +73,6 @@ namespace GetStoreApp.ViewModels.Window
         /// </summary>
         public async Task ActivateAsync()
         {
-            Program.ApplicationRoot.AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
-
             bool? IsWindowMaximized = await ConfigService.ReadSettingAsync<bool?>(ConfigKey.IsWindowMaximizedKey);
             int? WindowWidth = await ConfigService.ReadSettingAsync<int?>(ConfigKey.WindowWidthKey);
             int? WindowHeight = await ConfigService.ReadSettingAsync<int?>(ConfigKey.WindowHeightKey);

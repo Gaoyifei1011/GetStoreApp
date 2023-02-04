@@ -13,6 +13,7 @@
     MinHeight="768"
     ActivatedCommand="{x:Bind ViewModel.ActivatedCommand}"
     ClosedCommand="{x:Bind ViewModel.ClosedCommand}"
+    ExtendsContentIntoTitleBar="True"
     mc:Ignorable="d">
 
     <WinUI:WASDKWindow.DataContext>
@@ -22,12 +23,15 @@
     <Grid Background="{x:Bind ViewModel.AppBackground, Mode=OneWay}">
 
         <wc:AppTitleBarControl
+            x:Name="AppTitlebar"
             Height="45"
             Margin="{x:Bind ViewModel.AppTitleBarMargin, Mode=OneWay}"
-            VerticalAlignment="Top" />
+            VerticalAlignment="Top"
+            Loaded="{x:Bind AppTitlebarLoaded}" />
 
         <NavigationView
             BackRequested="{x:Bind ViewModel.OnNavigationViewBackRequested}"
+            Canvas.ZIndex="0"
             CompactModeThresholdWidth="768"
             DisplayModeChanged="{x:Bind ViewModel.OnDisplayModeChanged}"
             ExpandedModeThresholdWidth="768"

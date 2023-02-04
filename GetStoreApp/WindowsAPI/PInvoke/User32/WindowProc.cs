@@ -10,5 +10,5 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
     /// <param name="Msg">消息id，即消息的种类</param>
     /// <param name="wParam">具体信息</param>
     /// <param name="lParam">具体信息</param>
-    public delegate IntPtr WinProc(IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam);
+    public delegate IntPtr WindowProc(IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam);
 }

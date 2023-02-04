@@ -140,7 +140,7 @@
                 Grid.Column="0"
                 HorizontalAlignment="Stretch"
                 Command="{x:Bind ViewModel.CopyFileInformationCommand}"
-                CommandParameter="{Binding ElementName=FileInformationRoot}"
+                CommandParameter="{x:Bind FileInformationRoot}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CopyFileInformation')}"
                 IsEnabled="{x:Bind ViewModel.FileCheckState, Mode=OneWay}"
                 Style="{ThemeResource AccentButtonStyle}">
@@ -156,7 +156,7 @@
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
                 Command="{x:Bind ViewModel.CloseWindowCommand}"
-                CommandParameter="{Binding ElementName=FileInformationRoot}"
+                CommandParameter="{x:Bind FileInformationRoot}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseWindow')}"
                 IsEnabled="{x:Bind ViewModel.FileCheckState, Mode=OneWay}">
 

@@ -122,7 +122,7 @@
                 Grid.Column="0"
                 HorizontalAlignment="Stretch"
                 Command="{x:Bind ViewModel.CopyExceptionCommand}"
-                CommandParameter="{Binding ElementName=CoreWebView2FailedRoot}"
+                CommandParameter="{x:Bind CoreWebView2FailedRoot}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CopyException')}"
                 Style="{ThemeResource AccentButtonStyle}">
 
@@ -138,7 +138,7 @@
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
                 Command="{x:Bind ViewModel.CloswWindowCommand}"
-                CommandParameter="{Binding ElementName=CoreWebView2FailedRoot}"
+                CommandParameter="{x:Bind CoreWebView2FailedRoot}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseWindow')}">
 
                 <ToolTipService.ToolTip>

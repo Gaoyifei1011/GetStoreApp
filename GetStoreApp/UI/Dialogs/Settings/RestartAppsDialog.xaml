@@ -45,7 +45,7 @@
                 Grid.Column="0"
                 HorizontalAlignment="Stretch"
                 Command="{x:Bind ViewModel.RestartAppsCommand}"
-                CommandParameter="{Binding ElementName=RestartAppsRoot}"
+                CommandParameter="{x:Bind RestartAppsRoot}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Dialog/OK')}"
                 Style="{ThemeResource AccentButtonStyle}">
 
@@ -61,7 +61,7 @@
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
                 Command="{x:Bind ViewModel.CloswWindowCommand}"
-                CommandParameter="{Binding ElementName=RestartAppsRoot}"
+                CommandParameter="{x:Bind RestartAppsRoot}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Dialog/Cancel')}">
 
                 <ToolTipService.ToolTip>

@@ -85,7 +85,7 @@
                 Grid.Column="0"
                 HorizontalAlignment="Stretch"
                 Command="{x:Bind ViewModel.RestoreDefualtCommand}"
-                CommandParameter="{Binding ElementName=CoreWebView2FailedRoot}"
+                CommandParameter="{x:Bind ExperimentalConfigRoot}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Dialog/RestoreDefualt')}"
                 Style="{ThemeResource AccentButtonStyle}">
 
@@ -101,7 +101,7 @@
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
                 Command="{x:Bind ViewModel.CloswWindowCommand}"
-                CommandParameter="{Binding ElementName=ExperimentalConfigRoot}"
+                CommandParameter="{x:Bind ExperimentalConfigRoot}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseWindow')}">
 
                 <ToolTipService.ToolTip>

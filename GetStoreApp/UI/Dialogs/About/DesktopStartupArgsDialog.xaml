@@ -247,7 +247,7 @@
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
                 Command="{x:Bind ViewModel.CloswWindowCommand}"
-                CommandParameter="{Binding ElementName=DesktopStartupArgsRoot}"
+                CommandParameter="{x:Bind DesktopStartupArgsRoot}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseWindow')}">
 
                 <ToolTipService.ToolTip>

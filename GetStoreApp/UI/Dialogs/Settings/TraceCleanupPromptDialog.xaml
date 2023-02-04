@@ -112,7 +112,7 @@
                     Grid.Column="1"
                     HorizontalAlignment="Stretch"
                     Command="{x:Bind ViewModel.CloseWindowCommand}"
-                    CommandParameter="{Binding ElementName=TraceCleanupRoot}"
+                    CommandParameter="{x:Bind TraceCleanupRoot}"
                     Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseWindow')}">
 
                     <ToolTipService.ToolTip>

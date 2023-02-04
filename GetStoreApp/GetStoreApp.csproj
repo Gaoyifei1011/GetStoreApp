@@ -14,7 +14,7 @@
     <EnableMsixTooling>false</EnableMsixTooling>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <FileAlignment>512</FileAlignment>
-    <FileVersion>1.1.131.0</FileVersion>
+    <FileVersion>1.1.204.0</FileVersion>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
     <IncludeSymbols>False</IncludeSymbols>
@@ -28,7 +28,7 @@
     <PublishProtocol>FileSystem</PublishProtocol>
     <PublishReadyToRun>True</PublishReadyToRun>
     <!--调试时需要设置该选项为false-->
-    <PublishSingleFile>false</PublishSingleFile>
+    <PublishSingleFile>true</PublishSingleFile>
     <PublishTrimmed>true</PublishTrimmed>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <RootNamespace>GetStoreApp</RootNamespace>
@@ -40,7 +40,7 @@
     <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <TrimMode>partial</TrimMode>
-    <Version>1.1.131.0</Version>
+    <Version>1.1.204.0</Version>
     <UseWindowsForms>False</UseWindowsForms>
     <UseWinUI>true</UseWinUI>
     <UseWPF>False</UseWPF>
@@ -171,10 +171,12 @@
     <None Remove="Styles\InfoBar.xaml" />
     <None Remove="Styles\ListView.xaml" />
     <None Remove="Styles\MenuFlyout.xaml" />
+    <None Remove="Styles\MinMaxCloseControl.xaml" />
     <None Remove="Styles\NavigationView.xaml" />
     <None Remove="Styles\Pivot.xaml" />
     <None Remove="Styles\TeachingTip.xaml" />
     <None Remove="Styles\TextBlock.xaml" />
+    <None Remove="Styles\WindowChrome.xaml" />
     
     <None Remove="UI\Controls\About\HeaderControl.xaml" />
     <None Remove="UI\Controls\About\InstructionsControl.xaml" />
@@ -564,6 +566,18 @@
     </Page>
 
     <TrimmableAssembly Include="Microsoft.Windows.Widgets.Projection" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Page Update="Styles\MinMaxCloseControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Page Update="Styles\WindowChrome.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>
   

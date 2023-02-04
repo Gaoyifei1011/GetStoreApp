@@ -1,17 +1,8 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Extensions.Messaging;
-using GetStoreApp.Helpers.Window;
-using GetStoreApp.Services.Root;
-using GetStoreApp.UI.Dialogs.Common;
-using GetStoreApp.ViewModels.Base;
+﻿using GetStoreApp.ViewModels.Base;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
-using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using System;
-using System.Runtime.InteropServices;
 using System.Windows.Input;
-using Windows.System;
-using WinRT.Interop;
 
 namespace GetStoreApp.Views.Window
 {
@@ -20,9 +11,6 @@ namespace GetStoreApp.Views.Window
     /// </summary>
     public class WASDKWindow : Microsoft.UI.Xaml.Window
     {
-        private WinProc newWndProc = null;
-        private IntPtr oldWndProc = IntPtr.Zero;
-
         /// <summary>
         /// 窗口标题
         /// </summary>
@@ -98,15 +86,6 @@ namespace GetStoreApp.Views.Window
         {
             Activated += OnActivated;
             Closed += OnClosed;
-
-            // 获取窗口的句柄
-            Hwnd = WindowNative.GetWindowHandle(this);
-            if (Hwnd == IntPtr.Zero)
-            {
-                throw new NullReferenceException(ResourceService.GetLocalized("Resources/WindowHandleInitializeFailed"));
-            }
-            newWndProc = new WinProc(NewWindowProc);
-            oldWndProc = SetWindowLongPtr(Hwnd, WindowLongIndexFlags.GWL_WNDPROC, newWndProc);
         }
 
         ~WASDKWindow()
@@ -127,7 +106,7 @@ namespace GetStoreApp.Views.Window
         /// <summary>
         /// 更改指定窗口的属性
         /// </summary>
-        private IntPtr SetWindowLongPtr(IntPtr hWnd, WindowLongIndexFlags nIndex, WinProc newProc)
+        public IntPtr SetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex, WindowProc newProc)
         {
             if (IntPtr.Size == 8)
             {
@@ -137,86 +116,6 @@ namespace GetStoreApp.Views.Window
             {
                 return User32Library.SetWindowLong(hWnd, nIndex, newProc);
             }
-        }
-
-        /// <summary>
-        /// 窗口消息处理
-        /// </summary>
-        private IntPtr NewWindowProc(IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam)
-        {
-            switch (Msg)
-            {
-                // 系统设置发生更改时的消息
-                case WindowMessage.WM_SETTINGCHANGE:
-                    {
-                        Messenger.Default.Send(true, MessageToken.SystemSettingsChanged);
-                        break;
-                    }
-                case WindowMessage.WM_GETMINMAXINFO:
-                    {
-                        MINMAXINFO minMaxInfo = Marshal.PtrToStructure<MINMAXINFO>(lParam);
-                        if (MinWidth >= 0)
-                        {
-                            minMaxInfo.ptMinTrackSize.x = ConvertEpxToPixel(hWnd, MinWidth);
-                        }
-                        if (MinHeight >= 0)
-                        {
-                            minMaxInfo.ptMinTrackSize.y = ConvertEpxToPixel(hWnd, MinHeight);
-                        }
-                        if (MaxWidth > 0)
-                        {
-                            minMaxInfo.ptMaxTrackSize.x = ConvertEpxToPixel(hWnd, MaxWidth);
-                        }
-                        if (MaxHeight > 0)
-                        {
-                            minMaxInfo.ptMaxTrackSize.y = ConvertEpxToPixel(hWnd, MaxHeight);
-                        }
-                        Marshal.StructureToPtr(minMaxInfo, lParam, true);
-                        break;
-                    }
-                // 窗口接受其他数据消息
-                case WindowMessage.WM_COPYDATA:
-                    {
-                        CopyDataStruct copyDataStruct = (CopyDataStruct)Marshal.PtrToStructure(lParam, typeof(CopyDataStruct));
-
-                        // 没有任何命令参数，正常启动，应用可能被重复启动
-                        if (copyDataStruct.dwData is 0)
-                        {
-                            WindowHelper.ShowAppWindow();
-
-                            if (!Program.ApplicationRoot.IsDialogOpening)
-                            {
-                                Program.ApplicationRoot.IsDialogOpening = true;
-                                DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, async () =>
-                                {
-                                    await new AppRunningDialog().ShowAsync();
-                                    Program.ApplicationRoot.IsDialogOpening = false;
-                                });
-                            }
-                        }
-                        // 获取应用的命令参数
-                        else
-                        {
-                            string[] startupArgs = copyDataStruct.lpData.Split(' ');
-                            Messenger.Default.Send(startupArgs, MessageToken.Command);
-                        }
-                        break;
-                    }
-            }
-            return User32Library.CallWindowProc(oldWndProc, hWnd, Msg, wParam, lParam);
-        }
-
-        public static int ConvertEpxToPixel(IntPtr hwnd, int effectivePixels)
-        {
-            float scalingFactor = GetScalingFactor(hwnd);
-            return Convert.ToInt32(effectivePixels * scalingFactor);
-        }
-
-        public static float GetScalingFactor(IntPtr hwnd)
-        {
-            int dpi = User32Library.GetDpiForWindow(hwnd);
-            float scalingFactor = (float)dpi / 96;
-            return scalingFactor;
         }
     }
 }

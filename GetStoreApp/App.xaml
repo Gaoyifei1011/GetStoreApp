@@ -23,10 +23,12 @@
                 <ResourceDictionary Source="ms-appx:///Styles/InfoBar.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/ListView.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/MenuFlyout.xaml" />
+                <ResourceDictionary Source="ms-appx:///Styles/MinMaxCloseControl.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/NavigationView.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Pivot.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/TeachingTip.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/TextBlock.xaml" />
+                <ResourceDictionary Source="ms-appx:///Styles/WindowChrome.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

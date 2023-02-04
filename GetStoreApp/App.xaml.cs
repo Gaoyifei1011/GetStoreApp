@@ -58,6 +58,7 @@ namespace GetStoreApp
         private void InitializeMainWindow()
         {
             MainWindow = new MainWindow();
+            MainWindow.InitializeWindowProc();
         }
 
         /// <summary>

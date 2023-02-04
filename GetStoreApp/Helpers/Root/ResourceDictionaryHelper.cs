@@ -8,39 +8,43 @@ namespace GetStoreApp.Helpers.Root
     /// </summary>
     public static class ResourceDictionaryHelper
     {
-        public static ResourceDictionary ButtonResourceDict { get; set; }
+        public static ResourceDictionary ButtonResourceDict { get; private set; }
 
-        public static ResourceDictionary CheckboxResourceDict { get; set; }
+        public static ResourceDictionary CheckboxResourceDict { get; private set; }
 
-        public static ResourceDictionary CommandBarResourceDict { get; set; }
+        public static ResourceDictionary CommandBarResourceDict { get; private set; }
 
-        public static ResourceDictionary ContentDialogResourceDict { get; set; }
+        public static ResourceDictionary ContentDialogResourceDict { get; private set; }
 
-        public static ResourceDictionary DropDownButtonResourceDict { get; set; }
+        public static ResourceDictionary DropDownButtonResourceDict { get; private set; }
 
-        public static ResourceDictionary ExpanderResourceDict { get; set; }
+        public static ResourceDictionary ExpanderResourceDict { get; private set; }
 
-        public static ResourceDictionary FontIconResourceDict { get; set; }
+        public static ResourceDictionary FontIconResourceDict { get; private set; }
 
-        public static ResourceDictionary GridResourceDict { get; set; }
+        public static ResourceDictionary GridResourceDict { get; private set; }
 
-        public static ResourceDictionary GridViewResourceDict { get; set; }
+        public static ResourceDictionary GridViewResourceDict { get; private set; }
 
-        public static ResourceDictionary HyperlinkButtonResourceDict { get; set; }
+        public static ResourceDictionary HyperlinkButtonResourceDict { get; private set; }
 
-        public static ResourceDictionary InfoBarResourceDict { get; set; }
+        public static ResourceDictionary InfoBarResourceDict { get; private set; }
 
-        public static ResourceDictionary ListViewResourceDict { get; set; }
+        public static ResourceDictionary ListViewResourceDict { get; private set; }
 
-        public static ResourceDictionary MenuFlyoutResourceDict { get; set; }
+        public static ResourceDictionary MenuFlyoutResourceDict { get; private set; }
 
-        public static ResourceDictionary NavigationViewResourceDict { get; set; }
+        public static ResourceDictionary MinMaxCloseControlDict { get; private set; }
 
-        public static ResourceDictionary PivotResourceDict { get; set; }
+        public static ResourceDictionary NavigationViewResourceDict { get; private set; }
 
-        public static ResourceDictionary TeachingTipResourceDict { get; set; }
+        public static ResourceDictionary PivotResourceDict { get; private set; }
 
-        public static ResourceDictionary TextBlockResourceDict { get; set; }
+        public static ResourceDictionary TeachingTipResourceDict { get; private set; }
+
+        public static ResourceDictionary TextBlockResourceDict { get; private set; }
+
+        public static ResourceDictionary WindowChromeDict { get; private set; }
 
         /// <summary>
         /// 初始化资源字典信息
@@ -60,10 +64,12 @@ namespace GetStoreApp.Helpers.Root
             InfoBarResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[12];
             ListViewResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[13];
             MenuFlyoutResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[14];
-            NavigationViewResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[15];
-            PivotResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[16];
-            TeachingTipResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[17];
-            TextBlockResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[18];
+            MinMaxCloseControlDict = Program.ApplicationRoot.Resources.MergedDictionaries[15];
+            NavigationViewResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[16];
+            PivotResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[17];
+            TeachingTipResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[18];
+            TextBlockResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[19];
+            WindowChromeDict = Program.ApplicationRoot.Resources.MergedDictionaries[20];
 
             await Task.CompletedTask;
         }
