@@ -125,12 +125,12 @@ namespace GetStoreApp.ViewModels.Window
                 // 下载队列存在任务时，弹出对话窗口确认是否要关闭窗口
                 if (DownloadSchedulerService.DownloadingList.Count > 0 || DownloadSchedulerService.WaitingList.Count > 0)
                 {
-                    if(!WindowHelper.IsWindowVisible())
+                    if(!WindowHelper.IsWindowVisible)
                     {
                         WindowHelper.ShowAppWindow();
                     }
 
-                    if(!WindowHelper.IsWindowMinimized())
+                    if(!WindowHelper.IsWindowMinimized)
                     {
                         WindowHelper.RestoreAppWindow();
                     }

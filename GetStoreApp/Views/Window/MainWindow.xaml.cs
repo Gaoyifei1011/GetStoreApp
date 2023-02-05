@@ -29,7 +29,7 @@ namespace GetStoreApp.Views.Window
 
         public void AppTitlebarLoaded(object sender , RoutedEventArgs args)
         {
-            AppTitlebar.SetTitlebarState(WindowHelper.IsWindowMaximized());
+            AppTitlebar.SetTitlebarState(WindowHelper.IsWindowMaximized);
         }
 
         /// <summary>
@@ -56,9 +56,9 @@ namespace GetStoreApp.Views.Window
 
         public void InitializeWindowProc()
         {
-            IntPtr HWND = GetMainWindowHandle();
+            IntPtr MainWindowHandle = GetMainWindowHandle();
             newWndProc = new WindowProc(NewWindowProc);
-            oldWndProc = SetWindowLongAuto(HWND, WindowLongIndexFlags.GWL_WNDPROC, newWndProc);
+            oldWndProc = SetWindowLongAuto(MainWindowHandle, WindowLongIndexFlags.GWL_WNDPROC, newWndProc);
         }
 
         /// <summary>
@@ -80,19 +80,19 @@ namespace GetStoreApp.Views.Window
                         MINMAXINFO minMaxInfo = Marshal.PtrToStructure<MINMAXINFO>(lParam);
                         if (MinWidth >= 0)
                         {
-                            minMaxInfo.ptMinTrackSize.x = ConvertEpxToPixel(hWnd, MinWidth);
+                            minMaxInfo.ptMinTrackSize.X = ConvertEpxToPixel(hWnd, MinWidth);
                         }
                         if (MinHeight >= 0)
                         {
-                            minMaxInfo.ptMinTrackSize.y = ConvertEpxToPixel(hWnd, MinHeight);
+                            minMaxInfo.ptMinTrackSize.Y = ConvertEpxToPixel(hWnd, MinHeight);
                         }
                         if (MaxWidth > 0)
                         {
-                            minMaxInfo.ptMaxTrackSize.x = ConvertEpxToPixel(hWnd, MaxWidth);
+                            minMaxInfo.ptMaxTrackSize.X = ConvertEpxToPixel(hWnd, MaxWidth);
                         }
                         if (MaxHeight > 0)
                         {
-                            minMaxInfo.ptMaxTrackSize.y = ConvertEpxToPixel(hWnd, MaxHeight);
+                            minMaxInfo.ptMaxTrackSize.Y = ConvertEpxToPixel(hWnd, MaxHeight);
                         }
                         Marshal.StructureToPtr(minMaxInfo, lParam, true);
                         break;

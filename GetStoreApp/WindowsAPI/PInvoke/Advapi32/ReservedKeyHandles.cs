@@ -2,6 +2,9 @@
 
 namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
 {
+    /// <summary>
+    /// 注册表保留键值的句柄
+    /// </summary>
     public class ReservedKeyHandles
     {
         /// <summary>

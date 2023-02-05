@@ -10,7 +10,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
         /// <summary>
         /// 关闭指定注册表项的句柄。
         /// </summary>
-        /// <param name="hKey">要关闭的打开键的句柄。 该句柄必须由 <see cref="RegOpenKeyEx(nint, string, int, int, ref nint)"> 函数打开。</param>
+        /// <param name="hKey">要关闭的打开键的句柄。 该句柄必须由 <see cref="RegOpenKeyEx"> 函数打开。</param>
         /// <returns>如果函数成功，则返回值为 ERROR_SUCCESS。如果函数失败，则返回值为 Winerror.h 中定义的非零错误代码。</returns>
         [DllImport(Advapi32, CharSet = CharSet.Ansi, EntryPoint = "RegCloseKey", SetLastError = true)]
         public static extern int RegCloseKey(IntPtr hKey);

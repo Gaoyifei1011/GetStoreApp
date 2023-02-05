@@ -8,7 +8,6 @@
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:settings="using:GetStoreApp.Models.Dialogs.CommonDialogs.Settings"
     x:Name="TraceCleanupRoot"
-    Loaded="{x:Bind ViewModel.OnLoaded}"
     RequestedTheme="{x:Bind DialogTheme}"
     Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">

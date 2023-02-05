@@ -2,6 +2,7 @@
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;
 using System.Runtime.InteropServices;
+using Windows.Graphics;
 
 namespace GetStoreApp.Extensions.SystemTray
 {
@@ -195,10 +196,10 @@ namespace GetStoreApp.Extensions.SystemTray
         /// </summary>
         public void ShowContextMenu()
         {
-            POINT CurrentPoint;
+            PointInt32 CurrentPoint;
             User32Library.GetCursorPos(out CurrentPoint);
             User32Library.SetForegroundWindow(messageSink.MessageWindowHandle);
-            int menuid = User32Library.TrackPopupMenu(TrayMenu, TrackPopupMenuFlags.TPM_LEFTALIGN | TrackPopupMenuFlags.TPM_RIGHTBUTTON | TrackPopupMenuFlags.TPM_RETURNCMD | TrackPopupMenuFlags.TPM_NONOTIFY, CurrentPoint.x, CurrentPoint.y, 0, messageSink.MessageWindowHandle, IntPtr.Zero);
+            int menuid = User32Library.TrackPopupMenu(TrayMenu, TrackPopupMenuFlags.TPM_LEFTALIGN | TrackPopupMenuFlags.TPM_RIGHTBUTTON | TrackPopupMenuFlags.TPM_RETURNCMD | TrackPopupMenuFlags.TPM_NONOTIFY, CurrentPoint.X, CurrentPoint.Y, 0, messageSink.MessageWindowHandle, IntPtr.Zero);
             MenuCommand.Invoke(menuid);
         }
 

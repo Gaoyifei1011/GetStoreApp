@@ -1,7 +1,5 @@
-﻿using Microsoft.UI.Input;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Input;
 using Windows.Foundation;
 
 namespace GetStoreApp.UI.Controls.Window
@@ -40,34 +38,7 @@ namespace GetStoreApp.UI.Controls.Window
         /// </summary>
         public void ShowTitlebarMenu()
         {
-            TitlebarMenuFlyout.ShowAt(null, new Point(0, 30));
-        }
-
-        private void OnPointerPressed(object sender, PointerRoutedEventArgs args)
-        {
-            PointerPointProperties properties = args.GetCurrentPoint((Grid)sender).Properties;
-
-            if (properties.IsLeftButtonPressed)
-            {
-                ((Grid)sender).CapturePointer(args.Pointer);
-            }
-            else if (properties.IsRightButtonPressed)
-            {
-                //args.Handled = true;
-                //((Grid)sender).CapturePointer(args.Pointer);
-                //TitlebarMenuFlyout.ShowAt(null, new Point(Program.ApplicationRoot.MainWindow.Bounds.X, Program.ApplicationRoot.MainWindow.Bounds.Y));
-            }
-        }
-
-        private void OnPointerReleased(object sender, PointerRoutedEventArgs args)
-        {
-            ((Grid)sender).ReleasePointerCaptures();
-            //isMoving = false;
-        }
-
-        private void Grid_RightTapped(object sender, RightTappedRoutedEventArgs args)
-        {
-            TitlebarMenuFlyout.ShowAt(null, new Point(0, 30));
+            TitlebarMenuFlyout.ShowAt(null, new Point(0, 45));
         }
     }
 }

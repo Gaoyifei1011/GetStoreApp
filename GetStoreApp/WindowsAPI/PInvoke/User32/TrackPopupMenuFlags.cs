@@ -2,6 +2,9 @@
 
 namespace GetStoreApp.WindowsAPI.PInvoke.User32
 {
+    /// <summary>
+    /// 弹出快捷菜单时指定的选项
+    /// </summary>
     [Flags]
     public enum TrackPopupMenuFlags : uint
     {

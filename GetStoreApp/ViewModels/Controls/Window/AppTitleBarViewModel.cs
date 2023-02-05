@@ -56,7 +56,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
         // 窗口还原
         public IRelayCommand RestoreCommand => new RelayCommand(() =>
         {
-            if (WindowHelper.IsWindowMaximized())
+            if (WindowHelper.IsWindowMaximized)
             {
                 WindowHelper.RestoreAppWindow();
             }
@@ -91,7 +91,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
         // 窗口最大化
         public IRelayCommand MaximizeCommand => new RelayCommand(() =>
         {
-            if (WindowHelper.IsWindowMaximized())
+            if (WindowHelper.IsWindowMaximized)
             {
                 WindowHelper.RestoreAppWindow();
             }
@@ -109,7 +109,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
         /// </summary>
         public void OnDoubleTapped(object sender, DoubleTappedRoutedEventArgs args)
         {
-            if (WindowHelper.IsWindowMaximized())
+            if (WindowHelper.IsWindowMaximized)
             {
                 WindowHelper.RestoreAppWindow();
             }
@@ -133,7 +133,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
 
                 if (isWindowMoving)
                 {
-                    if (!WindowHelper.IsWindowMaximized())
+                    if (!WindowHelper.IsWindowMaximized)
                     {
                         Program.ApplicationRoot.AppWindow.Move(new PointInt32(nXWindow + (pt.X - nX), nYWindow + (pt.Y - nY)));
                     }
@@ -159,7 +159,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
                 User32Library.GetCursorPos(out pt);
                 nX = pt.X;
                 nY = pt.Y;
-                if (!WindowHelper.IsWindowMaximized())
+                if (!WindowHelper.IsWindowMaximized)
                 {
                     isWindowMoving = true;
                 }

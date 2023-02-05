@@ -15,6 +15,7 @@ namespace GetStoreApp.Helpers.Root
         public static ElementTheme GetRegistryAppTheme()
         {
             IntPtr hKey = IntPtr.Zero;
+            ElementTheme AppsUseLightTheme = ElementTheme.Default;
 
             if (Advapi32Library.RegOpenKeyEx(ReservedKeyHandles.HKEY_CURRENT_USER, @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", 0, RegistryAccessRights.KEY_READ, ref hKey) == 0)
             {
@@ -23,10 +24,11 @@ namespace GetStoreApp.Helpers.Root
 
                 if (Advapi32Library.RegQueryValueEx(hKey, "AppsUseLightTheme", IntPtr.Zero, IntPtr.Zero, data, ref dataSize) == 0)
                 {
-                    return data[0] is 0 ? ElementTheme.Dark : ElementTheme.Light;
+                    AppsUseLightTheme = data[0] is 0 ? ElementTheme.Dark : ElementTheme.Light;
                 }
             }
-            return default;
+            Advapi32Library.RegCloseKey(hKey);
+            return AppsUseLightTheme;
         }
     }
 }

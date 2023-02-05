@@ -30,7 +30,7 @@ namespace GetStoreApp.ViewModels.Window
         public IRelayCommand ShowOrHideWindowCommand => new RelayCommand(() =>
         {
             // 隐藏窗口
-            if (WindowHelper.IsWindowVisible())
+            if (WindowHelper.IsWindowVisible)
             {
                 WindowHelper.HideAppWindow();
             }
@@ -81,7 +81,7 @@ namespace GetStoreApp.ViewModels.Window
 
             if (IsWindowMaximized.HasValue && IsWindowMaximized.Value == true)
             {
-                User32Library.ShowWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), WindowShowStyle.SW_MAXIMIZE);
+                WindowHelper.MaximizeAppWindow();
             }
             else
             {
@@ -178,7 +178,7 @@ namespace GetStoreApp.ViewModels.Window
         /// </summary>
         private async Task SaveWindowInformationAsync()
         {
-            await ConfigService.SaveSettingAsync(ConfigKey.IsWindowMaximizedKey, WindowHelper.IsWindowMaximized());
+            await ConfigService.SaveSettingAsync(ConfigKey.IsWindowMaximizedKey, WindowHelper.IsWindowMaximized);
             await ConfigService.SaveSettingAsync(ConfigKey.WindowWidthKey, Program.ApplicationRoot.AppWindow.Size.Width);
             await ConfigService.SaveSettingAsync(ConfigKey.WindowHeightKey, Program.ApplicationRoot.AppWindow.Size.Height);
             await ConfigService.SaveSettingAsync(ConfigKey.WindowPositionXAxisKey, Program.ApplicationRoot.AppWindow.Position.X);

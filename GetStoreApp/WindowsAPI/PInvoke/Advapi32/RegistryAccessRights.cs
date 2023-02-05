@@ -1,5 +1,8 @@
 ﻿namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
 {
+    /// <summary>
+    /// 注册表访问权限枚举值
+    /// </summary>
     public enum RegistryAccessRights : uint
     {
         /// <summary>查询注册表项的值所必需的。</summary>

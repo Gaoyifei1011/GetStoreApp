@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Extensions.SystemTray;
 using GetStoreApp.Helpers.Root;
+using GetStoreApp.Helpers.Window;
 using GetStoreApp.Services.Root;
 using GetStoreApp.ViewModels.Window;
 using GetStoreApp.Views.Window;
@@ -68,6 +69,7 @@ namespace GetStoreApp
         {
             WindowId windowId = Win32Interop.GetWindowIdFromWindow(MainWindow.GetMainWindowHandle());
             AppWindow = AppWindow.GetFromWindowId(windowId);
+            WindowHelper.InitializePresenter(AppWindow);
         }
 
         /// <summary>

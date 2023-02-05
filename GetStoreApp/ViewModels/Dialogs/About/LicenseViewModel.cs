@@ -1,9 +1,6 @@
 ﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.ViewModels.Base;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Shapes;
 using System;
 using Windows.Storage;
 using Windows.Storage.Streams;
@@ -33,41 +30,12 @@ namespace GetStoreApp.ViewModels.Dialogs.About
         /// </summary>
         public async void OnLoaded(object sender, RoutedEventArgs args)
         {
-            ContentDialog dialog = sender as ContentDialog;
-
-            if (dialog is not null)
-            {
-                DependencyObject parent = VisualTreeHelper.GetParent(dialog);
-
-                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
-                {
-                    DependencyObject current = VisualTreeHelper.GetChild(parent, i);
-                    if (current is Rectangle { Name: "SmokeLayerBackground" } background)
-                    {
-                        background.Margin = new Thickness(0);
-                        background.RegisterPropertyChangedCallback(FrameworkElement.MarginProperty, OnMarginChanged);
-                        break;
-                    }
-                }
-            }
-
             StorageFile LicenseFile = await StorageFile.GetFileFromPathAsync(string.Format(@"{0}\{1}", InfoHelper.GetAppInstalledLocation(), @"Assets\LICENSE"));
 
             IBuffer buffer = await FileIO.ReadBufferAsync(LicenseFile);
             DataReader reader = DataReader.FromBuffer(buffer);
             reader.UnicodeEncoding = UnicodeEncoding.Utf8;
             LicenseText = reader.ReadString(buffer.Length);
-        }
-
-        /// <summary>
-        /// 重置内容对话框烟雾背景距离顶栏的间隔
-        /// </summary>
-        private void OnMarginChanged(DependencyObject sender, DependencyProperty property)
-        {
-            if (property == FrameworkElement.MarginProperty)
-            {
-                sender.ClearValue(property);
-            }
         }
     }
 }

@@ -134,9 +134,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="lpPoint">指向接收光标屏幕坐标的 POINT 结构的指针。</param>
         /// <returns>如果成功，则返回非零值，否则返回零。 </returns>
         [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "GetCursorPos", SetLastError = false)]
-        public static extern bool GetCursorPos(out POINT lpPoint);
-
-        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "GetCursorPos", SetLastError = false)]
         public static extern bool GetCursorPos(out PointInt32 lpPoint);
 
         /// <summary>
@@ -162,24 +159,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <returns>如果该函数成功，则返回值为非零值。 如果函数失败，则返回值为零。</returns>
         [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "InsertMenuItem", SetLastError = false)]
         public static extern bool InsertMenuItem(IntPtr hMenu, int uItem, bool fByPosition, [In] ref MENUITEMINFO lpmii);
-
-        /// <summary>
-        /// 确定窗口是否最大化
-        /// </summary>
-        /// <param name="hWnd">要测试的窗口的句柄</param>
-        /// <returns>如果缩放窗口，则返回值为非零。如果未缩放窗口，则返回值为零。</returns>
-        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "IsZoomed", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool IsZoomed(IntPtr hWnd);
-
-        /// <summary>
-        /// 确定窗口是否最小化
-        /// </summary>
-        /// <param name="hWnd">要测试的窗口的句柄</param>
-        /// <returns>如果窗口已最小化，返回值为非零；如果窗口未最小化，返回值为零。</returns>
-        [DllImport(nameof(User32), SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool IsIconic(IntPtr hWnd);
 
         /// <summary>
         /// 加载图标、游标、动画游标或位图。
@@ -293,19 +272,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
             int cx,
             int cy,
             SetWindowPosFlags uFlags);
-
-        /// <summary>
-        /// 设置指定窗口的显示状态。
-        /// </summary>
-        /// <param name="hWnd">窗口的句柄。</param>
-        /// <param name="nCmdShow">
-        /// 控制窗口的显示方式。 如果启动应用程序的程序提供 STARTUPINFO 结构，则首次调用 ShowWindow 时忽略此参数。
-        /// 否则，首次调用 ShowWindow 时，该值应该是 WinMain 函数在其 nCmdShow 参数中获取的值。
-        /// </param>
-        /// <returns>如果窗口以前可见，则返回值为非零。如果窗口之前已隐藏，则返回值为零。</returns>
-        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "ShowWindow", SetLastError = false)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool ShowWindow(IntPtr hWnd, WindowShowStyle nCmdShow);
 
         /// <summary>
         /// 在指定位置显示快捷菜单，并跟踪快捷菜单上的项选择。 快捷菜单可在屏幕上的任意位置显示。
