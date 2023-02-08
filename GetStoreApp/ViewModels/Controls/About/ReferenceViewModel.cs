@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using Windows.Foundation.Collections;
 
 namespace GetStoreApp.ViewModels.Controls.About
 {
@@ -8,7 +8,7 @@ namespace GetStoreApp.ViewModels.Controls.About
     public sealed class ReferenceViewModel
     {
         //项目引用信息
-        public Dictionary<string, string> ReferenceDict { get; } = new Dictionary<string, string>
+        public StringMap ReferenceDict { get; } = new StringMap
         {
             {"Aira2","https://aria2.github.io" },
             {"Microsoft.Data.Sqlite.Core","https://docs.microsoft.com/dotnet/standard/data/sqlite" },

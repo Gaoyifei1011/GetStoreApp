@@ -411,6 +411,25 @@ namespace GetStoreApp.ViewModels.Controls.Home
             }
         });
 
+        // 右键单击打开链接
+        public IRelayCommand OpenLinkCommand => new RelayCommand<ResultModel>(async (resultItem) =>
+        {
+            // 查看是否开启了网络监控服务
+            if (NetWorkMonitorService.NetWorkMonitorValue)
+            {
+                NetWorkStatus NetStatus = NetWorkHelper.GetNetWorkStatus();
+
+                // 网络处于未连接状态，不再进行下载，显示通知
+                if (NetStatus is NetWorkStatus.None || NetStatus is NetWorkStatus.Unknown)
+                {
+                    new NetWorkErrorNotification().Show();
+                    return;
+                }
+            }
+
+            await Launcher.LaunchUriAsync(new Uri(resultItem.FileLink));
+        });
+
         // 复制指定项目的链接
         public IRelayCommand CopyLinkCommand => new RelayCommand<string>((fileLink) =>
         {

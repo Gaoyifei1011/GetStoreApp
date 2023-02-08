@@ -3,12 +3,12 @@ using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.AppNotifications;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.DataTransfer.ShareTarget;
+using Windows.Foundation.Collections;
 
 namespace GetStoreApp.Services.Root
 {
@@ -22,7 +22,7 @@ namespace GetStoreApp.Services.Root
         private static int NeedToSendMesage;
 
         // 应用启动时使用的参数
-        public static Dictionary<string, object> LaunchArgs { get; set; } = new Dictionary<string, object>
+        public static ValueSet LaunchArgs { get; set; } = new ValueSet
         {
             {"TypeName",-1 },
             {"ChannelName",-1 },

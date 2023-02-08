@@ -4,8 +4,8 @@ using GetStoreApp.Services.Shell;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using Windows.Foundation.Collections;
 
 namespace GetStoreApp.Services.Root
 {
@@ -28,7 +28,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 应用启动时使用的参数
         /// </summary>
-        public static Dictionary<string, object> LaunchArgs { get; set; } = new Dictionary<string, object>
+        public static ValueSet LaunchArgs { get; set; } = new ValueSet
         {
             {"TypeName",-1 },
             {"ChannelName",-1 },

@@ -150,6 +150,9 @@
   <data name="NavigationFailed" xml:space="preserve">
     <value>页面{0}导航失败</value>
   </data>
+  <data name="ParentWindow" xml:space="preserve">
+    <value>显示此窗口需要一个已经初始化的父类窗口，请检查父类窗口的初始化状态</value>
+  </data>
   <data name="Restore" xml:space="preserve">
     <value>还原</value>
   </data>

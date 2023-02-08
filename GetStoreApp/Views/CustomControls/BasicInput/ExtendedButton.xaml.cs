@@ -1,6 +1,7 @@
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 
 namespace GetStoreApp.Views.CustomControls.BasicInput
 {
@@ -12,12 +13,6 @@ namespace GetStoreApp.Views.CustomControls.BasicInput
         public ExtendedButton()
         {
             InitializeComponent();
-            Loaded += OnLoaded;
-        }
-
-        ~ExtendedButton()
-        {
-            Loaded -= OnLoaded;
         }
 
         public InputSystemCursorShape Cursor
@@ -30,9 +25,21 @@ namespace GetStoreApp.Views.CustomControls.BasicInput
         public static readonly DependencyProperty CursorProperty =
             DependencyProperty.Register("Cursor", typeof(InputSystemCursorShape), typeof(ExtendedDropDownButton), new PropertyMetadata(InputSystemCursorShape.Arrow));
 
-        private void OnLoaded(object sender, RoutedEventArgs args)
+        protected override void OnPointerEntered(PointerRoutedEventArgs args)
         {
-            ProtectedCursor = InputSystemCursor.Create(Cursor);
+            base.OnPointerEntered(args);
+
+            if(ProtectedCursor == null)
+            {
+                ProtectedCursor= InputSystemCursor.Create(Cursor);
+            }
+            else
+            {
+                if((ProtectedCursor as InputSystemCursor).CursorShape != Cursor)
+                {
+                    ProtectedCursor= InputSystemCursor.Create(Cursor);
+                }
+            }
         }
     }
 }

@@ -255,10 +255,12 @@
     <None Remove="Views\CustomControls\BasicInput\ExtendedButton.xaml" />
     <None Remove="Views\CustomControls\BasicInput\ExtendedCheckBox.xaml" />
     <None Remove="Views\CustomControls\BasicInput\ExtendedDropDownButton.xaml" />
+    <None Remove="Views\CustomControls\BasicInput\ExtendedHyperlinkButton.xaml" />
     <None Remove="Views\CustomControls\Collections\AdaptiveGridView.xaml" />
     <None Remove="Views\CustomControls\MenusAndToolbars\AdaptiveMenuFlyout.xaml" />
     <None Remove="Views\CustomControls\MenusAndToolbars\ExtendedAppBarButton.xaml" />
     <None Remove="Views\CustomControls\Navigation\ExtendedNavigationViewItem.xaml" />
+    <None Remove="Views\ModalDialogs\ExitPromptControl.xaml" />
     
     <None Remove="Views\Pages\AboutPage.xaml" />
     <None Remove="Views\Pages\DownloadPage.xaml" />
@@ -536,6 +538,9 @@
     <Page Update="Views\CustomControls\BasicInput\ExtendedDropDownButton.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Update="Views\CustomControls\BasicInput\ExtendedHyperlinkButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\CustomControls\Collections\AdaptiveGridView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -572,6 +577,12 @@
     </Page>
 
     <TrimmableAssembly Include="Microsoft.Windows.Widgets.Projection" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Page Update="Views\ModalDialogs\ExitPromptControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>
   

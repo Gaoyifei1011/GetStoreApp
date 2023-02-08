@@ -21,7 +21,7 @@ namespace GetStoreApp.Views.CustomControls.MenusAndToolbars
             Opened -= OnOpened;
         }
 
-        public void OnOpened(object sender, object e)
+        public void OnOpened(object sender, object args)
         {
             if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[0].InternalName)
             {

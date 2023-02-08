@@ -400,12 +400,14 @@
                             </ToolTipService.ToolTip>
                         </basicInput:ExtendedCheckBox>
 
-                        <HyperlinkButton
+                        <basicInput:ExtendedHyperlinkButton
                             Grid.Column="1"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
                             Command="{Binding ElementName=ResultRoot, Path=DataContext.DownloadCommand, Mode=OneTime}"
                             CommandParameter="{Binding}"
+                            RightClickCommand="{Binding ElementName=ResultRoot, Path=DataContext.OpenLinkCommand, Mode=OneTime}"
+                            RightClickCommandParameter="{Binding}"
                             Content="{x:Bind FileName}"
                             Style="{StaticResource HyperlinkButtonStyle}">
 
@@ -415,7 +417,7 @@
                                     Placement="Bottom"
                                     VerticalOffset="25" />
                             </ToolTipService.ToolTip>
-                        </HyperlinkButton>
+                        </basicInput:ExtendedHyperlinkButton>
 
                         <TextBlock
                             Grid.Column="2"

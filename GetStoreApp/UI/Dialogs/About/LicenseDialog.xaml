@@ -8,7 +8,7 @@
     xmlns:root="using:GetStoreApp.Services.Root"
     Title="{x:Bind root:ResourceService.GetLocalized('Dialog/License')}"
     CloseButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseWindow')}"
-    Loaded="{x:Bind ViewModel.OnLoaded}"
+    Loading="{x:Bind ViewModel.OnLoading}"
     RequestedTheme="{x:Bind DialogTheme}"
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d">

@@ -43,13 +43,6 @@ namespace GetStoreApp.Views.CustomControls.Navigation
         {
             InitializeComponent();
             Loaded += OnLoaded;
-            Tapped += OnTapped;
-        }
-
-        ~ExtendedNavigationViewItem()
-        {
-            Loaded -= OnLoaded;
-            Tapped -= OnTapped;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs args)
@@ -62,13 +55,16 @@ namespace GetStoreApp.Views.CustomControls.Navigation
                 NavigationItemToolTip.VerticalOffset = 20;
                 ToolTipService.SetToolTip(this, NavigationItemToolTip);
             }
+            Loaded -= OnLoaded;
         }
 
         /// <summary>
         /// 点击导航控件项时触发命令
         /// </summary>
-        private void OnTapped(object sender, TappedRoutedEventArgs args)
+        protected override void OnTapped(TappedRoutedEventArgs args)
         {
+            base.OnTapped(args);
+
             ICommand clickCommand = Command;
             if (clickCommand is not null)
             {
