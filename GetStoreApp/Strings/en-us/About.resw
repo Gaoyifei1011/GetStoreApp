@@ -159,6 +159,12 @@
   <data name="ConsoleLaunch" xml:space="preserve">
     <value>Console program parameters</value>
   </data>
+  <data name="CreateDesktopShortcut" xml:space="preserve">
+    <value>Create desktop shortcut</value>
+  </data>
+  <data name="CreateDesktopShortcutToolTip" xml:space="preserve">
+    <value>Create a shortcut to this app on your desktop</value>
+  </data>
   <data name="DesktopApps" xml:space="preserve">
     <value>Traditional desktop apps</value>
   </data>
@@ -260,6 +266,18 @@
   </data>
   <data name="PaidAppsDescription" xml:space="preserve">
     <value>Microsoft has restricted the operation of paid apps in Windows systems, and paid apps that have not been purchased cannot function properly after installation through offline installation packages. If you have a paid app that you've already purchased, download it from the Microsoft Store.</value>
+  </data>
+  <data name="PinToStartScreen" xml:space="preserve">
+    <value>Pin to the Start screen</value>
+  </data>
+  <data name="PinToStartScreenToolTip" xml:space="preserve">
+    <value>Pin the app to Start screen</value>
+  </data>
+  <data name="PinToTaskbar" xml:space="preserve">
+    <value>Pin to taskbar</value>
+  </data>
+  <data name="PinToTaskbarToolTip" xml:space="preserve">
+    <value>Pin the app to the taskbar</value>
   </data>
   <data name="Precaution" xml:space="preserve">
     <value>Precautions</value>

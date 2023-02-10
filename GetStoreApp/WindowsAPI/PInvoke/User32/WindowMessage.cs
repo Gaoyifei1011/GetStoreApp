@@ -265,12 +265,12 @@
         WM_COMMNOTIFY = 0x0044,
 
         /// <summary>
-        /// 发送到一个窗口，其大小、位置或位置在 Z 顺序中将随着 对 <see cref="User32Library.SetWindowPos"> 函数或其他窗口管理函数的调用而更改。
+        /// 发送到一个窗口，其大小、位置或位置在 Z 顺序中将随着 对 SetWindowPos 函数或其他窗口管理函数的调用而更改。
         /// </summary>
         WM_WINDOWPOSCHANGING = 0x0046,
 
         /// <summary>
-        /// 由于对 <see cref="User32Library.SetWindowPos"> 函数或其他窗口管理函数的调用，其大小、位置或位置在 Z 顺序中的窗口已更改。
+        /// 由于对 SetWindowPos 函数或其他窗口管理函数的调用，其大小、位置或位置在 Z 顺序中的窗口已更改。
         /// </summary>
         WM_WINDOWPOSCHANGED = 0x0047,
 
@@ -545,6 +545,7 @@
         /// Sent to an application when the IME changes composition status as a result of a keystroke. A window receives this message through its WindowProc function.
         /// </summary>
         WM_IME_COMPOSITION = 0x010F,
+
         WM_IME_KEYLAST = 0x010F,
 
         /// <summary>
@@ -961,6 +962,7 @@
         /// The WM_WTSSESSION_CHANGE message notifies applications of changes in session state.
         /// </summary>
         WM_WTSSESSION_CHANGE = 0x02B1,
+
         WM_TABLET_FIRST = 0x02c0,
         WM_TABLET_LAST = 0x02df,
 
@@ -1129,6 +1131,7 @@
         /// Sent to request extended title bar information. A window receives this message through its WindowProc function.
         /// </summary>
         WM_GETTITLEBARINFOEX = 0x033F,
+
         WM_HANDHELDFIRST = 0x0358,
         WM_HANDHELDLAST = 0x035F,
         WM_AFXFIRST = 0x0360,

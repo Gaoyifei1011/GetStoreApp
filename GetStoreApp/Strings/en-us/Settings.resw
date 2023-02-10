@@ -414,4 +414,7 @@
   <data name="WindowsColorSettings" xml:space="preserve">
     <value>Windows color settings</value>
   </data>
+  <data name="WindowsNotificationSettings" xml:space="preserve">
+    <value>Windows notification settings</value>
+  </data>
 </root>

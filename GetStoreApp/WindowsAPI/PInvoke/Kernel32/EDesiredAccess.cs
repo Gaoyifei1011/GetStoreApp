@@ -11,7 +11,7 @@
         DELETE = 0x00010000,
 
         /// <summary>
-        /// 需要读取对象的安全描述符中的信息，而不包括 SACL 中的信息。 若要读取或写入 SACL，必须请求 ACCESS_SYSTEM_SECURITY 访问权限。 
+        /// 需要读取对象的安全描述符中的信息，而不包括 SACL 中的信息。 若要读取或写入 SACL，必须请求 ACCESS_SYSTEM_SECURITY 访问权限。
         /// </summary>
         READ_CONTROL = 0x00020000,
 

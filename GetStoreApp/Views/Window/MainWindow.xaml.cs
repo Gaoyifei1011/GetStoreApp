@@ -27,7 +27,7 @@ namespace GetStoreApp.Views.Window
             NavigationService.NavigationFrame = WindowFrame;
         }
 
-        public void AppTitlebarLoaded(object sender , RoutedEventArgs args)
+        public void AppTitlebarLoaded(object sender, RoutedEventArgs args)
         {
             AppTitlebar.SetTitlebarState(WindowHelper.IsWindowMaximized);
         }
@@ -139,11 +139,11 @@ namespace GetStoreApp.Views.Window
                     }
                 case WindowMessage.WM_SIZE:
                     {
-                        if((SizeMode)wParam == SizeMode.SIZE_MAXIMIZED)
+                        if ((SizeMode)wParam == SizeMode.SIZE_MAXIMIZED)
                         {
                             AppTitlebar.SetTitlebarState(true);
                         }
-                        else if((SizeMode)wParam == SizeMode.SIZE_RESTORED)
+                        else if ((SizeMode)wParam == SizeMode.SIZE_RESTORED)
                         {
                             AppTitlebar.SetTitlebarState(false);
                         }

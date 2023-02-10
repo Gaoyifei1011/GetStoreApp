@@ -49,6 +49,42 @@
 
                 <basicInput:ExtendedDropDownButton.Flyout>
                     <menusAndToolbars:AdaptiveMenuFlyout>
+
+                        <MenuFlyoutItem Command="{x:Bind ViewModel.CreateDesktopShortcutCommand}" Text="{x:Bind root:ResourceService.GetLocalized('About/CreateDesktopShortcut')}">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    Content="{x:Bind root:ResourceService.GetLocalized('About/CreateDesktopShortcutToolTip')}"
+                                    Placement="Bottom"
+                                    VerticalOffset="20" />
+                            </ToolTipService.ToolTip>
+                        </MenuFlyoutItem>
+
+                        <MenuFlyoutItem Command="{x:Bind ViewModel.PinToStartScreenCommand}" Text="{x:Bind root:ResourceService.GetLocalized('About/PinToStartScreen')}">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    Content="{x:Bind root:ResourceService.GetLocalized('About/PinToStartScreenToolTip')}"
+                                    Placement="Bottom"
+                                    VerticalOffset="20" />
+                            </ToolTipService.ToolTip>
+                        </MenuFlyoutItem>
+
+                        <MenuFlyoutItem
+                            Command="{x:Bind ViewModel.PinToTaskbarCommand}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('About/PinToTaskbar')}"
+                            Visibility="Collapsed">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    Content="{x:Bind root:ResourceService.GetLocalized('About/PinToTaskbarToolTip')}"
+                                    Placement="Bottom"
+                                    VerticalOffset="20" />
+                            </ToolTipService.ToolTip>
+                        </MenuFlyoutItem>
+
+                        <MenuFlyoutSeparator />
+
                         <MenuFlyoutItem Command="{x:Bind ViewModel.ShowReleaseNotesCommand}" Text="{x:Bind root:ResourceService.GetLocalized('About/ShowReleaseNotes')}">
 
                             <ToolTipService.ToolTip>

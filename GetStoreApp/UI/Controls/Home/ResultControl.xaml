@@ -406,9 +406,9 @@
                             VerticalAlignment="Center"
                             Command="{Binding ElementName=ResultRoot, Path=DataContext.DownloadCommand, Mode=OneTime}"
                             CommandParameter="{Binding}"
+                            Content="{x:Bind FileName}"
                             RightClickCommand="{Binding ElementName=ResultRoot, Path=DataContext.OpenLinkCommand, Mode=OneTime}"
                             RightClickCommandParameter="{Binding}"
-                            Content="{x:Bind FileName}"
                             Style="{StaticResource HyperlinkButtonStyle}">
 
                             <ToolTipService.ToolTip>

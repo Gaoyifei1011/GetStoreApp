@@ -120,6 +120,12 @@
   <data name="CheckNetWorkConnection" xml:space="preserve">
     <value>Check the network connection</value>
   </data>
+  <data name="DesktopShortcutSuccessfully" xml:space="preserve">
+    <value>The desktop shortcut for the app was created successfully</value>
+  </data>
+  <data name="DesktopShortFailed" xml:space="preserve">
+    <value>The app's desktop shortcut failed to create, please create it manually</value>
+  </data>
   <data name="DownloadCompleted" xml:space="preserve">
     <value>&lt;toast launch="action=OpenApp"&gt;
   &lt;visual&gt;
@@ -250,6 +256,18 @@
   </data>
   <data name="ResultLinkSelectedCopySuccessfully" xml:space="preserve">
     <value>{0} download links has been successfully copied to the clipboard</value>
+  </data>
+  <data name="StartScreenFailed" xml:space="preserve">
+    <value>App pinning to Start screen failed, please pin it manually</value>
+  </data>
+  <data name="StartScreenSuccessfully" xml:space="preserve">
+    <value>You successfully pinned the app to the Start screen</value>
+  </data>
+  <data name="TaskbarFailed" xml:space="preserve">
+    <value>App pinning to taskbar failed, please pin manually</value>
+  </data>
+  <data name="TaskbarSuccessfully" xml:space="preserve">
+    <value>The app was successfully pinned to the taskbar</value>
   </data>
   <data name="WebCacheCleanChangeFailed" xml:space="preserve">
     <value>Web page cache cleanup failed</value>

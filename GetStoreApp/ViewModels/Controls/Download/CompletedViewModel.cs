@@ -216,7 +216,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                         try
                         {
                             StorageFile CompletedDownloadFile = await StorageFile.GetFileFromPathAsync(completedItem.FilePath);
-                            await CompletedDownloadFile.DeleteAsync();
+                            await CompletedDownloadFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
                         }
                         finally { }
 
@@ -385,7 +385,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 try
                 {
                     StorageFile CompletedDownloadFile = await StorageFile.GetFileFromPathAsync(completedItem.FilePath);
-                    await CompletedDownloadFile.DeleteAsync();
+                    await CompletedDownloadFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
                 }
                 finally { }
 

@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
-using System.Text;
 
 namespace GetStoreApp.Models.Controls.Settings.Common
 {

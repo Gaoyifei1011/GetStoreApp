@@ -29,15 +29,15 @@ namespace GetStoreApp.Views.CustomControls.BasicInput
         {
             base.OnPointerEntered(args);
 
-            if(ProtectedCursor == null)
+            if (ProtectedCursor == null)
             {
-                ProtectedCursor= InputSystemCursor.Create(Cursor);
+                ProtectedCursor = InputSystemCursor.Create(Cursor);
             }
             else
             {
-                if((ProtectedCursor as InputSystemCursor).CursorShape != Cursor)
+                if ((ProtectedCursor as InputSystemCursor).CursorShape != Cursor)
                 {
-                    ProtectedCursor= InputSystemCursor.Create(Cursor);
+                    ProtectedCursor = InputSystemCursor.Create(Cursor);
                 }
             }
         }

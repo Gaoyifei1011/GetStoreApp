@@ -302,7 +302,7 @@ namespace GetStoreApp.ViewModels.Pages
                                             try
                                             {
                                                 StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
-                                                await ExistedFile.DeleteAsync();
+                                                await ExistedFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
                                             }
                                             finally
                                             {
@@ -332,7 +332,7 @@ namespace GetStoreApp.ViewModels.Pages
                                             try
                                             {
                                                 StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
-                                                await ExistedFile.DeleteAsync();
+                                                await ExistedFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
                                             }
                                             finally
                                             {

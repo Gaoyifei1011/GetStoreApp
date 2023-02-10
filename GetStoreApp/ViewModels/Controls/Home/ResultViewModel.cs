@@ -261,7 +261,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                                 try
                                 {
                                     StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
-                                    await ExistedFile.DeleteAsync();
+                                    await ExistedFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
                                 }
                                 finally
                                 {
@@ -355,7 +355,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                                     try
                                     {
                                         StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
-                                        await ExistedFile.DeleteAsync();
+                                        await ExistedFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
                                     }
                                     finally
                                     {
@@ -385,7 +385,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                                     try
                                     {
                                         StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
-                                        await ExistedFile.DeleteAsync();
+                                        await ExistedFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
                                     }
                                     finally
                                     {

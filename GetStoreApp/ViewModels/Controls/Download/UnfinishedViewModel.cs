@@ -180,7 +180,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 try
                 {
                     StorageFile TempFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
-                    await TempFile.DeleteAsync();
+                    await TempFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
                 }
                 finally { }
 
@@ -188,7 +188,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 try
                 {
                     StorageFile TempAria2File = await StorageFile.GetFileFromPathAsync(string.Format("{0}.{1}", backgroundItem.FilePath, "aria2"));
-                    await TempAria2File.DeleteAsync();
+                    await TempAria2File.DeleteAsync(StorageDeleteOption.PermanentDelete);
                 }
                 finally { }
 
@@ -260,7 +260,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             try
             {
                 StorageFile TempFile = await StorageFile.GetFileFromPathAsync(unfinishedItem.FilePath);
-                await TempFile.DeleteAsync();
+                await TempFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
             }
             finally { }
 
@@ -268,7 +268,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             try
             {
                 StorageFile TempAria2File = await StorageFile.GetFileFromPathAsync(string.Format("{0}.{1}", unfinishedItem.FilePath, "aria2"));
-                await TempAria2File.DeleteAsync();
+                await TempAria2File.DeleteAsync(StorageDeleteOption.PermanentDelete);
             }
             finally { }
 

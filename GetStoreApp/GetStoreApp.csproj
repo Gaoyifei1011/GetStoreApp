@@ -14,7 +14,7 @@
     <EnableMsixTooling>false</EnableMsixTooling>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <FileAlignment>512</FileAlignment>
-    <FileVersion>1.1.204.0</FileVersion>
+    <FileVersion>1.2.210.0</FileVersion>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
     <IncludeSymbols>False</IncludeSymbols>
@@ -28,7 +28,7 @@
     <PublishProtocol>FileSystem</PublishProtocol>
     <PublishReadyToRun>True</PublishReadyToRun>
     <!--调试时需要设置该选项为false-->
-    <PublishSingleFile>false</PublishSingleFile>
+    <PublishSingleFile>true</PublishSingleFile>
     <PublishTrimmed>true</PublishTrimmed>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <RootNamespace>GetStoreApp</RootNamespace>
@@ -40,7 +40,7 @@
     <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <TrimMode>partial</TrimMode>
-    <Version>1.1.204.0</Version>
+    <Version>1.2.210.0</Version>
     <UseWindowsForms>False</UseWindowsForms>
     <UseWinUI>true</UseWinUI>
     <UseWPF>False</UseWPF>
@@ -176,6 +176,7 @@
     <None Remove="Styles\Pivot.xaml" />
     <None Remove="Styles\TeachingTip.xaml" />
     <None Remove="Styles\TextBlock.xaml" />
+    <None Remove="Styles\ToggleSwitch.xaml" />
     <None Remove="Styles\WindowChrome.xaml" />
     
     <None Remove="UI\Controls\About\HeaderControl.xaml" />
@@ -248,6 +249,7 @@
     <None Remove="UI\Notifications\HistoryCopyNotification.xaml" />
     <None Remove="UI\Notifications\LanguageChangeNotification.xaml" />
     <None Remove="UI\Notifications\NetWorkErrorNotification.xaml" />
+    <None Remove="UI\Notifications\QuickOperationNotification.xaml" />
     <None Remove="UI\Notifications\ResultContentCopyNotification.xaml" />
     <None Remove="UI\Notifications\ResultIDCopyNotification.xaml" />
     <None Remove="UI\Notifications\ResultLinkCopyNotification.xaml" />
@@ -331,6 +333,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Styles\TextBlock.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\ToggleSwitch.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Styles\WindowChrome.xaml">
@@ -516,6 +521,9 @@
     <Page Update="UI\Notifications\NetWorkErrorNotification.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Update="UI\Notifications\QuickOperationNotification.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="UI\Notifications\ResultContentCopyNotification.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -578,7 +586,7 @@
 
     <TrimmableAssembly Include="Microsoft.Windows.Widgets.Projection" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <Page Update="Views\ModalDialogs\ExitPromptControl.xaml">
       <Generator>MSBuild:Compile</Generator>

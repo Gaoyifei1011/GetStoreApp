@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.ViewModels.Base;
-using Microsoft.UI.Xaml;
 using System;
 using Windows.Storage;
 using Windows.Storage.Streams;

@@ -252,28 +252,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         public static extern IntPtr SetWindowLongPtr(IntPtr hWnd, WindowLongIndexFlags nIndex, WindowProc newProc);
 
         /// <summary>
-        /// 更改子窗口、弹出窗口或顶级窗口的大小、位置和 Z 顺序。 这些窗口根据屏幕上的外观进行排序。 最上面的窗口接收最高排名，是 Z 顺序中的第一个窗口。
-        /// </summary>
-        /// <param name="hWnd">更改子窗口、弹出窗口或顶级窗口的大小、位置和 Z 顺序。 这些窗口根据屏幕上的外观进行排序。 最上面的窗口接收最高排名，是 Z 顺序中的第一个窗口。</param>
-        /// <param name="hWndInsertAfter">在 Z 顺序中定位窗口之前窗口的句柄。 </param>
-        /// <param name="X">在 Z 顺序中定位窗口之前窗口的句柄。 </param>
-        /// <param name="Y">窗口顶部的新位置，以客户端坐标表示。</param>
-        /// <param name="cx">窗口的新宽度（以像素为单位）。</param>
-        /// <param name="cy">窗口的新高度（以像素为单位）。</param>
-        /// <param name="uFlags">窗口大小调整和定位标志。</param>
-        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 </returns>
-        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SetWindowPos", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool SetWindowPos(
-            IntPtr hWnd,
-            IntPtr hWndInsertAfter,
-            int X,
-            int Y,
-            int cx,
-            int cy,
-            SetWindowPosFlags uFlags);
-
-        /// <summary>
         /// 在指定位置显示快捷菜单，并跟踪快捷菜单上的项选择。 快捷菜单可在屏幕上的任意位置显示。
         /// </summary>
         /// <param name="hmenu">

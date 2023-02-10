@@ -18,6 +18,7 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
         <FontIcon
@@ -40,14 +41,29 @@
                 Text="{x:Bind root:ResourceService.GetLocalized('Settings/NotificationDescription')}" />
         </StackPanel>
 
-        <ToggleSwitch
-            Name="NotificationToggleSwitch"
+        <HyperlinkButton
             Grid.Column="2"
+            Margin="0,0,6,0"
+            VerticalAlignment="Center"
+            Command="{x:Bind ViewModel.SettingsNotificationCommand}"
+            Content="{x:Bind root:ResourceService.GetLocalized('Settings/WindowsNotificationSettings')}">
+
+            <ToolTipService.ToolTip>
+                <ToolTip
+                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/WindowsNotificationSettings')}"
+                    Placement="Bottom"
+                    VerticalOffset="25" />
+            </ToolTipService.ToolTip>
+        </HyperlinkButton>
+
+        <ToggleSwitch
+            Grid.Column="3"
             controlExtensions:CursorHelper.Cursor="Hand"
             FlowDirection="RightToLeft"
             IsOn="{x:Bind ViewModel.Notification, Mode=OneWay}"
             OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/NotificationOffContent')}"
             OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/NotificationOnContent')}"
+            Style="{StaticResource ToggleSwitchStyle}"
             Toggled="{x:Bind ViewModel.OnToggled}" />
     </Grid>
 </UserControl>

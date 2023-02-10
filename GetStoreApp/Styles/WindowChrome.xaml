@@ -14,6 +14,7 @@
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Top"
                                 ColumnDefinitions="Auto,Auto,Auto">
+                                <!--  修改窗口右上角最小化按钮的显示属性：隐藏  -->
                                 <Button
                                     x:Name="MinimizeButton"
                                     Grid.Column="0"
@@ -22,7 +23,7 @@
                                     Content="M 0 0 H 10"
                                     Style="{StaticResource WindowCaptionButton}"
                                     Visibility="Collapsed" />
-
+                                <!--  修改窗口右上角最大化按钮的显示属性：隐藏  -->
                                 <Button
                                     x:Name="MaximizeButton"
                                     Grid.Column="1"
@@ -31,6 +32,7 @@
                                     Content="M 0 0 H 10 V 10 H 0 V 0"
                                     Style="{StaticResource WindowCaptionButton}"
                                     Visibility="Collapsed" />
+                                <!--  修改窗口右上角关闭按钮的显示属性：隐藏  -->
                                 <Button
                                     x:Name="CloseButton"
                                     Grid.Column="2"

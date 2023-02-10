@@ -169,10 +169,8 @@
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>
-
                         </VisualStateManager.VisualStateGroups>
                     </Border>
-
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

@@ -11,7 +11,6 @@ using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
 using GetStoreApp.Views.Pages;
-using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.AppNotifications;
 using System;

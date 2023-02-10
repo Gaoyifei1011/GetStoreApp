@@ -23,13 +23,13 @@ namespace GetStoreApp.Helpers.Root
                 // 删除当前文件夹下所有文件
                 foreach (StorageFile subFile in await folder.GetFilesAsync())
                 {
-                    await subFile.DeleteAsync();
+                    await subFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
                 }
 
                 // 删除当前文件夹下所有子文件夹（递归）
                 foreach (StorageFolder subFolder in await folder.GetFoldersAsync())
                 {
-                    await subFolder.DeleteAsync();
+                    await subFolder.DeleteAsync(StorageDeleteOption.PermanentDelete);
                 }
 
                 return true;

@@ -44,6 +44,8 @@ namespace GetStoreApp.Helpers.Root
 
         public static ResourceDictionary TextBlockResourceDict { get; private set; }
 
+        public static ResourceDictionary ToggleSwitchResourceDict { get; private set; }
+
         public static ResourceDictionary WindowChromeDict { get; private set; }
 
         /// <summary>
@@ -69,7 +71,8 @@ namespace GetStoreApp.Helpers.Root
             PivotResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[17];
             TeachingTipResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[18];
             TextBlockResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[19];
-            WindowChromeDict = Program.ApplicationRoot.Resources.MergedDictionaries[20];
+            ToggleSwitchResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[20];
+            WindowChromeDict = Program.ApplicationRoot.Resources.MergedDictionaries[21];
 
             await Task.CompletedTask;
         }
