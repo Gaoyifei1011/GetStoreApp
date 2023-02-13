@@ -5,6 +5,7 @@ using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Extensions.SystemTray;
 using GetStoreApp.Helpers.Controls.Home;
 using GetStoreApp.Helpers.Root;
+using GetStoreApp.Helpers.Window;
 using GetStoreApp.Models.Controls.History;
 using GetStoreApp.Models.Controls.Home;
 using GetStoreApp.Services.Controls.History;
@@ -155,7 +156,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                     NavigationService.NavigateTo(typeof(HomePage));
                 }
 
-                User32Library.SetForegroundWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
+                WindowHelper.BringToFront();
             });
 
             Messenger.Default.Register<HistoryModel>(this, MessageToken.Fillin, (fillinMessage) =>

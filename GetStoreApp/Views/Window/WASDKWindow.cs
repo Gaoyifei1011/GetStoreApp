@@ -59,11 +59,6 @@ namespace GetStoreApp.Views.Window
         /// </summary>
         public bool IsClosing { get; set; }
 
-        /// <summary>
-        /// 窗口句柄
-        /// </summary>
-        private IntPtr Hwnd { get; set; } = IntPtr.Zero;
-
         public ICommand ActivatedCommand
         {
             get { return (ICommand)Content.GetValue(ActivatedCommandProperty); }

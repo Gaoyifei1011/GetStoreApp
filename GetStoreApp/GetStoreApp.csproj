@@ -28,7 +28,7 @@
     <PublishProtocol>FileSystem</PublishProtocol>
     <PublishReadyToRun>True</PublishReadyToRun>
     <!--调试时需要设置该选项为false-->
-    <PublishSingleFile>true</PublishSingleFile>
+    <PublishSingleFile>false</PublishSingleFile>
     <PublishTrimmed>true</PublishTrimmed>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <RootNamespace>GetStoreApp</RootNamespace>
@@ -262,7 +262,6 @@
     <None Remove="Views\CustomControls\MenusAndToolbars\AdaptiveMenuFlyout.xaml" />
     <None Remove="Views\CustomControls\MenusAndToolbars\ExtendedAppBarButton.xaml" />
     <None Remove="Views\CustomControls\Navigation\ExtendedNavigationViewItem.xaml" />
-    <None Remove="Views\ModalDialogs\ExitPromptControl.xaml" />
     
     <None Remove="Views\Pages\AboutPage.xaml" />
     <None Remove="Views\Pages\DownloadPage.xaml" />
@@ -585,12 +584,6 @@
     </Page>
 
     <TrimmableAssembly Include="Microsoft.Windows.Widgets.Projection" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Views\ModalDialogs\ExitPromptControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
 </Project>
   

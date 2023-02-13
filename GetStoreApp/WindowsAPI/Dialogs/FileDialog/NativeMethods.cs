@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog.Native
+namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
 {
     internal static class NativeMethods
     {

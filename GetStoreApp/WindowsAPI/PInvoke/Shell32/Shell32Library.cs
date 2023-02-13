@@ -1,4 +1,4 @@
-﻿using GetStoreApp.WindowsAPI.Dialogs.FileDialog.Native;
+﻿using GetStoreApp.WindowsAPI.Dialogs.FileDialog;
 using System;
 using System.Runtime.InteropServices;
 
@@ -7,6 +7,14 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
     public static class Shell32Library
     {
         private const string Shell32 = "shell32.dll";
+
+        /// <summary>
+        /// 测试当前用户是否是管理员组的成员。
+        /// </summary>
+        /// <returns>如果用户是管理员组的成员，则返回 TRUE ;否则为 FALSE。</returns>
+        [DllImport(Shell32, CharSet = CharSet.Ansi, EntryPoint = "IsUserAnAdmin", SetLastError = false)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool IsUserAnAdmin();
 
         /// <summary>
         /// 从分析名称创建和初始化命令行管理程序项对象。

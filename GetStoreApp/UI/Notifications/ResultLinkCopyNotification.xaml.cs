@@ -58,21 +58,21 @@ namespace GetStoreApp.UI.Notifications
             }
         }
 
-        public bool ControlLoad(bool copyState, bool isMultiSelected, int visibilityFlag)
+        public bool ControlLoad(bool copyState, bool isMultiSelected, string controlName)
         {
-            if (visibilityFlag is 1 && copyState && !isMultiSelected)
+            if (controlName is "CopySuccess" && copyState && !isMultiSelected)
             {
                 return true;
             }
-            else if (visibilityFlag is 2 && !copyState && !isMultiSelected)
+            else if (controlName is "CopyFailed" && !copyState && !isMultiSelected)
             {
                 return true;
             }
-            else if (visibilityFlag is 3 && copyState && isMultiSelected)
+            else if (controlName is "CopySelectedSuccess" && copyState && isMultiSelected)
             {
                 return true;
             }
-            else if (visibilityFlag is 4 && !copyState && isMultiSelected)
+            else if (controlName is "CopySelectedFailed" && !copyState && isMultiSelected)
             {
                 return true;
             }

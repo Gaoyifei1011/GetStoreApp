@@ -80,22 +80,22 @@
 
         <TextBlock
             x:Name="CopySuccess"
-            x:Load="{x:Bind ControlLoad(ViewModel.CopyState, ViewModel.IsMultiSelected, 1), Mode=OneWay}"
+            x:Load="{x:Bind ControlLoad(ViewModel.CopyState, ViewModel.IsMultiSelected, 'CopySuccess'), Mode=OneWay}"
             Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/ResultContentCopySuccessfully')}" />
         <TextBlock
             x:Name="CopyFailed"
-            x:Load="{x:Bind ControlLoad(ViewModel.CopyState, ViewModel.IsMultiSelected, 2), Mode=OneWay}"
+            x:Load="{x:Bind ControlLoad(ViewModel.CopyState, ViewModel.IsMultiSelected, 'CopyFailed'), Mode=OneWay}"
             Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/ResultContentCopyFailed')}" />
         <TextBlock
             x:Name="CopySelectedSuccess"
-            x:Load="{x:Bind ControlLoad(ViewModel.CopyState, ViewModel.IsMultiSelected, 3), Mode=OneWay}"
+            x:Load="{x:Bind ControlLoad(ViewModel.CopyState, ViewModel.IsMultiSelected, 'CopySelectedSuccess'), Mode=OneWay}"
             Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
             Loaded="{x:Bind CopySelectedSuccessLoaded}" />
         <TextBlock
             x:Name="CopySelectedFailed"
-            x:Load="{x:Bind ControlLoad(ViewModel.CopyState, ViewModel.IsMultiSelected, 4), Mode=OneWay}"
+            x:Load="{x:Bind ControlLoad(ViewModel.CopyState, ViewModel.IsMultiSelected, 'CopySelectedFailed'), Mode=OneWay}"
             Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
             Loaded="{x:Bind CopySelectedFailedLoaded}" />
     </StackPanel>

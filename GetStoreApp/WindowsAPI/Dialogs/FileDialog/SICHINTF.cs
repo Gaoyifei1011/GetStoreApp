@@ -1,4 +1,4 @@
-﻿namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog.Native
+﻿namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
 {
     internal enum SICHINTF : uint
     {

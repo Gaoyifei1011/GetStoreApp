@@ -1,7 +1,7 @@
 ﻿namespace GetStoreApp.WindowsAPI.Controls.Taskbar
 {
     /// <summary>
-    /// HRESULT 包装器
+    /// <see cref="HResult"> 包装器
     /// </summary>
     public enum HResult
     {

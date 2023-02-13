@@ -8,9 +8,11 @@ using GetStoreApp.Services.Window;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.Dialogs;
+using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using System;
 using System.Collections.Generic;
 using Windows.Storage;
+using Windows.Storage.Pickers;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Common
 {
@@ -82,18 +84,38 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
         // 修改下载目录
         public IRelayCommand ChangeFolderCommand => new RelayCommand(async () =>
         {
-            FolderPickerDialog dialog = new FolderPickerDialog()
+            if (Shell32Library.IsUserAnAdmin())
             {
-                Title = ResourceService.GetLocalized("Settings/SelectFolder"),
-                Path = DownloadFolder.Path
-            };
+                FolderPickerDialog dialog = new FolderPickerDialog()
+                {
+                    Title = ResourceService.GetLocalized("Settings/SelectFolder"),
+                    Path = DownloadFolder.Path
+                };
 
-            bool Result = dialog.ShowDialog(Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
+                bool Result = dialog.ShowDialog(Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
 
-            if (Result)
+                if (Result)
+                {
+                    DownloadFolder = await StorageFolder.GetFolderFromPathAsync(dialog.Path);
+                    await DownloadOptionsService.SetFolderAsync(DownloadFolder);
+                }
+            }
+            else
             {
-                DownloadFolder = await StorageFolder.GetFolderFromPathAsync(dialog.Path);
-                await DownloadOptionsService.SetFolderAsync(DownloadFolder);
+                try
+                {
+                    FolderPicker folderPicker = new FolderPicker();
+                    folderPicker.SuggestedStartLocation = PickerLocationId.Downloads;
+                    WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
+                    StorageFolder folder = await folderPicker.PickSingleFolderAsync();
+
+                    if (folder is not null)
+                    {
+                        DownloadFolder = folder;
+                        await DownloadOptionsService.SetFolderAsync(folder);
+                    }
+                }
+                catch (Exception) { }
             }
         });
 

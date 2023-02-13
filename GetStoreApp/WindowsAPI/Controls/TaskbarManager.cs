@@ -55,10 +55,9 @@ namespace GetStoreApp.WindowsAPI.Controls
         public void SetProgressValue(int currentValue, int maximumValue)
         {
             if (IsPlatformSupported)
-                TaskbarList.Instance.SetProgressValue(
-                    OwnerHandle,
-                    Convert.ToUInt32(currentValue),
-                    Convert.ToUInt32(maximumValue));
+            {
+                TaskbarList.Instance.SetProgressValue(OwnerHandle, Convert.ToUInt32(currentValue), Convert.ToUInt32(maximumValue));
+            }
         }
 
         /// <summary>
@@ -71,20 +70,21 @@ namespace GetStoreApp.WindowsAPI.Controls
         public void SetProgressValue(int currentValue, int maximumValue, IntPtr windowHandle)
         {
             if (IsPlatformSupported)
-                TaskbarList.Instance.SetProgressValue(
-                    windowHandle,
-                    Convert.ToUInt32(currentValue),
-                    Convert.ToUInt32(maximumValue));
+            {
+                TaskbarList.Instance.SetProgressValue(windowHandle, Convert.ToUInt32(currentValue), Convert.ToUInt32(maximumValue));
+            }
         }
 
         /// <summary>
         /// 设置显示在主应用程序窗口的任务栏按钮上的进度指示器的类型和状态。
         /// </summary>
-        /// <param name="state">进度按钮的进度状态</param>
-        public void SetProgressState(TaskbarProgressBarState state)
+        /// <param name="flags">进度按钮的标志</param>
+        public void SetProgressState(TBPFLAG flags)
         {
             if (IsPlatformSupported)
-                TaskbarList.Instance.SetProgressState(OwnerHandle, (TaskbarProgressBarStatus)state);
+            {
+                TaskbarList.Instance.SetProgressState(OwnerHandle, flags);
+            }
         }
 
         /// <summary>
@@ -92,11 +92,11 @@ namespace GetStoreApp.WindowsAPI.Controls
         /// </summary>
         /// <param name="windowHandle">其关联的任务栏按钮用作进度指示器的窗口的句柄。
         /// 此窗口属于与按钮的应用程序关联的调用进程，并且必须已加载。</param>
-        /// <param name="state">进度按钮的进度状态</param>
-        public void SetProgressState(TaskbarProgressBarState state, IntPtr windowHandle)
+        /// <param name="flags">进度按钮的进度状态</param>
+        public void SetProgressState(TBPFLAG flags, IntPtr windowHandle)
         {
             if (IsPlatformSupported)
-                TaskbarList.Instance.SetProgressState(windowHandle, (TaskbarProgressBarStatus)state);
+                TaskbarList.Instance.SetProgressState(windowHandle, (TBPFLAG)flags);
         }
 
         private IntPtr _ownerHandle;

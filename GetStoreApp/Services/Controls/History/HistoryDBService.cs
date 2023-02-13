@@ -179,7 +179,7 @@ namespace GetStoreApp.Services.Controls.History
         /// <param name="typeFilter"></param>
         /// <param name="channelFilter"></param>
         /// <returns>返回历史记录列表</returns>
-        public static async Task<(List<HistoryModel>, bool, bool)> QueryAllAsync(bool timeSortOrder = false, string typeFilter = "None", string channelFilter = "None")
+        public static async Task<(List<HistoryModel>, bool, bool)> QueryAllAsync(bool timeSortOrder = false, string typeFilter = "STPF_NONE", string channelFilter = "STPF_NONE")
         {
             List<HistoryModel> HistoryRawList = new List<HistoryModel>();
 
@@ -234,11 +234,11 @@ namespace GetStoreApp.Services.Controls.History
         {
             string SQL = string.Empty;
 
-            if (typeFilter is "None" && channelFilter is "None")
+            if (typeFilter is "STPF_NONE" && channelFilter is "STPF_NONE")
             {
                 SQL = string.Format("SELECT * FROM {0} ORDER BY TIMESTAMP", DataBaseService.HistoryTableName);
             }
-            else if (typeFilter is not "None" && channelFilter is not "None")
+            else if (typeFilter is not "STPF_NONE" && channelFilter is not "STPF_NONE")
             {
                 SQL = string.Format("SELECT * FROM {0} WHERE TYPE = '{1}' AND CHANNEL = '{2}' ORDER BY TIMESTAMP",
                     DataBaseService.HistoryTableName,
@@ -246,14 +246,14 @@ namespace GetStoreApp.Services.Controls.History
                     channelFilter
                     );
             }
-            else if (typeFilter is not "None")
+            else if (typeFilter is not "STPF_NONE")
             {
                 SQL = string.Format("SELECT * FROM {0} WHERE TYPE = '{1}' ORDER BY TIMESTAMP",
                     DataBaseService.HistoryTableName,
                     typeFilter
                     );
             }
-            else if (channelFilter is not "None")
+            else if (channelFilter is not "STPF_NONE")
             {
                 SQL = string.Format("SELECT * FROM {0} WHERE CHANNEL = '{1}' ORDER BY TIMESTAMP",
                     DataBaseService.HistoryTableName,

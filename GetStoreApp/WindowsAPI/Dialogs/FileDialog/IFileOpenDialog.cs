@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog.Native
+namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
 {
+    /// <summary>
+    /// 通过添加特定于打开对话框的方法扩展 IFileDialog 接口。
+    /// </summary>
     [ComImport]
     [Guid("42f85136-db7e-439c-85f1-e4075d135fc8")]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]

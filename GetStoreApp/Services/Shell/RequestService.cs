@@ -147,7 +147,7 @@ namespace GetStoreApp.Services.Shell
             string SerialNumberHeader = ResourceService.GetLocalized("Console/SerialNumber");
             string FileNameHeader = ResourceService.GetLocalized("Console/FileName");
             string FileSizeHeader = ResourceService.GetLocalized("Console/FileSize");
-            string None = ResourceService.GetLocalized("Console/None");
+            string None = ResourceService.GetLocalized("Console/STPF_NONE");
 
             int SerialNumberHeaderLength = CharExtension.GetStringDisplayLengthEx(SerialNumberHeader);
             int FileNameHeaderLength = CharExtension.GetStringDisplayLengthEx(FileNameHeader);

@@ -178,7 +178,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// </summary>
         /// <param name="hWnd">要创建的消息框的所有者窗口的句柄。 如果此参数为 NULL，则消息框没有所有者窗口。</param>
         /// <param name="lptext">要显示的消息。 如果字符串包含多个行，则可以使用回车符和/或换行符分隔每行之间的行。</param>
-        /// <param name="lpcaption">对话框标题。 如果此参数为 NULL，则默认标题为 Error。</param>
+        /// <param name="lpcaption">对话框标题。 如果此参数为 NULL，则默认标题为 TBPF_ERROR。</param>
         /// <param name="options">对话框的内容和行为。</param>
         /// <returns>
         /// 如果消息框有 “取消 ”按钮，则函数返回 IDCANCEL 值（如果按下 ESC 键或选中 “取消 ”按钮）。

@@ -68,8 +68,7 @@ namespace GetStoreApp.Helpers.Window
                 RestoreAppWindow();
             }
 
-            // 将应用窗口设置到前台
-            User32Library.SetForegroundWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
+            BringToFront();
         }
 
         /// <summary>
@@ -110,6 +109,14 @@ namespace GetStoreApp.Helpers.Window
             {
                 WindowPresenter.Maximize();
             }
+        }
+
+        /// <summary>
+        /// 将应用窗口设置到前台
+        /// </summary>
+        public static void BringToFront()
+        {
+            User32Library.SetForegroundWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
         }
 
         /// <summary>

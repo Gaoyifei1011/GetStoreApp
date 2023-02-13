@@ -7,7 +7,6 @@ using GetStoreApp.UI.Notifications;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.System;
@@ -29,7 +28,7 @@ namespace GetStoreApp.ViewModels.Pages
             {
                 IShellLink AppLink = (IShellLink)new CShellLink();
                 IReadOnlyList<AppListEntry> AppEntries = await Package.Current.GetAppListEntriesAsync();
-                AppListEntry DefaultEntry = AppEntries.FirstOrDefault();
+                AppListEntry DefaultEntry = AppEntries[0];
                 AppLink.SetPath(string.Format(@"shell:AppsFolder\{0}", DefaultEntry.AppUserModelId));
 
                 IPersistFile PersistFile = (IPersistFile)AppLink;
@@ -51,7 +50,7 @@ namespace GetStoreApp.ViewModels.Pages
             {
                 IReadOnlyList<AppListEntry> AppEntries = await Package.Current.GetAppListEntriesAsync();
 
-                AppListEntry DefaultEntry = AppEntries.FirstOrDefault();
+                AppListEntry DefaultEntry = AppEntries[0];
 
                 if (DefaultEntry is not null)
                 {

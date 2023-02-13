@@ -1,4 +1,4 @@
-﻿using GetStoreApp.WindowsAPI.Dialogs.FileDialog.Native;
+﻿using GetStoreApp.WindowsAPI.Dialogs.FileDialog;
 using System;
 using System.Runtime.InteropServices;
 
@@ -19,7 +19,7 @@ namespace GetStoreApp.WindowsAPI.Dialogs
         public string Title { get; set; }
 
         /// <summary>
-        /// 显示对话框
+        /// 显示对话框（非模态窗口）
         /// </summary>
         public bool ShowDialog()
         {
@@ -27,7 +27,7 @@ namespace GetStoreApp.WindowsAPI.Dialogs
         }
 
         /// <summary>
-        /// 使用父窗口的窗口句柄来显示对话框
+        /// 显示对话框（模态窗口）
         /// </summary>
         public bool ShowDialog(IntPtr hwnd)
         {
@@ -41,9 +41,10 @@ namespace GetStoreApp.WindowsAPI.Dialogs
 
                 FILEOPENDIALOGOPTIONS option = dialog.GetOptions();
 
-                // 排除“我的电脑”目录和“网络”目录。
+                // 设置选项：选择文件夹，确保返回的项目是文件系统项目
                 dialog.SetOptions(option | FILEOPENDIALOGOPTIONS.FOS_PICKFOLDERS | FILEOPENDIALOGOPTIONS.FOS_FORCEFILESYSTEM);
 
+                // 设置首选目录
                 IShellItem item;
                 if (!string.IsNullOrEmpty(Path))
                 {
@@ -51,17 +52,19 @@ namespace GetStoreApp.WindowsAPI.Dialogs
                     dialog.SetFolder(item);
                 }
 
+                // 设置标题
                 if (!string.IsNullOrEmpty(Title))
                 {
                     dialog.SetTitle(Title);
                 }
 
                 int hr = dialog.Show(hwnd);
+
                 if (hr == NativeMethods.ERROR_CANCELLED)
                 {
                     return false;
                 }
-
+                
                 if (hr != NativeMethods.OK)
                 {
                     Marshal.ThrowExceptionForHR(hr);

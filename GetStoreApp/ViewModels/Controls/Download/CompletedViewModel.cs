@@ -289,7 +289,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                         {
                             CompletedDataList[InstallIndex].InstallError = true;
                             // 显示安装失败通知
-                            AppNotificationService.Show("InstallApp", "Error", CompletedFile.Name, e.Message);
+                            AppNotificationService.Show("InstallApp", "TBPF_ERROR", CompletedFile.Name, e.Message);
                         }
                         // 恢复原来的安装信息显示（并延缓当前安装信息显示时间1秒）
                         finally

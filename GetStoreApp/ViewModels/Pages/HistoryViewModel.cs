@@ -91,7 +91,7 @@ namespace GetStoreApp.ViewModels.Pages
             }
         }
 
-        private string _typeFilter = "None";
+        private string _typeFilter = "STPF_NONE";
 
         public string TypeFilter
         {
@@ -104,7 +104,7 @@ namespace GetStoreApp.ViewModels.Pages
             }
         }
 
-        private string _channelFilter = "None";
+        private string _channelFilter = "STPF_NONE";
 
         public string ChannelFilter
         {
@@ -253,7 +253,7 @@ namespace GetStoreApp.ViewModels.Pages
 
                 if (HistoryDataList.Count is 0)
                 {
-                    if (TypeFilter is "None" || ChannelFilter is "None")
+                    if (TypeFilter is "STPF_NONE" || ChannelFilter is "STPF_NONE")
                     {
                         IsHistoryEmpty = true;
                         IsHistoryEmptyAfterFilter = false;

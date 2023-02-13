@@ -26,16 +26,14 @@ namespace GetStoreApp.WindowsAPI.Controls.Taskbar
 
         // ITaskbarList2
         [PreserveSig]
-        void MarkFullscreenWindow(
-            IntPtr hwnd,
-            [MarshalAs(UnmanagedType.Bool)] bool fFullscreen);
+        void MarkFullscreenWindow(IntPtr hwnd, [MarshalAs(UnmanagedType.Bool)] bool fFullscreen);
 
         // ITaskbarList3
         [PreserveSig]
         void SetProgressValue(IntPtr hwnd, ulong ullCompleted, ulong ullTotal);
 
         [PreserveSig]
-        void SetProgressState(IntPtr hwnd, TaskbarProgressBarStatus tbpFlags);
+        void SetProgressState(IntPtr hwnd, TBPFLAG tbpFlags);
 
         [PreserveSig]
         void RegisterTab(IntPtr hwndTab, IntPtr hwndMDI);
@@ -53,13 +51,13 @@ namespace GetStoreApp.WindowsAPI.Controls.Taskbar
         HResult ThumbBarAddButtons(
             IntPtr hwnd,
             uint cButtons,
-            [MarshalAs(UnmanagedType.LPArray)] ThumbButton[] pButtons);
+            [MarshalAs(UnmanagedType.LPArray)] THUMBBUTTON[] pButtons);
 
         [PreserveSig]
         HResult ThumbBarUpdateButtons(
             IntPtr hwnd,
             uint cButtons,
-            [MarshalAs(UnmanagedType.LPArray)] ThumbButton[] pButtons);
+            [MarshalAs(UnmanagedType.LPArray)] THUMBBUTTON[] pButtons);
 
         [PreserveSig]
         void ThumbBarSetImageList(IntPtr hwnd, IntPtr himl);
@@ -81,6 +79,6 @@ namespace GetStoreApp.WindowsAPI.Controls.Taskbar
             IntPtr prcClip);
 
         // ITaskbarList4
-        void SetTabProperties(IntPtr hwndTab, SetTabPropertiesOption stpFlags);
+        void SetTabProperties(IntPtr hwndTab, STPFLAG stpFlags);
     }
 }
