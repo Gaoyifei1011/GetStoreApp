@@ -154,7 +154,7 @@
     <value>Display this window requires an initialized superclass window. Check the initialization status of the superclass window</value>
   </data>
   <data name="Restore" xml:space="preserve">
-    <value>Restore</value>
+    <value>Restore Down</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>

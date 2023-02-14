@@ -8,7 +8,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
     /// 为了配置而提交的结构任务栏图标。提供各种成员可以部分配置，根据 <see cref="IconDataMembers"/> 中的定义。
     /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    public struct NotifyIconData
+    public struct NOTIFYICONDATA
     {
         /// <summary>
         /// 此结构的大小（以字节为单位）。
@@ -100,10 +100,10 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         /// <param name="handle">窗口句柄</param>
         /// <param name="iconFile">图标路径</param>
         /// <param name="toolTip">提示文本</param>
-        /// <returns>NotifyIconData</returns>
-        public static NotifyIconData CreateDefault(IntPtr handle, string iconFile, string toolTip)
+        /// <returns>NOTIFYICONDATA</returns>
+        public static NOTIFYICONDATA CreateDefault(IntPtr handle, string iconFile, string toolTip)
         {
-            var data = new NotifyIconData();
+            var data = new NOTIFYICONDATA();
 
             if (Environment.OSVersion.Version.Major >= 6)
             {

@@ -44,8 +44,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         MF_MENUBREAK = 0x00000040,
 
         /// <summary>
-        /// 指定该项是所有者描述的项。在首次显示菜单之前，拥有菜单的窗口会收到一条WM_MEASUREITEM消息，以检索菜单项的宽度和高度。
-        /// 然后，每当必须更新菜单项的外观时，WM_DRAWITEM 消息都会发送到所有者窗口的窗口过程。
+        /// 指定该项是所有者描述的项。在首次显示菜单之前，拥有菜单的窗口会收到一条 <see cref="WindowMessage.WM_MEASUREITEM"> 消息，以检索菜单项的宽度和高度。 然后，每当必须更新菜单项的外观时，<see cref="WindowMessage.WM_DRAWITEM"> 消息都会发送到所有者窗口的窗口过程。
         /// </summary>
         MF_OWNERDRAW = 0x00000100,
 

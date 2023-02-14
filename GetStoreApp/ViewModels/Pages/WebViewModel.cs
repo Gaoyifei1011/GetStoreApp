@@ -156,12 +156,7 @@ namespace GetStoreApp.ViewModels.Pages
         public async void OnCoreProcessFailed(object sender, CoreWebView2ProcessFailedEventArgs args)
         {
             // 显示异常信息错误原因，弹出对话框
-            if (!Program.ApplicationRoot.IsDialogOpening)
-            {
-                Program.ApplicationRoot.IsDialogOpening = true;
-                await new CoreWebView2FailedDialog(args).ShowAsync();
-                Program.ApplicationRoot.IsDialogOpening = false;
-            }
+            await new CoreWebView2FailedDialog(args).ShowAsync();
         }
 
         /// <summary>
@@ -291,60 +286,48 @@ namespace GetStoreApp.ViewModels.Pages
 
                             case DuplicatedDataInfoArgs.Unfinished:
                                 {
-                                    if (!Program.ApplicationRoot.IsDialogOpening)
+                                    ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Unfinished).ShowAsync();
+
+                                    if (result is ContentDialogResult.Primary)
                                     {
-                                        Program.ApplicationRoot.IsDialogOpening = true;
-
-                                        ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Unfinished).ShowAsync();
-
-                                        if (result is ContentDialogResult.Primary)
+                                        try
                                         {
-                                            try
-                                            {
-                                                StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
-                                                await ExistedFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
-                                            }
-                                            finally
-                                            {
-                                                bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                                new DownloadCreateNotification(AddResult).Show();
-                                            }
+                                            StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
+                                            await ExistedFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
                                         }
-                                        else if (result is ContentDialogResult.Secondary)
+                                        finally
                                         {
-                                            NavigationService.NavigateTo(typeof(DownloadPage));
+                                            bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
+                                            new DownloadCreateNotification(AddResult).Show();
                                         }
-                                        Program.ApplicationRoot.IsDialogOpening = false;
+                                    }
+                                    else if (result is ContentDialogResult.Secondary)
+                                    {
+                                        NavigationService.NavigateTo(typeof(DownloadPage));
                                     }
                                     break;
                                 }
 
                             case DuplicatedDataInfoArgs.Completed:
                                 {
-                                    if (!Program.ApplicationRoot.IsDialogOpening)
+                                    ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Completed).ShowAsync();
+
+                                    if (result is ContentDialogResult.Primary)
                                     {
-                                        Program.ApplicationRoot.IsDialogOpening = true;
-
-                                        ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Completed).ShowAsync();
-
-                                        if (result is ContentDialogResult.Primary)
+                                        try
                                         {
-                                            try
-                                            {
-                                                StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
-                                                await ExistedFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
-                                            }
-                                            finally
-                                            {
-                                                bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                                new DownloadCreateNotification(AddResult).Show();
-                                            }
+                                            StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
+                                            await ExistedFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
                                         }
-                                        else if (result is ContentDialogResult.Secondary)
+                                        finally
                                         {
-                                            NavigationService.NavigateTo(typeof(DownloadPage));
+                                            bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
+                                            new DownloadCreateNotification(AddResult).Show();
                                         }
-                                        Program.ApplicationRoot.IsDialogOpening = false;
+                                    }
+                                    else if (result is ContentDialogResult.Secondary)
+                                    {
+                                        NavigationService.NavigateTo(typeof(DownloadPage));
                                     }
                                     break;
                                 }

@@ -1,8 +1,8 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
+using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 using System;
 
 namespace GetStoreApp.UI.Dialogs.Common
@@ -10,7 +10,7 @@ namespace GetStoreApp.UI.Dialogs.Common
     /// <summary>
     /// 删除提示对话框视图
     /// </summary>
-    public sealed partial class DeletePromptDialog : ContentDialog
+    public sealed partial class DeletePromptDialog : ExtendedContentDialog
     {
         public ElementTheme DialogTheme { get; } = (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
 

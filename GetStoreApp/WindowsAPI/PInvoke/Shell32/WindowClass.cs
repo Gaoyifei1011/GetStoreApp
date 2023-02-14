@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GetStoreApp.WindowsAPI.PInvoke.User32;
+using System;
 using System.Runtime.InteropServices;
 
 namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
@@ -15,7 +16,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         public uint style;
 
         /// <summary>
-        /// 指向窗口过程的指针。 必须使用 CallWindowProc 函数调用窗口过程。
+        /// 指向窗口过程的指针。 必须使用 <see cref="User32Library.CallWindowProc"> 函数调用窗口过程。
         /// </summary>
         public WindowProcedureHandler lpfnWndProc;
 
@@ -58,8 +59,8 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         public string lpszMenuName;
 
         /// <summary>
-        /// 指向空终止字符串或原子的指针。 如果此参数是 atom，则它必须是由上一次对 RegisterClass 或 RegisterClassEx 函数的调用创建的类原子。
-        /// atom 必须位于 lpszClassName 的低序单词中;高序单词必须为零。
+        /// 指向空终止字符串或原子的指针。 如果此参数是 atom，则它必须是由上一次对 <see cref="User32Library.RegisterClass"> 或 RegisterClassEx 函数的调用创建的类原子。
+        /// atom 必须位于 <see cref="lpszClassName"> 的低序单词中;高序单词必须为零。
         /// </summary>
         [MarshalAs(UnmanagedType.LPWStr)]
         public string lpszClassName;

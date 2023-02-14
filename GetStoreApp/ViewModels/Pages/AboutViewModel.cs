@@ -71,9 +71,6 @@ namespace GetStoreApp.ViewModels.Pages
             }
         });
 
-        // 将应用固定到任务栏
-        public IRelayCommand PinToTaskbarCommand => new RelayCommand(() => { });
-
         // 查看更新日志
         public IRelayCommand ShowReleaseNotesCommand => new RelayCommand(async () =>
         {
@@ -83,12 +80,7 @@ namespace GetStoreApp.ViewModels.Pages
         // 查看许可证
         public IRelayCommand ShowLicenseCommand => new RelayCommand(async () =>
         {
-            if (!Program.ApplicationRoot.IsDialogOpening)
-            {
-                Program.ApplicationRoot.IsDialogOpening = true;
-                await new LicenseDialog().ShowAsync();
-                Program.ApplicationRoot.IsDialogOpening = false;
-            }
+            await new LicenseDialog().ShowAsync();
         });
     }
 }

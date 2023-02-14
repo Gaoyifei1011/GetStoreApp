@@ -91,7 +91,7 @@
         PROCESS_SUSPEND_RESUME = 0x0800,
 
         /// <summary>
-        /// 检索有关进程的某些信息需要。 PROCESS_QUERY_LIMITED_INFORMATION自动授予具有PROCESS_QUERY_INFORMATION访问权限的句柄。
+        /// 检索有关进程的某些信息需要。 <see cref="PROCESS_QUERY_LIMITED_INFORMATION"> 自动授予具有 <see cref="PROCESS_QUERY_INFORMATION"> 访问权限的句柄。
         /// </summary>
         PROCESS_QUERY_LIMITED_INFORMATION = 0x1000,
 

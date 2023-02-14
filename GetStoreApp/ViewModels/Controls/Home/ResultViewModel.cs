@@ -129,12 +129,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             // 内容为空时显示空提示对话框
             if (SelectedResultDataList.Count is 0)
             {
-                if (!Program.ApplicationRoot.IsDialogOpening)
-                {
-                    Program.ApplicationRoot.IsDialogOpening = true;
-                    await new SelectEmptyPromptDialog().ShowAsync();
-                    Program.ApplicationRoot.IsDialogOpening = false;
-                }
+                await new SelectEmptyPromptDialog().ShowAsync();
                 return;
             };
 
@@ -163,12 +158,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             // 内容为空时显示空提示对话框
             if (SelectedResultDataList.Count is 0)
             {
-                if (!Program.ApplicationRoot.IsDialogOpening)
-                {
-                    Program.ApplicationRoot.IsDialogOpening = true;
-                    await new SelectEmptyPromptDialog().ShowAsync();
-                    Program.ApplicationRoot.IsDialogOpening = false;
-                }
+                await new SelectEmptyPromptDialog().ShowAsync();
                 return;
             };
 
@@ -202,12 +192,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             // 内容为空时显示空提示对话框
             if (SelectedResultDataList.Count is 0)
             {
-                if (!Program.ApplicationRoot.IsDialogOpening)
-                {
-                    Program.ApplicationRoot.IsDialogOpening = true;
-                    await new SelectEmptyPromptDialog().ShowAsync();
-                    Program.ApplicationRoot.IsDialogOpening = false;
-                }
+                await new SelectEmptyPromptDialog().ShowAsync();
                 return;
             };
 
@@ -248,33 +233,27 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
                 if (duplicatedList.Count > 0)
                 {
-                    if (!Program.ApplicationRoot.IsDialogOpening)
+                    ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.MultiRecord).ShowAsync();
+
+                    if (result is ContentDialogResult.Primary)
                     {
-                        Program.ApplicationRoot.IsDialogOpening = true;
-
-                        ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.MultiRecord).ShowAsync();
-
-                        if (result is ContentDialogResult.Primary)
+                        foreach (BackgroundModel backgroundItem in duplicatedList)
                         {
-                            foreach (BackgroundModel backgroundItem in duplicatedList)
+                            try
                             {
-                                try
-                                {
-                                    StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
-                                    await ExistedFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
-                                }
-                                finally
-                                {
-                                    await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                    IsDownloadSuccessfully = true;
-                                }
+                                StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
+                                await ExistedFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                            }
+                            finally
+                            {
+                                await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
+                                IsDownloadSuccessfully = true;
                             }
                         }
-                        else if (result is ContentDialogResult.Secondary)
-                        {
-                            NavigationService.NavigateTo(typeof(DownloadPage));
-                        }
-                        Program.ApplicationRoot.IsDialogOpening = false;
+                    }
+                    else if (result is ContentDialogResult.Secondary)
+                    {
+                        NavigationService.NavigateTo(typeof(DownloadPage));
                     }
                 }
 
@@ -344,60 +323,48 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
                     case DuplicatedDataInfoArgs.Unfinished:
                         {
-                            if (!Program.ApplicationRoot.IsDialogOpening)
+                            ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Unfinished).ShowAsync();
+
+                            if (result is ContentDialogResult.Primary)
                             {
-                                Program.ApplicationRoot.IsDialogOpening = true;
-
-                                ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Unfinished).ShowAsync();
-
-                                if (result is ContentDialogResult.Primary)
+                                try
                                 {
-                                    try
-                                    {
-                                        StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
-                                        await ExistedFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
-                                    }
-                                    finally
-                                    {
-                                        bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                        new DownloadCreateNotification(AddResult).Show();
-                                    }
+                                    StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
+                                    await ExistedFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
                                 }
-                                else if (result is ContentDialogResult.Secondary)
+                                finally
                                 {
-                                    NavigationService.NavigateTo(typeof(DownloadPage));
+                                    bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
+                                    new DownloadCreateNotification(AddResult).Show();
                                 }
-                                Program.ApplicationRoot.IsDialogOpening = false;
+                            }
+                            else if (result is ContentDialogResult.Secondary)
+                            {
+                                NavigationService.NavigateTo(typeof(DownloadPage));
                             }
                             break;
                         }
 
                     case DuplicatedDataInfoArgs.Completed:
                         {
-                            if (!Program.ApplicationRoot.IsDialogOpening)
+                            ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Completed).ShowAsync();
+
+                            if (result is ContentDialogResult.Primary)
                             {
-                                Program.ApplicationRoot.IsDialogOpening = true;
-
-                                ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Completed).ShowAsync();
-
-                                if (result is ContentDialogResult.Primary)
+                                try
                                 {
-                                    try
-                                    {
-                                        StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
-                                        await ExistedFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
-                                    }
-                                    finally
-                                    {
-                                        bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                        new DownloadCreateNotification(AddResult).Show();
-                                    }
+                                    StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
+                                    await ExistedFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
                                 }
-                                else if (result is ContentDialogResult.Secondary)
+                                finally
                                 {
-                                    NavigationService.NavigateTo(typeof(DownloadPage));
+                                    bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
+                                    new DownloadCreateNotification(AddResult).Show();
                                 }
-                                Program.ApplicationRoot.IsDialogOpening = false;
+                            }
+                            else if (result is ContentDialogResult.Secondary)
+                            {
+                                NavigationService.NavigateTo(typeof(DownloadPage));
                             }
                             break;
                         }

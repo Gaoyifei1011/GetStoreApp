@@ -273,12 +273,6 @@
   <data name="PinToStartScreenToolTip" xml:space="preserve">
     <value>Pin the app to Start screen</value>
   </data>
-  <data name="PinToTaskbar" xml:space="preserve">
-    <value>Pin to taskbar</value>
-  </data>
-  <data name="PinToTaskbarToolTip" xml:space="preserve">
-    <value>Pin the app to the taskbar</value>
-  </data>
   <data name="Precaution" xml:space="preserve">
     <value>Precautions</value>
   </data>

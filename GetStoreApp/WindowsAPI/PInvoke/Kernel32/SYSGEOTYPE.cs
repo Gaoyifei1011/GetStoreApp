@@ -31,12 +31,12 @@
         GEO_ISO3 = 0x0005,
 
         /// <summary>
-        /// 字符串的名称，符合 RFC 4646 (从 Windows Vista) 开始，该名称派生自 GetGeoInfo 参数 语言 和 GeoId。
+        /// 字符串的名称，符合 RFC 4646 (从 Windows Vista) 开始，该名称派生自 <see cref="Kernel32Library.GetGeoInfo"> 参数 语言 和 GeoId。
         /// </summary>
         GEO_RFC1766 = 0x0006,
 
         /// <summary>
-        /// 使用 GetGeoInfo 派生的区域设置标识符。
+        /// 使用 <see cref="Kernel32Library.GetGeoInfo"> 派生的区域设置标识符。
         /// </summary>
         GEO_LCID = 0x0007,
 
@@ -92,7 +92,7 @@
 
         /// <summary>
         /// 从 Windows 10 版本 1709 开始：该区域的 Windows 地理位置标识符 (GEOID) 。 提供此值是为了向后兼容。
-        /// 不要在新应用程序中使用此值，而是改用 GEO_NAME 。
+        /// 不要在新应用程序中使用此值，而是改用 <see cref="GEO_NAME"> 。
         /// </summary>
         GEO_ID = 0x0012
     }

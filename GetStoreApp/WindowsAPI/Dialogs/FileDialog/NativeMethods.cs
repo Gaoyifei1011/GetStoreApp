@@ -2,7 +2,7 @@
 
 namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
 {
-    internal static class NativeMethods
+    public static class NativeMethods
     {
         /// <summary>
         /// 0x800704C7

@@ -9,25 +9,21 @@ namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
     /// </summary>
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [Guid("43826d1e-e718-42ee-bc55-a1e261c37bfe")]
-    internal interface IShellItem
+    public interface IShellItem
     {
         /// <summary>
         /// 绑定到由处理程序 ID 值 (BHID) 指定的项的处理程序。
         /// </summary>
         /// <param name="pbc">
-        /// 指向绑定上下文对象上的 IBindCtx 接口的指针。 用于将可选参数传递给处理程序。 绑定上下文的内容特定于处理程序。
-        /// 例如，绑定到 BHID_Strea m时，绑定上下文中的 STGM 标志指示 (读取或读/写) 所需的访问模式。
+        /// 指向绑定上下文对象上的 <see cref="IBindCtx"> 接口的指针。 用于将可选参数传递给处理程序。 绑定上下文的内容特定于处理程序。
+        /// 例如，绑定到 BHID_Stream时，绑定上下文中的 STGM 标志指示 (读取或读/写) 所需的访问模式。
         /// </param>
         /// <param name="bhid">对 GUID 的引用，指定将创建哪个处理程序。</param>
         /// <param name="riid">要检索的对象类型的 IID。</param>
         /// <param name="ppv">此方法返回时，包含由 riid 指定的处理程序返回的类型 riid 的指针。</param>
-        /// <returns></returns>
+        /// <returns>如果项相同，则返回S_OK项，如果项不同，则返回S_FALSE，否则返回错误值。</returns>
         [return: MarshalAs(UnmanagedType.IUnknown)]
-        object BindToHandler(
-            IntPtr pbc,
-            [MarshalAs(UnmanagedType.LPStruct)] Guid bhid,
-            [MarshalAs(UnmanagedType.LPStruct)] Guid riid,
-            ref IntPtr ppv);
+        object BindToHandler(IntPtr pbc, [MarshalAs(UnmanagedType.LPStruct)] Guid bhid, [MarshalAs(UnmanagedType.LPStruct)] Guid riid, ref IntPtr ppv);
 
         /// <summary>
         /// 比较两个 <see cref="IShellItem"> 对象。
@@ -40,9 +36,9 @@ namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
         /// <summary>
         /// 获取 <see cref="IShellItem"> 对象的请求属性集。
         /// </summary>
-        /// <param name="sfgaoMask">指定要检索的属性。 一个或多个 SFGAO 值。 使用按位 OR 运算符确定要检索的属性。</param>
-        /// <returns></returns>
-        SFGAOF GetAttributes(SFGAOF sfgaoMask,out SFGAOF psfgaoAttribs);
+        /// <param name="sfgaoMask">指定要检索的属性。 一个或多个 <see cref="SFGAO"> 值。 使用按位 OR 运算符确定要检索的属性。</param>
+        /// <returns>如果返回的属性与 sfgaoMask 中请求的属性完全匹配，则返回S_OK。如果属性不完全匹配，或者返回标准 COM 错误值，则返回S_FALSE。</returns>
+        SFGAO GetAttributes(SFGAO sfgaoMask, out SFGAO psfgaoAttribs);
 
         /// <summary>
         /// 获取 <see cref="IShellItem"> 对象的显示名称。

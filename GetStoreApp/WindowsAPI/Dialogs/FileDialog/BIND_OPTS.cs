@@ -26,7 +26,7 @@ namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
 
         /// <summary>
         /// 调用方希望绑定操作完成的时钟时间（以毫秒为单位）。 此成员允许调用方在速度至关重要时限制操作的执行时间。 值为零表示没有截止时间。
-        /// 调用 IMoniker::GetTimeOfLastChange 方法时，调用方最常使用此功能，但也可以将其应用于其他操作。 CreateBindCtx 函数将此字段初始化为零。
+        /// 调用 <see cref="IMoniker.GetTimeOfLastChange"> 方法时，调用方最常使用此功能，但也可以将其应用于其他操作。CreateBindCtx 函数将此字段初始化为零。
         /// </summary>
         public int dwTickCountDeadline;
     }

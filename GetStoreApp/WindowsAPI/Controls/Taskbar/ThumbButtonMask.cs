@@ -3,7 +3,7 @@
     /// <summary>
     /// <see cref="THUMBBUTTON"> 结构用于指定该结构的成员包含有效数据。
     /// </summary>
-    internal enum THUMBBUTTONMASK
+    public enum THUMBBUTTONMASK
     {
         /// <summary>
         /// <see cref="THUMBBUTTON.iBitmap"> 成员包含有效信息。

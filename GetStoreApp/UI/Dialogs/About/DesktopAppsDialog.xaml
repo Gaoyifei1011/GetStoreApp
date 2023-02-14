@@ -1,8 +1,9 @@
-﻿<ContentDialog
+﻿<dialogsAndFlyouts:ExtendedContentDialog
     x:Class="GetStoreApp.UI.Dialogs.About.DesktopAppsDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dialogsAndFlyouts="using:GetStoreApp.Views.CustomControls.DialogsAndFlyouts"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     Title="{x:Bind root:ResourceService.GetLocalized('Dialog/RecognizeDesktopApps')}"
@@ -11,9 +12,9 @@
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d">
 
-    <ContentDialog.Resources>
+    <dialogsAndFlyouts:ExtendedContentDialog.Resources>
         <x:Double x:Key="ContentDialogMaxWidth">560</x:Double>
-    </ContentDialog.Resources>
+    </dialogsAndFlyouts:ExtendedContentDialog.Resources>
 
     <StackPanel>
         <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Dialog/DesktopAppsContent1')}" />
@@ -29,4 +30,4 @@
                 Source="ms-appx:///Assets/Images/DesktopApps.png" />
         </Border>
     </StackPanel>
-</ContentDialog>
+</dialogsAndFlyouts:ExtendedContentDialog>

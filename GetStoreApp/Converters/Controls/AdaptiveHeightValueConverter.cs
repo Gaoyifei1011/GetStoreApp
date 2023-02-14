@@ -9,7 +9,7 @@ namespace GetStoreApp.Converters.Controls
     /// <summary>
     /// 适应性网格视图高度值计算转换器
     /// </summary>
-    internal class AdaptiveHeightValueConverter : IValueConverter
+    public class AdaptiveHeightValueConverter : IValueConverter
     {
         private Thickness thickness = new Thickness(0, 0, 4, 4);
 
@@ -46,7 +46,7 @@ namespace GetStoreApp.Converters.Controls
             return default;
         }
 
-        internal static Thickness GetItemMargin(GridView view, Thickness fallback = default)
+        public static Thickness GetItemMargin(GridView view, Thickness fallback = default)
         {
             var setter = view.ItemContainerStyle?.Setters.OfType<Setter>().FirstOrDefault(s => s.Property == FrameworkElement.MarginProperty);
             if (setter is not null)

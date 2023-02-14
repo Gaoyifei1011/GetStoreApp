@@ -4,6 +4,9 @@ using System.Text;
 
 namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
 {
+    /// <summary>
+    /// Kernel32.dll 函数库
+    /// </summary>
     public static class Kernel32Library
     {
         private const string Kernel32 = "Kernel32.dll";

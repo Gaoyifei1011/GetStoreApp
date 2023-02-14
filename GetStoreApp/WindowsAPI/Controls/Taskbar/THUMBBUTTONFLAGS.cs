@@ -6,7 +6,7 @@ namespace GetStoreApp.WindowsAPI.Controls.Taskbar
     /// <see cref="THUMBBUTTON"> 用于控制按钮的特定状态和行为。
     /// </summary>
     [Flags]
-    internal enum THUMBBUTTONFLAGS
+    public enum THUMBBUTTONFLAGS
     {
         /// <summary>
         /// 按钮处于活动状态，可供用户使用。

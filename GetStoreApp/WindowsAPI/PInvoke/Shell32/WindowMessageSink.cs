@@ -210,7 +210,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
             {
                 return;
             };
-            IsDisposed = true;
+            IsDisposed = disposing;
 
             // 始终销毁非托管句柄（即使从 GC 调用）
             User32Library.DestroyWindow(MessageWindowHandle);

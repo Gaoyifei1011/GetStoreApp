@@ -154,7 +154,7 @@
     <value>显示此窗口需要一个已经初始化的父类窗口，请检查父类窗口的初始化状态</value>
   </data>
   <data name="Restore" xml:space="preserve">
-    <value>还原</value>
+    <value>向下还原</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>设置</value>

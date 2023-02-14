@@ -22,12 +22,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
         // 清理应用内使用的所有痕迹
         public IRelayCommand TraceCleanupCommand = new RelayCommand(async () =>
         {
-            if (!Program.ApplicationRoot.IsDialogOpening)
-            {
-                Program.ApplicationRoot.IsDialogOpening = true;
-                await new TraceCleanupPromptDialog().ShowAsync();
-                Program.ApplicationRoot.IsDialogOpening = false;
-            }
+            await new TraceCleanupPromptDialog().ShowAsync();
         });
     }
 }

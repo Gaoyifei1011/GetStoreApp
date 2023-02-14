@@ -156,7 +156,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         MB_NOFOCUS = 0x008000,
 
         /// <summary>
-        /// 消息框将成为前台窗口。 在内部，系统调用消息框的 SetForegroundWindow 函数。
+        /// 消息框将成为前台窗口。 在内部，系统调用消息框的 <see cref="User32Library.SetForegroundWindow"> 函数。
         /// </summary>
         MB_SETFOREGROUND = 0x00010000,
 

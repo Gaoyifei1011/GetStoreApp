@@ -3,7 +3,7 @@
 namespace GetStoreApp.WindowsAPI.PInvoke.UxTheme
 {
     /// <summary>
-    /// 从 UxTheme.dll Windows库中导出的函数。
+    /// 从 UxTheme.dll 函数库。
     /// </summary>
     public static class UxThemeLibrary
     {

@@ -107,15 +107,10 @@ namespace GetStoreApp.Views.Window
                         {
                             WindowHelper.ShowAppWindow();
 
-                            if (!Program.ApplicationRoot.IsDialogOpening)
+                            DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, async () =>
                             {
-                                Program.ApplicationRoot.IsDialogOpening = true;
-                                DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, async () =>
-                                {
-                                    await new AppRunningDialog().ShowAsync();
-                                    Program.ApplicationRoot.IsDialogOpening = false;
-                                });
-                            }
+                                await new AppRunningDialog().ShowAsync();
+                            });
                         }
                         // 获取应用的命令参数
                         else

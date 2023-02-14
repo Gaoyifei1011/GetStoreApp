@@ -13,12 +13,7 @@ namespace GetStoreApp.ViewModels.Controls.About
         // 区分传统桌面应用
         public IRelayCommand RecognizeCommand => new RelayCommand(async () =>
         {
-            if (!Program.ApplicationRoot.IsDialogOpening)
-            {
-                Program.ApplicationRoot.IsDialogOpening = true;
-                await new DesktopAppsDialog().ShowAsync();
-                Program.ApplicationRoot.IsDialogOpening = false;
-            }
+            await new DesktopAppsDialog().ShowAsync();
         });
     }
 }

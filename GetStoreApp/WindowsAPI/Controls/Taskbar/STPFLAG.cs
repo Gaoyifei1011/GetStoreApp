@@ -3,7 +3,7 @@
     /// <summary>
     /// 由 <see cref="ITaskbarList4.SetTabProperties"> 方法用来指定选项卡属性
     /// </summary>
-    internal enum STPFLAG
+    public enum STPFLAG
     {
         /// <summary>
         /// 未指定任何特定属性值。 使用默认行为：选项卡窗口提供缩略图和速览图像，根据需要实时或静态。

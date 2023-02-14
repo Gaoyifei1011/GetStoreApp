@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using Windows.Storage;
 using Windows.Storage.Pickers;
+using WinRT.Interop;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Common
 {
@@ -106,7 +107,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
                 {
                     FolderPicker folderPicker = new FolderPicker();
                     folderPicker.SuggestedStartLocation = PickerLocationId.Downloads;
-                    WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
+                    InitializeWithWindow.Initialize(folderPicker, Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
                     StorageFolder folder = await folderPicker.PickSingleFolderAsync();
 
                     if (folder is not null)

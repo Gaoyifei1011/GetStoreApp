@@ -129,7 +129,7 @@ namespace GetStoreApp.Extensions.Command
         /// <param name="result">生成的 <typeparamref name="T"/> 值（如果有）。</param>
         /// <returns>是否可以检索兼容的命令参数。</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static bool TryGetCommandArgument(object? parameter, out T? result)
+        public static bool TryGetCommandArgument(object? parameter, out T? result)
         {
             // 如果参数为 null，并且 T 的默认值也为 null，则该参数有效。T 可以是引用类型或可为 null 的值类型。
             if (parameter is null && default(T) is null)
@@ -158,7 +158,7 @@ namespace GetStoreApp.Extensions.Command
         /// </summary>
         /// <param name="parameter">输入参数。</param>
         /// <exception cref="ArgumentException">抛出错误消息，以提供有关无效参数的信息。</exception>
-        internal static void ThrowArgumentExceptionForInvalidCommandArgument(object? parameter)
+        public static void ThrowArgumentExceptionForInvalidCommandArgument(object? parameter)
         {
             [MethodImpl(MethodImplOptions.NoInlining)]
             static Exception GetException(object? parameter)

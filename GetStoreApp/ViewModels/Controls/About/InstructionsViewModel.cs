@@ -17,23 +17,13 @@ namespace GetStoreApp.ViewModels.Controls.About
         // 桌面程序启动参数说明
         public IRelayCommand DesktopLaunchCommand => new RelayCommand(async () =>
         {
-            if (!Program.ApplicationRoot.IsDialogOpening)
-            {
-                Program.ApplicationRoot.IsDialogOpening = true;
-                await new DesktopStartupArgsDialog().ShowAsync();
-                Program.ApplicationRoot.IsDialogOpening = false;
-            }
+            await new DesktopStartupArgsDialog().ShowAsync();
         });
 
         // 控制台程序启动参数说明
         public IRelayCommand ConsoleLaunchCommand => new RelayCommand(async () =>
         {
-            if (!Program.ApplicationRoot.IsDialogOpening)
-            {
-                Program.ApplicationRoot.IsDialogOpening = true;
-                await new ConsoleStartupArgsDialog().ShowAsync();
-                Program.ApplicationRoot.IsDialogOpening = false;
-            }
+            await new ConsoleStartupArgsDialog().ShowAsync();
         });
 
         // 检查网络
@@ -51,12 +41,7 @@ namespace GetStoreApp.ViewModels.Controls.About
         // Cloudflare 5秒验证信息
         public IRelayCommand CloudflareValidationCommand => new RelayCommand(async () =>
         {
-            if (!Program.ApplicationRoot.IsDialogOpening)
-            {
-                Program.ApplicationRoot.IsDialogOpening = true;
-                await new CloudflareValidationDialog().ShowAsync();
-                Program.ApplicationRoot.IsDialogOpening = false;
-            }
+            await new CloudflareValidationDialog().ShowAsync();
         });
 
         // 下载设置

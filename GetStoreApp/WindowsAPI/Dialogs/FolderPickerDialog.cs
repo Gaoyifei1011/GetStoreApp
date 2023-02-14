@@ -19,14 +19,6 @@ namespace GetStoreApp.WindowsAPI.Dialogs
         public string Title { get; set; }
 
         /// <summary>
-        /// 显示对话框（非模态窗口）
-        /// </summary>
-        public bool ShowDialog()
-        {
-            return ShowDialog(IntPtr.Zero);
-        }
-
-        /// <summary>
         /// 显示对话框（模态窗口）
         /// </summary>
         public bool ShowDialog(IntPtr hwnd)
@@ -64,7 +56,7 @@ namespace GetStoreApp.WindowsAPI.Dialogs
                 {
                     return false;
                 }
-                
+
                 if (hr != NativeMethods.OK)
                 {
                     Marshal.ThrowExceptionForHR(hr);

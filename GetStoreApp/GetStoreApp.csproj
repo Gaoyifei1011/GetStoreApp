@@ -14,7 +14,7 @@
     <EnableMsixTooling>false</EnableMsixTooling>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <FileAlignment>512</FileAlignment>
-    <FileVersion>1.2.210.0</FileVersion>
+    <FileVersion>1.2.214.0</FileVersion>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
     <IncludeSymbols>False</IncludeSymbols>
@@ -24,12 +24,13 @@
     <Optimize>True</Optimize>
     <OutputType>WinExe</OutputType>
     <PackageIcon>Assets\GetStoreApp.png</PackageIcon>
-    <Platforms>x86;x64;ARM64</Platforms>
+    <Platforms>x86;x64;ARM64;AnyCPU</Platforms>
     <PublishProtocol>FileSystem</PublishProtocol>
     <PublishReadyToRun>True</PublishReadyToRun>
     <!--调试时需要设置该选项为false-->
     <PublishSingleFile>false</PublishSingleFile>
     <PublishTrimmed>true</PublishTrimmed>
+    <Product>获取商店应用</Product>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <RootNamespace>GetStoreApp</RootNamespace>
     <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
@@ -40,7 +41,7 @@
     <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <TrimMode>partial</TrimMode>
-    <Version>1.2.210.0</Version>
+    <Version>1.2.214.0</Version>
     <UseWindowsForms>False</UseWindowsForms>
     <UseWinUI>true</UseWinUI>
     <UseWPF>False</UseWPF>
@@ -55,6 +56,9 @@
     <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Platform)'=='ARM64'">
+    <RuntimeIdentifier>win10-arm64</RuntimeIdentifier>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Platform)'=='AnyCPU'">
     <RuntimeIdentifier>win10-arm64</RuntimeIdentifier>
   </PropertyGroup>
   
@@ -73,7 +77,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <DebugType>portable</DebugType>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>portable</DebugType>
   </PropertyGroup>
   
@@ -91,16 +101,19 @@
       <CopyToOutputDirectory Condition="'$(Platform)'=='x86'">Never</CopyToOutputDirectory>
       <CopyToOutputDirectory Condition="'$(Platform)'=='x64'">Never</CopyToOutputDirectory>
       <CopyToOutputDirectory Condition="'$(Platform)'=='ARM64'">Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory Condition="'$(Platform)'=='AnyCPU'">Always</CopyToOutputDirectory>
     </Content>    
     <Content Include="Aria2\Aria2cX64.exe" Link="Aria2\Aria2c.exe">
       <CopyToOutputDirectory Condition="'$(Platform)'=='x86'">Never</CopyToOutputDirectory>
       <CopyToOutputDirectory Condition="'$(Platform)'=='x64'">Always</CopyToOutputDirectory>
       <CopyToOutputDirectory Condition="'$(Platform)'=='ARM64'">Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory Condition="'$(Platform)'=='AnyCPU'">Never</CopyToOutputDirectory>
     </Content>
     <Content Include="Aria2\Aria2cX86.exe" Link="Aria2\Aria2c.exe">
       <CopyToOutputDirectory Condition="'$(Platform)'=='x86'">Always</CopyToOutputDirectory>
       <CopyToOutputDirectory Condition="'$(Platform)'=='x64'">Never</CopyToOutputDirectory>
       <CopyToOutputDirectory Condition="'$(Platform)'=='ARM64'">Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory Condition="'$(Platform)'=='AnyCPU'">Never</CopyToOutputDirectory>
     </Content>
 
     <Content Update="Assets\GetStoreApp.ico">

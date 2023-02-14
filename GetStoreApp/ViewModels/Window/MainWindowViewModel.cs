@@ -136,25 +136,18 @@ namespace GetStoreApp.ViewModels.Window
                     }
 
                     // 关闭窗口提示对话框是否已经处于打开状态，如果是，不再弹出
-                    if (!Program.ApplicationRoot.IsDialogOpening)
+                    ContentDialogResult result = await new ClosingWindowDialog().ShowAsync();
+
+                    if (result is ContentDialogResult.Primary)
                     {
-                        Program.ApplicationRoot.IsDialogOpening = true;
-
-                        ContentDialogResult result = await new ClosingWindowDialog().ShowAsync();
-
-                        if (result is ContentDialogResult.Primary)
+                        await Program.ApplicationRoot.ViewModel.CloseAppAsync();
+                    }
+                    else if (result is ContentDialogResult.Secondary)
+                    {
+                        if (NavigationService.GetCurrentPageType() != typeof(DownloadPage))
                         {
-                            await Program.ApplicationRoot.ViewModel.CloseAppAsync();
+                            NavigationService.NavigateTo(typeof(DownloadPage));
                         }
-                        else if (result is ContentDialogResult.Secondary)
-                        {
-                            if (NavigationService.GetCurrentPageType() != typeof(DownloadPage))
-                            {
-                                NavigationService.NavigateTo(typeof(DownloadPage));
-                            }
-                        }
-
-                        Program.ApplicationRoot.IsDialogOpening = false;
                     }
                 }
                 else

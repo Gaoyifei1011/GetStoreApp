@@ -2,11 +2,14 @@
 
 namespace GetStoreApp.WindowsAPI.PInvoke.CoreMessaging
 {
+    /// <summary>
+    /// 为新的 DispatcherQueueController 指定线程和单元类型。
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct DispatcherQueueOptions
     {
         /// <summary>
-        /// DispatcherQueueOptions 结构的大小
+        /// <see cref="DispatcherQueueOptions"> 结构的大小
         /// </summary>
         public int dwSize;
 

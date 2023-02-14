@@ -40,16 +40,14 @@
         /// <summary>
         /// 合并 <see cref="STANDARD_RIGHTS_WRITE" />, <see cref="KEY_SET_VALUE" />, 和 <see cref="KEY_CREATE_SUB_KEY" /> 访问权限。
         /// </summary>
-        KEY_WRITE =
-            (int)StandardRight.STANDARD_RIGHTS_WRITE | KEY_SET_VALUE | KEY_CREATE_SUB_KEY,
+        KEY_WRITE = (int)StandardRight.STANDARD_RIGHTS_WRITE | KEY_SET_VALUE | KEY_CREATE_SUB_KEY,
 
         /// <summary>
         /// 合并 <see cref="STANDARD_RIGHTS_READ" />, <see cref="KEY_QUERY_VALUE" />, <see cref="KEY_ENUMERATE_SUB_KEYS" />, 和 <see cref="KEY_NOTIFY" /> 值。
         /// </summary>
-        KEY_READ =
-            (int)StandardRight.STANDARD_RIGHTS_READ | KEY_QUERY_VALUE | KEY_ENUMERATE_SUB_KEYS | KEY_NOTIFY,
+        KEY_READ = (int)StandardRight.STANDARD_RIGHTS_READ | KEY_QUERY_VALUE | KEY_ENUMERATE_SUB_KEYS | KEY_NOTIFY,
 
-        /// <summary>等效于 <see cref="KEY_READ" />.</summary>
+        /// <summary>等效于 <see cref="KEY_READ" />。</summary>
         KEY_EXECUTE = KEY_READ,
 
         /// <summary>

@@ -14,7 +14,7 @@ namespace GetStoreApp.Extensions.SystemTray
         private readonly object lockObject = new object();
         public static readonly object SyncRoot = new object();
 
-        private NotifyIconData iconData;
+        private NOTIFYICONDATA iconData;
 
         private int menuIndex = 0;
 
@@ -42,7 +42,7 @@ namespace GetStoreApp.Extensions.SystemTray
             messageSink = new WindowMessageSink();
 
             // 初始化图标数据结构
-            iconData = NotifyIconData.CreateDefault(messageSink.MessageWindowHandle, iconFile, title);
+            iconData = NOTIFYICONDATA.CreateDefault(messageSink.MessageWindowHandle, iconFile, title);
 
             // 创建任务栏图标
             CreateTaskbarIcon();
@@ -175,14 +175,14 @@ namespace GetStoreApp.Extensions.SystemTray
         }
 
         /// <summary>
-        /// 使用给定 <see cref="NotifyIconData"/> 实例提供的数据更新任务栏图标。
+        /// 使用给定 <see cref="NOTIFYICONDATA"/> 实例提供的数据更新任务栏图标。
         /// </summary>
         /// <param name="data">通知图标的配置设置。</param>
         /// <param name="command">对图标进行操作（例如删除图标）。</param>
         /// <param name="flags">定义设置 <paramref name="data"/> 结构的哪些成员。</param>
         /// <returns>如果数据已成功写入，则为 True。</returns>
         /// <remarks>有关详细信息，请参阅 MSDN 上的Shell_NotifyIcon文档。</remarks>
-        public static bool WriteIconData(ref NotifyIconData data, NotifyCommand command, IconDataMembers flags)
+        public static bool WriteIconData(ref NOTIFYICONDATA data, NotifyCommand command, IconDataMembers flags)
         {
             data.ValidMembers = flags;
             lock (SyncRoot)

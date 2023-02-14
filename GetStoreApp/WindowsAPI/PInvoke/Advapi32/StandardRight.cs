@@ -34,7 +34,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
         SYNCHRONIZE = 0x00100000,
 
         /// <summary>
-        /// 合并 DELETE、READ_CONTROL、WRITE_DAC 和WRITE_OWNER访问。
+        /// 合并 <see cref="DELETE">、<see cref="READ_CONTROL">、<see cref="WRITE_DAC"> 和 <see cref="WRITE_OWNER"> 访问。
         /// </summary>
         STANDARD_RIGHTS_REQUIRED = 0x000F0000,
 
@@ -54,7 +54,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
         STANDARD_RIGHTS_EXECUTE = READ_CONTROL,
 
         /// <summary>
-        /// 合并 DELETE、READ_CONTROL、WRITE_DAC、WRITE_OWNER 和 SYNCHRONIZE 访问。
+        /// 合并 <see cref="DELETE">、<see cref="READ_CONTROL">、<see cref="WRITE_DAC">、<see cref="WRITE_OWNER"> 和 <see cref="SYNCHRONIZE"> 访问。
         /// </summary>
         STANDARD_RIGHTS_ALL = 0x001F0000,
     }

@@ -1,9 +1,10 @@
-﻿<ContentDialog
+﻿<dialogsAndFlyouts:ExtendedContentDialog
     x:Class="GetStoreApp.UI.Dialogs.Download.FileInformationDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dialogViewModel="using:GetStoreApp.ViewModels.Dialogs.Download"
+    xmlns:dialogsAndFlyouts="using:GetStoreApp.Views.CustomControls.DialogsAndFlyouts"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     x:Name="FileInformationRoot"
@@ -12,9 +13,9 @@
     Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">
 
-    <ContentDialog.DataContext>
+    <dialogsAndFlyouts:ExtendedContentDialog.DataContext>
         <dialogViewModel:FileInformationViewModel x:Name="ViewModel" />
-    </ContentDialog.DataContext>
+    </dialogsAndFlyouts:ExtendedContentDialog.DataContext>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -169,4 +170,4 @@
             </Button>
         </Grid>
     </Grid>
-</ContentDialog>
+</dialogsAndFlyouts:ExtendedContentDialog>

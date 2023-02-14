@@ -2,6 +2,9 @@
 
 namespace GetStoreApp.WindowsAPI.PInvoke.CoreMessaging
 {
+    /// <summary>
+    /// CoreMessaging.dll 函数库
+    /// </summary>
     public class CoreMessagingLibrary
     {
         private const string CoreMessaging = "CoreMessaging.dll";

@@ -9,7 +9,7 @@ namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
     [ComImport]
     [Guid("42f85136-db7e-439c-85f1-e4075d135fc8")]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    internal interface IFileOpenDialog
+    public interface IFileOpenDialog
     {
         [PreserveSig]
         int Show([In] IntPtr hwnd);

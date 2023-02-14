@@ -29,12 +29,12 @@ namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
         FOS_PICKFOLDERS = 0x20,
 
         /// <summary>
-        /// 确保返回的项目是文件系统项目 <see cref="SFGAOF.SFGAO_FILESYSTEM">。请注意，这不适用于 <see cref="IFileOpenDialog.GetCurrentSelection"> 返回的项目。
+        /// 确保返回的项目是文件系统项目 <see cref="SFGAO.SFGAO_FILESYSTEM">。请注意，这不适用于 <see cref="IFileOpenDialog.GetCurrentSelection"> 返回的项目。
         /// </summary>
         FOS_FORCEFILESYSTEM = 0x40,
 
         /// <summary>
-        /// 使用户能够选择 Shell 命名空间中的任何项，而不仅仅是具有 <see cref="SFGAOF.SFGAO_STREAM"> 或 <see cref="SFGAOF.SFGAO_FILESYSTEM"> 属性的项。
+        /// 使用户能够选择 Shell 命名空间中的任何项，而不仅仅是具有 <see cref="SFGAO.SFGAO_STREAM"> 或 <see cref="SFGAO.SFGAO_FILESYSTEM"> 属性的项。
         /// 此标志不能与 <see cref="FOS_FORCEFILESYSTEM"> 结合使用。
         /// </summary>
         FOS_ALLNONSTORAGEITEMS = 0x80,
