@@ -16,7 +16,6 @@
         ResultControlVisable = 8,
         ResultDataList = 9,
         StatusBarState = 10,
-        SystemSettingsChanged = 11,
-        WindowClosed = 12
+        WindowClosed = 11
     }
 }

@@ -18,8 +18,6 @@ namespace GetStoreApp.UI.Dialogs.Common
 
         public DownloadNotifyDialog(DuplicatedDataInfoArgs duplicatedDataInfo)
         {
-            XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
-
             switch (duplicatedDataInfo)
             {
                 case DuplicatedDataInfoArgs.Unfinished: DownloadNotifyContent = ResourceService.GetLocalized("Dialog/DownloadUnfinishedContent"); break;

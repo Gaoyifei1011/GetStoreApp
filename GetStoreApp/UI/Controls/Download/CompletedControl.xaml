@@ -193,6 +193,23 @@
                 </menusAndToolbars:ExtendedAppBarButton>
 
                 <menusAndToolbars:ExtendedAppBarButton
+                    Command="{x:Bind ViewModel.ShareSelectedFileCommand}"
+                    Cursor="Hand"
+                    Label="{x:Bind root:ResourceService.GetLocalized('Download/ShareSelectedFile')}">
+
+                    <menusAndToolbars:ExtendedAppBarButton.Icon>
+                        <FontIcon Glyph="&#xE72d;" Style="{StaticResource SegoeFluentStyle}" />
+                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('Download/ShareSelectedFile')}"
+                            Placement="Bottom"
+                            VerticalOffset="25" />
+                    </ToolTipService.ToolTip>
+                </menusAndToolbars:ExtendedAppBarButton>
+
+                <menusAndToolbars:ExtendedAppBarButton
                     Command="{x:Bind ViewModel.CancelCommand}"
                     Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('Download/Cancel')}">

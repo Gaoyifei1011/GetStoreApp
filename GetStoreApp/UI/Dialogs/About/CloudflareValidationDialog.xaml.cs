@@ -14,7 +14,6 @@ namespace GetStoreApp.UI.Dialogs.About
 
         public CloudflareValidationDialog()
         {
-            XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
             InitializeComponent();
         }
     }

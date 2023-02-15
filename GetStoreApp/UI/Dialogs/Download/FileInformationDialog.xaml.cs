@@ -15,7 +15,6 @@ namespace GetStoreApp.UI.Dialogs.Download
 
         public FileInformationDialog(CompletedModel completedItem)
         {
-            XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
             InitializeComponent();
             ViewModel.InitializeFileInformation(completedItem);
         }

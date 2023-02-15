@@ -1,3 +1,7 @@
+<div align=center>
+<img src="https://user-images.githubusercontent.com/49179966/219057775-f8d6abb5-c9c3-46c6-829e-05d164937b76.png" width="140" height="140"/>
+</div>
+
 # <p align="center">Welcome to GetStoreApp</p>
 
 ### Application brief introduction

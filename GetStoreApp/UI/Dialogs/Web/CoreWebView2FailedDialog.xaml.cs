@@ -15,7 +15,6 @@ namespace GetStoreApp.UI.Dialogs.Web
 
         public CoreWebView2FailedDialog(CoreWebView2ProcessFailedEventArgs args)
         {
-            XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
             InitializeComponent();
             ViewModel.InitializeFailedInformation(args);
         }

@@ -18,8 +18,6 @@ namespace GetStoreApp.UI.Dialogs.Common
 
         public DeletePromptDialog(DeleteArgs deletePrompt)
         {
-            XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
-
             switch (deletePrompt)
             {
                 case DeleteArgs.History: DeleteContent = ResourceService.GetLocalized(string.Format("/Dialog/Delete{0}", deletePrompt.ToString())); break;

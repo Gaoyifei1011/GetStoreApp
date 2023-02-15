@@ -257,6 +257,12 @@
   <data name="ResultLinkSelectedCopySuccessfully" xml:space="preserve">
     <value>{0} download links has been successfully copied to the clipboard</value>
   </data>
+  <data name="ShareFailed" xml:space="preserve">
+    <value>File sharing fails. Please check the access permission of the shared file</value>
+  </data>
+  <data name="ShareSelectedFailed" xml:space="preserve">
+    <value>{0} files sharing failed. Please check the access permission of the shared files</value>
+  </data>
   <data name="StartScreenFailed" xml:space="preserve">
     <value>App pinning to Start screen failed, please pin it manually</value>
   </data>

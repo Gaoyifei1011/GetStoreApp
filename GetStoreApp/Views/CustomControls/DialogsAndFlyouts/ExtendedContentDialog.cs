@@ -17,6 +17,7 @@ namespace GetStoreApp.Views.CustomControls.DialogsAndFlyouts
             if (!IsDialogOpening)
             {
                 IsDialogOpening = true;
+                XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
                 dialogResult = await base.ShowAsync();
                 IsDialogOpening = false;
             }

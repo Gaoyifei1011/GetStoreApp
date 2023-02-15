@@ -14,7 +14,6 @@ namespace GetStoreApp.UI.Dialogs.Common
 
         public ClosingWindowDialog()
         {
-            XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
             InitializeComponent();
         }
     }

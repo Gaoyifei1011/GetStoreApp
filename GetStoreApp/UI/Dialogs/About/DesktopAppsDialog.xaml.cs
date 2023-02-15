@@ -14,7 +14,6 @@ namespace GetStoreApp.UI.Dialogs.About
 
         public DesktopAppsDialog()
         {
-            XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
             InitializeComponent();
         }
     }

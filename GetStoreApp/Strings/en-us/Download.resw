@@ -280,7 +280,13 @@
     <value>Enter multi-select mode</value>
   </data>
   <data name="ShareFile" xml:space="preserve">
+    <value>Share file</value>
+  </data>
+  <data name="ShareFileTitle" xml:space="preserve">
     <value>File sharing</value>
+  </data>
+  <data name="ShareSelectedFile" xml:space="preserve">
+    <value>Share the selected files</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Download Management</value>

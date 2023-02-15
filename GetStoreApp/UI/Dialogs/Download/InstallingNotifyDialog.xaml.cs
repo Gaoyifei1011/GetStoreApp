@@ -14,7 +14,6 @@ namespace GetStoreApp.UI.Dialogs.Download
 
         public InstallingNotifyDialog()
         {
-            XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
             InitializeComponent();
         }
     }

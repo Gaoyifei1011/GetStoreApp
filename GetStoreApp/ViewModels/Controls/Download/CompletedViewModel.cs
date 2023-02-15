@@ -10,7 +10,9 @@ using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Dialogs.Download;
+using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Base;
+using GetStoreApp.WindowsAPI.PInvoke.WinUI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -18,9 +20,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Management.Deployment;
 using Windows.Storage;
 using Windows.System;
+using WinRT;
 
 namespace GetStoreApp.ViewModels.Controls.Download
 {
@@ -209,6 +213,59 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
         });
 
+        // 分享选中的文件
+        public IRelayCommand ShareSelectedFileCommand => new RelayCommand(async () =>
+        {
+            List<BackgroundModel> SelectedCompletedDataList = new List<BackgroundModel>();
+
+            foreach (CompletedModel completedItem in CompletedDataList.Where(item => item.IsSelected is true))
+            {
+                SelectedCompletedDataList.Add(new BackgroundModel
+                {
+                    DownloadKey = completedItem.DownloadKey,
+                    FilePath = completedItem.FilePath,
+                    IsInstalling = completedItem.IsInstalling,
+                });
+            }
+
+            // 没有选中任何内容时显示空提示对话框
+            if (SelectedCompletedDataList.Count is 0)
+            {
+                await new SelectEmptyPromptDialog().ShowAsync();
+                return;
+            }
+
+            try
+            {
+                IDataTransferManagerInterop interop = DataTransferManager.As<IDataTransferManagerInterop>();
+
+                IntPtr result = interop.GetForWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), new Guid(0xa5caee9b, 0x8708, 0x49d1, 0x8d, 0x36, 0x67, 0xd2, 0x5a, 0x8d, 0xa0, 0x0c));
+
+                DataTransferManager dataTransferManager = MarshalInterface<DataTransferManager>.FromAbi(result);
+
+                dataTransferManager.DataRequested += async (sender, args) =>
+                {
+                    DataRequestDeferral deferral = args.Request.GetDeferral();
+
+                    args.Request.Data.Properties.Title = string.Format(ResourceService.GetLocalized("Download/ShareFileTitle"));
+
+                    List<StorageFile> SelectedFileList = new List<StorageFile>();
+                    foreach (BackgroundModel completedItem in SelectedCompletedDataList)
+                    {
+                        SelectedFileList.Add(await StorageFile.GetFileFromPathAsync(completedItem.FilePath));
+                    }
+                    args.Request.Data.SetStorageItems(SelectedFileList);
+                    deferral.Complete();
+                };
+
+                interop.ShowShareUIForWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
+            }
+            catch(Exception)
+            {
+                new ShareFailedNotification(true, SelectedCompletedDataList.Count).Show();
+            }
+        });
+
         // 退出多选模式
         public IRelayCommand CancelCommand => new RelayCommand(() =>
         {
@@ -364,9 +421,32 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
         });
 
-        public IRelayCommand ShareFileCommand => new RelayCommand<CompletedModel>(async (completedItem) =>
+        // 共享文件
+        public IRelayCommand ShareFileCommand => new RelayCommand<CompletedModel>((completedItem) =>
         {
-            await Task.CompletedTask;
+            try
+            {
+                IDataTransferManagerInterop interop = DataTransferManager.As<IDataTransferManagerInterop>();
+
+                IntPtr result = interop.GetForWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), new Guid(0xa5caee9b, 0x8708, 0x49d1, 0x8d, 0x36, 0x67, 0xd2, 0x5a, 0x8d, 0xa0, 0x0c));
+
+                DataTransferManager dataTransferManager = MarshalInterface<DataTransferManager>.FromAbi(result);
+
+                dataTransferManager.DataRequested += async (sender, args) =>
+                {
+                    DataRequestDeferral deferral = args.Request.GetDeferral();
+
+                    args.Request.Data.Properties.Title = string.Format(ResourceService.GetLocalized("Download/ShareFileTitle"));
+                    args.Request.Data.SetStorageItems(new List<StorageFile>() { await StorageFile.GetFileFromPathAsync(completedItem.FilePath) });
+                    deferral.Complete();
+                };
+
+                interop.ShowShareUIForWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
+            }
+            catch(Exception)
+            {
+                new ShareFailedNotification(false).Show();
+            }
         });
 
         // 查看文件信息

@@ -14,7 +14,6 @@ namespace GetStoreApp.UI.Dialogs.Settings
 
         public ExperimentalConfigDialog()
         {
-            XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
             InitializeComponent();
         }
     }
