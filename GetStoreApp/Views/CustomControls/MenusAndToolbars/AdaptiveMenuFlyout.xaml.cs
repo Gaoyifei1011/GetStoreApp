@@ -25,7 +25,7 @@ namespace GetStoreApp.Views.CustomControls.MenusAndToolbars
         {
             if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[0].InternalName)
             {
-                if (RegistryHelper.GetRegistryAppTheme() == ElementTheme.Light)
+                if (Application.Current.RequestedTheme is ApplicationTheme.Light)
                 {
                     MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveFlyoutLightPresenter"] as Style;
                 }

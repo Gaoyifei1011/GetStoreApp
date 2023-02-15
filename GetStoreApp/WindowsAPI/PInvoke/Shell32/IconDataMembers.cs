@@ -48,7 +48,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         /// Windows Vista（Shell32.dll版本 6.0.6）及更高版本。
         /// 使用标准工具提示。通常，当 uVersion 设置为 NOTIFYICON_VERSION_4 时，标准工具提示将替换为应用程序绘制的弹出式用户界面 （UI）。
         /// 如果应用程序想要在这种情况下显示标准工具提示，则无论悬停 UI 是否显示，它都可以指定 NIF_SHOWTIP 以指示仍应显示标准工具提示。
-        /// 请注意，NIF_SHOWTIP标志在下次调用Shell_NotifyIcon之前有效。
+        /// 请注意，NIF_SHOWTIP标志在下次调用 <see cref="Shell32Library.Shell_NotifyIcon"> 之前有效。
         /// </summary>
         UseLegacyToolTips = 0x80
     }

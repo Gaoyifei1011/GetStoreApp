@@ -7,13 +7,13 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
     {
         /// <summary>
         /// 使用文本字符串显示菜单项。 dwTypeData 成员是指向 null 终止字符串的指针，cch 成员是字符串的长度。
-        /// MFT_STRING 替换为 MIIM_STRING。
+        /// <see cref="MFT_STRING"> 替换为 <see cref="MenuMembersMask.MIIM_STRING">。
         /// </summary>
         MFT_STRING = 0x00000000,
 
         /// <summary>
         /// 使用位图显示菜单项。 dwTypeData 成员的低顺序字是位图句柄，cch 成员将被忽略。
-        /// MFT_BITMAP 由 MIIM_BITMAP 和 hbmpItem 替换。
+        /// <see cref="MFT_BITMAP"> 由 <see cref="MenuMembersMask.MIIM_BITMAP"> 和 hbmpItem 替换。
         /// </summary>
         MFT_BITMAP = 0x00000004,
 
@@ -28,7 +28,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         MFT_MENUBREAK = 0x00000040,
 
         /// <summary>
-        /// 分配将菜单项绘制到拥有菜单的窗口的责任。 窗口在首次显示菜单前接收 WM_MEASUREITEM 消息，每当必须更新菜单项的外观时，都会收到 WM_DRAWITEM 消息。 如果指定了此值， dwTypeData 成员将包含应用程序定义的值。
+        /// 分配将菜单项绘制到拥有菜单的窗口的责任。 窗口在首次显示菜单前接收 <see cref="WindowMessage.WM_MEASUREITEM"> 消息，每当必须更新菜单项的外观时，都会收到 <see cref="WindowMessage.WM_DRAWITEM"> 消息。 如果指定了此值， dwTypeData 成员将包含应用程序定义的值。
         /// </summary>
         MFT_OWNERDRAW = 0x00000100,
 

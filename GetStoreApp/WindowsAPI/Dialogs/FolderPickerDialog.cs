@@ -9,11 +9,6 @@ namespace GetStoreApp.WindowsAPI.Dialogs
     /// </summary>
     public class FolderPickerDialog
     {
-        /// <summary>
-        /// 未指定参数时，使用“我的电脑”目录
-        /// </summary>
-        public const string ComputerPath = "::{20D04FE0-3AEA-1069-A2D8-08002B30309D}";
-
         public string Path { get; set; }
 
         public string Title { get; set; }

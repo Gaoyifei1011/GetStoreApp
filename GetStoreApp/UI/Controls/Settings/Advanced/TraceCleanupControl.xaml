@@ -24,7 +24,7 @@
         <FontIcon
             Grid.Column="0"
             FontFamily="{StaticResource SegoeFluentFontFamily}"
-            Glyph="&#xe74d;"
+            Glyph="&#xE74d;"
             Style="{StaticResource FontIconStyle}" />
 
         <StackPanel Grid.Column="1" Orientation="Vertical">

@@ -6,7 +6,7 @@
     public enum SizeMode : int
     {
         /// <summary>
-        /// 窗口已调整大小，但 SIZE_MINIMIZED 和 SIZE_MAXIMIZED 值均未应用。
+        /// 窗口已调整大小，但 <see cref="SIZE_MINIMIZED"> 和 <see cref="SIZE_MAXIMIZED"> 值均未应用。
         /// </summary>
         SIZE_RESTORED = 0,
 

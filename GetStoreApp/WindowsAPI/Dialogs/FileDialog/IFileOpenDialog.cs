@@ -20,6 +20,9 @@ namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
 
         void GetFileTypeIndex();
 
+        /// <summary>
+        /// 分配侦听来自对话的事件的事件处理程序。
+        /// </summary>
         void Advise();
 
         void Unadvise();
@@ -48,6 +51,9 @@ namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
 
         void GetResult(out IShellItem ppsi);
 
+        /// <summary>
+        /// 将文件夹添加到可供用户打开或保存项的位置列表中。
+        /// </summary>
         void AddPlace();
 
         void SetDefaultExtension();
@@ -60,7 +66,14 @@ namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
 
         void SetFilter();
 
+        /// <summary>
+        /// 在允许多项选择的对话框中获取用户的选择。
+        /// </summary>
         void GetResults();
+
+        /// <summary>
+        /// 获取对话框中当前选定的项。这些项目可能是在视图中选择的项目，也可能是在文件名编辑框中选择的文本。
+        /// </summary>
 
         void GetSelectedItems();
     }

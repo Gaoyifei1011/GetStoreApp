@@ -26,7 +26,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         MIIM_CHECKMARKS = 0x00000008,
 
         /// <summary>
-        /// 检索或设置 fType 和 dwTypeData 成员。MIIM_TYPE 替换为 MIIM_BITMAP、 MIIM_FTYPE和 MIIM_STRING。
+        /// 检索或设置 fType 和 dwTypeData 成员。<see cref="MIIM_TYPE"> 替换为 <see cref="MIIM_BITMAP">、 <see cref="MIIM_FTYPE"> 和 <see cref="MIIM_STRING">。
         /// </summary>
         MIIM_TYPE = 0x00000010,
 

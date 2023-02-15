@@ -68,12 +68,6 @@ namespace GetStoreApp.Views.Window
         {
             switch (Msg)
             {
-                // 系统设置发生更改时的消息
-                case WindowMessage.WM_SETTINGCHANGE:
-                    {
-                        Messenger.Default.Send(true, MessageToken.SystemSettingsChanged);
-                        break;
-                    }
                 // 窗口大小发生更改时的消息
                 case WindowMessage.WM_GETMINMAXINFO:
                     {

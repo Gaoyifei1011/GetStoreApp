@@ -42,12 +42,12 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         MB_RETRYCANCEL = 0x000005,
 
         /// <summary>
-        /// 消息框包含三个按下按钮： “取消”、“ 重试”、“ 继续”。 使用此消息框类型，而不是MB_ABORTRETRYIGNORE。
+        /// 消息框包含三个按下按钮： “取消”、“ 重试”、“ 继续”。 使用此消息框类型，而不是 <see cref="MB_ABORTRETRYIGNORE">。
         /// </summary>
         MB_CANCELTRYCONTINUE = 0x000006,
 
         /// <summary>
-        /// 向消息框添加 “帮助 ”按钮。 当用户单击 “帮助 ”按钮或按 F1 时，系统会向所有者发送 WM_HELP 消息。
+        /// 向消息框添加 “帮助 ”按钮。 当用户单击 “帮助 ”按钮或按 F1 时，系统会向所有者发送 <see cref="WindowMessage.WM_HELP"> 消息。
         /// </summary>
         MB_HELP = 0x00004000,
 
@@ -106,7 +106,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
 
         /// <summary>
         /// 第一个按钮是默认按钮。
-        /// 除非指定了MB_DEFBUTTON2、MB_DEFBUTTON3或MB_DEFBUTTON4，否则MB_DEFBUTTON1是默认值。
+        /// 除非指定了 <see cref="MB_DEFBUTTON2">、<see cref="MB_DEFBUTTON3"> 或 <see cref="MB_DEFBUTTON4">，否则 <see cref="MB_DEFBUTTON1"> 是默认值。
         /// </summary>
         MB_DEFBUTTON1 = 0x000000,
 
@@ -131,18 +131,18 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <summary>
         /// 在 hWnd 参数标识的窗口中继续工作之前，用户必须响应消息框。 但是，用户可以移动到其他线程的窗口，并在这些窗口中工作。
         /// 根据应用程序中的窗口层次结构，用户可能能够移动到线程中的其他窗口。 消息框父级的所有子窗口都将自动禁用，但弹出窗口不是。
-        /// 如果未指定MB_SYSTEMMODAL或MB_TASKMODAL，则MB_APPLMODAL为默认值。
+        /// 如果未指定 <see cref="MB_SYSTEMMODAL"> 或 <see cref="MB_TASKMODAL">，则 <see cref="MB_APPLMODAL"> 为默认值。
         /// </summary>
         MB_APPLMODAL = 0x000000,
 
         /// <summary>
-        /// 与MB_APPLMODAL相同，消息框具有 WS_EX_TOPMOST 样式。 使用系统模式消息框通知用户严重、潜在的破坏性错误，
+        /// 与 <see cref="MB_APPLMODAL"> 相同，消息框具有 WS_EX_TOPMOST 样式。 使用系统模式消息框通知用户严重、潜在的破坏性错误，
         /// 例如， (立即引起注意，) 内存不足。 此标志不会影响用户与 与 hWnd 关联的窗口以外的窗口交互的能力。
         /// </summary>
         MB_SYSTEMMODAL = 0x001000,
 
         /// <summary>
-        /// 与 MB_APPLMODAL 相同，如果 hWnd 参数为 NULL，则禁用属于当前线程的所有顶级窗口。
+        /// 与 <see cref="MB_APPLMODAL"> 相同，如果 hWnd 参数为 NULL，则禁用属于当前线程的所有顶级窗口。
         /// 当调用应用程序或库没有可用的窗口句柄时，请使用此标志，但仍需要防止输入到调用线程中的其他窗口，而不会挂起其他线程。
         /// </summary>
         MB_TASKMODAL = 0x002000,
@@ -151,7 +151,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// 若要指定其他选项，请使用以下一个或多个值。
 
         /// <summary>
-        /// Undocumented
+        /// 未记录
         /// </summary>
         MB_NOFOCUS = 0x008000,
 
@@ -162,7 +162,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
 
         /// <summary>
         /// 与交互式窗口工作站的桌面相同。 有关详细信息，请参阅 窗口工作站。
-        /// 如果当前输入桌面不是默认桌面，则在用户切换到默认桌面之前， MessageBox 不会返回。
+        /// 如果当前输入桌面不是默认桌面，则在用户切换到默认桌面之前， <see cref="User32Library.MessageBox"> 不会返回。
         /// </summary>
         MB_DEFAULT_DESKTOP_ONLY = 0x00020000,
 

@@ -11,7 +11,7 @@
         WM_NULL = 0x0000,
 
         /// <summary>
-        /// 当应用程序请求通过调用 <see cref="User32Library.CreateWindowEx"> 或 CreateWindowEx 函数创建窗口时发送。 (函数返回之前发送消息。) 新窗口的窗口过程在创建窗口后接收此消息，但在窗口变为可见之前。
+        /// 当应用程序请求通过调用 CreateWindow 或 <see cref="User32Library.CreateWindowEx"> 函数创建窗口时发送。 (函数返回之前发送消息。) 新窗口的窗口过程在创建窗口后接收此消息，但在窗口变为可见之前。
         /// </summary>
         WM_CREATE = 0x0001,
 
@@ -53,7 +53,7 @@
         WM_ENABLE = 0x000A,
 
         /// <summary>
-        /// 将 WM_SETREDRAW 消息发送到窗口，以允许重新绘制该窗口中的更改，或阻止重新绘制该窗口中的更改。
+        /// 将 <see cref="WM_SETREDRAW"> 消息发送到窗口，以允许重新绘制该窗口中的更改，或阻止重新绘制该窗口中的更改。
         /// </summary>
         WM_SETREDRAW = 0x000B,
 
@@ -84,7 +84,7 @@
         WM_CLOSE = 0x0010,
 
         /// <summary>
-        /// WM_ENDSESSION消息在系统处理WM_QUERYENDSESSION消息的结果后发送到应用程序。 WM_ENDSESSION消息通知应用程序会话是否结束。
+        /// <see cref="WM_ENDSESSION"> 消息在系统处理 <see cref="WM_QUERYENDSESSION"> 消息的结果后发送到应用程序。 <see cref="WM_ENDSESSION"> 消息通知应用程序会话是否结束。
         /// </summary>
         WM_QUERYENDSESSION = 0x0011,
 
@@ -134,7 +134,7 @@
         WM_ACTIVATEAPP = 0x001C,
 
         /// <summary>
-        /// 应用程序更改字体资源池后，将 WM_FONTCHANGE 消息发送到系统中的所有顶级窗口。
+        /// 应用程序更改字体资源池后，将 <see cref="WM_FONTCHANGE"> 消息发送到系统中的所有顶级窗口。
         /// </summary>
         WM_FONTCHANGE = 0x001D,
 
@@ -215,7 +215,7 @@
         WM_VKEYTOITEM = 0x002E,
 
         /// <summary>
-        /// 由具有 LBS_WANTKEYBOARDINPUT 样式的列表框发送到其所有者，以响应 WM_CHAR 消息。
+        /// 由具有 LBS_WANTKEYBOARDINPUT 样式的列表框发送到其所有者，以响应 <see cref="WM_CHAR"> 消息。
         /// </summary>
         WM_CHARTOITEM = 0x002F,
 
@@ -260,7 +260,7 @@
         WM_COMPACTING = 0x0041,
 
         /// <summary>
-        /// 每当发生 COM 端口事件时，通信设备驱动程序都会发布WM_COMMNOTIFY消息。该消息指示窗口的输入或输出队列的状态。
+        /// 每当发生 COM 端口事件时，通信设备驱动程序都会发布 <see cref="WM_COMMNOTIFY"> 消息。该消息指示窗口的输入或输出队列的状态。
         /// </summary>
         WM_COMMNOTIFY = 0x0044,
 

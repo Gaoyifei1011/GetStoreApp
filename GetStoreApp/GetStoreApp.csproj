@@ -10,21 +10,24 @@
     <Copyright>高怡飞</Copyright>
     <DisableXbfLineInfo>False</DisableXbfLineInfo>
     <Defineconstants>DISABLE_XAML_GENERATED_MAIN</Defineconstants>
+    <Deterministic>true</Deterministic>
     <DesktopCompatible>true</DesktopCompatible>
     <EnableMsixTooling>false</EnableMsixTooling>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <FileAlignment>512</FileAlignment>
     <FileVersion>1.2.214.0</FileVersion>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
     <IncludeSymbols>False</IncludeSymbols>
     <ImplicitUsings>disable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
+    <NoWarn>CA1416;IL2050;IL2070</NoWarn>
     <Nullable>disable</Nullable>
     <Optimize>True</Optimize>
     <OutputType>WinExe</OutputType>
     <PackageIcon>Assets\GetStoreApp.png</PackageIcon>
-    <Platforms>x86;x64;ARM64;AnyCPU</Platforms>
+    <Platforms>x86;x64;ARM64</Platforms>
     <PublishProtocol>FileSystem</PublishProtocol>
     <PublishReadyToRun>True</PublishReadyToRun>
     <!--调试时需要设置该选项为false-->
@@ -45,6 +48,7 @@
     <UseWindowsForms>False</UseWindowsForms>
     <UseWinUI>true</UseWinUI>
     <UseWPF>False</UseWPF>
+    <WindowsAppSDKDeploymentManagerInitialize>false</WindowsAppSDKDeploymentManagerInitialize>
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
     <WindowsPackageType>MSIX</WindowsPackageType>
   </PropertyGroup>
@@ -56,9 +60,6 @@
     <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Platform)'=='ARM64'">
-    <RuntimeIdentifier>win10-arm64</RuntimeIdentifier>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Platform)'=='AnyCPU'">
     <RuntimeIdentifier>win10-arm64</RuntimeIdentifier>
   </PropertyGroup>
   
@@ -77,13 +78,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <DebugType>portable</DebugType>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DebugType>portable</DebugType>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
-    <DebugType>portable</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>portable</DebugType>
   </PropertyGroup>
   
@@ -101,19 +96,16 @@
       <CopyToOutputDirectory Condition="'$(Platform)'=='x86'">Never</CopyToOutputDirectory>
       <CopyToOutputDirectory Condition="'$(Platform)'=='x64'">Never</CopyToOutputDirectory>
       <CopyToOutputDirectory Condition="'$(Platform)'=='ARM64'">Always</CopyToOutputDirectory>
-      <CopyToOutputDirectory Condition="'$(Platform)'=='AnyCPU'">Always</CopyToOutputDirectory>
     </Content>    
     <Content Include="Aria2\Aria2cX64.exe" Link="Aria2\Aria2c.exe">
       <CopyToOutputDirectory Condition="'$(Platform)'=='x86'">Never</CopyToOutputDirectory>
       <CopyToOutputDirectory Condition="'$(Platform)'=='x64'">Always</CopyToOutputDirectory>
       <CopyToOutputDirectory Condition="'$(Platform)'=='ARM64'">Never</CopyToOutputDirectory>
-      <CopyToOutputDirectory Condition="'$(Platform)'=='AnyCPU'">Never</CopyToOutputDirectory>
     </Content>
     <Content Include="Aria2\Aria2cX86.exe" Link="Aria2\Aria2c.exe">
       <CopyToOutputDirectory Condition="'$(Platform)'=='x86'">Always</CopyToOutputDirectory>
       <CopyToOutputDirectory Condition="'$(Platform)'=='x64'">Never</CopyToOutputDirectory>
       <CopyToOutputDirectory Condition="'$(Platform)'=='ARM64'">Never</CopyToOutputDirectory>
-      <CopyToOutputDirectory Condition="'$(Platform)'=='AnyCPU'">Never</CopyToOutputDirectory>
     </Content>
 
     <Content Update="Assets\GetStoreApp.ico">
@@ -285,7 +277,7 @@
     
     <None Remove="Views\Window\MainWindow.xaml" />
     
-    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.2" />
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.3" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.230118.102" />
     <PackageReference Include="SQLitePCLRaw.core" Version="2.1.4" />
     <PackageReference Include="SQLitePCLRaw.provider.winsqlite3" Version="2.1.4" />

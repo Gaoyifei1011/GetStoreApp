@@ -26,6 +26,8 @@ namespace GetStoreApp.UI.Controls.Download
 
         public string DeleteWithFileToolTip { get; } = ResourceService.GetLocalized("Download/DeleteWithFileToolTip");
 
+        public string ShareFile { get; } = ResourceService.GetLocalized("Download/ShareFile");
+
         public string FileInformation { get; } = ResourceService.GetLocalized("Download/FileInformation");
 
         public CompletedControl()

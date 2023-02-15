@@ -22,6 +22,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using Windows.UI.ViewManagement;
 
 namespace GetStoreApp.ViewModels.Window
 {
@@ -30,6 +31,8 @@ namespace GetStoreApp.ViewModels.Window
     /// </summary>
     public sealed class MainWindowViewModel : ViewModelBase
     {
+        private UISettings AppUISettings { get; } = new UISettings();
+
         private SolidColorBrush _appBackground;
 
         public SolidColorBrush AppBackground
@@ -202,6 +205,7 @@ namespace GetStoreApp.ViewModels.Window
             SetContextMenuTheme((FrameworkElement)Program.ApplicationRoot.MainWindow.Content);
 
             ((FrameworkElement)Program.ApplicationRoot.MainWindow.Content).ActualThemeChanged += OnActualThemeChanged;
+            AppUISettings.ColorValuesChanged += OnColorValuesChanged;
 
             // 导航控件加载完成后初始化内容
 
@@ -263,12 +267,6 @@ namespace GetStoreApp.ViewModels.Window
             {
                 SetAppBackground();
             });
-
-            // 应用主题设置跟随系统发生变化时，当系统主题设置发生变化时修改修改应用背景色
-            Messenger.Default.Register<bool>(this, MessageToken.SystemSettingsChanged, (systemSettingsChangedMessage) =>
-            {
-                SetAppBackground();
-            });
         }
 
         /// <summary>
@@ -276,6 +274,7 @@ namespace GetStoreApp.ViewModels.Window
         /// </summary>
         public void OnNavigationViewUnLoaded(object sender, RoutedEventArgs args)
         {
+            AppUISettings.ColorValuesChanged -= OnColorValuesChanged;
             Messenger.Default.Unregister(this);
         }
 
@@ -307,6 +306,14 @@ namespace GetStoreApp.ViewModels.Window
         }
 
         /// <summary>
+        /// 应用主题设置跟随系统发生变化时，当系统主题设置发生变化时修改修改应用背景色
+        /// </summary>
+        private void OnColorValuesChanged(UISettings sender, object args)
+        {
+            SetAppBackground();
+        }
+
+        /// <summary>
         /// 设置应用背景色
         /// </summary>
         private void SetAppBackground()
@@ -315,7 +322,7 @@ namespace GetStoreApp.ViewModels.Window
             {
                 if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[0].InternalName)
                 {
-                    if (RegistryHelper.GetRegistryAppTheme() is ElementTheme.Light)
+                    if (Application.Current.RequestedTheme is ApplicationTheme.Light)
                     {
                         AppBackground = new SolidColorBrush(ColorHelper.FromArgb(255, 240, 243, 249));
                     }

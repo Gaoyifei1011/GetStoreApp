@@ -506,6 +506,23 @@
                                                 </MenuFlyoutItem>
                                                 <MenuFlyoutSeparator />
                                                 <MenuFlyoutItem
+                                                    Command="{Binding ElementName=CompletedRoot, Path=DataContext.ShareFileCommand, Mode=OneTime}"
+                                                    CommandParameter="{Binding}"
+                                                    IsEnabled="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}"
+                                                    Text="{Binding ElementName=CompletedRoot, Path=ShareFile, Mode=OneTime}">
+
+                                                    <MenuFlyoutItem.Icon>
+                                                        <FontIcon Glyph="&#xE72d;" Style="{StaticResource SegoeFluentStyle}" />
+                                                    </MenuFlyoutItem.Icon>
+
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip
+                                                            Content="{Binding ElementName=CompletedRoot, Path=ShareFile, Mode=OneTime}"
+                                                            Placement="Bottom"
+                                                            VerticalOffset="20" />
+                                                    </ToolTipService.ToolTip>
+                                                </MenuFlyoutItem>
+                                                <MenuFlyoutItem
                                                     Command="{Binding ElementName=CompletedRoot, Path=DataContext.FileInformationCommand, Mode=OneTime}"
                                                     CommandParameter="{Binding}"
                                                     IsEnabled="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}"

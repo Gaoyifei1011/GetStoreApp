@@ -56,7 +56,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         DWLP_MSGRESULT = 0x0,
 
         /// <summary>
-        /// 检索对话框过程的地址，或表示对话框过程的地址的句柄。 必须使用 CallWindowProc 函数调用对话框过程。
+        /// 检索对话框过程的地址，或表示对话框过程的地址的句柄。 必须使用 <see cref="User32Library.CallWindowProc"> 函数调用对话框过程。
         /// </summary>
         DWLP_DLGPROC = 0x4,
     }

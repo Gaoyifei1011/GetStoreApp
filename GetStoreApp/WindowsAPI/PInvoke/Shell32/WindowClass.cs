@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
 {
     /// <summary>
-    /// Win API WNDCLASS struct - 表示单个窗口。用于接收窗口消息。
+    /// <see cref="WindowClass">结构 - 表示单个窗口。用于接收窗口消息。
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct WindowClass

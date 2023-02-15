@@ -364,6 +364,11 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
         });
 
+        public IRelayCommand ShareFileCommand => new RelayCommand<CompletedModel>(async (completedItem) =>
+        {
+            await Task.CompletedTask;
+        });
+
         // 查看文件信息
         public IRelayCommand FileInformationCommand => new RelayCommand<CompletedModel>(async (completedItem) =>
         {
