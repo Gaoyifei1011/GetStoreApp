@@ -22,6 +22,12 @@
 
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
     <application>
+      <maxversiontested Id="10.0.18362.0"/>
+      <maxversiontested Id="10.0.19041.0"/>
+      <maxversiontested Id="10.0.20348.0"/>
+      <maxversiontested Id="10.0.22000.0"/>
+      <maxversiontested Id="10.0.22621.0"/>
+
       <!-- 设计此应用程序与其一起工作且已针对此应用程序进行测试的
            Windows 版本的列表。取消评论适当的元素，
            Windows 将自动选择最兼容的环境。 -->
@@ -40,7 +46,6 @@
 
       <!-- Windows 10 -->
       <supportedOS Id="{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}" />
-
     </application>
   </compatibility>
 
@@ -55,12 +60,12 @@
       <autoElevate xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">False</autoElevate>
       <disableTheming xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">False</disableTheming>
       <dpiAware xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">True/PM</dpiAware>
-      <dpiAwareness xmlns="http://schemas.microsoft.com/SMI/2016/WindowsSettings">PerMonitorV2, PerMonitor, System, Unaware</dpiAwareness>
       <disableWindowFiltering xmlns="http://schemas.microsoft.com/SMI/2011/WindowsSettings">True</disableWindowFiltering>
       <printerDriverIsolation xmlns="http://schemas.microsoft.com/SMI/2011/WindowsSettings">True</printerDriverIsolation>
       <highResolutionScrollingAware xmlns="http://schemas.microsoft.com/SMI/2013/WindowsSettings">True</highResolutionScrollingAware>
       <ultraHighResolutionScrollingAware xmlns="http://schemas.microsoft.com/SMI/2013/WindowsSettings">True</ultraHighResolutionScrollingAware>
       <forceFocusBasedMouseWheel xmlns="http://schemas.microsoft.com/SMI/2014/WindowsSettings">False</forceFocusBasedMouseWheel>
+      <dpiAwareness xmlns="http://schemas.microsoft.com/SMI/2016/WindowsSettings">PerMonitorV2, PerMonitor, System, Unaware</dpiAwareness>
       <longPathAware xmlns="http://schemas.microsoft.com/SMI/2016/WindowsSettings">True</longPathAware>
       <gdiScaling xmlns="http://schemas.microsoft.com/SMI/2017/WindowsSettings">False</gdiScaling>
       <activeCodePage xmlns="http://schemas.microsoft.com/SMI/2019/WindowsSettings">UTF-8</activeCodePage>
@@ -81,4 +86,10 @@
         />
     </dependentAssembly>
   </dependency>
+
+  <file name="Mile.Xaml.dll">
+    <activatableClass xmlns="urn:schemas-microsoft-com:winrt.v1" name="Mile.Xaml.Application" threadingModel="both" />
+    <activatableClass xmlns="urn:schemas-microsoft-com:winrt.v1" name="Mile.Xaml.XamlControlsResources" threadingModel="both" />
+  </file>
+
 </assembly>

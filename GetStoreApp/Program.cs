@@ -31,7 +31,7 @@ namespace GetStoreApp
         public static List<string> CommandLineArgs { get; set; }
 
         // 应用程序实例
-        public static App ApplicationRoot { get; set; }
+        public static WinUIApp ApplicationRoot { get; set; }
 
         public static bool IsAppLaunched { get; set; } = false;
 
@@ -58,7 +58,7 @@ namespace GetStoreApp
                 {
                     DispatcherQueueSynchronizationContext context = new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread());
                     SynchronizationContext.SetSynchronizationContext(context);
-                    ApplicationRoot = new App();
+                    ApplicationRoot = new WinUIApp();
                 });
             }
 

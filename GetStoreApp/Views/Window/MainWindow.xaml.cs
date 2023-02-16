@@ -16,7 +16,7 @@ namespace GetStoreApp.Views.Window
     /// <summary>
     /// 应用主窗口
     /// </summary>
-    public sealed partial class MainWindow : WASDKWindow
+    public sealed partial class MainWindow : WinUIWindow
     {
         private WindowProc newWndProc = null;
         private IntPtr oldWndProc = IntPtr.Zero;

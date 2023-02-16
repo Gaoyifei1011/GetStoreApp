@@ -1,4 +1,4 @@
-﻿ namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
+﻿namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
 {
     /// <summary>
     /// 用于确定如何比较两个 Shell 项。 <see cref="IShellItem.Compare"> 使用此枚举类型。

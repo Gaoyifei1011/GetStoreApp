@@ -1,0 +1,8 @@
+﻿{
+  "profiles": {
+    "获取商店应用 辅助程序": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

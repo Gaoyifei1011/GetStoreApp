@@ -13,7 +13,7 @@ using Windows.UI.StartScreen;
 
 namespace GetStoreApp
 {
-    public partial class App : Application
+    public partial class WinUIApp : Application
     {
         public AppWindow AppWindow { get; set; }
 
@@ -25,7 +25,7 @@ namespace GetStoreApp
 
         public AppViewModel ViewModel { get; } = new AppViewModel();
 
-        public App()
+        public WinUIApp()
         {
             InitializeComponent();
             UnhandledException += ViewModel.OnUnhandledException;

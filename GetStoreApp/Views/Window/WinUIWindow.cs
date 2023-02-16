@@ -9,7 +9,7 @@ namespace GetStoreApp.Views.Window
     /// <summary>
     /// Windows 应用 SDK窗口的扩展类
     /// </summary>
-    public class WASDKWindow : Microsoft.UI.Xaml.Window
+    public class WinUIWindow : Microsoft.UI.Xaml.Window
     {
         /// <summary>
         /// 窗口标题
@@ -77,13 +77,13 @@ namespace GetStoreApp.Views.Window
 
         public static readonly DependencyProperty ClosedCommandProperty = DependencyProperty.Register("ClosedCommand", typeof(ICommand), typeof(UIElement), new PropertyMetadata(null));
 
-        public WASDKWindow()
+        public WinUIWindow()
         {
             Activated += OnActivated;
             Closed += OnClosed;
         }
 
-        ~WASDKWindow()
+        ~WinUIWindow()
         {
             Activated -= OnActivated;
         }

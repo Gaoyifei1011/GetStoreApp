@@ -260,7 +260,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
                 interop.ShowShareUIForWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
             }
-            catch(Exception)
+            catch (Exception)
             {
                 new ShareFailedNotification(true, SelectedCompletedDataList.Count).Show();
             }
@@ -443,7 +443,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
                 interop.ShowShareUIForWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
             }
-            catch(Exception)
+            catch (Exception)
             {
                 new ShareFailedNotification(false).Show();
             }

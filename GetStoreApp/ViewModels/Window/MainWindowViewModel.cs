@@ -349,9 +349,9 @@ namespace GetStoreApp.ViewModels.Window
         /// <summary>
         /// 设置Win32 传统右键菜单的主题值
         /// </summary>
-        /// 注意：Windows 10 1809（17763）和Windows 10 1903（18362）及更高的版本系统最终呈现的效果不同
+        /// 注意：Windows 10 1809（19041）和Windows 10 1903（18362）及更高的版本系统最终呈现的效果不同
         /// Windows 10 1903（18362）有4个值，可以由用户单独指定传统右键菜单的主题值
-        /// Windows 10 1809（17763）只有2个值，设定为True时右键菜单主题值会根据系统变化，不能由用户单独指定
+        /// Windows 10 1809（19041）只有2个值，设定为True时右键菜单主题值会根据系统变化，不能由用户单独指定
         private void SetContextMenuTheme(FrameworkElement element)
         {
             switch (element.RequestedTheme)

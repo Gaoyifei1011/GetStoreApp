@@ -15,7 +15,7 @@
     <EnableMsixTooling>false</EnableMsixTooling>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <FileAlignment>512</FileAlignment>
-    <FileVersion>1.2.215</FileVersion>
+    <FileVersion>1.2.216.0</FileVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
@@ -31,7 +31,7 @@
     <PublishProtocol>FileSystem</PublishProtocol>
     <PublishReadyToRun>True</PublishReadyToRun>
     <!--调试时需要设置该选项为false-->
-    <PublishSingleFile>false</PublishSingleFile>
+    <PublishSingleFile>true</PublishSingleFile>
     <PublishTrimmed>true</PublishTrimmed>
     <Product>获取商店应用</Product>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
@@ -40,11 +40,11 @@
     <SelfContained>true</SelfContained>
     <SignAssembly>False</SignAssembly>
     <StartupObject>GetStoreApp.Program</StartupObject>
-    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
     <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
-    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <TrimMode>partial</TrimMode>
-    <Version>1.2.215.0</Version>
+    <Version>1.2.216.0</Version>
     <UseWindowsForms>False</UseWindowsForms>
     <UseWinUI>true</UseWinUI>
     <UseWPF>False</UseWPF>
@@ -81,7 +81,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <DebugType>portable</DebugType>
   </PropertyGroup>
-  
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -278,6 +277,14 @@
     <None Remove="Views\Pages\WebPage.xaml" />
     
     <None Remove="Views\Window\MainWindow.xaml" />
+    
+    <None Remove="WinUIApp.xaml" />
+    <Page Remove="WinUIApp.xaml" />
+    <ApplicationDefinition Include="WinUIApp.xaml" />
+    <ApplicationDefinition Update="WinUIApp.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
     
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.3" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.230118.102" />

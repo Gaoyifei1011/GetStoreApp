@@ -1,4 +1,4 @@
-﻿<WinUI:WASDKWindow
+﻿<WinUI:WinUIWindow
     x:Class="GetStoreApp.Views.Window.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -16,9 +16,9 @@
     ExtendsContentIntoTitleBar="True"
     mc:Ignorable="d">
 
-    <WinUI:WASDKWindow.DataContext>
+    <WinUI:WinUIWindow.DataContext>
         <viewModel:MainWindowViewModel x:Name="ViewModel" />
-    </WinUI:WASDKWindow.DataContext>
+    </WinUI:WinUIWindow.DataContext>
 
     <Grid Background="{x:Bind ViewModel.AppBackground, Mode=OneWay}">
 
@@ -128,4 +128,4 @@
             </Frame>
         </NavigationView>
     </Grid>
-</WinUI:WASDKWindow>
+</WinUI:WinUIWindow>

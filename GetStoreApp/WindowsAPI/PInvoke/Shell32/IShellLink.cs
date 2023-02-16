@@ -147,11 +147,5 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         /// <param name="pszDir">包含新工作目录名称的缓冲区的地址。</param>
         [PreserveSig]
         void SetWorkingDirectory([MarshalAs(UnmanagedType.LPWStr)] string pszDir);
-
-
-
-
-
-
     }
 }

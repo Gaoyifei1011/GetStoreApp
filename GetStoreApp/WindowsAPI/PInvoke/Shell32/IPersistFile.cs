@@ -49,7 +49,5 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         /// </summary>
         /// <param name="pszFileName">以前保存对象的文件的绝对路径。</param>
         void SaveCompleted([MarshalAs(UnmanagedType.LPWStr)] string pszFileName);
-
-
     }
 }

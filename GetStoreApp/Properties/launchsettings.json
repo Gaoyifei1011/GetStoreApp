@@ -1,6 +1,6 @@
 ﻿{
   "profiles": {
-    "GetStoreApp (Single-Project MSIX(Depricated))": {
+    "获取商店应用 (单项目 MSIX(已废弃))": {
       "commandName": "MsixPackage",
       "nativeDebugging": true
     }

@@ -4,7 +4,6 @@ using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Settings;
 using GetStoreApp.Views.Pages;
-using System;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
 {

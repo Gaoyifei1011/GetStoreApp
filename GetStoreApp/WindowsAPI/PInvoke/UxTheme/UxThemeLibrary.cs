@@ -10,7 +10,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.UxTheme
         private const string UxTheme = "uxtheme.dll";
 
         // 未公开的API，修改Win32传统右键菜单主题色
-        // 适用于Windows 10 1809（17763）系统
+        // 适用于Windows 10 1809（19041）系统
         [DllImport(UxTheme, EntryPoint = "#135")]
         public static extern bool AllowDarkModeForApp(bool allow);
 
