@@ -12,12 +12,6 @@ namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
     public interface IEnumMoniker
     {
         /// <summary>
-        /// 创建一个新的枚举器，其中包含与当前枚举状态相同的枚举状态。此方法可以记录枚举序列中的特定点，然后在以后返回到该点。调用方必须独立于第一个枚举器释放此新枚举器。
-        /// </summary>
-        /// <param name="ppenum">接收指向枚举对象的接口指针的 <see cref="IEnumMoniker"> 指针变量的地址。如果该方法不成功，则未定义此输出变量的值。</param>
-        void Clone(out IEnumMoniker ppenum);
-
-        /// <summary>
         /// 检索枚举序列中的指定项数。
         /// </summary>
         /// <param name="celt">要检索的项数。 如果序列中剩余的项数少于请求的项数，此方法将检索剩余的元素。</param>
@@ -28,16 +22,22 @@ namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
         int Next(int celt, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0), Out] IMoniker[] rgelt, IntPtr pceltFetched);
 
         /// <summary>
-        /// 将枚举序列重置到开头。
-        /// </summary>
-        void Reset();
-
-        /// <summary>
         /// 跳过枚举序列中指定数量的项。
         /// </summary>
         /// <param name="celt">要跳过的项数。</param>
         /// <returns>如果该方法跳过请求的项数，则返回值S_OK。 否则，它将S_FALSE。</returns>
         [PreserveSig]
         int Skip(int celt);
+
+        /// <summary>
+        /// 将枚举序列重置到开头。
+        /// </summary>
+        void Reset();
+
+        /// <summary>
+        /// 创建一个新的枚举器，其中包含与当前枚举状态相同的枚举状态。此方法可以记录枚举序列中的特定点，然后在以后返回到该点。调用方必须独立于第一个枚举器释放此新枚举器。
+        /// </summary>
+        /// <param name="ppenum">接收指向枚举对象的接口指针的 <see cref="IEnumMoniker"> 指针变量的地址。如果该方法不成功，则未定义此输出变量的值。</param>
+        void Clone(out IEnumMoniker ppenum);
     }
 }

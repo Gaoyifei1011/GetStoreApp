@@ -47,12 +47,12 @@ namespace GetStoreApp.WindowsAPI.Dialogs
 
                 int hr = dialog.Show(hwnd);
 
-                if (hr == NativeMethods.ERROR_CANCELLED)
+                if (hr == BitConverter.ToInt32(BitConverter.GetBytes(0x800704C7), 0))
                 {
                     return false;
                 }
 
-                if (hr != NativeMethods.OK)
+                if (hr != 0)
                 {
                     Marshal.ThrowExceptionForHR(hr);
                 }

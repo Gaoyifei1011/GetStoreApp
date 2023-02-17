@@ -17,11 +17,10 @@ namespace GetStoreApp.WindowsAPI.Controls.Taskbar
         // ITaskbarList 接口方法
 
         /// <summary>
-        /// 激活任务栏上的项。 窗口实际上未激活;任务栏上的窗口项仅显示为活动状态。
+        /// 初始化任务栏列表对象。必须先调用此方法，然后才能调用任何其他 <see cref="ITaskbarList4"> 方法。
         /// </summary>
-        /// <param name="hwnd">要显示为活动的任务栏上的窗口的句柄。</param>
         [PreserveSig]
-        void ActivateTab(IntPtr hwnd);
+        void HrInit();
 
         /// <summary>
         /// 将项添加到任务栏。
@@ -38,10 +37,11 @@ namespace GetStoreApp.WindowsAPI.Controls.Taskbar
         void DeleteTab(IntPtr hwnd);
 
         /// <summary>
-        /// 初始化任务栏列表对象。必须先调用此方法，然后才能调用任何其他 <see cref="ITaskbarList4"> 方法。
+        /// 激活任务栏上的项。 窗口实际上未激活;任务栏上的窗口项仅显示为活动状态。
         /// </summary>
+        /// <param name="hwnd">要显示为活动的任务栏上的窗口的句柄。</param>
         [PreserveSig]
-        void HrInit();
+        void ActivateTab(IntPtr hwnd);
 
         /// <summary>
         /// 将任务栏项标记为活动，但不直观地激活它。
@@ -63,12 +63,13 @@ namespace GetStoreApp.WindowsAPI.Controls.Taskbar
         // ITaskbarList3 接口方法
 
         /// <summary>
-        /// 通知任务栏，已提供新的选项卡或文档缩略图，以便在应用程序的任务栏组浮出控件中显示。
+        /// 显示或更新任务栏按钮中托管的进度栏，以显示完成完整操作的特定百分比。
         /// </summary>
-        /// <param name="hwndTab">选项卡或文档窗口的句柄。 此值是必需的，不能为 NULL。</param>
-        /// <param name="hwndMDI">应用程序的主窗口的句柄。 此值告知任务栏要将新缩略图附加到哪个应用程序的预览组。 此值是必需的，不能为 NULL。</param>
+        /// <param name="hwnd">其关联的任务栏按钮用作进度指示器的窗口的句柄。</param>
+        /// <param name="ullCompleted">一个应用程序定义值，该值指示在调用方法时已完成的操作的比例。</param>
+        /// <param name="ullTotal">一个应用程序定义的值，该值指定操作完成后将具有值 <param name="ullCompleted"> 。</param>
         [PreserveSig]
-        void RegisterTab(IntPtr hwndTab, IntPtr hwndMDI);
+        void SetProgressValue(IntPtr hwnd, ulong ullCompleted, ulong ullTotal);
 
         /// <summary>
         /// 设置任务栏按钮上显示的进度指示器的类型和状态。
@@ -79,27 +80,19 @@ namespace GetStoreApp.WindowsAPI.Controls.Taskbar
         void SetProgressState(IntPtr hwnd, TBPFLAG tbpFlags);
 
         /// <summary>
-        /// 显示或更新任务栏按钮中托管的进度栏，以显示完成完整操作的特定百分比。
+        /// 通知任务栏，已提供新的选项卡或文档缩略图，以便在应用程序的任务栏组浮出控件中显示。
         /// </summary>
-        /// <param name="hwnd">其关联的任务栏按钮用作进度指示器的窗口的句柄。</param>
-        /// <param name="ullCompleted">一个应用程序定义值，该值指示在调用方法时已完成的操作的比例。</param>
-        /// <param name="ullTotal">一个应用程序定义的值，该值指定操作完成后将具有值 <param name="ullCompleted"> 。</param>
+        /// <param name="hwndTab">选项卡或文档窗口的句柄。 此值是必需的，不能为 NULL。</param>
+        /// <param name="hwndMDI">应用程序的主窗口的句柄。 此值告知任务栏要将新缩略图附加到哪个应用程序的预览组。 此值是必需的，不能为 NULL。</param>
         [PreserveSig]
-        void SetProgressValue(IntPtr hwnd, ulong ullCompleted, ulong ullTotal);
+        void RegisterTab(IntPtr hwndTab, IntPtr hwndMDI);
 
         /// <summary>
-        /// 将覆盖应用于任务栏按钮，以指示应用程序状态或给用户的通知。
+        /// 在应用程序中关闭该选项卡或文档时，从应用程序的预览组中删除缩略图。
         /// </summary>
-        /// <param name="hwnd">关联的任务栏按钮接收覆盖的窗口的句柄。 此句柄必须属于与按钮的应用程序关联的调用进程，并且必须是有效的 HWND 或忽略调用。</param>
-        /// <param name="hIcon">要用作覆盖的图标的句柄。 这应该是一个小图标，以 96 dpi 分辨率测量 16x16 像素。 如果覆盖图标已应用于任务栏按钮，则会替换现有覆盖。
-        /// 此值可以为 NULL。 如何处理 NULL 值取决于任务栏按钮是表示单个窗口还是一组窗口。
-        /// 如果任务栏按钮表示单个窗口，则会从显示中删除覆盖图标。
-        /// 如果任务栏按钮表示一组窗口，并且以前的覆盖层仍可用， (早于当前覆盖区接收，但尚未由 NULL 值) 释放，则会显示上一个覆盖层代替当前覆盖。
-        /// 调用应用程序在不再需要 hIcon 时负责释放它。 这通常可以在调用 <see cref="SetOverlayIcon"> 后完成，因为任务栏创建并使用其自己的图标副本。
-        /// </param>
-        /// <param name="pszDescription">指向字符串的指针，该字符串提供覆盖所传达信息的替换文字版本，以提供辅助功能。</param>
+        /// <param name="hwndTab">正在删除其缩略图的选项卡窗口的句柄。 此值与缩略图通过 <see cref="RegisterTab"> 注册为组的一部分的值相同。 此值是必需的，不能为 NULL。</param>
         [PreserveSig]
-        void SetOverlayIcon(IntPtr hwnd, IntPtr hIcon, [MarshalAs(UnmanagedType.LPWStr)] string pszDescription);
+        void UnregisterTab(IntPtr hwndTab);
 
         /// <summary>
         /// 将新缩略图插入选项卡式文档界面， (TDI) 或多文档界面 (MDI) 应用程序的组浮出控件或将现有缩略图移动到应用程序组中的新位置。
@@ -119,22 +112,6 @@ namespace GetStoreApp.WindowsAPI.Controls.Taskbar
         void SetTabActive(IntPtr hwndTab, IntPtr hwndMDI, uint dwReserved);
 
         /// <summary>
-        /// 选择窗口工作区的一部分，以在任务栏中显示为该窗口的缩略图。
-        /// </summary>
-        /// <param name="hwnd">任务栏中表示的窗口的句柄。</param>
-        /// <param name="prcClip">指向 RECT 结构的指针，该结构指定窗口工作区中相对于该工作区左上角的选择。 若要清除已到位的剪辑并返回到缩略图的默认显示，请将此参数设置为 NULL。</param>
-        [PreserveSig]
-        void SetThumbnailClip(IntPtr hwnd, IntPtr prcClip);
-
-        /// <summary>
-        /// 指定或更新当鼠标指针停留在任务栏按钮浮出控件中单个预览缩略图时显示的工具提示的文本。
-        /// </summary>
-        /// <param name="hwnd">其缩略图显示工具提示的窗口的句柄。 此句柄必须属于调用进程。</param>
-        /// <param name="pszTip">指向工具提示中显示的文本的指针。 此值可以为 NULL，在这种情况下， <param name="hwnd"> 指定的窗口标题用作工具提示。</param>
-        [PreserveSig]
-        void SetThumbnailTooltip(IntPtr hwnd, [MarshalAs(UnmanagedType.LPWStr)] string pszTip);
-
-        /// <summary>
         /// 将具有指定按钮集的缩略图工具栏添加到任务栏按钮浮出控件中窗口的缩略图图像。
         /// </summary>
         /// <param name="hwnd">其缩略图表示形式将接收工具栏的窗口的句柄。 此句柄必须属于调用进程。</param>
@@ -142,14 +119,6 @@ namespace GetStoreApp.WindowsAPI.Controls.Taskbar
         /// <param name="pButtons">指向 <see cref="THUMBBUTTON"> 结构的数组的指针。 每个 <see cref="THUMBBUTTON"> 定义要添加到工具栏中的单个按钮。 以后无法添加或删除按钮，因此必须是完整的定义集。 按钮也不能重新排序，因此它们在数组中的顺序（即它们从左到右显示的顺序）将是其永久顺序。</param>
         [PreserveSig]
         void ThumbBarAddButtons(IntPtr hwnd, uint cButtons, [MarshalAs(UnmanagedType.LPArray)] THUMBBUTTON[] pButtons);
-
-        /// <summary>
-        /// 指定一个图像列表，其中包含任务栏按钮浮出控件中窗口缩略图中嵌入工具栏的按钮图像。
-        /// </summary>
-        /// <param name="hwnd">其缩略图表示形式包含要更新的工具栏的窗口的句柄。 此句柄必须属于调用进程。</param>
-        /// <param name="himl">包含工具栏中使用的所有按钮图像的图像列表的句柄。</param>
-        [PreserveSig]
-        void ThumbBarSetImageList(IntPtr hwnd, IntPtr himl);
 
         /// <summary>
         /// 根据窗口的当前状态，显示、启用、禁用或隐藏缩略图工具栏中的按钮。 缩略图工具栏是嵌入任务栏按钮浮出控件中窗口缩略图中的工具栏。
@@ -161,11 +130,42 @@ namespace GetStoreApp.WindowsAPI.Controls.Taskbar
         void ThumbBarUpdateButtons(IntPtr hwnd, uint cButtons, [MarshalAs(UnmanagedType.LPArray)] THUMBBUTTON[] pButtons);
 
         /// <summary>
-        /// 在应用程序中关闭该选项卡或文档时，从应用程序的预览组中删除缩略图。
+        /// 指定一个图像列表，其中包含任务栏按钮浮出控件中窗口缩略图中嵌入工具栏的按钮图像。
         /// </summary>
-        /// <param name="hwndTab">正在删除其缩略图的选项卡窗口的句柄。 此值与缩略图通过 <see cref="RegisterTab"> 注册为组的一部分的值相同。 此值是必需的，不能为 NULL。</param>
+        /// <param name="hwnd">其缩略图表示形式包含要更新的工具栏的窗口的句柄。 此句柄必须属于调用进程。</param>
+        /// <param name="himl">包含工具栏中使用的所有按钮图像的图像列表的句柄。</param>
         [PreserveSig]
-        void UnregisterTab(IntPtr hwndTab);
+        void ThumbBarSetImageList(IntPtr hwnd, IntPtr himl);
+
+        /// <summary>
+        /// 将覆盖应用于任务栏按钮，以指示应用程序状态或给用户的通知。
+        /// </summary>
+        /// <param name="hwnd">关联的任务栏按钮接收覆盖的窗口的句柄。 此句柄必须属于与按钮的应用程序关联的调用进程，并且必须是有效的 HWND 或忽略调用。</param>
+        /// <param name="hIcon">要用作覆盖的图标的句柄。 这应该是一个小图标，以 96 dpi 分辨率测量 16x16 像素。 如果覆盖图标已应用于任务栏按钮，则会替换现有覆盖。
+        /// 此值可以为 NULL。 如何处理 NULL 值取决于任务栏按钮是表示单个窗口还是一组窗口。
+        /// 如果任务栏按钮表示单个窗口，则会从显示中删除覆盖图标。
+        /// 如果任务栏按钮表示一组窗口，并且以前的覆盖层仍可用， (早于当前覆盖区接收，但尚未由 NULL 值) 释放，则会显示上一个覆盖层代替当前覆盖。
+        /// 调用应用程序在不再需要 hIcon 时负责释放它。 这通常可以在调用 <see cref="SetOverlayIcon"> 后完成，因为任务栏创建并使用其自己的图标副本。
+        /// </param>
+        /// <param name="pszDescription">指向字符串的指针，该字符串提供覆盖所传达信息的替换文字版本，以提供辅助功能。</param>
+        [PreserveSig]
+        void SetOverlayIcon(IntPtr hwnd, IntPtr hIcon, [MarshalAs(UnmanagedType.LPWStr)] string pszDescription);
+
+        /// <summary>
+        /// 指定或更新当鼠标指针停留在任务栏按钮浮出控件中单个预览缩略图时显示的工具提示的文本。
+        /// </summary>
+        /// <param name="hwnd">其缩略图显示工具提示的窗口的句柄。 此句柄必须属于调用进程。</param>
+        /// <param name="pszTip">指向工具提示中显示的文本的指针。 此值可以为 NULL，在这种情况下， <param name="hwnd"> 指定的窗口标题用作工具提示。</param>
+        [PreserveSig]
+        void SetThumbnailTooltip(IntPtr hwnd, [MarshalAs(UnmanagedType.LPWStr)] string pszTip);
+
+        /// <summary>
+        /// 选择窗口工作区的一部分，以在任务栏中显示为该窗口的缩略图。
+        /// </summary>
+        /// <param name="hwnd">任务栏中表示的窗口的句柄。</param>
+        /// <param name="prcClip">指向 RECT 结构的指针，该结构指定窗口工作区中相对于该工作区左上角的选择。 若要清除已到位的剪辑并返回到缩略图的默认显示，请将此参数设置为 NULL。</param>
+        [PreserveSig]
+        void SetThumbnailClip(IntPtr hwnd, IntPtr prcClip);
 
         // ITaskbarList4 接口方法
 

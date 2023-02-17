@@ -386,7 +386,7 @@
         WM_NCACTIVATE = 0x0086,
 
         /// <summary>
-        /// The WM_GETDLGCODE message is sent to the window procedure associated with a control. By default, the system handles all keyboard input to the control; the system interprets certain types of keyboard input as dialog box navigation keys. To override this default behavior, the control can respond to the WM_GETDLGCODE message to indicate the types of input it wants to process itself.
+        /// The WM_GETDLGCODE message is sent to the window procedure associated with a control. By default, the system handles all keyboard input to the control; the system interprets certain types of keyboard input as FolderDialog box navigation keys. To override this default behavior, the control can respond to the WM_GETDLGCODE message to indicate the types of input it wants to process itself.
         /// </summary>
         WM_GETDLGCODE = 0x0087,
 
@@ -549,7 +549,7 @@
         WM_IME_KEYLAST = 0x010F,
 
         /// <summary>
-        /// The WM_INITDIALOG message is sent to the dialog box procedure immediately before a dialog box is displayed. Dialog box procedures typically use this message to initialize controls and carry out any other initialization tasks that affect the appearance of the dialog box.
+        /// The WM_INITDIALOG message is sent to the FolderDialog box procedure immediately before a FolderDialog box is displayed. Dialog box procedures typically use this message to initialize controls and carry out any other initialization tasks that affect the appearance of the FolderDialog box.
         /// </summary>
         WM_INITDIALOG = 0x0110,
 
@@ -599,7 +599,7 @@
         WM_MENUCHAR = 0x0120,
 
         /// <summary>
-        /// The WM_ENTERIDLE message is sent to the owner window of a modal dialog box or menu that is entering an idle state. A modal dialog box or menu enters an idle state when no messages are waiting in its queue after it has processed one or more previous messages.
+        /// The WM_ENTERIDLE message is sent to the owner window of a modal FolderDialog box or menu that is entering an idle state. A modal FolderDialog box or menu enters an idle state when no messages are waiting in its queue after it has processed one or more previous messages.
         /// </summary>
         WM_ENTERIDLE = 0x0121,
 
@@ -664,7 +664,7 @@
         WM_CTLCOLORBTN = 0x0135,
 
         /// <summary>
-        /// The WM_CTLCOLORDLG message is sent to a dialog box before the system draws the dialog box. By responding to this message, the dialog box can set its text and background colors using the specified display device context handle.
+        /// The WM_CTLCOLORDLG message is sent to a FolderDialog box before the system draws the FolderDialog box. By responding to this message, the FolderDialog box can set its text and background colors using the specified display device context handle.
         /// </summary>
         WM_CTLCOLORDLG = 0x0136,
 

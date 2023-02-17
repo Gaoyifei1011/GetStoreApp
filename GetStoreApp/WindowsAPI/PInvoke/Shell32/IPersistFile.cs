@@ -18,12 +18,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         void GetClassID(out Guid pClassID);
 
         /// <summary>
-        /// 检索与对象关联的文件的当前名称。 如果没有当前工作文件，此方法将检索对象的默认保存提示。
-        /// </summary>
-        /// <param name="ppszFileName"></param>
-        void GetCurFile([MarshalAs(UnmanagedType.LPWStr)] out string ppszFileName);
-
-        /// <summary>
         /// 确定对象自上次保存到其当前文件以来是否已更改。
         /// </summary>
         /// <returns>此方法返回 S_OK 以指示对象已更改。否则，它将返回S_FALSE。</returns>
@@ -49,5 +43,11 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         /// </summary>
         /// <param name="pszFileName">以前保存对象的文件的绝对路径。</param>
         void SaveCompleted([MarshalAs(UnmanagedType.LPWStr)] string pszFileName);
+
+        /// <summary>
+        /// 检索与对象关联的文件的当前名称。 如果没有当前工作文件，此方法将检索对象的默认保存提示。
+        /// </summary>
+        /// <param name="ppszFileName"></param>
+        void GetCurFile([MarshalAs(UnmanagedType.LPWStr)] out string ppszFileName);
     }
 }

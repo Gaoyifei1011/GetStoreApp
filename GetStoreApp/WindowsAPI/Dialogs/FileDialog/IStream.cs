@@ -16,35 +16,6 @@ namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
     public interface IStream
     {
         /// <summary>
-        /// Clone 方法创建一个新的流对象，其自己的查找指针引用与原始流相同的字节。
-        /// </summary>
-        /// <param name="ppstm">成功后，指向指向新流对象的 <see cref="IStream"> 指针的位置的指针。 如果发生错误，此参数为 NULL。</param>
-        void Clone(out IStream ppstm);
-
-        /// <summary>
-        /// <see cref="Commit"> 方法可确保在事务处理模式下打开的流对象所做的任何更改都反映在父存储中。 如果流对象在直接模式下打开， 则 <see cref="Commit"> 除了将所有内存缓冲区刷新到下一级存储对象之外，也不起作用。 流的 COM 复合文件实现不支持在事务处理模式下打开流。
-        /// </summary>
-        /// <param name="grfCommitFlags">控制提交对流对象的更改的方式。 有关这些值的定义，请参阅 STGC 枚举。</param>
-        void Commit(int grfCommitFlags);
-
-        /// <summary>
-        /// <see cref="CopyTo"> 方法将流中的当前查找指针中的指定字节数复制到另一个流中的当前查找指针。
-        /// </summary>
-        /// <param name="pstm">指向目标流的指针。 <param name="pstm"> 指向的流可以是新流或源流的克隆。</param>
-        /// <param name="cb">要从源流复制的字节数。</param>
-        /// <param name="pcbRead">指向此方法写入从源读取的实际字节数的位置的指针。 可以将此指针设置为 NULL。 在这种情况下，此方法不提供读取的实际字节数。</param>
-        /// <param name="pcbWritten">指向此方法写入要写入到目标的实际字节数的位置的指针。 可以将此指针设置为 NULL。 在这种情况下，此方法不提供写入的实际字节数。</param>
-        void CopyTo(IStream pstm, long cb, IntPtr pcbRead, IntPtr pcbWritten);
-
-        /// <summary>
-        /// <see cref="LockRegion"> 方法限制对流中指定字节范围的访问。 支持此功能是可选的，因为某些文件系统不提供此功能。
-        /// </summary>
-        /// <param name="libOffset">指定范围开头的字节偏移量的整数。</param>
-        /// <param name="cb">指定要限制的范围长度（以字节为单位）的整数。</param>
-        /// <param name="dwLockType">指定在访问范围时请求的限制。</param>
-        void LockRegion(long libOffset, long cb, int dwLockType);
-
-        /// <summary>
         /// <see cref="Read"> 方法从流对象读取指定数量的字节到内存中，从当前搜寻指针开始。
         /// </summary>
         /// <param name="pv">指向流数据读取到的缓冲区的指针。</param>
@@ -53,9 +24,12 @@ namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
         void Read([MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1), Out] byte[] pv, int cb, IntPtr pcbRead);
 
         /// <summary>
-        /// <see cref="Revert"> 方法放弃自上次 <see cref="Commit"> 调用以来对事务处理流所做的所有更改。 在直接模式下打开的流，并使用 <see cref="Revert"> 的 COM 复合文件实现流，此方法不起作用。
+        /// <see cref="Write"> 方法将指定的字节数写入流对象，从当前查找指针开始。
         /// </summary>
-        void Revert();
+        /// <param name="pv">指向包含要写入流的数据的缓冲区的指针。 即使 <param name="cb"> 为零，也必须为此参数提供有效的指针。</param>
+        /// <param name="cb">要尝试写入流的数据字节数。 此值可以为零。</param>
+        /// <param name="pcbWritten">指向 ULONG 变量的指针，此方法将写入流对象的实际字节数。 调用方可以将此指针设置为 NULL，在这种情况下，此方法不提供写入的实际字节数。</param>
+        void Write([MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] byte[] pv, int cb, IntPtr pcbWritten);
 
         /// <summary>
         /// <see cref="Seek"> 方法将 查找 指针更改为新位置。 新位置相对于流的开头、流的末尾或当前查找指针。
@@ -72,11 +46,32 @@ namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
         void SetSize(long libNewSize);
 
         /// <summary>
-        /// <see cref="Stat"> 方法检索此流的 <see cref="STATSTG"> 结构。
+        /// <see cref="CopyTo"> 方法将流中的当前查找指针中的指定字节数复制到另一个流中的当前查找指针。
         /// </summary>
-        /// <param name="pstatstg">指向 <see cref="STATSTG"> 结构的指针，此方法在其中放置有关此流对象的信息。</param>
-        /// <param name="grfStatFlag">指定此方法不返回 <see cref="STATSTG"> 结构中的某些成员，从而节省内存分配操作。 值取自 <see cref="STATSTG"> 枚举。</param>
-        void Stat(out STATSTG pstatstg, int grfStatFlag);
+        /// <param name="pstm">指向目标流的指针。 <param name="pstm"> 指向的流可以是新流或源流的克隆。</param>
+        /// <param name="cb">要从源流复制的字节数。</param>
+        /// <param name="pcbRead">指向此方法写入从源读取的实际字节数的位置的指针。 可以将此指针设置为 NULL。 在这种情况下，此方法不提供读取的实际字节数。</param>
+        /// <param name="pcbWritten">指向此方法写入要写入到目标的实际字节数的位置的指针。 可以将此指针设置为 NULL。 在这种情况下，此方法不提供写入的实际字节数。</param>
+        void CopyTo(IStream pstm, long cb, IntPtr pcbRead, IntPtr pcbWritten);
+
+        /// <summary>
+        /// <see cref="Commit"> 方法可确保在事务处理模式下打开的流对象所做的任何更改都反映在父存储中。 如果流对象在直接模式下打开， 则 <see cref="Commit"> 除了将所有内存缓冲区刷新到下一级存储对象之外，也不起作用。 流的 COM 复合文件实现不支持在事务处理模式下打开流。
+        /// </summary>
+        /// <param name="grfCommitFlags">控制提交对流对象的更改的方式。 有关这些值的定义，请参阅 STGC 枚举。</param>
+        void Commit(int grfCommitFlags);
+
+        /// <summary>
+        /// <see cref="Revert"> 方法放弃自上次 <see cref="Commit"> 调用以来对事务处理流所做的所有更改。 在直接模式下打开的流，并使用 <see cref="Revert"> 的 COM 复合文件实现流，此方法不起作用。
+        /// </summary>
+        void Revert();
+
+        /// <summary>
+        /// <see cref="LockRegion"> 方法限制对流中指定字节范围的访问。 支持此功能是可选的，因为某些文件系统不提供此功能。
+        /// </summary>
+        /// <param name="libOffset">指定范围开头的字节偏移量的整数。</param>
+        /// <param name="cb">指定要限制的范围长度（以字节为单位）的整数。</param>
+        /// <param name="dwLockType">指定在访问范围时请求的限制。</param>
+        void LockRegion(long libOffset, long cb, int dwLockType);
 
         /// <summary>
         /// <see cref="UnlockRegion"> 方法删除以前使用 <see cref="LockRegion"> 限制的一系列字节的访问限制。
@@ -87,11 +82,16 @@ namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
         void UnlockRegion(long libOffset, long cb, int dwLockType);
 
         /// <summary>
-        /// <see cref="Write"> 方法将指定的字节数写入流对象，从当前查找指针开始。
+        /// <see cref="Stat"> 方法检索此流的 <see cref="STATSTG"> 结构。
         /// </summary>
-        /// <param name="pv">指向包含要写入流的数据的缓冲区的指针。 即使 <param name="cb"> 为零，也必须为此参数提供有效的指针。</param>
-        /// <param name="cb">要尝试写入流的数据字节数。 此值可以为零。</param>
-        /// <param name="pcbWritten">指向 ULONG 变量的指针，此方法将写入流对象的实际字节数。 调用方可以将此指针设置为 NULL，在这种情况下，此方法不提供写入的实际字节数。</param>
-        void Write([MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] byte[] pv, int cb, IntPtr pcbWritten);
+        /// <param name="pstatstg">指向 <see cref="STATSTG"> 结构的指针，此方法在其中放置有关此流对象的信息。</param>
+        /// <param name="grfStatFlag">指定此方法不返回 <see cref="STATSTG"> 结构中的某些成员，从而节省内存分配操作。 值取自 <see cref="STATSTG"> 枚举。</param>
+        void Stat(out STATSTG pstatstg, int grfStatFlag);
+
+        /// <summary>
+        /// Clone 方法创建一个新的流对象，其自己的查找指针引用与原始流相同的字节。
+        /// </summary>
+        /// <param name="ppstm">成功后，指向指向新流对象的 <see cref="IStream"> 指针的位置的指针。 如果发生错误，此参数为 NULL。</param>
+        void Clone(out IStream ppstm);
     }
 }
