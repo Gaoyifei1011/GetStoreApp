@@ -91,7 +91,6 @@ namespace GetStoreApp.ViewModels.Window
                 }
             }
 
-            Program.ApplicationRoot.AppWindow.Title = ResourceService.GetLocalized("Resources/AppDisplayName");
             Program.ApplicationRoot.AppWindow.SetIcon(string.Format(@"{0}\{1}", InfoHelper.GetAppInstalledLocation(), "Assets/GetStoreApp.ico"));
             Program.ApplicationRoot.AppWindow.Show();
         }

@@ -38,7 +38,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
         // 背景色不可用时具体信息了解
         public IRelayCommand BackdropTipCommand => new RelayCommand(() =>
         {
-            NavigationService.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.SettingsHelp);
+            NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
         });
 
         /// <summary>

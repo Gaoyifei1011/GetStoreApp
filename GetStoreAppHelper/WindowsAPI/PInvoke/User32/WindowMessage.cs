@@ -1,4 +1,4 @@
-﻿namespace GetStoreApp.WindowsAPI.PInvoke.User32
+﻿namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
 {
     /// <summary>
     /// Windows 消息
@@ -11,7 +11,7 @@
         WM_NULL = 0x0000,
 
         /// <summary>
-        /// 当应用程序请求通过调用 CreateWindow 或 <see cref="User32Library.CreateWindowEx"> 函数创建窗口时发送。 (函数返回之前发送消息。) 新窗口的窗口过程在创建窗口后接收此消息，但在窗口变为可见之前。
+        /// 当应用程序请求通过调用 InitializeWindow 或 <see cref="User32Library.CreateWindowEx"> 函数创建窗口时发送。 (函数返回之前发送消息。) 新窗口的窗口过程在创建窗口后接收此消息，但在窗口变为可见之前。
         /// </summary>
         WM_CREATE = 0x0001,
 
@@ -773,7 +773,7 @@
         WM_MOUSELAST = 0x020E,
 
         /// <summary>
-        /// The WM_PARENTNOTIFY message is sent to the parent of a child window when the child window is created or destroyed, or when the user clicks a mouse button while the cursor is over the child window. When the child window is being created, the system sends WM_PARENTNOTIFY just before the CreateWindow or CreateWindowEx function that creates the window returns. When the child window is being destroyed, the system sends the message before any processing to destroy the window takes place.
+        /// The WM_PARENTNOTIFY message is sent to the parent of a child window when the child window is created or destroyed, or when the user clicks a mouse button while the cursor is over the child window. When the child window is being created, the system sends WM_PARENTNOTIFY just before the InitializeWindow or CreateWindowEx function that creates the window returns. When the child window is being destroyed, the system sends the message before any processing to destroy the window takes place.
         /// </summary>
         WM_PARENTNOTIFY = 0x0210,
 

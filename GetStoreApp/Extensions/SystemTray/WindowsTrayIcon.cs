@@ -211,8 +211,6 @@ namespace GetStoreApp.Extensions.SystemTray
         public void Dispose()
         {
             Dispose(true);
-
-            // 此对象将由 Dispose 方法清理。因此，您应该调用 GC.SuppressFinalize() 将此对象从终结队列中删除，并防止此对象的终结代码再次执行。
             GC.SuppressFinalize(this);
         }
 
@@ -228,23 +226,27 @@ namespace GetStoreApp.Extensions.SystemTray
             {
                 return;
             };
-            IsDisposed = true;
 
-            // 始终销毁非托管句柄（即使从 GC 调用）
-            messageSink.Dispose();
-
-            // 销毁任务栏扩展菜单
-            if (TrayMenu != IntPtr.Zero)
+            if (disposing)
             {
-                User32Library.DestroyMenu(TrayMenu);
+                // 始终销毁非托管句柄（即使从 GC 调用）
+                messageSink.Dispose();
+
+                // 销毁任务栏扩展菜单
+                if (TrayMenu != IntPtr.Zero)
+                {
+                    User32Library.DestroyMenu(TrayMenu);
+                }
+
+                // 移除任务栏图标
+                RemoveTaskbarIcon();
+
+                // 注销事件监听器
+                messageSink.MouseEventReceived -= OnMouseEventReceived;
+                messageSink.TaskbarCreated -= OnTaskbarCreated;
             }
 
-            // 移除任务栏图标
-            RemoveTaskbarIcon();
-
-            // 注销事件监听器
-            messageSink.MouseEventReceived -= OnMouseEventReceived;
-            messageSink.TaskbarCreated -= OnTaskbarCreated;
+            IsDisposed = true;
         }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using System;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.UI.Notifications
@@ -23,7 +24,7 @@ namespace GetStoreApp.UI.Notifications
 
         private bool IsMultiSelected = false;
 
-        public HistoryCopyNotification(bool copyState, bool isMultiSelected = false, int count = 0, double? duration = null)
+        public HistoryCopyNotification(bool copyState, [Optional, DefaultParameterValue(false)] bool isMultiSelected, [Optional, DefaultParameterValue(0)] int count, [Optional] double? duration)
         {
             IsMultiSelected = isMultiSelected;
             Count = count;

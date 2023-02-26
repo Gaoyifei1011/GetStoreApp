@@ -19,7 +19,7 @@ namespace GetStoreApp.ViewModels.Controls.About
         // 应用信息
         public IRelayCommand AppInformationCommand => new RelayCommand(async () =>
         {
-            await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
+            await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures-app"));
         });
 
         // 了解以".e"开头的文件

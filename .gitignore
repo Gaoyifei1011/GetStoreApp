@@ -358,6 +358,9 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
+# GetStoreAppHelperTest 仅用作本地测试，故不上传
+GetStoreAppHelperTest/
+
 [core]
 autocrlf = false
 filemode = false

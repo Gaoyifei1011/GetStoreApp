@@ -10,6 +10,7 @@
     <TargetFramework>net481</TargetFramework>
     <TargetPlatformVersion>10.0.22621.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Platform)'=='x86'">
@@ -26,6 +27,10 @@
     <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.22621.755" />
     <PackageReference Include="Mile.Xaml" Version="1.2.495" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+  </ItemGroup>
   
   <ItemGroup>
     <ApplicationDefinition Update="App.xaml">
@@ -38,5 +43,9 @@
     <Page Update="MainPage.xaml">
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="AppWindow\" />
   </ItemGroup>
 </Project>

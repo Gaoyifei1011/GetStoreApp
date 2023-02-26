@@ -3,6 +3,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using System;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.UI.Notifications
@@ -18,7 +19,7 @@ namespace GetStoreApp.UI.Notifications
 
         private int Duration = 2000;
 
-        public FileInformationCopyNotification(bool copyState, double? duration = null)
+        public FileInformationCopyNotification(bool copyState, [Optional] double? duration)
         {
             InitializeComponent();
             ViewModel.Initialize(copyState);

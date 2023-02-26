@@ -138,6 +138,11 @@ namespace GetStoreApp.Views.Window
                         }
                         break;
                     }
+                case WindowMessage.WM_TASKBARRCLICK:
+                    {
+                        WindowHelper.BringToFront();
+                        return 0;
+                    }
             }
             return User32Library.CallWindowProc(oldWndProc, hWnd, Msg, wParam, lParam);
         }

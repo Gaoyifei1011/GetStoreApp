@@ -9,6 +9,7 @@
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:viewModel="using:GetStoreApp.ViewModels.Window"
     xmlns:wc="using:GetStoreApp.UI.Controls.Window"
+    Title="{x:Bind root:ResourceService.GetLocalized('Resources/AppDisplayName')}"
     MinWidth="600"
     MinHeight="768"
     ActivatedCommand="{x:Bind ViewModel.ActivatedCommand}"

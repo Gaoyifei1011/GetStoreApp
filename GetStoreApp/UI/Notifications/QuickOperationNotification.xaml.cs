@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using System;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.UI.Notifications
@@ -19,7 +20,7 @@ namespace GetStoreApp.UI.Notifications
 
         private int Duration = 2000;
 
-        public QuickOperationNotification(QuickOperationType operationType, bool isPinnedSuccessfully = false, double? duration = null)
+        public QuickOperationNotification(QuickOperationType operationType, [Optional, DefaultParameterValue(false)] bool isPinnedSuccessfully, [Optional] double? duration)
         {
             InitializeComponent();
             ViewModel.Initialize(operationType, isPinnedSuccessfully);
