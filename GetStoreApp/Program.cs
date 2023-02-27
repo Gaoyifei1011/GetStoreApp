@@ -26,12 +26,12 @@ namespace GetStoreApp
     /// </summary>
     public class Program
     {
-        public static bool IsDesktopProgram { get; set; } = true;
+        private static bool IsDesktopProgram { get; set; } = true;
 
-        public static List<string> CommandLineArgs { get; set; }
+        public static List<string> CommandLineArgs { get; private set; }
 
         // 应用程序实例
-        public static WinUIApp ApplicationRoot { get; set; }
+        public static WinUIApp ApplicationRoot { get; private set; }
 
         public static bool IsAppLaunched { get; set; } = false;
 

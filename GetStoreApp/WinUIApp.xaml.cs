@@ -15,13 +15,13 @@ namespace GetStoreApp
 {
     public partial class WinUIApp : Application
     {
-        public AppWindow AppWindow { get; set; }
+        public AppWindow AppWindow { get; private set; }
 
-        public MainWindow MainWindow { get; set; }
+        public MainWindow MainWindow { get; private set; }
 
-        public WindowsTrayIcon TrayIcon { get; set; }
+        public WindowsTrayIcon TrayIcon { get; private set; }
 
-        public JumpList TaskbarJumpList { get; set; }
+        public JumpList TaskbarJumpList { get; private set; }
 
         public AppViewModel ViewModel { get; } = new AppViewModel();
 

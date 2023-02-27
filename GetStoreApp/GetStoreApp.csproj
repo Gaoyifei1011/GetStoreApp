@@ -15,14 +15,13 @@
     <EnableMsixTooling>false</EnableMsixTooling>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <FileAlignment>512</FileAlignment>
-    <FileVersion>1.2.217.0</FileVersion>
+    <FileVersion>1.2.227.0</FileVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
     <IncludeSymbols>False</IncludeSymbols>
     <ImplicitUsings>disable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
-    <NoWarn>CA1416;IL2050;IL2070</NoWarn>
     <Nullable>disable</Nullable>
     <Optimize>True</Optimize>
     <OutputType>WinExe</OutputType>
@@ -30,7 +29,6 @@
     <Platforms>x86;x64;ARM64</Platforms>
     <PublishProtocol>FileSystem</PublishProtocol>
     <PublishReadyToRun>True</PublishReadyToRun>
-    <!--调试时需要设置该选项为false-->
     <PublishSingleFile>true</PublishSingleFile>
     <PublishTrimmed>true</PublishTrimmed>
     <Product>获取商店应用</Product>
@@ -44,7 +42,7 @@
     <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <TrimMode>partial</TrimMode>
-    <Version>1.2.217.0</Version>
+    <Version>1.2.227.0</Version>
     <UseWindowsForms>False</UseWindowsForms>
     <UseWinUI>true</UseWinUI>
     <UseWPF>False</UseWPF>

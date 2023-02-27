@@ -1,14 +1,18 @@
-﻿using GetStoreAppHelper.WindowsAPI.PInvoke.User32;
+﻿using GetStoreAppHelper.Services;
+using GetStoreAppHelper.WindowsAPI.PInvoke.User32;
 using Microsoft.VisualBasic.ApplicationServices;
 using System;
 
 namespace GetStoreAppHelper
 {
+    /// <summary>
+    /// 单例应用程序管理器
+    /// </summary>
     public class SingleInstanceManager : WindowsFormsApplicationBase, IDisposable
     {
         private bool isDisposed = false;
 
-        private App ApplicationRoot { get; set; }
+        public App ApplicationRoot { get; private set; }
 
         public MileWindow MainWindow { get; set; }
 
@@ -23,7 +27,7 @@ namespace GetStoreAppHelper
 
             MainWindow = new MileWindow();
             MainWindow.Content = new MainPage();
-            MainWindow.Title = "获取商店应用 辅助程序";
+            MainWindow.Title = ResourceService.GetLocalized("HelperResources/Title");
             MainWindow.Position.X = unchecked((int)0x80000000);
             MainWindow.Position.Y = 0;
             MainWindow.Size.X = unchecked((int)0x80000000);
@@ -64,7 +68,7 @@ namespace GetStoreAppHelper
             isDisposed = true;
         }
 
-        public new void Run(string[] commandline)
+        public void Start(string[] commandline)
         {
             try
             {

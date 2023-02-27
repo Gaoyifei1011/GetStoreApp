@@ -91,13 +91,10 @@ Global
 		{5B0B2EA7-A45C-4233-B19A-73CECC9A6DB2}.Debug|x86.Deploy.0 = Debug|x86
 		{5B0B2EA7-A45C-4233-B19A-73CECC9A6DB2}.Release|ARM64.ActiveCfg = Release|ARM64
 		{5B0B2EA7-A45C-4233-B19A-73CECC9A6DB2}.Release|ARM64.Build.0 = Release|ARM64
-		{5B0B2EA7-A45C-4233-B19A-73CECC9A6DB2}.Release|ARM64.Deploy.0 = Release|ARM64
 		{5B0B2EA7-A45C-4233-B19A-73CECC9A6DB2}.Release|x64.ActiveCfg = Release|x64
 		{5B0B2EA7-A45C-4233-B19A-73CECC9A6DB2}.Release|x64.Build.0 = Release|x64
-		{5B0B2EA7-A45C-4233-B19A-73CECC9A6DB2}.Release|x64.Deploy.0 = Release|x64
 		{5B0B2EA7-A45C-4233-B19A-73CECC9A6DB2}.Release|x86.ActiveCfg = Release|x86
 		{5B0B2EA7-A45C-4233-B19A-73CECC9A6DB2}.Release|x86.Build.0 = Release|x86
-		{5B0B2EA7-A45C-4233-B19A-73CECC9A6DB2}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -51,7 +51,7 @@ namespace GetStoreApp.Views.Window
         {
             return Content.XamlRoot is not null
                 ? Content.XamlRoot
-                : throw new ApplicationException(ResourceService.GetLocalized("Resources/WindowContentInitializeFailed"));
+                : throw new ApplicationException(ResourceService.GetLocalized("Resources/WindowXamlRootInitializeFailed"));
         }
 
         public void InitializeWindowProc()

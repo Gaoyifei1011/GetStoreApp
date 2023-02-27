@@ -288,9 +288,6 @@
   <data name="Reference" xml:space="preserve">
     <value>项目引用（按英文首字母排序）</value>
   </data>
-  <data name="ReferenceTip" xml:space="preserve">
-    <value>标记"*"的是第三方库引用的内容</value>
-  </data>
   <data name="ReferenceToolTip" xml:space="preserve">
     <value>单击了解被引用开源项目的信息</value>
   </data>

@@ -1,4 +1,4 @@
-﻿using Windows.Foundation.Collections;
+﻿using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.About
 {
@@ -7,7 +7,7 @@ namespace GetStoreApp.ViewModels.Controls.About
     /// </summary>
     public sealed class ThanksViewModel
     {
-        public StringMap ThanksDict { get; } = new StringMap
+        public Dictionary<string, string> ThanksDict { get; } = new Dictionary<string, string>
         {
             {"AndromedaMelody","https://github.com/AndromedaMelody" },
             {"飞翔","https://fionlen.azurewebsites.net"},

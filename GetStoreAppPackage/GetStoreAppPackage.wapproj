@@ -49,7 +49,6 @@
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
-    <NoWarn>$(NoWarn);NU1702;MSB4018</NoWarn>
     <PackageCertificateKeyFile>GetStoreAppPackage_SignKey.pfx</PackageCertificateKeyFile>
     <ProjectGuid>ca6c2dc4-c96d-4c23-ae18-fc7150bef554</ProjectGuid>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>

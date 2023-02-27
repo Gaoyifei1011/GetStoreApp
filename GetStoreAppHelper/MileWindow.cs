@@ -1,8 +1,10 @@
-﻿using GetStoreAppHelper.WindowsAPI.PInvoke.Kernel32;
+﻿using GetStoreAppHelper.Services;
+using GetStoreAppHelper.WindowsAPI.PInvoke.Kernel32;
 using GetStoreAppHelper.WindowsAPI.PInvoke.User32;
 using System;
 using System.Runtime.InteropServices;
 using Windows.Graphics;
+using Windows.UI.Xaml;
 
 namespace GetStoreAppHelper
 {
@@ -20,9 +22,9 @@ namespace GetStoreAppHelper
 
         public IntPtr Handle { get; private set; } = IntPtr.Zero;
 
-        public object Content { get; set; } = null;
+        public UIElement Content { get; set; } = null;
 
-        public MileWindow([Optional] string title, [Optional] object content, [Optional] PointInt32 position, [Optional] PointInt32 size)
+        public MileWindow([Optional] string title, [Optional] UIElement content, [Optional] PointInt32 position, [Optional] PointInt32 size)
         {
             if (title is not null) Title = title;
             if (content is not null) Content = content;
@@ -57,7 +59,7 @@ namespace GetStoreAppHelper
 
             if (Handle == IntPtr.Zero)
             {
-                throw new ApplicationException("初始化窗口失败");
+                throw new ApplicationException(ResourceService.GetLocalized("HelperResources/WindowHandleInitializeFailed"));
             }
             else
             {

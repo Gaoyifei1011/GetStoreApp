@@ -7,7 +7,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
     /// <summary>
     /// Kernel32.dll 函数库
     /// </summary>
-    public static class Kernel32Library
+    public static partial class Kernel32Library
     {
         private const string Kernel32 = "Kernel32.dll";
 
@@ -15,8 +15,9 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// 为调用进程分配一个新的控制台。
         /// </summary>
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
-        [DllImport(Kernel32, CharSet = CharSet.Ansi, EntryPoint = "AllocConsole", SetLastError = false)]
-        public static extern bool AllocConsole();
+        [LibraryImport(Kernel32, EntryPoint = "AllocConsole", SetLastError = false)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static partial bool AllocConsole();
 
         /// <summary>
         /// 将调用进程附加到指定进程的控制台作为客户端应用程序
@@ -25,8 +26,9 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// 将调用进程附加到指定进程的控制台作为客户端应用程序，默认值为ATTACH_PARENT_PROCESS = -1
         /// </param>
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
-        [DllImport(Kernel32, CharSet = CharSet.Unicode, EntryPoint = "AttachConsole", SetLastError = false)]
-        public static extern bool AttachConsole(int dwProcessId = -1);
+        [LibraryImport(Kernel32, EntryPoint = "AttachConsole", SetLastError = false)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static partial bool AttachConsole(int dwProcessId = -1);
 
         /// <summary>
         /// 关闭打开的对象句柄。
@@ -37,8 +39,8 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// 如果应用程序在调试器下运行，则如果函数收到无效的句柄值或伪句柄值，该函数将引发异常。
         /// 如果两次关闭句柄，或者对 FindFirstFile 函数返回的句柄调用 CloseHandle，而不是调用 FindClose 函数，则可能会出现这种情况。
         /// </returns>
-        [DllImport(Kernel32, CharSet = CharSet.Unicode, EntryPoint = "CloseHandle", SetLastError = false)]
-        public static extern int CloseHandle(int hObject);
+        [LibraryImport(Kernel32, EntryPoint = "CloseHandle", SetLastError = false)]
+        public static partial int CloseHandle(int hObject);
 
         /// <summary>枚举操作系统上可用的地理位置标识符 (类型 GEOID) 。</summary>
         /// <param name="geoClass">
@@ -47,22 +49,23 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <param name="parentGeoId">保留。 此参数必须为 0。</param>
         /// <param name="lpGeoEnumProc">指向应用程序定义的回调函数 EnumGeoInfoProc 的指针。 EnumSystemGeoID 函数对此回调函数进行重复调用，直到返回 FALSE。</param>
         /// <returns>如果成功，则返回非零值，否则返回 0。</returns>
-        [DllImport(Kernel32, CharSet = CharSet.Unicode, EntryPoint = "EnumSystemGeoID", SetLastError = true)]
-        public static extern int EnumSystemGeoID(int geoClass, int parentGeoId, EnumGeoInfoProc lpGeoEnumProc);
+        [LibraryImport(Kernel32, EntryPoint = "EnumSystemGeoID", SetLastError = true)]
+        public static partial int EnumSystemGeoID(int geoClass, int parentGeoId, EnumGeoInfoProc lpGeoEnumProc);
 
         /// <summary>
         /// 从其控制台中分离调用进程。
         /// </summary>
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
-        [DllImport(Kernel32, CharSet = CharSet.Ansi, EntryPoint = "FreeConsole", SetLastError = false)]
-        public static extern bool FreeConsole();
+        [LibraryImport(Kernel32, EntryPoint = "FreeConsole", SetLastError = false)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static partial bool FreeConsole();
 
         /// <summary>
         /// 检索与调用进程关联的控制台所使用的窗口句柄。
         /// </summary>
         /// <returns>返回值是与调用进程关联的控制台所使用的窗口的句柄; 如果没有此类关联的控制台，则为 NULL 。</returns>
-        [DllImport(Kernel32, CharSet = CharSet.Ansi, EntryPoint = "GetConsoleWindow", SetLastError = false)]
-        public static extern IntPtr GetConsoleWindow();
+        [LibraryImport(Kernel32, EntryPoint = "GetConsoleWindow", SetLastError = false)]
+        public static partial IntPtr GetConsoleWindow();
 
         /// <summary>检索有关指定地理位置的信息。</summary>
         /// <param name="location">要获取信息的地理位置的标识符。可以通过调用 EnumSystemGeoID 来获取可用值。</param>
@@ -100,7 +103,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// 最后一个错误代码是因为它们的访问限制阻止用户级代码打开它们。ERROR_INVALID_PARAMETERERROR_ACCESS_DENIED
         /// </param>
         /// <returns>如果函数成功，则返回值是指定进程的打开句柄。如果函数失败，则返回值为 NULL。</returns>
-        [DllImport(Kernel32, CharSet = CharSet.Ansi, EntryPoint = "OpenProcess", SetLastError = false)]
-        public static extern int OpenProcess(EDesiredAccess dwDesiredAccess, bool bInheritHandle, int dwProcessId);
+        [LibraryImport(Kernel32, EntryPoint = "OpenProcess", SetLastError = false)]
+        public static partial int OpenProcess(EDesiredAccess dwDesiredAccess, [MarshalAs(UnmanagedType.Bool)] bool bInheritHandle, int dwProcessId);
     }
 }

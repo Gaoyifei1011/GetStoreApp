@@ -23,39 +23,36 @@
             <TextBlock Style="{StaticResource ExpanderHeaderStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/Reference')}" />
         </Expander.Header>
         <Expander.Content>
-            <StackPanel>
-                <collections:AdaptiveGridView
-                    Margin="9,0"
-                    Padding="0"
-                    HorizontalAlignment="Stretch"
-                    HorizontalContentAlignment="Stretch"
-                    DesiredWidth="280"
-                    ItemContainerStyle="{StaticResource GridViewItemStyle}"
-                    ItemsSource="{x:Bind ViewModel.ReferenceDict}"
-                    OneRowModeEnabled="False"
-                    SelectionMode="None"
-                    StretchContentForSingleRow="True">
-                    <collections:AdaptiveGridView.ItemTemplate>
-                        <DataTemplate>
-                            <HyperlinkButton
-                                Padding="5,8"
-                                HorizontalAlignment="Stretch"
-                                HorizontalContentAlignment="Left"
-                                Content="{Binding Key, Mode=OneTime}"
-                                NavigateUri="{Binding Value, Mode=OneTime}">
+            <collections:AdaptiveGridView
+                Margin="9,0"
+                Padding="0"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                DesiredWidth="280"
+                ItemContainerStyle="{StaticResource GridViewItemStyle}"
+                ItemsSource="{x:Bind ViewModel.ReferenceDict}"
+                OneRowModeEnabled="False"
+                SelectionMode="None"
+                StretchContentForSingleRow="True">
+                <collections:AdaptiveGridView.ItemTemplate>
+                    <DataTemplate>
+                        <HyperlinkButton
+                            Padding="5,8"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Left"
+                            Content="{Binding Key, Mode=OneTime}"
+                            NavigateUri="{Binding Value, Mode=OneTime}">
 
-                                <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        Content="{Binding Key, Converter={StaticResource AboutToolTipFormatConverter}, ConverterParameter=Reference, Mode=OneTime}"
-                                        Placement="Bottom"
-                                        VerticalOffset="25" />
-                                </ToolTipService.ToolTip>
-                            </HyperlinkButton>
-                        </DataTemplate>
-                    </collections:AdaptiveGridView.ItemTemplate>
-                </collections:AdaptiveGridView>
-                <TextBlock Margin="14,5,0,5" Text="{x:Bind root:ResourceService.GetLocalized('About/ReferenceTip')}" />
-            </StackPanel>
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    Content="{Binding Key, Converter={StaticResource AboutToolTipFormatConverter}, ConverterParameter=Reference, Mode=OneTime}"
+                                    Placement="Bottom"
+                                    VerticalOffset="25" />
+                            </ToolTipService.ToolTip>
+                        </HyperlinkButton>
+                    </DataTemplate>
+                </collections:AdaptiveGridView.ItemTemplate>
+            </collections:AdaptiveGridView>
         </Expander.Content>
     </Expander>
 </UserControl>

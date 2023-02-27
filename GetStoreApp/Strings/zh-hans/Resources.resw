@@ -171,10 +171,10 @@
   <data name="URL" xml:space="preserve">
     <value>URL（链接）</value>
   </data>
-  <data name="WindowContentInitializeFailed" xml:space="preserve">
-    <value>窗口内容初始化失败，窗口内容为空</value>
-  </data>
   <data name="WindowHandleInitializeFailed" xml:space="preserve">
     <value>窗口句柄初始化失败，窗口句柄为空指针</value>
+  </data>
+  <data name="WindowXamlRootInitializeFailed" xml:space="preserve">
+    <value>窗口Xaml根初始化失败，窗口Xaml根为空</value>
   </data>
 </root>

@@ -56,13 +56,13 @@ All the content of the program has been developed
 
 > * [Aira2](https://aria2.github.io)&emsp;
 > * [Microsoft.Data.Sqlite.Core](https://docs.microsoft.com/dotnet/standard/data/sqlite)&emsp;
-> * [Microsoft.Windows.SDK.BuildTools*](https://aka.ms/WinSDKProjectURL)&emsp;
+> * [Microsoft.VisualBasic](https://dot.net)&emsp;
+> * [Microsoft.Windows.SDK.Contracts](https://aka.ms/WinSDKProjectURL)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
+> * [Mile.Xaml](https://github.com/ProjectMile/Mile.Xaml)&emsp;
 > * [SQLitePCLRaw.core](https://github.com/ericsink/SQLitePCL.raw)&emsp;
 > * [SQLitePCLRaw.provider.winsqlite3](https://github.com/ericsink/SQLitePCL.raw)&emsp;
-> * [System.Memory*](https://dot.net)&emsp;
 
-The "*" marked is the content referenced by the third-party library  
 [Code referenced or used during the learning process](https://github.com/Gaoyifei1011/GetStoreApp/blob/master/Description/StudyReferenceCode.md)&emsp;
 
 ------

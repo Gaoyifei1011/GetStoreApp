@@ -8,7 +8,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
     /// <summary>
     /// 从 User32.dll 函数库。
     /// </summary>
-    public static class User32Library
+    public static partial class User32Library
     {
         private const string User32 = "User32.dll";
 
@@ -76,8 +76,8 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// 指向通过 CREATESTRUCT 结构传递给窗口的值的指针， (lpCreateParams 成员) <see cref="WindowMessage.WM_CREATE"> 消息的 <param name="lpParam"> 参数所指向的值。 此消息在返回之前由此函数发送到创建的窗口。
         /// </param>
         /// <returns>如果函数成功，则返回值是新窗口的句柄。如果函数失败，则返回值为 NULL。</returns>
-        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "CreateWindowExW", SetLastError = true)]
-        public static extern IntPtr CreateWindowEx(
+        [LibraryImport(User32, EntryPoint = "CreateWindowExW", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)]
+        public static partial IntPtr CreateWindowEx(
            int dwExStyle,
            string lpClassName,
            string lpWindowName,
@@ -99,16 +99,17 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="wParam">其他消息信息。 此参数的内容取决于 <param name="Msg"> 参数的值。</param>
         /// <param name="lParam">其他消息信息。 此参数的内容取决于 <param name="Msg"> 参数的值。</param>
         /// <returns>返回值是消息处理的结果，取决于消息。</returns>
-        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "DefWindowProc", SetLastError = false)]
-        public static extern IntPtr DefWindowProc(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+        [LibraryImport(User32, EntryPoint = "DefWindowProcA", SetLastError = false)]
+        public static partial IntPtr DefWindowProc(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
         /// 销毁指定的菜单并释放菜单占用的任何内存。
         /// </summary>
         /// <param name="hMenu">要销毁的菜单的句柄。</param>
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
-        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "DestroyMenu", SetLastError = true)]
-        public static extern bool DestroyMenu(IntPtr hMenu);
+        [LibraryImport(User32, EntryPoint = "DestroyMenu", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static partial bool DestroyMenu(IntPtr hMenu);
 
         /// <summary>
         /// 销毁指定的窗口。 该函数将 <see cref="WindowMessage.WM_DESTROY"> 和 <see cref="WindowMessage.WM_NCDESTROY"> 消息发送到窗口以停用它，并从中删除键盘焦点。 该函数还会销毁窗口的菜单、刷新线程消息队列、销毁计时器、删除剪贴板所有权，如果窗口位于查看器链顶部) ，则中断剪贴板查看器链。
@@ -118,8 +119,9 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// </summary>
         /// <param name="hwnd">要销毁的窗口的句柄。</param>
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
-        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "DestroyWindow", SetLastError = true)]
-        public static extern bool DestroyWindow(IntPtr hwnd);
+        [LibraryImport(User32, EntryPoint = "DestroyWindow", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static partial bool DestroyWindow(IntPtr hwnd);
 
         /// <summary>
         /// 检索鼠标光标的位置（以屏幕坐标为单位）。
@@ -134,13 +136,13 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// </summary>
         /// <param name="hwnd">要获取相关信息的窗口。</param>
         /// <returns>窗口的 DPI，无效 的 <param name="hwnd"> 值将导致返回值 0。</returns>
-        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "GetDpiForWindow", SetLastError = false)]
-        public static extern int GetDpiForWindow(IntPtr hwnd);
+        [LibraryImport(User32, EntryPoint = "GetDpiForWindow", SetLastError = false)]
+        public static partial int GetDpiForWindow(IntPtr hwnd);
 
         /// <summary>检索前台窗口的句柄， (用户当前正在使用的窗口) 。 系统向创建前台窗口的线程分配略高于其他线程的优先级。</summary>
         /// <returns>返回值是前台窗口的句柄。 在某些情况下，前台窗口可以为 NULL ，例如窗口丢失激活时。</returns>
-        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "GetForegroundWindow", SetLastError = true)]
-        public static extern IntPtr GetForegroundWindow();
+        [LibraryImport(User32, EntryPoint = "GetForegroundWindow", SetLastError = true)]
+        public static partial IntPtr GetForegroundWindow();
 
         /// <summary>
         /// 在菜单中的指定位置插入新菜单项。
@@ -163,8 +165,8 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="cy">图标或光标的高度（以像素为单位）。</param>
         /// <param name="fuLoad">此参数可使用以下一个或多个值。</param>
         /// <returns>如果函数成功，则返回值是新加载的图像的句柄。如果函数失败，则返回值为 NULL。</returns>
-        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "LoadImage", SetLastError = true)]
-        public static extern IntPtr LoadImage(IntPtr hinst, string lpszName, ImageType type, int cx, int cy, LoadImageFlags fuLoad);
+        [LibraryImport(User32, EntryPoint = "LoadImageW", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)]
+        public static partial IntPtr LoadImage(IntPtr hinst, string lpszName, ImageType type, int cx, int cy, LoadImageFlags fuLoad);
 
         /// <summary>
         /// 显示一个模式对话框，其中包含系统图标、一组按钮和一条简短的应用程序特定消息，例如状态或错误信息。 消息框返回一个整数值，该值指示用户单击的按钮。
@@ -179,8 +181,8 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// 如果函数失败，则返回值为零。
         /// 如果函数成功，则返回值为 <see cref="MessageBoxResult"> 的枚举值之一。
         /// </returns>
-        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "MessageBox", SetLastError = true)]
-        public static extern MessageBoxResult MessageBox(IntPtr hWnd, string lptext, string lpcaption, MessageBoxOptions options);
+        [LibraryImport(User32, EntryPoint = "MessageBoxW", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)]
+        public static partial MessageBoxResult MessageBox(IntPtr hWnd, string lptext, string lpcaption, MessageBoxOptions options);
 
         /// <summary>
         /// 注册一个窗口类，以便在对 CreateWindow 或 <see cref="CreateWindowEx"> 函数的调用中随后使用。
@@ -195,8 +197,8 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// </summary>
         /// <param name="lpString">要注册的消息。</param>
         /// <returns>如果成功注册消息，则返回值是范围0xC000到0xFFFF的消息标识符。如果函数失败，则返回值为零。</returns>
-        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "RegisterWindowMessageW", SetLastError = false)]
-        public static extern uint RegisterWindowMessage([MarshalAs(UnmanagedType.LPWStr)] string lpString);
+        [LibraryImport(User32, EntryPoint = "RegisterWindowMessageW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16)]
+        public static partial uint RegisterWindowMessage([MarshalAs(UnmanagedType.LPWStr)] string lpString);
 
         /// <summary>
         /// 将指定的消息发送到窗口或窗口。 <see cref="SendMessage"> 函数调用指定窗口的窗口过程，在窗口过程处理消息之前不会返回。
@@ -213,16 +215,17 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SendMessage", SetLastError = false)]
         public static extern IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, int wParam, ref CopyDataStruct lParam);
 
-        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SendMessage", SetLastError = false)]
-        public static extern IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, int wParam, IntPtr lParam);
+        [LibraryImport(User32, EntryPoint = "SendMessageA", SetLastError = false)]
+        public static partial IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, int wParam, IntPtr lParam);
 
         /// <summary>
         /// 将创建指定窗口的线程引入前台并激活窗口。 键盘输入将定向到窗口，并为用户更改各种视觉提示。 系统向创建前台窗口的线程分配略高于其他线程的优先级。
         /// </summary>
         /// <param name="hWnd">应激活并带到前台的窗口的句柄。</param>
         /// <returns>如果窗口被带到前台，则返回值为非零。如果未将窗口带到前台，则返回值为零。</returns>
-        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SetForegroundWindow", SetLastError = false)]
-        public static extern bool SetForegroundWindow(IntPtr hWnd);
+        [LibraryImport(User32, EntryPoint = "SetForegroundWindow", SetLastError = false)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static partial bool SetForegroundWindow(IntPtr hWnd);
 
         /// <summary>
         /// 更改指定窗口的属性。 该函数还将指定偏移量处的32位（long类型）值设置到额外的窗口内存中。
@@ -231,8 +234,8 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="nIndex">要设置的值的从零开始的偏移量。 有效值的范围为零到额外窗口内存的字节数，减去整数的大小。</param>
         /// <param name="newProc">新事件处理函数（回调函数）</param>
         /// <returns>如果函数成功，则返回值是指定 32 位整数的上一个值。如果函数失败，则返回值为零。 </returns>
-        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SetWindowLong", SetLastError = false)]
-        public static extern IntPtr SetWindowLong(IntPtr hWnd, WindowLongIndexFlags nIndex, WindowProc newProc);
+        [LibraryImport(User32, EntryPoint = "SetWindowLongA", SetLastError = false)]
+        public static partial IntPtr SetWindowLong(IntPtr hWnd, WindowLongIndexFlags nIndex, WindowProc newProc);
 
         /// <summary>
         /// 更改指定窗口的属性。 该函数还将指定偏移量处的64位（long类型）值设置到额外的窗口内存中。
@@ -241,8 +244,30 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="nIndex">要设置的值的从零开始的偏移量。 有效值的范围为零到额外窗口内存的字节数，减去整数的大小。</param>
         /// <param name="newProc">新事件处理函数（回调函数）</param>
         /// <returns>如果函数成功，则返回值是指定偏移量的上一个值。如果函数失败，则返回值为零。 </returns>
-        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SetWindowLongPtr", SetLastError = false)]
-        public static extern IntPtr SetWindowLongPtr(IntPtr hWnd, WindowLongIndexFlags nIndex, WindowProc newProc);
+        [LibraryImport(User32, EntryPoint = "SetWindowLongPtrA", SetLastError = false)]
+        public static partial IntPtr SetWindowLongPtr(IntPtr hWnd, WindowLongIndexFlags nIndex, WindowProc newProc);
+
+        /// <summary>
+        /// 更改子窗口、弹出窗口或顶级窗口的大小、位置和 Z 顺序。 这些窗口根据屏幕上的外观进行排序。 最上面的窗口接收最高排名，是 Z 顺序中的第一个窗口。
+        /// </summary>
+        /// <param name="hWnd">更改子窗口、弹出窗口或顶级窗口的大小、位置和 Z 顺序。 这些窗口根据屏幕上的外观进行排序。 最上面的窗口接收最高排名，是 Z 顺序中的第一个窗口。</param>
+        /// <param name="hWndInsertAfter">在 Z 顺序中定位窗口之前窗口的句柄。 </param>
+        /// <param name="X">在 Z 顺序中定位窗口之前窗口的句柄。 </param>
+        /// <param name="Y">窗口顶部的新位置，以客户端坐标表示。</param>
+        /// <param name="cx">窗口的新宽度（以像素为单位）。</param>
+        /// <param name="cy">窗口的新高度（以像素为单位）。</param>
+        /// <param name="uFlags">窗口大小调整和定位标志。</param>
+        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 </returns>
+        [LibraryImport(User32, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static partial bool SetWindowPos(
+            IntPtr hWnd,
+            IntPtr hWndInsertAfter,
+            int X,
+            int Y,
+            int cx,
+            int cy,
+            SetWindowPosFlags uFlags);
 
         /// <summary>
         /// 在指定位置显示快捷菜单，并跟踪快捷菜单上的项选择。 快捷菜单可在屏幕上的任意位置显示。
@@ -262,7 +287,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <returns>
         /// 如果在 uFlags 参数中指定<see cref="TrackPopupMenuFlags.TPM_RETURNCMD">，则返回值是用户选择的项的菜单项标识符。 如果用户取消菜单而不进行选择，或者发生错误，则返回值为零。如果未在 uFlags 参数中指定<see cref="TrackPopupMenuFlags.TPM_RETURNCMD">，则如果函数成功且失败，则返回值为零。
         /// </returns>
-        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "TrackPopupMenu", SetLastError = false)]
-        public static extern int TrackPopupMenu(IntPtr hMenu, TrackPopupMenuFlags uFlags, int x, int y, int reserved, IntPtr hwnd, IntPtr prcRect);
+        [LibraryImport(User32, EntryPoint = "TrackPopupMenu", SetLastError = false)]
+        public static partial int TrackPopupMenu(IntPtr hMenu, TrackPopupMenuFlags uFlags, int x, int y, int reserved, IntPtr hwnd, IntPtr prcRect);
     }
 }

@@ -16,6 +16,7 @@ using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.UxTheme;
 using Microsoft.UI;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
@@ -310,7 +311,10 @@ namespace GetStoreApp.ViewModels.Window
         /// </summary>
         private void OnColorValuesChanged(UISettings sender, object args)
         {
-            SetAppBackground();
+            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
+            {
+                SetAppBackground();
+            });
         }
 
         /// <summary>

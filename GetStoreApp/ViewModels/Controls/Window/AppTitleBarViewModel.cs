@@ -83,10 +83,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
         });
 
         // 窗口最小化
-        public IRelayCommand MinimizeCommand => new RelayCommand(() =>
-        {
-            WindowHelper.MinimizeAppWindow();
-        });
+        public IRelayCommand MinimizeCommand => new RelayCommand(WindowHelper.MinimizeAppWindow);
 
         // 窗口最大化
         public IRelayCommand MaximizeCommand => new RelayCommand(() =>
@@ -128,14 +125,13 @@ namespace GetStoreApp.ViewModels.Controls.Window
 
             if (properties.IsLeftButtonPressed)
             {
-                PointInt32 pt;
-                User32Library.GetCursorPos(out pt);
+                User32Library.GetCursorPos(out PointInt32 pt);
 
                 if (isWindowMoving)
                 {
                     if (!WindowHelper.IsWindowMaximized)
                     {
-                        Program.ApplicationRoot.AppWindow.Move(new PointInt32(nXWindow + (pt.X - nX), nYWindow + (pt.Y - nY)));
+                        User32Library.SetWindowPos(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), 0, nXWindow + (pt.X - nX), nYWindow + (pt.Y - nY), 0, 0, SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER);
                     }
                 }
                 args.Handled = true;
@@ -154,9 +150,8 @@ namespace GetStoreApp.ViewModels.Controls.Window
                 ((Grid)sender).CapturePointer(args.Pointer);
                 nXWindow = Program.ApplicationRoot.AppWindow.Position.X;
                 nYWindow = Program.ApplicationRoot.AppWindow.Position.Y;
-                PointInt32 pt;
 
-                User32Library.GetCursorPos(out pt);
+                User32Library.GetCursorPos(out PointInt32 pt);
                 nX = pt.X;
                 nY = pt.Y;
                 if (!WindowHelper.IsWindowMaximized)
