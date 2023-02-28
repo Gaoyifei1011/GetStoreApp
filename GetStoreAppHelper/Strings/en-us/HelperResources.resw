@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppName" xml:space="preserve">
+    <value>GetStoreApp</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="ShowOrHideWindow" xml:space="preserve">
+    <value>Show / Hide window</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>GetStoreAppHelper</value>
   </data>

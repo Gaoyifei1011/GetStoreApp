@@ -7,6 +7,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <MileXaml:XamlControlsResources />
+
+                <ResourceDictionary Source="ms-appx:///Styles/FontIcon.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

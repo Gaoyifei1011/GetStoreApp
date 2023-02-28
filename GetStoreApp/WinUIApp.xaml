@@ -8,6 +8,7 @@
             <!--  资源字典顺序发生变化时，需要修改ResourceDictionaryHelper静态类的资源字典顺序  -->
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+
                 <ResourceDictionary Source="ms-appx:///Styles/Converter.xaml" />
 
                 <ResourceDictionary Source="ms-appx:///Styles/Button.xaml" />

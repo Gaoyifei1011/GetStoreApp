@@ -24,7 +24,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
     <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.22621.755" />
     <PackageReference Include="Mile.Xaml" Version="1.2.495" />
   </ItemGroup>
@@ -46,8 +45,13 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    
-    <Page Update="MainPage.xaml">
+
+    <Page Update="Styles\FontIcon.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+
+    <Page Update="UI\Controls\TrayMenuControl.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

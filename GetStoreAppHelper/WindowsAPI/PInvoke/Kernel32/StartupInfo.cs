@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GetStoreAppHelper.WindowsAPI.PInvoke.User32;
+using System;
 
 namespace GetStoreAppHelper.WindowsAPI.PInvoke.Kernel32
 {
@@ -77,7 +78,7 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.Kernel32
         /// If <see cref="dwFlags"/> specifies <see cref="StartupInfoFlags.STARTF_USESHOWWINDOW"/>, this member can be any of the values that can be specified in the nCmdShow parameter for the ShowWindow function, except for SW_SHOWDEFAULT. Otherwise, this member is ignored.
         /// For GUI processes, the first time ShowWindow is called, its nCmdShow parameter is ignored wShowWindow specifies the default value. In subsequent calls to ShowWindow, the wShowWindow member is used if the nCmdShow parameter of ShowWindow is set to SW_SHOWDEFAULT.
         /// </summary>
-        public ushort wShowWindow;
+        public WindowShowStyle wShowWindow;
 
         /// <summary>
         /// Reserved for use by the C Run-time; must be zero.

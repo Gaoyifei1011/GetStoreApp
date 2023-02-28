@@ -43,10 +43,10 @@ namespace GetStoreAppHelper
         public void InitializeWindow()
         {
             Handle = User32Library.CreateWindowEx(
-                WindowStylesEx.WS_EX_LEFT,
+                WindowStylesEx.WS_EX_TRANSPARENT | WindowStylesEx.WS_EX_LAYERED | WindowStylesEx.WS_EX_TOOLWINDOW,
                 "Mile.Xaml.ContentWindow",
                 Title,
-                WindowStyles.WS_OVERLAPPEDWINDOW,
+                WindowStyles.WS_POPUP,
                 Position.X,
                 Position.Y,
                 Size.X,

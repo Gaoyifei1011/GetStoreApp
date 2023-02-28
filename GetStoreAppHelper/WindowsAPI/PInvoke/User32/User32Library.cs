@@ -1,5 +1,7 @@
-﻿using System;
+﻿using GetStoreAppHelper.WindowsAPI.PInvoke.Shell32;
+using System;
 using System.Runtime.InteropServices;
+using Windows.Graphics;
 
 namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
 {
@@ -64,8 +66,38 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
            IntPtr hInstance,
            IntPtr lpParam);
 
+        /// <summary>
+        /// 调用默认窗口过程，为应用程序未处理的任何窗口消息提供默认处理。 此函数可确保处理每个消息。 使用窗口过程收到的相同参数调用 <see cref="DefWindowProc">。
+        /// </summary>
+        /// <param name="hWnd">接收消息的窗口过程的句柄。</param>
+        /// <param name="Msg">其他消息信息。</param>
+        /// <param name="wParam">其他消息信息。 此参数的内容取决于 <param name="Msg"> 参数的值。</param>
+        /// <param name="lParam">其他消息信息。 此参数的内容取决于 <param name="Msg"> 参数的值。</param>
+        /// <returns>返回值是消息处理的结果，取决于消息。</returns>
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "DefWindowProc", SetLastError = false)]
+        public static extern IntPtr DefWindowProc(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
+        /// <summary>
+        /// 销毁指定的窗口。 该函数将 <see cref="WindowMessage.WM_DESTROY"> 和 <see cref="WindowMessage.WM_NCDESTROY"> 消息发送到窗口以停用它，并从中删除键盘焦点。 该函数还会销毁窗口的菜单、刷新线程消息队列、销毁计时器、删除剪贴板所有权，如果窗口位于查看器链顶部) ，则中断剪贴板查看器链。
+        /// 如果指定的窗口是父窗口或所有者窗口， 则 <see cref="DestroyWindow"> 会在销毁父窗口或所有者窗口时自动销毁关联的子窗口或拥有窗口。
+        /// 该函数首先销毁子窗口或拥有的窗口，然后销毁父窗口或所有者窗口。
+        /// <see cref="DestroyWindow"> 还会销毁 CreateDialog 函数创建的无模式对话框。
+        /// </summary>
+        /// <param name="hwnd">要销毁的窗口的句柄。</param>
+        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
+        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "DestroyWindow", SetLastError = true)]
+        public static extern bool DestroyWindow(IntPtr hwnd);
+
         [DllImport(User32, SetLastError = true)]
         public static extern IntPtr DispatchMessage(ref MSG lpmsg);
+
+        /// <summary>
+        /// 检索鼠标光标的位置（以屏幕坐标为单位）。
+        /// </summary>
+        /// <param name="lpPoint">指向接收光标屏幕坐标的 <see cref="PointInt32"> 结构的指针。</param>
+        /// <returns>如果成功，则返回非零值，否则返回零。 </returns>
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "GetCursorPos", SetLastError = false)]
+        public static extern bool GetCursorPos(out PointInt32 lpPoint);
 
         /// <summary>Retrieves the handle to the ancestor of the specified window.</summary>
         /// <param name="hWnd">
@@ -81,6 +113,52 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
         public static extern bool GetMessage(out MSG lpMsg, IntPtr hWnd, WindowMessage wMsgFilterMin, WindowMessage wMsgFilterMax);
 
         /// <summary>
+        /// Determines the visibility state of the specified window.
+        /// </summary>
+        /// <param name="hWnd">A handle to the window to be tested.</param>
+        /// <returns>
+        /// If the specified window, its parent window, its parent's parent window, and so forth, have the WS_VISIBLE style, the return value is true, otherwise it is false.
+        /// Because the return value specifies whether the window has the WS_VISIBLE style, it may be nonzero even if the window is totally obscured by other windows.
+        /// </returns>
+        /// <remarks>
+        /// The visibility state of a window is indicated by the WS_VISIBLE style bit.
+        /// When WS_VISIBLE is set, the window is displayed and subsequent drawing into it is displayed as long as the window has the WS_VISIBLE style.
+        /// Any drawing to a window with the WS_VISIBLE style will not be displayed if the window is obscured by other windows or is clipped by its parent window.
+        /// </remarks>
+        [DllImport(User32, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool IsWindowVisible(IntPtr hWnd);
+
+        /// <summary>
+        /// 加载图标、游标、动画游标或位图。
+        /// </summary>
+        /// <param name="hinst">DLL 或可执行文件 (.exe 模块的句柄) ，其中包含要加载的图像。</param>
+        /// <param name="lpszName">要加载的图像。</param>
+        /// <param name="type">要加载的图像的类型。</param>
+        /// <param name="cx">图标或光标的宽度（以像素为单位）。</param>
+        /// <param name="cy">图标或光标的高度（以像素为单位）。</param>
+        /// <param name="fuLoad">此参数可使用以下一个或多个值。</param>
+        /// <returns>如果函数成功，则返回值是新加载的图像的句柄。如果函数失败，则返回值为 NULL。</returns>
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "LoadImage", SetLastError = true)]
+        public static extern IntPtr LoadImage(IntPtr hinst, string lpszName, ImageType type, int cx, int cy, LoadImageFlags fuLoad);
+
+        /// <summary>
+        /// 注册一个窗口类，以便在对 CreateWindow 或 <see cref="CreateWindowEx"> 函数的调用中随后使用。
+        /// </summary>
+        /// <param name="lpWndClass">指向 <see cref="WindowClass"> 结构的指针。 在将结构传递给函数之前，必须用相应的类属性填充结构。</param>
+        /// <return>如果函数成功，则返回值是唯一标识所注册类的类原子。 如果函数失败，则返回值为零。</return>
+        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "RegisterClassW", SetLastError = true)]
+        public static extern short RegisterClass(ref WindowClass lpWndClass);
+
+        /// <summary>
+        /// 定义保证在整个系统中唯一的新窗口消息。 发送或发布消息时可以使用消息值。
+        /// </summary>
+        /// <param name="lpString">要注册的消息。</param>
+        /// <returns>如果成功注册消息，则返回值是范围0xC000到0xFFFF的消息标识符。如果函数失败，则返回值为零。</returns>
+        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "RegisterWindowMessageW", SetLastError = false)]
+        public static extern uint RegisterWindowMessage([MarshalAs(UnmanagedType.LPWStr)] string lpString);
+
+        /// <summary>
         /// 将创建指定窗口的线程引入前台并激活窗口。 键盘输入将定向到窗口，并为用户更改各种视觉提示。 系统向创建前台窗口的线程分配略高于其他线程的优先级。
         /// </summary>
         /// <param name="hWnd">应激活并带到前台的窗口的句柄。</param>
@@ -93,7 +171,7 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
 
         [DllImport(User32, CharSet = CharSet.Unicode, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool ShowWindow([In] IntPtr hWnd, [In] int nCmdShow);
+        public static extern bool ShowWindow([In] IntPtr hWnd, WindowShowStyle nCmdShow);
 
         [DllImport(User32, CharSet = CharSet.Unicode, ExactSpelling = true, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]

@@ -56,7 +56,6 @@
 
 > * [Aira2](https://aria2.github.io)&emsp;
 > * [Microsoft.Data.Sqlite.Core](https://docs.microsoft.com/dotnet/standard/data/sqlite)&emsp;
-> * [Microsoft.VisualBasic](https://dot.net)&emsp;
 > * [Microsoft.Windows.SDK.Contracts](https://aka.ms/WinSDKProjectURL)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Mile.Xaml](https://github.com/ProjectMile/Mile.Xaml)&emsp;

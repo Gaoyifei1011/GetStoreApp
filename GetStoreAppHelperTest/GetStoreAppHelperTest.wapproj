@@ -67,6 +67,9 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\GetStoreApp.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\SplashScreen.scale-200.png" />
     <Content Include="Images\LockScreenLogo.scale-200.png" />
     <Content Include="Images\Square150x150Logo.scale-200.png" />
@@ -81,5 +84,8 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GetStoreAppHelper\GetStoreAppHelper.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\launchsettings.json" />
   </ItemGroup>
 </Project>
