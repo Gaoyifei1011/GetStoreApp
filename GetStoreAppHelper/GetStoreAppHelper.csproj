@@ -22,11 +22,6 @@
   <PropertyGroup Condition="'$(Platform)'=='ARM64'">
     <RuntimeIdentifier>win10-arm64</RuntimeIdentifier>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.22621.755" />
-    <PackageReference Include="Mile.Xaml" Version="1.2.495" />
-  </ItemGroup>
   
   <ItemGroup>
     <ApplicationDefinition Update="App.xaml">
@@ -46,7 +41,15 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
 
-    <Page Update="Styles\FontIcon.xaml">
+    <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.22621.755" />
+    <PackageReference Include="Mile.Xaml" Version="1.2.495" />
+
+    <Page Update="Styles\HelperFontIcon.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+
+    <Page Update="Styles\HelperMenuFlyout.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

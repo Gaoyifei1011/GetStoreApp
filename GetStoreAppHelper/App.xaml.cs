@@ -1,4 +1,5 @@
 ﻿using GetStoreAppHelper.Extensions.SystemTray;
+using GetStoreAppHelper.Helpers;
 using GetStoreAppHelper.Services;
 using GetStoreAppHelper.UI.Controls;
 using GetStoreAppHelper.WindowsAPI.PInvoke.User32;
@@ -22,6 +23,7 @@ namespace GetStoreAppHelper
         public void Run()
         {
             InitializeTrayIcon();
+            ResourceDictionaryHelper.InitializeResourceDictionaryAsync().Wait();
 
             MainWindow = new MileWindow();
 

@@ -2,7 +2,6 @@
 using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
 using GetStoreApp.Models.Controls.Settings.Appearance;
 using GetStoreApp.Models.Window;
@@ -14,7 +13,6 @@ using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
-using GetStoreApp.WindowsAPI.PInvoke.UxTheme;
 using Microsoft.UI;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
@@ -174,6 +172,48 @@ namespace GetStoreApp.ViewModels.Window
             }
         });
 
+        // 打开应用“关于”页面
+        public IRelayCommand AboutAppCommand => new RelayCommand(() =>
+        {
+            // 窗口置前端
+            WindowHelper.ShowAppWindow();
+
+            if (NavigationService.GetCurrentPageType() != typeof(AboutPage))
+            {
+                NavigationService.NavigateTo(typeof(AboutPage));
+            }
+        });
+
+        // 显示 / 隐藏窗口
+        public IRelayCommand ShowOrHideWindowCommand => new RelayCommand(() =>
+        {
+            // 隐藏窗口
+            if (WindowHelper.IsWindowVisible)
+            {
+                WindowHelper.HideAppWindow();
+            }
+            // 显示窗口
+            else
+            {
+                WindowHelper.ShowAppWindow();
+            }
+        });
+
+        // 打开设置
+        public IRelayCommand SettingsCommand => new RelayCommand(() =>
+        {
+            // 窗口置前端
+            WindowHelper.ShowAppWindow();
+
+            if (NavigationService.GetCurrentPageType() != typeof(SettingsPage))
+            {
+                NavigationService.NavigateTo(typeof(SettingsPage));
+            }
+        });
+
+        // 退出应用
+        public IRelayCommand ExitCommand => new RelayCommand(Program.ApplicationRoot.MainWindow.Close);
+
         /// <summary>
         /// 当后退按钮收到交互（如单击或点击）时发生
         /// </summary>
@@ -203,7 +243,6 @@ namespace GetStoreApp.ViewModels.Window
         public void OnNavigationViewLoaded(object sender, RoutedEventArgs args)
         {
             SetAppBackground();
-            SetContextMenuTheme((FrameworkElement)Program.ApplicationRoot.MainWindow.Content);
 
             ((FrameworkElement)Program.ApplicationRoot.MainWindow.Content).ActualThemeChanged += OnActualThemeChanged;
             AppUISettings.ColorValuesChanged += OnColorValuesChanged;
@@ -303,7 +342,6 @@ namespace GetStoreApp.ViewModels.Window
         private void OnActualThemeChanged(FrameworkElement sender, object args)
         {
             SetAppBackground();
-            SetContextMenuTheme(sender);
         }
 
         /// <summary>
@@ -347,59 +385,6 @@ namespace GetStoreApp.ViewModels.Window
             else
             {
                 AppBackground = new SolidColorBrush(Colors.Transparent);
-            }
-        }
-
-        /// <summary>
-        /// 设置Win32 传统右键菜单的主题值
-        /// </summary>
-        /// 注意：Windows 10 1809（19041）和Windows 10 1903（18362）及更高的版本系统最终呈现的效果不同
-        /// Windows 10 1903（18362）有4个值，可以由用户单独指定传统右键菜单的主题值
-        /// Windows 10 1809（19041）只有2个值，设定为True时右键菜单主题值会根据系统变化，不能由用户单独指定
-        private void SetContextMenuTheme(FrameworkElement element)
-        {
-            switch (element.RequestedTheme)
-            {
-                case ElementTheme.Default:
-                    {
-                        if (InfoHelper.GetSystemVersion().BuildNumber > 18362)
-                        {
-                            UxThemeLibrary.SetPreferredAppMode(PreferredAppMode.AllowDark);
-                        }
-                        else
-                        {
-                            UxThemeLibrary.AllowDarkModeForApp(true);
-                        }
-                        break;
-                    }
-                case ElementTheme.Light:
-                    {
-                        if (InfoHelper.GetSystemVersion().BuildNumber > 18362)
-                        {
-                            UxThemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceLight);
-                        }
-                        else
-                        {
-                            UxThemeLibrary.AllowDarkModeForApp(false);
-                        }
-                        break;
-                    }
-                case ElementTheme.Dark:
-                    {
-                        if (InfoHelper.GetSystemVersion().BuildNumber > 18362)
-                        {
-                            UxThemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceDark);
-                        }
-                        else
-                        {
-                            UxThemeLibrary.AllowDarkModeForApp(true);
-                        }
-                        break;
-                    }
-                default:
-                    {
-                        break;
-                    }
             }
         }
     }

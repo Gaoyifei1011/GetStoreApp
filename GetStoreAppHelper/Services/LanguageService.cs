@@ -8,6 +8,8 @@ namespace GetStoreAppHelper.Services
 {
     public static class LanguageService
     {
+        private static string SettingsKey { get; } = "AppLanguage";
+
         public static string DefaultAppLanguage { get; set; }
 
         public static string AppLanguage { get; set; }
@@ -18,13 +20,11 @@ namespace GetStoreAppHelper.Services
         {
             DefaultAppLanguage = AppLanguagesList.First(item => item.Equals("en-US", StringComparison.OrdinalIgnoreCase));
 
-            if (string.IsNullOrEmpty(ApplicationLanguages.PrimaryLanguageOverride))
+            AppLanguage = await ConfigService.ReadSettingAsync<string>(SettingsKey);
+
+            if (string.IsNullOrEmpty(AppLanguage))
             {
                 AppLanguage = "zh-hans";
-            }
-            else
-            {
-                AppLanguage = ApplicationLanguages.PrimaryLanguageOverride;
             }
 
             await Task.CompletedTask;

@@ -19,6 +19,7 @@ namespace GetStoreApp.Services.Root
     {
         public static ExtendedActivationKind StartupKind;
 
+        // 0 表示不需要发送消息，1表示发送的是应用启动时重定向的消息
         private static int NeedToSendMesage;
 
         // 应用启动时使用的参数
@@ -138,7 +139,7 @@ namespace GetStoreApp.Services.Root
 
             // 获取或注册主实例
             AppInstance mainInstance = AppInstance.FindOrRegisterForKey("Main");
-
+            Debug.WriteLine("is current" + mainInstance.IsCurrent);
             // 如果主实例不是此当前实例
             if (!mainInstance.IsCurrent)
             {
@@ -159,11 +160,10 @@ namespace GetStoreApp.Services.Root
                     {
                         // 向主进程发送消息
                         User32Library.SendMessage(process.MainWindowHandle, WindowMessage.WM_COPYDATA, 0, ref copyDataStruct);
-
-                        // 然后退出实例并停止
-                        Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
                     }
                 }
+                // 然后退出实例并停止
+                Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
             }
         }
     }

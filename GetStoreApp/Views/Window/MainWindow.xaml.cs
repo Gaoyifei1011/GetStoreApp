@@ -27,6 +27,9 @@ namespace GetStoreApp.Views.Window
             NavigationService.NavigationFrame = WindowFrame;
         }
 
+        /// <summary>
+        /// 设置标题栏状态
+        /// </summary>
         public void AppTitlebarLoaded(object sender, RoutedEventArgs args)
         {
             AppTitlebar.SetTitlebarState(WindowHelper.IsWindowMaximized);
@@ -54,6 +57,9 @@ namespace GetStoreApp.Views.Window
                 : throw new ApplicationException(ResourceService.GetLocalized("Resources/WindowXamlRootInitializeFailed"));
         }
 
+        /// <summary>
+        /// 初始化窗口过程
+        /// </summary>
         public void InitializeWindowProc()
         {
             IntPtr MainWindowHandle = GetMainWindowHandle();
@@ -68,6 +74,19 @@ namespace GetStoreApp.Views.Window
         {
             switch (Msg)
             {
+                // 窗口显示模式发生修改时的消息
+                case WindowMessage.WM_SIZE:
+                    {
+                        if ((SizeMode)wParam == SizeMode.SIZE_MAXIMIZED)
+                        {
+                            AppTitlebar.SetTitlebarState(true);
+                        }
+                        else if ((SizeMode)wParam == SizeMode.SIZE_RESTORED)
+                        {
+                            AppTitlebar.SetTitlebarState(false);
+                        }
+                        break;
+                    }
                 // 窗口大小发生更改时的消息
                 case WindowMessage.WM_GETMINMAXINFO:
                     {
@@ -126,34 +145,44 @@ namespace GetStoreApp.Views.Window
                         }
                         break;
                     }
-                case WindowMessage.WM_SIZE:
-                    {
-                        if ((SizeMode)wParam == SizeMode.SIZE_MAXIMIZED)
-                        {
-                            AppTitlebar.SetTitlebarState(true);
-                        }
-                        else if ((SizeMode)wParam == SizeMode.SIZE_RESTORED)
-                        {
-                            AppTitlebar.SetTitlebarState(false);
-                        }
-                        break;
-                    }
                 case WindowMessage.WM_TASKBARRCLICK:
                     {
                         WindowHelper.BringToFront();
                         return 0;
                     }
+                //两个进程通信时使用到的消息
+                case WindowMessage.WM_PROCESSCOMMUNICATION:
+                    {
+                        CommunicationFlags flags = (CommunicationFlags)(wParam);
+                        if (flags == CommunicationFlags.AboutApp)
+                        {
+                            DispatcherQueue.TryEnqueue(() => { ViewModel.AboutAppCommand.Execute(null); });
+                        }
+                        else if (flags == CommunicationFlags.ShowOrHideWindow)
+                        {
+                            DispatcherQueue.TryEnqueue(() => { ViewModel.ShowOrHideWindowCommand.Execute(null); });
+                        }
+                        else if (flags == CommunicationFlags.Settings)
+                        {
+                            DispatcherQueue.TryEnqueue(() => { ViewModel.SettingsCommand.Execute(null); });
+                        }
+                        else if (flags == CommunicationFlags.Exit)
+                        {
+                            DispatcherQueue.TryEnqueue(() => { ViewModel.ExitCommand.Execute(null); });
+                        }
+                        break;
+                    }
             }
             return User32Library.CallWindowProc(oldWndProc, hWnd, Msg, wParam, lParam);
         }
 
-        public static int ConvertEpxToPixel(IntPtr hwnd, int effectivePixels)
+        private static int ConvertEpxToPixel(IntPtr hwnd, int effectivePixels)
         {
             float scalingFactor = GetScalingFactor(hwnd);
             return Convert.ToInt32(effectivePixels * scalingFactor);
         }
 
-        public static float GetScalingFactor(IntPtr hwnd)
+        private static float GetScalingFactor(IntPtr hwnd)
         {
             int dpi = User32Library.GetDpiForWindow(hwnd);
             float scalingFactor = (float)dpi / 96;

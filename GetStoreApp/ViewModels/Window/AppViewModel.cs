@@ -165,7 +165,6 @@ namespace GetStoreApp.ViewModels.Window
             await SaveWindowInformationAsync();
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
             await Aria2Service.CloseAria2Async();
-            Program.ApplicationRoot.TrayIcon.Dispose();
             AppNotificationService.Unregister();
             BackdropHelper.ReleaseBackdrop();
             Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));

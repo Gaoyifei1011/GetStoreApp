@@ -85,7 +85,4 @@
   <ItemGroup>
     <ProjectReference Include="..\GetStoreAppHelper\GetStoreAppHelper.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Properties\launchsettings.json" />
-  </ItemGroup>
 </Project>

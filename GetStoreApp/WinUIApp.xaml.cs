@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Extensions.SystemTray;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
-using GetStoreApp.Services.Root;
 using GetStoreApp.ViewModels.Window;
 using GetStoreApp.Views.Window;
 using Microsoft.UI;
@@ -18,8 +17,6 @@ namespace GetStoreApp
         public AppWindow AppWindow { get; private set; }
 
         public MainWindow MainWindow { get; private set; }
-
-        public WindowsTrayIcon TrayIcon { get; private set; }
 
         public JumpList TaskbarJumpList { get; private set; }
 
@@ -44,7 +41,6 @@ namespace GetStoreApp
             Program.IsAppLaunched = true;
             await ViewModel.ActivateAsync();
 
-            InitializeTrayIcon();
             await InitializeJumpListAsync();
             await ViewModel.StartupAsync();
             await ViewModel.HandleAppNotificationAsync();
@@ -67,57 +63,6 @@ namespace GetStoreApp
             WindowId windowId = Win32Interop.GetWindowIdFromWindow(MainWindow.GetMainWindowHandle());
             AppWindow = AppWindow.GetFromWindowId(windowId);
             WindowHelper.InitializePresenter(AppWindow);
-        }
-
-        /// <summary>
-        /// 初始化应用的托盘图标
-        /// </summary>
-        private void InitializeTrayIcon()
-        {
-            TrayIcon = new WindowsTrayIcon(
-                string.Format(@"{0}\{1}", InfoHelper.GetAppInstalledLocation(), @"Assets\GetStoreApp.ico"),
-                ResourceService.GetLocalized("Resources/AppDisplayName")
-            );
-
-            TrayIcon.InitializeTrayMenu();
-            TrayIcon.AddMenuItemText(1, ResourceService.GetLocalized("Resources/ShowOrHideWindow"));
-            TrayIcon.AddMenuItemText(2, ResourceService.GetLocalized("Resources/Settings"));
-            TrayIcon.AddMenuItemSeperator();
-            TrayIcon.AddMenuItemText(3, ResourceService.GetLocalized("Resources/Exit"));
-
-            TrayIcon.DoubleClick = () =>
-            {
-                MainWindow.DispatcherQueue.TryEnqueue(() => { ViewModel.ShowOrHideWindowCommand.Execute(null); });
-            };
-            TrayIcon.RightClick = () =>
-            {
-                MainWindow.DispatcherQueue.TryEnqueue(() => { TrayIcon.ShowContextMenu(); });
-            };
-            TrayIcon.MenuCommand = (menuid) =>
-            {
-                switch (menuid)
-                {
-                    case 1:
-                        {
-                            MainWindow.DispatcherQueue.TryEnqueue(() => { ViewModel.ShowOrHideWindowCommand.Execute(null); });
-                            break;
-                        }
-                    case 2:
-                        {
-                            MainWindow.DispatcherQueue.TryEnqueue(() => { ViewModel.SettingsCommand.Execute(null); });
-                            break;
-                        }
-                    case 3:
-                        {
-                            MainWindow.DispatcherQueue.TryEnqueue(() => { ViewModel.ExitCommand.Execute(null); });
-                            break;
-                        }
-                    default:
-                        {
-                            break;
-                        }
-                }
-            };
         }
 
         /// <summary>

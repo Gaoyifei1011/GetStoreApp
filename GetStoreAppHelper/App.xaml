@@ -8,7 +8,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <MileXaml:XamlControlsResources />
 
-                <ResourceDictionary Source="ms-appx:///Styles/FontIcon.xaml" />
+                <ResourceDictionary Source="ms-appx:///Styles/HelperFontIcon.xaml" />
+                <ResourceDictionary Source="ms-appx:///Styles/HelperMenuFlyout.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

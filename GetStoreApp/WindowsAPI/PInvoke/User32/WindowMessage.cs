@@ -11,7 +11,7 @@
         WM_NULL = 0x0000,
 
         /// <summary>
-        /// 当应用程序请求通过调用 CreateWindow 或 <see cref="User32Library.CreateWindowEx"> 函数创建窗口时发送。 (函数返回之前发送消息。) 新窗口的窗口过程在创建窗口后接收此消息，但在窗口变为可见之前。
+        /// 当应用程序请求通过调用 CreateWindow 或 CreateWindowEx 函数创建窗口时发送。 (函数返回之前发送消息。) 新窗口的窗口过程在创建窗口后接收此消息，但在窗口变为可见之前。
         /// </summary>
         WM_CREATE = 0x0001,
 
@@ -155,7 +155,7 @@
         WM_SETCURSOR = 0x0020,
 
         /// <summary>
-        /// 当光标处于非活动窗口中且用户按下鼠标按钮时发送。 仅当子窗口将其传递给 <see cref="User32Library.DefWindowProc"> 函数时，父窗口才会接收此消息。
+        /// 当光标处于非活动窗口中且用户按下鼠标按钮时发送。 仅当子窗口将其传递给 DefWindowProc 函数时，父窗口才会接收此消息。
         /// </summary>
         WM_MOUSEACTIVATE = 0x0021,
 
@@ -295,12 +295,12 @@
         WM_NOTIFY = 0x004E,
 
         /// <summary>
-        /// 当用户选择新的输入语言（在键盘控制面板应用程序) 或系统任务栏上的指示器中指定的热键时，发布到具有焦点的窗口。 应用程序可以通过将消息传递给 <see cref="User32Library.DefWindowProc"> 函数来接受更改，或者拒绝更改，并阻止它立即返回) 。
+        /// 当用户选择新的输入语言（在键盘控制面板应用程序) 或系统任务栏上的指示器中指定的热键时，发布到具有焦点的窗口。 应用程序可以通过将消息传递给 DefWindowProc 函数来接受更改，或者拒绝更改，并阻止它立即返回) 。
         /// </summary>
         WM_INPUTLANGCHANGEREQUEST = 0x0050,
 
         /// <summary>
-        /// 更改应用程序输入语言后，发送到最受影响的窗口。 应进行任何特定于应用程序的设置并将消息传递给 <see cref="User32Library.DefWindowProc"> 函数，该函数会将消息传递给所有第一级子窗口。 这些子窗口可以将消息传递给 <see cref="User32Library.DefWindowProc"> ，使其将消息传递给其子窗口等。
+        /// 更改应用程序输入语言后，发送到最受影响的窗口。 应进行任何特定于应用程序的设置并将消息传递给 DefWindowProc 函数，该函数会将消息传递给所有第一级子窗口。 这些子窗口可以将消息传递给 <see cref="User32Library.DefWindowProc"> ，使其将消息传递给其子窗口等。
         /// </summary>
         WM_INPUTLANGCHANGE = 0x0051,
 
@@ -360,7 +360,7 @@
         WM_NCCREATE = 0x0081,
 
         /// <summary>
-        /// 通知窗口其非客户区域正在被销毁。 <see cref="User32Library.DestroyWindow"> 函数将 <see cref="WM_NCDESTROY"> 消息发送到 <see cref="WM_DESTROY"> 消息后面的窗口。<see cref="WM_DESTROY"> 用于释放与窗口关联的已分配内存对象。
+        /// 通知窗口其非客户区域正在被销毁。 DestroyWindow 函数将 <see cref="WM_NCDESTROY"> 消息发送到 <see cref="WM_DESTROY"> 消息后面的窗口。<see cref="WM_DESTROY"> 用于释放与窗口关联的已分配内存对象。
         /// 子窗口被销毁后，将发送 <see cref="WM_NCDESTROY"> 消息。 相比之下， <see cref="WM_DESTROY"> 在销毁子窗口之前发送。
         /// </summary>
         WM_NCDESTROY = 0x0082,
@@ -1153,6 +1153,11 @@
         /// <see cref="WM_USER"> 用于定义专用窗口类使用的专用消息
         /// </summary>
         WM_USER = 0x0400,
+
+        /// <summary>
+        /// 进程通信时使用到的消息
+        /// </summary>
+        WM_PROCESSCOMMUNICATION = WM_USER + 0x0001,
 
         /// <summary>
         /// An application sends the WM_CPL_LAUNCH message to Windows Control Panel to request that a Control Panel application be started.

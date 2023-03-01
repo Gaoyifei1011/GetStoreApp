@@ -169,6 +169,9 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
         [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SendMessage", SetLastError = false)]
         public static extern IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, IntPtr wParam, IntPtr lParam);
 
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SendMessage", SetLastError = false)]
+        public static extern IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, int wParam, IntPtr lParam);
+
         [DllImport(User32, CharSet = CharSet.Unicode, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool ShowWindow([In] IntPtr hWnd, WindowShowStyle nCmdShow);

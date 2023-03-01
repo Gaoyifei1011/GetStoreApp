@@ -38,6 +38,7 @@ namespace GetStoreAppHelper
         {
             await LanguageService.InitializeLanguageAsync();
             await ResourceService.InitializeResourceAsync(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
+            await ThemeService.InitializeThemeAsync();
         }
     }
 }

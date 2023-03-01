@@ -1155,6 +1155,11 @@
         WM_USER = 0x0400,
 
         /// <summary>
+        /// 进程通信时使用到的消息
+        /// </summary>
+        WM_PROCESSCOMMUNICATION = WM_USER + 0x0001,
+
+        /// <summary>
         /// An application sends the WM_CPL_LAUNCH message to Windows Control Panel to request that a Control Panel application be started.
         /// </summary>
         WM_CPL_LAUNCH = WM_USER + 0x1000,
