@@ -4,38 +4,37 @@ using Windows.Graphics;
 namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
 {
     /// <summary>
-    /// Contains message information from a thread's message queue.
+    /// 包含来自线程的消息队列的消息信息。
     /// </summary>
     public struct MSG
     {
         /// <summary>
-        /// A handle to the window whose window procedure receives the message. This member is <see cref="IntPtr.Zero" /> when
-        /// the message is a thread message.
+        /// 其窗口过程接收消息的窗口的句柄。 当消息是线程消息时，此成员为  <see cref="IntPtr.Zero" />
         /// </summary>
         public IntPtr hwnd;
 
         /// <summary>
-        /// The message identifier. Applications can only use the low word; the high word is reserved by the system.
+        /// 消息的标识符。 应用程序只能使用低字;高字由系统保留。
         /// </summary>
         public WindowMessage message;
 
         /// <summary>
-        /// Additional information about the message. The exact meaning depends on the value of the message member.
+        /// 关于消息的附加信息。 确切含义取决于 消息 成员的值。
         /// </summary>
         public IntPtr wParam;
 
         /// <summary>
-        /// Additional information about the message. The exact meaning depends on the value of the message member.
+        /// 关于消息的附加信息。 确切含义取决于 消息 成员的值。
         /// </summary>
         public IntPtr lParam;
 
         /// <summary>
-        /// The time at which the message was posted.
+        /// 消息的发布时间。
         /// </summary>
         public int time;
 
         /// <summary>
-        /// The cursor position, in screen coordinates, when the message was posted.
+        /// 发布消息时的光标位置（以屏幕坐标表示）。
         /// </summary>
         public PointInt32 pt;
     }

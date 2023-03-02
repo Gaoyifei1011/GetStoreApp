@@ -5,6 +5,9 @@ using Windows.ApplicationModel.Resources.Core;
 
 namespace GetStoreAppHelper.Services
 {
+    /// <summary>
+    /// 应用资源服务
+    /// </summary>
     public static class ResourceService
     {
         private static bool IsInitialized { get; set; } = false;
@@ -19,6 +22,11 @@ namespace GetStoreAppHelper.Services
 
         private static ResourceMap ResourceMap { get; } = ResourceManager.Current.MainResourceMap;
 
+        /// <summary>
+        /// 初始化应用本地化资源
+        /// </summary>
+        /// <param name="defaultAppLanguage">默认语言名称</param>
+        /// <param name="currentAppLanguage">当前语言名称</param>
         public static async Task InitializeResourceAsync(string defaultAppLanguage, string currentAppLanguage)
         {
             DefaultAppLanguage = defaultAppLanguage;
@@ -31,6 +39,9 @@ namespace GetStoreAppHelper.Services
             await Task.CompletedTask;
         }
 
+        /// <summary>
+        /// 字符串本地化
+        /// </summary>
         public static string GetLocalized(string resource)
         {
             if (IsInitialized)

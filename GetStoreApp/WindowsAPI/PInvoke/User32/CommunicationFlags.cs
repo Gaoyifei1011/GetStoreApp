@@ -1,5 +1,8 @@
 ﻿namespace GetStoreApp.WindowsAPI.PInvoke.User32
 {
+    /// <summary>
+    /// 自定义消息：进程通信时对应的标志
+    /// </summary>
     public enum CommunicationFlags : int
     {
         /// <summary>

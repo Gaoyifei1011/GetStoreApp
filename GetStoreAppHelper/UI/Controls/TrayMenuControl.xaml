@@ -8,7 +8,7 @@
     xmlns:root="using:GetStoreAppHelper.Services"
     mc:Ignorable="d">
     <ContentControl.DataContext>
-        <controls:TrayMenuViewModel x:Name="ViewModel" />
+        <controls:TrayMenuViewModel x:Name="ViewModel" x:FieldModifier="public" />
     </ContentControl.DataContext>
     <MenuFlyout x:Name="TrayMenuFlyout" Opened="{x:Bind ViewModel.OnOpened}">
         <MenuFlyoutItem Command="{x:Bind ViewModel.ProjectDescriptionCommand}" Text="{x:Bind root:ResourceService.GetLocalized('HelperResources/ProjectHomePage')}">

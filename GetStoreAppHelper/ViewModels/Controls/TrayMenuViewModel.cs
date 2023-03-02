@@ -5,13 +5,15 @@ using GetStoreAppHelper.Services;
 using GetStoreAppHelper.WindowsAPI.PInvoke.User32;
 using System;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace GetStoreAppHelper.ViewModels.Controls
 {
+    /// <summary>
+    /// 任务栏辅助部分：任务栏右键菜单浮出控件视图模型
+    /// </summary>
     public class TrayMenuViewModel
     {
         // 项目主页
@@ -23,106 +25,154 @@ namespace GetStoreAppHelper.ViewModels.Controls
         // 打开应用“关于”页面
         public IRelayCommand AboutAppCommand => new RelayCommand(() =>
         {
-            bool FindResult = false;
             Process[] GetStoreAppProcess = Process.GetProcessesByName("GetStoreApp");
 
             if (GetStoreAppProcess.Length > 0)
             {
-                foreach (Process process in GetStoreAppProcess)
+                IntPtr hwnd = IntPtr.Zero;
+                do
                 {
-                    if (process.MainWindowHandle != IntPtr.Zero)
+                    hwnd = User32Library.FindWindowEx(IntPtr.Zero, hwnd, "WinUIDesktopWin32WindowClass", null);
+
+                    if (hwnd != IntPtr.Zero)
                     {
-                        User32Library.SendMessage(process.MainWindowHandle, WindowMessage.WM_PROCESSCOMMUNICATION, Convert.ToInt32(CommunicationFlags.AboutApp), IntPtr.Zero);
-                        FindResult = true;
+                        User32Library.GetWindowThreadProcessId(hwnd, out int processId);
+
+                        if (processId is not 0)
+                        {
+                            bool result = false;
+                            foreach (Process process in GetStoreAppProcess)
+                            {
+                                if (process.Id == processId)
+                                {
+                                    User32Library.SendMessage(hwnd, WindowMessage.WM_PROCESSCOMMUNICATION, Convert.ToInt32(CommunicationFlags.AboutApp), IntPtr.Zero);
+                                    result = true;
+                                    break;
+                                }
+                            }
+
+                            if (result) break;
+                        }
                     }
                 }
-
-                if (!FindResult)
-                {
-                    IntPtr hwnd = FindWindow(null, "获取商店");
-                    User32Library.SendMessage(hwnd, WindowMessage.WM_PROCESSCOMMUNICATION, Convert.ToInt32(CommunicationFlags.AboutApp), IntPtr.Zero);
-                }
+                while (hwnd != IntPtr.Zero);
             }
         });
 
         // 显示 / 隐藏窗口
         public IRelayCommand ShowOrHideWindowCommand => new RelayCommand(() =>
         {
-            bool FindResult = false;
             Process[] GetStoreAppProcess = Process.GetProcessesByName("GetStoreApp");
 
             if (GetStoreAppProcess.Length > 0)
             {
-                foreach (Process process in GetStoreAppProcess)
+                IntPtr hwnd = IntPtr.Zero;
+                do
                 {
-                    if (process.MainWindowHandle != IntPtr.Zero)
+                    hwnd = User32Library.FindWindowEx(IntPtr.Zero, hwnd, "WinUIDesktopWin32WindowClass", null);
+
+                    if (hwnd != IntPtr.Zero)
                     {
-                        User32Library.SendMessage(process.MainWindowHandle, WindowMessage.WM_PROCESSCOMMUNICATION, Convert.ToInt32(CommunicationFlags.ShowOrHideWindow), IntPtr.Zero);
+                        User32Library.GetWindowThreadProcessId(hwnd, out int processId);
+
+                        if (processId is not 0)
+                        {
+                            bool result = false;
+                            foreach (Process process in GetStoreAppProcess)
+                            {
+                                if (process.Id == processId)
+                                {
+                                    User32Library.SendMessage(hwnd, WindowMessage.WM_PROCESSCOMMUNICATION, Convert.ToInt32(CommunicationFlags.ShowOrHideWindow), IntPtr.Zero);
+                                    result = true;
+                                    break;
+                                }
+                            }
+
+                            if (result) break;
+                        }
                     }
                 }
-
-                if (!FindResult)
-                {
-                    IntPtr hwnd = FindWindow(null, "获取商店");
-                    User32Library.SendMessage(hwnd, WindowMessage.WM_PROCESSCOMMUNICATION, Convert.ToInt32(CommunicationFlags.ShowOrHideWindow), IntPtr.Zero);
-                }
+                while (hwnd != IntPtr.Zero);
             }
         });
-
-        [DllImport("user32.dll", EntryPoint = "FindWindow")]
-        private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
         // 打开设置
         public IRelayCommand SettingsCommand => new RelayCommand(() =>
         {
-            bool FindResult = false;
             Process[] GetStoreAppProcess = Process.GetProcessesByName("GetStoreApp");
 
             if (GetStoreAppProcess.Length > 0)
             {
-                foreach (Process process in GetStoreAppProcess)
+                IntPtr hwnd = IntPtr.Zero;
+                do
                 {
-                    if (process.MainWindowHandle != IntPtr.Zero)
+                    hwnd = User32Library.FindWindowEx(IntPtr.Zero, hwnd, "WinUIDesktopWin32WindowClass", null);
+
+                    if (hwnd != IntPtr.Zero)
                     {
-                        User32Library.SendMessage(process.MainWindowHandle, WindowMessage.WM_PROCESSCOMMUNICATION, Convert.ToInt32(CommunicationFlags.Settings), IntPtr.Zero);
-                        FindResult = true;
+                        User32Library.GetWindowThreadProcessId(hwnd, out int processId);
+
+                        if (processId is not 0)
+                        {
+                            bool result = false;
+                            foreach (Process process in GetStoreAppProcess)
+                            {
+                                if (process.Id == processId)
+                                {
+                                    User32Library.SendMessage(hwnd, WindowMessage.WM_PROCESSCOMMUNICATION, Convert.ToInt32(CommunicationFlags.Settings), IntPtr.Zero);
+                                    result = true;
+                                    break;
+                                }
+                            }
+
+                            if (result) break;
+                        }
                     }
                 }
-
-                if (!FindResult)
-                {
-                    IntPtr hwnd = FindWindow(null, "获取商店");
-                    User32Library.SendMessage(hwnd, WindowMessage.WM_PROCESSCOMMUNICATION, Convert.ToInt32(CommunicationFlags.Settings), IntPtr.Zero);
-                }
+                while (hwnd != IntPtr.Zero);
             }
         });
 
         // 退出应用
         public IRelayCommand ExitCommand => new RelayCommand(() =>
         {
-            bool FindResult = false;
             Process[] GetStoreAppProcess = Process.GetProcessesByName("GetStoreApp");
 
             if (GetStoreAppProcess.Length > 0)
             {
-                foreach (Process process in GetStoreAppProcess)
+                IntPtr hwnd = IntPtr.Zero;
+                do
                 {
-                    if (process.MainWindowHandle != IntPtr.Zero)
+                    hwnd = User32Library.FindWindowEx(IntPtr.Zero, hwnd, "WinUIDesktopWin32WindowClass", null);
+
+                    if (hwnd != IntPtr.Zero)
                     {
-                        User32Library.SendMessage(process.MainWindowHandle, WindowMessage.WM_PROCESSCOMMUNICATION, Convert.ToInt32(CommunicationFlags.Exit), IntPtr.Zero);
+                        User32Library.GetWindowThreadProcessId(hwnd, out int processId);
+
+                        if (processId is not 0)
+                        {
+                            bool result = false;
+                            foreach (Process process in GetStoreAppProcess)
+                            {
+                                if (process.Id == processId)
+                                {
+                                    User32Library.SendMessage(hwnd, WindowMessage.WM_PROCESSCOMMUNICATION, Convert.ToInt32(CommunicationFlags.Exit), IntPtr.Zero);
+                                    result = true;
+                                    break;
+                                }
+                            }
+
+                            if (result) break;
+                        }
                     }
                 }
-
-                if (!FindResult)
-                {
-                    IntPtr hwnd = FindWindow(null, "获取商店");
-                    User32Library.SendMessage(hwnd, WindowMessage.WM_PROCESSCOMMUNICATION, Convert.ToInt32(CommunicationFlags.Exit), IntPtr.Zero);
-                }
+                while (hwnd != IntPtr.Zero);
             }
         });
 
-        public void OnOpened(object sender, object args)
+        public async void OnOpened(object sender, object args)
         {
+            await ThemeService.LoadThemeAsync();
             if (ThemeService.AppTheme == Convert.ToString(ElementTheme.Default))
             {
                 if (Application.Current.RequestedTheme is ApplicationTheme.Light)

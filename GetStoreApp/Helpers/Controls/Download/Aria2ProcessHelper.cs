@@ -3,6 +3,7 @@ using GetStoreApp.WindowsAPI.PInvoke.NTdll;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.Helpers.Controls.Download
@@ -26,7 +27,7 @@ namespace GetStoreApp.Helpers.Controls.Download
         /// <summary>
         /// 让Aria2以RPC方式启动，并让其在后台运行
         /// </summary>
-        public static async Task RunAria2Async(string fileName, string arguments)
+        public static async Task RunAria2Async(string fileName, [Optional, DefaultParameterValue("")] string arguments)
         {
             //设置启动程序的信息
             ProcessStartInfo Aria2Info = new ProcessStartInfo
@@ -44,7 +45,7 @@ namespace GetStoreApp.Helpers.Controls.Download
                 Arguments = arguments
             };
 
-            // 启动Aria2下载进程，并设置进程ID号
+            // 启动Aria2下载进程，并获取进程ID号
             Aria2ProcessID = Process.Start(Aria2Info).Id;
             await Task.CompletedTask;
         }

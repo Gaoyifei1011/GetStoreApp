@@ -8,6 +8,9 @@ using Windows.UI.Xaml;
 
 namespace GetStoreAppHelper
 {
+    /// <summary>
+    /// 应用窗口类
+    /// </summary>
     public class MileWindow
     {
         private STARTUPINFO StartupInfo = new STARTUPINFO();
@@ -17,6 +20,9 @@ namespace GetStoreAppHelper
         public PointInt32 Size = new PointInt32();
 
         private bool isWindowCreated = false;
+
+        private WindowProc newWndProc = null;
+        private IntPtr oldWndProc = IntPtr.Zero;
 
         public string Title { get; set; } = string.Empty;
 
@@ -40,6 +46,9 @@ namespace GetStoreAppHelper
             }
         }
 
+        /// <summary>
+        /// 初始化应用窗口
+        /// </summary>
         public void InitializeWindow()
         {
             Handle = User32Library.CreateWindowEx(
@@ -67,12 +76,39 @@ namespace GetStoreAppHelper
             }
         }
 
+        /// <summary>
+        /// 初始化窗口过程
+        /// </summary>
+        public void InitializeWindowProc()
+        {
+            newWndProc = new WindowProc(NewWindowProc);
+            oldWndProc = SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_WNDPROC, newWndProc);
+        }
+
+        /// <summary>
+        /// 更改指定窗口的属性
+        /// </summary>
+        public IntPtr SetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex, WindowProc newProc)
+        {
+            if (IntPtr.Size == 8)
+            {
+                return User32Library.SetWindowLongPtr(hWnd, nIndex, newProc);
+            }
+            else
+            {
+                return User32Library.SetWindowLong(hWnd, nIndex, newProc);
+            }
+        }
+
+        /// <summary>
+        /// 激活窗口
+        /// </summary>
         public void Activate()
         {
             if (isWindowCreated)
             {
                 StartupInfo.cb = Marshal.SizeOf(StartupInfo);
-                Kernel32Library.GetStartupInfoW(out StartupInfo);
+                Kernel32Library.GetStartupInfo(out StartupInfo);
 
                 User32Library.ShowWindow(Handle, StartupInfo.wShowWindow);
                 User32Library.UpdateWindow(Handle);
@@ -89,6 +125,28 @@ namespace GetStoreAppHelper
                     User32Library.DispatchMessage(ref msg);
                 }
             }
+        }
+
+        /// <summary>
+        /// 窗口消息处理
+        /// </summary>
+        private IntPtr NewWindowProc(IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam)
+        {
+            switch (Msg)
+            {
+                case WindowMessage.WM_PROCESSCOMMUNICATION:
+                    {
+                        CommunicationFlags flags = (CommunicationFlags)wParam;
+                        if (flags == CommunicationFlags.Exit)
+                        {
+                            Program.ApplicationRoot.CloseApp();
+                        }
+                        break;
+                    }
+                default:
+                    break;
+            }
+            return User32Library.CallWindowProc(oldWndProc, hWnd, Msg, wParam, lParam);
         }
     }
 }

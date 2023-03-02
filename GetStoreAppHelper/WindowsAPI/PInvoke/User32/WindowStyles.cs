@@ -3,142 +3,140 @@
 namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
 {
     /// <summary>
-    /// MainWindow Styles. The following styles can be specified wherever a window style is required.
-    /// After the control has been created, these styles cannot be modified, except as noted.
+    /// 主窗口风格。只要需要窗口样式，就可以指定以下样式。
+    /// 创建控件后，不能修改这些样式，除非有说明。
     /// </summary>
     [Flags]
     public enum WindowStyles : uint
     {
         /// <summary>
-        /// The window has a thin-line border.
+        /// 窗口具有细线边框
         /// </summary>
         WS_BORDER = 0x800000,
 
         /// <summary>
-        /// The window has a title bar (includes the WS_BORDER style).
+        /// 窗口具有标题栏 (包括 <see cref="WS_BORDER"> 样式) 。
         /// </summary>
         WS_CAPTION = 0xc00000,
 
         /// <summary>
-        /// The window is a child window. A window with this style cannot have a menu bar. This style
-        /// cannot be used with the WS_POPUP style.
+        /// 窗口是子窗口。 具有此样式的窗口不能有菜单栏。
+        /// 此样式不能与 <see cref="WS_POPUP"> 样式一 起使用。
         /// </summary>
         WS_CHILD = 0x40000000,
 
         /// <summary>
-        /// Excludes the area occupied by child windows when drawing occurs within the parent window.
-        /// This style is used when creating the parent window.
+        /// 与 <see cref="WS_CHILD"> 样式相同。
+        /// </summary>
+        WS_CHILDWINDOW = 0x40000000,
+
+        /// <summary>
+        /// 在父窗口中绘制时，排除子窗口占用的区域。 创建父窗口时会使用此样式。
         /// </summary>
         WS_CLIPCHILDREN = 0x2000000,
 
         /// <summary>
-        /// Clips child windows relative to each other; that is, when a particular child window
-        /// receives a WM_PAINT message, the WS_CLIPSIBLINGS style clips all other overlapping child
-        /// windows out of the region of the child window to be updated. If WS_CLIPSIBLINGS is not
-        /// specified and child windows overlap, it is possible, when drawing within the client area
-        /// of a child window, to draw within the client area of a neighboring child window.
+        /// 将子窗口相对于彼此剪裁;也就是说，当特定子窗口收到 <see cref="WindowMessage.WM_PAINT"> 消息时， <see cref="WS_CLIPSIBLINGS"> 样式会将所有其他重叠子窗口剪辑到要更新的子窗口区域。 如果未指定 <see cref="WS_CLIPSIBLINGS"> 并且子窗口重叠，则当在子窗口的工作区内绘制时，可以在相邻子窗口的工作区内绘制。
         /// </summary>
         WS_CLIPSIBLINGS = 0x4000000,
 
         /// <summary>
-        /// The window is initially disabled. A disabled window cannot receive input from the user.
-        /// To change this after a window has been created, use the EnableWindow function.
+        /// 窗口最初处于禁用状态。 禁用的窗口无法从用户接收输入。 若要在创建窗口后进行更改，请使用 EnableWindow 函数。
         /// </summary>
         WS_DISABLED = 0x8000000,
 
         /// <summary>
-        /// The window has a border of a style typically used with dialog boxes. A window with this
-        /// style cannot have a title bar.
+        /// 窗口具有通常与对话框一起使用的样式边框。 具有此样式的窗口不能有标题栏。
         /// </summary>
         WS_DLGFRAME = 0x400000,
 
         /// <summary>
-        /// The window is the first control of a group of controls. The group consists of this first
-        /// control and all controls defined after it, up to the next control with the WS_GROUP
-        /// style. The first control in each group usually has the WS_TABSTOP style so that the user
-        /// can move from group to group. The user can subsequently change the keyboard focus from
-        /// one control in the group to the next control in the group by using the direction keys.
-        /// You can turn this style on and off to change dialog box navigation. To change this style
-        /// after a window has been created, use the SetWindowLong function.
+        /// 窗口是一组控件的第一个控件。 该组包含此第一个控件及其之后定义的所有控件，最多包含 <see cref="WS_GROUP"> 样式的下一个控件。 每个组中的第一个控件通常具有 <see cref="WS_TABSTOP"> 样式，以便用户可以从组移动到组。 用户随后可以使用方向键将组中的一个控件中的键盘焦点更改为组中的下一个控件。可以打开和关闭此样式以更改对话框导航。 若要在创建窗口后更改此样式，请使用 SetWindowLong 函数。
         /// </summary>
         WS_GROUP = 0x20000,
 
         /// <summary>
-        /// The window has a horizontal scroll bar.
+        /// 窗口具有水平滚动条。
         /// </summary>
         WS_HSCROLL = 0x100000,
 
         /// <summary>
-        /// The window is initially maximized.
+        /// 窗口最初最小化。 与 <see cref="WS_MINIMIZE"> 样式相同。
+        /// </summary>
+        WS_ICONIC = 0x20000000,
+
+        /// <summary>
+        /// 窗口最初最大化。
         /// </summary>
         WS_MAXIMIZE = 0x1000000,
 
         /// <summary>
-        /// The window has a maximize button. Cannot be combined with the WS_EX_CONTEXTHELP style.
-        /// The WS_SYSMENU style must also be specified.
+        /// 窗口具有最大化按钮。 不能与 <see cref="WindowStylesEx.WS_EX_CONTEXTHELP"> 样式组合。 还必须指定 <see cref="WS_SYSMENU"> 样式。
         /// </summary>
         WS_MAXIMIZEBOX = 0x10000,
 
         /// <summary>
-        /// The window is initially minimized.
+        /// 窗口最初最小化。 与 <see cref="WS_ICONIC"> 样式相同。
         /// </summary>
         WS_MINIMIZE = 0x20000000,
 
         /// <summary>
-        /// The window has a minimize button. Cannot be combined with the WS_EX_CONTEXTHELP style.
-        /// The WS_SYSMENU style must also be specified.
+        /// 窗口具有最小化按钮。 不能与 <see cref="WindowStylesEx.WS_EX_CONTEXTHELP"> 样式组合。 还必须指定 <see cref="WS_SYSMENU"> 样式。
         /// </summary>
         WS_MINIMIZEBOX = 0x20000,
 
         /// <summary>
-        /// The window is an overlapped window. An overlapped window has a title bar and a border.
+        /// 窗口是重叠的窗口。
         /// </summary>
         WS_OVERLAPPED = 0x0,
 
         /// <summary>
-        /// The window is an overlapped window.
+        /// 窗口是重叠的窗口。 
         /// </summary>
         WS_OVERLAPPEDWINDOW = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_SIZEFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX,
 
         /// <summary>
-        /// The window is a pop-up window. This style cannot be used with the WS_CHILD style.
+        /// 窗口是弹出窗口。 此样式不能与 <see cref="WS_CHILD"> 样式一 起使用。
         /// </summary>
         WS_POPUP = 0x80000000u,
 
         /// <summary>
-        /// The window is a pop-up window. The WS_CAPTION and WS_POPUPWINDOW styles must be combined
-        /// to make the window menu visible.
+        /// 窗口是弹出窗口。 必须组合 <see cref="WS_CAPTION"> 和 <see cref="WS_POPUPWINDOW"> 样式以使窗口菜单可见。
         /// </summary>
         WS_POPUPWINDOW = WS_POPUP | WS_BORDER | WS_SYSMENU,
 
         /// <summary>
-        /// The window has a sizing border.
+        /// 窗口具有大小调整边框。
         /// </summary>
         WS_SIZEFRAME = 0x40000,
 
         /// <summary>
-        /// The window has a window menu on its title bar. The WS_CAPTION style must also be specified.
+        /// 窗口的标题栏上有一个窗口菜单。 还必须指定 <see cref="WS_CAPTION"> 样式。
         /// </summary>
         WS_SYSMENU = 0x80000,
 
         /// <summary>
-        /// The window is a control that can receive the keyboard focus when the user presses the TAB
-        /// key. Pressing the TAB key changes the keyboard focus to the next control with the
-        /// WS_TABSTOP style. You can turn this style on and off to change dialog box navigation. To
-        /// change this style after a window has been created, use the SetWindowLong function. For
-        /// user-created windows and modeless dialogs to work with tab stops, alter the message loop
-        /// to call the IsDialogMessage function.
+        /// 窗口是一个控件，当用户按下 TAB 键时，可以接收键盘焦点。 按 Tab 键会将键盘焦点更改为 具有 <see cref="WS_TABSTOP"> 样式的下一个控件。可以打开和关闭此样式以更改对话框导航。 若要在创建窗口后更改此样式，请使用 SetWindowLong 函数。 若要使用户创建的窗口和无模式对话框使用制表位，请更改消息循环以调用 IsDialogMessage 函数。
         /// </summary>
         WS_TABSTOP = 0x10000,
 
         /// <summary>
-        /// The window is initially visible. This style can be turned on and off by using the
-        /// ShowWindow or SetWindowPos function.
+        /// 窗口具有大小调整边框。
+        /// </summary>
+        WS_THICKFRAME = 0x00040000,
+
+        /// <summary>
+        /// 窗口是重叠的窗口。 重叠窗口具有标题栏和边框。
+        /// </summary>
+        WS_TILED = 0x00000000,
+
+        /// <summary>
+        /// 窗口最初可见。 可以使用 <see cref="User32Library.ShowWindow"> 或 SetWindowPos 函数打开和关闭此样式。
         /// </summary>
         WS_VISIBLE = 0x10000000,
 
         /// <summary>
-        /// The window has a vertical scroll bar.
+        /// 该窗口具有垂直滚动条。
         /// </summary>
         WS_VSCROLL = 0x200000,
     }

@@ -154,14 +154,38 @@ namespace GetStoreApp.Services.Root
 
                 Process[] GetStoreAppProcess = Process.GetProcessesByName("GetStoreApp");
 
-                foreach (Process process in GetStoreAppProcess)
+                if (GetStoreAppProcess.Length > 0)
                 {
-                    if (process.MainWindowHandle != IntPtr.Zero)
+                    IntPtr hwnd = IntPtr.Zero;
+                    do
                     {
-                        // 向主进程发送消息
-                        User32Library.SendMessage(process.MainWindowHandle, WindowMessage.WM_COPYDATA, 0, ref copyDataStruct);
+                        hwnd = User32Library.FindWindowEx(IntPtr.Zero, hwnd, "WinUIDesktopWin32WindowClass", null);
+
+                        if (hwnd != IntPtr.Zero)
+                        {
+                            User32Library.GetWindowThreadProcessId(hwnd, out int processId);
+
+                            if (processId is not 0)
+                            {
+                                bool result = false;
+                                foreach (Process process in GetStoreAppProcess)
+                                {
+                                    if (process.Id == processId)
+                                    {
+                                        // 向主进程发送消息
+                                        User32Library.SendMessage(hwnd, WindowMessage.WM_COPYDATA, 0, ref copyDataStruct);
+                                        result = true;
+                                        break;
+                                    }
+                                }
+
+                                if (result) break;
+                            }
+                        }
                     }
+                    while (hwnd != IntPtr.Zero);
                 }
+
                 // 然后退出实例并停止
                 Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
             }

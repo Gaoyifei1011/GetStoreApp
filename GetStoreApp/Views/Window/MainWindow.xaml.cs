@@ -93,19 +93,19 @@ namespace GetStoreApp.Views.Window
                         MINMAXINFO minMaxInfo = Marshal.PtrToStructure<MINMAXINFO>(lParam);
                         if (MinWidth >= 0)
                         {
-                            minMaxInfo.ptMinTrackSize.X = ConvertEpxToPixel(hWnd, MinWidth);
+                            minMaxInfo.ptMinTrackSize.X = DPICalcHelper.ConvertEpxToPixel(hWnd, MinWidth);
                         }
                         if (MinHeight >= 0)
                         {
-                            minMaxInfo.ptMinTrackSize.Y = ConvertEpxToPixel(hWnd, MinHeight);
+                            minMaxInfo.ptMinTrackSize.Y = DPICalcHelper.ConvertEpxToPixel(hWnd, MinHeight);
                         }
                         if (MaxWidth > 0)
                         {
-                            minMaxInfo.ptMaxTrackSize.X = ConvertEpxToPixel(hWnd, MaxWidth);
+                            minMaxInfo.ptMaxTrackSize.X = DPICalcHelper.ConvertEpxToPixel(hWnd, MaxWidth);
                         }
                         if (MaxHeight > 0)
                         {
-                            minMaxInfo.ptMaxTrackSize.Y = ConvertEpxToPixel(hWnd, MaxHeight);
+                            minMaxInfo.ptMaxTrackSize.Y = DPICalcHelper.ConvertEpxToPixel(hWnd, MaxHeight);
                         }
                         Marshal.StructureToPtr(minMaxInfo, lParam, true);
                         break;
@@ -128,6 +128,8 @@ namespace GetStoreApp.Views.Window
                         // 获取应用的命令参数
                         else
                         {
+                            WindowHelper.ShowAppWindow();
+
                             string[] startupArgs = copyDataStruct.lpData.Split(' ');
                             Messenger.Default.Send(startupArgs, MessageToken.Command);
                         }
@@ -145,6 +147,7 @@ namespace GetStoreApp.Views.Window
                         }
                         break;
                     }
+                // 任务栏窗口右键菜单弹出时消息
                 case WindowMessage.WM_TASKBARRCLICK:
                     {
                         WindowHelper.BringToFront();
@@ -153,7 +156,7 @@ namespace GetStoreApp.Views.Window
                 //两个进程通信时使用到的消息
                 case WindowMessage.WM_PROCESSCOMMUNICATION:
                     {
-                        CommunicationFlags flags = (CommunicationFlags)(wParam);
+                        CommunicationFlags flags = (CommunicationFlags)wParam;
                         if (flags == CommunicationFlags.AboutApp)
                         {
                             DispatcherQueue.TryEnqueue(() => { ViewModel.AboutAppCommand.Execute(null); });
@@ -174,19 +177,6 @@ namespace GetStoreApp.Views.Window
                     }
             }
             return User32Library.CallWindowProc(oldWndProc, hWnd, Msg, wParam, lParam);
-        }
-
-        private static int ConvertEpxToPixel(IntPtr hwnd, int effectivePixels)
-        {
-            float scalingFactor = GetScalingFactor(hwnd);
-            return Convert.ToInt32(effectivePixels * scalingFactor);
-        }
-
-        private static float GetScalingFactor(IntPtr hwnd)
-        {
-            int dpi = User32Library.GetDpiForWindow(hwnd);
-            float scalingFactor = (float)dpi / 96;
-            return scalingFactor;
         }
     }
 }

@@ -1,97 +1,98 @@
-﻿using System;
+﻿using GetStoreAppHelper.WindowsAPI.PInvoke.User32;
+using System;
 
 namespace GetStoreAppHelper.WindowsAPI.PInvoke.Kernel32
 {
     /// <summary>
-    /// A bitfield that determines whether certain <see cref="STARTUPINFO"/> members are used when the process creates a window.
+    /// 一个位域，用于确定进程创建窗口时是否使用某些 <see cref="STARTUPINFO"/> 成员。
     /// </summary>
     [Flags]
     public enum StartupInfoFlags
     {
         /// <summary>
-        /// No flags.
+        /// 无标志
         /// </summary>
         None = 0x0,
 
         /// <summary>
-        /// Indicates that the cursor is in feedback mode for two seconds after <see cref="CreateProcessAsUser(IntPtr, string, string, SECURITY_ATTRIBUTES*, SECURITY_ATTRIBUTES*, bool, CreateProcessFlags, void*, string, ref STARTUPINFO, out PROCESS_INFORMATION)"/> is called. The Working in Background cursor is displayed (see the Pointers tab in the Mouse control panel utility).
-        /// If during those two seconds the process makes the first GUI call, the system gives five more seconds to the process. If during those five seconds the process shows a window, the system gives five more seconds to the process to finish drawing the window.
-        /// The system turns the feedback cursor off after the first call to GetMessage, regardless of whether the process is drawing.
+        /// 指示在调用 <see cref="CreateProcessAsUser(IntPtr, string, string, SECURITY_ATTRIBUTES*, SECURITY_ATTRIBUTES*, bool, CreateProcessFlags, void*, string, ref STARTUPINFO, out PROCESS_INFORMATION)"/> 后，游标处于反馈模式两秒。 (“鼠标”控制面板实用工具中的“指针”选项卡) 显示“在后台工作”光标。
+        /// 如果在这两秒内，进程进行第一次 GUI 调用，则系统会为进程再提供 5 秒。 如果在这五秒内进程显示窗口，则系统会为进程再提供 5 秒的时间以完成该窗口的绘制。
+        /// 无论进程是否正在绘制，系统在首次调用 <see cref="User32Library.GetMessage"> 后关闭反馈游标。
         /// </summary>
         STARTF_FORCEONFEEDBACK = 0x00000040,
 
         /// <summary>
-        /// Indicates that the feedback cursor is forced off while the process is starting. The Normal Select cursor is displayed.
+        /// 指示在进程启动时，反馈游标被强制关闭。 将显示“普通选择”游标。
         /// </summary>
         STARTF_FORCEOFFFEEDBACK = 0x00000080,
 
         /// <summary>
-        /// Indicates that any windows created by the process cannot be pinned on the taskbar.
-        /// This flag must be combined with <see cref="STARTF_TITLEISAPPID"/>.
+        /// 指示进程创建的任何窗口都不能固定在任务栏上。
+        /// 此标志必须与 <see cref="STARTF_TITLEISAPPID"/> 结合使用。
         /// </summary>
         STARTF_PREVENTPINNING = 0x00002000,
 
         /// <summary>
-        /// Indicates that the process should be run in full-screen mode, rather than in windowed mode.
-        /// This flag is only valid for console applications running on an x86 computer.
+        /// 指示进程应在全屏模式下运行，而不是在窗口模式下运行。
+        /// 此标志仅适用于在 x86 计算机上运行的控制台应用程序。
         /// </summary>
         STARTF_RUNFULLSCREEN = 0x00000020,
 
         /// <summary>
-        /// The lpTitle member contains an AppUserModelID. This identifier controls how the taskbar and Start menu present the application, and enables it to be associated with the correct shortcuts and Jump Lists. Generally, applications will use the SetCurrentProcessExplicitAppUserModelID and GetCurrentProcessExplicitAppUserModelID functions instead of setting this flag. For more information, see Application User Model IDs.
-        /// If <see cref="STARTF_PREVENTPINNING"/> is used, application windows cannot be pinned on the taskbar. The use of any AppUserModelID-related window properties by the application overrides this setting for that window only.
-        /// This flag cannot be used with <see cref="STARTF_TITLEISLINKNAME"/>.
+        /// lpTitle 成员包含 AppUserModelID。 此标识符控制任务栏和 “开始” 菜单显示应用程序的方式，并使它能够与正确的快捷方式和跳转列表相关联。 通常，应用程序将使用 SetCurrentProcessExplicitAppUserModelID 和 GetCurrentProcessExplicitAppUserModelID 函数，而不是设置此标志。 有关详细信息，请参阅 应用程序用户模型 ID。
+        /// 如果使用 <see cref="STARTF_PREVENTPINNING"/>，则无法将应用程序窗口固定到任务栏上。 应用程序使用任何 AppUserModelID 相关的窗口属性仅覆盖该窗口的此设置。
+        /// 此标志不能与 <see cref="STARTF_TITLEISLINKNAME"/> 一起使用。
         /// </summary>
         STARTF_TITLEISAPPID = 0x00001000,
 
         /// <summary>
-        /// The lpTitle member contains the path of the shortcut file (.lnk) that the user invoked to start this process. This is typically set by the shell when a .lnk file pointing to the launched application is invoked. Most applications will not need to set this value.
-        /// This flag cannot be used with <see cref="STARTF_TITLEISAPPID"/>.
+        /// lpTitle 成员包含用户调用启动此过程的快捷文件 (.lnk) 的路径。 调用指向已启动的应用程序的 .lnk 文件时，通常由 shell 设置此值。 大多数应用程序不需要设置此值。
+        /// 此标志不能与 <see cref="STARTF_TITLEISAPPID"/> 一起使用。
         /// </summary>
         STARTF_TITLEISLINKNAME = 0x00000800,
 
         /// <summary>
-        /// The command line came from an untrusted source. For more information, see Remarks.
+        /// 命令行来自不受信任的源。 有关详细信息，请参阅“备注”。
         /// </summary>
         STARTF_UNTRUSTEDSOURCE = 0x00008000,
 
         /// <summary>
-        /// The <see cref="STARTUPINFO.dwXCountChars"/> and <see cref="STARTUPINFO.dwYCountChars"/> members contain additional information.
+        /// <see cref="STARTUPINFO.dwXCountChars"/> 和 <see cref="STARTUPINFO.dwYCountChars"/> 员包含其他信息。
         /// </summary>
         STARTF_USECOUNTCHARS = 0x00000008,
 
         /// <summary>
-        /// The <see cref="STARTUPINFO.dwFillAttribute"/> member contains additional information.
+        /// <see cref="STARTUPINFO.dwFillAttribute"/> 成员包含其他信息。
         /// </summary>
         STARTF_USEFILLATTRIBUTE = 0x00000010,
 
         /// <summary>
-        /// The <see cref="STARTUPINFO.hStdInput"/> member contains additional information.
-        /// This flag cannot be used with <see cref="STARTF_USESTDHANDLES"/>.
+        /// <see cref="STARTUPINFO.hStdInput"/> 成员包含其他信息。
+        /// 此标志不能与 <see cref="STARTF_USESTDHANDLES"/> 一起使用。
         /// </summary>
         STARTF_USEHOTKEY = 0x00000200,
 
         /// <summary>
-        /// The <see cref="STARTUPINFO.dwX"/> and <see cref="STARTUPINFO.dwY"/> members contain additional information.
+        /// <see cref="STARTUPINFO.dwX"/> 和 <see cref="STARTUPINFO.dwY"/> 成员包含其他信息。
         /// </summary>
         STARTF_USEPOSITION = 0x00000004,
 
         /// <summary>
-        /// The <see cref="STARTUPINFO.wShowWindow"/> member contains additional information.
+        /// <see cref="STARTUPINFO.wShowWindow"/> 成员包含其他信息。
         /// </summary>
         STARTF_USESHOWWINDOW = 0x00000001,
 
         /// <summary>
-        /// The <see cref="STARTUPINFO.dwXSize"/> and <see cref="STARTUPINFO.dwYSize"/> members contain additional information.
+        /// <see cref="STARTUPINFO.dwXSize"/> 和 <see cref="STARTUPINFO.dwYSize"/> 成员包含其他信息。
         /// </summary>
         STARTF_USESIZE = 0x00000002,
 
         /// <summary>
-        /// The <see cref="STARTUPINFO.hStdInput"/>, <see cref="STARTUPINFO.hStdOutput"/>, and <see cref="STARTUPINFO.hStdError"/> members contain additional information.
-        /// If this flag is specified when calling one of the process creation functions, the handles must be inheritable and the function's bInheritHandles parameter must be set to TRUE. For more information, see Handle Inheritance.
-        /// If this flag is specified when calling the <see cref="GetStartupInfo(STARTUPINFO*)"/> function, these members are either the handle value specified during process creation or <see cref="INVALID_HANDLE_VALUE"/>.
-        /// Handles must be closed with <see cref="CloseHandle"/> when they are no longer needed.
-        /// This flag cannot be used with <see cref="STARTF_USEHOTKEY"/>.
+        /// <see cref="STARTUPINFO.hStdInput"/>, <see cref="STARTUPINFO.hStdOutput"/> 和 <see cref="STARTUPINFO.hStdError"/> 成员包含其他信息。
+        /// 如果在调用某个进程创建函数时指定此标志，则句柄必须可继承，并且该函数的 bInheritHandles 参数必须设置为 TRUE。 有关详细信息，请参阅 句柄继承。
+        /// 如果在调用 <see cref="GetStartupInfo(STARTUPINFO*)"/> 函数时指定了此标志，则这些成员是进程创建期间指定的句柄值或INVALID_HANDLE_VALUE。
+        /// 不再需要句柄时，必须使用 CloseHandle 关闭句柄。
+        /// 此标志不能与 <see cref="STARTF_USEHOTKEY"/> 一起使用。
         /// </summary>
         STARTF_USESTDHANDLES = 0x00000100,
     }

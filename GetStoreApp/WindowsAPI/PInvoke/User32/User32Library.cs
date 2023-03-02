@@ -12,6 +12,17 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         private const string User32 = "User32.dll";
 
         /// <summary>
+        /// 将一个线程的输入处理机制附加到另一个线程的输入处理机制。
+        /// </summary>
+        /// <param name="idAttach">要附加到另一个线程的线程的标识符。 要附加的线程不能是系统线程。</param>
+        /// <param name="idAttachTo"><param name="idAttach"> 将附加到的线程的标识符。 此线程不能是系统线程。 线程无法附加到自身。 因此， <param name="idAttachTo"> 不能等于 <param name="idAttach">。</param>
+        /// <param name="fAttach">如果此参数为 TRUE，则附加两个线程。 如果参数为 FALSE，则分离线程。</param>
+        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
+        [LibraryImport(User32, EntryPoint = "AttachThreadInput", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static partial bool AttachThreadInput(int idAttach, int idAttachTo, [MarshalAs(UnmanagedType.Bool)] bool fAttach);
+
+        /// <summary>
         /// 将消息信息传递给指定的窗口过程。
         /// </summary>
         /// <param name="lpPrevWndFunc">
@@ -24,6 +35,17 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <returns>返回值指定消息处理的结果，具体取决于发送的消息。</returns>
         [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "CallWindowProc", SetLastError = false)]
         public static extern IntPtr CallWindowProc(IntPtr lpPrevWndFunc, IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam);
+
+        /// <summary>
+        /// 检索一个窗口的句柄，该窗口的类名和窗口名称与指定的字符串匹配。 该函数搜索子窗口，从指定子窗口后面的子窗口开始。 此函数不执行区分大小写的搜索。
+        /// </summary>
+        /// <param name="parentHandle">要搜索其子窗口的父窗口的句柄。如果 hwndParent 为 NULL，则该函数使用桌面窗口作为父窗口。 函数在桌面的子窗口之间搜索。 如果 hwndParent 为HWND_MESSAGE，则函数将搜索所有 仅消息窗口。</param>
+        /// <param name="childAfter">子窗口的句柄。 搜索从 Z 顺序中的下一个子窗口开始。 子窗口必须是 hwndParent 的直接子窗口，而不仅仅是子窗口。 如果 hwndChildAfter 为 NULL，则搜索从 hwndParent 的第一个子窗口开始。请注意，如果 hwndParent 和 hwndChildAfter 均为 NULL，则该函数将搜索所有顶级窗口和仅消息窗口。</param>
+        /// <param name="className">类名或上一次对 RegisterClass 或 RegisterClassEx 函数的调用创建的类名或类原子。 原子必须置于 lpszClass 的低序单词中;高阶单词必须为零。如果 lpszClass 是字符串，则指定窗口类名。 类名可以是注册到 RegisterClass 或 RegisterClassEx 的任何名称，也可以是预定义的控件类名称，也可以是 MAKEINTATOM(0x8000)。 在此后一种情况下，0x8000是菜单类的原子。 </param>
+        /// <param name="windowTitle">窗口名称 (窗口的标题) 。 如果此参数为 NULL，则所有窗口名称都匹配。</param>
+        /// <returns></returns>
+        [LibraryImport(User32, EntryPoint = "FindWindowExW", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)]
+        public static partial IntPtr FindWindowEx(IntPtr parentHandle, IntPtr childAfter, string className, string windowTitle);
 
         /// <summary>
         /// 检索鼠标光标的位置（以屏幕坐标为单位）。
@@ -45,6 +67,15 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <returns>返回值是前台窗口的句柄。 在某些情况下，前台窗口可以为 NULL ，例如窗口丢失激活时。</returns>
         [LibraryImport(User32, EntryPoint = "GetForegroundWindow", SetLastError = true)]
         public static partial IntPtr GetForegroundWindow();
+
+        /// <summary>
+        /// 检索创建指定窗口的线程的标识符，以及（可选）创建窗口的进程的标识符。
+        /// </summary>
+        /// <param name="hwnd">窗口的句柄。</param>
+        /// <param name="ID">指向接收进程标识符的变量的指针。如果此参数不为 NULL，则 <see cref="GetWindowThreadProcessId"> 将进程的标识符复制到变量;否则，它不会。</param>
+        /// <returns>返回值是创建窗口的线程的标识符。</returns>
+        [LibraryImport(User32, EntryPoint = "GetWindowThreadProcessId", SetLastError = true)]
+        public static partial int GetWindowThreadProcessId(IntPtr hwnd, out int ID);
 
         /// <summary>
         /// 显示一个模式对话框，其中包含系统图标、一组按钮和一条简短的应用程序特定消息，例如状态或错误信息。 消息框返回一个整数值，该值指示用户单击的按钮。

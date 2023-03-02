@@ -2,7 +2,7 @@
 
 namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
 {
-    /// <summary>Virtual-key codes.</summary>
+    /// <summary>虚拟键代码</summary>
     /// <remarks>Defined in winuser.h from Windows SDK v6.1.</remarks>
     /// <devremarks>
     /// APIs vary in the length they expect a parameter for virtual keys to be.

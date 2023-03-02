@@ -23,10 +23,6 @@ namespace GetStoreApp.Services.Controls.Download
 
         public static string Aria2ConfPath { get; } = string.Format(@"{0}\{1}", ApplicationData.Current.LocalFolder.Path, "Aria2.conf");
 
-        public static StorageFile DefaultAria2ConfFile { get; set; }
-
-        public static StorageFile Aria2ConfFile { get; set; }
-
         private static string Aria2Arguments { get; set; }
 
         private static string RPCServerLink { get; } = "http://127.0.0.1:6300/jsonrpc";

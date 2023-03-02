@@ -1,5 +1,7 @@
-﻿using GetStoreApp.WindowsAPI.PInvoke.User32;
+﻿using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
+using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Windowing;
+using System;
 
 namespace GetStoreApp.Helpers.Window
 {
@@ -116,7 +118,12 @@ namespace GetStoreApp.Helpers.Window
         /// </summary>
         public static void BringToFront()
         {
+            IntPtr hForegdWnd = User32Library.GetForegroundWindow();
+            int dwCurID = Kernel32Library.GetCurrentThreadId();
+            User32Library.GetWindowThreadProcessId(hForegdWnd, out int dwForeID);
+            User32Library.AttachThreadInput(dwCurID, dwForeID, true);
             User32Library.SetForegroundWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
+            User32Library.AttachThreadInput(dwCurID, dwForeID, false);
         }
 
         /// <summary>

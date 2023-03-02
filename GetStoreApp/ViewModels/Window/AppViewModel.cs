@@ -1,6 +1,4 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Extensions.DataType.Constant;
+﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Extensions.SystemTray;
@@ -9,8 +7,6 @@ using GetStoreApp.Helpers.Window;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Services.Window;
-using GetStoreApp.Views.Pages;
 using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.AppNotifications;
 using System;
@@ -25,36 +21,6 @@ namespace GetStoreApp.ViewModels.Window
     /// </summary>
     public sealed class AppViewModel
     {
-        // 隐藏 / 显示窗口
-        public IRelayCommand ShowOrHideWindowCommand => new RelayCommand(() =>
-        {
-            // 隐藏窗口
-            if (WindowHelper.IsWindowVisible)
-            {
-                WindowHelper.HideAppWindow();
-            }
-            // 显示窗口
-            else
-            {
-                WindowHelper.ShowAppWindow();
-            }
-        });
-
-        // 打开设置
-        public IRelayCommand SettingsCommand => new RelayCommand(() =>
-        {
-            // 窗口置前端
-            WindowHelper.ShowAppWindow();
-
-            if (NavigationService.GetCurrentPageType() != typeof(SettingsPage))
-            {
-                NavigationService.NavigateTo(typeof(SettingsPage));
-            }
-        });
-
-        // 退出应用
-        public IRelayCommand ExitCommand => new RelayCommand(Program.ApplicationRoot.MainWindow.Close);
-
         /// <summary>
         /// 处理应用程序未知异常处理
         /// </summary>
@@ -165,6 +131,7 @@ namespace GetStoreApp.ViewModels.Window
             await SaveWindowInformationAsync();
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
             await Aria2Service.CloseAria2Async();
+            await TaskbarService.CloseTaskbarProcessAsync();
             AppNotificationService.Unregister();
             BackdropHelper.ReleaseBackdrop();
             Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));

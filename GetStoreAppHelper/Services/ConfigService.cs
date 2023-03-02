@@ -3,6 +3,9 @@ using Windows.Storage;
 
 namespace GetStoreAppHelper.Services
 {
+    /// <summary>
+    /// 设置选项配置服务
+    /// </summary>
     public static class ConfigService
     {
         /// <summary>

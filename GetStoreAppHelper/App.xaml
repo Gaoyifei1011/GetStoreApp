@@ -5,6 +5,7 @@
     xmlns:MileXaml="using:Mile.Xaml">
     <Application.Resources>
         <ResourceDictionary>
+            <!--  资源字典顺序发生变化时，需要修改 ResourceDictionaryHelper 静态类的资源字典顺序  -->
             <ResourceDictionary.MergedDictionaries>
                 <MileXaml:XamlControlsResources />
 

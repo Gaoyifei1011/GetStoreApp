@@ -5,7 +5,7 @@
 
     <Application.Resources>
         <ResourceDictionary>
-            <!--  资源字典顺序发生变化时，需要修改ResourceDictionaryHelper静态类的资源字典顺序  -->
+            <!--  资源字典顺序发生变化时，需要修改 ResourceDictionaryHelper 静态类的资源字典顺序  -->
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
 

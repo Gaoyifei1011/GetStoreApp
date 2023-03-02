@@ -1,13 +1,28 @@
-﻿using GetStoreAppHelper.WindowsAPI.PInvoke.Shell32;
+﻿using GetStoreAppHelper.WindowsAPI.PInvoke.Kernel32;
+using GetStoreAppHelper.WindowsAPI.PInvoke.Shell32;
 using System;
 using System.Runtime.InteropServices;
 using Windows.Graphics;
 
 namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
 {
-    public class User32Library
+    public static class User32Library
     {
         private const string User32 = "User32.dll";
+
+        /// <summary>
+        /// 将消息信息传递给指定的窗口过程。
+        /// </summary>
+        /// <param name="lpPrevWndFunc">
+        /// 上一个窗口过程。 如果通过调用设置为GWL_WNDPROC或DWL_DLGPROC的 nIndex 参数的 GetWindowLong 函数来获取此值，
+        /// 则它实际上是窗口或对话框过程的地址，或者仅对 <see cref="CallWindowProc"> 有意义的特殊内部值。</param>
+        /// <param name="hWnd">用于接收消息的窗口过程的句柄。</param>
+        /// <param name="Msg">消息。</param>
+        /// <param name="wParam">其他的消息特定信息。 此参数的内容取决于 <param name="Msg"> 参数的值。</param>
+        /// <param name="lParam">其他的消息特定信息。 此参数的内容取决于 <param name="Msg"> 参数的值。</param>
+        /// <returns>返回值指定消息处理的结果，具体取决于发送的消息。</returns>
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "CallWindowProc", SetLastError = false)]
+        public static extern IntPtr CallWindowProc(IntPtr lpPrevWndFunc, IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
         /// 创建具有扩展窗口样式的重叠、弹出窗口或子窗口;否则，此函数与 InitializeWindow 函数相同。
@@ -88,8 +103,44 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
         [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "DestroyWindow", SetLastError = true)]
         public static extern bool DestroyWindow(IntPtr hwnd);
 
-        [DllImport(User32, SetLastError = true)]
+        /// <summary>
+        /// 将消息调度到窗口过程。 它通常用于调度 <see cref="GetMessage"> 函数检索的消息。
+        /// </summary>
+        /// <param name="lpmsg">指向包含消息的结构的指针。</param>
+        /// <returns>返回值指定窗口过程返回的值。 虽然其含义取决于正在调度的消息，但通常忽略返回值。</returns>
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "DispatchMessage", SetLastError = true)]
         public static extern IntPtr DispatchMessage(ref MSG lpmsg);
+
+        /// <summary>
+        /// 检索一个窗口的句柄，该窗口的类名和窗口名称与指定的字符串匹配。 该函数搜索子窗口，从指定子窗口后面的子窗口开始。 此函数不执行区分大小写的搜索。
+        /// </summary>
+        /// <param name="parentHandle">
+        /// 要搜索其子窗口的父窗口的句柄。
+        /// 如果 hwndParent 为 NULL，则该函数使用桌面窗口作为父窗口。 函数在桌面的子窗口之间搜索。
+        /// 如果 hwndParentHWND_MESSAGE，则函数将搜索所有 仅消息窗口。
+        /// </param>
+        /// <param name="childAfter">
+        /// 子窗口的句柄。 搜索从 Z 顺序中的下一个子窗口开始。 子窗口必须是 hwndParent 的直接子窗口，而不仅仅是子窗口。
+        /// 如果 hwndChildAfter 为 NULL，则搜索从 hwndParent 的第一个子窗口开始。
+        /// 请注意，如果 hwndParent 和 hwndChildAfter 均为 NULL，则该函数将搜索所有顶级窗口和仅消息窗口。
+        /// </param>
+        /// <param name="className">
+        /// 类名或上一次对 RegisterClass 或 RegisterClassEx 函数的调用创建的类名或类原子。 原子必须置于 lpszClass 的低序单词中;高阶单词必须为零。
+        /// 如果 lpszClass 是字符串，则指定窗口类名。 类名可以是注册到 RegisterClass 或 RegisterClassEx 的任何名称，也可以是预定义的控件类名称，也可以是 MAKEINTATOM(0x8000)。 在此后一种情况下，0x8000是菜单类的原子。 有关详细信息，请参阅本主题的“备注”部分。
+        /// </param>
+        /// <param name="windowTitle">窗口名称 (窗口的标题) 。 如果此参数为 NULL，则所有窗口名称都匹配。</param>
+        /// <returns>如果函数成功，则返回值是具有指定类和窗口名称的窗口的句柄。如果函数失败，则返回值为 NULL。</returns>
+        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "FindWindowExW", SetLastError = true)]
+        public static extern IntPtr FindWindowEx(IntPtr parentHandle, IntPtr childAfter, string className, string windowTitle);
+
+        /// <summary>检索指定窗口的上级句柄。</summary>
+        /// <param name="hWnd">
+        /// 要检索其上级窗口的句柄。 如果此参数是桌面窗口，则该函数返回 <see cref="IntPtr.Zero" />.
+        /// </param>
+        /// <param name="gaFlags">要检索的上级。 </param>
+        /// <returns>返回值是上级窗口的句柄。</returns>
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "GetAncestor", SetLastError = true)]
+        public static extern IntPtr GetAncestor(IntPtr hWnd, GetAncestorFlags gaFlags);
 
         /// <summary>
         /// 检索鼠标光标的位置（以屏幕坐标为单位）。
@@ -99,35 +150,49 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
         [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "GetCursorPos", SetLastError = false)]
         public static extern bool GetCursorPos(out PointInt32 lpPoint);
 
-        /// <summary>Retrieves the handle to the ancestor of the specified window.</summary>
-        /// <param name="hWnd">
-        ///     A handle to the window whose ancestor is to be retrieved. If this parameter is the desktop window,
-        ///     the function returns <see cref="IntPtr.Zero" />.
-        /// </param>
-        /// <param name="gaFlags">The ancestor to be retrieved.</param>
-        /// <returns>The handle to the ancestor window.</returns>
-        [DllImport(nameof(User32), SetLastError = true)]
-        public static extern IntPtr GetAncestor(IntPtr hWnd, GetAncestorFlags gaFlags);
+        /// <summary>
+        /// 返回指定窗口的每英寸点 (dpi) 值。
+        /// </summary>
+        /// <param name="hwnd">要获取相关信息的窗口。</param>
+        /// <returns>窗口的 DPI，无效 的 <param name="hwnd"> 值将导致返回值 0。</returns>
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "GetDpiForWindow", SetLastError = false)]
+        public static extern int GetDpiForWindow(IntPtr hwnd);
 
-        [DllImport(User32, SetLastError = true, CharSet = CharSet.Unicode)]
+        /// <summary>
+        /// 从调用线程的消息队列中检索消息。 该函数将调度传入的已发送邮件，直到发布的消息可供检索。与 <see cref="GetMessage"> 不同， PeekMessage 函数不会等待在返回之前发布消息。
+        /// </summary>
+        /// <param name="lpMsg">指向从线程消息队列接收消息信息的 <see cref="MSG"> 结构的指针。</param>
+        /// <param name="hWnd">
+        /// 要检索其消息的窗口的句柄。 窗口必须属于当前线程。
+        /// 如果 hWnd 为 NULL， 则 <see cref="GetMessage"> 会检索属于当前线程的任何窗口的消息，以及当前线程的消息队列上的任何消息，其 hwnd 值为 NULL ， (看到 <see cref="MSG"> 结构) 。 因此，如果 hWnd 为 NULL，则处理窗口消息和线程消息。
+        /// 如果 hWnd 为 -1，则 GetMessage 仅检索当前线程的消息队列中的消息，其 hwnd 值为 NULL，也就是说，当 hWnd 参数为 NULL 或 PostThreadMessage 时发布的线程消息。
+        /// </param>
+        /// <param name="wMsgFilterMin">
+        /// 要检索到的最低消息值的整数值。 使用 <see cref="WindowMessage.WM_KEYFIRST"> (0x0100) 指定第一个键盘消息或 <see cref="WindowMessage.WM_MOUSEFIRST"> (0x0200) 指定第一条鼠标消息。
+        /// 使用此处和 <param name="wMsgFilterMax"> 中的 <see cref="WindowMessage.WM_INPUT"> 仅指定 <see cref="WindowMessage.WM_INPUT"> 消息。
+        /// 如果 <param name="wMsgFilterMax"> 和 <param name="wMsgFilterMax"> 均为零， 则 <see cref="GetMessage"> 将返回所有可用消息，即不会执行范围筛选。
+        /// </param>
+        /// <param name="wMsgFilterMax">
+        /// 要检索的最大消息值的整数值。 使用 <see cref="WindowMessage.WM_KEYFIRST"> 指定最后一条键盘消息或 <see cref="WindowMessage.WM_MOUSEFIRST"> 指定最后一条鼠标消息。
+        /// 使用此处和 <param name="wMsgFilterMax"> 中的 <see cref="WindowMessage.WM_INPUT"> 仅指定 <see cref="WindowMessage.WM_INPUT"> 消息。
+        /// 如果 <param name="wMsgFilterMax"> 和 <param name="wMsgFilterMax"> 均为零， 则 <see cref="GetMessage"> 将返回所有可用消息，即不会执行范围筛选。
+        /// </param>
+        /// <returns>
+        /// 如果函数检索 非 <see cref="WindowMessage.WM_QUIT"> 的消息，则返回值为非零值。
+        /// 如果函数检索 <see cref="WindowMessage.WM_QUIT"> 消息，则返回值为零。
+        /// 如果出现错误，则返回值为 -1。 例如，如果 hWnd 是无效的窗口句柄或 lpMsg 是无效指针，则函数将失败。 要获得更多的错误信息，请调用 GetLastError。
+        /// </returns>
+        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "GetMessageW", SetLastError = true)]
         public static extern bool GetMessage(out MSG lpMsg, IntPtr hWnd, WindowMessage wMsgFilterMin, WindowMessage wMsgFilterMax);
 
         /// <summary>
-        /// Determines the visibility state of the specified window.
+        /// 检索创建指定窗口的线程的标识符，以及（可选）创建窗口的进程的标识符。
         /// </summary>
-        /// <param name="hWnd">A handle to the window to be tested.</param>
-        /// <returns>
-        /// If the specified window, its parent window, its parent's parent window, and so forth, have the WS_VISIBLE style, the return value is true, otherwise it is false.
-        /// Because the return value specifies whether the window has the WS_VISIBLE style, it may be nonzero even if the window is totally obscured by other windows.
-        /// </returns>
-        /// <remarks>
-        /// The visibility state of a window is indicated by the WS_VISIBLE style bit.
-        /// When WS_VISIBLE is set, the window is displayed and subsequent drawing into it is displayed as long as the window has the WS_VISIBLE style.
-        /// Any drawing to a window with the WS_VISIBLE style will not be displayed if the window is obscured by other windows or is clipped by its parent window.
-        /// </remarks>
-        [DllImport(User32, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool IsWindowVisible(IntPtr hWnd);
+        /// <param name="hwnd">窗口的句柄。</param>
+        /// <param name="ID">指向接收进程标识符的变量的指针。如果此参数不为 NULL，则 <see cref="GetWindowThreadProcessId"> 将进程的标识符复制到变量;否则，它不会。</param>
+        /// <returns>返回值是创建窗口的线程的标识符。</returns>
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "GetWindowThreadProcessId", SetLastError = false)]
+        public static extern int GetWindowThreadProcessId(IntPtr hwnd, out int ID);
 
         /// <summary>
         /// 加载图标、游标、动画游标或位图。
@@ -166,22 +231,77 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
         [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SetForegroundWindow", SetLastError = false)]
         public static extern bool SetForegroundWindow(IntPtr hWnd);
 
+        /// <summary>
+        /// 将指定的消息发送到窗口或窗口。 <see cref="SendMessage"> 函数调用指定窗口的窗口过程，在窗口过程处理消息之前不会返回。
+        /// </summary>
+        /// <param name="hWnd">
+        /// 窗口过程的句柄将接收消息。 如果此参数 HWND_BROADCAST ( (HWND) 0xffff) ，则会将消息发送到系统中的所有顶级窗口，
+        /// 包括已禁用或不可见的未所有者窗口、重叠窗口和弹出窗口;但消息不会发送到子窗口。消息发送受 UIPI 的约束。
+        /// 进程的线程只能将消息发送到较低或等于完整性级别的线程的消息队列。
+        /// </param>
+        /// <param name="wMsg">要发送的消息。</param>
+        /// <param name="wParam">其他的消息特定信息。</param>
+        /// <param name="lParam">其他的消息特定信息。</param>
+        /// <returns>返回值指定消息处理的结果;这取决于发送的消息。</returns>
         [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SendMessage", SetLastError = false)]
         public static extern IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, IntPtr wParam, IntPtr lParam);
 
         [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SendMessage", SetLastError = false)]
         public static extern IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, int wParam, IntPtr lParam);
 
-        [DllImport(User32, CharSet = CharSet.Unicode, ExactSpelling = true)]
+        /// <summary>
+        /// 更改指定窗口的属性。 该函数还将指定偏移量处的32位（long类型）值设置到额外的窗口内存中。
+        /// </summary>
+        /// <param name="hWnd">窗口的句柄，间接地是窗口所属的类</param>
+        /// <param name="nIndex">要设置的值的从零开始的偏移量。 有效值的范围为零到额外窗口内存的字节数，减去整数的大小。</param>
+        /// <param name="newProc">新事件处理函数（回调函数）</param>
+        /// <returns>如果函数成功，则返回值是指定 32 位整数的上一个值。如果函数失败，则返回值为零。 </returns>
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SetWindowLongA", SetLastError = false)]
+        public static extern IntPtr SetWindowLong(IntPtr hWnd, WindowLongIndexFlags nIndex, WindowProc newProc);
+
+        /// <summary>
+        /// 更改指定窗口的属性。 该函数还将指定偏移量处的64位（long类型）值设置到额外的窗口内存中。
+        /// </summary>
+        /// <param name="hWnd">窗口的句柄，间接地是窗口所属的类</param>
+        /// <param name="nIndex">要设置的值的从零开始的偏移量。 有效值的范围为零到额外窗口内存的字节数，减去整数的大小。</param>
+        /// <param name="newProc">新事件处理函数（回调函数）</param>
+        /// <returns>如果函数成功，则返回值是指定偏移量的上一个值。如果函数失败，则返回值为零。 </returns>
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SetWindowLongPtrA", SetLastError = false)]
+        public static extern IntPtr SetWindowLongPtr(IntPtr hWnd, WindowLongIndexFlags nIndex, WindowProc newProc);
+
+        /// <summary>
+        /// 设置指定窗口的显示状态。
+        /// </summary>
+        /// <param name="hWnd">窗口的句柄。</param>
+        /// <param name="nCmdShow">
+        /// 控制窗口的显示方式。 如果启动应用程序的程序提供 <see cref="STARTUPINFO"> 结构，则首次调用 <see cref="ShowWindow"> 时忽略此参数。 否则，首次调用 <see cref="ShowWindow"> 时，该值应该是 WinMain 函数在其 nCmdShow 参数中获取的值。
+        /// </param>
+        /// <returns>如果窗口以前可见，则返回值为非零。如果窗口之前已隐藏，则返回值为零。</returns>
+        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "ShowWindow", ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool ShowWindow([In] IntPtr hWnd, WindowShowStyle nCmdShow);
 
-        [DllImport(User32, CharSet = CharSet.Unicode, ExactSpelling = true, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool UpdateWindow([In] IntPtr hWnd);
-
-        [DllImport(User32, SetLastError = true)]
+        /// <summary>
+        /// 将虚拟密钥消息转换为字符消息。 字符消息将发布到调用线程的消息队列，下次线程调用 <see cref="GetMessage"> 或 PeekMessage 函数时要读取。
+        /// </summary>
+        /// <param name="lpMsg">
+        /// 指向 MSG 结构的指针，该结构包含使用 <see cref="GetMessage"> 或 PeekMessage 函数从调用线程的消息队列中检索到的消息信息。
+        /// </param>
+        /// <returns>
+        /// 如果消息转换，则会将字符消息发布到线程的消息队列) ，则返回值为非零。
+        /// 如果消息是 <see cref="WindowMessage.WM_KEYDOWN">、 <see cref="WindowMessage.WM_KEYUP">、 <see cref="WindowMessage.WM_SYSKEYDOWN"> 或 <see cref="WindowMessage.WM_SYSKEYUP">，则无论翻译如何，返回值都是非零的。
+        /// </returns>
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "TranslateMessage", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool TranslateMessage(ref MSG lpMsg);
+
+        /// <summary>
+        /// <see cref="UpdateWindow"> 函数通过将 <see cref="WindowMessage.WM_PAINT"> 消息发送到窗口来更新指定窗口的工作区（如果窗口的更新区域不为空）。 该函数将 <see cref="WindowMessage.WM_PAINT"> 消息直接发送到指定窗口的窗口过程，绕过应用程序队列。 如果更新区域为空，则不会发送任何消息。
+        /// </summary>
+        /// <param name="hWnd">要更新的窗口的句柄。</param>
+        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
+        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "UpdateWindow", ExactSpelling = true, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool UpdateWindow([In] IntPtr hWnd);
     }
 }

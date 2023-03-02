@@ -1,4 +1,4 @@
-﻿namespace GetStoreApp.Extensions.DataType.Enums
+﻿namespace GetStoreAppHelper.Extensions.DataType
 {
     /// <summary>
     /// 应用程序退出返回结果枚举值

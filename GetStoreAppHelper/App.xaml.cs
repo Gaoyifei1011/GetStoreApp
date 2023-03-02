@@ -1,9 +1,11 @@
-﻿using GetStoreAppHelper.Extensions.SystemTray;
+﻿using GetStoreAppHelper.Extensions.DataType;
+using GetStoreAppHelper.Extensions.SystemTray;
 using GetStoreAppHelper.Helpers;
 using GetStoreAppHelper.Services;
 using GetStoreAppHelper.UI.Controls;
 using GetStoreAppHelper.WindowsAPI.PInvoke.User32;
 using Mile.Xaml;
+using System;
 using Windows.ApplicationModel;
 using Windows.Graphics;
 
@@ -20,6 +22,9 @@ namespace GetStoreAppHelper
             Initialize();
         }
 
+        /// <summary>
+        /// 启动应用
+        /// </summary>
         public void Run()
         {
             InitializeTrayIcon();
@@ -35,6 +40,7 @@ namespace GetStoreAppHelper
             MainWindow.Size.Y = 0;
 
             MainWindow.InitializeWindow();
+            MainWindow.InitializeWindowProc();
             MainWindow.Activate();
         }
 
@@ -50,14 +56,7 @@ namespace GetStoreAppHelper
 
             TrayIcon.DoubleClick = () =>
             {
-                if (User32Library.IsWindowVisible(MainWindow.Handle))
-                {
-                    User32Library.ShowWindow(MainWindow.Handle, WindowShowStyle.SW_HIDE);
-                }
-                else
-                {
-                    User32Library.ShowWindow(MainWindow.Handle, WindowShowStyle.SW_SHOWNORMAL);
-                }
+                (MainWindow.Content as TrayMenuControl).ViewModel.ShowOrHideWindowCommand.Execute(null);
             };
 
             TrayIcon.RightClick = () =>
@@ -67,6 +66,15 @@ namespace GetStoreAppHelper
                 (MainWindow.Content as TrayMenuControl).SetXamlRoot(MainWindow.Content.XamlRoot);
                 (MainWindow.Content as TrayMenuControl).ShowMenuFlyout(CurrentPoint);
             };
+        }
+
+        /// <summary>
+        /// 关闭应用并释放所有资源
+        /// </summary>
+        public void CloseApp()
+        {
+            TrayIcon.Dispose();
+            Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
         }
     }
 }
