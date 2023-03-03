@@ -148,7 +148,7 @@ namespace GetStoreApp.Views.Window
                         break;
                     }
                 // 任务栏窗口右键菜单弹出时消息
-                case WindowMessage.WM_TASKBARRCLICK:
+                case WindowMessage.WM_SYSMENU:
                     {
                         WindowHelper.BringToFront();
                         return 0;
