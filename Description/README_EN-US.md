@@ -47,6 +47,7 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 | Access the web version of the docking download interface | Completed                                                                                                          |
 | Console applications (quickly download)                  | Completed                                                                                                          |
 | Program performance optimization                         | Completed                                                                                                          |
+| Interface modernization                                  | Completed                                                                                                          |
 
 All the content of the program has been developed
 
@@ -81,7 +82,7 @@ All the content of the program has been developed
 #### <p align="center">Tools that must be installed</p>
 
 > * [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com/) 
-> * . NET Desktop Development (Installed in Visual Studio Installer, .NET SDK Version 7.0)
+> * . NET Desktop Development (Installed in Visual Studio Installer, .NET SDK Version 7.0 and .NET Framework SDK 4.8.1)
 > * [Microsoft Edge WebView2 Runtime](https://developer.microsoft.com/zh-cn/microsoft-edge/webview2/) £¨install recommendedly£©
 
 #### <p align="center">Compilation steps</p>

@@ -47,6 +47,7 @@
 | 访问网页版对接下载接口          | 已完成                                            |
 | 控制台应用程序（快速下载）      | 已完成                                            |
 | 程序性能优化                    | 已完成                                            |
+| 界面现代化改造                  | 已完成                                            |
 
 程序所有功能都已开发完成
 
@@ -81,7 +82,7 @@
 #### <p align="center">必须安装的工具</p>
 
 > * [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com/) 
-> * .NET桌面开发（Visual Studio Installer中安装，.NET SDK 版本 7.0）
+> * .NET桌面开发（Visual Studio Installer中安装，.NET SDK 版本 7.0 和 .NET Framework SDK 4.8.1）
 > * [Microsoft Edge WebView2 运行时](https://developer.microsoft.com/zh-cn/microsoft-edge/webview2/) （推荐安装）
 
 #### <p align="center">编译步骤</p>

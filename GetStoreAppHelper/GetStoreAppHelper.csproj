@@ -1,6 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ApplicationManifest>App.manifest</ApplicationManifest>
+    <AssemblyName>GetStoreAppHelper</AssemblyName>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <Copyright>高怡飞</Copyright>
+    <DisableXbfLineInfo>False</DisableXbfLineInfo>
+    <Deterministic>true</Deterministic>
+    <FileAlignment>512</FileAlignment>
+    <FileVersion>1.3.303.0</FileVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <LangVersion>latest</LangVersion>
     <OutputType>WinExe</OutputType>
@@ -10,7 +18,6 @@
     <TargetFramework>net481</TargetFramework>
     <TargetPlatformVersion>10.0.22621.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Platform)'=='x86'">

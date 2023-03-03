@@ -114,6 +114,16 @@
         WM_ENDSESSION = 0x0016,
 
         /// <summary>
+        /// 当窗口即将隐藏或显示时发送到窗口。
+        /// </summary>
+        WM_SHOWWINDOW = 0x0018,
+
+        /// <summary>
+        /// 在每个控件开始绘制之前，都会向其父窗口发送 <see cref="WM_CTLCOLOR"> 通告消息，在该消息的处理函数中，可以设置控件显示文本的前景色、背景色以及字体。该消息处理函数还要求返回一个画刷的句柄，用于在控件具体的绘制之前擦除其客户区。
+        /// </summary>
+        WM_CTLCOLOR = 0x0019,
+
+        /// <summary>
         /// 应用程序在更改WIN.INI文件后，将 <see cref="WM_WININICHANGE"> 消息发送到所有顶级窗口。 SystemParametersInfo 函数在应用程序使用该函数更改WIN.INI中的设置后发送此消息。
         /// </summary>
         WM_WININICHANGE = 0x001A,
@@ -280,6 +290,11 @@
         WM_POWER = 0x0048,
 
         /// <summary>
+        /// 从 Win3.1 开始可能与 <see cref="WM_COPYDATA"> 有关，现在很可能从 MSDN 中删除。每个于此相关的功能还是带着这个消息。
+        /// </summary>
+        WM_COPYGLOBALDATA = 0x0049,
+
+        /// <summary>
         /// 应用程序将 <see cref="WM_COPYDATA"> 消息发送到另一个应用程序。
         /// </summary>
         WM_COPYDATA = 0x004A,
@@ -300,7 +315,7 @@
         WM_INPUTLANGCHANGEREQUEST = 0x0050,
 
         /// <summary>
-        /// 更改应用程序输入语言后，发送到最受影响的窗口。 应进行任何特定于应用程序的设置并将消息传递给 DefWindowProc 函数，该函数会将消息传递给所有第一级子窗口。 这些子窗口可以将消息传递给 <see cref="User32Library.DefWindowProc"> ，使其将消息传递给其子窗口等。
+        /// 更改应用程序输入语言后，发送到最受影响的窗口。 应进行任何特定于应用程序的设置并将消息传递给 DefWindowProc 函数，该函数会将消息传递给所有第一级子窗口。 这些子窗口可以将消息传递给 DefWindowProc ，使其将消息传递给其子窗口等。
         /// </summary>
         WM_INPUTLANGCHANGE = 0x0051,
 
@@ -376,89 +391,277 @@
         WM_NCHITTEST = 0x0084,
 
         /// <summary>
-        /// The WM_NCPAINT message is sent to a window when its frame must be painted.
+        /// <see cref="WM_NCPAINT"> 消息在必须绘制其框架时发送到窗口。
         /// </summary>
         WM_NCPAINT = 0x0085,
 
         /// <summary>
-        /// The WM_NCACTIVATE message is sent to a window when its nonclient area needs to be changed to indicate an active or inactive state.
+        /// 当需要更改其非client 区域以指示活动或非活动状态时，发送到窗口。
         /// </summary>
         WM_NCACTIVATE = 0x0086,
 
         /// <summary>
-        /// The WM_GETDLGCODE message is sent to the window procedure associated with a control. By default, the system handles all keyboard input to the control; the system interprets certain types of keyboard input as FolderDialog box navigation keys. To override this default behavior, the control can respond to the WM_GETDLGCODE message to indicate the types of input it wants to process itself.
+        /// 发送到与控件关联的窗口过程。 默认情况下，系统将处理控件的所有键盘输入;系统将某些类型的键盘输入解释为对话框导航键。 若要替代此默认行为，控件可以响应 <see cref="WM_GETDLGCODE"> 消息，以指示要处理其本身的输入类型。
         /// </summary>
         WM_GETDLGCODE = 0x0087,
 
         /// <summary>
-        /// The WM_SYNCPAINT message is used to synchronize painting while avoiding linking independent GUI threads.
+        /// <see cref="WM_SYNCPAINT"> 消息用于同步绘制，同时避免链接独立的 GUI 线程。
         /// </summary>
         WM_SYNCPAINT = 0x0088,
 
         /// <summary>
-        /// The WM_NCMOUSEMOVE message is posted to a window when the cursor is moved within the nonclient area of the window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+        /// 当光标在窗口的非工作区内移动时发布到窗口。 此消息将发布到包含光标的窗口。 如果窗口捕获了鼠标，则不会发布此消息。
         /// </summary>
         WM_NCMOUSEMOVE = 0x00A0,
 
         /// <summary>
-        /// The WM_NCLBUTTONDOWN message is posted when the user presses the left mouse button while the cursor is within the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+        /// 当用户在光标位于窗口的非工作区内时按下鼠标左键时发布。 此消息将发布到包含光标的窗口。 如果窗口捕获了鼠标，则不会发布此消息。
         /// </summary>
         WM_NCLBUTTONDOWN = 0x00A1,
 
         /// <summary>
-        /// The WM_NCLBUTTONUP message is posted when the user releases the left mouse button while the cursor is within the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+        /// 当用户释放鼠标左键时，光标位于窗口的非工作区内时发布。 此消息将发布到包含光标的窗口。 如果窗口捕获了鼠标，则不会发布此消息。
         /// </summary>
         WM_NCLBUTTONUP = 0x00A2,
 
         /// <summary>
-        /// The WM_NCLBUTTONDBLCLK message is posted when the user double-clicks the left mouse button while the cursor is within the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+        /// 当用户在光标位于窗口的非工作区内时双击鼠标左键时发布。 此消息将发布到包含光标的窗口。 如果窗口捕获了鼠标，则不会发布此消息。
         /// </summary>
         WM_NCLBUTTONDBLCLK = 0x00A3,
 
         /// <summary>
-        /// The WM_NCRBUTTONDOWN message is posted when the user presses the right mouse button while the cursor is within the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+        /// 当用户按下鼠标右键时，光标位于窗口的非工作区内时发布。 此消息将发布到包含光标的窗口。 如果窗口捕获了鼠标，则不会发布此消息。
         /// </summary>
         WM_NCRBUTTONDOWN = 0x00A4,
 
         /// <summary>
-        /// The WM_NCRBUTTONUP message is posted when the user releases the right mouse button while the cursor is within the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+        /// 当用户松开鼠标右键时，光标位于窗口的非工作区内时发布。 此消息将发布到包含光标的窗口。 如果窗口捕获了鼠标，则不会发布此消息。
         /// </summary>
         WM_NCRBUTTONUP = 0x00A5,
 
         /// <summary>
-        /// The WM_NCRBUTTONDBLCLK message is posted when the user double-clicks the right mouse button while the cursor is within the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+        /// 当用户在光标位于窗口的非工作区内时双击鼠标右键时发布。 此消息将发布到包含光标的窗口。 如果窗口捕获了鼠标，则不会发布此消息。
         /// </summary>
         WM_NCRBUTTONDBLCLK = 0x00A6,
 
         /// <summary>
-        /// The WM_NCMBUTTONDOWN message is posted when the user presses the middle mouse button while the cursor is within the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+        /// 当用户按下鼠标中键时光标位于窗口的非工作区内时发布。 此消息将发布到包含光标的窗口。 如果窗口捕获了鼠标，则不会发布此消息。
         /// </summary>
         WM_NCMBUTTONDOWN = 0x00A7,
 
         /// <summary>
-        /// The WM_NCMBUTTONUP message is posted when the user releases the middle mouse button while the cursor is within the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+        /// 当用户松开鼠标中键时，光标位于窗口的非工作区内时发布。 此消息将发布到包含光标的窗口。 如果窗口捕获了鼠标，则不会发布此消息。
         /// </summary>
         WM_NCMBUTTONUP = 0x00A8,
 
         /// <summary>
-        /// The WM_NCMBUTTONDBLCLK message is posted when the user double-clicks the middle mouse button while the cursor is within the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+        /// 当用户在光标位于窗口的非工作区内时双击鼠标中键时发布。 此消息将发布到包含光标的窗口。 如果窗口捕获了鼠标，则不会发布此消息。
         /// </summary>
         WM_NCMBUTTONDBLCLK = 0x00A9,
 
         /// <summary>
-        /// The WM_NCXBUTTONDOWN message is posted when the user presses the first or second X button while the cursor is in the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+        /// 当用户按下第一个或第二个 X 按钮时，光标位于窗口的非工作区时发布。 此消息将发布到包含光标的窗口。 如果窗口捕获了鼠标，则 不会 发布此消息。
         /// </summary>
         WM_NCXBUTTONDOWN = 0x00AB,
 
         /// <summary>
-        /// The WM_NCXBUTTONUP message is posted when the user releases the first or second X button while the cursor is in the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+        /// 当用户释放第一个或第二个 X 按钮时，光标位于窗口的非工作区时发布。 此消息将发布到包含光标的窗口。 如果窗口捕获了鼠标，则 不会 发布此消息。
         /// </summary>
         WM_NCXBUTTONUP = 0x00AC,
 
         /// <summary>
-        /// The WM_NCXBUTTONDBLCLK message is posted when the user double-clicks the first or second X button while the cursor is in the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+        /// 当用户在光标位于窗口的非工作区时双击第一个或第二个 X 按钮时发布。 此消息将发布到包含光标的窗口。 如果窗口捕获了鼠标，则不会发布此消息。
         /// </summary>
         WM_NCXBUTTONDBLCLK = 0x00AD,
+
+        /// <summary>
+        /// 获取编辑控件中当前所选内容) TCHARs 中 (开始和结束字符位置。 可以将此消息发送到编辑控件或丰富的编辑控件。
+        /// </summary>
+        EM_GETSEL = 0x00b0,
+
+        /// <summary>
+        /// 在编辑控件中选择一系列字符。 可以将此消息发送到编辑控件或丰富的编辑控件。
+        /// </summary>
+        EM_SETSEL = 0x00b1,
+
+        /// <summary>
+        /// 获取编辑控件 的格式设置矩形 。 格式设置矩形是控件在其中绘制文本的限制矩形。 限制矩形与编辑控件窗口的大小无关。 可以将此消息发送到编辑控件或富编辑控件。
+        /// </summary>
+        EM_GETRECT = 0x00b2,
+
+        /// <summary>
+        /// 设置多行编辑控件 的格式矩形 。 格式设置矩形是控件在其中绘制文本的限制矩形。 限制矩形与编辑控件窗口的大小无关。
+        /// 此消息仅由多行编辑控件处理。 可以将此消息发送到编辑控件或富编辑控件。
+        /// </summary>
+        EM_SETRECT = 0x00b3,
+
+        /// <summary>
+        /// 设置多行编辑控件 的格式矩形 。 EM_SETRECTNP消息与EM_SETRECT消息相同，只是EM_SETRECTNP不会重绘编辑控件窗口。
+        /// 格式设置矩形是控件在其中绘制文本的限制矩形。 限制矩形与编辑控件窗口的大小无关。
+        /// 此消息仅由多行编辑控件处理。 可以将此消息发送到编辑控件或富编辑控件。
+        /// </summary>
+        EM_SETRECTNP = 0x00b4,
+
+        /// <summary>
+        /// 在多行编辑控件中垂直滚动文本。 此消息等效于将 <see cref="WM_VSCROLL"> 消息发送到编辑控件。 可以将此消息发送到编辑控件或丰富的编辑控件。
+        /// </summary>
+        EM_SCROLL = 0x00b5,
+
+        /// <summary>
+        /// 滚动多行编辑控件中的文本。
+        /// </summary>
+        EM_LINESCROLL = 0x00b6,
+
+        /// <summary>
+        /// 将插入点滚动到编辑控件的视图中。 可以将此消息发送到编辑控件或丰富的编辑控件。
+        /// </summary>
+        EM_SCROLLCARET = 0x00b7,
+
+        /// <summary>
+        /// 获取编辑控件的修改标志的状态。 标志指示是否已修改编辑控件的内容。 可以将此消息发送到编辑控件或丰富的编辑控件。
+        /// </summary>
+        EM_GETMODIFY = 0x00b8,
+
+        /// <summary>
+        /// 设置或清除编辑控件的修改标志。 修改标志指示编辑控件中的文本是否已修改。 可以将此消息发送到编辑控件或丰富的编辑控件。
+        /// </summary>
+        EM_SETMODIFY = 0x00b9,
+
+        /// <summary>
+        /// 获取多行编辑控件中的行数。 可以将此消息发送到编辑控件或丰富的编辑控件。
+        /// </summary>
+        EM_GETLINECOUNT = 0x00ba,
+
+        /// <summary>
+        /// 获取多行编辑控件中指定行的第一个字符的字符索引。 字符索引是从编辑控件的开头开始的字符的从零开始的索引。 可以将此消息发送到编辑控件或丰富的编辑控件。
+        /// </summary>
+        EM_LINEINDEX = 0x00bb,
+
+        /// <summary>
+        /// 设置多行编辑控件将使用的内存的句柄。
+        /// </summary>
+        EM_SETHANDLE = 0x00bc,
+
+        /// <summary>
+        /// 获取当前为多行编辑控件的文本分配的内存的句柄。
+        /// </summary>
+        EM_GETHANDLE = 0x00bd,
+
+        /// <summary>
+        /// 获取多行编辑控件垂直滚动条中滚动框 (拇指) 的位置。 可以将此消息发送到编辑控件或丰富的编辑控件。
+        /// </summary>
+        EM_GETTHUMB = 0x00be,
+
+        /// <summary>
+        /// 检索编辑控件中行的长度（以字符为单位）。 可以将此消息发送到编辑控件或丰富的编辑控件。
+        /// </summary>
+        EM_LINELENGTH = 0x00c1,
+
+        /// <summary>
+        /// 将编辑控件中的选定文本或丰富的编辑控件替换为指定的文本。
+        /// </summary>
+        EM_REPLACESEL = 0x00c2,
+
+        /// <summary>
+        /// 设置富编辑控件中所选文本的字体。
+        /// </summary>
+        EM_SETFONT = 0x00c3,
+
+        /// <summary>
+        /// 从编辑控件复制文本行，并将其置于指定的缓冲区中。 可以将此消息发送到编辑控件或丰富的编辑控件。
+        /// </summary>
+        EM_GETLINE = 0x00c4,
+
+        /// <summary>
+        /// 设置编辑控件的文本限制。 文本限制是用户可以在编辑控件中键入的最大文本量（以 TCHAR 为单位）。 可以将此消息发送到编辑控件或丰富的编辑控件。
+        /// 对于编辑控件和 Microsoft Rich Edit 1.0，将使用字节。 对于 Microsoft Rich Edit 2.0 及更高版本，将使用字符。
+        /// </summary>
+        EM_LIMITTEXT = 0x00c5,
+
+        /// <summary>
+        /// 设置编辑控件的文本限制。 文本限制是用户可在编辑控件中键入的最大文本量（ 在 TCHARs 中）。 可以将此消息发送到编辑控件或丰富的编辑控件。
+        /// 对于编辑控件和 Microsoft Rich Edit 1.0，将使用字节。 对于 Microsoft Rich Edit 2.0 及更高版本，将使用字符。
+        /// <see cref="EM_SETLIMITTEXT"> 消息与 <see cref="EM_LIMITTEXT"> 消息相同。
+        /// </summary>
+        EM_SETLIMITTEXT = EM_LIMITTEXT,
+
+        /// <summary>
+        /// 确定编辑控件的撤消队列中是否有任何操作。 可以将此消息发送到编辑控件或丰富的编辑控件。
+        /// </summary>
+        EM_CANUNDO = 0x00c6,
+
+        /// <summary>
+        /// 此消息撤消控件队列中最后一次编辑控件操作。 可以将此消息发送到编辑控件或丰富的编辑控件。
+        /// </summary>
+        EM_UNDO = 0x00c7,
+
+        /// <summary>
+        /// 设置一个标志，用于确定多行编辑控件是否包含软换行符。 软换行符由两个回车符和一个换行符组成，插入到由于单词包装而断开的行的末尾。
+        /// </summary>
+        EM_FMTLINES = 0x00c8,
+
+        /// <summary>
+        /// 获取包含多行编辑控件中指定字符索引的行的索引。 字符索引是从编辑控件的开头开始的字符的从零开始的索引。 可以将此消息发送到编辑控件或丰富的编辑控件。
+        /// </summary>
+        EM_LINEFROMCHAR = 0x00c9,
+
+        /// <summary>
+        /// 本操作现已不支持，请使用 <see cref="EM_SETWORDBREAKPROC">
+        /// </summary>
+        EM_SETWORDBREAK = 0x00ca,
+
+        /// <summary>
+        /// EM_SETTABSTOPS消息设置多行编辑控件中的制表位。 当文本复制到控件时，文本中的任何制表符都会导致空间生成到下一个制表位。
+        /// 此消息仅由多行编辑控件处理。 可以将此消息发送到编辑控件或丰富的编辑控件。
+        /// </summary>
+        EM_SETTABSTOPS = 0x00cb,
+
+        /// <summary>
+        /// 设置或删除编辑控件的密码字符。 设置密码字符时，将显示该字符代替用户键入的字符。 可以将此消息发送到编辑控件或丰富的编辑控件。
+        /// </summary>
+        EM_SETPASSWORDCHAR = 0x00cc,
+
+        /// <summary>
+        /// 重置编辑控件的撤消标志。 每当可以撤消编辑控件中的操作时，都会设置撤消标志。 可以将此消息发送到编辑控件或丰富的编辑控件。
+        /// </summary>
+        EM_EMPTYUNDOBUFFER = 0x00cd,
+
+        /// <summary>
+        /// 获取多行编辑控件中最上端可见行的从零开始的索引。 可以将此消息发送到编辑控件或丰富的编辑控件。
+        /// </summary>
+        EM_GETFIRSTVISIBLELINE = 0x00ce,
+
+        /// <summary>
+        /// 设置或删除编辑控件的只读样式 (ES_READONLY) 。 可以将此消息发送到编辑控件或丰富的编辑控件。
+        /// </summary>
+        EM_SETREADONLY = 0x00cf,
+
+        /// <summary>
+        /// 将编辑控件的默认 Wordwrap 函数替换为应用程序定义的 Wordwrap 函数。 可以将此消息发送到编辑控件或丰富的编辑控件。
+        /// </summary>
+        EM_SETWORDBREAKPROC = 0x00d0,
+
+        /// <summary>
+        /// 获取当前 Wordwrap 函数的地址。 可以将此消息发送到编辑控件或丰富的编辑控件。
+        /// </summary>
+        EM_GETWORDBREAKPROC = 0x00d1,
+
+        EM_GETPASSWORDCHAR = 0x00d2,
+
+        EM_SETMARGINS = 0x00d3,
+
+        EM_GETMARGINS = 0x00d4,
+
+        EM_GETLIMITTEXT = 0x00d5,
+
+        EM_POSFROMCHAR = 0x00d6,
+
+        EM_CHARFROMPOS = 0x00d7,
+
+        EM_SETIMESTATUS = 0x00d8,
+
+        EM_GETIMESTATUS = 0x00d9,
 
         /// <summary>
         /// The WM_INPUT_DEVICE_CHANGE message is sent to the window that registered to receive raw input. A window receives this message through its WindowProc function.
