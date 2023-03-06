@@ -12,17 +12,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         private const string User32 = "User32.dll";
 
         /// <summary>
-        /// 将一个线程的输入处理机制附加到另一个线程的输入处理机制。
-        /// </summary>
-        /// <param name="idAttach">要附加到另一个线程的线程的标识符。 要附加的线程不能是系统线程。</param>
-        /// <param name="idAttachTo"><param name="idAttach"> 将附加到的线程的标识符。 此线程不能是系统线程。 线程无法附加到自身。 因此， <param name="idAttachTo"> 不能等于 <param name="idAttach">。</param>
-        /// <param name="fAttach">如果此参数为 TRUE，则附加两个线程。 如果参数为 FALSE，则分离线程。</param>
-        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
-        [LibraryImport(User32, EntryPoint = "AttachThreadInput", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool AttachThreadInput(int idAttach, int idAttachTo, [MarshalAs(UnmanagedType.Bool)] bool fAttach);
-
-        /// <summary>
         /// 将消息信息传递给指定的窗口过程。
         /// </summary>
         /// <param name="lpPrevWndFunc">
@@ -62,11 +51,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <returns>窗口的 DPI，无效 的 <param name="hwnd"> 值将导致返回值 0。</returns>
         [LibraryImport(User32, EntryPoint = "GetDpiForWindow", SetLastError = false)]
         public static partial int GetDpiForWindow(IntPtr hwnd);
-
-        /// <summary>检索前台窗口的句柄， (用户当前正在使用的窗口) 。 系统向创建前台窗口的线程分配略高于其他线程的优先级。</summary>
-        /// <returns>返回值是前台窗口的句柄。 在某些情况下，前台窗口可以为 NULL ，例如窗口丢失激活时。</returns>
-        [LibraryImport(User32, EntryPoint = "GetForegroundWindow", SetLastError = true)]
-        public static partial IntPtr GetForegroundWindow();
 
         /// <summary>
         /// 检索创建指定窗口的线程的标识符，以及（可选）创建窗口的进程的标识符。
@@ -112,15 +96,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         public static partial IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, int wParam, IntPtr lParam);
 
         /// <summary>
-        /// 将创建指定窗口的线程引入前台并激活窗口。 键盘输入将定向到窗口，并为用户更改各种视觉提示。 系统向创建前台窗口的线程分配略高于其他线程的优先级。
-        /// </summary>
-        /// <param name="hWnd">应激活并带到前台的窗口的句柄。</param>
-        /// <returns>如果窗口被带到前台，则返回值为非零。如果未将窗口带到前台，则返回值为零。</returns>
-        [LibraryImport(User32, EntryPoint = "SetForegroundWindow", SetLastError = false)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool SetForegroundWindow(IntPtr hWnd);
-
-        /// <summary>
         /// 更改指定窗口的属性。 该函数还将指定偏移量处的32位（long类型）值设置到额外的窗口内存中。
         /// </summary>
         /// <param name="hWnd">窗口的句柄，间接地是窗口所属的类</param>
@@ -151,7 +126,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="cy">窗口的新高度（以像素为单位）。</param>
         /// <param name="uFlags">窗口大小调整和定位标志。</param>
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 </returns>
-        [LibraryImport(User32, SetLastError = true)]
+        [LibraryImport(User32, EntryPoint = "SetWindowPos", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static partial bool SetWindowPos(
             IntPtr hWnd,

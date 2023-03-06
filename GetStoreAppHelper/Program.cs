@@ -1,4 +1,5 @@
-﻿using GetStoreAppHelper.Services;
+﻿using GetStoreAppHelper.Helpers.Root;
+using GetStoreAppHelper.Services;
 using System;
 using System.Reflection;
 using System.Threading;
@@ -36,6 +37,8 @@ namespace GetStoreAppHelper
         {
             await LanguageService.InitializeLanguageAsync();
             await ResourceService.InitializeResourceAsync(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
+
+            InfoHelper.InitializeSystemVersion();
         }
     }
 }

@@ -67,13 +67,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         [LibraryImport(Kernel32, EntryPoint = "GetConsoleWindow", SetLastError = false)]
         public static partial IntPtr GetConsoleWindow();
 
-        /// <summary>
-        /// 检索调用线程的线程标识符。
-        /// </summary>
-        /// <returns>返回值是调用线程的线程标识符。</returns>
-        [LibraryImport(Kernel32,EntryPoint = "GetCurrentThreadId", SetLastError = false)]
-        public static partial int GetCurrentThreadId();
-
         /// <summary>检索有关指定地理位置的信息。</summary>
         /// <param name="location">要获取信息的地理位置的标识符。可以通过调用 EnumSystemGeoID 来获取可用值。</param>
         /// <param name="geoType">

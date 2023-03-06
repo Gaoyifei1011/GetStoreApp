@@ -156,14 +156,14 @@
             <Button
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
-                Command="{x:Bind ViewModel.CloseWindowCommand}"
+                Command="{x:Bind ViewModel.CloseDialogCommand}"
                 CommandParameter="{x:Bind FileInformationRoot}"
-                Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseWindow')}"
+                Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
                 IsEnabled="{x:Bind ViewModel.FileCheckState, Mode=OneWay}">
 
                 <ToolTipService.ToolTip>
                     <ToolTip
-                        Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseWindow')}"
+                        Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
                         Placement="Bottom"
                         VerticalOffset="20" />
                 </ToolTipService.ToolTip>

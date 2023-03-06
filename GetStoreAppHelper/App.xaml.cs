@@ -1,4 +1,4 @@
-﻿using GetStoreAppHelper.Extensions.DataType;
+﻿using GetStoreAppHelper.Extensions.DataType.Enums;
 using GetStoreAppHelper.Extensions.SystemTray;
 using GetStoreAppHelper.Helpers;
 using GetStoreAppHelper.Services;
@@ -34,9 +34,9 @@ namespace GetStoreAppHelper
 
             MainWindow.Content = new TrayMenuControl();
             MainWindow.Title = ResourceService.GetLocalized("HelperResources/Title");
-            MainWindow.Position.X = unchecked((int)0x80000000);
+            MainWindow.Position.X = 0;
             MainWindow.Position.Y = 0;
-            MainWindow.Size.X = unchecked((int)0x80000000);
+            MainWindow.Size.X = 0;
             MainWindow.Size.Y = 0;
 
             MainWindow.InitializeWindow();

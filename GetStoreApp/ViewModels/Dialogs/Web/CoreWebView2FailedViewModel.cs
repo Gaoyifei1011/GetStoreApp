@@ -38,8 +38,8 @@ namespace GetStoreApp.ViewModels.Dialogs.Web
             new ExceptionCopyNotification(true).Show();
         });
 
-        // 关闭窗口
-        public IRelayCommand CloswWindowCommand => new RelayCommand<ContentDialog>((dialog) =>
+        // 关闭对话框
+        public IRelayCommand CloseDialogCommand => new RelayCommand<ContentDialog>((dialog) =>
         {
             dialog.Hide();
         });

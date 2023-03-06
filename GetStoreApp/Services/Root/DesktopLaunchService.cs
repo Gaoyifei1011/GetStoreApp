@@ -139,7 +139,7 @@ namespace GetStoreApp.Services.Root
 
             // 获取或注册主实例
             AppInstance mainInstance = AppInstance.FindOrRegisterForKey("Main");
-            Debug.WriteLine("is current" + mainInstance.IsCurrent);
+
             // 如果主实例不是此当前实例
             if (!mainInstance.IsCurrent)
             {

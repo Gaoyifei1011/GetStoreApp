@@ -155,7 +155,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                     NavigationService.NavigateTo(typeof(HomePage));
                 }
 
-                WindowHelper.BringToFront();
+                WindowHelper.ShowAppWindow();
             });
 
             Messenger.Default.Register<HistoryModel>(this, MessageToken.Fillin, (fillinMessage) =>

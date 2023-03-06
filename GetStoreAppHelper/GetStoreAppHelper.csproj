@@ -7,6 +7,7 @@
     <Copyright>高怡飞</Copyright>
     <DisableXbfLineInfo>False</DisableXbfLineInfo>
     <Deterministic>true</Deterministic>
+    <EnableTypeInfoReflection>true</EnableTypeInfoReflection>
     <FileAlignment>512</FileAlignment>
     <FileVersion>1.3.303.0</FileVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -17,8 +18,8 @@
     <StartupObject>GetStoreAppHelper.Program</StartupObject>
     <TargetFramework>net481</TargetFramework>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformMoniker>Windows,Version=$(TargetPlatformVersion)</TargetPlatformMoniker>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
+    <TargetPlatformMoniker>Windows,Version=$(TargetPlatformVersion)</TargetPlatformMoniker>
     <TargetPlatformVersion>10.0.22621.0</TargetPlatformVersion>
   </PropertyGroup>
 

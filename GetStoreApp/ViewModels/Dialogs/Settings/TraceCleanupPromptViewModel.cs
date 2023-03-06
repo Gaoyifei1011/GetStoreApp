@@ -71,8 +71,8 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
             IsCleaning = false;
         });
 
-        // 关闭窗口
-        public IRelayCommand CloseWindowCommand => new RelayCommand<ContentDialog>((dialog) =>
+        // 关闭对话框
+        public IRelayCommand CloseDialogCommand => new RelayCommand<ContentDialog>((dialog) =>
         {
             TraceCleanupList.ForEach(traceCleanupItem => traceCleanupItem.PropertyChanged -= OnPropertyChanged);
             dialog.Hide();

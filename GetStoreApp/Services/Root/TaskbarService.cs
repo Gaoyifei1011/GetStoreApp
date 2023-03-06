@@ -23,7 +23,7 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         public static async Task CloseTaskbarProcessAsync()
         {
-            TaskbarProcessHelper.KillProcess(TaskbarProcessHelper.GetProcessID());
+            TaskbarProcessHelper.KillProcess();
             await Task.CompletedTask;
         }
     }

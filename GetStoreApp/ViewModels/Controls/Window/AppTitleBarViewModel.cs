@@ -54,13 +54,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
         }
 
         // 窗口还原
-        public IRelayCommand RestoreCommand => new RelayCommand(() =>
-        {
-            if (WindowHelper.IsWindowMaximized)
-            {
-                WindowHelper.RestoreAppWindow();
-            }
-        });
+        public IRelayCommand RestoreCommand => new RelayCommand(WindowHelper.RestoreAppWindow);
 
         // 窗口移动
         public IRelayCommand MoveCommand => new RelayCommand<AdaptiveMenuFlyout>((flyout) =>

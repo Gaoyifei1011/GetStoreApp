@@ -49,8 +49,8 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
             Messenger.Default.Send(true, MessageToken.RestoreDefault);
         });
 
-        // 关闭窗口
-        public IRelayCommand CloswWindowCommand => new RelayCommand<ContentDialog>((dialog) =>
+        // 关闭对话框
+        public IRelayCommand CloseDialogCommand => new RelayCommand<ContentDialog>((dialog) =>
         {
             DisplayTimer.Tick -= DisplayTimerTick;
             dialog.Hide();

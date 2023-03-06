@@ -79,6 +79,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <DebugType>portable</DebugType>
   </PropertyGroup>
+  
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -224,6 +225,8 @@
     <None Remove="UI\Controls\Window\AppTitleBarControl.xaml" />
     
     <None Remove="UI\Dialogs\About\ConsoleStartupArgsDialog.xaml" />
+    
+    <None Remove="UI\Dialogs\Common\DPIChangedNotifyDialog.xaml" />
 
     <None Remove="UI\Dialogs\ContentDialogs\About\CloudflareValidationDialog.xaml" />
     <None Remove="UI\Dialogs\ContentDialogs\About\DesktopAppsDialog.xaml" />
@@ -487,6 +490,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Dialogs\Common\DownloadNotifyDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Dialogs\Common\DPIChangedNotifyDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Dialogs\Common\SelectEmptyPromptDialog.xaml">

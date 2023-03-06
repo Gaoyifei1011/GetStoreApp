@@ -127,15 +127,7 @@ namespace GetStoreApp.ViewModels.Window
                 // 下载队列存在任务时，弹出对话窗口确认是否要关闭窗口
                 if (DownloadSchedulerService.DownloadingList.Count > 0 || DownloadSchedulerService.WaitingList.Count > 0)
                 {
-                    if (!WindowHelper.IsWindowVisible)
-                    {
-                        WindowHelper.ShowAppWindow();
-                    }
-
-                    if (!WindowHelper.IsWindowMinimized)
-                    {
-                        WindowHelper.RestoreAppWindow();
-                    }
+                    WindowHelper.ShowAppWindow();
 
                     // 关闭窗口提示对话框是否已经处于打开状态，如果是，不再弹出
                     ContentDialogResult result = await new ClosingWindowDialog().ShowAsync();
@@ -238,7 +230,7 @@ namespace GetStoreApp.ViewModels.Window
         }
 
         /// <summary>
-        /// 导航控件加载完成后初始化内容，初始化导航视图控件属性和应用的背景色
+        /// 导航控件加载完成后初始化内容，初始化导航视图控件属性、屏幕缩放比例值和应用的背景色
         /// </summary>
         public void OnNavigationViewLoaded(object sender, RoutedEventArgs args)
         {
@@ -349,10 +341,7 @@ namespace GetStoreApp.ViewModels.Window
         /// </summary>
         private void OnColorValuesChanged(UISettings sender, object args)
         {
-            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
-            {
-                SetAppBackground();
-            });
+            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, SetAppBackground);
         }
 
         /// <summary>

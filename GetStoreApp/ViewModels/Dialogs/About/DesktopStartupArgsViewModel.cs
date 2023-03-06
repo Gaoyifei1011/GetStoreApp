@@ -23,8 +23,8 @@ namespace GetStoreApp.ViewModels.Dialogs.About
             new StartupArgsModel(){ArgumentName = ResourceService.GetLocalized("Dialog/Link"),Argument="-l; --link",IsRequired=ResourceService.GetLocalized("Dialog/Yes"),ArgumentContent=string.Format("[{0}]",ResourceService.GetLocalized("Dialog/LinkContent")) }
         };
 
-        // 关闭窗口
-        public IRelayCommand CloswWindowCommand => new RelayCommand<ContentDialog>((dialog) =>
+        // 关闭对话框
+        public IRelayCommand CloseDialogCommand => new RelayCommand<ContentDialog>((dialog) =>
         {
             dialog.Hide();
         });

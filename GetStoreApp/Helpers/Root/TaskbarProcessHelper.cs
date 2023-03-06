@@ -14,14 +14,6 @@ namespace GetStoreApp.Helpers.Root
         private static int TaskbarProcessID = default;
 
         /// <summary>
-        /// 获取当前进程的PID信息
-        /// </summary>
-        public static int GetProcessID()
-        {
-            return TaskbarProcessID;
-        }
-
-        /// <summary>
         /// 启动任务栏通知区域进程
         /// </summary>
         public static async Task RunTaskbarProcessAsync(string fileName, [Optional, DefaultParameterValue("")] string arguments)
@@ -49,7 +41,7 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 应用程序关闭时，关闭任务栏通知区域进程
         /// </summary>
-        public static void KillProcess(int processID)
+        public static void KillProcess()
         {
             Process[] GetStoreAppHelperProcess = Process.GetProcessesByName("GetStoreAppHelper");
 

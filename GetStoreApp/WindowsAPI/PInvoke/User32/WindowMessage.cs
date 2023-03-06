@@ -1,7 +1,12 @@
 ﻿namespace GetStoreApp.WindowsAPI.PInvoke.User32
 {
     /// <summary>
-    /// Windows 消息（0x0000[0]-0x0400[1024]）
+    /// 窗口消息（，0x0400，0x0800）
+    /// 系统预留使用的消息 0x0000 - 0x03FF
+    /// 被私有窗口类使用的消息 0x0400 - 0x07FF
+    /// 被应用程序使用的消息 0x0800 - 0xBFFF
+    /// 被应用程序使用的字符串消息 0xC000 - 0xFFFF
+    /// 系统预留 大于0xFFFF
     /// </summary>
     public enum WindowMessage : int
     {
@@ -2375,19 +2380,343 @@
         // 0x0341 - 0x0357 消息未定义
 
         WM_HANDHELDFIRST = 0x0358,
+
+        WM_HANDHELD_reserved_359 = 0x0359,
+
+        WM_HANDHELD_reserved_35a = 0x035A,
+
+        WM_HANDHELD_reserved_35b = 0x035B,
+
+        WM_HANDHELD_reserved_35c = 0x035C,
+
+        WM_HANDHELD_reserved_35d = 0x035D,
+
+        WM_HANDHELD_reserved_35e = 0x035E,
+
         WM_HANDHELDLAST = 0x035F,
+
         WM_AFXFIRST = 0x0360,
+
+        WM_AFX_reserved_361 = 0x0361,
+
+        WM_AFX_reserved_362 = 0x0362,
+
+        WM_AFX_reserved_363 = 0x0363,
+
+        WM_AFX_reserved_364 = 0x0364,
+
+        WM_AFX_reserved_365 = 0x0365,
+
+        WM_AFX_reserved_366 = 0x0366,
+
+        WM_AFX_reserved_367 = 0x0367,
+
+        WM_AFX_reserved_368 = 0x0368,
+
+        WM_AFX_reserved_369 = 0x0369,
+
+        WM_AFX_reserved_36a = 0x036A,
+
+        WM_AFX_reserved_36b = 0x036B,
+
+        WM_AFX_reserved_36c = 0x036C,
+
+        WM_AFX_reserved_36d = 0x036D,
+
+        WM_AFX_reserved_36e = 0x036E,
+
+        WM_AFX_reserved_36f = 0x036F,
+
+        WM_AFX_reserved_370 = 0x0370,
+
+        WM_AFX_reserved_371 = 0x0371,
+
+        WM_AFX_reserved_372 = 0x0372,
+
+        WM_AFX_reserved_373 = 0x0373,
+
+        WM_AFX_reserved_374 = 0x0374,
+
+        WM_AFX_reserved_375 = 0x0375,
+
+        WM_AFX_reserved_376 = 0x0376,
+
+        WM_AFX_reserved_377 = 0x0377,
+
+        WM_AFX_reserved_378 = 0x0378,
+
+        WM_AFX_reserved_379 = 0x0379,
+
+        WM_AFX_reserved_37a = 0x037A,
+
+        WM_AFX_reserved_37b = 0x037B,
+
+        WM_AFX_reserved_37c = 0x037C,
+
+        WM_AFX_reserved_37d = 0x037D,
+
+        WM_AFX_reserved_37e = 0x037E,
+
         WM_AFXLAST = 0x037F,
+
         WM_PENWINFIRST = 0x0380,
+
+        WM_PENWIN_reserved_381 = 0x0381,
+
+        WM_PENWIN_reserved_382 = 0x0382,
+
+        WM_PENWIN_reserved_383 = 0x0383,
+
+        WM_PENWIN_reserved_384 = 0x0384,
+
+        WM_PENWIN_reserved_385 = 0x0385,
+
+        WM_PENWIN_reserved_386 = 0x0386,
+
+        WM_PENWIN_reserved_387 = 0x0387,
+
+        WM_PENWIN_reserved_388 = 0x0388,
+
+        WM_PENWIN_reserved_389 = 0x0389,
+
+        WM_PENWIN_reserved_38a = 0x038A,
+
+        WM_PENWIN_reserved_38b = 0x038B,
+
+        WM_PENWIN_reserved_38c = 0x038C,
+
+        WM_PENWIN_reserved_38d = 0x038D,
+
+        WM_PENWIN_reserved_38e = 0x038E,
+        
         WM_PENWINLAST = 0x038F,
 
-        /// <summary>
-        /// The WM_APP constant is used by applications to help define private messages, usually of the form WM_APP+X, where X is an integer value.
-        /// </summary>
-        WM_APP = 0x8000,
+        WM_COALESCE_FIRST = 0x0390,
+
+        WM_COALESCE__reserved_391 = 0x0391,
+
+        WM_COALESCE__reserved_392 = 0x0392,
+
+        WM_COALESCE__reserved_393 = 0x0393,
+
+        WM_COALESCE__reserved_394 = 0x0394,
+
+        WM_COALESCE__reserved_395 = 0x0395,
+
+        WM_COALESCE__reserved_396 = 0x0396,
+
+        WM_COALESCE__reserved_397 = 0x0397,
+
+        WM_COALESCE__reserved_398 = 0x0398,
+
+        WM_COALESCE__reserved_399 = 0x0399,
+
+        WM_COALESCE__reserved_39a = 0x039A,
+
+        WM_COALESCE__reserved_39b = 0x039B,
+
+        WM_COALESCE__reserved_39c = 0x039C,
+
+        WM_COALESCE__reserved_39d = 0x039D,
+
+        WM_COALESCE__reserved_39e = 0x039E,
+
+        WM_COALESCE_LAST = 0x039F,
+
+        WM_MM_RESERVED_FIRST = 0x03A0,
+
+        WM_MM_RESERVED__reserved_3a1 = 0x03A1,
+
+        WM_MM_RESERVED__reserved_3a2 = 0x03A2,
+
+        WM_MM_RESERVED__reserved_3a3 = 0x03A3,
+
+        WM_MM_RESERVED__reserved_3a4 = 0x03A4,
+
+        WM_MM_RESERVED__reserved_3a5 = 0x03A5,
+
+        WM_MM_RESERVED__reserved_3a6 = 0x03A6,
+
+        WM_MM_RESERVED__reserved_3a7 = 0x03A7,
+
+        WM_MM_RESERVED__reserved_3a8 = 0x03A8,
+
+        WM_MM_RESERVED__reserved_3a9 = 0x03A9,
+
+        WM_MM_RESERVED__reserved_3aA = 0x03AA,
+
+        WM_MM_RESERVED__reserved_3ab = 0x03AB,
+
+        WM_MM_RESERVED__reserved_3ac = 0x03AC,
+
+        WM_MM_RESERVED__reserved_3ad = 0x03AD,
+
+        WM_MM_RESERVED__reserved_3ae = 0x03AE,
+
+        WM_MM_RESERVED__reserved_3af = 0x03AF,
+
+        WM_MM_RESERVED__reserved_3b0 = 0x03B0,
+
+        WM_MM_RESERVED__reserved_3b1 = 0x03B1,
+
+        WM_MM_RESERVED__reserved_3b2 = 0x03B2,
+
+        WM_MM_RESERVED__reserved_3b3 = 0x03B3,
+
+        WM_MM_RESERVED__reserved_3b4 = 0x03B4,
+
+        WM_MM_RESERVED__reserved_3b5 = 0x03B5,
+
+        WM_MM_RESERVED__reserved_3b6 = 0x03B6,
+
+        WM_MM_RESERVED__reserved_3b7 = 0x03B7,
+
+        WM_MM_RESERVED__reserved_3b8 = 0x03B8,
+
+        WM_MM_RESERVED__reserved_3b9 = 0x03B9,
+
+        WM_MM_RESERVED__reserved_3ba = 0x03BA,
+
+        WM_MM_RESERVED__reserved_3bb = 0x03BB,
+
+        WM_MM_RESERVED__reserved_3bc = 0x03BC,
+
+        WM_MM_RESERVED__reserved_3bd = 0x03BD,
+
+        WM_MM_RESERVED__reserved_3be = 0x03BE,
+
+        WM_MM_RESERVED__reserved_3bf = 0x03BF,
+
+        WM_MM_RESERVED__reserved_3c0 = 0x03C0,
+
+        WM_MM_RESERVED__reserved_3c1 = 0x03C1,
+
+        WM_MM_RESERVED__reserved_3c2 = 0x03C2,
+
+        WM_MM_RESERVED__reserved_3c3 = 0x03C3,
+
+        WM_MM_RESERVED__reserved_3c4 = 0x03C4,
+
+        WM_MM_RESERVED__reserved_3c5 = 0x03C5,
+
+        WM_MM_RESERVED__reserved_3c6 = 0x03C6,
+
+        WM_MM_RESERVED__reserved_3c7 = 0x03C7,
+
+        WM_MM_RESERVED__reserved_3c8 = 0x03C8,
+
+        WM_MM_RESERVED__reserved_3c9 = 0x03C9,
+
+        WM_MM_RESERVED__reserved_3ca = 0x03CA,
+
+        WM_MM_RESERVED__reserved_3cb = 0x03CB,
+
+        WM_MM_RESERVED__reserved_3cc = 0x03CC,
+
+        WM_MM_RESERVED__reserved_3cd = 0x03CD,
+
+        WM_MM_RESERVED__reserved_3ce = 0x03CE,
+
+        WM_MM_RESERVED__reserved_3cf = 0x03CF,
+
+        WM_MM_RESERVED__reserved_3d0 = 0x03D0,
+
+        WM_MM_RESERVED__reserved_3d1 = 0x03D1,
+
+        WM_MM_RESERVED__reserved_3d2 = 0x03D2,
+
+        WM_MM_RESERVED__reserved_3d3 = 0x03D3,
+
+        WM_MM_RESERVED__reserved_3d4 = 0x03D4,
+
+        WM_MM_RESERVED__reserved_3d5 = 0x03D5,
+
+        WM_MM_RESERVED__reserved_3d6 = 0x03D6,
+
+        WM_MM_RESERVED__reserved_3d7 = 0x03D7,
+
+        WM_MM_RESERVED__reserved_3d8 = 0x03D8,
+
+        WM_MM_RESERVED__reserved_3d9 = 0x03D9,
+
+        WM_MM_RESERVED__reserved_3da = 0x03DA,
+
+        WM_MM_RESERVED__reserved_3db = 0x03DB,
+
+        WM_MM_RESERVED__reserved_3dc = 0x03DC,
+
+        WM_MM_RESERVED__reserved_3dd = 0x03DD,
+
+        WM_MM_RESERVED__reserved_3de = 0x03DE,
+
+        WM_MM_RESERVED_LAST = 0x03DF,
+
+        WM_INTERNAL_DDE_FIRST = 0x03E0,
+
+        WM_INTERNAL_DDE__reserved_3e1 = 0x03E1,
+
+        WM_INTERNAL_DDE__reserved_3e2 = 0x03E2,
+
+        WM_INTERNAL_DDE__reserved_3e3 = 0x03E3,
+
+        WM_INTERNAL_DDE__reserved_3e4 = 0x03E4,
+
+        WM_INTERNAL_DDE__reserved_3e5 = 0x03E5,
+
+        WM_INTERNAL_DDE__reserved_3e6 = 0x03E6,
+
+        WM_INTERNAL_DDE__reserved_3e7 = 0x03E7,
+
+        WM_INTERNAL_DDE__reserved_3e8 = 0x03E8,
+
+        WM_INTERNAL_DDE__reserved_3e9 = 0x03E9,
+
+        WM_INTERNAL_DDE__reserved_3ea = 0x03EA,
+
+        WM_INTERNAL_DDE__reserved_3eb = 0x03EB,
+
+        WM_INTERNAL_DDE__reserved_3ec = 0x03EC,
+
+        WM_INTERNAL_DDE__reserved_3ed = 0x03ED,
+
+        WM_INTERNAL_DDE__reserved_3ee = 0x03EE,
+
+        WM_INTERNAL_DDE_LAST = 0x03EF,
+
+        WM_CBT_RESERVED_FIRST = 0x03F0,
+
+        WM_CBT_RESERVED__reserved_3f1 = 0x03F1,
+
+        WM_CBT_RESERVED__reserved_3f2 = 0x03F2,
+
+        WM_CBT_RESERVED__reserved_3f3 = 0x03F3,
+
+        WM_CBT_RESERVED__reserved_3f4 = 0x03F4,
+
+        WM_CBT_RESERVED__reserved_3f5 = 0x03F5,
+
+        WM_CBT_RESERVED__reserved_3f6 = 0x03F6,
+
+        WM_CBT_RESERVED__reserved_3f7 = 0x03F7,
+
+        WM_CBT_RESERVED__reserved_3f8 = 0x03F8,
+
+        WM_CBT_RESERVED__reserved_3f9 = 0x03F9,
+
+        WM_CBT_RESERVED__reserved_3fa = 0x03FA,
+
+        WM_CBT_RESERVED__reserved_3fb = 0x03FB,
+
+        WM_CBT_RESERVED__reserved_3fc = 0x03FC,
+
+        WM_CBT_RESERVED__reserved_3fd = 0x03FD,
+
+        WM_CBT_RESERVED__reserved_3fe = 0x03FE,
+
+        WM_CBT_RESERVED_LAST = 0x03FF,
 
         /// <summary>
-        /// <see cref="WM_USER"> 用于定义专用窗口类使用的专用消息
+        /// 用于定义专用窗口类使用的专用消息，通常为 WM_USER+x 格式，其中 x 是整数值。
         /// </summary>
         WM_USER = 0x0400,
 
@@ -2397,13 +2726,8 @@
         WM_PROCESSCOMMUNICATION = WM_USER + 0x0001,
 
         /// <summary>
-        /// An application sends the WM_CPL_LAUNCH message to Windows Control Panel to request that a Control Panel application be started.
+        /// 用于定义专用消息，通常为 WM_APP+x 形式的专用消息，其中 x 是整数值。
         /// </summary>
-        WM_CPL_LAUNCH = WM_USER + 0x1000,
-
-        /// <summary>
-        /// The WM_CPL_LAUNCHED message is sent when a Control Panel application, started by the WM_CPL_LAUNCH message, has closed. The WM_CPL_LAUNCHED message is sent to the window identified by the wParam parameter of the WM_CPL_LAUNCH message that started the application.
-        /// </summary>
-        WM_CPL_LAUNCHED = WM_USER + 0x1001,
+        WM_APP = 0x8000,
     }
 }

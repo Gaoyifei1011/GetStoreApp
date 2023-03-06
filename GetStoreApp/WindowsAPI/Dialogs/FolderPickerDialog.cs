@@ -21,10 +21,7 @@ namespace GetStoreApp.WindowsAPI.Dialogs
             IFileOpenDialog dialog = new FileOpenDialog() as IFileOpenDialog;
             try
             {
-                if (hwnd == IntPtr.Zero)
-                {
-                    hwnd = PInvoke.User32.User32Library.GetForegroundWindow();
-                }
+                if (hwnd == IntPtr.Zero) return false;
 
                 FILEOPENDIALOGOPTIONS option = dialog.GetOptions();
 

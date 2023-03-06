@@ -7,15 +7,14 @@ using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.AppLifecycle;
-using System;
 using System.Threading.Tasks;
 
-namespace GetStoreApp.ViewModels.Dialogs.Settings
+namespace GetStoreApp.ViewModels.Dialogs.Common
 {
     /// <summary>
-    /// 应用重启对话框视图模型
+    /// 屏幕缩放通知对话框视图模型
     /// </summary>
-    public sealed class RestartAppsViewModel
+    public sealed class DPIChangedNotifyViewModel
     {
         // 重启应用
         public IRelayCommand RestartAppsCommand => new RelayCommand<ContentDialog>(async (dialog) =>
@@ -24,7 +23,7 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
             await RestartAppsAsync();
         });
 
-        // 取消重启应用
+        // 关闭对话框
         public IRelayCommand CloseDialogCommand => new RelayCommand<ContentDialog>((dialog) =>
         {
             dialog.Hide();

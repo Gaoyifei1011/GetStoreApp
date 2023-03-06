@@ -93,7 +93,7 @@ namespace GetStoreApp.Views.Window
                         MINMAXINFO minMaxInfo = Marshal.PtrToStructure<MINMAXINFO>(lParam);
                         if (MinWidth >= 0)
                         {
-                            minMaxInfo.ptMinTrackSize.X = DPICalcHelper.ConvertEpxToPixel(hWnd, MinWidth);
+                            minMaxInfo.ptMinTrackSize.X = DPICalcHelper.ConvertEpxToPixel(hWnd,MinWidth);
                         }
                         if (MinHeight >= 0)
                         {
@@ -147,10 +147,21 @@ namespace GetStoreApp.Views.Window
                         }
                         break;
                     }
+                // 屏幕缩放比例发生变化时的消息
+                case WindowMessage.WM_DPICHANGED:
+                    {
+                        WindowHelper.ShowAppWindow();
+
+                        Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, async () =>
+                        {
+                            await new DPIChangedNotifyDialog().ShowAsync();
+                        });
+                        break;
+                    }
                 // 任务栏窗口右键菜单弹出时消息
                 case WindowMessage.WM_SYSMENU:
                     {
-                        WindowHelper.BringToFront();
+                        WindowHelper.ShowAppWindow();
                         return 0;
                     }
                 //两个进程通信时使用到的消息

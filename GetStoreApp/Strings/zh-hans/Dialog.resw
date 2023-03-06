@@ -147,8 +147,8 @@
   <data name="CleanupNow" xml:space="preserve">
     <value>立即清理</value>
   </data>
-  <data name="CloseWindow" xml:space="preserve">
-    <value>关闭窗口</value>
+  <data name="CloseDialog" xml:space="preserve">
+    <value>关闭对话框</value>
   </data>
   <data name="ClosingWindowContent" xml:space="preserve">
     <value>您目前还有尚未完成下载的任务，是否要保存下载状态并强制退出应用？</value>
@@ -374,5 +374,11 @@
   </data>
   <data name="JumpListCleanError" xml:space="preserve">
     <value>任务栏右键菜单记录清理失败，请手动清理右键菜单记录</value>
+  </data>
+  <data name="DPIChangedNotifyTitle" xml:space="preserve">
+    <value>屏幕缩放</value>
+  </data>
+  <data name="DPIChangedNotifyContent" xml:space="preserve">
+    <value>应用已监测到您的屏幕缩放比例发生了变化，为了确保您的应用能够正常运行，建议您重启应用</value>
   </data>
 </root>

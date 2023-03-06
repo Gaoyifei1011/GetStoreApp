@@ -1,7 +1,6 @@
-﻿using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
-using GetStoreApp.WindowsAPI.PInvoke.User32;
+﻿using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Windowing;
-using System;
+using System.Runtime.InteropServices;
 
 namespace GetStoreApp.Helpers.Window
 {
@@ -57,16 +56,13 @@ namespace GetStoreApp.Helpers.Window
         /// </summary>
         public static void ShowAppWindow()
         {
-            // 判断窗口状态是否处于最大化状态，如果是，直接最大化窗口
+            // 判断窗口状态是否处于最大化状态，如果是，直接最大化窗口，其他状态下窗口还原显示状态
             if (IsWindowMaximized)
             {
                 MaximizeAppWindow();
             }
-
-            // 其他状态下窗口还原显示状态
             else
             {
-                // 还原窗口（如果最小化）时
                 RestoreAppWindow();
             }
 
@@ -116,14 +112,13 @@ namespace GetStoreApp.Helpers.Window
         /// <summary>
         /// 将应用窗口设置到前台
         /// </summary>
-        public static void BringToFront()
+        private static void BringToFront([Optional, DefaultParameterValue(false)] bool needToFlashWindow)
         {
-            IntPtr hForegdWnd = User32Library.GetForegroundWindow();
-            int dwCurID = Kernel32Library.GetCurrentThreadId();
-            User32Library.GetWindowThreadProcessId(hForegdWnd, out int dwForeID);
-            User32Library.AttachThreadInput(dwCurID, dwForeID, true);
-            User32Library.SetForegroundWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
-            User32Library.AttachThreadInput(dwCurID, dwForeID, false);
+            bool isWindowOnTop = WindowPresenter.IsAlwaysOnTop;
+
+            User32Library.SetWindowPos(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), -1, 0, 0, 0, 0, SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOACTIVATE);
+
+            if (!isWindowOnTop) WindowPresenter.IsAlwaysOnTop = false;
         }
 
         /// <summary>

@@ -112,6 +112,7 @@ All the content of the program has been developed
 ### Thanks (Sort by alphabetical order)
 
 > * [AndromedaMelody](https://github.com/AndromedaMelody)&emsp;
+> * [cnbluefire](https://github.com/cnbluefire)&emsp;
 > * [·ÉÏè](https://fionlen.azurewebsites.net)&emsp;
 > * [MouriNaruto](https://github.com/MouriNaruto)&emsp;
 > * [TaylorShi](https://github.com/TaylorShi)&emsp;
