@@ -45,7 +45,7 @@ namespace GetStoreAppHelper.ViewModels.Controls
                             {
                                 if (process.Id == processId)
                                 {
-                                    User32Library.SendMessage(hwnd, WindowMessage.WM_PROCESSCOMMUNICATION, Convert.ToInt32(CommunicationFlags.AboutApp), IntPtr.Zero);
+                                    User32Library.PostMessage(hwnd, WindowMessage.WM_PROCESSCOMMUNICATION, Convert.ToInt32(CommunicationFlags.AboutApp), IntPtr.Zero);
                                     result = true;
                                     break;
                                 }
@@ -82,7 +82,7 @@ namespace GetStoreAppHelper.ViewModels.Controls
                             {
                                 if (process.Id == processId)
                                 {
-                                    User32Library.SendMessage(hwnd, WindowMessage.WM_PROCESSCOMMUNICATION, Convert.ToInt32(CommunicationFlags.ShowOrHideWindow), IntPtr.Zero);
+                                    User32Library.PostMessage(hwnd, WindowMessage.WM_PROCESSCOMMUNICATION, Convert.ToInt32(CommunicationFlags.ShowOrHideWindow), IntPtr.Zero);
                                     result = true;
                                     break;
                                 }
@@ -119,7 +119,7 @@ namespace GetStoreAppHelper.ViewModels.Controls
                             {
                                 if (process.Id == processId)
                                 {
-                                    User32Library.SendMessage(hwnd, WindowMessage.WM_PROCESSCOMMUNICATION, Convert.ToInt32(CommunicationFlags.Settings), IntPtr.Zero);
+                                    User32Library.PostMessage(hwnd, WindowMessage.WM_PROCESSCOMMUNICATION, Convert.ToInt32(CommunicationFlags.Settings), IntPtr.Zero);
                                     result = true;
                                     break;
                                 }
@@ -156,7 +156,7 @@ namespace GetStoreAppHelper.ViewModels.Controls
                             {
                                 if (process.Id == processId)
                                 {
-                                    User32Library.SendMessage(hwnd, WindowMessage.WM_PROCESSCOMMUNICATION, Convert.ToInt32(CommunicationFlags.Exit), IntPtr.Zero);
+                                    User32Library.PostMessage(hwnd, WindowMessage.WM_PROCESSCOMMUNICATION, Convert.ToInt32(CommunicationFlags.Exit), IntPtr.Zero);
                                     result = true;
                                     break;
                                 }
@@ -167,6 +167,10 @@ namespace GetStoreAppHelper.ViewModels.Controls
                     }
                 }
                 while (hwnd != IntPtr.Zero);
+            }
+            else
+            {
+                Program.ApplicationRoot.CloseApp();
             }
         });
 

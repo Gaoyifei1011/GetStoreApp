@@ -11,8 +11,6 @@ namespace GetStoreApp.Helpers.Root
     /// </summary>
     public static class TaskbarProcessHelper
     {
-        private static int TaskbarProcessID = default;
-
         /// <summary>
         /// 启动任务栏通知区域进程
         /// </summary>
@@ -34,7 +32,7 @@ namespace GetStoreApp.Helpers.Root
             };
 
             // 启动任务栏进程，并获取进程ID号
-            TaskbarProcessID = Process.Start(TaskbarProcessInfo).Id;
+            Process.Start(TaskbarProcessInfo);
             await Task.CompletedTask;
         }
 
@@ -63,7 +61,7 @@ namespace GetStoreApp.Helpers.Root
                             {
                                 if (process.Id == processId)
                                 {
-                                    User32Library.SendMessage(hwnd, WindowMessage.WM_PROCESSCOMMUNICATION, Convert.ToInt32(CommunicationFlags.Exit), IntPtr.Zero);
+                                    User32Library.PostMessage(hwnd, WindowMessage.WM_PROCESSCOMMUNICATION, Convert.ToInt32(CommunicationFlags.Exit), IntPtr.Zero);
                                     result = true;
                                     break;
                                 }

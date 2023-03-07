@@ -22,8 +22,8 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="wParam">其他的消息特定信息。 此参数的内容取决于 <param name="Msg"> 参数的值。</param>
         /// <param name="lParam">其他的消息特定信息。 此参数的内容取决于 <param name="Msg"> 参数的值。</param>
         /// <returns>返回值指定消息处理的结果，具体取决于发送的消息。</returns>
-        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "CallWindowProc", SetLastError = false)]
-        public static extern IntPtr CallWindowProc(IntPtr lpPrevWndFunc, IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam);
+        [LibraryImport(User32, EntryPoint = "CallWindowProcA", SetLastError = false)]
+        public static partial IntPtr CallWindowProc(IntPtr lpPrevWndFunc, IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
         /// 检索一个窗口的句柄，该窗口的类名和窗口名称与指定的字符串匹配。 该函数搜索子窗口，从指定子窗口后面的子窗口开始。 此函数不执行区分大小写的搜索。
@@ -78,7 +78,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         public static partial MessageBoxResult MessageBox(IntPtr hWnd, string lptext, string lpcaption, MessageBoxOptions options);
 
         /// <summary>
-        /// 将指定的消息发送到窗口或窗口。 <see cref="SendMessage"> 函数调用指定窗口的窗口过程，在窗口过程处理消息之前不会返回。
+        /// 将指定的消息发送到窗口或窗口。 <see cref="PostMessage"> 函数调用指定窗口的窗口过程，在窗口过程处理消息之前不会返回。
         /// </summary>
         /// <param name="hWnd">
         /// 窗口过程的句柄将接收消息。 如果此参数 HWND_BROADCAST ( (HWND) 0xffff) ，则会将消息发送到系统中的所有顶级窗口，
@@ -89,11 +89,11 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="wParam">其他的消息特定信息。</param>
         /// <param name="lParam">其他的消息特定信息。</param>
         /// <returns>返回值指定消息处理的结果;这取决于发送的消息。</returns>
-        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SendMessage", SetLastError = false)]
-        public static extern IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, int wParam, ref CopyDataStruct lParam);
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "PostMessage", SetLastError = false)]
+        public static extern IntPtr PostMessage(IntPtr hWnd, WindowMessage wMsg, int wParam, ref CopyDataStruct lParam);
 
-        [LibraryImport(User32, EntryPoint = "SendMessageA", SetLastError = false)]
-        public static partial IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, int wParam, IntPtr lParam);
+        [LibraryImport(User32, EntryPoint = "PostMessageA", SetLastError = false)]
+        public static partial IntPtr PostMessage(IntPtr hWnd, WindowMessage wMsg, int wParam, IntPtr lParam);
 
         /// <summary>
         /// 更改指定窗口的属性。 该函数还将指定偏移量处的32位（long类型）值设置到额外的窗口内存中。

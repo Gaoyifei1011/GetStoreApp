@@ -40,7 +40,8 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// 如果两次关闭句柄，或者对 FindFirstFile 函数返回的句柄调用 CloseHandle，而不是调用 FindClose 函数，则可能会出现这种情况。
         /// </returns>
         [LibraryImport(Kernel32, EntryPoint = "CloseHandle", SetLastError = false)]
-        public static partial int CloseHandle(int hObject);
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static partial bool CloseHandle(int hObject);
 
         /// <summary>枚举操作系统上可用的地理位置标识符 (类型 GEOID) 。</summary>
         /// <param name="geoClass">

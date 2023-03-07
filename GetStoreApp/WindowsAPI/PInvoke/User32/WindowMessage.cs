@@ -1926,7 +1926,7 @@
         WM_IME_NOTIFY = 0x0282,
 
         /// <summary>
-        /// 应用程序发送以指示 IME 窗口执行请求的命令。 应用程序使用此消息来控制已创建的 IME 窗口。 若要发送此消息，应用程序使用以下参数调用 SendMessage 函数。
+        /// 应用程序发送以指示 IME 窗口执行请求的命令。 应用程序使用此消息来控制已创建的 IME 窗口。 若要发送此消息，应用程序使用以下参数调用 PostMessage 函数。
         /// </summary>
         WM_IME_CONTROL = 0x0283,
 
@@ -2092,7 +2092,7 @@
         WM_TABLET__reserved_2d0 = 0x02D0,
 
         WM_TABLET__reserved_2d1 = 0x02D1,
-        
+
         WM_TABLET__reserved_2d2 = 0x02D2,
 
         WM_TABLET__reserved_2d3 = 0x02D3,
@@ -2488,7 +2488,7 @@
         WM_PENWIN_reserved_38d = 0x038D,
 
         WM_PENWIN_reserved_38e = 0x038E,
-        
+
         WM_PENWINLAST = 0x038F,
 
         WM_COALESCE_FIRST = 0x0390,

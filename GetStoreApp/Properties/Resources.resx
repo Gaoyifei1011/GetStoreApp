@@ -121,6 +121,9 @@
   <data name="Lengths" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\resources\lengths.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="LICENSE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Resources\LICENSE;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="ResourcesInitializeFailed" xml:space="preserve">
     <value>Have you forgot to initialize app's resources?</value>
   </data>

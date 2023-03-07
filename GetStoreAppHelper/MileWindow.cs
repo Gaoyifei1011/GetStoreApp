@@ -117,7 +117,7 @@ namespace GetStoreAppHelper
                 {
                     if (msg.message == WindowMessage.WM_SYSKEYDOWN && msg.wParam == (IntPtr)VirtualKey.VK_F4)
                     {
-                        User32Library.SendMessage(User32Library.GetAncestor(Handle, GetAncestorFlags.GA_ROOT), msg.message, msg.wParam, msg.lParam);
+                        User32Library.PostMessage(User32Library.GetAncestor(Handle, GetAncestorFlags.GA_ROOT), msg.message, msg.wParam, msg.lParam);
                         continue;
                     }
 

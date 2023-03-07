@@ -15,13 +15,14 @@
     <EnableMsixTooling>false</EnableMsixTooling>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <FileAlignment>512</FileAlignment>
-    <FileVersion>1.3.303.0</FileVersion>
+    <FileVersion>1.3.307.0</FileVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
     <IncludeSymbols>False</IncludeSymbols>
     <ImplicitUsings>disable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
+    <NeutralLanguage>en-US</NeutralLanguage>
     <Nullable>disable</Nullable>
     <Optimize>True</Optimize>
     <OutputType>WinExe</OutputType>
@@ -42,7 +43,7 @@
     <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <TrimMode>partial</TrimMode>
-    <Version>1.3.303.0</Version>
+    <Version>1.3.307.0</Version>
     <UseWindowsForms>False</UseWindowsForms>
     <UseWinUI>true</UseWinUI>
     <UseWPF>False</UseWPF>
@@ -79,6 +80,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <DebugType>portable</DebugType>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Remove="Assets\Resources\Lengths.bin" />
+    <Content Remove="Assets\Resources\LICENSE" />
+  </ItemGroup>
   
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
@@ -136,9 +141,9 @@
     <Content Update="Assets\Images\DesktopApps.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="Assets\LICENSE">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>    
+    <None Update="Assets\Resources\LICENSE">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>    
     <Content Include="Fonts\Segoe Fluent Icons.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

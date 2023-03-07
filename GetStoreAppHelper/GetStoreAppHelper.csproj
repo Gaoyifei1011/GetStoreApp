@@ -2,6 +2,7 @@
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ApplicationManifest>App.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\GetStoreAppHelper.ico</ApplicationIcon>
     <AssemblyName>GetStoreAppHelper</AssemblyName>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <Copyright>高怡飞</Copyright>
@@ -9,7 +10,7 @@
     <Deterministic>true</Deterministic>
     <EnableTypeInfoReflection>true</EnableTypeInfoReflection>
     <FileAlignment>512</FileAlignment>
-    <FileVersion>1.3.303.0</FileVersion>
+    <FileVersion>1.3.307.0</FileVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <LangVersion>latest</LangVersion>
     <OutputType>WinExe</OutputType>
@@ -53,6 +54,9 @@
 
     <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.22621.755" />
     <PackageReference Include="Mile.Xaml" Version="1.2.495" />
+    <None Update="Assets\GetStoreAppHelper.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
 
     <Page Update="Styles\HelperFontIcon.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>

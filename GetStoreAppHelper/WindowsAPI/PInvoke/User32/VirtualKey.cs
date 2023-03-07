@@ -31,7 +31,7 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
         VK_CANCEL = 0x03,
 
         /// <summary>
-        /// 中间鼠标按钮 (三键鼠标) 
+        /// 中间鼠标按钮 (三键鼠标)
         /// </summary>
         /// <remarks>L和R键不相邻</remarks>
         VK_MBUTTON = 0x04,
@@ -105,7 +105,7 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
         VK_KANA = 0x15,
 
         /// <summary>
-        /// IME 朝鲜文库埃尔模式 (保持兼容性;使用 <see crf="VK_HANGUL">) 
+        /// IME 朝鲜文库埃尔模式 (保持兼容性;使用 <see crf="VK_HANGUL">)
         /// </summary>
         [Obsolete("Use VK_HANGUL instead")]
         VK_HANGEUL = 0x15,
@@ -139,7 +139,7 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
         /// IME Kanji 模式
         /// </summary>
         VK_KANJI = 0x19,
-        
+
         /// <summary>
         /// IME 关闭
         /// </summary>
@@ -433,17 +433,17 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
         VK_Z = 0x5A,
 
         /// <summary>
-        /// 左Windows键 (自然键盘) 
+        /// 左Windows键 (自然键盘)
         /// </summary>
         VK_LWIN = 0x5B,
 
         /// <summary>
-        /// 右Windows键 (自然键盘) 
+        /// 右Windows键 (自然键盘)
         /// </summary>
         VK_RWIN = 0x5C,
 
         /// <summary>
-        /// 应用程序键 (自然键盘) 
+        /// 应用程序键 (自然键盘)
         /// </summary>
         VK_APPS = 0x5D,
 
@@ -850,13 +850,13 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
         VK_OEM_PERIOD = 0xBE,
 
         /// <summary>
-        /// 用于其他字符;它可能因键盘而异。 
+        /// 用于其他字符;它可能因键盘而异。
         /// </summary>
         /// <remarks>对于美国标准键盘，“/？” key</remarks>
         VK_OEM_2 = 0xBF,
 
         /// <summary>
-        /// 用于其他字符;它可能因键盘而异。 
+        /// 用于其他字符;它可能因键盘而异。
         /// </summary>
         /// <remarks>对于美国标准键盘，“~”键</remarks>
         VK_OEM_3 = 0xC0,

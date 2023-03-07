@@ -93,7 +93,7 @@ namespace GetStoreApp.Views.Window
                         MINMAXINFO minMaxInfo = Marshal.PtrToStructure<MINMAXINFO>(lParam);
                         if (MinWidth >= 0)
                         {
-                            minMaxInfo.ptMinTrackSize.X = DPICalcHelper.ConvertEpxToPixel(hWnd,MinWidth);
+                            minMaxInfo.ptMinTrackSize.X = DPICalcHelper.ConvertEpxToPixel(hWnd, MinWidth);
                         }
                         if (MinHeight >= 0)
                         {

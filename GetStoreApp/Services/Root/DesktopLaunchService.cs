@@ -173,7 +173,7 @@ namespace GetStoreApp.Services.Root
                                     if (process.Id == processId)
                                     {
                                         // 向主进程发送消息
-                                        User32Library.SendMessage(hwnd, WindowMessage.WM_COPYDATA, 0, ref copyDataStruct);
+                                        User32Library.PostMessage(hwnd, WindowMessage.WM_COPYDATA, 0, ref copyDataStruct);
                                         result = true;
                                         break;
                                     }

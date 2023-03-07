@@ -1,5 +1,4 @@
 ﻿using GetStoreAppHelper.Extensions.DataType.Struct;
-using Windows.ApplicationModel;
 using Windows.System.Profile;
 
 namespace GetStoreAppHelper.Helpers.Root

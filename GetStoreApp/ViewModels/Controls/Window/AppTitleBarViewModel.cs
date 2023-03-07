@@ -62,7 +62,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
             if (flyout is not null)
             {
                 flyout.Hide();
-                User32Library.SendMessage(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), WindowMessage.WM_SYSCOMMAND, (int)SystemCommand.SC_MOVE, 0);
+                User32Library.PostMessage(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), WindowMessage.WM_SYSCOMMAND, (int)SystemCommand.SC_MOVE, 0);
             }
         });
 
@@ -72,7 +72,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
             if (flyout is not null)
             {
                 flyout.Hide();
-                User32Library.SendMessage(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), WindowMessage.WM_SYSCOMMAND, (int)SystemCommand.SC_SIZE, 0);
+                User32Library.PostMessage(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), WindowMessage.WM_SYSCOMMAND, (int)SystemCommand.SC_SIZE, 0);
             }
         });
 

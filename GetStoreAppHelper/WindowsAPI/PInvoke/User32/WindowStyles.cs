@@ -91,7 +91,7 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
         WS_OVERLAPPED = 0x0,
 
         /// <summary>
-        /// 窗口是重叠的窗口。 
+        /// 窗口是重叠的窗口。
         /// </summary>
         WS_OVERLAPPEDWINDOW = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_SIZEFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX,
 

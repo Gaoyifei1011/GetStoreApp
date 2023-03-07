@@ -8,11 +8,17 @@ namespace GetStoreApp.Helpers.Controls.Home
     /// <summary>
     /// 网页解析辅助类
     /// </summary>
-    public static class HtmlParseHelper
+    public static partial class HtmlParseHelper
     {
-        private static Regex CIDRegex = new Regex(@"<i>(.*?)<\/i>", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        [GeneratedRegex(@"<i>(.*?)<\/i>", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
+        private static partial Regex CIDRegularExpression();
 
-        private static Regex ResultDataListRegex = new Regex(@"<tr\sstyle=\\?""background-color:rgba\(\d{3},\s\d{3},\s\d{3},\s0.8\)\\?"">\s{0,}<td>\s{0,}<a\shref=\\?""(.*?)\\?""\srel=\\?""noreferrer\\?"">(.*?)<\/a>\s{0,}<\/td>\s{0,}<td\salign=\\?""center\\?"">(.*?GMT)<\/td>\s{0,}<td\salign=\\?""center\\?"">(.*?)<\/td>\s{0,}<td\salign=\\?""center\\?"">(.*?)<\/td>\s{0,}<\/tr>", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        private static Regex CIDRegex = CIDRegularExpression();
+
+        [GeneratedRegex(@"<tr\sstyle=\\?""background-color:rgba\(\d{3},\s\d{3},\s\d{3},\s0.8\)\\?"">\s{0,}<td>\s{0,}<a\shref=\\?""(.*?)\\?""\srel=\\?""noreferrer\\?"">(.*?)<\/a>\s{0,}<\/td>\s{0,}<td\salign=\\?""center\\?"">(.*?GMT)<\/td>\s{0,}<td\salign=\\?""center\\?"">(.*?)<\/td>\s{0,}<td\salign=\\?""center\\?"">(.*?)<\/td>\s{0,}<\/tr>", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
+        private static partial Regex ResultDataListRegularExpression();
+
+        private static Regex ResultDataListRegex = ResultDataListRegularExpression();
 
         private static string ParseContent = string.Empty;
 
@@ -75,5 +81,7 @@ namespace GetStoreApp.Helpers.Controls.Home
             }
             return ResultDataList;
         }
+
+
     }
 }

@@ -111,8 +111,19 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
         [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "DispatchMessage", SetLastError = true)]
         public static extern IntPtr DispatchMessage(ref MSG lpmsg);
 
+        /// <summary>
+        /// 检索顶级窗口的句柄，该窗口的类名称和窗口名称与指定的字符串匹配。 此函数不搜索子窗口。 此函数不执行区分大小写的搜索。
+        /// 若要搜索子窗口，请从指定的子窗口开始，请使用 <see cref="FindWindowEx"> 函数。
+        /// </summary>
+        /// <param name="lpClassName">
+        /// 类名或上一次对 RegisterClass 或 RegisterClassEx 函数的调用创建的类名或类原子。 原子必须位于 <param name="lpClassName"> 的低序单词中;高阶单词必须为零。
+        /// 如果 <param name="lpClassName"> 指向字符串，则指定窗口类名。 类名可以是向 RegisterClass 或 RegisterClassEx 注册的任何名称，也可以是预定义控件类名称中的任何名称。
+        /// 如果 <param name="lpClassName"> 为 NULL，它将查找其标题与 <param name="lpWindowName"> 参数匹配的任何窗口。
+        /// </param>
+        /// <param name="lpWindowName">窗口名称 (窗口的标题) 。 如果此参数为 NULL，则所有窗口名称都匹配。</param>
+        /// <returns></returns>
         [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "FindWindowW", SetLastError = true)]
-        public static extern IntPtr FindWindow(string className, string windowTitle);
+        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
         /// <summary>
         /// 检索一个窗口的句柄，该窗口的类名和窗口名称与指定的字符串匹配。 该函数搜索子窗口，从指定子窗口后面的子窗口开始。 此函数不执行区分大小写的搜索。
@@ -128,8 +139,8 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
         /// 请注意，如果 hwndParent 和 hwndChildAfter 均为 NULL，则该函数将搜索所有顶级窗口和仅消息窗口。
         /// </param>
         /// <param name="className">
-        /// 类名或上一次对 RegisterClass 或 RegisterClassEx 函数的调用创建的类名或类原子。 原子必须置于 lpszClass 的低序单词中;高阶单词必须为零。
-        /// 如果 lpszClass 是字符串，则指定窗口类名。 类名可以是注册到 RegisterClass 或 RegisterClassEx 的任何名称，也可以是预定义的控件类名称，也可以是 MAKEINTATOM(0x8000)。 在此后一种情况下，0x8000是菜单类的原子。 有关详细信息，请参阅本主题的“备注”部分。
+        /// 类名或上一次对 <see cref="RegisterClass"> 或 RegisterClassEx 函数的调用创建的类名或类原子。 原子必须置于 lpszClass 的低序单词中;高阶单词必须为零。
+        /// 如果 lpszClass 是字符串，则指定窗口类名。 类名可以是注册到 <see cref="RegisterClass"> 或 RegisterClassEx 的任何名称，也可以是预定义的控件类名称，也可以是 MAKEINTATOM(0x8000)。 在此后一种情况下，0x8000是菜单类的原子。 有关详细信息，请参阅本主题的“备注”部分。
         /// </param>
         /// <param name="windowTitle">窗口名称 (窗口的标题) 。 如果此参数为 NULL，则所有窗口名称都匹配。</param>
         /// <returns>如果函数成功，则返回值是具有指定类和窗口名称的窗口的句柄。如果函数失败，则返回值为 NULL。</returns>
@@ -235,7 +246,7 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
         public static extern bool SetForegroundWindow(IntPtr hWnd);
 
         /// <summary>
-        /// 将指定的消息发送到窗口或窗口。 <see cref="SendMessage"> 函数调用指定窗口的窗口过程，在窗口过程处理消息之前不会返回。
+        /// 将指定的消息发送到窗口或窗口。 <see cref="PostMessage"> 函数调用指定窗口的窗口过程，在窗口过程处理消息之前不会返回。
         /// </summary>
         /// <param name="hWnd">
         /// 窗口过程的句柄将接收消息。 如果此参数 HWND_BROADCAST ( (HWND) 0xffff) ，则会将消息发送到系统中的所有顶级窗口，
@@ -246,11 +257,11 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
         /// <param name="wParam">其他的消息特定信息。</param>
         /// <param name="lParam">其他的消息特定信息。</param>
         /// <returns>返回值指定消息处理的结果;这取决于发送的消息。</returns>
-        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SendMessage", SetLastError = false)]
-        public static extern IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, IntPtr wParam, IntPtr lParam);
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "PostMessage", SetLastError = false)]
+        public static extern IntPtr PostMessage(IntPtr hWnd, WindowMessage wMsg, IntPtr wParam, IntPtr lParam);
 
-        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SendMessage", SetLastError = false)]
-        public static extern IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, int wParam, IntPtr lParam);
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "PostMessage", SetLastError = false)]
+        public static extern IntPtr PostMessage(IntPtr hWnd, WindowMessage wMsg, int wParam, IntPtr lParam);
 
         /// <summary>
         /// 更改指定窗口的属性。 该函数还将指定偏移量处的32位（long类型）值设置到额外的窗口内存中。
@@ -283,7 +294,7 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
         /// <param name="cy">窗口的新高度（以像素为单位）。</param>
         /// <param name="uFlags">窗口大小调整和定位标志。</param>
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 </returns>
-        [DllImport(User32, CharSet = CharSet.Ansi,EntryPoint = "SetWindowPos", SetLastError = true)]
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SetWindowPos", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool SetWindowPos(
             IntPtr hWnd,

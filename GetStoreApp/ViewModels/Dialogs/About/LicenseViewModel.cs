@@ -1,8 +1,6 @@
-﻿using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Properties;
 using GetStoreApp.ViewModels.Base;
-using System;
-using Windows.Storage;
-using Windows.Storage.Streams;
+using System.Text;
 
 namespace GetStoreApp.ViewModels.Dialogs.About
 {
@@ -27,14 +25,9 @@ namespace GetStoreApp.ViewModels.Dialogs.About
         /// <summary>
         /// 对话框加载完成后让内容对话框的烟雾层背景（SmokeLayerBackground）覆盖到标题栏中，并初始化许可证信息
         /// </summary>
-        public async void OnLoading(object sender, object args)
+        public void OnLoading(object sender, object args)
         {
-            StorageFile LicenseFile = await StorageFile.GetFileFromPathAsync(string.Format(@"{0}\{1}", InfoHelper.GetAppInstalledLocation(), @"Assets\LICENSE"));
-
-            IBuffer buffer = await FileIO.ReadBufferAsync(LicenseFile);
-            DataReader reader = DataReader.FromBuffer(buffer);
-            reader.UnicodeEncoding = UnicodeEncoding.Utf8;
-            LicenseText = reader.ReadString(buffer.Length);
+            LicenseText = Encoding.UTF8.GetString(Resources.LICENSE);
         }
     }
 }
