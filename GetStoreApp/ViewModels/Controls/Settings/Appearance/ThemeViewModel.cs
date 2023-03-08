@@ -16,6 +16,8 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
     {
         public List<ThemeModel> ThemeList { get; } = ThemeService.ThemeList;
 
+        public List<NotifyIconMenuThemeModel> NotifyIconMenuThemeList { get; } = ThemeService.NotifyIconMenuThemeList;
+
         private ThemeModel _theme = ThemeService.AppTheme;
 
         public ThemeModel Theme
@@ -25,6 +27,19 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
             set
             {
                 _theme = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private NotifyIconMenuThemeModel _notifyIconMenuTheme = ThemeService.NotifyIconMenuTheme;
+
+        public NotifyIconMenuThemeModel NotifyIconMenuTheme
+        {
+            get { return _notifyIconMenuTheme; }
+
+            set
+            {
+                _notifyIconMenuTheme = value;
                 OnPropertyChanged();
             }
         }
@@ -41,6 +56,13 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
             Theme = ThemeList[Convert.ToInt32(themeIndex)];
             await ThemeService.SetThemeAsync(Theme);
             await ThemeService.SetAppThemeAsync();
+        });
+
+        // 通知区域右键菜单主题设置
+        public IRelayCommand NotifyIconMenuThemeSelectCommand => new RelayCommand<string>(async (notifyIconMenuThemeIndex) =>
+        {
+            NotifyIconMenuTheme = NotifyIconMenuThemeList[Convert.ToInt32(notifyIconMenuThemeIndex)];
+            await ThemeService.SetNotifyIconMenuThemeAsync(NotifyIconMenuTheme);
         });
     }
 }

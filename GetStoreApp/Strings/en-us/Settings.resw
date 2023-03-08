@@ -318,6 +318,18 @@
   <data name="NotificationOnContent" xml:space="preserve">
     <value>Opening</value>
   </data>
+  <data name="NotifyIconMenuAppTheme" xml:space="preserve">
+    <value>Follow app theme</value>
+  </data>
+  <data name="NotifyIconMenuSystemTheme" xml:space="preserve">
+    <value>Follow system topic</value>
+  </data>
+  <data name="NotifyIconMenuTheme" xml:space="preserve">
+    <value>Notification area right-click menu theme</value>
+  </data>
+  <data name="NotifyIconMenuThemeDescription" xml:space="preserve">
+    <value>Sets the theme mode of the context menu in the notification area</value>
+  </data>
   <data name="OpenConfigFile" xml:space="preserve">
     <value>Open the Aria2 configuration file</value>
   </data>
@@ -368,6 +380,12 @@
   </data>
   <data name="ThemeLight" xml:space="preserve">
     <value>Light</value>
+  </data>
+  <data name="ThemeMode" xml:space="preserve">
+    <value>Theme mode</value>
+  </data>
+  <data name="ThemeModeDescription" xml:space="preserve">
+    <value>Set the theme mode for the app as a whole</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Settings</value>

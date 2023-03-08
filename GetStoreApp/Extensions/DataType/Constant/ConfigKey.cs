@@ -33,6 +33,8 @@
 
         public const string NotificationKey = "AppNotification";
 
+        public const string NotifyIconMenuThemeKey = "NotifyIconMenuTheme";
+
         public const string RegionKey = "AppRegion";
 
         public const string StartsWithEFilterKey = "StartsWithEFilterValue";

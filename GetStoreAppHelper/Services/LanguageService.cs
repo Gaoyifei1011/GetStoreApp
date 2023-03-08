@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GetStoreAppHelper.Extensions.DataType.Constant;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace GetStoreAppHelper.Services
     /// </summary>
     public static class LanguageService
     {
-        private static string SettingsKey { get; } = "AppLanguage";
+        private static string SettingsKey { get; } = ConfigKey.LanguageKey;
 
         public static string DefaultAppLanguage { get; set; }
 

@@ -176,10 +176,34 @@ namespace GetStoreAppHelper.ViewModels.Controls
 
         public async void OnOpened(object sender, object args)
         {
-            await ThemeService.LoadThemeAsync();
-            if (ThemeService.AppTheme == Convert.ToString(ElementTheme.Default))
+            await ThemeService.LoadNotifyIconMenuThemeAsync();
+
+            if (ThemeService.NotifyIconMenuTheme == ThemeService.NotifyIconMenuThemeList[0])
             {
-                if (Application.Current.RequestedTheme is ApplicationTheme.Light)
+                await ThemeService.LoadThemeAsync();
+                if (ThemeService.AppTheme == Convert.ToString(ElementTheme.Default))
+                {
+                    if (Application.Current.RequestedTheme is ApplicationTheme.Light)
+                    {
+                        (sender as MenuFlyout).MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveFlyoutLightPresenter"] as Style;
+                    }
+                    else
+                    {
+                        (sender as MenuFlyout).MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveFlyoutDarkPresenter"] as Style;
+                    }
+                }
+                else if (ThemeService.AppTheme == Convert.ToString(ElementTheme.Light))
+                {
+                    (sender as MenuFlyout).MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveFlyoutLightPresenter"] as Style;
+                }
+                else if (ThemeService.AppTheme == Convert.ToString(ElementTheme.Dark))
+                {
+                    (sender as MenuFlyout).MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveFlyoutDarkPresenter"] as Style;
+                }
+            }
+            else
+            {
+                if (RegistryHelper.GetRegistrySystemTheme() == ElementTheme.Light)
                 {
                     (sender as MenuFlyout).MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveFlyoutLightPresenter"] as Style;
                 }
@@ -187,14 +211,6 @@ namespace GetStoreAppHelper.ViewModels.Controls
                 {
                     (sender as MenuFlyout).MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveFlyoutDarkPresenter"] as Style;
                 }
-            }
-            else if (ThemeService.AppTheme == Convert.ToString(ElementTheme.Light))
-            {
-                (sender as MenuFlyout).MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveFlyoutLightPresenter"] as Style;
-            }
-            else if (ThemeService.AppTheme == Convert.ToString(ElementTheme.Dark))
-            {
-                (sender as MenuFlyout).MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveFlyoutDarkPresenter"] as Style;
             }
         }
     }

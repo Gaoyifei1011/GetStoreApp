@@ -122,7 +122,7 @@ namespace GetStoreApp
 
                 await AlwaysShowBackdropService.InitializeAlwaysShowBackdropAsync();
                 await BackdropService.InitializeBackdropAsync();
-                await ThemeService.InitializeThemeAsync();
+                await ThemeService.InitializeAsync();
                 await TopMostService.InitializeTopMostValueAsync();
 
                 await HistoryRecordService.InitializeAsync();

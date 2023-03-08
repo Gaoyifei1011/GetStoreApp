@@ -4,6 +4,7 @@ using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Controls.Settings.Appearance
@@ -13,49 +14,108 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
     /// </summary>
     public static class ThemeService
     {
-        private static string SettingsKey { get; } = ConfigKey.ThemeKey;
+        private static string ThemeSettingsKey { get; } = ConfigKey.ThemeKey;
+
+        private static string NotifyIconMenuThemeSettingsKey { get; } = ConfigKey.NotifyIconMenuThemeKey;
 
         private static ThemeModel DefaultAppTheme { get; set; }
 
+        private static NotifyIconMenuThemeModel DefaultNotifyIconMenuTheme { get; set; }
+
         public static ThemeModel AppTheme { get; set; }
 
+        public static NotifyIconMenuThemeModel NotifyIconMenuTheme { get; set; }
+
         public static List<ThemeModel> ThemeList { get; set; }
+
+        public static List<NotifyIconMenuThemeModel> NotifyIconMenuThemeList { get; set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的主题值
         /// </summary>
-        public static async Task InitializeThemeAsync()
+        public static async Task InitializeAsync()
         {
             ThemeList = ResourceService.ThemeList;
 
+            NotifyIconMenuThemeList = ResourceService.NotifyIconMenuThemeList;
+
             DefaultAppTheme = ThemeList.Find(item => item.InternalName == Convert.ToString(ElementTheme.Default));
 
-            AppTheme = await GetThemeAsync();
+            DefaultNotifyIconMenuTheme = NotifyIconMenuThemeList.Find(item => item.InternalName.Equals("NotifyIconMenuSystemTheme", StringComparison.OrdinalIgnoreCase));
+
+            (bool, ThemeModel) ThemeResult = await GetThemeAsync();
+
+            AppTheme = ThemeResult.Item2;
+
+            if (ThemeResult.Item1)
+            {
+                await SetThemeAsync(AppTheme, true);
+            }
+
+            (bool, NotifyIconMenuThemeModel) NotifyIconMenuThemeResult = await GetNotifyIconMenuThemeAsync();
+
+            NotifyIconMenuTheme = NotifyIconMenuThemeResult.Item2;
+
+            if (NotifyIconMenuThemeResult.Item1)
+            {
+                await SetNotifyIconMenuThemeAsync(NotifyIconMenuTheme, true);
+            }
         }
 
         /// <summary>
         /// 获取设置存储的主题值，如果设置没有存储，使用默认值
         /// </summary>
-        private static async Task<ThemeModel> GetThemeAsync()
+        private static async Task<(bool, ThemeModel)> GetThemeAsync()
         {
-            string theme = await ConfigService.ReadSettingAsync<string>(SettingsKey);
+            string theme = await ConfigService.ReadSettingAsync<string>(ThemeSettingsKey);
 
             if (string.IsNullOrEmpty(theme))
             {
-                return ThemeList.Find(item => item.InternalName.Equals(DefaultAppTheme.InternalName, StringComparison.OrdinalIgnoreCase));
+                return (true, ThemeList.Find(item => item.InternalName.Equals(DefaultAppTheme.InternalName, StringComparison.OrdinalIgnoreCase)));
             }
 
-            return ThemeList.Find(item => item.InternalName.Equals(theme, StringComparison.OrdinalIgnoreCase));
+            return (false, ThemeList.Find(item => item.InternalName.Equals(theme, StringComparison.OrdinalIgnoreCase)));
+        }
+
+        /// <summary>
+        /// 获取设置存储的通知区域右键菜单主题值，如果设置没有存储，使用默认值
+        /// </summary>
+        private static async Task<(bool, NotifyIconMenuThemeModel)> GetNotifyIconMenuThemeAsync()
+        {
+            string notifyIconMenuTheme = await ConfigService.ReadSettingAsync<string>(NotifyIconMenuThemeSettingsKey);
+
+            if (string.IsNullOrEmpty(notifyIconMenuTheme))
+            {
+                return (true, NotifyIconMenuThemeList.Find(item => item.InternalName.Equals(DefaultNotifyIconMenuTheme.InternalName, StringComparison.OrdinalIgnoreCase)));
+            }
+
+            return (false, NotifyIconMenuThemeList.Find(item => item.InternalName.Equals(notifyIconMenuTheme, StringComparison.OrdinalIgnoreCase)));
         }
 
         /// <summary>
         /// 应用主题发生修改时修改设置存储的主题值
         /// </summary>
-        public static async Task SetThemeAsync(ThemeModel theme)
+        public static async Task SetThemeAsync(ThemeModel theme, [Optional, DefaultParameterValue(false)] bool isFirstSet)
         {
-            AppTheme = theme;
+            if (isFirstSet)
+            {
+                AppTheme = theme;
+            }
 
-            await ConfigService.SaveSettingAsync(SettingsKey, theme.InternalName);
+            await ConfigService.SaveSettingAsync(ThemeSettingsKey, theme.InternalName);
+        }
+
+        /// <summary>
+        /// 通知区域右键菜单主题发生修改时修改设置存储的主题值
+        /// </summary>
+        public static async Task SetNotifyIconMenuThemeAsync(NotifyIconMenuThemeModel notifyIconMenuTheme, [Optional, DefaultParameterValue(false)] bool isFirstSet)
+        {
+            if (isFirstSet)
+            {
+                NotifyIconMenuTheme = notifyIconMenuTheme;
+            }
+
+            await ConfigService.SaveSettingAsync(NotifyIconMenuThemeSettingsKey, notifyIconMenuTheme.InternalName);
         }
 
         /// <summary>

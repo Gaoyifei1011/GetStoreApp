@@ -51,6 +51,8 @@ namespace GetStoreApp.Services.Root
 
         public static List<ThemeModel> ThemeList { get; } = new List<ThemeModel>();
 
+        public static List<NotifyIconMenuThemeModel> NotifyIconMenuThemeList { get; } = new List<NotifyIconMenuThemeModel>();
+
         public static List<TraceCleanupModel> TraceCleanupList { get; } = new List<TraceCleanupModel>();
 
         /// <summary>
@@ -88,6 +90,7 @@ namespace GetStoreApp.Services.Root
             InitializeHistoryJumpListNumList();
             InitializeInstallModeList();
             InitializeThemeList();
+            InitializeNotifyIconMenuThemeList();
             InitializeTraceCleanupList();
 
             await Task.CompletedTask;
@@ -345,6 +348,23 @@ namespace GetStoreApp.Services.Root
             {
                 DisplayName = GetLocalized("Settings/ThemeDark"),
                 InternalName = Convert.ToString(ElementTheme.Dark)
+            });
+        }
+
+        /// <summary>
+        /// 初始化通知区域右键菜单主题信息列表
+        /// </summary>
+        private static void InitializeNotifyIconMenuThemeList()
+        {
+            NotifyIconMenuThemeList.Add(new NotifyIconMenuThemeModel
+            {
+                DisplayName = GetLocalized("Settings/NotifyIconMenuAppTheme"),
+                InternalName = "NotifyIconMenuAppTheme"
+            });
+            NotifyIconMenuThemeList.Add(new NotifyIconMenuThemeModel
+            {
+                DisplayName = GetLocalized("Settings/NotifyIconMenuSystemTheme"),
+                InternalName = "NotifyIconMenuSystemTheme"
             });
         }
 

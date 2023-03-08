@@ -62,18 +62,15 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// </summary>
         public static async Task InitializeLanguageAsync()
         {
-            bool IsSettingsValueEmpty = true;
-
             InitializeLanguageList();
 
             DefaultAppLanguage = LanguageList.Find(item => item.InternalName.Equals("en-US", StringComparison.OrdinalIgnoreCase));
 
             (bool, LanguageModel) LanguageValueResult = await GetLanguageAsync();
 
-            IsSettingsValueEmpty = LanguageValueResult.Item1;
             AppLanguage = LanguageValueResult.Item2;
 
-            if (IsSettingsValueEmpty)
+            if (LanguageValueResult.Item1)
             {
                 await SetLanguageAsync(AppLanguage, true);
                 await SetAppLanguageAsync(AppLanguage);
