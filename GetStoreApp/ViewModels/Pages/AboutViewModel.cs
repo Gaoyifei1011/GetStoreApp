@@ -24,7 +24,7 @@ namespace GetStoreApp.ViewModels.Pages
         {
             bool IsCreatedSuccessfully = false;
 
-            try
+            try 
             {
                 IShellLink AppLink = (IShellLink)new CShellLink();
                 IReadOnlyList<AppListEntry> AppEntries = await Package.Current.GetAppListEntriesAsync();
@@ -35,7 +35,7 @@ namespace GetStoreApp.ViewModels.Pages
                 PersistFile.Save(string.Format(@"{0}\{1}.lnk", Environment.GetFolderPath(Environment.SpecialFolder.Desktop), ResourceService.GetLocalized("Resources/AppDisplayName")), false);
                 IsCreatedSuccessfully = true;
             }
-            finally
+            catch(Exception)
             {
                 new QuickOperationNotification(QuickOperationType.DesktopShortcut, IsCreatedSuccessfully).Show();
             }
@@ -65,7 +65,7 @@ namespace GetStoreApp.ViewModels.Pages
                 }
                 IsPinnedSuccessfully = true;
             }
-            finally
+            catch (Exception)
             {
                 new QuickOperationNotification(QuickOperationType.StartScreen, IsPinnedSuccessfully).Show();
             }

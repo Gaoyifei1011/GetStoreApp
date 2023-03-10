@@ -60,9 +60,10 @@ namespace GetStoreApp.WindowsAPI.Dialogs
 
                 return true;
             }
-            finally
+            catch (Exception)
             {
                 Marshal.FinalReleaseComObject(dialog);
+                return false;
             }
         }
     }

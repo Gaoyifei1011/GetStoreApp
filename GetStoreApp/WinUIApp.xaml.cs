@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Extensions.SystemTray;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
-using GetStoreApp.Services.Root;
 using GetStoreApp.ViewModels.Window;
 using GetStoreApp.Views.Window;
 using Microsoft.UI;
@@ -42,8 +41,6 @@ namespace GetStoreApp
             Program.IsAppLaunched = true;
             await ViewModel.ActivateAsync();
 
-            // 启动任务栏通知区域进程
-            await TaskbarService.StartTaskbarProcessAsync();
             await InitializeJumpListAsync();
             await ViewModel.StartupAsync();
             await ViewModel.HandleAppNotificationAsync();

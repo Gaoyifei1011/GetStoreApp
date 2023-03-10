@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("获取商店应用 辅助程序")]
-[assembly: AssemblyCopyright("高怡飞")]
+[assembly: AssemblyCopyright("Copyright ©2022-2023 高怡飞, All Rights Reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -28,5 +28,5 @@ using System.Runtime.InteropServices;
 //      生成号
 //      修订号
 //
-[assembly: AssemblyVersion("1.3.307.0")]
-[assembly: AssemblyFileVersion("1.3.307.0")]
+[assembly: AssemblyVersion("1.3.310.0")]
+[assembly: AssemblyFileVersion("1.3.310.0")]

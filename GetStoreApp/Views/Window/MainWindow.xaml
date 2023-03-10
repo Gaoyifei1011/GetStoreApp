@@ -55,7 +55,7 @@
                     Tag="Home"
                     ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/Home')}">
                     <navigation:ExtendedNavigationViewItem.Icon>
-                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/Home.png" />
+                        <ImageIcon Loaded="{x:Bind HomeIconLoaded}" />
                     </navigation:ExtendedNavigationViewItem.Icon>
                 </navigation:ExtendedNavigationViewItem>
 
@@ -66,7 +66,7 @@
                     Tag="History"
                     ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/History')}">
                     <navigation:ExtendedNavigationViewItem.Icon>
-                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/History.png" />
+                        <ImageIcon Loaded="{x:Bind HistoryIconLoaded}" />
                     </navigation:ExtendedNavigationViewItem.Icon>
                 </navigation:ExtendedNavigationViewItem>
 
@@ -77,7 +77,7 @@
                     Tag="Download"
                     ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/Download')}">
                     <navigation:ExtendedNavigationViewItem.Icon>
-                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/Download.png" />
+                        <ImageIcon Loaded="{x:Bind DownloadIconLoaded}" />
                     </navigation:ExtendedNavigationViewItem.Icon>
                 </navigation:ExtendedNavigationViewItem>
 
@@ -88,7 +88,7 @@
                     Tag="Web"
                     ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/Web')}">
                     <navigation:ExtendedNavigationViewItem.Icon>
-                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/Web.png" />
+                        <ImageIcon Loaded="{x:Bind WebIconLoaded}" />
                     </navigation:ExtendedNavigationViewItem.Icon>
                 </navigation:ExtendedNavigationViewItem>
             </NavigationView.MenuItems>
@@ -101,7 +101,7 @@
                     Tag="About"
                     ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/About')}">
                     <navigation:ExtendedNavigationViewItem.Icon>
-                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/About.png" />
+                        <ImageIcon Loaded="{x:Bind AboutIconLoaded}" />
                     </navigation:ExtendedNavigationViewItem.Icon>
                 </navigation:ExtendedNavigationViewItem>
 
@@ -112,7 +112,7 @@
                     Tag="Settings"
                     ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}">
                     <navigation:ExtendedNavigationViewItem.Icon>
-                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/Settings.png" />
+                        <ImageIcon Loaded="{x:Bind SettingsIconLoaded}" />
                     </navigation:ExtendedNavigationViewItem.Icon>
                 </navigation:ExtendedNavigationViewItem>
             </NavigationView.FooterMenuItems>

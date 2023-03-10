@@ -1,8 +1,8 @@
-﻿using GetStoreAppHelper.WindowsAPI.PInvoke.User32;
+﻿using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;
 using System.Runtime.InteropServices;
 
-namespace GetStoreAppHelper.WindowsAPI.PInvoke.Kernel32
+namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
 {
     /// <summary>
     /// 指定创建时进程的主窗口的窗口工作站、桌面、标准句柄和外观。

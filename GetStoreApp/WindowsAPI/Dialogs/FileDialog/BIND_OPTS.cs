@@ -6,7 +6,7 @@ namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
     /// <summary>
     /// 包含名字对象绑定操作期间使用的参数。可以使用 BIND_OPTS2 或 BIND_OPTS3 结构代替 BIND_OPTS 结构。
     /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct BIND_OPTS
     {
         /// <summary>

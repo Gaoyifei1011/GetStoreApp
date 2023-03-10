@@ -1,4 +1,5 @@
 ﻿using GetStoreAppHelper.WindowsAPI.PInvoke.Shell32;
+using GetStoreAppHelper.WindowsAPI.PInvoke.User32;
 using System;
 
 namespace GetStoreAppHelper.Extensions.SystemTray
@@ -11,9 +12,11 @@ namespace GetStoreAppHelper.Extensions.SystemTray
         private readonly object lockObject = new object();
         public static readonly object SyncRoot = new object();
 
+        private bool IsDisposed;
+
         private NOTIFYICONDATA iconData;
 
-        private bool IsDisposed;
+        private IntPtr[] hIcons;
 
         /// <summary>
         /// 从任务栏图标接收消息
@@ -28,12 +31,12 @@ namespace GetStoreAppHelper.Extensions.SystemTray
 
         public bool IsTaskbarIconCreated { get; private set; }
 
-        public WindowsTrayIcon(string iconFile, string title)
+        public WindowsTrayIcon(string exeFile, string title)
         {
             messageSink = new WindowMessageSink();
 
             // 初始化图标数据结构
-            iconData = NOTIFYICONDATA.CreateDefault(messageSink.MessageWindowHandle, iconFile, title);
+            iconData = NOTIFYICONDATA.CreateDefault(messageSink.MessageWindowHandle, LoadIcon(exeFile), title);
 
             // 创建任务栏图标
             CreateTaskbarIcon();
@@ -41,6 +44,34 @@ namespace GetStoreAppHelper.Extensions.SystemTray
             // 注册事件侦听器
             messageSink.MouseEventReceived += OnMouseEventReceived;
             messageSink.TaskbarCreated += OnTaskbarCreated;
+        }
+
+        /// <summary>
+        /// 从exe应用程序中加载图标文件
+        /// </summary>
+        private IntPtr LoadIcon(string exeFile)
+        {
+            // 选中文件中的图标总数
+            int iconTotalCount = User32Library.PrivateExtractIcons(exeFile, 0, 0, 0, null, null, 0, 0);
+
+            // 用于接收获取到的图标指针
+            hIcons = new IntPtr[iconTotalCount];
+
+            // 对应的图标id
+            int[] ids = new int[iconTotalCount];
+
+            // 成功获取到的图标个数
+            int successCount = User32Library.PrivateExtractIcons(exeFile, 0, 16, 16, hIcons, ids, iconTotalCount, 0);
+
+            // GetStoreApp.exe 应用程序只有一个图标，返回该应用程序的图标句柄
+            if (successCount >= 1 && hIcons[0] != IntPtr.Zero)
+            {
+                return hIcons[0];
+            }
+            else
+            {
+                return IntPtr.Zero;
+            }
         }
 
         /// <summary>
@@ -160,6 +191,15 @@ namespace GetStoreAppHelper.Extensions.SystemTray
                 // 始终销毁非托管句柄（即使从 GC 调用）
                 messageSink.Dispose();
 
+                // 始终销毁非托管句柄（即使从 GC 调用）
+                if (hIcons is not null)
+                {
+                    foreach (IntPtr hIcon in hIcons)
+                    {
+                        User32Library.DestroyIcon(hIcon);
+                    }
+                }
+
                 // 移除任务栏图标
                 RemoveTaskbarIcon();
 
@@ -167,7 +207,6 @@ namespace GetStoreAppHelper.Extensions.SystemTray
                 messageSink.MouseEventReceived -= OnMouseEventReceived;
                 messageSink.TaskbarCreated -= OnTaskbarCreated;
             }
-
             IsDisposed = true;
         }
     }

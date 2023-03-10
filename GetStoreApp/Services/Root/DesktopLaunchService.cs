@@ -1,9 +1,10 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.AppNotifications;
 using System;
-using System.Diagnostics;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
@@ -152,9 +153,9 @@ namespace GetStoreApp.Services.Root
                 copyDataStruct.lpData = string.Format("{0} {1} {2}", LaunchArgs["TypeName"], LaunchArgs["ChannelName"], LaunchArgs["Link"] is null ? "PlaceHolderText" : LaunchArgs["Link"]);
                 copyDataStruct.cbData = Encoding.Default.GetBytes(copyDataStruct.lpData).Length + 1;
 
-                Process[] GetStoreAppProcess = Process.GetProcessesByName("GetStoreApp");
+                List<uint> GetStoreAppProcessPIDList = ProcessHelper.GetProcessPIDByName("GetStoreApp.exe");
 
-                if (GetStoreAppProcess.Length > 0)
+                if (GetStoreAppProcessPIDList.Count > 0)
                 {
                     IntPtr hwnd = IntPtr.Zero;
                     do
@@ -168,12 +169,12 @@ namespace GetStoreApp.Services.Root
                             if (processId is not 0)
                             {
                                 bool result = false;
-                                foreach (Process process in GetStoreAppProcess)
+                                foreach (uint ProcessID in GetStoreAppProcessPIDList)
                                 {
-                                    if (process.Id == processId)
+                                    if (ProcessID == processId)
                                     {
                                         // 向主进程发送消息
-                                        User32Library.PostMessage(hwnd, WindowMessage.WM_COPYDATA, 0, ref copyDataStruct);
+                                        User32Library.SendMessage(hwnd, WindowMessage.WM_COPYDATA, 0, ref copyDataStruct);
                                         result = true;
                                         break;
                                     }

@@ -1,4 +1,5 @@
 ﻿using GetStoreAppHelper.Extensions.DataType.Struct;
+using Windows.ApplicationModel;
 using Windows.System.Profile;
 
 namespace GetStoreAppHelper.Helpers.Root
@@ -21,6 +22,14 @@ namespace GetStoreAppHelper.Helpers.Root
             SystemVersion.MinorVersion = (VersionInfo & 0x0000FFFF00000000L) >> 32;
             SystemVersion.BuildNumber = (VersionInfo & 0x00000000FFFF0000L) >> 16;
             SystemVersion.BuildRevision = VersionInfo & 0x000000000000FFFFL;
+        }
+
+        /// <summary>
+        /// 获取应用安装根目录
+        /// </summary>
+        public static string GetAppInstalledLocation()
+        {
+            return Package.Current.InstalledLocation.Path;
         }
 
         /// <summary>

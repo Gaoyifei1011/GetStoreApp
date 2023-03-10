@@ -5,7 +5,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.CoreMessaging
     /// <summary>
     /// 为新的 DispatcherQueueController 指定线程和单元类型。
     /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct DispatcherQueueOptions
     {
         /// <summary>

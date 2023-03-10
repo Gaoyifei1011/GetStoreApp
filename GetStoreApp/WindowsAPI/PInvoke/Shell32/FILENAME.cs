@@ -5,7 +5,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
     /// <summary>
     /// 包含一个 64 位值，该值表示自 1601 年 1 月 1 日以来的 100 纳秒间隔数 (UTC) 。
     /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct FILETIME
     {
         /// <summary>

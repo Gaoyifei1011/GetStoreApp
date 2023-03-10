@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using Windows.Graphics;
 
 namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
@@ -6,6 +7,7 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
     /// <summary>
     /// 包含来自线程的消息队列的消息信息。
     /// </summary>
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct MSG
     {
         /// <summary>

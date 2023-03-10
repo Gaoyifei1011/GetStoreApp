@@ -244,7 +244,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                                 StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
                                 await ExistedFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
                             }
-                            finally
+                            catch (Exception)
                             {
                                 await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
                                 IsDownloadSuccessfully = true;
@@ -332,7 +332,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                                     StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
                                     await ExistedFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
                                 }
-                                finally
+                                catch (Exception)
                                 {
                                     bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
                                     new DownloadCreateNotification(AddResult).Show();
@@ -356,7 +356,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                                     StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
                                     await ExistedFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
                                 }
-                                finally
+                                catch (Exception)
                                 {
                                     bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
                                     new DownloadCreateNotification(AddResult).Show();

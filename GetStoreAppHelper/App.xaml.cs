@@ -1,12 +1,12 @@
 ﻿using GetStoreAppHelper.Extensions.DataType.Enums;
 using GetStoreAppHelper.Extensions.SystemTray;
 using GetStoreAppHelper.Helpers;
+using GetStoreAppHelper.Helpers.Root;
 using GetStoreAppHelper.Services;
 using GetStoreAppHelper.UI.Controls;
 using GetStoreAppHelper.WindowsAPI.PInvoke.User32;
 using Mile.Xaml;
 using System;
-using Windows.ApplicationModel;
 using Windows.Graphics;
 
 namespace GetStoreAppHelper
@@ -40,7 +40,6 @@ namespace GetStoreAppHelper
             MainWindow.Size.Y = 0;
 
             MainWindow.InitializeWindow();
-            MainWindow.InitializeWindowProc();
             MainWindow.Activate();
         }
 
@@ -50,7 +49,7 @@ namespace GetStoreAppHelper
         private void InitializeTrayIcon()
         {
             TrayIcon = new WindowsTrayIcon(
-                string.Format(@"{0}\{1}", Package.Current.InstalledLocation.Path, @"Assets\GetStoreApp.ico"),
+                string.Format(@"{0}\{1}", InfoHelper.GetAppInstalledLocation(), "GetStoreApp.exe"),
                 ResourceService.GetLocalized("HelperResources/AppName")
             );
 

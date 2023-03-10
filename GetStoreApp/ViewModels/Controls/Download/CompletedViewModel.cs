@@ -193,7 +193,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                         StorageFile CompletedDownloadFile = await StorageFile.GetFileFromPathAsync(completedItem.FilePath);
                         await CompletedDownloadFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
                     }
-                    finally { }
+                    catch (Exception) { }
 
                     // 删除记录
                     try
@@ -208,7 +208,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                             }
                         }
                     }
-                    finally { }
+                    catch (Exception) { }
                 }
             }
         });
@@ -402,7 +402,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     StorageFile CompletedDownloadFile = await StorageFile.GetFileFromPathAsync(completedItem.FilePath);
                     await CompletedDownloadFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
                 }
-                finally { }
+                catch (Exception) { }
 
                 // 删除记录
                 try
@@ -417,7 +417,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                         }
                     }
                 }
-                finally { }
+                catch (Exception) { }
             }
         });
 

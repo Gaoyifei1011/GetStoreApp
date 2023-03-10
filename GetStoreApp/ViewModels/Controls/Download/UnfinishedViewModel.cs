@@ -177,7 +177,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     StorageFile TempFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
                     await TempFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
                 }
-                finally { }
+                catch (Exception) { }
 
                 // 删除Aria2后缀下载信息记录文件
                 try
@@ -185,7 +185,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     StorageFile TempAria2File = await StorageFile.GetFileFromPathAsync(string.Format("{0}.{1}", backgroundItem.FilePath, "aria2"));
                     await TempAria2File.DeleteAsync(StorageDeleteOption.PermanentDelete);
                 }
-                finally { }
+                catch (Exception) { }
 
                 // 删除记录
                 try
@@ -200,7 +200,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                         }
                     }
                 }
-                finally { }
+                catch (Exception) { }
             }
         });
 
@@ -257,7 +257,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 StorageFile TempFile = await StorageFile.GetFileFromPathAsync(unfinishedItem.FilePath);
                 await TempFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
             }
-            finally { }
+            catch(Exception) { }
 
             // 删除Aria2后缀下载信息记录文件
             try
@@ -265,7 +265,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 StorageFile TempAria2File = await StorageFile.GetFileFromPathAsync(string.Format("{0}.{1}", unfinishedItem.FilePath, "aria2"));
                 await TempAria2File.DeleteAsync(StorageDeleteOption.PermanentDelete);
             }
-            finally { }
+            catch (Exception) { }
 
             // 删除记录
             try
@@ -280,7 +280,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     }
                 }
             }
-            finally { }
+            catch (Exception) { }
         });
 
         public UnfinishedViewModel()

@@ -179,8 +179,7 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.Shell32
         /// <summary>
         /// 释放对象。
         /// </summary>
-        /// <remarks>此方法在设计上不是虚拟的。派生类应重写 <see cref="Dispose(bool)"/>.
-        /// </remarks>
+        /// <remarks>此方法在设计上不是虚拟的。派生类应重写 <see cref="Dispose(bool)"/>.</remarks>
         public void Dispose()
         {
             Dispose(true);
@@ -210,11 +209,14 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.Shell32
             {
                 return;
             };
-            IsDisposed = disposing;
 
-            // 始终销毁非托管句柄（即使从 GC 调用）
-            User32Library.DestroyWindow(MessageWindowHandle);
-            messageHandler = null;
+            if (disposing)
+            {
+                // 始终销毁非托管句柄（即使从 GC 调用）
+                User32Library.DestroyWindow(MessageWindowHandle);
+                messageHandler = null;
+            }
+            IsDisposed = true;
         }
     }
 }

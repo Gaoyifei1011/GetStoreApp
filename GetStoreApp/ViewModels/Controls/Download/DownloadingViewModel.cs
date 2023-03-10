@@ -198,7 +198,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                         StorageFile TempFile = await StorageFile.GetFileFromPathAsync(downloadingItem.FilePath);
                         await TempFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
                     }
-                    finally { }
+                    catch (Exception) { }
 
                     // 删除Aria2后缀下载信息记录文件
                     try
@@ -206,7 +206,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                         StorageFile TempAria2File = await StorageFile.GetFileFromPathAsync(string.Format("{0}.{1}", downloadingItem.FilePath, "aria2"));
                         await TempAria2File.DeleteAsync(StorageDeleteOption.PermanentDelete);
                     }
-                    finally { }
+                    catch (Exception) { }
                 }
             });
 
@@ -274,7 +274,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     StorageFile TempFile = await StorageFile.GetFileFromPathAsync(downloadingItem.FilePath);
                     await TempFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
                 }
-                finally { }
+                catch (Exception) { }
 
                 // 删除Aria2后缀下载信息记录文件
                 try
@@ -282,7 +282,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     StorageFile TempAria2File = await StorageFile.GetFileFromPathAsync(string.Format("{0}.{1}", downloadingItem.FilePath, "aria2"));
                     await TempAria2File.DeleteAsync(StorageDeleteOption.PermanentDelete);
                 }
-                finally { }
+                catch (Exception) { }
             }
 
             // 信息更新完毕时，允许其他操作开始执行

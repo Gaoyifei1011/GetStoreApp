@@ -295,7 +295,7 @@ namespace GetStoreApp.ViewModels.Pages
                                             StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
                                             await ExistedFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
                                         }
-                                        finally
+                                        catch (Exception)
                                         {
                                             bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
                                             new DownloadCreateNotification(AddResult).Show();
@@ -319,7 +319,7 @@ namespace GetStoreApp.ViewModels.Pages
                                             StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
                                             await ExistedFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
                                         }
-                                        finally
+                                        catch (Exception)
                                         {
                                             bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
                                             new DownloadCreateNotification(AddResult).Show();

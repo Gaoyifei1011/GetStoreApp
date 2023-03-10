@@ -1,13 +1,17 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Helpers.Window;
+using GetStoreApp.Properties;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Runtime.InteropServices;
+using Windows.Storage.Streams;
 using Windows.System;
 using WinRT.Interop;
 
@@ -33,6 +37,90 @@ namespace GetStoreApp.Views.Window
         public void AppTitlebarLoaded(object sender, RoutedEventArgs args)
         {
             AppTitlebar.SetTitlebarState(WindowHelper.IsWindowMaximized);
+        }
+
+        /// <summary>
+        /// 加载“主页”图标
+        /// </summary>
+        public async void HomeIconLoaded(object sender, RoutedEventArgs args)
+        {
+            InMemoryRandomAccessStream memoryStream = new InMemoryRandomAccessStream();
+            DataWriter datawriter = new DataWriter(memoryStream.GetOutputStreamAt(0));
+            datawriter.WriteBytes(Resources.Home);
+            await datawriter.StoreAsync();
+            BitmapImage image = new BitmapImage();
+            await image.SetSourceAsync(memoryStream);
+            (sender as ImageIcon).Source = image;
+        }
+
+        /// <summary>
+        /// 加载“历史记录”图标
+        /// </summary>
+        public async void HistoryIconLoaded(object sender, RoutedEventArgs args)
+        {
+            InMemoryRandomAccessStream memoryStream = new InMemoryRandomAccessStream();
+            DataWriter datawriter = new DataWriter(memoryStream.GetOutputStreamAt(0));
+            datawriter.WriteBytes(Resources.History);
+            await datawriter.StoreAsync();
+            BitmapImage image = new BitmapImage();
+            await image.SetSourceAsync(memoryStream);
+            (sender as ImageIcon).Source = image;
+        }
+
+        /// <summary>
+        /// 加载“下载管理”图标
+        /// </summary>
+        public async void DownloadIconLoaded(object sender, RoutedEventArgs args)
+        {
+            InMemoryRandomAccessStream memoryStream = new InMemoryRandomAccessStream();
+            DataWriter datawriter = new DataWriter(memoryStream.GetOutputStreamAt(0));
+            datawriter.WriteBytes(Resources.Download);
+            await datawriter.StoreAsync();
+            BitmapImage image = new BitmapImage();
+            await image.SetSourceAsync(memoryStream);
+            (sender as ImageIcon).Source = image;
+        }
+
+        /// <summary>
+        /// 加载“访问网页版”图标
+        /// </summary>
+        public async void WebIconLoaded(object sender, RoutedEventArgs args)
+        {
+            InMemoryRandomAccessStream memoryStream = new InMemoryRandomAccessStream();
+            DataWriter datawriter = new DataWriter(memoryStream.GetOutputStreamAt(0));
+            datawriter.WriteBytes(Resources.Web);
+            await datawriter.StoreAsync();
+            BitmapImage image = new BitmapImage();
+            await image.SetSourceAsync(memoryStream);
+            (sender as ImageIcon).Source = image;
+        }
+
+        /// <summary>
+        /// 加载“关于”图标
+        /// </summary>
+        public async void AboutIconLoaded(object sender, RoutedEventArgs args)
+        {
+            InMemoryRandomAccessStream memoryStream = new InMemoryRandomAccessStream();
+            DataWriter datawriter = new DataWriter(memoryStream.GetOutputStreamAt(0));
+            datawriter.WriteBytes(Resources.About);
+            await datawriter.StoreAsync();
+            BitmapImage image = new BitmapImage();
+            await image.SetSourceAsync(memoryStream);
+            (sender as ImageIcon).Source = image;
+        }
+
+        /// <summary>
+        /// 加载“设置”图标
+        /// </summary>
+        public async void SettingsIconLoaded(object sender, RoutedEventArgs args)
+        {
+            InMemoryRandomAccessStream memoryStream = new InMemoryRandomAccessStream();
+            DataWriter datawriter = new DataWriter(memoryStream.GetOutputStreamAt(0));
+            datawriter.WriteBytes(Resources.Settings);
+            await datawriter.StoreAsync();
+            BitmapImage image = new BitmapImage();
+            await image.SetSourceAsync(memoryStream);
+            (sender as ImageIcon).Source = image;
         }
 
         /// <summary>

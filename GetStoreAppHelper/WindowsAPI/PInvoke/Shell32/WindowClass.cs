@@ -6,7 +6,7 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.Shell32
     /// <summary>
     /// <see cref="WindowClass">结构 - 表示单个窗口。用于接收窗口消息。
     /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct WindowClass
     {
         /// <summary>

@@ -21,7 +21,7 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
         /// <param name="wParam">其他的消息特定信息。 此参数的内容取决于 <param name="Msg"> 参数的值。</param>
         /// <param name="lParam">其他的消息特定信息。 此参数的内容取决于 <param name="Msg"> 参数的值。</param>
         /// <returns>返回值指定消息处理的结果，具体取决于发送的消息。</returns>
-        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "CallWindowProc", SetLastError = false)]
+        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "CallWindowProc", SetLastError = false)]
         public static extern IntPtr CallWindowProc(IntPtr lpPrevWndFunc, IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
@@ -89,8 +89,16 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
         /// <param name="wParam">其他消息信息。 此参数的内容取决于 <param name="Msg"> 参数的值。</param>
         /// <param name="lParam">其他消息信息。 此参数的内容取决于 <param name="Msg"> 参数的值。</param>
         /// <returns>返回值是消息处理的结果，取决于消息。</returns>
-        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "DefWindowProc", SetLastError = false)]
+        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "DefWindowProc", SetLastError = false)]
         public static extern IntPtr DefWindowProc(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
+        /// <summary>
+        /// 销毁图标并释放图标占用的任何内存。
+        /// </summary>
+        /// <param name="hIcon">要销毁的图标的句柄。 图标不得使用。</param>
+        /// <returns>如果该函数成功，则返回值为非零值。</returns>
+        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "DestroyIcon", SetLastError = true)]
+        public static extern int DestroyIcon(IntPtr hIcon);
 
         /// <summary>
         /// 销毁指定的窗口。 该函数将 <see cref="WindowMessage.WM_DESTROY"> 和 <see cref="WindowMessage.WM_NCDESTROY"> 消息发送到窗口以停用它，并从中删除键盘焦点。 该函数还会销毁窗口的菜单、刷新线程消息队列、销毁计时器、删除剪贴板所有权，如果窗口位于查看器链顶部) ，则中断剪贴板查看器链。
@@ -209,17 +217,32 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
         public static extern int GetWindowThreadProcessId(IntPtr hwnd, out int ID);
 
         /// <summary>
-        /// 加载图标、游标、动画游标或位图。
+        /// 创建从指定文件中提取的图标的句柄数组。
         /// </summary>
-        /// <param name="hinst">DLL 或可执行文件 (.exe 模块的句柄) ，其中包含要加载的图像。</param>
-        /// <param name="lpszName">要加载的图像。</param>
-        /// <param name="type">要加载的图像的类型。</param>
-        /// <param name="cx">图标或光标的宽度（以像素为单位）。</param>
-        /// <param name="cy">图标或光标的高度（以像素为单位）。</param>
-        /// <param name="fuLoad">此参数可使用以下一个或多个值。</param>
-        /// <returns>如果函数成功，则返回值是新加载的图像的句柄。如果函数失败，则返回值为 NULL。</returns>
-        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "LoadImage", SetLastError = true)]
-        public static extern IntPtr LoadImage(IntPtr hinst, string lpszName, ImageType type, int cx, int cy, LoadImageFlags fuLoad);
+        /// <param name="lpszFile">要从中提取图标的文件的路径和名称。</param>
+        /// <param name="nIconIndex">要提取的第一个图标的从零开始的索引。 例如，如果此值为零，函数将提取指定文件中的第一个图标。</param>
+        /// <param name="cxIcon">所需的水平图标大小。 </param>
+        /// <param name="cyIcon">所需的垂直图标大小。</param>
+        /// <param name="phicon">指向返回的图标句柄数组的指针。</param>
+        /// <param name="piconid">
+        /// 指向最适合当前显示设备的图标返回的资源标识符的指针。 如果标识符不可用于此格式，则返回的标识符0xFFFFFFFF。 如果无法获取标识符，则返回的标识符为 0。
+        /// </param>
+        /// <param name="nIcons">要从文件中提取的图标数。 此参数仅在从.exe和.dll文件时有效。</param>
+        /// <param name="flags">指定控制此函数的标志。 这些标志是 LoadImage 函数使用的 LR_* 标志。</param>
+        /// <returns>
+        /// 如果 <param name="phicon"> 参数为 NULL 且此函数成功，则返回值为文件中的图标数。 如果函数失败，则返回值为 0。 如果 <param name="phicon"> 参数不是 NULL 且函数成功，则返回值是提取的图标数。 否则，如果未找到文件，则返回值0xFFFFFFFF。
+        /// </returns>
+        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "PrivateExtractIconsW", SetLastError = false)]
+        public static extern int PrivateExtractIcons(
+            string lpszFile,
+            int nIconIndex,
+            int cxIcon,
+            int cyIcon,
+            IntPtr[] phicon,
+            int[] piconid,
+            int nIcons,
+            int flags
+        );
 
         /// <summary>
         /// 注册一个窗口类，以便在对 CreateWindow 或 <see cref="CreateWindowEx"> 函数的调用中随后使用。
@@ -270,7 +293,7 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
         /// <param name="nIndex">要设置的值的从零开始的偏移量。 有效值的范围为零到额外窗口内存的字节数，减去整数的大小。</param>
         /// <param name="newProc">新事件处理函数（回调函数）</param>
         /// <returns>如果函数成功，则返回值是指定 32 位整数的上一个值。如果函数失败，则返回值为零。 </returns>
-        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SetWindowLongA", SetLastError = false)]
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SetWindowLongW", SetLastError = false)]
         public static extern IntPtr SetWindowLong(IntPtr hWnd, WindowLongIndexFlags nIndex, WindowProc newProc);
 
         /// <summary>
@@ -280,7 +303,7 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
         /// <param name="nIndex">要设置的值的从零开始的偏移量。 有效值的范围为零到额外窗口内存的字节数，减去整数的大小。</param>
         /// <param name="newProc">新事件处理函数（回调函数）</param>
         /// <returns>如果函数成功，则返回值是指定偏移量的上一个值。如果函数失败，则返回值为零。 </returns>
-        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SetWindowLongPtrA", SetLastError = false)]
+        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SetWindowLongPtrW", SetLastError = false)]
         public static extern IntPtr SetWindowLongPtr(IntPtr hWnd, WindowLongIndexFlags nIndex, WindowProc newProc);
 
         /// <summary>

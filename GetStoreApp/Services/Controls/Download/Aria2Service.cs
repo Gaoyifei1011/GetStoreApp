@@ -27,6 +27,8 @@ namespace GetStoreApp.Services.Controls.Download
 
         private static string RPCServerLink { get; } = "http://127.0.0.1:6300/jsonrpc";
 
+        private static bool IsAria2ProcessRunning = false;
+
         /// <summary>
         /// 初始化Aria2配置文件
         /// </summary>
@@ -63,7 +65,8 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         public static async Task StartAria2Async()
         {
-            await Aria2ProcessHelper.RunAria2Async(Aria2FilePath, Aria2Arguments);
+            IsAria2ProcessRunning = Aria2ProcessHelper.RunAria2Process(Aria2FilePath, Aria2Arguments);
+            await Task.CompletedTask;
         }
 
         /// <summary>
@@ -71,7 +74,10 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         public static async Task CloseAria2Async()
         {
-            Aria2ProcessHelper.KillProcessAndChildren(Aria2ProcessHelper.GetProcessID());
+            if (IsAria2ProcessRunning)
+            {
+                Aria2ProcessHelper.KillAria2Process();
+            }
             await Task.CompletedTask;
         }
 
@@ -109,7 +115,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 添加下载任务
         /// </summary>
-        public static async Task<(bool, string)> NewAddUriAsync(string downloadLink, string folderPath)
+        public static async Task<(bool, string)> AddUriAsync(string downloadLink, string folderPath)
         {
             try
             {
@@ -195,7 +201,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 暂停下载选定的任务
         /// </summary>
-        public static async Task<(bool, string)> NewPauseAsync(string GID)
+        public static async Task<(bool, string)> PauseAsync(string GID)
         {
             try
             {
@@ -274,7 +280,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 取消下载选定的任务
         /// </summary>
-        public static async Task<(bool, string)> NewDeleteAsync(string GID)
+        public static async Task<(bool, string)> DeleteAsync(string GID)
         {
             try
             {
@@ -353,7 +359,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 汇报下载任务状态信息
         /// </summary>
-        public static async Task<(bool, string, double, double, double)> NewTellStatusAsync(string GID)
+        public static async Task<(bool, string, double, double, double)> TellStatusAsync(string GID)
         {
             try
             {

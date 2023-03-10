@@ -6,7 +6,7 @@ namespace GetStoreApp.WindowsAPI.Controls.Taskbar
     /// <summary>
     /// <see cref="THUMBBUTTON"> 接口的方法用于定义嵌入窗口缩略图表示形式的工具栏中使用的按钮。
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct THUMBBUTTON
     {
         /// <summary>

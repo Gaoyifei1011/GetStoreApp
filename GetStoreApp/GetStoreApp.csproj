@@ -15,7 +15,7 @@
     <EnableMsixTooling>false</EnableMsixTooling>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <FileAlignment>512</FileAlignment>
-    <FileVersion>1.3.307.0</FileVersion>
+    <FileVersion>1.3.310.0</FileVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
@@ -43,7 +43,7 @@
     <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <TrimMode>partial</TrimMode>
-    <Version>1.3.307.0</Version>
+    <Version>1.3.310.0</Version>
     <UseWindowsForms>False</UseWindowsForms>
     <UseWinUI>true</UseWinUI>
     <UseWPF>False</UseWPF>
@@ -80,10 +80,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <DebugType>portable</DebugType>
   </PropertyGroup>
-  <ItemGroup>
-    <Content Remove="Assets\Resources\Lengths.bin" />
-    <Content Remove="Assets\Resources\LICENSE" />
-  </ItemGroup>
   
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
@@ -110,29 +106,21 @@
       <CopyToOutputDirectory Condition="'$(Platform)'=='x64'">Never</CopyToOutputDirectory>
       <CopyToOutputDirectory Condition="'$(Platform)'=='ARM64'">Never</CopyToOutputDirectory>
     </Content>
+    
+    <Content Remove="Assets\ControlIcon\About.png" />
+    <Content Remove="Assets\ControlIcon\Download.png" />
+    <Content Remove="Assets\ControlIcon\History.png" />
+    <Content Remove="Assets\ControlIcon\Home.png" />
+    <Content Remove="Assets\ControlIcon\Settings.png" />
+    <Content Remove="Assets\ControlIcon\Web.png" />
+    <Content Remove="Assets\GetStoreApp.ico" />
+    <Content Remove="Assets\Resources\Lengths.bin" />
+    <Content Remove="Assets\Resources\LICENSE" />
 
-    <Content Update="Assets\GetStoreApp.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <None Update="Assets\GetStoreApp.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
     <Content Update="Assets\GetStoreApp.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Assets\ControlIcon\About.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Assets\ControlIcon\Download.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Assets\ControlIcon\History.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Assets\ControlIcon\Home.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Assets\ControlIcon\Settings.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Assets\ControlIcon\Web.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="Assets\Images\CloudflareValidation.png">
@@ -157,6 +145,25 @@
     </EmbeddedResource>
     
     <Manifest Include="$(ApplicationManifest)" />
+
+    <None Include="Assets\ControlIcon\About.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\ControlIcon\Download.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\ControlIcon\History.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\ControlIcon\Home.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\ControlIcon\Settings.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\ControlIcon\Web.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
     
     <None Remove="Assets\GetStoreApp.png" />
     <None Remove="Assets\Images\CloudflareValidation.png" />
@@ -609,6 +616,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
+    <TrimmableAssembly Include="Microsoft.Windows.ApplicationModel.DynamicDependency.Projection" />
+    <TrimmableAssembly Include="Microsoft.Windows.ApplicationModel.Resources.Projection" />
+    <TrimmableAssembly Include="Microsoft.Windows.ApplicationModel.WindowsAppRuntime.Projection" />
+    <TrimmableAssembly Include="Microsoft.Windows.ApplicationModel.WindowsAppRuntime.Projection" />
+    <TrimmableAssembly Include="Microsoft.Windows.AppNotifications.Builder.Projection" />
+    <TrimmableAssembly Include="Microsoft.Windows.AppNotifications.Projection" />
+    <TrimmableAssembly Include="Microsoft.Windows.PushNotifications.Projection" />
+    <TrimmableAssembly Include="Microsoft.Windows.Security.AccessControl.Projection" />
+    <TrimmableAssembly Include="Microsoft.Windows.System.Power.Projection" />
+    <TrimmableAssembly Include="Microsoft.Windows.System.Projection" />
+    <TrimmableAssembly Include="Microsoft.WindowsAppRuntime.Bootstrap" />
+    <TrimmableAssembly Include="Microsoft.WindowsAppRuntime.Bootstrap.Net" />
     <TrimmableAssembly Include="Microsoft.Windows.Widgets.Projection" />
   </ItemGroup>
 </Project>

@@ -63,6 +63,46 @@ namespace GetStoreApp.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
+        public static byte[] About {
+            get {
+                object obj = ResourceManager.GetObject("About", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
+        public static byte[] Download {
+            get {
+                object obj = ResourceManager.GetObject("Download", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
+        public static byte[] History {
+            get {
+                object obj = ResourceManager.GetObject("History", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
+        public static byte[] Home {
+            get {
+                object obj = ResourceManager.GetObject("Home", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
         public static byte[] Lengths {
             get {
                 object obj = ResourceManager.GetObject("Lengths", resourceCulture);
@@ -86,6 +126,26 @@ namespace GetStoreApp.Properties {
         public static string ResourcesInitializeFailed {
             get {
                 return ResourceManager.GetString("ResourcesInitializeFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
+        public static byte[] Settings {
+            get {
+                object obj = ResourceManager.GetObject("Settings", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
+        public static byte[] Web {
+            get {
+                object obj = ResourceManager.GetObject("Web", resourceCulture);
+                return ((byte[])(obj));
             }
         }
     }

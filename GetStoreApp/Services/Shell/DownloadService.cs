@@ -1,7 +1,7 @@
-﻿using GetStoreApp.Helpers.Controls.Download;
-using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
+using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -154,7 +154,15 @@ namespace GetStoreApp.Services.Shell
         {
             if (IsFileDownloading)
             {
-                Aria2ProcessHelper.KillProcessAndChildren(Aria2ProcessId);
+                if (Aria2ProcessId is not 0)
+                {
+                    IntPtr hProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_TERMINATE, false, Aria2ProcessId);
+                    if (hProcess != IntPtr.Zero)
+                    {
+                        Kernel32Library.TerminateProcess(hProcess, 0);
+                    }
+                    Kernel32Library.CloseHandle(hProcess);
+                }
             }
         }
     }

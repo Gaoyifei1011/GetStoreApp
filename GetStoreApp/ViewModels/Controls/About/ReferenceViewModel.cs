@@ -12,7 +12,6 @@ namespace GetStoreApp.ViewModels.Controls.About
         {
             {"Aira2","https://aria2.github.io" },
             {"Microsoft.Data.Sqlite.Core","https://docs.microsoft.com/dotnet/standard/data/sqlite" },
-            {"Microsoft.VisualBasic","https://dot.net" },
             {"Microsoft.Windows.SDK.Contracts","https://aka.ms/WinSDKProjectURL" },
             {"Microsoft.WindowsAppSDK","https://github.com/microsoft/windowsappsdk" },
             {"Mile.Xaml","https://github.com/ProjectMile/Mile.Xaml" },

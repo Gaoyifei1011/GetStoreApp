@@ -49,7 +49,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
 
             if (ThemeResult.Item1)
             {
-                await SetThemeAsync(AppTheme, true);
+                await SetThemeAsync(AppTheme, false);
             }
 
             (bool, NotifyIconMenuThemeModel) NotifyIconMenuThemeResult = await GetNotifyIconMenuThemeAsync();
@@ -58,7 +58,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
 
             if (NotifyIconMenuThemeResult.Item1)
             {
-                await SetNotifyIconMenuThemeAsync(NotifyIconMenuTheme, true);
+                await SetNotifyIconMenuThemeAsync(NotifyIconMenuTheme, false);
             }
         }
 
@@ -95,9 +95,9 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// <summary>
         /// 应用主题发生修改时修改设置存储的主题值
         /// </summary>
-        public static async Task SetThemeAsync(ThemeModel theme, [Optional, DefaultParameterValue(false)] bool isFirstSet)
+        public static async Task SetThemeAsync(ThemeModel theme, [Optional, DefaultParameterValue(true)] bool isNotFirstSet)
         {
-            if (isFirstSet)
+            if (isNotFirstSet)
             {
                 AppTheme = theme;
             }
@@ -108,9 +108,9 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// <summary>
         /// 通知区域右键菜单主题发生修改时修改设置存储的主题值
         /// </summary>
-        public static async Task SetNotifyIconMenuThemeAsync(NotifyIconMenuThemeModel notifyIconMenuTheme, [Optional, DefaultParameterValue(false)] bool isFirstSet)
+        public static async Task SetNotifyIconMenuThemeAsync(NotifyIconMenuThemeModel notifyIconMenuTheme, [Optional, DefaultParameterValue(true)] bool isNotFirstSet)
         {
-            if (isFirstSet)
+            if (isNotFirstSet)
             {
                 NotifyIconMenuTheme = notifyIconMenuTheme;
             }

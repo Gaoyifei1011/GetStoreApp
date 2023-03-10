@@ -6,6 +6,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
     /// <summary>
     /// 包含要通过 <see cref="WindowMessage.WM_COPYDATA"> 消息传递到另一个应用程序的数据。
     /// </summary>
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct CopyDataStruct
     {
         /// <summary>

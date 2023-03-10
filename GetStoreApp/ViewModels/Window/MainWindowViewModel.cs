@@ -134,7 +134,7 @@ namespace GetStoreApp.ViewModels.Window
 
                     if (result is ContentDialogResult.Primary)
                     {
-                        await Program.ApplicationRoot.ViewModel.CloseAppAsync();
+                        Program.ApplicationRoot.ViewModel.Dispose();
                     }
                     else if (result is ContentDialogResult.Secondary)
                     {
@@ -146,7 +146,7 @@ namespace GetStoreApp.ViewModels.Window
                 }
                 else
                 {
-                    await Program.ApplicationRoot.ViewModel.CloseAppAsync();
+                    Program.ApplicationRoot.ViewModel.Dispose();
                 }
             }
         });

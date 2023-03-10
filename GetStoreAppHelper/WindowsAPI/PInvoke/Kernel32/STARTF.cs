@@ -7,7 +7,7 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.Kernel32
     /// 一个位域，用于确定进程创建窗口时是否使用某些 <see cref="STARTUPINFO"/> 成员。
     /// </summary>
     [Flags]
-    public enum StartupInfoFlags
+    public enum STARTF
     {
         /// <summary>
         /// 无标志

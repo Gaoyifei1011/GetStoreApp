@@ -1,8 +1,7 @@
-﻿using GetStoreApp.WindowsAPI.PInvoke.User32;
+﻿using GetStoreApp.Extensions.SystemTray;
+using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using System;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 
 namespace GetStoreApp.Helpers.Root
 {
@@ -11,67 +10,62 @@ namespace GetStoreApp.Helpers.Root
     /// </summary>
     public static class TaskbarProcessHelper
     {
+        private static STARTUPINFO TaskbarProcessStartupInfo;
+
+        private static PROCESS_INFORMATION TaskbarProcessInformation;
+
         /// <summary>
         /// 启动任务栏通知区域进程
         /// </summary>
-        public static async Task RunTaskbarProcessAsync(string fileName, [Optional, DefaultParameterValue("")] string arguments)
+        public static unsafe bool RunTaskbarProcess(string fileName, [Optional, DefaultParameterValue("")] string arguments)
         {
-            ProcessStartInfo TaskbarProcessInfo = new ProcessStartInfo
+            try
             {
-                //设置外部程序名
-                FileName = fileName,
+                Kernel32Library.GetStartupInfo(out TaskbarProcessStartupInfo);
+                TaskbarProcessStartupInfo.lpReserved = null;
+                TaskbarProcessStartupInfo.lpDesktop = null;
+                TaskbarProcessStartupInfo.lpTitle = null;
+                TaskbarProcessStartupInfo.dwX = 0;
+                TaskbarProcessStartupInfo.dwY = 0;
+                TaskbarProcessStartupInfo.dwXSize = 0;
+                TaskbarProcessStartupInfo.dwYSize = 0;
+                TaskbarProcessStartupInfo.dwXCountChars = 500;
+                TaskbarProcessStartupInfo.dwYCountChars = 500;
+                TaskbarProcessStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
+                TaskbarProcessStartupInfo.wShowWindow = 0;
+                TaskbarProcessStartupInfo.cbReserved2 = 0;
+                TaskbarProcessStartupInfo.lpReserved2 = IntPtr.Zero;
+                TaskbarProcessStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
 
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                UseShellExecute = false,
-                CreateNoWindow = true,
-
-                //最小化方式启动
-                WindowStyle = ProcessWindowStyle.Hidden,
-                Arguments = arguments
-            };
-
-            // 启动任务栏进程，并获取进程ID号
-            Process.Start(TaskbarProcessInfo);
-            await Task.CompletedTask;
+                return Kernel32Library.CreateProcess(null, string.Format("{0} {1}", fileName, arguments), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref TaskbarProcessStartupInfo, out TaskbarProcessInformation);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         /// <summary>
         /// 应用程序关闭时，关闭任务栏通知区域进程
         /// </summary>
-        public static void KillProcess()
+        public static void KillTaskbarProcess()
         {
-            Process[] GetStoreAppHelperProcess = Process.GetProcessesByName("GetStoreAppHelper");
-
-            if (GetStoreAppHelperProcess.Length > 0)
+            try
             {
-                IntPtr hwnd = IntPtr.Zero;
-                do
+                if (TaskbarProcessInformation.dwProcessId is not 0)
                 {
-                    hwnd = User32Library.FindWindowEx(IntPtr.Zero, hwnd, "Mile.Xaml.ContentWindow", null);
-
-                    if (hwnd != IntPtr.Zero)
+                    IntPtr hProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_TERMINATE, false, TaskbarProcessInformation.dwProcessId);
+                    if (hProcess != IntPtr.Zero)
                     {
-                        User32Library.GetWindowThreadProcessId(hwnd, out int processId);
-
-                        if (processId is not 0)
-                        {
-                            bool result = false;
-                            foreach (Process process in GetStoreAppHelperProcess)
-                            {
-                                if (process.Id == processId)
-                                {
-                                    User32Library.PostMessage(hwnd, WindowMessage.WM_PROCESSCOMMUNICATION, Convert.ToInt32(CommunicationFlags.Exit), IntPtr.Zero);
-                                    result = true;
-                                    break;
-                                }
-                            }
-
-                            if (result) break;
-                        }
+                        Kernel32Library.TerminateProcess(hProcess, 0);
                     }
+                    Kernel32Library.CloseHandle(hProcess);
+                    NotifyIconManager.RefreshNotification();
                 }
-                while (hwnd != IntPtr.Zero);
+            }
+            catch (Exception)
+            {
+                return;
             }
         }
     }

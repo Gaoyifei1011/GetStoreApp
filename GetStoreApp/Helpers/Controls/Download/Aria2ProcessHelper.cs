@@ -1,10 +1,6 @@
 ﻿using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
-using GetStoreApp.WindowsAPI.PInvoke.NTdll;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 
 namespace GetStoreApp.Helpers.Controls.Download
 {
@@ -13,114 +9,62 @@ namespace GetStoreApp.Helpers.Controls.Download
     /// </summary>
     public static class Aria2ProcessHelper
     {
-        // Aria2下载进程的ID号
-        private static int Aria2ProcessID = default;
+        private static STARTUPINFO Aria2ProcessStartupInfo;
 
-        /// <summary>
-        /// 获取当前进程的PID信息
-        /// </summary>
-        public static int GetProcessID()
-        {
-            return Aria2ProcessID;
-        }
+        private static PROCESS_INFORMATION Aria2ProcessInformation;
 
         /// <summary>
         /// 让Aria2以RPC方式启动，并让其在后台运行
         /// </summary>
-        public static async Task RunAria2Async(string fileName, [Optional, DefaultParameterValue("")] string arguments)
+        public static unsafe bool RunAria2Process(string fileName, [Optional, DefaultParameterValue("")] string arguments)
         {
-            //设置启动程序的信息
-            ProcessStartInfo Aria2Info = new ProcessStartInfo
+            try
             {
-                //设置外部程序名
-                FileName = fileName,
+                Kernel32Library.GetStartupInfo(out Aria2ProcessStartupInfo);
+                Aria2ProcessStartupInfo.lpReserved = null;
+                Aria2ProcessStartupInfo.lpDesktop = null;
+                Aria2ProcessStartupInfo.lpTitle = null;
+                Aria2ProcessStartupInfo.dwX = 0;
+                Aria2ProcessStartupInfo.dwY = 0;
+                Aria2ProcessStartupInfo.dwXSize = 0;
+                Aria2ProcessStartupInfo.dwYSize = 0;
+                Aria2ProcessStartupInfo.dwXCountChars = 500;
+                Aria2ProcessStartupInfo.dwYCountChars = 500;
+                Aria2ProcessStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
+                Aria2ProcessStartupInfo.wShowWindow = 0;
+                Aria2ProcessStartupInfo.cbReserved2 = 0;
+                Aria2ProcessStartupInfo.lpReserved2 = IntPtr.Zero;
+                Aria2ProcessStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
 
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                UseShellExecute = false,
-                CreateNoWindow = true,
-
-                //最小化方式启动
-                WindowStyle = ProcessWindowStyle.Hidden,
-                Arguments = arguments
-            };
-
-            // 启动Aria2下载进程，并获取进程ID号
-            Aria2ProcessID = Process.Start(Aria2Info).Id;
-            await Task.CompletedTask;
-        }
-
-        /// <summary>
-        /// 应用程序关闭时，需要终止相应的Aria2进程树
-        /// </summary>
-        public static void KillProcessAndChildren(int processID)
-        {
-            GetChildProcessIds(processID).ForEach(childProcessId =>
+                return Kernel32Library.CreateProcess(null, string.Format("{0} {1}", fileName, arguments), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref Aria2ProcessStartupInfo, out Aria2ProcessInformation);
+            }
+            catch (Exception)
             {
-                using (Process child = Process.GetProcessById(childProcessId))
-                {
-                    child.Kill();
-                }
-            });
-
-            using (Process thisProcess = Process.GetProcessById(processID))
-            {
-                thisProcess.Kill();
+                return false;
             }
         }
 
         /// <summary>
-        /// 获取所有的子进程ID
+        /// 应用程序关闭时，关闭Aria2下载进程
         /// </summary>
-        public static List<int> GetChildProcessIds(int parentProcessId)
+        public static void KillAria2Process()
         {
-            List<int> myChildrenProcessList = new List<int>();
-            foreach (Process proc in Process.GetProcesses())
+            try
             {
-                if (proc is null)
+                if (Aria2ProcessInformation.dwProcessId is not 0)
                 {
-                    return new List<int>();
-                }
-
-                int currentProcessId = proc.Id;
-                proc.Dispose();
-                if (parentProcessId == GetParentProcessId(currentProcessId))
-                {
-                    // 添加自身
-                    myChildrenProcessList.Add(currentProcessId);
-                    // 添加和其自身有关的所有子进程
-                    myChildrenProcessList.AddRange(GetChildProcessIds(currentProcessId));
-                }
-            }
-
-            return myChildrenProcessList;
-        }
-
-        /// <summary>
-        /// 获取父进程ID
-        /// </summary>
-        public static int GetParentProcessId(int processId)
-        {
-            int ParentID = 0;
-            int hProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_QUERY_INFORMATION, false, processId);
-            if (hProcess is not 0)
-            {
-                try
-                {
-                    PROCESS_BASIC_INFORMATION pbi = new PROCESS_BASIC_INFORMATION();
-                    int pSize = 0;
-                    if (NTdllLibrary.NtQueryInformationProcess(hProcess, PROCESSINFOCLASS.ProcessBasicInformation, ref pbi, pbi.Size, ref pSize) is not -1)
+                    IntPtr hProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_TERMINATE, false, Aria2ProcessInformation.dwProcessId);
+                    if (hProcess != IntPtr.Zero)
                     {
-                        ParentID = pbi.InheritedFromUniqueProcessId;
+                        Kernel32Library.TerminateProcess(hProcess, 0);
                     }
-                }
-                finally
-                {
                     Kernel32Library.CloseHandle(hProcess);
                 }
             }
-
-            return (ParentID);
+            catch (Exception)
+            {
+                return;
+            }
         }
 
         /// <summary>
@@ -128,22 +72,33 @@ namespace GetStoreApp.Helpers.Controls.Download
         /// </summary>
         public static bool IsAria2ProcessExisted()
         {
+            bool SearchResult = false;
             try
             {
-                if (GetProcessID() != default)
+                IntPtr hSnapshot = Kernel32Library.CreateToolhelp32Snapshot(CreateToolhelp32SnapshotFlags.TH32CS_SNAPPROCESS, 0);
+
+                if (hSnapshot == IntPtr.Zero || hSnapshot == Kernel32Library.INVALID_HANDLE_VALUE)
                 {
-                    Process.GetProcessById(GetProcessID());
-                    return true;
+                    throw new Exception();
                 }
-                else
+
+                PROCESSENTRY32 ProcessEntry32 = new PROCESSENTRY32();
+                ProcessEntry32.dwSize = Marshal.SizeOf(typeof(PROCESSENTRY32));
+
+                for (bool result = Kernel32Library.Process32First(hSnapshot, ref ProcessEntry32); result; result = Kernel32Library.Process32Next(hSnapshot, ref ProcessEntry32))
                 {
-                    return false;
+                    if (ProcessEntry32.th32ProcessID == Aria2ProcessInformation.dwProcessId)
+                    {
+                        SearchResult = true;
+                    }
                 }
+                Kernel32Library.CloseHandle(hSnapshot);
             }
             catch (Exception)
             {
-                return false;
+                SearchResult = false;
             }
+            return SearchResult;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using GetStoreAppHelper.WindowsAPI.PInvoke.User32;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 
 namespace GetStoreAppHelper.WindowsAPI.PInvoke.Shell32
@@ -101,7 +100,7 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.Shell32
         /// <param name="iconFile">图标路径</param>
         /// <param name="toolTip">提示文本</param>
         /// <returns><see cref="NOTIFYICONDATA"></returns>
-        public static NOTIFYICONDATA CreateDefault(IntPtr handle, string iconFile, string toolTip)
+        public static NOTIFYICONDATA CreateDefault(IntPtr handle, IntPtr iconPtr, string toolTip)
         {
             var data = new NOTIFYICONDATA();
 
@@ -119,13 +118,8 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.Shell32
             data.WindowHandle = handle;
             data.TaskbarIconId = 0x0;
             data.CallbackMessageId = WindowMessageSink.CallbackMessageId;
-            data.VersionOrTimeout = (uint)0x4;
-
-            IntPtr hIcon = User32Library.LoadImage(IntPtr.Zero, iconFile,
-                ImageType.IMAGE_ICON, 16, 16, LoadImageFlags.LR_LOADFROMFILE);
-
-            data.IconHandle = hIcon;
-
+            data.VersionOrTimeout = 0x4;
+            data.IconHandle = iconPtr;
             data.IconState = IconState.Hidden;
             data.StateMask = IconState.Hidden;
 
