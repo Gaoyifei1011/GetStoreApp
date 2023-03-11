@@ -48,6 +48,7 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 | Console applications (quickly download)                  | Completed                                                                                                          |
 | Program performance optimization                         | Completed                                                                                                          |
 | Interface modernization                                  | Completed                                                                                                          |
+| Use CppWinRT to reinvent the application, further greatly reduce the application size, and improve the overall application performance It is expected that the official version 2.0 will be implemented |
 
 All the content of the program has been developed
 

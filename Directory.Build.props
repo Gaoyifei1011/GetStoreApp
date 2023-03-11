@@ -4,16 +4,22 @@
     <!--强制引入PackageReferences-->
     <ProjectCapability Include="PackageReferences" />
   </ItemGroup>
-  <PropertyGroup Condition="'$(MSBuildProjectExtension)' == '.vcxproj'">
+  <PropertyGroup Label="NuGet" Condition="('$(MSBuildProjectExtension)' == '.vcxproj') Or ('$(MSBuildProjectExtension)' == '.wapproj')">
+    <!-- https://github.com/microsoft/react-native-windows/pull/8195 -->
+    <AssetTargetFallback>$(AssetTargetFallback);native;uap$(TargetPlatformVersion);</AssetTargetFallback>
+    <!-- https://github.com/microsoft/react-native-windows/pull/8195 -->
+    <TargetFrameworkMoniker>native,Version=v0.0</TargetFrameworkMoniker>
     <!--指定自己的体系为native-->
     <NuGetTargetMoniker Condition="'$(NuGetTargetMoniker)' == ''">native,Version=v0.0</NuGetTargetMoniker>
+    <TargetFrameworkMoniker Condition ="'$(DesignTimeBuild)' == 'true'">.NETCore,Version=v5.0</TargetFrameworkMoniker>
+    <NuGetTargetMoniker Condition ="'$(DesignTimeBuild)' == 'true'">.NETCore,Version=v5.0</NuGetTargetMoniker>
     <!--如果不指定这一行，那么arm64平台会找不到RID而失败-->
-    <RuntimeIdentifiers Condition="'$(RuntimeIdentifiers)' == ''">win;win-x86;win-x64;win-arm;win-arm64</RuntimeIdentifiers>
+    <RuntimeIdentifiers Condition="'$(RuntimeIdentifiers)' == ''">win;win-x86;win-x64;win-arm;win-arm64;win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
   </PropertyGroup>
 
   <!--从兼容性考虑，继续向上搜索 Directory.Build.props-->
   <PropertyGroup>
-    <NoWarn>CA1069;CA1401;CA1416;CA1822;CA2211;IDE0090;IL2050;IL2070;MSB4018;NU1702</NoWarn>
+    <NoWarn>CA1069;CA1401;CA1416;CA1822;CA2211;IDE0090;IL2050;IL2070;MSB4018;NU1201;NU1702</NoWarn>
     <DirectoryBuildPropsPath>$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))</DirectoryBuildPropsPath>
   </PropertyGroup>
   <Import Project="$(DirectoryBuildPropsPath)" Condition="'$(DirectoryBuildPropsPath)' != ''"/>
