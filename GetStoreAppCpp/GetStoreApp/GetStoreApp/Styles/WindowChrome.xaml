@@ -1,0 +1,108 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="WindowChromeStyle" TargetType="ContentControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Grid x:Name="LayoutRoot">
+                        <Grid
+                            x:Name="TitleBarMinMaxCloseContainer"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Visibility="{Binding CaptionVisibility, RelativeSource={RelativeSource TemplatedParent}}">
+                            <Grid
+                                x:Name="MinMaxCloseContainer"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"
+                                ColumnDefinitions="Auto,Auto,Auto">
+                                <!--  修改窗口右上角最小化按钮的显示属性：隐藏  -->
+                                <Button
+                                    x:Name="MinimizeButton"
+                                    Grid.Column="0"
+                                    AutomationProperties.AutomationId="_MinimizeButton"
+                                    AutomationProperties.Name="Minimize"
+                                    Content="M 0 0 H 10"
+                                    Style="{StaticResource WindowCaptionButton}"
+                                    Visibility="Collapsed" />
+                                <!--  修改窗口右上角最大化按钮的显示属性：隐藏  -->
+                                <Button
+                                    x:Name="MaximizeButton"
+                                    Grid.Column="1"
+                                    AutomationProperties.AutomationId="_MaximizeButton"
+                                    AutomationProperties.Name="Maximize"
+                                    Content="M 0 0 H 10 V 10 H 0 V 0"
+                                    Style="{StaticResource WindowCaptionButton}"
+                                    Visibility="Collapsed" />
+                                <!--  修改窗口右上角关闭按钮的显示属性：隐藏  -->
+                                <Button
+                                    x:Name="CloseButton"
+                                    Grid.Column="2"
+                                    AutomationProperties.AutomationId="_CloseButton"
+                                    AutomationProperties.Name="Close"
+                                    Content="M 0 0 L 10 10 M 10 0 L 0 10"
+                                    Style="{StaticResource WindowCaptionButton}"
+                                    Visibility="Collapsed">
+                                    <Button.Resources>
+                                        <ResourceDictionary>
+                                            <ResourceDictionary.ThemeDictionaries>
+                                                <ResourceDictionary x:Key="Light">
+                                                    <StaticResource x:Key="WindowCaptionButtonBackgroundPointerOver" ResourceKey="CloseButtonBackgroundPointerOver" />
+                                                    <StaticResource x:Key="WindowCaptionButtonBackgroundPressed" ResourceKey="CloseButtonBackgroundPressed" />
+                                                    <StaticResource x:Key="WindowCaptionButtonStrokePointerOver" ResourceKey="CloseButtonStrokePointerOver" />
+                                                    <StaticResource x:Key="WindowCaptionButtonStrokePressed" ResourceKey="CloseButtonStrokePressed" />
+                                                </ResourceDictionary>
+                                                <ResourceDictionary x:Key="Dark">
+                                                    <StaticResource x:Key="WindowCaptionButtonBackgroundPointerOver" ResourceKey="CloseButtonBackgroundPointerOver" />
+                                                    <StaticResource x:Key="WindowCaptionButtonBackgroundPressed" ResourceKey="CloseButtonBackgroundPressed" />
+                                                    <StaticResource x:Key="WindowCaptionButtonStrokePointerOver" ResourceKey="CloseButtonStrokePointerOver" />
+                                                    <StaticResource x:Key="WindowCaptionButtonStrokePressed" ResourceKey="CloseButtonStrokePressed" />
+                                                </ResourceDictionary>
+                                                <ResourceDictionary x:Key="HighContrast">
+                                                    <StaticResource x:Key="WindowCaptionButtonBackgroundPointerOver" ResourceKey="CloseButtonBackgroundPointerOver" />
+                                                    <StaticResource x:Key="WindowCaptionButtonBackgroundPressed" ResourceKey="CloseButtonBackgroundPressed" />
+                                                    <StaticResource x:Key="WindowCaptionButtonStrokePointerOver" ResourceKey="CloseButtonStrokePointerOver" />
+                                                    <StaticResource x:Key="WindowCaptionButtonStrokePressed" ResourceKey="CloseButtonStrokePressed" />
+                                                </ResourceDictionary>
+                                            </ResourceDictionary.ThemeDictionaries>
+                                        </ResourceDictionary>
+                                    </Button.Resources>
+                                </Button>
+                            </Grid>
+                        </Grid>
+                        <ContentPresenter
+                            x:Name="ClientAreaPresenter"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                            Foreground="{TemplateBinding Foreground}" />
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <VisualState.Setters>
+                                        <Setter Target="TitleBarMinMaxCloseContainer.Background" Value="{ThemeResource WindowCaptionBackground}" />
+                                        <Setter Target="MinimizeButton.Foreground" Value="{ThemeResource WindowCaptionForeground}" />
+                                        <Setter Target="MinimizeButton.Background" Value="{ThemeResource WindowCaptionButtonBackground}" />
+                                        <Setter Target="MaximizeButton.Foreground" Value="{ThemeResource WindowCaptionForeground}" />
+                                        <Setter Target="MaximizeButton.Background" Value="{ThemeResource WindowCaptionButtonBackground}" />
+                                        <Setter Target="CloseButton.Foreground" Value="{ThemeResource WindowCaptionForeground}" />
+                                        <Setter Target="CloseButton.Background" Value="{ThemeResource WindowCaptionButtonBackground}" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="WindowInactive">
+                                    <VisualState.Setters>
+                                        <Setter Target="TitleBarMinMaxCloseContainer.Background" Value="{ThemeResource WindowCaptionBackgroundDisabled}" />
+                                        <Setter Target="MinimizeButton.Foreground" Value="{ThemeResource WindowCaptionForegroundDisabled}" />
+                                        <Setter Target="MinimizeButton.Background" Value="{ThemeResource WindowCaptionButtonBackground}" />
+                                        <Setter Target="MaximizeButton.Foreground" Value="{ThemeResource WindowCaptionForegroundDisabled}" />
+                                        <Setter Target="MaximizeButton.Background" Value="{ThemeResource WindowCaptionButtonBackground}" />
+                                        <Setter Target="CloseButton.Foreground" Value="{ThemeResource WindowCaptionForegroundDisabled}" />
+                                        <Setter Target="CloseButton.Background" Value="{ThemeResource WindowCaptionButtonBackground}" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

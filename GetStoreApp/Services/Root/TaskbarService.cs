@@ -20,17 +20,5 @@ namespace GetStoreApp.Services.Root
             IsTaskbarProcessRunning = TaskbarProcessHelper.RunTaskbarProcess(TaskbarProcessFilePath, string.Empty);
             await Task.CompletedTask;
         }
-
-        /// <summary>
-        /// 关闭任务栏辅助进程
-        /// </summary>
-        public static async Task CloseTaskbarProcessAsync()
-        {
-            if (IsTaskbarProcessRunning)
-            {
-                TaskbarProcessHelper.KillTaskbarProcess();
-            }
-            await Task.CompletedTask;
-        }
     }
 }

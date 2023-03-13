@@ -8,6 +8,8 @@ using GetStoreAppHelper.WindowsAPI.PInvoke.User32;
 using Mile.Xaml;
 using System;
 using Windows.Graphics;
+using System.Timers;
+using System.Diagnostics;
 
 namespace GetStoreAppHelper
 {
@@ -17,9 +19,25 @@ namespace GetStoreAppHelper
 
         public MileWindow MainWindow { get; set; }
 
+        private Timer AppTimer { get; set; } = new Timer(1000);
+
         public App()
         {
             Initialize();
+
+            AppTimer.Elapsed += AppTimerElapsed;
+            AppTimer.AutoReset = true;
+            AppTimer.Start();
+        }
+
+        private void AppTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            Process[] GetStoreAppProcess = Process.GetProcessesByName("GetStoreApp");
+
+            if(GetStoreAppProcess.Length == 0)
+            {
+                CloseApp();
+            }
         }
 
         /// <summary>
@@ -72,6 +90,10 @@ namespace GetStoreAppHelper
         /// </summary>
         public void CloseApp()
         {
+            AppTimer.Stop();
+            AppTimer.Elapsed -= AppTimerElapsed;
+            AppTimer.Dispose();
+
             TrayIcon.Dispose();
             Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
         }

@@ -1,0 +1,438 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Advanced" xml:space="preserve">
+    <value>高级选项</value>
+  </data>
+  <data name="AlwaysShowBackdrop" xml:space="preserve">
+    <value>始终显示背景色</value>
+  </data>
+  <data name="AlwaysShowBackdropDescription" xml:space="preserve">
+    <value>窗口失去焦点时不会回退为纯色</value>
+  </data>
+  <data name="AlwaysShowBackdropOffContent" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="AlwaysShowBackdropOnContent" xml:space="preserve">
+    <value>开启</value>
+  </data>
+  <data name="Appearance" xml:space="preserve">
+    <value>外观</value>
+  </data>
+  <data name="AppExit" xml:space="preserve">
+    <value>应用关闭方式</value>
+  </data>
+  <data name="AppExitDescription" xml:space="preserve">
+    <value>设置应用关闭时需要执行的操作</value>
+  </data>
+  <data name="AppInstall" xml:space="preserve">
+    <value>使用应用安装程序安装</value>
+  </data>
+  <data name="Backdrop" xml:space="preserve">
+    <value>窗口背景材质</value>
+  </data>
+  <data name="BackdropAcrylic" xml:space="preserve">
+    <value>亚克力</value>
+  </data>
+  <data name="BackdropDefault" xml:space="preserve">
+    <value>不开启</value>
+  </data>
+  <data name="BackdropDescription" xml:space="preserve">
+    <value>设置应用呈现的背景色</value>
+  </data>
+  <data name="BackdropMica" xml:space="preserve">
+    <value>云母</value>
+  </data>
+  <data name="BackdropMicaAlt" xml:space="preserve">
+    <value>云母（Alt）</value>
+  </data>
+  <data name="BackdropToolTip" xml:space="preserve">
+    <value>帮助</value>
+  </data>
+  <data name="BlockMap" xml:space="preserve">
+    <value>不显示文件扩展名称为BlockMap的文件</value>
+  </data>
+  <data name="BlockMapDescription" xml:space="preserve">
+    <value>BlockMap文件由makeappx.exe打包时自动创建</value>
+  </data>
+  <data name="BlockMapOffContent" xml:space="preserve">
+    <value>不过滤</value>
+  </data>
+  <data name="BlockMapOnContent" xml:space="preserve">
+    <value>过滤</value>
+  </data>
+  <data name="ChangeFolder" xml:space="preserve">
+    <value>更改目录</value>
+  </data>
+  <data name="CloseApp" xml:space="preserve">
+    <value>退出应用</value>
+  </data>
+  <data name="CodeInstall" xml:space="preserve">
+    <value>直接安装</value>
+  </data>
+  <data name="Config" xml:space="preserve">
+    <value>配置</value>
+  </data>
+  <data name="DownloadFolder" xml:space="preserve">
+    <value>文件存放路径</value>
+  </data>
+  <data name="DownloadInApp" xml:space="preserve">
+    <value>使用应用内下载管理器下载</value>
+  </data>
+  <data name="DownloadInstruction" xml:space="preserve">
+    <value>下载管理说明</value>
+  </data>
+  <data name="DownloadItem" xml:space="preserve">
+    <value>同时下载任务数</value>
+  </data>
+  <data name="DownloadItemDescription" xml:space="preserve">
+    <value>设置同时下载的文件数目</value>
+  </data>
+  <data name="DownloadMode" xml:space="preserve">
+    <value>下载方式</value>
+  </data>
+  <data name="DownloadModeDescription" xml:space="preserve">
+    <value>选择您要使用下载文件的方式</value>
+  </data>
+  <data name="DownloadOptions" xml:space="preserve">
+    <value>下载管理</value>
+  </data>
+  <data name="DownloadOptionsDescription" xml:space="preserve">
+    <value>应用程序下载文件设置</value>
+  </data>
+  <data name="DownloadWithBrowser" xml:space="preserve">
+    <value>使用浏览器下载</value>
+  </data>
+  <data name="ExperimentalFeatures" xml:space="preserve">
+    <value>实验性功能</value>
+  </data>
+  <data name="ExperimentalFeaturesDescription" xml:space="preserve">
+    <value>应用的实验性功能，一般情况下无需修改</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>常规选项</value>
+  </data>
+  <data name="HideToTray" xml:space="preserve">
+    <value>最小化到系统托盘</value>
+  </data>
+  <data name="HistoryJumpList" xml:space="preserve">
+    <value>任务栏“历史记录”显示数目</value>
+  </data>
+  <data name="HistoryJumpList3Items" xml:space="preserve">
+    <value>3条</value>
+  </data>
+  <data name="HistoryJumpList5Items" xml:space="preserve">
+    <value>5条</value>
+  </data>
+  <data name="HistoryJumpList7Items" xml:space="preserve">
+    <value>7条</value>
+  </data>
+  <data name="HistoryJumpList9Items" xml:space="preserve">
+    <value>9条</value>
+  </data>
+  <data name="HistoryJumpListDescription" xml:space="preserve">
+    <value>任务栏右键跳转列表最多显示的“历史记录”条目数量</value>
+  </data>
+  <data name="HistoryJumpListUnlimited" xml:space="preserve">
+    <value>无限制</value>
+  </data>
+  <data name="HistoryLite" xml:space="preserve">
+    <value>主页面“历史记录”显示数目</value>
+  </data>
+  <data name="HistoryLite3Items" xml:space="preserve">
+    <value>3条</value>
+  </data>
+  <data name="HistoryLite5Items" xml:space="preserve">
+    <value>5条</value>
+  </data>
+  <data name="HistoryLiteDescription" xml:space="preserve">
+    <value>应用启动后在主页面打开时最多显示的“历史记录”条目数量</value>
+  </data>
+  <data name="HistoryRecord" xml:space="preserve">
+    <value>历史记录</value>
+  </data>
+  <data name="HistoryRecordDescription" xml:space="preserve">
+    <value>应用程序历史记录设置</value>
+  </data>
+  <data name="InstallMode" xml:space="preserve">
+    <value>应用安装方式</value>
+  </data>
+  <data name="InstallModeDescription" xml:space="preserve">
+    <value>选择Windows 应用包的安装方式</value>
+  </data>
+  <data name="InstallModeToolTip" xml:space="preserve">
+    <value>帮助</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>界面语言</value>
+  </data>
+  <data name="LanguageDescription" xml:space="preserve">
+    <value>修改应用界面显示的语言</value>
+  </data>
+  <data name="LanguageToolTip" xml:space="preserve">
+    <value>帮助</value>
+  </data>
+  <data name="LinkFilter" xml:space="preserve">
+    <value>链接过滤</value>
+  </data>
+  <data name="LinkFilterDescription" xml:space="preserve">
+    <value>过滤掉不会使用的链接，提升查找应用的效率</value>
+  </data>
+  <data name="LinkFilterInstruction" xml:space="preserve">
+    <value>链接过滤说明</value>
+  </data>
+  <data name="NetWorkMonitor" xml:space="preserve">
+    <value>网络监控状态</value>
+  </data>
+  <data name="NetWorkMonitorOffContent" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="NetWorkMonitorOnContent" xml:space="preserve">
+    <value>开启</value>
+  </data>
+  <data name="Notification" xml:space="preserve">
+    <value>应用通知</value>
+  </data>
+  <data name="NotificationDescription" xml:space="preserve">
+    <value>显示来自应用的消息通知</value>
+  </data>
+  <data name="NotificationOffContent" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="NotificationOnContent" xml:space="preserve">
+    <value>开启</value>
+  </data>
+  <data name="NotifyIconMenuAppTheme" xml:space="preserve">
+    <value>遵循应用主题</value>
+  </data>
+  <data name="NotifyIconMenuSystemTheme" xml:space="preserve">
+    <value>遵循系统主题</value>
+  </data>
+  <data name="NotifyIconMenuTheme" xml:space="preserve">
+    <value>通知区域右键菜单主题</value>
+  </data>
+  <data name="NotifyIconMenuThemeDescription" xml:space="preserve">
+    <value>设置通知区域右键菜单的主题模式</value>
+  </data>
+  <data name="OpenConfigFile" xml:space="preserve">
+    <value>打开Aria2配置文件</value>
+  </data>
+  <data name="OpenConfigFolder" xml:space="preserve">
+    <value>打开配置文件目录</value>
+  </data>
+  <data name="OpenFolderToolTip" xml:space="preserve">
+    <value>单击访问该文件夹</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>应用在应用商店对应的区域</value>
+  </data>
+  <data name="RegionDescription" xml:space="preserve">
+    <value>应用如果在特定的地区上架，需要调整区域</value>
+  </data>
+  <data name="RestartApp" xml:space="preserve">
+    <value>重启应用</value>
+  </data>
+  <data name="RestartAppToolTip" xml:space="preserve">
+    <value>应用设置发生修改后，部分选项需要重启后生效</value>
+  </data>
+  <data name="SelectFolder" xml:space="preserve">
+    <value>请选择要保存的目录</value>
+  </data>
+  <data name="StartsWithE" xml:space="preserve">
+    <value>不显示文件扩展名称以'.e'开头的文件</value>
+  </data>
+  <data name="StartsWithEDescription" xml:space="preserve">
+    <value>该类型文件是从Windows 8.1应用商店以来提供的加密的应用程序包</value>
+  </data>
+  <data name="StartsWithEOffContent" xml:space="preserve">
+    <value>不过滤</value>
+  </data>
+  <data name="StartsWithEOnContent" xml:space="preserve">
+    <value>过滤</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>应用主题</value>
+  </data>
+  <data name="ThemeDark" xml:space="preserve">
+    <value>深色</value>
+  </data>
+  <data name="ThemeDefault" xml:space="preserve">
+    <value>使用系统设置</value>
+  </data>
+  <data name="ThemeDescription" xml:space="preserve">
+    <value>选择要显示的应用主题</value>
+  </data>
+  <data name="ThemeLight" xml:space="preserve">
+    <value>浅色</value>
+  </data>
+  <data name="ThemeMode" xml:space="preserve">
+    <value>主题模式</value>
+  </data>
+  <data name="ThemeModeDescription" xml:space="preserve">
+    <value>设置应用整体的主题模式</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="TopMost" xml:space="preserve">
+    <value>窗口置顶</value>
+  </data>
+  <data name="TopMostDescription" xml:space="preserve">
+    <value>将当前应用的窗口置于最顶端</value>
+  </data>
+  <data name="TopMostOffContent" xml:space="preserve">
+    <value>未置顶</value>
+  </data>
+  <data name="TopMostOnContent" xml:space="preserve">
+    <value>置顶</value>
+  </data>
+  <data name="TraceCleanup" xml:space="preserve">
+    <value>痕迹清理</value>
+  </data>
+  <data name="TraceCleanupDescription" xml:space="preserve">
+    <value>清理应用内使用过的所有痕迹</value>
+  </data>
+  <data name="TraceCleanupToolTip" xml:space="preserve">
+    <value>帮助</value>
+  </data>
+  <data name="TraceClear" xml:space="preserve">
+    <value>选择要清理的内容</value>
+  </data>
+  <data name="UseDefaultFolder" xml:space="preserve">
+    <value>使用默认目录</value>
+  </data>
+  <data name="UseInstruction" xml:space="preserve">
+    <value>“使用说明”按钮</value>
+  </data>
+  <data name="UseInstructionDescription" xml:space="preserve">
+    <value>是否在相应的页面上显示快速了解相应功能的使用情况</value>
+  </data>
+  <data name="UseInstructionOffContent" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="UseInstructionOnContent" xml:space="preserve">
+    <value>显示</value>
+  </data>
+  <data name="WindowsColorSettings" xml:space="preserve">
+    <value>Windows 颜色设置</value>
+  </data>
+  <data name="WindowsNotificationSettings" xml:space="preserve">
+    <value>Windows 通知设置</value>
+  </data>
+</root>

@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Extensions.SystemTray;
-using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
+﻿using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using System;
 using System.Runtime.InteropServices;
 
@@ -11,8 +10,6 @@ namespace GetStoreApp.Helpers.Root
     public static class TaskbarProcessHelper
     {
         private static STARTUPINFO TaskbarProcessStartupInfo;
-
-        private static PROCESS_INFORMATION TaskbarProcessInformation;
 
         /// <summary>
         /// 启动任务栏通知区域进程
@@ -37,35 +34,11 @@ namespace GetStoreApp.Helpers.Root
                 TaskbarProcessStartupInfo.lpReserved2 = IntPtr.Zero;
                 TaskbarProcessStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
 
-                return Kernel32Library.CreateProcess(null, string.Format("{0} {1}", fileName, arguments), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref TaskbarProcessStartupInfo, out TaskbarProcessInformation);
+                return Kernel32Library.CreateProcess(null, string.Format("{0} {1}", fileName, arguments), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref TaskbarProcessStartupInfo, out PROCESS_INFORMATION TaskbarProcessInformation);
             }
             catch (Exception)
             {
                 return false;
-            }
-        }
-
-        /// <summary>
-        /// 应用程序关闭时，关闭任务栏通知区域进程
-        /// </summary>
-        public static void KillTaskbarProcess()
-        {
-            try
-            {
-                if (TaskbarProcessInformation.dwProcessId is not 0)
-                {
-                    IntPtr hProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_TERMINATE, false, TaskbarProcessInformation.dwProcessId);
-                    if (hProcess != IntPtr.Zero)
-                    {
-                        Kernel32Library.TerminateProcess(hProcess, 0);
-                    }
-                    Kernel32Library.CloseHandle(hProcess);
-                    NotifyIconManager.RefreshNotification();
-                }
-            }
-            catch (Exception)
-            {
-                return;
             }
         }
     }

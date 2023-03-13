@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <RootNamespace>GetStoreApp</RootNamespace>
+    <AppContainerApplication>false</AppContainerApplication>
+    <ApplicationType>Windows Store</ApplicationType>
+    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+    <AppxPackage>false</AppxPackage>
+    <CppWinRTOptimized>true</CppWinRTOptimized>
+    <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <MinimalCoreWin>true</MinimalCoreWin>
+    <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
+    <ProjectGuid>{170c68c6-52be-43f8-af3c-72818f6a6fab}</ProjectGuid>
+    <ProjectName>GetStoreApp</ProjectName>
+    <TargetName>$(RootNamespace)</TargetName>
+    <UseWinUI>true</UseWinUI>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.19041.0</WindowsTargetPlatformMinVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <DesktopCompatible>true</DesktopCompatible>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <OutDir>$(SolutionDir)$(MSBuildProjectName)\bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)$(MSBuildProjectName)\obj\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(MSBuildProjectName)\bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)$(MSBuildProjectName)\obj\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)$(MSBuildProjectName)\bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)$(MSBuildProjectName)\obj\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <OutDir>$(SolutionDir)$(MSBuildProjectName)\bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)$(MSBuildProjectName)\obj\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(MSBuildProjectName)\bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)$(MSBuildProjectName)\obj\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)$(MSBuildProjectName)\bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)$(MSBuildProjectName)\obj\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
+      <WarningLevel>Level4</WarningLevel>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
+    <ClCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
+    <ClCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Manifest Include="App.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="WinUIApp.xaml" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="WinUIApp.xaml.h">
+      <DependentUpon>WinUIApp.xaml</DependentUpon>
+    </ClInclude>
+    <ClCompile Include="WinUIApp.xaml.cpp">
+      <DependentUpon>WinUIApp.xaml</DependentUpon>
+    </ClCompile>
+    <ClInclude Include="MainWindow.xaml.h">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </ClInclude>
+    <ClCompile Include="MainWindow.xaml.cpp">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClInclude Include="resource.h" />
+    <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+    <Image Include="..\GetStoreAppPackage\Assets\GetStoreApp.ico" />
+    <Midl Include="WinUIApp.idl">
+      <SubType>Code</SubType>
+      <DependentUpon>WinUIApp.xaml</DependentUpon>
+    </Midl>
+    <Midl Include="MainWindow.idl">
+      <SubType>Code</SubType>
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Midl>
+    <None Include="Assets\Resources\Lengths.bin" />
+    <None Include="Properties\launchsettings.json" />
+    <Page Include="MainWindow.xaml" />
+    <PackageReference Include="Microsoft.Windows.CppWinRT">
+      <Version>2.0.230225.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.WindowsAppSDK">
+      <Version>1.2.230217.4</Version>
+    </PackageReference>
+    <Page Include="Styles\Button.xaml" />
+    <Page Include="Styles\CommandBar.xaml" />
+    <Page Include="Styles\ContentDialog.xaml" />
+    <Page Include="Styles\FontIcon.xaml" />
+    <Page Include="Styles\Grid.xaml" />
+    <Page Include="Styles\GridView.xaml" />
+    <Page Include="Styles\HyperlinkButton.xaml" />
+    <Page Include="Styles\InfoBar.xaml" />
+    <Page Include="Styles\ListView.xaml" />
+    <Page Include="Styles\MenuFlyout.xaml" />
+    <Page Include="Styles\MinMaxCloseControl.xaml" />
+    <Page Include="Styles\Pivot.xaml" />
+    <Page Include="Styles\TeachingTip.xaml" />
+    <Page Include="Styles\TextBlock.xaml" />
+    <Page Include="Styles\ToggleSwitch.xaml" />
+    <Page Include="Styles\WindowChrome.xaml" />
+    <PRIResource Include="Strings\en-us\About.resw" />
+    <PRIResource Include="Strings\en-us\Console.resw" />
+    <PRIResource Include="Strings\en-us\Dialog.resw" />
+    <PRIResource Include="Strings\en-us\Download.resw" />
+    <PRIResource Include="Strings\en-us\History.resw" />
+    <PRIResource Include="Strings\en-us\Home.resw" />
+    <PRIResource Include="Strings\en-us\Notification.resw" />
+    <PRIResource Include="Strings\en-us\Resources.resw" />
+    <PRIResource Include="Strings\en-us\Settings.resw" />
+    <PRIResource Include="Strings\en-us\Web.resw" />
+    <PRIResource Include="Strings\en-us\Window.resw" />
+    <PRIResource Include="Strings\zh-hans\About.resw" />
+    <PRIResource Include="Strings\zh-hans\Console.resw" />
+    <PRIResource Include="Strings\zh-hans\Dialog.resw" />
+    <PRIResource Include="Strings\zh-hans\Download.resw" />
+    <PRIResource Include="Strings\zh-hans\History.resw" />
+    <PRIResource Include="Strings\zh-hans\Home.resw" />
+    <PRIResource Include="Strings\zh-hans\Notification.resw" />
+    <PRIResource Include="Strings\zh-hans\Resources.resw" />
+    <PRIResource Include="Strings\zh-hans\Settings.resw" />
+    <PRIResource Include="Strings\zh-hans\Web.resw" />
+    <PRIResource Include="Strings\zh-hans\Window.resw" />
+    <ResourceCompile Include="GetStoreApp.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>

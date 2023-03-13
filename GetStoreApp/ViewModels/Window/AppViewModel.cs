@@ -36,7 +36,6 @@ namespace GetStoreApp.ViewModels.Window
 
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
             await Aria2Service.CloseAria2Async();
-            await TaskbarService.CloseTaskbarProcessAsync();
             Messenger.Default.Send(true, MessageToken.WindowClosed);
         }
 
@@ -164,7 +163,6 @@ namespace GetStoreApp.ViewModels.Window
         {
             await SaveWindowInformationAsync();
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
-            await TaskbarService.CloseTaskbarProcessAsync();
             await Aria2Service.CloseAria2Async();
             AppNotificationService.Unregister();
             BackdropHelper.ReleaseBackdrop();
