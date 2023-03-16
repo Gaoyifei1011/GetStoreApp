@@ -190,7 +190,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 // 删除记录
                 try
                 {
-                    bool DeleteResult = await DownloadDBService.DeleteAsync(backgroundItem.DownloadKey);
+                    bool DeleteResult = await DownloadXmlService.DeleteAsync(backgroundItem.DownloadKey);
 
                     if (DeleteResult)
                     {
@@ -270,7 +270,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             // 删除记录
             try
             {
-                bool DeleteResult = await DownloadDBService.DeleteAsync(unfinishedItem.DownloadKey);
+                bool DeleteResult = await DownloadXmlService.DeleteAsync(unfinishedItem.DownloadKey);
 
                 if (DeleteResult)
                 {
@@ -340,7 +340,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     {
                         if (backgroundItem.DownloadFlag is 0 || backgroundItem.DownloadFlag is 2)
                         {
-                            BackgroundModel item = await DownloadDBService.QueryWithKeyAsync(backgroundItem.DownloadKey);
+                            BackgroundModel item = await DownloadXmlService.QueryWithKeyAsync(backgroundItem.DownloadKey);
 
                             lock (UnfinishedDataListLock)
                             {
@@ -366,9 +366,9 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// </summary>
         private async Task GetUnfinishedDataListAsync()
         {
-            List<BackgroundModel> FailureDownloadRawList = await DownloadDBService.QueryWithFlagAsync(0);
+            List<BackgroundModel> FailureDownloadRawList = await DownloadXmlService.QueryWithFlagAsync(0);
 
-            List<BackgroundModel> PauseDownloadRawList = await DownloadDBService.QueryWithFlagAsync(2);
+            List<BackgroundModel> PauseDownloadRawList = await DownloadXmlService.QueryWithFlagAsync(2);
 
             lock (UnfinishedDataListLock)
             {

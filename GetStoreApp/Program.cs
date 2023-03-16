@@ -52,8 +52,12 @@ namespace GetStoreApp
                 AppNotificationService.Initialize();
                 DesktopLaunchService.InitializeLaunchAsync().Wait();
 
+                // 启动任务栏通知区域进程
+                TaskbarService.StartTaskbarProcessAsync().Wait();
+
                 WinUILibrary.XamlCheckProcessRequirements();
                 ComWrappersSupport.InitializeComWrappers();
+
                 Application.Start((param) =>
                 {
                     DispatcherQueueSynchronizationContext context = new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread());
@@ -112,9 +116,9 @@ namespace GetStoreApp
 
             if (IsDesktopProgram)
             {
-                // 初始化数据库信息
-                await DataBaseService.InitializeDataBaseAsync();
-                await DownloadDBService.InitializeDownloadDBAsync();
+                // 初始化存储数据信息
+                await XmlStorageService.InitializeXmlFileAsync();
+                await DownloadXmlService.InitializeDownloadXmlAsync();
 
                 // 初始化应用配置信息
                 await AppExitService.InitializeAppExitAsync();

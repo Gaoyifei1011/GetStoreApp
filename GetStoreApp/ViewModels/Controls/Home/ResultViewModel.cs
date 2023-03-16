@@ -218,7 +218,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                         DownloadFlag = 1
                     };
 
-                    DuplicatedDataInfoArgs CheckResult = await DownloadDBService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
+                    DuplicatedDataInfoArgs CheckResult = await DownloadXmlService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
 
                     if (CheckResult is DuplicatedDataInfoArgs.None)
                     {
@@ -310,7 +310,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 };
 
                 // 检查是否存在相同的任务记录
-                DuplicatedDataInfoArgs CheckResult = await DownloadDBService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
+                DuplicatedDataInfoArgs CheckResult = await DownloadXmlService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
 
                 switch (CheckResult)
                 {

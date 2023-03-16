@@ -94,7 +94,7 @@ namespace GetStoreApp.Services.Controls.Download
             if (operation is "Add")
             {
                 // 在数据库中添加下载信息，并获取添加成功的结果
-                bool AddResult = await DownloadDBService.AddAsync(backgroundItem);
+                bool AddResult = await DownloadXmlService.AddAsync(backgroundItem);
 
                 // 数据库添加成功后添加等待下载任务
                 if (AddResult)
@@ -106,7 +106,7 @@ namespace GetStoreApp.Services.Controls.Download
             // 存在重复的下载记录
             else if (operation is "Update")
             {
-                bool UpdateResult = await DownloadDBService.UpdateFlagAsync(backgroundItem.DownloadKey, 1);
+                bool UpdateResult = await DownloadXmlService.UpdateFlagAsync(backgroundItem.DownloadKey, 1);
 
                 // 数据库更新成功后添加等待下载任务
                 if (UpdateResult)
@@ -144,7 +144,7 @@ namespace GetStoreApp.Services.Controls.Download
             }
 
             // 将继续下载的任务状态标记为等待下载状态
-            bool UpdateResult = await DownloadDBService.UpdateFlagAsync(downloadItem.DownloadKey, 1);
+            bool UpdateResult = await DownloadXmlService.UpdateFlagAsync(downloadItem.DownloadKey, 1);
 
             // 数据库添加成功后添加等待下载任务
             if (UpdateResult)
@@ -187,7 +187,7 @@ namespace GetStoreApp.Services.Controls.Download
                 try
                 {
                     WaitingList.Remove(WaitingList.Find(item => item.DownloadKey == downloadKey));
-                    Result = await DownloadDBService.UpdateFlagAsync(downloadKey, 2);
+                    Result = await DownloadXmlService.UpdateFlagAsync(downloadKey, 2);
                 }
                 catch (Exception)
                 {
@@ -206,7 +206,7 @@ namespace GetStoreApp.Services.Controls.Download
                     try
                     {
                         DownloadingList.Remove(DownloadingList.Find(item => item.DownloadKey == downloadKey));
-                        Result = await DownloadDBService.UpdateFlagAsync(downloadKey, 2);
+                        Result = await DownloadXmlService.UpdateFlagAsync(downloadKey, 2);
                     }
                     catch (Exception)
                     {
@@ -256,7 +256,7 @@ namespace GetStoreApp.Services.Controls.Download
                 {
                     try
                     {
-                        await DownloadDBService.UpdateFlagAsync(backgroundItem.DownloadKey, 2);
+                        await DownloadXmlService.UpdateFlagAsync(backgroundItem.DownloadKey, 2);
                     }
                     catch (Exception)
                     {
@@ -270,7 +270,7 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 try
                 {
-                    await DownloadDBService.UpdateFlagAsync(backgroundItem.DownloadKey, 2);
+                    await DownloadXmlService.UpdateFlagAsync(backgroundItem.DownloadKey, 2);
                 }
                 catch (Exception)
                 {
@@ -315,7 +315,7 @@ namespace GetStoreApp.Services.Controls.Download
                 try
                 {
                     WaitingList.RemoveAll(item => item.DownloadKey == downloadKey);
-                    Result = await DownloadDBService.DeleteAsync(downloadKey);
+                    Result = await DownloadXmlService.DeleteAsync(downloadKey);
                 }
                 catch (Exception)
                 {
@@ -335,7 +335,7 @@ namespace GetStoreApp.Services.Controls.Download
                     {
                         DownloadingList.RemoveAll(item => item.DownloadKey == downloadKey);
 
-                        Result = await DownloadDBService.DeleteAsync(downloadKey);
+                        Result = await DownloadXmlService.DeleteAsync(downloadKey);
                     }
                     catch (Exception)
                     {
@@ -461,7 +461,7 @@ namespace GetStoreApp.Services.Controls.Download
 
                         DownloadingList.Add(DownloadItem);
 
-                        await DownloadDBService.UpdateFlagAsync(DownloadItem.DownloadKey, DownloadItem.DownloadFlag);
+                        await DownloadXmlService.UpdateFlagAsync(DownloadItem.DownloadKey, DownloadItem.DownloadFlag);
                     }
                     catch (Exception)
                     {
@@ -503,8 +503,8 @@ namespace GetStoreApp.Services.Controls.Download
                             downloadItem.TotalSize = TellStatusResult.Item4;
                             downloadItem.CurrentSpeed = TellStatusResult.Item5;
 
-                            await DownloadDBService.UpdateFlagAsync(downloadItem.DownloadKey, downloadItem.DownloadFlag);
-                            await DownloadDBService.UpdateFileSizeAsync(downloadItem.DownloadKey, downloadItem.TotalSize);
+                            await DownloadXmlService.UpdateFlagAsync(downloadItem.DownloadKey, downloadItem.DownloadFlag);
+                            await DownloadXmlService.UpdateFileSizeAsync(downloadItem.DownloadKey, downloadItem.TotalSize);
                         }
 
                         // 当下载任务处于错误状态时，将当前任务标记为错误状态
@@ -516,8 +516,8 @@ namespace GetStoreApp.Services.Controls.Download
                             downloadItem.TotalSize = TellStatusResult.Item4;
                             downloadItem.CurrentSpeed = TellStatusResult.Item5;
 
-                            await DownloadDBService.UpdateFlagAsync(downloadItem.DownloadKey, downloadItem.DownloadFlag);
-                            await DownloadDBService.UpdateFileSizeAsync(downloadItem.DownloadKey, downloadItem.TotalSize);
+                            await DownloadXmlService.UpdateFlagAsync(downloadItem.DownloadKey, downloadItem.DownloadFlag);
+                            await DownloadXmlService.UpdateFileSizeAsync(downloadItem.DownloadKey, downloadItem.TotalSize);
                         }
                     }
                     else
@@ -525,8 +525,8 @@ namespace GetStoreApp.Services.Controls.Download
                         downloadItem.DownloadFlag = 2;
                         downloadItem.GID = string.Empty;
 
-                        await DownloadDBService.UpdateFlagAsync(downloadItem.DownloadKey, downloadItem.DownloadFlag);
-                        await DownloadDBService.UpdateFileSizeAsync(downloadItem.DownloadKey, downloadItem.TotalSize);
+                        await DownloadXmlService.UpdateFlagAsync(downloadItem.DownloadKey, downloadItem.DownloadFlag);
+                        await DownloadXmlService.UpdateFileSizeAsync(downloadItem.DownloadKey, downloadItem.TotalSize);
                     }
                 }
 

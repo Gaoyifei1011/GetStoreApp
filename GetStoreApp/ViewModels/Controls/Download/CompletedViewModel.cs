@@ -130,7 +130,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 IsSelectMode = false;
 
-                bool DeleteSelectedResult = await DownloadDBService.DeleteSelectedAsync(SelectedCompletedDataList);
+                bool DeleteSelectedResult = await DownloadXmlService.DeleteSelectedAsync(SelectedCompletedDataList);
 
                 lock (CompletedDataListLock)
                 {
@@ -198,7 +198,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     // 删除记录
                     try
                     {
-                        bool DeleteResult = await DownloadDBService.DeleteAsync(completedItem.DownloadKey);
+                        bool DeleteResult = await DownloadXmlService.DeleteAsync(completedItem.DownloadKey);
 
                         if (DeleteResult)
                         {
@@ -373,7 +373,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     return;
                 }
 
-                bool DeleteResult = await DownloadDBService.DeleteAsync(completedItem.DownloadKey);
+                bool DeleteResult = await DownloadXmlService.DeleteAsync(completedItem.DownloadKey);
 
                 if (DeleteResult)
                 {
@@ -407,7 +407,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 // 删除记录
                 try
                 {
-                    bool DeleteResult = await DownloadDBService.DeleteAsync(completedItem.DownloadKey);
+                    bool DeleteResult = await DownloadXmlService.DeleteAsync(completedItem.DownloadKey);
 
                     if (DeleteResult)
                     {
@@ -504,7 +504,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// </summary>
         private async Task GetCompletedDataListAsync()
         {
-            List<BackgroundModel> DownloadRawList = await DownloadDBService.QueryWithFlagAsync(4);
+            List<BackgroundModel> DownloadRawList = await DownloadXmlService.QueryWithFlagAsync(4);
 
             lock (CompletedDataListLock)
             {
@@ -542,7 +542,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     {
                         if (backgroundItem.DownloadFlag is 4)
                         {
-                            BackgroundModel item = await DownloadDBService.QueryWithKeyAsync(backgroundItem.DownloadKey);
+                            BackgroundModel item = await DownloadXmlService.QueryWithKeyAsync(backgroundItem.DownloadKey);
 
                             lock (CompletedDataListLock)
                             {

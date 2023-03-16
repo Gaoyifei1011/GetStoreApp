@@ -30,7 +30,7 @@
     <Platforms>x86;x64;ARM64</Platforms>
     <PublishProtocol>FileSystem</PublishProtocol>
     <PublishReadyToRun>True</PublishReadyToRun>
-    <PublishSingleFile>true</PublishSingleFile>
+    <PublishSingleFile>True</PublishSingleFile>
     <PublishTrimmed>true</PublishTrimmed>
     <Product>获取商店应用</Product>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
@@ -298,11 +298,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    
-    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.3" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.230217.4" />
-    <PackageReference Include="SQLitePCLRaw.core" Version="2.1.4" />
-    <PackageReference Include="SQLitePCLRaw.provider.winsqlite3" Version="2.1.4" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.230313.1" />
     
     <Page Update="Styles\Button.xaml">
       <Generator>MSBuild:Compile</Generator>

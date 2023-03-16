@@ -18,12 +18,5 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.Kernel32
         /// <returns>如果函数成功，则返回值是指定模块的句柄。如果函数失败，则返回值为 NULL。</returns>
         [DllImport(Kernel32, CharSet = CharSet.Unicode, EntryPoint = "GetModuleHandleW", ExactSpelling = true, SetLastError = true)]
         public static extern IntPtr GetModuleHandle([In][Optional] string lpModuleName);
-
-        /// <summary>
-        /// 检索创建调用进程时指定的 <see cref="STARTUPINFO"> 结构的内容。
-        /// </summary>
-        /// <param name="lpStartupInfo">指向接收启动信息的 <see cref="STARTUPINFO"> 结构的指针。</param>
-        [DllImport(Kernel32, CharSet = CharSet.Unicode, EntryPoint = "GetStartupInfoW", ExactSpelling = true, SetLastError = false)]
-        public static extern void GetStartupInfo([Out] out STARTUPINFO lpStartupInfo);
     }
 }

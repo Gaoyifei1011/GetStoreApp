@@ -10,14 +10,12 @@ namespace GetStoreApp.Services.Root
     {
         private static string TaskbarProcessFilePath { get; } = string.Format(@"{0}\{1}", InfoHelper.GetAppInstalledLocation(), @"GetStoreAppHelper.exe");
 
-        private static bool IsTaskbarProcessRunning = false;
-
         /// <summary>
         /// 初始化运行任务栏辅助进程
         /// </summary>
         public static async Task StartTaskbarProcessAsync()
         {
-            IsTaskbarProcessRunning = TaskbarProcessHelper.RunTaskbarProcess(TaskbarProcessFilePath, string.Empty);
+            TaskbarProcessHelper.RunTaskbarProcess(TaskbarProcessFilePath, string.Empty);
             await Task.CompletedTask;
         }
     }

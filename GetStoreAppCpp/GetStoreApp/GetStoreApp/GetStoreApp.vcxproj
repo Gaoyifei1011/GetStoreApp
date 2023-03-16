@@ -9,6 +9,7 @@
     <CppWinRTOptimized>true</CppWinRTOptimized>
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
     <DefaultLanguage>en-US</DefaultLanguage>
+    <DisableXbfLineInfo>False</DisableXbfLineInfo>
     <MinimalCoreWin>true</MinimalCoreWin>
     <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
     <ProjectGuid>{170c68c6-52be-43f8-af3c-72818f6a6fab}</ProjectGuid>
@@ -119,25 +120,30 @@
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="WinUIApp.xaml" />
+    <ClCompile Include="Views\Window\WinUIWindow.cpp" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="WinUIApp.xaml.h">
       <DependentUpon>WinUIApp.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </ClInclude>
     <ClCompile Include="WinUIApp.xaml.cpp">
       <DependentUpon>WinUIApp.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </ClCompile>
     <ClInclude Include="MainWindow.xaml.h">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </ClInclude>
     <ClCompile Include="MainWindow.xaml.cpp">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClInclude Include="resource.h" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <Image Include="..\GetStoreAppPackage\Assets\GetStoreApp.ico" />
+    <ClInclude Include="Views\Window\WinUIWindow.h" />
     <Midl Include="WinUIApp.idl">
       <SubType>Code</SubType>
       <DependentUpon>WinUIApp.xaml</DependentUpon>
@@ -152,7 +158,7 @@
     <PackageReference Include="Microsoft.Windows.CppWinRT">
       <Version>2.0.230225.1</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.WindowsAppSDK">
+    <PackageReference Include="Microsoft.WindowsAppSDK" ExcludeAssets="build">
       <Version>1.2.230217.4</Version>
     </PackageReference>
     <Page Include="Styles\Button.xaml" />
@@ -197,4 +203,24 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
+  <Target Name="AddMyEmbeddedItems" BeforeTargets="_GenerateProjectPriFileCore" AfterTargets="_CalculateInputsForGenerateProjectPriFileCore">
+    <ItemGroup>
+      <MyXamlEmbededItems Include="@(_LayoutFile)" Condition="'%(Extension)' == '.xbf' or '%(Extension)' == '.xaml'" />
+    </ItemGroup>
+    <Copy SourceFiles="@(MyXamlEmbededItems)" DestinationFiles="@(MyXamlEmbededItems->'$(IntermediateOutputPath)embed\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+    <ReadLinesFromFile File="$(_EmbedFileResfilePath)">
+      <Output TaskParameter="Lines" ItemName="ItemsFromFile" />
+    </ReadLinesFromFile>
+    <ItemGroup>
+      <MyEmbeddedFileList Include="@(ItemsFromFile)" />
+      <MyEmbeddedFileList Include="@(MyXamlEmbededItems->'%(Filename)%(Extension)')" />
+    </ItemGroup>
+    <WriteLinesToFile File="$(_EmbedFileResfilePath)" Lines="@(MyEmbeddedFileList)" Overwrite="true" Encoding="Unicode" />
+  </Target>
+  <Target Name="_FixMUXPri" AfterTargets="RemoveDuplicatePriFiles" BeforeTargets="_ComputeInputPriFiles">
+    <ItemGroup>
+      <MyPriToBeRemoved Include="@(_PriFilesFromPayload)" Condition="'%(_PriFilesFromPayload.NuGetPackageId)' == 'Microsoft.UI.Xaml' and '%(_PriFilesFromPayload.NuGetPackageVersion)' == '2.4.2'" />
+      <_PriFilesFromPayload Remove="@(MyPriToBeRemoved)" />
+    </ItemGroup>
+  </Target>
 </Project>

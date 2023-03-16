@@ -161,10 +161,7 @@
                     </menusAndToolbars:ExtendedAppBarButton.Flyout>
                 </menusAndToolbars:ExtendedAppBarButton>
 
-                <menusAndToolbars:ExtendedAppBarButton
-                    Cursor="Hand"
-                    IsEnabled="{x:Bind sys:Convert.ToBoolean(ViewModel.HistoryDataList.Count), Mode=OneWay}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('History/Filter')}">
+                <menusAndToolbars:ExtendedAppBarButton Cursor="Hand" Label="{x:Bind root:ResourceService.GetLocalized('History/Filter')}">
 
                     <menusAndToolbars:ExtendedAppBarButton.Icon>
                         <FontIcon Glyph="&#xE74a;" Style="{StaticResource SegoeFluentStyle}" />

@@ -5,6 +5,7 @@ using System;
 using System.Runtime.InteropServices;
 using Windows.Graphics;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace GetStoreAppHelper
 {
@@ -13,8 +14,6 @@ namespace GetStoreAppHelper
     /// </summary>
     public class MileWindow
     {
-        private STARTUPINFO StartupInfo = new STARTUPINFO();
-
         public PointInt32 Position = new PointInt32();
 
         public PointInt32 Size = new PointInt32();
@@ -29,8 +28,8 @@ namespace GetStoreAppHelper
 
         public MileWindow([Optional] string title, [Optional] UIElement content, [Optional] PointInt32 position, [Optional] PointInt32 size)
         {
-            if (title is not null) Title = title;
-            if (content is not null) Content = content;
+            Title = title is not null ? title : string.Empty;
+            Content = content is not null ? content : new ContentControl();
             if (!position.Equals(Position))
             {
                 Position.X = position.X;
@@ -80,10 +79,7 @@ namespace GetStoreAppHelper
         {
             if (isWindowCreated)
             {
-                StartupInfo.cb = Marshal.SizeOf(StartupInfo);
-                Kernel32Library.GetStartupInfo(out StartupInfo);
-
-                User32Library.ShowWindow(Handle, StartupInfo.wShowWindow);
+                User32Library.ShowWindow(Handle, WindowShowStyle.SW_SHOWDEFAULT);
                 User32Library.UpdateWindow(Handle);
 
                 while (User32Library.GetMessage(out MSG msg, IntPtr.Zero, WindowMessage.WM_NULL, WindowMessage.WM_NULL))

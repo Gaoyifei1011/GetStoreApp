@@ -20,9 +20,9 @@ namespace GetStoreApp.Services.Controls.Settings.Advanced
         {
             switch (cleanupArgs)
             {
-                case CleanArgs.History: return await HistoryDBService.ClearAsync();
+                case CleanArgs.History: return await HistoryXmlService.ClearAsync();
                 case CleanArgs.JumpList: return await CleanTaskbarJumpListAsync();
-                case CleanArgs.Download: return await DownloadDBService.ClearAsync();
+                case CleanArgs.Download: return await DownloadXmlService.ClearAsync();
                 case CleanArgs.LocalFile: return await IOHelper.CleanFolderAsync(DownloadOptionsService.DefaultFolder);
                 default: return true;
             }

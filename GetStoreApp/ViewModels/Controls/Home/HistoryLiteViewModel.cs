@@ -100,7 +100,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
         private async Task GetHistoryLiteDataListAsync()
         {
             // 获取数据库的原始记录数据
-            List<HistoryModel> HistoryRawList = await HistoryDBService.QueryAsync(HistoryLiteItem.HistoryLiteNumValue);
+            List<HistoryModel> HistoryRawList = await HistoryXmlService.QueryAsync(HistoryLiteItem.HistoryLiteNumValue);
 
             lock (HistoryLiteDataListLock)
             {

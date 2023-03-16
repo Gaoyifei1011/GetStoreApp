@@ -87,9 +87,6 @@ namespace GetStoreApp.ViewModels.Window
             // 初始化Aria2配置文件信息
             await Aria2Service.InitializeAria2ConfAsync();
 
-            // 启动任务栏通知区域进程
-            await TaskbarService.StartTaskbarProcessAsync();
-
             // 启动Aria2下载服务
             await Aria2Service.StartAria2Async();
         }

@@ -5,25 +5,27 @@ using GetStoreAppHelper.Helpers.Root;
 using GetStoreAppHelper.Services;
 using GetStoreAppHelper.UI.Controls;
 using GetStoreAppHelper.WindowsAPI.PInvoke.User32;
-using Mile.Xaml;
+using GetStoreAppHelper.WindowsAPI.PInvoke.WinUI;
 using System;
-using Windows.Graphics;
-using System.Timers;
 using System.Diagnostics;
+using System.Timers;
+using Windows.Graphics;
+using Windows.UI.Xaml;
 
 namespace GetStoreAppHelper
 {
     public sealed partial class App : Application
     {
+        private Timer AppTimer { get; set; } = new Timer(1000);
+
         public WindowsTrayIcon TrayIcon { get; private set; }
 
         public MileWindow MainWindow { get; set; }
 
-        private Timer AppTimer { get; set; } = new Timer(1000);
-
         public App()
         {
-            Initialize();
+            MileXamlLibrary.MileXamlGlobalInitialize();
+            InitializeComponent();
 
             AppTimer.Elapsed += AppTimerElapsed;
             AppTimer.AutoReset = true;
@@ -34,8 +36,12 @@ namespace GetStoreAppHelper
         {
             Process[] GetStoreAppProcess = Process.GetProcessesByName("GetStoreApp");
 
-            if(GetStoreAppProcess.Length == 0)
+            if (GetStoreAppProcess.Length == 0)
             {
+                AppTimer.Stop();
+                AppTimer.Elapsed -= AppTimerElapsed;
+                AppTimer.Dispose();
+
                 CloseApp();
             }
         }
@@ -45,18 +51,17 @@ namespace GetStoreAppHelper
         /// </summary>
         public void Run()
         {
-            InitializeTrayIcon();
             ResourceDictionaryHelper.InitializeResourceDictionaryAsync().Wait();
 
-            MainWindow = new MileWindow();
+            InitializeTrayIcon();
 
+            MainWindow = new MileWindow();
             MainWindow.Content = new TrayMenuControl();
             MainWindow.Title = ResourceService.GetLocalized("HelperResources/Title");
             MainWindow.Position.X = 0;
             MainWindow.Position.Y = 0;
             MainWindow.Size.X = 0;
             MainWindow.Size.Y = 0;
-
             MainWindow.InitializeWindow();
             MainWindow.Activate();
         }
@@ -73,15 +78,22 @@ namespace GetStoreAppHelper
 
             TrayIcon.DoubleClick = () =>
             {
-                (MainWindow.Content as TrayMenuControl).ViewModel.ShowOrHideWindowCommand.Execute(null);
+                if (MainWindow.Content is not null)
+                {
+                    (MainWindow.Content as TrayMenuControl).ViewModel.ShowOrHideWindowCommand.Execute(null);
+                }
             };
 
             TrayIcon.RightClick = () =>
             {
                 User32Library.GetCursorPos(out PointInt32 CurrentPoint);
                 User32Library.SetForegroundWindow(MainWindow.Handle);
-                (MainWindow.Content as TrayMenuControl).SetXamlRoot(MainWindow.Content.XamlRoot);
-                (MainWindow.Content as TrayMenuControl).ShowMenuFlyout(CurrentPoint);
+
+                if (MainWindow.Content is not null)
+                {
+                    (MainWindow.Content as TrayMenuControl).SetXamlRoot(MainWindow.Content.XamlRoot);
+                    (MainWindow.Content as TrayMenuControl).ShowMenuFlyout(CurrentPoint);
+                }
             };
         }
 
@@ -90,11 +102,8 @@ namespace GetStoreAppHelper
         /// </summary>
         public void CloseApp()
         {
-            AppTimer.Stop();
-            AppTimer.Elapsed -= AppTimerElapsed;
-            AppTimer.Dispose();
+            TrayIcon?.Dispose();
 
-            TrayIcon.Dispose();
             Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
         }
     }

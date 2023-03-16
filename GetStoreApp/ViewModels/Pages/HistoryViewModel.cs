@@ -91,7 +91,7 @@ namespace GetStoreApp.ViewModels.Pages
             }
         }
 
-        private string _typeFilter = "STPF_NONE";
+        private string _typeFilter = "None";
 
         public string TypeFilter
         {
@@ -104,7 +104,7 @@ namespace GetStoreApp.ViewModels.Pages
             }
         }
 
-        private string _channelFilter = "STPF_NONE";
+        private string _channelFilter = "None";
 
         public string ChannelFilter
         {
@@ -230,7 +230,7 @@ namespace GetStoreApp.ViewModels.Pages
             {
                 IsSelectMode = false;
 
-                bool DeleteResult = await HistoryDBService.DeleteAsync(SelectedHistoryDataList);
+                bool DeleteResult = await HistoryXmlService.DeleteAsync(SelectedHistoryDataList);
 
                 if (DeleteResult)
                 {
@@ -243,7 +243,7 @@ namespace GetStoreApp.ViewModels.Pages
 
                 if (HistoryDataList.Count is 0)
                 {
-                    if (TypeFilter is "STPF_NONE" || ChannelFilter is "STPF_NONE")
+                    if (TypeFilter is "None" || ChannelFilter is "None")
                     {
                         IsHistoryEmpty = true;
                         IsHistoryEmptyAfterFilter = false;
@@ -311,7 +311,7 @@ namespace GetStoreApp.ViewModels.Pages
         /// </summary>
         private async Task GetHistoryDataListAsync()
         {
-            (List<HistoryModel>, bool, bool) HistoryAllData = await HistoryDBService.QueryAllAsync(TimeSortOrder, TypeFilter, ChannelFilter);
+            (List<HistoryModel>, bool, bool) HistoryAllData = await HistoryXmlService.QueryAllAsync(TimeSortOrder, TypeFilter, ChannelFilter);
 
             // 获取数据库的原始记录数据
             List<HistoryModel> HistoryRawList = HistoryAllData.Item1;

@@ -1,22 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml" />
+    <ApplicationDefinition Include="WinUIApp.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainWindow.xaml" />
+    <Page Include="Styles\Button.xaml" />
+    <Page Include="Styles\CommandBar.xaml" />
+    <Page Include="Styles\ContentDialog.xaml" />
+    <Page Include="Styles\FontIcon.xaml" />
+    <Page Include="Styles\Grid.xaml" />
+    <Page Include="Styles\GridView.xaml" />
+    <Page Include="Styles\HyperlinkButton.xaml" />
+    <Page Include="Styles\InfoBar.xaml" />
+    <Page Include="Styles\ListView.xaml" />
+    <Page Include="Styles\MenuFlyout.xaml" />
+    <Page Include="Styles\MinMaxCloseControl.xaml" />
+    <Page Include="Styles\Pivot.xaml" />
+    <Page Include="Styles\TeachingTip.xaml" />
+    <Page Include="Styles\TextBlock.xaml" />
+    <Page Include="Styles\ToggleSwitch.xaml" />
+    <Page Include="Styles\WindowChrome.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="App.idl" />
     <Midl Include="MainWindow.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+    <ClCompile Include="Views\Window\WinUIWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Views\Window\WinUIWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">

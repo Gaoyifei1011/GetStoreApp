@@ -268,7 +268,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             // 添加时间戳
             long TimeStamp = GenerateTimeStamp();
 
-            await HistoryDBService.AddAsync(new HistoryModel
+            await HistoryXmlService.AddAsync(new HistoryModel
             {
                 CreateTimeStamp = TimeStamp,
                 HistoryKey = UniqueKeyHelper.GenerateHistoryKey(TypeList[currentType].InternalName, ChannelList[currentChannel].InternalName, currentLink),

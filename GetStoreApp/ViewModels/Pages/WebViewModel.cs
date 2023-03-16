@@ -273,7 +273,7 @@ namespace GetStoreApp.ViewModels.Pages
                         backgroundItem.DownloadKey = UniqueKeyHelper.GenerateDownloadKey(backgroundItem.FileName, backgroundItem.FilePath);
 
                         // 检查是否存在相同的任务记录
-                        DuplicatedDataInfoArgs CheckResult = await DownloadDBService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
+                        DuplicatedDataInfoArgs CheckResult = await DownloadXmlService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
 
                         switch (CheckResult)
                         {

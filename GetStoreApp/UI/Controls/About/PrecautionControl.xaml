@@ -39,6 +39,10 @@
                             VerticalOffset="25" />
                     </ToolTipService.ToolTip>
                 </HyperlinkButton>
+                <MenuFlyoutSeparator Margin="0,0,0,8" />
+
+                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/DataStorage')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/DataStorageDescription')}" />
             </StackPanel>
         </Expander.Content>
     </Expander>

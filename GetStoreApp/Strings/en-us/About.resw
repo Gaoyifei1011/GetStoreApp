@@ -165,6 +165,12 @@
   <data name="CreateDesktopShortcutToolTip" xml:space="preserve">
     <value>Create a shortcut to this app on your desktop</value>
   </data>
+  <data name="DataStorage" xml:space="preserve">
+    <value>Data storage</value>
+  </data>
+  <data name="DataStorageDescription" xml:space="preserve">
+    <value>The application's data store has now been switched to XML storage instead of database binary storage. This means that you can use text tools to access the datastore file (unencrypted), and do not feel free to modify anything in the datastore file while accessing it.</value>
+  </data>
   <data name="DesktopApps" xml:space="preserve">
     <value>Traditional desktop apps</value>
   </data>
