@@ -18,7 +18,7 @@ namespace GetStoreAppHelper
 
         public PointInt32 Size = new PointInt32();
 
-        private bool isWindowCreated = false;
+        public bool IsWindowCreated { get; private set; } = false;
 
         public string Title { get; set; } = string.Empty;
 
@@ -68,7 +68,7 @@ namespace GetStoreAppHelper
             }
             else
             {
-                isWindowCreated = true;
+                IsWindowCreated = true;
             }
         }
 
@@ -77,7 +77,7 @@ namespace GetStoreAppHelper
         /// </summary>
         public void Activate()
         {
-            if (isWindowCreated)
+            if (IsWindowCreated)
             {
                 User32Library.ShowWindow(Handle, WindowShowStyle.SW_SHOWDEFAULT);
                 User32Library.UpdateWindow(Handle);

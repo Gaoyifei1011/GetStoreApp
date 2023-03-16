@@ -257,7 +257,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 StorageFile TempFile = await StorageFile.GetFileFromPathAsync(unfinishedItem.FilePath);
                 await TempFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
             }
-            catch(Exception) { }
+            catch (Exception) { }
 
             // 删除Aria2后缀下载信息记录文件
             try

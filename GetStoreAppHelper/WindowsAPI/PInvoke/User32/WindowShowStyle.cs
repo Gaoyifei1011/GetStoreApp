@@ -1,6 +1,4 @@
-﻿using GetStoreAppHelper.WindowsAPI.PInvoke.Kernel32;
-
-namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
+﻿namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
 {
     /// <summary>
     /// 使用 <see cref="User32Library.ShowWindow"> 显示窗口的不同方式的枚举。

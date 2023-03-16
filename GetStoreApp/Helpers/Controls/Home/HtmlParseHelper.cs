@@ -81,7 +81,5 @@ namespace GetStoreApp.Helpers.Controls.Home
             }
             return ResultDataList;
         }
-
-
     }
 }

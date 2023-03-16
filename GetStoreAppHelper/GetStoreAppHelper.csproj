@@ -22,6 +22,7 @@
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <TargetPlatformMoniker>Windows,Version=$(TargetPlatformVersion)</TargetPlatformMoniker>
     <TargetPlatformVersion>10.0.22621.0</TargetPlatformVersion>
+    <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Platform)'=='x86'">
@@ -54,6 +55,7 @@
 
     <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.22621.755" />
     <PackageReference Include="Mile.Xaml" Version="2.0.546" />
+    
     <None Update="Assets\GetStoreAppHelper.ico">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
@@ -71,9 +73,5 @@
     <Page Update="UI\Controls\TrayMenuControl.xaml">
       <SubType>Designer</SubType>
     </Page>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="ViewModels\Window\" />
   </ItemGroup>
 </Project>

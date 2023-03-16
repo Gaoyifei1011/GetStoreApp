@@ -4,7 +4,6 @@ using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Helpers.Window;
 using GetStoreApp.Services.Controls.Download;
-using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.AppLifecycle;
 using System;

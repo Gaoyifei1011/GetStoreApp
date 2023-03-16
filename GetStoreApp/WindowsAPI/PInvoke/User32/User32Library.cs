@@ -45,18 +45,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         public static partial IntPtr FindWindowEx(IntPtr parentHandle, IntPtr childAfter, string className, string windowTitle);
 
         /// <summary>
-        /// 检索窗口工作区的坐标。 客户端坐标指定工作区的左上角和右下角。 由于客户端坐标相对于窗口工作区的左上角，左上角的坐标 (0，0) 。
-        /// </summary>
-        /// <param name="hWnd">要检索其客户端坐标的窗口的句柄。</param>
-        /// <param name="lpRect">
-        /// 指向接收客户端坐标的 <see cref="RECT"> 结构的指针。 左侧成员和顶部成员为零。 右成员和底部成员包含窗口的宽度和高度。
-        /// </param>
-        /// <returns></returns>
-        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "GetClientRect", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool GetClientRect(IntPtr hWnd, out RECT lpRect);
-
-        /// <summary>
         /// 检索鼠标光标的位置（以屏幕坐标为单位）。
         /// </summary>
         /// <param name="lpPoint">指向接收光标屏幕坐标的 <see cref="PointInt32"> 结构的指针。</param>

@@ -1,6 +1,4 @@
-﻿using GetStoreAppHelper.WindowsAPI.PInvoke.Kernel32;
-using GetStoreAppHelper.WindowsAPI.PInvoke.Shell32;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using Windows.Graphics;
 
@@ -9,20 +7,6 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
     public static class User32Library
     {
         private const string User32 = "User32.dll";
-
-        /// <summary>
-        /// 将消息信息传递给指定的窗口过程。
-        /// </summary>
-        /// <param name="lpPrevWndFunc">
-        /// 上一个窗口过程。 如果通过调用设置为GWL_WNDPROC或DWL_DLGPROC的 nIndex 参数的 GetWindowLong 函数来获取此值，
-        /// 则它实际上是窗口或对话框过程的地址，或者仅对 <see cref="CallWindowProc"> 有意义的特殊内部值。</param>
-        /// <param name="hWnd">用于接收消息的窗口过程的句柄。</param>
-        /// <param name="Msg">消息。</param>
-        /// <param name="wParam">其他的消息特定信息。 此参数的内容取决于 <param name="Msg"> 参数的值。</param>
-        /// <param name="lParam">其他的消息特定信息。 此参数的内容取决于 <param name="Msg"> 参数的值。</param>
-        /// <returns>返回值指定消息处理的结果，具体取决于发送的消息。</returns>
-        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "CallWindowProc", SetLastError = false)]
-        public static extern IntPtr CallWindowProc(IntPtr lpPrevWndFunc, IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
         /// 创建具有扩展窗口样式的重叠、弹出窗口或子窗口;否则，此函数与 InitializeWindow 函数相同。
@@ -82,34 +66,12 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
            IntPtr lpParam);
 
         /// <summary>
-        /// 调用默认窗口过程，为应用程序未处理的任何窗口消息提供默认处理。 此函数可确保处理每个消息。 使用窗口过程收到的相同参数调用 <see cref="DefWindowProc">。
-        /// </summary>
-        /// <param name="hWnd">接收消息的窗口过程的句柄。</param>
-        /// <param name="Msg">其他消息信息。</param>
-        /// <param name="wParam">其他消息信息。 此参数的内容取决于 <param name="Msg"> 参数的值。</param>
-        /// <param name="lParam">其他消息信息。 此参数的内容取决于 <param name="Msg"> 参数的值。</param>
-        /// <returns>返回值是消息处理的结果，取决于消息。</returns>
-        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "DefWindowProc", SetLastError = false)]
-        public static extern IntPtr DefWindowProc(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
-
-        /// <summary>
         /// 销毁图标并释放图标占用的任何内存。
         /// </summary>
         /// <param name="hIcon">要销毁的图标的句柄。 图标不得使用。</param>
         /// <returns>如果该函数成功，则返回值为非零值。</returns>
         [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "DestroyIcon", SetLastError = true)]
         public static extern int DestroyIcon(IntPtr hIcon);
-
-        /// <summary>
-        /// 销毁指定的窗口。 该函数将 <see cref="WindowMessage.WM_DESTROY"> 和 <see cref="WindowMessage.WM_NCDESTROY"> 消息发送到窗口以停用它，并从中删除键盘焦点。 该函数还会销毁窗口的菜单、刷新线程消息队列、销毁计时器、删除剪贴板所有权，如果窗口位于查看器链顶部) ，则中断剪贴板查看器链。
-        /// 如果指定的窗口是父窗口或所有者窗口， 则 <see cref="DestroyWindow"> 会在销毁父窗口或所有者窗口时自动销毁关联的子窗口或拥有窗口。
-        /// 该函数首先销毁子窗口或拥有的窗口，然后销毁父窗口或所有者窗口。
-        /// <see cref="DestroyWindow"> 还会销毁 CreateDialog 函数创建的无模式对话框。
-        /// </summary>
-        /// <param name="hwnd">要销毁的窗口的句柄。</param>
-        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
-        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "DestroyWindow", SetLastError = true)]
-        public static extern bool DestroyWindow(IntPtr hwnd);
 
         /// <summary>
         /// 将消息调度到窗口过程。 它通常用于调度 <see cref="GetMessage"> 函数检索的消息。
@@ -129,7 +91,7 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
         /// 如果 <param name="lpClassName"> 为 NULL，它将查找其标题与 <param name="lpWindowName"> 参数匹配的任何窗口。
         /// </param>
         /// <param name="lpWindowName">窗口名称 (窗口的标题) 。 如果此参数为 NULL，则所有窗口名称都匹配。</param>
-        /// <returns></returns>
+        /// <returns>如果函数成功，则返回值是具有指定类和窗口名称的窗口的句柄。如果函数失败，则返回值为 NULL。</returns>
         [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "FindWindowW", SetLastError = true)]
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
@@ -245,22 +207,6 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
         );
 
         /// <summary>
-        /// 注册一个窗口类，以便在对 CreateWindow 或 <see cref="CreateWindowEx"> 函数的调用中随后使用。
-        /// </summary>
-        /// <param name="lpWndClass">指向 <see cref="WindowClass"> 结构的指针。 在将结构传递给函数之前，必须用相应的类属性填充结构。</param>
-        /// <return>如果函数成功，则返回值是唯一标识所注册类的类原子。 如果函数失败，则返回值为零。</return>
-        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "RegisterClassW", SetLastError = true)]
-        public static extern short RegisterClass(ref WindowClass lpWndClass);
-
-        /// <summary>
-        /// 定义保证在整个系统中唯一的新窗口消息。 发送或发布消息时可以使用消息值。
-        /// </summary>
-        /// <param name="lpString">要注册的消息。</param>
-        /// <returns>如果成功注册消息，则返回值是范围0xC000到0xFFFF的消息标识符。如果函数失败，则返回值为零。</returns>
-        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "RegisterWindowMessageW", SetLastError = false)]
-        public static extern uint RegisterWindowMessage([MarshalAs(UnmanagedType.LPWStr)] string lpString);
-
-        /// <summary>
         /// 将创建指定窗口的线程引入前台并激活窗口。 键盘输入将定向到窗口，并为用户更改各种视觉提示。 系统向创建前台窗口的线程分配略高于其他线程的优先级。
         /// </summary>
         /// <param name="hWnd">应激活并带到前台的窗口的句柄。</param>
@@ -285,26 +231,6 @@ namespace GetStoreAppHelper.WindowsAPI.PInvoke.User32
 
         [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "PostMessage", SetLastError = false)]
         public static extern IntPtr PostMessage(IntPtr hWnd, WindowMessage wMsg, int wParam, IntPtr lParam);
-
-        /// <summary>
-        /// 更改指定窗口的属性。 该函数还将指定偏移量处的32位（long类型）值设置到额外的窗口内存中。
-        /// </summary>
-        /// <param name="hWnd">窗口的句柄，间接地是窗口所属的类</param>
-        /// <param name="nIndex">要设置的值的从零开始的偏移量。 有效值的范围为零到额外窗口内存的字节数，减去整数的大小。</param>
-        /// <param name="newProc">新事件处理函数（回调函数）</param>
-        /// <returns>如果函数成功，则返回值是指定 32 位整数的上一个值。如果函数失败，则返回值为零。 </returns>
-        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SetWindowLongW", SetLastError = false)]
-        public static extern IntPtr SetWindowLong(IntPtr hWnd, WindowLongIndexFlags nIndex, WindowProc newProc);
-
-        /// <summary>
-        /// 更改指定窗口的属性。 该函数还将指定偏移量处的64位（long类型）值设置到额外的窗口内存中。
-        /// </summary>
-        /// <param name="hWnd">窗口的句柄，间接地是窗口所属的类</param>
-        /// <param name="nIndex">要设置的值的从零开始的偏移量。 有效值的范围为零到额外窗口内存的字节数，减去整数的大小。</param>
-        /// <param name="newProc">新事件处理函数（回调函数）</param>
-        /// <returns>如果函数成功，则返回值是指定偏移量的上一个值。如果函数失败，则返回值为零。 </returns>
-        [DllImport(User32, CharSet = CharSet.Ansi, EntryPoint = "SetWindowLongPtrW", SetLastError = false)]
-        public static extern IntPtr SetWindowLongPtr(IntPtr hWnd, WindowLongIndexFlags nIndex, WindowProc newProc);
 
         /// <summary>
         /// 更改子窗口、弹出窗口或顶级窗口的大小、位置和 Z 顺序。 这些窗口根据屏幕上的外观进行排序。 最上面的窗口接收最高排名，是 Z 顺序中的第一个窗口。

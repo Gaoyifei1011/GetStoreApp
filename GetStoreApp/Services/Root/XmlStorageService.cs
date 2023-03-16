@@ -32,26 +32,23 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         public static async Task InitializeHistoryXmlFileAsync()
         {
-            while (true)
+            try
             {
-                try
+                if (File.Exists(Path.Combine(ApplicationData.Current.LocalFolder.Path, HistoryXmlFileName)))
                 {
-                    if (File.Exists(Path.Combine(ApplicationData.Current.LocalFolder.Path, HistoryXmlFileName)))
-                    {
-                        HistoryXmlFile = await ApplicationData.Current.LocalFolder.GetFileAsync(HistoryXmlFileName);
-                    }
-                    else
-                    {
-                        HistoryXmlFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(HistoryXmlFileName);
-                        await InitializeHistoryDataAsync();
-                    }
+                    HistoryXmlFile = await ApplicationData.Current.LocalFolder.GetFileAsync(HistoryXmlFileName);
                 }
-                catch (Exception)
+                else
                 {
-                    continue;
+                    HistoryXmlFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(HistoryXmlFileName);
+                    await InitializeHistoryDataAsync();
                 }
             }
-
+            catch (Exception)
+            {
+                User32Library.MessageBox(IntPtr.Zero, ResourceService.GetLocalized("MessageInfo/CreateFileFailed"), ResourceService.GetLocalized("Resources/Application"), MessageBoxOptions.MB_OK);
+                Environment.Exit(Convert.ToInt32(AppExitCode.Failed));
+            }
         }
 
         /// <summary>

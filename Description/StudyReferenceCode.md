@@ -6,7 +6,6 @@
 > * [Blog-GeographicalLocation](https://github.com/Ucodia/Blog-GeographicalLocation)&emsp;
 > * [Community Toolkit](https://github.com/CommunityToolkit/dotnet)&emsp;
 > * [Desktop Window](https://github.com/marb2000/DesktopWindow)&emsp;
-> * [Hardcodet NotifyIcon for WPF](https://github.com/hardcodet/wpf-notifyicon)&emsp;
 > * [IFileDialog](https://github.com/shigobu/IFileDialog)&emsp;
 > * [Microsoft Windows API Codepack](https://github.com/Wagnerp/Windows-API-CodePack-NET)&emsp;
 > * [Mile.Xaml.Samples](https://github.com/ProjectMile/Mile.Xaml.Samples)&emsp;
@@ -18,4 +17,3 @@
 > * [TaskbarManager](https://blog.csdn.net/weixin_30521161/article/details/96964128)&emsp;
 > * [UWP InAppNotification(Popup)](https://www.cnblogs.com/MzwCat/p/7748033.html)&emsp;
 > * [WinUI3_Transparent](https://github.com/castorix/WinUI3_Transparent)&emsp;
-> * [YDKK.Windows.NotifyIcon](https://github.com/YDKK/YDKK.Windows.NotifyIcon)&emsp;

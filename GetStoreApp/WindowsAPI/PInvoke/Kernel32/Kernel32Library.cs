@@ -127,17 +127,18 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// 如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。
         /// 请注意，函数在进程完成初始化之前返回 。 如果找不到所需的 DLL 或无法初始化，则进程将终止。 若要获取进程的终止状态，请调用 GetExitCodeProcess。
         /// </returns>
-        [DllImport(Kernel32, CharSet = CharSet.Unicode, EntryPoint = "CreateProcess", SetLastError = true)]
-        public static extern bool CreateProcess(
+        [LibraryImport(Kernel32, EntryPoint = "CreateProcessW", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static partial bool CreateProcess(
             string lpApplicationName,
             string lpCommandLine,
             IntPtr lpProcessAttributes,
             IntPtr lpThreadAttributes,
-            bool bInheritHandles,
+            [MarshalAs(UnmanagedType.Bool)] bool bInheritHandles,
             CreateProcessFlags dwCreationFlags,
             IntPtr lpEnvironment,
             string lpCurrentDirectory,
-            [In] ref STARTUPINFO lpStartupInfo,
+            ref STARTUPINFO lpStartupInfo,
             out PROCESS_INFORMATION lpProcessInformation);
 
         /// <summary>枚举操作系统上可用的地理位置标识符 (类型 GEOID) 。</summary>
@@ -191,8 +192,8 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// 检索创建调用进程时指定的 <see cref="STARTUPINFO"> 结构的内容。
         /// </summary>
         /// <param name="lpStartupInfo">指向接收启动信息的 <see cref="STARTUPINFO"> 结构的指针。</param>
-        [DllImport(Kernel32, CharSet = CharSet.Unicode, EntryPoint = "GetStartupInfo", SetLastError = false)]
-        public static extern void GetStartupInfo(out STARTUPINFO lpStartupInfo);
+        [LibraryImport(Kernel32, EntryPoint = "GetStartupInfoW", SetLastError = false)]
+        public static partial void GetStartupInfo(out STARTUPINFO lpStartupInfo);
 
         /// <summary>
         /// 打开现有的本地进程对象。
