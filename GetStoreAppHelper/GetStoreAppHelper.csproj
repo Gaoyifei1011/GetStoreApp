@@ -1,16 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <ApplicationManifest>App.manifest</ApplicationManifest>
     <ApplicationIcon>Assets\GetStoreAppHelper.ico</ApplicationIcon>
+    <ApplicationManifest>App.manifest</ApplicationManifest>
     <AssemblyName>GetStoreAppHelper</AssemblyName>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <Copyright>高怡飞</Copyright>
-    <DisableXbfLineInfo>False</DisableXbfLineInfo>
     <Deterministic>true</Deterministic>
+    <DisableXbfLineInfo>False</DisableXbfLineInfo>
     <EnableTypeInfoReflection>true</EnableTypeInfoReflection>
     <FileAlignment>512</FileAlignment>
-    <FileVersion>1.3.310.0</FileVersion>
+    <FileVersion>1.3.317.0</FileVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <LangVersion>latest</LangVersion>
     <OutputType>WinExe</OutputType>

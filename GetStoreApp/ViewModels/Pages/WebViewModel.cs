@@ -292,10 +292,13 @@ namespace GetStoreApp.ViewModels.Pages
                                     {
                                         try
                                         {
-                                            StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
-                                            await ExistedFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                                            if (File.Exists(backgroundItem.FilePath))
+                                            {
+                                                File.Delete(backgroundItem.FilePath);
+                                            }
                                         }
-                                        catch (Exception)
+                                        catch (Exception) { }
+                                        finally
                                         {
                                             bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
                                             new DownloadCreateNotification(AddResult).Show();
@@ -316,10 +319,13 @@ namespace GetStoreApp.ViewModels.Pages
                                     {
                                         try
                                         {
-                                            StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
-                                            await ExistedFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                                            if (File.Exists(backgroundItem.FilePath))
+                                            {
+                                                File.Delete(backgroundItem.FilePath);
+                                            }
                                         }
-                                        catch (Exception)
+                                        catch (Exception) { }
+                                        finally
                                         {
                                             bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
                                             new DownloadCreateNotification(AddResult).Show();

@@ -18,6 +18,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
@@ -37,6 +38,8 @@ namespace GetStoreApp.ViewModels.Controls.Download
         private readonly object CompletedDataListLock = new object();
 
         public ObservableCollection<CompletedModel> CompletedDataList { get; } = new ObservableCollection<CompletedModel>();
+
+        private bool isUpdatingNow = false;
 
         private bool _isSelectMode = false;
 
@@ -58,41 +61,46 @@ namespace GetStoreApp.ViewModels.Controls.Download
         });
 
         // 进入多选模式
-        public IRelayCommand SelectCommand => new RelayCommand(() =>
+        public IRelayCommand SelectCommand => new RelayCommand(async () =>
         {
-            lock (CompletedDataListLock)
+            while (isUpdatingNow) await Task.Delay(50);
+            lock (CompletedDataListLock) isUpdatingNow = true;
+
+            foreach (CompletedModel completedItem in CompletedDataList)
             {
-                foreach (CompletedModel completedItem in CompletedDataList)
-                {
-                    completedItem.IsSelected = false;
-                }
+                completedItem.IsSelected = false;
             }
 
             IsSelectMode = true;
+            lock (CompletedDataListLock) { isUpdatingNow = false; }
         });
 
         // 全部选择
-        public IRelayCommand SelectAllCommand => new RelayCommand(() =>
+        public IRelayCommand SelectAllCommand => new RelayCommand(async () =>
         {
-            lock (CompletedDataListLock)
+            while (isUpdatingNow) await Task.Delay(50);
+            lock (CompletedDataListLock) isUpdatingNow = true;
+
+            foreach (CompletedModel completedItem in CompletedDataList)
             {
-                foreach (CompletedModel completedItem in CompletedDataList)
-                {
-                    completedItem.IsSelected = true;
-                }
+                completedItem.IsSelected = true;
             }
+
+            lock (CompletedDataListLock) isUpdatingNow = false;
         });
 
         // 全部不选
-        public IRelayCommand SelectNoneCommand => new RelayCommand(() =>
+        public IRelayCommand SelectNoneCommand => new RelayCommand(async () =>
         {
-            lock (CompletedDataListLock)
+            while (isUpdatingNow) await Task.Delay(50);
+            lock (CompletedDataListLock) isUpdatingNow = true;
+
+            foreach (CompletedModel completedItem in CompletedDataList)
             {
-                foreach (CompletedModel completedItem in CompletedDataList)
-                {
-                    completedItem.IsSelected = false;
-                }
+                completedItem.IsSelected = false;
             }
+
+            lock (CompletedDataListLock) isUpdatingNow = false;
         });
 
         // 删除选中的任务
@@ -132,20 +140,22 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
                 bool DeleteSelectedResult = await DownloadXmlService.DeleteSelectedAsync(SelectedCompletedDataList);
 
-                lock (CompletedDataListLock)
+                while (isUpdatingNow) await Task.Delay(50);
+                lock (CompletedDataListLock) isUpdatingNow = true;
+
+                foreach (BackgroundModel backgroundItem in SelectedCompletedDataList)
                 {
-                    foreach (BackgroundModel backgroundItem in SelectedCompletedDataList)
+                    try
                     {
-                        try
-                        {
-                            CompletedDataList.Remove(CompletedDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey));
-                        }
-                        catch (Exception)
-                        {
-                            continue;
-                        }
+                        CompletedDataList.Remove(CompletedDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey));
+                    }
+                    catch (Exception)
+                    {
+                        continue;
                     }
                 }
+
+                lock (CompletedDataListLock) isUpdatingNow = false;
             }
         });
 
@@ -185,13 +195,18 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 IsSelectMode = false;
 
+                while (isUpdatingNow) await Task.Delay(50);
+                lock (CompletedDataListLock) isUpdatingNow = true;
+
                 foreach (BackgroundModel completedItem in SelectedCompletedDataList)
                 {
                     // 删除文件
                     try
                     {
-                        StorageFile CompletedDownloadFile = await StorageFile.GetFileFromPathAsync(completedItem.FilePath);
-                        await CompletedDownloadFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                        if (File.Exists(completedItem.FilePath))
+                        {
+                            File.Delete(completedItem.FilePath);
+                        }
                     }
                     catch (Exception) { }
 
@@ -202,14 +217,16 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
                         if (DeleteResult)
                         {
-                            lock (CompletedDataListLock)
-                            {
-                                CompletedDataList.Remove(CompletedDataList.First(item => item.DownloadKey == item.DownloadKey));
-                            }
+                            CompletedDataList.Remove(CompletedDataList.First(item => item.DownloadKey == item.DownloadKey));
                         }
                     }
-                    catch (Exception) { }
+                    catch (Exception)
+                    {
+                        continue;
+                    }
                 }
+
+                lock (CompletedDataListLock) isUpdatingNow = false;
             }
         });
 
@@ -291,37 +308,48 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     else if (InstallModeService.InstallMode.InternalName == InstallModeService.InstallModeList[1].InternalName)
                     {
                         // 标记安装状态
-                        int InstallIndex = CompletedDataList.IndexOf(CompletedDataList.First(item => item.DownloadKey == completedItem.DownloadKey));
-                        CompletedDataList[InstallIndex].IsInstalling = true;
-
-                        PackageManager packageManager = new PackageManager();
-
-                        // 更新安装进度
-                        Progress<DeploymentProgress> progressCallBack = new Progress<DeploymentProgress>((installProgress) =>
-                        {
-                            CompletedDataList[InstallIndex].InstallValue = installProgress.percentage;
-                        });
-
                         try
                         {
-                            // 安装目标应用
-                            DeploymentResult InstallResult = await packageManager.AddPackageAsync(new Uri(completedItem.FilePath), null, DeploymentOptions.None).AsTask(progressCallBack);
-                            // 显示安装成功通知
-                            AppNotificationService.Show("InstallApp", "Successfully", CompletedFile.Name);
+                            int InstallIndex = CompletedDataList.IndexOf(CompletedDataList.First(item => item.DownloadKey == completedItem.DownloadKey));
+
+                            if (InstallIndex is not -1 && InstallIndex < CompletedDataList.Count)
+                            {
+                                CompletedDataList[InstallIndex].IsInstalling = true;
+
+                                PackageManager packageManager = new PackageManager();
+
+                                // 更新安装进度
+                                Progress<DeploymentProgress> progressCallBack = new Progress<DeploymentProgress>((installProgress) =>
+                                {
+                                    CompletedDataList[InstallIndex].InstallValue = installProgress.percentage;
+                                });
+
+                                try
+                                {
+                                    // 安装目标应用
+                                    DeploymentResult InstallResult = await packageManager.AddPackageAsync(new Uri(completedItem.FilePath), null, DeploymentOptions.None).AsTask(progressCallBack);
+                                    // 显示安装成功通知
+                                    AppNotificationService.Show("InstallApp", "Successfully", CompletedFile.Name);
+                                }
+                                // 安装失败显示失败信息
+                                catch (Exception e)
+                                {
+                                    CompletedDataList[InstallIndex].InstallError = true;
+                                    // 显示安装失败通知
+                                    AppNotificationService.Show("InstallApp", "Error", CompletedFile.Name, e.Message);
+                                }
+                                // 恢复原来的安装信息显示（并延缓当前安装信息显示时间1秒）
+                                finally
+                                {
+                                    await Task.Delay(500);
+                                    CompletedDataList[InstallIndex].IsInstalling = false;
+                                    CompletedDataList[InstallIndex].InstallError = false;
+                                }
+                            }
                         }
-                        // 安装失败显示失败信息
-                        catch (Exception e)
+                        catch (Exception)
                         {
-                            CompletedDataList[InstallIndex].InstallError = true;
-                            // 显示安装失败通知
-                            AppNotificationService.Show("InstallApp", "TBPF_ERROR", CompletedFile.Name, e.Message);
-                        }
-                        // 恢复原来的安装信息显示（并延缓当前安装信息显示时间1秒）
-                        finally
-                        {
-                            await Task.Delay(1000);
-                            CompletedDataList[InstallIndex].IsInstalling = false;
-                            CompletedDataList[InstallIndex].InstallError = false;
+                            return;
                         }
                     }
                 }
@@ -377,10 +405,16 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
                 if (DeleteResult)
                 {
-                    lock (CompletedDataListLock)
+                    while (isUpdatingNow) await Task.Delay(50);
+                    lock (CompletedDataListLock) isUpdatingNow = true;
+
+                    try
                     {
                         CompletedDataList.Remove(completedItem);
                     }
+                    catch (Exception) { }
+
+                    lock (CompletedDataListLock) isUpdatingNow = false;
                 }
             }
         });
@@ -399,25 +433,29 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 // 删除文件
                 try
                 {
-                    StorageFile CompletedDownloadFile = await StorageFile.GetFileFromPathAsync(completedItem.FilePath);
-                    await CompletedDownloadFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
-                }
-                catch (Exception) { }
-
-                // 删除记录
-                try
-                {
-                    bool DeleteResult = await DownloadXmlService.DeleteAsync(completedItem.DownloadKey);
-
-                    if (DeleteResult)
+                    if (File.Exists(completedItem.FilePath))
                     {
-                        lock (CompletedDataListLock)
-                        {
-                            CompletedDataList.Remove(completedItem);
-                        }
+                        File.Delete(completedItem.FilePath);
                     }
                 }
                 catch (Exception) { }
+
+                bool DeleteResult = await DownloadXmlService.DeleteAsync(completedItem.DownloadKey);
+
+                // 删除记录
+                if (DeleteResult)
+                {
+                    while (isUpdatingNow) await Task.Delay(50);
+                    lock (CompletedDataListLock) isUpdatingNow = true;
+
+                    try
+                    {
+                        CompletedDataList.Remove(completedItem);
+                    }
+                    catch (Exception) { }
+
+                    lock (CompletedDataListLock) isUpdatingNow = false;
+                }
             }
         });
 
@@ -488,15 +526,20 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// <summary>
         /// 在多选模式下点击项目选择相应的条目
         /// </summary>
-        public void OnItemClick(object sender, ItemClickEventArgs args)
+        public async void OnItemClick(object sender, ItemClickEventArgs args)
         {
             CompletedModel completedItem = (CompletedModel)args.ClickedItem;
             int ClickedIndex = CompletedDataList.IndexOf(completedItem);
 
-            lock (CompletedDataListLock)
+            while (isUpdatingNow) await Task.Delay(50);
+            lock (CompletedDataListLock) isUpdatingNow = true;
+
+            if (ClickedIndex >= 0 && ClickedIndex < CompletedDataList.Count)
             {
                 CompletedDataList[ClickedIndex].IsSelected = !CompletedDataList[ClickedIndex].IsSelected;
             }
+
+            lock (CompletedDataListLock) isUpdatingNow = false;
         }
 
         /// <summary>
@@ -506,27 +549,26 @@ namespace GetStoreApp.ViewModels.Controls.Download
         {
             List<BackgroundModel> DownloadRawList = await DownloadXmlService.QueryWithFlagAsync(4);
 
-            lock (CompletedDataListLock)
+            while (isUpdatingNow) await Task.Delay(50);
+            lock (CompletedDataListLock) isUpdatingNow = true;
+
+            CompletedDataList.Clear();
+
+            foreach (BackgroundModel downloadRawData in DownloadRawList)
             {
-                CompletedDataList.Clear();
+                CompletedDataList.Add(new CompletedModel
+                {
+                    DownloadKey = downloadRawData.DownloadKey,
+                    FileName = downloadRawData.FileName,
+                    FileLink = downloadRawData.FileLink,
+                    FilePath = downloadRawData.FilePath,
+                    FileSHA1 = downloadRawData.FileSHA1,
+                    TotalSize = downloadRawData.TotalSize,
+                    DownloadFlag = downloadRawData.DownloadFlag
+                });
             }
 
-            lock (CompletedDataListLock)
-            {
-                foreach (BackgroundModel downloadRawData in DownloadRawList)
-                {
-                    CompletedDataList.Add(new CompletedModel
-                    {
-                        DownloadKey = downloadRawData.DownloadKey,
-                        FileName = downloadRawData.FileName,
-                        FileLink = downloadRawData.FileLink,
-                        FilePath = downloadRawData.FilePath,
-                        FileSHA1 = downloadRawData.FileSHA1,
-                        TotalSize = downloadRawData.TotalSize,
-                        DownloadFlag = downloadRawData.DownloadFlag
-                    });
-                }
-            }
+            lock (CompletedDataListLock) isUpdatingNow = false;
         }
 
         /// <summary>
@@ -538,27 +580,29 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(async () =>
                 {
+                    while (isUpdatingNow) await Task.Delay(50);
+                    lock (CompletedDataListLock) isUpdatingNow = true;
+
                     foreach (BackgroundModel backgroundItem in args.RemovedItems)
                     {
                         if (backgroundItem.DownloadFlag is 4)
                         {
                             BackgroundModel item = await DownloadXmlService.QueryWithKeyAsync(backgroundItem.DownloadKey);
 
-                            lock (CompletedDataListLock)
+                            CompletedDataList.Add(new CompletedModel
                             {
-                                CompletedDataList.Add(new CompletedModel
-                                {
-                                    DownloadKey = item.DownloadKey,
-                                    FileName = item.FileName,
-                                    FileLink = item.FileLink,
-                                    FilePath = item.FilePath,
-                                    FileSHA1 = item.FileSHA1,
-                                    TotalSize = item.TotalSize,
-                                    DownloadFlag = item.DownloadFlag
-                                });
-                            }
+                                DownloadKey = item.DownloadKey,
+                                FileName = item.FileName,
+                                FileLink = item.FileLink,
+                                FilePath = item.FilePath,
+                                FileSHA1 = item.FileSHA1,
+                                TotalSize = item.TotalSize,
+                                DownloadFlag = item.DownloadFlag
+                            });
                         }
                     }
+
+                    lock (CompletedDataListLock) isUpdatingNow = false;
                 });
             }
         }

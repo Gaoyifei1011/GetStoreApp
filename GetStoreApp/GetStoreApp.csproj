@@ -7,20 +7,20 @@
     <AssemblyName>GetStoreApp</AssemblyName>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
-    <Copyright>高怡飞</Copyright>
-    <DisableXbfLineInfo>False</DisableXbfLineInfo>
+    <Copyright>Copyright ©2022-2023 高怡飞, All Rights Reserved.</Copyright>
     <Defineconstants>DISABLE_XAML_GENERATED_MAIN</Defineconstants>
     <Deterministic>true</Deterministic>
     <DesktopCompatible>true</DesktopCompatible>
+    <DisableXbfLineInfo>False</DisableXbfLineInfo>
     <EnableMsixTooling>false</EnableMsixTooling>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <FileAlignment>512</FileAlignment>
-    <FileVersion>1.3.310.0</FileVersion>
+    <FileVersion>1.3.317.0</FileVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
-    <IncludeSymbols>False</IncludeSymbols>
     <ImplicitUsings>disable</ImplicitUsings>
+    <IncludeSymbols>False</IncludeSymbols>
     <LangVersion>latest</LangVersion>
     <NeutralLanguage>en-US</NeutralLanguage>
     <Nullable>disable</Nullable>
@@ -28,11 +28,11 @@
     <OutputType>WinExe</OutputType>
     <PackageIcon>Assets\GetStoreApp.png</PackageIcon>
     <Platforms>x86;x64;ARM64</Platforms>
+    <Product>获取商店应用</Product>
     <PublishProtocol>FileSystem</PublishProtocol>
     <PublishReadyToRun>True</PublishReadyToRun>
     <PublishSingleFile>True</PublishSingleFile>
     <PublishTrimmed>true</PublishTrimmed>
-    <Product>获取商店应用</Product>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <RootNamespace>GetStoreApp</RootNamespace>
     <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
@@ -43,7 +43,7 @@
     <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <TrimMode>partial</TrimMode>
-    <Version>1.3.310.0</Version>
+    <Version>1.3.317.0</Version>
     <UseWindowsForms>False</UseWindowsForms>
     <UseWinUI>true</UseWinUI>
     <UseWPF>False</UseWPF>

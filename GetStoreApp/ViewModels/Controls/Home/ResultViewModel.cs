@@ -17,9 +17,9 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
-using Windows.Storage;
 using Windows.System;
 
 namespace GetStoreApp.ViewModels.Controls.Home
@@ -29,9 +29,6 @@ namespace GetStoreApp.ViewModels.Controls.Home
     /// </summary>
     public sealed class ResultViewModel : ViewModelBase
     {
-        // 临界区资源访问互斥锁
-        private readonly object ResultDataListLock = new object();
-
         public ObservableCollection<ResultModel> ResultDataList { get; } = new ObservableCollection<ResultModel>();
 
         private bool _resultCotnrolVisable = false;
@@ -83,13 +80,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
         // 进入多选模式
         public IRelayCommand SelectCommand => new RelayCommand(() =>
         {
-            // 保证线程安全
-            lock (ResultDataListLock)
+            foreach (ResultModel resultItem in ResultDataList)
             {
-                foreach (ResultModel resultItem in ResultDataList)
-                {
-                    resultItem.IsSelected = false;
-                }
+                resultItem.IsSelected = false;
             }
 
             IsSelectMode = true;
@@ -98,26 +91,18 @@ namespace GetStoreApp.ViewModels.Controls.Home
         // 全选
         public IRelayCommand SelectAllCommand => new RelayCommand(() =>
         {
-            // 保证线程安全
-            lock (ResultDataListLock)
+            foreach (ResultModel resultItem in ResultDataList)
             {
-                foreach (ResultModel resultItem in ResultDataList)
-                {
-                    resultItem.IsSelected = true;
-                }
+                resultItem.IsSelected = true;
             }
         });
 
         // 全部不选
         public IRelayCommand SelectNoneCommand => new RelayCommand(() =>
         {
-            // 保证线程安全
-            lock (ResultDataListLock)
+            foreach (ResultModel resultItem in ResultDataList)
             {
-                foreach (ResultModel resultItem in ResultDataList)
-                {
-                    resultItem.IsSelected = false;
-                }
+                resultItem.IsSelected = false;
             }
         });
 
@@ -241,10 +226,13 @@ namespace GetStoreApp.ViewModels.Controls.Home
                         {
                             try
                             {
-                                StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
-                                await ExistedFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                                if (File.Exists(backgroundItem.FilePath))
+                                {
+                                    File.Delete(backgroundItem.FilePath);
+                                }
                             }
-                            catch (Exception)
+                            catch (Exception) { }
+                            finally
                             {
                                 await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
                                 IsDownloadSuccessfully = true;
@@ -329,10 +317,13 @@ namespace GetStoreApp.ViewModels.Controls.Home
                             {
                                 try
                                 {
-                                    StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
-                                    await ExistedFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                                    if (File.Exists(backgroundItem.FilePath))
+                                    {
+                                        File.Delete(backgroundItem.FilePath);
+                                    }
                                 }
-                                catch (Exception)
+                                catch (Exception) { }
+                                finally
                                 {
                                     bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
                                     new DownloadCreateNotification(AddResult).Show();
@@ -353,10 +344,13 @@ namespace GetStoreApp.ViewModels.Controls.Home
                             {
                                 try
                                 {
-                                    StorageFile ExistedFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
-                                    await ExistedFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                                    if (File.Exists(backgroundItem.FilePath))
+                                    {
+                                        File.Delete(backgroundItem.FilePath);
+                                    }
                                 }
-                                catch (Exception)
+                                catch (Exception) { }
+                                finally
                                 {
                                     bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
                                     new DownloadCreateNotification(AddResult).Show();
@@ -434,18 +428,12 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
             Messenger.Default.Register<List<ResultModel>>(this, MessageToken.ResultDataList, (resultDataListMessage) =>
             {
-                lock (ResultDataListLock)
-                {
-                    ResultDataList.Clear();
-                }
+                ResultDataList.Clear();
 
-                lock (ResultDataListLock)
+                foreach (ResultModel resultItem in resultDataListMessage)
                 {
-                    foreach (ResultModel resultItem in resultDataListMessage)
-                    {
-                        resultItem.IsSelected = false;
-                        ResultDataList.Add(resultItem);
-                    }
+                    resultItem.IsSelected = false;
+                    ResultDataList.Add(resultItem);
                 }
             });
 
@@ -466,10 +454,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             ResultModel resultItem = (ResultModel)args.ClickedItem;
             int ClickedIndex = ResultDataList.IndexOf(resultItem);
 
-            lock (ResultDataListLock)
-            {
-                ResultDataList[ClickedIndex].IsSelected = !ResultDataList[ClickedIndex].IsSelected;
-            }
+            ResultDataList[ClickedIndex].IsSelected = !ResultDataList[ClickedIndex].IsSelected;
         }
     }
 }

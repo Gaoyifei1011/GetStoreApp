@@ -178,7 +178,7 @@ namespace GetStoreApp.Services.Root
                             notification.ExpiresOnReboot = true;
                             AppNotificationManager.Show(notification);
                         }
-                        else if (notificationContent[0] is "TBPF_ERROR")
+                        else if (notificationContent[0] is "Error")
                         {
                             notification = new AppNotification(string.Format(ResourceService.GetLocalized("/Notification/InstallError"), notificationContent[1], notificationContent[2]));
                             notification.ExpiresOnReboot = true;

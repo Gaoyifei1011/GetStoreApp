@@ -16,20 +16,24 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 清空缓存文件夹
         /// </summary>
-        public static async Task<bool> CleanFolderAsync(StorageFolder folder)
+        public static bool CleanFolder(StorageFolder folder)
         {
             try
             {
-                // 删除当前文件夹下所有文件
-                foreach (StorageFile subFile in await folder.GetFilesAsync())
+                if (string.IsNullOrEmpty(folder.Path) || !Directory.Exists(folder.Path))
                 {
-                    await subFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                    return true;
                 }
 
-                // 删除当前文件夹下所有子文件夹（递归）
-                foreach (StorageFolder subFolder in await folder.GetFoldersAsync())
+                // 删除当前文件夹下所有文件
+                foreach (string strFile in Directory.GetFiles(folder.Path))
                 {
-                    await subFolder.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                    File.Delete(strFile);
+                }
+                // 删除当前文件夹下所有子文件夹(递归)
+                foreach (string strDir in Directory.GetDirectories(folder.Path))
+                {
+                    Directory.Delete(strDir, true);
                 }
 
                 return true;

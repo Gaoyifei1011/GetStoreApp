@@ -23,7 +23,7 @@ namespace GetStoreApp.Services.Controls.Settings.Advanced
                 case CleanArgs.History: return await HistoryXmlService.ClearAsync();
                 case CleanArgs.JumpList: return await CleanTaskbarJumpListAsync();
                 case CleanArgs.Download: return await DownloadXmlService.ClearAsync();
-                case CleanArgs.LocalFile: return await IOHelper.CleanFolderAsync(DownloadOptionsService.DefaultFolder);
+                case CleanArgs.LocalFile: return IOHelper.CleanFolder(DownloadOptionsService.DefaultFolder);
                 default: return true;
             }
         }

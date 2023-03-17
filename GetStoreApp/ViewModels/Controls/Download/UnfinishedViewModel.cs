@@ -16,9 +16,9 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.Storage;
 
 namespace GetStoreApp.ViewModels.Controls.Download
 {
@@ -29,6 +29,8 @@ namespace GetStoreApp.ViewModels.Controls.Download
     {
         // 临界区资源访问互斥锁
         private readonly object UnfinishedDataListLock = new object();
+
+        private bool isUpdatingNow = false;
 
         public ObservableCollection<UnfinishedModel> UnfinishedDataList { get; } = new ObservableCollection<UnfinishedModel>();
 
@@ -83,22 +85,22 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 });
             }
 
+            while (isUpdatingNow) await Task.Delay(50);
+            lock (UnfinishedDataListLock) isUpdatingNow = true;
+
             foreach (BackgroundModel unfinishedItem in PauseList)
             {
                 bool ContinueResult = await DownloadSchedulerService.ContinueTaskAsync(unfinishedItem);
 
                 if (ContinueResult)
                 {
-                    lock (UnfinishedDataListLock)
+                    try
                     {
-                        try
-                        {
-                            UnfinishedDataList.Remove(UnfinishedDataList.First(item => item.DownloadKey == item.DownloadKey));
-                        }
-                        catch (Exception)
-                        {
-                            continue;
-                        }
+                        UnfinishedDataList.Remove(UnfinishedDataList.First(item => item.DownloadKey == item.DownloadKey));
+                    }
+                    catch (Exception)
+                    {
+                        continue;
                     }
                 }
                 else
@@ -106,44 +108,51 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     continue;
                 }
             }
+
+            lock (UnfinishedDataListLock) isUpdatingNow = false;
         });
 
         // 进入多选模式
-        public IRelayCommand SelectCommand => new RelayCommand(() =>
+        public IRelayCommand SelectCommand => new RelayCommand(async () =>
         {
-            lock (UnfinishedDataListLock)
+            while (isUpdatingNow) await Task.Delay(50);
+            lock (UnfinishedDataListLock) isUpdatingNow = true;
+
+            foreach (UnfinishedModel unfinishedItem in UnfinishedDataList)
             {
-                foreach (UnfinishedModel unfinishedItem in UnfinishedDataList)
-                {
-                    unfinishedItem.IsSelected = false;
-                }
+                unfinishedItem.IsSelected = false;
             }
 
             IsSelectMode = true;
+            lock (UnfinishedDataListLock) isUpdatingNow = false;
         });
 
         // 全部选择
-        public IRelayCommand SelectAllCommand => new RelayCommand(() =>
+        public IRelayCommand SelectAllCommand => new RelayCommand(async () =>
         {
-            lock (UnfinishedDataListLock)
+            while (isUpdatingNow) await Task.Delay(50);
+            lock (UnfinishedDataListLock) isUpdatingNow = true;
+
+            foreach (UnfinishedModel unfinishedItem in UnfinishedDataList)
             {
-                foreach (UnfinishedModel unfinishedItem in UnfinishedDataList)
-                {
-                    unfinishedItem.IsSelected = true;
-                }
+                unfinishedItem.IsSelected = true;
             }
+
+            lock (UnfinishedDataListLock) isUpdatingNow = false;
         });
 
         // 全部不选
-        public IRelayCommand SelectNoneCommand => new RelayCommand(() =>
+        public IRelayCommand SelectNoneCommand => new RelayCommand(async () =>
         {
-            lock (UnfinishedDataListLock)
+            while (isUpdatingNow) await Task.Delay(50);
+            lock (UnfinishedDataListLock) isUpdatingNow = true;
+
+            foreach (UnfinishedModel unfinishedItem in UnfinishedDataList)
             {
-                foreach (UnfinishedModel unfinishedItem in UnfinishedDataList)
-                {
-                    unfinishedItem.IsSelected = false;
-                }
+                unfinishedItem.IsSelected = false;
             }
+
+            lock (UnfinishedDataListLock) isUpdatingNow = false;
         });
 
         // 删除选中的任务
@@ -169,21 +178,28 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
             IsSelectMode = false;
 
+            while (isUpdatingNow) await Task.Delay(50);
+            lock (UnfinishedDataListLock) isUpdatingNow = true;
+
             foreach (BackgroundModel backgroundItem in SelectedUnfinishedDataList)
             {
                 // 删除下载文件
                 try
                 {
-                    StorageFile TempFile = await StorageFile.GetFileFromPathAsync(backgroundItem.FilePath);
-                    await TempFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                    if (File.Exists(backgroundItem.FilePath))
+                    {
+                        File.Delete(backgroundItem.FilePath);
+                    }
                 }
                 catch (Exception) { }
 
                 // 删除Aria2后缀下载信息记录文件
                 try
                 {
-                    StorageFile TempAria2File = await StorageFile.GetFileFromPathAsync(string.Format("{0}.{1}", backgroundItem.FilePath, "aria2"));
-                    await TempAria2File.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                    if (File.Exists(string.Format("{0}.{1}", backgroundItem.FilePath, "aria2")))
+                    {
+                        File.Delete(string.Format("{0}.{1}", backgroundItem.FilePath, "aria2"));
+                    }
                 }
                 catch (Exception) { }
 
@@ -194,14 +210,13 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
                     if (DeleteResult)
                     {
-                        lock (UnfinishedDataListLock)
-                        {
-                            UnfinishedDataList.Remove(UnfinishedDataList.First(item => item.DownloadKey == item.DownloadKey));
-                        }
+                        UnfinishedDataList.Remove(UnfinishedDataList.First(item => item.DownloadKey == item.DownloadKey));
                     }
                 }
                 catch (Exception) { }
             }
+
+            lock (UnfinishedDataListLock) isUpdatingNow = false;
         });
 
         // 退出多选模式
@@ -240,10 +255,12 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
                 if (ContinueResult)
                 {
-                    lock (UnfinishedDataList)
-                    {
-                        UnfinishedDataList.Remove(unfinishedItem);
-                    }
+                    while (isUpdatingNow) await Task.Delay(50);
+                    lock (UnfinishedDataListLock) isUpdatingNow = true;
+
+                    UnfinishedDataList.Remove(unfinishedItem);
+
+                    lock (UnfinishedDataListLock) isUpdatingNow = false;
                 }
             }
         });
@@ -254,33 +271,39 @@ namespace GetStoreApp.ViewModels.Controls.Download
             // 删除下载文件
             try
             {
-                StorageFile TempFile = await StorageFile.GetFileFromPathAsync(unfinishedItem.FilePath);
-                await TempFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                if (File.Exists(unfinishedItem.FilePath))
+                {
+                    File.Delete(unfinishedItem.FilePath);
+                }
             }
             catch (Exception) { }
 
             // 删除Aria2后缀下载信息记录文件
             try
             {
-                StorageFile TempAria2File = await StorageFile.GetFileFromPathAsync(string.Format("{0}.{1}", unfinishedItem.FilePath, "aria2"));
-                await TempAria2File.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                if (File.Exists(string.Format("{0}.{1}", unfinishedItem.FilePath, "aria2")))
+                {
+                    File.Delete(string.Format("{0}.{1}", unfinishedItem.FilePath, "aria2"));
+                }
             }
             catch (Exception) { }
 
             // 删除记录
+            while (isUpdatingNow) await Task.Delay(50);
+            lock (UnfinishedDataListLock) isUpdatingNow = true;
+
             try
             {
                 bool DeleteResult = await DownloadXmlService.DeleteAsync(unfinishedItem.DownloadKey);
 
                 if (DeleteResult)
                 {
-                    lock (UnfinishedDataListLock)
-                    {
-                        UnfinishedDataList.Remove(unfinishedItem);
-                    }
+                    UnfinishedDataList.Remove(unfinishedItem);
                 }
             }
             catch (Exception) { }
+
+            lock (UnfinishedDataListLock) isUpdatingNow = false;
         });
 
         public UnfinishedViewModel()
@@ -316,15 +339,20 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// <summary>
         /// 在多选模式下点击项目选择相应的条目
         /// </summary>
-        public void OnItemClick(object sender, ItemClickEventArgs args)
+        public async void OnItemClick(object sender, ItemClickEventArgs args)
         {
             UnfinishedModel resultItem = (UnfinishedModel)args.ClickedItem;
             int ClickedIndex = UnfinishedDataList.IndexOf(resultItem);
 
-            lock (UnfinishedDataListLock)
+            while (isUpdatingNow) await Task.Delay(50);
+            lock (UnfinishedDataListLock) isUpdatingNow = true;
+
+            if (ClickedIndex is not >= 0 && ClickedIndex < UnfinishedDataList.Count)
             {
                 UnfinishedDataList[ClickedIndex].IsSelected = !UnfinishedDataList[ClickedIndex].IsSelected;
             }
+
+            lock (UnfinishedDataListLock) isUpdatingNow = false;
         }
 
         /// <summary>
@@ -336,27 +364,29 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(async () =>
                 {
+                    while (isUpdatingNow) await Task.Delay(50);
+                    lock (UnfinishedDataListLock) isUpdatingNow = true;
+
                     foreach (BackgroundModel backgroundItem in args.RemovedItems)
                     {
                         if (backgroundItem.DownloadFlag is 0 || backgroundItem.DownloadFlag is 2)
                         {
                             BackgroundModel item = await DownloadXmlService.QueryWithKeyAsync(backgroundItem.DownloadKey);
 
-                            lock (UnfinishedDataListLock)
+                            UnfinishedDataList.Add(new UnfinishedModel
                             {
-                                UnfinishedDataList.Add(new UnfinishedModel
-                                {
-                                    DownloadKey = item.DownloadKey,
-                                    FileName = item.FileName,
-                                    FilePath = item.FilePath,
-                                    FileLink = item.FileLink,
-                                    FileSHA1 = item.FileSHA1,
-                                    TotalSize = item.TotalSize,
-                                    DownloadFlag = item.DownloadFlag
-                                });
-                            }
+                                DownloadKey = item.DownloadKey,
+                                FileName = item.FileName,
+                                FilePath = item.FilePath,
+                                FileLink = item.FileLink,
+                                FileSHA1 = item.FileSHA1,
+                                TotalSize = item.TotalSize,
+                                DownloadFlag = item.DownloadFlag
+                            });
                         }
                     }
+
+                    lock (UnfinishedDataListLock) isUpdatingNow = false;
                 });
             }
         }
@@ -370,14 +400,12 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
             List<BackgroundModel> PauseDownloadRawList = await DownloadXmlService.QueryWithFlagAsync(2);
 
-            lock (UnfinishedDataListLock)
-            {
-                UnfinishedDataList.Clear();
-            }
+            while (isUpdatingNow) await Task.Delay(50);
+            lock (UnfinishedDataListLock) isUpdatingNow = true;
 
-            lock (UnfinishedDataListLock)
-            {
-                PauseDownloadRawList.ForEach(downloadItem =>
+            UnfinishedDataList.Clear();
+
+            PauseDownloadRawList.ForEach(downloadItem =>
                 {
                     UnfinishedDataList.Add(new UnfinishedModel
                     {
@@ -391,20 +419,21 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     });
                 });
 
-                FailureDownloadRawList.ForEach(downloadItem =>
+            FailureDownloadRawList.ForEach(downloadItem =>
+            {
+                UnfinishedDataList.Add(new UnfinishedModel
                 {
-                    UnfinishedDataList.Add(new UnfinishedModel
-                    {
-                        DownloadKey = downloadItem.DownloadKey,
-                        FileName = downloadItem.FileName,
-                        FileLink = downloadItem.FileLink,
-                        FilePath = downloadItem.FilePath,
-                        FileSHA1 = downloadItem.FileSHA1,
-                        TotalSize = downloadItem.TotalSize,
-                        DownloadFlag = downloadItem.DownloadFlag
-                    });
+                    DownloadKey = downloadItem.DownloadKey,
+                    FileName = downloadItem.FileName,
+                    FileLink = downloadItem.FileLink,
+                    FilePath = downloadItem.FilePath,
+                    FileSHA1 = downloadItem.FileSHA1,
+                    TotalSize = downloadItem.TotalSize,
+                    DownloadFlag = downloadItem.DownloadFlag
                 });
-            }
+            });
+
+            lock (UnfinishedDataListLock) isUpdatingNow = false;
         }
     }
 }

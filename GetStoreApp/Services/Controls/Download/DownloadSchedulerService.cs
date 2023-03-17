@@ -18,7 +18,7 @@ namespace GetStoreApp.Services.Controls.Download
     public static class DownloadSchedulerService
     {
         // 临界区资源访问互斥锁
-        private static readonly object IsUpdatingNowLock = new object();
+        private static readonly object DownloadSchedulerLock = new object();
 
         private static readonly object IsNetWorkConnectedLock = new object();
 
@@ -76,18 +76,9 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         public static async Task<bool> AddTaskAsync(BackgroundModel backgroundItem, string operation)
         {
-            // 有信息在更新时，等待操作
-            while (IsUpdatingNow)
-            {
-                await Task.Delay(300);
-                continue;
-            }
-
-            // 当有信息处于更新状态中时，暂停其他操作
-            lock (IsUpdatingNowLock)
-            {
-                IsUpdatingNow = true;
-            }
+            // 尝试进入写模式，该模式必须等待
+            while (IsUpdatingNow) await Task.Delay(50);
+            lock (DownloadSchedulerLock) IsUpdatingNow = true;
 
             bool Result = false;
 
@@ -116,11 +107,8 @@ namespace GetStoreApp.Services.Controls.Download
                 }
             }
 
-            // 信息更新完毕时，允许其他操作开始执行
-            lock (IsUpdatingNowLock)
-            {
-                IsUpdatingNow = false;
-            }
+            // 信息更新完毕时，退出写模式，让其他线程执行操作
+            lock (DownloadSchedulerLock) IsUpdatingNow = false;
 
             return Result;
         }
@@ -130,18 +118,9 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         public static async Task<bool> ContinueTaskAsync(BackgroundModel downloadItem)
         {
-            // 有信息在更新时，等待操作
-            while (IsUpdatingNow)
-            {
-                await Task.Delay(300);
-                continue;
-            }
-
-            // 当有信息处于更新状态中时，暂停其他操作
-            lock (IsUpdatingNowLock)
-            {
-                IsUpdatingNow = true;
-            }
+            // 尝试进入写模式，该模式必须等待
+            while (IsUpdatingNow) await Task.Delay(50);
+            lock (DownloadSchedulerLock) IsUpdatingNow = true;
 
             // 将继续下载的任务状态标记为等待下载状态
             bool UpdateResult = await DownloadXmlService.UpdateFlagAsync(downloadItem.DownloadKey, 1);
@@ -152,11 +131,8 @@ namespace GetStoreApp.Services.Controls.Download
                 WaitingList.Add(downloadItem);
             }
 
-            // 信息更新完毕时，允许其他操作开始执行
-            lock (IsUpdatingNowLock)
-            {
-                IsUpdatingNow = false;
-            }
+            // 信息更新完毕时，退出写模式，让其他线程执行操作
+            lock (DownloadSchedulerLock) IsUpdatingNow = false;
 
             return UpdateResult;
         }
@@ -166,18 +142,9 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         public static async Task<bool> PauseTaskAsync(string downloadKey, string gID, int downloadFlag)
         {
-            // 有信息在更新时，等待操作
-            while (IsUpdatingNow)
-            {
-                await Task.Delay(300);
-                continue;
-            }
-
-            // 当有信息处于更新状态中时，暂停其他操作
-            lock (IsUpdatingNowLock)
-            {
-                IsUpdatingNow = true;
-            }
+            // 尝试进入写模式，该模式必须等待
+            while (IsUpdatingNow) await Task.Delay(50);
+            lock (DownloadSchedulerLock) IsUpdatingNow = true;
 
             bool Result = true;
 
@@ -219,11 +186,8 @@ namespace GetStoreApp.Services.Controls.Download
                 }
             }
 
-            // 信息更新完毕时，允许其他操作开始执行
-            lock (IsUpdatingNowLock)
-            {
-                IsUpdatingNow = false;
-            }
+            // 信息更新完毕时，退出写模式，让其他线程执行操作
+            lock (DownloadSchedulerLock) IsUpdatingNow = false;
 
             return Result;
         }
@@ -233,18 +197,9 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         public static async Task PauseAllTaskAsync()
         {
-            // 有信息在更新时，等待操作
-            while (IsUpdatingNow)
-            {
-                await Task.Delay(300);
-                continue;
-            }
-
-            // 当有信息处于更新状态中时，暂停其他操作
-            lock (IsUpdatingNowLock)
-            {
-                IsUpdatingNow = true;
-            }
+            // 尝试进入写模式，该模式必须等待
+            while (IsUpdatingNow) await Task.Delay(50);
+            lock (DownloadSchedulerLock) IsUpdatingNow = true;
 
             // 从正在下载列表中暂停所有正在下载任务
             foreach (BackgroundModel backgroundItem in DownloadingList)
@@ -282,11 +237,8 @@ namespace GetStoreApp.Services.Controls.Download
             DownloadingList.Clear();
             WaitingList.Clear();
 
-            // 信息更新完毕时，允许其他操作开始执行
-            lock (IsUpdatingNowLock)
-            {
-                IsUpdatingNow = false;
-            }
+            // 信息更新完毕时，退出写模式，让其他线程执行操作
+            lock (DownloadSchedulerLock) IsUpdatingNow = false;
         }
 
         /// <summary>
@@ -294,18 +246,9 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         public static async Task<bool> DeleteTaskAsync(string downloadKey, string gID, int downloadFlag)
         {
-            // 有信息在更新时，等待操作
-            while (IsUpdatingNow)
-            {
-                await Task.Delay(300);
-                continue;
-            }
-
-            // 当有信息处于更新状态中时，暂停其他操作
-            lock (IsUpdatingNowLock)
-            {
-                IsUpdatingNow = true;
-            }
+            // 尝试进入写模式，该模式必须等待
+            while (IsUpdatingNow) await Task.Delay(50);
+            lock (DownloadSchedulerLock) IsUpdatingNow = true;
 
             bool Result = true;
 
@@ -348,11 +291,8 @@ namespace GetStoreApp.Services.Controls.Download
                 }
             }
 
-            // 信息更新完毕时，允许其他操作开始执行
-            lock (IsUpdatingNowLock)
-            {
-                IsUpdatingNow = false;
-            }
+            // 信息更新完毕时，退出写模式，让其他线程执行操作
+            lock (DownloadSchedulerLock) IsUpdatingNow = false;
 
             return Result;
         }
@@ -368,27 +308,16 @@ namespace GetStoreApp.Services.Controls.Download
                 await ScheduledGetNetWorkAsync();
             }
 
-            // 有信息在更新时，不再操作，等待下一秒尝试更新内容
-            if (IsUpdatingNow)
-            {
-                return;
-            }
-
-            // 当有信息处于更新状态中时，暂停其他操作
-            lock (IsUpdatingNowLock)
-            {
-                IsUpdatingNow = true;
-            }
+            // 尝试进入写模式，该模式必须等待
+            while (IsUpdatingNow) await Task.Delay(50);
+            lock (DownloadSchedulerLock) IsUpdatingNow = true;
 
             await ScheduledUpdateStatusAsync();
 
             await ScheduledAddTaskAsync();
 
-            // 信息更新完毕时，允许其他操作开始执行
-            lock (IsUpdatingNowLock)
-            {
-                IsUpdatingNow = false;
-            }
+            // 信息更新完毕时，退出写模式，让其他线程执行操作
+            lock (DownloadSchedulerLock) IsUpdatingNow = false;
         }
 
         /// <summary>

@@ -31,6 +31,10 @@ namespace GetStoreApp.Services.Controls.Download
 
         private const string DownloadFlag = "DownloadFlag";
 
+        private static readonly object DownloadXmlFileLock = new object();
+
+        private static bool isReadingAndWriting = false;
+
         /// <summary>
         /// 检查是否有下载异常的记录，并将对应的下载状态值复原
         /// </summary>
@@ -45,7 +49,12 @@ namespace GetStoreApp.Services.Controls.Download
                 }
                 else
                 {
+                    while (isReadingAndWriting) await Task.Delay(10);
+                    lock (DownloadXmlFileLock) isReadingAndWriting = true;
+
                     XmlDocument DownloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
+
+                    lock (DownloadXmlFileLock) isReadingAndWriting = false;
 
                     if (DownloadFileDocument.HasChildNodes())
                     {
@@ -67,7 +76,12 @@ namespace GetStoreApp.Services.Controls.Download
 
                             if (isModified)
                             {
+                                while (isReadingAndWriting) await Task.Delay(10);
+                                lock (DownloadXmlFileLock) isReadingAndWriting = true;
+
                                 await DownloadFileDocument.SaveToFileAsync(XmlStorageService.DownloadXmlFile);
+
+                                lock (DownloadXmlFileLock) isReadingAndWriting = false;
                             }
                         }
                     }
@@ -86,7 +100,12 @@ namespace GetStoreApp.Services.Controls.Download
         {
             try
             {
+                while (isReadingAndWriting) await Task.Delay(10);
+                lock (DownloadXmlFileLock) isReadingAndWriting = true;
+
                 XmlDocument DownloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
+
+                lock (DownloadXmlFileLock) isReadingAndWriting = false;
 
                 if (DownloadFileDocument.HasChildNodes())
                 {
@@ -102,7 +121,12 @@ namespace GetStoreApp.Services.Controls.Download
                     DownloadItemElement.SetAttribute(DownloadFlag, Convert.ToString(backgroundItem.DownloadFlag));
                     DownloadRootElement.AppendChild(DownloadItemElement);
 
+                    while (isReadingAndWriting) await Task.Delay(10);
+                    lock (DownloadXmlFileLock) isReadingAndWriting = true;
+
                     await DownloadFileDocument.SaveToFileAsync(XmlStorageService.DownloadXmlFile);
+
+                    lock (DownloadXmlFileLock) isReadingAndWriting = false;
                     return true;
                 }
                 else
@@ -124,7 +148,12 @@ namespace GetStoreApp.Services.Controls.Download
             bool isUpdatedSuccessfully = false;
             try
             {
+                while (isReadingAndWriting) await Task.Delay(10);
+                lock (DownloadXmlFileLock) isReadingAndWriting = true;
+
                 XmlDocument DownloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
+
+                lock (DownloadXmlFileLock) isReadingAndWriting = false;
 
                 if (DownloadFileDocument.HasChildNodes())
                 {
@@ -145,7 +174,12 @@ namespace GetStoreApp.Services.Controls.Download
 
                         if (isModified)
                         {
+                            while (isReadingAndWriting) await Task.Delay(10);
+                            lock (DownloadXmlFileLock) isReadingAndWriting = true;
+
                             await DownloadFileDocument.SaveToFileAsync(XmlStorageService.DownloadXmlFile);
+
+                            lock (DownloadXmlFileLock) isReadingAndWriting = false;
                             isUpdatedSuccessfully = true;
                         }
                     }
@@ -163,7 +197,12 @@ namespace GetStoreApp.Services.Controls.Download
             bool isUpdatedSuccessfully = false;
             try
             {
+                while (isReadingAndWriting) await Task.Delay(10);
+                lock (DownloadXmlFileLock) isReadingAndWriting = true;
+
                 XmlDocument DownloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
+
+                lock (DownloadXmlFileLock) isReadingAndWriting = false;
 
                 if (DownloadFileDocument.HasChildNodes())
                 {
@@ -184,7 +223,12 @@ namespace GetStoreApp.Services.Controls.Download
 
                         if (isModified)
                         {
+                            while (isReadingAndWriting) await Task.Delay(10);
+                            lock (DownloadXmlFileLock) isReadingAndWriting = true;
+
                             await DownloadFileDocument.SaveToFileAsync(XmlStorageService.DownloadXmlFile);
+
+                            lock (DownloadXmlFileLock) isReadingAndWriting = false;
                             isUpdatedSuccessfully = true;
                         }
                     }
@@ -205,7 +249,12 @@ namespace GetStoreApp.Services.Controls.Download
 
             try
             {
+                while (isReadingAndWriting) await Task.Delay(10);
+                lock (DownloadXmlFileLock) isReadingAndWriting = true;
+
                 XmlDocument DownloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
+
+                lock (DownloadXmlFileLock) isReadingAndWriting = false;
 
                 if (DownloadFileDocument.HasChildNodes())
                 {
@@ -251,7 +300,12 @@ namespace GetStoreApp.Services.Controls.Download
 
             try
             {
+                while (isReadingAndWriting) await Task.Delay(10);
+                lock (DownloadXmlFileLock) isReadingAndWriting = true;
+
                 XmlDocument DownloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
+
+                lock (DownloadXmlFileLock) isReadingAndWriting = false;
 
                 if (DownloadFileDocument.HasChildNodes())
                 {
@@ -292,7 +346,12 @@ namespace GetStoreApp.Services.Controls.Download
 
             try
             {
+                while (isReadingAndWriting) await Task.Delay(10);
+                lock (DownloadXmlFileLock) isReadingAndWriting = true;
+
                 XmlDocument DownloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
+
+                lock (DownloadXmlFileLock) isReadingAndWriting = false;
 
                 if (DownloadFileDocument.HasChildNodes())
                 {
@@ -333,7 +392,12 @@ namespace GetStoreApp.Services.Controls.Download
             bool isDeleteSuccessfully = false;
             try
             {
+                while (isReadingAndWriting) await Task.Delay(10);
+                lock (DownloadXmlFileLock) isReadingAndWriting = true;
+
                 XmlDocument DownloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
+
+                lock (DownloadXmlFileLock) isReadingAndWriting = false;
 
                 if (DownloadFileDocument.HasChildNodes())
                 {
@@ -354,7 +418,12 @@ namespace GetStoreApp.Services.Controls.Download
 
                         if (isModified)
                         {
+                            while (isReadingAndWriting) await Task.Delay(10);
+                            lock (DownloadXmlFileLock) isReadingAndWriting = true;
+
                             await DownloadFileDocument.SaveToFileAsync(XmlStorageService.DownloadXmlFile);
+
+                            lock (DownloadXmlFileLock) isReadingAndWriting = false;
                             isDeleteSuccessfully = true;
                         }
                     }
@@ -372,7 +441,12 @@ namespace GetStoreApp.Services.Controls.Download
             bool isDeleteSuccessfully = false;
             try
             {
+                while (isReadingAndWriting) await Task.Delay(10);
+                lock (DownloadXmlFileLock) isReadingAndWriting = true;
+
                 XmlDocument DownloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
+
+                lock (DownloadXmlFileLock) isReadingAndWriting = false;
 
                 if (DownloadFileDocument.HasChildNodes())
                 {
@@ -396,7 +470,12 @@ namespace GetStoreApp.Services.Controls.Download
 
                         if (isModified)
                         {
+                            while (isReadingAndWriting) await Task.Delay(10);
+                            lock (DownloadXmlFileLock) isReadingAndWriting = true;
+
                             await DownloadFileDocument.SaveToFileAsync(XmlStorageService.DownloadXmlFile);
+
+                            lock (DownloadXmlFileLock) isReadingAndWriting = false;
                             isDeleteSuccessfully = true;
                         }
                     }
@@ -413,7 +492,12 @@ namespace GetStoreApp.Services.Controls.Download
         {
             try
             {
+                while (isReadingAndWriting) await Task.Delay(10);
+                lock (DownloadXmlFileLock) isReadingAndWriting = true;
+
                 XmlDocument DownloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
+
+                lock (DownloadXmlFileLock) isReadingAndWriting = false;
 
                 if (DownloadFileDocument.HasChildNodes())
                 {
@@ -425,7 +509,13 @@ namespace GetStoreApp.Services.Controls.Download
                         {
                             DownloadRootElement.RemoveChild(DownloadRootElement.ChildNodes[0]);
                         }
+
+                        while (isReadingAndWriting) await Task.Delay(10);
+                        lock (DownloadXmlFileLock) isReadingAndWriting = true;
+
                         await DownloadFileDocument.SaveToFileAsync(XmlStorageService.DownloadXmlFile);
+
+                        lock (DownloadXmlFileLock) isReadingAndWriting = false;
                     }
                 }
                 return true;
