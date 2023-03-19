@@ -46,6 +46,20 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         public static partial bool CloseHandle(IntPtr hObject);
 
         /// <summary>
+        /// 创建匿名管道，并将句柄返回到管道的读取和写入端。
+        /// </summary>
+        /// <param name="hReadPipe">指向接收管道读取句柄的变量的指针。</param>
+        /// <param name="hWritePipe">指向接收管道写入句柄的变量的指针。</param>
+        /// <param name="lpPipeAttributes">
+        /// 指向 <see cref="SECURITY_ATTRIBUTES"> 结构的指针，该结构确定返回的句柄是否可以由子进程继承。 如果 <param name="lpPipeAttributes"> 为 NULL，则无法继承句柄。
+        /// 结构的 lpSecurityDescriptor 成员为新管道指定安全描述符。 如果 <param name="lpPipeAttributes"> 为 NULL，管道将获取默认的安全描述符。 管道的默认安全描述符中的 ACL 来自创建者的主要或模拟令牌。
+        /// </param>
+        /// <param name="nSize">管道缓冲区的大小（以字节为单位）。 大小只是建议;系统使用该值计算适当的缓冲机制。 如果此参数为零，则系统使用默认缓冲区大小。</param>
+        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
+        [DllImport(Kernel32, CharSet = CharSet.Unicode, EntryPoint = "CreatePipe", SetLastError = true)]
+        public static extern bool CreatePipe(ref IntPtr hReadPipe, ref IntPtr hWritePipe, ref SECURITY_ATTRIBUTES lpPipeAttributes, uint nSize);
+
+        /// <summary>
         /// 获取指定进程的快照，以及这些进程使用的堆、模块和线程。
         /// </summary>
         /// <param name="dwFlags">要包含在快照中的系统部分。 此参数可使用以下一个或多个值。</param>
@@ -196,6 +210,17 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         public static partial void GetStartupInfo(out STARTUPINFO lpStartupInfo);
 
         /// <summary>
+        /// 检索指定标准设备的句柄（标准输入、标准输出或标准错误）。
+        /// </summary>
+        /// <param name="nStdHandle">标准设备。</param>
+        /// <returns>
+        /// 如果该函数成功，则返回值为指定设备的句柄，或为由先前对 <see cref="SetStdHandle"> 的调用设置的重定向句柄。
+        /// 除非应用程序已使用 <see cref="SetStdHandle"> 来设置具有较少访问权限的标准句柄，否则该句柄具有 GENERIC_READ 和 GENERIC_WRITE 访问权限。
+        /// </returns>
+        [LibraryImport(Kernel32, EntryPoint = "GetStdHandle", SetLastError = true)]
+        public static partial IntPtr GetStdHandle(StdHandle nStdHandle);
+
+        /// <summary>
         /// 打开现有的本地进程对象。
         /// </summary>
         /// <param name="dwDesiredAccess">
@@ -233,6 +258,46 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// </returns>
         [DllImport(Kernel32, CharSet = CharSet.Unicode, EntryPoint = "Process32Next", SetLastError = false)]
         public static extern bool Process32Next(IntPtr snapshot, ref PROCESSENTRY32 lppe);
+
+        /// <summary>
+        /// 从指定的文件或输入/输出 (I/O) 设备读取数据。 如果设备支持，则读取发生在文件指针指定的位置。
+        /// 此函数适用于同步操作和异步操作。 有关专为异步操作设计的类似函数，请参阅 ReadFileEx。
+        /// </summary>
+        /// <param name="hFile">
+        /// 设备句柄 (例如文件、文件流、物理磁盘、卷、控制台缓冲区、磁带驱动器、套接字、通信资源、mailslot 或管道) 。必须使用读取访问权限创建 <param name="hFile"> 参数。
+        /// 有关详细信息，请参阅通用访问权限和文件安全性和访问权限。对于异步读取操作，<param name="hFile"> 可以是使用 CreateFile 函数的 FILE_FLAG_OVERLAPPED 标志打开的任何句柄，
+        /// 也可以是套接字或 accept 函数返回的套接字句柄。
+        /// </param>
+        /// <param name="lpBuffer">
+        /// 指向接收从文件或设备读取数据的缓冲区的指针。此缓冲区必须在读取操作期间保持有效。 在读取操作完成之前，调用方不得使用此缓冲区。
+        /// </param>
+        /// <param name="nNumberOfBytesToRead">要读取的最多字节数。</param>
+        /// <param name="lpNumberOfBytesRead">
+        /// 指向使用同步 <param name="hFile"> 参数时接收读取的字节数的变量的指针。 <see cref="ReadFile"> 将此值设置为零，然后再执行任何工作或错误检查。
+        /// 如果这是一个异步操作，请对此参数使用 NULL ，以避免潜在的错误结果。仅当 <param name="lpOverlapped"> 参数不为 NULL 时，此参数才可为 NULL。
+        /// Windows 7： 此参数不能为 NULL。
+        /// </param>
+        /// <param name="lpOverlapped">
+        /// 如果使用 FILE_FLAG_OVERLAPPED 打开 <param name="hFile"> 参数，则需要指向 OVERLAPPED 结构的指针，否则可为 NULL。
+        /// 如果使用 FILE_FLAG_OVERLAPPED打开 <param name="hFile">，则 <param name="lpOverlapped"> 参数必须指向有效且唯一的 OVERLAPPED 结构，否则该函数无法错误地报告读取操作已完成。
+        /// 对于支持字节偏移量的 <param name="hFile"> ，如果使用此参数，则必须指定从文件或设备开始读取的字节偏移量。 通过设置 OVERLAPPED 结构的 Offset 和 OffsetHigh 成员来指定此偏移量。
+        /// 对于不支持字节偏移量的 <param name="hFile">，将忽略 Offset 和 OffsetHigh。
+        /// 有关 lpOverlapped 和 FILE_FLAG_OVERLAPPED的不同组合的详细信息，请参阅“备注”部分和 “同步和文件位置 ”部分。
+        /// </param>
+        /// <returns>如果函数成功，则返回值为非零 (TRUE) 。如果函数失败或异步完成，则返回值为零，(FALSE) </returns>
+        [LibraryImport(Kernel32, EntryPoint = "ReadFile", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static partial bool ReadFile(IntPtr hFile, byte[] lpBuffer, uint nNumberOfBytesToRead, out uint lpNumberOfBytesRead, IntPtr lpOverlapped);
+
+        /// <summary>
+        /// 为指定的标准设备 (标准输入、标准输出或标准错误) 设置句柄。
+        /// </summary>
+        /// <param name="nStdHandle">要为其设置句柄的标准设备。</param>
+        /// <param name="handle">标准设备的句柄。</param>
+        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
+        [LibraryImport(Kernel32, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static partial bool SetStdHandle(StdHandle nStdHandle, IntPtr handle);
 
         /// <summary>
         /// 终止指定的进程及其所有线程。

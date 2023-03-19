@@ -22,7 +22,7 @@ using WinRT;
 namespace GetStoreApp
 {
     /// <summary>
-    /// 应用程序类，程序入口
+    /// 获取商店应用 桌面程序
     /// </summary>
     public class Program
     {

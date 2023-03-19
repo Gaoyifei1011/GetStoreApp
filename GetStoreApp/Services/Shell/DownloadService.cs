@@ -4,9 +4,9 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading.Tasks;
 using Windows.System;
 
@@ -17,11 +17,11 @@ namespace GetStoreApp.Services.Shell
     /// </summary>
     public static class DownloadService
     {
-        private static string Aria2FilePath { get; } = string.Format(@"{0}\{1}", InfoHelper.GetAppInstalledLocation(), @"Aria2\Aria2c.exe");
+        private static bool IsFileDownloading = false;
 
-        private static bool IsFileDownloading;
+        public static STARTUPINFO DownloadProcessStartupInfo;
 
-        private static int Aria2ProcessId;
+        public static PROCESS_INFORMATION DownloadProcessInformation;
 
         /// <summary>
         /// 下载相应的文件
@@ -54,7 +54,7 @@ namespace GetStoreApp.Services.Shell
                             if (ConsoleLaunchService.IsAppRunning)
                             {
                                 Console.WriteLine(ResourceService.GetLocalized("Console/DownloadingInformation"), index + 1, IndexList.Count);
-                                await DownloadFileAsync(ParseService.ResultDataList[Convert.ToInt32(IndexItem) - 1].FileLink);
+                                DownloadFile(ParseService.ResultDataList[Convert.ToInt32(IndexItem) - 1].FileLink);
                             }
                         }
                         Console.WriteLine(ResourceService.GetLocalized("Console/DownloadCompleted"));
@@ -103,40 +103,83 @@ namespace GetStoreApp.Services.Shell
         /// <summary>
         /// 下载文件
         /// </summary>
-        private static async Task DownloadFileAsync(string fileLink)
+        private static unsafe void DownloadFile(string fileLink)
         {
-            ProcessStartInfo Aria2Info = new ProcessStartInfo()
+            byte[] ReadBuff = new byte[101];
+
+            DownloadProcessStartupInfo = new STARTUPINFO();
+            DownloadProcessInformation = new PROCESS_INFORMATION();
+
+            IntPtr hRead = IntPtr.Zero;
+            IntPtr hWrite = IntPtr.Zero;
+
+            SECURITY_ATTRIBUTES DownloadSecurityAttributes = new SECURITY_ATTRIBUTES();
+            DownloadSecurityAttributes.nLength = Marshal.SizeOf(typeof(SECURITY_ATTRIBUTES));
+            DownloadSecurityAttributes.bInheritHandle = true;
+            DownloadSecurityAttributes.lpSecurityDescriptor = 0;
+
+            bool PipeCreateResult = Kernel32Library.CreatePipe(ref hRead, ref hWrite, ref DownloadSecurityAttributes, 0);
+
+            if (PipeCreateResult)
             {
-                FileName = Aria2FilePath,
+                IntPtr Handle = Kernel32Library.GetStdHandle(StdHandle.STD_OUTPUT_HANDLE);
+                Kernel32Library.SetStdHandle(StdHandle.STD_OUTPUT_HANDLE, hWrite);
 
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                UseShellExecute = false,
-                CreateNoWindow = true,
+                Kernel32Library.GetStartupInfo(out DownloadProcessStartupInfo);
+                DownloadProcessStartupInfo.lpReserved = null;
+                DownloadProcessStartupInfo.lpDesktop = null;
+                DownloadProcessStartupInfo.lpTitle = null;
+                DownloadProcessStartupInfo.dwX = 0;
+                DownloadProcessStartupInfo.dwY = 0;
+                DownloadProcessStartupInfo.dwXSize = 0;
+                DownloadProcessStartupInfo.dwYSize = 0;
+                DownloadProcessStartupInfo.dwXCountChars = 500;
+                DownloadProcessStartupInfo.dwYCountChars = 500;
+                DownloadProcessStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW | STARTF.STARTF_USESTDHANDLES;
+                DownloadProcessStartupInfo.wShowWindow = 0;
+                DownloadProcessStartupInfo.cbReserved2 = 0;
+                DownloadProcessStartupInfo.lpReserved2 = IntPtr.Zero;
+                DownloadProcessStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+                DownloadProcessStartupInfo.hStdError = hWrite;
+                DownloadProcessStartupInfo.hStdOutput = hWrite;
 
-                WindowStyle = ProcessWindowStyle.Hidden,
-                Arguments = string.Format("--file-allocation=none -d \"{0}\" {1}", DownloadOptionsService.DownloadFolder.Path, fileLink)
-            };
+                bool ProcessCreateResult = Kernel32Library.CreateProcess(
+                    null,
+                    string.Format(
+                        @"{0}\{1} --file-allocation=none -d ""{2}"" ""{3}""",
+                        InfoHelper.GetAppInstalledLocation(), @"Aria2\Aria2c.exe",
+                        DownloadOptionsService.DownloadFolder.Path, fileLink
+                        ),
+                    IntPtr.Zero,
+                    IntPtr.Zero,
+                    true,
+                    CreateProcessFlags.CREATE_NO_WINDOW,
+                    IntPtr.Zero,
+                    null,
+                    ref DownloadProcessStartupInfo,
+                    out DownloadProcessInformation
+                    );
 
-            StreamReader streamReader;
+                IsFileDownloading = true;
+                Kernel32Library.SetStdHandle(StdHandle.STD_OUTPUT_HANDLE, Handle);
+                Kernel32Library.CloseHandle(hWrite);
 
-            Process Aria2Process = new Process();
-            Aria2Process.StartInfo = Aria2Info;
-            Aria2Process.Start();
-            IsFileDownloading = true;
-            Aria2ProcessId = Aria2Process.Id;
-            streamReader = Aria2Process.StandardOutput;
-            while (!streamReader.EndOfStream)
-            {
-                char[] bs = new char[16];
-                streamReader.Read(bs, 0, 16);
-                foreach (char o in bs)
+                if (ProcessCreateResult)
                 {
-                    Console.Write(o);
+                    while (Kernel32Library.ReadFile(hRead, ReadBuff, 100, out uint ReadNum, IntPtr.Zero))
+                    {
+                        ReadBuff[ReadNum] = (byte)'\0';
+                        Console.Write(Encoding.UTF8.GetString(ReadBuff));
+                    }
+
+                    if (DownloadProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(DownloadProcessInformation.hProcess);
+                    if (DownloadProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(DownloadProcessInformation.hThread);
+                    Kernel32Library.CloseHandle(hRead);
                 }
+
+                if (hRead != IntPtr.Zero) Kernel32Library.CloseHandle(hRead);
+                IsFileDownloading = false;
             }
-            await Aria2Process.WaitForExitAsync();
-            Aria2Process.Close();
         }
 
         /// <summary>
@@ -154,9 +197,9 @@ namespace GetStoreApp.Services.Shell
         {
             if (IsFileDownloading)
             {
-                if (Aria2ProcessId is not 0)
+                if (DownloadProcessInformation.dwProcessId is not 0)
                 {
-                    IntPtr hProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_TERMINATE, false, Aria2ProcessId);
+                    IntPtr hProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_TERMINATE, false, DownloadProcessInformation.dwProcessId);
                     if (hProcess != IntPtr.Zero)
                     {
                         Kernel32Library.TerminateProcess(hProcess, 0);

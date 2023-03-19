@@ -5,10 +5,10 @@ using System.Runtime.InteropServices;
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("获取商店应用")]
-[assembly: AssemblyDescription("获取商店应用")]
+[assembly: AssemblyDescription("获取商店应用 桌面程序")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("获取商店应用")]
+[assembly: AssemblyProduct("获取商店应用 桌面程序")]
 [assembly: AssemblyCopyright("Copyright ©2022-2023 高怡飞, All Rights Reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -28,5 +28,5 @@ using System.Runtime.InteropServices;
 //      生成号
 //      修订号
 //
-[assembly: AssemblyVersion("1.3.317.0")]
-[assembly: AssemblyFileVersion("1.3.317.0")]
+[assembly: AssemblyVersion("1.3.319.0")]
+[assembly: AssemblyFileVersion("1.3.319.0")]

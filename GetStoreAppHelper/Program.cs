@@ -5,7 +5,8 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
-// 获取商店应用辅助程序，创建任务栏菜单图标，为获取商店应用程序提供模态对话框支持。
+// 获取商店应用 辅助程序
+// 创建任务栏菜单图标，为获取商店应用程序提供模态对话框支持。
 namespace GetStoreAppHelper
 {
     public static class Program

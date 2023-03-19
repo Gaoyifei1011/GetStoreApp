@@ -71,6 +71,9 @@ namespace GetStoreApp.ViewModels.Pages
             }
         });
 
+        // 将应用固定到任务栏
+        //public IRelayCommand PinToTaskbarCommand => new RelayCommand(() => { });
+
         // 查看更新日志
         public IRelayCommand ShowReleaseNotesCommand => new RelayCommand(async () =>
         {
