@@ -6,6 +6,7 @@ using Windows.Foundation;
 using Windows.Graphics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 
 namespace GetStoreAppHelper.UI.Controls
 {
@@ -49,11 +50,17 @@ namespace GetStoreAppHelper.UI.Controls
 
             if (InfoHelper.GetSystemVersion().BuildNumber >= 22000)
             {
-                TrayMenuFlyout.ShowAt(null, new Point(x, y));
+                FlyoutShowOptions CommandBarOptions = new FlyoutShowOptions();
+                CommandBarOptions.ShowMode = FlyoutShowMode.Standard;
+                CommandBarOptions.Position = new Point(x, y);
+                TrayMenuFlyout.ShowAt(null, CommandBarOptions);
             }
             else
             {
-                TrayMenuFlyout.ShowAt(null, new Point(point.X, point.Y));
+                FlyoutShowOptions CommandBarOptions = new FlyoutShowOptions();
+                CommandBarOptions.ShowMode = FlyoutShowMode.Standard;
+                CommandBarOptions.Position = new Point(point.X, point.Y);
+                TrayMenuFlyout.ShowAt(null, CommandBarOptions);
             }
         }
     }

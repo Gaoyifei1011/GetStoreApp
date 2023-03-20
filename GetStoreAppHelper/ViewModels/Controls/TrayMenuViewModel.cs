@@ -2,20 +2,37 @@
 using GetStoreAppHelper.Extensions.Command;
 using GetStoreAppHelper.Helpers;
 using GetStoreAppHelper.Services;
+using GetStoreAppHelper.ViewModels.Base;
 using GetStoreAppHelper.WindowsAPI.PInvoke.User32;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Media;
 
 namespace GetStoreAppHelper.ViewModels.Controls
 {
     /// <summary>
     /// 任务栏辅助部分：任务栏右键菜单浮出控件视图模型
     /// </summary>
-    public class TrayMenuViewModel
+    public class TrayMenuViewModel : ViewModelBase
     {
+        private ElementTheme _commandBarTheme;
+
+        public ElementTheme CommandBarTheme
+        {
+            get { return _commandBarTheme; }
+
+            set
+            {
+                _commandBarTheme = value;
+                OnPropertyChanged();
+            }
+        }
+
         // 项目主页
         public IRelayCommand ProjectDescriptionCommand => new RelayCommand(async () =>
         {
@@ -174,6 +191,9 @@ namespace GetStoreAppHelper.ViewModels.Controls
             }
         });
 
+        /// <summary>
+        /// 命令栏控件在即将打开的时候获取应用设置相应的主题值
+        /// </summary>
         public async void OnOpened(object sender, object args)
         {
             await ThemeService.LoadNotifyIconMenuThemeAsync();
@@ -185,31 +205,47 @@ namespace GetStoreAppHelper.ViewModels.Controls
                 {
                     if (Application.Current.RequestedTheme is ApplicationTheme.Light)
                     {
-                        (sender as MenuFlyout).MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveFlyoutLightPresenter"] as Style;
+                        CommandBarTheme = ElementTheme.Light;
                     }
                     else
                     {
-                        (sender as MenuFlyout).MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveFlyoutDarkPresenter"] as Style;
+                        CommandBarTheme = ElementTheme.Dark;
                     }
                 }
                 else if (ThemeService.AppTheme == Convert.ToString(ElementTheme.Light))
                 {
-                    (sender as MenuFlyout).MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveFlyoutLightPresenter"] as Style;
+                    CommandBarTheme = ElementTheme.Light;
                 }
                 else if (ThemeService.AppTheme == Convert.ToString(ElementTheme.Dark))
                 {
-                    (sender as MenuFlyout).MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveFlyoutDarkPresenter"] as Style;
+                    CommandBarTheme = ElementTheme.Dark;
                 }
             }
             else
             {
                 if (RegistryHelper.GetRegistrySystemTheme() == ElementTheme.Light)
                 {
-                    (sender as MenuFlyout).MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveFlyoutLightPresenter"] as Style;
+                    CommandBarTheme = ElementTheme.Light;
                 }
                 else
                 {
-                    (sender as MenuFlyout).MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveFlyoutDarkPresenter"] as Style;
+                    CommandBarTheme = ElementTheme.Dark;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 命令栏显示时设置相应的主题
+        /// </summary>
+        public void OnLoaded(object sender, RoutedEventArgs args)
+        {
+            IReadOnlyList<Popup> PopupRootList = VisualTreeHelper.GetOpenPopupsForXamlRoot(Program.ApplicationRoot.MainWindow.Content.XamlRoot);
+
+            foreach (Popup popupItem in PopupRootList)
+            {
+                if (popupItem.Child is FlyoutPresenter)
+                {
+                    (popupItem.Child as FlyoutPresenter).RequestedTheme = CommandBarTheme;
                 }
             }
         }

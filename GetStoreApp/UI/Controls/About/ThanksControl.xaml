@@ -35,7 +35,7 @@
                     Padding="0"
                     HorizontalAlignment="Stretch"
                     HorizontalContentAlignment="Stretch"
-                    DesiredWidth="120"
+                    DesiredWidth="280"
                     ItemContainerStyle="{StaticResource GridViewItemStyle}"
                     ItemsSource="{x:Bind ViewModel.ThanksDict}"
                     OneRowModeEnabled="False"

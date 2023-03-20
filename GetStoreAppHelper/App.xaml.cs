@@ -51,8 +51,6 @@ namespace GetStoreAppHelper
         /// </summary>
         public void Run()
         {
-            ResourceDictionaryHelper.InitializeResourceDictionaryAsync().Wait();
-
             MainWindow = new MileWindow();
             MainWindow.Content = new TrayMenuControl();
             MainWindow.Title = ResourceService.GetLocalized("HelperResources/Title");
