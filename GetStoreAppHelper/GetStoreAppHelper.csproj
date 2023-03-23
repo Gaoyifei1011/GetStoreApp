@@ -10,7 +10,7 @@
     <DisableXbfLineInfo>False</DisableXbfLineInfo>
     <EnableTypeInfoReflection>true</EnableTypeInfoReflection>
     <FileAlignment>512</FileAlignment>
-    <FileVersion>1.4.320.0</FileVersion>
+    <FileVersion>1.4.323.0</FileVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <LangVersion>latest</LangVersion>
     <OutputType>WinExe</OutputType>
@@ -63,6 +63,10 @@
     <Page Update="Styles\HelperFontIcon.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
+    </Page>
+
+    <Page Update="Styles\HelperMenuFlyout.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
 
     <Page Update="UI\Controls\TrayMenuControl.xaml">

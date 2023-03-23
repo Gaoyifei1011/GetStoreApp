@@ -11,62 +11,57 @@
         <controls:TrayMenuViewModel x:Name="ViewModel" x:FieldModifier="public" />
     </ContentControl.DataContext>
 
-    <CommandBarFlyout
-        x:Name="TrayMenuFlyout"
-        Opened="{x:Bind ViewModel.OnOpened}"
-        Placement="Full">
-        <CommandBarFlyout.SecondaryCommands>
-            <AppBarButton
-                Command="{x:Bind ViewModel.ProjectDescriptionCommand}"
-                Label="{x:Bind root:ResourceService.GetLocalized('HelperResources/ProjectHomePage')}"
-                RequestedTheme="{x:Bind ViewModel.CommandBarTheme, Mode=OneWay}">
+    <MenuFlyout x:Name="TrayMenuFlyout" Opened="{x:Bind ViewModel.OnOpened}">
+        <MenuFlyoutItem
+            MinHeight="40"
+            Command="{x:Bind ViewModel.ProjectDescriptionCommand}"
+            Text="{x:Bind root:ResourceService.GetLocalized('HelperResources/ProjectHomePage')}">
 
-                <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE80f;" Style="{StaticResource SegoeFluentStyle}" />
-                </AppBarButton.Icon>
-            </AppBarButton>
+            <MenuFlyoutItem.Icon>
+                <FontIcon Glyph="&#xE80f;" Style="{StaticResource SegoeFluentStyle}" />
+            </MenuFlyoutItem.Icon>
+        </MenuFlyoutItem>
 
-            <AppBarButton
-                Command="{x:Bind ViewModel.AboutAppCommand}"
-                Label="{x:Bind root:ResourceService.GetLocalized('HelperResources/AboutApp')}"
-                RequestedTheme="{x:Bind ViewModel.CommandBarTheme, Mode=OneWay}">
+        <MenuFlyoutItem
+            MinHeight="40"
+            Command="{x:Bind ViewModel.AboutAppCommand}"
+            Text="{x:Bind root:ResourceService.GetLocalized('HelperResources/AboutApp')}">
 
-                <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE946;" Style="{StaticResource SegoeFluentStyle}" />
-                </AppBarButton.Icon>
-            </AppBarButton>
+            <MenuFlyoutItem.Icon>
+                <FontIcon Glyph="&#xE946;" Style="{StaticResource SegoeFluentStyle}" />
+            </MenuFlyoutItem.Icon>
+        </MenuFlyoutItem>
 
-            <AppBarSeparator Loaded="{x:Bind ViewModel.OnLoaded}" RequestedTheme="{x:Bind ViewModel.CommandBarTheme, Mode=OneWay}" />
+        <MenuFlyoutSeparator />
 
-            <AppBarButton
-                Command="{x:Bind ViewModel.ShowOrHideWindowCommand}"
-                Label="{x:Bind root:ResourceService.GetLocalized('HelperResources/ShowOrHideWindow')}"
-                RequestedTheme="{x:Bind ViewModel.CommandBarTheme, Mode=OneWay}">
+        <MenuFlyoutItem
+            MinHeight="40"
+            Command="{x:Bind ViewModel.ShowOrHideWindowCommand}"
+            Text="{x:Bind root:ResourceService.GetLocalized('HelperResources/ShowOrHideWindow')}">
 
-                <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE770;" Style="{StaticResource SegoeFluentStyle}" />
-                </AppBarButton.Icon>
-            </AppBarButton>
+            <MenuFlyoutItem.Icon>
+                <FontIcon Glyph="&#xE770;" Style="{StaticResource SegoeFluentStyle}" />
+            </MenuFlyoutItem.Icon>
+        </MenuFlyoutItem>
 
-            <AppBarButton
-                Command="{x:Bind ViewModel.SettingsCommand}"
-                Label="{x:Bind root:ResourceService.GetLocalized('HelperResources/Settings')}"
-                RequestedTheme="{x:Bind ViewModel.CommandBarTheme, Mode=OneWay}">
+        <MenuFlyoutItem
+            MinHeight="40"
+            Command="{x:Bind ViewModel.SettingsCommand}"
+            Text="{x:Bind root:ResourceService.GetLocalized('HelperResources/Settings')}">
 
-                <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE713;" Style="{StaticResource SegoeFluentStyle}" />
-                </AppBarButton.Icon>
-            </AppBarButton>
+            <MenuFlyoutItem.Icon>
+                <FontIcon Glyph="&#xE713;" Style="{StaticResource SegoeFluentStyle}" />
+            </MenuFlyoutItem.Icon>
+        </MenuFlyoutItem>
 
-            <AppBarButton
-                Command="{x:Bind ViewModel.ExitCommand}"
-                Label="{x:Bind root:ResourceService.GetLocalized('HelperResources/Exit')}"
-                RequestedTheme="{x:Bind ViewModel.CommandBarTheme, Mode=OneWay}">
+        <MenuFlyoutItem
+            MinHeight="40"
+            Command="{x:Bind ViewModel.ExitCommand}"
+            Text="{x:Bind root:ResourceService.GetLocalized('HelperResources/Exit')}">
 
-                <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE7e8;" Style="{StaticResource SegoeFluentStyle}" />
-                </AppBarButton.Icon>
-            </AppBarButton>
-        </CommandBarFlyout.SecondaryCommands>
-    </CommandBarFlyout>
+            <MenuFlyoutItem.Icon>
+                <FontIcon Glyph="&#xE7e8;" Style="{StaticResource SegoeFluentStyle}" />
+            </MenuFlyoutItem.Icon>
+        </MenuFlyoutItem>
+    </MenuFlyout>
 </ContentControl>

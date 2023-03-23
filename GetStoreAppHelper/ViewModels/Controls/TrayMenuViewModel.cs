@@ -5,13 +5,10 @@ using GetStoreAppHelper.Services;
 using GetStoreAppHelper.ViewModels.Base;
 using GetStoreAppHelper.WindowsAPI.PInvoke.User32;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Media;
 
 namespace GetStoreAppHelper.ViewModels.Controls
 {
@@ -205,47 +202,31 @@ namespace GetStoreAppHelper.ViewModels.Controls
                 {
                     if (Application.Current.RequestedTheme is ApplicationTheme.Light)
                     {
-                        CommandBarTheme = ElementTheme.Light;
+                        (sender as MenuFlyout).MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveFlyoutLightPresenter"] as Style;
                     }
                     else
                     {
-                        CommandBarTheme = ElementTheme.Dark;
+                        (sender as MenuFlyout).MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveFlyoutDarkPresenter"] as Style;
                     }
                 }
                 else if (ThemeService.AppTheme == Convert.ToString(ElementTheme.Light))
                 {
-                    CommandBarTheme = ElementTheme.Light;
+                    (sender as MenuFlyout).MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveFlyoutLightPresenter"] as Style;
                 }
                 else if (ThemeService.AppTheme == Convert.ToString(ElementTheme.Dark))
                 {
-                    CommandBarTheme = ElementTheme.Dark;
+                    (sender as MenuFlyout).MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveFlyoutDarkPresenter"] as Style;
                 }
             }
             else
             {
                 if (RegistryHelper.GetRegistrySystemTheme() == ElementTheme.Light)
                 {
-                    CommandBarTheme = ElementTheme.Light;
+                    (sender as MenuFlyout).MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveFlyoutLightPresenter"] as Style;
                 }
                 else
                 {
-                    CommandBarTheme = ElementTheme.Dark;
-                }
-            }
-        }
-
-        /// <summary>
-        /// 命令栏显示时设置相应的主题
-        /// </summary>
-        public void OnLoaded(object sender, RoutedEventArgs args)
-        {
-            IReadOnlyList<Popup> PopupRootList = VisualTreeHelper.GetOpenPopupsForXamlRoot(Program.ApplicationRoot.MainWindow.Content.XamlRoot);
-
-            foreach (Popup popupItem in PopupRootList)
-            {
-                if (popupItem.Child is FlyoutPresenter)
-                {
-                    (popupItem.Child as FlyoutPresenter).RequestedTheme = CommandBarTheme;
+                    (sender as MenuFlyout).MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveFlyoutDarkPresenter"] as Style;
                 }
             }
         }
