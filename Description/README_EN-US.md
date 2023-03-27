@@ -81,7 +81,7 @@ All the content of the program has been developed
 
 > * [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com/) 
 > * . NET Desktop Development (Installed in Visual Studio Installer, .NET SDK Version 7.0 and .NET Framework SDK 4.8.1)
-> * [Microsoft Edge WebView2 Runtime](https://developer.microsoft.com/zh-cn/microsoft-edge/webview2/) £¨install recommendedly£©
+> * [Microsoft Edge WebView2 Runtime](https://developer.microsoft.com/zh-cn/microsoft-edge/webview2/)(install recommendedly)
 
 #### <p align="center">Compilation steps</p>
 
