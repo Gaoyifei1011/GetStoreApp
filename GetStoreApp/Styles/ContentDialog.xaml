@@ -72,8 +72,10 @@
         <Setter Property="Foreground" Value="{ThemeResource ContentDialogForeground}" />
         <Setter Property="Background" Value="{ThemeResource ContentDialogBackground}" />
         <Setter Property="BorderThickness" Value="{ThemeResource ContentDialogBorderWidth}" />
+        <!--  内容对话框控件修改处  -->
         <Setter Property="BorderBrush" Value="{ThemeResource ContentDialogBorderThemeBrush}" />
         <Setter Property="IsTabStop" Value="False" />
+        <!--  内容对话框控件修改处  -->
         <Setter Property="PrimaryButtonStyle" Value="{ThemeResource AccentButtonStyle}" />
         <Setter Property="SecondaryButtonStyle" Value="{ThemeResource DefaultButtonStyle}" />
         <Setter Property="CloseButtonStyle" Value="{ThemeResource DefaultButtonStyle}" />
@@ -394,8 +396,10 @@
         <Setter Property="Foreground" Value="{ThemeResource ContentDialogForeground}" />
         <Setter Property="Background" Value="{ThemeResource ContentDialogBackground}" />
         <Setter Property="BorderThickness" Value="{ThemeResource ContentDialogBorderWidth}" />
+        <!--  内容对话框控件修改处  -->
         <Setter Property="BorderBrush" Value="{ThemeResource ContentDialogBorderThemeBrush}" />
         <Setter Property="IsTabStop" Value="False" />
+        <!--  内容对话框控件修改处  -->
         <Setter Property="PrimaryButtonStyle" Value="{ThemeResource AccentButtonStyle}" />
         <Setter Property="SecondaryButtonStyle" Value="{ThemeResource DefaultButtonStyle}" />
         <Setter Property="CloseButtonStyle" Value="{ThemeResource DefaultButtonStyle}" />
@@ -504,6 +508,7 @@
                                             IsEnabled="{TemplateBinding IsPrimaryButtonEnabled}"
                                             IsTabStop="False"
                                             Style="{TemplateBinding PrimaryButtonStyle}">
+                                            <!--  内容对话框控件修改处  -->
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
                                                     Content="{TemplateBinding PrimaryButtonText}"
@@ -519,6 +524,7 @@
                                             IsEnabled="{TemplateBinding IsSecondaryButtonEnabled}"
                                             IsTabStop="False"
                                             Style="{TemplateBinding SecondaryButtonStyle}">
+                                            <!--  内容对话框控件修改处  -->
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
                                                     Content="{TemplateBinding SecondaryButtonText}"
@@ -534,6 +540,7 @@
                                             ElementSoundMode="FocusOnly"
                                             IsTabStop="False"
                                             Style="{TemplateBinding CloseButtonStyle}">
+                                            <!--  内容对话框控件修改处  -->
                                             <ToolTipService.ToolTip>
                                                 <ToolTip
                                                     Content="{TemplateBinding CloseButtonText}"

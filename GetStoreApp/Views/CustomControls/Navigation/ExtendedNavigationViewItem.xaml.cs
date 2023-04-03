@@ -18,7 +18,7 @@ namespace GetStoreApp.Views.CustomControls.Navigation
             set { SetValue(CommandProperty, value); }
         }
 
-        public static readonly DependencyProperty CommandProperty = DependencyProperty.Register("ActivatedCommand", typeof(ICommand), typeof(ExtendedNavigationViewItem), new PropertyMetadata(null));
+        public static readonly DependencyProperty CommandProperty = DependencyProperty.Register("Command", typeof(ICommand), typeof(ExtendedNavigationViewItem), new PropertyMetadata(null));
 
         public object CommandParameter
         {

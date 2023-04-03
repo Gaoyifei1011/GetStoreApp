@@ -43,6 +43,7 @@
             Loaded="{x:Bind ViewModel.OnNavigationViewLoaded}"
             OpenPaneLength="220"
             SelectedItem="{x:Bind ViewModel.SelectedItem, Mode=OneWay}"
+            Style="{StaticResource NavigationViewStyle}"
             Unloaded="{x:Bind ViewModel.OnNavigationViewUnLoaded}">
 
             <NavigationView.MenuItems>
