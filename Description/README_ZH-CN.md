@@ -56,9 +56,9 @@
 
 ### 项目引用（按英文首字母排序）
 
-> * [Aira2](https://aria2.github.io)&emsp;
-> * [Microsoft.Windows.SDK.Contracts](https://aka.ms/WinSDKProjectURL)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
+> * [Microsoft.Windows.SDK.Contracts](https://aka.ms/WinSDKProjectURL)&emsp;
+> * [Mile.Aria2](https://github.com/ProjectMile/Mile.Aria2)&emsp;
 > * [Mile.Xaml](https://github.com/ProjectMile/Mile.Xaml)&emsp;
  
 [学习过程中参考或使用的代码](https://github.com/Gaoyifei1011/GetStoreApp/blob/master/Description/StudyReferenceCode.md)&emsp;

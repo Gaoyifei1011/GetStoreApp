@@ -273,6 +273,7 @@
         </Setter>
     </Style>
 
+    <!--  关于页面的扩展器格式  -->
     <Style x:Key="ExpanderAboutStyle" TargetType="Expander">
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="IsExpanded" Value="True" />
@@ -280,6 +281,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
     </Style>
 
+    <!--  设置页面的扩展器格式  -->
     <Style x:Key="ExpanderSettingsStyle" TargetType="Expander">
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="IsExpanded" Value="True" />

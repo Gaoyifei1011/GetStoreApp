@@ -10,10 +10,10 @@ namespace GetStoreApp.ViewModels.Controls.About
         //项目引用信息
         public Dictionary<string, string> ReferenceDict { get; } = new Dictionary<string, string>
         {
-            {"Aira2","https://aria2.github.io" },
-            {"Microsoft.Windows.SDK.Contracts","https://aka.ms/WinSDKProjectURL" },
             {"Microsoft.WindowsAppSDK","https://github.com/microsoft/windowsappsdk" },
-            {"Mile.Xaml","https://github.com/ProjectMile/Mile.Xaml" },
+            {"Microsoft.Windows.SDK.Contracts","https://aka.ms/WinSDKProjectURL" },
+            {"Mile.Aria2","https://github.com/ProjectMile/Mile.Aria2" },
+            {"Mile.Xaml","https://github.com/ProjectMile/Mile.Xaml" }
         };
     }
 }

@@ -147,7 +147,7 @@ namespace GetStoreApp.Services.Shell
                     null,
                     string.Format(
                         @"{0}\{1} --file-allocation=none -d ""{2}"" ""{3}""",
-                        InfoHelper.GetAppInstalledLocation(), @"Aria2\Aria2c.exe",
+                        InfoHelper.GetAppInstalledLocation(), @"Aria2\Mile.Aria2.exe",
                         DownloadOptionsService.DownloadFolder.Path, fileLink
                         ),
                     IntPtr.Zero,
