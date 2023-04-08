@@ -19,7 +19,7 @@
 
   <!--从兼容性考虑，继续向上搜索 Directory.Build.props-->
   <PropertyGroup>
-    <NoWarn>CA1069;CA1401;CA1416;CA1822;CA2211;IDE0090;IL2050;IL2070;MSB4018;NU1201;NU1702</NoWarn>
+    <NoWarn>CA1069;CA1401;CA1416;CA1822;CA2211;CS0649;IDE0090;IL2050;IL2070;MSB4018;NU1201;NU1702</NoWarn>
     <DirectoryBuildPropsPath>$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))</DirectoryBuildPropsPath>
   </PropertyGroup>
   <Import Project="$(DirectoryBuildPropsPath)" Condition="'$(DirectoryBuildPropsPath)' != ''"/>

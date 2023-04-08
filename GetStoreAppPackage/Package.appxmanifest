@@ -13,7 +13,7 @@
   <Identity
     Name="Gaoyifei1011.GetStoreApp"
     Publisher="CN=高怡飞"
-    Version="1.4.405.0" />
+    Version="1.4.408.0" />
 
   <Properties>
     <DisplayName>ms-resource:PackageDisplayName</DisplayName>
@@ -51,14 +51,6 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
-        <!--通过协议方式启动-->
-        <uap:Extension Category="windows.protocol">
-          <uap:Protocol Name="getstoreapp">
-            <uap:Logo>Assets\StoreLogo.png</uap:Logo>
-            <uap:DisplayName>ms-resource:ProtocolName</uap:DisplayName>
-          </uap:Protocol>
-        </uap:Extension>
-
         <!--共享目标-->
         <uap:Extension Category="windows.shareTarget" Executable="GetStoreApp.exe" EntryPoint="Windows.FullTrustApplication">
           <uap:ShareTarget>
@@ -92,7 +84,7 @@
   <Extensions>
     <!--Mile.Aria2.exe进程预定义的防火墙规则-->
     <desktop2:Extension Category="windows.firewallRules">
-      <desktop2:FirewallRules Executable="Aria2/Mile.Aria2.exe">
+      <desktop2:FirewallRules Executable="Mile.Aria2.exe">
         <desktop2:Rule Direction="in" IPProtocol="TCP" Profile="all"/>
         <desktop2:Rule Direction="in" IPProtocol="UDP" Profile="all"/>
       </desktop2:FirewallRules>

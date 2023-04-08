@@ -10,7 +10,7 @@
     <DisableXbfLineInfo>False</DisableXbfLineInfo>
     <EnableTypeInfoReflection>true</EnableTypeInfoReflection>
     <FileAlignment>512</FileAlignment>
-    <FileVersion>1.4.405.0</FileVersion>
+    <FileVersion>1.4.408.0</FileVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <LangVersion>latest</LangVersion>
     <OutputType>WinExe</OutputType>

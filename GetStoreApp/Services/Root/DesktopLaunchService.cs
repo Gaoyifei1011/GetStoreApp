@@ -54,12 +54,6 @@ namespace GetStoreApp.Services.Root
                         ParseLaunchArgs();
                         break;
                     }
-                // 使用 Protocol协议启动
-                case ExtendedActivationKind.Protocol:
-                    {
-                        NeedToSendMesage = 0;
-                        break;
-                    }
                 // 使用共享目标方式启动
                 case ExtendedActivationKind.ShareTarget:
                     {
