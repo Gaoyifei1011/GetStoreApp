@@ -58,13 +58,13 @@ namespace GetStoreApp.ViewModels.Window
             {
                 if (WindowWidth.HasValue && WindowHeight.HasValue && WindowPositionXAxis.HasValue && WindowPositionYAxis.HasValue)
                 {
-                    Program.ApplicationRoot.AppWindow.Resize(new SizeInt32(WindowWidth.Value, WindowHeight.Value));
-                    Program.ApplicationRoot.AppWindow.Move(new PointInt32(WindowPositionXAxis.Value, WindowPositionYAxis.Value));
+                    Program.ApplicationRoot.MainWindow.AppWindow.Resize(new SizeInt32(WindowWidth.Value, WindowHeight.Value));
+                    Program.ApplicationRoot.MainWindow.AppWindow.Move(new PointInt32(WindowPositionXAxis.Value, WindowPositionYAxis.Value));
                 }
             }
 
             SetAppIcon();
-            Program.ApplicationRoot.AppWindow.Show();
+            Program.ApplicationRoot.MainWindow.AppWindow.Show();
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace GetStoreApp.ViewModels.Window
             // GetStoreApp.exe 应用程序只有一个图标
             if (successCount >= 1 && hIcons[0] != IntPtr.Zero)
             {
-                Program.ApplicationRoot.AppWindow.SetIcon(Win32Interop.GetIconIdFromIcon(hIcons[0]));
+                Program.ApplicationRoot.MainWindow.AppWindow.SetIcon(Win32Interop.GetIconIdFromIcon(hIcons[0]));
             }
         }
 
@@ -162,7 +162,6 @@ namespace GetStoreApp.ViewModels.Window
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
             await Aria2Service.CloseAria2Async();
             AppNotificationService.Unregister();
-            BackdropHelper.ReleaseBackdrop();
             Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
         }
 
@@ -172,10 +171,10 @@ namespace GetStoreApp.ViewModels.Window
         private async Task SaveWindowInformationAsync()
         {
             await ConfigService.SaveSettingAsync(ConfigKey.IsWindowMaximizedKey, WindowHelper.IsWindowMaximized);
-            await ConfigService.SaveSettingAsync(ConfigKey.WindowWidthKey, Program.ApplicationRoot.AppWindow.Size.Width);
-            await ConfigService.SaveSettingAsync(ConfigKey.WindowHeightKey, Program.ApplicationRoot.AppWindow.Size.Height);
-            await ConfigService.SaveSettingAsync(ConfigKey.WindowPositionXAxisKey, Program.ApplicationRoot.AppWindow.Position.X);
-            await ConfigService.SaveSettingAsync(ConfigKey.WindowPositionYAxisKey, Program.ApplicationRoot.AppWindow.Position.Y);
+            await ConfigService.SaveSettingAsync(ConfigKey.WindowWidthKey, Program.ApplicationRoot.MainWindow.AppWindow.Size.Width);
+            await ConfigService.SaveSettingAsync(ConfigKey.WindowHeightKey, Program.ApplicationRoot.MainWindow.AppWindow.Size.Height);
+            await ConfigService.SaveSettingAsync(ConfigKey.WindowPositionXAxisKey, Program.ApplicationRoot.MainWindow.AppWindow.Position.X);
+            await ConfigService.SaveSettingAsync(ConfigKey.WindowPositionYAxisKey, Program.ApplicationRoot.MainWindow.AppWindow.Position.Y);
         }
 
         /// <summary>

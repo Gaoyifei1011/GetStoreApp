@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Backdrop;
 using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
@@ -97,6 +98,19 @@ namespace GetStoreApp.ViewModels.Window
             }
         }
 
+        private SystemBackdrop _systemBackdrop;
+
+        public SystemBackdrop SystemBackdrop
+        {
+            get { return _systemBackdrop; }
+
+            set
+            {
+                _systemBackdrop = value;
+                OnPropertyChanged();
+            }
+        }
+
         private Dictionary<string, Type> PageDict { get; } = new Dictionary<string, Type>()
         {
             {"Home",typeof(HomePage) },
@@ -110,7 +124,7 @@ namespace GetStoreApp.ViewModels.Window
         // 设置窗口处于非激活状态时的背景色
         public IRelayCommand ActivatedCommand => new RelayCommand<WindowActivatedEventArgs>((args) =>
         {
-            BackdropHelper.SetBackdropState(AlwaysShowBackdropService.AlwaysShowBackdropValue, args);
+            SetBackdropState(AlwaysShowBackdropService.AlwaysShowBackdropValue, args);
         });
 
         // 关闭窗口之后关闭其他服务
@@ -345,7 +359,7 @@ namespace GetStoreApp.ViewModels.Window
         }
 
         /// <summary>
-        /// 设置应用背景色
+        /// 设置应用主题色
         /// </summary>
         private void SetAppBackground()
         {
@@ -374,6 +388,46 @@ namespace GetStoreApp.ViewModels.Window
             else
             {
                 AppBackground = new SolidColorBrush(Colors.Transparent);
+            }
+        }
+
+        /// <summary>
+        /// 设置应用背景色
+        /// </summary>
+        private void SetBackdropState(bool alwaysShowBackdrop, WindowActivatedEventArgs args)
+        {
+            if (BackdropService.AppBackdrop.InternalName == BackdropService.BackdropList[1].InternalName ||
+                BackdropService.AppBackdrop.InternalName == BackdropService.BackdropList[2].InternalName)
+            {
+                MicaSystemBackdrop micaBackdrop = SystemBackdrop as MicaSystemBackdrop;
+
+                if (micaBackdrop is not null && micaBackdrop.BackdropConfiguration is not null)
+                {
+                    if (alwaysShowBackdrop)
+                    {
+                        micaBackdrop.BackdropConfiguration.IsInputActive = true;
+                    }
+                    else
+                    {
+                        micaBackdrop.BackdropConfiguration.IsInputActive = args.WindowActivationState is not WindowActivationState.Deactivated;
+                    }
+                }
+            }
+            else if (BackdropService.AppBackdrop.InternalName == BackdropService.BackdropList[3].InternalName)
+            {
+                DesktopAcrylicSystemBackdrop desktopAcrylicSystemBackdrop = SystemBackdrop as DesktopAcrylicSystemBackdrop;
+
+                if (desktopAcrylicSystemBackdrop is not null && desktopAcrylicSystemBackdrop.BackdropConfiguration is not null)
+                {
+                    if (alwaysShowBackdrop)
+                    {
+                        desktopAcrylicSystemBackdrop.BackdropConfiguration.IsInputActive = true;
+                    }
+                    else
+                    {
+                        desktopAcrylicSystemBackdrop.BackdropConfiguration.IsInputActive = args.WindowActivationState is not WindowActivationState.Deactivated;
+                    }
+                }
             }
         }
     }

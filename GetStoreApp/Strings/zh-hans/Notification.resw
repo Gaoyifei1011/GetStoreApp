@@ -120,6 +120,12 @@
   <data name="CheckNetWorkConnection" xml:space="preserve">
     <value>检查网络连接</value>
   </data>
+  <data name="CopyAppInformationCopyFailed" xml:space="preserve">
+    <value>应用信息复制失败，请检查剪贴板的访问权限</value>
+  </data>
+  <data name="CopyAppInformationSuccessfully" xml:space="preserve">
+    <value>应用信息信息已成功复制到剪贴板</value>
+  </data>
   <data name="DesktopShortcutSuccessfully" xml:space="preserve">
     <value>应用的桌面快捷方式已成功创建</value>
   </data>

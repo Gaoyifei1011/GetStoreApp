@@ -120,6 +120,9 @@
   <data name="AppInformation" xml:space="preserve">
     <value>View app information</value>
   </data>
+  <data name="AppSettings" xml:space="preserve">
+    <value>Open App settings</value>
+  </data>
   <data name="AppVersion" xml:space="preserve">
     <value>Application Version: {0}</value>
   </data>

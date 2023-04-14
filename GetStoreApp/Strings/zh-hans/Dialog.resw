@@ -381,4 +381,25 @@
   <data name="DPIChangedNotifyContent" xml:space="preserve">
     <value>应用已监测到您的屏幕缩放比例发生了变化，为了确保您的应用能够正常运行，建议您重启应用</value>
   </data>
+  <data name="AppInformationTitle" xml:space="preserve">
+    <value>应用信息</value>
+  </data>
+  <data name="CopyAppInformation" xml:space="preserve">
+    <value>复制应用信息</value>
+  </data>
+  <data name="DoNetVersion" xml:space="preserve">
+    <value>.NET 版本：</value>
+  </data>
+  <data name="MileXamlVersion" xml:space="preserve">
+    <value>Mile.Xaml 版本：</value>
+  </data>
+  <data name="WindowsAppSDKVersion" xml:space="preserve">
+    <value>Windows 应用 SDK 版本：</value>
+  </data>
+  <data name="WinUI3Version" xml:space="preserve">
+    <value>WinUI3 版本：</value>
+  </data>
+  <data name="WebView2CoreVersion" xml:space="preserve">
+    <value>WebView2 Core 版本：</value>
+  </data>
 </root>

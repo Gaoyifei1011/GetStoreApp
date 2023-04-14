@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Windowing;
-using System.Runtime.InteropServices;
 
 namespace GetStoreApp.Helpers.Window
 {
@@ -26,7 +25,7 @@ namespace GetStoreApp.Helpers.Window
         // 获取窗口是否已经被隐藏
         public static bool IsWindowVisible
         {
-            get { return Program.ApplicationRoot.AppWindow.IsVisible; }
+            get { return Program.ApplicationRoot.MainWindow.AppWindow.IsVisible; }
         }
 
         /// <summary>
@@ -45,9 +44,9 @@ namespace GetStoreApp.Helpers.Window
         /// </summary>
         public static void HideAppWindow()
         {
-            if (Program.ApplicationRoot.AppWindow.IsVisible)
+            if (Program.ApplicationRoot.MainWindow.AppWindow.IsVisible)
             {
-                Program.ApplicationRoot.AppWindow.Hide();
+                Program.ApplicationRoot.MainWindow.AppWindow.Hide();
             }
         }
 
@@ -112,7 +111,7 @@ namespace GetStoreApp.Helpers.Window
         /// <summary>
         /// 将应用窗口设置到前台
         /// </summary>
-        private static void BringToFront([Optional, DefaultParameterValue(false)] bool needToFlashWindow)
+        private static void BringToFront()
         {
             bool isWindowOnTop = WindowPresenter.IsAlwaysOnTop;
 

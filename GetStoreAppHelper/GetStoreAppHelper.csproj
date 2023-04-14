@@ -10,7 +10,7 @@
     <DisableXbfLineInfo>False</DisableXbfLineInfo>
     <EnableTypeInfoReflection>true</EnableTypeInfoReflection>
     <FileAlignment>512</FileAlignment>
-    <FileVersion>1.4.408.0</FileVersion>
+    <FileVersion>1.5.414.0</FileVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <LangVersion>latest</LangVersion>
     <OutputType>WinExe</OutputType>
@@ -54,7 +54,7 @@
     </EmbeddedResource>
 
     <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.22621.755" />
-    <PackageReference Include="Mile.Xaml" Version="2.0.546" />
+    <PackageReference Include="Mile.Xaml" Version="2.0.573-preview" />
     
     <None Update="Assets\GetStoreAppHelper.ico">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>

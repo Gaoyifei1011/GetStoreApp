@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
-using GetStoreApp.Helpers.Window;
 using GetStoreApp.Models.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
 using System;
@@ -63,33 +62,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// </summary>
         public static async Task SetAppBackdropAsync()
         {
-            switch (AppBackdrop.InternalName)
-            {
-                case "Mica":
-                    {
-                        BackdropHelper.ReleaseBackdrop();
-                        BackdropHelper.TrySetMicaBackdrop();
-                        break;
-                    }
-                case "MicaAlt":
-                    {
-                        BackdropHelper.ReleaseBackdrop();
-                        BackdropHelper.TrySetMicaAltBackdrop();
-                        break;
-                    }
-                case "Acrylic":
-                    {
-                        BackdropHelper.ReleaseBackdrop();
-                        BackdropHelper.TrySetAcrylicBackdrop();
-                        break;
-                    }
-                default:
-                    {
-                        BackdropHelper.ReleaseBackdrop();
-                        break;
-                    }
-            }
-
+            Program.ApplicationRoot.MainWindow.SetSystemBackdrop(AppBackdrop.InternalName);
             await Task.CompletedTask;
         }
     }

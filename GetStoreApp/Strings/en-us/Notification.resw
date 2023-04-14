@@ -120,6 +120,12 @@
   <data name="CheckNetWorkConnection" xml:space="preserve">
     <value>Check the network connection</value>
   </data>
+  <data name="CopyAppInformationCopyFailed" xml:space="preserve">
+    <value>App information replication failed. Please check the access permissions of the clipboard</value>
+  </data>
+  <data name="CopyAppInformationSuccessfully" xml:space="preserve">
+    <value>The app information has been successfully copied to the clipboard</value>
+  </data>
   <data name="DesktopShortcutSuccessfully" xml:space="preserve">
     <value>The desktop shortcut for the app was created successfully</value>
   </data>

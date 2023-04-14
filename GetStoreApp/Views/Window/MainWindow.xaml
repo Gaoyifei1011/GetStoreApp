@@ -15,6 +15,7 @@
     ActivatedCommand="{x:Bind ViewModel.ActivatedCommand}"
     ClosedCommand="{x:Bind ViewModel.ClosedCommand}"
     ExtendsContentIntoTitleBar="True"
+    SystemBackdrop="{x:Bind ViewModel.SystemBackdrop, Mode=OneWay}"
     mc:Ignorable="d">
 
     <WinUI:WinUIWindow.DataContext>

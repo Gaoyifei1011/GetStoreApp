@@ -2,7 +2,6 @@
 using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
-using GetStoreApp.Helpers.Window;
 using GetStoreApp.Services.Controls.Download;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.AppLifecycle;
@@ -35,7 +34,6 @@ namespace GetStoreApp.ViewModels.Dialogs.Common
         {
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
             await Aria2Service.CloseAria2Async();
-            BackdropHelper.ReleaseBackdrop();
             Messenger.Default.Send(true, MessageToken.WindowClosed);
 
             // 重启应用

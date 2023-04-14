@@ -142,8 +142,8 @@ namespace GetStoreApp.ViewModels.Controls.Window
             if (properties.IsLeftButtonPressed)
             {
                 ((Grid)sender).CapturePointer(args.Pointer);
-                nXWindow = Program.ApplicationRoot.AppWindow.Position.X;
-                nYWindow = Program.ApplicationRoot.AppWindow.Position.Y;
+                nXWindow = Program.ApplicationRoot.MainWindow.AppWindow.Position.X;
+                nYWindow = Program.ApplicationRoot.MainWindow.AppWindow.Position.Y;
 
                 User32Library.GetCursorPos(out PointInt32 pt);
                 nX = pt.X;

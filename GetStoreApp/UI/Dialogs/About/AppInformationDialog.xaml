@@ -1,20 +1,24 @@
-﻿<dialogsAndFlyouts:ExtendedContentDialog
-    x:Class="GetStoreApp.UI.Dialogs.Web.CoreWebView2FailedDialog"
+<dialogsAndFlyouts:ExtendedContentDialog
+    x:Class="GetStoreApp.UI.Dialogs.About.AppInformationDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:dialogViewModel="using:GetStoreApp.ViewModels.Dialogs.Web"
+    xmlns:dialogViewModel="using:GetStoreApp.ViewModels.Dialogs.About"
     xmlns:dialogsAndFlyouts="using:GetStoreApp.Views.CustomControls.DialogsAndFlyouts"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    x:Name="CoreWebView2FailedRoot"
+    x:Name="AppInformationRoot"
     RequestedTheme="{x:Bind DialogTheme}"
     Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">
 
     <dialogsAndFlyouts:ExtendedContentDialog.DataContext>
-        <dialogViewModel:CoreWebView2FailedViewModel x:Name="ViewModel" />
+        <dialogViewModel:AppInformationViewModel x:Name="ViewModel" />
     </dialogsAndFlyouts:ExtendedContentDialog.DataContext>
+
+    <dialogsAndFlyouts:ExtendedContentDialog.Resources>
+        <x:Double x:Key="ContentDialogMinWidth">480</x:Double>
+    </dialogsAndFlyouts:ExtendedContentDialog.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -29,10 +33,7 @@
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
             BorderThickness="{ThemeResource ContentDialogBorderWidth}">
 
-            <TextBlock
-                Grid.Column="0"
-                Style="{StaticResource ContentDialogTitleStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/CoreWebView2FailedTitle')}" />
+            <TextBlock Style="{StaticResource ContentDialogTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Dialog/AppInformationTitle')}" />
 
             <Grid Margin="0,0,0,3">
                 <Grid.ColumnDefinitions>
@@ -42,11 +43,11 @@
                 <TextBlock
                     Grid.Column="0"
                     Style="{StaticResource ContentDialogContentStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ProcessFailedKind')}" />
+                    Text="{x:Bind root:ResourceService.GetLocalized('Dialog/WindowsAppSDKVersion')}" />
                 <TextBlock
                     Grid.Column="1"
                     Style="{StaticResource ContentDialogContentStyle}"
-                    Text="{x:Bind ViewModel.ProcessFailedKind}"
+                    Text="{x:Bind ViewModel.WindowsAppSDKVersion}"
                     TextAlignment="DetectFromContent"
                     TextWrapping="Wrap" />
             </Grid>
@@ -59,11 +60,11 @@
                 <TextBlock
                     Grid.Column="0"
                     Style="{StaticResource ContentDialogContentStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Dialog/Reason')}" />
+                    Text="{x:Bind root:ResourceService.GetLocalized('Dialog/WinUI3Version')}" />
                 <TextBlock
                     Grid.Column="1"
                     Style="{StaticResource ContentDialogContentStyle}"
-                    Text="{x:Bind ViewModel.Reason}"
+                    Text="{x:Bind ViewModel.WinUI3Version}"
                     TextAlignment="DetectFromContent"
                     TextWrapping="Wrap" />
             </Grid>
@@ -76,11 +77,28 @@
                 <TextBlock
                     Grid.Column="0"
                     Style="{StaticResource ContentDialogContentStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ExitCode')}" />
+                    Text="{x:Bind root:ResourceService.GetLocalized('Dialog/MileXamlVersion')}" />
                 <TextBlock
                     Grid.Column="1"
                     Style="{StaticResource ContentDialogContentStyle}"
-                    Text="{x:Bind ViewModel.ExitCode}"
+                    Text="{x:Bind ViewModel.MileXamlVersion}"
+                    TextAlignment="DetectFromContent"
+                    TextWrapping="Wrap" />
+            </Grid>
+
+            <Grid Margin="0,0,0,3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Column="0"
+                    Style="{StaticResource ContentDialogContentStyle}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Dialog/WebView2CoreVersion')}" />
+                <TextBlock
+                    Grid.Column="1"
+                    Style="{StaticResource ContentDialogContentStyle}"
+                    Text="{x:Bind ViewModel.WebView2CoreVersion}"
                     TextAlignment="DetectFromContent"
                     TextWrapping="Wrap" />
             </Grid>
@@ -93,11 +111,11 @@
                 <TextBlock
                     Grid.Column="0"
                     Style="{StaticResource ContentDialogContentStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ProcessDescription')}" />
+                    Text="{x:Bind root:ResourceService.GetLocalized('Dialog/DoNetVersion')}" />
                 <TextBlock
                     Grid.Column="1"
                     Style="{StaticResource ContentDialogContentStyle}"
-                    Text="{x:Bind ViewModel.ProcessDescription}"
+                    Text="{x:Bind ViewModel.DoNetVersion}"
                     TextAlignment="DetectFromContent"
                     TextWrapping="Wrap" />
             </Grid>
@@ -115,14 +133,14 @@
             <Button
                 Grid.Column="0"
                 HorizontalAlignment="Stretch"
-                Command="{x:Bind ViewModel.CopyExceptionCommand}"
-                CommandParameter="{x:Bind CoreWebView2FailedRoot}"
-                Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CopyException')}"
+                Command="{x:Bind ViewModel.CopyAppInformationCommand}"
+                CommandParameter="{x:Bind AppInformationRoot}"
+                Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CopyAppInformation')}"
                 Style="{ThemeResource AccentButtonStyle}">
 
                 <ToolTipService.ToolTip>
                     <ToolTip
-                        Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CopyException')}"
+                        Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CopyAppInformation')}"
                         Placement="Bottom"
                         VerticalOffset="20" />
                 </ToolTipService.ToolTip>
@@ -132,7 +150,7 @@
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
                 Command="{x:Bind ViewModel.CloseDialogCommand}"
-                CommandParameter="{x:Bind CoreWebView2FailedRoot}"
+                CommandParameter="{x:Bind AppInformationRoot}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}">
 
                 <ToolTipService.ToolTip>

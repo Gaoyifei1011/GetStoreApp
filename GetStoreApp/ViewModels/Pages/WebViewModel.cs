@@ -146,7 +146,12 @@ namespace GetStoreApp.ViewModels.Pages
         // 清理网页缓存
         public IRelayCommand ClearWebCacheCommand => new RelayCommand(async () =>
         {
-            await CoreWebView.CallDevToolsProtocolMethodAsync("Network.clearBrowserCache", "{}");
+            if (CoreWebView is not null)
+            {
+                CoreWebView2Profile coreWebView2Profile = CoreWebView.Profile;
+                await coreWebView2Profile.ClearBrowsingDataAsync();
+            }
+
             new WebCacheCleanNotification(true).Show();
         });
 

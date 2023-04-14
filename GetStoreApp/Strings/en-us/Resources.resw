@@ -168,4 +168,7 @@
   <data name="WindowHandleInitializeFailed" xml:space="preserve">
     <value>Window handle initialization failed, window handle is a null pointer</value>
   </data>
+  <data name="SystemBackdropControllerInitializeFailed" xml:space="preserve">
+    <value>The app's sytstem backdrop controller failed to initialize</value>
+  </data>
 </root>

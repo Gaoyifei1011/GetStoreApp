@@ -3,8 +3,6 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
 using GetStoreApp.ViewModels.Window;
 using GetStoreApp.Views.Window;
-using Microsoft.UI;
-using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using System;
 using System.Threading.Tasks;
@@ -14,8 +12,6 @@ namespace GetStoreApp
 {
     public partial class WinUIApp : Application
     {
-        public AppWindow AppWindow { get; private set; }
-
         public MainWindow MainWindow { get; private set; }
 
         public JumpList TaskbarJumpList { get; private set; }
@@ -37,7 +33,6 @@ namespace GetStoreApp
             await ResourceDictionaryHelper.InitializeResourceDictionaryAsync();
 
             InitializeMainWindow();
-            InitializeAppWindow();
             Program.IsAppLaunched = true;
             await ViewModel.ActivateAsync();
 
@@ -53,16 +48,7 @@ namespace GetStoreApp
         {
             MainWindow = new MainWindow();
             MainWindow.InitializeWindowProc();
-        }
-
-        /// <summary>
-        /// 初始化应用的AppWindow
-        /// </summary>
-        private void InitializeAppWindow()
-        {
-            WindowId windowId = Win32Interop.GetWindowIdFromWindow(MainWindow.GetMainWindowHandle());
-            AppWindow = AppWindow.GetFromWindowId(windowId);
-            WindowHelper.InitializePresenter(AppWindow);
+            WindowHelper.InitializePresenter(Program.ApplicationRoot.MainWindow.AppWindow);
         }
 
         /// <summary>

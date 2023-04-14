@@ -159,6 +159,9 @@
   <data name="Slow" xml:space="preserve">
     <value>慢速</value>
   </data>
+  <data name="SystemBackdropControllerInitializeFailed" xml:space="preserve">
+    <value>应用的背景色控制器初始化失败</value>
+  </data>
   <data name="URL" xml:space="preserve">
     <value>URL（链接）</value>
   </data>

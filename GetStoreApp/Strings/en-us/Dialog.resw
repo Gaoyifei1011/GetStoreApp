@@ -381,4 +381,25 @@
   <data name="DPIChangedNotifyContent" xml:space="preserve">
     <value>The app has detected a change in your screen scaling and recommends that you restart the app to ensure that it works correctly</value>
   </data>
+  <data name="AppInformationTitle" xml:space="preserve">
+    <value>App information</value>
+  </data>
+  <data name="CopyAppInformation" xml:space="preserve">
+    <value>Copy app information</value>
+  </data>
+  <data name="DoNetVersion" xml:space="preserve">
+    <value>.NET version：</value>
+  </data>
+  <data name="MileXamlVersion" xml:space="preserve">
+    <value>Mile.Xaml version：</value>
+  </data>
+  <data name="WindowsAppSDKVersion" xml:space="preserve">
+    <value>Windows App SDK version：</value>
+  </data>
+  <data name="WinUI3Version" xml:space="preserve">
+    <value>WinUI3 version：</value>
+  </data>
+  <data name="WebView2CoreVersion" xml:space="preserve">
+    <value>WebView2 Core Version：</value>
+  </data>
 </root>

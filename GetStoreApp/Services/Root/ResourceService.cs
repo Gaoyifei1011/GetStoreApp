@@ -7,10 +7,10 @@ using GetStoreApp.Models.Dialogs.CommonDialogs.Settings;
 using GetStoreApp.Properties;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.Windows.ApplicationModel.Resources;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Resources.Core;
 
 namespace GetStoreApp.Services.Root
 {
@@ -25,11 +25,11 @@ namespace GetStoreApp.Services.Root
 
         private static LanguageModel CurrentAppLanguage { get; set; }
 
-        private static ResourceContext DefaultResourceContext { get; set; }
+        private static ResourceContext DefaultResourceContext { get; set; } = new ResourceContext();
 
-        private static ResourceContext CurrentResourceContext { get; set; }
+        private static ResourceContext CurrentResourceContext { get; set; } = new ResourceContext();
 
-        private static ResourceManager ResourceManager { get; } = new ResourceManager();
+        private static ResourceMap ResourceMap { get; } = ResourceManager.Current.MainResourceMap;
 
         public static List<TypeModel> TypeList { get; } = new List<TypeModel>();
 
@@ -64,9 +64,6 @@ namespace GetStoreApp.Services.Root
         {
             DefaultAppLanguage = defaultAppLanguage;
             CurrentAppLanguage = currentAppLanguage;
-
-            DefaultResourceContext = ResourceManager.CreateResourceContext();
-            CurrentResourceContext = ResourceManager.CreateResourceContext();
 
             DefaultResourceContext.QualifierValues["Language"] = DefaultAppLanguage.InternalName;
             CurrentResourceContext.QualifierValues["Language"] = CurrentAppLanguage.InternalName;
@@ -408,13 +405,13 @@ namespace GetStoreApp.Services.Root
             {
                 try
                 {
-                    return ResourceManager.MainResourceMap.GetValue(resource, CurrentResourceContext).ValueAsString;
+                    return ResourceMap.GetValue(resource, CurrentResourceContext).ValueAsString;
                 }
                 catch (Exception)
                 {
                     try
                     {
-                        return ResourceManager.MainResourceMap.GetValue(resource, DefaultResourceContext).ValueAsString;
+                        return ResourceMap.GetValue(resource, DefaultResourceContext).ValueAsString;
                     }
                     catch (Exception)
                     {

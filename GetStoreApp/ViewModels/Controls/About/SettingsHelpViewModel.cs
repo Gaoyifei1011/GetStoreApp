@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Contracts.Command;
 using GetStoreApp.Extensions.Command;
+using GetStoreApp.UI.Dialogs.About;
 using System;
 using Windows.System;
 
@@ -18,6 +19,12 @@ namespace GetStoreApp.ViewModels.Controls.About
 
         // 应用信息
         public IRelayCommand AppInformationCommand => new RelayCommand(async () =>
+        {
+            await new AppInformationDialog().ShowAsync();
+        });
+
+        // 应用设置
+        public IRelayCommand AppSettingsCommand => new RelayCommand(async () =>
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures-app"));
         });
