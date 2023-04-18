@@ -119,15 +119,21 @@ namespace GetStoreApp.ViewModels.Controls.Window
 
             if (properties.IsLeftButtonPressed)
             {
-                User32Library.GetCursorPos(out PointInt32 pt);
-
-                if (isWindowMoving)
+                unsafe
                 {
-                    if (!WindowHelper.IsWindowMaximized)
+                    PointInt32 pointInt32 = new PointInt32() { X = 0, Y = 0 };
+                    PointInt32* pointPtr = &pointInt32;
+                    User32Library.GetCursorPos(pointPtr);
+
+                    if (isWindowMoving)
                     {
-                        User32Library.SetWindowPos(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), 0, nXWindow + (pt.X - nX), nYWindow + (pt.Y - nY), 0, 0, SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER);
+                        if (!WindowHelper.IsWindowMaximized)
+                        {
+                            User32Library.SetWindowPos(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), 0, nXWindow + (pointInt32.X - nX), nYWindow + (pointInt32.Y - nY), 0, 0, SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER);
+                        }
                     }
                 }
+
                 args.Handled = true;
             }
         }
@@ -145,12 +151,17 @@ namespace GetStoreApp.ViewModels.Controls.Window
                 nXWindow = Program.ApplicationRoot.MainWindow.AppWindow.Position.X;
                 nYWindow = Program.ApplicationRoot.MainWindow.AppWindow.Position.Y;
 
-                User32Library.GetCursorPos(out PointInt32 pt);
-                nX = pt.X;
-                nY = pt.Y;
-                if (!WindowHelper.IsWindowMaximized)
+                unsafe
                 {
-                    isWindowMoving = true;
+                    PointInt32 pointInt32 = new PointInt32() { X = 0, Y = 0 };
+                    PointInt32* pointPtr = &pointInt32;
+                    User32Library.GetCursorPos(pointPtr);
+                    nX = pointInt32.X;
+                    nY = pointInt32.Y;
+                    if (!WindowHelper.IsWindowMaximized)
+                    {
+                        isWindowMoving = true;
+                    }
                 }
             }
         }

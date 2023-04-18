@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
 {
@@ -10,6 +9,9 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
     public static partial class Kernel32Library
     {
         private const string Kernel32 = "Kernel32.dll";
+
+        public const int MAX_GEO_NAME_LENGTH = 128;
+        public const int MAX_PATH = 260;
 
         public static IntPtr INVALID_HANDLE_VALUE { get; } = new IntPtr(-1);
 
@@ -56,8 +58,9 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// </param>
         /// <param name="nSize">管道缓冲区的大小（以字节为单位）。 大小只是建议;系统使用该值计算适当的缓冲机制。 如果此参数为零，则系统使用默认缓冲区大小。</param>
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
-        [DllImport(Kernel32, CharSet = CharSet.Unicode, EntryPoint = "CreatePipe", SetLastError = true)]
-        public static extern bool CreatePipe(ref IntPtr hReadPipe, ref IntPtr hWritePipe, ref SECURITY_ATTRIBUTES lpPipeAttributes, uint nSize);
+        [LibraryImport(Kernel32, EntryPoint = "CreatePipe", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static unsafe partial bool CreatePipe(ref IntPtr hReadPipe, ref IntPtr hWritePipe, SECURITY_ATTRIBUTES* lpPipeAttributes, uint nSize);
 
         /// <summary>
         /// 获取指定进程的快照，以及这些进程使用的堆、模块和线程。
@@ -199,8 +202,8 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// 返回 (ANSI) 或单词 (Unicode) 在输出缓冲区中检索的地理位置信息的字节数。
         /// 如果 cchData 设置为 0，则函数返回缓冲区所需的大小。如果函数不成功，则返回 0。
         /// </returns>
-        [DllImport(Kernel32, CharSet = CharSet.Unicode, EntryPoint = "GetGeoInfo", SetLastError = true)]
-        public static extern int GetGeoInfo(int location, SYSGEOTYPE geoType, StringBuilder lpGeoData, int cchData, int langId);
+        [LibraryImport(Kernel32, EntryPoint = "GetGeoInfoW", SetLastError = true)]
+        public static unsafe partial int GetGeoInfo(int location, SYSGEOTYPE geoType, char* lpGeoData, int cchData, int langId);
 
         /// <summary>
         /// 检索创建调用进程时指定的 <see cref="STARTUPINFO"> 结构的内容。
@@ -245,8 +248,9 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>
         /// 如果进程列表的第一个条目已复制到缓冲区或 FALSE，则返回 TRUE。 如果不存在进程或快照不包含进程信息，则 GetLastError 函数将返回ERROR_NO_MORE_FILES错误值。
         /// </returns>
-        [DllImport(Kernel32, CharSet = CharSet.Unicode, EntryPoint = "Process32First", SetLastError = false)]
-        public static extern bool Process32First(IntPtr snapshot, ref PROCESSENTRY32 lppe);
+        [LibraryImport(Kernel32, EntryPoint = "Process32FirstW", SetLastError = false)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static partial bool Process32First(IntPtr snapshot, ref PROCESSENTRY32 lppe);
 
         /// <summary>
         /// 检索有关系统快照中记录的下一个进程的信息。
@@ -256,8 +260,9 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>
         /// 如果进程列表的下一个条目已复制到缓冲区，则返回 TRUE，否则返回 FALSE。如果不存在任何进程或快照不包含进程信息，则 GetLastError 函数将返回ERROR_NO_MORE_FILES错误值。
         /// </returns>
-        [DllImport(Kernel32, CharSet = CharSet.Unicode, EntryPoint = "Process32Next", SetLastError = false)]
-        public static extern bool Process32Next(IntPtr snapshot, ref PROCESSENTRY32 lppe);
+        [LibraryImport(Kernel32, EntryPoint = "Process32NextW", SetLastError = false)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static partial bool Process32Next(IntPtr snapshot, ref PROCESSENTRY32 lppe);
 
         /// <summary>
         /// 从指定的文件或输入/输出 (I/O) 设备读取数据。 如果设备支持，则读取发生在文件指针指定的位置。

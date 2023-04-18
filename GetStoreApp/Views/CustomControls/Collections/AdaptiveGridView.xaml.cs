@@ -102,8 +102,6 @@ namespace GetStoreApp.Views.CustomControls.Collections
         public static readonly DependencyProperty StretchContentForSingleRowProperty =
             DependencyProperty.Register("StretchContentForSingleRow", typeof(bool), typeof(AdaptiveGridView), new PropertyMetadata(true, OnStretchContentForSingleRowPropertyChanged));
 
-        public new ItemsPanelTemplate ItemsPanel => ItemsPanel;
-
         public AdaptiveGridView()
         {
             IsTabStop = false;
@@ -164,7 +162,7 @@ namespace GetStoreApp.Views.CustomControls.Collections
         /// <summary>计算网格项的宽度。</summary>
         /// <param name="containerWidth">容器控件的宽度。</param>
         /// <returns>计算的项目宽度。</returns>
-        protected virtual double CalculateItemWidth(double containerWidth)
+        private double CalculateItemWidth(double containerWidth)
         {
             if (double.IsNaN(DesiredWidth))
             {
@@ -196,7 +194,7 @@ namespace GetStoreApp.Views.CustomControls.Collections
             OnOneRowModeEnabledChanged(this, OneRowModeEnabled);
         }
 
-        private void ItemsOnVectorChanged(IObservableVector<object> sender, IVectorChangedEventArgs @event)
+        private void ItemsOnVectorChanged(IObservableVector<object> sender, IVectorChangedEventArgs args)
         {
             if (!double.IsNaN(ActualWidth))
             {
@@ -324,7 +322,7 @@ namespace GetStoreApp.Views.CustomControls.Collections
             obj.RecalculateLayout(obj.ActualWidth);
         }
 
-        private static int CalculateColumns(double containerWidth, double itemWidth)
+        private int CalculateColumns(double containerWidth, double itemWidth)
         {
             int num = (int)Math.Round(containerWidth / itemWidth);
             if (num is 0)

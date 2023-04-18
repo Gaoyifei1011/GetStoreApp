@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
 {
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    public struct PROCESSENTRY32
+    public unsafe struct PROCESSENTRY32
     {
         /// <summary>
         /// 结构大小（以字节为单位）。 在调用 Process32First 函数之前，请将此成员设置为 sizeof(PROCESSENTRY32)。 如果不初始化 dwSize， Process32First 将失败。
@@ -55,7 +55,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// 进程的可执行文件的名称。 若要检索可执行文件的完整路径，请调用 Module32First 函数并检查返回的 MODULEENTRY32 结构的 szExePath 成员。
         /// 但是，如果调用进程是 32 位进程，则必须调用 QueryFullProcessImageName 函数，才能检索 64 位进程的可执行文件的完整路径。
         /// </summary>
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-        public string szExeFile;
+        public char szExeFile[Kernel32Library.MAX_PATH];
     }
 }

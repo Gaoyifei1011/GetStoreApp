@@ -5,7 +5,7 @@ using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.AppNotifications;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.DataTransfer.ShareTarget;
@@ -141,11 +141,13 @@ namespace GetStoreApp.Services.Root
                 // 将激活重定向到主实例
                 await mainInstance.RedirectActivationToAsync(appArgs);
 
+                string sendData = string.Format("{0} {1} {2}", LaunchArgs["TypeName"], LaunchArgs["ChannelName"], LaunchArgs["Link"] is null ? "PlaceHolderText" : LaunchArgs["Link"]);
+
                 // 向主实例发送数据
-                CopyDataStruct copyDataStruct;
+                CopyDataStruct copyDataStruct = new CopyDataStruct();
                 copyDataStruct.dwData = NeedToSendMesage;
-                copyDataStruct.lpData = string.Format("{0} {1} {2}", LaunchArgs["TypeName"], LaunchArgs["ChannelName"], LaunchArgs["Link"] is null ? "PlaceHolderText" : LaunchArgs["Link"]);
-                copyDataStruct.cbData = Encoding.Default.GetBytes(copyDataStruct.lpData).Length + 1;
+                copyDataStruct.cbData = (sendData.Length + 1) * 2;
+                copyDataStruct.lpData = Marshal.StringToHGlobalUni(sendData);
 
                 List<uint> GetStoreAppProcessPIDList = ProcessHelper.GetProcessPIDByName("GetStoreApp.exe");
 
@@ -180,6 +182,9 @@ namespace GetStoreApp.Services.Root
                     }
                     while (hwnd != IntPtr.Zero);
                 }
+
+                // 释放分配的内存
+                Marshal.FreeHGlobal(copyDataStruct.lpData);
 
                 // 然后退出实例并停止
                 Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));

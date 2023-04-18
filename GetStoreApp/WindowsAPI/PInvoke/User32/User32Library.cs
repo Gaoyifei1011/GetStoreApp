@@ -49,8 +49,9 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// </summary>
         /// <param name="lpPoint">指向接收光标屏幕坐标的 <see cref="PointInt32"> 结构的指针。</param>
         /// <returns>如果成功，则返回非零值，否则返回零。 </returns>
-        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "GetCursorPos", SetLastError = false)]
-        public static extern bool GetCursorPos(out PointInt32 lpPoint);
+        [LibraryImport(User32, EntryPoint = "GetCursorPos", SetLastError = false)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static unsafe partial bool GetCursorPos(PointInt32* lpPoint);
 
         /// <summary>
         /// 返回指定窗口的每英寸点 (dpi) 值。
@@ -140,8 +141,8 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="wParam">其他的消息特定信息。</param>
         /// <param name="lParam">其他的消息特定信息。</param>
         /// <returns>返回值指定消息处理的结果;这取决于发送的消息。</returns>
-        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "SendMessage", SetLastError = false)]
-        public static extern IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, int wParam, ref CopyDataStruct lParam);
+        [LibraryImport(User32, EntryPoint = "SendMessageW", SetLastError = false)]
+        public static partial IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, int wParam, ref CopyDataStruct lParam);
 
         /// <summary>
         /// 更改指定窗口的属性。 该函数还将指定偏移量处的32位（long类型）值设置到额外的窗口内存中。

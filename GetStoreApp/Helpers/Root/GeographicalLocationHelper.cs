@@ -1,9 +1,10 @@
 ﻿using GetStoreApp.Models.Controls.Settings.Common;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
+using System.Runtime.InteropServices;
 
 namespace GetStoreApp.Helpers.Root
 {
@@ -44,19 +45,18 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 获取系统存储的地理位置信息列表
         /// </summary>
-        private static string GetGeoInfo(int location, SYSGEOTYPE geoType, int langId)
+        private static unsafe string GetGeoInfo(int location, SYSGEOTYPE geoType, int langId)
         {
-            StringBuilder geoDataBuilder = new StringBuilder();
+            char* pGeoIsoId = stackalloc char[Kernel32Library.MAX_GEO_NAME_LENGTH];
 
-            int bufferSize = Kernel32Library.GetGeoInfo(location, geoType, geoDataBuilder, 0, langId);
+            int bufferSize = Kernel32Library.GetGeoInfo(location, geoType, pGeoIsoId, 0, langId);
 
             if (bufferSize > 0)
             {
-                geoDataBuilder.Capacity = bufferSize;
-                Kernel32Library.GetGeoInfo(location, geoType, geoDataBuilder, bufferSize, langId);
+                Kernel32Library.GetGeoInfo(location, geoType, pGeoIsoId, bufferSize, langId);
             }
 
-            return geoDataBuilder.ToString();
+            return Marshal.PtrToStringUni((IntPtr)pGeoIsoId);
         }
 
         /// <summary>

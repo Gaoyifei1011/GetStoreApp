@@ -10,7 +10,7 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 根据进程名称获取所有的进程列表信息
         /// </summary>
-        public static List<uint> GetProcessPIDByName(string processName)
+        public static unsafe List<uint> GetProcessPIDByName(string processName)
         {
             if (!processName.EndsWith(".exe"))
             {
@@ -32,7 +32,7 @@ namespace GetStoreApp.Helpers.Root
 
                 for (bool result = Kernel32Library.Process32First(hSnapshot, ref ProcessEntry32); result; result = Kernel32Library.Process32Next(hSnapshot, ref ProcessEntry32))
                 {
-                    if (ProcessEntry32.szExeFile.Equals(processName, StringComparison.OrdinalIgnoreCase))
+                    if (Marshal.PtrToStringUni((IntPtr)ProcessEntry32.szExeFile).Equals(processName, StringComparison.OrdinalIgnoreCase))
                     {
                         ProcessEntry32PIDList.Add(ProcessEntry32.th32ProcessID);
                     }

@@ -7,7 +7,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
     /// 包含要通过 <see cref="WindowMessage.WM_COPYDATA"> 消息传递到另一个应用程序的数据。
     /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    public struct CopyDataStruct
+    public unsafe struct CopyDataStruct
     {
         /// <summary>
         /// 要传递给接收应用程序的数据类型。 接收应用程序定义有效类型。
@@ -22,7 +22,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <summary>
         /// 要传递给接收应用程序的数据。 此成员可以为 NULL。
         /// </summary>
-        [MarshalAs(UnmanagedType.LPStr)]
-        public string lpData;
+        public IntPtr lpData;
     }
 }

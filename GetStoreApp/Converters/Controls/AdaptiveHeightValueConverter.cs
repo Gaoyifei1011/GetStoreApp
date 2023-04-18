@@ -29,10 +29,10 @@ namespace GetStoreApp.Converters.Controls
                     return value;
                 }
 
-                double.TryParse(System.Convert.ToString(value), out double height);
+                double height = System.Convert.ToDouble(value);
 
-                var padding = gridView.Padding;
-                var margin = GetItemMargin(gridView, DefaultItemMargin);
+                Thickness padding = gridView.Padding;
+                Thickness margin = GetItemMargin(gridView, DefaultItemMargin);
                 height = height + margin.Top + margin.Bottom + padding.Top + padding.Bottom;
 
                 return height;
@@ -48,7 +48,7 @@ namespace GetStoreApp.Converters.Controls
 
         public static Thickness GetItemMargin(GridView view, Thickness fallback = default)
         {
-            var setter = view.ItemContainerStyle?.Setters.OfType<Setter>().FirstOrDefault(s => s.Property == FrameworkElement.MarginProperty);
+            Setter setter = view.ItemContainerStyle?.Setters.OfType<Setter>().FirstOrDefault(s => s.Property == FrameworkElement.MarginProperty);
             if (setter is not null)
             {
                 return (Thickness)setter.Value;
