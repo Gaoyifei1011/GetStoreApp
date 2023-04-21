@@ -121,15 +121,14 @@ namespace GetStoreApp.ViewModels.Controls.Window
             {
                 unsafe
                 {
-                    PointInt32 pointInt32 = new PointInt32() { X = 0, Y = 0 };
-                    PointInt32* pointPtr = &pointInt32;
-                    User32Library.GetCursorPos(pointPtr);
+                    PointInt32 pt = new PointInt32();
+                    User32Library.GetCursorPos(&pt);
 
                     if (isWindowMoving)
                     {
                         if (!WindowHelper.IsWindowMaximized)
                         {
-                            User32Library.SetWindowPos(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), 0, nXWindow + (pointInt32.X - nX), nYWindow + (pointInt32.Y - nY), 0, 0, SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER);
+                            User32Library.SetWindowPos(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), 0, nXWindow + (pt.X - nX), nYWindow + (pt.Y - nY), 0, 0, SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER);
                         }
                     }
                 }
@@ -153,11 +152,10 @@ namespace GetStoreApp.ViewModels.Controls.Window
 
                 unsafe
                 {
-                    PointInt32 pointInt32 = new PointInt32() { X = 0, Y = 0 };
-                    PointInt32* pointPtr = &pointInt32;
-                    User32Library.GetCursorPos(pointPtr);
-                    nX = pointInt32.X;
-                    nY = pointInt32.Y;
+                    PointInt32 pt = new PointInt32() { X = 0, Y = 0 };
+                    User32Library.GetCursorPos(&pt);
+                    nX = pt.X;
+                    nY = pt.Y;
                     if (!WindowHelper.IsWindowMaximized)
                     {
                         isWindowMoving = true;

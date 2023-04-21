@@ -73,7 +73,7 @@ namespace GetStoreApp.Services.Root
         }
 
         /// <summary>
-        /// 初始化必备应用本地化信息
+        /// 初始化应用本地化信息
         /// </summary>
         public static async Task LocalizeReosurceAsync()
         {

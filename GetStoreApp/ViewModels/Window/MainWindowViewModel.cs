@@ -3,6 +3,7 @@ using GetStoreApp.Extensions.Backdrop;
 using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
 using GetStoreApp.Models.Controls.Settings.Appearance;
 using GetStoreApp.Models.Window;
@@ -369,25 +370,25 @@ namespace GetStoreApp.ViewModels.Window
                 {
                     if (Application.Current.RequestedTheme is ApplicationTheme.Light)
                     {
-                        AppBackground = new SolidColorBrush(ColorHelper.FromArgb(255, 240, 243, 249));
+                        AppBackground = ResourceDictionaryHelper.WindowChromeDict["WindowLightBrush"] as SolidColorBrush;
                     }
                     else
                     {
-                        AppBackground = new SolidColorBrush(ColorHelper.FromArgb(255, 20, 20, 20));
+                        AppBackground = ResourceDictionaryHelper.WindowChromeDict["WindowDarkBrush"] as SolidColorBrush;
                     }
                 }
                 else if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[1].InternalName)
                 {
-                    AppBackground = new SolidColorBrush(ColorHelper.FromArgb(255, 240, 243, 249));
+                    AppBackground = ResourceDictionaryHelper.WindowChromeDict["WindowLightBrush"] as SolidColorBrush;
                 }
                 else if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[2].InternalName)
                 {
-                    AppBackground = new SolidColorBrush(ColorHelper.FromArgb(255, 20, 20, 20));
+                    AppBackground = ResourceDictionaryHelper.WindowChromeDict["WindowDarkBrush"] as SolidColorBrush;
                 }
             }
             else
             {
-                AppBackground = new SolidColorBrush(Colors.Transparent);
+                AppBackground = ResourceDictionaryHelper.WindowChromeDict["WindowSystemBackdropBrush"] as SolidColorBrush;
             }
         }
 

@@ -70,6 +70,7 @@ namespace GetStoreApp
             else
             {
                 bool AttachResult = Kernel32Library.AttachConsole();
+
                 if (!AttachResult)
                 {
                     Kernel32Library.AllocConsole();
@@ -113,7 +114,7 @@ namespace GetStoreApp
             // 初始化应用任务跳转列表信息
             AppJumpList.GroupName = ResourceService.GetLocalized("Window/JumpListGroupName");
             AppJumpList.GroupKind = JumpListSystemGroupKind.Recent;
-
+            
             if (IsDesktopProgram)
             {
                 // 初始化存储数据信息

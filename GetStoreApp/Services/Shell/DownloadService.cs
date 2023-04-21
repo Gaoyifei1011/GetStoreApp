@@ -117,9 +117,8 @@ namespace GetStoreApp.Services.Shell
             DownloadSecurityAttributes.nLength = Marshal.SizeOf(typeof(SECURITY_ATTRIBUTES));
             DownloadSecurityAttributes.bInheritHandle = true;
             DownloadSecurityAttributes.lpSecurityDescriptor = 0;
-            SECURITY_ATTRIBUTES* pSecurityAttributes = &DownloadSecurityAttributes;
 
-            bool PipeCreateResult = Kernel32Library.CreatePipe(ref hRead, ref hWrite, pSecurityAttributes, 0);
+            bool PipeCreateResult = Kernel32Library.CreatePipe(ref hRead, ref hWrite, &DownloadSecurityAttributes, 0);
 
             if (PipeCreateResult)
             {

@@ -55,6 +55,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// 进程的可执行文件的名称。 若要检索可执行文件的完整路径，请调用 Module32First 函数并检查返回的 MODULEENTRY32 结构的 szExePath 成员。
         /// 但是，如果调用进程是 32 位进程，则必须调用 QueryFullProcessImageName 函数，才能检索 64 位进程的可执行文件的完整路径。
         /// </summary>
-        public char szExeFile[Kernel32Library.MAX_PATH];
+        public fixed char szExeFile[Kernel32Library.MAX_PATH];
     }
 }
