@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.WindowsAPI.Dialogs.FileDialog;
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
@@ -20,6 +21,18 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         public static partial bool IsUserAnAdmin();
 
         /// <summary>
+        /// 将应用栏消息发送到系统。
+        /// </summary>
+        /// <param name="dwMessage">要发送的 Appbar 消息值。</param>
+        /// <param name="pData">
+        /// 指向 <see cref="APPBARDATA"> 结构的指针。 入口和退出结构的内容取决于 <param name="dwMessage"> 参数中设置的值。 有关具体信息，请参阅单独的邮件页。
+        /// </param>
+        /// <returns></returns>
+        [LibraryImport(Shell32, EntryPoint = "SHAppBarMessage", SetLastError = false)]
+        [UnmanagedCallConv(CallConvs = new Type[] { typeof(CallConvStdcall) })]
+        public static partial uint SHAppBarMessage(AppBarMessage dwMessage, ref APPBARDATA pData);
+
+        /// <summary>
         /// 从分析名称创建和初始化命令行管理程序项对象。
         /// </summary>
         /// <param name="pszPath">指向显示名称的指针。</param>
@@ -36,5 +49,21 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         /// <returns>此方法成功返回时，包含riid 中请求的接口指针。这通常是 <see cref="IShellItem"> 或IShellItem2。</returns>
         [DllImport(Shell32, CharSet = CharSet.Unicode, EntryPoint = "SHCreateItemFromParsingName", ExactSpelling = true, PreserveSig = false, SetLastError = false)]
         public static extern IShellItem SHCreateItemFromParsingName(string pszPath, IntPtr pbc, [MarshalAs(UnmanagedType.LPStruct)] Guid riid);
+
+        /// <summary>
+        /// 向任务栏的状态区域发送消息。
+        /// </summary>
+        /// <param name="cmd">一个值，该值指定要由此函数执行的操作</param>
+        /// <param name="data">
+        /// 指向 NOTIFYICONDATA 结构的指针。 结构的内容取决于 cmd 的值。
+        /// 它可以定义一个图标以添加到通知区域，导致该图标显示通知，或标识要修改或删除的图标。
+        /// </param>
+        /// <returns>
+        /// 如果成功，则返回 TRUE ;否则返回 FALSE 。 如果 dwMessage 设置为 NIM_SETVERSION，则函数在成功更改版本时返回 TRUE ;
+        /// 如果请求的版本不受支持，则 返回 FALSE 。
+        /// </returns>
+        [LibraryImport(Shell32, EntryPoint = "Shell_NotifyIconW", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static unsafe partial bool Shell_NotifyIcon(NotifyIconMessage dwMessage, NOTIFYICONDATA* lpData);
     }
 }

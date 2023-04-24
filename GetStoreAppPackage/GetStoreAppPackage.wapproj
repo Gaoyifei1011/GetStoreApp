@@ -86,7 +86,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GetStoreApp\GetStoreApp.csproj" />
-    <ProjectReference Include="..\GetStoreAppHelper\GetStoreAppHelper.csproj" />
   </ItemGroup>
   <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.targets" />
   <Target Name="GetStoreAppStompSourceProjectForWapProject" BeforeTargets="_ConvertItems">

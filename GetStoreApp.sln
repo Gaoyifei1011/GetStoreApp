@@ -24,8 +24,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Description", "Description"
 		Description\StudyReferenceCode.md = Description\StudyReferenceCode.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetStoreAppHelper", "GetStoreAppHelper\GetStoreAppHelper.csproj", "{E5F0A18A-347D-4020-BA37-2E06C0DE233E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -66,18 +64,6 @@ Global
 		{CA6C2DC4-C96D-4C23-AE18-FC7150BEF554}.Release|x86.ActiveCfg = Release|x86
 		{CA6C2DC4-C96D-4C23-AE18-FC7150BEF554}.Release|x86.Build.0 = Release|x86
 		{CA6C2DC4-C96D-4C23-AE18-FC7150BEF554}.Release|x86.Deploy.0 = Release|x86
-		{E5F0A18A-347D-4020-BA37-2E06C0DE233E}.Debug|ARM64.ActiveCfg = Debug|ARM64
-		{E5F0A18A-347D-4020-BA37-2E06C0DE233E}.Debug|ARM64.Build.0 = Debug|ARM64
-		{E5F0A18A-347D-4020-BA37-2E06C0DE233E}.Debug|x64.ActiveCfg = Debug|x64
-		{E5F0A18A-347D-4020-BA37-2E06C0DE233E}.Debug|x64.Build.0 = Debug|x64
-		{E5F0A18A-347D-4020-BA37-2E06C0DE233E}.Debug|x86.ActiveCfg = Debug|x86
-		{E5F0A18A-347D-4020-BA37-2E06C0DE233E}.Debug|x86.Build.0 = Debug|x86
-		{E5F0A18A-347D-4020-BA37-2E06C0DE233E}.Release|ARM64.ActiveCfg = Release|ARM64
-		{E5F0A18A-347D-4020-BA37-2E06C0DE233E}.Release|ARM64.Build.0 = Release|ARM64
-		{E5F0A18A-347D-4020-BA37-2E06C0DE233E}.Release|x64.ActiveCfg = Release|x64
-		{E5F0A18A-347D-4020-BA37-2E06C0DE233E}.Release|x64.Build.0 = Release|x64
-		{E5F0A18A-347D-4020-BA37-2E06C0DE233E}.Release|x86.ActiveCfg = Release|x86
-		{E5F0A18A-347D-4020-BA37-2E06C0DE233E}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

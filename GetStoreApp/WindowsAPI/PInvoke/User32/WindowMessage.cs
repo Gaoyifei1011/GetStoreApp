@@ -2721,11 +2721,6 @@
         WM_USER = 0x0400,
 
         /// <summary>
-        /// 进程通信时使用到的消息
-        /// </summary>
-        WM_PROCESSCOMMUNICATION = WM_USER + 0x0001,
-
-        /// <summary>
         /// 用于定义专用消息，通常为 WM_APP+x 形式的专用消息，其中 x 是整数值。
         /// </summary>
         WM_APP = 0x8000,

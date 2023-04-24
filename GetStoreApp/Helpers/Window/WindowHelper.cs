@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Windowing;
+using System;
 
 namespace GetStoreApp.Helpers.Window
 {
@@ -115,7 +116,15 @@ namespace GetStoreApp.Helpers.Window
         {
             bool isWindowOnTop = WindowPresenter.IsAlwaysOnTop;
 
-            User32Library.SetWindowPos(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), -1, 0, 0, 0, 0, SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOACTIVATE);
+            User32Library.SetWindowPos(
+                Program.ApplicationRoot.MainWindow.GetMainWindowHandle(),
+                new IntPtr(-1),
+                0,
+                0,
+                0,
+                0,
+                SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOACTIVATE
+                );
 
             if (!isWindowOnTop) WindowPresenter.IsAlwaysOnTop = false;
         }

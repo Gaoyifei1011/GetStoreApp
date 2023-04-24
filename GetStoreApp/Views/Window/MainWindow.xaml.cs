@@ -285,28 +285,6 @@ namespace GetStoreApp.Views.Window
                         WindowHelper.ShowAppWindow();
                         return 0;
                     }
-                //两个进程通信时使用到的消息
-                case WindowMessage.WM_PROCESSCOMMUNICATION:
-                    {
-                        CommunicationFlags flags = (CommunicationFlags)wParam;
-                        if (flags == CommunicationFlags.AboutApp)
-                        {
-                            DispatcherQueue.TryEnqueue(() => { ViewModel.AboutAppCommand.Execute(null); });
-                        }
-                        else if (flags == CommunicationFlags.ShowOrHideWindow)
-                        {
-                            DispatcherQueue.TryEnqueue(() => { ViewModel.ShowOrHideWindowCommand.Execute(null); });
-                        }
-                        else if (flags == CommunicationFlags.Settings)
-                        {
-                            DispatcherQueue.TryEnqueue(() => { ViewModel.SettingsCommand.Execute(null); });
-                        }
-                        else if (flags == CommunicationFlags.Exit)
-                        {
-                            DispatcherQueue.TryEnqueue(() => { ViewModel.ExitCommand.Execute(null); });
-                        }
-                        break;
-                    }
             }
             return User32Library.CallWindowProc(oldWndProc, hWnd, Msg, wParam, lParam);
         }

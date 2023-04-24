@@ -94,7 +94,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
 
         /// <summary>
         /// 如果 <see cref="dwFlags"/> 指定 <see cref="STARTF.STARTF_USESTDHANDLES"/>, 则此成员是进程的标准输入句柄。 如果未指定 <see cref="STARTF.STARTF_USESTDHANDLES"/>，则标准输入的默认值为键盘缓冲区
-        /// 如果 <see cref="dwFlags"/> 指定 <see cref="STARTF.STARTF_USEHOTKEY"/>, 则此成员指定一个热键值，该值作为 <see cref="WindowMessage.WM_SETHOTKEY"> 消息的 wParam 参数发送到拥有该过程的应用程序创建的第一个符合条件的顶级窗口。如果使用 <see cref="WindowStyles.WS_POPUP"> 窗口样式创建窗口，则它不符合条件，除非还设置了 <see cref="WindowStylesEx.WS_EX_APPWINDOW"> 扩展窗口样式。 有关详细信息，请参阅 <see cref="User32Library.CreateWindowEx">。
+        /// 如果 <see cref="dwFlags"/> 指定 <see cref="STARTF.STARTF_USEHOTKEY"/>, 则此成员指定一个热键值，该值作为 <see cref="WindowMessage.WM_SETHOTKEY"> 消息的 wParam 参数发送到拥有该过程的应用程序创建的第一个符合条件的顶级窗口。如果使用 <see cref="WindowStyle.WS_POPUP"> 窗口样式创建窗口，则它不符合条件，除非还设置了 <see cref="WindowStyleEx.WS_EX_APPWINDOW"> 扩展窗口样式。 有关详细信息，请参阅 <see cref="User32Library.CreateWindowEx">。
         /// 否则，将忽略此成员。
         /// </summary>
         public IntPtr hStdInput;

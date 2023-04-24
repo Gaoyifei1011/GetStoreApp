@@ -11,9 +11,8 @@ namespace GetStoreApp.ViewModels.Controls.About
         public Dictionary<string, string> ReferenceDict { get; } = new Dictionary<string, string>
         {
             {"Microsoft.WindowsAppSDK","https://github.com/microsoft/windowsappsdk" },
-            {"Microsoft.Windows.SDK.Contracts","https://aka.ms/WinSDKProjectURL" },
+            {"Microsoft.Windows.SDK.BuildTools","https://aka.ms/WinSDKProjectURL" },
             {"Mile.Aria2","https://github.com/ProjectMile/Mile.Aria2" },
-            {"Mile.Xaml","https://github.com/ProjectMile/Mile.Xaml" }
         };
     }
 }

@@ -1,6 +1,7 @@
 ﻿using GetStoreApp.Extensions.SystemTray;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
+using GetStoreApp.Services.Root;
 using GetStoreApp.ViewModels.Window;
 using GetStoreApp.Views.Window;
 using Microsoft.UI.Xaml;
@@ -13,6 +14,10 @@ namespace GetStoreApp
     public partial class WinUIApp : Application
     {
         public MainWindow MainWindow { get; private set; }
+
+        public TrayMenuWindow TrayMenuWindow { get; private set; }
+
+        public WindowTrayIcon TrayIcon { get; private set; }
 
         public JumpList TaskbarJumpList { get; private set; }
 
@@ -33,6 +38,8 @@ namespace GetStoreApp
             await ResourceDictionaryHelper.InitializeResourceDictionaryAsync();
 
             InitializeMainWindow();
+            InitializeTrayMenuWindow();
+            InitializeTrayIcon();
             Program.IsAppLaunched = true;
             await ViewModel.ActivateAsync();
 
@@ -49,6 +56,27 @@ namespace GetStoreApp
             MainWindow = new MainWindow();
             MainWindow.InitializeWindowProc();
             WindowHelper.InitializePresenter(Program.ApplicationRoot.MainWindow.AppWindow);
+        }
+
+        /// <summary>
+        /// 初始化应用的托盘右键菜单窗口
+        /// </summary>
+        private void InitializeTrayMenuWindow()
+        {
+            TrayMenuWindow = new TrayMenuWindow();
+            TrayMenuWindow.InitializeWindow();
+        }
+
+        /// <summary>
+        /// 初始化应用的托盘图标
+        /// </summary>
+        private void InitializeTrayIcon()
+        {
+            TrayIcon = new WindowTrayIcon(ResourceService.GetLocalized("Resources/AppDisplayName"))
+            {
+                RightClickCommand = ViewModel.RightClickCommand,
+                DoubleClickCommand = ViewModel.DoubleClickCommand
+            };
         }
 
         /// <summary>

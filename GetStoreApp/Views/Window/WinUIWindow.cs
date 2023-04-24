@@ -54,11 +54,6 @@ namespace GetStoreApp.Views.Window
         /// </summary>
         public int MaxHeight { get; set; } = -1;
 
-        /// <summary>
-        /// 窗口是否关闭的标志
-        /// </summary>
-        public bool IsClosing { get; set; }
-
         public ICommand ActivatedCommand
         {
             get { return (ICommand)Content.GetValue(ActivatedCommandProperty); }

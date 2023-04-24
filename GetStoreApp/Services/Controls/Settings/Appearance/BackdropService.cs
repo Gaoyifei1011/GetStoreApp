@@ -63,6 +63,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         public static async Task SetAppBackdropAsync()
         {
             Program.ApplicationRoot.MainWindow.SetSystemBackdrop(AppBackdrop.InternalName);
+            Program.ApplicationRoot.TrayMenuWindow.SetSystemBackdrop(AppBackdrop.InternalName);
             await Task.CompletedTask;
         }
     }

@@ -19,7 +19,7 @@
     mc:Ignorable="d">
 
     <WinUI:WinUIWindow.DataContext>
-        <viewModel:MainWindowViewModel x:Name="ViewModel" />
+        <viewModel:MainWindowViewModel x:Name="ViewModel" x:FieldModifier="public" />
     </WinUI:WinUIWindow.DataContext>
 
     <Grid Background="{x:Bind ViewModel.AppBackground, Mode=OneWay}">

@@ -5,10 +5,10 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Notifications;
 using GetStoreApp.WindowsAPI.PInvoke.Version;
 using Microsoft.UI.Xaml.Controls;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Windows.ApplicationModel;
-using System;
 
 namespace GetStoreApp.ViewModels.Dialogs.About
 {

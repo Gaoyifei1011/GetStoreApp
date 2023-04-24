@@ -1,4 +1,6 @@
-﻿using GetStoreApp.Extensions.DataType.Constant;
+﻿using GetStoreApp.Contracts.Command;
+using GetStoreApp.Extensions.Command;
+using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Extensions.SystemTray;
@@ -7,11 +9,13 @@ using GetStoreApp.Helpers.Window;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
+using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI;
 using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.AppNotifications;
 using System;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Graphics;
 using Windows.UI.StartScreen;
@@ -26,6 +30,41 @@ namespace GetStoreApp.ViewModels.Window
         private bool IsDisposed;
 
         private IntPtr[] hIcons;
+
+        // 双击任务栏图标：显示 / 隐藏窗口
+        public IRelayCommand DoubleClickCommand => new RelayCommand(() =>
+        {
+            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() => { Program.ApplicationRoot.MainWindow.ViewModel.ShowOrHideWindowCommand.Execute(null); });
+        });
+
+        // 右键任务栏图标：显示菜单窗口
+        public IRelayCommand RightClickCommand => new RelayCommand(() =>
+        {
+            unsafe
+            {
+                // 获取当前鼠标位置信息
+                PointInt32 pt;
+                User32Library.GetCursorPos(&pt);
+
+                // 获取当前状态栏信息
+                APPBARDATA appbarData = new APPBARDATA();
+                Shell32Library.SHAppBarMessage(AppBarMessage.ABM_GETTASKBARPOS, ref appbarData);
+
+                // 获取屏幕信息
+                IntPtr hMonitor = User32Library.MonitorFromWindow(Program.ApplicationRoot.TrayMenuWindow.GetWindowHandle(), MonitorFlags.MONITOR_DEFAULTTONEAREST);
+                MONITORINFO monitorInfo = new MONITORINFO();
+                monitorInfo.cbSize = Marshal.SizeOf(typeof(MONITORINFO));
+                User32Library.GetMonitorInfo(hMonitor, ref monitorInfo);
+
+                // 调整窗口的大小
+                Program.ApplicationRoot.TrayMenuWindow.SetWindowSize();
+                // 计算窗口应该具体显示的位置，防止超出屏幕边界
+                Program.ApplicationRoot.TrayMenuWindow.SetWindowPosition(appbarData, monitorInfo, pt);
+
+                Program.ApplicationRoot.TrayMenuWindow.AppWindow.Show();
+                User32Library.SetForegroundWindow(Program.ApplicationRoot.TrayMenuWindow.GetWindowHandle());
+            }
+        });
 
         /// <summary>
         /// 处理应用程序未知异常处理
@@ -58,8 +97,15 @@ namespace GetStoreApp.ViewModels.Window
             {
                 if (WindowWidth.HasValue && WindowHeight.HasValue && WindowPositionXAxis.HasValue && WindowPositionYAxis.HasValue)
                 {
-                    Program.ApplicationRoot.MainWindow.AppWindow.Resize(new SizeInt32(WindowWidth.Value, WindowHeight.Value));
-                    Program.ApplicationRoot.MainWindow.AppWindow.Move(new PointInt32(WindowPositionXAxis.Value, WindowPositionYAxis.Value));
+                    User32Library.SetWindowPos(
+                        Program.ApplicationRoot.MainWindow.GetMainWindowHandle(),
+                        IntPtr.Zero,
+                        WindowPositionXAxis.Value,
+                        WindowPositionYAxis.Value,
+                        WindowWidth.Value,
+                        WindowHeight.Value,
+                        SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER
+                        );
                 }
             }
 
@@ -161,6 +207,7 @@ namespace GetStoreApp.ViewModels.Window
             await SaveWindowInformationAsync();
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
             await Aria2Service.CloseAria2Async();
+            Program.ApplicationRoot.TrayIcon.Dispose();
             AppNotificationService.Unregister();
             Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
         }

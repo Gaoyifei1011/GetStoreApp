@@ -8,6 +8,7 @@ using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using System;
 using Windows.Graphics;
 
 namespace GetStoreApp.ViewModels.Controls.Window
@@ -128,7 +129,15 @@ namespace GetStoreApp.ViewModels.Controls.Window
                     {
                         if (!WindowHelper.IsWindowMaximized)
                         {
-                            User32Library.SetWindowPos(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), 0, nXWindow + (pt.X - nX), nYWindow + (pt.Y - nY), 0, 0, SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER);
+                            User32Library.SetWindowPos(
+                                Program.ApplicationRoot.MainWindow.GetMainWindowHandle(),
+                                IntPtr.Zero,
+                                nXWindow + (pt.X - nX),
+                                nYWindow + (pt.Y - nY),
+                                0,
+                                0,
+                                SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER
+                                );
                         }
                     }
                 }

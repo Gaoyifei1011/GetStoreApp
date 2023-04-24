@@ -52,9 +52,6 @@ namespace GetStoreApp
                 AppNotificationService.Initialize();
                 DesktopLaunchService.InitializeLaunchAsync().Wait();
 
-                // 启动任务栏通知区域进程
-                TaskbarService.StartTaskbarProcessAsync().Wait();
-
                 WinUILibrary.XamlCheckProcessRequirements();
                 ComWrappersSupport.InitializeComWrappers();
 
@@ -114,7 +111,7 @@ namespace GetStoreApp
             // 初始化应用任务跳转列表信息
             AppJumpList.GroupName = ResourceService.GetLocalized("Window/JumpListGroupName");
             AppJumpList.GroupKind = JumpListSystemGroupKind.Recent;
-            
+
             if (IsDesktopProgram)
             {
                 // 初始化存储数据信息
