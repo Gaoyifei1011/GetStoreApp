@@ -1,6 +1,7 @@
 ﻿using GetStoreApp.Contracts.Command;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using System;
+using System.Runtime.InteropServices;
 
 namespace GetStoreApp.Extensions.SystemTray
 {
@@ -128,15 +129,16 @@ namespace GetStoreApp.Extensions.SystemTray
         /// <param name="flags">定义设置 <paramref name="data"/> 结构的哪些成员。</param>
         /// <returns>如果数据已成功写入，则为 True。</returns>
         /// <remarks>有关详细信息，请参阅 MSDN 上的Shell_NotifyIcon文档。</remarks>
-        public static unsafe bool WriteIconData(ref NOTIFYICONDATA data, NotifyIconMessage message, NotifyIconFlags flags)
+        public static bool WriteIconData(ref NOTIFYICONDATA data, NotifyIconMessage message, NotifyIconFlags flags)
         {
             data.uFlags = flags;
             lock (SyncRoot)
             {
-                fixed (NOTIFYICONDATA* pdata = &data)
-                {
-                    return Shell32Library.Shell_NotifyIcon(message, pdata);
-                }
+                IntPtr pdata = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(NOTIFYICONDATA)));
+                Marshal.StructureToPtr(data, pdata, false);
+                bool result = Shell32Library.Shell_NotifyIcon(message, pdata);
+                Marshal.FreeHGlobal(pdata);
+                return result;
             }
         }
 

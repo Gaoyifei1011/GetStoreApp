@@ -233,7 +233,7 @@ namespace GetStoreApp.Views.Window
                 // 窗口接收其他数据消息
                 case WindowMessage.WM_COPYDATA:
                     {
-                        CopyDataStruct copyDataStruct = Marshal.PtrToStructure<CopyDataStruct>(lParam);
+                        COPYDATASTRUCT copyDataStruct = Marshal.PtrToStructure<COPYDATASTRUCT>(lParam);
 
                         // 没有任何命令参数，正常启动，应用可能被重复启动
                         if (copyDataStruct.dwData is 0)
@@ -250,7 +250,7 @@ namespace GetStoreApp.Views.Window
                         {
                             WindowHelper.ShowAppWindow();
 
-                            string[] startupArgs = Marshal.PtrToStringUni(copyDataStruct.lpData).Split(' ');
+                            string[] startupArgs = copyDataStruct.lpData.Split(' ');
                             Messenger.Default.Send(startupArgs, MessageToken.Command);
                         }
 

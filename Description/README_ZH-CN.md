@@ -48,7 +48,6 @@
 | 控制台应用程序（快速下载）      | 已完成                                            |
 | 程序性能优化                    | 已完成                                            |
 | 界面现代化改造                  | 已完成                                            |
-| 使用CppWinRT重新改造该应用，进一步大幅度降低应用体积，整体提升应用性能 | 预计2.0正式版本实现 |
 
 程序所有功能都已开发完成
 
@@ -57,9 +56,8 @@
 ### 项目引用（按英文首字母排序）
 
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
-> * [Microsoft.Windows.SDK.Contracts](https://aka.ms/WinSDKProjectURL)&emsp;
+> * [Microsoft.Windows.SDK.BuildTools](https://aka.ms/WinSDKProjectURL)&emsp;
 > * [Mile.Aria2](https://github.com/ProjectMile/Mile.Aria2)&emsp;
-> * [Mile.Xaml](https://github.com/ProjectMile/Mile.Xaml)&emsp;
  
 [学习过程中参考或使用的代码](https://github.com/Gaoyifei1011/GetStoreApp/blob/master/Description/StudyReferenceCode.md)&emsp;
 

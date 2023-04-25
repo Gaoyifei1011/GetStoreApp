@@ -5,7 +5,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
     /// <summary>
     /// <see cref="RECT"> 结构按其左上角和右下角的坐标定义矩形。
     /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct RECT
     {
         /// <summary>

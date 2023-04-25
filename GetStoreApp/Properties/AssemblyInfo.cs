@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Resources;
 using System.Runtime.InteropServices;
 
 // 有关程序集的一般信息由以下
@@ -12,6 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Copyright ©2022-2023 高怡飞, All Rights Reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+[assembly: NeutralResourcesLanguage("en-us")]
 
 //将 ComVisible 设置为 false 将使此程序集中的类型
 //对 COM 组件不可见。  如果需要从 COM 访问此程序集中的类型，
@@ -28,5 +30,5 @@ using System.Runtime.InteropServices;
 //      生成号
 //      修订号
 //
-[assembly: AssemblyVersion("1.5.424.0")]
-[assembly: AssemblyFileVersion("1.5.424.0")]
+[assembly: AssemblyVersion("1.5.425.0")]
+[assembly: AssemblyFileVersion("1.5.425.0")]

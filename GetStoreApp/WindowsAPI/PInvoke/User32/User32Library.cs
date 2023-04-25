@@ -273,7 +273,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="lParam">其他的消息特定信息。</param>
         /// <returns>返回值指定消息处理的结果;这取决于发送的消息。</returns>
         [LibraryImport(User32, EntryPoint = "SendMessageW", SetLastError = false)]
-        public static partial IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, int wParam, ref CopyDataStruct lParam);
+        public static partial IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, int wParam, IntPtr lParam);
 
         /// <summary>
         /// 更改指定窗口的属性。 该函数还将指定偏移量处的32位（long类型）值设置到额外的窗口内存中。

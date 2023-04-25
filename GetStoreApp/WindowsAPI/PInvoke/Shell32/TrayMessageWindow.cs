@@ -36,7 +36,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
 
         private WNDCLASS wc;
 
-        public unsafe TrayMessageWindow()
+        public TrayMessageWindow()
         {
             trayMessageId = "GetStoreApp" + GuidHelper.CreateNewGuid();
 
@@ -49,10 +49,10 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
             wc.hIcon = IntPtr.Zero;
             wc.hCursor = IntPtr.Zero;
             wc.hbrBackground = IntPtr.Zero;
-            wc.lpszMenuName = Marshal.StringToHGlobalUni(string.Empty);
-            wc.lpszClassName = Marshal.StringToHGlobalUni(trayMessageId);
+            wc.lpszMenuName = string.Empty;
+            wc.lpszClassName = trayMessageId;
 
-            IntPtr ptrWndClass = Marshal.AllocHGlobal(Marshal.SizeOf(wc));
+            IntPtr ptrWndClass = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(WNDCLASS)));
             Marshal.StructureToPtr(wc, ptrWndClass, false);
             // 创建窗口类后需要注册窗口类
             User32Library.RegisterClass(ptrWndClass);
@@ -166,16 +166,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
 
             if (disposing)
             {
-                if (wc.lpszMenuName != IntPtr.Zero)
-                {
-                    Marshal.FreeHGlobal(wc.lpszMenuName);
-                }
-
-                if (wc.lpszClassName != IntPtr.Zero)
-                {
-                    Marshal.FreeHGlobal(wc.lpszClassName);
-                }
-
                 // 始终销毁非托管句柄（即使从 GC 调用）
                 User32Library.DestroyWindow(TrayMessagehWnd);
                 wc.lpfnWndProc = null;

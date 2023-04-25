@@ -6,6 +6,7 @@ using Microsoft.Windows.AppNotifications;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.DataTransfer.ShareTarget;
@@ -144,10 +145,10 @@ namespace GetStoreApp.Services.Root
                 string sendData = string.Format("{0} {1} {2}", LaunchArgs["TypeName"], LaunchArgs["ChannelName"], LaunchArgs["Link"] is null ? "PlaceHolderText" : LaunchArgs["Link"]);
 
                 // 向主实例发送数据
-                CopyDataStruct copyDataStruct = new CopyDataStruct();
+                COPYDATASTRUCT copyDataStruct = new COPYDATASTRUCT();
                 copyDataStruct.dwData = NeedToSendMesage;
-                copyDataStruct.cbData = (sendData.Length + 1) * 2;
-                copyDataStruct.lpData = Marshal.StringToHGlobalUni(sendData);
+                copyDataStruct.cbData = Encoding.Default.GetBytes(sendData).Length + 1;
+                copyDataStruct.lpData = sendData;
 
                 List<uint> GetStoreAppProcessPIDList = ProcessHelper.GetProcessPIDByName("GetStoreApp.exe");
 
@@ -164,27 +165,23 @@ namespace GetStoreApp.Services.Root
 
                             if (processId is not 0)
                             {
-                                bool result = false;
                                 foreach (uint ProcessID in GetStoreAppProcessPIDList)
                                 {
                                     if (ProcessID == processId)
                                     {
                                         // 向主进程发送消息
-                                        User32Library.SendMessage(hwnd, WindowMessage.WM_COPYDATA, 0, ref copyDataStruct);
-                                        result = true;
+                                        IntPtr ptrCopyDataStruct = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(COPYDATASTRUCT)));
+                                        Marshal.StructureToPtr(copyDataStruct, ptrCopyDataStruct, false);
+                                        User32Library.SendMessage(hwnd, WindowMessage.WM_COPYDATA, 0, ptrCopyDataStruct);
+                                        Marshal.FreeHGlobal(ptrCopyDataStruct);
                                         break;
                                     }
                                 }
-
-                                if (result) break;
                             }
                         }
                     }
                     while (hwnd != IntPtr.Zero);
                 }
-
-                // 释放分配的内存
-                Marshal.FreeHGlobal(copyDataStruct.lpData);
 
                 // 然后退出实例并停止
                 Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));

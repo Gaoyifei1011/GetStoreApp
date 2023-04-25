@@ -64,6 +64,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         /// </returns>
         [LibraryImport(Shell32, EntryPoint = "Shell_NotifyIconW", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static unsafe partial bool Shell_NotifyIcon(NotifyIconMessage dwMessage, NOTIFYICONDATA* lpData);
+        public static partial bool Shell_NotifyIcon(NotifyIconMessage dwMessage, IntPtr lpData);
     }
 }

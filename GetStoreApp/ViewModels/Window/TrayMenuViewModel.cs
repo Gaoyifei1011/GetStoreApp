@@ -60,6 +60,7 @@ namespace GetStoreApp.ViewModels.Controls
         public IRelayCommand ProjectDescriptionCommand => new RelayCommand(async () =>
         {
             await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp"));
+            Program.ApplicationRoot.TrayMenuWindow.AppWindow.Hide();
         });
 
         // 打开应用“关于”页面
@@ -69,6 +70,7 @@ namespace GetStoreApp.ViewModels.Controls
             {
                 Program.ApplicationRoot.MainWindow.ViewModel.AboutAppCommand.Execute(null);
             });
+            Program.ApplicationRoot.TrayMenuWindow.AppWindow.Hide();
         });
 
         // 显示 / 隐藏窗口
@@ -88,6 +90,7 @@ namespace GetStoreApp.ViewModels.Controls
             {
                 Program.ApplicationRoot.MainWindow.ViewModel.SettingsCommand.Execute(null);
             });
+            Program.ApplicationRoot.TrayMenuWindow.AppWindow.Hide();
         });
 
         // 退出应用

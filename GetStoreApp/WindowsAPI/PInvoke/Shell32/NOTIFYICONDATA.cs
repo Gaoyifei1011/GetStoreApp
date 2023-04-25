@@ -9,7 +9,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
     /// 为了配置而提交的结构任务栏图标。提供各种成员可以部分配置，根据 <see cref="IconDataMembers"/> 中的定义。
     /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    public unsafe struct NOTIFYICONDATA : IDisposable
+    public struct NOTIFYICONDATA
     {
         /// <summary>
         /// 此结构的大小（以字节为单位）。
@@ -53,7 +53,8 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         /// 以 null 结尾的字符串，指定标准工具提示的文本。 它最多可以包含 64 个字符，包括终止 null 字符。
         /// 对于 Windows 2000 及更高版本， <see cref="szTip"> 最多可以包含 128 个字符，包括终止 null 字符。
         /// </summary>
-        public IntPtr szTip;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+        public string szTip;
 
         /// <summary>
         /// Windows 2000 及更高版本。 图标的状态
@@ -68,7 +69,8 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         /// <summary>
         /// 以 null 结尾的字符串，指定要在气球通知中显示的文本。 它最多可以包含 256 个字符，包括终止 null 字符，但应限制为 200 个字符（英语），以适应本地化。 若要从 UI 中删除气球通知，请删除带有 NIM_DELETE) 的图标 (，或在 uFlags 中设置NIF_INFO标志，并将 szInfo 设置为空字符串。
         /// </summary>
-        public IntPtr szInfo;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+        public string szInfo;
 
         /// <summary>
         /// 与 uVersion 联合。 通知的超时值（以毫秒为单位）。 系统强制实施最小和最大超时值。 在 uTimeout 中指定的过大值将设置为最大值。 太小的值默认为最小值。 系统最小和最大超时值当前分别设置为 10 秒和 30 秒。 有关 uTimeout 的进一步讨论，请参阅备注。
@@ -79,7 +81,8 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         /// <summary>
         ///  一个以 null 结尾的字符串，指定气球通知的标题。 此标题以紧邻文本上方的大字体显示。 它最多可以包含 64 个字符，包括终止 null 字符，但英语应限制为 48 个字符，以适应本地化。
         /// </summary>
-        public IntPtr szInfoTitle;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+        public string szInfoTitle;
 
         /// <summary>
         /// Windows 2000 及更高版本。 可以设置为修改气球通知的行为和外观的标志。 图标放置在标题的左侧。 如果 szInfoTitle 成员的长度为零，则不显示图标。
@@ -125,7 +128,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
             data.dwState = NotifyIconState.NIS_HIDDEN;
             data.dwStateMask = NotifyIconState.NIS_HIDDEN;
             data.uFlags = NotifyIconFlags.NIF_MESSAGE | NotifyIconFlags.NIF_ICON | NotifyIconFlags.NIF_TIP;
-            data.szTip = Marshal.StringToHGlobalUni(toolTip);
+            data.szTip = toolTip;
 
             return data;
         }
@@ -155,24 +158,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
             else
             {
                 return IntPtr.Zero;
-            }
-        }
-
-        public void Dispose()
-        {
-            if (szTip != IntPtr.Zero)
-            {
-                Marshal.FreeHGlobal(szTip);
-            }
-
-            if (szInfo != IntPtr.Zero)
-            {
-                Marshal.FreeHGlobal(szInfo);
-            }
-
-            if (szInfoTitle != IntPtr.Zero)
-            {
-                Marshal.FreeHGlobal(szInfoTitle);
             }
         }
     }

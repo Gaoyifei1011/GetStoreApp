@@ -48,7 +48,6 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 | Console applications (quickly download)                  | Completed                                                                                                          |
 | Program performance optimization                         | Completed                                                                                                          |
 | Interface modernization                                  | Completed                                                                                                          |
-| Use CppWinRT to reinvent the application, further greatly reduce the application size, and improve the overall application performance It is expected that the official version 2.0 will be implemented |
 
 All the content of the program has been developed
 
@@ -57,9 +56,8 @@ All the content of the program has been developed
 ### Project References (Sort by alphabetical order)
 
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
-> * [Microsoft.Windows.SDK.Contracts](https://aka.ms/WinSDKProjectURL)&emsp;
+> * [Microsoft.Windows.SDK.BuildTools](https://aka.ms/WinSDKProjectURL)&emsp;
 > * [Mile.Aria2](https://github.com/ProjectMile/Mile.Aria2)&emsp;
-> * [Mile.Xaml](https://github.com/ProjectMile/Mile.Xaml)&emsp;
 
 [Code referenced or used during the learning process](https://github.com/Gaoyifei1011/GetStoreApp/blob/master/Description/StudyReferenceCode.md)&emsp;
 
