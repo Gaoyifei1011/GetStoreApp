@@ -148,5 +148,14 @@ namespace GetStoreApp.Properties {
                 return ((byte[])(obj));
             }
         }
+        
+        /// <summary>
+        ///   查找类似 GetStoreAppWindow 的本地化字符串。
+        /// </summary>
+        public static string WinUIWindowClassName {
+            get {
+                return ResourceManager.GetString("WinUIWindowClassName", resourceCulture);
+            }
+        }
     }
 }

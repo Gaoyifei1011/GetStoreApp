@@ -60,11 +60,10 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// <summary>
         /// 设置应用显示的背景色
         /// </summary>
-        public static async Task SetAppBackdropAsync()
+        public static void SetAppBackdrop()
         {
-            Program.ApplicationRoot.MainWindow.SetSystemBackdrop(AppBackdrop.InternalName);
-            Program.ApplicationRoot.TrayMenuWindow.SetSystemBackdrop(AppBackdrop.InternalName);
-            await Task.CompletedTask;
+            Program.ApplicationRoot.MainWindow.ViewModel.SetSystemBackdropAndBackground(AppBackdrop.InternalName);
+            Program.ApplicationRoot.TrayMenuWindow.ViewModel.SetSystemBackdropAndBackground(AppBackdrop.InternalName);
         }
     }
 }

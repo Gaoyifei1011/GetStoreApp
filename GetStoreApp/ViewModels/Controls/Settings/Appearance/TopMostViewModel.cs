@@ -32,7 +32,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
             if (toggleSwitch is not null)
             {
                 await TopMostService.SetTopMostValueAsync(toggleSwitch.IsOn);
-                await TopMostService.SetAppTopMostAsync();
+                TopMostService.SetAppTopMost();
                 TopMostValue = toggleSwitch.IsOn;
             }
         }

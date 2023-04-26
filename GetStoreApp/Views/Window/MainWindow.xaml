@@ -12,8 +12,7 @@
     Title="{x:Bind root:ResourceService.GetLocalized('Resources/AppDisplayName')}"
     MinWidth="600"
     MinHeight="768"
-    ActivatedCommand="{x:Bind ViewModel.ActivatedCommand}"
-    ClosedCommand="{x:Bind ViewModel.ClosedCommand}"
+    Closed="{x:Bind ViewModel.OnClosed}"
     ExtendsContentIntoTitleBar="True"
     SystemBackdrop="{x:Bind ViewModel.SystemBackdrop, Mode=OneWay}"
     mc:Ignorable="d">
@@ -22,7 +21,7 @@
         <viewModel:MainWindowViewModel x:Name="ViewModel" x:FieldModifier="public" />
     </WinUI:WinUIWindow.DataContext>
 
-    <Grid Background="{x:Bind ViewModel.AppBackground, Mode=OneWay}">
+    <Grid Background="{x:Bind ViewModel.WindowBackground, Mode=OneWay}" RequestedTheme="{x:Bind ViewModel.WindowTheme, Mode=OneWay}">
 
         <wc:AppTitleBarControl
             x:Name="AppTitlebar"

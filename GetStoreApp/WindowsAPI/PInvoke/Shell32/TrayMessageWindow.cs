@@ -1,8 +1,8 @@
-﻿using GetStoreApp.Services.Root;
+﻿using GetStoreApp.Properties;
+using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;
 using System.Runtime.InteropServices;
-using Windows.Foundation;
 
 namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
 {
@@ -23,8 +23,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         // 在调用释放后立即设置为 true。
         private bool IsDisposed;
 
-        private readonly string trayMessageId;
-
         // 消息窗口的句柄
         public IntPtr TrayMessagehWnd { get; private set; }
 
@@ -38,8 +36,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
 
         public TrayMessageWindow()
         {
-            trayMessageId = "GetStoreApp" + GuidHelper.CreateNewGuid();
-
             // 创建窗口类，用于将任务栏图标的消息转发到该消息窗口中
             wc.style = 0;
             wc.lpfnWndProc = TrayMessageWndProc;
@@ -50,7 +46,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
             wc.hCursor = IntPtr.Zero;
             wc.hbrBackground = IntPtr.Zero;
             wc.lpszMenuName = string.Empty;
-            wc.lpszClassName = trayMessageId;
+            wc.lpszClassName = Resources.WinUIWindowClassName;
 
             IntPtr ptrWndClass = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(WNDCLASS)));
             Marshal.StructureToPtr(wc, ptrWndClass, false);
@@ -63,8 +59,8 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
             // 创建窗口
             TrayMessagehWnd = User32Library.CreateWindowEx(
                 WindowStyleEx.WS_EX_LEFT,
-                trayMessageId,
-                "GetStoreAppTrayMessageWindow",
+                Resources.WinUIWindowClassName,
+                ResourceService.GetLocalized("Window/TrayMessageWindowName"),
                 WindowStyle.WS_TILED,
                 0,
                 0,

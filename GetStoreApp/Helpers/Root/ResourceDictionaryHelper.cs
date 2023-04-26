@@ -51,7 +51,7 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 初始化资源字典信息
         /// </summary>
-        public static async Task InitializeResourceDictionaryAsync()
+        public static void InitializeResourceDictionary()
         {
             ButtonResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[2];
             CheckboxResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[3];
@@ -73,8 +73,6 @@ namespace GetStoreApp.Helpers.Root
             TextBlockResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[19];
             ToggleSwitchResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[20];
             WindowChromeDict = Program.ApplicationRoot.Resources.MergedDictionaries[21];
-
-            await Task.CompletedTask;
         }
     }
 }

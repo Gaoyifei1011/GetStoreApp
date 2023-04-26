@@ -390,9 +390,6 @@
   <data name="DoNetVersion" xml:space="preserve">
     <value>.NET 版本：</value>
   </data>
-  <data name="MileXamlVersion" xml:space="preserve">
-    <value>Mile.Xaml 版本：</value>
-  </data>
   <data name="WindowsAppSDKVersion" xml:space="preserve">
     <value>Windows 应用 SDK 版本：</value>
   </data>

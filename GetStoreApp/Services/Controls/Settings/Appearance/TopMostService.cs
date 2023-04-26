@@ -51,13 +51,11 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         }
 
         /// <summary>
-        /// 设置应用的窗口置顶
+        /// 设置应用的窗口置顶状态
         /// </summary>
-        public static async Task SetAppTopMostAsync()
+        public static void SetAppTopMost()
         {
             WindowHelper.SetAppTopMost(TopMostValue);
-
-            await Task.CompletedTask;
         }
     }
 }

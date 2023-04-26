@@ -21,8 +21,6 @@ namespace GetStoreApp.ViewModels.Dialogs.About
 
         public string WinUI3Version { get; set; }
 
-        public string MileXamlVersion { get; set; }
-
         public string DoNetVersion { get; set; }
 
         public string WebView2CoreVersion { get; set; }
@@ -33,7 +31,6 @@ namespace GetStoreApp.ViewModels.Dialogs.About
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WindowsAppSDKVersion") + WindowsAppSDKVersion);
             stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WinUI3Version") + WinUI3Version);
-            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/MileXamlVersion") + MileXamlVersion);
             stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WebView2CoreVersion") + WebView2CoreVersion);
             stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/DoNetVersion") + DoNetVersion);
 
@@ -84,14 +81,6 @@ namespace GetStoreApp.ViewModels.Dialogs.About
                         (WebView2CoreFileInfo.dwFileVersionLS >> 0) & 0xffff);
                 }
             }
-
-            // Mile.Xaml 版本信息
-            VS_FIXEDFILEINFO MileXamlFileInfo = InfoHelper.GetFileInfo(string.Format(@"{0}\{1}", InfoHelper.GetAppInstalledLocation(), "Mile.Xaml.dll"));
-            MileXamlVersion = string.Format("{0}.{1}.{2}.{3}",
-                (MileXamlFileInfo.dwFileVersionMS >> 16) & 0xffff,
-                (MileXamlFileInfo.dwFileVersionMS >> 0) & 0xffff,
-                (MileXamlFileInfo.dwFileVersionLS >> 16) & 0xffff,
-                (MileXamlFileInfo.dwFileVersionLS >> 0) & 0xffff);
 
             // .NET 版本信息
             DoNetVersion = Environment.Version.ToString();

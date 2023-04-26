@@ -119,13 +119,14 @@ namespace GetStoreApp.ViewModels.Window
         public async Task StartupAsync()
         {
             // 设置应用主题
-            await ThemeService.SetAppThemeAsync();
+            ThemeService.SetWindowTheme();
+            ThemeService.SetTrayWindowTheme();
 
             // 设置应用背景色
-            await BackdropService.SetAppBackdropAsync();
+            BackdropService.SetAppBackdrop();
 
             // 设置应用置顶状态
-            await TopMostService.SetAppTopMostAsync();
+            TopMostService.SetAppTopMost();
 
             // 初始化下载监控服务
             await DownloadSchedulerService.InitializeDownloadSchedulerAsync();

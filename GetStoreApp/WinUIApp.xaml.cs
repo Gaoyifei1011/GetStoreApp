@@ -35,7 +35,7 @@ namespace GetStoreApp
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
             base.OnLaunched(args);
-            await ResourceDictionaryHelper.InitializeResourceDictionaryAsync();
+            ResourceDictionaryHelper.InitializeResourceDictionary();
 
             InitializeMainWindow();
             InitializeTrayMenuWindow();

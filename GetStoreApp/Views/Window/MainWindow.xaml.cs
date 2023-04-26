@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Extensions.Backdrop;
-using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Helpers.Window;
 using GetStoreApp.Properties;
@@ -10,6 +9,7 @@ using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Runtime.InteropServices;
@@ -155,36 +155,6 @@ namespace GetStoreApp.Views.Window
             IntPtr MainWindowHandle = GetMainWindowHandle();
             newWndProc = new WindowProc(NewWindowProc);
             oldWndProc = SetWindowLongAuto(MainWindowHandle, WindowLongIndexFlags.GWL_WNDPROC, newWndProc);
-        }
-
-        /// <summary>
-        /// 设置应用的背景主题色
-        /// </summary>
-        public void SetSystemBackdrop(string backdropName)
-        {
-            switch (backdropName)
-            {
-                case "Mica":
-                    {
-                        ViewModel.SystemBackdrop = new MicaSystemBackdrop() { Kind = MicaKind.Base };
-                        break;
-                    }
-                case "MicaAlt":
-                    {
-                        ViewModel.SystemBackdrop = new MicaSystemBackdrop() { Kind = MicaKind.BaseAlt };
-                        break;
-                    }
-                case "Acrylic":
-                    {
-                        ViewModel.SystemBackdrop = new DesktopAcrylicSystemBackdrop();
-                        break;
-                    }
-                default:
-                    {
-                        ViewModel.SystemBackdrop = null;
-                        break;
-                    }
-            }
         }
 
         /// <summary>

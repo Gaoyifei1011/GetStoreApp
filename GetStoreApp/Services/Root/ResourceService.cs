@@ -60,7 +60,7 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         /// <param name="defaultAppLanguage">默认语言名称</param>
         /// <param name="currentAppLanguage">当前语言名称</param>
-        public static async Task InitializeResourceAsync(LanguageModel defaultAppLanguage, LanguageModel currentAppLanguage)
+        public static void InitializeResource(LanguageModel defaultAppLanguage, LanguageModel currentAppLanguage)
         {
             DefaultAppLanguage = defaultAppLanguage;
             CurrentAppLanguage = currentAppLanguage;
@@ -69,13 +69,12 @@ namespace GetStoreApp.Services.Root
             CurrentResourceContext.QualifierValues["Language"] = CurrentAppLanguage.InternalName;
 
             IsInitialized = true;
-            await Task.CompletedTask;
         }
 
         /// <summary>
         /// 初始化应用本地化信息
         /// </summary>
-        public static async Task LocalizeReosurceAsync()
+        public static void LocalizeReosurce()
         {
             InitializeTypeList();
             InitializeChannelList();
@@ -89,8 +88,6 @@ namespace GetStoreApp.Services.Root
             InitializeThemeList();
             InitializeNotifyIconMenuThemeList();
             InitializeTraceCleanupList();
-
-            await Task.CompletedTask;
         }
 
         /// <summary>

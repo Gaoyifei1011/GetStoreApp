@@ -45,7 +45,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
             {
                 Language = args.AddedItems[0] as LanguageModel;
                 await LanguageService.SetLanguageAsync(Language);
-                await LanguageService.SetAppLanguageAsync(Language);
+                LanguageService.SetAppLanguage(Language);
                 new LanguageChangeNotification(true).Show();
             }
         }

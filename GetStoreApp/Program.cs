@@ -96,10 +96,10 @@ namespace GetStoreApp
         {
             // 初始化应用资源，应用使用的语言信息和启动参数
             await LanguageService.InitializeLanguageAsync();
-            await ResourceService.InitializeResourceAsync(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
+            ResourceService.InitializeResource(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
 
             // 初始化通用设置选项（桌面应用程序和控制台应用程序）
-            await ResourceService.LocalizeReosurceAsync();
+            ResourceService.LocalizeReosurce();
             await RegionService.InitializeRegionAsync();
             await LinkFilterService.InitializeLinkFilterValueAsnyc();
             await DownloadOptionsService.InitializeAsync();

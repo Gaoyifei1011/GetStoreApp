@@ -1,13 +1,10 @@
-﻿using GetStoreApp.ViewModels.Base;
-using GetStoreApp.WindowsAPI.PInvoke.User32;
-using Microsoft.UI.Xaml;
+﻿using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;
-using System.Windows.Input;
 
 namespace GetStoreApp.Views.Window
 {
     /// <summary>
-    /// Windows 应用 SDK窗口的扩展类
+    /// Windows 应用 SDK 窗口的扩展类
     /// </summary>
     public class WinUIWindow : Microsoft.UI.Xaml.Window
     {
@@ -32,7 +29,7 @@ namespace GetStoreApp.Views.Window
         /// <summary>
         /// 窗口类参与数据绑定时的数据上下文
         /// </summary>
-        public ViewModelBase DataContext { get; set; }
+        public object DataContext { get; set; }
 
         /// <summary>
         /// 窗口最小宽度
@@ -53,45 +50,6 @@ namespace GetStoreApp.Views.Window
         /// 窗口最大高度
         /// </summary>
         public int MaxHeight { get; set; } = -1;
-
-        public ICommand ActivatedCommand
-        {
-            get { return (ICommand)Content.GetValue(ActivatedCommandProperty); }
-
-            set { Content.SetValue(ActivatedCommandProperty, value); }
-        }
-
-        public static readonly DependencyProperty ActivatedCommandProperty = DependencyProperty.Register("ActivatedCommand", typeof(ICommand), typeof(UIElement), new PropertyMetadata(null));
-
-        public ICommand ClosedCommand
-        {
-            get { return (ICommand)Content.GetValue(ClosedCommandProperty); }
-
-            set { Content.SetValue(ClosedCommandProperty, value); }
-        }
-
-        public static readonly DependencyProperty ClosedCommandProperty = DependencyProperty.Register("ClosedCommand", typeof(ICommand), typeof(UIElement), new PropertyMetadata(null));
-
-        public WinUIWindow()
-        {
-            Activated += OnActivated;
-            Closed += OnClosed;
-        }
-
-        ~WinUIWindow()
-        {
-            Activated -= OnActivated;
-        }
-
-        public void OnActivated(object sender, WindowActivatedEventArgs args)
-        {
-            ActivatedCommand?.Execute(args);
-        }
-
-        public void OnClosed(object sender, WindowEventArgs args)
-        {
-            ClosedCommand?.Execute(args);
-        }
 
         /// <summary>
         /// 更改指定窗口的属性

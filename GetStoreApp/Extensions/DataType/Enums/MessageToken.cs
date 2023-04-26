@@ -5,17 +5,16 @@
     /// </summary>
     public enum MessageToken
     {
-        BackdropChanged = 0,
-        Command = 1,
-        Fillin = 2,
-        HistoryLiteNum = 3,
-        History = 4,
-        PivotSelection = 5,
-        RestoreDefault = 6,
-        ResultCategoryId = 7,
-        ResultControlVisable = 8,
-        ResultDataList = 9,
-        StatusBarState = 10,
-        WindowClosed = 11
+        Command = 0,
+        Fillin = 1,
+        HistoryLiteNum = 2,
+        History = 3,
+        PivotSelection = 4,
+        RestoreDefault = 5,
+        ResultCategoryId = 6,
+        ResultControlVisable = 7,
+        ResultDataList = 8,
+        StatusBarState = 9,
+        WindowClosed = 10
     }
 }

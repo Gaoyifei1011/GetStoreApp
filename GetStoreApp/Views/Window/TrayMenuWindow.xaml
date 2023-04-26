@@ -7,9 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:window="using:GetStoreApp.Views.Window"
+    Title="{x:Bind root:ResourceService.GetLocalized('Window/TrayMenuWindow')}"
     MinWidth="0"
     MinHeight="0"
-    ActivatedCommand="{x:Bind ViewModel.ActivatedCommand}"
+    Activated="{x:Bind ViewModel.OnActivated}"
     ExtendsContentIntoTitleBar="True"
     SystemBackdrop="{x:Bind ViewModel.SystemBackdrop, Mode=OneWay}"
     mc:Ignorable="d">
@@ -22,8 +23,9 @@
         x:Name="TrayMenuFlyout"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
-        Background="{x:Bind ViewModel.TrayWindowBackground, Mode=OneWay}"
+        Background="{x:Bind ViewModel.WindowBackground, Mode=OneWay}"
         Loaded="{x:Bind ViewModel.OnLoaded}"
+        RequestedTheme="{x:Bind ViewModel.WindowTheme, Mode=OneWay}"
         Style="{StaticResource TrayMenuFlyoutPresenterStyle}"
         Unloaded="{x:Bind ViewModel.OnUnloaded}">
 

@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
@@ -121,11 +122,24 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// <summary>
         /// 设置应用显示的主题
         /// </summary>
-        public static async Task SetAppThemeAsync()
+        public static void SetWindowTheme()
         {
-            (Program.ApplicationRoot.MainWindow.Content as FrameworkElement).RequestedTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme.InternalName);
-            (Program.ApplicationRoot.TrayMenuWindow.Content as FrameworkElement).RequestedTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme.InternalName);
-            await Task.CompletedTask;
+            Program.ApplicationRoot.MainWindow.ViewModel.WindowTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme.InternalName);
+        }
+
+        /// <summary>
+        /// 设置任务栏菜单窗口显示的主题
+        /// </summary>
+        public static void SetTrayWindowTheme()
+        {
+            if (NotifyIconMenuTheme == NotifyIconMenuThemeList[0])
+            {
+                Program.ApplicationRoot.TrayMenuWindow.ViewModel.WindowTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme.InternalName);
+            }
+            else
+            {
+                Program.ApplicationRoot.TrayMenuWindow.ViewModel.WindowTheme = RegistryHelper.GetSystemUsesTheme();
+            }
         }
     }
 }

@@ -48,8 +48,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
         {
             Backdrop = BackdropList[Convert.ToInt32(backdropIndex)];
             await BackdropService.SetBackdropAsync(Backdrop);
-            await BackdropService.SetAppBackdropAsync();
-            Messenger.Default.Send(Backdrop, MessageToken.BackdropChanged);
+            BackdropService.SetAppBackdrop();
         });
 
         public BackdropViewModel()
