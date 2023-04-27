@@ -1,10 +1,10 @@
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
+using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
-using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Windowing;
-using Microsoft.UI.Xaml.Media;
 using System;
 using System.Runtime.InteropServices;
 using Windows.Graphics;
@@ -76,36 +76,6 @@ namespace GetStoreApp.Views.Window
             else
             {
                 return User32Library.SetWindowLong(hWnd, nIndex, styleEx);
-            }
-        }
-
-        /// <summary>
-        /// 设置应用的背景主题色
-        /// </summary>
-        public void SetSystemBackdrop(string backdropName)
-        {
-            switch (backdropName)
-            {
-                case "Mica":
-                    {
-                        ViewModel.SystemBackdrop = new MicaBackdrop() { Kind = MicaKind.Base };
-                        break;
-                    }
-                case "MicaAlt":
-                    {
-                        ViewModel.SystemBackdrop = new MicaBackdrop() { Kind = MicaKind.BaseAlt };
-                        break;
-                    }
-                case "Acrylic":
-                    {
-                        ViewModel.SystemBackdrop = new DesktopAcrylicBackdrop();
-                        break;
-                    }
-                default:
-                    {
-                        ViewModel.SystemBackdrop = null;
-                        break;
-                    }
             }
         }
 
@@ -265,6 +235,7 @@ namespace GetStoreApp.Views.Window
         {
             switch (Msg)
             {
+                // 窗口大小发生更改时的消息
                 case WindowMessage.WM_GETMINMAXINFO:
                     {
                         MINMAXINFO minMaxInfo = Marshal.PtrToStructure<MINMAXINFO>(lParam);
@@ -287,6 +258,18 @@ namespace GetStoreApp.Views.Window
 
                         minMaxInfo.ptMinTrackSize.Y = 0;
                         Marshal.StructureToPtr(minMaxInfo, lParam, true);
+                        break;
+                    }
+                // 系统设置选项发生更改时的消息
+                case WindowMessage.WM_SETTINGCHANGE:
+                    {
+                        DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
+                        {
+                            if (ThemeService.NotifyIconMenuTheme == ThemeService.NotifyIconMenuThemeList[1])
+                            {
+                                ViewModel.WindowTheme = RegistryHelper.GetSystemUsesTheme();
+                            }
+                        });
                         break;
                     }
             }

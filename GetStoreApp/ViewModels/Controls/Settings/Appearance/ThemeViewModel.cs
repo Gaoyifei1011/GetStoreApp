@@ -56,6 +56,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
             Theme = ThemeList[Convert.ToInt32(themeIndex)];
             await ThemeService.SetThemeAsync(Theme);
             ThemeService.SetWindowTheme();
+            ThemeService.SetTrayWindowTheme();
         });
 
         // 通知区域右键菜单主题设置

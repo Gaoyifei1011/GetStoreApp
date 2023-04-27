@@ -20,6 +20,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Windows.UI.ViewManagement;
 
 namespace GetStoreApp.ViewModels.Window
@@ -294,9 +295,7 @@ namespace GetStoreApp.ViewModels.Window
         /// </summary>
         public void OnNavigationViewLoaded(object sender, RoutedEventArgs args)
         {
-            SetWindowBackground();
-
-            ((FrameworkElement)Program.ApplicationRoot.MainWindow.Content).ActualThemeChanged += OnActualThemeChanged;
+            PropertyChanged += OnPropertyChanged;
             AppUISettings.ColorValuesChanged += OnColorValuesChanged;
 
             // 导航控件加载完成后初始化内容
@@ -361,7 +360,26 @@ namespace GetStoreApp.ViewModels.Window
         public void OnNavigationViewUnLoaded(object sender, RoutedEventArgs args)
         {
             AppUISettings.ColorValuesChanged -= OnColorValuesChanged;
-            ((FrameworkElement)Program.ApplicationRoot.MainWindow.Content).ActualThemeChanged -= OnActualThemeChanged;
+            PropertyChanged -= OnPropertyChanged;
+        }
+
+        /// <summary>
+        /// 应用主题设置跟随系统发生变化时，当系统主题设置发生变化时修改修改应用背景色
+        /// </summary>
+        private void OnColorValuesChanged(UISettings sender, object args)
+        {
+            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, SetWindowBackground);
+        }
+
+        /// <summary>
+        /// 可通知的属性发生更改时的事件处理
+        /// </summary>
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
+        {
+            if (args.PropertyName == nameof(WindowTheme) || args.PropertyName == nameof(SystemBackdrop))
+            {
+                Program.ApplicationRoot.TrayMenuWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, SetWindowBackground);
+            }
         }
 
         /// <summary>
@@ -383,25 +401,9 @@ namespace GetStoreApp.ViewModels.Window
         }
 
         /// <summary>
-        /// 设置主题发生变化时修改标题栏按钮的主题
-        /// </summary>
-        private void OnActualThemeChanged(FrameworkElement sender, object args)
-        {
-            SetWindowBackground();
-        }
-
-        /// <summary>
-        /// 应用主题设置跟随系统发生变化时，当系统主题设置发生变化时修改修改应用背景色
-        /// </summary>
-        private void OnColorValuesChanged(UISettings sender, object args)
-        {
-            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, SetWindowBackground);
-        }
-
-        /// <summary>
         /// 设置应用的背景主题色和控件的背景色
         /// </summary>
-        public void SetSystemBackdropAndBackground(string backdropName)
+        public void SetSystemBackdrop(string backdropName)
         {
             switch (backdropName)
             {
@@ -426,8 +428,6 @@ namespace GetStoreApp.ViewModels.Window
                         break;
                     }
             }
-
-            SetWindowBackground();
         }
 
         /// <summary>

@@ -62,8 +62,8 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// </summary>
         public static void SetAppBackdrop()
         {
-            Program.ApplicationRoot.MainWindow.ViewModel.SetSystemBackdropAndBackground(AppBackdrop.InternalName);
-            Program.ApplicationRoot.TrayMenuWindow.ViewModel.SetSystemBackdropAndBackground(AppBackdrop.InternalName);
+            Program.ApplicationRoot.MainWindow.ViewModel.SetSystemBackdrop(AppBackdrop.InternalName);
+            Program.ApplicationRoot.TrayMenuWindow.ViewModel.SetSystemBackdrop(AppBackdrop.InternalName);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
     /// <see cref="User32Library.GetMonitorInfo"> 函数将信息存储在 <see cref="MONITORINFO"> 结构或 MONITORINFOEX 结构中。
     /// MONITORINFO 结构是 MONITORINFOEX 结构的子集。 MONITORINFOEX 结构添加字符串成员以包含显示监视器的名称。
     /// </summary>
-    [StructLayout(LayoutKind.Sequential,CharSet = CharSet.Unicode)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct MONITORINFO
     {
         /// <summary>

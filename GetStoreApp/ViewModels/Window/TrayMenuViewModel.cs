@@ -7,6 +7,7 @@ using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using System;
+using System.ComponentModel;
 using Windows.System;
 using Windows.UI.ViewManagement;
 
@@ -17,7 +18,7 @@ namespace GetStoreApp.ViewModels.Controls
     /// </summary>
     public sealed class TrayMenuViewModel : ViewModelBase
     {
-        private UISettings AppUISettings { get; } = new UISettings();
+        private UISettings AppUISettings = new UISettings();
 
         private ElementTheme _windowTheme;
 
@@ -118,10 +119,8 @@ namespace GetStoreApp.ViewModels.Controls
         /// </summary>
         public void OnLoaded(object sender, RoutedEventArgs args)
         {
-            SetWindowBackground();
-
-            ((FrameworkElement)Program.ApplicationRoot.MainWindow.Content).ActualThemeChanged += OnActualThemeChanged;
             AppUISettings.ColorValuesChanged += OnColorValuesChanged;
+            PropertyChanged += OnPropertyChanged;
         }
 
         /// <summary>
@@ -130,29 +129,35 @@ namespace GetStoreApp.ViewModels.Controls
         public void OnUnloaded(object sender, RoutedEventArgs args)
         {
             AppUISettings.ColorValuesChanged -= OnColorValuesChanged;
-            ((FrameworkElement)Program.ApplicationRoot.MainWindow.Content).ActualThemeChanged -= OnActualThemeChanged;
+            PropertyChanged -= OnPropertyChanged;
         }
 
         /// <summary>
         /// 设置主题发生变化时修改标题栏按钮的主题
         /// </summary>
-        private void OnActualThemeChanged(FrameworkElement sender, object args)
-        {
-            SetWindowBackground();
-        }
-
-        /// <summary>
-        /// 应用主题设置跟随系统发生变化时，当系统主题设置发生变化时修改修改应用背景色
-        /// </summary>
         private void OnColorValuesChanged(UISettings sender, object args)
         {
-            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, SetWindowBackground);
+            if (ThemeService.NotifyIconMenuTheme.InternalName == ThemeService.NotifyIconMenuThemeList[0].InternalName)
+            {
+                Program.ApplicationRoot.TrayMenuWindow.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, SetWindowBackground);
+            }
         }
 
         /// <summary>
-        /// 设置应用的背景主题色和控件的背景色
+        /// 可通知的属性发生更改时的事件处理
         /// </summary>
-        public void SetSystemBackdropAndBackground(string backdropName)
+        public void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
+        {
+            if (args.PropertyName == nameof(WindowTheme) || args.PropertyName == nameof(SystemBackdrop))
+            {
+                Program.ApplicationRoot.TrayMenuWindow.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, SetWindowBackground);
+            }
+        }
+
+        /// <summary>
+        /// 设置应用的背景主题色
+        /// </summary>
+        public void SetSystemBackdrop(string backdropName)
         {
             switch (backdropName)
             {
@@ -177,20 +182,18 @@ namespace GetStoreApp.ViewModels.Controls
                         break;
                     }
             }
-
-            SetWindowBackground();
         }
 
         /// <summary>
-        /// 应用背景色设置跟随系统发生变化时，修改控件的背景值
+        /// 应用背景色设置跟随系统发生变化时，修改控件的背景色值
         /// </summary>
         private void SetWindowBackground()
         {
             if (BackdropService.AppBackdrop.InternalName == BackdropService.BackdropList[0].InternalName)
             {
-                if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[0].InternalName)
+                if (WindowTheme == ElementTheme.Default)
                 {
-                    if (Application.Current.RequestedTheme is ApplicationTheme.Light)
+                    if (Application.Current.RequestedTheme == ApplicationTheme.Light)
                     {
                         WindowBackground = ResourceDictionaryHelper.WindowChromeDict["MenuFlyoutWindowLightBrush"] as AcrylicBrush;
                     }
@@ -199,11 +202,11 @@ namespace GetStoreApp.ViewModels.Controls
                         WindowBackground = ResourceDictionaryHelper.WindowChromeDict["MenuFlyoutWindowDarkBrush"] as AcrylicBrush;
                     }
                 }
-                else if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[1].InternalName)
+                else if (WindowTheme == ElementTheme.Light)
                 {
                     WindowBackground = ResourceDictionaryHelper.WindowChromeDict["MenuFlyoutWindowLightBrush"] as AcrylicBrush;
                 }
-                else if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[2].InternalName)
+                else if (WindowTheme == ElementTheme.Dark)
                 {
                     WindowBackground = ResourceDictionaryHelper.WindowChromeDict["MenuFlyoutWindowDarkBrush"] as AcrylicBrush;
                 }
