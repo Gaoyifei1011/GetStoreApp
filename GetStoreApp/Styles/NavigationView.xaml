@@ -421,8 +421,8 @@
                                     <Grid
                                         x:Name="ContentGrid"
                                         Margin="0,45,0,0"
-                                        Background="{ThemeResource NavigationViewContentBackground}"
-                                        BorderBrush="{ThemeResource NavigationViewContentGridBorderBrush}"
+                                        Background="Transparent"
+                                        BorderBrush="Transparent"
                                         BorderThickness="{ThemeResource NavigationViewContentGridBorderThickness}"
                                         CornerRadius="{ThemeResource NavigationViewContentGridCornerRadius}">
                                         <Grid.RowDefinitions>

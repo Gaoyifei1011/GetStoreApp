@@ -195,20 +195,20 @@ namespace GetStoreApp.ViewModels.Controls
                 {
                     if (Application.Current.RequestedTheme == ApplicationTheme.Light)
                     {
-                        WindowBackground = ResourceDictionaryHelper.WindowChromeDict["MenuFlyoutWindowLightBrush"] as AcrylicBrush;
+                        WindowBackground = ResourceDictionaryHelper.WindowChromeDict["MenuFlyoutLightBrush"] as SolidColorBrush;
                     }
                     else
                     {
-                        WindowBackground = ResourceDictionaryHelper.WindowChromeDict["MenuFlyoutWindowDarkBrush"] as AcrylicBrush;
+                        WindowBackground = ResourceDictionaryHelper.WindowChromeDict["MenuFlyoutDarkBrush"] as SolidColorBrush;
                     }
                 }
                 else if (WindowTheme == ElementTheme.Light)
                 {
-                    WindowBackground = ResourceDictionaryHelper.WindowChromeDict["MenuFlyoutWindowLightBrush"] as AcrylicBrush;
+                    WindowBackground = ResourceDictionaryHelper.WindowChromeDict["MenuFlyoutLightBrush"] as SolidColorBrush;
                 }
                 else if (WindowTheme == ElementTheme.Dark)
                 {
-                    WindowBackground = ResourceDictionaryHelper.WindowChromeDict["MenuFlyoutWindowDarkBrush"] as AcrylicBrush;
+                    WindowBackground = ResourceDictionaryHelper.WindowChromeDict["MenuFlyoutDarkBrush"] as SolidColorBrush;
                 }
             }
             else

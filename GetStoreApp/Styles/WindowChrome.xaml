@@ -1,16 +1,8 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <SolidColorBrush x:Key="WindowLightBrush" Color="#F0F3F9" />
     <SolidColorBrush x:Key="WindowDarkBrush" Color="#141414" />
-    <AcrylicBrush
-        x:Key="MenuFlyoutWindowLightBrush"
-        FallbackColor="#F9F9F9"
-        TintColor="#FCFCFC"
-        TintOpacity="0.0" />
-    <AcrylicBrush
-        x:Key="MenuFlyoutWindowDarkBrush"
-        FallbackColor="#2C2C2C"
-        TintColor="#2C2C2C"
-        TintOpacity="0.15" />
+    <SolidColorBrush x:Key="MenuFlyoutLightBrush" Color="#F8F8F8" />
+    <SolidColorBrush x:Key="MenuFlyoutDarkBrush" Color="#353535" />
     <SolidColorBrush x:Key="WindowSystemBackdropBrush" Color="Transparent" />
 
     <Style x:Key="WindowChromeStyle" TargetType="ContentControl">
