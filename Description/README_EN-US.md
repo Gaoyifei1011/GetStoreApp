@@ -23,16 +23,16 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 ### Screenshot of the app
 
 #### <p align="center">The app successfully gets the interface</p>
-![image](https://user-images.githubusercontent.com/49179966/213074717-14e491c7-bdf9-4bfd-a156-f9ba7d041bcd.png)
+![image](https://user-images.githubusercontent.com/49179966/235411271-19757110-c06f-41f8-94cd-a5f6c46d9d27.png)
 #### <p align="center">History Record</p>
-![image](https://user-images.githubusercontent.com/49179966/213074809-7097acca-0403-42de-8c6b-b843b068f252.png)
+![image](https://user-images.githubusercontent.com/49179966/235411326-0a2dfcb8-dc5a-4178-98a3-f3864e69ad21.png)
 #### <p align="center">Download Management</p>
 ![image](https://user-images.githubusercontent.com/49179966/213075014-8141a1ca-c589-43c1-ab6d-68dd5215feea.png)
-![image](https://user-images.githubusercontent.com/49179966/213075091-bd934848-12ce-4d25-b7a8-e0e7a32334d5.png)
+![image](https://user-images.githubusercontent.com/49179966/235411434-a6b49f2e-c4fc-43cb-a06e-face5580ed27.png)
 #### <p align="center">Access Webpage</p>
-![image](https://user-images.githubusercontent.com/49179966/213075241-5ee74c5b-303e-452e-8b06-64b683e86f2e.png)
+![image](https://user-images.githubusercontent.com/49179966/235411495-5507b27c-68a4-480f-abf0-d419889b173b.png)
 #### <p align="center">Application Descriptions</p>
-![image](https://user-images.githubusercontent.com/49179966/213076832-3010fa9b-73eb-4f99-a974-e4b2c915d5b0.png)
+![image](https://user-images.githubusercontent.com/49179966/235411549-e5cd3413-e2cd-4d27-8813-93bb090832de.png)
 
 ------
 

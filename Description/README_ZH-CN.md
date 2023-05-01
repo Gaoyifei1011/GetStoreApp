@@ -23,16 +23,17 @@
 ### 应用截图
 
 #### <p align="center">应用成功获取界面</p>
-![image](https://user-images.githubusercontent.com/49179966/213072610-b0acba12-bb60-43cb-b5b1-a0270cd3b7f1.png)
+![image](https://user-images.githubusercontent.com/49179966/235410865-f0d02daa-b7ac-40f2-8ca6-1143366edb2f.png)
 #### <p align="center">历史记录</p>
-![image](https://user-images.githubusercontent.com/49179966/213072877-d1be2dc7-f351-4607-809d-f23134b18ca9.png)
+![image](https://user-images.githubusercontent.com/49179966/235410882-4d1da348-9e1f-4f7c-be1a-9921ff5b8b74.png)
 #### <p align="center">下载管理</p>
-![image](https://user-images.githubusercontent.com/49179966/213073804-83c985f2-4917-4b5f-8c3b-f49c94b8c5a1.png)
-![image](https://user-images.githubusercontent.com/49179966/213074001-02fca36d-65a1-493f-abf1-0b087e51e2fc.png)
+![image](https://user-images.githubusercontent.com/49179966/235410909-a9ff827e-64fe-4e12-b647-f84fe8894ac6.png)
+![image](https://user-images.githubusercontent.com/49179966/235410932-63265a8c-46c8-4127-9d5f-04bcf8a2c2a0.png)
 #### <p align="center">访问网页版</p>
-![image](https://user-images.githubusercontent.com/49179966/213074325-54989cde-4a2e-4876-8c31-67532d0614f9.png)
+![image](https://user-images.githubusercontent.com/49179966/235410984-65e66521-4095-404b-96f8-7e7043257bba.png)
 #### <p align="center">应用说明</p>
-![image](https://user-images.githubusercontent.com/49179966/213076697-4a3e45f1-3474-4fde-8f72-06a0fc79b65c.png)
+![image](https://user-images.githubusercontent.com/49179966/235411005-1209fd25-c0f8-483c-8a0d-f6f679630156.png)
+
 
 ------
 
