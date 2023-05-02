@@ -778,25 +778,25 @@
 
         /// <summary>
         /// 发送 SBM_SETPOS 消息以设置滚动框的位置 (拇指) ，如果请求，请重新绘制滚动条以反映滚动框的新位置。
-        /// 应用程序不应直接发送此消息。 相反，它们应使用 SetScrollPos 函数。 窗口通过其 WindowProc 函数接收此消息。 实现自定义滚动条控件的应用程序必须响应这些消息， 以便 SetScrollPos 函数正常工作。
+        /// 应用程序不应直接发送此消息。 相反，它们应使用 SetScrollPos 函数。 窗口通过其 WndProc 函数接收此消息。 实现自定义滚动条控件的应用程序必须响应这些消息， 以便 SetScrollPos 函数正常工作。
         /// </summary>
         SBM_SETPOS = 0x00E0,
 
         /// <summary>
         /// 发送 SBM_GETPOS 消息以检索滚动条控件滚动框的当前位置。 当前位置是一个相对值，该值取决于当前滚动范围。 例如，如果滚动范围为 0 到 100，并且滚动框位于条形图中间，则当前位置为 50。
-        /// 应用程序不应直接发送此消息。 相反，它们应使用 GetScrollPos 函数。 窗口通过其 WindowProc 函数接收此消息。 实现自定义滚动条控件的应用程序必须响应这些消息， 以便 GetScrollPos 函数正常运行。
+        /// 应用程序不应直接发送此消息。 相反，它们应使用 GetScrollPos 函数。 窗口通过其 WndProc 函数接收此消息。 实现自定义滚动条控件的应用程序必须响应这些消息， 以便 GetScrollPos 函数正常运行。
         /// </summary>
         SBM_GETPOS = 0x00E1,
 
         /// <summary>
         /// 发送 SBM_SETRANGE 消息以设置滚动条控件的最小和最大位置值。
-        /// 应用程序不应直接发送此消息。 相反，它们应使用 SetScrollRange 函数。 窗口通过其 WindowProc 函数接收此消息。 实现自定义滚动条控件的应用程序必须响应这些消息， 才能使 SetScrollRange 函数正常工作。
+        /// 应用程序不应直接发送此消息。 相反，它们应使用 SetScrollRange 函数。 窗口通过其 WndProc 函数接收此消息。 实现自定义滚动条控件的应用程序必须响应这些消息， 才能使 SetScrollRange 函数正常工作。
         /// </summary>
         SBM_SETRANGE = 0x00E2,
 
         /// <summary>
         /// 发送 SBM_GETRANGE 消息以检索滚动条控件的最小和最大位置值。
-        /// 应用程序不应直接发送此消息。 相反，它们应使用 GetScrollRange 函数。 窗口通过其 WindowProc 函数接收此消息。 实现自定义滚动条控件的应用程序必须响应这些消息， 以便 GetScrollRange 函数正常工作。
+        /// 应用程序不应直接发送此消息。 相反，它们应使用 GetScrollRange 函数。 窗口通过其 WndProc 函数接收此消息。 实现自定义滚动条控件的应用程序必须响应这些消息， 以便 GetScrollRange 函数正常工作。
         /// </summary>
         SBM_GETRANGE = 0x00E3,
 
@@ -816,13 +816,13 @@
 
         /// <summary>
         /// 发送 <see cref="SBM_SETSCROLLINFO"> 消息以设置滚动条的参数。
-        /// 应用程序不应直接发送此消息。 相反，它们应使用 SetScrollInfo 函数。 窗口通过其 WindowProc 函数接收此消息。 实现自定义滚动条控件的应用程序必须响应这些消息， SetScrollInfo 函数才能正常运行。
+        /// 应用程序不应直接发送此消息。 相反，它们应使用 SetScrollInfo 函数。 窗口通过其 WndProc 函数接收此消息。 实现自定义滚动条控件的应用程序必须响应这些消息， SetScrollInfo 函数才能正常运行。
         /// </summary>
         SBM_SETSCROLLINFO = 0x00E9,
 
         /// <summary>
         /// 发送 SBM_GETSCROLLINFO 消息以检索滚动条的参数。
-        /// 应用程序不应直接发送此消息。 相反，它们应使用 GetScrollInfo 函数。 窗口通过其 WindowProc 函数接收此消息。 实现自定义滚动条控件的应用程序必须响应这些消息，以便 GetScrollInfo 函数正常工作。
+        /// 应用程序不应直接发送此消息。 相反，它们应使用 GetScrollInfo 函数。 窗口通过其 WndProc 函数接收此消息。 实现自定义滚动条控件的应用程序必须响应这些消息，以便 GetScrollInfo 函数正常工作。
         /// </summary>
         SBM_GETSCROLLINFO = 0x00EA,
 
@@ -883,7 +883,7 @@
         /// <summary>
         /// 发送到注册以接收原始输入的窗口。
         /// 仅当应用程序调用 RegisterRawInputDevices 和 RIDEV_DEVNOTIFY 标志后，原始输入通知才可用。
-        /// 窗口通过其 WindowProc 函数接收此消息。
+        /// 窗口通过其 WndProc 函数接收此消息。
         /// </summary>
         WM_INPUT_DEVICE_CHANGE = 0x00FE,
 
@@ -956,17 +956,17 @@
         WM_INTERIM = 0x010C,
 
         /// <summary>
-        /// 在 IME 生成合成字符串之前立即发送，因为击键。 窗口通过其 WindowProc 函数接收此消息。
+        /// 在 IME 生成合成字符串之前立即发送，因为击键。 窗口通过其 WndProc 函数接收此消息。
         /// </summary>
         WM_IME_STARTCOMPOSITION = 0x010D,
 
         /// <summary>
-        /// 当 IME 结束组合时发送到应用程序。 窗口通过其 WindowProc 函数接收此消息。
+        /// 当 IME 结束组合时发送到应用程序。 窗口通过其 WndProc 函数接收此消息。
         /// </summary>
         WM_IME_ENDCOMPOSITION = 0x010E,
 
         /// <summary>
-        /// 当 IME 因击键而更改组合状态时发送到应用程序。 窗口通过其 WindowProc 函数接收此消息。
+        /// 当 IME 因击键而更改组合状态时发送到应用程序。 窗口通过其 WndProc 函数接收此消息。
         /// </summary>
         WM_IME_COMPOSITION = 0x010F,
 
@@ -1916,12 +1916,12 @@
         WM_IME_REPORT = 0x0280,
 
         /// <summary>
-        /// 激活窗口时发送到应用程序。 窗口通过其 WindowProc 函数接收此消息。
+        /// 激活窗口时发送到应用程序。 窗口通过其 WndProc 函数接收此消息。
         /// </summary>
         WM_IME_SETCONTEXT = 0x0281,
 
         /// <summary>
-        /// 发送到应用程序以通知应用程序对 IME 窗口所做的更改。 窗口通过其 WindowProc 函数接收此消息。
+        /// 发送到应用程序以通知应用程序对 IME 窗口所做的更改。 窗口通过其 WndProc 函数接收此消息。
         /// </summary>
         WM_IME_NOTIFY = 0x0282,
 
@@ -1931,24 +1931,24 @@
         WM_IME_CONTROL = 0x0283,
 
         /// <summary>
-        /// 当 IME 窗口没有空间扩展合成窗口的区域时发送到应用程序。 窗口通过其 WindowProc 函数接收此消息。
+        /// 当 IME 窗口没有空间扩展合成窗口的区域时发送到应用程序。 窗口通过其 WndProc 函数接收此消息。
         /// </summary>
         WM_IME_COMPOSITIONFULL = 0x0284,
 
         /// <summary>
-        /// 当操作系统即将更改当前 IME 时发送到应用程序。 窗口通过其 WindowProc 函数接收此消息。
+        /// 当操作系统即将更改当前 IME 时发送到应用程序。 窗口通过其 WndProc 函数接收此消息。
         /// </summary>
         WM_IME_SELECT = 0x0285,
 
         /// <summary>
-        /// 当 IME 获取转换结果的字符时发送到应用程序。 窗口通过其 WindowProc 函数接收此消息。
+        /// 当 IME 获取转换结果的字符时发送到应用程序。 窗口通过其 WndProc 函数接收此消息。
         /// </summary>
         WM_IME_CHAR = 0x0286,
 
         WM_IME_SYSTEM = 0x0287,
 
         /// <summary>
-        /// 发送到应用程序以提供命令和请求信息。 窗口通过其 WindowProc 函数接收此消息。
+        /// 发送到应用程序以提供命令和请求信息。 窗口通过其 WndProc 函数接收此消息。
         /// </summary>
         WM_IME_REQUEST = 0x0288,
 
@@ -1967,12 +1967,12 @@
         WM_KANJI_reserved_28f = 0x028F,
 
         /// <summary>
-        /// IME 发送到应用程序以通知应用程序按下键并保留消息顺序。 窗口通过其 WindowProc 函数接收此消息。
+        /// IME 发送到应用程序以通知应用程序按下键并保留消息顺序。 窗口通过其 WndProc 函数接收此消息。
         /// </summary>
         WM_IME_KEYDOWN = 0x0290,
 
         /// <summary>
-        /// 通过 IME 发送到应用程序以通知应用程序密钥发布并保留消息顺序。 窗口通过其 WindowProc 函数接收此消息。
+        /// 通过 IME 发送到应用程序以通知应用程序密钥发布并保留消息顺序。 窗口通过其 WndProc 函数接收此消息。
         /// </summary>
         WM_IME_KEYUP = 0x0291,
 
@@ -2263,7 +2263,7 @@
 
         /// <summary>
         /// 将 <see cref="WM_PRINTCLIENT"> 消息发送到窗口，以请求它在指定的设备上下文中绘制其工作区，通常位于打印机设备上下文中。
-        /// 与 <see cref="WM_PRINT"> 不同，DefWindowProc 不会处理 <see cref="WM_PRINTCLIENT">。 窗口应通过应用程序定义的 WindowProc 函数处理 <see cref="WM_PRINTCLIENT"> 消息，以便其正确使用。
+        /// 与 <see cref="WM_PRINT"> 不同，DefWindowProc 不会处理 <see cref="WM_PRINTCLIENT">。 窗口应通过应用程序定义的 WndProc 函数处理 <see cref="WM_PRINTCLIENT"> 消息，以便其正确使用。
         /// </summary>
         WM_PRINTCLIENT = 0x0318,
 
@@ -2371,7 +2371,7 @@
         WM_CE_ONLY_LAST = 0x033E,
 
         /// <summary>
-        /// 发送到请求扩展标题栏信息。 窗口通过其 WindowProc 函数接收此消息。
+        /// 发送到请求扩展标题栏信息。 窗口通过其 WndProc 函数接收此消息。
         /// </summary>
         WM_GETTITLEBARINFOEX = 0x033F,
 

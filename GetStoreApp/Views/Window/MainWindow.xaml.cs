@@ -22,7 +22,7 @@ namespace GetStoreApp.Views.Window
     /// </summary>
     public sealed partial class MainWindow : WinUIWindow
     {
-        private WindowProc newWndProc = null;
+        private WndProc newWndProc = null;
         private IntPtr oldWndProc = IntPtr.Zero;
 
         public MainWindow()
@@ -151,7 +151,7 @@ namespace GetStoreApp.Views.Window
         public void InitializeWindowProc()
         {
             IntPtr MainWindowHandle = GetMainWindowHandle();
-            newWndProc = new WindowProc(NewWindowProc);
+            newWndProc = new WndProc(NewWindowProc);
             oldWndProc = SetWindowLongAuto(MainWindowHandle, WindowLongIndexFlags.GWL_WNDPROC, newWndProc);
         }
 

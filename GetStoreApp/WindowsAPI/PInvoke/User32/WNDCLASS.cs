@@ -16,9 +16,9 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         public uint style;
 
         /// <summary>
-        /// 指向窗口过程的指针。 必须使用 <see cref="User32Library.CallWindowProc"> 函数调用窗口过程。 有关详细信息，请参阅 WindowProc。
+        /// 指向窗口过程的指针。 必须使用 <see cref="User32Library.CallWindowProc"> 函数调用窗口过程。 有关详细信息，请参阅 WndProc。
         /// </summary>
-        public WindowProc lpfnWndProc;
+        public WndProc lpfnWndProc;
 
         /// <summary>
         /// 要按照窗口类结构分配的额外字节数。 系统将字节初始化为零。

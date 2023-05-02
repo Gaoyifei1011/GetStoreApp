@@ -53,7 +53,7 @@
                     Command="{x:Bind ViewModel.NavigationItemCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
                     Content="{x:Bind root:ResourceService.GetLocalized('Window/Home')}"
-                    Tag="Home"
+                    Tag="{x:Bind ViewModel.TagList[0]}"
                     ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/Home')}">
                     <navigation:ExtendedNavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind HomeIconLoaded}" />
@@ -64,7 +64,7 @@
                     Command="{x:Bind ViewModel.NavigationItemCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
                     Content="{x:Bind root:ResourceService.GetLocalized('Window/History')}"
-                    Tag="History"
+                    Tag="{x:Bind ViewModel.TagList[1]}"
                     ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/History')}">
                     <navigation:ExtendedNavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind HistoryIconLoaded}" />
@@ -75,7 +75,7 @@
                     Command="{x:Bind ViewModel.NavigationItemCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
                     Content="{x:Bind root:ResourceService.GetLocalized('Window/Download')}"
-                    Tag="Download"
+                    Tag="{x:Bind ViewModel.TagList[2]}"
                     ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/Download')}">
                     <navigation:ExtendedNavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind DownloadIconLoaded}" />
@@ -86,7 +86,7 @@
                     Command="{x:Bind ViewModel.NavigationItemCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
                     Content="{x:Bind root:ResourceService.GetLocalized('Window/Web')}"
-                    Tag="Web"
+                    Tag="{x:Bind ViewModel.TagList[3]}"
                     ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/Web')}">
                     <navigation:ExtendedNavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind WebIconLoaded}" />
@@ -99,7 +99,7 @@
                     Command="{x:Bind ViewModel.NavigationItemCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
                     Content="{x:Bind root:ResourceService.GetLocalized('Window/About')}"
-                    Tag="About"
+                    Tag="{x:Bind ViewModel.TagList[4]}"
                     ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/About')}">
                     <navigation:ExtendedNavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind AboutIconLoaded}" />
@@ -110,7 +110,7 @@
                     Command="{x:Bind ViewModel.NavigationItemCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
                     Content="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}"
-                    Tag="Settings"
+                    Tag="{x:Bind ViewModel.TagList[5]}"
                     ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}">
                     <navigation:ExtendedNavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind SettingsIconLoaded}" />

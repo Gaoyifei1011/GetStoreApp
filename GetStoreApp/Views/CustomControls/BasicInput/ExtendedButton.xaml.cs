@@ -23,7 +23,7 @@ namespace GetStoreApp.Views.CustomControls.BasicInput
 
         // Using a DependencyProperty as the backing store for Cursor.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CursorProperty =
-            DependencyProperty.Register("Cursor", typeof(InputSystemCursorShape), typeof(ExtendedDropDownButton), new PropertyMetadata(InputSystemCursorShape.Arrow));
+            DependencyProperty.Register("Cursor", typeof(InputSystemCursorShape), typeof(ExtendedButton), new PropertyMetadata(InputSystemCursorShape.Arrow));
 
         protected override void OnPointerEntered(PointerRoutedEventArgs args)
         {

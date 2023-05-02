@@ -17,7 +17,7 @@ namespace GetStoreApp.Views.Window
     /// </summary>
     public sealed partial class TrayMenuWindow : WinUIWindow
     {
-        private WindowProc newWndProc = null;
+        private WndProc newWndProc = null;
         private IntPtr oldWndProc = IntPtr.Zero;
 
         public TrayMenuWindow()
@@ -40,7 +40,7 @@ namespace GetStoreApp.Views.Window
         public void InitializeWindow()
         {
             IntPtr MainWindowHandle = GetWindowHandle();
-            newWndProc = new WindowProc(NewWindowProc);
+            newWndProc = new WndProc(NewWindowProc);
             oldWndProc = SetWindowLongAuto(MainWindowHandle, WindowLongIndexFlags.GWL_WNDPROC, newWndProc);
 
             // 使用重叠的配置显示应用窗口。

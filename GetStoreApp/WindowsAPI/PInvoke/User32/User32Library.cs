@@ -283,7 +283,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="newProc">新事件处理函数（回调函数）</param>
         /// <returns>如果函数成功，则返回值是指定 32 位整数的上一个值。如果函数失败，则返回值为零。 </returns>
         [LibraryImport(User32, EntryPoint = "SetWindowLongW", SetLastError = false)]
-        public static partial IntPtr SetWindowLong(IntPtr hWnd, WindowLongIndexFlags nIndex, WindowProc newProc);
+        public static partial IntPtr SetWindowLong(IntPtr hWnd, WindowLongIndexFlags nIndex, WndProc newProc);
 
         [LibraryImport(User32, EntryPoint = "SetWindowLongW", SetLastError = false)]
         public static partial IntPtr SetWindowLong(IntPtr hWnd, WindowLongIndexFlags nIndex, WindowStyleEx styleEx);
@@ -296,7 +296,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="newProc">新事件处理函数（回调函数）</param>
         /// <returns>如果函数成功，则返回值是指定偏移量的上一个值。如果函数失败，则返回值为零。 </returns>
         [LibraryImport(User32, EntryPoint = "SetWindowLongPtrW", SetLastError = false)]
-        public static partial IntPtr SetWindowLongPtr(IntPtr hWnd, WindowLongIndexFlags nIndex, WindowProc newProc);
+        public static partial IntPtr SetWindowLongPtr(IntPtr hWnd, WindowLongIndexFlags nIndex, WndProc newProc);
 
         [LibraryImport(User32, EntryPoint = "SetWindowLongPtrW", SetLastError = false)]
         public static partial IntPtr SetWindowLongPtr(IntPtr hWnd, WindowLongIndexFlags nIndex, WindowStyleEx styleEx);

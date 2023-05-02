@@ -54,7 +54,7 @@ namespace GetStoreApp.Views.Window
         /// <summary>
         /// 更改指定窗口的属性
         /// </summary>
-        public IntPtr SetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex, WindowProc newProc)
+        public IntPtr SetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex, WndProc newProc)
         {
             if (IntPtr.Size == 8)
             {
