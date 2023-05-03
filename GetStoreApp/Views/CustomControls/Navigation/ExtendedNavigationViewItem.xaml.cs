@@ -45,6 +45,11 @@ namespace GetStoreApp.Views.CustomControls.Navigation
             Loaded += OnLoaded;
         }
 
+        ~ExtendedNavigationViewItem()
+        {
+            Loaded -= OnLoaded;
+        }
+
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
             if (!string.IsNullOrEmpty(ToolTip))
@@ -55,7 +60,6 @@ namespace GetStoreApp.Views.CustomControls.Navigation
                 NavigationItemToolTip.VerticalOffset = 20;
                 ToolTipService.SetToolTip(this, NavigationItemToolTip);
             }
-            Loaded -= OnLoaded;
         }
 
         /// <summary>

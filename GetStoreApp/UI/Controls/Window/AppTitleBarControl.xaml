@@ -22,7 +22,7 @@
 
     <!--  标题栏右键菜单  -->
     <Grid.ContextFlyout>
-        <menusAndToolbars:AdaptiveMenuFlyout x:Name="TitlebarMenuFlyout">
+        <menusAndToolbars:AdaptiveMenuFlyout x:Name="TitlebarMenuFlyout" AreOpenCloseAnimationsEnabled="False">
             <MenuFlyoutItem
                 MinWidth="200"
                 Command="{x:Bind ViewModel.RestoreCommand}"
