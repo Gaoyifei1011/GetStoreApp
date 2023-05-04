@@ -40,13 +40,27 @@ namespace GetStoreApp.Views.Window
         }
 
         /// <summary>
-        /// 加载“主页”图标
+        /// 加载“微软商店”图标
         /// </summary>
-        public async void HomeIconLoaded(object sender, RoutedEventArgs args)
+        public async void StoreIconLoaded(object sender, RoutedEventArgs args)
         {
             InMemoryRandomAccessStream memoryStream = new InMemoryRandomAccessStream();
             DataWriter datawriter = new DataWriter(memoryStream.GetOutputStreamAt(0));
-            datawriter.WriteBytes(Resources.Home);
+            datawriter.WriteBytes(Resources.Store);
+            await datawriter.StoreAsync();
+            BitmapImage image = new BitmapImage();
+            await image.SetSourceAsync(memoryStream);
+            (sender as ImageIcon).Source = image;
+        }
+
+        /// <summary>
+        /// 加载“WinGet 程序包”图标
+        /// </summary>
+        public async void WinGetIconLoaded(object sender, RoutedEventArgs args)
+        {
+            InMemoryRandomAccessStream memoryStream = new InMemoryRandomAccessStream();
+            DataWriter datawriter = new DataWriter(memoryStream.GetOutputStreamAt(0));
+            datawriter.WriteBytes(Resources.WinGet);
             await datawriter.StoreAsync();
             BitmapImage image = new BitmapImage();
             await image.SetSourceAsync(memoryStream);

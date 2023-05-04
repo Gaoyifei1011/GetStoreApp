@@ -13,7 +13,8 @@ namespace GetStoreApp.ViewModels.Controls.About
             {"cnbluefire","https://github.com/cnbluefire" },
             {"飞翔","https://fionlen.azurewebsites.net"},
             {"MouriNaruto","https://github.com/MouriNaruto" },
-            {"TaylorShi","https://github.com/TaylorShi" }
+            {"TaylorShi","https://github.com/TaylorShi" },
+            {"wherewhere","https://github.com/wherewhere" }
         };
     }
 }

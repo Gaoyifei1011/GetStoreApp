@@ -97,7 +97,9 @@
     <Content Remove="Assets\ControlIcon\History.png" />
     <Content Remove="Assets\ControlIcon\Home.png" />
     <Content Remove="Assets\ControlIcon\Settings.png" />
+    <Content Remove="Assets\ControlIcon\Store.png" />
     <Content Remove="Assets\ControlIcon\Web.png" />
+    <Content Remove="Assets\ControlIcon\Winget.png" />
     <Content Remove="Assets\GetStoreApp.ico" />
     <Content Remove="Assets\Resources\Lengths.bin" />
     <Content Remove="Assets\Resources\LICENSE" />
@@ -141,12 +143,14 @@
     <None Include="Assets\ControlIcon\Home.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
+    <None Include="Assets\ControlIcon\Store.png" />
     <None Include="Assets\ControlIcon\Settings.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Include="Assets\ControlIcon\Web.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
+    <None Include="Assets\ControlIcon\WinGet.png" />
     
     <None Remove="Assets\GetStoreApp.png" />
     <None Remove="Assets\Images\CloudflareValidation.png" />

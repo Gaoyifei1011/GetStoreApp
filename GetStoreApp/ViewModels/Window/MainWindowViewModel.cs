@@ -136,6 +136,7 @@ namespace GetStoreApp.ViewModels.Window
         public List<string> TagList { get; } = new List<string>()
         {
             "Home",
+            "WinGet",
             "History",
             "Download",
             "Web",

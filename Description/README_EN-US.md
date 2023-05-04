@@ -40,7 +40,8 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 
 | Project progress                                         | Development progress                                                                                               |
 | ---------------------------------------------------------| -------------------------------------------------------------------------------------------------------------------|
-| Main page functionality                                  | Completed                                                                                                          |
+| Microsoft Store link to get                              | Completed                                                                                                          |
+| WinGet package to get                                    | Processing([#1](https://github.com/Gaoyifei1011/GetStoreApp/issues/1))                                             |
 | History (records used links)                             | Completed                                                                                                          |
 | Download the file from the generated link                | Completed                                                                                                          |
 | Deploy the app offline after the download is complete    | Completed                                                                                                          |
@@ -112,6 +113,7 @@ All the content of the program has been developed
 > * [·ÉÏè](https://fionlen.azurewebsites.net)&emsp;
 > * [MouriNaruto](https://github.com/MouriNaruto)&emsp;
 > * [TaylorShi](https://github.com/TaylorShi)&emsp;
+> * [wherewhere](https://github.com/wherewhere)&emsp;
 
 ------
 

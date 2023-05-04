@@ -93,16 +93,6 @@ namespace GetStoreApp.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        public static byte[] Home {
-            get {
-                object obj = ResourceManager.GetObject("Home", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找 System.Byte[] 类型的本地化资源。
-        /// </summary>
         public static byte[] Lengths {
             get {
                 object obj = ResourceManager.GetObject("Lengths", resourceCulture);
@@ -142,9 +132,29 @@ namespace GetStoreApp.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
+        public static byte[] Store {
+            get {
+                object obj = ResourceManager.GetObject("Store", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
         public static byte[] Web {
             get {
                 object obj = ResourceManager.GetObject("Web", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
+        public static byte[] WinGet {
+            get {
+                object obj = ResourceManager.GetObject("WinGet", resourceCulture);
                 return ((byte[])(obj));
             }
         }
