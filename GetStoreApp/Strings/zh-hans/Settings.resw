@@ -253,7 +253,7 @@
     <value>无限制</value>
   </data>
   <data name="HistoryLite" xml:space="preserve">
-    <value>主页面“历史记录”显示数目</value>
+    <value>微软商店页面“历史记录”显示数目</value>
   </data>
   <data name="HistoryLite3Items" xml:space="preserve">
     <value>3条</value>
@@ -262,7 +262,7 @@
     <value>5条</value>
   </data>
   <data name="HistoryLiteDescription" xml:space="preserve">
-    <value>应用启动后在主页面打开时最多显示的“历史记录”条目数量</value>
+    <value>应用启动后在微软商店页面打开时最多显示的“历史记录”条目数量</value>
   </data>
   <data name="HistoryRecord" xml:space="preserve">
     <value>历史记录</value>

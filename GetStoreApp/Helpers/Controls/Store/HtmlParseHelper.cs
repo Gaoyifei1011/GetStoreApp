@@ -1,9 +1,9 @@
-﻿using GetStoreApp.Models.Controls.Home;
+﻿using GetStoreApp.Models.Controls.Store;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace GetStoreApp.Helpers.Controls.Home
+namespace GetStoreApp.Helpers.Controls.Store
 {
     /// <summary>
     /// 网页解析辅助类

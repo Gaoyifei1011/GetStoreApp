@@ -4,7 +4,7 @@ using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.History;
-using GetStoreApp.Models.Controls.Home;
+using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Models.Controls.Settings.Common;
 using GetStoreApp.Services.Controls.History;
 using GetStoreApp.Services.Controls.Settings.Common;
@@ -18,10 +18,10 @@ using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace GetStoreApp.ViewModels.Controls.Home
+namespace GetStoreApp.ViewModels.Controls.Store
 {
     /// <summary>
-    /// 主页面：部分历史记录用户控件视图模型
+    /// 微软商店页面：部分历史记录用户控件视图模型
     /// </summary>
     public sealed class HistoryLiteViewModel
     {

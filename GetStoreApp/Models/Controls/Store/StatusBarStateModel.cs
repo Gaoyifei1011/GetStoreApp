@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 
-namespace GetStoreApp.Models.Controls.Home
+namespace GetStoreApp.Models.Controls.Store
 {
     /// <summary>
     /// 已下载完成文件信息数据模型

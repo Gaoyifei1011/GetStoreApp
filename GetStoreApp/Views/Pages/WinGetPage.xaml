@@ -1,0 +1,24 @@
+<Page
+    x:Class="GetStoreApp.Views.Pages.WinGetPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pageViewModel="using:GetStoreApp.ViewModels.Pages"
+    xmlns:root="using:GetStoreApp.Services.Root"
+    NavigationCacheMode="Enabled"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <pageViewModel:WinGetViewModel x:Name="ViewModel" />
+    </Page.DataContext>
+
+    <Pivot Margin="0,15,0,0" Style="{StaticResource PivotStyle}">
+
+        <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchApps')}" />
+
+        <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledApps')}" />
+
+        <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradableApps')}" />
+    </Pivot>
+</Page>

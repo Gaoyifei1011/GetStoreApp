@@ -1,7 +1,7 @@
-﻿using GetStoreApp.Models.Controls.Home;
+﻿using GetStoreApp.Models.Controls.Store;
 using System;
 
-namespace GetStoreApp.Helpers.Controls.Home
+namespace GetStoreApp.Helpers.Controls.Store
 {
     /// <summary>
     /// 网页请求状态解析辅助类

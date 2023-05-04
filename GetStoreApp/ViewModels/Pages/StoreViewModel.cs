@@ -9,9 +9,9 @@ using GetStoreApp.Views.Pages;
 namespace GetStoreApp.ViewModels.Pages
 {
     /// <summary>
-    /// 主页面视图模型
+    /// 微软商店页面视图模型
     /// </summary>
-    public sealed class HomeViewModel : ViewModelBase
+    public sealed class StoreViewModel : ViewModelBase
     {
         private bool _useInsVisValue;
 
@@ -32,7 +32,7 @@ namespace GetStoreApp.ViewModels.Pages
             NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.Instructions);
         });
 
-        public HomeViewModel()
+        public StoreViewModel()
         {
             UseInsVisValue = UseInstructionService.UseInsVisValue;
         }

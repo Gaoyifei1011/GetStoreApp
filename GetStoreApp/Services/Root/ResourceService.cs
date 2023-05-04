@@ -1,5 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Models.Controls.Home;
+using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Models.Controls.Settings.Advanced;
 using GetStoreApp.Models.Controls.Settings.Appearance;
 using GetStoreApp.Models.Controls.Settings.Common;
@@ -165,28 +165,28 @@ namespace GetStoreApp.Services.Root
             StatusBarStateList.Add(new StatusBarStateModel
             {
                 InfoBarSeverity = InfoBarSeverity.Informational,
-                StateInfoText = GetLocalized("Home/StatusInfoGetting"),
+                StateInfoText = GetLocalized("Store/StatusInfoGetting"),
                 StatePrRingActValue = true,
                 StatePrRingVisValue = true
             });
             StatusBarStateList.Add(new StatusBarStateModel
             {
                 InfoBarSeverity = InfoBarSeverity.Success,
-                StateInfoText = GetLocalized("Home/StatusInfoSuccess"),
+                StateInfoText = GetLocalized("Store/StatusInfoSuccess"),
                 StatePrRingActValue = false,
                 StatePrRingVisValue = false
             });
             StatusBarStateList.Add(new StatusBarStateModel
             {
                 InfoBarSeverity = InfoBarSeverity.Warning,
-                StateInfoText = GetLocalized("Home/StatusInfoWarning"),
+                StateInfoText = GetLocalized("Store/StatusInfoWarning"),
                 StatePrRingActValue = false,
                 StatePrRingVisValue = false
             });
             StatusBarStateList.Add(new StatusBarStateModel
             {
                 InfoBarSeverity = InfoBarSeverity.Error,
-                StateInfoText = GetLocalized("Home/StatusInfoError"),
+                StateInfoText = GetLocalized("Store/StatusInfoError"),
                 StatePrRingActValue = false,
                 StatePrRingVisValue = false
             });
@@ -257,7 +257,7 @@ namespace GetStoreApp.Services.Root
         }
 
         /// <summary>
-        /// 初始化主页面历史记录显示数量信息列表
+        /// 初始化微软商店页面历史记录显示数量信息列表
         /// </summary>
         private static void InitializeHistoryLiteNumList()
         {

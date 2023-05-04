@@ -125,7 +125,8 @@ namespace GetStoreApp.ViewModels.Window
 
         private Dictionary<string, Type> PageDict { get; } = new Dictionary<string, Type>()
         {
-            {"Home",typeof(HomePage) },
+            {"Store",typeof(StorePage) },
+            {"WinGet",typeof(WinGetPage) },
             {"History",typeof(HistoryPage) },
             {"Download",typeof(DownloadPage) },
             {"Web",typeof(WebPage) },
@@ -135,7 +136,7 @@ namespace GetStoreApp.ViewModels.Window
 
         public List<string> TagList { get; } = new List<string>()
         {
-            "Home",
+            "Store",
             "WinGet",
             "History",
             "Download",
@@ -361,7 +362,7 @@ namespace GetStoreApp.ViewModels.Window
             }
 
             SelectedItem = NavigationService.NavigationItemList[0].NavigationItem;
-            NavigationService.NavigateTo(typeof(HomePage));
+            NavigationService.NavigateTo(typeof(StorePage));
             IsBackEnabled = NavigationService.CanGoBack();
         }
 

@@ -1,4 +1,4 @@
-﻿namespace GetStoreApp.Models.Controls.Home
+﻿namespace GetStoreApp.Models.Controls.Store
 {
     /// <summary>
     /// 网页请求数据模型

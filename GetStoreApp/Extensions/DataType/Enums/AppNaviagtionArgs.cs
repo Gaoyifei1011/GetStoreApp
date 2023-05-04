@@ -6,7 +6,7 @@
     public enum AppNaviagtionArgs
     {
         None = 0,
-        Home = 1,
+        Store = 1,
         History = 2,
         Instructions = 3,
         SettingsHelp = 4,

@@ -95,11 +95,10 @@
     <Content Remove="Assets\ControlIcon\About.png" />
     <Content Remove="Assets\ControlIcon\Download.png" />
     <Content Remove="Assets\ControlIcon\History.png" />
-    <Content Remove="Assets\ControlIcon\Home.png" />
     <Content Remove="Assets\ControlIcon\Settings.png" />
     <Content Remove="Assets\ControlIcon\Store.png" />
     <Content Remove="Assets\ControlIcon\Web.png" />
-    <Content Remove="Assets\ControlIcon\Winget.png" />
+    <Content Remove="Assets\ControlIcon\WinGet.png" />
     <Content Remove="Assets\GetStoreApp.ico" />
     <Content Remove="Assets\Resources\Lengths.bin" />
     <Content Remove="Assets\Resources\LICENSE" />
@@ -140,11 +139,10 @@
     <None Include="Assets\ControlIcon\Download.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\ControlIcon\Home.png">
+    <None Include="Assets\ControlIcon\Settings.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\ControlIcon\Store.png" />
-    <None Include="Assets\ControlIcon\Settings.png">
+    <None Include="Assets\ControlIcon\Store.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Include="Assets\ControlIcon\Web.png">
@@ -193,15 +191,15 @@
     <None Remove="UI\Controls\Download\DownloadingControl.xaml" />
     <None Remove="UI\Controls\Download\UnfinishedControl.xaml" />
     
-    <None Remove="UI\Controls\Home\HistoryLiteControl.xaml" />
-    <None Remove="UI\Controls\Home\RequestControl.xaml" />
-    <None Remove="UI\Controls\Home\ResultControl.xaml" />
-    <None Remove="UI\Controls\Home\StatusBarControl.xaml" />
-    
     <None Remove="UI\Controls\Settings\Advanced\AppExitControl.xaml" />
     <None Remove="UI\Controls\Settings\Advanced\ExperimentalFeaturesControl.xaml" />
     <None Remove="UI\Controls\Settings\Advanced\InstallModeControl.xaml" />
     <None Remove="UI\Controls\Settings\Advanced\TraceCleanupControl.xaml" />
+
+    <None Remove="UI\Controls\Store\HistoryLiteControl.xaml" />
+    <None Remove="UI\Controls\Store\RequestControl.xaml" />
+    <None Remove="UI\Controls\Store\ResultControl.xaml" />
+    <None Remove="UI\Controls\Store\StatusBarControl.xaml" />
     
     <None Remove="UI\Controls\Settings\Appearance\AlwaysShowBackdropControl.xaml" />    
     <None Remove="UI\Controls\Settings\Appearance\BackdropControl.xaml" />
@@ -275,9 +273,10 @@
     <None Remove="Views\Pages\AboutPage.xaml" />
     <None Remove="Views\Pages\DownloadPage.xaml" />
     <None Remove="Views\Pages\HistoryPage.xaml" />
-    <None Remove="Views\Pages\HomePage.xaml" />
     <None Remove="Views\Pages\SettingsPage.xaml" />
+    <None Remove="Views\Pages\StorePage.xaml" />
     <None Remove="Views\Pages\WebPage.xaml" />
+    <None Remove="Views\Pages\WinGetPage.xaml" />
     
     <None Remove="Views\Window\MainWindow.xaml" />
     <None Remove="Views\Window\TrayMenuWindow.xaml" />
@@ -389,19 +388,6 @@
     <Page Update="UI\Controls\Download\UnfinishedControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    
-    <Page Update="UI\Controls\Home\HistoryLiteControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\Home\RequestControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\Home\ResultControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\Home\StatusBarControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
 
     <Page Update="UI\Controls\Settings\Advanced\AppExitControl.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -413,6 +399,19 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Controls\Settings\Advanced\TraceCleanupControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    
+    <Page Update="UI\Controls\Store\HistoryLiteControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\Store\RequestControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\Store\ResultControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\Store\StatusBarControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
@@ -599,15 +598,19 @@
     <Page Update="Views\Pages\HistoryPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\Pages\HomePage.xaml">
+    <Page Update="Views\Pages\SettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\Pages\SettingsPage.xaml">
+    <Page Update="Views\Pages\StorePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\Pages\WebPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Update="Views\Pages\WinGetPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    
     <Page Update="Views\Window\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

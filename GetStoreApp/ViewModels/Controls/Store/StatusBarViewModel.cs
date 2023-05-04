@@ -1,6 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
-using GetStoreApp.Models.Controls.Home;
+using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Services.Root;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.WindowsAPI.Controls;
@@ -9,10 +9,10 @@ using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace GetStoreApp.ViewModels.Controls.Home
+namespace GetStoreApp.ViewModels.Controls.Store
 {
     /// <summary>
-    /// 主页面：状态栏用户控件视图模型
+    /// 微软商店页面：状态栏用户控件视图模型
     /// </summary>
     public sealed class StatusBarViewModel : ViewModelBase
     {
@@ -74,7 +74,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
 
         public StatusBarViewModel()
         {
-            StateInfoText = ResourceService.GetLocalized("Home/StatusInfoWelcome");
+            StateInfoText = ResourceService.GetLocalized("Store/StatusInfoWelcome");
 
             Messenger.Default.Register<int>(this, MessageToken.StatusBarState, (statusBarStateMessage) =>
             {

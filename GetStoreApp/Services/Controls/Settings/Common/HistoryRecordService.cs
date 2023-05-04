@@ -47,7 +47,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         }
 
         /// <summary>
-        /// 获取设置存储的主页面历史记录显示的最多项目值，如果设置没有存储，使用默认值
+        /// 获取设置存储的微软商店页面历史记录显示的最多项目值，如果设置没有存储，使用默认值
         /// </summary>
         private static async Task<HistoryLiteNumModel> GetHistoryLiteNumAsync()
         {
@@ -77,7 +77,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         }
 
         /// <summary>
-        /// 历史记录显示数量发生修改时修改设置存储的主页面历史记录显示数量值
+        /// 历史记录显示数量发生修改时修改设置存储的微软商店页面历史记录显示数量值
         /// </summary>
         public static async Task SetHistoryLiteNumAsync(HistoryLiteNumModel historyLiteNum)
         {

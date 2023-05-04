@@ -1,6 +1,6 @@
 ﻿using GetStoreApp.Extensions.Console;
-using GetStoreApp.Helpers.Controls.Home;
-using GetStoreApp.Models.Controls.Home;
+using GetStoreApp.Helpers.Controls.Store;
+using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
 using System;

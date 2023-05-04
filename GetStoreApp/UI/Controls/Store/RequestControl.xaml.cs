@@ -1,12 +1,12 @@
-﻿using GetStoreApp.Models.Controls.Home;
+﻿using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
 
-namespace GetStoreApp.UI.Controls.Home
+namespace GetStoreApp.UI.Controls.Store
 {
     /// <summary>
-    /// 主页面：请求用户控件视图
+    /// 微软商店页面：请求用户控件视图
     /// </summary>
     public sealed partial class RequestControl : UserControl
     {

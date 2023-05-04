@@ -4,7 +4,7 @@ using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
-using GetStoreApp.Models.Controls.Home;
+using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Controls.Settings.Experiment;
@@ -22,10 +22,10 @@ using System.Linq;
 using System.Text;
 using Windows.System;
 
-namespace GetStoreApp.ViewModels.Controls.Home
+namespace GetStoreApp.ViewModels.Controls.Store
 {
     /// <summary>
-    /// 主页面：请求结果用户控件视图模型
+    /// 微软商店页面：请求结果用户控件视图模型
     /// </summary>
     public sealed class ResultViewModel : ViewModelBase
     {

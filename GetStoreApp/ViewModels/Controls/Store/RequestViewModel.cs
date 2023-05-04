@@ -3,11 +3,11 @@ using GetStoreApp.Extensions.Command;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Extensions.SystemTray;
-using GetStoreApp.Helpers.Controls.Home;
+using GetStoreApp.Helpers.Controls.Store;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
 using GetStoreApp.Models.Controls.History;
-using GetStoreApp.Models.Controls.Home;
+using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Services.Controls.History;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
@@ -20,10 +20,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.UI.StartScreen;
 
-namespace GetStoreApp.ViewModels.Controls.Home
+namespace GetStoreApp.ViewModels.Controls.Store
 {
     /// <summary>
-    /// 主页面：请求用户控件视图模型
+    /// 微软商店页面：请求用户控件视图模型
     /// </summary>
     public sealed class RequestViewModel : ViewModelBase
     {
@@ -39,7 +39,7 @@ namespace GetStoreApp.ViewModels.Controls.Home
             "d58c3a5f-ca63-4435-842c-7814b5ff91b7"
         };
 
-        private string SampleTitle { get; } = ResourceService.GetLocalized("Home/SampleTitle");
+        private string SampleTitle { get; } = ResourceService.GetLocalized("Store/SampleTitle");
 
         private string SampleLink { get; set; }
 
@@ -150,9 +150,9 @@ namespace GetStoreApp.ViewModels.Controls.Home
                 SelectedChannel = Convert.ToInt32(commandMessage[1]) is -1 ? ChannelList[3] : ChannelList[Convert.ToInt32(commandMessage[1])];
                 LinkText = commandMessage[2] is "PlaceHolderText" ? string.Empty : commandMessage[2];
 
-                if (NavigationService.GetCurrentPageType() != typeof(HomePage))
+                if (NavigationService.GetCurrentPageType() != typeof(StorePage))
                 {
-                    NavigationService.NavigateTo(typeof(HomePage));
+                    NavigationService.NavigateTo(typeof(StorePage));
                 }
 
                 WindowHelper.ShowAppWindow();

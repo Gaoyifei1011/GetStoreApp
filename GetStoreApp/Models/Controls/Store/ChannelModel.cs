@@ -1,4 +1,4 @@
-﻿namespace GetStoreApp.Models.Controls.Home
+﻿namespace GetStoreApp.Models.Controls.Store
 {
     /// <summary>
     /// 通道类型数据模型

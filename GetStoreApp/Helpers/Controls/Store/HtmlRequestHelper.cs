@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Models.Controls.Home;
+﻿using GetStoreApp.Models.Controls.Store;
 using System;
 using System.Text;
 using System.Threading;
@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Windows.Web.Http;
 using Windows.Web.Http.Headers;
 
-namespace GetStoreApp.Helpers.Controls.Home
+namespace GetStoreApp.Helpers.Controls.Store
 {
     /// <summary>
     /// 网页请求辅助类

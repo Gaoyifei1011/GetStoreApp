@@ -4,7 +4,7 @@ using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.History;
-using GetStoreApp.Models.Controls.Home;
+using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Services.Controls.History;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
@@ -269,7 +269,7 @@ namespace GetStoreApp.ViewModels.Pages
         public IRelayCommand FillinCommand => new RelayCommand<HistoryModel>((historyItem) =>
         {
             Messenger.Default.Send(historyItem, MessageToken.Fillin);
-            NavigationService.NavigateTo(typeof(HomePage), AppNaviagtionArgs.Home);
+            NavigationService.NavigateTo(typeof(StorePage), AppNaviagtionArgs.Store);
         });
 
         // 复制指定项目的内容

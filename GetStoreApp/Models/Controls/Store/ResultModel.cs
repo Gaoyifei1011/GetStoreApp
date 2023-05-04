@@ -1,6 +1,6 @@
 ﻿using GetStoreApp.Models.Base;
 
-namespace GetStoreApp.Models.Controls.Home
+namespace GetStoreApp.Models.Controls.Store
 {
     /// <summary>
     /// 网页请求返回结果的数据模型

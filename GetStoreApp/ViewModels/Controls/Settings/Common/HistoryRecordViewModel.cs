@@ -45,7 +45,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
             }
         }
 
-        // 主页面“历史记录”显示数目修改
+        // 微软商店页面“历史记录”显示数目修改
         public IRelayCommand HistoryLiteSelectCommand => new RelayCommand<string>(async (historyLiteIndex) =>
         {
             HistoryLiteItem = HistoryLiteNumList[Convert.ToInt32(historyLiteIndex)];

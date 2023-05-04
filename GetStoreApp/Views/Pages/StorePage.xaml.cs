@@ -7,13 +7,13 @@ using System;
 namespace GetStoreApp.Views.Pages
 {
     /// <summary>
-    /// 主页面
+    /// 微软商店页面
     /// </summary>
-    public sealed partial class HomePage : Page
+    public sealed partial class StorePage : Page
     {
-        private AppNaviagtionArgs HomeNavigationArgs { get; set; } = AppNaviagtionArgs.None;
+        private AppNaviagtionArgs StoreNavigationArgs { get; set; } = AppNaviagtionArgs.None;
 
-        public HomePage()
+        public StorePage()
         {
             InitializeComponent();
         }
@@ -24,22 +24,22 @@ namespace GetStoreApp.Views.Pages
             ViewModel.OnNavigatedTo();
             if (args.Parameter is not null)
             {
-                HomeNavigationArgs = (AppNaviagtionArgs)Enum.Parse(typeof(AppNaviagtionArgs), Convert.ToString(args.Parameter));
+                StoreNavigationArgs = (AppNaviagtionArgs)Enum.Parse(typeof(AppNaviagtionArgs), Convert.ToString(args.Parameter));
             }
             else
             {
-                HomeNavigationArgs = AppNaviagtionArgs.None;
+                StoreNavigationArgs = AppNaviagtionArgs.None;
             }
         }
 
         /// <summary>
         /// 页面加载完成后如果有具体的要求，将页面滚动到指定位置
         /// </summary>
-        public void HomeLoaded(object sender, RoutedEventArgs args)
+        public void StoreLoaded(object sender, RoutedEventArgs args)
         {
-            if (HomeNavigationArgs is AppNaviagtionArgs.Home)
+            if (StoreNavigationArgs is AppNaviagtionArgs.Store)
             {
-                HomeScroll.ChangeView(null, 0, null);
+                StoreScroll.ChangeView(null, 0, null);
             }
         }
     }

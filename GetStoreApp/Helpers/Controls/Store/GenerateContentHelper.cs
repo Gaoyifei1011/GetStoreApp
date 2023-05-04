@@ -1,4 +1,4 @@
-﻿namespace GetStoreApp.Helpers.Controls.Home
+﻿namespace GetStoreApp.Helpers.Controls.Store
 {
     /// <summary>
     /// 请求内容生成辅助类

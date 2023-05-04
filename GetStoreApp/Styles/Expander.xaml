@@ -115,7 +115,7 @@
     <Thickness x:Key="ExpanderContentDownBorderThickness">1,0,1,1</Thickness>
     <Thickness x:Key="ExpanderContentUpBorderThickness">1,1,1,0</Thickness>
 
-    <!--  主页面历史记录的扩展器格式  -->
+    <!--  微软商店页面历史记录的扩展器格式  -->
     <Style x:Key="HistoryLiteExpanderStyle" TargetType="Expander">
 
         <Setter Property="IsTabStop" Value="False" />
