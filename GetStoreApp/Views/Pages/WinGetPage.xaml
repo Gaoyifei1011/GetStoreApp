@@ -13,12 +13,15 @@
         <pageViewModel:WinGetViewModel x:Name="ViewModel" />
     </Page.DataContext>
 
-    <Pivot Margin="0,15,0,0" Style="{StaticResource PivotStyle}">
+    <StackPanel>
+        <Pivot Margin="0,15,0,0" Style="{StaticResource PivotStyle}">
 
-        <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchApps')}" />
+            <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchApps')}" />
 
-        <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledApps')}" />
+            <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledApps')}" />
 
-        <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradableApps')}" />
-    </Pivot>
+            <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradableApps')}" />
+        </Pivot>
+        <Button Click="Button_Click" Content="Click Me Test" />
+    </StackPanel>
 </Page>

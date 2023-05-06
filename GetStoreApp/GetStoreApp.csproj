@@ -8,6 +8,7 @@
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <Copyright>Copyright ©2022-2023 高怡飞, All Rights Reserved.</Copyright>
+    <CsWinRTIncludes>Microsoft.Management.Deployment</CsWinRTIncludes>
     <Defineconstants>DISABLE_XAML_GENERATED_MAIN</Defineconstants>
     <Deterministic>true</Deterministic>
     <DesktopCompatible>true</DesktopCompatible>
@@ -125,6 +126,8 @@
     <Content Include="Fonts\Settings Fluent Icons.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+
+    <CsWinRTInputs Include="lib\Microsoft.Management.Deployment.winmd" />
 
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -288,6 +291,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.2" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
     
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.3.230331000" />
