@@ -380,6 +380,12 @@ namespace GetStoreApp.Services.Root
             });
             TraceCleanupList.Add(new TraceCleanupModel
             {
+                DisplayName = GetLocalized("Dialog/ActionCenter"),
+                InternalName = CleanArgs.ActionCenter,
+                CleanFailedText = GetLocalized("Dialog/ActionCenterError")
+            });
+            TraceCleanupList.Add(new TraceCleanupModel
+            {
                 DisplayName = GetLocalized("Dialog/DownloadRecord"),
                 InternalName = CleanArgs.Download,
                 CleanFailedText = GetLocalized("Dialog/DownloadCleanError")

@@ -25,7 +25,7 @@
     <LangVersion>latest</LangVersion>
     <NeutralLanguage>en-US</NeutralLanguage>
     <Nullable>disable</Nullable>
-    <Optimize>True</Optimize>
+    <Optimize>False</Optimize>
     <OutputType>WinExe</OutputType>
     <PackageIcon>Assets\GetStoreApp.png</PackageIcon>
     <Platforms>x86;x64;ARM64</Platforms>
@@ -119,6 +119,9 @@
     </Content>
     <None Update="Assets\Resources\LICENSE">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="lib\Microsoft.Management.Deployment.winmd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="Fonts\Segoe Fluent Icons.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

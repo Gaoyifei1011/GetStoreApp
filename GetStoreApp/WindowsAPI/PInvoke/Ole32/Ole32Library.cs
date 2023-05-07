@@ -6,7 +6,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Ole32
     /// <summary>
     /// Ole32.dll 函数库
     /// </summary>
-    public static class Ole32Library
+    public static partial class Ole32Library
     {
         private const string Ole32 = "Ole32.dll";
 
@@ -21,7 +21,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Ole32
         /// <param name="dwClsContext">管理新创建对象的代码将在其中运行的上下文。 这些值取自枚举 CLSCTX。</param>
         /// <param name="riid">对要用于与对象通信的接口标识符的引用。</param>
         /// <param name="ppv">接收 riid 中请求的接口指针的指针变量的地址。 成功返回后，*ppv 包含请求的接口指针。 失败后，*ppv 包含 NULL。</param>
-        [DllImport(Ole32, EntryPoint = "CoCreateInstance", PreserveSig = false, SetLastError = true)]
-        public static extern void CoCreateInstance([In] ref Guid rclsid, IntPtr pUnkOuter, CLSCTX dwClsContext, [In] ref Guid riid, [MarshalAs(UnmanagedType.IUnknown)] out object ppv);
+        [LibraryImport(Ole32, EntryPoint = "CoCreateInstance", SetLastError = true)]
+        public static unsafe partial int CoCreateInstance(Guid* rclsid, IntPtr pUnkOuter, CLSCTX dwClsContext, Guid* riid, out IntPtr ppv);
     }
 }

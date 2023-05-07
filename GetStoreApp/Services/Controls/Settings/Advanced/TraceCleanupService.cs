@@ -5,6 +5,7 @@ using GetStoreApp.Services.Controls.History;
 using GetStoreApp.Services.Controls.Settings.Common;
 using System;
 using System.Threading.Tasks;
+using Windows.UI.Notifications;
 
 namespace GetStoreApp.Services.Controls.Settings.Advanced
 {
@@ -20,12 +21,22 @@ namespace GetStoreApp.Services.Controls.Settings.Advanced
         {
             switch (cleanupArgs)
             {
+                case CleanArgs.ActionCenter: return ClearActionCenter();
+                case CleanArgs.Download: return await DownloadXmlService.ClearAsync();
                 case CleanArgs.History: return await HistoryXmlService.ClearAsync();
                 case CleanArgs.JumpList: return await CleanTaskbarJumpListAsync();
-                case CleanArgs.Download: return await DownloadXmlService.ClearAsync();
                 case CleanArgs.LocalFile: return IOHelper.CleanFolder(DownloadOptionsService.DefaultFolder);
                 default: return true;
             }
+        }
+
+        /// <summary>
+        /// 清理操作中心的通知内容
+        /// </summary>
+        private static bool ClearActionCenter()
+        {
+            ToastNotificationManager.History.Clear();
+            return true;
         }
 
         /// <summary>

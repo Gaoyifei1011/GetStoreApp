@@ -5,9 +5,10 @@
     /// </summary>
     public enum CleanArgs
     {
-        History = 0,
-        JumpList = 1,
-        Download = 2,
-        LocalFile = 3
+        ActionCenter = 0,
+        Download = 1,
+        History = 2,
+        JumpList = 3,
+        LocalFile = 4
     }
 }

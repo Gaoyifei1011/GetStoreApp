@@ -399,4 +399,10 @@
   <data name="WebView2CoreVersion" xml:space="preserve">
     <value>WebView2 Core 版本：</value>
   </data>
+  <data name="ActionCenter" xml:space="preserve">
+    <value>操作中心的应用通知</value>
+  </data>
+  <data name="ActionCenterError" xml:space="preserve">
+    <value>操作中心的应用通知清理失败，请手动打开操作中心清理通知记录</value>
+  </data>
 </root>
