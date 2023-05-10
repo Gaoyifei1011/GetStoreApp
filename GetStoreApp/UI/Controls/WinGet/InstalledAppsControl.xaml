@@ -1,0 +1,149 @@
+<UserControl
+    x:Class="GetStoreApp.UI.Controls.WinGet.InstalledAppsControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:format="using:GetStoreApp.Converters.Formats"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:winGetViewModel="using:GetStoreApp.ViewModels.Controls.WinGet"
+    xmlns:winget="using:GetStoreApp.Models.Controls.WinGet"
+    x:Name="InstalledAppsRoot"
+    Loaded="{x:Bind ViewModel.OnLoaded}"
+    mc:Ignorable="d">
+
+    <UserControl.DataContext>
+        <winGetViewModel:InstalledAppsViewModel x:Name="ViewModel" x:FieldModifier="public" />
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <format:InstalledAppsToolTipConverter x:Name="InstalledAppsToolTipConverter" />
+    </UserControl.Resources>
+
+    <Grid Padding="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid
+            x:Name="LoadingTip"
+            Grid.Row="1"
+            Margin="30,3,30,0"
+            x:Load="{x:Bind ViewModel.IsLoadedCompleted, Converter={StaticResource BooleanToOppositeValueConverter}, ConverterParameter=Reverse, Mode=OneWay}"
+            Style="{StaticResource CardGridStyle}">
+
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Horizontal"
+                Spacing="10">
+
+                <ProgressRing IsActive="True" IsEnabled="True" />
+
+                <TextBlock
+                    Margin="0,10"
+                    VerticalAlignment="Center"
+                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/LoadingInstalledApps')}"
+                    TextAlignment="Center">
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/LoadingInstalledApps')}"
+                            Placement="Bottom"
+                            VerticalOffset="20" />
+                    </ToolTipService.ToolTip>
+                </TextBlock>
+            </StackPanel>
+        </Grid>
+
+        <ScrollViewer
+            x:Name="InstalledAppsScroll"
+            Grid.Row="2"
+            Padding="0,3,0,0"
+            HorizontalScrollBarVisibility="Disabled"
+            HorizontalScrollMode="Disabled"
+            Style="{StaticResource ScrollViewerStyle}"
+            VerticalScrollBarVisibility="Auto"
+            VerticalScrollMode="Enabled">
+
+            <ListView
+                Padding="30,0,30,30"
+                ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
+                ItemsSource="{x:Bind ViewModel.InstalledAppsList, Mode=OneWay}"
+                SelectionMode="None"
+                Visibility="{x:Bind ViewModel.InstalledAppsList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="winget:InstalledAppsModel">
+
+                        <Grid ColumnSpacing="10" Style="{StaticResource CardGridStyle}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="120" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock
+                                Grid.Column="0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Style="{StaticResource SubWinGetItemTextStyle}"
+                                Text="{x:Bind AppName}">
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        Content="{x:Bind AppName, Converter={StaticResource InstalledAppsToolTipConverter}, ConverterParameter=AppName}"
+                                        Placement="Bottom"
+                                        VerticalOffset="20" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock
+                                Grid.Column="1"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Style="{StaticResource SubWinGetItemTextStyle}"
+                                Text="{x:Bind AppPublisher}">
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        Content="{x:Bind AppPublisher, Converter={StaticResource InstalledAppsToolTipConverter}, ConverterParameter=AppPublisher}"
+                                        Placement="Bottom"
+                                        VerticalOffset="20" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock
+                                Grid.Column="2"
+                                MinWidth="100"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                HorizontalTextAlignment="Left"
+                                Style="{StaticResource SubWinGetItemTextStyle}"
+                                Text="{x:Bind AppVersion}">
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        Content="{x:Bind AppVersion, Converter={StaticResource InstalledAppsToolTipConverter}, ConverterParameter=AppVersion}"
+                                        Placement="Bottom"
+                                        VerticalOffset="20" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
+
+                            <HyperlinkButton
+                                Grid.Column="3"
+                                Command="{Binding ElementName=InstalledAppsRoot, Path=DataContext.UnInstallCommand}"
+                                CommandParameter="{x:Bind AppID}"
+                                Content="{x:Bind root:ResourceService.GetLocalized('WinGet/UnInstall')}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollViewer>
+    </Grid>
+
+
+</UserControl>

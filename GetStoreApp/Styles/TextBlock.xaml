@@ -80,4 +80,17 @@
         <Setter Property="TextAlignment" Value="Left" />
         <Setter Property="FontSize" Value="14" />
     </Style>
+
+    <Style x:Key="WinGetItemTextStyle" TargetType="TextBlock">
+        <Setter Property="MinWidth" Value="50" />
+        <Setter Property="TextAlignment" Value="Left" />
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+
+    <Style x:Key="SubWinGetItemTextStyle" TargetType="TextBlock">
+        <Setter Property="Margin" Value="0,-4,0,-5" />
+        <Setter Property="MinWidth" Value="50" />
+        <Setter Property="TextAlignment" Value="Left" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
 </ResourceDictionary>

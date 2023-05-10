@@ -123,6 +123,12 @@
     <None Update="lib\Microsoft.Management.Deployment.winmd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Styles\ScrollViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\InstalledAppsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Content Include="Fonts\Segoe Fluent Icons.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -180,6 +186,7 @@
     <None Remove="Styles\MinMaxCloseControl.xaml" />
     <None Remove="Styles\NavigationView.xaml" />
     <None Remove="Styles\Pivot.xaml" />
+    <None Remove="Styles\ScrollViewer.xaml" />
     <None Remove="Styles\TeachingTip.xaml" />
     <None Remove="Styles\TextBlock.xaml" />
     <None Remove="Styles\ToggleSwitch.xaml" />
@@ -196,6 +203,7 @@
     <None Remove="UI\Controls\Download\CompletedControl.xaml" />
     <None Remove="UI\Controls\Download\DownloadingControl.xaml" />
     <None Remove="UI\Controls\Download\UnfinishedControl.xaml" />
+    <None Remove="UI\Controls\InstalledAppsControl.xaml" />
     
     <None Remove="UI\Controls\Settings\Advanced\AppExitControl.xaml" />
     <None Remove="UI\Controls\Settings\Advanced\ExperimentalFeaturesControl.xaml" />
@@ -638,6 +646,10 @@
     <TrimmableAssembly Include="Microsoft.WindowsAppRuntime.Bootstrap" />
     <TrimmableAssembly Include="Microsoft.WindowsAppRuntime.Bootstrap.Net" />
     <TrimmableAssembly Include="Microsoft.Windows.Widgets.Projection" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="UI\Controls\WinGet\" />
   </ItemGroup>
 </Project>
   

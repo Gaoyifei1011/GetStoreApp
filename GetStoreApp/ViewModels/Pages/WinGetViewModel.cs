@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.ViewModels.Base;
+using System.ComponentModel;
 
 namespace GetStoreApp.ViewModels.Pages
 {
@@ -7,6 +8,19 @@ namespace GetStoreApp.ViewModels.Pages
     /// </summary>
     public sealed class WinGetViewModel : ViewModelBase
     {
+        private int _selectedIndex;
+
+        public int SelectedIndex
+        {
+            get { return _selectedIndex; }
+
+            set
+            {
+                _selectedIndex = value;
+                OnPropertyChanged();
+            }
+        }
+
 
     }
 }

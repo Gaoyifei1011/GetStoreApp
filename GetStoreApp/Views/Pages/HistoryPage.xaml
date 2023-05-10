@@ -500,7 +500,7 @@
                         Grid.Row="1"
                         IsItemClickEnabled="{x:Bind ViewModel.IsSelectMode, Mode=OneWay}"
                         ItemClick="{x:Bind ViewModel.OnItemClick}"
-                        ItemContainerStyle="{StaticResource ListViewItemStyle}"
+                        ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
                         ItemsSource="{x:Bind ViewModel.HistoryDataList, Mode=OneWay}"
                         SelectionMode="None"
                         Visibility="{x:Bind ViewModel.IsHistoryEmptyAfterFilter, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}">

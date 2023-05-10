@@ -32,7 +32,7 @@
             <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Dialog/TraceCleanupContent')}" />
 
             <ListView
-                ItemContainerStyle="{StaticResource ListViewItemStyle}"
+                ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
                 ItemsSource="{x:Bind ViewModel.TraceCleanupList}"
                 SelectionMode="None">
 

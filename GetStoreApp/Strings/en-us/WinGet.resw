@@ -117,11 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppNameToolTip" xml:space="preserve">
+    <value>App name:{0}</value>
+  </data>
+  <data name="AppPublisherToolTip" xml:space="preserve">
+    <value>Publisher:{0}</value>
+  </data>
+  <data name="AppVersionToolTIp" xml:space="preserve">
+    <value>App version:{0}</value>
+  </data>
   <data name="InstalledApps" xml:space="preserve">
     <value>Installed apps</value>
   </data>
+  <data name="LoadingInstalledApps" xml:space="preserve">
+    <value>Please wait while loading the list of installed applications...</value>
+  </data>
   <data name="SearchApps" xml:space="preserve">
     <value>Search apps</value>
+  </data>
+  <data name="UnInstall" xml:space="preserve">
+    <value>Uninstall</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Unknown</value>
   </data>
   <data name="UpgradableApps" xml:space="preserve">
     <value>Upgradable apps</value>

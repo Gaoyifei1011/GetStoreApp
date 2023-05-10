@@ -28,7 +28,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 应用启动时使用的参数
         /// </summary>
-        public static Dictionary<string,object> LaunchArgs { get; set; } = new Dictionary<string, object>()
+        public static Dictionary<string, object> LaunchArgs { get; set; } = new Dictionary<string, object>()
         {
             {"TypeName",-1 },
             {"ChannelName",-1 },
@@ -59,20 +59,11 @@ namespace GetStoreApp.Services.Root
             {
                 IntPtr ConsoleHandle = Kernel32Library.GetConsoleWindow();
 
-                if (ConsoleHandle != IntPtr.Zero)
-                {
-                    Result = User32Library.MessageBox(ConsoleHandle,
-                        ResourceService.GetLocalized("Console/ExitPrompt"),
-                        ResourceService.GetLocalized("Resources/AppDisplayName"),
-                        MessageBoxOptions.MB_OKCANCEL | MessageBoxOptions.MB_ICONINFORMATION);
-                }
-                else
-                {
-                    Result = User32Library.MessageBox(IntPtr.Zero,
-                        ResourceService.GetLocalized("Console/ExitPrompt"),
-                        ResourceService.GetLocalized("Resources/AppDisplayName"),
-                        MessageBoxOptions.MB_OKCANCEL | MessageBoxOptions.MB_ICONINFORMATION);
-                }
+                Result = User32Library.MessageBox(ConsoleHandle,
+                    ResourceService.GetLocalized("Console/ExitPrompt"),
+                    ResourceService.GetLocalized("Resources/AppDisplayName"),
+                    MessageBoxOptions.MB_OKCANCEL | MessageBoxOptions.MB_ICONINFORMATION);
+
                 if (Result is MessageBoxResult.IDOK)
                 {
                     Console.WriteLine(LineBreaks + ResourceService.GetLocalized("Console/ApplicationExit"));

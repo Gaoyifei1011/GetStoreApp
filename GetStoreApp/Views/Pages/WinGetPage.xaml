@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pageViewModel="using:GetStoreApp.ViewModels.Pages"
     xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:wc="using:GetStoreApp.UI.Controls.WinGet"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
@@ -13,15 +14,17 @@
         <pageViewModel:WinGetViewModel x:Name="ViewModel" />
     </Page.DataContext>
 
-    <StackPanel>
-        <Pivot Margin="0,15,0,0" Style="{StaticResource PivotStyle}">
+    <Pivot
+        Margin="0,15,0,0"
+        SelectedIndex="{x:Bind ViewModel.SelectedIndex, Mode=TwoWay}"
+        Style="{StaticResource PivotStyle}">
 
-            <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchApps')}" />
+        <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchApps')}" />
 
-            <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledApps')}" />
+        <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledApps')}">
+            <wc:InstalledAppsControl x:Name="InstalledApps" />
+        </PivotItem>
 
-            <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradableApps')}" />
-        </Pivot>
-        <Button Click="Button_Click" Content="Click Me Test" />
-    </StackPanel>
+        <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradableApps')}" />
+    </Pivot>
 </Page>

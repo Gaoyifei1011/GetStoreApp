@@ -39,6 +39,8 @@ namespace GetStoreApp.Helpers.Root
 
         public static ResourceDictionary PivotResourceDict { get; private set; }
 
+        public static ResourceDictionary ScrollViewerResourceDict { get;private set; }
+
         public static ResourceDictionary TeachingTipResourceDict { get; private set; }
 
         public static ResourceDictionary TextBlockResourceDict { get; private set; }
@@ -68,10 +70,11 @@ namespace GetStoreApp.Helpers.Root
             MinMaxCloseControlDict = Program.ApplicationRoot.Resources.MergedDictionaries[15];
             NavigationViewResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[16];
             PivotResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[17];
-            TeachingTipResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[18];
-            TextBlockResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[19];
-            ToggleSwitchResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[20];
-            WindowChromeDict = Program.ApplicationRoot.Resources.MergedDictionaries[21];
+            ScrollViewerResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[18];
+            TeachingTipResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[19];
+            TextBlockResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[20];
+            ToggleSwitchResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[21];
+            WindowChromeDict = Program.ApplicationRoot.Resources.MergedDictionaries[22];
         }
     }
 }

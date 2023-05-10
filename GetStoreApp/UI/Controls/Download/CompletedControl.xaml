@@ -260,7 +260,7 @@
                 Padding="30,0,30,30"
                 IsItemClickEnabled="{x:Bind ViewModel.IsSelectMode, Mode=OneWay}"
                 ItemClick="{x:Bind ViewModel.OnItemClick}"
-                ItemContainerStyle="{StaticResource ListPickerFlyoutPresenterItemStyle}"
+                ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
                 ItemsSource="{x:Bind ViewModel.CompletedDataList, Mode=OneWay}"
                 SelectionMode="None"
                 Visibility="{x:Bind ViewModel.CompletedDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">

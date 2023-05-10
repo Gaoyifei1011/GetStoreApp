@@ -5,10 +5,10 @@
     xmlns:converter="using:GetStoreApp.Converters.Formats"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:history="using:GetStoreApp.Models.Controls.History"
-    xmlns:storeViewModel="using:GetStoreApp.ViewModels.Controls.Store"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
     xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:storeViewModel="using:GetStoreApp.ViewModels.Controls.Store"
     x:Name="HistoryLiteRoot"
     Loaded="{x:Bind ViewModel.OnLoaded}"
     mc:Ignorable="d">
@@ -82,7 +82,7 @@
                     Visibility="{x:Bind ViewModel.HistoryLiteDataList.Count, Converter={StaticResource IntToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}" />
 
                 <ListView
-                    ItemContainerStyle="{StaticResource ListViewItemStyle}"
+                    ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
                     ItemsSource="{x:Bind ViewModel.HistoryLiteDataList, Mode=OneWay}"
                     SelectionMode="None"
                     Visibility="{x:Bind ViewModel.HistoryLiteDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">

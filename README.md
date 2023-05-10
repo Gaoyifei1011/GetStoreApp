@@ -64,6 +64,7 @@
 
 ### 项目引用（按英文首字母排序）
 
+> * [Microsoft.Windows.CsWinRT](https://github.com/microsoft/cswinrt)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Microsoft.Windows.SDK.BuildTools](https://aka.ms/WinSDKProjectURL)&emsp;
 > * [Mile.Aria2](https://github.com/ProjectMile/Mile.Aria2)&emsp;

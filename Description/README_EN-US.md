@@ -56,6 +56,7 @@ All the content of the program has been developed
 
 ### Project References (Sort by alphabetical order)
 
+> * [Microsoft.Windows.CsWinRT](https://github.com/microsoft/cswinrt)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Microsoft.Windows.SDK.BuildTools](https://aka.ms/WinSDKProjectURL)&emsp;
 > * [Mile.Aria2](https://github.com/ProjectMile/Mile.Aria2)&emsp;

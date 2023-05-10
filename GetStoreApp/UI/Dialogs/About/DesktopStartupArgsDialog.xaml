@@ -43,7 +43,7 @@
 
             <ListView
                 Margin="0,0,0,5"
-                ItemContainerStyle="{StaticResource ListViewItemStyle}"
+                ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
                 ItemsSource="{x:Bind ViewModel.DesktopStartupArgsList}"
                 SelectionMode="None">
 

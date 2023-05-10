@@ -5,11 +5,11 @@
     xmlns:basicInput="using:GetStoreApp.Views.CustomControls.BasicInput"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:formats="using:GetStoreApp.Converters.Formats"
-    xmlns:store="using:GetStoreApp.Models.Controls.Store"
-    xmlns:storeViewModel="using:GetStoreApp.ViewModels.Controls.Store"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
     xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:store="using:GetStoreApp.Models.Controls.Store"
+    xmlns:storeViewModel="using:GetStoreApp.ViewModels.Controls.Store"
     xmlns:system="using:System"
     x:Name="ResultRoot"
     mc:Ignorable="d">
@@ -248,7 +248,7 @@
             Grid.Row="1"
             IsItemClickEnabled="{x:Bind ViewModel.IsSelectMode, Mode=OneWay}"
             ItemClick="{x:Bind ViewModel.OnItemClick}"
-            ItemContainerStyle="{StaticResource ListViewItemStyle}"
+            ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
             ItemsSource="{x:Bind ViewModel.ResultDataList, Mode=OneWay}"
             SelectionMode="None"
             Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
