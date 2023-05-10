@@ -167,22 +167,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         public static partial int GetWindowThreadProcessId(IntPtr hwnd, out int ID);
 
         /// <summary>
-        /// 显示一个模式对话框，其中包含系统图标、一组按钮和一条简短的应用程序特定消息，例如状态或错误信息。 消息框返回一个整数值，该值指示用户单击的按钮。
-        /// </summary>
-        /// <param name="hWnd">要创建的消息框的所有者窗口的句柄。 如果此参数为 NULL，则消息框没有所有者窗口。</param>
-        /// <param name="lptext">要显示的消息。 如果字符串包含多个行，则可以使用回车符和/或换行符分隔每行之间的行。</param>
-        /// <param name="lpcaption">对话框标题。 如果此参数为 NULL，则默认标题为 TBPF_ERROR。</param>
-        /// <param name="options">对话框的内容和行为。</param>
-        /// <returns>
-        /// 如果消息框有 “取消 ”按钮，则函数返回 IDCANCEL 值（如果按下 ESC 键或选中 “取消 ”按钮）。
-        /// 如果消息框没有 “取消 ”按钮，则按 ESC 将不起作用 -除非存在MB_OK按钮。 如果显示MB_OK按钮，并且用户按 ESC，则返回值为 IDOK。
-        /// 如果函数失败，则返回值为零。
-        /// 如果函数成功，则返回值为 <see cref="MessageBoxResult"> 的枚举值之一。
-        /// </returns>
-        [LibraryImport(User32, EntryPoint = "MessageBoxW", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)]
-        public static partial MessageBoxResult MessageBox(IntPtr hWnd, string lptext, string lpcaption, MessageBoxOptions options);
-
-        /// <summary>
         /// <see cref="MonitorFromWindow"> 函数检索显示监视器的句柄，该监视器具有与指定窗口的边界矩形相交的最大区域。
         /// </summary>
         /// <param name="hwnd">感兴趣的窗口的句柄。</param>

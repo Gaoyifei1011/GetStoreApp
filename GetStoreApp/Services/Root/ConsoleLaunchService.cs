@@ -1,8 +1,8 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Shell;
+using GetStoreApp.WindowsAPI.PInvoke.Comctl32;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
-using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -54,17 +54,22 @@ namespace GetStoreApp.Services.Root
         private static void OnConsoleCancelKeyPress(object sender, ConsoleCancelEventArgs args)
         {
             args.Cancel = true;
-            MessageBoxResult Result;
             if (args.SpecialKey is ConsoleSpecialKey.ControlC)
             {
                 IntPtr ConsoleHandle = Kernel32Library.GetConsoleWindow();
 
-                Result = User32Library.MessageBox(ConsoleHandle,
-                    ResourceService.GetLocalized("Console/ExitPrompt"),
+                Comctl32Library.TaskDialog(
+                    ConsoleHandle,
+                    IntPtr.Zero,
                     ResourceService.GetLocalized("Resources/AppDisplayName"),
-                    MessageBoxOptions.MB_OKCANCEL | MessageBoxOptions.MB_ICONINFORMATION);
+                    ResourceService.GetLocalized("Console/ExitPrompt"),
+                    string.Empty,
+                    TASKDIALOG_COMMON_BUTTON_FLAGS.TDCBF_OK_BUTTON | TASKDIALOG_COMMON_BUTTON_FLAGS.TDCBF_CANCEL_BUTTON,
+                    TASKDIALOGICON.TD_SHIELD_WARNING_YELLOW_BAR,
+                    out TaskDialogResult Result
+                    );
 
-                if (Result is MessageBoxResult.IDOK)
+                if (Result is TaskDialogResult.IDOK)
                 {
                     Console.WriteLine(LineBreaks + ResourceService.GetLocalized("Console/ApplicationExit"));
                     IsAppRunning = false;

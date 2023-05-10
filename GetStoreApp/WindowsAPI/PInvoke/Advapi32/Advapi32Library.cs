@@ -3,6 +3,9 @@ using System.Runtime.InteropServices;
 
 namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
 {
+    /// <summary>
+    /// Advapi32.dll 函数库
+    /// </summary>
     public static partial class Advapi32Library
     {
         private const string Advapi32 = "advapi32.dll";

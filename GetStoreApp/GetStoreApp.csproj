@@ -123,12 +123,6 @@
     <None Update="lib\Microsoft.Management.Deployment.winmd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Page Update="Styles\ScrollViewer.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\InstalledAppsControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Content Include="Fonts\Segoe Fluent Icons.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -203,7 +197,6 @@
     <None Remove="UI\Controls\Download\CompletedControl.xaml" />
     <None Remove="UI\Controls\Download\DownloadingControl.xaml" />
     <None Remove="UI\Controls\Download\UnfinishedControl.xaml" />
-    <None Remove="UI\Controls\InstalledAppsControl.xaml" />
     
     <None Remove="UI\Controls\Settings\Advanced\AppExitControl.xaml" />
     <None Remove="UI\Controls\Settings\Advanced\ExperimentalFeaturesControl.xaml" />
@@ -234,6 +227,8 @@
     <None Remove="UI\Controls\Web\LoadFailedControl.xaml" />
     
     <None Remove="UI\Controls\Window\AppTitleBarControl.xaml" />
+
+    <None Remove="UI\Controls\WinGet\InstalledAppsControl.xaml" />
     
     <None Remove="UI\Dialogs\About\AppInformationDialog.xaml" />
     <None Remove="UI\Dialogs\About\ConsoleStartupArgsDialog.xaml" />
@@ -304,8 +299,7 @@
     </ApplicationDefinition>
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.2" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
-    
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.3.230331000" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.3.230502000" />
     <PackageReference Include="Mile.Aria2" Version="1.0.8" />
     
     <Page Update="Styles\Button.xaml">
@@ -357,6 +351,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Styles\Pivot.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\ScrollViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Styles\TeachingTip.xaml">
@@ -416,19 +413,6 @@
     <Page Update="UI\Controls\Settings\Advanced\TraceCleanupControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    
-    <Page Update="UI\Controls\Store\HistoryLiteControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\Store\RequestControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\Store\ResultControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\Store\StatusBarControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
 
     <Page Update="UI\Controls\Settings\Appearance\AlwaysShowBackdropControl.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -472,11 +456,28 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
-    <Page Update="UI\Controls\Window\AppTitleBarControl.xaml">
+    <Page Update="UI\Controls\Store\HistoryLiteControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\Store\RequestControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\Store\ResultControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\Store\StatusBarControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+
+    <Page Update="UI\Controls\WinGet\InstalledAppsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
     <Page Update="UI\Controls\Web\LoadFailedControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+
+    <Page Update="UI\Controls\Window\AppTitleBarControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
@@ -646,10 +647,6 @@
     <TrimmableAssembly Include="Microsoft.WindowsAppRuntime.Bootstrap" />
     <TrimmableAssembly Include="Microsoft.WindowsAppRuntime.Bootstrap.Net" />
     <TrimmableAssembly Include="Microsoft.Windows.Widgets.Projection" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="UI\Controls\WinGet\" />
   </ItemGroup>
 </Project>
   

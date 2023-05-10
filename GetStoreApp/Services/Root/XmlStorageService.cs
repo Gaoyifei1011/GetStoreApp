@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.WindowsAPI.PInvoke.Comctl32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;
 using System.IO;
@@ -46,7 +47,16 @@ namespace GetStoreApp.Services.Root
             }
             catch (Exception)
             {
-                User32Library.MessageBox(IntPtr.Zero, ResourceService.GetLocalized("MessageInfo/CreateFileFailed"), ResourceService.GetLocalized("Resources/Application"), MessageBoxOptions.MB_OK);
+                Comctl32Library.TaskDialog(
+                    IntPtr.Zero,
+                    IntPtr.Zero,
+                    ResourceService.GetLocalized("Resources/AppDisplayName"),
+                    ResourceService.GetLocalized("MessageInfo/CreateFileFailed"),
+                    string.Empty,
+                    TASKDIALOG_COMMON_BUTTON_FLAGS.TDCBF_OK_BUTTON,
+                    TASKDIALOGICON.TD_SHIELD_ERROR_RED_BAR,
+                    out TaskDialogResult _
+                    );
                 Environment.Exit(Convert.ToInt32(AppExitCode.Failed));
             }
         }
@@ -70,7 +80,16 @@ namespace GetStoreApp.Services.Root
             }
             catch (Exception)
             {
-                User32Library.MessageBox(IntPtr.Zero, ResourceService.GetLocalized("MessageInfo/CreateFileFailed"), ResourceService.GetLocalized("Resources/Application"), MessageBoxOptions.MB_OK);
+                Comctl32Library.TaskDialog(
+                    IntPtr.Zero,
+                    IntPtr.Zero,
+                    ResourceService.GetLocalized("Resources/AppDisplayName"),
+                    ResourceService.GetLocalized("MessageInfo/CreateFileFailed"),
+                    string.Empty,
+                    TASKDIALOG_COMMON_BUTTON_FLAGS.TDCBF_OK_BUTTON,
+                    TASKDIALOGICON.TD_SHIELD_ERROR_RED_BAR,
+                    out TaskDialogResult _
+                    );
                 Environment.Exit(Convert.ToInt32(AppExitCode.Failed));
             }
         }
