@@ -19,12 +19,12 @@
         SelectedIndex="{x:Bind ViewModel.SelectedIndex, Mode=TwoWay}"
         Style="{StaticResource PivotStyle}">
 
-        <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchApps')}" />
+        <!--<PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchApps')}" Style="{StaticResource PivotItemStyle}" />-->
 
-        <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledApps')}">
+        <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledApps')}" Style="{StaticResource PivotItemStyle}">
             <wc:InstalledAppsControl x:Name="InstalledApps" />
         </PivotItem>
 
-        <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradableApps')}" />
+        <!--<PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradableApps')}" Style="{StaticResource PivotItemStyle}" />-->
     </Pivot>
 </Page>

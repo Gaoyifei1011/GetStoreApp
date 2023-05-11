@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GetStoreApp.WindowsAPI.PInvoke.Comctl32
+﻿namespace GetStoreApp.WindowsAPI.PInvoke.Comctl32
 {
     public enum TaskDialogResult
     {
@@ -29,6 +23,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Comctl32
         /// 已选择“重试”按钮。
         /// </summary>
         IDRETRY = 4,
+
         IDIGNORE = 5,
 
         /// <summary>

@@ -1,3 +1,4 @@
+using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.UI.Controls.WinGet
@@ -10,6 +11,21 @@ namespace GetStoreApp.UI.Controls.WinGet
         public InstalledAppsControl()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// 本地化应用数量统计信息
+        /// </summary>
+        public string LocalizeInstalledAppsCountInfo(int count)
+        {
+            if (count is 0)
+            {
+                return ResourceService.GetLocalized("WinGet/InstalledAppsEmpty");
+            }
+            else
+            {
+                return string.Format(ResourceService.GetLocalized("WinGet/InstalledAppsCountInfo"), count);
+            }
         }
     }
 }

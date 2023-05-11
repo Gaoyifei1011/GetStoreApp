@@ -33,21 +33,38 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
             }
         }
 
-        private List<MatchResult> SearchResultList = new List<MatchResult>();
+        private List<MatchResult> SearchResultList;
 
-        public ObservableCollection<InstalledAppsModel> InstalledAppsList { get; set; } = new ObservableCollection<InstalledAppsModel>();
+        public ObservableCollection<InstalledAppsModel> InstalledAppsDataList { get; set; } = new ObservableCollection<InstalledAppsModel>();
+
+        // 更新已安装应用数据
+        public IRelayCommand RefreshCommand => new RelayCommand(async () =>
+        {
+            InstalledAppsDataList.Clear();
+            IsLoadedCompleted = false;
+            await Task.Delay(500);
+            await GetInstalledAppsAsync();
+            IsLoadedCompleted = true;
+        });
 
         // 卸载应用
         public IRelayCommand UnInstallCommand => new RelayCommand<string>((id) =>
         {
         });
 
+        /// <summary>
+        /// 初始化已安装应用信息
+        /// </summary>
         public async void OnLoaded(object sender, RoutedEventArgs args)
         {
-            await Task.Delay(500);
-            await GetInstalledAppsAsync();
-            _isInitialized = true;
-            IsLoadedCompleted = true;
+            if (!_isInitialized)
+            {
+                InstalledAppsDataList.Clear();
+                await Task.Delay(500);
+                await GetInstalledAppsAsync();
+                IsLoadedCompleted = true;
+                _isInitialized = true;
+            }
         }
 
         /// <summary>
@@ -69,10 +86,10 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                     FindPackagesResult findResult = await installedCatalog.FindPackagesAsync(findPackagesOptions);
 
                     SearchResultList = findResult.Matches.ToList();
-                    InstalledAppsList.Clear();
+
                     foreach (MatchResult matchItem in SearchResultList)
                     {
-                        InstalledAppsList.Add(new InstalledAppsModel()
+                        InstalledAppsDataList.Add(new InstalledAppsModel()
                         {
                             AppID = matchItem.CatalogPackage.InstalledVersion.Id,
                             AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.DisplayName) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.DisplayName,

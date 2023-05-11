@@ -25,7 +25,7 @@ namespace GetStoreApp.ViewModels.Window
     /// <summary>
     /// 应用类数据模型
     /// </summary>
-    public sealed class AppViewModel : IDisposable
+    public sealed class WinUIAppViewModel : IDisposable
     {
         private bool IsDisposed;
 
@@ -239,11 +239,9 @@ namespace GetStoreApp.ViewModels.Window
 
         /// <summary>
         /// 仅当 <see cref="Dispose()"/> 方法未被调用时，此析构函数才会运行。这使此基类有机会完成。
-        /// <para>
-        /// 注意： 不要在从此类派生的类型中提供析构函数。
-        /// </para>
+        /// <para>注意： 不要在从此类派生的类型中提供析构函数。</para>
         /// </summary>
-        ~AppViewModel()
+        ~WinUIAppViewModel()
         {
             Dispose(false);
         }

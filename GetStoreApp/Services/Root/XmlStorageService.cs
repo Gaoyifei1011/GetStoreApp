@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.WindowsAPI.PInvoke.Comctl32;
-using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;
 using System.IO;
 using System.Threading.Tasks;

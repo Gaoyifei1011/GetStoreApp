@@ -253,6 +253,7 @@
             Padding="0,3,0,0"
             HorizontalScrollBarVisibility="Disabled"
             HorizontalScrollMode="Disabled"
+            Style="{StaticResource ScrollViewerStyle}"
             VerticalScrollBarVisibility="Auto"
             VerticalScrollMode="Enabled">
 

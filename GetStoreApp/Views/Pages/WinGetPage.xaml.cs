@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.Views.Pages
@@ -71,7 +70,6 @@ namespace GetStoreApp.Views.Pages
                     {
                         GetInstalledPackagesAsync().Wait();
                         break;
-
                     }
                 case "UnInstallOptions":
                     {
@@ -104,7 +102,7 @@ namespace GetStoreApp.Views.Pages
             ConnectResult connectResult = await installedSearchCatalogReference.ConnectAsync();
             PackageCatalog installedCatalog = connectResult.PackageCatalog;
 
-            if(installedCatalog is not null)
+            if (installedCatalog is not null)
             {
                 FindPackagesOptions findPackagesOptions = WinGetService.CreateFindPackagesOptions();
                 FindPackagesResult findResult = await installedCatalog.FindPackagesAsync(findPackagesOptions);
@@ -113,7 +111,7 @@ namespace GetStoreApp.Views.Pages
 
                 foreach (var item in matchResults)
                 {
-                    string result = string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\n",item.CatalogPackage.Name,item.CatalogPackage.Id,item.CatalogPackage.InstalledVersion.Version,item.CatalogPackage.InstalledVersion.Id,item.CatalogPackage.InstalledVersion.Channel,item.CatalogPackage.InstalledVersion.Publisher,item.CatalogPackage.InstalledVersion.DisplayName);
+                    string result = string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\n", item.CatalogPackage.Name, item.CatalogPackage.Id, item.CatalogPackage.InstalledVersion.Version, item.CatalogPackage.InstalledVersion.Id, item.CatalogPackage.InstalledVersion.Channel, item.CatalogPackage.InstalledVersion.Publisher, item.CatalogPackage.InstalledVersion.DisplayName);
                     System.IO.File.AppendAllText(@"D:\0014.txt", result);
                 }
             }

@@ -122,7 +122,9 @@ namespace GetStoreApp.Views.CustomControls.Collections
             Unloaded -= OnUnloaded;
         }
 
-        /// <summary>准备指定的元素以显示指定的项。</summary>
+        /// <summary>
+        /// 准备指定的元素以显示指定的项。
+        /// </summary>
         /// <param name="obj">用于显示指定项的元素。</param>
         /// <param name="item">要显示的项。</param>
         protected override void PrepareContainerForItemOverride(DependencyObject obj, object item)
@@ -159,7 +161,9 @@ namespace GetStoreApp.Views.CustomControls.Collections
             }
         }
 
-        /// <summary>计算网格项的宽度。</summary>
+        /// <summary>
+        /// 计算网格项的宽度。
+        /// </summary>
         /// <param name="containerWidth">容器控件的宽度。</param>
         /// <returns>计算的项目宽度。</returns>
         private double CalculateItemWidth(double containerWidth)

@@ -21,7 +21,7 @@ namespace GetStoreApp
 
         public JumpList TaskbarJumpList { get; private set; }
 
-        public AppViewModel ViewModel { get; } = new AppViewModel();
+        public WinUIAppViewModel ViewModel { get; } = new WinUIAppViewModel();
 
         public WinUIApp()
         {

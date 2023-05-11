@@ -96,7 +96,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 创建卸载选项
         /// </summary>
-        public static unsafe UninstallOptions CreateUninstallOptions([Optional,DefaultValue(false)] bool useDev)
+        public static unsafe UninstallOptions CreateUninstallOptions([Optional, DefaultValue(false)] bool useDev)
         {
             if (useDev)
             {
@@ -119,7 +119,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 创建查找包选项
         /// </summary>
-        public static unsafe FindPackagesOptions CreateFindPackagesOptions([Optional,DefaultValue(false)] bool useDev)
+        public static unsafe FindPackagesOptions CreateFindPackagesOptions([Optional, DefaultValue(false)] bool useDev)
         {
             if (useDev)
             {
@@ -142,7 +142,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 嗯。。。暂时未知
         /// </summary>
-        public static unsafe CreateCompositePackageCatalogOptions CreateCreateCompositePackageCatalogOptions([Optional,DefaultValue(false)] bool useDev)
+        public static unsafe CreateCompositePackageCatalogOptions CreateCreateCompositePackageCatalogOptions([Optional, DefaultValue(false)] bool useDev)
         {
             if (useDev)
             {

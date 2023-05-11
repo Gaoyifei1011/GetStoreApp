@@ -1,14 +1,14 @@
 ﻿<Page
     x:Class="GetStoreApp.Views.Pages.AboutPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:ac="using:GetStoreApp.UI.Controls.About"
-    xmlns:pageViewModel="using:GetStoreApp.ViewModels.Pages"
     xmlns:basicInput="using:GetStoreApp.Views.CustomControls.BasicInput"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
+    xmlns:pageViewModel="using:GetStoreApp.ViewModels.Pages"
+    xmlns:root="using:GetStoreApp.Services.Root"
     Loaded="{x:Bind AboutLoaded}"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
@@ -114,6 +114,7 @@
             Grid.Row="1"
             HorizontalScrollBarVisibility="Disabled"
             HorizontalScrollMode="Disabled"
+            Style="{StaticResource ScrollViewerStyle}"
             VerticalScrollBarVisibility="Auto"
             VerticalScrollMode="Enabled">
 

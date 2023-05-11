@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppNameSort" xml:space="preserve">
+    <value>Sort by app name</value>
+  </data>
   <data name="AppNameToolTip" xml:space="preserve">
     <value>App name:{0}</value>
+  </data>
+  <data name="AppPublisherSort" xml:space="preserve">
+    <value>Sort by app publisher name</value>
   </data>
   <data name="AppPublisherToolTip" xml:space="preserve">
     <value>Publisher:{0}</value>
@@ -126,14 +132,47 @@
   <data name="AppVersionToolTIp" xml:space="preserve">
     <value>App version:{0}</value>
   </data>
+  <data name="DecreaseSort" xml:space="preserve">
+    <value>Negative sort</value>
+  </data>
+  <data name="IncreaseSort" xml:space="preserve">
+    <value>Positive sort</value>
+  </data>
   <data name="InstalledApps" xml:space="preserve">
     <value>Installed apps</value>
+  </data>
+  <data name="InstalledAppsCountInfo" xml:space="preserve">
+    <value>There are {0} applications</value>
+  </data>
+  <data name="InstalledAppsEmpty" xml:space="preserve">
+    <value>There is no application</value>
+  </data>
+  <data name="InstalledAppsPlaceHolderText" xml:space="preserve">
+    <value>Search the installed applications</value>
   </data>
   <data name="LoadingInstalledApps" xml:space="preserve">
     <value>Please wait while loading the list of installed applications...</value>
   </data>
+  <data name="Operation" xml:space="preserve">
+    <value>Operation</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="RefreshToolTip" xml:space="preserve">
+    <value>Refresh installed application data</value>
+  </data>
   <data name="SearchApps" xml:space="preserve">
     <value>Search apps</value>
+  </data>
+  <data name="Sort" xml:space="preserve">
+    <value>Sort</value>
+  </data>
+  <data name="SortMode" xml:space="preserve">
+    <value>Sorting mode</value>
+  </data>
+  <data name="SortRule" xml:space="preserve">
+    <value>Sorting rules</value>
   </data>
   <data name="UnInstall" xml:space="preserve">
     <value>Uninstall</value>

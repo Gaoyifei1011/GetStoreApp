@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppNameSort" xml:space="preserve">
+    <value>按照应用名称排序</value>
+  </data>
   <data name="AppNameToolTip" xml:space="preserve">
     <value>应用名称：{0}</value>
+  </data>
+  <data name="AppPublisherSort" xml:space="preserve">
+    <value>按照应用发布者排序</value>
   </data>
   <data name="AppPublisherToolTip" xml:space="preserve">
     <value>发布者：{0}</value>
@@ -126,14 +132,47 @@
   <data name="AppVersionToolTip" xml:space="preserve">
     <value>应用版本：{0}</value>
   </data>
+  <data name="DecreaseSort" xml:space="preserve">
+    <value>倒序排序</value>
+  </data>
+  <data name="IncreaseSort" xml:space="preserve">
+    <value>正序排序</value>
+  </data>
   <data name="InstalledApps" xml:space="preserve">
     <value>已安装应用</value>
+  </data>
+  <data name="InstalledAppsCountInfo" xml:space="preserve">
+    <value>共有{0}个应用</value>
+  </data>
+  <data name="InstalledAppsEmpty" xml:space="preserve">
+    <value>没有任何应用</value>
+  </data>
+  <data name="InstalledAppsPlaceHolderText" xml:space="preserve">
+    <value>搜索已安装的应用</value>
   </data>
   <data name="LoadingInstalledApps" xml:space="preserve">
     <value>正在加载已安装应用列表，请稍候...</value>
   </data>
+  <data name="Operation" xml:space="preserve">
+    <value>操作</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>刷新</value>
+  </data>
+  <data name="RefreshToolTip" xml:space="preserve">
+    <value>刷新已安装应用数据</value>
+  </data>
   <data name="SearchApps" xml:space="preserve">
     <value>查找应用</value>
+  </data>
+  <data name="Sort" xml:space="preserve">
+    <value>排序</value>
+  </data>
+  <data name="SortMode" xml:space="preserve">
+    <value>排序方式</value>
+  </data>
+  <data name="SortRule" xml:space="preserve">
+    <value>排序规则</value>
   </data>
   <data name="UnInstall" xml:space="preserve">
     <value>卸载</value>

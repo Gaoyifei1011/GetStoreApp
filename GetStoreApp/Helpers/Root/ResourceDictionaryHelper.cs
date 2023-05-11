@@ -39,7 +39,7 @@ namespace GetStoreApp.Helpers.Root
 
         public static ResourceDictionary PivotResourceDict { get; private set; }
 
-        public static ResourceDictionary ScrollViewerResourceDict { get;private set; }
+        public static ResourceDictionary ScrollViewerResourceDict { get; private set; }
 
         public static ResourceDictionary TeachingTipResourceDict { get; private set; }
 

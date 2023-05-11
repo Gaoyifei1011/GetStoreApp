@@ -164,7 +164,7 @@
                 <menusAndToolbars:ExtendedAppBarButton Cursor="Hand" Label="{x:Bind root:ResourceService.GetLocalized('History/Filter')}">
 
                     <menusAndToolbars:ExtendedAppBarButton.Icon>
-                        <FontIcon Glyph="&#xE74a;" Style="{StaticResource SegoeFluentStyle}" />
+                        <FontIcon Glyph="&#xE71C;" Style="{StaticResource SegoeFluentStyle}" />
                     </menusAndToolbars:ExtendedAppBarButton.Icon>
 
                     <ToolTipService.ToolTip>
@@ -464,6 +464,7 @@
             Grid.Row="2"
             HorizontalScrollBarVisibility="Disabled"
             HorizontalScrollMode="Disabled"
+            Style="{StaticResource ScrollViewerStyle}"
             VerticalScrollBarVisibility="Auto"
             VerticalScrollMode="Enabled">
 

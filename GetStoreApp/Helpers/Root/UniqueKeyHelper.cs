@@ -10,7 +10,7 @@ namespace GetStoreApp.Helpers.Root
     public static class UniqueKeyHelper
     {
         /// <summary>
-        ///  拼接并生成唯一的历史记录MD5值
+        /// 拼接并生成唯一的历史记录MD5值
         /// </summary>
         public static string GenerateHistoryKey(string typeName, string channelName, string currentLink)
         {

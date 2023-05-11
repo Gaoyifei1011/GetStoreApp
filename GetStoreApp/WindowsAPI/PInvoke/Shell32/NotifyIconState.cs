@@ -8,7 +8,7 @@
         NIS_VISABLE = 0x00,
 
         /// <summary>
-        ///  图标处于隐藏状态。
+        /// 图标处于隐藏状态。
         /// </summary>
         NIS_HIDDEN = 0x01,
 

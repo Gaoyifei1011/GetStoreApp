@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.ViewModels.Base;
-using System.ComponentModel;
 
 namespace GetStoreApp.ViewModels.Pages
 {
@@ -20,7 +19,5 @@ namespace GetStoreApp.ViewModels.Pages
                 OnPropertyChanged();
             }
         }
-
-
     }
 }

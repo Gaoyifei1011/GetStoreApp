@@ -400,7 +400,6 @@
                                 IsTabStop="False"
                                 Opacity="0"
                                 Template="{StaticResource HorizontalIncrementTemplate}" />
-
                         </Grid>
                         <Grid
                             x:Name="HorizontalPanningRoot"
@@ -417,7 +416,6 @@
                                 VerticalAlignment="Bottom"
                                 Background="{ThemeResource ScrollBarPanningThumbBackground}"
                                 BorderThickness="0" />
-
                         </Grid>
                         <Grid
                             x:Name="VerticalRoot"
@@ -502,7 +500,6 @@
                                 IsTabStop="False"
                                 Opacity="0"
                                 Template="{StaticResource VerticalIncrementTemplate}" />
-
                         </Grid>
                         <Grid
                             x:Name="VerticalPanningRoot"
@@ -519,7 +516,6 @@
                                 VerticalAlignment="Top"
                                 Background="{ThemeResource ScrollBarPanningThumbBackground}"
                                 BorderThickness="0" />
-
                         </Grid>
 
                         <VisualStateManager.VisualStateGroups>
@@ -538,10 +534,8 @@
                                         <Setter Target="VerticalTrackRect.Fill" Value="Transparent" />
                                         <Setter Target="HorizontalPanningThumb.Background" Value="{ThemeResource ScrollBarPanningThumbBackgroundDisabled}" />
                                         <Setter Target="VerticalPanningThumb.Background" Value="{ThemeResource ScrollBarPanningThumbBackgroundDisabled}" />
-
                                     </VisualState.Setters>
                                 </VisualState>
-
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="ScrollingIndicatorStates">
                                 <VisualState x:Name="TouchIndicator">
@@ -550,7 +544,6 @@
                                         <Setter Target="VerticalRoot.Visibility" Value="Collapsed" />
                                         <Setter Target="HorizontalPanningRoot.Opacity" Value="1" />
                                         <Setter Target="VerticalPanningRoot.Opacity" Value="1" />
-
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="MouseIndicator">
@@ -561,14 +554,12 @@
                                         <Setter Target="VerticalRoot.IsHitTestVisible" Value="True" />
                                         <Setter Target="HorizontalThumb.Opacity" Value="1" />
                                         <Setter Target="VerticalThumb.Opacity" Value="1" />
-
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="NoIndicator">
                                     <VisualState.Setters>
                                         <Setter Target="HorizontalThumb.Background" Value="{ThemeResource ScrollBarPanningThumbBackground}" />
                                         <Setter Target="VerticalThumb.Background" Value="{ThemeResource ScrollBarPanningThumbBackground}" />
-
                                     </VisualState.Setters>
 
                                     <Storyboard>
@@ -708,7 +699,6 @@
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
-
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="ConsciousStates">
 
@@ -821,7 +811,6 @@
                                     <VisualState.Setters>
                                         <Setter Target="HorizontalThumb.Background" Value="{ThemeResource ScrollBarPanningThumbBackgroundColor}" />
                                         <Setter Target="VerticalThumb.Background" Value="{ThemeResource ScrollBarPanningThumbBackgroundColor}" />
-
                                     </VisualState.Setters>
                                 </VisualState>
 
@@ -836,7 +825,6 @@
                                         <Setter Target="VerticalTrackRect.Fill" Value="Transparent" />
                                         <Setter Target="HorizontalThumb.Background" Value="{ThemeResource ScrollBarThumbBackground}" />
                                         <Setter Target="VerticalThumb.Background" Value="{ThemeResource ScrollBarThumbBackground}" />
-
                                     </VisualState.Setters>
 
                                     <Storyboard>
@@ -952,7 +940,6 @@
                                         <Setter Target="VerticalTrackRect.Fill" Value="Transparent" />
                                         <Setter Target="HorizontalThumb.Background" Value="{ThemeResource ScrollBarThumbBackground}" />
                                         <Setter Target="VerticalThumb.Background" Value="{ThemeResource ScrollBarThumbBackground}" />
-
                                     </VisualState.Setters>
                                     <!--
                                         The storyboard below cannot be moved to a transition since transitions
@@ -1064,7 +1051,6 @@
                                     <VisualState.Setters>
                                         <Setter Target="HorizontalThumb.Background" Value="{ThemeResource ScrollBarPanningThumbBackground}" />
                                         <Setter Target="VerticalThumb.Background" Value="{ThemeResource ScrollBarPanningThumbBackground}" />
-
                                     </VisualState.Setters>
                                     <!--
                                         The storyboard below cannot be moved to a transition since transitions
@@ -1172,12 +1158,9 @@
                                         </DoubleAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
-
                             </VisualStateGroup>
-
                         </VisualStateManager.VisualStateGroups>
                     </Grid>
-
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -1256,7 +1239,6 @@
                                 Grid.Column="1"
                                 Background="{ThemeResource ScrollViewerScrollBarSeparatorBackground}"
                                 Opacity="0" />
-
                         </Grid>
 
                         <VisualStateManager.VisualStateGroups>
@@ -1398,7 +1380,6 @@
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
-
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="ScrollBarSeparatorStates">
 
@@ -1449,12 +1430,9 @@
                                             Duration="0" />
                                     </Storyboard>
                                 </VisualState>
-
                             </VisualStateGroup>
-
                         </VisualStateManager.VisualStateGroups>
                     </Border>
-
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
