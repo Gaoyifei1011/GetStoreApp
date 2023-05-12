@@ -147,8 +147,14 @@
   <data name="InstalledAppsEmpty" xml:space="preserve">
     <value>没有任何应用</value>
   </data>
+  <data name="InstalledAppsEmptyDescription" xml:space="preserve">
+    <value>应用记录为空，快去安装需要使用的应用吧</value>
+  </data>
   <data name="InstalledAppsPlaceHolderText" xml:space="preserve">
     <value>搜索已安装的应用</value>
+  </data>
+  <data name="InstalledAppsSearchEmptyDescription" xml:space="preserve">
+    <value>您搜索的应用暂未找到，请更改搜索条件后再进行尝试</value>
   </data>
   <data name="LoadingInstalledApps" xml:space="preserve">
     <value>正在加载已安装应用列表，请稍候...</value>

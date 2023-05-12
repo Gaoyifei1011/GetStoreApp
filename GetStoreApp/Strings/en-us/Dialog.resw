@@ -405,4 +405,25 @@
   <data name="ActionCenterError" xml:space="preserve">
     <value>The application notification in the action center fails to be cleared. Please manually open the app notification record in the action center</value>
   </data>
+  <data name="Reboot" xml:space="preserve">
+    <value>Reboot</value>
+  </data>
+  <data name="RebootTitle" xml:space="preserve">
+    <value>Restart device prompt</value>
+  </data>
+  <data name="UnInstallFailedContent" xml:space="preserve">
+    <value>{0} Application uninstallation failed. Please check whether you have the permission to uninstall the application</value>
+  </data>
+  <data name="UnInstallNeedReboot" xml:space="preserve">
+    <value>{0} The application has been uninstalled. Some changes need to be restarted to take effect. Do you need to restart the device?</value>
+  </data>
+  <data name="UnInstallFailedTitle" xml:space="preserve">
+    <value>Uninstallation failure prompt</value>
+  </data>
+  <data name="UnInstallInSettings" xml:space="preserve">
+    <value>Uninstall your application in Settings</value>
+  </data>
+  <data name="OpenSettings" xml:space="preserve">
+    <value>Open settings</value>
+  </data>
 </root>

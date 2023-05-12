@@ -338,7 +338,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                                     // 显示安装失败通知
                                     AppNotificationService.Show("InstallApp", "Error", CompletedFile.Name, e.Message);
                                 }
-                                // 恢复原来的安装信息显示（并延缓当前安装信息显示时间1秒）
+                                // 恢复原来的安装信息显示（并延缓当前安装信息显示时间0.5秒）
                                 finally
                                 {
                                     await Task.Delay(500);

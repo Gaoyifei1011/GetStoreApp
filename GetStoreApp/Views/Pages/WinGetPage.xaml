@@ -22,7 +22,7 @@
         <!--<PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchApps')}" Style="{StaticResource PivotItemStyle}" />-->
 
         <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledApps')}" Style="{StaticResource PivotItemStyle}">
-            <wc:InstalledAppsControl x:Name="InstalledApps" />
+            <wc:InstalledAppsControl x:Name="InstalledApps" x:FieldModifier="public" />
         </PivotItem>
 
         <!--<PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradableApps')}" Style="{StaticResource PivotItemStyle}" />-->

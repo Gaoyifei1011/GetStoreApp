@@ -405,4 +405,25 @@
   <data name="ActionCenterError" xml:space="preserve">
     <value>操作中心的应用通知清理失败，请手动打开操作中心清理通知记录</value>
   </data>
+  <data name="Reboot" xml:space="preserve">
+    <value>重启</value>
+  </data>
+  <data name="RebootTitle" xml:space="preserve">
+    <value>重启设备提示</value>
+  </data>
+  <data name="UnInstallFailedContent" xml:space="preserve">
+    <value>{0}应用卸载失败，请检查您是否有卸载应用的权限</value>
+  </data>
+  <data name="UnInstallNeedReboot" xml:space="preserve">
+    <value>{0}应用已卸载完成，部分更改需要重启后生效，请问您是否需要重启设备？</value>
+  </data>
+  <data name="UnInstallFailedTitle" xml:space="preserve">
+    <value>卸载失败提示</value>
+  </data>
+  <data name="UnInstallInSettings" xml:space="preserve">
+    <value>在设置中卸载您的应用</value>
+  </data>
+  <data name="OpenSettings" xml:space="preserve">
+    <value>打开"设置"</value>
+  </data>
 </root>

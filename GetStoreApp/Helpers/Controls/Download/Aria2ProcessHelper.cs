@@ -60,6 +60,8 @@ namespace GetStoreApp.Helpers.Controls.Download
                     }
                     Kernel32Library.CloseHandle(hProcess);
                 }
+                Kernel32Library.CloseHandle(Aria2ProcessInformation.hProcess);
+                Kernel32Library.CloseHandle(Aria2ProcessInformation.hThread);
             }
             catch (Exception)
             {
