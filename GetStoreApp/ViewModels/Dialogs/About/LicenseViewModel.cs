@@ -23,7 +23,7 @@ namespace GetStoreApp.ViewModels.Dialogs.About
         }
 
         /// <summary>
-        /// 对话框加载完成后让内容对话框的烟雾层背景（SmokeLayerBackground）覆盖到标题栏中，并初始化许可证信息
+        /// 加载许可证信息
         /// </summary>
         public void OnLoading(object sender, object args)
         {

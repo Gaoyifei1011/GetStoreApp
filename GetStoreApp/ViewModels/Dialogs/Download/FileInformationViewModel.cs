@@ -1,13 +1,10 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Converters.Formats;
-using GetStoreApp.Extensions.Command;
+﻿using GetStoreApp.Converters.Formats;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Base;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Text;
 
@@ -54,8 +51,19 @@ namespace GetStoreApp.ViewModels.Dialogs.Download
             }
         }
 
-        // 复制文件信息
-        public IRelayCommand CopyFileInformationCommand => new RelayCommand<ContentDialog>((dialog) =>
+        /// <summary>
+        /// 初始化信息
+        /// </summary>
+        public async void OnLoaded(object sender, RoutedEventArgs args)
+        {
+            CheckFileSHA1 = await IOHelper.GetFileSHA1Async(FilePath);
+            FileCheckState = true;
+        }
+
+        /// <summary>
+        /// 复制文件信息
+        /// </summary>
+        public void CopyFileInformation()
         {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileName") + FileName);
@@ -68,24 +76,8 @@ namespace GetStoreApp.ViewModels.Dialogs.Download
             stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/CheckFileSHA1") + CheckFileSHA1);
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
-            dialog.Hide();
 
             new FileInformationCopyNotification(true).Show();
-        });
-
-        // 关闭对话框
-        public IRelayCommand CloseDialogCommand => new RelayCommand<ContentDialog>((dialog) =>
-        {
-            dialog.Hide();
-        });
-
-        /// <summary>
-        /// 初始化信息
-        /// </summary>
-        public async void OnLoaded(object sender, RoutedEventArgs args)
-        {
-            CheckFileSHA1 = await IOHelper.GetFileSHA1Async(FilePath);
-            FileCheckState = true;
         }
 
         /// <summary>

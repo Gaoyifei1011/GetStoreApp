@@ -292,7 +292,6 @@
     <None Remove="Views\CustomControls\Collections\AdaptiveGridView.xaml" />
     <None Remove="Views\CustomControls\MenusAndToolbars\AdaptiveMenuFlyout.xaml" />
     <None Remove="Views\CustomControls\MenusAndToolbars\ExtendedAppBarButton.xaml" />
-    <None Remove="Views\CustomControls\Navigation\ExtendedNavigationViewItem.xaml" />
     
     <None Remove="Views\Pages\AboutPage.xaml" />
     <None Remove="Views\Pages\DownloadPage.xaml" />
@@ -614,9 +613,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\CustomControls\MenusAndToolbars\ExtendedAppBarButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\CustomControls\Navigation\ExtendedNavigationViewItem.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
 

@@ -1,8 +1,4 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Extensions.Messaging;
-using GetStoreApp.Services.Controls.Download;
+﻿using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Experiment;
 using GetStoreApp.ViewModels.Base;
 using Microsoft.UI.Xaml;
@@ -33,8 +29,27 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
             }
         }
 
-        // 还原默认值
-        public IRelayCommand RestoreDefualtCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 关闭对话框后注销计时器
+        /// </summary>
+        public void OnClosed(object sender, ContentDialogClosedEventArgs args)
+        {
+            DisplayTimer.Tick -= DisplayTimerTick;
+        }
+
+        /// <summary>
+        /// 打开对话框时初始化计时器
+        /// </summary>
+        public void OnOpened(object sender, ContentDialogOpenedEventArgs args)
+        {
+            DisplayTimer.Tick += DisplayTimerTick;
+            DisplayTimer.Interval = new TimeSpan(0, 0, 1);
+        }
+
+        /// <summary>
+        /// 还原默认值
+        /// </summary>
+        public async void RestoreDefault()
         {
             await Aria2Service.RestoreDefaultAsync();
             await NetWorkMonitorService.RestoreDefaultValueAsync();
@@ -45,24 +60,6 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
                 IsMessageVisable = true;
             }
             CountDown = 3;
-
-            Messenger.Default.Send(true, MessageToken.RestoreDefault);
-        });
-
-        // 关闭对话框
-        public IRelayCommand CloseDialogCommand => new RelayCommand<ContentDialog>((dialog) =>
-        {
-            DisplayTimer.Tick -= DisplayTimerTick;
-            dialog.Hide();
-        });
-
-        /// <summary>
-        /// 初始化计时器
-        /// </summary>
-        public void OnLoaded(object sender, RoutedEventArgs args)
-        {
-            DisplayTimer.Tick += DisplayTimerTick;
-            DisplayTimer.Interval = new TimeSpan(0, 0, 1);
         }
 
         private void DisplayTimerTick(object sender, object e)

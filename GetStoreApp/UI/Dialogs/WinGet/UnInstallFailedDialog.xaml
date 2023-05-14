@@ -44,8 +44,7 @@
             <Button
                 Grid.Column="0"
                 HorizontalAlignment="Stretch"
-                Command="{x:Bind ViewModel.OpenSettingsCommand}"
-                CommandParameter="{x:Bind UnInstallFailedRoot}"
+                Click="{x:Bind OnOpenSettingsClicked}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Dialog/OpenSettings')}"
                 Style="{ThemeResource AccentButtonStyle}">
 
@@ -60,8 +59,7 @@
             <Button
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
-                Command="{x:Bind ViewModel.CloseDialogCommand}"
-                CommandParameter="{x:Bind UnInstallFailedRoot}"
+                Click="{x:Bind OnCloseDialogClicked}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}">
 
                 <ToolTipService.ToolTip>

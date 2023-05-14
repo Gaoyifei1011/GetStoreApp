@@ -72,11 +72,9 @@ namespace GetStoreApp
         /// </summary>
         private void InitializeTrayIcon()
         {
-            TrayIcon = new WindowTrayIcon(ResourceService.GetLocalized("Resources/AppDisplayName"))
-            {
-                RightClickCommand = ViewModel.RightClickCommand,
-                DoubleClickCommand = ViewModel.DoubleClickCommand
-            };
+            TrayIcon = new WindowTrayIcon(ResourceService.GetLocalized("Resources/AppDisplayName"));
+            TrayIcon.DoubleClick += ViewModel.DoubleClick;
+            TrayIcon.RightClick += ViewModel.RightClick;
         }
 
         /// <summary>

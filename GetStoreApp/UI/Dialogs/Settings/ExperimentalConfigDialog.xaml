@@ -8,8 +8,8 @@
     xmlns:experiment="using:GetStoreApp.UI.Controls.Settings.Experiment"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    x:Name="ExperimentalConfigRoot"
-    Loaded="{x:Bind ViewModel.OnLoaded}"
+    Closed="{x:Bind ViewModel.OnClosed}"
+    Opened="{x:Bind ViewModel.OnOpened}"
     RequestedTheme="{x:Bind DialogTheme}"
     Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">
@@ -56,7 +56,7 @@
                 Severity="Warning"
                 Style="{StaticResource ExperimentalInfoBarStyle}" />
 
-            <experiment:NetWorkMonitorControl />
+            <experiment:NetWorkMonitorControl x:Name="NetWorkMonitor" />
 
             <experiment:OpenConfigFIleControl />
 
@@ -85,8 +85,7 @@
             <Button
                 Grid.Column="0"
                 HorizontalAlignment="Stretch"
-                Command="{x:Bind ViewModel.RestoreDefualtCommand}"
-                CommandParameter="{x:Bind ExperimentalConfigRoot}"
+                Click="{x:Bind OnRestoreDefaultClicked}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Dialog/RestoreDefualt')}"
                 Style="{ThemeResource AccentButtonStyle}">
 
@@ -101,8 +100,7 @@
             <Button
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
-                Command="{x:Bind ViewModel.CloseDialogCommand}"
-                CommandParameter="{x:Bind ExperimentalConfigRoot}"
+                Click="{x:Bind OnCloseDialogClicked}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}">
 
                 <ToolTipService.ToolTip>

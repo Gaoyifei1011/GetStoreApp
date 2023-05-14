@@ -28,7 +28,7 @@
 
                 <StackPanel Orientation="Horizontal">
                     <HyperlinkButton
-                        Command="{x:Bind ViewModel.DesktopLaunchCommand}"
+                        Click="{x:Bind ViewModel.OnDesktopLaunchClicked}"
                         Content="{x:Bind root:ResourceService.GetLocalized('About/DesktopLaunch')}"
                         Style="{StaticResource AboutHyperlinkButtonStyle}">
 
@@ -41,7 +41,7 @@
                     </HyperlinkButton>
 
                     <HyperlinkButton
-                        Command="{x:Bind ViewModel.ConsoleLaunchCommand}"
+                        Click="{x:Bind ViewModel.OnConsoleLaunchClicked}"
                         Content="{x:Bind root:ResourceService.GetLocalized('About/ConsoleLaunch')}"
                         Style="{StaticResource AboutHyperlinkButtonStyle}">
 
@@ -65,7 +65,7 @@
 
                 <StackPanel Orientation="Horizontal">
                     <HyperlinkButton
-                        Command="{x:Bind ViewModel.CheckNetWorkCommand}"
+                        Click="{x:Bind ViewModel.OnCheckNetWorkClicked}"
                         Content="{x:Bind root:ResourceService.GetLocalized('About/CheckNetwork')}"
                         Style="{StaticResource AboutHyperlinkButtonStyle}">
 
@@ -78,7 +78,7 @@
                     </HyperlinkButton>
 
                     <HyperlinkButton
-                        Command="{x:Bind ViewModel.TroubleShootCommand}"
+                        Click="{x:Bind ViewModel.OnTroubleShootClicked}"
                         Content="{x:Bind root:ResourceService.GetLocalized('About/TroubleShoot')}"
                         Style="{StaticResource AboutHyperlinkButtonStyle}">
 
@@ -91,7 +91,7 @@
                     </HyperlinkButton>
 
                     <HyperlinkButton
-                        Command="{x:Bind ViewModel.CloudflareValidationCommand}"
+                        Click="{x:Bind ViewModel.OnCloudflareValidationClicked}"
                         Content="{x:Bind root:ResourceService.GetLocalized('About/CloudflareValidation')}"
                         Style="{StaticResource AboutHyperlinkButtonStyle}">
 
@@ -113,7 +113,7 @@
 
                 <StackPanel Orientation="Horizontal">
                     <HyperlinkButton
-                        Command="{x:Bind ViewModel.DownloadSettingsCommand}"
+                        Click="{x:Bind ViewModel.OnDownloadSettingsClicked}"
                         Content="{x:Bind root:ResourceService.GetLocalized('About/DownloadSettings')}"
                         Style="{StaticResource AboutHyperlinkButtonStyle}">
 

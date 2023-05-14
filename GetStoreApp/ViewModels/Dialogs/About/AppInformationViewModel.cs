@@ -1,10 +1,7 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Notifications;
 using GetStoreApp.WindowsAPI.PInvoke.Version;
-using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,8 +22,10 @@ namespace GetStoreApp.ViewModels.Dialogs.About
 
         public string WebView2CoreVersion { get; set; }
 
-        // 复制应用信息
-        public IRelayCommand CopyAppInformationCommand => new RelayCommand<ContentDialog>((dialog) =>
+        /// <summary>
+        /// 复制应用信息
+        /// </summary>
+        public void CopyAppInformation()
         {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WindowsAppSDKVersion") + WindowsAppSDKVersion);
@@ -35,16 +34,8 @@ namespace GetStoreApp.ViewModels.Dialogs.About
             stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/DoNetVersion") + DoNetVersion);
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
-            dialog.Hide();
-
             new CopyAppInformationNotification(true).Show();
-        });
-
-        // 关闭对话框
-        public IRelayCommand CloseDialogCommand => new RelayCommand<ContentDialog>((dialog) =>
-        {
-            dialog.Hide();
-        });
+        }
 
         /// <summary>
         /// 初始化应用信息

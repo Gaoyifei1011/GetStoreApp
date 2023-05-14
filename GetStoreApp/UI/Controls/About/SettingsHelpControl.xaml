@@ -22,7 +22,7 @@
                 <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/BackdropDescription')}" />
 
                 <HyperlinkButton
-                    Command="{x:Bind ViewModel.SystemInformationCommand}"
+                    Click="{x:Bind ViewModel.OnSystemInformationClicked}"
                     Content="{x:Bind root:ResourceService.GetLocalized('About/SystemInformation')}"
                     Style="{StaticResource AboutHyperlinkButtonStyle}">
 
@@ -40,7 +40,7 @@
 
                 <StackPanel Orientation="Horizontal">
                     <HyperlinkButton
-                        Command="{x:Bind ViewModel.AppInformationCommand}"
+                        Click="{x:Bind ViewModel.OnAppInformationClicked}"
                         Content="{x:Bind root:ResourceService.GetLocalized('About/AppInformation')}"
                         Style="{StaticResource AboutHyperlinkButtonStyle}">
 
@@ -53,7 +53,7 @@
                     </HyperlinkButton>
 
                     <HyperlinkButton
-                        Command="{x:Bind ViewModel.AppSettingsCommand}"
+                        Click="{x:Bind ViewModel.OnAppSettingsClicked}"
                         Content="{x:Bind root:ResourceService.GetLocalized('About/AppSettings')}"
                         Style="{StaticResource AboutHyperlinkButtonStyle}">
 
@@ -74,7 +74,7 @@
 
                 <StackPanel Orientation="Horizontal">
                     <HyperlinkButton
-                        Command="{x:Bind ViewModel.StartsWithECommand}"
+                        Click="{x:Bind ViewModel.OnStartWithEClicked}"
                         Content="{x:Bind root:ResourceService.GetLocalized('About/StartsWithEButton')}"
                         Style="{StaticResource AboutHyperlinkButtonStyle}">
 
@@ -87,7 +87,7 @@
                     </HyperlinkButton>
 
                     <HyperlinkButton
-                        Command="{x:Bind ViewModel.BlockMapCommand}"
+                        Click="{x:Bind ViewModel.OnBlockMapClicked}"
                         Content="{x:Bind root:ResourceService.GetLocalized('About/BlockMapButton')}"
                         Style="{StaticResource AboutHyperlinkButtonStyle}">
 

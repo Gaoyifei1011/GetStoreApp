@@ -1,6 +1,4 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Backdrop;
-using GetStoreApp.Extensions.Command;
+﻿using GetStoreApp.Extensions.Backdrop;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
 using GetStoreApp.Models.Window;
@@ -16,6 +14,7 @@ using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
@@ -145,61 +144,6 @@ namespace GetStoreApp.ViewModels.Window
             "Settings"
         };
 
-        // 当菜单中的项收到交互（如单击或点击）时发生
-        public IRelayCommand NavigationItemCommand => new RelayCommand<object>((invokedItemTag) =>
-        {
-            if (invokedItemTag is not null)
-            {
-                NavigationModel navigationViewItem = NavigationService.NavigationItemList.Find(item => item.NavigationTag == Convert.ToString(invokedItemTag));
-                if (SelectedItem != navigationViewItem.NavigationItem)
-                {
-                    NavigationService.NavigateTo(navigationViewItem.NavigationPage);
-                }
-            }
-        });
-
-        // 打开应用“关于”页面
-        public IRelayCommand AboutAppCommand => new RelayCommand(() =>
-        {
-            // 窗口置前端
-            WindowHelper.ShowAppWindow();
-
-            if (NavigationService.GetCurrentPageType() != typeof(AboutPage))
-            {
-                NavigationService.NavigateTo(typeof(AboutPage));
-            }
-        });
-
-        // 显示 / 隐藏窗口
-        public IRelayCommand ShowOrHideWindowCommand => new RelayCommand(() =>
-        {
-            // 隐藏窗口
-            if (WindowHelper.IsWindowVisible)
-            {
-                WindowHelper.HideAppWindow();
-            }
-            // 显示窗口
-            else
-            {
-                WindowHelper.ShowAppWindow();
-            }
-        });
-
-        // 打开设置
-        public IRelayCommand SettingsCommand => new RelayCommand(() =>
-        {
-            // 窗口置前端
-            WindowHelper.ShowAppWindow();
-
-            if (NavigationService.GetCurrentPageType() != typeof(SettingsPage))
-            {
-                NavigationService.NavigateTo(typeof(SettingsPage));
-            }
-        });
-
-        // 退出应用
-        public IRelayCommand ExitCommand => new RelayCommand(Program.ApplicationRoot.MainWindow.Close);
-
         /// <summary>
         /// 设置窗口处于非激活状态时的背景色
         /// </summary>
@@ -280,11 +224,11 @@ namespace GetStoreApp.ViewModels.Window
         }
 
         /// <summary>
-        /// 当后退按钮收到交互（如单击或点击）时发生
+        /// 应用主题设置跟随系统发生变化时，当系统主题设置发生变化时修改修改应用背景色
         /// </summary>
-        public void OnNavigationViewBackRequested(object sender, NavigationViewBackRequestedEventArgs args)
+        private void OnColorValuesChanged(UISettings sender, object args)
         {
-            NavigationService.NavigationFrom();
+            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, SetWindowBackground);
         }
 
         // 导航视图显示的样式发生改变时发生
@@ -300,6 +244,32 @@ namespace GetStoreApp.ViewModels.Window
                 IsPaneToggleButtonVisible = false;
                 AppTitleBarMargin = new Thickness(48, 0, 0, 0);
             }
+        }
+
+        /// <summary>
+        /// 导航完成后发生
+        /// </summary>
+        public void OnFrameNavigated(object sender, NavigationEventArgs args)
+        {
+            Type CurrentPageType = NavigationService.GetCurrentPageType();
+            SelectedItem = NavigationService.NavigationItemList.Find(item => item.NavigationPage == CurrentPageType).NavigationItem;
+            IsBackEnabled = NavigationService.CanGoBack();
+        }
+
+        /// <summary>
+        /// 导航失败时发生
+        /// </summary>
+        public void OnFrameNavigationFailed(object sender, NavigationFailedEventArgs args)
+        {
+            throw new ApplicationException(string.Format(ResourceService.GetLocalized("/Window/NavigationFailed"), args.SourcePageType.FullName));
+        }
+
+        /// <summary>
+        /// 当后退按钮收到交互（如单击或点击）时发生
+        /// </summary>
+        public void OnNavigationViewBackRequested(object sender, NavigationViewBackRequestedEventArgs args)
+        {
+            NavigationService.NavigationFrom();
         }
 
         /// <summary>
@@ -376,14 +346,6 @@ namespace GetStoreApp.ViewModels.Window
         }
 
         /// <summary>
-        /// 应用主题设置跟随系统发生变化时，当系统主题设置发生变化时修改修改应用背景色
-        /// </summary>
-        private void OnColorValuesChanged(UISettings sender, object args)
-        {
-            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, SetWindowBackground);
-        }
-
-        /// <summary>
         /// 可通知的属性发生更改时的事件处理
         /// </summary>
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
@@ -395,21 +357,19 @@ namespace GetStoreApp.ViewModels.Window
         }
 
         /// <summary>
-        /// 导航完成后发生
+        /// 当菜单中的项收到交互（如单击或点击）时发生
         /// </summary>
-        public void OnFrameNavigated(object sender, NavigationEventArgs args)
+        public void OnTapped(object sender, TappedRoutedEventArgs args)
         {
-            Type CurrentPageType = NavigationService.GetCurrentPageType();
-            SelectedItem = NavigationService.NavigationItemList.Find(item => item.NavigationPage == CurrentPageType).NavigationItem;
-            IsBackEnabled = NavigationService.CanGoBack();
-        }
-
-        /// <summary>
-        /// 导航失败时发生
-        /// </summary>
-        public void OnFrameNavgationFailed(object sender, NavigationFailedEventArgs args)
-        {
-            throw new ApplicationException(string.Format(ResourceService.GetLocalized("/Window/NavigationFailed"), args.SourcePageType.FullName));
+            NavigationViewItem navigationViewItem = sender as NavigationViewItem;
+            if (navigationViewItem.Tag is not null)
+            {
+                NavigationModel navigationItem = NavigationService.NavigationItemList.Find(item => item.NavigationTag == Convert.ToString(navigationViewItem.Tag));
+                if (SelectedItem != navigationItem.NavigationItem)
+                {
+                    NavigationService.NavigateTo(navigationItem.NavigationPage);
+                }
+            }
         }
 
         /// <summary>

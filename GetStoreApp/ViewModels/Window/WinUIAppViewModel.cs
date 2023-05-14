@@ -1,6 +1,4 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Extensions.DataType.Constant;
+﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Extensions.SystemTray;
@@ -12,6 +10,7 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI;
+using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.AppNotifications;
 using System;
@@ -31,14 +30,30 @@ namespace GetStoreApp.ViewModels.Window
 
         private IntPtr[] hIcons;
 
-        // 双击任务栏图标：显示 / 隐藏窗口
-        public IRelayCommand DoubleClickCommand => new RelayCommand(() =>
+        /// <summary>
+        /// 双击任务栏图标：显示 / 隐藏窗口
+        /// </summary>
+        public void DoubleClick(object sender, RoutedEventArgs args)
         {
-            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() => { Program.ApplicationRoot.MainWindow.ViewModel.ShowOrHideWindowCommand.Execute(null); });
-        });
+            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
+            {
+                // 隐藏窗口
+                if (WindowHelper.IsWindowVisible)
+                {
+                    WindowHelper.HideAppWindow();
+                }
+                // 显示窗口
+                else
+                {
+                    WindowHelper.ShowAppWindow();
+                }
+            });
+        }
 
-        // 右键任务栏图标：显示菜单窗口
-        public IRelayCommand RightClickCommand => new RelayCommand(() =>
+        /// <summary>
+        /// 右键任务栏图标：显示菜单窗口
+        /// </summary>
+        public void RightClick(object sender, RoutedEventArgs args)
         {
             unsafe
             {
@@ -64,18 +79,15 @@ namespace GetStoreApp.ViewModels.Window
                 Program.ApplicationRoot.TrayMenuWindow.AppWindow.Show();
                 User32Library.SetForegroundWindow(Program.ApplicationRoot.TrayMenuWindow.GetWindowHandle());
             }
-        });
+        }
 
         /// <summary>
         /// 处理应用程序未知异常处理
         /// </summary>
-        public async void OnUnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs args)
+        public void OnUnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs args)
         {
             args.Handled = true;
-
-            await DownloadSchedulerService.CloseDownloadSchedulerAsync();
-            await Aria2Service.CloseAria2Async();
-            Messenger.Default.Send(true, MessageToken.WindowClosed);
+            Dispose();
         }
 
         /// <summary>
@@ -208,7 +220,10 @@ namespace GetStoreApp.ViewModels.Window
             await SaveWindowInformationAsync();
             await DownloadSchedulerService.CloseDownloadSchedulerAsync();
             await Aria2Service.CloseAria2Async();
+            Messenger.Default.Send(true, MessageToken.WindowClosed);
             Program.ApplicationRoot.TrayIcon.Dispose();
+            Program.ApplicationRoot.TrayIcon.DoubleClick -= DoubleClick;
+            Program.ApplicationRoot.TrayIcon.RightClick -= RightClick;
             AppNotificationService.Unregister();
             Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
         }

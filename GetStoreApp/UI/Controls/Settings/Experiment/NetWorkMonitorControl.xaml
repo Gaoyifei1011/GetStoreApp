@@ -7,11 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Experiment"
-    Unloaded="{x:Bind ViewModel.OnUnloaded}"
     mc:Ignorable="d">
 
     <UserControl.DataContext>
-        <settingsViewModel:NetWorkMonitorViewModel x:Name="ViewModel" />
+        <settingsViewModel:NetWorkMonitorViewModel x:Name="ViewModel" x:FieldModifier="public" />
     </UserControl.DataContext>
 
     <Grid Style="{StaticResource CardGridStyle}">

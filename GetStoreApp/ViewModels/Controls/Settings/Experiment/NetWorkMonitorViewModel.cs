@@ -1,6 +1,4 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Extensions.Messaging;
-using GetStoreApp.Services.Controls.Settings.Experiment;
+﻿using GetStoreApp.Services.Controls.Settings.Experiment;
 using GetStoreApp.ViewModels.Base;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -26,14 +24,6 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Experiment
         }
 
         /// <summary>
-        /// 控件被卸载时，关闭消息服务
-        /// </summary>
-        public void OnUnloaded(object sender, RoutedEventArgs args)
-        {
-            Messenger.Default.Unregister(this);
-        }
-
-        /// <summary>
         /// 下载文件时“网络状态监控”开启设置
         /// </summary>
         public async void OnToggled(object sender, RoutedEventArgs args)
@@ -44,17 +34,6 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Experiment
                 await NetWorkMonitorService.SetNetWorkMonitorValueAsync(toggleSwitch.IsOn);
                 NetWorkMonitorValue = toggleSwitch.IsOn;
             }
-        }
-
-        public NetWorkMonitorViewModel()
-        {
-            Messenger.Default.Register<bool>(this, MessageToken.RestoreDefault, (restoreDefaultMessage) =>
-            {
-                if (restoreDefaultMessage)
-                {
-                    NetWorkMonitorValue = NetWorkMonitorService.NetWorkMonitorValue;
-                }
-            });
         }
     }
 }

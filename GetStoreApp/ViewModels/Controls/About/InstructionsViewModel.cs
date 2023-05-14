@@ -1,9 +1,8 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.About;
 using GetStoreApp.Views.Pages;
+using Microsoft.UI.Xaml;
 using System;
 using Windows.System;
 
@@ -14,40 +13,52 @@ namespace GetStoreApp.ViewModels.Controls.About
     /// </summary>
     public sealed class InstructionsViewModel
     {
-        // 桌面程序启动参数说明
-        public IRelayCommand DesktopLaunchCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 桌面程序启动参数说明
+        /// </summary>
+        public async void OnDesktopLaunchClicked(object sender,RoutedEventArgs args)
         {
             await new DesktopStartupArgsDialog().ShowAsync();
-        });
+        }
 
-        // 控制台程序启动参数说明
-        public IRelayCommand ConsoleLaunchCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 控制台程序启动参数说明
+        /// </summary>
+        public async void OnConsoleLaunchClicked(object sender,RoutedEventArgs args)
         {
             await new ConsoleStartupArgsDialog().ShowAsync();
-        });
+        }
 
-        // 检查网络
-        public IRelayCommand CheckNetWorkCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 检查网络
+        /// </summary>
+        public async void OnCheckNetWorkClicked(object sender,RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
-        });
+        }
 
-        // 疑难解答
-        public IRelayCommand TroubleShootCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 疑难解答
+        /// </summary>
+        public async void OnTroubleShootClicked(object sender,RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:troubleshoot"));
-        });
+        }
 
-        // Cloudflare 5秒验证信息
-        public IRelayCommand CloudflareValidationCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// Cloudflare 5秒验证信息
+        /// </summary>
+        public async void OnCloudflareValidationClicked(object sender,RoutedEventArgs args)
         {
             await new CloudflareValidationDialog().ShowAsync();
-        });
+        }
 
-        // 下载设置
-        public IRelayCommand DownloadSettingsCommand => new RelayCommand(() =>
+        /// <summary>
+        /// 打开下载设置
+        /// </summary>
+        public void OnDownloadSettingsClicked(object sender,RoutedEventArgs args)
         {
             NavigationService.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.DownloadOptions);
-        });
+        }
     }
 }

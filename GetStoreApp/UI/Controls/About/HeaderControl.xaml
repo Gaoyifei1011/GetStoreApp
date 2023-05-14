@@ -52,7 +52,7 @@
 
                 <HyperlinkButton
                     VerticalAlignment="Center"
-                    Command="{x:Bind ViewModel.DeveloperDescriptionCommand}"
+                    Click="{x:Bind ViewModel.OnDeveloperDescriptionClicked}"
                     Content="{x:Bind root:ResourceService.GetLocalized('About/DeveloperName')}"
                     Style="{StaticResource HyperlinkButtonStyle}">
 
@@ -74,7 +74,7 @@
 
             <Button
                 MinWidth="150"
-                Command="{x:Bind ViewModel.ProjectDescriptionCommand}"
+                Click="{x:Bind ViewModel.OnProjectDescriptionClicked}"
                 Content="{x:Bind root:ResourceService.GetLocalized('About/ProjectHomePage')}"
                 Style="{StaticResource AccentButtonStyle}">
 
@@ -88,7 +88,7 @@
 
             <Button
                 MinWidth="150"
-                Command="{x:Bind ViewModel.SendFeedbackCommand}"
+                Click="{x:Bind ViewModel.OnSendFeedbackClicked}"
                 Content="{x:Bind root:ResourceService.GetLocalized('About/SendFeedback')}">
 
                 <ToolTipService.ToolTip>
@@ -101,7 +101,7 @@
 
             <Button
                 MinWidth="150"
-                Command="{x:Bind ViewModel.CheckUpdateCommand}"
+                Click="{x:Bind ViewModel.OnCheckUpdateClicked}"
                 Content="{x:Bind root:ResourceService.GetLocalized('About/CheckUpdate')}">
 
                 <ToolTipService.ToolTip>

@@ -15,7 +15,6 @@ using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Controls.Store
@@ -26,7 +25,7 @@ namespace GetStoreApp.ViewModels.Controls.Store
     public sealed class HistoryLiteViewModel
     {
         // 临界区资源访问互斥锁
-        private readonly ReaderWriterLockSlim HistoryLiteDataListLock = new ReaderWriterLockSlim();
+        private readonly object HistoryLiteDataListLock = new object();
 
         private HistoryLiteNumModel HistoryLiteItem { get; set; }
 
@@ -103,22 +102,14 @@ namespace GetStoreApp.ViewModels.Controls.Store
             // 获取数据库的原始记录数据
             List<HistoryModel> HistoryRawList = await HistoryXmlService.QueryAsync(HistoryLiteItem.HistoryLiteNumValue);
 
-            HistoryLiteDataListLock?.TryEnterWriteLock(-1);
-
-            HistoryLiteDataList.Clear();
-
-            if (HistoryLiteDataListLock.IsWriteLockHeld)
+            lock (HistoryLiteDataListLock)
             {
-                HistoryLiteDataListLock.ExitWriteLock();
+                HistoryLiteDataList.Clear();
             }
 
-            HistoryLiteDataListLock?.TryEnterWriteLock(-1);
-
-            HistoryRawList.ForEach(HistoryLiteDataList.Add);
-
-            if (HistoryLiteDataListLock.IsWriteLockHeld)
+            lock (HistoryLiteDataListLock)
             {
-                HistoryLiteDataListLock.ExitWriteLock();
+                HistoryRawList.ForEach(HistoryLiteDataList.Add);
             }
         }
     }

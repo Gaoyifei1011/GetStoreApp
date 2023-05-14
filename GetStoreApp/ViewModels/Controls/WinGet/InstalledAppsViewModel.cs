@@ -65,20 +65,20 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
             }
         }
 
-        private List<MatchResult> SearchResultList;
+        private List<MatchResult> MatchResultList;
 
         public ObservableCollection<InstalledAppsModel> InstalledAppsDataList { get; set; } = new ObservableCollection<InstalledAppsModel>();
 
         // 更新已安装应用数据
         public IRelayCommand RefreshCommand => new RelayCommand(async () =>
         {
-            SearchResultList = null;
+            MatchResultList = null;
             IsLoadedCompleted = false;
             SearchText = string.Empty;
             await Task.Delay(500);
             await GetInstalledAppsAsync();
             InitializeData();
-            IsInstalledAppsEmpty = SearchResultList.Count is 0;
+            IsInstalledAppsEmpty = MatchResultList.Count is 0;
             IsLoadedCompleted = true;
         });
 
@@ -92,7 +92,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                 uninstallOptions.PackageUninstallMode = PackageUninstallMode.Interactive;
                 uninstallOptions.PackageUninstallScope = PackageUninstallScope.Any;
 
-                UninstallResult unInstallResult = await InstalledAppsManager.UninstallPackageAsync(SearchResultList.Find(item => item.CatalogPackage.InstalledVersion.Id == installedApps.AppID).CatalogPackage, uninstallOptions);
+                UninstallResult unInstallResult = await InstalledAppsManager.UninstallPackageAsync(MatchResultList.Find(item => item.CatalogPackage.InstalledVersion.Id == installedApps.AppID).CatalogPackage, uninstallOptions);
 
                 // 获取卸载后的结果信息
                 // 卸载成功，从列表中删除该应用
@@ -170,7 +170,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
             await Task.Delay(500);
             await GetInstalledAppsAsync();
             InitializeData();
-            IsInstalledAppsEmpty = SearchResultList.Count is 0;
+            IsInstalledAppsEmpty = MatchResultList.Count is 0;
             IsLoadedCompleted = true;
         }
 
@@ -189,7 +189,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
         {
             if (args.PropertyName == nameof(SearchText))
             {
-                if (SearchText == string.Empty && SearchResultList is not null)
+                if (SearchText == string.Empty && MatchResultList is not null)
                 {
                     InitializeData();
                 }
@@ -203,18 +203,21 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
         {
             try
             {
-                PackageCatalogReference searchCatalogReference = InstalledAppsManager.GetLocalPackageCatalog(LocalPackageCatalog.InstalledPackages);
-
-                ConnectResult connectResult = await searchCatalogReference.ConnectAsync();
-                PackageCatalog installedCatalog = connectResult.PackageCatalog;
-
-                if (installedCatalog is not null)
+                await Task.Run(async () =>
                 {
-                    FindPackagesOptions findPackagesOptions = WinGetService.CreateFindPackagesOptions();
-                    FindPackagesResult findResult = await installedCatalog.FindPackagesAsync(findPackagesOptions);
+                    PackageCatalogReference searchCatalogReference = InstalledAppsManager.GetLocalPackageCatalog(LocalPackageCatalog.InstalledPackages);
 
-                    SearchResultList = findResult.Matches.ToList();
-                }
+                    ConnectResult connectResult = await searchCatalogReference.ConnectAsync();
+                    PackageCatalog installedCatalog = connectResult.PackageCatalog;
+
+                    if (installedCatalog is not null)
+                    {
+                        FindPackagesOptions findPackagesOptions = WinGetService.CreateFindPackagesOptions();
+                        FindPackagesResult findResult = await installedCatalog.FindPackagesAsync(findPackagesOptions);
+
+                        MatchResultList = findResult.Matches.ToList();
+                    }
+                });
             }
             catch (Exception) { }
         }
@@ -225,11 +228,11 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
         private void InitializeData([Optional, DefaultValue(false)] bool hasSearchText)
         {
             InstalledAppsDataList.Clear();
-            if (SearchResultList is not null)
+            if (MatchResultList is not null)
             {
                 if (hasSearchText)
                 {
-                    foreach (MatchResult matchItem in SearchResultList)
+                    foreach (MatchResult matchItem in MatchResultList)
                     {
                         if (matchItem.CatalogPackage.InstalledVersion.DisplayName.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
                         {
@@ -245,7 +248,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                 }
                 else
                 {
-                    foreach (MatchResult matchItem in SearchResultList)
+                    foreach (MatchResult matchItem in MatchResultList)
                     {
                         InstalledAppsDataList.Add(new InstalledAppsModel()
                         {

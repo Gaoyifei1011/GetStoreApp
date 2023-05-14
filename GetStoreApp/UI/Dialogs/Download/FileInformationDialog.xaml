@@ -7,7 +7,6 @@
     xmlns:dialogsAndFlyouts="using:GetStoreApp.Views.CustomControls.DialogsAndFlyouts"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    x:Name="FileInformationRoot"
     Loaded="{x:Bind ViewModel.OnLoaded}"
     RequestedTheme="{x:Bind DialogTheme}"
     Style="{StaticResource ContentDialogStyle}"
@@ -140,8 +139,7 @@
             <Button
                 Grid.Column="0"
                 HorizontalAlignment="Stretch"
-                Command="{x:Bind ViewModel.CopyFileInformationCommand}"
-                CommandParameter="{x:Bind FileInformationRoot}"
+                Click="{x:Bind OnCopyFileInformationClicked}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CopyFileInformation')}"
                 IsEnabled="{x:Bind ViewModel.FileCheckState, Mode=OneWay}"
                 Style="{ThemeResource AccentButtonStyle}">
@@ -156,8 +154,7 @@
             <Button
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
-                Command="{x:Bind ViewModel.CloseDialogCommand}"
-                CommandParameter="{x:Bind FileInformationRoot}"
+                Click="{x:Bind OnCloseDialogClicked}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
                 IsEnabled="{x:Bind ViewModel.FileCheckState, Mode=OneWay}">
 

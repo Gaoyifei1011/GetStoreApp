@@ -7,7 +7,6 @@
     xmlns:dialogsAndFlyouts="using:GetStoreApp.Views.CustomControls.DialogsAndFlyouts"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    x:Name="RestartAppsRoot"
     RequestedTheme="{x:Bind DialogTheme}"
     Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">
@@ -44,8 +43,7 @@
             <Button
                 Grid.Column="0"
                 HorizontalAlignment="Stretch"
-                Command="{x:Bind ViewModel.RestartAppsCommand}"
-                CommandParameter="{x:Bind RestartAppsRoot}"
+                Click="{x:Bind OnRestartClicked}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Dialog/Restart')}"
                 Style="{ThemeResource AccentButtonStyle}">
 
@@ -60,8 +58,7 @@
             <Button
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
-                Command="{x:Bind ViewModel.CloseDialogCommand}"
-                CommandParameter="{x:Bind RestartAppsRoot}"
+                Click="{x:Bind OnCloseDialogClicked}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}">
 
                 <ToolTipService.ToolTip>

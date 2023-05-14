@@ -1,10 +1,4 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
-using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
-using System;
-using System.IO;
-using System.Runtime.InteropServices;
+﻿using System;
 using Windows.System;
 
 namespace GetStoreApp.ViewModels.Dialogs.WinGet
@@ -16,17 +10,12 @@ namespace GetStoreApp.ViewModels.Dialogs.WinGet
     {
         public string UnInstallFailedContent { get; set; }
 
-        // 打开应用和功能卸载应用
-        public IRelayCommand OpenSettingsCommand => new RelayCommand<ExtendedContentDialog>(async (dialog) =>
+        /// <summary>
+        /// 打开设置
+        /// </summary>
+        public async void OpenSettings()
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
-            dialog.Hide();
-        });
-
-        // 关闭对话框
-        public IRelayCommand CloseDialogCommand => new RelayCommand<ExtendedContentDialog>((dialog) =>
-        {
-            dialog.Hide();
-        });
+        }
     }
 }

@@ -421,7 +421,7 @@
     <value>卸载失败提示</value>
   </data>
   <data name="UnInstallInSettings" xml:space="preserve">
-    <value>在设置中卸载您的应用</value>
+    <value>解决方案：在设置中卸载您的应用</value>
   </data>
   <data name="OpenSettings" xml:space="preserve">
     <value>打开"设置"</value>

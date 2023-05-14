@@ -5,7 +5,6 @@
     xmlns:WinUI="using:GetStoreApp.Views.Window"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:navigation="using:GetStoreApp.Views.CustomControls.Navigation"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:viewModel="using:GetStoreApp.ViewModels.Window"
     xmlns:wc="using:GetStoreApp.UI.Controls.Window"
@@ -49,90 +48,132 @@
             <NavigationView.MenuItems>
                 <NavigationViewItemHeader Content="{x:Bind root:ResourceService.GetLocalized('Window/Title')}" Foreground="{ThemeResource NavigationViewItemForeground}" />
 
-                <navigation:ExtendedNavigationViewItem
-                    Command="{x:Bind ViewModel.NavigationItemCommand}"
-                    CommandParameter="{x:Bind ViewModel.TagList[0]}"
+                <NavigationViewItem
                     Content="{x:Bind root:ResourceService.GetLocalized('Window/Store')}"
                     Tag="{x:Bind ViewModel.TagList[0]}"
-                    ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/Store')}">
-                    <navigation:ExtendedNavigationViewItem.Icon>
-                        <ImageIcon Loaded="{x:Bind StoreIconLoaded}" />
-                    </navigation:ExtendedNavigationViewItem.Icon>
-                </navigation:ExtendedNavigationViewItem>
+                    Tapped="{x:Bind ViewModel.OnTapped}">
 
-                <navigation:ExtendedNavigationViewItem
-                    Command="{x:Bind ViewModel.NavigationItemCommand}"
-                    CommandParameter="{x:Bind ViewModel.TagList[1]}"
+                    <NavigationViewItem.Icon>
+                        <ImageIcon Loaded="{x:Bind StoreIconLoaded}" />
+                    </NavigationViewItem.Icon>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('Window/Store')}"
+                            Placement="Bottom"
+                            VerticalOffset="20" />
+                    </ToolTipService.ToolTip>
+                </NavigationViewItem>
+
+                <NavigationViewItem
                     Content="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}"
                     Tag="{x:Bind ViewModel.TagList[1]}"
-                    ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}">
-                    <navigation:ExtendedNavigationViewItem.Icon>
-                        <ImageIcon Loaded="{x:Bind WinGetIconLoaded}" />
-                    </navigation:ExtendedNavigationViewItem.Icon>
-                </navigation:ExtendedNavigationViewItem>
+                    Tapped="{x:Bind ViewModel.OnTapped}">
 
-                <navigation:ExtendedNavigationViewItem
-                    Command="{x:Bind ViewModel.NavigationItemCommand}"
-                    CommandParameter="{x:Bind ViewModel.TagList[2]}"
+                    <NavigationViewItem.Icon>
+                        <ImageIcon Loaded="{x:Bind WinGetIconLoaded}" />
+                    </NavigationViewItem.Icon>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}"
+                            Placement="Bottom"
+                            VerticalOffset="20" />
+                    </ToolTipService.ToolTip>
+                </NavigationViewItem>
+
+                <NavigationViewItem
                     Content="{x:Bind root:ResourceService.GetLocalized('Window/History')}"
                     Tag="{x:Bind ViewModel.TagList[2]}"
-                    ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/History')}">
-                    <navigation:ExtendedNavigationViewItem.Icon>
-                        <ImageIcon Loaded="{x:Bind HistoryIconLoaded}" />
-                    </navigation:ExtendedNavigationViewItem.Icon>
-                </navigation:ExtendedNavigationViewItem>
+                    Tapped="{x:Bind ViewModel.OnTapped}">
 
-                <navigation:ExtendedNavigationViewItem
-                    Command="{x:Bind ViewModel.NavigationItemCommand}"
-                    CommandParameter="{x:Bind ViewModel.TagList[3]}"
+                    <NavigationViewItem.Icon>
+                        <ImageIcon Loaded="{x:Bind HistoryIconLoaded}" />
+                    </NavigationViewItem.Icon>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('Window/History')}"
+                            Placement="Bottom"
+                            VerticalOffset="20" />
+                    </ToolTipService.ToolTip>
+                </NavigationViewItem>
+
+                <NavigationViewItem
                     Content="{x:Bind root:ResourceService.GetLocalized('Window/Download')}"
                     Tag="{x:Bind ViewModel.TagList[3]}"
-                    ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/Download')}">
-                    <navigation:ExtendedNavigationViewItem.Icon>
-                        <ImageIcon Loaded="{x:Bind DownloadIconLoaded}" />
-                    </navigation:ExtendedNavigationViewItem.Icon>
-                </navigation:ExtendedNavigationViewItem>
+                    Tapped="{x:Bind ViewModel.OnTapped}">
 
-                <navigation:ExtendedNavigationViewItem
-                    Command="{x:Bind ViewModel.NavigationItemCommand}"
-                    CommandParameter="{x:Bind ViewModel.TagList[4]}"
+                    <NavigationViewItem.Icon>
+                        <ImageIcon Loaded="{x:Bind DownloadIconLoaded}" />
+                    </NavigationViewItem.Icon>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('Window/Download')}"
+                            Placement="Bottom"
+                            VerticalOffset="20" />
+                    </ToolTipService.ToolTip>
+                </NavigationViewItem>
+
+                <NavigationViewItem
                     Content="{x:Bind root:ResourceService.GetLocalized('Window/Web')}"
                     Tag="{x:Bind ViewModel.TagList[4]}"
-                    ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/Web')}">
-                    <navigation:ExtendedNavigationViewItem.Icon>
+                    Tapped="{x:Bind ViewModel.OnTapped}">
+
+                    <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind WebIconLoaded}" />
-                    </navigation:ExtendedNavigationViewItem.Icon>
-                </navigation:ExtendedNavigationViewItem>
+                    </NavigationViewItem.Icon>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('Window/Web')}"
+                            Placement="Bottom"
+                            VerticalOffset="20" />
+                    </ToolTipService.ToolTip>
+                </NavigationViewItem>
             </NavigationView.MenuItems>
 
             <NavigationView.FooterMenuItems>
-                <navigation:ExtendedNavigationViewItem
-                    Command="{x:Bind ViewModel.NavigationItemCommand}"
-                    CommandParameter="{x:Bind ViewModel.TagList[5]}"
+                <NavigationViewItem
                     Content="{x:Bind root:ResourceService.GetLocalized('Window/About')}"
                     Tag="{x:Bind ViewModel.TagList[5]}"
-                    ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/About')}">
-                    <navigation:ExtendedNavigationViewItem.Icon>
-                        <ImageIcon Loaded="{x:Bind AboutIconLoaded}" />
-                    </navigation:ExtendedNavigationViewItem.Icon>
-                </navigation:ExtendedNavigationViewItem>
+                    Tapped="{x:Bind ViewModel.OnTapped}">
 
-                <navigation:ExtendedNavigationViewItem
-                    Command="{x:Bind ViewModel.NavigationItemCommand}"
-                    CommandParameter="{x:Bind ViewModel.TagList[6]}"
+                    <NavigationViewItem.Icon>
+                        <ImageIcon Loaded="{x:Bind AboutIconLoaded}" />
+                    </NavigationViewItem.Icon>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('Window/About')}"
+                            Placement="Bottom"
+                            VerticalOffset="20" />
+                    </ToolTipService.ToolTip>
+                </NavigationViewItem>
+
+                <NavigationViewItem
                     Content="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}"
                     Tag="{x:Bind ViewModel.TagList[6]}"
-                    ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}">
-                    <navigation:ExtendedNavigationViewItem.Icon>
+                    Tapped="{x:Bind ViewModel.OnTapped}">
+
+                    <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind SettingsIconLoaded}" />
-                    </navigation:ExtendedNavigationViewItem.Icon>
-                </navigation:ExtendedNavigationViewItem>
+                    </NavigationViewItem.Icon>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}"
+                            Placement="Bottom"
+                            VerticalOffset="20" />
+                    </ToolTipService.ToolTip>
+                </NavigationViewItem>
             </NavigationView.FooterMenuItems>
 
             <Frame
                 x:Name="WindowFrame"
                 Navigated="{x:Bind ViewModel.OnFrameNavigated}"
-                NavigationFailed="{x:Bind ViewModel.OnFrameNavgationFailed}">
+                NavigationFailed="{x:Bind ViewModel.OnFrameNavigationFailed}">
                 <Frame.ContentTransitions>
                     <TransitionCollection>
                         <NavigationThemeTransition />

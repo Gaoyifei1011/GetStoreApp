@@ -10,11 +10,10 @@
         HistoryLiteNum = 2,
         History = 3,
         PivotSelection = 4,
-        RestoreDefault = 5,
-        ResultCategoryId = 6,
-        ResultControlVisable = 7,
-        ResultDataList = 8,
-        StatusBarState = 9,
-        WindowClosed = 10
+        ResultCategoryId = 5,
+        ResultControlVisable = 6,
+        ResultDataList = 7,
+        StatusBarState = 8,
+        WindowClosed = 9
     }
 }

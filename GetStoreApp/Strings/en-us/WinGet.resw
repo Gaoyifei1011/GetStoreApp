@@ -117,35 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppNameSort" xml:space="preserve">
-    <value>Sort by app name</value>
-  </data>
   <data name="AppNameToolTip" xml:space="preserve">
     <value>App name:{0}</value>
-  </data>
-  <data name="AppPublisherSort" xml:space="preserve">
-    <value>Sort by app publisher name</value>
   </data>
   <data name="AppPublisherToolTip" xml:space="preserve">
     <value>Publisher:{0}</value>
   </data>
+  <data name="AppsCountEmpty" xml:space="preserve">
+    <value>There is no apps</value>
+  </data>
+  <data name="AppsCountInfo" xml:space="preserve">
+    <value>There are {0} applications</value>
+  </data>
   <data name="AppVersionToolTIp" xml:space="preserve">
     <value>App version:{0}</value>
   </data>
-  <data name="DecreaseSort" xml:space="preserve">
-    <value>Negative sort</value>
-  </data>
-  <data name="IncreaseSort" xml:space="preserve">
-    <value>Positive sort</value>
+  <data name="Install" xml:space="preserve">
+    <value>Install</value>
   </data>
   <data name="InstalledApps" xml:space="preserve">
     <value>Installed apps</value>
-  </data>
-  <data name="InstalledAppsCountInfo" xml:space="preserve">
-    <value>There are {0} applications</value>
-  </data>
-  <data name="InstalledAppsEmpty" xml:space="preserve">
-    <value>There is no application</value>
   </data>
   <data name="InstalledAppsEmptyDescription" xml:space="preserve">
     <value>The application record is empty. Go ahead and install the application you want to use</value>
@@ -159,6 +150,9 @@
   <data name="LoadingInstalledApps" xml:space="preserve">
     <value>Please wait while loading the list of installed applications...</value>
   </data>
+  <data name="NotSearchedTip" xml:space="preserve">
+    <value>Go ahead and get the apps you want to install. The apps you search for will be displayed here</value>
+  </data>
   <data name="Operation" xml:space="preserve">
     <value>Operation</value>
   </data>
@@ -171,14 +165,23 @@
   <data name="SearchApps" xml:space="preserve">
     <value>Search apps</value>
   </data>
-  <data name="Sort" xml:space="preserve">
-    <value>Sort</value>
+  <data name="SearchAppsEmptyDescription" xml:space="preserve">
+    <value>Unable to find a package that matches the entered criteria, please change the search criteria and try again</value>
+  </data>
+  <data name="SearchAppsPlaceHolderText" xml:space="preserve">
+    <value>Search apps</value>
+  </data>
+  <data name="SearchingApps" xml:space="preserve">
+    <value>The application is searching, please wait...</value>
   </data>
   <data name="SortMode" xml:space="preserve">
     <value>Sorting mode</value>
   </data>
   <data name="SortRule" xml:space="preserve">
     <value>Sorting rules</value>
+  </data>
+  <data name="TaskManager" xml:space="preserve">
+    <value>Task manager</value>
   </data>
   <data name="UnInstall" xml:space="preserve">
     <value>Uninstall</value>

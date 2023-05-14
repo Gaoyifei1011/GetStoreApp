@@ -1,6 +1,5 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.UI.Dialogs.About;
+﻿using GetStoreApp.UI.Dialogs.About;
+using Microsoft.UI.Xaml;
 
 namespace GetStoreApp.ViewModels.Controls.About
 {
@@ -9,10 +8,12 @@ namespace GetStoreApp.ViewModels.Controls.About
     /// </summary>
     public sealed class PrecautionViewModel
     {
-        // 区分传统桌面应用
-        public IRelayCommand RecognizeCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 区分传统桌面应用
+        /// </summary>
+        public async void OnRecognizeClicked(object sender,RoutedEventArgs args)
         {
             await new DesktopAppsDialog().ShowAsync();
-        });
+        }
     }
 }

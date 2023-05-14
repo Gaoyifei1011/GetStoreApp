@@ -18,5 +18,22 @@ namespace GetStoreApp.UI.Dialogs.WinGet
             InitializeComponent();
             ViewModel.UnInstallFailedContent = string.Format(ResourceService.GetLocalized("Dialog/UnInstallFailedContent"), appName);
         }
+
+        /// <summary>
+        /// 关闭对话框
+        /// </summary>
+        public void OnCloseDialogClicked(object sender, RoutedEventArgs args)
+        {
+            Hide();
+        }
+
+        /// <summary>
+        /// 打开应用和功能卸载应用
+        /// </summary>
+        public void OnOpenSettingsClicked(object sender, RoutedEventArgs args)
+        {
+            ViewModel.OpenSettings();
+            Hide();
+        }
     }
 }

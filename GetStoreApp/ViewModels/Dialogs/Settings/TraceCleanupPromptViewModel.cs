@@ -1,11 +1,10 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Models.Dialogs.CommonDialogs.Settings;
 using GetStoreApp.Services.Controls.Settings.Advanced;
 using GetStoreApp.Services.Root;
 using GetStoreApp.ViewModels.Base;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -60,8 +59,10 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
             }
         }
 
-        // 痕迹清理
-        public IRelayCommand CleanupNowCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 痕迹清理
+        /// </summary>
+        public async void OnCleanupNowClicked(object sender, RoutedEventArgs args)
         {
             IsFirstInitialize = false;
             TraceCleanupList.ForEach(traceCleanupItem => traceCleanupItem.IsCleanFailed = false);
@@ -69,14 +70,15 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
             TraceCleanup();
             await Task.Delay(1000);
             IsCleaning = false;
-        });
+        }
 
-        // 关闭对话框
-        public IRelayCommand CloseDialogCommand => new RelayCommand<ContentDialog>((dialog) =>
+        /// <summary>
+        /// 关闭对话框后取消订阅相应的事件
+        /// </summary>
+        public void OnClosed(object sender, ContentDialogClosedEventArgs args)
         {
             TraceCleanupList.ForEach(traceCleanupItem => traceCleanupItem.PropertyChanged -= OnPropertyChanged);
-            dialog.Hide();
-        });
+        }
 
         /// <summary>
         /// 初始化清理列表信息

@@ -1,8 +1,9 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Helpers.Root;
+using GetStoreApp.Helpers.Window;
 using GetStoreApp.Services.Controls.Settings.Appearance;
+using GetStoreApp.Services.Window;
 using GetStoreApp.ViewModels.Base;
+using GetStoreApp.Views.Pages;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
@@ -59,61 +60,6 @@ namespace GetStoreApp.ViewModels.Controls
             }
         }
 
-        // 项目主页
-        public IRelayCommand ProjectDescriptionCommand => new RelayCommand(async () =>
-        {
-            await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp"));
-            Program.ApplicationRoot.TrayMenuWindow.AppWindow.Hide();
-        });
-
-        // 打开应用“关于”页面
-        public IRelayCommand AboutAppCommand => new RelayCommand(() =>
-        {
-            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
-            {
-                Program.ApplicationRoot.MainWindow.ViewModel.AboutAppCommand.Execute(null);
-            });
-            Program.ApplicationRoot.TrayMenuWindow.AppWindow.Hide();
-        });
-
-        // 显示 / 隐藏窗口
-        public IRelayCommand ShowOrHideWindowCommand => new RelayCommand(() =>
-        {
-            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
-            {
-                Program.ApplicationRoot.MainWindow.ViewModel.ShowOrHideWindowCommand.Execute(null);
-            });
-            Program.ApplicationRoot.TrayMenuWindow.AppWindow.Hide();
-        });
-
-        // 打开设置
-        public IRelayCommand SettingsCommand => new RelayCommand(() =>
-        {
-            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
-            {
-                Program.ApplicationRoot.MainWindow.ViewModel.SettingsCommand.Execute(null);
-            });
-            Program.ApplicationRoot.TrayMenuWindow.AppWindow.Hide();
-        });
-
-        // 退出应用
-        public IRelayCommand ExitCommand => new RelayCommand(() =>
-        {
-            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
-            {
-                Program.ApplicationRoot.MainWindow.ViewModel.ExitCommand.Execute(null);
-            });
-        });
-
-        // 窗口处于非激活状态时自动隐藏窗口
-        public void OnActivated(object sender, WindowActivatedEventArgs args)
-        {
-            if (args.WindowActivationState == WindowActivationState.Deactivated)
-            {
-                Program.ApplicationRoot.TrayMenuWindow.AppWindow.Hide();
-            }
-        }
-
         /// <summary>
         /// 浮出窗口加载完成后初始化内容，初始化导航视图控件属性、屏幕缩放比例值和应用的背景色
         /// </summary>
@@ -133,6 +79,44 @@ namespace GetStoreApp.ViewModels.Controls
         }
 
         /// <summary>
+        /// 打开应用的项目主页
+        /// </summary>
+        public async void OnProjectDescriptionClicked(object sender, RoutedEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp"));
+            Program.ApplicationRoot.TrayMenuWindow.AppWindow.Hide();
+        }
+
+        /// <summary>
+        /// 打开应用“关于”页面
+        /// </summary>
+        public void OnAboutAppClicked(object sender, RoutedEventArgs args)
+        {
+            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
+            {
+                // 窗口置前端
+                WindowHelper.ShowAppWindow();
+
+                if (NavigationService.GetCurrentPageType() != typeof(AboutPage))
+                {
+                    NavigationService.NavigateTo(typeof(AboutPage));
+                }
+            });
+            Program.ApplicationRoot.TrayMenuWindow.AppWindow.Hide();
+        }
+
+        /// <summary>
+        ///  窗口处于非激活状态时自动隐藏窗口
+        /// </summary>
+        public void OnActivated(object sender, WindowActivatedEventArgs args)
+        {
+            if (args.WindowActivationState == WindowActivationState.Deactivated)
+            {
+                Program.ApplicationRoot.TrayMenuWindow.AppWindow.Hide();
+            }
+        }
+
+        /// <summary>
         /// 设置主题发生变化时修改标题栏按钮的主题
         /// </summary>
         private void OnColorValuesChanged(UISettings sender, object args)
@@ -144,6 +128,14 @@ namespace GetStoreApp.ViewModels.Controls
         }
 
         /// <summary>
+        /// 退出应用
+        /// </summary>
+        public void OnExitClicked(object sender, RoutedEventArgs args)
+        {
+            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(Program.ApplicationRoot.MainWindow.Close);
+        }
+
+        /// <summary>
         /// 可通知的属性发生更改时的事件处理
         /// </summary>
         public void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
@@ -152,6 +144,45 @@ namespace GetStoreApp.ViewModels.Controls
             {
                 Program.ApplicationRoot.TrayMenuWindow.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, SetWindowBackground);
             }
+        }
+
+        /// <summary>
+        /// 打开设置
+        /// </summary>
+        public void OnSettingsClicked(object sender, RoutedEventArgs args)
+        {
+            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
+            {
+                // 窗口置前端
+                WindowHelper.ShowAppWindow();
+
+                if (NavigationService.GetCurrentPageType() != typeof(SettingsPage))
+                {
+                    NavigationService.NavigateTo(typeof(SettingsPage));
+                }
+            });
+            Program.ApplicationRoot.TrayMenuWindow.AppWindow.Hide();
+        }
+
+        /// <summary>
+        /// 显示 / 隐藏窗口
+        /// </summary>
+        public void OnShowOrHideWindowClicked(object sender, RoutedEventArgs args)
+        {
+            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
+            {
+                // 隐藏窗口
+                if (WindowHelper.IsWindowVisible)
+                {
+                    WindowHelper.HideAppWindow();
+                }
+                // 显示窗口
+                else
+                {
+                    WindowHelper.ShowAppWindow();
+                }
+            });
+            Program.ApplicationRoot.TrayMenuWindow.AppWindow.Hide();
         }
 
         /// <summary>

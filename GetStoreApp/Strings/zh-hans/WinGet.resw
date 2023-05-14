@@ -117,35 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppNameSort" xml:space="preserve">
-    <value>按照应用名称排序</value>
-  </data>
   <data name="AppNameToolTip" xml:space="preserve">
     <value>应用名称：{0}</value>
-  </data>
-  <data name="AppPublisherSort" xml:space="preserve">
-    <value>按照应用发布者排序</value>
   </data>
   <data name="AppPublisherToolTip" xml:space="preserve">
     <value>发布者：{0}</value>
   </data>
+  <data name="AppsCountEmpty" xml:space="preserve">
+    <value>没有任何应用</value>
+  </data>
+  <data name="AppsCountInfo" xml:space="preserve">
+    <value>共有{0}个应用</value>
+  </data>
   <data name="AppVersionToolTip" xml:space="preserve">
     <value>应用版本：{0}</value>
   </data>
-  <data name="DecreaseSort" xml:space="preserve">
-    <value>倒序排序</value>
-  </data>
-  <data name="IncreaseSort" xml:space="preserve">
-    <value>正序排序</value>
+  <data name="Install" xml:space="preserve">
+    <value>安装</value>
   </data>
   <data name="InstalledApps" xml:space="preserve">
     <value>已安装应用</value>
-  </data>
-  <data name="InstalledAppsCountInfo" xml:space="preserve">
-    <value>共有{0}个应用</value>
-  </data>
-  <data name="InstalledAppsEmpty" xml:space="preserve">
-    <value>没有任何应用</value>
   </data>
   <data name="InstalledAppsEmptyDescription" xml:space="preserve">
     <value>应用记录为空，快去安装需要使用的应用吧</value>
@@ -159,6 +150,9 @@
   <data name="LoadingInstalledApps" xml:space="preserve">
     <value>正在加载已安装应用列表，请稍候...</value>
   </data>
+  <data name="NotSearchedTip" xml:space="preserve">
+    <value>快去获取想要安装的应用吧，您搜索到的应用将会显示在此处</value>
+  </data>
   <data name="Operation" xml:space="preserve">
     <value>操作</value>
   </data>
@@ -171,14 +165,23 @@
   <data name="SearchApps" xml:space="preserve">
     <value>查找应用</value>
   </data>
-  <data name="Sort" xml:space="preserve">
-    <value>排序</value>
+  <data name="SearchAppsEmptyDescription" xml:space="preserve">
+    <value>找不到与输入条件匹配的程序包，请更改搜索条件后再进行尝试</value>
+  </data>
+  <data name="SearchAppsPlaceHolderText" xml:space="preserve">
+    <value>搜索应用</value>
+  </data>
+  <data name="SearchingApps" xml:space="preserve">
+    <value>应用正在搜索中，清稍候...</value>
   </data>
   <data name="SortMode" xml:space="preserve">
     <value>排序方式</value>
   </data>
   <data name="SortRule" xml:space="preserve">
     <value>排序规则</value>
+  </data>
+  <data name="TaskManager" xml:space="preserve">
+    <value>任务管理</value>
   </data>
   <data name="UnInstall" xml:space="preserve">
     <value>卸载</value>

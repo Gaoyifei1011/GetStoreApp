@@ -16,5 +16,22 @@ namespace GetStoreApp.UI.Dialogs.Common
         {
             InitializeComponent();
         }
+
+        /// <summary>
+        /// 关闭对话框
+        /// </summary>
+        public void OnCloseDialogClicked(object sender, RoutedEventArgs args)
+        {
+            Hide();
+        }
+
+        /// <summary>
+        /// 重启应用
+        /// </summary>
+        public async void OnRestartClicked(object sender, RoutedEventArgs args)
+        {
+            Hide();
+            await ViewModel.RestartAppsAsync();
+        }
     }
 }

@@ -18,5 +18,22 @@ namespace GetStoreApp.UI.Dialogs.Download
             InitializeComponent();
             ViewModel.InitializeFileInformation(completedItem);
         }
+
+        /// <summary>
+        /// 关闭对话框
+        /// </summary>
+        public void OnCloseDialogClicked(object sender, RoutedEventArgs args)
+        {
+            Hide();
+        }
+
+        /// <summary>
+        /// 复制文件信息
+        /// </summary>
+        public void OnCopyFileInformationClicked(object sender, RoutedEventArgs args)
+        {
+            ViewModel.CopyFileInformation();
+            Hide();
+        }
     }
 }

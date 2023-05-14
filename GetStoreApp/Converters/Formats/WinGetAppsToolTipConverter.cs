@@ -4,7 +4,10 @@ using System;
 
 namespace GetStoreApp.Converters.Formats
 {
-    public class InstalledAppsToolTipConverter : IValueConverter
+    /// <summary>
+    /// WinGet 程序包描述信息转换器
+    /// </summary>
+    public class WinGetAppsToolTipConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {

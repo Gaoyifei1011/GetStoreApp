@@ -1,5 +1,5 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.WindowsAPI.PInvoke.Shell32;
+﻿using GetStoreApp.WindowsAPI.PInvoke.Shell32;
+using Microsoft.UI.Xaml;
 using System;
 using System.Runtime.InteropServices;
 
@@ -19,19 +19,14 @@ namespace GetStoreApp.Extensions.SystemTray
 
         public IntPtr Handle { get; private set; } = IntPtr.Zero;
 
-        public Action Click { get; set; }
-
-        public Action RightClick { get; set; }
-
-        public Action DoubleClick { get; set; }
-
-        public IRelayCommand ClickCommand { get; set; }
-
-        public IRelayCommand RightClickCommand { get; set; }
-
-        public IRelayCommand DoubleClickCommand { get; set; }
-
         public bool IsTaskbarIconCreated { get; private set; }
+
+        public RoutedEventHandler Click;
+
+        public RoutedEventHandler RightClick;
+
+        public RoutedEventHandler DoubleClick;
+
 
         public WindowTrayIcon(string title)
         {
@@ -63,18 +58,15 @@ namespace GetStoreApp.Extensions.SystemTray
         {
             if (mouseEvent is MouseEvent.IconLeftMouseUp)
             {
-                Click?.Invoke();
-                ClickCommand?.Execute(null);
+                Click?.Invoke(this, null);
             }
             else if (mouseEvent is MouseEvent.IconRightMouseUp)
             {
-                RightClick?.Invoke();
-                RightClickCommand.Execute(null);
+                RightClick?.Invoke(this, null);
             }
             else if (mouseEvent is MouseEvent.IconDoubleClick)
             {
-                DoubleClick?.Invoke();
-                DoubleClickCommand.Execute(null);
+                DoubleClick?.Invoke(this, null);
             }
         }
 

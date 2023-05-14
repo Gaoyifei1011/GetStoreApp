@@ -20,11 +20,11 @@ namespace GetStoreApp.UI.Controls.WinGet
         {
             if (count is 0)
             {
-                return ResourceService.GetLocalized("WinGet/InstalledAppsEmpty");
+                return ResourceService.GetLocalized("WinGet/AppsCountEmpty");
             }
             else
             {
-                return string.Format(ResourceService.GetLocalized("WinGet/InstalledAppsCountInfo"), count);
+                return string.Format(ResourceService.GetLocalized("WinGet/AppsCountInfo"), count);
             }
         }
     }

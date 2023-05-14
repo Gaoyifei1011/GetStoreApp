@@ -1,8 +1,5 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Models.Dialogs.CommonDialogs.About;
+﻿using GetStoreApp.Models.Dialogs.CommonDialogs.About;
 using GetStoreApp.Services.Root;
-using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Dialogs.About
@@ -24,11 +21,5 @@ namespace GetStoreApp.ViewModels.Dialogs.About
             new StartupArgsModel(){ArgumentName = ResourceService.GetLocalized("Dialog/Channel"),Argument="-c; --channel",IsRequired=ResourceService.GetLocalized("Dialog/No"),ArgumentContent=@"""wif"",""wis"",""rp"",""rt"""},
             new StartupArgsModel(){ArgumentName = ResourceService.GetLocalized("Dialog/Link"),Argument="-l; --link",IsRequired=ResourceService.GetLocalized("Dialog/Yes"),ArgumentContent=string.Format("[{0}]",ResourceService.GetLocalized("Dialog/LinkContent")) }
         };
-
-        // 关闭对话框
-        public IRelayCommand CloseDialogCommand => new RelayCommand<ContentDialog>((dialog) =>
-        {
-            dialog.Hide();
-        });
     }
 }

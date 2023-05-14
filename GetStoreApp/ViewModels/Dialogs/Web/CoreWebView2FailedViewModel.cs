@@ -1,9 +1,6 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Notifications;
-using Microsoft.UI.Xaml.Controls;
 using Microsoft.Web.WebView2.Core;
 using System;
 using System.Text;
@@ -23,8 +20,10 @@ namespace GetStoreApp.ViewModels.Dialogs.Web
 
         public string ProcessDescription { get; set; }
 
-        // 复制异常信息
-        public IRelayCommand CopyExceptionCommand => new RelayCommand<ContentDialog>((dialog) =>
+        /// <summary>
+        /// 复制异常信息
+        /// </summary>
+        public void CopyExceptionInformation()
         {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/ProcessFailedKind") + ProcessFailedKind);
@@ -33,16 +32,9 @@ namespace GetStoreApp.ViewModels.Dialogs.Web
             stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/ProcessDescription") + ProcessDescription);
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
-            dialog.Hide();
 
             new ExceptionCopyNotification(true).Show();
-        });
-
-        // 关闭对话框
-        public IRelayCommand CloseDialogCommand => new RelayCommand<ContentDialog>((dialog) =>
-        {
-            dialog.Hide();
-        });
+        }
 
         /// <summary>
         /// 初始化错误信息

@@ -16,5 +16,21 @@ namespace GetStoreApp.UI.Dialogs.Settings
         {
             InitializeComponent();
         }
+
+        /// <summary>
+        /// 取消重启应用
+        /// </summary>
+        public void OnCancelClicked(object sender, RoutedEventArgs args)
+        {
+            Hide();
+        }
+
+        /// <summary>
+        /// 重启应用
+        /// </summary>
+        public async void OnRestartAppsClicked(object sender, RoutedEventArgs args)
+        {
+            await ViewModel.RestartAppsAsync();
+        }
     }
 }

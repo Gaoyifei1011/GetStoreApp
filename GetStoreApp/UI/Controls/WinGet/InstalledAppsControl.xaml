@@ -18,7 +18,7 @@
     </UserControl.DataContext>
 
     <UserControl.Resources>
-        <format:InstalledAppsToolTipConverter x:Name="InstalledAppsToolTipConverter" />
+        <format:WinGetAppsToolTipConverter x:Name="WinGetAppsToolTipConverter" />
     </UserControl.Resources>
 
     <Grid Padding="0">
@@ -90,39 +90,9 @@
                 DefaultLabelPosition="Right">
 
                 <menusAndToolbars:ExtendedAppBarButton
-                    Cursor="Hand"
-                    IsEnabled="False"
-                    Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Sort')}">
-
-                    <menusAndToolbars:ExtendedAppBarButton.Icon>
-                        <FontIcon Glyph="&#xE8CB;" Style="{StaticResource SegoeFluentStyle}" />
-                    </menusAndToolbars:ExtendedAppBarButton.Icon>
-
-                    <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Sort')}"
-                            Placement="Bottom"
-                            VerticalOffset="25" />
-                    </ToolTipService.ToolTip>
-
-                    <menusAndToolbars:ExtendedAppBarButton.Flyout>
-                        <menusAndToolbars:AdaptiveMenuFlyout>
-                            <MenuFlyoutSubItem Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortRule')}">
-                                <RadioMenuFlyoutItem Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppNameSort')}" />
-                                <RadioMenuFlyoutItem Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppPublisherSort')}" />
-                            </MenuFlyoutSubItem>
-
-                            <MenuFlyoutSubItem Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortMode')}">
-                                <RadioMenuFlyoutItem Text="{x:Bind root:ResourceService.GetLocalized('WinGet/IncreaseSort')}" />
-                                <RadioMenuFlyoutItem Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DecreaseSort')}" />
-                            </MenuFlyoutSubItem>
-                        </menusAndToolbars:AdaptiveMenuFlyout>
-                    </menusAndToolbars:ExtendedAppBarButton.Flyout>
-                </menusAndToolbars:ExtendedAppBarButton>
-
-                <menusAndToolbars:ExtendedAppBarButton
                     Command="{x:Bind ViewModel.RefreshCommand}"
                     Cursor="Hand"
+                    IsEnabled="{x:Bind ViewModel.IsLoadedCompleted, Mode=OneWay}"
                     Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Refresh')}">
 
                     <menusAndToolbars:ExtendedAppBarButton.Icon>
@@ -140,7 +110,7 @@
         </Grid>
 
         <Grid
-            x:Name="LoadingTip"
+            x:Name="LoadingGrid"
             Grid.Row="1"
             Margin="30,3,30,0"
             x:Load="{x:Bind ViewModel.IsLoadedCompleted, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
@@ -171,7 +141,6 @@
         </Grid>
 
         <ScrollViewer
-            x:Name="InstalledAppsScroll"
             Grid.Row="2"
             Padding="30,3,30,0"
             HorizontalScrollBarVisibility="Disabled"
@@ -248,7 +217,7 @@
 
                                         <ToolTipService.ToolTip>
                                             <ToolTip
-                                                Content="{x:Bind AppName, Converter={StaticResource InstalledAppsToolTipConverter}, ConverterParameter=AppName}"
+                                                Content="{x:Bind AppName, Converter={StaticResource WinGetAppsToolTipConverter}, ConverterParameter=AppName}"
                                                 Placement="Bottom"
                                                 VerticalOffset="20" />
                                         </ToolTipService.ToolTip>
@@ -263,7 +232,7 @@
 
                                         <ToolTipService.ToolTip>
                                             <ToolTip
-                                                Content="{x:Bind AppPublisher, Converter={StaticResource InstalledAppsToolTipConverter}, ConverterParameter=AppPublisher}"
+                                                Content="{x:Bind AppPublisher, Converter={StaticResource WinGetAppsToolTipConverter}, ConverterParameter=AppPublisher}"
                                                 Placement="Bottom"
                                                 VerticalOffset="20" />
                                         </ToolTipService.ToolTip>
@@ -280,7 +249,7 @@
 
                                         <ToolTipService.ToolTip>
                                             <ToolTip
-                                                Content="{x:Bind AppVersion, Converter={StaticResource InstalledAppsToolTipConverter}, ConverterParameter=AppVersion}"
+                                                Content="{x:Bind AppVersion, Converter={StaticResource WinGetAppsToolTipConverter}, ConverterParameter=AppVersion}"
                                                 Placement="Bottom"
                                                 VerticalOffset="20" />
                                         </ToolTipService.ToolTip>

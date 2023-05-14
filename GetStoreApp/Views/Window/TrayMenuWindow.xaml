@@ -30,7 +30,7 @@
         Unloaded="{x:Bind ViewModel.OnUnloaded}">
 
         <MenuFlyoutItem
-            Command="{x:Bind ViewModel.ProjectDescriptionCommand}"
+            Click="{x:Bind ViewModel.OnProjectDescriptionClicked}"
             Style="{StaticResource TrayMenuFlyoutItemStyle}"
             Text="{x:Bind root:ResourceService.GetLocalized('Resources/ProjectHomePage')}">
 
@@ -40,7 +40,7 @@
         </MenuFlyoutItem>
 
         <MenuFlyoutItem
-            Command="{x:Bind ViewModel.AboutAppCommand}"
+            Click="{x:Bind ViewModel.OnAboutAppClicked}"
             Style="{StaticResource TrayMenuFlyoutItemStyle}"
             Text="{x:Bind root:ResourceService.GetLocalized('Resources/AboutApp')}">
 
@@ -52,7 +52,7 @@
         <MenuFlyoutSeparator />
 
         <MenuFlyoutItem
-            Command="{x:Bind ViewModel.ShowOrHideWindowCommand}"
+            Click="{x:Bind ViewModel.OnShowOrHideWindowClicked}"
             Style="{StaticResource TrayMenuFlyoutItemStyle}"
             Text="{x:Bind root:ResourceService.GetLocalized('Resources/ShowOrHideWindow')}">
 
@@ -62,7 +62,7 @@
         </MenuFlyoutItem>
 
         <MenuFlyoutItem
-            Command="{x:Bind ViewModel.SettingsCommand}"
+            Click="{x:Bind ViewModel.OnSettingsClicked}"
             Style="{StaticResource TrayMenuFlyoutItemStyle}"
             Text="{x:Bind root:ResourceService.GetLocalized('Resources/Settings')}">
 
@@ -72,7 +72,7 @@
         </MenuFlyoutItem>
 
         <MenuFlyoutItem
-            Command="{x:Bind ViewModel.ExitCommand}"
+            Click="{x:Bind ViewModel.OnExitClicked}"
             Style="{StaticResource TrayMenuFlyoutItemStyle}"
             Text="{x:Bind root:ResourceService.GetLocalized('Resources/Exit')}">
 

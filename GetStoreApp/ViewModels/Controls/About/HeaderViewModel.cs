@@ -1,6 +1,4 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.ViewModels.Base;
 using Microsoft.UI.Xaml;
 using System;
@@ -34,29 +32,21 @@ namespace GetStoreApp.ViewModels.Controls.About
             }
         }
 
-        // 开发者个人信息
-        public IRelayCommand DeveloperDescriptionCommand => new RelayCommand(async () =>
-        {
-            await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011"));
-        });
-
-        // 项目主页
-        public IRelayCommand ProjectDescriptionCommand => new RelayCommand(async () =>
-        {
-            await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp"));
-        });
-
-        // 发送反馈
-        public IRelayCommand SendFeedbackCommand => new RelayCommand(async () =>
-        {
-            await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/issues"));
-        });
-
-        // 检查更新
-        public IRelayCommand CheckUpdateCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 检查更新
+        /// </summary>
+        public async void OnCheckUpdateClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/releases"));
-        });
+        }
+
+        /// <summary>
+        /// 开发者个人信息
+        /// </summary>
+        public async void OnDeveloperDescriptionClicked(object sender, RoutedEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011"));
+        }
 
         /// <summary>
         /// 初始化应用版本信息
@@ -64,6 +54,22 @@ namespace GetStoreApp.ViewModels.Controls.About
         public void OnLoaded(object sender, RoutedEventArgs args)
         {
             AppVersion = string.Format("{0}.{1}.{2}.{3}", MajorVersion, MinorVersion, BuildVersion, RevisionVersion);
+        }
+
+        /// <summary>
+        /// 项目主页
+        /// </summary>
+        public async void OnProjectDescriptionClicked(object sender, RoutedEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp"));
+        }
+
+        /// <summary>
+        /// 发送反馈
+        /// </summary>
+        public async void OnSendFeedbackClicked(object sender, RoutedEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/issues"));
         }
     }
 }
