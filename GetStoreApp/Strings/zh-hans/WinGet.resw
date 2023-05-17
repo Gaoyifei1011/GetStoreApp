@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppCurrentVersionToolTip" xml:space="preserve">
+    <value>当前版本：{0}</value>
+  </data>
   <data name="AppNameToolTip" xml:space="preserve">
     <value>应用名称：{0}</value>
+  </data>
+  <data name="AppNewestVersionToolTip" xml:space="preserve">
+    <value>最新版本：{0}</value>
   </data>
   <data name="AppPublisherToolTip" xml:space="preserve">
     <value>发布者：{0}</value>
@@ -149,6 +155,9 @@
   </data>
   <data name="LoadingInstalledApps" xml:space="preserve">
     <value>正在加载已安装应用列表，请稍候...</value>
+  </data>
+  <data name="LoadingUpgradableApps" xml:space="preserve">
+    <value>正在加载可升级应用列表，请稍候...</value>
   </data>
   <data name="NotSearchedTip" xml:space="preserve">
     <value>快去获取想要安装的应用吧，您搜索到的应用将会显示在此处</value>
@@ -189,7 +198,13 @@
   <data name="Unknown" xml:space="preserve">
     <value>未知</value>
   </data>
+  <data name="Update" xml:space="preserve">
+    <value>升级</value>
+  </data>
   <data name="UpgradableApps" xml:space="preserve">
     <value>可升级应用</value>
+  </data>
+  <data name="UpgradableAppsEmptyDescription" xml:space="preserve">
+    <value>您的所有应用已经是最新版本了</value>
   </data>
 </root>

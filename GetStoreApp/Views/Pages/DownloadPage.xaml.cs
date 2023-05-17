@@ -26,7 +26,28 @@ namespace GetStoreApp.Views.Pages
             ViewModel.OnNavigatedFrom();
         }
 
-        public void TeachingTipClicked(object sender, RoutedEventArgs args)
+        /// <summary>
+        /// 打开应用“下载设置”
+        /// </summary>
+        public void OnDownloadSettingsClicked(object sender, RoutedEventArgs args)
+        {
+            DownloadTeachingTip.IsOpen = false;
+            ViewModel.OpenDownloadSettings();
+        }
+
+        /// <summary>
+        /// 了解更多下载管理说明
+        /// </summary>
+        public void OnLearnMoreClicked(object sender, RoutedEventArgs args)
+        {
+            DownloadTeachingTip.IsOpen = false;
+            ViewModel.LearnMore();
+        }
+
+        /// <summary>
+        /// 显示下载管理说明内容
+        /// </summary>
+        public void OnTeachingTipClicked(object sender, RoutedEventArgs args)
         {
             DownloadTeachingTip.IsOpen = true;
         }

@@ -42,7 +42,7 @@
         <Button
             Grid.Column="2"
             MinWidth="100"
-            Command="{x:Bind ViewModel.ConfigCommand}"
+            Click="{x:Bind ViewModel.OnConfigClicked}"
             Content="{x:Bind root:ResourceService.GetLocalized('Settings/Config')}">
 
             <ToolTipService.ToolTip>

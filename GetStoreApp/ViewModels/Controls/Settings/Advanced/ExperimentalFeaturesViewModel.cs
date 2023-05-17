@@ -1,6 +1,5 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.UI.Dialogs.Settings;
+﻿using GetStoreApp.UI.Dialogs.Settings;
+using Microsoft.UI.Xaml;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
 {
@@ -9,10 +8,12 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
     /// </summary>
     public sealed class ExperimentalFeaturesViewModel
     {
-        // 实验功能设置
-        public IRelayCommand ConfigCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 实验功能设置
+        /// </summary>
+        public async void OnConfigClicked(object sender,RoutedEventArgs args)
         {
             await new ExperimentalConfigDialog().ShowAsync();
-        });
+        }
     }
 }

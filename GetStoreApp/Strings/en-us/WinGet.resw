@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppCurrentVersionToolTip" xml:space="preserve">
+    <value>Current version:{0}</value>
+  </data>
   <data name="AppNameToolTip" xml:space="preserve">
     <value>App name:{0}</value>
+  </data>
+  <data name="AppNewestVersionToolTip" xml:space="preserve">
+    <value>The newest version:{0}</value>
   </data>
   <data name="AppPublisherToolTip" xml:space="preserve">
     <value>Publisher:{0}</value>
@@ -149,6 +155,9 @@
   </data>
   <data name="LoadingInstalledApps" xml:space="preserve">
     <value>Please wait while loading the list of installed applications...</value>
+  </data>
+  <data name="LoadingUpgradableApps" xml:space="preserve">
+    <value>Please wait while loading the list of upgradable applications...</value>
   </data>
   <data name="NotSearchedTip" xml:space="preserve">
     <value>Go ahead and get the apps you want to install. The apps you search for will be displayed here</value>
@@ -189,7 +198,13 @@
   <data name="Unknown" xml:space="preserve">
     <value>Unknown</value>
   </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
   <data name="UpgradableApps" xml:space="preserve">
     <value>Upgradable apps</value>
+  </data>
+  <data name="UpgradableAppsEmptyDescription" xml:space="preserve">
+    <value>All of your applications are up to date</value>
   </data>
 </root>

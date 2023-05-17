@@ -202,8 +202,8 @@
                                     ColumnSpacing="10"
                                     Style="{StaticResource CardGridStyle}">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="3*" />
-                                        <ColumnDefinition Width="3*" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="2*" />
                                         <ColumnDefinition Width="120" />
                                         <ColumnDefinition Width="60" />
                                     </Grid.ColumnDefinitions>

@@ -1,13 +1,13 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style
-        x:Key="AdaptiveFlyoutLightPresenter"
+        x:Key="AdaptiveMenuFlyoutLightPresenterStyle"
         BasedOn="{StaticResource DefaultMenuFlyoutPresenterStyle}"
         TargetType="MenuFlyoutPresenter">
         <Setter Property="RequestedTheme" Value="Light" />
     </Style>
     <Style
-        x:Key="AdaptiveFlyoutDarkPresenter"
+        x:Key="AdaptiveMenuFlyoutDarkPresenterStyle"
         BasedOn="{StaticResource DefaultMenuFlyoutPresenterStyle}"
         TargetType="MenuFlyoutPresenter">
         <Setter Property="RequestedTheme" Value="Dark" />

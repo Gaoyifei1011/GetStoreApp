@@ -1,9 +1,8 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Settings;
 using GetStoreApp.Views.Pages;
+using Microsoft.UI.Xaml;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
 {
@@ -12,16 +11,20 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
     /// </summary>
     public sealed class TraceCleanupViewModel
     {
-        // 痕迹清理说明
-        public IRelayCommand TraceCleanupTipCommand => new RelayCommand(() =>
+        /// <summary>
+        /// 痕迹清理说明
+        /// </summary>
+        public void OnTraceCleanupTipClicked(object sender, RoutedEventArgs args)
         {
             NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
-        });
+        }
 
-        // 清理应用内使用的所有痕迹
-        public IRelayCommand TraceCleanupCommand = new RelayCommand(async () =>
+        /// <summary>
+        /// 清理应用内使用的所有痕迹
+        /// </summary>
+        public async void OnTraceCleanupClicked(object sender, RoutedEventArgs args)
         {
             await new TraceCleanupPromptDialog().ShowAsync();
-        });
+        }
     }
 }

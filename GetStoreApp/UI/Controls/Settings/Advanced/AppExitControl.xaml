@@ -55,10 +55,10 @@
             <DropDownButton.Flyout>
                 <menusAndToolbars:AdaptiveMenuFlyout>
                     <RadioMenuFlyoutItem
-                        Command="{x:Bind ViewModel.AppExitSelectCommand}"
-                        CommandParameter="0"
+                        Click="{x:Bind ViewModel.OnAppExitSelectClicked}"
                         GroupName="AppExitSetting"
                         IsChecked="{x:Bind IsItemChecked(ViewModel.AppExit.InternalName, ViewModel.AppExitList[0].InternalName), Mode=OneWay}"
+                        Tag="0"
                         Text="{x:Bind ViewModel.AppExitList[0].DisplayName}">
 
                         <ToolTipService.ToolTip>
@@ -70,10 +70,10 @@
                     </RadioMenuFlyoutItem>
 
                     <RadioMenuFlyoutItem
-                        Command="{x:Bind ViewModel.AppExitSelectCommand}"
-                        CommandParameter="1"
+                        Click="{x:Bind ViewModel.OnAppExitSelectClicked}"
                         GroupName="AppExitSetting"
                         IsChecked="{x:Bind IsItemChecked(ViewModel.AppExit.InternalName, ViewModel.AppExitList[1].InternalName), Mode=OneWay}"
+                        Tag="1"
                         Text="{x:Bind ViewModel.AppExitList[1].DisplayName}">
 
                         <ToolTipService.ToolTip>

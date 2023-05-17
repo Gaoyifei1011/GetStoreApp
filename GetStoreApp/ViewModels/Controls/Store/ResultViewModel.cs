@@ -13,6 +13,7 @@ using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
+using GetStoreApp.WindowsAPI.PInvoke.WinINet;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -162,10 +163,9 @@ namespace GetStoreApp.ViewModels.Controls.Store
             // 查看是否开启了网络监控服务
             if (NetWorkMonitorService.NetWorkMonitorValue)
             {
-                NetWorkStatus NetStatus = NetWorkHelper.GetNetWorkStatus();
-
                 // 网络处于未连接状态，不再进行下载，显示通知
-                if (NetStatus is NetWorkStatus.None || NetStatus is NetWorkStatus.Unknown)
+                INTERNET_CONNECTION_FLAGS flags = INTERNET_CONNECTION_FLAGS.INTERNET_CONNECTION_OFFLINE;
+                if (!WinINetLibrary.InternetGetConnectedState(ref flags, 0))
                 {
                     new NetWorkErrorNotification().Show();
                     return;
@@ -271,10 +271,9 @@ namespace GetStoreApp.ViewModels.Controls.Store
             // 查看是否开启了网络监控服务
             if (NetWorkMonitorService.NetWorkMonitorValue)
             {
-                NetWorkStatus NetStatus = NetWorkHelper.GetNetWorkStatus();
-
                 // 网络处于未连接状态，不再进行下载，显示通知
-                if (NetStatus is NetWorkStatus.None || NetStatus is NetWorkStatus.Unknown)
+                INTERNET_CONNECTION_FLAGS flags = INTERNET_CONNECTION_FLAGS.INTERNET_CONNECTION_OFFLINE;
+                if (!WinINetLibrary.InternetGetConnectedState(ref flags, 0))
                 {
                     new NetWorkErrorNotification().Show();
                     return;
@@ -378,10 +377,9 @@ namespace GetStoreApp.ViewModels.Controls.Store
             // 查看是否开启了网络监控服务
             if (NetWorkMonitorService.NetWorkMonitorValue)
             {
-                NetWorkStatus NetStatus = NetWorkHelper.GetNetWorkStatus();
-
                 // 网络处于未连接状态，不再进行下载，显示通知
-                if (NetStatus is NetWorkStatus.None || NetStatus is NetWorkStatus.Unknown)
+                INTERNET_CONNECTION_FLAGS flags = INTERNET_CONNECTION_FLAGS.INTERNET_CONNECTION_OFFLINE;
+                if (!WinINetLibrary.InternetGetConnectedState(ref flags, 0))
                 {
                     new NetWorkErrorNotification().Show();
                     return;

@@ -1,11 +1,11 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Models.Controls.Settings.Advanced;
 using GetStoreApp.Services.Controls.Settings.Advanced;
 using GetStoreApp.Services.Window;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 
@@ -31,17 +31,25 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
             }
         }
 
-        // 应用安装方式说明
-        public IRelayCommand InstallModeTipCommand => new RelayCommand(() =>
+        /// <summary>
+        /// 应用安装方式说明
+        /// </summary>
+        public void OnInstallModeTipClicked(object sender, RoutedEventArgs args)
         {
             NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
-        });
+        }
 
-        // 应用安装方式设置
-        public IRelayCommand InstallModeSelectCommand => new RelayCommand<string>(async (installModeIndex) =>
+        /// <summary>
+        /// 应用安装方式设置
+        /// </summary>
+        public async void OnInstallModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            InstallMode = InstallModeList[Convert.ToInt32(installModeIndex)];
-            await InstallModeService.SetInstallModeAsync(InstallMode);
-        });
+            RadioMenuFlyoutItem item = sender as RadioMenuFlyoutItem;
+            if (item.Tag is not null)
+            {
+                InstallMode = InstallModeList[Convert.ToInt32(item.Tag)];
+                await InstallModeService.SetInstallModeAsync(InstallMode);
+            }
+        }
     }
 }

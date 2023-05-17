@@ -19,5 +19,18 @@ namespace GetStoreApp.ViewModels.Pages
                 OnPropertyChanged();
             }
         }
+
+        private int _installingAppsCount;
+
+        public int InstallingAppsCount
+        {
+            get { return _installingAppsCount; }
+
+            set
+            {
+                _installingAppsCount = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }

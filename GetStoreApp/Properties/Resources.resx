@@ -142,6 +142,9 @@
   <data name="Store" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\ControlIcon\Store.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="TaskEmpty" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Images\TaskEmpty.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Web" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\ControlIcon\Web.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

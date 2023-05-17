@@ -27,20 +27,20 @@ namespace GetStoreApp.Views.CustomControls.MenusAndToolbars
             {
                 if (Application.Current.RequestedTheme is ApplicationTheme.Light)
                 {
-                    MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveFlyoutLightPresenter"] as Style;
+                    MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveMenuFlyoutLightPresenterStyle"] as Style;
                 }
                 else
                 {
-                    MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveFlyoutDarkPresenter"] as Style;
+                    MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveMenuFlyoutDarkPresenterStyle"] as Style;
                 }
             }
             else if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[1].InternalName)
             {
-                MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveFlyoutLightPresenter"] as Style;
+                MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveMenuFlyoutLightPresenterStyle"] as Style;
             }
             else if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[2].InternalName)
             {
-                MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveFlyoutDarkPresenter"] as Style;
+                MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveMenuFlyoutDarkPresenterStyle"] as Style;
             }
         }
     }

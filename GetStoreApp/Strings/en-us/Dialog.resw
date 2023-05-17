@@ -421,7 +421,7 @@
     <value>Uninstallation failure prompt</value>
   </data>
   <data name="UnInstallInSettings" xml:space="preserve">
-    <value>Solution: Uninstall your application in Settings</value>
+    <value>Alternatively, you can try uninstalling your app in Settings</value>
   </data>
   <data name="OpenSettings" xml:space="preserve">
     <value>Open settings</value>

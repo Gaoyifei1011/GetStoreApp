@@ -45,7 +45,7 @@
         <basicinput:ExtendedButton
             Grid.Column="2"
             VerticalAlignment="Center"
-            Command="{x:Bind ViewModel.InstallModeTipCommand}"
+            Click="{x:Bind ViewModel.OnInstallModeTipClicked}"
             Cursor="Hand"
             Style="{StaticResource ButtonInfoStyle}">
 
@@ -79,10 +79,10 @@
             <DropDownButton.Flyout>
                 <menusAndToolbars:AdaptiveMenuFlyout>
                     <RadioMenuFlyoutItem
-                        Command="{x:Bind ViewModel.InstallModeSelectCommand}"
-                        CommandParameter="0"
+                        Click="{x:Bind ViewModel.OnInstallModeSelectClicked}"
                         GroupName="InstallModeSetting"
                         IsChecked="{x:Bind IsItemChecked(ViewModel.InstallMode.InternalName, ViewModel.InstallModeList[0].InternalName), Mode=OneWay}"
+                        Tag="0"
                         Text="{x:Bind ViewModel.InstallModeList[0].DisplayName}">
 
                         <ToolTipService.ToolTip>
@@ -94,10 +94,10 @@
                     </RadioMenuFlyoutItem>
 
                     <RadioMenuFlyoutItem
-                        Command="{x:Bind ViewModel.InstallModeSelectCommand}"
-                        CommandParameter="1"
+                        Click="{x:Bind ViewModel.OnInstallModeSelectClicked}"
                         GroupName="InstallModeSetting"
                         IsChecked="{x:Bind IsItemChecked(ViewModel.InstallMode.InternalName, ViewModel.InstallModeList[1].InternalName), Mode=OneWay}"
+                        Tag="1"
                         Text="{x:Bind ViewModel.InstallModeList[1].DisplayName}">
 
                         <ToolTipService.ToolTip>

@@ -1,10 +1,9 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.About;
 using GetStoreApp.UI.Notifications;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
+using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using Windows.ApplicationModel;
@@ -19,8 +18,10 @@ namespace GetStoreApp.ViewModels.Pages
     /// </summary>
     public sealed class AboutViewModel
     {
-        // 创建应用的桌面快捷方式
-        public IRelayCommand CreateDesktopShortcutCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 创建应用的桌面快捷方式
+        /// </summary>
+        public async void OnCreateDesktopShortcutClicked(object sender, RoutedEventArgs args)
         {
             bool IsCreatedSuccessfully = false;
 
@@ -39,10 +40,12 @@ namespace GetStoreApp.ViewModels.Pages
             {
                 new QuickOperationNotification(QuickOperationType.DesktopShortcut, IsCreatedSuccessfully).Show();
             }
-        });
+        }
 
-        // 将应用固定到“开始”屏幕
-        public IRelayCommand PinToStartScreenCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 将应用固定到“开始”屏幕
+        /// </summary>
+        public async void OnPinToStartScreenClicked(object sender, RoutedEventArgs args)
         {
             bool IsPinnedSuccessfully = false;
 
@@ -69,21 +72,25 @@ namespace GetStoreApp.ViewModels.Pages
             {
                 new QuickOperationNotification(QuickOperationType.StartScreen, IsPinnedSuccessfully).Show();
             }
-        });
+        }
 
         // 将应用固定到任务栏
-        //public IRelayCommand PinToTaskbarCommand => new RelayCommand(() => { });
+        //public void OnPinToTaskbarClicked(object sender,RoutedEventArgs args) { }
 
-        // 查看更新日志
-        public IRelayCommand ShowReleaseNotesCommand => new RelayCommand(async () =>
-        {
-            await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/releases"));
-        });
-
-        // 查看许可证
-        public IRelayCommand ShowLicenseCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 查看许可证
+        /// </summary>
+        public async void OnShowLicenseClicked(object sender, RoutedEventArgs args)
         {
             await new LicenseDialog().ShowAsync();
-        });
+        }
+
+        /// <summary>
+        /// 查看更新日志
+        /// </summary>
+        public async void OnShowReleaseNotesClicked(object sender, RoutedEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/releases"));
+        }
     }
 }

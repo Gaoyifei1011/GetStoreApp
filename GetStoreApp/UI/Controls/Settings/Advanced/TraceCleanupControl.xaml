@@ -44,7 +44,7 @@
         <basicinput:ExtendedButton
             Grid.Column="2"
             VerticalAlignment="Center"
-            Command="{x:Bind ViewModel.TraceCleanupTipCommand}"
+            Click="{x:Bind ViewModel.OnTraceCleanupTipClicked}"
             Cursor="Hand"
             Style="{StaticResource ButtonInfoStyle}">
 
@@ -66,7 +66,7 @@
         <Button
             Grid.Column="3"
             MinWidth="100"
-            Command="{x:Bind ViewModel.TraceCleanupCommand}"
+            Click="{x:Bind ViewModel.OnTraceCleanupClicked}"
             Content="{x:Bind root:ResourceService.GetLocalized('Settings/TraceClear')}">
 
             <ToolTipService.ToolTip>

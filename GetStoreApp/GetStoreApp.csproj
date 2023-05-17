@@ -101,6 +101,7 @@
     <Content Remove="Assets\ControlIcon\Web.png" />
     <Content Remove="Assets\ControlIcon\WinGet.png" />
     <Content Remove="Assets\GetStoreApp.ico" />
+    <Content Remove="Assets\Images\TaskEmpty.png" />
     <Content Remove="Assets\Resources\Lengths.bin" />
     <Content Remove="Assets\Resources\LICENSE" />
 
@@ -123,6 +124,9 @@
     <None Update="lib\Microsoft.Management.Deployment.winmd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="UI\Controls\WinGet\UpgradableAppsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="UI\Dialogs\WinGet\UnInstallFailedDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -164,6 +168,7 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Include="Assets\ControlIcon\WinGet.png" />
+    <None Include="Assets\Images\TaskEmpty.png" />
     
     <None Remove="Assets\GetStoreApp.png" />
     <None Remove="Assets\Images\CloudflareValidation.png" />
@@ -179,6 +184,7 @@
     <None Remove="Styles\Converter.xaml" />
     <None Remove="Styles\DropDownButton.xaml" />
     <None Remove="Styles\Expander.xaml" />
+    <None Remove="Styles\Flyout.xaml" />
     <None Remove="Styles\FontIcon.xaml" />
     <None Remove="Styles\Grid.xaml" />
     <None Remove="Styles\GridView.xaml" />
@@ -194,6 +200,7 @@
     <None Remove="Styles\TextBlock.xaml" />
     <None Remove="Styles\ToggleSwitch.xaml" />
     <None Remove="Styles\WindowChrome.xaml" />
+    <None Remove="UI\Controls\WinGet\UpgradableAppsControl.xaml" />
     
     <None Remove="UI\Dialogs\Controls\About\HeaderControl.xaml" />
     <None Remove="UI\Dialogs\Controls\About\InstructionsControl.xaml" />
@@ -658,6 +665,14 @@
     <TrimmableAssembly Include="Microsoft.WindowsAppRuntime.Bootstrap" />
     <TrimmableAssembly Include="Microsoft.WindowsAppRuntime.Bootstrap.Net" />
     <TrimmableAssembly Include="Microsoft.Windows.Widgets.Projection" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <CustomAdditionalCompileInputs Remove="Styles\Flyout.xaml" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Resource Remove="Styles\Flyout.xaml" />
   </ItemGroup>
 </Project>
   

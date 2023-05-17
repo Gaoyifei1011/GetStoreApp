@@ -1,4 +1,5 @@
 ﻿using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls.Primitives;
 
 namespace GetStoreApp.Helpers.Root
 {
@@ -18,6 +19,8 @@ namespace GetStoreApp.Helpers.Root
         public static ResourceDictionary DropDownButtonResourceDict { get; private set; }
 
         public static ResourceDictionary ExpanderResourceDict { get; private set; }
+
+        public static ResourceDictionary FlyoutResourceDict { get; private set; }
 
         public static ResourceDictionary FontIconResourceDict { get; private set; }
 
@@ -60,21 +63,22 @@ namespace GetStoreApp.Helpers.Root
             ContentDialogResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[5];
             DropDownButtonResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[6];
             ExpanderResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[7];
-            FontIconResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[8];
-            GridResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[9];
-            GridViewResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[10];
-            HyperlinkButtonResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[11];
-            InfoBarResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[12];
-            ListViewResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[13];
-            MenuFlyoutResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[14];
-            MinMaxCloseControlDict = Program.ApplicationRoot.Resources.MergedDictionaries[15];
-            NavigationViewResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[16];
-            PivotResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[17];
-            ScrollViewerResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[18];
-            TeachingTipResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[19];
-            TextBlockResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[20];
-            ToggleSwitchResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[21];
-            WindowChromeDict = Program.ApplicationRoot.Resources.MergedDictionaries[22];
+            FlyoutResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[8];
+            FontIconResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[9];
+            GridResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[10];
+            GridViewResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[11];
+            HyperlinkButtonResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[12];
+            InfoBarResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[13];
+            ListViewResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[14];
+            MenuFlyoutResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[15];
+            MinMaxCloseControlDict = Program.ApplicationRoot.Resources.MergedDictionaries[16];
+            NavigationViewResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[17];
+            PivotResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[18];
+            ScrollViewerResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[19];
+            TeachingTipResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[20];
+            TextBlockResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[21];
+            ToggleSwitchResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[22];
+            WindowChromeDict = Program.ApplicationRoot.Resources.MergedDictionaries[23];
         }
     }
 }

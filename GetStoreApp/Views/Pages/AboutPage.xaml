@@ -50,7 +50,7 @@
                 <basicInput:ExtendedDropDownButton.Flyout>
                     <menusAndToolbars:AdaptiveMenuFlyout>
 
-                        <MenuFlyoutItem Command="{x:Bind ViewModel.CreateDesktopShortcutCommand}" Text="{x:Bind root:ResourceService.GetLocalized('About/CreateDesktopShortcut')}">
+                        <MenuFlyoutItem Click="{x:Bind ViewModel.OnCreateDesktopShortcutClicked}" Text="{x:Bind root:ResourceService.GetLocalized('About/CreateDesktopShortcut')}">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip
@@ -60,7 +60,7 @@
                             </ToolTipService.ToolTip>
                         </MenuFlyoutItem>
 
-                        <MenuFlyoutItem Command="{x:Bind ViewModel.PinToStartScreenCommand}" Text="{x:Bind root:ResourceService.GetLocalized('About/PinToStartScreen')}">
+                        <MenuFlyoutItem Click="{x:Bind ViewModel.OnPinToStartScreenClicked}" Text="{x:Bind root:ResourceService.GetLocalized('About/PinToStartScreen')}">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip
@@ -72,7 +72,7 @@
 
                         <!--<MenuFlyoutItem
                             x:Load="False"
-                            Command="{x:Bind ViewModel.PinToTaskbarCommand}"
+                            Click="{x:Bind ViewModel.OnPinToTaskbarClicked}"
                             Text="{x:Bind root:ResourceService.GetLocalized('About/PinToTaskbar')}">
 
                             <ToolTipService.ToolTip>
@@ -85,7 +85,7 @@
 
                         <MenuFlyoutSeparator />
 
-                        <MenuFlyoutItem Command="{x:Bind ViewModel.ShowReleaseNotesCommand}" Text="{x:Bind root:ResourceService.GetLocalized('About/ShowReleaseNotes')}">
+                        <MenuFlyoutItem Click="{x:Bind ViewModel.OnShowReleaseNotesClicked}" Text="{x:Bind root:ResourceService.GetLocalized('About/ShowReleaseNotes')}">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip
@@ -95,7 +95,7 @@
                             </ToolTipService.ToolTip>
                         </MenuFlyoutItem>
 
-                        <MenuFlyoutItem Command="{x:Bind ViewModel.ShowLicenseCommand}" Text="{x:Bind root:ResourceService.GetLocalized('About/ShowLicense')}">
+                        <MenuFlyoutItem Click="{x:Bind ViewModel.OnShowLicenseClicked}" Text="{x:Bind root:ResourceService.GetLocalized('About/ShowLicense')}">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip

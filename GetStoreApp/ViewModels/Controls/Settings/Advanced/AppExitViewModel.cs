@@ -1,8 +1,8 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Models.Controls.Settings.Advanced;
+﻿using GetStoreApp.Models.Controls.Settings.Advanced;
 using GetStoreApp.Services.Controls.Settings.Advanced;
 using GetStoreApp.ViewModels.Base;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 
@@ -28,11 +28,17 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
             }
         }
 
-        // 应用退出方式设置
-        public IRelayCommand AppExitSelectCommand => new RelayCommand<string>(async (appExitIndex) =>
+        /// <summary>
+        /// 应用退出方式设置
+        /// </summary>
+        public async void OnAppExitSelectClicked(object sender, RoutedEventArgs args)
         {
-            AppExit = AppExitList[Convert.ToInt32(appExitIndex)];
-            await AppExitService.SetAppExitAsync(AppExit);
-        });
+            RadioMenuFlyoutItem item = sender as RadioMenuFlyoutItem;
+            if (item.Tag is not null)
+            {
+                AppExit = AppExitList[Convert.ToInt32(item.Tag)];
+                await AppExitService.SetAppExitAsync(AppExit);
+            }
+        }
     }
 }

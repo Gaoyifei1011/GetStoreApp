@@ -24,11 +24,13 @@
             <wc:InstalledAppsControl />
         </PivotItem>
 
-        <!--<PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradableApps')}" Style="{StaticResource PivotItemStyle}" />-->
+        <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradableApps')}" Style="{StaticResource PivotItemStyle}">
+            <wc:UpgradableAppsControl />
+        </PivotItem>
 
         <Pivot.RightHeader>
             <StackPanel VerticalAlignment="Top" Orientation="Horizontal">
-                <Button Content="{x:Bind root:ResourceService.GetLocalized('WinGet/TaskManager')}">
+                <Button>
 
                     <ToolTipService.ToolTip>
                         <ToolTip
@@ -36,6 +38,75 @@
                             Placement="Bottom"
                             VerticalOffset="20" />
                     </ToolTipService.ToolTip>
+
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="{x:Bind root:ResourceService.GetLocalized('WinGet/TaskManager')}" />
+                            <InfoBadge
+                                Grid.Column="1"
+                                Margin="5,0,0,0"
+                                Visibility="{x:Bind ViewModel.InstallingAppsCount, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}"
+                                Value="2" />
+                        </Grid>
+                    </Button.Content>
+
+                    <!--<Button.Flyout>
+                        <Flyout FlyoutPresenterStyle="{StaticResource AdaptiveFlyoutLightPresenterStyle}" Placement="Bottom">
+                            <Grid
+                                Width="250"
+                                MinHeight="120"
+                                MaxHeight="200">
+                                <ListView ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}" SelectionMode="None">
+                                    <ListViewItem>
+                                        <Grid Height="60" Padding="10">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <TextBlock
+                                                    Grid.Column="0"
+                                                    Style="{StaticResource SubDownloadItemTextStyle}"
+                                                    Text="爱奇艺" />
+
+                                                <Button
+                                                    Grid.Column="1"
+                                                    VerticalAlignment="Top"
+                                                    Content="取消" />
+                                            </Grid>
+                                            <ProgressBar
+                                                Grid.Row="1"
+                                                IsIndeterminate="False"
+                                                Value="30" />
+                                        </Grid>
+                                    </ListViewItem>
+                                </ListView>
+                                <StackPanel
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Orientation="Horizontal"
+                                    Spacing="10"
+                                    Visibility="Collapsed">
+                                    <Image
+                                        Width="50"
+                                        Height="50"
+                                        Loaded="{x:Bind OnTaskEmptyLoaded}" />
+                                    <TextBlock VerticalAlignment="Center" Text="当前暂无安装任务" />
+                                </StackPanel>
+                            </Grid>
+                        </Flyout>
+                    </Button.Flyout>-->
                 </Button>
             </StackPanel>
         </Pivot.RightHeader>

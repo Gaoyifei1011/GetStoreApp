@@ -5,6 +5,7 @@ using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Controls.Settings.Experiment;
 using GetStoreApp.Services.Root;
+using GetStoreApp.WindowsAPI.PInvoke.WinINet;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -44,9 +45,8 @@ namespace GetStoreApp.Services.Controls.Download
             // 查看是否开启了网络监控服务
             if (NetWorkMonitorService.NetWorkMonitorValue)
             {
-                NetWorkStatus NetStatus = NetWorkHelper.GetNetWorkStatus();
-
-                if (NetStatus is NetWorkStatus.None || NetStatus is NetWorkStatus.Unknown)
+                INTERNET_CONNECTION_FLAGS flags = INTERNET_CONNECTION_FLAGS.INTERNET_CONNECTION_OFFLINE;
+                if (!WinINetLibrary.InternetGetConnectedState(ref flags, 0))
                 {
                     IsNetWorkConnected = false;
                     AppNotificationService.Show("DownloadAborted", "NotDownload");
@@ -325,10 +325,9 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         private static async Task ScheduledGetNetWorkAsync()
         {
-            NetWorkStatus NetStatus = NetWorkHelper.GetNetWorkStatus();
-
             // 网络处于未连接状态，暂停所有任务
-            if (NetStatus is NetWorkStatus.None || NetStatus is NetWorkStatus.Unknown)
+            INTERNET_CONNECTION_FLAGS flags = INTERNET_CONNECTION_FLAGS.INTERNET_CONNECTION_OFFLINE;
+            if (!WinINetLibrary.InternetGetConnectedState(ref flags, 0))
             {
                 // 如果网络处于正在连接状态，修改当前网络状态并发送通知
                 if (IsNetWorkConnected)
