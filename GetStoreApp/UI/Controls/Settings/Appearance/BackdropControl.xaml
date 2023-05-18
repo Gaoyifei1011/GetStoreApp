@@ -45,7 +45,7 @@
         <basicinput:ExtendedButton
             Grid.Column="2"
             VerticalAlignment="Center"
-            Command="{x:Bind ViewModel.BackdropTipCommand}"
+            Click="{x:Bind ViewModel.OnBackdropTipClicked}"
             Cursor="Hand"
             Style="{StaticResource ButtonInfoStyle}"
             Visibility="{x:Bind ViewModel.CanUseMicaBackdrop, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Reverse}">
@@ -80,10 +80,10 @@
             <DropDownButton.Flyout>
                 <menusAndToolbars:AdaptiveMenuFlyout>
                     <RadioMenuFlyoutItem
-                        Command="{x:Bind ViewModel.BackdropSelectCommand}"
-                        CommandParameter="0"
+                        Click="{x:Bind ViewModel.OnBackdropSelectClicked}"
                         GroupName="BackdropSetting"
                         IsChecked="{x:Bind IsItemChecked(ViewModel.Backdrop.InternalName, ViewModel.BackdropList[0].InternalName), Mode=OneWay}"
+                        Tag="0"
                         Text="{x:Bind ViewModel.BackdropList[0].DisplayName}">
 
                         <ToolTipService.ToolTip>
@@ -95,10 +95,10 @@
                     </RadioMenuFlyoutItem>
 
                     <RadioMenuFlyoutItem
-                        Command="{x:Bind ViewModel.BackdropSelectCommand}"
-                        CommandParameter="1"
+                        Click="{x:Bind ViewModel.OnBackdropSelectClicked}"
                         GroupName="BackdropSetting"
                         IsChecked="{x:Bind IsItemChecked(ViewModel.Backdrop.InternalName, ViewModel.BackdropList[1].InternalName), Mode=OneWay}"
+                        Tag="1"
                         Text="{x:Bind ViewModel.BackdropList[1].DisplayName}"
                         Visibility="{x:Bind ViewModel.CanUseMicaBackdrop, Converter={StaticResource BooleanToVisibilityConverter}}">
 
@@ -111,10 +111,10 @@
                     </RadioMenuFlyoutItem>
 
                     <RadioMenuFlyoutItem
-                        Command="{x:Bind ViewModel.BackdropSelectCommand}"
-                        CommandParameter="2"
+                        Click="{x:Bind ViewModel.OnBackdropSelectClicked}"
                         GroupName="BackdropSetting"
                         IsChecked="{x:Bind IsItemChecked(ViewModel.Backdrop.InternalName, ViewModel.BackdropList[2].InternalName), Mode=OneWay}"
+                        Tag="2"
                         Text="{x:Bind ViewModel.BackdropList[2].DisplayName}"
                         Visibility="{x:Bind ViewModel.CanUseMicaBackdrop, Converter={StaticResource BooleanToVisibilityConverter}}">
 
@@ -127,10 +127,10 @@
                     </RadioMenuFlyoutItem>
 
                     <RadioMenuFlyoutItem
-                        Command="{x:Bind ViewModel.BackdropSelectCommand}"
-                        CommandParameter="3"
+                        Click="{x:Bind ViewModel.OnBackdropSelectClicked}"
                         GroupName="BackdropSetting"
                         IsChecked="{x:Bind IsItemChecked(ViewModel.Backdrop.InternalName, ViewModel.BackdropList[3].InternalName), Mode=OneWay}"
+                        Tag="3"
                         Text="{x:Bind ViewModel.BackdropList[3].DisplayName}">
 
                         <ToolTipService.ToolTip>

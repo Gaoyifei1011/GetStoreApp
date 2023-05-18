@@ -86,7 +86,7 @@
                 DefaultLabelPosition="Right">
 
                 <menusAndToolbars:ExtendedAppBarButton
-                    Command="{x:Bind ViewModel.SelectCommand}"
+                    Click="{x:Bind ViewModel.OnSelectClicked}"
                     Cursor="Hand"
                     IsEnabled="{x:Bind sys:Convert.ToBoolean(ViewModel.HistoryDataList.Count), Mode=OneWay}"
                     Label="{x:Bind root:ResourceService.GetLocalized('History/Select')}">
@@ -123,9 +123,9 @@
                         <menusAndToolbars:AdaptiveMenuFlyout>
 
                             <RadioMenuFlyoutItem
-                                Command="{x:Bind ViewModel.TimeSortCommand}"
-                                CommandParameter="True"
+                                Click="{x:Bind ViewModel.OnTimeSortClicked}"
                                 IsChecked="{x:Bind ViewModel.TimeSortOrder, Converter={StaticResource TimeSortValueCheckConverter}, ConverterParameter=true, Mode=OneWay}"
+                                Tag="True"
                                 Text="{x:Bind root:ResourceService.GetLocalized('History/TimeIncreaseSort')}">
 
                                 <RadioMenuFlyoutItem.Icon>
@@ -141,9 +141,9 @@
                             </RadioMenuFlyoutItem>
 
                             <RadioMenuFlyoutItem
-                                Command="{x:Bind ViewModel.TimeSortCommand}"
-                                CommandParameter="False"
+                                Click="{x:Bind ViewModel.OnTimeSortClicked}"
                                 IsChecked="{x:Bind ViewModel.TimeSortOrder, Converter={StaticResource TimeSortValueCheckConverter}, ConverterParameter=false, Mode=OneWay}"
+                                Tag="False"
                                 Text="{x:Bind root:ResourceService.GetLocalized('History/TimeDecreaseSort')}">
 
                                 <RadioMenuFlyoutItem.Icon>
@@ -179,10 +179,10 @@
                         <menusAndToolbars:AdaptiveMenuFlyout>
                             <MenuFlyoutSubItem Text="{x:Bind root:ResourceService.GetLocalized('History/Type')}">
                                 <RadioMenuFlyoutItem
-                                    Command="{x:Bind ViewModel.TypeFilterCommand}"
-                                    CommandParameter="url"
+                                    Click="{x:Bind ViewModel.OnTypeFilterClicked}"
                                     GroupName="TypeFilter"
                                     IsChecked="{x:Bind ViewModel.TypeFilter, Converter={StaticResource FilterValueCheckConverter}, ConverterParameter=url, Mode=OneWay}"
+                                    Tag="url"
                                     Text="{x:Bind root:ResourceService.GetLocalized('Resources/URL')}">
 
                                     <ToolTipService.ToolTip>
@@ -194,10 +194,10 @@
                                 </RadioMenuFlyoutItem>
 
                                 <RadioMenuFlyoutItem
-                                    Command="{x:Bind ViewModel.TypeFilterCommand}"
-                                    CommandParameter="ProductId"
+                                    Click="{x:Bind ViewModel.OnTypeFilterClicked}"
                                     GroupName="TypeFilter"
                                     IsChecked="{x:Bind ViewModel.TypeFilter, Converter={StaticResource FilterValueCheckConverter}, ConverterParameter=ProductId, Mode=OneWay}"
+                                    Tag="ProductId"
                                     Text="{x:Bind root:ResourceService.GetLocalized('Resources/ProductID')}">
 
                                     <ToolTipService.ToolTip>
@@ -209,10 +209,10 @@
                                 </RadioMenuFlyoutItem>
 
                                 <RadioMenuFlyoutItem
-                                    Command="{x:Bind ViewModel.TypeFilterCommand}"
-                                    CommandParameter="PackageFamilyName"
+                                    Click="{x:Bind ViewModel.OnTypeFilterClicked}"
                                     GroupName="TypeFilter"
                                     IsChecked="{x:Bind ViewModel.TypeFilter, Converter={StaticResource FilterValueCheckConverter}, ConverterParameter=PackageFamilyName, Mode=OneWay}"
+                                    Tag="PackageFamilyName"
                                     Text="{x:Bind root:ResourceService.GetLocalized('Resources/PackageFamilyName')}">
 
                                     <ToolTipService.ToolTip>
@@ -224,10 +224,10 @@
                                 </RadioMenuFlyoutItem>
 
                                 <RadioMenuFlyoutItem
-                                    Command="{x:Bind ViewModel.TypeFilterCommand}"
-                                    CommandParameter="CategoryId"
+                                    Click="{x:Bind ViewModel.OnTypeFilterClicked}"
                                     GroupName="TypeFilter"
                                     IsChecked="{x:Bind ViewModel.TypeFilter, Converter={StaticResource FilterValueCheckConverter}, ConverterParameter=CategoryId, Mode=OneWay}"
+                                    Tag="CategoryId"
                                     Text="{x:Bind root:ResourceService.GetLocalized('Resources/CategoryID')}">
 
                                     <ToolTipService.ToolTip>
@@ -241,10 +241,10 @@
                                 <MenuFlyoutSeparator />
 
                                 <RadioMenuFlyoutItem
-                                    Command="{x:Bind ViewModel.TypeFilterCommand}"
-                                    CommandParameter="None"
+                                    Click="{x:Bind ViewModel.OnTypeFilterClicked}"
                                     GroupName="TypeFilter"
                                     IsChecked="{x:Bind ViewModel.TypeFilter, Converter={StaticResource FilterValueCheckConverter}, ConverterParameter=None, Mode=OneWay}"
+                                    Tag="None"
                                     Text="{x:Bind root:ResourceService.GetLocalized('History/None')}">
 
                                     <ToolTipService.ToolTip>
@@ -266,10 +266,10 @@
                                 </ToolTipService.ToolTip>
 
                                 <RadioMenuFlyoutItem
-                                    Command="{x:Bind ViewModel.ChannelFilterCommand}"
-                                    CommandParameter="WIF"
+                                    Click="{x:Bind ViewModel.OnChannelFilterClicked}"
                                     GroupName="ChannelFilter"
                                     IsChecked="{x:Bind ViewModel.ChannelFilter, Converter={StaticResource FilterValueCheckConverter}, ConverterParameter=WIF, Mode=OneWay}"
+                                    Tag="WIF"
                                     Text="{x:Bind root:ResourceService.GetLocalized('Resources/Fast')}">
 
                                     <ToolTipService.ToolTip>
@@ -281,10 +281,10 @@
                                 </RadioMenuFlyoutItem>
 
                                 <RadioMenuFlyoutItem
-                                    Command="{x:Bind ViewModel.ChannelFilterCommand}"
-                                    CommandParameter="WIS"
+                                    Click="{x:Bind ViewModel.OnChannelFilterClicked}"
                                     GroupName="ChannelFilter"
                                     IsChecked="{x:Bind ViewModel.ChannelFilter, Converter={StaticResource FilterValueCheckConverter}, ConverterParameter=WIS, Mode=OneWay}"
+                                    Tag="WIS"
                                     Text="{x:Bind root:ResourceService.GetLocalized('Resources/Slow')}">
 
                                     <ToolTipService.ToolTip>
@@ -296,10 +296,10 @@
                                 </RadioMenuFlyoutItem>
 
                                 <RadioMenuFlyoutItem
-                                    Command="{x:Bind ViewModel.ChannelFilterCommand}"
-                                    CommandParameter="RP"
+                                    Click="{x:Bind ViewModel.OnChannelFilterClicked}"
                                     GroupName="ChannelFilter"
                                     IsChecked="{x:Bind ViewModel.ChannelFilter, Converter={StaticResource FilterValueCheckConverter}, ConverterParameter=RP, Mode=OneWay}"
+                                    Tag="RP"
                                     Text="{x:Bind root:ResourceService.GetLocalized('Resources/RP')}">
 
                                     <ToolTipService.ToolTip>
@@ -311,10 +311,10 @@
                                 </RadioMenuFlyoutItem>
 
                                 <RadioMenuFlyoutItem
-                                    Command="{x:Bind ViewModel.ChannelFilterCommand}"
-                                    CommandParameter="Retail"
+                                    Click="{x:Bind ViewModel.OnChannelFilterClicked}"
                                     GroupName="ChannelFilter"
                                     IsChecked="{x:Bind ViewModel.ChannelFilter, Converter={StaticResource FilterValueCheckConverter}, ConverterParameter=Retail, Mode=OneWay}"
+                                    Tag="Retail"
                                     Text="{x:Bind root:ResourceService.GetLocalized('Resources/Retail')}">
 
                                     <ToolTipService.ToolTip>
@@ -328,10 +328,10 @@
                                 <MenuFlyoutSeparator />
 
                                 <RadioMenuFlyoutItem
-                                    Command="{x:Bind ViewModel.ChannelFilterCommand}"
-                                    CommandParameter="None"
+                                    Click="{x:Bind ViewModel.OnChannelFilterClicked}"
                                     GroupName="ChannelFilter"
                                     IsChecked="{x:Bind ViewModel.ChannelFilter, Converter={StaticResource FilterValueCheckConverter}, ConverterParameter=None, Mode=OneWay}"
+                                    Tag="None"
                                     Text="{x:Bind root:ResourceService.GetLocalized('History/None')}">
 
                                     <ToolTipService.ToolTip>
@@ -347,7 +347,7 @@
                 </menusAndToolbars:ExtendedAppBarButton>
 
                 <menusAndToolbars:ExtendedAppBarButton
-                    Command="{x:Bind ViewModel.RefreshCommand}"
+                    Click="{x:Bind ViewModel.OnRefreshClicked}"
                     Cursor="Hand"
                     IsEnabled="{x:Bind sys:Convert.ToBoolean(ViewModel.HistoryDataList.Count), Mode=OneWay}"
                     Label="{x:Bind root:ResourceService.GetLocalized('History/Refresh')}">
@@ -373,7 +373,7 @@
                 DefaultLabelPosition="Right">
 
                 <menusAndToolbars:ExtendedAppBarButton
-                    Command="{x:Bind ViewModel.SelectAllCommand}"
+                    Click="{x:Bind ViewModel.OnSelectAllClicked}"
                     Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('History/SelectAll')}">
 
@@ -390,7 +390,7 @@
                 </menusAndToolbars:ExtendedAppBarButton>
 
                 <menusAndToolbars:ExtendedAppBarButton
-                    Command="{x:Bind ViewModel.SelectNoneCommand}"
+                    Click="{x:Bind ViewModel.OnSelectNoneClicked}"
                     Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('History/SelectNone')}">
 
@@ -407,7 +407,7 @@
                 </menusAndToolbars:ExtendedAppBarButton>
 
                 <menusAndToolbars:ExtendedAppBarButton
-                    Command="{x:Bind ViewModel.CopySelectedCommand}"
+                    Click="{x:Bind ViewModel.OnCopySelectedClicked}"
                     Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('History/CopySelected')}">
 
@@ -424,7 +424,7 @@
                 </menusAndToolbars:ExtendedAppBarButton>
 
                 <menusAndToolbars:ExtendedAppBarButton
-                    Command="{x:Bind ViewModel.DeleteCommand}"
+                    Click="{x:Bind ViewModel.OnDeleteClicked}"
                     Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('History/Delete')}">
 
@@ -441,7 +441,7 @@
                 </menusAndToolbars:ExtendedAppBarButton>
 
                 <menusAndToolbars:ExtendedAppBarButton
-                    Command="{x:Bind ViewModel.CancelCommand}"
+                    Click="{x:Bind ViewModel.OnCancelClicked}"
                     Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('History/Cancel')}">
 
@@ -500,7 +500,7 @@
                     <ListView
                         Grid.Row="1"
                         IsItemClickEnabled="{x:Bind ViewModel.IsSelectMode, Mode=OneWay}"
-                        ItemClick="{x:Bind ViewModel.OnItemClick}"
+                        ItemClick="{x:Bind ViewModel.OnItemClicked}"
                         ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
                         ItemsSource="{x:Bind ViewModel.HistoryDataList, Mode=OneWay}"
                         SelectionMode="None"

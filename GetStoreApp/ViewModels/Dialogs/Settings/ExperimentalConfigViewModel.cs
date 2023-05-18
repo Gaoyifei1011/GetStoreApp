@@ -1,6 +1,8 @@
 ﻿using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Experiment;
+using GetStoreApp.UI.Controls.Settings.Experiment;
 using GetStoreApp.ViewModels.Base;
+using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -30,14 +32,6 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
         }
 
         /// <summary>
-        /// 关闭对话框后注销计时器
-        /// </summary>
-        public void OnClosed(object sender, ContentDialogClosedEventArgs args)
-        {
-            DisplayTimer.Tick -= DisplayTimerTick;
-        }
-
-        /// <summary>
         /// 打开对话框时初始化计时器
         /// </summary>
         public void OnOpened(object sender, ContentDialogOpenedEventArgs args)
@@ -47,19 +41,37 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
         }
 
         /// <summary>
+        /// 关闭对话框
+        /// </summary>
+        public void OnCloseDialogClicked(object sender, RoutedEventArgs args)
+        {
+            Button button = sender as Button;
+            if (button.Tag is not null)
+            {
+                ((ExtendedContentDialog)button.Tag).Hide();
+            }
+            DisplayTimer.Tick -= DisplayTimerTick;
+        }
+
+        /// <summary>
         /// 还原默认值
         /// </summary>
-        public async void RestoreDefault()
+        public async void OnRestoreDefaultClicked(object sender, RoutedEventArgs args)
         {
-            await Aria2Service.RestoreDefaultAsync();
-            await NetWorkMonitorService.RestoreDefaultValueAsync();
-
-            if (!DisplayTimer.IsEnabled)
+            Button button = sender as Button;
+            if (button.Tag is not null)
             {
-                DisplayTimer.Start();
-                IsMessageVisable = true;
+                ((NetWorkMonitorControl)button.Tag).ViewModel.NetWorkMonitorValue = true;
+                await Aria2Service.RestoreDefaultAsync();
+                await NetWorkMonitorService.RestoreDefaultValueAsync();
+
+                if (!DisplayTimer.IsEnabled)
+                {
+                    DisplayTimer.Start();
+                    IsMessageVisable = true;
+                }
+                CountDown = 3;
             }
-            CountDown = 3;
         }
 
         private void DisplayTimerTick(object sender, object e)

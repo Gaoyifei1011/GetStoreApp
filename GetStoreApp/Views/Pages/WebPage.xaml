@@ -41,7 +41,7 @@
                     DefaultLabelPosition="Right">
 
                     <menusAndToolbars:ExtendedAppBarButton
-                        Command="{x:Bind ViewModel.BrowserBackCommand, Mode=OneWay}"
+                        Click="{x:Bind ViewModel.OnBrowserBackClicked}"
                         Cursor="Hand"
                         IsEnabled="{x:Bind ViewModel.CanGoBack, Mode=OneWay}"
                         Label="{x:Bind root:ResourceService.GetLocalized('Web/Back')}">
@@ -59,7 +59,7 @@
                     </menusAndToolbars:ExtendedAppBarButton>
 
                     <menusAndToolbars:ExtendedAppBarButton
-                        Command="{x:Bind ViewModel.BrowserForwardCommand, Mode=OneWay}"
+                        Click="{x:Bind ViewModel.OnBrowserForwardClicked}"
                         Cursor="Hand"
                         IsEnabled="{x:Bind ViewModel.CanGoForward, Mode=OneWay}"
                         Label="{x:Bind root:ResourceService.GetLocalized('Web/Forward')}">
@@ -77,7 +77,7 @@
                     </menusAndToolbars:ExtendedAppBarButton>
 
                     <menusAndToolbars:ExtendedAppBarButton
-                        Command="{x:Bind ViewModel.RefreshCommand}"
+                        Click="{x:Bind ViewModel.OnRefreshClicked}"
                         CommandParameter="{Binding ElementName=WebView}"
                         Cursor="Hand"
                         Label="{x:Bind root:ResourceService.GetLocalized('Web/Refresh')}">
@@ -134,7 +134,7 @@
                     Style="{StaticResource CommandBarStyle}">
 
                     <menusAndToolbars:ExtendedAppBarButton
-                        Command="{x:Bind ViewModel.OpenWithBrowserCommand}"
+                        Click="{x:Bind ViewModel.OnOpenWithBrowserClicked}"
                         Cursor="Hand"
                         Label="{x:Bind root:ResourceService.GetLocalized('Web/OpenWithBrowser')}">
 
@@ -151,7 +151,7 @@
                     </menusAndToolbars:ExtendedAppBarButton>
 
                     <CommandBar.SecondaryCommands>
-                        <AppBarButton Command="{x:Bind ViewModel.OpenCacheFolderCommand}" Label="{x:Bind root:ResourceService.GetLocalized('Web/OpenCacheFolder')}">
+                        <AppBarButton Click="{x:Bind ViewModel.OnOpenCacheFolderClicked}" Label="{x:Bind root:ResourceService.GetLocalized('Web/OpenCacheFolder')}">
 
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE8b7;" Style="{StaticResource SegoeFluentStyle}" />
@@ -166,7 +166,7 @@
                         </AppBarButton>
 
                         <AppBarButton
-                            Command="{x:Bind ViewModel.ClearWebCacheCommand}"
+                            Click="{x:Bind ViewModel.OnClearWebCacheClicked}"
                             IsEnabled="{x:Bind ViewModel.IsEnabled, Mode=OneWay}"
                             Label="{x:Bind root:ResourceService.GetLocalized('Web/ClearWebCache')}">
 

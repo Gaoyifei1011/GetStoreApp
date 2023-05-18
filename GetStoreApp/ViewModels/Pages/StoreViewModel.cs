@@ -1,10 +1,9 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Window;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
+using Microsoft.UI.Xaml;
 
 namespace GetStoreApp.ViewModels.Pages
 {
@@ -26,11 +25,13 @@ namespace GetStoreApp.ViewModels.Pages
             }
         }
 
-        // 了解应用具体的使用说明
-        public IRelayCommand UseInstructionCommand => new RelayCommand(() =>
+        /// <summary>
+        /// 了解应用具体的使用说明
+        /// </summary>
+        public void OnUseInstructionClicked(object sender, RoutedEventArgs args)
         {
             NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.Instructions);
-        });
+        }
 
         public StoreViewModel()
         {

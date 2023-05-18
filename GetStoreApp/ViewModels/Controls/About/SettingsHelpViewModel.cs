@@ -13,7 +13,7 @@ namespace GetStoreApp.ViewModels.Controls.About
         /// <summary>
         /// 应用信息
         /// </summary>
-        public async void OnAppInformationClicked(object sender,RoutedEventArgs args)
+        public async void OnAppInformationClicked(object sender, RoutedEventArgs args)
         {
             await new AppInformationDialog().ShowAsync();
         }
@@ -21,7 +21,7 @@ namespace GetStoreApp.ViewModels.Controls.About
         /// <summary>
         /// 应用设置
         /// </summary>
-        public async void OnAppSettingsClicked(object sender,RoutedEventArgs args)
+        public async void OnAppSettingsClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures-app"));
         }
@@ -45,7 +45,7 @@ namespace GetStoreApp.ViewModels.Controls.About
         /// <summary>
         /// 系统信息
         /// </summary>
-        public async void OnSystemInformationClicked(object sender,RoutedEventArgs args)
+        public async void OnSystemInformationClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:about"));
         }

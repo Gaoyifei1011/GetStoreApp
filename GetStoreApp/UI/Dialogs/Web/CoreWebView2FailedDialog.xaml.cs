@@ -18,22 +18,5 @@ namespace GetStoreApp.UI.Dialogs.Web
             InitializeComponent();
             ViewModel.InitializeFailedInformation(args);
         }
-
-        /// <summary>
-        /// 关闭对话框
-        /// </summary>
-        public void OnCloseDialogClicked(object sender, RoutedEventArgs args)
-        {
-            Hide();
-        }
-
-        /// <summary>
-        /// 复制异常信息
-        /// </summary>
-        public void OnCopyExceptionInformationClicked(object sender, RoutedEventArgs args)
-        {
-            ViewModel.CopyExceptionInformation();
-            Hide();
-        }
     }
 }

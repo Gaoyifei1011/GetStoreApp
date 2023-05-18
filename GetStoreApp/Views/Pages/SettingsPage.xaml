@@ -37,7 +37,7 @@
 
             <Button
                 Grid.Column="1"
-                Command="{x:Bind ViewModel.RestartCommand}"
+                Click="{x:Bind ViewModel.OnRestartAppsClicked}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Settings/RestartApp')}">
 
                 <ToolTipService.ToolTip>

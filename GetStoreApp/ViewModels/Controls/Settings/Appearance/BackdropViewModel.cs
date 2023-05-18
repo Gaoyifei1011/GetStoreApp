@@ -1,12 +1,12 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings.Appearance;
 using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Window;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 
@@ -34,21 +34,27 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
 
         public bool CanUseMicaBackdrop { get; set; }
 
-        // 背景色不可用时具体信息了解
-        public IRelayCommand BackdropTipCommand => new RelayCommand(() =>
+        /// <summary>
+        /// 背景色不可用时具体信息了解
+        /// </summary>
+        public void OnBackdropTipClicked(object sender, RoutedEventArgs args)
         {
             NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
-        });
+        }
 
         /// <summary>
         /// 背景色修改设置
         /// </summary>
-        public IRelayCommand BackdropSelectCommand => new RelayCommand<string>(async (backdropIndex) =>
+        public async void OnBackdropSelectClicked(object sender, RoutedEventArgs args)
         {
-            Backdrop = BackdropList[Convert.ToInt32(backdropIndex)];
-            await BackdropService.SetBackdropAsync(Backdrop);
-            BackdropService.SetAppBackdrop();
-        });
+            RadioMenuFlyoutItem item = sender as RadioMenuFlyoutItem;
+            if (item.Tag is not null)
+            {
+                Backdrop = BackdropList[Convert.ToInt32(item.Tag)];
+                await BackdropService.SetBackdropAsync(Backdrop);
+                BackdropService.SetAppBackdrop();
+            }
+        }
 
         public BackdropViewModel()
         {

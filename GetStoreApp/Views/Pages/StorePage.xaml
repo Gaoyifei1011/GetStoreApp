@@ -36,7 +36,7 @@
             <Button
                 Grid.Column="1"
                 VerticalAlignment="Center"
-                Command="{x:Bind ViewModel.UseInstructionCommand}"
+                Click="{x:Bind ViewModel.OnUseInstructionClicked}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Store/UseInstruction')}"
                 Visibility="{x:Bind ViewModel.UseInsVisValue, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
 

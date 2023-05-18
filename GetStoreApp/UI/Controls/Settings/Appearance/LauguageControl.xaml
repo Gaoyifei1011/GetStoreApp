@@ -44,7 +44,7 @@
         <basicinput:ExtendedButton
             Grid.Column="2"
             VerticalAlignment="Center"
-            Command="{x:Bind ViewModel.LanguageTipCommand}"
+            Click="{x:Bind ViewModel.OnLanguageTipClicked}"
             Cursor="Hand"
             Style="{StaticResource ButtonInfoStyle}">
 

@@ -1,6 +1,4 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Controls.Web;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
@@ -100,38 +98,51 @@ namespace GetStoreApp.ViewModels.Pages
             }
         }
 
-        // 网页后退
-        public IRelayCommand BrowserBackCommand => new RelayCommand(() =>
+        /// <summary>
+        /// 网页后退
+        /// </summary>
+        public void OnBrowserBackClicked(object sender, RoutedEventArgs args)
         {
             if (CoreWebView is not null && CoreWebView.CanGoBack)
             {
                 CoreWebView.GoBack();
             }
-        });
+        }
 
-        // 网页前进
-        public IRelayCommand BrowserForwardCommand => new RelayCommand(() =>
+        /// <summary>
+        /// 网页前进
+        /// </summary>
+        public void OnBrowserForwardClicked(object sender, RoutedEventArgs args)
         {
             if (CoreWebView is not null && CoreWebView.CanGoForward)
             {
                 CoreWebView.GoForward();
             }
-        });
+        }
 
-        // 网页刷新
-        public IRelayCommand RefreshCommand => new RelayCommand<WebView2>((webView) =>
+        /// <summary>
+        /// 网页刷新
+        /// </summary>
+        public void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
-            webView.Reload();
-        });
+            if (CoreWebView is not null)
+            {
+                CoreWebView.Reload();
+            }
+        }
 
-        // 在浏览器中打开
-        public IRelayCommand OpenWithBrowserCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 在浏览器中打开
+        /// </summary>
+        public async void OnOpenWithBrowserClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(Source);
-        });
+        }
 
-        // 打开缓存文件夹
-        public IRelayCommand OpenCacheFolderCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 打开缓存文件夹
+        /// </summary>
+        public async void OnOpenCacheFolderClicked(object sender, RoutedEventArgs args)
         {
             try
             {
@@ -141,10 +152,12 @@ namespace GetStoreApp.ViewModels.Pages
             {
                 await Launcher.LaunchFolderAsync(ApplicationData.Current.LocalFolder);
             }
-        });
+        }
 
-        // 清理网页缓存
-        public IRelayCommand ClearWebCacheCommand => new RelayCommand(async () =>
+        /// <summary>
+        ///  清理网页缓存
+        /// </summary>
+        public async void OnClearWebCacheClicked(object sender, RoutedEventArgs args)
         {
             if (CoreWebView is not null)
             {
@@ -153,7 +166,7 @@ namespace GetStoreApp.ViewModels.Pages
             }
 
             new WebCacheCleanNotification(true).Show();
-        });
+        }
 
         /// <summary>
         /// 浏览器内核进程发生异常时对应的事件

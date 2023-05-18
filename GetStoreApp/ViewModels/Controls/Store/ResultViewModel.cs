@@ -1,6 +1,4 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
@@ -14,7 +12,9 @@ using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.WinINet;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -71,15 +71,28 @@ namespace GetStoreApp.ViewModels.Controls.Store
             }
         }
 
-        // 复制CategoryID
-        public IRelayCommand CopyIDCommand => new RelayCommand(() =>
+        // 根据设置存储的文件链接操作方式操作获取到的文件链接
+        public XamlUICommand DownloadCommand { get; } = new XamlUICommand();
+
+        // 复制指定项目的链接
+        public XamlUICommand CopyLinkCommand { get; } = new XamlUICommand();
+
+        // 复制指定项目的内容
+        public XamlUICommand CopyContentCommand { get; } = new XamlUICommand();
+
+        /// <summary>
+        /// 复制CategoryID
+        /// </summary>
+        public void OnCopyIDClicked(object sender, RoutedEventArgs args)
         {
             CopyPasteHelper.CopyToClipBoard(CategoryId);
             new ResultIDCopyNotification(true).Show();
-        });
+        }
 
-        // 进入多选模式
-        public IRelayCommand SelectCommand => new RelayCommand(() =>
+        /// <summary>
+        /// 进入多选模式
+        /// </summary>
+        public void OnSelectClicked(object sender, RoutedEventArgs args)
         {
             foreach (ResultModel resultItem in ResultDataList)
             {
@@ -87,28 +100,34 @@ namespace GetStoreApp.ViewModels.Controls.Store
             }
 
             IsSelectMode = true;
-        });
+        }
 
-        // 全选
-        public IRelayCommand SelectAllCommand => new RelayCommand(() =>
+        /// <summary>
+        /// 全选
+        /// </summary>
+        public void OnSelectAllClicked(object sender, RoutedEventArgs args)
         {
             foreach (ResultModel resultItem in ResultDataList)
             {
                 resultItem.IsSelected = true;
             }
-        });
+        }
 
-        // 全部不选
-        public IRelayCommand SelectNoneCommand => new RelayCommand(() =>
+        /// <summary>
+        /// 全部不选
+        /// </summary>
+        public void OnSelectNoneClicked(object sender, RoutedEventArgs args)
         {
             foreach (ResultModel resultItem in ResultDataList)
             {
                 resultItem.IsSelected = false;
             }
-        });
+        }
 
-        // 复制选定项目的内容
-        public IRelayCommand CopySelectedCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 复制选定项目的内容
+        /// </summary>
+        public async void OnCopySelectedClicked(object sender, RoutedEventArgs args)
         {
             List<ResultModel> SelectedResultDataList = ResultDataList.Where(item => item.IsSelected is true).ToList();
 
@@ -134,10 +153,12 @@ namespace GetStoreApp.ViewModels.Controls.Store
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
 
             new ResultContentCopyNotification(true, true, SelectedResultDataList.Count).Show();
-        });
+        }
 
-        // 复制选定项目的链接
-        public IRelayCommand CopySelectedLinkCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 复制选定项目的链接
+        /// </summary>
+        public async void OnCopySelectedLinkClicked(object sender, RoutedEventArgs args)
         {
             List<ResultModel> SelectedResultDataList = ResultDataList.Where(item => item.IsSelected is true).ToList();
 
@@ -155,10 +176,12 @@ namespace GetStoreApp.ViewModels.Controls.Store
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
 
             new ResultLinkCopyNotification(true, true, SelectedResultDataList.Count).Show();
-        });
+        }
 
-        // 下载选定项目
-        public IRelayCommand DownloadSelectedCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 下载选定项目
+        /// </summary>
+        public async void OnDownloadSelectedClicked(object sender, RoutedEventArgs args)
         {
             // 查看是否开启了网络监控服务
             if (NetWorkMonitorService.NetWorkMonitorValue)
@@ -257,163 +280,170 @@ namespace GetStoreApp.ViewModels.Controls.Store
                     await Launcher.LaunchUriAsync(new Uri(resultItem.FileLink));
                 });
             }
-        });
+        }
 
-        // 退出多选模式
-        public IRelayCommand CancelCommand => new RelayCommand(() =>
+        /// <summary>
+        /// 退出多选模式
+        /// </summary>
+        public void OnCancelClicked(object sender, RoutedEventArgs args)
         {
             IsSelectMode = false;
-        });
+        }
 
-        // 根据设置存储的文件链接操作方式操作获取到的文件链接
-        public IRelayCommand DownloadCommand => new RelayCommand<ResultModel>(async (resultItem) =>
+        /// <summary>
+        /// 在多选模式下点击项目选择相应的条目
+        /// </summary>
+        public void OnItemClicked(object sender, ItemClickEventArgs args)
         {
-            // 查看是否开启了网络监控服务
-            if (NetWorkMonitorService.NetWorkMonitorValue)
+            ResultModel resultItem = args.ClickedItem as ResultModel;
+
+            if (resultItem is not null)
             {
-                // 网络处于未连接状态，不再进行下载，显示通知
-                INTERNET_CONNECTION_FLAGS flags = INTERNET_CONNECTION_FLAGS.INTERNET_CONNECTION_OFFLINE;
-                if (!WinINetLibrary.InternetGetConnectedState(ref flags, 0))
-                {
-                    new NetWorkErrorNotification().Show();
-                    return;
-                }
+                int ClickedIndex = ResultDataList.IndexOf(resultItem);
+                ResultDataList[ClickedIndex].IsSelected = !ResultDataList[ClickedIndex].IsSelected;
             }
-
-            // 使用应用内提供的下载方式
-            if (DownloadOptionsService.DownloadMode.InternalName == DownloadOptionsService.DownloadModeList[0].InternalName)
-            {
-                string DownloadFilePath = string.Format("{0}\\{1}", DownloadOptionsService.DownloadFolder.Path, resultItem.FileName);
-
-                BackgroundModel backgroundItem = new BackgroundModel
-                {
-                    DownloadKey = UniqueKeyHelper.GenerateDownloadKey(resultItem.FileName, DownloadFilePath),
-                    FileName = resultItem.FileName,
-                    FileLink = resultItem.FileLink,
-                    FilePath = DownloadFilePath,
-                    TotalSize = 0,
-                    FileSHA1 = resultItem.FileSHA1,
-                    DownloadFlag = 1
-                };
-
-                // 检查是否存在相同的任务记录
-                DuplicatedDataInfoArgs CheckResult = await DownloadXmlService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
-
-                switch (CheckResult)
-                {
-                    case DuplicatedDataInfoArgs.None:
-                        {
-                            bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add");
-                            new DownloadCreateNotification(AddResult).Show();
-                            break;
-                        }
-
-                    case DuplicatedDataInfoArgs.Unfinished:
-                        {
-                            ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Unfinished).ShowAsync();
-
-                            if (result is ContentDialogResult.Primary)
-                            {
-                                try
-                                {
-                                    if (File.Exists(backgroundItem.FilePath))
-                                    {
-                                        File.Delete(backgroundItem.FilePath);
-                                    }
-                                }
-                                catch (Exception) { }
-                                finally
-                                {
-                                    bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                    new DownloadCreateNotification(AddResult).Show();
-                                }
-                            }
-                            else if (result is ContentDialogResult.Secondary)
-                            {
-                                NavigationService.NavigateTo(typeof(DownloadPage));
-                            }
-                            break;
-                        }
-
-                    case DuplicatedDataInfoArgs.Completed:
-                        {
-                            ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Completed).ShowAsync();
-
-                            if (result is ContentDialogResult.Primary)
-                            {
-                                try
-                                {
-                                    if (File.Exists(backgroundItem.FilePath))
-                                    {
-                                        File.Delete(backgroundItem.FilePath);
-                                    }
-                                }
-                                catch (Exception) { }
-                                finally
-                                {
-                                    bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                    new DownloadCreateNotification(AddResult).Show();
-                                }
-                            }
-                            else if (result is ContentDialogResult.Secondary)
-                            {
-                                NavigationService.NavigateTo(typeof(DownloadPage));
-                            }
-                            break;
-                        }
-                }
-            }
-
-            // 使用浏览器下载
-            else if (DownloadOptionsService.DownloadMode == DownloadOptionsService.DownloadModeList[1])
-            {
-                await Launcher.LaunchUriAsync(new Uri(resultItem.FileLink));
-            }
-        });
-
-        // 右键单击打开链接
-        public IRelayCommand OpenLinkCommand => new RelayCommand<ResultModel>(async (resultItem) =>
-        {
-            // 查看是否开启了网络监控服务
-            if (NetWorkMonitorService.NetWorkMonitorValue)
-            {
-                // 网络处于未连接状态，不再进行下载，显示通知
-                INTERNET_CONNECTION_FLAGS flags = INTERNET_CONNECTION_FLAGS.INTERNET_CONNECTION_OFFLINE;
-                if (!WinINetLibrary.InternetGetConnectedState(ref flags, 0))
-                {
-                    new NetWorkErrorNotification().Show();
-                    return;
-                }
-            }
-
-            await Launcher.LaunchUriAsync(new Uri(resultItem.FileLink));
-        });
-
-        // 复制指定项目的链接
-        public IRelayCommand CopyLinkCommand => new RelayCommand<string>((fileLink) =>
-        {
-            CopyPasteHelper.CopyToClipBoard(fileLink);
-
-            new ResultLinkCopyNotification(true, false).Show();
-        });
-
-        // 复制指定项目的内容
-        public IRelayCommand CopyContentCommand => new RelayCommand<ResultModel>((copyContent) =>
-        {
-            string CopyContent = string.Format("[\n{0}\n{1}\n{2}\n{3}\n]\n",
-                copyContent.FileName,
-                copyContent.FileLink,
-                copyContent.FileSHA1,
-                copyContent.FileSize
-                );
-
-            CopyPasteHelper.CopyToClipBoard(CopyContent);
-
-            new ResultContentCopyNotification(true, false).Show();
-        });
+        }
 
         public ResultViewModel()
         {
+            DownloadCommand.ExecuteRequested += async (sender, args) =>
+            {
+                ResultModel resultItem = args.Parameter as ResultModel;
+                if (resultItem is not null)
+                {
+                    // 查看是否开启了网络监控服务
+                    if (NetWorkMonitorService.NetWorkMonitorValue)
+                    {
+                        // 网络处于未连接状态，不再进行下载，显示通知
+                        INTERNET_CONNECTION_FLAGS flags = INTERNET_CONNECTION_FLAGS.INTERNET_CONNECTION_OFFLINE;
+                        if (!WinINetLibrary.InternetGetConnectedState(ref flags, 0))
+                        {
+                            new NetWorkErrorNotification().Show();
+                            return;
+                        }
+                    }
+
+                    // 使用应用内提供的下载方式
+                    if (DownloadOptionsService.DownloadMode.InternalName == DownloadOptionsService.DownloadModeList[0].InternalName)
+                    {
+                        string DownloadFilePath = string.Format("{0}\\{1}", DownloadOptionsService.DownloadFolder.Path, resultItem.FileName);
+
+                        BackgroundModel backgroundItem = new BackgroundModel
+                        {
+                            DownloadKey = UniqueKeyHelper.GenerateDownloadKey(resultItem.FileName, DownloadFilePath),
+                            FileName = resultItem.FileName,
+                            FileLink = resultItem.FileLink,
+                            FilePath = DownloadFilePath,
+                            TotalSize = 0,
+                            FileSHA1 = resultItem.FileSHA1,
+                            DownloadFlag = 1
+                        };
+
+                        // 检查是否存在相同的任务记录
+                        DuplicatedDataInfoArgs CheckResult = await DownloadXmlService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
+
+                        switch (CheckResult)
+                        {
+                            case DuplicatedDataInfoArgs.None:
+                                {
+                                    bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add");
+                                    new DownloadCreateNotification(AddResult).Show();
+                                    break;
+                                }
+
+                            case DuplicatedDataInfoArgs.Unfinished:
+                                {
+                                    ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Unfinished).ShowAsync();
+
+                                    if (result is ContentDialogResult.Primary)
+                                    {
+                                        try
+                                        {
+                                            if (File.Exists(backgroundItem.FilePath))
+                                            {
+                                                File.Delete(backgroundItem.FilePath);
+                                            }
+                                        }
+                                        catch (Exception) { }
+                                        finally
+                                        {
+                                            bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
+                                            new DownloadCreateNotification(AddResult).Show();
+                                        }
+                                    }
+                                    else if (result is ContentDialogResult.Secondary)
+                                    {
+                                        NavigationService.NavigateTo(typeof(DownloadPage));
+                                    }
+                                    break;
+                                }
+
+                            case DuplicatedDataInfoArgs.Completed:
+                                {
+                                    ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Completed).ShowAsync();
+
+                                    if (result is ContentDialogResult.Primary)
+                                    {
+                                        try
+                                        {
+                                            if (File.Exists(backgroundItem.FilePath))
+                                            {
+                                                File.Delete(backgroundItem.FilePath);
+                                            }
+                                        }
+                                        catch (Exception) { }
+                                        finally
+                                        {
+                                            bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
+                                            new DownloadCreateNotification(AddResult).Show();
+                                        }
+                                    }
+                                    else if (result is ContentDialogResult.Secondary)
+                                    {
+                                        NavigationService.NavigateTo(typeof(DownloadPage));
+                                    }
+                                    break;
+                                }
+                        }
+                    }
+
+                    // 使用浏览器下载
+                    else if (DownloadOptionsService.DownloadMode == DownloadOptionsService.DownloadModeList[1])
+                    {
+                        await Launcher.LaunchUriAsync(new Uri(resultItem.FileLink));
+                    }
+                }
+            };
+
+            CopyLinkCommand.ExecuteRequested += (sender, args) =>
+            {
+                string fileLink = args.Parameter as string;
+
+                if (fileLink is not null)
+                {
+                    CopyPasteHelper.CopyToClipBoard(fileLink);
+
+                    new ResultLinkCopyNotification(true, false).Show();
+                }
+            };
+
+            CopyContentCommand.ExecuteRequested += (sender, args) =>
+            {
+                ResultModel resultItem = args.Parameter as ResultModel;
+                if (resultItem is not null)
+                {
+                    string CopyContent = string.Format("[\n{0}\n{1}\n{2}\n{3}\n]\n",
+                        resultItem.FileName,
+                        resultItem.FileLink,
+                        resultItem.FileSHA1,
+                        resultItem.FileSize
+                        );
+
+                    CopyPasteHelper.CopyToClipBoard(CopyContent);
+                    new ResultContentCopyNotification(true, false).Show();
+                }
+            };
+
             Messenger.Default.Register<bool>(this, MessageToken.ResultControlVisable, (resultControlVisableMessage) =>
             {
                 ResultControlVisable = resultControlVisableMessage;
@@ -442,17 +472,6 @@ namespace GetStoreApp.ViewModels.Controls.Store
                     Messenger.Default.Unregister(this);
                 }
             });
-        }
-
-        /// <summary>
-        /// 在多选模式下点击项目选择相应的条目
-        /// </summary>
-        public void OnItemClick(object sender, ItemClickEventArgs args)
-        {
-            ResultModel resultItem = (ResultModel)args.ClickedItem;
-            int ClickedIndex = ResultDataList.IndexOf(resultItem);
-
-            ResultDataList[ClickedIndex].IsSelected = !ResultDataList[ClickedIndex].IsSelected;
         }
     }
 }

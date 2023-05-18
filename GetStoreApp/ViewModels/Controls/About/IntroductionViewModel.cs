@@ -12,7 +12,7 @@ namespace GetStoreApp.ViewModels.Controls.About
         /// <summary>
         /// 查看项目后续的维护信息
         /// </summary>
-        public async void OnMaintenanceClicked(object sender,RoutedEventArgs args)
+        public async void OnMaintenanceClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp"));
         }

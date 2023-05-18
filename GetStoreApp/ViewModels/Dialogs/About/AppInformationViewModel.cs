@@ -1,7 +1,10 @@
 ﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Notifications;
+using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
 using GetStoreApp.WindowsAPI.PInvoke.Version;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -23,18 +26,35 @@ namespace GetStoreApp.ViewModels.Dialogs.About
         public string WebView2CoreVersion { get; set; }
 
         /// <summary>
+        /// 关闭对话框
+        /// </summary>
+        public void OnCloseDialogClicked(object sender, RoutedEventArgs args)
+        {
+            Button button = sender as Button;
+            if (button.Tag is not null)
+            {
+                ((ExtendedContentDialog)button.Tag).Hide();
+            }
+        }
+
+        /// <summary>
         /// 复制应用信息
         /// </summary>
-        public void CopyAppInformation()
+        public void OnCopyAppInformationClicked(object sender, RoutedEventArgs args)
         {
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WindowsAppSDKVersion") + WindowsAppSDKVersion);
-            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WinUI3Version") + WinUI3Version);
-            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WebView2CoreVersion") + WebView2CoreVersion);
-            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/DoNetVersion") + DoNetVersion);
+            Button button = sender as Button;
+            if (button.Tag is not null)
+            {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WindowsAppSDKVersion") + WindowsAppSDKVersion);
+                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WinUI3Version") + WinUI3Version);
+                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WebView2CoreVersion") + WebView2CoreVersion);
+                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/DoNetVersion") + DoNetVersion);
 
-            CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
-            new CopyAppInformationNotification(true).Show();
+                CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
+                ((ExtendedContentDialog)button.Tag).Hide();
+                new CopyAppInformationNotification(true).Show();
+            }
         }
 
         /// <summary>

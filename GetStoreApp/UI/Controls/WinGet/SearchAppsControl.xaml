@@ -79,7 +79,6 @@
                 <AutoSuggestBox.QueryIcon>
                     <FontIcon Glyph="&#xE71E;" Style="{StaticResource SegoeFluentStyle}" />
                 </AutoSuggestBox.QueryIcon>
-
             </AutoSuggestBox>
 
             <CommandBar
@@ -89,7 +88,7 @@
                 DefaultLabelPosition="Right">
 
                 <menusAndToolbars:ExtendedAppBarButton
-                    Command="{x:Bind ViewModel.RefreshCommand}"
+                    Click="{x:Bind ViewModel.OnRefreshClicked}"
                     Cursor="Hand"
                     IsEnabled="{x:Bind ViewModel.IsSearchCompleted, Mode=OneWay}"
                     Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Refresh')}">

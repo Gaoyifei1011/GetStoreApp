@@ -47,7 +47,7 @@
 
                 <Button
                     Grid.Column="2"
-                    Command="{x:Bind ViewModel.DownloadInstructionCommand}"
+                    Click="{x:Bind ViewModel.OnDownloadInstructionClicked}"
                     Content="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadInstruction')}">
 
                     <ToolTipService.ToolTip>
@@ -77,7 +77,7 @@
                                 Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadFolder')}" />
 
                             <HyperlinkButton
-                                Command="{x:Bind ViewModel.OpenFolderCommand}"
+                                Click="{x:Bind ViewModel.OnOpenFolderClicked}"
                                 Content="{x:Bind ViewModel.DownloadFolder.Path, Mode=OneWay}"
                                 Style="{StaticResource HyperlinkButtonStyle}">
 
@@ -93,7 +93,7 @@
                         <Button
                             Grid.Column="1"
                             Margin="6,0,6,0"
-                            Command="{x:Bind ViewModel.UseDefaultFolderCommand}"
+                            Click="{x:Bind ViewModel.OnUseDefaultFolderClicked}"
                             Content="{x:Bind root:ResourceService.GetLocalized('Settings/UseDefaultFolder')}">
 
                             <ToolTipService.ToolTip>
@@ -106,7 +106,7 @@
 
                         <Button
                             Grid.Column="2"
-                            Command="{x:Bind ViewModel.ChangeFolderCommand}"
+                            Click="{x:Bind ViewModel.OnChangeFolderClicked}"
                             Content="{x:Bind root:ResourceService.GetLocalized('Settings/ChangeFolder')}">
 
                             <ToolTipService.ToolTip>
@@ -154,10 +154,10 @@
                             <DropDownButton.Flyout>
                                 <menusAndToolbars:AdaptiveMenuFlyout>
                                     <RadioMenuFlyoutItem
-                                        Command="{x:Bind ViewModel.DownloadItemSelectCommand}"
-                                        CommandParameter="1"
+                                        Click="{x:Bind ViewModel.OnDownloadItemSelectClicked}"
                                         GroupName="DownloadItemSetting"
                                         IsChecked="{x:Bind IsDownloadItemChecked(ViewModel.DownloadItem, 1), Mode=OneWay}"
+                                        Tag="1"
                                         Text="1">
 
                                         <ToolTipService.ToolTip>
@@ -169,10 +169,10 @@
                                     </RadioMenuFlyoutItem>
 
                                     <RadioMenuFlyoutItem
-                                        Command="{x:Bind ViewModel.DownloadItemSelectCommand}"
-                                        CommandParameter="2"
+                                        Click="{x:Bind ViewModel.OnDownloadItemSelectClicked}"
                                         GroupName="DownloadItemSetting"
                                         IsChecked="{x:Bind IsDownloadItemChecked(ViewModel.DownloadItem, 2), Mode=OneWay}"
+                                        Tag="2"
                                         Text="2">
 
                                         <ToolTipService.ToolTip>
@@ -184,10 +184,10 @@
                                     </RadioMenuFlyoutItem>
 
                                     <RadioMenuFlyoutItem
-                                        Command="{x:Bind ViewModel.DownloadItemSelectCommand}"
-                                        CommandParameter="3"
+                                        Click="{x:Bind ViewModel.OnDownloadItemSelectClicked}"
                                         GroupName="DownloadItemSetting"
                                         IsChecked="{x:Bind IsDownloadItemChecked(ViewModel.DownloadItem, 3), Mode=OneWay}"
+                                        Tag="3"
                                         Text="3">
 
                                         <ToolTipService.ToolTip>
@@ -238,10 +238,10 @@
                             <DropDownButton.Flyout>
                                 <menusAndToolbars:AdaptiveMenuFlyout>
                                     <RadioMenuFlyoutItem
-                                        Command="{x:Bind ViewModel.DownloadModeSelectCommand}"
-                                        CommandParameter="0"
+                                        Click="{x:Bind ViewModel.OnDownloadModeSelectClicked}"
                                         GroupName="DownloadModeSetting"
                                         IsChecked="{x:Bind IsDownloadModeChecked(ViewModel.DownloadMode.InternalName, ViewModel.DownloadModeList[0].InternalName), Mode=OneWay}"
+                                        Tag="0"
                                         Text="{x:Bind ViewModel.DownloadModeList[0].DisplayName}">
 
                                         <ToolTipService.ToolTip>
@@ -253,10 +253,10 @@
                                     </RadioMenuFlyoutItem>
 
                                     <RadioMenuFlyoutItem
-                                        Command="{x:Bind ViewModel.DownloadModeSelectCommand}"
-                                        CommandParameter="1"
+                                        Click="{x:Bind ViewModel.OnDownloadModeSelectClicked}"
                                         GroupName="DownloadModeSetting"
                                         IsChecked="{x:Bind IsDownloadModeChecked(ViewModel.DownloadMode.InternalName, ViewModel.DownloadModeList[1].InternalName), Mode=OneWay}"
+                                        Tag="1"
                                         Text="{x:Bind ViewModel.DownloadModeList[1].DisplayName}">
 
                                         <ToolTipService.ToolTip>

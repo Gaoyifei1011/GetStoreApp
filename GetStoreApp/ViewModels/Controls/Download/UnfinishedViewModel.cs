@@ -1,9 +1,6 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.DataType.Events;
 using GetStoreApp.Extensions.Messaging;
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Common;
@@ -14,6 +11,7 @@ using GetStoreApp.ViewModels.Base;
 using GetStoreApp.WindowsAPI.PInvoke.WinINet;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -48,14 +46,32 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
         }
 
-        // 打开默认保存的文件夹
-        public IRelayCommand OpenFolderCommand => new RelayCommand(async () =>
+        // 继续下载当前任务
+        public XamlUICommand ContinueCommand { get; } = new XamlUICommand();
+
+        // 删除当前任务
+        public XamlUICommand DeleteCommand { get; } = new XamlUICommand();
+
+        /// <summary>
+        /// 页面被卸载时，关闭消息服务
+        /// </summary>
+        public void OnUnloaded(object sender, RoutedEventArgs args)
+        {
+            Messenger.Default.Unregister(this);
+        }
+
+        /// <summary>
+        /// 打开默认保存的文件夹
+        /// </summary>
+        public async void OnOpenFolderClicked(object sender, RoutedEventArgs args)
         {
             await DownloadOptionsService.OpenFolderAsync(DownloadOptionsService.DownloadFolder);
-        });
+        }
 
-        // 继续下载全部任务
-        public IRelayCommand ContinueAllCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 继续下载全部任务
+        /// </summary>
+        public async void OnContinueAllClicked(object sender, RoutedEventArgs args)
         {
             // 查看是否开启了网络监控服务
             if (NetWorkMonitorService.NetWorkMonitorValue)
@@ -110,10 +126,12 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
 
             lock (UnfinishedDataListLock) isUpdatingNow = false;
-        });
+        }
 
-        // 进入多选模式
-        public IRelayCommand SelectCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 进入多选模式
+        /// </summary>
+        public async void OnSelectClicked(object sender, RoutedEventArgs args)
         {
             while (isUpdatingNow) await Task.Delay(50);
             lock (UnfinishedDataListLock) isUpdatingNow = true;
@@ -125,10 +143,12 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
             IsSelectMode = true;
             lock (UnfinishedDataListLock) isUpdatingNow = false;
-        });
+        }
 
-        // 全部选择
-        public IRelayCommand SelectAllCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 全部选择
+        /// </summary>
+        public async void OnSelectAllClicked(object sender, RoutedEventArgs args)
         {
             while (isUpdatingNow) await Task.Delay(50);
             lock (UnfinishedDataListLock) isUpdatingNow = true;
@@ -139,10 +159,12 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
 
             lock (UnfinishedDataListLock) isUpdatingNow = false;
-        });
+        }
 
-        // 全部不选
-        public IRelayCommand SelectNoneCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 全部不选
+        /// </summary>
+        public async void OnSelectNoneClicked(object sender, RoutedEventArgs args)
         {
             while (isUpdatingNow) await Task.Delay(50);
             lock (UnfinishedDataListLock) isUpdatingNow = true;
@@ -153,10 +175,12 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
 
             lock (UnfinishedDataListLock) isUpdatingNow = false;
-        });
+        }
 
-        // 删除选中的任务
-        public IRelayCommand DeleteSelectedCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 删除选中的任务
+        /// </summary>
+        public async void OnDeleteSelectedClicked(object sender, RoutedEventArgs args)
         {
             List<BackgroundModel> SelectedUnfinishedDataList = new List<BackgroundModel>();
 
@@ -217,96 +241,104 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
 
             lock (UnfinishedDataListLock) isUpdatingNow = false;
-        });
+        }
 
-        // 退出多选模式
-        public IRelayCommand CancelCommand => new RelayCommand(() =>
+        /// <summary>
+        /// 退出多选模式
+        /// </summary>
+        public void OnCancelClicked(object sender, RoutedEventArgs args)
         {
             IsSelectMode = false;
-        });
-
-        // 继续下载当前任务
-        public IRelayCommand ContinueCommand => new RelayCommand<UnfinishedModel>(async (unfinishedItem) =>
-        {
-            // 查看是否开启了网络监控服务
-            if (NetWorkMonitorService.NetWorkMonitorValue)
-            {
-                // 网络处于未连接状态，不再进行下载，显示通知
-                INTERNET_CONNECTION_FLAGS flags = INTERNET_CONNECTION_FLAGS.INTERNET_CONNECTION_OFFLINE;
-                if (!WinINetLibrary.InternetGetConnectedState(ref flags, 0))
-                {
-                    new NetWorkErrorNotification().Show();
-                    return;
-                }
-            }
-
-            if (unfinishedItem.DownloadFlag is 2)
-            {
-                bool ContinueResult = await DownloadSchedulerService.ContinueTaskAsync(new BackgroundModel
-                {
-                    DownloadKey = unfinishedItem.DownloadKey,
-                    FileName = unfinishedItem.FileName,
-                    FileLink = unfinishedItem.FileLink,
-                    FilePath = unfinishedItem.FilePath,
-                    FileSHA1 = unfinishedItem.FileSHA1,
-                    TotalSize = unfinishedItem.TotalSize
-                });
-
-                if (ContinueResult)
-                {
-                    while (isUpdatingNow) await Task.Delay(50);
-                    lock (UnfinishedDataListLock) isUpdatingNow = true;
-
-                    UnfinishedDataList.Remove(unfinishedItem);
-
-                    lock (UnfinishedDataListLock) isUpdatingNow = false;
-                }
-            }
-        });
-
-        // 删除当前任务
-        public IRelayCommand DeleteCommand => new RelayCommand<UnfinishedModel>(async (unfinishedItem) =>
-        {
-            // 删除下载文件
-            try
-            {
-                if (File.Exists(unfinishedItem.FilePath))
-                {
-                    File.Delete(unfinishedItem.FilePath);
-                }
-            }
-            catch (Exception) { }
-
-            // 删除Aria2后缀下载信息记录文件
-            try
-            {
-                if (File.Exists(string.Format("{0}.{1}", unfinishedItem.FilePath, "aria2")))
-                {
-                    File.Delete(string.Format("{0}.{1}", unfinishedItem.FilePath, "aria2"));
-                }
-            }
-            catch (Exception) { }
-
-            // 删除记录
-            while (isUpdatingNow) await Task.Delay(50);
-            lock (UnfinishedDataListLock) isUpdatingNow = true;
-
-            try
-            {
-                bool DeleteResult = await DownloadXmlService.DeleteAsync(unfinishedItem.DownloadKey);
-
-                if (DeleteResult)
-                {
-                    UnfinishedDataList.Remove(unfinishedItem);
-                }
-            }
-            catch (Exception) { }
-
-            lock (UnfinishedDataListLock) isUpdatingNow = false;
-        });
+        }
 
         public UnfinishedViewModel()
         {
+            ContinueCommand.ExecuteRequested += async (sender, args) =>
+            {
+                UnfinishedModel unfinishedItem = args.Parameter as UnfinishedModel;
+                if (unfinishedItem is not null)
+                {
+                    // 查看是否开启了网络监控服务
+                    if (NetWorkMonitorService.NetWorkMonitorValue)
+                    {
+                        // 网络处于未连接状态，不再进行下载，显示通知
+                        INTERNET_CONNECTION_FLAGS flags = INTERNET_CONNECTION_FLAGS.INTERNET_CONNECTION_OFFLINE;
+                        if (!WinINetLibrary.InternetGetConnectedState(ref flags, 0))
+                        {
+                            new NetWorkErrorNotification().Show();
+                            return;
+                        }
+                    }
+
+                    if (unfinishedItem.DownloadFlag is 2)
+                    {
+                        bool ContinueResult = await DownloadSchedulerService.ContinueTaskAsync(new BackgroundModel
+                        {
+                            DownloadKey = unfinishedItem.DownloadKey,
+                            FileName = unfinishedItem.FileName,
+                            FileLink = unfinishedItem.FileLink,
+                            FilePath = unfinishedItem.FilePath,
+                            FileSHA1 = unfinishedItem.FileSHA1,
+                            TotalSize = unfinishedItem.TotalSize
+                        });
+
+                        if (ContinueResult)
+                        {
+                            while (isUpdatingNow) await Task.Delay(50);
+                            lock (UnfinishedDataListLock) isUpdatingNow = true;
+
+                            UnfinishedDataList.Remove(unfinishedItem);
+
+                            lock (UnfinishedDataListLock) isUpdatingNow = false;
+                        }
+                    }
+                }
+            };
+
+            DeleteCommand.ExecuteRequested += async (sender, args) =>
+            {
+                UnfinishedModel unfinishedItem = args.Parameter as UnfinishedModel;
+                if (unfinishedItem is not null)
+                {
+                    // 删除下载文件
+                    try
+                    {
+                        if (File.Exists(unfinishedItem.FilePath))
+                        {
+                            File.Delete(unfinishedItem.FilePath);
+                        }
+                    }
+                    catch (Exception) { }
+
+                    // 删除Aria2后缀下载信息记录文件
+                    try
+                    {
+                        if (File.Exists(string.Format("{0}.{1}", unfinishedItem.FilePath, "aria2")))
+                        {
+                            File.Delete(string.Format("{0}.{1}", unfinishedItem.FilePath, "aria2"));
+                        }
+                    }
+                    catch (Exception) { }
+
+                    // 删除记录
+                    while (isUpdatingNow) await Task.Delay(50);
+                    lock (UnfinishedDataListLock) isUpdatingNow = true;
+
+                    try
+                    {
+                        bool DeleteResult = await DownloadXmlService.DeleteAsync(unfinishedItem.DownloadKey);
+
+                        if (DeleteResult)
+                        {
+                            UnfinishedDataList.Remove(unfinishedItem);
+                        }
+                    }
+                    catch (Exception) { }
+
+                    lock (UnfinishedDataListLock) isUpdatingNow = false;
+                }
+            };
+
             Messenger.Default.Register<int>(this, MessageToken.PivotSelection, async (pivotSelectionMessage) =>
             {
                 // 切换到已完成页面时，更新当前页面的数据
@@ -328,17 +360,9 @@ namespace GetStoreApp.ViewModels.Controls.Download
         }
 
         /// <summary>
-        /// 页面被卸载时，关闭消息服务
-        /// </summary>
-        public void OnUnloaded(object sender, RoutedEventArgs args)
-        {
-            Messenger.Default.Unregister(this);
-        }
-
-        /// <summary>
         /// 在多选模式下点击项目选择相应的条目
         /// </summary>
-        public async void OnItemClick(object sender, ItemClickEventArgs args)
+        public async void OnItemClicked(object sender, ItemClickEventArgs args)
         {
             UnfinishedModel resultItem = (UnfinishedModel)args.ClickedItem;
             int ClickedIndex = UnfinishedDataList.IndexOf(resultItem);

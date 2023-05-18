@@ -11,7 +11,7 @@ namespace GetStoreApp.ViewModels.Controls.About
         /// <summary>
         /// 区分传统桌面应用
         /// </summary>
-        public async void OnRecognizeClicked(object sender,RoutedEventArgs args)
+        public async void OnRecognizeClicked(object sender, RoutedEventArgs args)
         {
             await new DesktopAppsDialog().ShowAsync();
         }

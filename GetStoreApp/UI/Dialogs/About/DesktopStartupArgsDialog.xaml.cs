@@ -16,14 +16,5 @@ namespace GetStoreApp.UI.Dialogs.About
         {
             InitializeComponent();
         }
-
-
-        /// <summary>
-        /// 关闭对话框
-        /// </summary>
-        public void OnCloseDialogClicked(object sender, RoutedEventArgs args)
-        {
-            Hide();
-        }
     }
 }

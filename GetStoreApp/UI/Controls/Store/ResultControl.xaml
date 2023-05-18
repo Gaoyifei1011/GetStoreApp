@@ -93,7 +93,7 @@
                 DefaultLabelPosition="Right">
 
                 <menusAndToolbars:ExtendedAppBarButton
-                    Command="{x:Bind ViewModel.CopyIDCommand}"
+                    Click="{x:Bind ViewModel.OnCopyIDClicked}"
                     Cursor="Hand"
                     IsEnabled="{x:Bind system:Convert.ToBoolean(ViewModel.ResultDataList.Count), Mode=OneWay}"
                     Label="{x:Bind root:ResourceService.GetLocalized('Store/CopyID')}">
@@ -110,7 +110,7 @@
                 </menusAndToolbars:ExtendedAppBarButton>
 
                 <menusAndToolbars:ExtendedAppBarButton
-                    Command="{x:Bind ViewModel.SelectCommand}"
+                    Click="{x:Bind ViewModel.OnSelectClicked}"
                     Cursor="Hand"
                     IsEnabled="{x:Bind system:Convert.ToBoolean(ViewModel.ResultDataList.Count), Mode=OneWay}"
                     Label="{x:Bind root:ResourceService.GetLocalized('Store/Select')}">
@@ -137,7 +137,7 @@
                 DefaultLabelPosition="Right">
 
                 <menusAndToolbars:ExtendedAppBarButton
-                    Command="{x:Bind ViewModel.SelectAllCommand}"
+                    Click="{x:Bind ViewModel.OnSelectAllClicked}"
                     Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('Store/SelectAll')}">
 
@@ -154,7 +154,7 @@
                 </menusAndToolbars:ExtendedAppBarButton>
 
                 <menusAndToolbars:ExtendedAppBarButton
-                    Command="{x:Bind ViewModel.SelectNoneCommand}"
+                    Click="{x:Bind ViewModel.OnSelectNoneClicked}"
                     Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('Store/SelectNone')}">
 
@@ -185,7 +185,7 @@
 
                     <menusAndToolbars:ExtendedAppBarButton.Flyout>
                         <menusAndToolbars:AdaptiveMenuFlyout>
-                            <MenuFlyoutItem Command="{x:Bind ViewModel.CopySelectedLinkCommand}" Text="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedLink')}">
+                            <MenuFlyoutItem Click="{x:Bind ViewModel.OnCopySelectedLinkClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedLink')}">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip
@@ -195,7 +195,7 @@
                                 </ToolTipService.ToolTip>
                             </MenuFlyoutItem>
 
-                            <MenuFlyoutItem Command="{x:Bind ViewModel.CopySelectedCommand}" Text="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedContent')}">
+                            <MenuFlyoutItem Click="{x:Bind ViewModel.OnCopySelectedClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedContent')}">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip
@@ -209,7 +209,7 @@
                 </menusAndToolbars:ExtendedAppBarButton>
 
                 <menusAndToolbars:ExtendedAppBarButton
-                    Command="{x:Bind ViewModel.DownloadSelectedCommand}"
+                    Click="{x:Bind ViewModel.OnDownloadSelectedClicked}"
                     Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('Store/DownloadSelected')}">
 
@@ -226,7 +226,7 @@
                 </menusAndToolbars:ExtendedAppBarButton>
 
                 <menusAndToolbars:ExtendedAppBarButton
-                    Command="{x:Bind ViewModel.CancelCommand}"
+                    Click="{x:Bind ViewModel.OnCancelClicked}"
                     Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('Store/Cancel')}">
 
@@ -247,7 +247,7 @@
         <ListView
             Grid.Row="1"
             IsItemClickEnabled="{x:Bind ViewModel.IsSelectMode, Mode=OneWay}"
-            ItemClick="{x:Bind ViewModel.OnItemClick}"
+            ItemClick="{x:Bind ViewModel.OnItemClicked}"
             ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
             ItemsSource="{x:Bind ViewModel.ResultDataList, Mode=OneWay}"
             SelectionMode="None"
@@ -400,15 +400,13 @@
                             </ToolTipService.ToolTip>
                         </basicInput:ExtendedCheckBox>
 
-                        <basicInput:ExtendedHyperlinkButton
+                        <HyperlinkButton
                             Grid.Column="1"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
                             Command="{Binding ElementName=ResultRoot, Path=DataContext.DownloadCommand, Mode=OneTime}"
                             CommandParameter="{Binding}"
                             Content="{x:Bind FileName}"
-                            RightClickCommand="{Binding ElementName=ResultRoot, Path=DataContext.OpenLinkCommand, Mode=OneTime}"
-                            RightClickCommandParameter="{Binding}"
                             Style="{StaticResource HyperlinkButtonStyle}">
 
                             <ToolTipService.ToolTip>
@@ -417,7 +415,7 @@
                                     Placement="Bottom"
                                     VerticalOffset="25" />
                             </ToolTipService.ToolTip>
-                        </basicInput:ExtendedHyperlinkButton>
+                        </HyperlinkButton>
 
                         <TextBlock
                             Grid.Column="2"

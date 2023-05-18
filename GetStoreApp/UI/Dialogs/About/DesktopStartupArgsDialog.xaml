@@ -8,6 +8,7 @@
     xmlns:dialogsAndFlyouts="using:GetStoreApp.Views.CustomControls.DialogsAndFlyouts"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
+    x:Name="DesktopStartupArgsRoot"
     RequestedTheme="{x:Bind DialogTheme}"
     Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">
@@ -245,7 +246,8 @@
             <Button
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
-                Click="{x:Bind OnCloseDialogClicked}"
+                Click="{x:Bind ViewModel.OnCloseDialogClicked}"
+                Tag="{x:Bind DesktopStartupArgsRoot}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}">
 
                 <ToolTipService.ToolTip>

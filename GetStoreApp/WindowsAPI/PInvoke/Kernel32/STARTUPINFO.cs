@@ -114,12 +114,12 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <summary>
         /// 以字符串形式获取 <see cref="lpDesktop" /> 的值
         /// </summary>
-        public string Desktop => lpDesktop != null ? new string(lpDesktop) : null;
+        public string Desktop => lpDesktop is not null ? new string(lpDesktop) : null;
 
         /// <summary>
         /// 以字符串形式获取 <see cref="lpDesktop" /> 的值
         /// </summary>
-        public string Title => lpTitle != null ? new string(lpTitle) : null;
+        public string Title => lpTitle is not null ? new string(lpTitle) : null;
 
         /// <summary>
         /// 初始化 <see cref="STARTUPINFO"/> 结构体的一个新实例。

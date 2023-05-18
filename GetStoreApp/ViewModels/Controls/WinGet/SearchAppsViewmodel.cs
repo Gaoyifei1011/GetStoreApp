@@ -1,11 +1,10 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Models.Controls.WinGet;
+﻿using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Root;
 using GetStoreApp.ViewModels.Base;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -60,20 +59,12 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
             }
         }
 
+        // 安装应用
+        public XamlUICommand InstallCommand { get; } = new XamlUICommand();
+
         private List<MatchResult> MatchResultList;
 
         public ObservableCollection<SearchAppsModel> SearchAppsDataList { get; set; } = new ObservableCollection<SearchAppsModel>();
-
-        // 更新已安装应用数据
-        public IRelayCommand RefreshCommand => new RelayCommand(async () =>
-        {
-            MatchResultList = null;
-            IsSearchCompleted = false;
-            await Task.Delay(500);
-            await GetSearchAppsAsync();
-            InitializeData();
-            IsSearchCompleted = true;
-        });
 
         /// <summary>
         /// 初始化搜索应用内容
@@ -90,10 +81,18 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
             }
         }
 
-        // 安装应用
-        public RelayCommand InstallCommand => new RelayCommand(() =>
+        /// <summary>
+        /// 更新已安装应用数据
+        /// </summary>
+        public async void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
-        });
+            MatchResultList = null;
+            IsSearchCompleted = false;
+            await Task.Delay(500);
+            await GetSearchAppsAsync();
+            InitializeData();
+            IsSearchCompleted = true;
+        }
 
         /// <summary>
         /// 根据输入的内容检索应用
@@ -106,6 +105,13 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
             await GetSearchAppsAsync();
             InitializeData();
             IsSearchCompleted = true;
+        }
+
+        public SearchAppsViewModel()
+        {
+            InstallCommand.ExecuteRequested += (sender, args) =>
+            {
+            };
         }
 
         /// <summary>

@@ -17,22 +17,5 @@ namespace GetStoreApp.UI.Dialogs.About
             InitializeComponent();
             ViewModel.InitializeAppInformation();
         }
-
-        /// <summary>
-        /// 关闭对话框
-        /// </summary>
-        public void OnCloseDialogClicked(object sender, RoutedEventArgs args)
-        {
-            Hide();
-        }
-
-        /// <summary>
-        /// 复制应用信息
-        /// </summary>
-        public void OnCopyAppInformationClicked(object sender, RoutedEventArgs args)
-        {
-            ViewModel.CopyAppInformation();
-            Hide();
-        }
     }
 }

@@ -1,11 +1,10 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Helpers.Window;
+﻿using GetStoreApp.Helpers.Window;
 using GetStoreApp.Services.Root;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.CustomControls.MenusAndToolbars;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Input;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using System;
@@ -53,48 +52,6 @@ namespace GetStoreApp.ViewModels.Controls.Window
                 OnPropertyChanged();
             }
         }
-
-        // 窗口还原
-        public IRelayCommand RestoreCommand => new RelayCommand(WindowHelper.RestoreAppWindow);
-
-        // 窗口移动
-        public IRelayCommand MoveCommand => new RelayCommand<AdaptiveMenuFlyout>((flyout) =>
-        {
-            if (flyout is not null)
-            {
-                flyout.Hide();
-                User32Library.PostMessage(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), WindowMessage.WM_SYSCOMMAND, (int)SystemCommand.SC_MOVE, 0);
-            }
-        });
-
-        // 窗口大小
-        public IRelayCommand SizeCommand => new RelayCommand<AdaptiveMenuFlyout>((flyout) =>
-        {
-            if (flyout is not null)
-            {
-                flyout.Hide();
-                User32Library.PostMessage(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), WindowMessage.WM_SYSCOMMAND, (int)SystemCommand.SC_SIZE, 0);
-            }
-        });
-
-        // 窗口最小化
-        public IRelayCommand MinimizeCommand => new RelayCommand(WindowHelper.MinimizeAppWindow);
-
-        // 窗口最大化
-        public IRelayCommand MaximizeCommand => new RelayCommand(() =>
-        {
-            if (WindowHelper.IsWindowMaximized)
-            {
-                WindowHelper.RestoreAppWindow();
-            }
-            else
-            {
-                WindowHelper.MaximizeAppWindow();
-            }
-        });
-
-        // 窗口关闭
-        public IRelayCommand CloseCommand => new RelayCommand(Program.ApplicationRoot.MainWindow.Close);
 
         /// <summary>
         /// 双击标题栏对应的事件（窗口最大化或还原窗口）
@@ -180,6 +137,71 @@ namespace GetStoreApp.ViewModels.Controls.Window
         {
             ((Grid)sender).ReleasePointerCaptures();
             isWindowMoving = false;
+        }
+
+        /// <summary>
+        /// 窗口还原
+        /// </summary>
+        public void OnRestoreClicked(object sender, RoutedEventArgs args)
+        {
+            WindowHelper.RestoreAppWindow();
+        }
+
+        /// <summary>
+        /// 窗口移动
+        /// </summary>
+        public void OnMoveClicked(object sender, RoutedEventArgs args)
+        {
+            Button button = sender as Button;
+            if (button.Tag is not null)
+            {
+                ((AdaptiveMenuFlyout)button.Tag).Hide();
+                User32Library.PostMessage(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), WindowMessage.WM_SYSCOMMAND, (int)SystemCommand.SC_MOVE, 0);
+            }
+        }
+
+        /// <summary>
+        /// 窗口大小
+        /// </summary>
+        public void OnSizeClicked(object sender, RoutedEventArgs args)
+        {
+            Button button = sender as Button;
+            if (button.Tag is not null)
+            {
+                ((AdaptiveMenuFlyout)button.Tag).Hide();
+                User32Library.PostMessage(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), WindowMessage.WM_SYSCOMMAND, (int)SystemCommand.SC_SIZE, 0);
+            }
+        }
+
+        /// <summary>
+        /// 窗口最小化
+        /// </summary>
+        public void OnMinimizeClicked(object sender, RoutedEventArgs args)
+        {
+            WindowHelper.MinimizeAppWindow();
+        }
+
+        /// <summary>
+        /// 窗口最大化
+        /// </summary>
+        public void OnMaximizeClicked(object sender, RoutedEventArgs args)
+        {
+            if (WindowHelper.IsWindowMaximized)
+            {
+                WindowHelper.RestoreAppWindow();
+            }
+            else
+            {
+                WindowHelper.MaximizeAppWindow();
+            }
+        }
+
+        /// <summary>
+        /// 窗口关闭
+        /// </summary>
+        public void OnCloseClicked(object sender, RoutedEventArgs args)
+        {
+            Program.ApplicationRoot.MainWindow.Close();
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.History;
@@ -13,6 +11,7 @@ using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Notifications;
 using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Input;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -33,35 +32,59 @@ namespace GetStoreApp.ViewModels.Controls.Store
 
         public List<ChannelModel> ChannelList { get; } = ResourceService.ChannelList;
 
-        public ObservableCollection<HistoryModel> HistoryLiteDataList { get; } = new ObservableCollection<HistoryModel>();
-
-        // 查看全部
-        public IRelayCommand ViewAllCommand => new RelayCommand(() =>
-        {
-            NavigationService.NavigateTo(typeof(HistoryPage), AppNaviagtionArgs.History);
-        });
-
         // 复制到剪贴板
-        public IRelayCommand CopyCommand => new RelayCommand<HistoryModel>((historyItem) =>
-        {
-            string CopyContent = string.Format("{0}\t{1}\t{2}",
-                TypeList.Find(item => item.InternalName.Equals(historyItem.HistoryType)).DisplayName,
-                ChannelList.Find(item => item.InternalName.Equals(historyItem.HistoryChannel)).DisplayName,
-                historyItem.HistoryLink);
-            CopyPasteHelper.CopyToClipBoard(CopyContent);
-
-            new HistoryCopyNotification(true, false).Show();
-        });
+        public XamlUICommand CopyCommand { get; } = new XamlUICommand();
 
         // 填入到文本框
-        public IRelayCommand FillinCommand => new RelayCommand<HistoryModel>((historyItem) =>
+        public XamlUICommand FillinCommand { get; } = new XamlUICommand();
+
+        public ObservableCollection<HistoryModel> HistoryLiteDataList { get; } = new ObservableCollection<HistoryModel>();
+
+        /// <summary>
+        /// 列表初始化，可以从数据库获得的列表中加载
+        /// </summary>
+        public async void OnLoaded(object sender, RoutedEventArgs args)
         {
-            Messenger.Default.Send(historyItem, MessageToken.Fillin);
-        });
+            await GetHistoryLiteDataListAsync();
+        }
+
+        /// <summary>
+        /// 查看全部
+        /// </summary>
+        public void OnViewAllClicked(object sender, RoutedEventArgs args)
+        {
+            NavigationService.NavigateTo(typeof(HistoryPage), AppNaviagtionArgs.History);
+        }
 
         public HistoryLiteViewModel()
         {
             HistoryLiteItem = HistoryRecordService.HistoryLiteNum;
+
+            CopyCommand.ExecuteRequested += (sender, args) =>
+            {
+                HistoryModel historyItem = args.Parameter as HistoryModel;
+
+                if (historyItem is not null)
+                {
+                    string CopyContent = string.Format("{0}\t{1}\t{2}",
+                        TypeList.Find(item => item.InternalName.Equals(historyItem.HistoryType)).DisplayName,
+                        ChannelList.Find(item => item.InternalName.Equals(historyItem.HistoryChannel)).DisplayName,
+                        historyItem.HistoryLink);
+                    CopyPasteHelper.CopyToClipBoard(CopyContent);
+
+                    new HistoryCopyNotification(true, false).Show();
+                }
+            };
+
+            FillinCommand.ExecuteRequested += (sender, args) =>
+            {
+                HistoryModel historyItem = args.Parameter as HistoryModel;
+
+                if (historyItem is not null)
+                {
+                    Messenger.Default.Send(historyItem, MessageToken.Fillin);
+                }
+            };
 
             Messenger.Default.Register<bool>(this, MessageToken.History, async (historyMessage) =>
             {
@@ -84,14 +107,6 @@ namespace GetStoreApp.ViewModels.Controls.Store
                     Messenger.Default.Unregister(this);
                 }
             });
-        }
-
-        /// <summary>
-        /// 列表初始化，可以从数据库获得的列表中加载
-        /// </summary>
-        public async void OnLoaded(object sender, RoutedEventArgs args)
-        {
-            await GetHistoryLiteDataListAsync();
         }
 
         /// <summary>

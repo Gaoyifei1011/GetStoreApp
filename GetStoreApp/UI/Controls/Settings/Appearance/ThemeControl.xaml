@@ -47,7 +47,7 @@
 
                 <Button
                     Grid.Column="2"
-                    Command="{x:Bind ViewModel.SettingsColorCommand}"
+                    Click="{x:Bind ViewModel.OnSettingsColorClicked}"
                     Content="{x:Bind root:ResourceService.GetLocalized('Settings/WindowsColorSettings')}">
 
                     <ToolTipService.ToolTip>
@@ -98,10 +98,10 @@
                             <DropDownButton.Flyout>
                                 <menusAndToolbars:AdaptiveMenuFlyout>
                                     <RadioMenuFlyoutItem
-                                        Command="{x:Bind ViewModel.ThemeSelectCommand}"
-                                        CommandParameter="0"
+                                        Click="{x:Bind ViewModel.OnThemeSelectClicked}"
                                         GroupName="ThemeSetting"
                                         IsChecked="{x:Bind IsItemChecked(ViewModel.Theme.InternalName, ViewModel.ThemeList[0].InternalName), Mode=OneWay}"
+                                        Tag="0"
                                         Text="{x:Bind ViewModel.ThemeList[0].DisplayName}">
 
                                         <ToolTipService.ToolTip>
@@ -113,10 +113,10 @@
                                     </RadioMenuFlyoutItem>
 
                                     <RadioMenuFlyoutItem
-                                        Command="{x:Bind ViewModel.ThemeSelectCommand}"
-                                        CommandParameter="1"
+                                        Click="{x:Bind ViewModel.OnThemeSelectClicked}"
                                         GroupName="ThemeSetting"
                                         IsChecked="{x:Bind IsItemChecked(ViewModel.Theme.InternalName, ViewModel.ThemeList[1].InternalName), Mode=OneWay}"
+                                        Tag="1"
                                         Text="{x:Bind ViewModel.ThemeList[1].DisplayName}">
 
                                         <ToolTipService.ToolTip>
@@ -128,10 +128,10 @@
                                     </RadioMenuFlyoutItem>
 
                                     <RadioMenuFlyoutItem
-                                        Command="{x:Bind ViewModel.ThemeSelectCommand}"
-                                        CommandParameter="2"
+                                        Click="{x:Bind ViewModel.OnThemeSelectClicked}"
                                         GroupName="ThemeSetting"
                                         IsChecked="{x:Bind IsItemChecked(ViewModel.Theme.InternalName, ViewModel.ThemeList[2].InternalName), Mode=OneWay}"
+                                        Tag="2"
                                         Text="{x:Bind ViewModel.ThemeList[2].DisplayName}">
 
                                         <ToolTipService.ToolTip>
@@ -185,10 +185,10 @@
                             <DropDownButton.Flyout>
                                 <menusAndToolbars:AdaptiveMenuFlyout>
                                     <RadioMenuFlyoutItem
-                                        Command="{x:Bind ViewModel.NotifyIconMenuThemeSelectCommand}"
-                                        CommandParameter="0"
+                                        Click="{x:Bind ViewModel.OnNotifyIconMenuThemeSelectClicked}"
                                         GroupName="NotifyIconMenuThemeSetting"
                                         IsChecked="{x:Bind IsItemChecked(ViewModel.NotifyIconMenuTheme.InternalName, ViewModel.NotifyIconMenuThemeList[0].InternalName), Mode=OneWay}"
+                                        Tag="0"
                                         Text="{x:Bind ViewModel.NotifyIconMenuThemeList[0].DisplayName}">
 
                                         <ToolTipService.ToolTip>
@@ -200,10 +200,10 @@
                                     </RadioMenuFlyoutItem>
 
                                     <RadioMenuFlyoutItem
-                                        Command="{x:Bind ViewModel.NotifyIconMenuThemeSelectCommand}"
-                                        CommandParameter="1"
+                                        Click="{x:Bind ViewModel.OnNotifyIconMenuThemeSelectClicked}"
                                         GroupName="NotifyIconMenuThemeSetting"
                                         IsChecked="{x:Bind IsItemChecked(ViewModel.NotifyIconMenuTheme.InternalName, ViewModel.NotifyIconMenuThemeList[1].InternalName), Mode=OneWay}"
+                                        Tag="1"
                                         Text="{x:Bind ViewModel.NotifyIconMenuThemeList[1].DisplayName}">
 
                                         <ToolTipService.ToolTip>

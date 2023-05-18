@@ -295,7 +295,6 @@
     <None Remove="Views\CustomControls\BasicInput\ExtendedButton.xaml" />
     <None Remove="Views\CustomControls\BasicInput\ExtendedCheckBox.xaml" />
     <None Remove="Views\CustomControls\BasicInput\ExtendedDropDownButton.xaml" />
-    <None Remove="Views\CustomControls\BasicInput\ExtendedHyperlinkButton.xaml" />
     <None Remove="Views\CustomControls\Collections\AdaptiveGridView.xaml" />
     <None Remove="Views\CustomControls\MenusAndToolbars\AdaptiveMenuFlyout.xaml" />
     <None Remove="Views\CustomControls\MenusAndToolbars\ExtendedAppBarButton.xaml" />
@@ -608,9 +607,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\CustomControls\BasicInput\ExtendedDropDownButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\CustomControls\BasicInput\ExtendedHyperlinkButton.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\CustomControls\Collections\AdaptiveGridView.xaml">

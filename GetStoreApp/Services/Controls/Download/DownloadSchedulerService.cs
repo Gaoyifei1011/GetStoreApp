@@ -1,6 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Collections;
-using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Controls.Settings.Experiment;

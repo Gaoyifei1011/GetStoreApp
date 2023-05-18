@@ -1,6 +1,4 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Models.Controls.WinGet;
+﻿using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.WinGet;
 using GetStoreApp.ViewModels.Base;
@@ -8,6 +6,7 @@ using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -67,10 +66,15 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
 
         private List<MatchResult> MatchResultList;
 
+        // 卸载应用
+        public XamlUICommand UnInstallCommand { get; } = new XamlUICommand();
+
         public ObservableCollection<InstalledAppsModel> InstalledAppsDataList { get; set; } = new ObservableCollection<InstalledAppsModel>();
 
-        // 更新已安装应用数据
-        public IRelayCommand RefreshCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 更新已安装应用数据
+        /// </summary>
+        public async void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
             MatchResultList = null;
             IsLoadedCompleted = false;
@@ -80,73 +84,75 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
             InitializeData();
             IsInstalledAppsEmpty = MatchResultList.Count is 0;
             IsLoadedCompleted = true;
-        });
-
-        // 卸载应用
-        public IRelayCommand UnInstallCommand => new RelayCommand<InstalledAppsModel>(async (installedApps) =>
-        {
-            try
-            {
-                UninstallOptions uninstallOptions = WinGetService.CreateUninstallOptions();
-
-                uninstallOptions.PackageUninstallMode = PackageUninstallMode.Interactive;
-                uninstallOptions.PackageUninstallScope = PackageUninstallScope.Any;
-
-                UninstallResult unInstallResult = await InstalledAppsManager.UninstallPackageAsync(MatchResultList.Find(item => item.CatalogPackage.InstalledVersion.Id == installedApps.AppID).CatalogPackage, uninstallOptions);
-
-                // 获取卸载后的结果信息
-                // 卸载成功，从列表中删除该应用
-                if (unInstallResult.Status == UninstallResultStatus.Ok)
-                {
-                    // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
-                    if (unInstallResult.RebootRequired)
-                    {
-                        ContentDialogResult Result = await new RebootDialog(installedApps.AppName).ShowAsync();
-                        unsafe
-                        {
-                            Kernel32Library.GetStartupInfo(out STARTUPINFO RebootStartupInfo);
-                            RebootStartupInfo.lpReserved = null;
-                            RebootStartupInfo.lpDesktop = null;
-                            RebootStartupInfo.lpTitle = null;
-                            RebootStartupInfo.dwX = 0;
-                            RebootStartupInfo.dwY = 0;
-                            RebootStartupInfo.dwXSize = 0;
-                            RebootStartupInfo.dwYSize = 0;
-                            RebootStartupInfo.dwXCountChars = 500;
-                            RebootStartupInfo.dwYCountChars = 500;
-                            RebootStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-                            RebootStartupInfo.wShowWindow = 0;
-                            RebootStartupInfo.cbReserved2 = 0;
-                            RebootStartupInfo.lpReserved2 = IntPtr.Zero;
-
-                            RebootStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
-                            Kernel32Library.CreateProcess(null, string.Format("{0} {1}", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), "System32", "Shutdown.exe"), "-r -t 120"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref RebootStartupInfo, out PROCESS_INFORMATION RebootProcessInformation);
-
-                            Kernel32Library.CloseHandle(RebootProcessInformation.hProcess);
-                            Kernel32Library.CloseHandle(RebootProcessInformation.hThread);
-                        }
-                    }
-                }
-                else
-                {
-                    await new UnInstallFailedDialog(installedApps.AppName).ShowAsync();
-                }
-            }
-            // 操作被用户所取消异常
-            catch (OperationCanceledException)
-            {
-                await new UnInstallFailedDialog(installedApps.AppName).ShowAsync();
-            }
-            // 其他异常
-            catch (Exception)
-            {
-                await new UnInstallFailedDialog(installedApps.AppName).ShowAsync();
-            }
-        });
+        }
 
         public InstalledAppsViewModel()
         {
             PropertyChanged += OnPropertyChanged;
+            UnInstallCommand.ExecuteRequested += async (sender, args) =>
+            {
+                InstalledAppsModel installedApps = args.Parameter as InstalledAppsModel;
+                if (installedApps is not null)
+                {
+                    try
+                    {
+                        UninstallOptions uninstallOptions = WinGetService.CreateUninstallOptions();
+
+                        uninstallOptions.PackageUninstallMode = PackageUninstallMode.Interactive;
+                        uninstallOptions.PackageUninstallScope = PackageUninstallScope.Any;
+
+                        UninstallResult unInstallResult = await InstalledAppsManager.UninstallPackageAsync(MatchResultList.Find(item => item.CatalogPackage.InstalledVersion.Id == installedApps.AppID).CatalogPackage, uninstallOptions);
+
+                        // 获取卸载后的结果信息
+                        // 卸载成功，从列表中删除该应用
+                        if (unInstallResult.Status == UninstallResultStatus.Ok)
+                        {
+                            // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
+                            if (unInstallResult.RebootRequired)
+                            {
+                                ContentDialogResult Result = await new RebootDialog(installedApps.AppName).ShowAsync();
+                                unsafe
+                                {
+                                    Kernel32Library.GetStartupInfo(out STARTUPINFO RebootStartupInfo);
+                                    RebootStartupInfo.lpReserved = null;
+                                    RebootStartupInfo.lpDesktop = null;
+                                    RebootStartupInfo.lpTitle = null;
+                                    RebootStartupInfo.dwX = 0;
+                                    RebootStartupInfo.dwY = 0;
+                                    RebootStartupInfo.dwXSize = 0;
+                                    RebootStartupInfo.dwYSize = 0;
+                                    RebootStartupInfo.dwXCountChars = 500;
+                                    RebootStartupInfo.dwYCountChars = 500;
+                                    RebootStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
+                                    RebootStartupInfo.wShowWindow = 0;
+                                    RebootStartupInfo.cbReserved2 = 0;
+                                    RebootStartupInfo.lpReserved2 = IntPtr.Zero;
+
+                                    RebootStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+                                    Kernel32Library.CreateProcess(null, string.Format("{0} {1}", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), "System32", "Shutdown.exe"), "-r -t 120"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref RebootStartupInfo, out PROCESS_INFORMATION RebootProcessInformation);
+
+                                    Kernel32Library.CloseHandle(RebootProcessInformation.hProcess);
+                                    Kernel32Library.CloseHandle(RebootProcessInformation.hThread);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            await new UnInstallFailedDialog(installedApps.AppName).ShowAsync();
+                        }
+                    }
+                    // 操作被用户所取消异常
+                    catch (OperationCanceledException)
+                    {
+                        await new UnInstallFailedDialog(installedApps.AppName).ShowAsync();
+                    }
+                    // 其他异常
+                    catch (Exception)
+                    {
+                        await new UnInstallFailedDialog(installedApps.AppName).ShowAsync();
+                    }
+                }
+            };
         }
 
         ~InstalledAppsViewModel()

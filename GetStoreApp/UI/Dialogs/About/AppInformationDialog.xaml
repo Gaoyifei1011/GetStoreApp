@@ -7,6 +7,7 @@
     xmlns:dialogsAndFlyouts="using:GetStoreApp.Views.CustomControls.DialogsAndFlyouts"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
+    x:Name="AppInformationRoot"
     RequestedTheme="{x:Bind DialogTheme}"
     Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">
@@ -115,9 +116,10 @@
             <Button
                 Grid.Column="0"
                 HorizontalAlignment="Stretch"
-                Click="{x:Bind OnCopyAppInformationClicked}"
+                Click="{x:Bind ViewModel.OnCopyAppInformationClicked}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CopyAppInformation')}"
-                Style="{ThemeResource AccentButtonStyle}">
+                Style="{ThemeResource AccentButtonStyle}"
+                Tag="{x:Bind AppInformationRoot}">
 
                 <ToolTipService.ToolTip>
                     <ToolTip
@@ -130,8 +132,9 @@
             <Button
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
-                Click="{x:Bind OnCloseDialogClicked}"
-                Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}">
+                Click="{x:Bind ViewModel.OnCloseDialogClicked}"
+                Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
+                Tag="{x:Bind AppInformationRoot}">
 
                 <ToolTipService.ToolTip>
                     <ToolTip

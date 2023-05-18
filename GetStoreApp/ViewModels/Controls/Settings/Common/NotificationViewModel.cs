@@ -1,6 +1,4 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Services.Controls.Settings.Common;
+﻿using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.ViewModels.Base;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -27,10 +25,13 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
             }
         }
 
-        public IRelayCommand SettingsNotificationCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 打开系统通知设置
+        /// </summary>
+        public async void OnSettingsNotificationClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:notifications"));
-        });
+        }
 
         /// <summary>
         /// 设置是否开启应用通知

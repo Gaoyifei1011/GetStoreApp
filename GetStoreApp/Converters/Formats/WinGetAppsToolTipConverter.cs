@@ -34,7 +34,7 @@ namespace GetStoreApp.Converters.Formats
             {
                 return string.Format(ResourceService.GetLocalized("WinGet/AppCurrentVersionToolTip"), value);
             }
-            else if(param is "AppNewestVersion")
+            else if (param is "AppNewestVersion")
             {
                 return string.Format(ResourceService.GetLocalized("WinGet/AppNewestVersionToolTip"), value);
             }

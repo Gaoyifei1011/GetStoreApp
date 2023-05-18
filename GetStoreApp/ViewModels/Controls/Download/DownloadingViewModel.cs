@@ -1,6 +1,4 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.DataType.Events;
 using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Models.Controls.Download;
@@ -10,6 +8,7 @@ using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.ViewModels.Base;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -50,14 +49,32 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
         }
 
-        // 打开默认保存的文件夹
-        public IRelayCommand OpenFolderCommand => new RelayCommand(async () =>
+        // 暂停下载当前任务
+        public XamlUICommand PauseCommand { get; } = new XamlUICommand();
+
+        // 删除当前任务
+        public XamlUICommand DeleteCommand { get; } = new XamlUICommand();
+
+        /// <summary>
+        /// 页面被卸载时，关闭消息服务
+        /// </summary>
+        public void OnUnloaded(object sender, RoutedEventArgs args)
+        {
+            Messenger.Default.Unregister(this);
+        }
+
+        /// <summary>
+        /// 打开默认保存的文件夹
+        /// </summary>
+        public async void OnOpenFolderClicked(object sender, RoutedEventArgs args)
         {
             await DownloadOptionsService.OpenFolderAsync(DownloadOptionsService.DownloadFolder);
-        });
+        }
 
-        // 暂停下载全部任务
-        public IRelayCommand PauseAllCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 暂停下载全部任务
+        /// </summary>
+        public async void OnPauseAllClicked(object sender, RoutedEventArgs args)
         {
             // 有信息在更新时，等待操作
             while (IsUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
@@ -68,10 +85,12 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
             // 信息更新完毕时，允许其他操作开始执行
             lock (DownloadingNowLock) IsUpdatingNow = false;
-        });
+        }
 
-        // 进入多选模式
-        public IRelayCommand SelectCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 进入多选模式
+        /// </summary>
+        public async void OnSelectClicked(object sender, RoutedEventArgs args)
         {
             // 有信息在更新时，等待操作
             while (IsUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
@@ -86,10 +105,12 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
             // 信息更新完毕时，允许其他操作开始执行
             lock (DownloadingNowLock) IsUpdatingNow = false;
-        });
+        }
 
-        // 全部选择
-        public IRelayCommand SelectAllCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 全部选择
+        /// </summary>
+        public async void OnSelectAllClicked(object sender, RoutedEventArgs args)
         {
             // 有信息在更新时，等待操作
             while (IsUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
@@ -102,10 +123,12 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
             // 信息更新完毕时，允许其他操作开始执行
             lock (DownloadingNowLock) IsUpdatingNow = false;
-        });
+        }
 
-        // 全部不选
-        public IRelayCommand SelectNoneCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 全部不选
+        /// </summary>
+        public async void OnSelectNoneClicked(object sender, RoutedEventArgs args)
         {
             // 有信息在更新时，等待操作
             while (IsUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
@@ -118,10 +141,12 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
             // 信息更新完毕时，允许其他操作开始执行
             lock (DownloadingNowLock) IsUpdatingNow = false;
-        });
+        }
 
-        // 删除选中的任务
-        public IRelayCommand DeleteSelectedCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 删除选中的任务
+        /// </summary>
+        public async void OnDeleteSelectedClicked(object sender, RoutedEventArgs args)
         {
             // 有信息在更新时，等待操作
             while (IsUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
@@ -168,62 +193,33 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
             // 信息更新完毕时，允许其他操作开始执行
             lock (DownloadingNowLock) IsUpdatingNow = false;
-        });
+        }
 
-        // 退出多选模式
-        public IRelayCommand CancelCommand => new RelayCommand(() =>
+        public void OnCancelClicked(object sender, RoutedEventArgs args)
         {
             IsSelectMode = false;
-        });
+        }
 
-        // 暂停下载当前任务
-        public IRelayCommand PauseCommand => new RelayCommand<DownloadingModel>(async (downloadingItem) =>
+        /// <summary>
+        /// 在多选模式下点击项目选择相应的条目
+        /// </summary>
+        public async void OnItemClicked(object sender, ItemClickEventArgs args)
         {
             // 有信息在更新时，等待操作
             while (IsUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
             lock (DownloadingNowLock) IsUpdatingNow = true;
 
-            bool PauseResult = await DownloadSchedulerService.PauseTaskAsync(downloadingItem.DownloadKey, downloadingItem.GID, downloadingItem.DownloadFlag);
+            DownloadingModel downloadingItem = (DownloadingModel)args.ClickedItem;
+            int ClickedIndex = DownloadingDataList.IndexOf(downloadingItem);
 
-            // 信息更新完毕时，允许其他操作开始执行
-            lock (DownloadingNowLock) IsUpdatingNow = false;
-        });
-
-        // 删除当前任务
-        public IRelayCommand DeleteCommand => new RelayCommand<DownloadingModel>(async (downloadingItem) =>
-        {
-            // 有信息在更新时，等待操作
-            while (IsUpdatingNow) await Task.Delay(50);
-            lock (DownloadingNowLock) IsUpdatingNow = true;
-
-            bool DeleteResult = await DownloadSchedulerService.DeleteTaskAsync(downloadingItem.DownloadKey, downloadingItem.GID, downloadingItem.DownloadFlag);
-
-            if (DeleteResult)
+            if (ClickedIndex >= 0 && ClickedIndex < DownloadingDataList.Count)
             {
-                // 删除下载文件
-                try
-                {
-                    if (File.Exists(downloadingItem.FilePath))
-                    {
-                        File.Delete(downloadingItem.FilePath);
-                    }
-                }
-                catch (Exception) { }
-
-                // 删除Aria2后缀下载信息记录文件
-                try
-                {
-                    if (File.Exists(string.Format("{0}.{1}", downloadingItem.FilePath, "aria2")))
-                    {
-                        File.Delete(string.Format("{0}.{1}", downloadingItem.FilePath, "aria2"));
-                    }
-                }
-                catch (Exception) { }
+                DownloadingDataList[ClickedIndex].IsSelected = !DownloadingDataList[ClickedIndex].IsSelected;
             }
 
             // 信息更新完毕时，允许其他操作开始执行
             lock (DownloadingNowLock) IsUpdatingNow = false;
-        });
+        }
 
         public DownloadingViewModel()
         {
@@ -231,6 +227,61 @@ namespace GetStoreApp.ViewModels.Controls.Download
             DownloadingTimer.Tick += DownloadInfoTimerTick;
             // Interval 获取或设置计时器刻度之间的时间段
             DownloadingTimer.Interval = new TimeSpan(0, 0, 1);
+
+            PauseCommand.ExecuteRequested += async (sender, args) =>
+            {
+                DownloadingModel downloadingItem = args.Parameter as DownloadingModel;
+                if (downloadingItem is not null)
+                {
+                    // 有信息在更新时，等待操作
+                    while (IsUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
+                    lock (DownloadingNowLock) IsUpdatingNow = true;
+
+                    bool PauseResult = await DownloadSchedulerService.PauseTaskAsync(downloadingItem.DownloadKey, downloadingItem.GID, downloadingItem.DownloadFlag);
+
+                    // 信息更新完毕时，允许其他操作开始执行
+                    lock (DownloadingNowLock) IsUpdatingNow = false;
+                }
+            };
+
+            DeleteCommand.ExecuteRequested += async (sender, args) =>
+            {
+                DownloadingModel downloadingItem = args.Parameter as DownloadingModel;
+                if (downloadingItem is not null)
+                {
+                    // 有信息在更新时，等待操作
+                    while (IsUpdatingNow) await Task.Delay(50);
+                    lock (DownloadingNowLock) IsUpdatingNow = true;
+
+                    bool DeleteResult = await DownloadSchedulerService.DeleteTaskAsync(downloadingItem.DownloadKey, downloadingItem.GID, downloadingItem.DownloadFlag);
+
+                    if (DeleteResult)
+                    {
+                        // 删除下载文件
+                        try
+                        {
+                            if (File.Exists(downloadingItem.FilePath))
+                            {
+                                File.Delete(downloadingItem.FilePath);
+                            }
+                        }
+                        catch (Exception) { }
+
+                        // 删除Aria2后缀下载信息记录文件
+                        try
+                        {
+                            if (File.Exists(string.Format("{0}.{1}", downloadingItem.FilePath, "aria2")))
+                            {
+                                File.Delete(string.Format("{0}.{1}", downloadingItem.FilePath, "aria2"));
+                            }
+                        }
+                        catch (Exception) { }
+                    }
+
+                    // 信息更新完毕时，允许其他操作开始执行
+                    lock (DownloadingNowLock) IsUpdatingNow = false;
+                }
+            };
 
             Messenger.Default.Register<int>(this, MessageToken.PivotSelection, async (pivotSelectionMessage) =>
             {
@@ -270,35 +321,6 @@ namespace GetStoreApp.ViewModels.Controls.Download
             // 订阅事件
             DownloadSchedulerService.DownloadingList.ItemsChanged += OnDownloadingListItemsChanged;
             DownloadSchedulerService.WaitingList.ItemsChanged += OnWaitingListItemsChanged;
-        }
-
-        /// <summary>
-        /// 页面被卸载时，关闭消息服务
-        /// </summary>
-        public void OnUnloaded(object sender, RoutedEventArgs args)
-        {
-            Messenger.Default.Unregister(this);
-        }
-
-        /// <summary>
-        /// 在多选模式下点击项目选择相应的条目
-        /// </summary>
-        public async void OnItemClick(object sender, ItemClickEventArgs args)
-        {
-            // 有信息在更新时，等待操作
-            while (IsUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
-            lock (DownloadingNowLock) IsUpdatingNow = true;
-
-            DownloadingModel downloadingItem = (DownloadingModel)args.ClickedItem;
-            int ClickedIndex = DownloadingDataList.IndexOf(downloadingItem);
-
-            if (ClickedIndex >= 0 && ClickedIndex < DownloadingDataList.Count)
-            {
-                DownloadingDataList[ClickedIndex].IsSelected = !DownloadingDataList[ClickedIndex].IsSelected;
-            }
-
-            // 信息更新完毕时，允许其他操作开始执行
-            lock (DownloadingNowLock) IsUpdatingNow = false;
         }
 
         /// <summary>

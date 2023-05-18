@@ -7,6 +7,7 @@
     xmlns:dialogsAndFlyouts="using:GetStoreApp.Views.CustomControls.DialogsAndFlyouts"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
+    x:Name="CoreWebView2FailedRoot"
     RequestedTheme="{x:Bind DialogTheme}"
     Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">
@@ -114,9 +115,10 @@
             <Button
                 Grid.Column="0"
                 HorizontalAlignment="Stretch"
-                Click="{x:Bind OnCopyExceptionInformationClicked}"
+                Click="{x:Bind ViewModel.OnCopyExceptionInformationClicked}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CopyException')}"
-                Style="{ThemeResource AccentButtonStyle}">
+                Style="{ThemeResource AccentButtonStyle}"
+                Tag="{x:Bind CoreWebView2FailedRoot}">
 
                 <ToolTipService.ToolTip>
                     <ToolTip
@@ -129,8 +131,9 @@
             <Button
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
-                Click="{x:Bind OnCloseDialogClicked}"
-                Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}">
+                Click="{x:Bind ViewModel.OnCloseDialogClicked}"
+                Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
+                Tag="{x:Bind CoreWebView2FailedRoot}">
 
                 <ToolTipService.ToolTip>
                     <ToolTip

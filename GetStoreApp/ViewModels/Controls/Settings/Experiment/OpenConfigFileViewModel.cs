@@ -1,6 +1,5 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Services.Controls.Download;
+﻿using GetStoreApp.Services.Controls.Download;
+using Microsoft.UI.Xaml;
 using System;
 using Windows.Storage;
 using Windows.System;
@@ -12,8 +11,10 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Experiment
     /// </summary>
     public sealed class OpenConfigFileViewModel
     {
-        // 打开配置文件目录
-        public IRelayCommand OpenConfigFileCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 打开配置文件目录
+        /// </summary>
+        public async void OnOpenConfigFileClicked(object sender, RoutedEventArgs args)
         {
             if (Aria2Service.Aria2ConfPath is not null)
             {
@@ -40,6 +41,6 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Experiment
                     await Launcher.LaunchFolderPathAsync(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
                 }
             }
-        });
+        }
     }
 }

@@ -1,6 +1,5 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.UI.Dialogs.Settings;
+﻿using GetStoreApp.UI.Dialogs.Settings;
+using Microsoft.UI.Xaml;
 
 namespace GetStoreApp.ViewModels.Pages
 {
@@ -9,10 +8,12 @@ namespace GetStoreApp.ViewModels.Pages
     /// </summary>
     public sealed class SettingsViewModel
     {
-        // 打开重启应用确认的窗口对话框
-        public IRelayCommand RestartCommand = new RelayCommand(async () =>
+        /// <summary>
+        /// 打开重启应用确认的窗口对话框
+        /// </summary>
+        public async void OnRestartAppsClicked(object sender, RoutedEventArgs args)
         {
             await new RestartAppsDialog().ShowAsync();
-        });
+        }
     }
 }

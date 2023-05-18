@@ -80,7 +80,7 @@
             <Button
                 Grid.Column="0"
                 HorizontalAlignment="Right"
-                Command="{x:Bind ViewModel.DownloadWebView2Command}"
+                Click="{x:Bind ViewModel.OnDownloadWebView2Clicked}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Web/DownloadWebView2')}"
                 Style="{StaticResource AccentButtonStyle}">
                 <ToolTipService.ToolTip>
@@ -93,7 +93,7 @@
             <Button
                 Grid.Column="1"
                 HorizontalAlignment="Left"
-                Command="{x:Bind ViewModel.OpenWithBrowserCommand}"
+                Click="{x:Bind ViewModel.OnOpenWithBrowserClicked}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Web/OpenWithBrowser')}">
                 <ToolTipService.ToolTip>
                     <ToolTip

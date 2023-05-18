@@ -1,6 +1,4 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Models.Controls.Settings.Common;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
@@ -9,6 +7,8 @@ using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.Dialogs;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using Windows.Storage;
@@ -63,27 +63,35 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
             }
         }
 
-        // 下载管理说明
-        public IRelayCommand DownloadInstructionCommand => new RelayCommand(() =>
+        /// <summary>
+        /// 下载管理说明
+        /// </summary>
+        public void OnDownloadInstructionClicked(object sender, RoutedEventArgs args)
         {
             NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
-        });
+        }
 
-        // 打开文件存放目录
-        public IRelayCommand OpenFolderCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 打开文件存放目录
+        /// </summary>
+        public async void OnOpenFolderClicked(object sender, RoutedEventArgs args)
         {
             await DownloadOptionsService.OpenFolderAsync(DownloadFolder);
-        });
+        }
 
-        // 使用默认目录
-        public IRelayCommand UseDefaultFolderCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 使用默认目录
+        /// </summary>
+        public async void OnUseDefaultFolderClicked(object sender, RoutedEventArgs args)
         {
             DownloadFolder = DownloadOptionsService.DefaultFolder;
             await DownloadOptionsService.SetFolderAsync(DownloadOptionsService.DefaultFolder);
-        });
+        }
 
-        // 修改下载目录
-        public IRelayCommand ChangeFolderCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 修改下载目录
+        /// </summary>
+        public async void OnChangeFolderClicked(object sender, RoutedEventArgs args)
         {
             if (Shell32Library.IsUserAnAdmin())
             {
@@ -118,20 +126,32 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
                 }
                 catch (Exception) { }
             }
-        });
+        }
 
-        // 修改同时下载文件数
-        public IRelayCommand DownloadItemSelectCommand => new RelayCommand<string>(async (downloadItemIndex) =>
+        /// <summary>
+        /// 修改同时下载文件数
+        /// </summary>
+        public async void OnDownloadItemSelectClicked(object sender, RoutedEventArgs args)
         {
-            DownloadItem = Convert.ToInt32(downloadItemIndex);
-            await DownloadOptionsService.SetItemAsync(DownloadItem);
-        });
+            RadioMenuFlyoutItem item = sender as RadioMenuFlyoutItem;
+            if (item.Tag is not null)
+            {
+                DownloadItem = Convert.ToInt32(item.Tag);
+                await DownloadOptionsService.SetItemAsync(DownloadItem);
+            }
+        }
 
-        // 修改下载文件的方式
-        public IRelayCommand DownloadModeSelectCommand => new RelayCommand<string>(async (downloadModeIndex) =>
+        /// <summary>
+        /// 修改下载文件的方式
+        /// </summary>
+        public async void OnDownloadModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            DownloadMode = DownloadModeList[Convert.ToInt32(downloadModeIndex)];
-            await DownloadOptionsService.SetModeAsync(DownloadMode);
-        });
+            RadioMenuFlyoutItem item = sender as RadioMenuFlyoutItem;
+            if (item.Tag is not null)
+            {
+                DownloadMode = DownloadModeList[Convert.ToInt32(item.Tag)];
+                await DownloadOptionsService.SetModeAsync(DownloadMode);
+            }
+        }
     }
 }

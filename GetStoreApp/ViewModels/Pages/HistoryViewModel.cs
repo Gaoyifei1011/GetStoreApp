@@ -1,6 +1,4 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.History;
@@ -12,7 +10,9 @@ using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -117,10 +117,17 @@ namespace GetStoreApp.ViewModels.Pages
             }
         }
 
-        // 进入多选模式
-        public IRelayCommand SelectCommand => new RelayCommand(() =>
+        // 填入指定项目的内容
+        public XamlUICommand FillinCommand { get; } = new XamlUICommand();
+
+        // 复制指定项目的内容
+        public XamlUICommand CopyCommand { get; } = new XamlUICommand();
+
+        /// <summary>
+        /// 进入多选模式
+        /// </summary>
+        public void OnSelectClicked(object sender, RoutedEventArgs args)
         {
-            // 保证线程安全
             lock (HistoryDataListLock)
             {
                 foreach (HistoryModel historyItem in HistoryDataList)
@@ -130,39 +137,60 @@ namespace GetStoreApp.ViewModels.Pages
             }
 
             IsSelectMode = true;
-        });
+        }
 
-        // 按时间进行排序
-        public IRelayCommand TimeSortCommand => new RelayCommand<string>(async (value) =>
+        /// <summary>
+        /// 按时间进行排序
+        /// </summary>
+        public async void OnTimeSortClicked(object sender, RoutedEventArgs args)
         {
-            TimeSortOrder = Convert.ToBoolean(value);
+            RadioMenuFlyoutItem item = sender as RadioMenuFlyoutItem;
+            if (item.Tag is not null)
+            {
+                TimeSortOrder = Convert.ToBoolean(item.Tag);
+                await GetHistoryDataListAsync();
+            }
+        }
+
+        /// <summary>
+        /// 按类型进行过滤
+        /// </summary>
+        public async void OnTypeFilterClicked(object sender, RoutedEventArgs args)
+        {
+            RadioMenuFlyoutItem item = sender as RadioMenuFlyoutItem;
+            if (item.Tag is not null)
+            {
+                TypeFilter = Convert.ToString(item.Tag);
+                await GetHistoryDataListAsync();
+            }
+        }
+
+        /// <summary>
+        /// 按通道进行过滤
+        /// </summary>
+        public async void OnChannelFilterClicked(object sender, RoutedEventArgs args)
+        {
+            RadioMenuFlyoutItem item = sender as RadioMenuFlyoutItem;
+            if (item.Tag is not null)
+            {
+                ChannelFilter = Convert.ToString(item.Tag);
+                await GetHistoryDataListAsync();
+            }
+        }
+
+        /// <summary>
+        /// 刷新数据
+        /// </summary>
+        public async void OnRefreshClicked(object sender, RoutedEventArgs args)
+        {
             await GetHistoryDataListAsync();
-        });
+        }
 
-        // 按类型进行过滤
-        public IRelayCommand TypeFilterCommand => new RelayCommand<string>(async (value) =>
+        /// <summary>
+        /// 全选
+        /// </summary>
+        public void OnSelectAllClicked(object sender, RoutedEventArgs args)
         {
-            TypeFilter = value;
-            await GetHistoryDataListAsync();
-        });
-
-        // 按通道进行过滤
-        public IRelayCommand ChannelFilterCommand => new RelayCommand<string>(async (value) =>
-        {
-            ChannelFilter = value;
-            await GetHistoryDataListAsync();
-        });
-
-        // 刷新数据
-        public IRelayCommand RefreshCommand => new RelayCommand(async () =>
-        {
-            await GetHistoryDataListAsync();
-        });
-
-        // 全选
-        public IRelayCommand SelectAllCommand => new RelayCommand(() =>
-        {
-            // 保证线程安全
             lock (HistoryDataListLock)
             {
                 foreach (HistoryModel historyItem in HistoryDataList)
@@ -170,12 +198,13 @@ namespace GetStoreApp.ViewModels.Pages
                     historyItem.IsSelected = true;
                 }
             }
-        });
+        }
 
-        // 全部不选
-        public IRelayCommand SelectNoneCommand => new RelayCommand(() =>
+        /// <summary>
+        /// 全部不选
+        /// </summary>
+        public void OnSelectNoneClicked(object sender, RoutedEventArgs args)
         {
-            // 保证线程安全
             lock (HistoryDataListLock)
             {
                 foreach (HistoryModel historyItem in HistoryDataList)
@@ -183,10 +212,12 @@ namespace GetStoreApp.ViewModels.Pages
                     historyItem.IsSelected = false;
                 }
             }
-        });
+        }
 
-        // 复制选定项目的内容
-        public IRelayCommand CopySelectedCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 复制选定项目的内容
+        /// </summary>
+        public async void OnCopySelectedClicked(object sender, RoutedEventArgs args)
         {
             List<HistoryModel> SelectedHistoryDataList = HistoryDataList.Where(item => item.IsSelected is true).ToList();
 
@@ -209,10 +240,12 @@ namespace GetStoreApp.ViewModels.Pages
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
 
             new HistoryCopyNotification(true, true, SelectedHistoryDataList.Count).Show();
-        });
+        }
 
-        // 删除选定的项目
-        public IRelayCommand DeleteCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 删除选定的项目
+        /// </summary>
+        public async void OnDeleteClicked(object sender, RoutedEventArgs args)
         {
             List<HistoryModel> SelectedHistoryDataList = HistoryDataList.Where(item => item.IsSelected is true).ToList();
 
@@ -257,32 +290,29 @@ namespace GetStoreApp.ViewModels.Pages
 
                 Messenger.Default.Send(true, MessageToken.History);
             }
-        });
+        }
 
-        // 退出多选模式
-        public IRelayCommand CancelCommand => new RelayCommand(() =>
+        /// <summary>
+        /// 退出多选模式
+        /// </summary>
+        public void OnCancelClicked(object sender, RoutedEventArgs args)
         {
             IsSelectMode = false;
-        });
+        }
 
-        // 填入指定项目的内容
-        public IRelayCommand FillinCommand => new RelayCommand<HistoryModel>((historyItem) =>
+        /// <summary>
+        /// 在多选模式下点击项目选择相应的条目
+        /// </summary>
+        public void OnItemClicked(object sender, ItemClickEventArgs args)
         {
-            Messenger.Default.Send(historyItem, MessageToken.Fillin);
-            NavigationService.NavigateTo(typeof(StorePage), AppNaviagtionArgs.Store);
-        });
+            HistoryModel historyItem = (HistoryModel)args.ClickedItem;
+            int ClickedIndex = HistoryDataList.IndexOf(historyItem);
 
-        // 复制指定项目的内容
-        public IRelayCommand CopyCommand => new RelayCommand<HistoryModel>((historyItem) =>
-        {
-            string CopyContent = string.Format("{0}\t{1}\t{2}",
-                TypeList.Find(item => item.InternalName.Equals(historyItem.HistoryType)).DisplayName,
-                ChannelList.Find(item => item.InternalName.Equals(historyItem.HistoryChannel)).DisplayName,
-                historyItem.HistoryLink);
-            CopyPasteHelper.CopyToClipBoard(CopyContent);
-
-            new HistoryCopyNotification(true, false).Show();
-        });
+            lock (HistoryDataListLock)
+            {
+                HistoryDataList[ClickedIndex].IsSelected = !HistoryDataList[ClickedIndex].IsSelected;
+            }
+        }
 
         /// <summary>
         /// 导航到历史记录页面时，历史记录数据列表初始化，从数据库中存储的列表中加载
@@ -292,18 +322,31 @@ namespace GetStoreApp.ViewModels.Pages
             await GetHistoryDataListAsync();
         }
 
-        /// <summary>
-        /// 在多选模式下点击项目选择相应的条目
-        /// </summary>
-        public void OnItemClick(object sender, ItemClickEventArgs args)
+        public HistoryViewModel()
         {
-            HistoryModel historyItem = (HistoryModel)args.ClickedItem;
-            int ClickedIndex = HistoryDataList.IndexOf(historyItem);
-
-            lock (HistoryDataListLock)
+            FillinCommand.ExecuteRequested += (sender, args) =>
             {
-                HistoryDataList[ClickedIndex].IsSelected = !HistoryDataList[ClickedIndex].IsSelected;
-            }
+                HistoryModel historyItem = args.Parameter as HistoryModel;
+                if (historyItem is not null)
+                {
+                    Messenger.Default.Send(historyItem, MessageToken.Fillin);
+                    NavigationService.NavigateTo(typeof(StorePage), AppNaviagtionArgs.Store);
+                }
+            };
+
+            CopyCommand.ExecuteRequested += (sender, args) =>
+            {
+                HistoryModel historyItem = (HistoryModel)args.Parameter;
+                if (historyItem is not null)
+                {
+                    string CopyContent = string.Format("{0}\t{1}\t{2}",
+                        TypeList.Find(item => item.InternalName.Equals(historyItem.HistoryType)).DisplayName,
+                        ChannelList.Find(item => item.InternalName.Equals(historyItem.HistoryChannel)).DisplayName,
+                        historyItem.HistoryLink);
+                    CopyPasteHelper.CopyToClipBoard(CopyContent);
+                    new HistoryCopyNotification(true, false).Show();
+                }
+            };
         }
 
         /// <summary>

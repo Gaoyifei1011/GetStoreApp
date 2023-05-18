@@ -33,7 +33,7 @@
 
         <HyperlinkButton
             Grid.Column="2"
-            Command="{x:Bind ViewModel.OpenConfigFileCommand}"
+            Click="{x:Bind ViewModel.OnOpenConfigFileClicked}"
             Style="{StaticResource ExperimentalHyperlinkButtonStyle}">
 
             <HyperlinkButton.Content>

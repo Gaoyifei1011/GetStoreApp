@@ -53,7 +53,7 @@
                     DefaultLabelPosition="Right">
 
                     <menusAndToolbars:ExtendedAppBarButton
-                        Command="{x:Bind ViewModel.ViewAllCommand}"
+                        Click="{x:Bind ViewModel.OnViewAllClicked}"
                         Cursor="Hand"
                         Label="{x:Bind root:ResourceService.GetLocalized('Store/ViewAll')}">
 

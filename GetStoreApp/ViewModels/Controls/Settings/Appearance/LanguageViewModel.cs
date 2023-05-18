@@ -1,12 +1,11 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Models.Controls.Settings.Appearance;
 using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
 
@@ -32,13 +31,17 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
             }
         }
 
-        // 语言设置说明
-        public IRelayCommand LanguageTipCommand => new RelayCommand(() =>
+        /// <summary>
+        /// 语言设置说明
+        /// </summary>
+        public void OnLanguageTipClicked(object sender, RoutedEventArgs args)
         {
             NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
-        });
+        }
 
-        // 应用默认语言修改
+        /// <summary>
+        /// 应用默认语言修改
+        /// </summary>
         public async void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
             if (args.RemovedItems.Count > 0)

@@ -27,7 +27,6 @@ namespace GetStoreApp.Extensions.SystemTray
 
         public RoutedEventHandler DoubleClick;
 
-
         public WindowTrayIcon(string title)
         {
             trayMessageWindow = new TrayMessageWindow();

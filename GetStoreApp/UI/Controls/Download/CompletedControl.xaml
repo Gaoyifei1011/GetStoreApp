@@ -80,7 +80,7 @@
                 DefaultLabelPosition="Right">
 
                 <menusAndToolbars:ExtendedAppBarButton
-                    Command="{x:Bind ViewModel.OpenFolderCommand}"
+                    Click="{x:Bind ViewModel.OnOpenFolderClicked}"
                     Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolder')}">
 
@@ -97,7 +97,7 @@
                 </menusAndToolbars:ExtendedAppBarButton>
 
                 <menusAndToolbars:ExtendedAppBarButton
-                    Command="{x:Bind ViewModel.SelectCommand}"
+                    Click="{x:Bind ViewModel.OnSelectClicked}"
                     Cursor="Hand"
                     IsEnabled="{x:Bind sys:Convert.ToBoolean(ViewModel.CompletedDataList.Count), Mode=OneWay}"
                     Label="{x:Bind root:ResourceService.GetLocalized('Download/Select')}">
@@ -124,7 +124,7 @@
                 DefaultLabelPosition="Right">
 
                 <menusAndToolbars:ExtendedAppBarButton
-                    Command="{x:Bind ViewModel.SelectAllCommand}"
+                    Click="{x:Bind ViewModel.OnSelectAllClicked}"
                     Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('Download/SelectAll')}">
 
@@ -141,7 +141,7 @@
                 </menusAndToolbars:ExtendedAppBarButton>
 
                 <menusAndToolbars:ExtendedAppBarButton
-                    Command="{x:Bind ViewModel.SelectNoneCommand}"
+                    Click="{x:Bind ViewModel.OnSelectNoneClicked}"
                     Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('Download/SelectNone')}">
 
@@ -171,7 +171,7 @@
 
                     <menusAndToolbars:ExtendedAppBarButton.Flyout>
                         <menusAndToolbars:AdaptiveMenuFlyout>
-                            <MenuFlyoutItem Command="{x:Bind ViewModel.DeleteSelectedCommand}" Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelected')}">
+                            <MenuFlyoutItem Click="{x:Bind ViewModel.OnDelectSelectedClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelected')}">
                                 <ToolTipService.ToolTip>
                                     <ToolTip
                                         Content="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedToolTip')}"
@@ -180,7 +180,7 @@
                                 </ToolTipService.ToolTip>
                             </MenuFlyoutItem>
 
-                            <MenuFlyoutItem Command="{x:Bind ViewModel.DeleteSelectedWithFileCommand}" Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedWithFile')}">
+                            <MenuFlyoutItem Click="{x:Bind ViewModel.OnDeleteSelectedWithFileClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedWithFile')}">
                                 <ToolTipService.ToolTip>
                                     <ToolTip
                                         Content="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedWithFileToolTip')}"
@@ -193,7 +193,7 @@
                 </menusAndToolbars:ExtendedAppBarButton>
 
                 <menusAndToolbars:ExtendedAppBarButton
-                    Command="{x:Bind ViewModel.ShareSelectedFileCommand}"
+                    Click="{x:Bind ViewModel.OnShareSelectedFileClicked}"
                     Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('Download/ShareSelectedFile')}">
 
@@ -210,7 +210,7 @@
                 </menusAndToolbars:ExtendedAppBarButton>
 
                 <menusAndToolbars:ExtendedAppBarButton
-                    Command="{x:Bind ViewModel.CancelCommand}"
+                    Click="{x:Bind ViewModel.OnCancelClicked}"
                     Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('Download/Cancel')}">
 
@@ -260,7 +260,7 @@
             <ListView
                 Padding="30,0,30,30"
                 IsItemClickEnabled="{x:Bind ViewModel.IsSelectMode, Mode=OneWay}"
-                ItemClick="{x:Bind ViewModel.OnItemClick}"
+                ItemClick="{x:Bind ViewModel.OnItemClicked}"
                 ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
                 ItemsSource="{x:Bind ViewModel.CompletedDataList, Mode=OneWay}"
                 SelectionMode="None"

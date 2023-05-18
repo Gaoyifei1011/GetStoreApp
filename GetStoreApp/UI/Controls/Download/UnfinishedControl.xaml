@@ -1,15 +1,15 @@
 ﻿<UserControl
     x:Class="GetStoreApp.UI.Controls.Download.UnfinishedControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:basicInput="using:GetStoreApp.Views.CustomControls.BasicInput"
-    xmlns:converter="using:GetStoreApp.Converters.Formats"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:download="using:GetStoreApp.Models.Controls.Download"
-    xmlns:downloadViewModel="using:GetStoreApp.ViewModels.Controls.Download"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
+    xmlns:converter="using:GetStoreApp.Converters.Formats"
+    xmlns:download="using:GetStoreApp.Models.Controls.Download"
     xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:downloadViewModel="using:GetStoreApp.ViewModels.Controls.Download"
+    xmlns:basicInput="using:GetStoreApp.Views.CustomControls.BasicInput"
+    xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
     xmlns:sys="using:System"
     x:Name="UnfinishedRoot"
     Unloaded="{x:Bind ViewModel.OnUnloaded}"
@@ -76,7 +76,7 @@
                 DefaultLabelPosition="Right">
 
                 <menusAndToolbars:ExtendedAppBarButton
-                    Command="{x:Bind ViewModel.OpenFolderCommand}"
+                    Click="{x:Bind ViewModel.OnOpenFolderClicked}"
                     Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolder')}">
 
@@ -93,7 +93,7 @@
                 </menusAndToolbars:ExtendedAppBarButton>
 
                 <menusAndToolbars:ExtendedAppBarButton
-                    Command="{x:Bind ViewModel.ContinueAllCommand}"
+                    Click="{x:Bind ViewModel.OnContinueAllClicked}"
                     Cursor="Hand"
                     IsEnabled="{x:Bind sys:Convert.ToBoolean(ViewModel.UnfinishedDataList.Count), Mode=OneWay}"
                     Label="{x:Bind root:ResourceService.GetLocalized('Download/ContinueAll')}">
@@ -111,7 +111,7 @@
                 </menusAndToolbars:ExtendedAppBarButton>
 
                 <menusAndToolbars:ExtendedAppBarButton
-                    Command="{x:Bind ViewModel.SelectCommand}"
+                    Click="{x:Bind ViewModel.OnSelectClicked}"
                     Cursor="Hand"
                     IsEnabled="{x:Bind sys:Convert.ToBoolean(ViewModel.UnfinishedDataList.Count), Mode=OneWay}"
                     Label="{x:Bind root:ResourceService.GetLocalized('Download/Select')}">
@@ -138,7 +138,7 @@
                 DefaultLabelPosition="Right">
 
                 <menusAndToolbars:ExtendedAppBarButton
-                    Command="{x:Bind ViewModel.SelectAllCommand}"
+                    Click="{x:Bind ViewModel.OnSelectAllClicked}"
                     Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('Download/SelectAll')}">
 
@@ -155,7 +155,7 @@
                 </menusAndToolbars:ExtendedAppBarButton>
 
                 <menusAndToolbars:ExtendedAppBarButton
-                    Command="{x:Bind ViewModel.SelectNoneCommand}"
+                    Click="{x:Bind ViewModel.OnSelectNoneClicked}"
                     Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('Download/SelectNone')}">
 
@@ -172,7 +172,7 @@
                 </menusAndToolbars:ExtendedAppBarButton>
 
                 <menusAndToolbars:ExtendedAppBarButton
-                    Command="{x:Bind ViewModel.DeleteSelectedCommand}"
+                    Click="{x:Bind ViewModel.OnDeleteSelectedClicked}"
                     Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelected')}">
 
@@ -189,7 +189,7 @@
                 </menusAndToolbars:ExtendedAppBarButton>
 
                 <menusAndToolbars:ExtendedAppBarButton
-                    Command="{x:Bind ViewModel.CancelCommand}"
+                    Click="{x:Bind ViewModel.OnCancelClicked}"
                     Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('Download/Cancel')}">
 
@@ -239,7 +239,7 @@
             <ListView
                 Padding="30,0,30,30"
                 IsItemClickEnabled="{x:Bind ViewModel.IsSelectMode, Mode=OneWay}"
-                ItemClick="{x:Bind ViewModel.OnItemClick}"
+                ItemClick="{x:Bind ViewModel.OnItemClicked}"
                 ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
                 ItemsSource="{x:Bind ViewModel.UnfinishedDataList, Mode=OneWay}"
                 SelectionMode="None"

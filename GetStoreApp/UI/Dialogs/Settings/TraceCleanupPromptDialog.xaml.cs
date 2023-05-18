@@ -20,13 +20,5 @@ namespace GetStoreApp.UI.Dialogs.Settings
             InitializeComponent();
             ViewModel.InitializeTraceCleanupList();
         }
-
-        /// <summary>
-        /// 关闭对话框
-        /// </summary>
-        public void OnCloseDialogClicked(object sender, RoutedEventArgs args)
-        {
-            Hide();
-        }
     }
 }

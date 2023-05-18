@@ -25,7 +25,7 @@ namespace GetStoreApp.Extensions.Backdrop
         {
             base.OnTargetConnected(connectedTarget, xamlRoot);
 
-            if (_micaController != null)
+            if (_micaController is not null)
             {
                 throw new ApplicationException(ResourceService.GetLocalized("Resources/SystemBackdropControllerInitializeFailed"));
             }

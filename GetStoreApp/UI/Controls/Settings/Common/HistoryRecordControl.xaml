@@ -83,10 +83,10 @@
                             <DropDownButton.Flyout>
                                 <menusAndToolbars:AdaptiveMenuFlyout>
                                     <RadioMenuFlyoutItem
-                                        Command="{x:Bind ViewModel.HistoryLiteSelectCommand}"
-                                        CommandParameter="0"
+                                        Click="{x:Bind ViewModel.OnHistoryLiteSelectClicked}"
                                         GroupName="HistoryLiteSetting"
                                         IsChecked="{x:Bind IsHistoryLiteItemChecked(ViewModel.HistoryLiteItem.HistoryLiteNumValue, ViewModel.HistoryLiteNumList[0].HistoryLiteNumValue), Mode=OneWay}"
+                                        Tag="0"
                                         Text="{x:Bind ViewModel.HistoryLiteNumList[0].HistoryLiteNumName}">
 
                                         <ToolTipService.ToolTip>
@@ -98,10 +98,10 @@
                                     </RadioMenuFlyoutItem>
 
                                     <RadioMenuFlyoutItem
-                                        Command="{x:Bind ViewModel.HistoryLiteSelectCommand}"
-                                        CommandParameter="1"
+                                        Click="{x:Bind ViewModel.OnHistoryLiteSelectClicked}"
                                         GroupName="HistoryLiteSetting"
                                         IsChecked="{x:Bind IsHistoryLiteItemChecked(ViewModel.HistoryLiteItem.HistoryLiteNumValue, ViewModel.HistoryLiteNumList[1].HistoryLiteNumValue), Mode=OneWay}"
+                                        Tag="1"
                                         Text="{x:Bind ViewModel.HistoryLiteNumList[1].HistoryLiteNumName}">
 
                                         <ToolTipService.ToolTip>
@@ -154,10 +154,10 @@
                             <DropDownButton.Flyout>
                                 <menusAndToolbars:AdaptiveMenuFlyout>
                                     <RadioMenuFlyoutItem
-                                        Command="{x:Bind ViewModel.HistoryJumpListSelectCommand}"
-                                        CommandParameter="0"
+                                        Click="{x:Bind ViewModel.OnHistoryJumpListSelectClicked}"
                                         GroupName="HistoryJumpListSetting"
                                         IsChecked="{x:Bind IsHistoryJumpListItemChecked(ViewModel.HistoryJumpListItem.HistoryJumpListNumValue, ViewModel.HistoryJumpListNumList[0].HistoryJumpListNumValue), Mode=OneWay}"
+                                        Tag="0"
                                         Text="{x:Bind ViewModel.HistoryJumpListNumList[0].HistoryJumpListNumName}">
 
                                         <ToolTipService.ToolTip>
@@ -169,10 +169,10 @@
                                     </RadioMenuFlyoutItem>
 
                                     <RadioMenuFlyoutItem
-                                        Command="{x:Bind ViewModel.HistoryJumpListSelectCommand}"
-                                        CommandParameter="1"
+                                        Click="{x:Bind ViewModel.OnHistoryJumpListSelectClicked}"
                                         GroupName="HistoryJumpListSetting"
                                         IsChecked="{x:Bind IsHistoryJumpListItemChecked(ViewModel.HistoryJumpListItem.HistoryJumpListNumValue, ViewModel.HistoryJumpListNumList[1].HistoryJumpListNumValue), Mode=OneWay}"
+                                        Tag="1"
                                         Text="{x:Bind ViewModel.HistoryJumpListNumList[1].HistoryJumpListNumName}">
 
                                         <ToolTipService.ToolTip>
@@ -184,10 +184,10 @@
                                     </RadioMenuFlyoutItem>
 
                                     <RadioMenuFlyoutItem
-                                        Command="{x:Bind ViewModel.HistoryJumpListSelectCommand}"
-                                        CommandParameter="2"
+                                        Click="{x:Bind ViewModel.OnHistoryJumpListSelectClicked}"
                                         GroupName="HistoryJumpListSetting"
                                         IsChecked="{x:Bind IsHistoryJumpListItemChecked(ViewModel.HistoryJumpListItem.HistoryJumpListNumValue, ViewModel.HistoryJumpListNumList[2].HistoryJumpListNumValue), Mode=OneWay}"
+                                        Tag="2"
                                         Text="{x:Bind ViewModel.HistoryJumpListNumList[2].HistoryJumpListNumName}">
 
                                         <ToolTipService.ToolTip>
@@ -199,10 +199,10 @@
                                     </RadioMenuFlyoutItem>
 
                                     <RadioMenuFlyoutItem
-                                        Command="{x:Bind ViewModel.HistoryJumpListSelectCommand}"
-                                        CommandParameter="3"
+                                        Click="{x:Bind ViewModel.OnHistoryJumpListSelectClicked}"
                                         GroupName="HistoryJumpListSetting"
                                         IsChecked="{x:Bind IsHistoryJumpListItemChecked(ViewModel.HistoryJumpListItem.HistoryJumpListNumValue, ViewModel.HistoryJumpListNumList[3].HistoryJumpListNumValue), Mode=OneWay}"
+                                        Tag="3"
                                         Text="{x:Bind ViewModel.HistoryJumpListNumList[3].HistoryJumpListNumName}">
 
                                         <ToolTipService.ToolTip>
@@ -214,10 +214,10 @@
                                     </RadioMenuFlyoutItem>
 
                                     <RadioMenuFlyoutItem
-                                        Command="{x:Bind ViewModel.HistoryJumpListSelectCommand}"
-                                        CommandParameter="4"
+                                        Click="{x:Bind ViewModel.OnHistoryJumpListSelectClicked}"
                                         GroupName="HistoryJumpListSetting"
                                         IsChecked="{x:Bind IsHistoryJumpListItemChecked(ViewModel.HistoryJumpListItem.HistoryJumpListNumValue, ViewModel.HistoryJumpListNumList[4].HistoryJumpListNumValue), Mode=OneWay}"
+                                        Tag="4"
                                         Text="{x:Bind ViewModel.HistoryJumpListNumList[4].HistoryJumpListNumName}">
 
                                         <ToolTipService.ToolTip>

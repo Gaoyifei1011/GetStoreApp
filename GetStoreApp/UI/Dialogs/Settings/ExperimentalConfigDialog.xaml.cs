@@ -16,22 +16,5 @@ namespace GetStoreApp.UI.Dialogs.Settings
         {
             InitializeComponent();
         }
-
-        /// <summary>
-        /// 关闭对话框
-        /// </summary>
-        public void OnCloseDialogClicked(object sender, RoutedEventArgs args)
-        {
-            Hide();
-        }
-
-        /// <summary>
-        /// 还原默认值
-        /// </summary>
-        public void OnRestoreDefaultClicked(object sender, RoutedEventArgs args)
-        {
-            NetWorkMonitor.ViewModel.NetWorkMonitorValue = true;
-            ViewModel.RestoreDefault();
-        }
     }
 }

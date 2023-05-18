@@ -1,4 +1,7 @@
-﻿using System;
+﻿using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using System;
 using Windows.System;
 
 namespace GetStoreApp.ViewModels.Dialogs.WinGet
@@ -11,11 +14,28 @@ namespace GetStoreApp.ViewModels.Dialogs.WinGet
         public string UnInstallFailedContent { get; set; }
 
         /// <summary>
-        /// 打开设置
+        /// 关闭对话框
         /// </summary>
-        public async void OpenSettings()
+        public void OnCloseDialogClicked(object sender, RoutedEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
+            Button button = sender as Button;
+            if (button.Tag is not null)
+            {
+                ((ExtendedContentDialog)button.Tag).Hide();
+            }
+        }
+
+        /// <summary>
+        /// 打开应用和功能卸载应用
+        /// </summary>
+        public async void OnOpenSettingsClicked(object sender, RoutedEventArgs args)
+        {
+            Button button = sender as Button;
+            if (button.Tag is not null)
+            {
+                await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
+                ((ExtendedContentDialog)button.Tag).Hide();
+            }
         }
     }
 }

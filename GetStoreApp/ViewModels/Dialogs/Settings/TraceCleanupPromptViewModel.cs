@@ -4,6 +4,7 @@ using GetStoreApp.Models.Dialogs.CommonDialogs.Settings;
 using GetStoreApp.Services.Controls.Settings.Advanced;
 using GetStoreApp.Services.Root;
 using GetStoreApp.ViewModels.Base;
+using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
@@ -60,6 +61,19 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
         }
 
         /// <summary>
+        /// 关闭对话框
+        /// </summary>
+        public void OnCloseDialogClicked(object sender, RoutedEventArgs args)
+        {
+            Button button = sender as Button;
+            if (button.Tag is not null)
+            {
+                ((ExtendedContentDialog)button.Tag).Hide();
+                TraceCleanupList.ForEach(traceCleanupItem => traceCleanupItem.PropertyChanged -= OnPropertyChanged);
+            }
+        }
+
+        /// <summary>
         /// 痕迹清理
         /// </summary>
         public async void OnCleanupNowClicked(object sender, RoutedEventArgs args)
@@ -70,14 +84,6 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
             TraceCleanup();
             await Task.Delay(1000);
             IsCleaning = false;
-        }
-
-        /// <summary>
-        /// 关闭对话框后取消订阅相应的事件
-        /// </summary>
-        public void OnClosed(object sender, ContentDialogClosedEventArgs args)
-        {
-            TraceCleanupList.ForEach(traceCleanupItem => traceCleanupItem.PropertyChanged -= OnPropertyChanged);
         }
 
         /// <summary>

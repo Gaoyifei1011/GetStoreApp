@@ -36,10 +36,10 @@
             <DropDownButton.Flyout>
                 <menusAndToolbars:AdaptiveMenuFlyout>
                     <RadioMenuFlyoutItem
-                        Command="{x:Bind ViewModel.TypeSelectCommand}"
-                        CommandParameter="0"
+                        Click="{x:Bind ViewModel.OnTypeSelectClicked}"
                         GroupName="TypeSelect"
                         IsChecked="{x:Bind IsTypeItemChecked(ViewModel.SelectedType.InternalName, ViewModel.TypeList[0].InternalName), Mode=OneWay}"
+                        Tag="0"
                         Text="{x:Bind ViewModel.TypeList[0].DisplayName}">
 
                         <ToolTipService.ToolTip>
@@ -51,10 +51,10 @@
                     </RadioMenuFlyoutItem>
 
                     <RadioMenuFlyoutItem
-                        Command="{x:Bind ViewModel.TypeSelectCommand}"
-                        CommandParameter="1"
+                        Click="{x:Bind ViewModel.OnTypeSelectClicked}"
                         GroupName="TypeSelect"
                         IsChecked="{x:Bind IsTypeItemChecked(ViewModel.SelectedType.InternalName, ViewModel.TypeList[1].InternalName), Mode=OneWay}"
+                        Tag="1"
                         Text="{x:Bind ViewModel.TypeList[1].DisplayName}">
 
                         <ToolTipService.ToolTip>
@@ -66,10 +66,10 @@
                     </RadioMenuFlyoutItem>
 
                     <RadioMenuFlyoutItem
-                        Command="{x:Bind ViewModel.TypeSelectCommand}"
-                        CommandParameter="2"
+                        Click="{x:Bind ViewModel.OnTypeSelectClicked}"
                         GroupName="TypeSelect"
                         IsChecked="{x:Bind IsTypeItemChecked(ViewModel.SelectedType.InternalName, ViewModel.TypeList[2].InternalName), Mode=OneWay}"
+                        Tag="2"
                         Text="{x:Bind ViewModel.TypeList[2].DisplayName}">
 
                         <ToolTipService.ToolTip>
@@ -81,10 +81,10 @@
                     </RadioMenuFlyoutItem>
 
                     <RadioMenuFlyoutItem
-                        Command="{x:Bind ViewModel.TypeSelectCommand}"
-                        CommandParameter="3"
+                        Click="{x:Bind ViewModel.OnTypeSelectClicked}"
                         GroupName="TypeSelect"
                         IsChecked="{x:Bind IsTypeItemChecked(ViewModel.SelectedType.InternalName, ViewModel.TypeList[3].InternalName), Mode=OneWay}"
+                        Tag="3"
                         Text="{x:Bind ViewModel.TypeList[3].DisplayName}">
 
                         <ToolTipService.ToolTip>
@@ -113,10 +113,10 @@
             <DropDownButton.Flyout>
                 <menusAndToolbars:AdaptiveMenuFlyout>
                     <RadioMenuFlyoutItem
-                        Command="{x:Bind ViewModel.ChannelSelectCommand}"
-                        CommandParameter="0"
+                        Click="{x:Bind ViewModel.OnChannelSelectClicked}"
                         GroupName="ChannelSelect"
                         IsChecked="{x:Bind IsChannelItemChecked(ViewModel.SelectedChannel.InternalName, ViewModel.ChannelList[0].InternalName), Mode=OneWay}"
+                        Tag="0"
                         Text="{x:Bind ViewModel.ChannelList[0].DisplayName}">
 
                         <ToolTipService.ToolTip>
@@ -128,10 +128,10 @@
                     </RadioMenuFlyoutItem>
 
                     <RadioMenuFlyoutItem
-                        Command="{x:Bind ViewModel.ChannelSelectCommand}"
-                        CommandParameter="1"
+                        Click="{x:Bind ViewModel.OnChannelSelectClicked}"
                         GroupName="ChannelSelect"
                         IsChecked="{x:Bind IsChannelItemChecked(ViewModel.SelectedChannel.InternalName, ViewModel.ChannelList[1].InternalName), Mode=OneWay}"
+                        Tag="1"
                         Text="{x:Bind ViewModel.ChannelList[1].DisplayName}">
 
                         <ToolTipService.ToolTip>
@@ -143,10 +143,10 @@
                     </RadioMenuFlyoutItem>
 
                     <RadioMenuFlyoutItem
-                        Command="{x:Bind ViewModel.ChannelSelectCommand}"
-                        CommandParameter="2"
+                        Click="{x:Bind ViewModel.OnChannelSelectClicked}"
                         GroupName="ChannelSelect"
                         IsChecked="{x:Bind IsChannelItemChecked(ViewModel.SelectedChannel.InternalName, ViewModel.ChannelList[2].InternalName), Mode=OneWay}"
+                        Tag="2"
                         Text="{x:Bind ViewModel.ChannelList[2].DisplayName}">
 
                         <ToolTipService.ToolTip>
@@ -158,10 +158,10 @@
                     </RadioMenuFlyoutItem>
 
                     <RadioMenuFlyoutItem
-                        Command="{x:Bind ViewModel.ChannelSelectCommand}"
-                        CommandParameter="3"
+                        Click="{x:Bind ViewModel.OnChannelSelectClicked}"
                         GroupName="ChannelSelect"
                         IsChecked="{x:Bind IsChannelItemChecked(ViewModel.SelectedChannel.InternalName, ViewModel.ChannelList[3].InternalName), Mode=OneWay}"
+                        Tag="3"
                         Text="{x:Bind ViewModel.ChannelList[3].DisplayName}">
 
                         <ToolTipService.ToolTip>
@@ -187,7 +187,7 @@
             Grid.Column="3"
             HorizontalAlignment="Center"
             VerticalAlignment="Bottom"
-            Command="{x:Bind ViewModel.GetLinksCommand}"
+            Click="{x:Bind ViewModel.OnGetLinksClicked}"
             Content="{x:Bind root:ResourceService.GetLocalized('Store/GetLinks')}"
             IsEnabled="{x:Bind ViewModel.IsGettingLinks, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
             Style="{StaticResource AccentButtonStyle}">

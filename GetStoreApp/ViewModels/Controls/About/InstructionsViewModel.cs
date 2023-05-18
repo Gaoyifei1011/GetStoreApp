@@ -16,7 +16,7 @@ namespace GetStoreApp.ViewModels.Controls.About
         /// <summary>
         /// 桌面程序启动参数说明
         /// </summary>
-        public async void OnDesktopLaunchClicked(object sender,RoutedEventArgs args)
+        public async void OnDesktopLaunchClicked(object sender, RoutedEventArgs args)
         {
             await new DesktopStartupArgsDialog().ShowAsync();
         }
@@ -24,7 +24,7 @@ namespace GetStoreApp.ViewModels.Controls.About
         /// <summary>
         /// 控制台程序启动参数说明
         /// </summary>
-        public async void OnConsoleLaunchClicked(object sender,RoutedEventArgs args)
+        public async void OnConsoleLaunchClicked(object sender, RoutedEventArgs args)
         {
             await new ConsoleStartupArgsDialog().ShowAsync();
         }
@@ -32,7 +32,7 @@ namespace GetStoreApp.ViewModels.Controls.About
         /// <summary>
         /// 检查网络
         /// </summary>
-        public async void OnCheckNetWorkClicked(object sender,RoutedEventArgs args)
+        public async void OnCheckNetWorkClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
         }
@@ -40,7 +40,7 @@ namespace GetStoreApp.ViewModels.Controls.About
         /// <summary>
         /// 疑难解答
         /// </summary>
-        public async void OnTroubleShootClicked(object sender,RoutedEventArgs args)
+        public async void OnTroubleShootClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:troubleshoot"));
         }
@@ -48,7 +48,7 @@ namespace GetStoreApp.ViewModels.Controls.About
         /// <summary>
         /// Cloudflare 5秒验证信息
         /// </summary>
-        public async void OnCloudflareValidationClicked(object sender,RoutedEventArgs args)
+        public async void OnCloudflareValidationClicked(object sender, RoutedEventArgs args)
         {
             await new CloudflareValidationDialog().ShowAsync();
         }
@@ -56,7 +56,7 @@ namespace GetStoreApp.ViewModels.Controls.About
         /// <summary>
         /// 打开下载设置
         /// </summary>
-        public void OnDownloadSettingsClicked(object sender,RoutedEventArgs args)
+        public void OnDownloadSettingsClicked(object sender, RoutedEventArgs args)
         {
             NavigationService.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.DownloadOptions);
         }

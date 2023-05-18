@@ -11,7 +11,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Advanced
         /// <summary>
         /// 实验功能设置
         /// </summary>
-        public async void OnConfigClicked(object sender,RoutedEventArgs args)
+        public async void OnConfigClicked(object sender, RoutedEventArgs args)
         {
             await new ExperimentalConfigDialog().ShowAsync();
         }

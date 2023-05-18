@@ -23,7 +23,7 @@ namespace GetStoreApp.Extensions.Backdrop
         {
             base.OnTargetConnected(connectedTarget, xamlRoot);
 
-            if (_desktopAcrylicController != null)
+            if (_desktopAcrylicController is not null)
             {
                 throw new ApplicationException(ResourceService.GetLocalized("Resources/SystemBackdropControllerInitializeFailed"));
             }

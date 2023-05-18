@@ -1,6 +1,4 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Extensions.SystemTray;
 using GetStoreApp.Helpers.Controls.Store;
@@ -14,6 +12,7 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -108,27 +107,49 @@ namespace GetStoreApp.ViewModels.Controls.Store
             }
         }
 
-        // 获取链接
-        public IRelayCommand GetLinksCommand => new RelayCommand(async () =>
+        /// <summary>
+        /// 类型修改选择后修改样例文本
+        /// </summary>
+        public void OnTypeSelectClicked(object sender, RoutedEventArgs args)
+        {
+            RadioMenuFlyoutItem item = sender as RadioMenuFlyoutItem;
+            if (item.Tag is not null)
+            {
+                SelectedType = TypeList[Convert.ToInt32(item.Tag)];
+                SampleLink = SampleLinkList[TypeList.FindIndex(item => item.InternalName == SelectedType.InternalName)];
+                LinkPlaceHolderText = SampleTitle + SampleLink;
+
+                LinkText = string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// 通道选择修改
+        /// </summary>
+        public void OnChannelSelectClicked(object sender, RoutedEventArgs args)
+        {
+            RadioMenuFlyoutItem item = sender as RadioMenuFlyoutItem;
+            if (item.Tag is not null)
+            {
+                SelectedChannel = ChannelList[Convert.ToInt32(item.Tag)];
+            }
+        }
+
+        /// <summary>
+        /// 获取链接
+        /// </summary>
+        public async void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             await GetLinksAsync();
-        });
+        }
 
-        // 类型修改选择后修改样例文本
-        public IRelayCommand TypeSelectCommand => new RelayCommand<string>((typeIndex) =>
+        /// <summary>
+        /// 获取链接
+        /// </summary>
+        public async void OnGetLinksClicked(object sender, RoutedEventArgs args)
         {
-            SelectedType = TypeList[Convert.ToInt32(typeIndex)];
-            SampleLink = SampleLinkList[TypeList.FindIndex(item => item.InternalName == SelectedType.InternalName)];
-            LinkPlaceHolderText = SampleTitle + SampleLink;
-
-            LinkText = string.Empty;
-        });
-
-        // 通道选择修改
-        public IRelayCommand ChannelSelectCommand => new RelayCommand<string>((channelIndex) =>
-        {
-            SelectedChannel = ChannelList[Convert.ToInt32(channelIndex)];
-        });
+            await GetLinksAsync();
+        }
 
         public RequestViewModel()
         {
@@ -172,14 +193,6 @@ namespace GetStoreApp.ViewModels.Controls.Store
                     Messenger.Default.Unregister(this);
                 }
             });
-        }
-
-        /// <summary>
-        /// 获取链接
-        /// </summary>
-        public async void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
-        {
-            await GetLinksAsync();
         }
 
         /// <summary>

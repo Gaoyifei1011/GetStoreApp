@@ -45,7 +45,6 @@
                                 ContentTransitions="{TemplateBinding ContentTransitions}" />
                         </ScrollViewer>
                     </Border>
-
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -96,10 +95,8 @@
                                 ContentTransitions="{TemplateBinding ContentTransitions}" />
                         </ScrollViewer>
                     </Border>
-
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-
 </ResourceDictionary>

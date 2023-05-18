@@ -1,6 +1,4 @@
-﻿using GetStoreApp.Contracts.Command;
-using GetStoreApp.Extensions.Command;
-using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Window;
 using GetStoreApp.ViewModels.Base;
@@ -41,11 +39,13 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
             }
         }
 
-        // 链接过滤说明
-        public IRelayCommand LinkFilterInstructionCommand => new RelayCommand(() =>
+        /// <summary>
+        /// 链接过滤说明
+        /// </summary>
+        public void OnLinkFilterInstructionClicked(object sender, RoutedEventArgs args)
         {
             NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
-        });
+        }
 
         /// <summary>
         /// 设置是否过滤以“.e”开头的文件
