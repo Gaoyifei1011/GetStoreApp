@@ -1,6 +1,4 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Extensions.DataType.Events;
-using GetStoreApp.Extensions.Messaging;
+﻿using GetStoreApp.Extensions.DataType.Events;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Common;
@@ -51,14 +49,6 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
         // 删除当前任务
         public XamlUICommand DeleteCommand { get; } = new XamlUICommand();
-
-        /// <summary>
-        /// 页面被卸载时，关闭消息服务
-        /// </summary>
-        public void OnUnloaded(object sender, RoutedEventArgs args)
-        {
-            Messenger.Default.Unregister(this);
-        }
 
         /// <summary>
         /// 打开默认保存的文件夹
@@ -339,22 +329,6 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 }
             };
 
-            Messenger.Default.Register<int>(this, MessageToken.PivotSelection, async (pivotSelectionMessage) =>
-            {
-                // 切换到已完成页面时，更新当前页面的数据
-                if (pivotSelectionMessage is 1)
-                {
-                    await GetUnfinishedDataListAsync();
-                }
-
-                // 从下载页面离开时，关闭所有事件。
-                else if (pivotSelectionMessage is -1)
-                {
-                    // 取消订阅所有事件
-                    DownloadSchedulerService.DownloadingList.ItemsChanged -= OnDownloadingListItemsChanged;
-                }
-            });
-
             // 订阅事件
             DownloadSchedulerService.DownloadingList.ItemsChanged += OnDownloadingListItemsChanged;
         }
@@ -381,7 +355,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// <summary>
         /// 订阅事件，下载中列表内容有暂停下载或下载失败的项目时通知UI更改
         /// </summary>
-        private void OnDownloadingListItemsChanged(object sender, ItemsChangedEventArgs<BackgroundModel> args)
+        public void OnDownloadingListItemsChanged(object sender, ItemsChangedEventArgs<BackgroundModel> args)
         {
             if (args.RemovedItems.Any(item => item.DownloadFlag is 0 || item.DownloadFlag is 2))
             {
@@ -417,7 +391,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// <summary>
         /// 从数据库中加载未下载完成和下载失败的数据
         /// </summary>
-        private async Task GetUnfinishedDataListAsync()
+        public async Task GetUnfinishedDataListAsync()
         {
             List<BackgroundModel> FailureDownloadRawList = await DownloadXmlService.QueryWithFlagAsync(0);
 

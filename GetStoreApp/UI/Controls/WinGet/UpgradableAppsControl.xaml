@@ -9,6 +9,7 @@
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:winGetViewModel="using:GetStoreApp.ViewModels.Controls.WinGet"
     xmlns:winget="using:GetStoreApp.Models.Controls.WinGet"
+    x:Name="UpgradableAppsRoot"
     Loaded="{x:Bind ViewModel.OnLoaded}"
     mc:Ignorable="d">
 
@@ -240,7 +241,7 @@
 
                                 <HyperlinkButton
                                     Grid.Column="4"
-                                    Command="{Binding ElementName=SearchAppsRoot, Path=DataContext.UpdateCommand, Mode=OneTime}"
+                                    Command="{Binding ElementName=UpgradableAppsRoot, Path=DataContext.UpdateCommand, Mode=OneTime}"
                                     CommandParameter="{Binding}"
                                     Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Update')}">
 

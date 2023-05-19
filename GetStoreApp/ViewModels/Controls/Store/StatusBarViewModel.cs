@@ -1,6 +1,4 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Extensions.Messaging;
-using GetStoreApp.Models.Controls.Store;
+﻿using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Services.Root;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.WindowsAPI.Controls;
@@ -18,7 +16,7 @@ namespace GetStoreApp.ViewModels.Controls.Store
     {
         private TaskbarManager Taskbar { get; } = TaskbarManager.Instance;
 
-        public List<StatusBarStateModel> StatusBarStateList => ResourceService.StatusBarStateList;
+        private List<StatusBarStateModel> StatusBarStateList => ResourceService.StatusBarStateList;
 
         private InfoBarSeverity _infoSeverity = InfoBarSeverity.Informational;
 
@@ -76,24 +74,18 @@ namespace GetStoreApp.ViewModels.Controls.Store
         {
             StateInfoText = ResourceService.GetLocalized("Store/StatusInfoWelcome");
 
-            Messenger.Default.Register<int>(this, MessageToken.StatusBarState, (statusBarStateMessage) =>
-            {
-                InfoBarSeverity = StatusBarStateList[statusBarStateMessage].InfoBarSeverity;
-                StateInfoText = StatusBarStateList[statusBarStateMessage].StateInfoText;
-                StatePrRingVisValue = StatusBarStateList[statusBarStateMessage].StatePrRingVisValue;
-                StatePrRingActValue = StatusBarStateList[statusBarStateMessage].StatePrRingActValue;
-            });
-
-            Messenger.Default.Register<bool>(this, MessageToken.WindowClosed, (windowClosedMessage) =>
-            {
-                if (windowClosedMessage)
-                {
-                    PropertyChanged -= OnPropertyChanged;
-                    Messenger.Default.Unregister(this);
-                }
-            });
-
             PropertyChanged += OnPropertyChanged;
+        }
+
+        /// <summary>
+        /// 设置控件的状态
+        /// </summary>
+        public void SetControlState(int state)
+        {
+            InfoBarSeverity = StatusBarStateList[state].InfoBarSeverity;
+            StateInfoText = StatusBarStateList[state].StateInfoText;
+            StatePrRingVisValue = StatusBarStateList[state].StatePrRingVisValue;
+            StatePrRingActValue = StatusBarStateList[state].StatePrRingActValue;
         }
 
         /// <summary>

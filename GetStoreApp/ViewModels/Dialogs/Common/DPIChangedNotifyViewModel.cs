@@ -1,6 +1,4 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Extensions.Messaging;
-using GetStoreApp.Services.Controls.Download;
+﻿using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -44,9 +42,8 @@ namespace GetStoreApp.ViewModels.Dialogs.Common
         /// </summary>
         private async Task RestartAppsAsync()
         {
-            await DownloadSchedulerService.CloseDownloadSchedulerAsync();
+            DownloadSchedulerService.CloseDownloadScheduler();
             await Aria2Service.CloseAria2Async();
-            Messenger.Default.Send(true, MessageToken.WindowClosed);
 
             // 重启应用
             AppInstance.Restart(string.Empty);

@@ -1,6 +1,4 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Extensions.DataType.Events;
-using GetStoreApp.Extensions.Messaging;
+﻿using GetStoreApp.Extensions.DataType.Events;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Common;
@@ -54,14 +52,6 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
         // 删除当前任务
         public XamlUICommand DeleteCommand { get; } = new XamlUICommand();
-
-        /// <summary>
-        /// 页面被卸载时，关闭消息服务
-        /// </summary>
-        public void OnUnloaded(object sender, RoutedEventArgs args)
-        {
-            Messenger.Default.Unregister(this);
-        }
 
         /// <summary>
         /// 打开默认保存的文件夹
@@ -283,44 +273,38 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 }
             };
 
-            Messenger.Default.Register<int>(this, MessageToken.PivotSelection, async (pivotSelectionMessage) =>
-            {
-                // 切换到下载中页面时，开启监控。并更新当前页面的数据
-                if (pivotSelectionMessage is 0)
-                {
-                    await GetDownloadingDataListAsync();
-
-                    DownloadingTimer.Start();
-                }
-
-                // 从下载页面离开时，取消订阅所有事件。并注销所有消息服务
-                else if (pivotSelectionMessage is -1)
-                {
-                    if (DownloadingTimer.IsEnabled)
-                    {
-                        DownloadingTimer.Stop();
-                    }
-
-                    // 取消订阅所有事件
-                    DownloadingTimer.Tick -= DownloadInfoTimerTick;
-
-                    DownloadSchedulerService.DownloadingList.ItemsChanged -= OnDownloadingListItemsChanged;
-                    DownloadSchedulerService.WaitingList.ItemsChanged -= OnWaitingListItemsChanged;
-
-                    // 关闭消息服务
-                    Messenger.Default.Unregister(this);
-                }
-
-                // 切换到其他页面时，关闭监控
-                else
-                {
-                    DownloadingTimer.Stop();
-                }
-            });
-
             // 订阅事件
             DownloadSchedulerService.DownloadingList.ItemsChanged += OnDownloadingListItemsChanged;
             DownloadSchedulerService.WaitingList.ItemsChanged += OnWaitingListItemsChanged;
+        }
+
+        /// <summary>
+        /// 开始运行下载计时器，并获取下载任务信息
+        /// </summary>
+        public async Task StartDownloadingTimerAsync()
+        {
+            await GetDownloadingDataListAsync();
+            DownloadingTimer.Start();
+        }
+
+        /// <summary>
+        /// 停止运行下载计时器
+        /// </summary>
+        public void StopDownloadingTimer(bool needUnRegister)
+        {
+            if (DownloadingTimer.IsEnabled)
+            {
+                DownloadingTimer.Stop();
+            }
+
+            if (needUnRegister)
+            {
+                // 取消订阅所有事件
+                DownloadingTimer.Tick -= DownloadInfoTimerTick;
+
+                DownloadSchedulerService.DownloadingList.ItemsChanged -= OnDownloadingListItemsChanged;
+                DownloadSchedulerService.WaitingList.ItemsChanged -= OnWaitingListItemsChanged;
+            }
         }
 
         /// <summary>

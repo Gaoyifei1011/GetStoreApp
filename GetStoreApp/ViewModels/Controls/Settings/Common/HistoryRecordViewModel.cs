@@ -1,6 +1,4 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Extensions.Messaging;
-using GetStoreApp.Models.Controls.Settings.Common;
+﻿using GetStoreApp.Models.Controls.Settings.Common;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.ViewModels.Base;
 using Microsoft.UI.Xaml;
@@ -55,7 +53,6 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
             {
                 HistoryLiteItem = HistoryLiteNumList[Convert.ToInt32(item.Tag)];
                 await HistoryRecordService.SetHistoryLiteNumAsync(HistoryLiteItem);
-                Messenger.Default.Send(HistoryLiteItem, MessageToken.HistoryLiteNum);
             }
         }
 

@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Models.Dialogs.CommonDialogs.Settings;
 using GetStoreApp.Services.Controls.Settings.Advanced;
 using GetStoreApp.Services.Root;
@@ -112,11 +111,6 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
             {
                 // 清理并反馈回结果，修改相应的状态信息
                 bool CleanReusult = await TraceCleanupService.CleanAppTraceAsync(cleanupArgs);
-
-                if (cleanupArgs is CleanArgs.History)
-                {
-                    Messenger.Default.Send(true, MessageToken.History);
-                }
 
                 TraceCleanupList[TraceCleanupList.IndexOf(TraceCleanupList.First(item => item.InternalName == cleanupArgs))].IsCleanFailed = !CleanReusult;
             });

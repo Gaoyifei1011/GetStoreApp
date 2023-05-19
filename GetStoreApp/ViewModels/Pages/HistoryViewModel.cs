@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.History;
 using GetStoreApp.Models.Controls.Store;
@@ -287,8 +286,6 @@ namespace GetStoreApp.ViewModels.Pages
                         IsHistoryEmptyAfterFilter = true;
                     }
                 }
-
-                Messenger.Default.Send(true, MessageToken.History);
             }
         }
 
@@ -329,8 +326,7 @@ namespace GetStoreApp.ViewModels.Pages
                 HistoryModel historyItem = args.Parameter as HistoryModel;
                 if (historyItem is not null)
                 {
-                    Messenger.Default.Send(historyItem, MessageToken.Fillin);
-                    NavigationService.NavigateTo(typeof(StorePage), AppNaviagtionArgs.Store);
+                    NavigationService.NavigateTo(typeof(StorePage), new object[] { AppNaviagtionArgs.Store, historyItem.HistoryType, historyItem.HistoryChannel, historyItem.HistoryLink });
                 }
             };
 

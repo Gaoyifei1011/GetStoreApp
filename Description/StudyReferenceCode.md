@@ -4,11 +4,9 @@
 ------
 
 > * [Blog-GeographicalLocation](https://github.com/Ucodia/Blog-GeographicalLocation)&emsp;
-> * [Community Toolkit](https://github.com/CommunityToolkit/dotnet)&emsp;
 > * [Desktop Window](https://github.com/marb2000/DesktopWindow)&emsp;
 > * [IFileDialog](https://github.com/shigobu/IFileDialog)&emsp;
 > * [Microsoft Windows API Codepack](https://github.com/Wagnerp/Windows-API-CodePack-NET)&emsp;
-> * [MVVMLight.Messenger](https://github.com/TqrHsn/MVVMLight.Messenger)&emsp;
 > * [NanaGet](https://github.com/M2Team/NanaGet)&emsp;
 > * [NotifyList](https://blog.csdn.net/chinaherolts2008/article/details/115058859)&emsp;
 > * [Null.ConsoleEx](https://github.com/SlimeNull/Null.ConsoleEx)&emsp;

@@ -60,19 +60,19 @@
 
     <Pivot
         Margin="0,15,0,0"
-        SelectionChanged="{x:Bind ViewModel.OnSelectionChanged}"
+        SelectionChanged="{x:Bind OnSelectionChanged}"
         Style="{StaticResource PivotStyle}">
 
         <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('Download/Downloading')}" Style="{StaticResource PivotItemStyle}">
-            <dc:DownloadingControl />
+            <dc:DownloadingControl x:Name="Downloading" />
         </PivotItem>
 
         <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('Download/Unfinished')}" Style="{StaticResource PivotItemStyle}">
-            <dc:UnfinishedControl />
+            <dc:UnfinishedControl x:Name="Unfinished" />
         </PivotItem>
 
         <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('Download/Completed')}" Style="{StaticResource PivotItemStyle}">
-            <dc:CompletedControl />
+            <dc:CompletedControl x:Name="Completed" />
         </PivotItem>
 
         <Pivot.RightHeader>

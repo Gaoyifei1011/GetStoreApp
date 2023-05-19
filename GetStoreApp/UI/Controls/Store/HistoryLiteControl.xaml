@@ -10,11 +10,10 @@
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:storeViewModel="using:GetStoreApp.ViewModels.Controls.Store"
     x:Name="HistoryLiteRoot"
-    Loaded="{x:Bind ViewModel.OnLoaded}"
     mc:Ignorable="d">
 
     <UserControl.DataContext>
-        <storeViewModel:HistoryLiteViewModel x:Name="ViewModel" />
+        <storeViewModel:HistoryLiteViewModel x:Name="ViewModel" x:FieldModifier="public" />
     </UserControl.DataContext>
 
     <UserControl.Resources>

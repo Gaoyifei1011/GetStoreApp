@@ -13,11 +13,10 @@
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:sys="using:System"
     x:Name="CompletedRoot"
-    Unloaded="{x:Bind ViewModel.OnUnloaded}"
     mc:Ignorable="d">
 
     <UserControl.DataContext>
-        <downloadViewModel:CompletedViewModel x:Name="ViewModel" />
+        <downloadViewModel:CompletedViewModel x:Name="ViewModel" x:FieldModifier="public" />
     </UserControl.DataContext>
 
     <UserControl.Resources>

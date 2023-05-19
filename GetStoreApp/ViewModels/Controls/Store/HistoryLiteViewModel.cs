@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.History;
 using GetStoreApp.Models.Controls.Settings.Common;
@@ -26,7 +25,7 @@ namespace GetStoreApp.ViewModels.Controls.Store
         // 临界区资源访问互斥锁
         private readonly object HistoryLiteDataListLock = new object();
 
-        private HistoryLiteNumModel HistoryLiteItem { get; set; }
+        public HistoryLiteNumModel HistoryLiteItem { get; set; }
 
         public List<TypeModel> TypeList { get; } = ResourceService.TypeList;
 
@@ -39,14 +38,6 @@ namespace GetStoreApp.ViewModels.Controls.Store
         public XamlUICommand FillinCommand { get; } = new XamlUICommand();
 
         public ObservableCollection<HistoryModel> HistoryLiteDataList { get; } = new ObservableCollection<HistoryModel>();
-
-        /// <summary>
-        /// 列表初始化，可以从数据库获得的列表中加载
-        /// </summary>
-        public async void OnLoaded(object sender, RoutedEventArgs args)
-        {
-            await GetHistoryLiteDataListAsync();
-        }
 
         /// <summary>
         /// 查看全部
@@ -82,37 +73,23 @@ namespace GetStoreApp.ViewModels.Controls.Store
 
                 if (historyItem is not null)
                 {
-                    Messenger.Default.Send(historyItem, MessageToken.Fillin);
+                    StorePage storePage = NavigationService.NavigationFrame.Content as StorePage;
+                    if (storePage is not null)
+                    {
+                        RequestViewModel viewModel = storePage.Request.ViewModel;
+
+                        viewModel.SelectedType = viewModel.TypeList.Find(item => item.InternalName.Equals(historyItem.HistoryType));
+                        viewModel.SelectedChannel = viewModel.ChannelList.Find(item => item.InternalName.Equals(historyItem.HistoryChannel));
+                        viewModel.LinkText = historyItem.HistoryLink;
+                    }
                 }
             };
-
-            Messenger.Default.Register<bool>(this, MessageToken.History, async (historyMessage) =>
-            {
-                if (historyMessage)
-                {
-                    await GetHistoryLiteDataListAsync();
-                }
-            });
-
-            Messenger.Default.Register<HistoryLiteNumModel>(this, MessageToken.HistoryLiteNum, async (historyLiteNumMessage) =>
-            {
-                HistoryLiteItem = historyLiteNumMessage;
-                await GetHistoryLiteDataListAsync();
-            });
-
-            Messenger.Default.Register<bool>(this, MessageToken.WindowClosed, (windowClosedMessage) =>
-            {
-                if (windowClosedMessage)
-                {
-                    Messenger.Default.Unregister(this);
-                }
-            });
         }
 
         /// <summary>
         /// UI加载完成时/或者是数据库数据发生变化时，从数据库中异步加载数据
         /// </summary>
-        private async Task GetHistoryLiteDataListAsync()
+        public async Task GetHistoryLiteDataListAsync()
         {
             // 获取数据库的原始记录数据
             List<HistoryModel> HistoryRawList = await HistoryXmlService.QueryAsync(HistoryLiteItem.HistoryLiteNumValue);

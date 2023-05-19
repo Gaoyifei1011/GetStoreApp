@@ -1,10 +1,10 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Extensions.Messaging;
-using GetStoreApp.Helpers.Window;
+﻿using GetStoreApp.Helpers.Window;
 using GetStoreApp.Properties;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Common;
+using GetStoreApp.ViewModels.Controls.Store;
+using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -230,10 +230,24 @@ namespace GetStoreApp.Views.Window
                         // 获取应用的命令参数
                         else
                         {
-                            WindowHelper.ShowAppWindow();
-
                             string[] startupArgs = copyDataStruct.lpData.Split(' ');
-                            Messenger.Default.Send(startupArgs, MessageToken.Command);
+
+                            if (NavigationService.GetCurrentPageType() != typeof(StorePage))
+                            {
+                                NavigationService.NavigateTo(typeof(StorePage));
+                            }
+
+                            StorePage storePage = NavigationService.NavigationFrame.Content as StorePage;
+                            if (storePage is not null)
+                            {
+                                RequestViewModel viewModel = storePage.Request.ViewModel;
+
+                                viewModel.SelectedType = Convert.ToInt32(startupArgs[0]) is -1 ? viewModel.TypeList[0] : viewModel.TypeList[Convert.ToInt32(startupArgs[0])];
+                                viewModel.SelectedChannel = Convert.ToInt32(startupArgs[1]) is -1 ? viewModel.ChannelList[3] : viewModel.ChannelList[Convert.ToInt32(startupArgs[1])];
+                                viewModel.LinkText = startupArgs[2] is "PlaceHolderText" ? string.Empty : startupArgs[2];
+                            }
+
+                            WindowHelper.ShowAppWindow();
                         }
 
                         break;

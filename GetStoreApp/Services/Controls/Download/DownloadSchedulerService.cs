@@ -7,7 +7,7 @@ using GetStoreApp.WindowsAPI.PInvoke.WinINet;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Timers;
+using Windows.System.Threading;
 
 namespace GetStoreApp.Services.Controls.Download
 {
@@ -27,7 +27,7 @@ namespace GetStoreApp.Services.Controls.Download
         private static bool IsNetWorkConnected = true;
 
         // 下载调度器
-        private static Timer DownloadSchedulerTimer { get; } = new Timer(1000);
+        private static ThreadPoolTimer DownloadSchedulerTimer { get; set; }
 
         // 下载中任务列表（带通知）
         public static NotifyList<BackgroundModel> DownloadingList { get; } = new NotifyList<BackgroundModel>();
@@ -38,7 +38,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 先获取当前网络状态信息，然后初始化下载监控任务
         /// </summary>
-        public static async Task InitializeDownloadSchedulerAsync()
+        public static void InitializeDownloadScheduler()
         {
             // 查看是否开启了网络监控服务
             if (NetWorkMonitorService.NetWorkMonitorValue)
@@ -51,22 +51,15 @@ namespace GetStoreApp.Services.Controls.Download
                 }
             }
 
-            DownloadSchedulerTimer.Elapsed += DownloadSchedulerTimerElapsed;
-            DownloadSchedulerTimer.AutoReset = true;
-            DownloadSchedulerTimer.Start();
-            await Task.CompletedTask;
+            DownloadSchedulerTimer = ThreadPoolTimer.CreatePeriodicTimer(DownloadSchedulerTimerElapsed, TimeSpan.FromSeconds(1));
         }
 
         /// <summary>
         /// 关闭下载监控任务
         /// </summary>
-        public static async Task CloseDownloadSchedulerAsync()
+        public static void CloseDownloadScheduler()
         {
-            DownloadSchedulerTimer.Stop();
-            DownloadSchedulerTimer.Elapsed -= DownloadSchedulerTimerElapsed;
-            DownloadSchedulerTimer.Dispose();
-
-            await Task.CompletedTask;
+            DownloadSchedulerTimer.Cancel();
         }
 
         /// <summary>
@@ -298,7 +291,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 定时计划添加下载任务，更新下载任务信息
         /// </summary>
-        private static async void DownloadSchedulerTimerElapsed(object sender, ElapsedEventArgs args)
+        private static async void DownloadSchedulerTimerElapsed(ThreadPoolTimer timer)
         {
             // 查看是否开启了网络监控服务
             if (NetWorkMonitorService.NetWorkMonitorValue)

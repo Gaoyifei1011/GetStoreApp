@@ -6,7 +6,7 @@ using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Timers;
+using Windows.System.Threading;
 
 namespace GetStoreApp.Services.Shell
 {
@@ -21,7 +21,7 @@ namespace GetStoreApp.Services.Shell
 
         private static string LinkText { get; set; }
 
-        private static Timer ConsoleTimer { get; } = new Timer(1000);
+        private static ThreadPoolTimer ConsoleTimer { get; set; }
 
         private static int ElapsedTime { get; set; } = 0;
 
@@ -73,15 +73,12 @@ namespace GetStoreApp.Services.Shell
 
             while (RequestState)
             {
-                ConsoleTimer.Elapsed += OnRequestElasped;
-                ConsoleTimer.AutoReset = true;
-                ConsoleTimer.Start();
+                ConsoleTimer = ThreadPoolTimer.CreatePeriodicTimer(OnRequestElasped, TimeSpan.FromSeconds(1));
 
                 // 获取网页反馈回的原始数据
                 RequestModel httpRequestData = await HtmlRequestHelper.HttpRequestAsync(generateContent);
 
-                ConsoleTimer.Stop();
-                ConsoleTimer.Elapsed -= OnRequestElasped;
+                ConsoleTimer.Cancel();
                 ElapsedTime = 0;
 
                 Console.SetCursorPosition(0, Console.CursorTop);
@@ -130,7 +127,7 @@ namespace GetStoreApp.Services.Shell
         /// <summary>
         /// 显示正在获取中的动画
         /// </summary>
-        private static void OnRequestElasped(object sender, ElapsedEventArgs args)
+        private static void OnRequestElasped(ThreadPoolTimer timer)
         {
             Console.SetCursorPosition(0, Console.CursorTop);
             Console.Write(new string(' ', Console.WindowWidth));

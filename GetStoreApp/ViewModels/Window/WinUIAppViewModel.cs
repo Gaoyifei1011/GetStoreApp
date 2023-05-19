@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Extensions.SystemTray;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
@@ -141,7 +140,7 @@ namespace GetStoreApp.ViewModels.Window
             TopMostService.SetAppTopMost();
 
             // 初始化下载监控服务
-            await DownloadSchedulerService.InitializeDownloadSchedulerAsync();
+            DownloadSchedulerService.InitializeDownloadScheduler();
 
             // 初始化Aria2配置文件信息
             await Aria2Service.InitializeAria2ConfAsync();
@@ -218,9 +217,8 @@ namespace GetStoreApp.ViewModels.Window
         private async Task CloseAppAsync()
         {
             await SaveWindowInformationAsync();
-            await DownloadSchedulerService.CloseDownloadSchedulerAsync();
+            DownloadSchedulerService.CloseDownloadScheduler();
             await Aria2Service.CloseAria2Async();
-            Messenger.Default.Send(true, MessageToken.WindowClosed);
             Program.ApplicationRoot.TrayIcon.Dispose();
             Program.ApplicationRoot.TrayIcon.DoubleClick -= DoubleClick;
             Program.ApplicationRoot.TrayIcon.RightClick -= RightClick;

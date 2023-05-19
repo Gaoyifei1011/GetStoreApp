@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Extensions.Messaging;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Models.Controls.Store;
@@ -443,35 +442,6 @@ namespace GetStoreApp.ViewModels.Controls.Store
                     new ResultContentCopyNotification(true, false).Show();
                 }
             };
-
-            Messenger.Default.Register<bool>(this, MessageToken.ResultControlVisable, (resultControlVisableMessage) =>
-            {
-                ResultControlVisable = resultControlVisableMessage;
-            });
-
-            Messenger.Default.Register<string>(this, MessageToken.ResultCategoryId, (resultCategoryIdMessage) =>
-            {
-                CategoryId = resultCategoryIdMessage;
-            });
-
-            Messenger.Default.Register<List<ResultModel>>(this, MessageToken.ResultDataList, (resultDataListMessage) =>
-            {
-                ResultDataList.Clear();
-
-                foreach (ResultModel resultItem in resultDataListMessage)
-                {
-                    resultItem.IsSelected = false;
-                    ResultDataList.Add(resultItem);
-                }
-            });
-
-            Messenger.Default.Register<bool>(this, MessageToken.WindowClosed, (windowClosedMessage) =>
-            {
-                if (windowClosedMessage)
-                {
-                    Messenger.Default.Unregister(this);
-                }
-            });
         }
     }
 }

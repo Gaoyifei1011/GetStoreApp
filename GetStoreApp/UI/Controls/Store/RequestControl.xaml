@@ -10,7 +10,7 @@
     mc:Ignorable="d">
 
     <UserControl.DataContext>
-        <storeViewModel:RequestViewModel x:Name="ViewModel" />
+        <storeViewModel:RequestViewModel x:Name="ViewModel" x:FieldModifier="public" />
     </UserControl.DataContext>
 
     <Grid ColumnSpacing="6">

@@ -67,13 +67,13 @@
 
                 <TextBlock Style="{StaticResource TitleDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Store/TitleDescription2')}" />
 
-                <sc:RequestControl />
+                <sc:RequestControl x:Name="Request" x:FieldModifier="public" />
 
-                <sc:StatusBarControl />
+                <sc:StatusBarControl x:Name="StatusBar" x:FieldModifier="public" />
 
-                <sc:HistoryLiteControl />
+                <sc:HistoryLiteControl x:Name="HistoryLite" x:FieldModifier="public" />
 
-                <sc:ResultControl />
+                <sc:ResultControl x:Name="Result" x:FieldModifier="public" />
             </StackPanel>
         </ScrollViewer>
     </Grid>

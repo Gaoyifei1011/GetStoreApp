@@ -15,7 +15,7 @@
     mc:Ignorable="d">
 
     <UserControl.DataContext>
-        <storeViewModel:ResultViewModel x:Name="ViewModel" />
+        <storeViewModel:ResultViewModel x:Name="ViewModel" x:FieldModifier="public" />
     </UserControl.DataContext>
 
     <UserControl.Resources>

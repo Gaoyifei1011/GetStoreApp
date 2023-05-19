@@ -1,17 +1,12 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Extensions.Messaging;
-using GetStoreApp.Extensions.SystemTray;
+﻿using GetStoreApp.Extensions.SystemTray;
 using GetStoreApp.Helpers.Controls.Store;
 using GetStoreApp.Helpers.Root;
-using GetStoreApp.Helpers.Window;
 using GetStoreApp.Models.Controls.History;
 using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Services.Controls.History;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Services.Window;
 using GetStoreApp.ViewModels.Base;
-using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -26,6 +21,12 @@ namespace GetStoreApp.ViewModels.Controls.Store
     /// </summary>
     public sealed class RequestViewModel : ViewModelBase
     {
+        private HistoryLiteViewModel historyVMInstance;
+
+        private StatusBarViewModel statusBarVMInstance;
+
+        private ResultViewModel resultVMInstance;
+
         public List<TypeModel> TypeList { get; } = ResourceService.TypeList;
 
         public List<ChannelModel> ChannelList { get; } = ResourceService.ChannelList;
@@ -164,35 +165,16 @@ namespace GetStoreApp.ViewModels.Controls.Store
             LinkPlaceHolderText = SampleTitle + SampleLink;
 
             IsGettingLinks = false;
+        }
 
-            Messenger.Default.Register<string[]>(this, MessageToken.Command, (commandMessage) =>
-            {
-                SelectedType = Convert.ToInt32(commandMessage[0]) is -1 ? TypeList[0] : TypeList[Convert.ToInt32(commandMessage[0])];
-                SelectedChannel = Convert.ToInt32(commandMessage[1]) is -1 ? ChannelList[3] : ChannelList[Convert.ToInt32(commandMessage[1])];
-                LinkText = commandMessage[2] is "PlaceHolderText" ? string.Empty : commandMessage[2];
-
-                if (NavigationService.GetCurrentPageType() != typeof(StorePage))
-                {
-                    NavigationService.NavigateTo(typeof(StorePage));
-                }
-
-                WindowHelper.ShowAppWindow();
-            });
-
-            Messenger.Default.Register<HistoryModel>(this, MessageToken.Fillin, (fillinMessage) =>
-            {
-                SelectedType = TypeList.Find(item => item.InternalName.Equals(fillinMessage.HistoryType));
-                SelectedChannel = ChannelList.Find(item => item.InternalName.Equals(fillinMessage.HistoryChannel));
-                LinkText = fillinMessage.HistoryLink;
-            });
-
-            Messenger.Default.Register<bool>(this, MessageToken.WindowClosed, (windowClosedMessage) =>
-            {
-                if (windowClosedMessage)
-                {
-                    Messenger.Default.Unregister(this);
-                }
-            });
+        /// <summary>
+        /// 初始化微软商店页面其他控件的视图模型实例
+        /// </summary>
+        public void InitializeStorePageOtherViewModel(HistoryLiteViewModel historyLiteViewModel,StatusBarViewModel statusBarViewModel,ResultViewModel resultViewModel)
+        {
+            historyVMInstance = historyLiteViewModel;
+            statusBarVMInstance = statusBarViewModel;
+            resultVMInstance = resultViewModel;
         }
 
         /// <summary>
@@ -221,7 +203,7 @@ namespace GetStoreApp.ViewModels.Controls.Store
             string CurrentLink = LinkText;
 
             // 设置获取数据时的相关控件状态
-            Messenger.Default.Send(0, MessageToken.StatusBarState);
+            statusBarVMInstance.SetControlState(0);
 
             // 生成请求的内容
             string generateContent = GenerateContentHelper.GenerateRequestContent(
@@ -253,14 +235,16 @@ namespace GetStoreApp.ViewModels.Controls.Store
                 ResultListFilter(ref ResultDataList);
             }
 
-            // 发送消息，显示结果
-            Messenger.Default.Send(state, MessageToken.StatusBarState);
-
-            Messenger.Default.Send(ResultControlVisable, MessageToken.ResultControlVisable);
-
-            Messenger.Default.Send(CategoryId, MessageToken.ResultCategoryId);
-
-            Messenger.Default.Send(ResultDataList, MessageToken.ResultDataList);
+            // 显示结果
+            statusBarVMInstance.SetControlState(state);
+            resultVMInstance.ResultControlVisable = ResultControlVisable;
+            resultVMInstance.CategoryId = CategoryId;
+            resultVMInstance.ResultDataList.Clear();
+            foreach (ResultModel resultItem in ResultDataList)
+            {
+                resultItem.IsSelected = false;
+                resultVMInstance.ResultDataList.Add(resultItem);
+            }
 
             // 成功状态下更新历史记录
             if (state is 1)
@@ -269,7 +253,7 @@ namespace GetStoreApp.ViewModels.Controls.Store
 
                 await UpdateTaskbarJumpListAsync(CurrentType, CurrentChannel, CurrentLink);
 
-                Messenger.Default.Send(true, MessageToken.History);
+                await historyVMInstance.GetHistoryLiteDataListAsync();
             }
         }
 
