@@ -2,7 +2,7 @@
     x:Class="GetStoreApp.UI.Controls.Store.ResultControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:basicInput="using:GetStoreApp.Views.CustomControls.BasicInput"
+    xmlns:controlExtensions="using:GetStoreApp.Helpers.Controls.Extensions"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:formats="using:GetStoreApp.Converters.Formats"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -380,13 +380,13 @@
                             <ColumnDefinition Width="80" />
                         </Grid.ColumnDefinitions>
 
-                        <basicInput:ExtendedCheckBox
+                        <CheckBox
                             Grid.Column="0"
                             Width="50"
                             Margin="10,0,0,0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
-                            Cursor="Hand"
+                            controlExtensions:CursorHelper.Cursor="Hand"
                             IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
                             IsThreeState="False"
                             Style="{StaticResource CheckBoxStyle}"
@@ -398,7 +398,7 @@
                                     Placement="Bottom"
                                     VerticalOffset="25" />
                             </ToolTipService.ToolTip>
-                        </basicInput:ExtendedCheckBox>
+                        </CheckBox>
 
                         <HyperlinkButton
                             Grid.Column="1"
@@ -459,12 +459,12 @@
                             </ToolTipService.ToolTip>
                         </TextBlock>
 
-                        <basicInput:ExtendedDropDownButton
+                        <DropDownButton
                             Grid.Column="5"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
+                            controlExtensions:CursorHelper.Cursor="Hand"
                             Content="{Binding ElementName=ResultRoot, Path=Copy, Mode=OneTime}"
-                            Cursor="Hand"
                             IsEnabled="{Binding ElementName=ResultRoot, Path=DataContext.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
                             Style="{StaticResource DropDownButtonStyle}">
 
@@ -475,7 +475,7 @@
                                     VerticalOffset="25" />
                             </ToolTipService.ToolTip>
 
-                            <basicInput:ExtendedDropDownButton.Flyout>
+                            <DropDownButton.Flyout>
                                 <menusAndToolbars:AdaptiveMenuFlyout>
                                     <MenuFlyoutItem
                                         Command="{Binding ElementName=ResultRoot, Path=DataContext.CopyLinkCommand, Mode=OneTime}"
@@ -503,8 +503,8 @@
                                         </ToolTipService.ToolTip>
                                     </MenuFlyoutItem>
                                 </menusAndToolbars:AdaptiveMenuFlyout>
-                            </basicInput:ExtendedDropDownButton.Flyout>
-                        </basicInput:ExtendedDropDownButton>
+                            </DropDownButton.Flyout>
+                        </DropDownButton>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

@@ -170,7 +170,7 @@ namespace GetStoreApp.ViewModels.Controls.Store
         /// <summary>
         /// 初始化微软商店页面其他控件的视图模型实例
         /// </summary>
-        public void InitializeStorePageOtherViewModel(HistoryLiteViewModel historyLiteViewModel,StatusBarViewModel statusBarViewModel,ResultViewModel resultViewModel)
+        public void InitializeStorePageOtherViewModel(HistoryLiteViewModel historyLiteViewModel, StatusBarViewModel statusBarViewModel, ResultViewModel resultViewModel)
         {
             historyVMInstance = historyLiteViewModel;
             statusBarVMInstance = statusBarViewModel;

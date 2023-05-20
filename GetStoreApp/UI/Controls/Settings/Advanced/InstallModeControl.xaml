@@ -2,7 +2,7 @@
     x:Class="GetStoreApp.UI.Controls.Settings.Advanced.InstallModeControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:basicinput="using:GetStoreApp.Views.CustomControls.BasicInput"
+    xmlns:controlExtensions="using:GetStoreApp.Helpers.Controls.Extensions"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
@@ -42,19 +42,19 @@
                 Text="{x:Bind root:ResourceService.GetLocalized('Settings/InstallModeDescription')}" />
         </StackPanel>
 
-        <basicinput:ExtendedButton
+        <Button
             Grid.Column="2"
             VerticalAlignment="Center"
+            controlExtensions:CursorHelper.Cursor="Hand"
             Click="{x:Bind ViewModel.OnInstallModeTipClicked}"
-            Cursor="Hand"
             Style="{StaticResource ButtonInfoStyle}">
 
-            <basicinput:ExtendedButton.Content>
+            <Button.Content>
                 <FontIcon
                     FontSize="16"
                     Glyph="&#xE946;"
                     Style="{StaticResource SegoeFluentStyle}" />
-            </basicinput:ExtendedButton.Content>
+            </Button.Content>
 
             <ToolTipService.ToolTip>
                 <ToolTip
@@ -62,7 +62,7 @@
                     Placement="Bottom"
                     VerticalOffset="25" />
             </ToolTipService.ToolTip>
-        </basicinput:ExtendedButton>
+        </Button>
 
         <DropDownButton
             Grid.Column="3"

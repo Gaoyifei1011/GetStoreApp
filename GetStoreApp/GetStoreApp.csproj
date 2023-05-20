@@ -121,25 +121,13 @@
     <None Update="Assets\Resources\LICENSE">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
-    <None Update="lib\Microsoft.Management.Deployment.winmd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <Page Update="UI\Controls\WinGet\UpgradableAppsControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Dialogs\WinGet\UnInstallFailedDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Dialogs\WinGet\RebootDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\WinGet\SearchAppsControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Content Include="Fonts\Segoe Fluent Icons.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Fonts\Settings Fluent Icons.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="lib\Microsoft.Management.Deployment.winmd" Link="Microsoft.Management.Deployment.winmd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
 
@@ -176,6 +164,8 @@
     
     <None Remove="Fonts\Segoe Fluent Icons.ttf" />
     <None Remove="Fonts\Settings Fluent Icons.ttf" />
+    
+    <None Remove="lib\Microsoft.Management.Deployment.winmd" />
     
     <None Remove="Styles\Button.xaml" />
     <None Remove="Styles\Checkbox.xaml" />
@@ -291,10 +281,6 @@
     <None Remove="UI\Notifications\ResultLinkCopyNotification.xaml" />
     <None Remove="UI\Notifications\ShareFailedNotification.xaml" />
     <None Remove="UI\Notifications\WebCacheCleanNotification.xaml" />
-    
-    <None Remove="Views\CustomControls\BasicInput\ExtendedButton.xaml" />
-    <None Remove="Views\CustomControls\BasicInput\ExtendedCheckBox.xaml" />
-    <None Remove="Views\CustomControls\BasicInput\ExtendedDropDownButton.xaml" />
     <None Remove="Views\CustomControls\Collections\AdaptiveGridView.xaml" />
     <None Remove="Views\CustomControls\MenusAndToolbars\AdaptiveMenuFlyout.xaml" />
     <None Remove="Views\CustomControls\MenusAndToolbars\ExtendedAppBarButton.xaml" />
@@ -341,6 +327,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Styles\Expander.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\Flyout.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Styles\FontIcon.xaml">
@@ -489,11 +478,17 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
-    <Page Update="UI\Controls\WinGet\InstalledAppsControl.xaml">
+    <Page Update="UI\Controls\Web\LoadFailedControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
-    <Page Update="UI\Controls\Web\LoadFailedControl.xaml">
+    <Page Update="UI\Controls\WinGet\InstalledAppsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\WinGet\SearchAppsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Controls\WinGet\UpgradableAppsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
@@ -560,6 +555,13 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
+    <Page Update="UI\Dialogs\WinGet\RebootDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Dialogs\WinGet\UnInstallFailedDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+
     <Page Update="UI\Notifications\CopyAppInformationNotification.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -597,16 +599,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Notifications\WebCacheCleanNotification.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-
-    <Page Update="Views\CustomControls\BasicInput\ExtendedButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\CustomControls\BasicInput\ExtendedCheckBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\CustomControls\BasicInput\ExtendedDropDownButton.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\CustomControls\Collections\AdaptiveGridView.xaml">
@@ -661,14 +653,6 @@
     <TrimmableAssembly Include="Microsoft.WindowsAppRuntime.Bootstrap" />
     <TrimmableAssembly Include="Microsoft.WindowsAppRuntime.Bootstrap.Net" />
     <TrimmableAssembly Include="Microsoft.Windows.Widgets.Projection" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <CustomAdditionalCompileInputs Remove="Styles\Flyout.xaml" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Resource Remove="Styles\Flyout.xaml" />
   </ItemGroup>
 </Project>
   

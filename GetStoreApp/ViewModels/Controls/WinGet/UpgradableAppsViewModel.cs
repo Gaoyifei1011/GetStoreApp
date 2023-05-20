@@ -59,7 +59,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
             await Task.Delay(500);
             await GetUpgradableAppsAsync();
             InitializeData();
-            if(MatchResultList is null || MatchResultList.Count is 0)
+            if (MatchResultList is null || MatchResultList.Count is 0)
             {
                 IsUpgradableAppsEmpty = true;
             }

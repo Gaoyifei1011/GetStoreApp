@@ -221,7 +221,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                         FindPackagesOptions findPackagesOptions = WinGetService.CreateFindPackagesOptions();
                         FindPackagesResult findResult = await installedCatalog.FindPackagesAsync(findPackagesOptions);
 
-                        MatchResultList = findResult.Matches.ToList();
+                        MatchResultList = findResult.Matches.ToList().Where(item => item.CatalogPackage.InstalledVersion.Publisher != string.Empty).ToList();
                     }
                 });
             }

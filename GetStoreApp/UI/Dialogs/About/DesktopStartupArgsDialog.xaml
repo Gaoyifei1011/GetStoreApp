@@ -247,8 +247,8 @@
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
                 Click="{x:Bind ViewModel.OnCloseDialogClicked}"
-                Tag="{x:Bind DesktopStartupArgsRoot}"
-                Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}">
+                Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
+                Tag="{x:Bind DesktopStartupArgsRoot}">
 
                 <ToolTipService.ToolTip>
                     <ToolTip

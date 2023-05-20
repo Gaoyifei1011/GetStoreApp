@@ -2,7 +2,7 @@
     x:Class="GetStoreApp.Views.Pages.HistoryPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:basicInput="using:GetStoreApp.Views.CustomControls.BasicInput"
+    xmlns:controlExtensions="using:GetStoreApp.Helpers.Controls.Extensions"
     xmlns:converter="using:GetStoreApp.Converters.Formats"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:history="using:GetStoreApp.Models.Controls.History"
@@ -634,13 +634,13 @@
                                         <ColumnDefinition Width="65" />
                                     </Grid.ColumnDefinitions>
 
-                                    <basicInput:ExtendedCheckBox
+                                    <CheckBox
                                         Grid.Column="0"
                                         Width="50"
                                         Margin="10,0,0,0"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
-                                        Cursor="Hand"
+                                        controlExtensions:CursorHelper.Cursor="Hand"
                                         IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
                                         IsThreeState="False"
                                         Style="{StaticResource CheckBoxStyle}"
@@ -652,7 +652,7 @@
                                                 Placement="Bottom"
                                                 VerticalOffset="25" />
                                         </ToolTipService.ToolTip>
-                                    </basicInput:ExtendedCheckBox>
+                                    </CheckBox>
 
                                     <TextBlock
                                         Grid.Column="1"

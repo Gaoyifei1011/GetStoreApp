@@ -41,9 +41,9 @@ namespace GetStoreApp.Views.Pages
                 Pivot pivot = sender as Pivot;
                 if (pivot is not null)
                 {
-                    if(pivot.SelectedIndex == 0)
+                    if (pivot.SelectedIndex == 0)
                     {
-                       await Downloading.ViewModel.StartDownloadingTimerAsync();
+                        await Downloading.ViewModel.StartDownloadingTimerAsync();
                     }
                     else if (pivot.SelectedIndex == 1)
                     {
