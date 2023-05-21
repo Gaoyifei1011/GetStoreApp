@@ -13,7 +13,10 @@
         <Setter Property="RequestedTheme" Value="Dark" />
     </Style>
 
-    <Style x:Key="TrayMenuFlyoutPresenterStyle" TargetType="MenuFlyoutPresenter">
+    <Style
+        x:Key="TrayMenuFlyoutPresenterStyle"
+        BasedOn="{StaticResource DefaultMenuFlyoutPresenterStyle}"
+        TargetType="MenuFlyoutPresenter">
         <Setter Property="Background" Value="{StaticResource MenuFlyoutPresenterBackground}" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />

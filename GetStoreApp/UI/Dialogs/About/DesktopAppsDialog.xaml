@@ -9,7 +9,7 @@
     Title="{x:Bind root:ResourceService.GetLocalized('Dialog/RecognizeDesktopApps')}"
     CloseButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
     RequestedTheme="{x:Bind DialogTheme}"
-    Style="{StaticResource DefaultContentDialogStyle}"
+    Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">
 
     <dialogsAndFlyouts:ExtendedContentDialog.Resources>

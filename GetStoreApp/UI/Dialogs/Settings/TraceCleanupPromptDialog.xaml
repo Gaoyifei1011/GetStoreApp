@@ -10,7 +10,7 @@
     xmlns:settings="using:GetStoreApp.Models.Dialogs.CommonDialogs.Settings"
     x:Name="TraceCleanupPromptRoot"
     RequestedTheme="{x:Bind DialogTheme}"
-    Style="{StaticResource ContentDialogStyle}"
+    Style="{StaticResource EmptyContentDialogStyle}"
     mc:Ignorable="d">
 
     <dialogsAndFlyouts:ExtendedContentDialog.DataContext>

@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Models.Controls.Store;
 using System;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,22 +16,21 @@ namespace GetStoreApp.Helpers.Controls.Store
     {
         private const string API = "https://store.rg-adguard.net/api/GetFiles";
 
-        private static RequestModel HttpRequestResult;
-
         // 数据的请求状态，0是正常状态，1是网络异常（WebException），2是超时异常（TimeOutException），3是其他异常（默认值）
-        private static int RequestId = 3;
+        private static int RequestId;
 
-        private static string RequestStatusCode = string.Empty;
+        private static string RequestStatusCode;
 
-        private static string RequestContent = string.Empty;
+        private static string RequestContent;
 
-        private static string RequestExceptionContent = string.Empty;
+        private static string RequestExceptionContent;
 
         /// <summary>
         /// 发送网页请求并获取结果
         /// </summary>
         public static async Task<RequestModel> HttpRequestAsync(string content)
         {
+            RequestModel HttpRequestResult = null;
             try
             {
                 byte[] ContentBytes = Encoding.UTF8.GetBytes(content);
@@ -63,17 +63,31 @@ namespace GetStoreApp.Helpers.Controls.Store
                 }
             }
 
-            // 捕捉因访问超时引发的异常
-            catch (TaskCanceledException taskCanceledException)
+            // 捕捉因为网络失去链接获取信息时引发的异常
+            catch (COMException e)
             {
                 RequestId = 1;
-                RequestExceptionContent = taskCanceledException.Message;
+                RequestStatusCode = string.Empty;
+                RequestExceptionContent = e.Message;
+                RequestContent = string.Empty;
+            }
+
+            // 捕捉因访问超时引发的异常
+            catch (TaskCanceledException e)
+            {
+                RequestId = 2;
+                RequestStatusCode = string.Empty;
+                RequestExceptionContent = e.Message;
+                RequestContent = string.Empty;
             }
 
             // 其他异常
             catch (Exception e)
             {
+                RequestId = 3;
+                RequestStatusCode = string.Empty;
                 RequestExceptionContent = e.Message;
+                RequestContent = string.Empty;
             }
             finally
             {

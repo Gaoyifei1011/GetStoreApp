@@ -466,7 +466,7 @@
                             controlExtensions:CursorHelper.Cursor="Hand"
                             Content="{Binding ElementName=ResultRoot, Path=Copy, Mode=OneTime}"
                             IsEnabled="{Binding ElementName=ResultRoot, Path=DataContext.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
-                            Style="{StaticResource DropDownButtonStyle}">
+                            Style="{StaticResource HyperlinkDropDownButtonStyle}">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip

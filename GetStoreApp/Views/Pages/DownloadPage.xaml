@@ -17,6 +17,7 @@
         <TeachingTip
             x:Name="DownloadTeachingTip"
             Title="{x:Bind root:ResourceService.GetLocalized('Download/ExplainTitle')}"
+            PreferredPlacement="Bottom"
             Style="{StaticResource TeachingTipStyle}"
             Target="{x:Bind TeachingTipButton}">
             <TeachingTip.IconSource>

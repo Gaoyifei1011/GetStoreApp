@@ -14,49 +14,49 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
         /// 此句柄不应在模拟不同用户的服务或应用程序中使用。 请改为调用 RegOpenCurrentUser 函数。
         /// 有关详细信息，请参阅 HKEY_CURRENT_USER。
         /// </summary>
-        public static readonly IntPtr HKEY_CURRENT_USER = new IntPtr(0x80000001);
+        public static readonly UIntPtr HKEY_CURRENT_USER = new UIntPtr(0x80000001);
 
         /// <summary>
         /// 从属此键的注册表项定义计算机的物理状态，包括有关总线类型、系统内存和已安装硬件和软件的数据。 它包含保存当前配置数据的子项，包括 enum 分支 (即插即用信息，其中包括系统) 、网络登录首选项、网络安全信息、软件相关信息 (（例如服务器名称和服务器) 的位置）和其他系统信息的完整列表。
         /// 有关详细信息，请参阅 HKEY_LOCAL_MACHINE。
         /// </summary>
-        public static readonly IntPtr HKEY_LOCAL_MACHINE = new IntPtr(0x80000002);
+        public static readonly UIntPtr HKEY_LOCAL_MACHINE = new UIntPtr(0x80000002);
 
         /// <summary>
         /// 从属此键的注册表项为本地计算机上的新用户定义默认用户配置，并为当前用户定义用户配置。
         /// </summary>
-        public static readonly IntPtr HKEY_USERS = new IntPtr(0x80000003);
+        public static readonly UIntPtr HKEY_USERS = new UIntPtr(0x80000003);
 
         /// <summary>
         /// 从属此键的注册表项允许访问性能数据。 数据实际上未存储在注册表中;注册表函数会导致系统从其源收集数据。
         /// </summary>
-        public static readonly IntPtr HKEY_PERFORMANCE_DATA = new IntPtr(0x80000004);
+        public static readonly UIntPtr HKEY_PERFORMANCE_DATA = new UIntPtr(0x80000004);
 
         /// <summary>
         /// 包含有关本地计算机系统的当前硬件配置文件的信息。 HKEY_CURRENT_CONFIG下的信息仅描述了当前硬件配置与标准配置之间的差异。 有关标准硬件配置的信息存储在HKEY_LOCAL_MACHINE的软件和系统密钥下。
         /// HKEY_CURRENT_CONFIG 是 HKEY_LOCAL_MACHINE\System\CurrentControlSet\Hardware Profiles\Current的别名。
         /// 有关详细信息，请参阅 HKEY_CURRENT_CONFIG。
         /// </summary>
-        public static readonly IntPtr HKEY_CURRENT_CONFIG = new IntPtr(0x80000005);
+        public static readonly UIntPtr HKEY_CURRENT_CONFIG = new UIntPtr(0x80000005);
 
         /// <summary>
         /// HKEY_DYN_DATA是windows 95、windows 98（98se）、windows me以上三种windows操作系统的注册表当中所特有的一个主键。
         /// </summary>
-        public static readonly IntPtr HKEY_DYN_DATA = new IntPtr(0x80000006);
+        public static readonly UIntPtr HKEY_DYN_DATA = new UIntPtr(0x80000006);
 
         /// <summary>
         /// 从属此键的注册表项定义当前用户的本地计算机的首选项。 这些条目不包括在漫游用户配置文件的每个用户注册表部分中。 Windows Server 2008、Windows Vista、Windows Server 2003 和 Windows XP/2000：从 Windows 7 和 Windows Server 2008 R2 开始支持此密钥。
         /// </summary>
-        public static readonly IntPtr HKEY_CURRENT_USER_LOCAL_SETTINGS = new IntPtr(0x80000007);
+        public static readonly UIntPtr HKEY_CURRENT_USER_LOCAL_SETTINGS = new UIntPtr(0x80000007);
 
         /// <summary>
         /// 从属此键的注册表项引用描述美国英语计数器的文本字符串。 这些条目不适用于Regedit.exe和Regedt32.exe。Windows 2000：不支持此密钥。
         /// </summary>
-        public static readonly IntPtr HKEY_PERFORMANCE_TEXT = new IntPtr(0x80000050);
+        public static readonly UIntPtr HKEY_PERFORMANCE_TEXT = new UIntPtr(0x80000050);
 
         /// <summary>
         /// 从属于此键的注册表项引用文本字符串，这些字符串描述计算机系统所在区域的本地语言的计数器。 这些条目不适用于Regedit.exe和Regedt32.exe。Windows 2000：不支持此密钥。
         /// </summary>
-        public static readonly IntPtr HKEY_PERFORMANCE_NLSTEXT = new IntPtr(0x80000060);
+        public static readonly UIntPtr HKEY_PERFORMANCE_NLSTEXT = new UIntPtr(0x80000060);
     }
 }

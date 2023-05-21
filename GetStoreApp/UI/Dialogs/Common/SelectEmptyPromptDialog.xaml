@@ -10,5 +10,5 @@
     CloseButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/OK')}"
     Content="{x:Bind root:ResourceService.GetLocalized('Dialog/SelectEmptyContent')}"
     RequestedTheme="{x:Bind DialogTheme}"
-    Style="{StaticResource DefaultContentDialogStyle}"
+    Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d" />

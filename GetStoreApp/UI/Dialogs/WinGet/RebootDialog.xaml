@@ -12,7 +12,7 @@
     Content="{x:Bind ViewModel.UnInstallNeedReboot}"
     PrimaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/Reboot')}"
     RequestedTheme="{x:Bind DialogTheme}"
-    Style="{StaticResource DefaultContentDialogStyle}"
+    Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">
     <dialogsAndFlyouts:ExtendedContentDialog.DataContext>
         <dialogViewModel:RebootViewModel x:Name="ViewModel" />

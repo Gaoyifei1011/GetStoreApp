@@ -12,5 +12,5 @@
     PrimaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/OK')}"
     RequestedTheme="{x:Bind DialogTheme}"
     SecondaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/OpenDownloadPage')}"
-    Style="{StaticResource DefaultContentDialogStyle}"
+    Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d" />

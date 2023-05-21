@@ -10,7 +10,7 @@
     x:Name="FileInformationRoot"
     Loaded="{x:Bind ViewModel.OnLoaded}"
     RequestedTheme="{x:Bind DialogTheme}"
-    Style="{StaticResource ContentDialogStyle}"
+    Style="{StaticResource EmptyContentDialogStyle}"
     mc:Ignorable="d">
 
     <dialogsAndFlyouts:ExtendedContentDialog.DataContext>

@@ -11,7 +11,7 @@
     x:Name="ExperimentalConfigRoot"
     Opened="{x:Bind ViewModel.OnOpened}"
     RequestedTheme="{x:Bind DialogTheme}"
-    Style="{StaticResource ContentDialogStyle}"
+    Style="{StaticResource EmptyContentDialogStyle}"
     mc:Ignorable="d">
 
     <dialogsAndFlyouts:ExtendedContentDialog.DataContext>

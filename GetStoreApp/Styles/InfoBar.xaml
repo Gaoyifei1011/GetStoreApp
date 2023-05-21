@@ -52,81 +52,7 @@
             <StaticResource x:Key="InfoBarBorderBrush" ResourceKey="CardStrokeColorDefaultBrush" />
             <Thickness x:Key="InfoBarBorderThickness">1</Thickness>
         </ResourceDictionary>
-
-        <ResourceDictionary x:Key="HighContrast">
-            <StaticResource x:Key="InfoBarErrorSeverityBackgroundBrush" ResourceKey="SystemColorWindowColorBrush" />
-            <StaticResource x:Key="InfoBarWarningSeverityBackgroundBrush" ResourceKey="SystemColorWindowColorBrush" />
-            <StaticResource x:Key="InfoBarSuccessSeverityBackgroundBrush" ResourceKey="SystemColorWindowColorBrush" />
-            <StaticResource x:Key="InfoBarInformationalSeverityBackgroundBrush" ResourceKey="CardBackgroundFillColorDefaultBrush" />
-
-            <StaticResource x:Key="InfoBarErrorSeverityIconBackground" ResourceKey="SystemColorHighlightColorBrush" />
-            <StaticResource x:Key="InfoBarWarningSeverityIconBackground" ResourceKey="SystemColorHighlightColorBrush" />
-            <StaticResource x:Key="InfoBarSuccessSeverityIconBackground" ResourceKey="SystemColorHighlightColorBrush" />
-            <StaticResource x:Key="InfoBarInformationalSeverityIconBackground" ResourceKey="SystemColorHighlightColorBrush" />
-
-            <StaticResource x:Key="InfoBarErrorSeverityIconForeground" ResourceKey="SystemColorHighlightTextColorBrush" />
-            <StaticResource x:Key="InfoBarWarningSeverityIconForeground" ResourceKey="SystemColorHighlightTextColorBrush" />
-            <StaticResource x:Key="InfoBarSuccessSeverityIconForeground" ResourceKey="SystemColorHighlightTextColorBrush" />
-            <StaticResource x:Key="InfoBarInformationalSeverityIconForeground" ResourceKey="SystemColorHighlightTextColorBrush" />
-
-            <StaticResource x:Key="InfoBarTitleForeground" ResourceKey="SystemColorWindowTextColorBrush" />
-            <StaticResource x:Key="InfoBarMessageForeground" ResourceKey="SystemColorWindowTextColorBrush" />
-            <StaticResource x:Key="InfoBarHyperlinkButtonForeground" ResourceKey="SystemColorHotlightColorBrush" />
-
-            <StaticResource x:Key="InfoBarBorderBrush" ResourceKey="SystemControlTransientBorderBrush" />
-            <Thickness x:Key="InfoBarBorderThickness">2</Thickness>
-        </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
-
-    <x:Double x:Key="InfoBarTitleFontSize">14</x:Double>
-    <FontWeight x:Key="InfoBarTitleFontWeight">SemiBold</FontWeight>
-
-    <x:Double x:Key="InfoBarMessageFontSize">14</x:Double>
-    <FontWeight x:Key="InfoBarMessageFontWeight">Normal</FontWeight>
-
-    <x:Double x:Key="InfoBarMinHeight">48</x:Double>
-
-    <x:Double x:Key="InfoBarCloseButtonSize">38</x:Double>
-    <x:Double x:Key="InfoBarCloseButtonGlyphSize">16</x:Double>
-
-    <!--  This negative margin makes the link visually line up with the title/message  -->
-    <Thickness x:Key="InfoBarHyperlinkButtonMargin">-12,0,0,0</Thickness>
-
-    <x:String x:Key="InfoBarIconBackgroundGlyph">&#xF136;</x:String>
-    <x:String x:Key="InfoBarInformationalIconGlyph">&#xF13F;</x:String>
-    <x:String x:Key="InfoBarErrorIconGlyph">&#xF13D;</x:String>
-    <x:String x:Key="InfoBarWarningIconGlyph">&#xF13C;</x:String>
-    <x:String x:Key="InfoBarSuccessIconGlyph">&#xF13E;</x:String>
-
-    <Thickness x:Key="InfoBarContentRootPadding">16,0,0,0</Thickness>
-
-    <Thickness x:Key="InfoBarIconMargin">0,16,14,16</Thickness>
-    <x:Double x:Key="InfoBarIconFontSize">16</x:Double>
-
-    <Thickness x:Key="InfoBarPanelMargin">0,0,16,0</Thickness>
-    <Thickness x:Key="InfoBarPanelHorizontalOrientationPadding">0,0,0,0</Thickness>
-    <Thickness x:Key="InfoBarPanelVerticalOrientationPadding">0,14,0,18</Thickness>
-
-    <Thickness x:Key="InfoBarTitleHorizontalOrientationMargin">0,14,0,0</Thickness>
-    <Thickness x:Key="InfoBarTitleVerticalOrientationMargin">0,14,0,0</Thickness>
-
-    <Thickness x:Key="InfoBarMessageHorizontalOrientationMargin">12,14,0,0</Thickness>
-    <Thickness x:Key="InfoBarMessageVerticalOrientationMargin">0,4,0,0</Thickness>
-
-    <Thickness x:Key="InfoBarActionHorizontalOrientationMargin">16,8,0,0</Thickness>
-    <Thickness x:Key="InfoBarActionVerticalOrientationMargin">0,12,0,0</Thickness>
-
-    <Style
-        x:Key="InfoBarCloseButtonStyle"
-        BasedOn="{StaticResource DefaultButtonStyle}"
-        TargetType="Button">
-        <Style.Setters>
-            <Setter Property="Width" Value="{StaticResource InfoBarCloseButtonSize}" />
-            <Setter Property="Height" Value="{StaticResource InfoBarCloseButtonSize}" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Margin" Value="5" />
-        </Style.Setters>
-    </Style>
 
     <Style x:Key="InfoBarStyle" TargetType="InfoBar">
         <Setter Property="IsTabStop" Value="False" />
@@ -143,17 +69,17 @@
                     <Border
                         x:Name="ContentRoot"
                         VerticalAlignment="Center"
-                        contract7Present:CornerRadius="{TemplateBinding CornerRadius}"
                         Background="Transparent"
                         BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}">
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
                         <!--  Background is used here so that it overrides the severity status color if set.  -->
                         <Grid
                             MinHeight="{ThemeResource InfoBarMinHeight}"
                             Padding="0"
                             HorizontalAlignment="Stretch"
-                            contract7Present:CornerRadius="{TemplateBinding CornerRadius}"
-                            Background="{TemplateBinding Background}">
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="{TemplateBinding CornerRadius}">
 
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -207,37 +133,26 @@
                                 Child="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.IconElement}"
                                 Visibility="Collapsed" />
 
-                            <primitives:InfoBarPanel
-                                Grid.Column="1"
-                                Margin="{StaticResource InfoBarPanelMargin}"
-                                HorizontalOrientationPadding="{StaticResource InfoBarPanelHorizontalOrientationPadding}"
-                                VerticalOrientationPadding="{StaticResource InfoBarPanelVerticalOrientationPadding}">
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
 
                                 <TextBlock
                                     x:Name="Title"
-                                    primitives:InfoBarPanel.HorizontalOrientationMargin="{StaticResource InfoBarTitleHorizontalOrientationMargin}"
-                                    primitives:InfoBarPanel.VerticalOrientationMargin="{StaticResource InfoBarTitleVerticalOrientationMargin}"
                                     FontSize="{StaticResource InfoBarTitleFontSize}"
                                     FontWeight="{StaticResource InfoBarTitleFontWeight}"
                                     Foreground="{ThemeResource InfoBarTitleForeground}"
                                     Text="{TemplateBinding Title}"
-                                    TextWrapping="WrapWholeWords" />
+                                    TextWrapping="WrapWholeWords"
+                                    Visibility="Collapsed" />
 
                                 <TextBlock
                                     x:Name="Message"
-                                    primitives:InfoBarPanel.HorizontalOrientationMargin="{StaticResource InfoBarMessageHorizontalOrientationMargin}"
-                                    primitives:InfoBarPanel.VerticalOrientationMargin="{StaticResource InfoBarMessageVerticalOrientationMargin}"
                                     FontSize="{StaticResource InfoBarMessageFontSize}"
                                     FontWeight="{StaticResource InfoBarMessageFontWeight}"
                                     Foreground="{ThemeResource InfoBarMessageForeground}"
                                     Text="{TemplateBinding Message}"
                                     TextWrapping="WrapWholeWords" />
 
-                                <ContentPresenter
-                                    VerticalAlignment="Center"
-                                    primitives:InfoBarPanel.HorizontalOrientationMargin="{StaticResource InfoBarActionHorizontalOrientationMargin}"
-                                    primitives:InfoBarPanel.VerticalOrientationMargin="{StaticResource InfoBarActionVerticalOrientationMargin}"
-                                    Content="{TemplateBinding ActionButton}">
+                                <ContentPresenter VerticalAlignment="Center" Content="{TemplateBinding ActionButton}">
 
                                     <ContentPresenter.Resources>
                                         <Style BasedOn="{StaticResource DefaultHyperlinkButtonStyle}" TargetType="HyperlinkButton">
@@ -248,7 +163,7 @@
                                         </Style>
                                     </ContentPresenter.Resources>
                                 </ContentPresenter>
-                            </primitives:InfoBarPanel>
+                            </StackPanel>
 
                             <ContentPresenter
                                 Grid.Column="2"

@@ -11,5 +11,5 @@
     Content="{x:Bind DeleteContent}"
     PrimaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/Continue')}"
     RequestedTheme="{x:Bind DialogTheme}"
-    Style="{StaticResource DefaultContentDialogStyle}"
+    Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d" />

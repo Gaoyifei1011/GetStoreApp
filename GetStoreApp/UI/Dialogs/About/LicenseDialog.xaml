@@ -11,7 +11,7 @@
     CloseButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
     Loading="{x:Bind ViewModel.OnLoading}"
     RequestedTheme="{x:Bind DialogTheme}"
-    Style="{StaticResource DefaultContentDialogStyle}"
+    Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">
 
     <dialogsAndFlyouts:ExtendedContentDialog.DataContext>

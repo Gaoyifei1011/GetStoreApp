@@ -10,7 +10,7 @@
     xmlns:root="using:GetStoreApp.Services.Root"
     x:Name="DesktopStartupArgsRoot"
     RequestedTheme="{x:Bind DialogTheme}"
-    Style="{StaticResource ContentDialogStyle}"
+    Style="{StaticResource EmptyContentDialogStyle}"
     mc:Ignorable="d">
 
     <dialogsAndFlyouts:ExtendedContentDialog.DataContext>

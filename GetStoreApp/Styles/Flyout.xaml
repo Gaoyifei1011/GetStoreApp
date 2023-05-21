@@ -1,6 +1,11 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Style x:Key="AdaptiveFlyoutLightPresenterStyle" TargetType="FlyoutPresenter">
+    <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter" />
+
+    <Style
+        x:Key="AdaptiveFlyoutLightPresenterStyle"
+        BasedOn="{StaticResource DefaultFlyoutPresenterStyle}"
+        TargetType="FlyoutPresenter">
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="IsTabStop" Value="False" />
@@ -50,7 +55,10 @@
         </Setter>
     </Style>
 
-    <Style x:Key="AdaptiveFlyoutDarkPresenterStyle" TargetType="FlyoutPresenter">
+    <Style
+        x:Key="AdaptiveFlyoutDarkPresenterStyle"
+        BasedOn="{StaticResource DefaultFlyoutPresenterStyle}"
+        TargetType="FlyoutPresenter">
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="IsTabStop" Value="False" />
