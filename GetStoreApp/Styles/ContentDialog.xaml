@@ -383,7 +383,7 @@
                                             Padding="{ThemeResource ContentDialogPadding}"
                                             Background="{ThemeResource ContentDialogTopOverlay}"
                                             BorderBrush="{ThemeResource ContentDialogSeparatorBorderBrush}"
-                                            BorderThickness="{ThemeResource ContentDialogSeparatorThickness}">
+                                            BorderThickness="0">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto" />
                                                 <RowDefinition Height="*" />

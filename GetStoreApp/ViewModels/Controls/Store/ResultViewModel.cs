@@ -431,14 +431,14 @@ namespace GetStoreApp.ViewModels.Controls.Store
                 ResultModel resultItem = args.Parameter as ResultModel;
                 if (resultItem is not null)
                 {
-                    string CopyContent = string.Format("[\n{0}\n{1}\n{2}\n{3}\n]\n",
+                    string copyContent = string.Format("[\n{0}\n{1}\n{2}\n{3}\n]\n",
                         resultItem.FileName,
                         resultItem.FileLink,
                         resultItem.FileSHA1,
                         resultItem.FileSize
                         );
 
-                    CopyPasteHelper.CopyToClipBoard(CopyContent);
+                    CopyPasteHelper.CopyToClipBoard(copyContent);
                     new ResultContentCopyNotification(true, false).Show();
                 }
             };

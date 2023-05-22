@@ -118,13 +118,13 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <summary>
         /// 检索一个窗口的句柄，该窗口的类名和窗口名称与指定的字符串匹配。 该函数搜索子窗口，从指定子窗口后面的子窗口开始。 此函数不执行区分大小写的搜索。
         /// </summary>
-        /// <param name="parentHandle">要搜索其子窗口的父窗口的句柄。如果 hwndParent 为 NULL，则该函数使用桌面窗口作为父窗口。 函数在桌面的子窗口之间搜索。 如果 hwndParent 为HWND_MESSAGE，则函数将搜索所有 仅消息窗口。</param>
-        /// <param name="childAfter">子窗口的句柄。 搜索从 Z 顺序中的下一个子窗口开始。 子窗口必须是 hwndParent 的直接子窗口，而不仅仅是子窗口。 如果 hwndChildAfter 为 NULL，则搜索从 hwndParent 的第一个子窗口开始。请注意，如果 hwndParent 和 hwndChildAfter 均为 NULL，则该函数将搜索所有顶级窗口和仅消息窗口。</param>
-        /// <param name="className">类名或上一次对 RegisterClass 或 RegisterClassEx 函数的调用创建的类名或类原子。 原子必须置于 lpszClass 的低序单词中;高阶单词必须为零。如果 lpszClass 是字符串，则指定窗口类名。 类名可以是注册到 RegisterClass 或 RegisterClassEx 的任何名称，也可以是预定义的控件类名称，也可以是 MAKEINTATOM(0x8000)。 在此后一种情况下，0x8000是菜单类的原子。 </param>
-        /// <param name="windowTitle">窗口名称 (窗口的标题) 。 如果此参数为 NULL，则所有窗口名称都匹配。</param>
+        /// <param name="hWndParent">要搜索其子窗口的父窗口的句柄。如果 hwndParent 为 NULL，则该函数使用桌面窗口作为父窗口。 函数在桌面的子窗口之间搜索。 如果 hwndParent 为HWND_MESSAGE，则函数将搜索所有 仅消息窗口。</param>
+        /// <param name="hWndChildAfter">子窗口的句柄。 搜索从 Z 顺序中的下一个子窗口开始。 子窗口必须是 hwndParent 的直接子窗口，而不仅仅是子窗口。 如果 hwndChildAfter 为 NULL，则搜索从 hwndParent 的第一个子窗口开始。请注意，如果 hwndParent 和 hwndChildAfter 均为 NULL，则该函数将搜索所有顶级窗口和仅消息窗口。</param>
+        /// <param name="lpszClass">类名或上一次对 RegisterClass 或 RegisterClassEx 函数的调用创建的类名或类原子。 原子必须置于 lpszClass 的低序单词中;高阶单词必须为零。如果 lpszClass 是字符串，则指定窗口类名。 类名可以是注册到 RegisterClass 或 RegisterClassEx 的任何名称，也可以是预定义的控件类名称，也可以是 MAKEINTATOM(0x8000)。 在此后一种情况下，0x8000是菜单类的原子。 </param>
+        /// <param name="lpszWindow">窗口名称 (窗口的标题) 。 如果此参数为 NULL，则所有窗口名称都匹配。</param>
         /// <returns></returns>
         [LibraryImport(User32, EntryPoint = "FindWindowExW", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)]
-        public static partial IntPtr FindWindowEx(IntPtr parentHandle, IntPtr childAfter, string className, string windowTitle);
+        public static partial IntPtr FindWindowEx(IntPtr hWndParent, IntPtr hWndChildAfter, string lpszClass, string lpszWindow);
 
         /// <summary>
         /// 检索鼠标光标的位置（以屏幕坐标为单位）。
@@ -155,7 +155,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
         [LibraryImport(User32, EntryPoint = "GetMonitorInfoW", SetLastError = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool GetMonitorInfo(IntPtr hMonitor, ref MONITORINFO lpmi);
+        public static partial bool GetMonitorInfo(IntPtr hMonitor, out MONITORINFO lpmi);
 
         /// <summary>
         /// 检索创建指定窗口的线程的标识符，以及（可选）创建窗口的进程的标识符。
@@ -164,7 +164,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="ID">指向接收进程标识符的变量的指针。如果此参数不为 NULL，则 <see cref="GetWindowThreadProcessId"> 将进程的标识符复制到变量;否则，它不会。</param>
         /// <returns>返回值是创建窗口的线程的标识符。</returns>
         [LibraryImport(User32, EntryPoint = "GetWindowThreadProcessId", SetLastError = true)]
-        public static partial int GetWindowThreadProcessId(IntPtr hwnd, out int ID);
+        public static partial int GetWindowThreadProcessId(IntPtr hwnd, out uint lpdwProcessId);
 
         /// <summary>
         /// <see cref="MonitorFromWindow"> 函数检索显示监视器的句柄，该监视器具有与指定窗口的边界矩形相交的最大区域。

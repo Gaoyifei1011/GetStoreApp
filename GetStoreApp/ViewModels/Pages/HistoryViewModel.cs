@@ -335,11 +335,11 @@ namespace GetStoreApp.ViewModels.Pages
                 HistoryModel historyItem = (HistoryModel)args.Parameter;
                 if (historyItem is not null)
                 {
-                    string CopyContent = string.Format("{0}\t{1}\t{2}",
+                    string copyContent = string.Format("{0}\t{1}\t{2}",
                         TypeList.Find(item => item.InternalName.Equals(historyItem.HistoryType)).DisplayName,
                         ChannelList.Find(item => item.InternalName.Equals(historyItem.HistoryChannel)).DisplayName,
                         historyItem.HistoryLink);
-                    CopyPasteHelper.CopyToClipBoard(CopyContent);
+                    CopyPasteHelper.CopyToClipBoard(copyContent);
                     new HistoryCopyNotification(true, false).Show();
                 }
             };

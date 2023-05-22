@@ -43,6 +43,8 @@ namespace GetStoreApp.Helpers.Root
 
         public static ResourceDictionary ScrollViewerResourceDict { get; private set; }
 
+        public static ResourceDictionary SplitButtonResourceDict { get; private set; }
+
         public static ResourceDictionary TeachingTipResourceDict { get; private set; }
 
         public static ResourceDictionary TextBlockResourceDict { get; private set; }
@@ -74,10 +76,11 @@ namespace GetStoreApp.Helpers.Root
             NavigationViewResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[17];
             PivotResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[18];
             ScrollViewerResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[19];
-            TeachingTipResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[20];
-            TextBlockResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[21];
-            ToggleSwitchResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[22];
-            WindowChromeDict = Program.ApplicationRoot.Resources.MergedDictionaries[23];
+            SplitButtonResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[20];
+            TeachingTipResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[21];
+            TextBlockResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[22];
+            ToggleSwitchResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[23];
+            WindowChromeDict = Program.ApplicationRoot.Resources.MergedDictionaries[24];
         }
     }
 }

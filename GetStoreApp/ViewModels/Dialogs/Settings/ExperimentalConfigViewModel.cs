@@ -62,7 +62,7 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
             if (button.Tag is not null)
             {
                 ((NetWorkMonitorControl)button.Tag).ViewModel.NetWorkMonitorValue = true;
-                await Aria2Service.RestoreDefaultAsync();
+                Aria2Service.RestoreDefault();
                 await NetWorkMonitorService.RestoreDefaultValueAsync();
 
                 if (!DisplayTimer.IsEnabled)

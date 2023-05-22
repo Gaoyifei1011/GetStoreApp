@@ -53,7 +53,7 @@ namespace GetStoreApp.ViewModels.Dialogs.About
 
                 CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
                 ((ExtendedContentDialog)button.Tag).Hide();
-                new CopyAppInformationNotification(true).Show();
+                new AppInformationCopyNotification(true).Show();
             }
         }
 

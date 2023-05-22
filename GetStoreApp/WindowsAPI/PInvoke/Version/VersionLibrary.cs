@@ -35,7 +35,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Version
         /// <param name="lpdwHandle">指向函数设置为零的变量的指针。</param>
         /// <returns>如果函数成功，则返回值是文件版本信息的大小（以字节为单位）。如果函数失败，则返回值为零。 </returns>
         [LibraryImport(Version, EntryPoint = "GetFileVersionInfoSizeW", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)]
-        public static partial int GetFileVersionInfoSize(string lptstrFilename, out uint lpdwHandle);
+        public static partial int GetFileVersionInfoSize(string lptstrFilename, out IntPtr lpdwHandle);
 
         /// <summary>
         /// 从指定的版本信息资源检索指定的版本信息。 若要检索适当的资源，在调用 <see cref="VerQueryValue"> 之前，必须先调用 <see cref="GetFileVersionInfoSize"> 函数，然后调用 <see cref="GetFileVersionInfo"> 函数。
@@ -61,6 +61,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Version
         /// </returns>
         [LibraryImport(Version, EntryPoint = "VerQueryValueW", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool VerQueryValue(byte[] pBlock, string lpSubBlock, out IntPtr lplpBuffer, out uint puLen);
+        public static partial bool VerQueryValue(byte[] pBlock, string lpSubBlock, out IntPtr lplpBuffer, out IntPtr puLen);
     }
 }

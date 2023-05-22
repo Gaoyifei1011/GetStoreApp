@@ -3,9 +3,9 @@
 namespace GetStoreApp.ViewModels.Notifications
 {
     /// <summary>
-    /// 应用信息复制成功后应用内通知视图模型
+    /// WinGet 程序包应用卸载指令复制成功后应用内通知视图模型
     /// </summary>
-    public sealed class CopyAppInformationViewModel : ViewModelBase
+    public class UnInstallCopyViewModel : ViewModelBase
     {
         private bool _copyState = false;
 

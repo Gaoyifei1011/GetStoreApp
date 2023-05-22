@@ -77,13 +77,12 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         public static VS_FIXEDFILEINFO GetFileInfo(string filePath)
         {
-            uint dummy;
-            int versionSize = VersionLibrary.GetFileVersionInfoSize(filePath, out dummy);
+            int versionSize = VersionLibrary.GetFileVersionInfoSize(filePath, out _);
             byte[] versionData = new byte[versionSize];
             VersionLibrary.GetFileVersionInfo(filePath, 0, versionSize, versionData);
 
             IntPtr pFixedVersionInfo;
-            VersionLibrary.VerQueryValue(versionData, "\\", out pFixedVersionInfo, out dummy);
+            VersionLibrary.VerQueryValue(versionData, "\\", out pFixedVersionInfo, out _);
 
             return (VS_FIXEDFILEINFO)Marshal.PtrToStructure(pFixedVersionInfo, typeof(VS_FIXEDFILEINFO));
         }

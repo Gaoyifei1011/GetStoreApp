@@ -89,7 +89,6 @@
                                     </Storyboard>
                                     <VisualState.Setters>
                                         <Setter Target="ChevronIcon.(AnimatedIcon.State)" Value="PointerOver" />
-
                                     </VisualState.Setters>
                                 </VisualState>
 
@@ -111,7 +110,6 @@
                                     </Storyboard>
                                     <VisualState.Setters>
                                         <Setter Target="ChevronIcon.(AnimatedIcon.State)" Value="Pressed" />
-
                                     </VisualState.Setters>
                                 </VisualState>
 
@@ -134,15 +132,11 @@
                                     <VisualState.Setters>
                                         <!--  DisabledVisual Should be handled by the control, not the animated icon.  -->
                                         <Setter Target="ChevronIcon.(AnimatedIcon.State)" Value="Normal" />
-
                                     </VisualState.Setters>
                                 </VisualState>
-
                             </VisualStateGroup>
-
                         </VisualStateManager.VisualStateGroups>
                     </Grid>
-
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -306,6 +300,4 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-
 </ResourceDictionary>

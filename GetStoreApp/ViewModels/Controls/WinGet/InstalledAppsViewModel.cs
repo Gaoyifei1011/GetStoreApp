@@ -1,6 +1,8 @@
-﻿using GetStoreApp.Models.Controls.WinGet;
+﻿using GetStoreApp.Helpers.Root;
+using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.WinGet;
+using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using Microsoft.Management.Deployment;
@@ -68,6 +70,8 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
 
         // 卸载应用
         public XamlUICommand UnInstallCommand { get; } = new XamlUICommand();
+
+        public XamlUICommand CopyUnInstallTextCommand { get; } = new XamlUICommand();
 
         public ObservableCollection<InstalledAppsModel> InstalledAppsDataList { get; set; } = new ObservableCollection<InstalledAppsModel>();
 
@@ -151,6 +155,18 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                     {
                         await new UnInstallFailedDialog(installedApps.AppName).ShowAsync();
                     }
+                }
+            };
+
+            CopyUnInstallTextCommand.ExecuteRequested += (sender, args) =>
+            {
+                string appId = args.Parameter as string;
+                if (appId is not null)
+                {
+                    string copyContent = string.Format("winget uninstall {0}", appId);
+                    CopyPasteHelper.CopyToClipBoard(copyContent);
+
+                    new UninstallCopyNotification(true).Show();
                 }
             };
         }

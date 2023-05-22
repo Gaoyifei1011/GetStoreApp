@@ -92,14 +92,14 @@
                 Background="Transparent"
                 DefaultLabelPosition="Right">
 
-                <menusAndToolbars:ExtendedAppBarButton
+                <AppBarButton
+                    controlExtensions:CursorHelper.Cursor="Hand"
                     Click="{x:Bind ViewModel.OnCopyIDClicked}"
-                    Cursor="Hand"
                     IsEnabled="{x:Bind system:Convert.ToBoolean(ViewModel.ResultDataList.Count), Mode=OneWay}"
                     Label="{x:Bind root:ResourceService.GetLocalized('Store/CopyID')}">
-                    <menusAndToolbars:ExtendedAppBarButton.Icon>
+                    <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE8c8;" Style="{StaticResource SegoeFluentStyle}" />
-                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                    </AppBarButton.Icon>
 
                     <ToolTipService.ToolTip>
                         <ToolTip
@@ -107,17 +107,17 @@
                             Placement="Bottom"
                             VerticalOffset="25" />
                     </ToolTipService.ToolTip>
-                </menusAndToolbars:ExtendedAppBarButton>
+                </AppBarButton>
 
-                <menusAndToolbars:ExtendedAppBarButton
+                <AppBarButton
+                    controlExtensions:CursorHelper.Cursor="Hand"
                     Click="{x:Bind ViewModel.OnSelectClicked}"
-                    Cursor="Hand"
                     IsEnabled="{x:Bind system:Convert.ToBoolean(ViewModel.ResultDataList.Count), Mode=OneWay}"
                     Label="{x:Bind root:ResourceService.GetLocalized('Store/Select')}">
 
-                    <menusAndToolbars:ExtendedAppBarButton.Icon>
+                    <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE762;" Style="{StaticResource SegoeFluentStyle}" />
-                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                    </AppBarButton.Icon>
 
                     <ToolTipService.ToolTip>
                         <ToolTip
@@ -125,7 +125,7 @@
                             Placement="Bottom"
                             VerticalOffset="25" />
                     </ToolTipService.ToolTip>
-                </menusAndToolbars:ExtendedAppBarButton>
+                </AppBarButton>
             </CommandBar>
 
             <CommandBar
@@ -136,14 +136,14 @@
                 Background="Transparent"
                 DefaultLabelPosition="Right">
 
-                <menusAndToolbars:ExtendedAppBarButton
+                <AppBarButton
+                    controlExtensions:CursorHelper.Cursor="Hand"
                     Click="{x:Bind ViewModel.OnSelectAllClicked}"
-                    Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('Store/SelectAll')}">
 
-                    <menusAndToolbars:ExtendedAppBarButton.Icon>
+                    <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE8b3;" Style="{StaticResource SegoeFluentStyle}" />
-                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                    </AppBarButton.Icon>
 
                     <ToolTipService.ToolTip>
                         <ToolTip
@@ -151,16 +151,16 @@
                             Placement="Bottom"
                             VerticalOffset="25" />
                     </ToolTipService.ToolTip>
-                </menusAndToolbars:ExtendedAppBarButton>
+                </AppBarButton>
 
-                <menusAndToolbars:ExtendedAppBarButton
+                <AppBarButton
+                    controlExtensions:CursorHelper.Cursor="Hand"
                     Click="{x:Bind ViewModel.OnSelectNoneClicked}"
-                    Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('Store/SelectNone')}">
 
-                    <menusAndToolbars:ExtendedAppBarButton.Icon>
+                    <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE8e6;" Style="{StaticResource SegoeFluentStyle}" />
-                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                    </AppBarButton.Icon>
 
                     <ToolTipService.ToolTip>
                         <ToolTip
@@ -168,13 +168,13 @@
                             Placement="Bottom"
                             VerticalOffset="25" />
                     </ToolTipService.ToolTip>
-                </menusAndToolbars:ExtendedAppBarButton>
+                </AppBarButton>
 
-                <menusAndToolbars:ExtendedAppBarButton Cursor="Hand" Label="{x:Bind root:ResourceService.GetLocalized('Store/CopyOptions')}">
+                <AppBarButton controlExtensions:CursorHelper.Cursor="Hand" Label="{x:Bind root:ResourceService.GetLocalized('Store/CopyOptions')}">
 
-                    <menusAndToolbars:ExtendedAppBarButton.Icon>
+                    <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE8c8;" Style="{StaticResource SegoeFluentStyle}" />
-                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                    </AppBarButton.Icon>
 
                     <ToolTipService.ToolTip>
                         <ToolTip
@@ -183,7 +183,7 @@
                             VerticalOffset="25" />
                     </ToolTipService.ToolTip>
 
-                    <menusAndToolbars:ExtendedAppBarButton.Flyout>
+                    <AppBarButton.Flyout>
                         <menusAndToolbars:AdaptiveMenuFlyout>
                             <MenuFlyoutItem Click="{x:Bind ViewModel.OnCopySelectedLinkClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedLink')}">
 
@@ -205,17 +205,17 @@
                                 </ToolTipService.ToolTip>
                             </MenuFlyoutItem>
                         </menusAndToolbars:AdaptiveMenuFlyout>
-                    </menusAndToolbars:ExtendedAppBarButton.Flyout>
-                </menusAndToolbars:ExtendedAppBarButton>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
 
-                <menusAndToolbars:ExtendedAppBarButton
+                <AppBarButton
+                    controlExtensions:CursorHelper.Cursor="Hand"
                     Click="{x:Bind ViewModel.OnDownloadSelectedClicked}"
-                    Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('Store/DownloadSelected')}">
 
-                    <menusAndToolbars:ExtendedAppBarButton.Icon>
+                    <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE74b;" Style="{StaticResource SegoeFluentStyle}" />
-                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                    </AppBarButton.Icon>
 
                     <ToolTipService.ToolTip>
                         <ToolTip
@@ -223,16 +223,16 @@
                             Placement="Bottom"
                             VerticalOffset="25" />
                     </ToolTipService.ToolTip>
-                </menusAndToolbars:ExtendedAppBarButton>
+                </AppBarButton>
 
-                <menusAndToolbars:ExtendedAppBarButton
+                <AppBarButton
+                    controlExtensions:CursorHelper.Cursor="Hand"
                     Click="{x:Bind ViewModel.OnCancelClicked}"
-                    Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('Store/Cancel')}">
 
-                    <menusAndToolbars:ExtendedAppBarButton.Icon>
+                    <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE711;" Style="{StaticResource SegoeFluentStyle}" />
-                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                    </AppBarButton.Icon>
 
                     <ToolTipService.ToolTip>
                         <ToolTip
@@ -240,7 +240,7 @@
                             Placement="Bottom"
                             VerticalOffset="25" />
                     </ToolTipService.ToolTip>
-                </menusAndToolbars:ExtendedAppBarButton>
+                </AppBarButton>
             </CommandBar>
         </Grid>
 

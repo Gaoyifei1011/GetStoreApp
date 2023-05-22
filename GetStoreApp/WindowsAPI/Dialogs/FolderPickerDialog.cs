@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.WindowsAPI.Dialogs.FileDialog;
+using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using System;
 using System.Runtime.InteropServices;
 
@@ -23,17 +24,20 @@ namespace GetStoreApp.WindowsAPI.Dialogs
             {
                 if (hwnd == IntPtr.Zero) return false;
 
-                FILEOPENDIALOGOPTIONS option = dialog.GetOptions();
-
-                // 设置选项：选择文件夹，确保返回的项目是文件系统项目
-                dialog.SetOptions(option | FILEOPENDIALOGOPTIONS.FOS_PICKFOLDERS | FILEOPENDIALOGOPTIONS.FOS_FORCEFILESYSTEM);
+                // 设置选项：选择文件夹
+                dialog.SetOptions(FILEOPENDIALOGOPTIONS.FOS_PICKFOLDERS);
 
                 // 设置首选目录
-                IShellItem item;
                 if (!string.IsNullOrEmpty(Path))
                 {
-                    item = PInvoke.Shell32.Shell32Library.SHCreateItemFromParsingName(Path, IntPtr.Zero, typeof(IShellItem).GUID);
-                    dialog.SetFolder(item);
+                    unsafe
+                    {
+                        Guid iShellItemGuid = typeof(IShellItem).GUID;
+                        Shell32Library.SHCreateItemFromParsingName(Path, IntPtr.Zero, &iShellItemGuid, out IntPtr ppv);
+                        IShellItem initialFolder = (IShellItem)Marshal.GetObjectForIUnknown(ppv);
+                        dialog.SetFolder(initialFolder);
+                        Marshal.ReleaseComObject(initialFolder);
+                    }
                 }
 
                 // 设置标题
@@ -42,22 +46,17 @@ namespace GetStoreApp.WindowsAPI.Dialogs
                     dialog.SetTitle(Title);
                 }
 
-                int hr = dialog.Show(hwnd);
+                int result = dialog.Show(hwnd);
 
-                if (hr == BitConverter.ToInt32(BitConverter.GetBytes(0x800704C7), 0))
+                if (result != 0)
                 {
                     return false;
                 }
 
-                if (hr != 0)
-                {
-                    Marshal.ThrowExceptionForHR(hr);
-                }
-
-                dialog.GetResult(out item);
-                item.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, out string name);
-                Path = name;
-
+                dialog.GetResult(out IShellItem pItem);
+                pItem.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, out IntPtr pszString);
+                Path = Marshal.PtrToStringUni(pszString);
+                Marshal.ReleaseComObject(pItem);
                 return true;
             }
             catch (Exception)

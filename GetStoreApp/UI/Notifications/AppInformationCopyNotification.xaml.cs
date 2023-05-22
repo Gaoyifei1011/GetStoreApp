@@ -11,7 +11,7 @@ namespace GetStoreApp.UI.Notifications
     /// <summary>
     /// 应用信息复制成功后应用内通知视图
     /// </summary>
-    public sealed partial class CopyAppInformationNotification : UserControl
+    public sealed partial class AppInformationCopyNotification : UserControl
     {
         public ElementTheme NotificationTheme { get; } = (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
 
@@ -19,7 +19,7 @@ namespace GetStoreApp.UI.Notifications
 
         private int Duration = 2000;
 
-        public CopyAppInformationNotification(bool copyState, [Optional] double? duration)
+        public AppInformationCopyNotification(bool copyState, [Optional] double? duration)
         {
             InitializeComponent();
             ViewModel.Initialize(copyState);

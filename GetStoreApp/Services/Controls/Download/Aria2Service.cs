@@ -32,7 +32,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 初始化Aria2配置文件
         /// </summary>
-        public static async Task InitializeAria2ConfAsync()
+        public static void InitializeAria2Conf()
         {
             try
             {
@@ -54,37 +54,31 @@ namespace GetStoreApp.Services.Controls.Download
                     Aria2Arguments = string.Format("--conf-path=\"{0}\" -D", DefaultAria2ConfPath);
                 }
             }
-            finally
-            {
-                await Task.CompletedTask;
-            }
         }
 
         /// <summary>
         /// 初始化运行Aria2下载进程
         /// </summary>
-        public static async Task StartAria2Async()
+        public static void StartAria2Process()
         {
             IsAria2ProcessRunning = Aria2ProcessHelper.RunAria2Process(Aria2FilePath, Aria2Arguments);
-            await Task.CompletedTask;
         }
 
         /// <summary>
         /// 关闭Aria2进程
         /// </summary>
-        public static async Task CloseAria2Async()
+        public static void CloseAria2()
         {
             if (IsAria2ProcessRunning)
             {
                 Aria2ProcessHelper.KillAria2Process();
             }
-            await Task.CompletedTask;
         }
 
         /// <summary>
         /// 恢复配置文件默认值
         /// </summary>
-        public static async Task RestoreDefaultAsync()
+        public static void RestoreDefault()
         {
             try
             {
@@ -105,10 +99,6 @@ namespace GetStoreApp.Services.Controls.Download
                 {
                     Aria2Arguments = string.Format("--conf-path=\"{0}\" -D", DefaultAria2ConfPath);
                 }
-            }
-            finally
-            {
-                await Task.CompletedTask;
             }
         }
 

@@ -20,6 +20,8 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
     {
         private PackageManager SearchAppsManager { get; set; }
 
+        private string cachedSearchText;
+
         private bool _notSearched = true;
 
         public bool NotSearched
@@ -89,6 +91,11 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
             MatchResultList = null;
             IsSearchCompleted = false;
             await Task.Delay(500);
+            if (string.IsNullOrEmpty(cachedSearchText))
+            {
+                IsSearchCompleted = true;
+                return;
+            }
             await GetSearchAppsAsync();
             InitializeData();
             IsSearchCompleted = true;
@@ -99,9 +106,15 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
         /// </summary>
         public async void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
+            cachedSearchText = SearchText;
             NotSearched = false;
             IsSearchCompleted = false;
             await Task.Delay(500);
+            if (string.IsNullOrEmpty(cachedSearchText))
+            {
+                IsSearchCompleted = true;
+                return;
+            }
             await GetSearchAppsAsync();
             InitializeData();
             IsSearchCompleted = true;
@@ -140,7 +153,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                         // 根据应用的名称寻找符合条件的结果
                         nameMatchFilter.Field = PackageMatchField.Name;
                         nameMatchFilter.Option = PackageFieldMatchOption.ContainsCaseInsensitive;
-                        nameMatchFilter.Value = SearchText;
+                        nameMatchFilter.Value = cachedSearchText;
                         findPackagesOptions.Filters.Add(nameMatchFilter);
                         FindPackagesResult findResult = await connectResult.PackageCatalog.FindPackagesAsync(findPackagesOptions);
                         MatchResultList = findResult.Matches.ToList();

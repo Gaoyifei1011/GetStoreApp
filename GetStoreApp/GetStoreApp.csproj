@@ -16,7 +16,7 @@
     <EnableMsixTooling>false</EnableMsixTooling>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <FileAlignment>512</FileAlignment>
-    <FileVersion>1.6.521.0</FileVersion>
+    <FileVersion>1.6.522.0</FileVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
@@ -44,7 +44,7 @@
     <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
     <TrimMode>partial</TrimMode>
-    <Version>1.6.521.0</Version>
+    <Version>1.6.522.0</Version>
     <UseWindowsForms>False</UseWindowsForms>
     <UseWinUI>true</UseWinUI>
     <UseWPF>False</UseWPF>
@@ -186,6 +186,7 @@
     <None Remove="Styles\NavigationView.xaml" />
     <None Remove="Styles\Pivot.xaml" />
     <None Remove="Styles\ScrollViewer.xaml" />
+    <None Remove="Styles\SplitButton.xaml" />
     <None Remove="Styles\TeachingTip.xaml" />
     <None Remove="Styles\TextBlock.xaml" />
     <None Remove="Styles\ToggleSwitch.xaml" />
@@ -264,11 +265,9 @@
     <None Remove="UI\Dialogs\ContentDialogs\Web\CoreWebView2FailedDialog.xaml" />
     
     <None Remove="UI\Dialogs\WinGet\RebootDialog.xaml" />
-    
     <None Remove="UI\Dialogs\WinGet\UnInstallFailedDialog.xaml" />
     
-    <None Remove="UI\Notifications\CopyAppInformationNotification.xaml" />
-    
+    <None Remove="UI\Notifications\AppInformationCopyNotification.xaml" />
     <None Remove="UI\Notifications\DownloadCreateNotification.xaml" />
     <None Remove="UI\Notifications\ExceptionCopyNotification.xaml" />
     <None Remove="UI\Notifications\FileInformationCopyNotification.xaml" />
@@ -280,10 +279,10 @@
     <None Remove="UI\Notifications\ResultIDCopyNotification.xaml" />
     <None Remove="UI\Notifications\ResultLinkCopyNotification.xaml" />
     <None Remove="UI\Notifications\ShareFailedNotification.xaml" />
+    <None Remove="UI\Notifications\UninstallCopyNotification.xaml" />
     <None Remove="UI\Notifications\WebCacheCleanNotification.xaml" />
     <None Remove="Views\CustomControls\Collections\AdaptiveGridView.xaml" />
     <None Remove="Views\CustomControls\MenusAndToolbars\AdaptiveMenuFlyout.xaml" />
-    <None Remove="Views\CustomControls\MenusAndToolbars\ExtendedAppBarButton.xaml" />
     
     <None Remove="Views\Pages\AboutPage.xaml" />
     <None Remove="Views\Pages\DownloadPage.xaml" />
@@ -363,6 +362,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Styles\ScrollViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\SplitButton.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Styles\TeachingTip.xaml">
@@ -562,7 +564,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
-    <Page Update="UI\Notifications\CopyAppInformationNotification.xaml">
+    <Page Update="UI\Notifications\AppInformationCopyNotification.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Notifications\DownloadCreateNotification.xaml">
@@ -598,6 +600,9 @@
     <Page Update="UI\Notifications\ShareFailedNotification.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Update="UI\Notifications\UninstallCopyNotification.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="UI\Notifications\WebCacheCleanNotification.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -605,9 +610,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\CustomControls\MenusAndToolbars\AdaptiveMenuFlyout.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\CustomControls\MenusAndToolbars\ExtendedAppBarButton.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
 

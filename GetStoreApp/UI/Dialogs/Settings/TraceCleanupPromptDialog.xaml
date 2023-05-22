@@ -83,8 +83,9 @@
 
         <ContentControl
             Grid.Row="1"
-            Padding="24"
+            Padding="{ThemeResource ContentDialogPadding}"
             HorizontalContentAlignment="Stretch"
+            Background="{ThemeResource ContentDialogBackground}"
             IsEnabled="{x:Bind ViewModel.IsCleaning, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}">
             <Grid ColumnSpacing="10">
                 <Grid.ColumnDefinitions>

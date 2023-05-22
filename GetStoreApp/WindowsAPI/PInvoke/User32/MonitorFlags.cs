@@ -3,7 +3,7 @@
     /// <summary>
     /// 如果窗口不与任何显示监视器相交，则确定函数的返回值。
     /// </summary>
-    public enum MonitorFlags : int
+    public enum MonitorFlags : uint
     {
         /// <summary>
         /// 返回 NULL。

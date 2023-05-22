@@ -3,7 +3,6 @@ using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.AppLifecycle;
-using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Dialogs.Common
 {
@@ -27,23 +26,23 @@ namespace GetStoreApp.ViewModels.Dialogs.Common
         /// <summary>
         /// 重启应用
         /// </summary>
-        public async void OnRestartClicked(object sender, RoutedEventArgs args)
+        public void OnRestartClicked(object sender, RoutedEventArgs args)
         {
             Button button = sender as Button;
             if (button.Tag is not null)
             {
                 ((ExtendedContentDialog)button.Tag).Hide();
             }
-            await RestartAppsAsync();
+            RestartApps();
         }
 
         /// <summary>
         /// 重启应用，并关闭其他进程
         /// </summary>
-        private async Task RestartAppsAsync()
+        private void RestartApps()
         {
             DownloadSchedulerService.CloseDownloadScheduler();
-            await Aria2Service.CloseAria2Async();
+            Aria2Service.CloseAria2();
 
             // 重启应用
             AppInstance.Restart(string.Empty);

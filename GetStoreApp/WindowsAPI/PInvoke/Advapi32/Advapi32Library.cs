@@ -44,6 +44,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
         /// 如果 lpData 缓冲区太小，无法接收数据，函数将返回ERROR_MORE_DATA。如果 lpValueName 注册表值不存在，该函数将返回ERROR_FILE_NOT_FOUND。
         /// </returns>
         [LibraryImport(Advapi32, EntryPoint = "RegQueryValueExW", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)]
-        public static partial int RegQueryValueEx(UIntPtr hKey, string lpValueName, IntPtr lpReserved, IntPtr lpType, byte[] lpData, ref uint lpcbData);
+        public static partial int RegQueryValueEx(UIntPtr hKey, string lpValueName, int lpReserved, out uint lpType, byte[] lpData, ref uint lpcbData);
     }
 }

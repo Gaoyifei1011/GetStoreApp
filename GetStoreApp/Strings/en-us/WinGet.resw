@@ -129,14 +129,11 @@
   <data name="AppPublisherToolTip" xml:space="preserve">
     <value>Publisher:{0}</value>
   </data>
-  <data name="AppsCountEmpty" xml:space="preserve">
-    <value>There is no apps</value>
-  </data>
-  <data name="AppsCountInfo" xml:space="preserve">
-    <value>There are {0} applications</value>
-  </data>
   <data name="AppVersionToolTIp" xml:space="preserve">
     <value>App version:{0}</value>
+  </data>
+  <data name="CopyUnInstallText" xml:space="preserve">
+    <value>Copy uninstall command</value>
   </data>
   <data name="Install" xml:space="preserve">
     <value>Install</value>
@@ -144,11 +141,17 @@
   <data name="InstalledApps" xml:space="preserve">
     <value>Installed apps</value>
   </data>
+  <data name="InstalledAppsCountEmpty" xml:space="preserve">
+    <value>There is no installed apps</value>
+  </data>
+  <data name="InstalledAppsCountInfo" xml:space="preserve">
+    <value>There are {0} installed apps</value>
+  </data>
   <data name="InstalledAppsEmptyDescription" xml:space="preserve">
     <value>The application record is empty. Go ahead and install the application you want to use</value>
   </data>
   <data name="InstalledAppsPlaceHolderText" xml:space="preserve">
-    <value>Search the installed applications</value>
+    <value>Search the installed apps</value>
   </data>
   <data name="InstalledAppsSearchEmptyDescription" xml:space="preserve">
     <value>The application you searched for has not been found, please change the search criteria and try again</value>
@@ -180,6 +183,12 @@
   <data name="SearchAppsPlaceHolderText" xml:space="preserve">
     <value>Search apps</value>
   </data>
+  <data name="SearchedAppsCountEmpty" xml:space="preserve">
+    <value>No apps were searched</value>
+  </data>
+  <data name="SearchedAppsCountInfo" xml:space="preserve">
+    <value>There are {0} searched apps</value>
+  </data>
   <data name="SearchingApps" xml:space="preserve">
     <value>The application is searching, please wait...</value>
   </data>
@@ -204,7 +213,16 @@
   <data name="UpgradableApps" xml:space="preserve">
     <value>Upgradable apps</value>
   </data>
+  <data name="UpgradableAppsCountEmpty" xml:space="preserve">
+    <value>There is no upgradeable apps</value>
+  </data>
+  <data name="UpgradableAppsCountInfo" xml:space="preserve">
+    <value>There are {0} upgradable apps</value>
+  </data>
   <data name="UpgradableAppsEmptyDescription" xml:space="preserve">
     <value>All of your applications are up to date</value>
+  </data>
+  <data name="ViewMoreOptions" xml:space="preserve">
+    <value>View more options</value>
   </data>
 </root>

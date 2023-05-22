@@ -281,6 +281,12 @@
   <data name="TaskbarSuccessfully" xml:space="preserve">
     <value>The app was successfully pinned to the taskbar</value>
   </data>
+  <data name="UnInstallCopyFailed" xml:space="preserve">
+    <value>Uninstall command copy failed, check the access rights of the clipboard</value>
+  </data>
+  <data name="UnInstallCopySuccessfully" xml:space="preserve">
+    <value>Uninstall command was successfully copied to the clipboard</value>
+  </data>
   <data name="WebCacheCleanChangeFailed" xml:space="preserve">
     <value>Web page cache cleanup failed</value>
   </data>

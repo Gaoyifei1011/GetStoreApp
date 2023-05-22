@@ -75,7 +75,8 @@
 
         <Grid
             Grid.Row="1"
-            Padding="24"
+            Padding="{ThemeResource ContentDialogPadding}"
+            Background="{ThemeResource ContentDialogBackground}"
             ColumnSpacing="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />

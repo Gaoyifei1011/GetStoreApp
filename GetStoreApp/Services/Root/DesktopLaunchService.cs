@@ -160,7 +160,7 @@ namespace GetStoreApp.Services.Root
 
                         if (hwnd != IntPtr.Zero)
                         {
-                            User32Library.GetWindowThreadProcessId(hwnd, out int processId);
+                            User32Library.GetWindowThreadProcessId(hwnd, out uint processId);
 
                             if (processId is not 0)
                             {

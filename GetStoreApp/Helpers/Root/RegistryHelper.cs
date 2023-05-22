@@ -21,8 +21,7 @@ namespace GetStoreApp.Helpers.Root
             {
                 uint dataSize = 4;
                 byte[] data = new byte[dataSize];
-
-                if (Advapi32Library.RegQueryValueEx(hKey, "SystemUsesLightTheme", IntPtr.Zero, IntPtr.Zero, data, ref dataSize) == 0)
+                if (Advapi32Library.RegQueryValueEx(hKey, "SystemUsesLightTheme", 0, out _, data, ref dataSize) == 0)
                 {
                     SystemUsesLightTheme = data[0] is 0 ? ElementTheme.Dark : ElementTheme.Light;
                 }

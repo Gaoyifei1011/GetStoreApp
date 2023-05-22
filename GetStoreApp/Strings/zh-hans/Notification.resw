@@ -281,6 +281,12 @@
   <data name="TaskbarSuccessfully" xml:space="preserve">
     <value>已成功将应用固定到任务栏</value>
   </data>
+  <data name="UnInstallCopyFailed" xml:space="preserve">
+    <value>卸载命令复制失败，请检查剪贴板的访问权限</value>
+  </data>
+  <data name="UnInstallCopySuccessfully" xml:space="preserve">
+    <value>卸载命令已复制到剪贴板</value>
+  </data>
   <data name="WebCacheCleanChangeFailed" xml:space="preserve">
     <value>网页缓存清理失败</value>
   </data>

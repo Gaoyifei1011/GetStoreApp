@@ -68,7 +68,7 @@ namespace GetStoreApp.ViewModels.Window
                 IntPtr hMonitor = User32Library.MonitorFromWindow(Program.ApplicationRoot.TrayMenuWindow.GetWindowHandle(), MonitorFlags.MONITOR_DEFAULTTONEAREST);
                 MONITORINFO monitorInfo = new MONITORINFO();
                 monitorInfo.cbSize = Marshal.SizeOf(typeof(MONITORINFO));
-                User32Library.GetMonitorInfo(hMonitor, ref monitorInfo);
+                User32Library.GetMonitorInfo(hMonitor, out monitorInfo);
 
                 // 调整窗口的大小
                 Program.ApplicationRoot.TrayMenuWindow.SetWindowSize();
@@ -127,7 +127,7 @@ namespace GetStoreApp.ViewModels.Window
         /// <summary>
         /// 窗口激活后配置其他设置
         /// </summary>
-        public async Task StartupAsync()
+        public void Startup()
         {
             // 设置应用主题
             ThemeService.SetWindowTheme();
@@ -143,10 +143,10 @@ namespace GetStoreApp.ViewModels.Window
             DownloadSchedulerService.InitializeDownloadScheduler();
 
             // 初始化Aria2配置文件信息
-            await Aria2Service.InitializeAria2ConfAsync();
+            Aria2Service.InitializeAria2Conf();
 
             // 启动Aria2下载服务
-            await Aria2Service.StartAria2Async();
+            Aria2Service.StartAria2Process();
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace GetStoreApp.ViewModels.Window
         {
             await SaveWindowInformationAsync();
             DownloadSchedulerService.CloseDownloadScheduler();
-            await Aria2Service.CloseAria2Async();
+            Aria2Service.CloseAria2();
             Program.ApplicationRoot.TrayIcon.Dispose();
             Program.ApplicationRoot.TrayIcon.DoubleClick -= DoubleClick;
             Program.ApplicationRoot.TrayIcon.RightClick -= RightClick;

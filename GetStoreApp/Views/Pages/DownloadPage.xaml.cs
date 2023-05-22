@@ -16,11 +16,11 @@ namespace GetStoreApp.Views.Pages
             InitializeComponent();
         }
 
-        protected override async void OnNavigatedTo(NavigationEventArgs args)
+        protected override void OnNavigatedTo(NavigationEventArgs args)
         {
             base.OnNavigatedTo(args);
             ViewModel.UseInsVisValue = UseInstructionService.UseInsVisValue;
-            await Downloading.ViewModel.StartDownloadingTimerAsync();
+            Downloading.ViewModel.StartDownloadingTimer();
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs args)
@@ -43,7 +43,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     if (pivot.SelectedIndex == 0)
                     {
-                        await Downloading.ViewModel.StartDownloadingTimerAsync();
+                        Downloading.ViewModel.StartDownloadingTimer();
                     }
                     else if (pivot.SelectedIndex == 1)
                     {

@@ -85,15 +85,15 @@
                 Background="Transparent"
                 DefaultLabelPosition="Right">
 
-                <menusAndToolbars:ExtendedAppBarButton
+                <AppBarButton
+                    controlExtensions:CursorHelper.Cursor="Hand"
                     Click="{x:Bind ViewModel.OnSelectClicked}"
-                    Cursor="Hand"
                     IsEnabled="{x:Bind sys:Convert.ToBoolean(ViewModel.HistoryDataList.Count), Mode=OneWay}"
                     Label="{x:Bind root:ResourceService.GetLocalized('History/Select')}">
 
-                    <menusAndToolbars:ExtendedAppBarButton.Icon>
+                    <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE762;" Style="{StaticResource SegoeFluentStyle}" />
-                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                    </AppBarButton.Icon>
 
                     <ToolTipService.ToolTip>
                         <ToolTip
@@ -101,16 +101,16 @@
                             Placement="Bottom"
                             VerticalOffset="25" />
                     </ToolTipService.ToolTip>
-                </menusAndToolbars:ExtendedAppBarButton>
+                </AppBarButton>
 
-                <menusAndToolbars:ExtendedAppBarButton
-                    Cursor="Hand"
+                <AppBarButton
+                    controlExtensions:CursorHelper.Cursor="Hand"
                     IsEnabled="{x:Bind sys:Convert.ToBoolean(ViewModel.HistoryDataList.Count), Mode=OneWay}"
                     Label="{x:Bind root:ResourceService.GetLocalized('History/Sort')}">
 
-                    <menusAndToolbars:ExtendedAppBarButton.Icon>
+                    <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE8cb;" Style="{StaticResource SegoeFluentStyle}" />
-                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                    </AppBarButton.Icon>
 
                     <ToolTipService.ToolTip>
                         <ToolTip
@@ -119,7 +119,7 @@
                             VerticalOffset="25" />
                     </ToolTipService.ToolTip>
 
-                    <menusAndToolbars:ExtendedAppBarButton.Flyout>
+                    <AppBarButton.Flyout>
                         <menusAndToolbars:AdaptiveMenuFlyout>
 
                             <RadioMenuFlyoutItem
@@ -158,14 +158,14 @@
                                 </ToolTipService.ToolTip>
                             </RadioMenuFlyoutItem>
                         </menusAndToolbars:AdaptiveMenuFlyout>
-                    </menusAndToolbars:ExtendedAppBarButton.Flyout>
-                </menusAndToolbars:ExtendedAppBarButton>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
 
-                <menusAndToolbars:ExtendedAppBarButton Cursor="Hand" Label="{x:Bind root:ResourceService.GetLocalized('History/Filter')}">
+                <AppBarButton controlExtensions:CursorHelper.Cursor="Hand" Label="{x:Bind root:ResourceService.GetLocalized('History/Filter')}">
 
-                    <menusAndToolbars:ExtendedAppBarButton.Icon>
+                    <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE71C;" Style="{StaticResource SegoeFluentStyle}" />
-                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                    </AppBarButton.Icon>
 
                     <ToolTipService.ToolTip>
                         <ToolTip
@@ -174,7 +174,7 @@
                             VerticalOffset="25" />
                     </ToolTipService.ToolTip>
 
-                    <menusAndToolbars:ExtendedAppBarButton.Flyout>
+                    <AppBarButton.Flyout>
 
                         <menusAndToolbars:AdaptiveMenuFlyout>
                             <MenuFlyoutSubItem Text="{x:Bind root:ResourceService.GetLocalized('History/Type')}">
@@ -343,17 +343,17 @@
                                 </RadioMenuFlyoutItem>
                             </MenuFlyoutSubItem>
                         </menusAndToolbars:AdaptiveMenuFlyout>
-                    </menusAndToolbars:ExtendedAppBarButton.Flyout>
-                </menusAndToolbars:ExtendedAppBarButton>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
 
-                <menusAndToolbars:ExtendedAppBarButton
+                <AppBarButton
+                    controlExtensions:CursorHelper.Cursor="Hand"
                     Click="{x:Bind ViewModel.OnRefreshClicked}"
-                    Cursor="Hand"
                     IsEnabled="{x:Bind sys:Convert.ToBoolean(ViewModel.HistoryDataList.Count), Mode=OneWay}"
                     Label="{x:Bind root:ResourceService.GetLocalized('History/Refresh')}">
-                    <menusAndToolbars:ExtendedAppBarButton.Icon>
+                    <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE72c;" Style="{StaticResource SegoeFluentStyle}" />
-                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                    </AppBarButton.Icon>
 
                     <ToolTipService.ToolTip>
                         <ToolTip
@@ -361,7 +361,7 @@
                             Placement="Bottom"
                             VerticalOffset="25" />
                     </ToolTipService.ToolTip>
-                </menusAndToolbars:ExtendedAppBarButton>
+                </AppBarButton>
             </CommandBar>
 
             <CommandBar
@@ -372,14 +372,14 @@
                 Background="Transparent"
                 DefaultLabelPosition="Right">
 
-                <menusAndToolbars:ExtendedAppBarButton
+                <AppBarButton
+                    controlExtensions:CursorHelper.Cursor="Hand"
                     Click="{x:Bind ViewModel.OnSelectAllClicked}"
-                    Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('History/SelectAll')}">
 
-                    <menusAndToolbars:ExtendedAppBarButton.Icon>
+                    <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE8b3;" Style="{StaticResource SegoeFluentStyle}" />
-                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                    </AppBarButton.Icon>
 
                     <ToolTipService.ToolTip>
                         <ToolTip
@@ -387,16 +387,16 @@
                             Placement="Bottom"
                             VerticalOffset="25" />
                     </ToolTipService.ToolTip>
-                </menusAndToolbars:ExtendedAppBarButton>
+                </AppBarButton>
 
-                <menusAndToolbars:ExtendedAppBarButton
+                <AppBarButton
+                    controlExtensions:CursorHelper.Cursor="Hand"
                     Click="{x:Bind ViewModel.OnSelectNoneClicked}"
-                    Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('History/SelectNone')}">
 
-                    <menusAndToolbars:ExtendedAppBarButton.Icon>
+                    <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE8e6;" Style="{StaticResource SegoeFluentStyle}" />
-                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                    </AppBarButton.Icon>
 
                     <ToolTipService.ToolTip>
                         <ToolTip
@@ -404,16 +404,16 @@
                             Placement="Bottom"
                             VerticalOffset="25" />
                     </ToolTipService.ToolTip>
-                </menusAndToolbars:ExtendedAppBarButton>
+                </AppBarButton>
 
-                <menusAndToolbars:ExtendedAppBarButton
+                <AppBarButton
+                    controlExtensions:CursorHelper.Cursor="Hand"
                     Click="{x:Bind ViewModel.OnCopySelectedClicked}"
-                    Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('History/CopySelected')}">
 
-                    <menusAndToolbars:ExtendedAppBarButton.Icon>
+                    <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE8c8;" Style="{StaticResource SegoeFluentStyle}" />
-                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                    </AppBarButton.Icon>
 
                     <ToolTipService.ToolTip>
                         <ToolTip
@@ -421,16 +421,16 @@
                             Placement="Bottom"
                             VerticalOffset="25" />
                     </ToolTipService.ToolTip>
-                </menusAndToolbars:ExtendedAppBarButton>
+                </AppBarButton>
 
-                <menusAndToolbars:ExtendedAppBarButton
+                <AppBarButton
+                    controlExtensions:CursorHelper.Cursor="Hand"
                     Click="{x:Bind ViewModel.OnDeleteClicked}"
-                    Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('History/Delete')}">
 
-                    <menusAndToolbars:ExtendedAppBarButton.Icon>
+                    <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE74d;" Style="{StaticResource SegoeFluentStyle}" />
-                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                    </AppBarButton.Icon>
 
                     <ToolTipService.ToolTip>
                         <ToolTip
@@ -438,16 +438,16 @@
                             Placement="Bottom"
                             VerticalOffset="25" />
                     </ToolTipService.ToolTip>
-                </menusAndToolbars:ExtendedAppBarButton>
+                </AppBarButton>
 
-                <menusAndToolbars:ExtendedAppBarButton
+                <AppBarButton
+                    controlExtensions:CursorHelper.Cursor="Hand"
                     Click="{x:Bind ViewModel.OnCancelClicked}"
-                    Cursor="Hand"
                     Label="{x:Bind root:ResourceService.GetLocalized('History/Cancel')}">
 
-                    <menusAndToolbars:ExtendedAppBarButton.Icon>
+                    <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE711;" Style="{StaticResource SegoeFluentStyle}" />
-                    </menusAndToolbars:ExtendedAppBarButton.Icon>
+                    </AppBarButton.Icon>
 
                     <ToolTipService.ToolTip>
                         <ToolTip
@@ -455,7 +455,7 @@
                             Placement="Bottom"
                             VerticalOffset="25" />
                     </ToolTipService.ToolTip>
-                </menusAndToolbars:ExtendedAppBarButton>
+                </AppBarButton>
             </CommandBar>
         </Grid>
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Security;
 
 namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
 {
@@ -44,6 +45,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// 如果两次关闭句柄，或者对 FindFirstFile 函数返回的句柄调用 CloseHandle，而不是调用 FindClose 函数，则可能会出现这种情况。
         /// </returns>
         [LibraryImport(Kernel32, EntryPoint = "CloseHandle", SetLastError = false)]
+        [SuppressUnmanagedCodeSecurity]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static partial bool CloseHandle(IntPtr hObject);
 
@@ -60,7 +62,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
         [LibraryImport(Kernel32, EntryPoint = "CreatePipe", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static unsafe partial bool CreatePipe(ref IntPtr hReadPipe, ref IntPtr hWritePipe, SECURITY_ATTRIBUTES* lpPipeAttributes, uint nSize);
+        public static unsafe partial bool CreatePipe(out IntPtr hReadPipe, out IntPtr hWritePipe, SECURITY_ATTRIBUTES* lpPipeAttributes, uint nSize);
 
         /// <summary>
         /// 获取指定进程的快照，以及这些进程使用的堆、模块和线程。
@@ -313,6 +315,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
         [LibraryImport(Kernel32, EntryPoint = "TerminateProcess", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool TerminateProcess(IntPtr hProcess, int uExitCode);
+        public static partial bool TerminateProcess(IntPtr hProcess, uint uExitCode);
     }
 }

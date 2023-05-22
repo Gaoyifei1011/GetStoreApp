@@ -46,9 +46,10 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         /// 如果没有数据传递到分析函数或从分析函数接收任何数据，则此值可以为NULL。
         /// </param>
         /// <param name="riid">对接口的 IID 的引用，以通过ppv（通常为IID_IShellItem或IID_IShellItem2）进行检索。</param>
+        /// <param name="ppv">此方法成功返回时，包含 riid 中请求的接口指针。这通常是IShellItem或IShellItem2。</param>
         /// <returns>此方法成功返回时，包含riid 中请求的接口指针。这通常是 <see cref="IShellItem"> 或IShellItem2。</returns>
-        [DllImport(Shell32, CharSet = CharSet.Unicode, EntryPoint = "SHCreateItemFromParsingName", ExactSpelling = true, PreserveSig = false, SetLastError = false)]
-        public static extern IShellItem SHCreateItemFromParsingName(string pszPath, IntPtr pbc, [MarshalAs(UnmanagedType.LPStruct)] Guid riid);
+        [LibraryImport(Shell32, EntryPoint = "SHCreateItemFromParsingName", SetLastError = false, StringMarshalling = StringMarshalling.Utf16)]
+        public static unsafe partial void SHCreateItemFromParsingName([MarshalAs(UnmanagedType.LPWStr)] string pszPath, IntPtr pbc, Guid* riid, out IntPtr ppv);
 
         /// <summary>
         /// 向任务栏的状态区域发送消息。

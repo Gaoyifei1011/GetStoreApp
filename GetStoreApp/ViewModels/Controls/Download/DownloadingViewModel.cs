@@ -281,9 +281,9 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// <summary>
         /// 开始运行下载计时器，并获取下载任务信息
         /// </summary>
-        public async Task StartDownloadingTimerAsync()
+        public void StartDownloadingTimer()
         {
-            await GetDownloadingDataListAsync();
+            GetDownloadingDataList();
             DownloadingTimer.Start();
         }
 
@@ -310,7 +310,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// <summary>
         /// 从下载调度服务中获取正在下载和等待下载的数据
         /// </summary>
-        private async Task GetDownloadingDataListAsync()
+        private void GetDownloadingDataList()
         {
             // 有信息在更新时，等待操作
             lock (DownloadingNowLock) IsUpdatingNow = true;
@@ -351,8 +351,6 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 IsInitializeFinished = true;
                 IsUpdatingNow = false;
             }
-
-            await Task.CompletedTask;
         }
 
         /// <summary>

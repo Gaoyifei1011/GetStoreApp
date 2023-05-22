@@ -67,7 +67,6 @@
                                         Glyph="{StaticResource CheckBoxCheckedGlyph}" />
                                 </controls:AnimatedIcon.FallbackIconSource>
                             </controls:AnimatedIcon>
-
                         </Grid>
                         <ContentPresenter
                             x:Name="ContentPresenter"
@@ -107,7 +106,6 @@
                                     </Storyboard>
                                     <VisualState.Setters>
                                         <Setter Target="CheckGlyph.(controls:AnimatedIcon.State)" Value="NormalOff" />
-
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="UncheckedPointerOver">
@@ -134,7 +132,6 @@
                                     </Storyboard>
                                     <VisualState.Setters>
                                         <Setter Target="CheckGlyph.(controls:AnimatedIcon.State)" Value="PointerOverOff" />
-
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="UncheckedPressed">
@@ -161,7 +158,6 @@
                                     </Storyboard>
                                     <VisualState.Setters>
                                         <Setter Target="CheckGlyph.(controls:AnimatedIcon.State)" Value="PressedOff" />
-
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="UncheckedDisabled">
@@ -189,7 +185,6 @@
                                     <VisualState.Setters>
                                         <!--  DisabledVisual Should be handled by the control, not the animated icon.  -->
                                         <Setter Target="CheckGlyph.(controls:AnimatedIcon.State)" Value="NormalOff" />
-
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="CheckedNormal">
@@ -216,7 +211,6 @@
                                     </Storyboard>
                                     <VisualState.Setters>
                                         <Setter Target="CheckGlyph.(controls:AnimatedIcon.State)" Value="NormalOn" />
-
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="CheckedPointerOver">
@@ -243,7 +237,6 @@
                                     </Storyboard>
                                     <VisualState.Setters>
                                         <Setter Target="CheckGlyph.(controls:AnimatedIcon.State)" Value="PointerOverOn" />
-
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="CheckedPressed">
@@ -270,7 +263,6 @@
                                     </Storyboard>
                                     <VisualState.Setters>
                                         <Setter Target="CheckGlyph.(controls:AnimatedIcon.State)" Value="PressedOn" />
-
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="CheckedDisabled">
@@ -298,7 +290,6 @@
                                     <VisualState.Setters>
                                         <!--  DisabledVisual Should be handled by the control, not the animated icon.  -->
                                         <Setter Target="CheckGlyph.(controls:AnimatedIcon.State)" Value="NormalOn" />
-
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="IndeterminateNormal">
@@ -329,7 +320,6 @@
                                     <VisualState.Setters>
                                         <Setter Target="CheckGlyph.(controls:AnimatedIcon.State)" Value="NormalIndeterminate" />
                                         <Setter Target="CheckGlyph.Margin" Value="0" />
-
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="IndeterminatePointerOver">
@@ -360,7 +350,6 @@
                                     <VisualState.Setters>
                                         <Setter Target="CheckGlyph.(controls:AnimatedIcon.State)" Value="PointerOverIndeterminate" />
                                         <Setter Target="CheckGlyph.Margin" Value="0" />
-
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="IndeterminatePressed">
@@ -391,7 +380,6 @@
                                     <VisualState.Setters>
                                         <Setter Target="CheckGlyph.(controls:AnimatedIcon.State)" Value="PressedIndeterminate" />
                                         <Setter Target="CheckGlyph.Margin" Value="0" />
-
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="IndeterminateDisabled">
@@ -423,15 +411,11 @@
                                         <!--  DisabledVisual Should be handled by the control, not the animated icon.  -->
                                         <Setter Target="CheckGlyph.(controls:AnimatedIcon.State)" Value="NormalIndeterminate" />
                                         <Setter Target="CheckGlyph.Margin" Value="0" />
-
                                     </VisualState.Setters>
                                 </VisualState>
-
                             </VisualStateGroup>
-
                         </VisualStateManager.VisualStateGroups>
                     </Grid>
-
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
