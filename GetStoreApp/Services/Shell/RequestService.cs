@@ -68,7 +68,7 @@ namespace GetStoreApp.Services.Shell
         /// </summary>
         public static async Task GetLinksAsync()
         {
-            string generateContent = GenerateContentHelper.GenerateRequestContent(SelectedType, LinkText, SelectedChannel, RegionService.AppRegion.ISO2);
+            string generateContent = GenerateContentHelper.GenerateRequestContent(SelectedType, LinkText, SelectedChannel);
             bool RequestState = true;
 
             while (RequestState)

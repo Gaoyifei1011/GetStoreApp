@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.WinGet;
@@ -71,6 +72,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
         // 卸载应用
         public XamlUICommand UnInstallCommand { get; } = new XamlUICommand();
 
+        // 复制卸载命令
         public XamlUICommand CopyUnInstallTextCommand { get; } = new XamlUICommand();
 
         public ObservableCollection<InstalledAppsModel> InstalledAppsDataList { get; set; } = new ObservableCollection<InstalledAppsModel>();
@@ -166,7 +168,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                     string copyContent = string.Format("winget uninstall {0}", appId);
                     CopyPasteHelper.CopyToClipBoard(copyContent);
 
-                    new UninstallCopyNotification(true).Show();
+                    new WinGetCopyNotification(true, WinGetCopyOptionsArgs.UnInstall).Show();
                 }
             };
         }

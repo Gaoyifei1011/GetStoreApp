@@ -1,5 +1,5 @@
 <UserControl
-    x:Class="GetStoreApp.UI.Notifications.UninstallCopyNotification"
+    x:Class="GetStoreApp.UI.Notifications.WinGetCopyNotification"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -12,7 +12,7 @@
     mc:Ignorable="d">
 
     <UserControl.DataContext>
-        <notificationViewModel:UnInstallCopyViewModel x:Name="ViewModel" />
+        <notificationViewModel:WinGetCopyViewModel x:Name="ViewModel" />
     </UserControl.DataContext>
 
     <UserControl.Resources>
@@ -79,14 +79,34 @@
         </StackPanel.RenderTransform>
 
         <TextBlock
-            x:Name="CopySuccess"
-            x:Load="{x:Bind ViewModel.CopyState, Mode=OneWay}"
+            x:Name="SearchInstallCopySuccess"
+            x:Load="{x:Bind ControlLoaded(ViewModel.CopyState,ViewModel.CopyOptions,'SearchInstallCopySuccess'), Mode=OneWay}"
+            Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
+            Text="{x:Bind root:ResourceService.GetLocalized('Notification/SearchInstallCopySuccessfully')}" />
+        <TextBlock
+            x:Name="SearchInstallCopyFailed"
+            x:Load="{x:Bind ControlLoaded(ViewModel.CopyState,ViewModel.CopyOptions,'SearchInstallCopyFailed'), Mode=OneWay}"
+            Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
+            Text="{x:Bind root:ResourceService.GetLocalized('Notification/SearchInstallCopyFailed')}" />
+        <TextBlock
+            x:Name="UnInstallCopySuccess"
+            x:Load="{x:Bind ControlLoaded(ViewModel.CopyState,ViewModel.CopyOptions,'UnInstallCopySuccess'), Mode=OneWay}"
             Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/UnInstallCopySuccessfully')}" />
         <TextBlock
-            x:Name="CopyFailed"
-            x:Load="{x:Bind ViewModel.CopyState, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
+            x:Name="UnInstallCopyFailed"
+            x:Load="{x:Bind ControlLoaded(ViewModel.CopyState,ViewModel.CopyOptions,'UnInstallCopyFailed'), Mode=OneWay}"
             Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/UnInstallCopyFailed')}" />
+        <TextBlock
+            x:Name="UpgradeInstallCopySuccess"
+            x:Load="{x:Bind ControlLoaded(ViewModel.CopyState,ViewModel.CopyOptions,'UpgradeInstallCopySuccess'), Mode=OneWay}"
+            Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
+            Text="{x:Bind root:ResourceService.GetLocalized('Notification/UpgradeInstallCopySuccessfully')}" />
+        <TextBlock
+            x:Name="UpgradeInstallCopyFailed"
+            x:Load="{x:Bind ControlLoaded(ViewModel.CopyState,ViewModel.CopyOptions,'UpgradeInstallCopyFailed'), Mode=OneWay}"
+            Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
+            Text="{x:Bind root:ResourceService.GetLocalized('Notification/UpgradeInstallCopyFailed')}" />
     </StackPanel>
 </UserControl>

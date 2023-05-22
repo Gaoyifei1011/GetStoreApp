@@ -121,6 +121,9 @@
     <None Update="Assets\Resources\LICENSE">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
+    <Page Update="UI\Notifications\WinGetCopyNotification.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Content Include="Fonts\Segoe Fluent Icons.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -279,8 +282,8 @@
     <None Remove="UI\Notifications\ResultIDCopyNotification.xaml" />
     <None Remove="UI\Notifications\ResultLinkCopyNotification.xaml" />
     <None Remove="UI\Notifications\ShareFailedNotification.xaml" />
-    <None Remove="UI\Notifications\UninstallCopyNotification.xaml" />
     <None Remove="UI\Notifications\WebCacheCleanNotification.xaml" />
+    <None Remove="UI\Notifications\WinGetCopyNotification.xaml" />
     <None Remove="Views\CustomControls\Collections\AdaptiveGridView.xaml" />
     <None Remove="Views\CustomControls\MenusAndToolbars\AdaptiveMenuFlyout.xaml" />
     
@@ -453,9 +456,6 @@
     <Page Update="UI\Controls\Settings\Common\NotificationControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="UI\Controls\Settings\Common\RegionControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Update="UI\Controls\Settings\Common\UseInstructionControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -598,9 +598,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Notifications\ShareFailedNotification.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Notifications\UninstallCopyNotification.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="UI\Notifications\WebCacheCleanNotification.xaml">

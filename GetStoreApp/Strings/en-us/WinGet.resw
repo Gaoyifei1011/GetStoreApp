@@ -132,8 +132,14 @@
   <data name="AppVersionToolTIp" xml:space="preserve">
     <value>App version:{0}</value>
   </data>
+  <data name="CopyInstallText" xml:space="preserve">
+    <value>Copy install command</value>
+  </data>
   <data name="CopyUnInstallText" xml:space="preserve">
     <value>Copy uninstall command</value>
+  </data>
+  <data name="CopyUpgradeText" xml:space="preserve">
+    <value>Copy upgrade command</value>
   </data>
   <data name="Install" xml:space="preserve">
     <value>Install</value>

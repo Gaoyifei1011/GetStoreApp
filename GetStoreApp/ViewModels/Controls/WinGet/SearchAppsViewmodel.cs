@@ -1,5 +1,8 @@
-﻿using GetStoreApp.Models.Controls.WinGet;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Root;
+using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Root;
+using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Base;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
@@ -64,6 +67,9 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
         // 安装应用
         public XamlUICommand InstallCommand { get; } = new XamlUICommand();
 
+        // 复制安装命令
+        public XamlUICommand CopyInstallTextCommand { get; } = new XamlUICommand();
+
         private List<MatchResult> MatchResultList;
 
         public ObservableCollection<SearchAppsModel> SearchAppsDataList { get; set; } = new ObservableCollection<SearchAppsModel>();
@@ -124,6 +130,18 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
         {
             InstallCommand.ExecuteRequested += (sender, args) =>
             {
+            };
+
+            CopyInstallTextCommand.ExecuteRequested += (sender, args) =>
+            {
+                string appId = args.Parameter as string;
+                if (appId is not null)
+                {
+                    string copyContent = string.Format("winget install {0}", appId);
+                    CopyPasteHelper.CopyToClipBoard(copyContent);
+
+                    new WinGetCopyNotification(true, WinGetCopyOptionsArgs.SearchInstall).Show();
+                }
             };
         }
 

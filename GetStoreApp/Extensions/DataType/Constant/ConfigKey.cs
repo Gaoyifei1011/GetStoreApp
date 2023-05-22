@@ -35,8 +35,6 @@
 
         public const string NotifyIconMenuThemeKey = "NotifyIconMenuTheme";
 
-        public const string RegionKey = "AppRegion";
-
         public const string StartsWithEFilterKey = "StartsWithEFilterValue";
 
         public const string ThemeKey = "AppTheme";

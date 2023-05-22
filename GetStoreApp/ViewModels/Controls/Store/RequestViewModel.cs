@@ -209,8 +209,7 @@ namespace GetStoreApp.ViewModels.Controls.Store
             string generateContent = GenerateContentHelper.GenerateRequestContent(
                 SelectedType.InternalName,
                 LinkText,
-                SelectedChannel.InternalName,
-                RegionService.AppRegion.ISO2);
+                SelectedChannel.InternalName);
 
             // 获取网页反馈回的原始数据
             RequestModel httpRequestData = await HtmlRequestHelper.HttpRequestAsync(generateContent);

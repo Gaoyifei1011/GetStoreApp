@@ -132,8 +132,14 @@
   <data name="AppVersionToolTip" xml:space="preserve">
     <value>应用版本：{0}</value>
   </data>
+  <data name="CopyInstallText" xml:space="preserve">
+    <value>复制安装命令</value>
+  </data>
   <data name="CopyUnInstallText" xml:space="preserve">
     <value>复制卸载命令</value>
+  </data>
+  <data name="CopyUpgradeText" xml:space="preserve">
+    <value>复制升级命令</value>
   </data>
   <data name="Install" xml:space="preserve">
     <value>安装</value>

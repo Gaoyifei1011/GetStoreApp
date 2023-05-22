@@ -339,12 +339,6 @@
   <data name="OpenFolderToolTip" xml:space="preserve">
     <value>Click to access the folder</value>
   </data>
-  <data name="Region" xml:space="preserve">
-    <value>The app is in the corresponding area of the Store</value>
-  </data>
-  <data name="RegionDescription" xml:space="preserve">
-    <value>If the app is available in a specific region, the region needs to be adjusted</value>
-  </data>
   <data name="RestartApp" xml:space="preserve">
     <value>Application restart</value>
   </data>

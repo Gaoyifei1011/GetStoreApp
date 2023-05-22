@@ -9,7 +9,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.WinUI
     {
         private const string WinUI = "Microsoft.ui.xaml.dll";
 
-        [LibraryImport(WinUI)]
+        [LibraryImport(WinUI,EntryPoint = "XamlCheckProcessRequirements",SetLastError =false)]
         public static partial void XamlCheckProcessRequirements();
     }
 }

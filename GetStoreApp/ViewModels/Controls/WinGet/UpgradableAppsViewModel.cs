@@ -1,5 +1,8 @@
-﻿using GetStoreApp.Models.Controls.WinGet;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Root;
+using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Root;
+using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Base;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
@@ -49,6 +52,8 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
         // 应用升级
         public XamlUICommand UpdateCommand { get; } = new XamlUICommand();
 
+        public XamlUICommand CopyUpgradeTextCommand { get; } = new XamlUICommand();
+
         /// <summary>
         /// 更新可升级应用数据
         /// </summary>
@@ -74,6 +79,18 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
         {
             UpdateCommand.ExecuteRequested += (sender, args) =>
             {
+            };
+
+            CopyUpgradeTextCommand.ExecuteRequested += (sender, args) =>
+            {
+                string appId = args.Parameter as string;
+                if (appId is not null)
+                {
+                    string copyContent = string.Format("winget install {0}", appId);
+                    CopyPasteHelper.CopyToClipBoard(copyContent);
+
+                    new WinGetCopyNotification(true, WinGetCopyOptionsArgs.UpgradeInstall).Show();
+                }
             };
         }
 

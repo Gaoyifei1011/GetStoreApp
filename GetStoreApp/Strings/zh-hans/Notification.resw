@@ -263,6 +263,12 @@
   <data name="ResultLinkSelectedCopySuccessfully" xml:space="preserve">
     <value>{0}条下载链接已经成功复制到剪贴板</value>
   </data>
+  <data name="SearchInstallCopyFailed" xml:space="preserve">
+    <value>安装命令复制失败，请检查剪贴板的访问权限</value>
+  </data>
+  <data name="SearchInstallCopySuccessfully" xml:space="preserve">
+    <value>安装命令已复制到剪贴板</value>
+  </data>
   <data name="ShareFailed" xml:space="preserve">
     <value>文件分享失败，请检查被分享文件的访问权限</value>
   </data>
@@ -286,6 +292,12 @@
   </data>
   <data name="UnInstallCopySuccessfully" xml:space="preserve">
     <value>卸载命令已复制到剪贴板</value>
+  </data>
+  <data name="UpgradeInstallCopyFailed" xml:space="preserve">
+    <value>升级命令复制失败，请检查剪贴板的访问权限</value>
+  </data>
+  <data name="UpgradeInstallCopySuccessfully" xml:space="preserve">
+    <value>升级命令已复制到剪贴板</value>
   </data>
   <data name="WebCacheCleanChangeFailed" xml:space="preserve">
     <value>网页缓存清理失败</value>

@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:format="using:GetStoreApp.Converters.Formats"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:winGetViewModel="using:GetStoreApp.ViewModels.Controls.WinGet"
     xmlns:winget="using:GetStoreApp.Models.Controls.WinGet"
@@ -259,6 +260,15 @@
                                             Placement="Bottom"
                                             VerticalOffset="25" />
                                     </basicInput:ExtendedSplitButton.SecondaryButtonToolTip>
+
+                                    <basicInput:ExtendedSplitButton.Flyout>
+                                        <menusAndToolbars:AdaptiveMenuFlyout>
+                                            <MenuFlyoutItem
+                                                Command="{Binding ElementName=UpgradableAppsRoot, Path=DataContext.CopyUpgradeTextCommand}"
+                                                CommandParameter="{x:Bind AppID}"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUpgradeText')}" />
+                                        </menusAndToolbars:AdaptiveMenuFlyout>
+                                    </basicInput:ExtendedSplitButton.Flyout>
                                 </basicInput:ExtendedSplitButton>
                             </Grid>
                         </DataTemplate>

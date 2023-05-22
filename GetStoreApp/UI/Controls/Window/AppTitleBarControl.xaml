@@ -24,16 +24,14 @@
     <Grid.ContextFlyout>
         <menusAndToolbars:AdaptiveMenuFlyout x:Name="TitlebarMenuFlyout" AreOpenCloseAnimationsEnabled="False">
             <MenuFlyoutItem
-                MinWidth="200"
                 Click="{x:Bind ViewModel.OnRestoreClicked}"
                 IsEnabled="{x:Bind ViewModel.IsWindowMaximized, Mode=OneWay}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Window/Restore')}">
                 <MenuFlyoutItem.Icon>
-                    <FontIcon Glyph="&#xE7c4;" Style="{StaticResource SegoeFluentStyle}" />
+                    <FontIcon Glyph="&#xEB91;" Style="{StaticResource SegoeFluentStyle}" />
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
             <MenuFlyoutItem
-                MinWidth="200"
                 Click="{x:Bind ViewModel.OnMoveClicked}"
                 CommandParameter="{x:Bind TitlebarMenuFlyout}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Window/Move')}">
@@ -42,7 +40,6 @@
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
             <MenuFlyoutItem
-                MinWidth="200"
                 Click="{x:Bind ViewModel.OnSizeClicked}"
                 CommandParameter="{x:Bind TitlebarMenuFlyout}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Window/Size')}">
@@ -51,7 +48,6 @@
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
             <MenuFlyoutItem
-                MinWidth="200"
                 Click="{x:Bind ViewModel.OnMinimizeClicked}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Window/Minimize')}">
                 <MenuFlyoutItem.Icon>
@@ -59,17 +55,15 @@
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
             <MenuFlyoutItem
-                MinWidth="200"
                 Click="{x:Bind ViewModel.OnMaximizeClicked}"
                 IsEnabled="{x:Bind ViewModel.IsWindowMaximized, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Window/Maximize')}">
                 <MenuFlyoutItem.Icon>
-                    <FontIcon Glyph="&#xE739;" Style="{StaticResource SegoeFluentStyle}" />
+                    <FontIcon Glyph="&#xE71A;" Style="{StaticResource SegoeFluentStyle}" />
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
             <MenuFlyoutSeparator />
             <MenuFlyoutItem
-                MinWidth="200"
                 Click="{x:Bind ViewModel.OnCloseClicked}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Window/Close')}">
                 <MenuFlyoutItem.Icon>

@@ -100,7 +100,6 @@ namespace GetStoreApp
 
             // 初始化通用设置选项（桌面应用程序和控制台应用程序）
             ResourceService.LocalizeReosurce();
-            await RegionService.InitializeRegionAsync();
             await LinkFilterService.InitializeLinkFilterValueAsnyc();
             await DownloadOptionsService.InitializeAsync();
 
