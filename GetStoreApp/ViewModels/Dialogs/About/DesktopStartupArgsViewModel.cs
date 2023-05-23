@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Models.Dialogs.CommonDialogs.About;
+﻿using GetStoreApp.Models.Dialogs.About;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
 using Microsoft.UI.Xaml;

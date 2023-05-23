@@ -260,8 +260,7 @@
                                         MinWidth="100"
                                         Command="{Binding ElementName=InstalledAppsRoot, Path=DataContext.UnInstallCommand, Mode=OneTime}"
                                         CommandParameter="{Binding}"
-                                        Content="{x:Bind root:ResourceService.GetLocalized('WinGet/UnInstall')}"
-                                        Style="{StaticResource SplitButtonWithToolTipStyle}">
+                                        Content="{x:Bind root:ResourceService.GetLocalized('WinGet/UnInstall')}">
 
                                         <basicInput:ExtendedSplitButton.PrimaryButtonToolTip>
                                             <ToolTip
@@ -282,7 +281,12 @@
                                                 <MenuFlyoutItem
                                                     Command="{Binding ElementName=InstalledAppsRoot, Path=DataContext.CopyUnInstallTextCommand}"
                                                     CommandParameter="{x:Bind AppID}"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUnInstallText')}" />
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUnInstallText')}">
+
+                                                    <MenuFlyoutItem.Icon>
+                                                        <FontIcon Glyph="&#xE8C8;" Style="{StaticResource SegoeFluentStyle}" />
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
                                             </menusAndToolbars:AdaptiveMenuFlyout>
                                         </basicInput:ExtendedSplitButton.Flyout>
                                     </basicInput:ExtendedSplitButton>

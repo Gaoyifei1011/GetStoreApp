@@ -447,6 +447,7 @@
                             FontSize="{TemplateBinding FontSize}"
                             FontWeight="{TemplateBinding FontWeight}"
                             Foreground="{TemplateBinding Foreground}"
+                            IsEnabled="{TemplateBinding IsPrimaryButtonEnabled}"
                             IsTabStop="False"
                             ToolTipService.ToolTip="{TemplateBinding PrimaryButtonToolTip}" />
                         <Button
@@ -462,6 +463,7 @@
                             BorderBrush="Transparent"
                             BorderThickness="0"
                             Foreground="{ThemeResource SplitButtonForegroundSecondary}"
+                            IsEnabled="{TemplateBinding IsSecondaryButtonEnabled}"
                             IsTabStop="False"
                             ToolTipService.ToolTip="{TemplateBinding SecondaryButtonToolTip}">
                             <Button.Content>
@@ -503,11 +505,11 @@
                                 </VisualState>
                                 <VisualState x:Name="FlyoutOpen">
                                     <VisualState.Setters>
-                                        <Setter Target="PrimaryBackgroundGrid.Background" Value="{ThemeResource SplitButtonBackgroundPressed}" />
-                                        <Setter Target="SecondaryBackgroundGrid.Background" Value="{ThemeResource SplitButtonBackgroundPressed}" />
-                                        <Setter Target="Border.BorderBrush" Value="{ThemeResource SplitButtonBorderBrushPressed}" />
-                                        <Setter Target="PrimaryButton.Foreground" Value="{ThemeResource SplitButtonForegroundPressed}" />
-                                        <Setter Target="SecondaryButton.Foreground" Value="{ThemeResource SplitButtonForegroundSecondaryPressed}" />
+                                        <Setter Target="PrimaryBackgroundGrid.Background" Value="{ThemeResource SplitButtonBackground}" />
+                                        <Setter Target="SecondaryBackgroundGrid.Background" Value="{ThemeResource SplitButtonBackground}" />
+                                        <Setter Target="Border.BorderBrush" Value="{ThemeResource SplitButtonBorderBrush}" />
+                                        <Setter Target="PrimaryButton.Foreground" Value="{ThemeResource SplitButtonForeground}" />
+                                        <Setter Target="SecondaryButton.Foreground" Value="{ThemeResource SplitButtonForegroundSecondary}" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="TouchPressed">

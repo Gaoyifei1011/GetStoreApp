@@ -204,6 +204,9 @@
   <data name="SortRule" xml:space="preserve">
     <value>Sorting rules</value>
   </data>
+  <data name="StopDownload" xml:space="preserve">
+    <value>Stop download</value>
+  </data>
   <data name="TaskManager" xml:space="preserve">
     <value>Task manager</value>
   </data>

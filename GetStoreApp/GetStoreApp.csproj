@@ -121,9 +121,6 @@
     <None Update="Assets\Resources\LICENSE">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
-    <Page Update="UI\Notifications\WinGetCopyNotification.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Content Include="Fonts\Segoe Fluent Icons.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -267,6 +264,7 @@
     
     <None Remove="UI\Dialogs\ContentDialogs\Web\CoreWebView2FailedDialog.xaml" />
     
+    <None Remove="UI\Dialogs\WinGet\InstallFailedDialog.xaml" />
     <None Remove="UI\Dialogs\WinGet\RebootDialog.xaml" />
     <None Remove="UI\Dialogs\WinGet\UnInstallFailedDialog.xaml" />
     
@@ -285,6 +283,7 @@
     <None Remove="UI\Notifications\WebCacheCleanNotification.xaml" />
     <None Remove="UI\Notifications\WinGetCopyNotification.xaml" />
     <None Remove="Views\CustomControls\Collections\AdaptiveGridView.xaml" />
+    <None Remove="Views\CustomControls\DialogsAndFlyouts\AdaptiveFlyout.xaml" />
     <None Remove="Views\CustomControls\MenusAndToolbars\AdaptiveMenuFlyout.xaml" />
     
     <None Remove="Views\Pages\AboutPage.xaml" />
@@ -557,6 +556,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
+    <Page Update="UI\Dialogs\WinGet\InstallFailedDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="UI\Dialogs\WinGet\RebootDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -603,7 +605,14 @@
     <Page Update="UI\Notifications\WebCacheCleanNotification.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Update="UI\Notifications\WinGetCopyNotification.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    
     <Page Update="Views\CustomControls\Collections\AdaptiveGridView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\CustomControls\DialogsAndFlyouts\AdaptiveFlyout.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\CustomControls\MenusAndToolbars\AdaptiveMenuFlyout.xaml">

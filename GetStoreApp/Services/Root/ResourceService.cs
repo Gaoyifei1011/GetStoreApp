@@ -3,7 +3,7 @@ using GetStoreApp.Models.Controls.Settings.Advanced;
 using GetStoreApp.Models.Controls.Settings.Appearance;
 using GetStoreApp.Models.Controls.Settings.Common;
 using GetStoreApp.Models.Controls.Store;
-using GetStoreApp.Models.Dialogs.CommonDialogs.Settings;
+using GetStoreApp.Models.Dialogs.Settings;
 using GetStoreApp.Properties;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;

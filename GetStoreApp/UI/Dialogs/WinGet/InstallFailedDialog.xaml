@@ -1,20 +1,18 @@
 <dialogsAndFlyouts:ExtendedContentDialog
-    x:Class="GetStoreApp.UI.Dialogs.WinGet.RebootDialog"
+    x:Class="GetStoreApp.UI.Dialogs.WinGet.InstallFailedDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dialogViewModel="using:GetStoreApp.ViewModels.Dialogs.WinGet"
     xmlns:dialogsAndFlyouts="using:GetStoreApp.Views.CustomControls.DialogsAndFlyouts"
+    xmlns:getStoreApp="using:GetStoreApp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    Title="{x:Bind root:ResourceService.GetLocalized('Dialog/RebootTitle')}"
-    CloseButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
-    Content="{x:Bind ViewModel.RebootContent}"
-    PrimaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/Reboot')}"
-    RequestedTheme="{x:Bind DialogTheme}"
-    Style="{StaticResource ContentDialogStyle}"
+    x:Name="InstallFailedRoot"
+    RequestedTheme="{x:Bind getStoreApp:Program.ApplicationRoot.MainWindow.ViewModel.WindowTheme, Mode=OneWay}"
+    Style="{StaticResource EmptyContentDialogStyle}"
     mc:Ignorable="d">
     <dialogsAndFlyouts:ExtendedContentDialog.DataContext>
-        <dialogViewModel:RebootViewModel x:Name="ViewModel" />
+        <dialogViewModel:InstalledFailedViewModel x:Name="ViewModel" />
     </dialogsAndFlyouts:ExtendedContentDialog.DataContext>
 </dialogsAndFlyouts:ExtendedContentDialog>

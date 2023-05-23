@@ -31,5 +31,21 @@ namespace GetStoreApp.Models.Controls.WinGet
         /// 应用可升级的最新版本
         /// </summary>
         public string AppNewestVersion { get; set; }
+
+        /// <summary>
+        /// 应用是否处于正在升级中状态
+        /// </summary>
+        private bool _isUpgrading;
+
+        public bool IsUpgrading
+        {
+            get { return _isUpgrading; }
+
+            set
+            {
+                _isUpgrading = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }

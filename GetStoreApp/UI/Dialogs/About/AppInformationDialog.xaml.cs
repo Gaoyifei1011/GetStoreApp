@@ -10,8 +10,6 @@ namespace GetStoreApp.UI.Dialogs.About
     /// </summary>
     public sealed partial class AppInformationDialog : ExtendedContentDialog
     {
-        public ElementTheme DialogTheme { get; } = (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
-
         public AppInformationDialog()
         {
             InitializeComponent();

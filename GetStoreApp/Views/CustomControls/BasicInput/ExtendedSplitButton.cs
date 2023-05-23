@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using GetStoreApp.Helpers.Root;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.Views.CustomControls.BasicInput
@@ -11,7 +12,28 @@ namespace GetStoreApp.Views.CustomControls.BasicInput
         public ExtendedSplitButton()
         {
             DefaultStyleKey = typeof(ExtendedSplitButton);
+            Style = ResourceDictionaryHelper.SplitButtonResourceDict["SplitButtonWithToolTipStyle"] as Style;
         }
+
+        public bool IsPrimaryButtonEnabled
+        {
+            get { return (bool)GetValue(IsPrimaryButtonEnabledProperty); }
+            set { SetValue(IsPrimaryButtonEnabledProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsPrimaryButtonEnabled.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsPrimaryButtonEnabledProperty =
+            DependencyProperty.Register("IsPrimaryButtonEnabled", typeof(bool), typeof(ExtendedSplitButton), new PropertyMetadata(true));
+
+        public bool IsSecondaryButtonEnabled
+        {
+            get { return (bool)GetValue(IsSecondaryButtonEnabledProperty); }
+            set { SetValue(IsSecondaryButtonEnabledProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsSecondaryButtonEnabled.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsSecondaryButtonEnabledProperty =
+            DependencyProperty.Register("IsSecondaryButtonEnabled", typeof(bool), typeof(ExtendedSplitButton), new PropertyMetadata(true));
 
         public object PrimaryButtonToolTip
         {

@@ -47,9 +47,7 @@
                     <FontIcon Glyph="&#xE81D;" Style="{StaticResource SegoeFluentStyle}" />
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
-            <MenuFlyoutItem
-                Click="{x:Bind ViewModel.OnMinimizeClicked}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Window/Minimize')}">
+            <MenuFlyoutItem Click="{x:Bind ViewModel.OnMinimizeClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Window/Minimize')}">
                 <MenuFlyoutItem.Icon>
                     <FontIcon Glyph="&#xE738;" Style="{StaticResource SegoeFluentStyle}" />
                 </MenuFlyoutItem.Icon>
@@ -62,10 +60,8 @@
                     <FontIcon Glyph="&#xE71A;" Style="{StaticResource SegoeFluentStyle}" />
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
-            <MenuFlyoutSeparator />
-            <MenuFlyoutItem
-                Click="{x:Bind ViewModel.OnCloseClicked}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Window/Close')}">
+            <MenuFlyoutSeparator Width="200" />
+            <MenuFlyoutItem Click="{x:Bind ViewModel.OnCloseClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Window/Close')}">
                 <MenuFlyoutItem.Icon>
                     <FontIcon Glyph="&#xE894;" Style="{StaticResource SegoeFluentStyle}" />
                 </MenuFlyoutItem.Icon>

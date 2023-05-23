@@ -1,5 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Models.Dialogs.CommonDialogs.Settings;
+using GetStoreApp.Models.Dialogs.Settings;
 using GetStoreApp.Services.Controls.Settings.Advanced;
 using GetStoreApp.Services.Root;
 using GetStoreApp.ViewModels.Base;

@@ -1,5 +1,5 @@
+using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Controls.Settings.Appearance;
-using GetStoreApp.Services.Root;
 using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
 using Microsoft.UI.Xaml;
 using System;
@@ -13,10 +13,10 @@ namespace GetStoreApp.UI.Dialogs.WinGet
     {
         public ElementTheme DialogTheme { get; } = (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
 
-        public RebootDialog(string appName)
+        public RebootDialog(WinGetOptionArgs options, string appName)
         {
             InitializeComponent();
-            ViewModel.UnInstallNeedReboot = string.Format(ResourceService.GetLocalized("Dialog/UnInstallNeedReboot"), appName);
+            ViewModel.InitializeRebootContent(options, appName);
         }
     }
 }

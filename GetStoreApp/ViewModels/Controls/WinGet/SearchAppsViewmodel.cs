@@ -2,8 +2,10 @@
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Root;
+using GetStoreApp.UI.Dialogs.WinGet;
 using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Base;
+using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -11,7 +13,9 @@ using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Controls.WinGet
@@ -128,8 +132,120 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
 
         public SearchAppsViewModel()
         {
-            InstallCommand.ExecuteRequested += (sender, args) =>
+            InstallCommand.ExecuteRequested += async (sender, args) =>
             {
+                SearchAppsModel searchApps = args.Parameter as SearchAppsModel;
+                if (searchApps is not null)
+                {
+                    try
+                    {
+                        foreach (SearchAppsModel searchAppsItem in SearchAppsDataList)
+                        {
+                            if (searchAppsItem.AppID == searchApps.AppID)
+                            {
+                                searchAppsItem.IsInstalling = true;
+                                break;
+                            }
+                        }
+
+                        InstallOptions installOptions = WinGetService.CreateInstallOptions();
+
+                        installOptions.PackageInstallMode = PackageInstallMode.Interactive;
+                        installOptions.PackageInstallScope = PackageInstallScope.Any;
+
+                        // 更新安装进度
+                        Progress<InstallProgress> progressCallBack = new Progress<InstallProgress>((installProgress) =>
+                        {
+                            switch (installProgress.State)
+                            {
+                                // 处于等待中状态
+                                case PackageInstallProgressState.Queued:
+                                    {
+                                        break;
+                                    }
+                                // 处于下载中状态
+                                case PackageInstallProgressState.Downloading:
+                                    {
+                                        break;
+                                    }
+                                // 处于安装中状态
+                                case PackageInstallProgressState.Installing:
+                                    {
+                                        break;
+                                    }
+                                // 挂起状态
+                                case PackageInstallProgressState.PostInstall:
+                                    {
+                                        break;
+                                    }
+                                // 处于安装完成状态
+                                case PackageInstallProgressState.Finished:
+                                    {
+                                        break;
+                                    }
+                            }
+                        });
+
+                        InstallResult installResult = await SearchAppsManager.InstallPackageAsync(MatchResultList.Find(item => item.CatalogPackage.DefaultInstallVersion.Id == searchApps.AppID).CatalogPackage, installOptions).AsTask(progressCallBack);
+
+                        // 获取安装完成后的结果信息
+                        if (installResult.Status == InstallResultStatus.Ok)
+                        {
+                            // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
+                            if (installResult.RebootRequired)
+                            {
+                                ContentDialogResult Result = await new RebootDialog(WinGetOptionArgs.UpgradeInstall, searchApps.AppName).ShowAsync();
+                                if (Result == ContentDialogResult.Primary)
+                                {
+                                    unsafe
+                                    {
+                                        Kernel32Library.GetStartupInfo(out STARTUPINFO RebootStartupInfo);
+                                        RebootStartupInfo.lpReserved = null;
+                                        RebootStartupInfo.lpDesktop = null;
+                                        RebootStartupInfo.lpTitle = null;
+                                        RebootStartupInfo.dwX = 0;
+                                        RebootStartupInfo.dwY = 0;
+                                        RebootStartupInfo.dwXSize = 0;
+                                        RebootStartupInfo.dwYSize = 0;
+                                        RebootStartupInfo.dwXCountChars = 500;
+                                        RebootStartupInfo.dwYCountChars = 500;
+                                        RebootStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
+                                        RebootStartupInfo.wShowWindow = 0;
+                                        RebootStartupInfo.cbReserved2 = 0;
+                                        RebootStartupInfo.lpReserved2 = IntPtr.Zero;
+
+                                        RebootStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+                                        Kernel32Library.CreateProcess(null, string.Format("{0} {1}", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), "System32", "Shutdown.exe"), "-r -t 120"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref RebootStartupInfo, out PROCESS_INFORMATION RebootProcessInformation);
+
+                                        Kernel32Library.CloseHandle(RebootProcessInformation.hProcess);
+                                        Kernel32Library.CloseHandle(RebootProcessInformation.hThread);
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+
+                        }
+
+                        foreach (SearchAppsModel searchAppsItem in SearchAppsDataList)
+                        {
+                            if (searchAppsItem.AppID == searchApps.AppID)
+                            {
+                                searchAppsItem.IsInstalling = false;
+                                break;
+                            }
+                        }
+                    }
+                    // 操作被用户所取消异常
+                    catch (OperationCanceledException)
+                    {
+                    }
+                    // 其他异常
+                    catch (Exception)
+                    {
+                    }
+                }
             };
 
             CopyInstallTextCommand.ExecuteRequested += (sender, args) =>
@@ -140,7 +256,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                     string copyContent = string.Format("winget install {0}", appId);
                     CopyPasteHelper.CopyToClipBoard(copyContent);
 
-                    new WinGetCopyNotification(true, WinGetCopyOptionsArgs.SearchInstall).Show();
+                    new WinGetCopyNotification(true, WinGetOptionArgs.SearchInstall).Show();
                 }
             };
         }

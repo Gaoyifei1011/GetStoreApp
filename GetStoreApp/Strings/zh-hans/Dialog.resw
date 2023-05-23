@@ -426,4 +426,10 @@
   <data name="OpenSettings" xml:space="preserve">
     <value>打开"设置"</value>
   </data>
+  <data name="UpgradeNeedReboot" xml:space="preserve">
+    <value>{0}应用已升级完成，部分更改需要重启后生效，请问您是否需要重启设备？</value>
+  </data>
+  <data name="SearchNeedReboot" xml:space="preserve">
+    <value>{0}应用已安装完成，部分更改需要重启后生效，请问您是否需要重启设备？</value>
+  </data>
 </root>

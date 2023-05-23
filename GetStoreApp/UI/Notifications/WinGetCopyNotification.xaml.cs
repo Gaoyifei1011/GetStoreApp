@@ -20,10 +20,10 @@ namespace GetStoreApp.UI.Notifications
 
         private int Duration = 2000;
 
-        public WinGetCopyNotification(bool copyState, [Optional, DefaultParameterValue(WinGetCopyOptionsArgs.SearchInstall)] WinGetCopyOptionsArgs copyOptions, [Optional] double? duration)
+        public WinGetCopyNotification(bool copyState, [Optional, DefaultParameterValue(WinGetOptionArgs.SearchInstall)] WinGetOptionArgs optionArgs, [Optional] double? duration)
         {
             InitializeComponent();
-            ViewModel.Initialize(copyState, copyOptions);
+            ViewModel.Initialize(copyState, optionArgs);
 
             SetPopUpPlacement();
 
@@ -45,29 +45,29 @@ namespace GetStoreApp.UI.Notifications
             Program.ApplicationRoot.MainWindow.SizeChanged += NotificationPlaceChanged;
         }
 
-        public bool ControlLoaded(bool copyState, WinGetCopyOptionsArgs copyOptions, string controlName)
+        public bool ControlLoaded(bool copyState, WinGetOptionArgs optionArgs, string controlName)
         {
-            if (controlName is "SearchInstallCopySuccess" && copyState && copyOptions == WinGetCopyOptionsArgs.SearchInstall)
+            if (controlName is "SearchInstallCopySuccess" && copyState && optionArgs == WinGetOptionArgs.SearchInstall)
             {
                 return true;
             }
-            else if (controlName is "SearchInstallCopyFailed" && !copyState && copyOptions == WinGetCopyOptionsArgs.SearchInstall)
+            else if (controlName is "SearchInstallCopyFailed" && !copyState && optionArgs == WinGetOptionArgs.SearchInstall)
             {
                 return true;
             }
-            else if (controlName is "UnInstallCopySuccess" && copyState && copyOptions == WinGetCopyOptionsArgs.UnInstall)
+            else if (controlName is "UnInstallCopySuccess" && copyState && optionArgs == WinGetOptionArgs.UnInstall)
             {
                 return true;
             }
-            else if (controlName is "UnInstallCopyFailed" && !copyState && copyOptions == WinGetCopyOptionsArgs.UnInstall)
+            else if (controlName is "UnInstallCopyFailed" && !copyState && optionArgs == WinGetOptionArgs.UnInstall)
             {
                 return true;
             }
-            else if (controlName is "UpgradeInstallCopySuccess" && copyState && copyOptions == WinGetCopyOptionsArgs.UpgradeInstall)
+            else if (controlName is "UpgradeInstallCopySuccess" && copyState && optionArgs == WinGetOptionArgs.UpgradeInstall)
             {
                 return true;
             }
-            else if (controlName is "UpgradeInstallCopyFailed" && !copyState && copyOptions == WinGetCopyOptionsArgs.UpgradeInstall)
+            else if (controlName is "UpgradeInstallCopyFailed" && !copyState && optionArgs == WinGetOptionArgs.UpgradeInstall)
             {
                 return true;
             }

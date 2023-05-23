@@ -204,6 +204,9 @@
   <data name="SortRule" xml:space="preserve">
     <value>排序规则</value>
   </data>
+  <data name="StopDownload" xml:space="preserve">
+    <value>停止下载</value>
+  </data>
   <data name="TaskManager" xml:space="preserve">
     <value>任务管理</value>
   </data>

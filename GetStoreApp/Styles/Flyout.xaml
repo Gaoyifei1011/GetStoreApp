@@ -22,7 +22,7 @@
         <Setter Property="ScrollViewer.VerticalScrollMode" Value="Auto" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.ZoomMode" Value="Disabled" />
-        <Setter Property="CornerRadius" Value="{ThemeResource OverlayCornerRadius}" />
+        <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
         <Setter Property="RequestedTheme" Value="Light" />
         <Setter Property="Template">
             <Setter.Value>
@@ -75,7 +75,7 @@
         <Setter Property="ScrollViewer.VerticalScrollMode" Value="Auto" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.ZoomMode" Value="Disabled" />
-        <Setter Property="CornerRadius" Value="{ThemeResource OverlayCornerRadius}" />
+        <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
         <Setter Property="RequestedTheme" Value="Dark" />
         <Setter Property="Template">
             <Setter.Value>

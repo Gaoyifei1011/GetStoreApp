@@ -11,8 +11,6 @@ namespace GetStoreApp.UI.Dialogs.WinGet
     /// </summary>
     public sealed partial class UnInstallFailedDialog : ExtendedContentDialog
     {
-        public ElementTheme DialogTheme { get; } = (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
-
         public UnInstallFailedDialog(string appName)
         {
             InitializeComponent();

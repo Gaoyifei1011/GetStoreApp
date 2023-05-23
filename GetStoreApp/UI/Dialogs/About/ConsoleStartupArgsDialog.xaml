@@ -2,14 +2,15 @@
     x:Class="GetStoreApp.UI.Dialogs.About.ConsoleStartupArgsDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:about="using:GetStoreApp.Models.Dialogs.CommonDialogs.About"
+    xmlns:about="using:GetStoreApp.Models.Dialogs.About"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dialogViewModel="using:GetStoreApp.ViewModels.Dialogs.About"
     xmlns:dialogsAndFlyouts="using:GetStoreApp.Views.CustomControls.DialogsAndFlyouts"
+    xmlns:getStoreApp="using:GetStoreApp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     x:Name="ConsoleStartupArgsRoot"
-    RequestedTheme="{x:Bind DialogTheme}"
+    RequestedTheme="{x:Bind getStoreApp:Program.ApplicationRoot.MainWindow.ViewModel.WindowTheme, Mode=OneWay}"
     Style="{StaticResource EmptyContentDialogStyle}"
     mc:Ignorable="d">
 

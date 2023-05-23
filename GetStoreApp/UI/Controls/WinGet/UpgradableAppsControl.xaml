@@ -245,7 +245,7 @@
                                     Command="{Binding ElementName=UpgradableAppsRoot, Path=DataContext.UpdateCommand, Mode=OneTime}"
                                     CommandParameter="{Binding}"
                                     Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Update')}"
-                                    Style="{StaticResource SplitButtonWithToolTipStyle}">
+                                    IsPrimaryButtonEnabled="{x:Bind IsUpgrading, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}">
 
                                     <basicInput:ExtendedSplitButton.PrimaryButtonToolTip>
                                         <ToolTip
@@ -263,10 +263,21 @@
 
                                     <basicInput:ExtendedSplitButton.Flyout>
                                         <menusAndToolbars:AdaptiveMenuFlyout>
+                                            <MenuFlyoutItem x:Name="StopDownload" x:Load="{x:Bind IsUpgrading, Mode=OneWay}" Text="{x:Bind root:ResourceService.GetLocalized('WinGet/StopDownload')}">
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xE711;" Style="{StaticResource SegoeFluentStyle}" />
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
+
                                             <MenuFlyoutItem
                                                 Command="{Binding ElementName=UpgradableAppsRoot, Path=DataContext.CopyUpgradeTextCommand}"
                                                 CommandParameter="{x:Bind AppID}"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUpgradeText')}" />
+                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUpgradeText')}">
+
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xE8C8;" Style="{StaticResource SegoeFluentStyle}" />
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
                                         </menusAndToolbars:AdaptiveMenuFlyout>
                                     </basicInput:ExtendedSplitButton.Flyout>
                                 </basicInput:ExtendedSplitButton>

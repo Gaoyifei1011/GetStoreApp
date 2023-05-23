@@ -7,7 +7,7 @@
     xmlns:dialogsAndFlyouts="using:GetStoreApp.Views.CustomControls.DialogsAndFlyouts"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:settings="using:GetStoreApp.Models.Dialogs.CommonDialogs.Settings"
+    xmlns:settings="using:GetStoreApp.Models.Dialogs.Settings"
     x:Name="TraceCleanupPromptRoot"
     RequestedTheme="{x:Bind DialogTheme}"
     Style="{StaticResource EmptyContentDialogStyle}"

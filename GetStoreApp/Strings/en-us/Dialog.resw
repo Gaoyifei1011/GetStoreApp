@@ -426,4 +426,10 @@
   <data name="OpenSettings" xml:space="preserve">
     <value>Open settings</value>
   </data>
+  <data name="UpgradeNeedReboot" xml:space="preserve">
+    <value>{0} The application has been upgraded. Some changes need to be restarted to take effect. Do you need to restart the device?</value>
+  </data>
+  <data name="SearchNeedReboot" xml:space="preserve">
+    <value>{0} The application has been installed. Some changes need to be restarted to take effect. Do you need to restart the device?</value>
+  </data>
 </root>

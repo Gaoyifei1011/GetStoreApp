@@ -116,29 +116,32 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                             // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
                             if (unInstallResult.RebootRequired)
                             {
-                                ContentDialogResult Result = await new RebootDialog(installedApps.AppName).ShowAsync();
-                                unsafe
+                                ContentDialogResult Result = await new RebootDialog(WinGetOptionArgs.UnInstall, installedApps.AppName).ShowAsync();
+                                if (Result == ContentDialogResult.Primary)
                                 {
-                                    Kernel32Library.GetStartupInfo(out STARTUPINFO RebootStartupInfo);
-                                    RebootStartupInfo.lpReserved = null;
-                                    RebootStartupInfo.lpDesktop = null;
-                                    RebootStartupInfo.lpTitle = null;
-                                    RebootStartupInfo.dwX = 0;
-                                    RebootStartupInfo.dwY = 0;
-                                    RebootStartupInfo.dwXSize = 0;
-                                    RebootStartupInfo.dwYSize = 0;
-                                    RebootStartupInfo.dwXCountChars = 500;
-                                    RebootStartupInfo.dwYCountChars = 500;
-                                    RebootStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-                                    RebootStartupInfo.wShowWindow = 0;
-                                    RebootStartupInfo.cbReserved2 = 0;
-                                    RebootStartupInfo.lpReserved2 = IntPtr.Zero;
+                                    unsafe
+                                    {
+                                        Kernel32Library.GetStartupInfo(out STARTUPINFO RebootStartupInfo);
+                                        RebootStartupInfo.lpReserved = null;
+                                        RebootStartupInfo.lpDesktop = null;
+                                        RebootStartupInfo.lpTitle = null;
+                                        RebootStartupInfo.dwX = 0;
+                                        RebootStartupInfo.dwY = 0;
+                                        RebootStartupInfo.dwXSize = 0;
+                                        RebootStartupInfo.dwYSize = 0;
+                                        RebootStartupInfo.dwXCountChars = 500;
+                                        RebootStartupInfo.dwYCountChars = 500;
+                                        RebootStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
+                                        RebootStartupInfo.wShowWindow = 0;
+                                        RebootStartupInfo.cbReserved2 = 0;
+                                        RebootStartupInfo.lpReserved2 = IntPtr.Zero;
 
-                                    RebootStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
-                                    Kernel32Library.CreateProcess(null, string.Format("{0} {1}", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), "System32", "Shutdown.exe"), "-r -t 120"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref RebootStartupInfo, out PROCESS_INFORMATION RebootProcessInformation);
+                                        RebootStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+                                        Kernel32Library.CreateProcess(null, string.Format("{0} {1}", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), "System32", "Shutdown.exe"), "-r -t 120"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref RebootStartupInfo, out PROCESS_INFORMATION RebootProcessInformation);
 
-                                    Kernel32Library.CloseHandle(RebootProcessInformation.hProcess);
-                                    Kernel32Library.CloseHandle(RebootProcessInformation.hThread);
+                                        Kernel32Library.CloseHandle(RebootProcessInformation.hProcess);
+                                        Kernel32Library.CloseHandle(RebootProcessInformation.hThread);
+                                    }
                                 }
                             }
                         }
@@ -168,7 +171,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                     string copyContent = string.Format("winget uninstall {0}", appId);
                     CopyPasteHelper.CopyToClipBoard(copyContent);
 
-                    new WinGetCopyNotification(true, WinGetCopyOptionsArgs.UnInstall).Show();
+                    new WinGetCopyNotification(true, WinGetOptionArgs.UnInstall).Show();
                 }
             };
         }

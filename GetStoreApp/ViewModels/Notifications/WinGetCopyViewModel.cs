@@ -21,23 +21,23 @@ namespace GetStoreApp.ViewModels.Notifications
             }
         }
 
-        private WinGetCopyOptionsArgs _copyOptions;
+        private WinGetOptionArgs _optionArgs;
 
-        public WinGetCopyOptionsArgs CopyOptions
+        public WinGetOptionArgs OptionArgs
         {
-            get { return _copyOptions; }
+            get { return _optionArgs; }
 
             set
             {
-                _copyOptions = value;
+                _optionArgs = value;
                 OnPropertyChanged();
             }
         }
 
-        public void Initialize(bool copyState,WinGetCopyOptionsArgs copyOptions)
+        public void Initialize(bool copyState,WinGetOptionArgs optionArgs)
         {
             CopyState = copyState;
-            CopyOptions = copyOptions;
+            OptionArgs = optionArgs;
         }
     }
 }

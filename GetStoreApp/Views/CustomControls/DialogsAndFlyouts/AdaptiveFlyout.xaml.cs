@@ -3,20 +3,20 @@ using GetStoreApp.Services.Controls.Settings.Appearance;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
-namespace GetStoreApp.Views.CustomControls.MenusAndToolbars
+namespace GetStoreApp.Views.CustomControls.DialogsAndFlyouts
 {
     /// <summary>
-    /// 自适应系统主题变化的菜单浮出控件
+    /// 自适应系统主题变化的浮出控件
     /// </summary>
-    public partial class AdaptiveMenuFlyout : MenuFlyout
+    public sealed partial class AdaptiveFlyout : Flyout
     {
-        public AdaptiveMenuFlyout()
+        public AdaptiveFlyout()
         {
             InitializeComponent();
             Opened += OnOpened;
         }
 
-        ~AdaptiveMenuFlyout()
+        ~AdaptiveFlyout()
         {
             Opened -= OnOpened;
         }
@@ -27,20 +27,20 @@ namespace GetStoreApp.Views.CustomControls.MenusAndToolbars
             {
                 if (Application.Current.RequestedTheme is ApplicationTheme.Light)
                 {
-                    MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveMenuFlyoutLightPresenterStyle"] as Style;
+                    FlyoutPresenterStyle = ResourceDictionaryHelper.FlyoutResourceDict["AdaptiveFlyoutLightPresenterStyle"] as Style;
                 }
                 else
                 {
-                    MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveMenuFlyoutDarkPresenterStyle"] as Style;
+                    FlyoutPresenterStyle = ResourceDictionaryHelper.FlyoutResourceDict["AdaptiveFlyoutDarkPresenterStyle"] as Style;
                 }
             }
             else if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[1].InternalName)
             {
-                MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveMenuFlyoutLightPresenterStyle"] as Style;
+                FlyoutPresenterStyle = ResourceDictionaryHelper.FlyoutResourceDict["AdaptiveFlyoutLightPresenterStyle"] as Style;
             }
             else if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[2].InternalName)
             {
-                MenuFlyoutPresenterStyle = ResourceDictionaryHelper.MenuFlyoutResourceDict["AdaptiveMenuFlyoutDarkPresenterStyle"] as Style;
+                FlyoutPresenterStyle = ResourceDictionaryHelper.FlyoutResourceDict["AdaptiveFlyoutDarkPresenterStyle"] as Style;
             }
         }
     }

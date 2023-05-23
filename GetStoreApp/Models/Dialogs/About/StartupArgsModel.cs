@@ -1,4 +1,4 @@
-﻿namespace GetStoreApp.Models.Dialogs.CommonDialogs.About
+﻿namespace GetStoreApp.Models.Dialogs.About
 {
     /// <summary>
     /// 应用启动参数数据模型
