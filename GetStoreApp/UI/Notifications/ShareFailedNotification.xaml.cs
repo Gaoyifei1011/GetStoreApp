@@ -1,4 +1,3 @@
-using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -9,10 +8,11 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.UI.Notifications
 {
+    /// <summary>
+    /// 分享失败信息提示通知视图
+    /// </summary>
     public sealed partial class ShareFailedNotification : UserControl
     {
-        public ElementTheme NotificationTheme { get; } = (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
-
         private Popup Popup { get; set; } = new Popup();
 
         private int Duration = 2000;

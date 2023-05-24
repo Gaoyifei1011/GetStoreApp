@@ -2,6 +2,9 @@
 
 namespace GetStoreApp.ViewModels.Notifications
 {
+    /// <summary>
+    /// 分享失败信息提示通知视图模型
+    /// </summary>
     public class ShareFailedViewModel : ViewModelBase
     {
         private bool _isMultiSelected = false;

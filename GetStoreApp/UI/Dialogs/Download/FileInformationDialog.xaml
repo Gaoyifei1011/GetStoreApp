@@ -5,11 +5,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dialogViewModel="using:GetStoreApp.ViewModels.Dialogs.Download"
     xmlns:dialogsAndFlyouts="using:GetStoreApp.Views.CustomControls.DialogsAndFlyouts"
+    xmlns:getStoreApp="using:GetStoreApp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     x:Name="FileInformationRoot"
     Loaded="{x:Bind ViewModel.OnLoaded}"
-    RequestedTheme="{x:Bind DialogTheme}"
+    RequestedTheme="{x:Bind getStoreApp:Program.ApplicationRoot.MainWindow.ViewModel.WindowTheme, Mode=OneWay}"
     Style="{StaticResource EmptyContentDialogStyle}"
     mc:Ignorable="d">
 

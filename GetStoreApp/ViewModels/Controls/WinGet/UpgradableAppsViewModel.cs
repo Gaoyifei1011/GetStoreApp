@@ -185,6 +185,8 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                         }
                         else
                         {
+                            await new InstallFailedDialog(upgradableApps.AppName).ShowAsync();
+
                             foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsDataList)
                             {
                                 if (upgradableAppsItem.AppID == upgradableApps.AppID)
@@ -197,10 +199,28 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                     // 操作被用户所取消异常
                     catch (OperationCanceledException)
                     {
+                        await new InstallFailedDialog(upgradableApps.AppName).ShowAsync();
+                        foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsDataList)
+                        {
+                            if (upgradableAppsItem.AppID == upgradableApps.AppID)
+                            {
+                                upgradableAppsItem.IsUpgrading = false;
+                                break;
+                            }
+                        }
                     }
                     // 其他异常
                     catch (Exception)
                     {
+                        await new InstallFailedDialog(upgradableApps.AppName).ShowAsync();
+                        foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsDataList)
+                        {
+                            if (upgradableAppsItem.AppID == upgradableApps.AppID)
+                            {
+                                upgradableAppsItem.IsUpgrading = false;
+                                break;
+                            }
+                        }
                     }
                 }
             };

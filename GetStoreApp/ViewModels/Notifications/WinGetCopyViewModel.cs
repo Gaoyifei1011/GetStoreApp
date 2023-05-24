@@ -34,7 +34,7 @@ namespace GetStoreApp.ViewModels.Notifications
             }
         }
 
-        public void Initialize(bool copyState,WinGetOptionArgs optionArgs)
+        public void Initialize(bool copyState, WinGetOptionArgs optionArgs)
         {
             CopyState = copyState;
             OptionArgs = optionArgs;

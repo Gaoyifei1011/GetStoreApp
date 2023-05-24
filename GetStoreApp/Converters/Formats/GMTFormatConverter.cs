@@ -1,5 +1,6 @@
 ﻿using Microsoft.UI.Xaml.Data;
 using System;
+using Windows.Globalization.DateTimeFormatting;
 
 namespace GetStoreApp.Converters.Formats
 {
@@ -17,9 +18,10 @@ namespace GetStoreApp.Converters.Formats
 
             string RawDataTime = System.Convert.ToString(value);
 
-            DateTime dt = System.Convert.ToDateTime(RawDataTime).ToLocalTime();
+            DateTime dateTime = System.Convert.ToDateTime(RawDataTime).ToLocalTime();
 
-            return dt.ToString("F");
+            DateTimeFormatter dateTimeFormatter = new DateTimeFormatter("month day year hour minute second");
+            return dateTimeFormatter.Format(dateTime);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Services.Controls.Settings.Appearance;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using System;
@@ -13,8 +12,6 @@ namespace GetStoreApp.UI.Notifications
     /// </summary>
     public sealed partial class FileInformationCopyNotification : UserControl
     {
-        public ElementTheme NotificationTheme { get; } = (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
-
         private Popup Popup { get; set; } = new Popup();
 
         private int Duration = 2000;

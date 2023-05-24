@@ -1,8 +1,5 @@
-﻿using GetStoreApp.Services.Controls.Settings.Appearance;
-using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
-using Microsoft.UI.Xaml;
+﻿using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
 using Microsoft.Web.WebView2.Core;
-using System;
 
 namespace GetStoreApp.UI.Dialogs.Web
 {
@@ -11,8 +8,6 @@ namespace GetStoreApp.UI.Dialogs.Web
     /// </summary>
     public sealed partial class CoreWebView2FailedDialog : ExtendedContentDialog
     {
-        public ElementTheme DialogTheme { get; } = (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
-
         public CoreWebView2FailedDialog(CoreWebView2ProcessFailedEventArgs args)
         {
             InitializeComponent();

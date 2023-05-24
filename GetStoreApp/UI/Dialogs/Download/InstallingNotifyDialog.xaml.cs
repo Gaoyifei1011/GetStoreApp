@@ -1,7 +1,4 @@
-﻿using GetStoreApp.Services.Controls.Settings.Appearance;
-using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
-using Microsoft.UI.Xaml;
-using System;
+﻿using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
 
 namespace GetStoreApp.UI.Dialogs.Download
 {
@@ -10,8 +7,6 @@ namespace GetStoreApp.UI.Dialogs.Download
     /// </summary>
     public sealed partial class InstallingNotifyDialog : ExtendedContentDialog
     {
-        public ElementTheme DialogTheme { get; } = (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
-
         public InstallingNotifyDialog()
         {
             InitializeComponent();

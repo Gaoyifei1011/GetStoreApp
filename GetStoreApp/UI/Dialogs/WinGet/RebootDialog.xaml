@@ -5,13 +5,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dialogViewModel="using:GetStoreApp.ViewModels.Dialogs.WinGet"
     xmlns:dialogsAndFlyouts="using:GetStoreApp.Views.CustomControls.DialogsAndFlyouts"
+    xmlns:getStoreApp="using:GetStoreApp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     Title="{x:Bind root:ResourceService.GetLocalized('Dialog/RebootTitle')}"
     CloseButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
     Content="{x:Bind ViewModel.RebootContent}"
     PrimaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/Reboot')}"
-    RequestedTheme="{x:Bind DialogTheme}"
+    RequestedTheme="{x:Bind getStoreApp:Program.ApplicationRoot.MainWindow.ViewModel.WindowTheme, Mode=OneWay}"
     Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">
     <dialogsAndFlyouts:ExtendedContentDialog.DataContext>

@@ -15,4 +15,64 @@
     <dialogsAndFlyouts:ExtendedContentDialog.DataContext>
         <dialogViewModel:InstalledFailedViewModel x:Name="ViewModel" />
     </dialogsAndFlyouts:ExtendedContentDialog.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel
+            Grid.Row="0"
+            Padding="24"
+            Background="{ThemeResource ContentDialogTopOverlay}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            BorderThickness="{ThemeResource ContentDialogBorderWidth}">
+            <TextBlock Style="{StaticResource ContentDialogTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Dialog/InstallFailedTitle')}" />
+            <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind ViewModel.InstallFailedContent}" />
+            <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Dialog/InstallManually')}" />
+        </StackPanel>
+
+        <Grid
+            Grid.Row="1"
+            Padding="{ThemeResource ContentDialogPadding}"
+            Background="{ThemeResource ContentDialogBackground}"
+            ColumnSpacing="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button
+                Grid.Column="0"
+                HorizontalAlignment="Stretch"
+                Click="{x:Bind ViewModel.OpenDownloadFolderClicked}"
+                Content="{x:Bind root:ResourceService.GetLocalized('Dialog/OpenDownloadFolder')}"
+                Style="{ThemeResource AccentButtonStyle}"
+                Tag="{x:Bind InstallFailedRoot}">
+
+                <ToolTipService.ToolTip>
+                    <ToolTip
+                        Content="{x:Bind root:ResourceService.GetLocalized('Dialog/OpenDownloadFolder')}"
+                        Placement="Bottom"
+                        VerticalOffset="20" />
+                </ToolTipService.ToolTip>
+            </Button>
+
+            <Button
+                Grid.Column="1"
+                HorizontalAlignment="Stretch"
+                Click="{x:Bind ViewModel.OnCloseDialogClicked}"
+                Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
+                Tag="{x:Bind InstallFailedRoot}">
+
+                <ToolTipService.ToolTip>
+                    <ToolTip
+                        Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
+                        Placement="Bottom"
+                        VerticalOffset="20" />
+                </ToolTipService.ToolTip>
+            </Button>
+        </Grid>
+    </Grid>
 </dialogsAndFlyouts:ExtendedContentDialog>

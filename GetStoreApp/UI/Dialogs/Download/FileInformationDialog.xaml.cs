@@ -1,8 +1,5 @@
 ﻿using GetStoreApp.Models.Controls.Download;
-using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
-using Microsoft.UI.Xaml;
-using System;
 
 namespace GetStoreApp.UI.Dialogs.Download
 {
@@ -11,8 +8,6 @@ namespace GetStoreApp.UI.Dialogs.Download
     /// </summary>
     public sealed partial class FileInformationDialog : ExtendedContentDialog
     {
-        public ElementTheme DialogTheme { get; } = (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
-
         public FileInformationDialog(CompletedModel completedItem)
         {
             InitializeComponent();

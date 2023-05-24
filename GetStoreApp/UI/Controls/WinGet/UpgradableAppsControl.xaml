@@ -263,7 +263,10 @@
 
                                     <basicInput:ExtendedSplitButton.Flyout>
                                         <menusAndToolbars:AdaptiveMenuFlyout>
-                                            <MenuFlyoutItem x:Name="StopDownload" x:Load="{x:Bind IsUpgrading, Mode=OneWay}" Text="{x:Bind root:ResourceService.GetLocalized('WinGet/StopDownload')}">
+                                            <MenuFlyoutItem
+                                                x:Name="StopDownload"
+                                                x:Load="{x:Bind IsUpgrading, Mode=OneWay}"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/StopDownload')}">
                                                 <MenuFlyoutItem.Icon>
                                                     <FontIcon Glyph="&#xE711;" Style="{StaticResource SegoeFluentStyle}" />
                                                 </MenuFlyoutItem.Icon>

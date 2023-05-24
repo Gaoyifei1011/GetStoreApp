@@ -298,7 +298,10 @@
 
                                         <basicInput:ExtendedSplitButton.Flyout>
                                             <menusAndToolbars:AdaptiveMenuFlyout>
-                                                <MenuFlyoutItem x:Name="StopDownload" x:Load="{x:Bind IsInstalling, Mode=OneWay}" Text="{x:Bind root:ResourceService.GetLocalized('WinGet/StopDownload')}">
+                                                <MenuFlyoutItem
+                                                    x:Name="StopDownload"
+                                                    x:Load="{x:Bind IsInstalling, Mode=OneWay}"
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/StopDownload')}">
                                                     <MenuFlyoutItem.Icon>
                                                         <FontIcon Glyph="&#xE711;" Style="{StaticResource SegoeFluentStyle}" />
                                                     </MenuFlyoutItem.Icon>
@@ -313,7 +316,6 @@
                                                         <FontIcon Glyph="&#xE8C8;" Style="{StaticResource SegoeFluentStyle}" />
                                                     </MenuFlyoutItem.Icon>
                                                 </MenuFlyoutItem>
-
                                             </menusAndToolbars:AdaptiveMenuFlyout>
                                         </basicInput:ExtendedSplitButton.Flyout>
                                     </basicInput:ExtendedSplitButton>

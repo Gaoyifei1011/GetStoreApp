@@ -6,11 +6,12 @@
     xmlns:dialogViewModel="using:GetStoreApp.ViewModels.Dialogs.Settings"
     xmlns:dialogsAndFlyouts="using:GetStoreApp.Views.CustomControls.DialogsAndFlyouts"
     xmlns:experiment="using:GetStoreApp.UI.Controls.Settings.Experiment"
+    xmlns:getStoreApp="using:GetStoreApp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     x:Name="ExperimentalConfigRoot"
     Opened="{x:Bind ViewModel.OnOpened}"
-    RequestedTheme="{x:Bind DialogTheme}"
+    RequestedTheme="{x:Bind getStoreApp:Program.ApplicationRoot.MainWindow.ViewModel.WindowTheme, Mode=OneWay}"
     Style="{StaticResource EmptyContentDialogStyle}"
     mc:Ignorable="d">
 

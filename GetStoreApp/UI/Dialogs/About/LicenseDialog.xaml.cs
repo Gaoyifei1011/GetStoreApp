@@ -1,17 +1,12 @@
-﻿using GetStoreApp.Services.Controls.Settings.Appearance;
-using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
-using Microsoft.UI.Xaml;
-using System;
+﻿using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
 
 namespace GetStoreApp.UI.Dialogs.About
 {
     /// <summary>
-    /// 应用许可证对话框视图
+    /// 许可证文字内容对话框
     /// </summary>
     public sealed partial class LicenseDialog : ExtendedContentDialog
     {
-        public ElementTheme DialogTheme { get; } = (ElementTheme)Enum.Parse(typeof(ElementTheme), ThemeService.AppTheme.InternalName);
-
         public LicenseDialog()
         {
             InitializeComponent();

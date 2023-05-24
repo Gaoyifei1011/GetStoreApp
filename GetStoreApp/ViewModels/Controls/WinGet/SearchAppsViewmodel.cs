@@ -225,7 +225,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                         }
                         else
                         {
-
+                            await new InstallFailedDialog(searchApps.AppName).ShowAsync();
                         }
 
                         foreach (SearchAppsModel searchAppsItem in SearchAppsDataList)
@@ -240,10 +240,28 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                     // 操作被用户所取消异常
                     catch (OperationCanceledException)
                     {
+                        await new InstallFailedDialog(searchApps.AppName).ShowAsync();
+                        foreach (SearchAppsModel searchAppsItem in SearchAppsDataList)
+                        {
+                            if (searchAppsItem.AppID == searchApps.AppID)
+                            {
+                                searchAppsItem.IsInstalling = false;
+                                break;
+                            }
+                        }
                     }
                     // 其他异常
                     catch (Exception)
                     {
+                        await new InstallFailedDialog(searchApps.AppName).ShowAsync();
+                        foreach (SearchAppsModel searchAppsItem in SearchAppsDataList)
+                        {
+                            if (searchAppsItem.AppID == searchApps.AppID)
+                            {
+                                searchAppsItem.IsInstalling = false;
+                                break;
+                            }
+                        }
                     }
                 }
             };
