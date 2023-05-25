@@ -1,6 +1,4 @@
 ﻿using GetStoreApp.Services.Controls.Download;
-using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.AppLifecycle;
 
@@ -12,27 +10,10 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
     public sealed class RestartAppsViewModel
     {
         /// <summary>
-        /// 取消重启应用
-        /// </summary>
-        public void OnCancelClicked(object sender, RoutedEventArgs args)
-        {
-            Button button = sender as Button;
-            if (button.Tag is not null)
-            {
-                ((ExtendedContentDialog)button.Tag).Hide();
-            }
-        }
-
-        /// <summary>
         /// 重启应用
         /// </summary>
-        public void OnRestartAppsClicked(object sender, RoutedEventArgs args)
+        public void OnRestartAppsClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            Button button = sender as Button;
-            if (button.Tag is not null)
-            {
-                ((ExtendedContentDialog)button.Tag).Hide();
-            }
             RestartApps();
         }
 

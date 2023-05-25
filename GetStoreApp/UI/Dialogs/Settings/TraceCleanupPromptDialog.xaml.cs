@@ -15,5 +15,24 @@ namespace GetStoreApp.UI.Dialogs.Settings
             InitializeComponent();
             ViewModel.InitializeTraceCleanupList();
         }
+
+        public bool IsButtonEnabled(bool isSelected, bool isCleaning)
+        {
+            if (isCleaning)
+            {
+                return false;
+            }
+            else
+            {
+                if (isSelected)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
     }
 }

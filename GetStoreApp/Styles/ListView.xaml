@@ -24,6 +24,7 @@
         <Setter Property="FocusVisualPrimaryThickness" Value="2" />
         <Setter Property="FocusVisualSecondaryBrush" Value="{ThemeResource ListViewItemFocusVisualSecondaryBrush}" />
         <Setter Property="FocusVisualSecondaryThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="0" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListViewItem">
@@ -51,7 +52,7 @@
                         ContentMargin="{TemplateBinding Padding}"
                         ContentTransitions="{TemplateBinding ContentTransitions}"
                         Control.IsTemplateFocusTarget="True"
-                        CornerRadius="{ThemeResource ListViewItemCornerRadius}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
                         DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
                         DragBackground="{ThemeResource ListViewItemDragBackground}"
                         DragForeground="{ThemeResource ListViewItemDragForeground}"

@@ -133,7 +133,7 @@
                                 Grid.ColumnSpan="2"
                                 VerticalAlignment="Stretch"
                                 BorderBrush="{ThemeResource CommandBarBorderBrushOpen}"
-                                BorderThickness="{ThemeResource CommandBarBorderThicknessOpen}"
+                                BorderThickness="0"
                                 CornerRadius="{TemplateBinding CornerRadius}"
                                 Visibility="Collapsed" />
                         </Grid>

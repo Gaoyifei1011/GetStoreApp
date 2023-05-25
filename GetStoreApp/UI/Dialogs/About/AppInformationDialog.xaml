@@ -8,9 +8,12 @@
     xmlns:getStoreApp="using:GetStoreApp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    x:Name="AppInformationRoot"
+    Title="{x:Bind root:ResourceService.GetLocalized('Dialog/AppInformationTitle')}"
+    CloseButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
+    PrimaryButtonClick="{x:Bind ViewModel.OnCopyAppInformationClicked}"
+    PrimaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CopyAppInformation')}"
     RequestedTheme="{x:Bind getStoreApp:Program.ApplicationRoot.MainWindow.ViewModel.WindowTheme, Mode=OneWay}"
-    Style="{StaticResource EmptyContentDialogStyle}"
+    Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">
 
     <dialogsAndFlyouts:ExtendedContentDialog.DataContext>
@@ -21,130 +24,73 @@
         <x:Double x:Key="ContentDialogMinWidth">480</x:Double>
     </dialogsAndFlyouts:ExtendedContentDialog.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-
-        <StackPanel
-            Grid.Row="0"
-            Padding="24"
-            Background="{ThemeResource ContentDialogTopOverlay}"
-            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-            BorderThickness="{ThemeResource ContentDialogBorderWidth}">
-
-            <TextBlock Style="{StaticResource ContentDialogTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Dialog/AppInformationTitle')}" />
-
-            <Grid Margin="0,0,0,3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock
-                    Grid.Column="0"
-                    Style="{StaticResource ContentDialogContentStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Dialog/WindowsAppSDKVersion')}" />
-                <TextBlock
-                    Grid.Column="1"
-                    Style="{StaticResource ContentDialogContentStyle}"
-                    Text="{x:Bind ViewModel.WindowsAppSDKVersion}"
-                    TextAlignment="DetectFromContent"
-                    TextWrapping="Wrap" />
-            </Grid>
-
-            <Grid Margin="0,0,0,3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock
-                    Grid.Column="0"
-                    Style="{StaticResource ContentDialogContentStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Dialog/WinUI3Version')}" />
-                <TextBlock
-                    Grid.Column="1"
-                    Style="{StaticResource ContentDialogContentStyle}"
-                    Text="{x:Bind ViewModel.WinUI3Version}"
-                    TextAlignment="DetectFromContent"
-                    TextWrapping="Wrap" />
-            </Grid>
-
-            <Grid Margin="0,0,0,3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock
-                    Grid.Column="0"
-                    Style="{StaticResource ContentDialogContentStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Dialog/WebView2CoreVersion')}" />
-                <TextBlock
-                    Grid.Column="1"
-                    Style="{StaticResource ContentDialogContentStyle}"
-                    Text="{x:Bind ViewModel.WebView2CoreVersion}"
-                    TextAlignment="DetectFromContent"
-                    TextWrapping="Wrap" />
-            </Grid>
-
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock
-                    Grid.Column="0"
-                    Style="{StaticResource ContentDialogContentStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Dialog/DoNetVersion')}" />
-                <TextBlock
-                    Grid.Column="1"
-                    Style="{StaticResource ContentDialogContentStyle}"
-                    Text="{x:Bind ViewModel.DoNetVersion}"
-                    TextAlignment="DetectFromContent"
-                    TextWrapping="Wrap" />
-            </Grid>
-        </StackPanel>
-
-        <Grid
-            Grid.Row="1"
-            Padding="{ThemeResource ContentDialogPadding}"
-            Background="{ThemeResource ContentDialogBackground}"
-            ColumnSpacing="10">
+    <StackPanel>
+        <Grid Margin="0,0,0,3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-
-            <Button
+            <TextBlock
                 Grid.Column="0"
-                HorizontalAlignment="Stretch"
-                Click="{x:Bind ViewModel.OnCopyAppInformationClicked}"
-                Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CopyAppInformation')}"
-                Style="{ThemeResource AccentButtonStyle}"
-                Tag="{x:Bind AppInformationRoot}">
-
-                <ToolTipService.ToolTip>
-                    <ToolTip
-                        Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CopyAppInformation')}"
-                        Placement="Bottom"
-                        VerticalOffset="20" />
-                </ToolTipService.ToolTip>
-            </Button>
-
-            <Button
+                Style="{StaticResource ContentDialogContentStyle}"
+                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/WindowsAppSDKVersion')}" />
+            <TextBlock
                 Grid.Column="1"
-                HorizontalAlignment="Stretch"
-                Click="{x:Bind ViewModel.OnCloseDialogClicked}"
-                Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
-                Tag="{x:Bind AppInformationRoot}">
-
-                <ToolTipService.ToolTip>
-                    <ToolTip
-                        Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
-                        Placement="Bottom"
-                        VerticalOffset="20" />
-                </ToolTipService.ToolTip>
-            </Button>
+                Style="{StaticResource ContentDialogContentStyle}"
+                Text="{x:Bind ViewModel.WindowsAppSDKVersion}"
+                TextAlignment="DetectFromContent"
+                TextWrapping="Wrap" />
         </Grid>
-    </Grid>
+
+        <Grid Margin="0,0,0,3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                Grid.Column="0"
+                Style="{StaticResource ContentDialogContentStyle}"
+                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/WinUI3Version')}" />
+            <TextBlock
+                Grid.Column="1"
+                Style="{StaticResource ContentDialogContentStyle}"
+                Text="{x:Bind ViewModel.WinUI3Version}"
+                TextAlignment="DetectFromContent"
+                TextWrapping="Wrap" />
+        </Grid>
+
+        <Grid Margin="0,0,0,3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                Grid.Column="0"
+                Style="{StaticResource ContentDialogContentStyle}"
+                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/WebView2CoreVersion')}" />
+            <TextBlock
+                Grid.Column="1"
+                Style="{StaticResource ContentDialogContentStyle}"
+                Text="{x:Bind ViewModel.WebView2CoreVersion}"
+                TextAlignment="DetectFromContent"
+                TextWrapping="Wrap" />
+        </Grid>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                Grid.Column="0"
+                Style="{StaticResource ContentDialogContentStyle}"
+                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/DoNetVersion')}" />
+            <TextBlock
+                Grid.Column="1"
+                Style="{StaticResource ContentDialogContentStyle}"
+                Text="{x:Bind ViewModel.DoNetVersion}"
+                TextAlignment="DetectFromContent"
+                TextWrapping="Wrap" />
+        </Grid>
+    </StackPanel>
 </dialogsAndFlyouts:ExtendedContentDialog>

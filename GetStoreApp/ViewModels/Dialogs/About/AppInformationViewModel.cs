@@ -1,9 +1,7 @@
 ﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Notifications;
-using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
 using GetStoreApp.WindowsAPI.PInvoke.Version;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -26,35 +24,21 @@ namespace GetStoreApp.ViewModels.Dialogs.About
         public string WebView2CoreVersion { get; set; }
 
         /// <summary>
-        /// 关闭对话框
-        /// </summary>
-        public void OnCloseDialogClicked(object sender, RoutedEventArgs args)
-        {
-            Button button = sender as Button;
-            if (button.Tag is not null)
-            {
-                ((ExtendedContentDialog)button.Tag).Hide();
-            }
-        }
-
-        /// <summary>
         /// 复制应用信息
         /// </summary>
-        public void OnCopyAppInformationClicked(object sender, RoutedEventArgs args)
+        public void OnCopyAppInformationClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            Button button = sender as Button;
-            if (button.Tag is not null)
-            {
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WindowsAppSDKVersion") + WindowsAppSDKVersion);
-                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WinUI3Version") + WinUI3Version);
-                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WebView2CoreVersion") + WebView2CoreVersion);
-                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/DoNetVersion") + DoNetVersion);
+            args.Cancel = true;
 
-                CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
-                ((ExtendedContentDialog)button.Tag).Hide();
-                new AppInformationCopyNotification(true).Show();
-            }
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WindowsAppSDKVersion") + WindowsAppSDKVersion);
+            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WinUI3Version") + WinUI3Version);
+            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WebView2CoreVersion") + WebView2CoreVersion);
+            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/DoNetVersion") + DoNetVersion);
+
+            CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
+            sender.Hide();
+            new AppInformationCopyNotification(true).Show();
         }
 
         /// <summary>

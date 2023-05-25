@@ -110,15 +110,12 @@ namespace GetStoreApp.Services.Shell
             DownloadProcessStartupInfo = new STARTUPINFO();
             DownloadProcessInformation = new PROCESS_INFORMATION();
 
-            IntPtr hRead = IntPtr.Zero;
-            IntPtr hWrite = IntPtr.Zero;
-
             SECURITY_ATTRIBUTES DownloadSecurityAttributes = new SECURITY_ATTRIBUTES();
             DownloadSecurityAttributes.nLength = Marshal.SizeOf(typeof(SECURITY_ATTRIBUTES));
             DownloadSecurityAttributes.bInheritHandle = true;
             DownloadSecurityAttributes.lpSecurityDescriptor = 0;
 
-            bool PipeCreateResult = Kernel32Library.CreatePipe(out hRead, out hWrite, &DownloadSecurityAttributes, 0);
+            bool PipeCreateResult = Kernel32Library.CreatePipe(out IntPtr hRead, out IntPtr hWrite, &DownloadSecurityAttributes, 0);
 
             if (PipeCreateResult)
             {

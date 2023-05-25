@@ -9,9 +9,10 @@
     xmlns:getStoreApp="using:GetStoreApp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    x:Name="ConsoleStartupArgsRoot"
+    Title="{x:Bind root:ResourceService.GetLocalized('Dialog/ConsoleStartupArgsTitle')}"
+    CloseButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
     RequestedTheme="{x:Bind getStoreApp:Program.ApplicationRoot.MainWindow.ViewModel.WindowTheme, Mode=OneWay}"
-    Style="{StaticResource EmptyContentDialogStyle}"
+    Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">
 
     <dialogsAndFlyouts:ExtendedContentDialog.DataContext>
@@ -22,50 +23,111 @@
         <x:Double x:Key="ContentDialogMaxWidth">560</x:Double>
     </dialogsAndFlyouts:ExtendedContentDialog.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+    <StackPanel>
+        <TextBlock
+            Margin="0"
+            Style="{StaticResource ContentDialogContentStyle}"
+            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ConsoleStartupArgsDescription1')}" />
+        <TextBlock
+            Margin="0"
+            Style="{StaticResource ContentDialogContentStyle}"
+            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ConsoleStartupArgsDescription2')}" />
+        <TextBlock
+            Margin="0"
+            Style="{StaticResource ContentDialogContentStyle}"
+            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ConsoleStartupArgsDescription3')}" />
+        <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ConsoleStartupArgsDescription4')}" />
 
-        <StackPanel
-            Grid.Row="0"
-            Padding="24"
-            Background="{ThemeResource ContentDialogTopOverlay}"
-            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-            BorderThickness="{ThemeResource ContentDialogBorderWidth}">
+        <ListView
+            Margin="0,0,0,5"
+            ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
+            ItemsSource="{x:Bind ViewModel.ConsoleStartupArgsList}"
+            SelectionMode="None">
 
-            <TextBlock Style="{StaticResource ContentDialogTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ConsoleStartupArgsTitle')}" />
-            <TextBlock
-                Margin="0"
-                Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ConsoleStartupArgsDescription1')}" />
-            <TextBlock
-                Margin="0"
-                Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ConsoleStartupArgsDescription2')}" />
-            <TextBlock
-                Margin="0"
-                Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ConsoleStartupArgsDescription3')}" />
-            <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ConsoleStartupArgsDescription4')}" />
+            <ItemsControl.ItemContainerTransitions>
+                <TransitionCollection />
+            </ItemsControl.ItemContainerTransitions>
 
-            <ListView
-                Margin="0,0,0,5"
-                ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
-                ItemsSource="{x:Bind ViewModel.ConsoleStartupArgsList}"
-                SelectionMode="None">
+            <ListView.Header>
+                <Grid
+                    Height="35"
+                    Padding="6,0,0,0"
+                    BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}"
+                    BorderThickness="1,1,1,1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-                <ItemsControl.ItemContainerTransitions>
-                    <TransitionCollection />
-                </ItemsControl.ItemContainerTransitions>
+                    <TextBlock
+                        Grid.Column="0"
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ArgumentName')}">
 
-                <ListView.Header>
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind root:ResourceService.GetLocalized('Dialog/ArgumentName')}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
+
+                    <TextBlock
+                        Grid.Column="1"
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Dialog/Argument')}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind root:ResourceService.GetLocalized('Dialog/Argument')}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
+
+                    <TextBlock
+                        Grid.Column="2"
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Dialog/IsRequired')}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind root:ResourceService.GetLocalized('Dialog/IsRequired')}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
+
+                    <TextBlock
+                        Grid.Column="3"
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Dialog/InputContent')}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind root:ResourceService.GetLocalized('Dialog/InputContent')}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
+                </Grid>
+            </ListView.Header>
+
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="about:StartupArgsModel">
                     <Grid
                         Height="35"
                         Padding="6,0,0,0"
                         BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}"
-                        BorderThickness="1,1,1,1">
+                        BorderThickness="1,0,1,1"
+                        CornerRadius="0">
+
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="100" />
                             <ColumnDefinition Width="100" />
@@ -77,11 +139,11 @@
                             Grid.Column="0"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ArgumentName')}">
+                            Text="{x:Bind ArgumentName}">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip
-                                    Content="{x:Bind root:ResourceService.GetLocalized('Dialog/ArgumentName')}"
+                                    Content="{x:Bind ArgumentName}"
                                     Placement="Bottom"
                                     VerticalOffset="20" />
                             </ToolTipService.ToolTip>
@@ -91,11 +153,11 @@
                             Grid.Column="1"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/Argument')}">
+                            Text="{x:Bind Argument}">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip
-                                    Content="{x:Bind root:ResourceService.GetLocalized('Dialog/Argument')}"
+                                    Content="{x:Bind Argument}"
                                     Placement="Bottom"
                                     VerticalOffset="20" />
                             </ToolTipService.ToolTip>
@@ -105,11 +167,11 @@
                             Grid.Column="2"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/IsRequired')}">
+                            Text="{x:Bind IsRequired}">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip
-                                    Content="{x:Bind root:ResourceService.GetLocalized('Dialog/IsRequired')}"
+                                    Content="{x:Bind IsRequired}"
                                     Placement="Bottom"
                                     VerticalOffset="20" />
                             </ToolTipService.ToolTip>
@@ -119,180 +181,81 @@
                             Grid.Column="3"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/InputContent')}">
+                            Text="{x:Bind ArgumentContent}">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip
-                                    Content="{x:Bind root:ResourceService.GetLocalized('Dialog/InputContent')}"
+                                    Content="{x:Bind ArgumentContent}"
                                     Placement="Bottom"
                                     VerticalOffset="20" />
                             </ToolTipService.ToolTip>
                         </TextBlock>
                     </Grid>
-                </ListView.Header>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="about:StartupArgsModel">
-                        <Grid
-                            Height="35"
-                            Padding="6,0,0,0"
-                            BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}"
-                            BorderThickness="1,0,1,1">
+        <MenuFlyoutSeparator Margin="4,4,4,2" Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
+        <TextBlock
+            Margin="0,0,0,2"
+            FontSize="16"
+            FontWeight="Bold"
+            Style="{StaticResource ContentDialogContentStyle}"
+            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/StartupArgsSample')}" />
 
-                            <TextBlock
-                                Grid.Column="0"
-                                Margin="10,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{x:Bind ArgumentName}">
+        <TextBlock
+            Margin="0"
+            Style="{StaticResource ContentDialogContentStyle}"
+            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ParameterMode')}"
+            TextAlignment="Left" />
 
-                                <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        Content="{x:Bind ArgumentName}"
-                                        Placement="Bottom"
-                                        VerticalOffset="20" />
-                                </ToolTipService.ToolTip>
-                            </TextBlock>
+        <TextBlock
+            Margin="0"
+            Style="{StaticResource ContentDialogContentStyle}"
+            Text="{x:Bind ViewModel.SampleShort}"
+            TextAlignment="Left">
 
-                            <TextBlock
-                                Grid.Column="1"
-                                Margin="10,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{x:Bind Argument}">
+            <ToolTipService.ToolTip>
+                <ToolTip
+                    Content="{x:Bind ViewModel.SampleShort}"
+                    Placement="Bottom"
+                    VerticalOffset="20" />
+            </ToolTipService.ToolTip>
+        </TextBlock>
 
-                                <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        Content="{x:Bind Argument}"
-                                        Placement="Bottom"
-                                        VerticalOffset="20" />
-                                </ToolTipService.ToolTip>
-                            </TextBlock>
+        <TextBlock
+            Margin="0"
+            Style="{StaticResource ContentDialogContentStyle}"
+            Text="{x:Bind ViewModel.SampleFull}">
 
-                            <TextBlock
-                                Grid.Column="2"
-                                Margin="10,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{x:Bind IsRequired}">
+            <ToolTipService.ToolTip>
+                <ToolTip
+                    Content="{x:Bind ViewModel.SampleFull}"
+                    Placement="Bottom"
+                    VerticalOffset="20" />
+            </ToolTipService.ToolTip>
+        </TextBlock>
 
-                                <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        Content="{x:Bind IsRequired}"
-                                        Placement="Bottom"
-                                        VerticalOffset="20" />
-                                </ToolTipService.ToolTip>
-                            </TextBlock>
+        <MenuFlyoutSeparator Margin="4,4,4,2" Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />
 
-                            <TextBlock
-                                Grid.Column="3"
-                                Margin="10,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{x:Bind ArgumentContent}">
+        <TextBlock
+            Margin="0"
+            Style="{StaticResource ContentDialogContentStyle}"
+            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ParameterlessMode')}"
+            TextAlignment="Left" />
 
-                                <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        Content="{x:Bind ArgumentContent}"
-                                        Placement="Bottom"
-                                        VerticalOffset="20" />
-                                </ToolTipService.ToolTip>
-                            </TextBlock>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+        <TextBlock
+            Margin="0"
+            Style="{StaticResource ContentDialogContentStyle}"
+            Text="{x:Bind ViewModel.SampleWithoutParameter}">
 
-            <MenuFlyoutSeparator Margin="0,4,0,2" />
-
-            <TextBlock
-                Margin="0,0,0,2"
-                FontSize="16"
-                FontWeight="Bold"
-                Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/StartupArgsSample')}" />
-
-            <TextBlock
-                Margin="0"
-                Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ParameterMode')}"
-                TextAlignment="Left" />
-
-            <TextBlock
-                Margin="0"
-                Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind ViewModel.SampleShort}"
-                TextAlignment="Left">
-
-                <ToolTipService.ToolTip>
-                    <ToolTip
-                        Content="{x:Bind ViewModel.SampleShort}"
-                        Placement="Bottom"
-                        VerticalOffset="20" />
-                </ToolTipService.ToolTip>
-            </TextBlock>
-
-            <TextBlock
-                Margin="0"
-                Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind ViewModel.SampleFull}">
-
-                <ToolTipService.ToolTip>
-                    <ToolTip
-                        Content="{x:Bind ViewModel.SampleFull}"
-                        Placement="Bottom"
-                        VerticalOffset="20" />
-                </ToolTipService.ToolTip>
-            </TextBlock>
-
-            <MenuFlyoutSeparator Margin="0,4,0,2" />
-
-            <TextBlock
-                Margin="0"
-                Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ParameterlessMode')}"
-                TextAlignment="Left" />
-
-            <TextBlock
-                Margin="0"
-                Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind ViewModel.SampleWithoutParameter}">
-
-                <ToolTipService.ToolTip>
-                    <ToolTip
-                        Content="{x:Bind ViewModel.SampleWithoutParameter}"
-                        Placement="Bottom"
-                        VerticalOffset="20" />
-                </ToolTipService.ToolTip>
-            </TextBlock>
-        </StackPanel>
-
-        <Grid
-            Grid.Row="1"
-            Padding="{ThemeResource ContentDialogPadding}"
-            Background="{ThemeResource ContentDialogBackground}"
-            ColumnSpacing="10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Button
-                Grid.Column="1"
-                HorizontalAlignment="Stretch"
-                Click="{x:Bind ViewModel.OnCloseDialogClicked}"
-                Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
-                Tag="{x:Bind ConsoleStartupArgsRoot}">
-
-                <ToolTipService.ToolTip>
-                    <ToolTip
-                        Content="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
-                        Placement="Bottom"
-                        VerticalOffset="20" />
-                </ToolTipService.ToolTip>
-            </Button>
-        </Grid>
-    </Grid>
+            <ToolTipService.ToolTip>
+                <ToolTip
+                    Content="{x:Bind ViewModel.SampleWithoutParameter}"
+                    Placement="Bottom"
+                    VerticalOffset="20" />
+            </ToolTipService.ToolTip>
+        </TextBlock>
+    </StackPanel>
 </dialogsAndFlyouts:ExtendedContentDialog>

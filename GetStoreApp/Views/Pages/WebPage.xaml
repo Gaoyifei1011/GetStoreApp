@@ -19,7 +19,6 @@
         <Grid x:Name="LoadSuccess" x:Load="{x:Bind ViewModel.IsWebView2Installed}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
@@ -184,11 +183,6 @@
                     </CommandBar.SecondaryCommands>
                 </CommandBar>
             </Grid>
-
-            <MenuFlyoutSeparator
-                Grid.Row="1"
-                Height="2"
-                Padding="0" />
 
             <WebView2
                 x:Name="WebView"

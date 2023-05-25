@@ -4,7 +4,6 @@ using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Base;
-using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -63,39 +62,23 @@ namespace GetStoreApp.ViewModels.Dialogs.Download
         }
 
         /// <summary>
-        /// 关闭对话框
-        /// </summary>
-        public void OnCloseDialogClicked(object sender, RoutedEventArgs args)
-        {
-            Button button = sender as Button;
-            if (button.Tag is not null)
-            {
-                ((ExtendedContentDialog)button.Tag).Hide();
-            }
-        }
-
-        /// <summary>
         /// 复制文件信息
         /// </summary>
-        public void OnCopyFileInformationClicked(object sender, RoutedEventArgs args)
+        public void OnCopyFileInformationClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            Button button = sender as Button;
-            if (button.Tag is not null)
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileName") + FileName);
+            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FilePath") + FilePath);
+            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileSize") + FileSize);
+            if (FileSHA1Load)
             {
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileName") + FileName);
-                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FilePath") + FilePath);
-                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileSize") + FileSize);
-                if (FileSHA1Load)
-                {
-                    stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileSHA1") + FileSHA1);
-                }
-                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/CheckFileSHA1") + CheckFileSHA1);
-
-                CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
-                ((ExtendedContentDialog)button.Tag).Hide();
-                new FileInformationCopyNotification(true).Show();
+                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileSHA1") + FileSHA1);
             }
+            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/CheckFileSHA1") + CheckFileSHA1);
+
+            CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
+            sender.Hide();
+            new FileInformationCopyNotification(true).Show();
         }
 
         /// <summary>

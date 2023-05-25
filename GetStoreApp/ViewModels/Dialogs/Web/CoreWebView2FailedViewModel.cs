@@ -1,8 +1,6 @@
 ﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Notifications;
-using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Web.WebView2.Core;
 using System;
@@ -24,35 +22,21 @@ namespace GetStoreApp.ViewModels.Dialogs.Web
         public string ProcessDescription { get; set; }
 
         /// <summary>
-        /// 关闭对话框
-        /// </summary>
-        public void OnCloseDialogClicked(object sender, RoutedEventArgs args)
-        {
-            Button button = sender as Button;
-            if (button.Tag is not null)
-            {
-                ((ExtendedContentDialog)button.Tag).Hide();
-            }
-        }
-
-        /// <summary>
         /// 复制异常信息
         /// </summary>
-        public void OnCopyExceptionInformationClicked(object sender, RoutedEventArgs args)
+        public void OnCopyExceptionInformationClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            Button button = sender as Button;
-            if (button.Tag is not null)
-            {
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/ProcessFailedKind") + ProcessFailedKind);
-                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/Reason") + Reason);
-                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/ExitCode") + ExitCode);
-                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/ProcessDescription") + ProcessDescription);
+            args.Cancel = true;
 
-                CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
-                ((ExtendedContentDialog)button.Tag).Hide();
-                new ExceptionCopyNotification(true).Show();
-            }
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/ProcessFailedKind") + ProcessFailedKind);
+            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/Reason") + Reason);
+            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/ExitCode") + ExitCode);
+            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/ProcessDescription") + ProcessDescription);
+
+            CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
+            sender.Hide();
+            new ExceptionCopyNotification(true).Show();
         }
 
         /// <summary>

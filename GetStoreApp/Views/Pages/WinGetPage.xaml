@@ -29,33 +29,31 @@
         </PivotItem>
 
         <Pivot.RightHeader>
-            <StackPanel VerticalAlignment="Top" Orientation="Horizontal">
-                <Button>
+            <Button VerticalAlignment="Center">
+                <ToolTipService.ToolTip>
+                    <ToolTip
+                        Content="{x:Bind root:ResourceService.GetLocalized('WinGet/TaskManager')}"
+                        Placement="Bottom"
+                        VerticalOffset="20" />
+                </ToolTipService.ToolTip>
 
-                    <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/TaskManager')}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
-                    </ToolTipService.ToolTip>
+                <Button.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
 
-                    <Button.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{x:Bind root:ResourceService.GetLocalized('WinGet/TaskManager')}" />
+                        <InfoBadge
+                            Grid.Column="1"
+                            Margin="5,0,0,0"
+                            Visibility="{x:Bind ViewModel.InstallingAppsCount, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}"
+                            Value="2" />
+                    </Grid>
+                </Button.Content>
 
-                            <TextBlock Grid.Column="0" Text="{x:Bind root:ResourceService.GetLocalized('WinGet/TaskManager')}" />
-                            <InfoBadge
-                                Grid.Column="1"
-                                Margin="5,0,0,0"
-                                Visibility="{x:Bind ViewModel.InstallingAppsCount, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}"
-                                Value="2" />
-                        </Grid>
-                    </Button.Content>
-
-                    <!--<Button.Flyout>
+                <!--<Button.Flyout>
                         <dialogsAndFlyouts:AdaptiveFlyout>
                             <ListView SelectionMode="None">
                                 <ListViewItem Content="test01" Width="200" />
@@ -65,8 +63,7 @@
                             </ListView>
                         </dialogsAndFlyouts:AdaptiveFlyout>
                     </Button.Flyout>-->
-                </Button>
-            </StackPanel>
+            </Button>
         </Pivot.RightHeader>
     </Pivot>
 </Page>

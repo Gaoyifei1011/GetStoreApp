@@ -14,9 +14,10 @@
     <DesktopCompatible>true</DesktopCompatible>
     <DisableXbfLineInfo>False</DisableXbfLineInfo>
     <EnableMsixTooling>false</EnableMsixTooling>
+    <EnableUnsafeBinaryFormatterInDesigntimeLicenseContextSerialization>false</EnableUnsafeBinaryFormatterInDesigntimeLicenseContextSerialization>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <FileAlignment>512</FileAlignment>
-    <FileVersion>1.6.524.0</FileVersion>
+    <FileVersion>1.6.525.0</FileVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
@@ -36,6 +37,7 @@
     <PublishTrimmed>true</PublishTrimmed>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <RootNamespace>GetStoreApp</RootNamespace>
+    <RootPackageReference>false</RootPackageReference>
     <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
     <SelfContained>false</SelfContained>
     <SignAssembly>False</SignAssembly>
@@ -44,7 +46,8 @@
     <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
     <TrimMode>partial</TrimMode>
-    <Version>1.6.524.0</Version>
+    <TrimUnusedDependencies>true</TrimUnusedDependencies>
+    <Version>1.6.525.0</Version>
     <UseWindowsForms>False</UseWindowsForms>
     <UseWinUI>true</UseWinUI>
     <UseWPF>False</UseWPF>
@@ -62,7 +65,7 @@
   <PropertyGroup Condition="'$(Platform)'=='ARM64'">
     <RuntimeIdentifier>win10-arm64</RuntimeIdentifier>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
     <DebugType>portable</DebugType>
   </PropertyGroup>
@@ -89,9 +92,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     
-    <Content Include="Mile.Aria2.conf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Mile.Aria2.conf" CopyToOutputDirectory="Always" />
     
     <Content Remove="Assets\ControlIcon\About.png" />
     <Content Remove="Assets\ControlIcon\Download.png" />
@@ -105,31 +106,15 @@
     <Content Remove="Assets\Resources\Lengths.bin" />
     <Content Remove="Assets\Resources\LICENSE" />
 
-    <None Update="Assets\GetStoreApp.ico">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
+    <None Update="Assets\GetStoreApp.ico" CopyToOutputDirectory="Never" />
 
-    <Content Update="Assets\GetStoreApp.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Assets\Images\CloudflareValidation.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Assets\Images\DesktopApps.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <None Update="Assets\Resources\LICENSE">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
-    <Content Include="Fonts\Segoe Fluent Icons.ttf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Fonts\Settings Fluent Icons.ttf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="lib\Microsoft.Management.Deployment.winmd" Link="Microsoft.Management.Deployment.winmd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Update="Assets\GetStoreApp.png" CopyToOutputDirectory="Always" />
+    <Content Update="Assets\Images\CloudflareValidation.png" CopyToOutputDirectory="Always" />
+    <Content Update="Assets\Images\DesktopApps.png" CopyToOutputDirectory="Always" />
+    <None Update="Assets\Resources\LICENSE" CopyToOutputDirectory="Never" />
+    <Content Include="Fonts\Segoe Fluent Icons.ttf" CopyToOutputDirectory="Always" />
+    <Content Include="Fonts\Settings Fluent Icons.ttf" CopyToOutputDirectory="Always" />
+    <Content Include="lib\Microsoft.Management.Deployment.winmd" Link="Microsoft.Management.Deployment.winmd" CopyToOutputDirectory="Always" />
 
     <CsWinRTInputs Include="lib\Microsoft.Management.Deployment.winmd" />
 
@@ -140,21 +125,11 @@
     
     <Manifest Include="$(ApplicationManifest)" />
 
-    <None Include="Assets\ControlIcon\About.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\ControlIcon\Download.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\ControlIcon\Settings.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\ControlIcon\Store.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\ControlIcon\Web.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
+    <None Include="Assets\ControlIcon\About.png" CopyToOutputDirectory="Never" />
+    <None Include="Assets\ControlIcon\Download.png" CopyToOutputDirectory="Never" />
+    <None Include="Assets\ControlIcon\Settings.png" CopyToOutputDirectory="Never" />
+    <None Include="Assets\ControlIcon\Store.png" CopyToOutputDirectory="Never" />
+    <None Include="Assets\ControlIcon\Web.png" CopyToOutputDirectory="Never" />
     <None Include="Assets\ControlIcon\WinGet.png" />
     <None Include="Assets\Images\TaskEmpty.png" />
     
@@ -179,6 +154,7 @@
     <None Remove="Styles\Grid.xaml" />
     <None Remove="Styles\GridView.xaml" />
     <None Remove="Styles\HyperlinkButton.xaml" />
+    <None Remove="Styles\InAppNotification.xaml" />
     <None Remove="Styles\InfoBar.xaml" />
     <None Remove="Styles\ListView.xaml" />
     <None Remove="Styles\MenuFlyout.xaml" />
@@ -309,344 +285,133 @@
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.3.230502000" />
     <PackageReference Include="Mile.Aria2" Version="1.0.8" />
     
-    <Page Update="Styles\Button.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\Checkbox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\CommandBar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\ContentDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\Converter.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\DropDownButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\Expander.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\Flyout.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\FontIcon.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\Grid.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\GridView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\HyperlinkButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\InfoBar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\ListView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\MenuFlyout.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\MinMaxCloseControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\NavigationView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\Pivot.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\ScrollViewer.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\SplitButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\TeachingTip.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\TextBlock.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\ToggleSwitch.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\WindowChrome.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Page Update="Styles\Button.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\Checkbox.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\CommandBar.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\ContentDialog.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\Converter.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\DropDownButton.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\Expander.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\Flyout.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\FontIcon.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\Grid.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\GridView.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\HyperlinkButton.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\InAppNotification.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\InfoBar.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\ListView.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\MenuFlyout.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\MinMaxCloseControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\NavigationView.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\Pivot.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\ScrollViewer.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\SplitButton.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\TeachingTip.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\TextBlock.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\ToggleSwitch.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\WindowChrome.xaml" Generator="MSBuild:Compile" />
     
-    <Page Update="UI\Controls\About\HeaderControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\About\InstructionsControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\About\IntroductionControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\About\PrecautionControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\About\ReferenceControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\About\SettingsHelpControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\About\ThanksControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Page Update="UI\Controls\About\HeaderControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\About\InstructionsControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\About\IntroductionControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\About\PrecautionControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\About\ReferenceControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\About\SettingsHelpControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\About\ThanksControl.xaml" Generator="MSBuild:Compile" />
 
-    <Page Update="UI\Controls\Download\CompletedControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\Download\DownloadingControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\Download\UnfinishedControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Page Update="UI\Controls\Download\CompletedControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\Download\DownloadingControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\Download\UnfinishedControl.xaml" Generator="MSBuild:Compile" />
 
-    <Page Update="UI\Controls\Settings\Advanced\AppExitControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\Settings\Advanced\ExperimentalFeaturesControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\Settings\Advanced\InstallModeControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\Settings\Advanced\TraceCleanupControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Page Update="UI\Controls\Settings\Advanced\AppExitControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\Settings\Advanced\ExperimentalFeaturesControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\Settings\Advanced\InstallModeControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\Settings\Advanced\TraceCleanupControl.xaml" Generator="MSBuild:Compile" />
 
-    <Page Update="UI\Controls\Settings\Appearance\AlwaysShowBackdropControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\Settings\Appearance\BackdropControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\Settings\Appearance\LanguageControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\Settings\Appearance\ThemeControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\Settings\Appearance\TopMostControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Page Update="UI\Controls\Settings\Appearance\AlwaysShowBackdropControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\Settings\Appearance\BackdropControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\Settings\Appearance\LanguageControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\Settings\Appearance\ThemeControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\Settings\Appearance\TopMostControl.xaml" Generator="MSBuild:Compile" />
 
-    <Page Update="UI\Controls\Settings\Common\DownloadOptionsControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\Settings\Common\HistoryRecordControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\Settings\Common\LinkFilterControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\Settings\Common\NotificationControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\Settings\Common\UseInstructionControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Page Update="UI\Controls\Settings\Common\DownloadOptionsControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\Settings\Common\HistoryRecordControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\Settings\Common\LinkFilterControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\Settings\Common\NotificationControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\Settings\Common\UseInstructionControl.xaml" Generator="MSBuild:Compile" />
 
-    <Page Update="UI\Controls\Settings\Experiment\NetWorkMonitorControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\Settings\Experiment\OpenConfigFIleControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Page Update="UI\Controls\Settings\Experiment\NetWorkMonitorControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\Settings\Experiment\OpenConfigFIleControl.xaml" Generator="MSBuild:Compile" />
 
-    <Page Update="UI\Controls\Store\HistoryLiteControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\Store\RequestControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\Store\ResultControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\Store\StatusBarControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Page Update="UI\Controls\Store\HistoryLiteControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\Store\RequestControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\Store\ResultControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\Store\StatusBarControl.xaml" Generator="MSBuild:Compile" />
 
-    <Page Update="UI\Controls\Web\LoadFailedControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Page Update="UI\Controls\Web\LoadFailedControl.xaml" Generator="MSBuild:Compile" />
 
-    <Page Update="UI\Controls\WinGet\InstalledAppsControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\WinGet\SearchAppsControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Controls\WinGet\UpgradableAppsControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Page Update="UI\Controls\WinGet\InstalledAppsControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\WinGet\SearchAppsControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\WinGet\UpgradableAppsControl.xaml" Generator="MSBuild:Compile" />
 
-    <Page Update="UI\Controls\Window\AppTitleBarControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Page Update="UI\Controls\Window\AppTitleBarControl.xaml" Generator="MSBuild:Compile" />
 
-    <Page Update="UI\Dialogs\About\AppInformationDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Dialogs\About\CloudflareValidationDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Dialogs\About\ConsoleStartupArgsDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Dialogs\About\DesktopAppsDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Dialogs\About\DesktopStartupArgsDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Dialogs\About\LicenseDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Page Update="UI\Dialogs\About\AppInformationDialog.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Dialogs\About\CloudflareValidationDialog.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Dialogs\About\ConsoleStartupArgsDialog.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Dialogs\About\DesktopAppsDialog.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Dialogs\About\DesktopStartupArgsDialog.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Dialogs\About\LicenseDialog.xaml" Generator="MSBuild:Compile" />
 
-    <Page Update="UI\Dialogs\Common\AppRunningDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Dialogs\Common\ClosingWindowDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Dialogs\Common\DeletePromptDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Dialogs\Common\DownloadNotifyDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Dialogs\Common\DPIChangedNotifyDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Dialogs\Common\SelectEmptyPromptDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Page Update="UI\Dialogs\Common\AppRunningDialog.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Dialogs\Common\ClosingWindowDialog.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Dialogs\Common\DeletePromptDialog.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Dialogs\Common\DownloadNotifyDialog.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Dialogs\Common\DPIChangedNotifyDialog.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Dialogs\Common\SelectEmptyPromptDialog.xaml" Generator="MSBuild:Compile" />
 
-    <Page Update="UI\Dialogs\Download\FileInformationDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Dialogs\Download\InstallingNotifyDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Page Update="UI\Dialogs\Download\FileInformationDialog.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Dialogs\Download\InstallingNotifyDialog.xaml" Generator="MSBuild:Compile" />
     
-    <Page Update="UI\Dialogs\Settings\ExperimentalConfigDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Dialogs\Settings\RestartAppsDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Dialogs\Settings\TraceCleanupPromptDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Page Update="UI\Dialogs\Settings\ExperimentalConfigDialog.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Dialogs\Settings\RestartAppsDialog.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Dialogs\Settings\TraceCleanupPromptDialog.xaml" Generator="MSBuild:Compile" />
 
-    <Page Update="UI\Dialogs\Web\CoreWebView2FailedDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Page Update="UI\Dialogs\Web\CoreWebView2FailedDialog.xaml" Generator="MSBuild:Compile" />
 
-    <Page Update="UI\Dialogs\WinGet\InstallFailedDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Dialogs\WinGet\RebootDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Dialogs\WinGet\UnInstallFailedDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Page Update="UI\Dialogs\WinGet\InstallFailedDialog.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Dialogs\WinGet\RebootDialog.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Dialogs\WinGet\UnInstallFailedDialog.xaml" Generator="MSBuild:Compile" />
 
-    <Page Update="UI\Notifications\AppInformationCopyNotification.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Notifications\DownloadCreateNotification.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Notifications\ExceptionCopyNotification.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Notifications\FileInformationCopyNotification.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Notifications\HistoryCopyNotification.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Notifications\LanguageChangeNotification.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Notifications\NetWorkErrorNotification.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Notifications\QuickOperationNotification.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Notifications\ResultContentCopyNotification.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Notifications\ResultIDCopyNotification.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Notifications\ResultLinkCopyNotification.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Notifications\ShareFailedNotification.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Notifications\WebCacheCleanNotification.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Notifications\WinGetCopyNotification.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Page Update="UI\Notifications\AppInformationCopyNotification.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Notifications\DownloadCreateNotification.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Notifications\ExceptionCopyNotification.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Notifications\FileInformationCopyNotification.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Notifications\HistoryCopyNotification.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Notifications\LanguageChangeNotification.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Notifications\NetWorkErrorNotification.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Notifications\QuickOperationNotification.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Notifications\ResultContentCopyNotification.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Notifications\ResultIDCopyNotification.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Notifications\ResultLinkCopyNotification.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Notifications\ShareFailedNotification.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Notifications\WebCacheCleanNotification.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Notifications\WinGetCopyNotification.xaml" Generator="MSBuild:Compile" />
     
-    <Page Update="Views\CustomControls\Collections\AdaptiveGridView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\CustomControls\DialogsAndFlyouts\AdaptiveFlyout.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\CustomControls\MenusAndToolbars\AdaptiveMenuFlyout.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Page Update="Views\CustomControls\Collections\AdaptiveGridView.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Views\CustomControls\DialogsAndFlyouts\AdaptiveFlyout.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Views\CustomControls\MenusAndToolbars\AdaptiveMenuFlyout.xaml" Generator="MSBuild:Compile" />
 
-    <Page Update="Views\Pages\AboutPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\Pages\DownloadPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\Pages\HistoryPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\Pages\SettingsPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\Pages\StorePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\Pages\WebPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\Pages\WinGetPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Page Update="Views\Pages\AboutPage.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Views\Pages\DownloadPage.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Views\Pages\HistoryPage.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Views\Pages\SettingsPage.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Views\Pages\StorePage.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Views\Pages\WebPage.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Views\Pages\WinGetPage.xaml" Generator="MSBuild:Compile" />
     
-    <Page Update="Views\Window\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\Window\TrayMenuWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Page Update="Views\Window\MainWindow.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Views\Window\TrayMenuWindow.xaml" Generator="MSBuild:Compile" />
 
     <TrimmableAssembly Include="Microsoft.Windows.ApplicationModel.DynamicDependency.Projection" />
     <TrimmableAssembly Include="Microsoft.Windows.ApplicationModel.Resources.Projection" />
@@ -660,6 +425,7 @@
     <TrimmableAssembly Include="Microsoft.Windows.System.Projection" />
     <TrimmableAssembly Include="Microsoft.WindowsAppRuntime.Bootstrap" />
     <TrimmableAssembly Include="Microsoft.WindowsAppRuntime.Bootstrap.Net" />
+    <TrimmableAssembly Include="Microsoft.WindowsAppRuntime.Release.Net" />
     <TrimmableAssembly Include="Microsoft.Windows.Widgets.Projection" />
   </ItemGroup>
 </Project>

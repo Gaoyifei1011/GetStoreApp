@@ -2,7 +2,6 @@
 using GetStoreApp.Services.Controls.Settings.Experiment;
 using GetStoreApp.UI.Controls.Settings.Experiment;
 using GetStoreApp.ViewModels.Base;
-using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -41,27 +40,15 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
         }
 
         /// <summary>
-        /// 关闭对话框
-        /// </summary>
-        public void OnCloseDialogClicked(object sender, RoutedEventArgs args)
-        {
-            Button button = sender as Button;
-            if (button.Tag is not null)
-            {
-                ((ExtendedContentDialog)button.Tag).Hide();
-            }
-            DisplayTimer.Tick -= DisplayTimerTick;
-        }
-
-        /// <summary>
         /// 还原默认值
         /// </summary>
-        public async void OnRestoreDefaultClicked(object sender, RoutedEventArgs args)
+        public async void OnRestoreDefaultClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            Button button = sender as Button;
-            if (button.Tag is not null)
+            args.Cancel = true;
+
+            if (sender.Tag is not null)
             {
-                ((NetWorkMonitorControl)button.Tag).ViewModel.NetWorkMonitorValue = true;
+                ((NetWorkMonitorControl)sender.Tag).ViewModel.NetWorkMonitorValue = true;
                 Aria2Service.RestoreDefault();
                 await NetWorkMonitorService.RestoreDefaultValueAsync();
 
