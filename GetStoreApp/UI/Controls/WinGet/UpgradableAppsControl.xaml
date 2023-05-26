@@ -16,7 +16,7 @@
     mc:Ignorable="d">
 
     <UserControl.DataContext>
-        <winGetViewModel:UpgradableAppsViewModel x:Name="ViewModel" />
+        <winGetViewModel:UpgradableAppsViewModel x:Name="ViewModel" x:FieldModifier="public" />
     </UserControl.DataContext>
 
     <UserControl.Resources>

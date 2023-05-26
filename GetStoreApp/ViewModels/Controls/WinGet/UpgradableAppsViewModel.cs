@@ -5,6 +5,7 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.WinGet;
 using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Base;
+using GetStoreApp.ViewModels.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
@@ -16,6 +17,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.ViewModels.Controls.WinGet
@@ -23,6 +25,8 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
     public sealed class UpgradableAppsViewModel : ViewModelBase
     {
         private PackageManager UpgradableAppsManager { get; set; }
+
+        internal WinGetViewModel WinGetVMInstance;
 
         private bool _isLoadedCompleted = false;
 
@@ -89,6 +93,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                 {
                     try
                     {
+                        // 禁用当前应用的可升级状态
                         foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsDataList)
                         {
                             if (upgradableAppsItem.AppID == upgradableApps.AppID)
@@ -111,32 +116,104 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                 // 处于等待中状态
                                 case PackageInstallProgressState.Queued:
                                     {
+                                        lock (WinGetVMInstance.InstallingAppsObject)
+                                        {
+                                            foreach (InstallingAppsModel installingItem in WinGetVMInstance.InstallingAppsList)
+                                            {
+                                                if (installingItem.AppID == upgradableApps.AppID)
+                                                {
+                                                    installingItem.InstallProgressState = PackageInstallProgressState.Queued;
+                                                    break;
+                                                }
+                                            }
+                                        }
                                         break;
                                     }
                                 // 处于下载中状态
                                 case PackageInstallProgressState.Downloading:
                                     {
+                                        lock (WinGetVMInstance.InstallingAppsObject)
+                                        {
+                                            foreach (InstallingAppsModel installingItem in WinGetVMInstance.InstallingAppsList)
+                                            {
+                                                if (installingItem.AppID == upgradableApps.AppID)
+                                                {
+                                                    installingItem.InstallProgressState = PackageInstallProgressState.Downloading;
+                                                    installingItem.DownloadProgress = Math.Round(installProgress.DownloadProgress, 2) * 100;
+                                                    break;
+                                                }
+                                            }
+                                        }
                                         break;
                                     }
                                 // 处于安装中状态
                                 case PackageInstallProgressState.Installing:
                                     {
+                                        lock (WinGetVMInstance.InstallingAppsObject)
+                                        {
+                                            foreach (InstallingAppsModel installingItem in WinGetVMInstance.InstallingAppsList)
+                                            {
+                                                if (installingItem.AppID == upgradableApps.AppID)
+                                                {
+                                                    installingItem.InstallProgressState = PackageInstallProgressState.Installing;
+                                                    break;
+                                                }
+                                            }
+                                        }
                                         break;
                                     }
                                 // 挂起状态
                                 case PackageInstallProgressState.PostInstall:
                                     {
+                                        lock (WinGetVMInstance.InstallingAppsObject)
+                                        {
+                                            foreach (InstallingAppsModel installingItem in WinGetVMInstance.InstallingAppsList)
+                                            {
+                                                if (installingItem.AppID == upgradableApps.AppID)
+                                                {
+                                                    installingItem.InstallProgressState = PackageInstallProgressState.PostInstall;
+                                                    break;
+                                                }
+                                            }
+                                        }
                                         break;
                                     }
                                 // 处于安装完成状态
                                 case PackageInstallProgressState.Finished:
                                     {
+                                        lock (WinGetVMInstance.InstallingAppsObject)
+                                        {
+                                            foreach (InstallingAppsModel installingItem in WinGetVMInstance.InstallingAppsList)
+                                            {
+                                                if (installingItem.AppID == upgradableApps.AppID)
+                                                {
+                                                    installingItem.InstallProgressState = PackageInstallProgressState.Finished;
+                                                    break;
+                                                }
+                                            }
+                                        }
                                         break;
                                     }
                             }
                         });
 
-                        InstallResult installResult = await UpgradableAppsManager.UpgradePackageAsync(MatchResultList.Find(item => item.CatalogPackage.DefaultInstallVersion.Id == upgradableApps.AppID).CatalogPackage, installOptions).AsTask(progressCallBack);
+                        // 任务取消执行操作
+                        CancellationTokenSource upgradeTokenSource = new CancellationTokenSource();
+
+                        // 添加任务
+                        lock (WinGetVMInstance.InstallingAppsObject)
+                        {
+                            WinGetVMInstance.InstallingAppsList.Add(new InstallingAppsModel()
+                            {
+                                AppID = upgradableApps.AppID,
+                                AppName = upgradableApps.AppName,
+                                DownloadProgress = 0,
+                                InstallProgressState = PackageInstallProgressState.Queued
+                            });
+                            WinGetVMInstance.InstallingStateDict.Add(upgradableApps.AppID, upgradeTokenSource);
+                        }
+
+                        InstallResult installResult = await UpgradableAppsManager.UpgradePackageAsync(MatchResultList.Find(item => item.CatalogPackage.DefaultInstallVersion.Id == upgradableApps.AppID).CatalogPackage, installOptions).AsTask(upgradeTokenSource.Token, progressCallBack);
 
                         // 获取升级完成后的结果信息
                         // 升级完成，从列表中删除该应用
@@ -174,19 +251,34 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                 }
                             }
 
+                            // 完成任务后从任务管理中删除任务
+                            lock (WinGetVMInstance.InstallingAppsObject)
+                            {
+                                foreach (InstallingAppsModel installingAppsItem in WinGetVMInstance.InstallingAppsList)
+                                {
+                                    if (installingAppsItem.AppID == upgradableApps.AppID)
+                                    {
+                                        WinGetVMInstance.InstallingAppsList.Remove(installingAppsItem);
+                                        break;
+                                    }
+                                }
+                                WinGetVMInstance.InstallingStateDict.Remove(upgradableApps.AppID);
+                            }
+
+                            // 从升级列表中移除已升级完成的任务
                             foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsDataList)
                             {
                                 if (upgradableAppsItem.AppID == upgradableApps.AppID)
                                 {
                                     UpgradableAppsDataList.Remove(upgradableAppsItem);
+                                    IsUpgradableAppsEmpty = UpgradableAppsDataList.Count is 0;
                                     break;
                                 }
                             }
                         }
                         else
                         {
-                            await new InstallFailedDialog(upgradableApps.AppName).ShowAsync();
-
+                            // 应用升级失败，将当前任务状态修改为可升级状态
                             foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsDataList)
                             {
                                 if (upgradableAppsItem.AppID == upgradableApps.AppID)
@@ -194,12 +286,28 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                     upgradableAppsItem.IsUpgrading = false;
                                 }
                             }
+
+                            // 应用升级失败，将当前任务状态修改为可升级状态
+                            lock (WinGetVMInstance.InstallingAppsObject)
+                            {
+                                foreach (InstallingAppsModel installingAppsItem in WinGetVMInstance.InstallingAppsList)
+                                {
+                                    if (installingAppsItem.AppID == upgradableApps.AppID)
+                                    {
+                                        WinGetVMInstance.InstallingAppsList.Remove(installingAppsItem);
+                                        break;
+                                    }
+                                }
+                                WinGetVMInstance.InstallingStateDict.Remove(upgradableApps.AppID);
+                            }
+
+                            await new InstallFailedDialog(upgradableApps.AppName).ShowAsync();
                         }
                     }
                     // 操作被用户所取消异常
                     catch (OperationCanceledException)
                     {
-                        await new InstallFailedDialog(upgradableApps.AppName).ShowAsync();
+                        // 应用升级失败，将当前任务状态修改为可升级状态
                         foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsDataList)
                         {
                             if (upgradableAppsItem.AppID == upgradableApps.AppID)
@@ -208,11 +316,27 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                 break;
                             }
                         }
+
+                        // 应用升级失败，将当前任务状态修改为可升级状态
+                        lock (WinGetVMInstance.InstallingAppsObject)
+                        {
+                            foreach (InstallingAppsModel installingAppsItem in WinGetVMInstance.InstallingAppsList)
+                            {
+                                if (installingAppsItem.AppID == upgradableApps.AppID)
+                                {
+                                    WinGetVMInstance.InstallingAppsList.Remove(installingAppsItem);
+                                    break;
+                                }
+                            }
+                            WinGetVMInstance.InstallingStateDict.Remove(upgradableApps.AppID);
+                        }
+
+                        await new InstallFailedDialog(upgradableApps.AppName).ShowAsync();
                     }
                     // 其他异常
                     catch (Exception)
                     {
-                        await new InstallFailedDialog(upgradableApps.AppName).ShowAsync();
+                        // 应用升级失败，从任务管理列表中移除当前任务
                         foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsDataList)
                         {
                             if (upgradableAppsItem.AppID == upgradableApps.AppID)
@@ -221,6 +345,22 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                 break;
                             }
                         }
+
+                        // 应用升级失败，从任务管理列表中移除当前任务
+                        lock (WinGetVMInstance.InstallingAppsObject)
+                        {
+                            foreach (InstallingAppsModel installingAppsItem in WinGetVMInstance.InstallingAppsList)
+                            {
+                                if (installingAppsItem.AppID == upgradableApps.AppID)
+                                {
+                                    WinGetVMInstance.InstallingAppsList.Remove(installingAppsItem);
+                                    break;
+                                }
+                            }
+                            WinGetVMInstance.InstallingStateDict.Remove(upgradableApps.AppID);
+                        }
+
+                        await new InstallFailedDialog(upgradableApps.AppName).ShowAsync();
                     }
                 }
             };
@@ -306,14 +446,23 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
             {
                 foreach (MatchResult matchItem in MatchResultList)
                 {
+                    bool isUpgrading = false;
+                    foreach (InstallingAppsModel installingAppsItem in WinGetVMInstance.InstallingAppsList)
+                    {
+                        if (matchItem.CatalogPackage.DefaultInstallVersion.Id == installingAppsItem.AppID)
+                        {
+                            isUpgrading = true;
+                            break;
+                        }
+                    }
                     UpgradableAppsDataList.Add(new UpgradableAppsModel()
                     {
                         AppID = matchItem.CatalogPackage.DefaultInstallVersion.Id,
-                        AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.DisplayName) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.DisplayName,
-                        AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Publisher) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.Publisher,
-                        AppCurrentVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Version) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.Version,
-                        AppNewestVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Version) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.Version,
-                        IsUpgrading = false
+                        AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.DisplayName) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.DisplayName,
+                        AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Publisher) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.Publisher,
+                        AppCurrentVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Version) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.Version,
+                        AppNewestVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Version) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.Version,
+                        IsUpgrading = isUpgrading
                     });
                 }
             }

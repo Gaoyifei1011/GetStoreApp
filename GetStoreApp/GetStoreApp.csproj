@@ -102,7 +102,6 @@
     <Content Remove="Assets\ControlIcon\Web.png" />
     <Content Remove="Assets\ControlIcon\WinGet.png" />
     <Content Remove="Assets\GetStoreApp.ico" />
-    <Content Remove="Assets\Images\TaskEmpty.png" />
     <Content Remove="Assets\Resources\Lengths.bin" />
     <Content Remove="Assets\Resources\LICENSE" />
 
@@ -131,7 +130,6 @@
     <None Include="Assets\ControlIcon\Store.png" CopyToOutputDirectory="Never" />
     <None Include="Assets\ControlIcon\Web.png" CopyToOutputDirectory="Never" />
     <None Include="Assets\ControlIcon\WinGet.png" />
-    <None Include="Assets\Images\TaskEmpty.png" />
     
     <None Remove="Assets\GetStoreApp.png" />
     <None Remove="Assets\Images\CloudflareValidation.png" />

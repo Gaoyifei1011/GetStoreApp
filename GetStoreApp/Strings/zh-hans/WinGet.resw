@@ -132,6 +132,9 @@
   <data name="AppVersionToolTip" xml:space="preserve">
     <value>应用版本：{0}</value>
   </data>
+  <data name="CancelInstalling" xml:space="preserve">
+    <value>取消安装</value>
+  </data>
   <data name="CopyInstallText" xml:space="preserve">
     <value>复制安装命令</value>
   </data>
@@ -140,6 +143,15 @@
   </data>
   <data name="CopyUpgradeText" xml:space="preserve">
     <value>复制升级命令</value>
+  </data>
+  <data name="DownloadedProgressToolTip" xml:space="preserve">
+    <value>下载进度：已完成{0}%</value>
+  </data>
+  <data name="DownloadingToolTip" xml:space="preserve">
+    <value>下载中...</value>
+  </data>
+  <data name="FinishedToolTip" xml:space="preserve">
+    <value>已完成</value>
   </data>
   <data name="Install" xml:space="preserve">
     <value>安装</value>
@@ -162,6 +174,12 @@
   <data name="InstalledAppsSearchEmptyDescription" xml:space="preserve">
     <value>您搜索的应用暂未找到，请更改搜索条件后再进行尝试</value>
   </data>
+  <data name="InstallingToolTip" xml:space="preserve">
+    <value>安装中...</value>
+  </data>
+  <data name="InstallStateToolTip" xml:space="preserve">
+    <value>安装状态：{0}</value>
+  </data>
   <data name="LoadingInstalledApps" xml:space="preserve">
     <value>正在加载已安装应用列表，请稍候...</value>
   </data>
@@ -173,6 +191,12 @@
   </data>
   <data name="Operation" xml:space="preserve">
     <value>操作</value>
+  </data>
+  <data name="PostInstallToolTip" xml:space="preserve">
+    <value>等待安装完成后的其他操作</value>
+  </data>
+  <data name="QueuedToolTip" xml:space="preserve">
+    <value>等待中...</value>
   </data>
   <data name="Refresh" xml:space="preserve">
     <value>刷新</value>

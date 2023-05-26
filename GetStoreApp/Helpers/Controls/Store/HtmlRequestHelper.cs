@@ -31,6 +31,11 @@ namespace GetStoreApp.Helpers.Controls.Store
         public static async Task<RequestModel> HttpRequestAsync(string content)
         {
             RequestModel HttpRequestResult = null;
+
+            // 添加超时设置（半分钟后停止获取）
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
+
             try
             {
                 byte[] ContentBytes = Encoding.UTF8.GetBytes(content);
@@ -40,10 +45,6 @@ namespace GetStoreApp.Helpers.Controls.Store
                 httpContent.Headers.ContentType = new HttpMediaTypeHeaderValue("application/x-www-form-urlencoded");
                 httpContent.Headers.ContentLength = Convert.ToUInt64(ContentBytes.Length);
                 httpContent.Headers.ContentType.CharSet = "utf-8";
-
-                // 添加超时设置（半分钟后停止获取）
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-                cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
 
                 HttpClient httpClient = new HttpClient();
                 HttpResponseMessage response = await httpClient.PostAsync(new Uri(API), httpContent).AsTask(cancellationTokenSource.Token);
@@ -98,6 +99,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                     RequestContent = RequestContent,
                     RequestExceptionContent = RequestExceptionContent
                 };
+                cancellationTokenSource.Dispose();
             }
 
             return HttpRequestResult;

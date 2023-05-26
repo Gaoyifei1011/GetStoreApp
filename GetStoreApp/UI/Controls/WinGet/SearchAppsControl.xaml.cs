@@ -27,5 +27,24 @@ namespace GetStoreApp.UI.Controls.WinGet
                 return string.Format(ResourceService.GetLocalized("WinGet/SearchedAppsCountInfo"), count);
             }
         }
+
+        public bool IsSearchBoxEnabled(bool notSearched,bool isSearchCompleted)
+        {
+            if(notSearched)
+            {
+                return true;
+            }
+            else
+            {
+                if(isSearchCompleted)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
     }
 }

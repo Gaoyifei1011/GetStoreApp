@@ -16,7 +16,7 @@
     mc:Ignorable="d">
 
     <UserControl.DataContext>
-        <winGetViewModel:SearchAppsViewModel x:Name="ViewModel" />
+        <winGetViewModel:SearchAppsViewModel x:Name="ViewModel" x:FieldModifier="public" />
     </UserControl.DataContext>
 
     <UserControl.Resources>
@@ -54,6 +54,7 @@
                 Grid.Column="1"
                 VerticalAlignment="Center"
                 Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Operation')}" />
+
             <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
 
             <TextBlock
@@ -74,6 +75,7 @@
                 Width="170"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
+                IsEnabled="{x:Bind IsSearchBoxEnabled(ViewModel.NotSearched, ViewModel.IsSearchCompleted), Mode=OneWay}"
                 PlaceholderText="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchAppsPlaceHolderText')}"
                 QuerySubmitted="{x:Bind ViewModel.OnQuerySubmitted}"
                 Text="{x:Bind ViewModel.SearchText, Mode=TwoWay}">
