@@ -174,6 +174,9 @@
   <data name="InstalledAppsSearchEmptyDescription" xml:space="preserve">
     <value>The application you searched for has not been found, please change the search criteria and try again</value>
   </data>
+  <data name="InstallingAppsListEmpty" xml:space="preserve">
+    <value>There are currently no download and installation tasks</value>
+  </data>
   <data name="InstallingToolTip" xml:space="preserve">
     <value>Installing...</value>
   </data>

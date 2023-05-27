@@ -107,6 +107,10 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         public static async Task<(bool, string)> AddUriAsync(string downloadLink, string folderPath)
         {
+            // 添加超时设置（半分钟后停止获取）
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
+
             try
             {
                 // 判断下载进程是否存在
@@ -150,10 +154,6 @@ namespace GetStoreApp.Services.Controls.Download
                 httpContent.Headers.ContentLength = Convert.ToUInt64(ContentBytes.Length);
                 httpContent.Headers.ContentType.CharSet = "utf-8";
 
-                // 添加超时设置（半分钟后停止获取）
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-                cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
-
                 HttpClient httpClient = new HttpClient();
                 HttpResponseMessage response = await httpClient.PostAsync(new Uri(RPCServerLink), httpContent).AsTask(cancellationTokenSource.Token);
 
@@ -177,7 +177,7 @@ namespace GetStoreApp.Services.Controls.Download
                 return (false, string.Empty);
             }
             // 捕捉因访问超时引发的异常
-            catch (TaskCanceledException)
+            catch (OperationCanceledException)
             {
                 return (false, string.Empty);
             }
@@ -186,6 +186,10 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 return (false, string.Empty);
             }
+            finally
+            {
+                cancellationTokenSource.Dispose();
+            }
         }
 
         /// <summary>
@@ -193,6 +197,10 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         public static async Task<(bool, string)> PauseAsync(string GID)
         {
+            // 添加超时设置（半分钟后停止获取）
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
+
             try
             {
                 // 判断下载进程是否存在
@@ -229,10 +237,6 @@ namespace GetStoreApp.Services.Controls.Download
                 httpContent.Headers.ContentLength = Convert.ToUInt64(ContentBytes.Length);
                 httpContent.Headers.ContentType.CharSet = "utf-8";
 
-                // 添加超时设置（半分钟后停止获取）
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-                cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
-
                 HttpClient httpClient = new HttpClient();
                 HttpResponseMessage response = await httpClient.PostAsync(new Uri(RPCServerLink), httpContent).AsTask(cancellationTokenSource.Token);
 
@@ -256,7 +260,7 @@ namespace GetStoreApp.Services.Controls.Download
                 return (false, string.Empty);
             }
             // 捕捉因访问超时引发的异常
-            catch (TaskCanceledException)
+            catch (OperationCanceledException)
             {
                 return (false, string.Empty);
             }
@@ -265,6 +269,10 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 return (false, string.Empty);
             }
+            finally
+            {
+                cancellationTokenSource.Dispose();
+            }
         }
 
         /// <summary>
@@ -272,6 +280,10 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         public static async Task<(bool, string)> DeleteAsync(string GID)
         {
+            // 添加超时设置（半分钟后停止获取）
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
+
             try
             {
                 // 判断下载进程是否存在
@@ -308,10 +320,6 @@ namespace GetStoreApp.Services.Controls.Download
                 httpContent.Headers.ContentLength = Convert.ToUInt64(ContentBytes.Length);
                 httpContent.Headers.ContentType.CharSet = "utf-8";
 
-                // 添加超时设置（半分钟后停止获取）
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-                cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
-
                 HttpClient httpClient = new HttpClient();
                 HttpResponseMessage response = await httpClient.PostAsync(new Uri(RPCServerLink), httpContent).AsTask(cancellationTokenSource.Token);
 
@@ -335,7 +343,7 @@ namespace GetStoreApp.Services.Controls.Download
                 return (false, string.Empty);
             }
             // 捕捉因访问超时引发的异常
-            catch (TaskCanceledException)
+            catch (OperationCanceledException)
             {
                 return (false, string.Empty);
             }
@@ -344,6 +352,10 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 return (false, string.Empty);
             }
+            finally
+            {
+                cancellationTokenSource.Dispose();
+            }
         }
 
         /// <summary>
@@ -351,6 +363,10 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         public static async Task<(bool, string, double, double, double)> TellStatusAsync(string GID)
         {
+            // 添加超时设置（半分钟后停止获取）
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
+
             try
             {
                 // 判断下载进程是否存在
@@ -400,10 +416,6 @@ namespace GetStoreApp.Services.Controls.Download
                 httpContent.Headers.ContentLength = Convert.ToUInt64(ContentBytes.Length);
                 httpContent.Headers.ContentType.CharSet = "utf-8";
 
-                // 添加超时设置（半分钟后停止获取）
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-                cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
-
                 HttpClient httpClient = new HttpClient();
                 HttpResponseMessage response = await httpClient.PostAsync(new Uri(RPCServerLink), httpContent).AsTask(cancellationTokenSource.Token);
 
@@ -434,7 +446,7 @@ namespace GetStoreApp.Services.Controls.Download
                 return (false, string.Empty, default(double), default(double), default(double));
             }
             // 捕捉因访问超时引发的异常
-            catch (TaskCanceledException)
+            catch (OperationCanceledException)
             {
                 return (false, string.Empty, default(double), default(double), default(double));
             }
@@ -442,6 +454,10 @@ namespace GetStoreApp.Services.Controls.Download
             catch (Exception)
             {
                 return (false, string.Empty, default(double), default(double), default(double));
+            }
+            finally
+            {
+                cancellationTokenSource.Dispose();
             }
         }
     }

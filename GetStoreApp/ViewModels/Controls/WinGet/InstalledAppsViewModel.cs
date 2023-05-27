@@ -113,6 +113,8 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                         // 卸载成功，从列表中删除该应用
                         if (unInstallResult.Status == UninstallResultStatus.Ok)
                         {
+                            AppNotificationService.Show(NotificationArgs.UnInstallSuccessfully, installedApps.AppName);
+
                             // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
                             if (unInstallResult.RebootRequired)
                             {
@@ -147,18 +149,18 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                         }
                         else
                         {
-                            await new UnInstallFailedDialog(installedApps.AppName).ShowAsync();
+                            AppNotificationService.Show(NotificationArgs.UnInstallFailed, installedApps.AppName);
                         }
                     }
                     // 操作被用户所取消异常
                     catch (OperationCanceledException)
                     {
-                        await new UnInstallFailedDialog(installedApps.AppName).ShowAsync();
+                        AppNotificationService.Show(NotificationArgs.UnInstallFailed, installedApps.AppName);
                     }
                     // 其他异常
                     catch (Exception)
                     {
-                        await new UnInstallFailedDialog(installedApps.AppName).ShowAsync();
+                        AppNotificationService.Show(NotificationArgs.UnInstallFailed, installedApps.AppName);
                     }
                 }
             };

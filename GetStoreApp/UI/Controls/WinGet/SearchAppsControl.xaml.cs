@@ -28,15 +28,15 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
-        public bool IsSearchBoxEnabled(bool notSearched,bool isSearchCompleted)
+        public bool IsSearchBoxEnabled(bool notSearched, bool isSearchCompleted)
         {
-            if(notSearched)
+            if (notSearched)
             {
                 return true;
             }
             else
             {
-                if(isSearchCompleted)
+                if (isSearchCompleted)
                 {
                     return true;
                 }

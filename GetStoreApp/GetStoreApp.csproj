@@ -17,7 +17,7 @@
     <EnableUnsafeBinaryFormatterInDesigntimeLicenseContextSerialization>false</EnableUnsafeBinaryFormatterInDesigntimeLicenseContextSerialization>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <FileAlignment>512</FileAlignment>
-    <FileVersion>1.6.525.0</FileVersion>
+    <FileVersion>1.6.527.0</FileVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
@@ -47,7 +47,7 @@
     <TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
     <TrimMode>partial</TrimMode>
     <TrimUnusedDependencies>true</TrimUnusedDependencies>
-    <Version>1.6.525.0</Version>
+    <Version>1.6.527.0</Version>
     <UseWindowsForms>False</UseWindowsForms>
     <UseWinUI>true</UseWinUI>
     <UseWPF>False</UseWPF>
@@ -203,7 +203,7 @@
     <None Remove="UI\Dialogs\Controls\Settings\Common\UseInstructionControl.xaml" />
     
     <None Remove="UI\Dialogs\Controls\Settings\Experiment\NetWorkMonitorControl.xaml" />
-    <None Remove="UI\Dialogs\Controls\Settings\Experiment\OpenConfigFIleControl.xaml" />
+    <None Remove="UI\Dialogs\Controls\Settings\Experiment\OpenConfigFileControl.xaml" />
 
     <None Remove="UI\Dialogs\Controls\Web\LoadFailedControl.xaml" />
     
@@ -237,10 +237,7 @@
     <None Remove="UI\Dialogs\ContentDialogs\Settings\TraceCleanupPromptDialog.xaml" />
     
     <None Remove="UI\Dialogs\ContentDialogs\Web\CoreWebView2FailedDialog.xaml" />
-    
-    <None Remove="UI\Dialogs\WinGet\InstallFailedDialog.xaml" />
     <None Remove="UI\Dialogs\WinGet\RebootDialog.xaml" />
-    <None Remove="UI\Dialogs\WinGet\UnInstallFailedDialog.xaml" />
     
     <None Remove="UI\Notifications\AppInformationCopyNotification.xaml" />
     <None Remove="UI\Notifications\DownloadCreateNotification.xaml" />
@@ -339,7 +336,7 @@
     <Page Update="UI\Controls\Settings\Common\UseInstructionControl.xaml" Generator="MSBuild:Compile" />
 
     <Page Update="UI\Controls\Settings\Experiment\NetWorkMonitorControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\Settings\Experiment\OpenConfigFIleControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\Settings\Experiment\OpenConfigFileControl.xaml" Generator="MSBuild:Compile" />
 
     <Page Update="UI\Controls\Store\HistoryLiteControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Store\RequestControl.xaml" Generator="MSBuild:Compile" />
@@ -376,10 +373,7 @@
     <Page Update="UI\Dialogs\Settings\TraceCleanupPromptDialog.xaml" Generator="MSBuild:Compile" />
 
     <Page Update="UI\Dialogs\Web\CoreWebView2FailedDialog.xaml" Generator="MSBuild:Compile" />
-
-    <Page Update="UI\Dialogs\WinGet\InstallFailedDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\WinGet\RebootDialog.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Dialogs\WinGet\UnInstallFailedDialog.xaml" Generator="MSBuild:Compile" />
 
     <Page Update="UI\Notifications\AppInformationCopyNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Notifications\DownloadCreateNotification.xaml" Generator="MSBuild:Compile" />

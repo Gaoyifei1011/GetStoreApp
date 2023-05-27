@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Collections;
+using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Controls.Settings.Experiment;
@@ -47,7 +48,7 @@ namespace GetStoreApp.Services.Controls.Download
                 if (!WinINetLibrary.InternetGetConnectedState(ref flags, 0))
                 {
                     IsNetWorkConnected = false;
-                    AppNotificationService.Show("DownloadAborted", "NotDownload");
+                    AppNotificationService.Show(NotificationArgs.DownloadAborted, "NotDownload");
                 }
             }
 
@@ -331,11 +332,11 @@ namespace GetStoreApp.Services.Controls.Download
                     // 发送通知
                     if (DownloadingList.Any() || WaitingList.Any())
                     {
-                        AppNotificationService.Show("DownloadAborted", "DownloadingNow");
+                        AppNotificationService.Show(NotificationArgs.DownloadAborted, "DownloadingNow");
                     }
                     else
                     {
-                        AppNotificationService.Show("DownloadAborted", "NotDownload");
+                        AppNotificationService.Show(NotificationArgs.DownloadAborted, "NotDownload");
                     }
                 }
 
@@ -455,7 +456,7 @@ namespace GetStoreApp.Services.Controls.Download
                 // 下载完成后发送通知
                 if (DownloadingList.Count is 0 && WaitingList.Count is 0)
                 {
-                    AppNotificationService.Show("DownloadCompleted");
+                    AppNotificationService.Show(NotificationArgs.DownloadCompleted);
                 }
             }
         }

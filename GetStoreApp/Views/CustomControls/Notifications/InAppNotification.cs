@@ -99,7 +99,7 @@ namespace GetStoreApp.Views.CustomControls.Notifications
         /// <summary>
         /// 应用内通知加载动画演示完成时发生
         /// </summary>
-        private async void PopupInCompleted(object sender, object e)
+        private async void PopupInCompleted(object sender, object args)
         {
             await Task.Delay(Duration);
             popupOut.Begin();
@@ -108,7 +108,7 @@ namespace GetStoreApp.Views.CustomControls.Notifications
         /// <summary>
         /// 应用内通知加载动画卸载完成时发生，关闭控件
         /// </summary>
-        public void PopupOutCompleted(object sender, object e)
+        public void PopupOutCompleted(object sender, object args)
         {
             gridRoot.Loaded -= NotificationLoaded;
             gridRoot.Unloaded -= NotificationUnLoaded;

@@ -366,7 +366,7 @@ namespace GetStoreApp.Services.Controls.Download
                         {
                             if (downloadItemElement.Attributes.GetNamedItem(DownloadKey).InnerText.Equals(Convert.ToString(downloadKey)))
                             {
-                                int downloadFlag = Convert.ToInt32(downloadItemElement.Attributes.GetNamedItem(DownloadKey).InnerText);
+                                int downloadFlag = Convert.ToInt32(downloadItemElement.Attributes.GetNamedItem(DownloadFlag).InnerText);
                                 if (downloadFlag is 4)
                                 {
                                     duplicatedDataInfo = DuplicatedDataInfoArgs.Completed;

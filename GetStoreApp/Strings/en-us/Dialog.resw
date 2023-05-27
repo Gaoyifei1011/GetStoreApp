@@ -411,17 +411,8 @@
   <data name="RebootTitle" xml:space="preserve">
     <value>Restart device prompt</value>
   </data>
-  <data name="UnInstallFailedContent" xml:space="preserve">
-    <value>{0} Application uninstalled failed. Please check whether you have the permission to uninstall the application</value>
-  </data>
   <data name="UnInstallNeedReboot" xml:space="preserve">
     <value>{0} The application has been uninstalled. Some changes need to be restarted to take effect. Do you need to restart the device?</value>
-  </data>
-  <data name="UnInstallFailedTitle" xml:space="preserve">
-    <value>Uninstallation failure prompt</value>
-  </data>
-  <data name="UnInstallInSettings" xml:space="preserve">
-    <value>Alternatively, you can try uninstalling your app in Settings</value>
   </data>
   <data name="OpenSettings" xml:space="preserve">
     <value>Open settings</value>
@@ -431,17 +422,5 @@
   </data>
   <data name="SearchNeedReboot" xml:space="preserve">
     <value>{0} The application has been installed. Some changes need to be restarted to take effect. Do you need to restart the device?</value>
-  </data>
-  <data name="InstallFailedContent" xml:space="preserve">
-    <value>{0} Application installed failed. Please check whether you have the permission to install the application</value>
-  </data>
-  <data name="InstallFailedTitle" xml:space="preserve">
-    <value>Installation failure prompt</value>
-  </data>
-  <data name="InstallManually" xml:space="preserve">
-    <value>You can also try installing the application manually</value>
-  </data>
-  <data name="OpenDownloadFolder" xml:space="preserve">
-    <value>Open download folder</value>
   </data>
 </root>

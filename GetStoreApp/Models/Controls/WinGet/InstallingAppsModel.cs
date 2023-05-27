@@ -50,6 +50,38 @@ namespace GetStoreApp.Models.Controls.WinGet
         }
 
         /// <summary>
+        /// 已下载文件的大小
+        /// </summary>
+        public string _downloadedFileSize;
+
+        public string DownloadedFileSize
+        {
+            get { return _downloadedFileSize; }
+
+            set
+            {
+                _downloadedFileSize = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// 总文件大小
+        /// </summary>
+        public string _totalFileSize;
+
+        public string TotalFileSize
+        {
+            get { return _totalFileSize; }
+
+            set
+            {
+                _totalFileSize = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
         /// 安装状态
         /// </summary>
         private PackageInstallProgressState _installProgressState;
@@ -74,17 +106,17 @@ namespace GetStoreApp.Models.Controls.WinGet
         }
 
         /// <summary>
-        /// 获取应用是否处于安装状态
+        /// 获取下载的进度
         /// </summary>
-        public bool IsInstalling(PackageInstallProgressState installProgressState)
+        public string GetDownloadProgress(double downloadProgress)
         {
-            return installProgressState != PackageInstallProgressState.Installing;
+            return string.Format("{0}%", downloadProgress);
         }
 
         /// <summary>
         /// 添加安装任务的详细文字信息提示
         /// </summary>
-        public string InstallToolTip(string appName, PackageInstallProgressState installProgressState, double downloadProgress)
+        public string InstallToolTip(string appName, PackageInstallProgressState installProgressState, double downloadProgress, string downloadedFileSize, string totalFileSize)
         {
             StringBuilder builder = new StringBuilder();
             builder.AppendLine(string.Format(AppNameToolTip, appName));
@@ -100,6 +132,7 @@ namespace GetStoreApp.Models.Controls.WinGet
                     {
                         builder.AppendLine(string.Format(InstallStateToolTip, DownloadingToolTip));
                         builder.Append(string.Format(DownloadedProgressToolTip, downloadProgress));
+                        builder.Append(string.Format(",{0}/{1}", downloadedFileSize, totalFileSize));
                         break;
                     }
                 case PackageInstallProgressState.Installing:

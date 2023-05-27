@@ -123,7 +123,7 @@ namespace GetStoreApp.Helpers.Controls.Extensions
                 element.Loaded += OnLoaded;
             }
 
-            void OnLoaded(object sender, RoutedEventArgs e)
+            void OnLoaded(object sender, RoutedEventArgs args)
             {
                 element.Loaded -= OnLoaded;
                 setCursorFunc(element, cursor);

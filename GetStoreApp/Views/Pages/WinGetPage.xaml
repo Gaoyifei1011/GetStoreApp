@@ -60,17 +60,17 @@
                     <dialogsAndFlyouts:AdaptiveFlyout Placement="BottomEdgeAlignedRight">
                         <Grid x:Name="TaskManagerFlyout" DataContext="{x:Bind WinGetRoot.DataContext}">
                             <Grid
-                                Width="250"
+                                Width="300"
                                 Height="100"
                                 Visibility="{x:Bind ViewModel.InstallingAppsList.Count, Converter={StaticResource IntToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}">
                                 <TextBlock
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
-                                    Text="There is no Task."
+                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallingAppsListEmpty')}"
                                     TextAlignment="Center" />
                             </Grid>
                             <ScrollViewer
-                                Width="250"
+                                Width="300"
                                 Height="200"
                                 HorizontalScrollBarVisibility="Disabled"
                                 HorizontalScrollMode="Disabled"
@@ -95,7 +95,7 @@
 
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip
-                                                        Content="{x:Bind InstallToolTip(AppName, InstallProgressState, DownloadProgress), Mode=OneWay}"
+                                                        Content="{x:Bind InstallToolTip(AppName, InstallProgressState, DownloadProgress, DownloadedFileSize, TotalFileSize), Mode=OneWay}"
                                                         Placement="Bottom"
                                                         VerticalOffset="20" />
                                                 </ToolTipService.ToolTip>
@@ -105,12 +105,25 @@
                                                         <RowDefinition Height="Auto" />
                                                         <RowDefinition Height="Auto" />
                                                     </Grid.RowDefinitions>
-                                                    <TextBlock
-                                                        Grid.Row="0"
-                                                        Grid.Column="0"
-                                                        Margin="0,0,0,5"
-                                                        Style="{StaticResource WinGetItemTextStyle}"
-                                                        Text="{x:Bind AppName}" />
+
+                                                    <Grid Grid.Row="0" Margin="0,0,0,5">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <TextBlock
+                                                            Grid.Column="0"
+                                                            Style="{StaticResource WinGetItemTextStyle}"
+                                                            Text="{x:Bind AppName}" />
+
+                                                        <TextBlock
+                                                            Grid.Column="1"
+                                                            Style="{StaticResource WinGetItemTextStyle}"
+                                                            Text="{x:Bind GetDownloadProgress(DownloadProgress), Mode=OneWay}"
+                                                            TextAlignment="Right" />
+                                                    </Grid>
+
 
                                                     <ProgressBar
                                                         Grid.Row="1"
@@ -125,7 +138,6 @@
                                                     VerticalAlignment="Center"
                                                     Command="{Binding ElementName=TaskManagerFlyout, Path=DataContext.CancelInstallCommand}"
                                                     CommandParameter="{x:Bind AppID}"
-                                                    IsEnabled="{x:Bind IsInstalling(InstallProgressState), Mode=OneWay}"
                                                     Style="{StaticResource ExperimentalHyperlinkButtonStyle}">
                                                     <HyperlinkButton.Content>
                                                         <FontIcon Glyph="&#xE711;" Style="{StaticResource SegoeFluentStyle}" />

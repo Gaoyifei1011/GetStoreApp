@@ -139,7 +139,9 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                                 if (installingItem.AppID == upgradableApps.AppID)
                                                 {
                                                     installingItem.InstallProgressState = PackageInstallProgressState.Downloading;
-                                                    installingItem.DownloadProgress = Math.Round(installProgress.DownloadProgress, 2) * 100;
+                                                    installingItem.DownloadProgress = Math.Round(installProgress.DownloadProgress * 100, 2);
+                                                    installingItem.DownloadedFileSize = Convert.ToString(FileSizeHelper.ConvertFileSizeToString(installProgress.BytesDownloaded));
+                                                    installingItem.TotalFileSize = Convert.ToString(FileSizeHelper.ConvertFileSizeToString(installProgress.BytesRequired));
                                                     break;
                                                 }
                                             }
@@ -156,6 +158,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                                 if (installingItem.AppID == upgradableApps.AppID)
                                                 {
                                                     installingItem.InstallProgressState = PackageInstallProgressState.Installing;
+                                                    installingItem.DownloadProgress = 100;
                                                     break;
                                                 }
                                             }
@@ -188,6 +191,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                                 if (installingItem.AppID == upgradableApps.AppID)
                                                 {
                                                     installingItem.InstallProgressState = PackageInstallProgressState.Finished;
+                                                    installingItem.DownloadProgress = 100;
                                                     break;
                                                 }
                                             }
@@ -208,7 +212,9 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                 AppID = upgradableApps.AppID,
                                 AppName = upgradableApps.AppName,
                                 DownloadProgress = 0,
-                                InstallProgressState = PackageInstallProgressState.Queued
+                                InstallProgressState = PackageInstallProgressState.Queued,
+                                DownloadedFileSize = FileSizeHelper.ConvertFileSizeToString(0),
+                                TotalFileSize = FileSizeHelper.ConvertFileSizeToString(0)
                             });
                             WinGetVMInstance.InstallingStateDict.Add(upgradableApps.AppID, upgradeTokenSource);
                         }
@@ -222,6 +228,8 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                             // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
                             if (installResult.RebootRequired)
                             {
+                                AppNotificationService.Show(NotificationArgs.UpgradeSuccessfully, upgradableApps.AppName);
+
                                 ContentDialogResult Result = await new RebootDialog(WinGetOptionArgs.UpgradeInstall, upgradableApps.AppName).ShowAsync();
                                 if (Result == ContentDialogResult.Primary)
                                 {
@@ -301,7 +309,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                 WinGetVMInstance.InstallingStateDict.Remove(upgradableApps.AppID);
                             }
 
-                            await new InstallFailedDialog(upgradableApps.AppName).ShowAsync();
+                            AppNotificationService.Show(NotificationArgs.UpgradeFailed, upgradableApps.AppName);
                         }
                     }
                     // 操作被用户所取消异常
@@ -330,8 +338,6 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                             }
                             WinGetVMInstance.InstallingStateDict.Remove(upgradableApps.AppID);
                         }
-
-                        await new InstallFailedDialog(upgradableApps.AppName).ShowAsync();
                     }
                     // 其他异常
                     catch (Exception)
@@ -360,7 +366,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                             WinGetVMInstance.InstallingStateDict.Remove(upgradableApps.AppID);
                         }
 
-                        await new InstallFailedDialog(upgradableApps.AppName).ShowAsync();
+                        AppNotificationService.Show(NotificationArgs.UpgradeFailed, upgradableApps.AppName);
                     }
                 }
             };

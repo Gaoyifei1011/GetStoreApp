@@ -6,6 +6,7 @@ using GetStoreApp.Views.Pages;
 using Microsoft.UI.Dispatching;
 using Microsoft.Windows.AppNotifications;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Windows.Foundation;
 
@@ -45,7 +46,31 @@ namespace GetStoreApp.Services.Root
 
             if (AppNotificationArguments is "CheckNetWorkConnection" && isFirstExecute)
             {
-                await HandleWithoutMainThreadNotificationAsync();
+                await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
+                if (Program.ApplicationRoot is null)
+                {
+                    Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
+                }
+            }
+            else if(AppNotificationArguments is "OpenDownloadFolder")
+            {
+                string wingetTempPath = Path.Combine(Path.GetTempPath(), "WinGet");
+                if (Directory.Exists(wingetTempPath))
+                {
+                    await Windows.System.Launcher.LaunchFolderPathAsync(wingetTempPath);
+                }
+                else
+                {
+                    await Windows.System.Launcher.LaunchFolderPathAsync(Path.GetTempPath());
+                }
+                if (Program.ApplicationRoot is null)
+                {
+                    Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
+                }
+            }
+            else if(AppNotificationArguments is "OpenSettings")
+            {
+                await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
                 if (Program.ApplicationRoot is null)
                 {
                     Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
@@ -72,35 +97,12 @@ namespace GetStoreApp.Services.Root
 
                 switch (args)
                 {
+                    // 正常打开应用
                     case "OpenApp":
                         {
                             break;
                         }
-                    case "DownloadingNow":
-                        {
-                            if (NavigationService.GetCurrentPageType() != typeof(DownloadPage))
-                            {
-                                NavigationService.NavigateTo(typeof(DownloadPage));
-                            }
-                            break;
-                        }
-                    case "NotDownload":
-                        {
-                            if (NavigationService.GetCurrentPageType() != typeof(DownloadPage))
-                            {
-                                NavigationService.NavigateTo(typeof(DownloadPage));
-                            }
-                            break;
-                        }
                     case "ViewDownloadPage":
-                        {
-                            if (NavigationService.GetCurrentPageType() != typeof(DownloadPage))
-                            {
-                                NavigationService.NavigateTo(typeof(DownloadPage));
-                            }
-                            break;
-                        }
-                    case "DownloadCompleted":
                         {
                             if (NavigationService.GetCurrentPageType() != typeof(DownloadPage))
                             {
@@ -117,28 +119,18 @@ namespace GetStoreApp.Services.Root
         }
 
         /// <summary>
-        /// 处理不需要主线程就能处理的应用通知
-        /// </summary>
-        public static async Task HandleWithoutMainThreadNotificationAsync()
-        {
-            await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
-        }
-
-        /// <summary>
         /// 显示通知
         /// </summary>
-        public static void Show(string notificationKey, params string[] notificationContent)
+        public static void Show(NotificationArgs notificationKey, params string[] notificationContent)
         {
             if (!NotificationService.AppNotification)
             {
                 return;
             }
 
-            AppNotification notification;
-
             switch (notificationKey)
             {
-                case "DownloadAborted":
+                case NotificationArgs.DownloadAborted:
                     {
                         if (notificationContent.Length is 0)
                         {
@@ -148,7 +140,7 @@ namespace GetStoreApp.Services.Root
                         // 有任务处于正在下载状态时被迫中断显示相应的通知
                         if (notificationContent[0] is "DownloadingNow")
                         {
-                            notification = new AppNotification(ResourceService.GetLocalized("/Notification/DownloadingNowOfflineMode"));
+                            AppNotification notification = new AppNotification(ResourceService.GetLocalized("Notification/DownloadingNowOfflineMode"));
                             notification.ExpiresOnReboot = true;
                             AppNotificationManager.Show(notification);
                         }
@@ -156,7 +148,7 @@ namespace GetStoreApp.Services.Root
                         // 没有任务下载时显示相应的通知
                         else if (notificationContent[0] is "NotDownload")
                         {
-                            notification = new AppNotification(ResourceService.GetLocalized("/Notification/NotDownloadOfflineMode"));
+                            AppNotification notification = new AppNotification(ResourceService.GetLocalized("Notification/NotDownloadOfflineMode"));
                             notification.ExpiresOnReboot = true;
                             AppNotificationManager.Show(notification);
                         }
@@ -164,7 +156,7 @@ namespace GetStoreApp.Services.Root
                     }
 
                 // 安装应用显示相应的通知
-                case "InstallApp":
+                case NotificationArgs.InstallApp:
                     {
                         if (notificationContent.Length is 0)
                         {
@@ -174,13 +166,13 @@ namespace GetStoreApp.Services.Root
                         // 成功安装应用通知
                         if (notificationContent[0] is "Successfully")
                         {
-                            notification = new AppNotification(string.Format(ResourceService.GetLocalized("/Notification/InstallSuccessfully"), notificationContent[1]));
+                            AppNotification notification = new AppNotification(string.Format(ResourceService.GetLocalized("Notification/InstallSuccessfully"), notificationContent[1]));
                             notification.ExpiresOnReboot = true;
                             AppNotificationManager.Show(notification);
                         }
                         else if (notificationContent[0] is "Error")
                         {
-                            notification = new AppNotification(string.Format(ResourceService.GetLocalized("/Notification/InstallError"), notificationContent[1], notificationContent[2]));
+                            AppNotification notification = new AppNotification(string.Format(ResourceService.GetLocalized("Notification/InstallError"), notificationContent[1], notificationContent[2]));
                             notification.ExpiresOnReboot = true;
                             AppNotificationManager.Show(notification);
                         }
@@ -188,9 +180,57 @@ namespace GetStoreApp.Services.Root
                     }
 
                 // 所有任务下载完成时显示通知
-                case "DownloadCompleted":
+                case NotificationArgs.DownloadCompleted:
                     {
-                        notification = new AppNotification(ResourceService.GetLocalized("/Notification/DownloadCompleted"));
+                        AppNotification notification = new AppNotification(ResourceService.GetLocalized("Notification/DownloadCompleted"));
+                        notification.ExpiresOnReboot = true;
+                        AppNotificationManager.Show(notification);
+                        break;
+                    }
+                // 应用安装成功通知
+                case NotificationArgs.InstallSuccessfully:
+                    {
+                        AppNotification notification = new AppNotification(string.Format(ResourceService.GetLocalized("Notification/WinGetInstallSuccessfully"), notificationContent[0]));
+                        notification.ExpiresOnReboot = true;
+                        AppNotificationManager.Show(notification);
+                        break;
+                    }
+                // 应用安装失败通知
+                case NotificationArgs.InstallFailed:
+                    {
+                        AppNotification notification = new AppNotification(string.Format(ResourceService.GetLocalized("Notification/WinGetInstallFailed"), notificationContent[0]));
+                        notification.ExpiresOnReboot = true;
+                        AppNotificationManager.Show(notification);
+                        break;
+                    }
+                // 应用卸载成功通知
+                case NotificationArgs.UnInstallSuccessfully:
+                    {
+                        AppNotification notification = new AppNotification(string.Format(ResourceService.GetLocalized("Notification/WinGetUnInstallSuccessfully"), notificationContent[0]));
+                        notification.ExpiresOnReboot = true;
+                        AppNotificationManager.Show(notification);
+                        break;
+                    }
+                // 应用卸载失败通知
+                case NotificationArgs.UnInstallFailed:
+                    {
+                        AppNotification notification = new AppNotification(string.Format(ResourceService.GetLocalized("Notification/WinGetUnInstallFailed"), notificationContent[0]));
+                        notification.ExpiresOnReboot = true;
+                        AppNotificationManager.Show(notification);
+                        break;
+                    }
+                // 应用升级成功通知
+                case NotificationArgs.UpgradeSuccessfully:
+                    {
+                        AppNotification notification = new AppNotification(string.Format(ResourceService.GetLocalized("Notification/WinGetUpgradeSuccessfully"), notificationContent[0]));
+                        notification.ExpiresOnReboot = true;
+                        AppNotificationManager.Show(notification);
+                        break;
+                    }
+                // 应用升级失败通知
+                case NotificationArgs.UpgradeFailed:
+                    {
+                        AppNotification notification = new AppNotification(string.Format(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed"), notificationContent[0]));
                         notification.ExpiresOnReboot = true;
                         AppNotificationManager.Show(notification);
                         break;

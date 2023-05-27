@@ -189,7 +189,8 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                                 if (installingItem.AppID == searchApps.AppID)
                                                 {
                                                     installingItem.InstallProgressState = PackageInstallProgressState.Downloading;
-                                                    installingItem.DownloadProgress = Math.Round(installProgress.DownloadProgress, 2) * 100;
+                                                    installingItem.DownloadProgress = Math.Round(installProgress.DownloadProgress * 100, 2); installingItem.DownloadedFileSize = Convert.ToString(FileSizeHelper.ConvertFileSizeToString(installProgress.BytesDownloaded));
+                                                    installingItem.TotalFileSize = Convert.ToString(FileSizeHelper.ConvertFileSizeToString(installProgress.BytesRequired));
                                                     break;
                                                 }
                                             }
@@ -206,6 +207,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                                 if (installingItem.AppID == searchApps.AppID)
                                                 {
                                                     installingItem.InstallProgressState = PackageInstallProgressState.Installing;
+                                                    installingItem.DownloadProgress = 100;
                                                     break;
                                                 }
                                             }
@@ -238,6 +240,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                                 if (installingItem.AppID == searchApps.AppID)
                                                 {
                                                     installingItem.InstallProgressState = PackageInstallProgressState.Finished;
+                                                    installingItem.DownloadProgress = 100;
                                                     break;
                                                 }
                                             }
@@ -258,7 +261,9 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                 AppID = searchApps.AppID,
                                 AppName = searchApps.AppName,
                                 DownloadProgress = 0,
-                                InstallProgressState = PackageInstallProgressState.Queued
+                                InstallProgressState = PackageInstallProgressState.Queued,
+                                DownloadedFileSize = FileSizeHelper.ConvertFileSizeToString(0),
+                                TotalFileSize = FileSizeHelper.ConvertFileSizeToString(0)
                             });
                             WinGetVMInstance.InstallingStateDict.Add(searchApps.AppID, installTokenSource);
                         }
@@ -268,6 +273,8 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                         // 获取安装完成后的结果信息
                         if (installResult.Status == InstallResultStatus.Ok)
                         {
+                            AppNotificationService.Show(NotificationArgs.InstallSuccessfully, searchApps.AppName);
+
                             // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
                             if (installResult.RebootRequired)
                             {
@@ -302,7 +309,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                         }
                         else
                         {
-                            await new InstallFailedDialog(searchApps.AppName).ShowAsync();
+                            AppNotificationService.Show(NotificationArgs.InstallFailed, searchApps.AppName);
                         }
 
                         // 应用安装失败，将当前任务状态修改为可安装状态
@@ -355,8 +362,6 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                             }
                             WinGetVMInstance.InstallingStateDict.Remove(searchApps.AppID);
                         }
-
-                        await new InstallFailedDialog(searchApps.AppName).ShowAsync();
                     }
                     // 其他异常
                     catch (Exception)
@@ -385,7 +390,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                             WinGetVMInstance.InstallingStateDict.Remove(searchApps.AppID);
                         }
 
-                        await new InstallFailedDialog(searchApps.AppName).ShowAsync();
+                        AppNotificationService.Show(NotificationArgs.InstallFailed, searchApps.AppName);
                     }
                 }
             };

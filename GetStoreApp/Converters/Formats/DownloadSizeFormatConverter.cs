@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml.Data;
+﻿using GetStoreApp.Helpers.Root;
+using Microsoft.UI.Xaml.Data;
 using System;
 using System.Collections.Generic;
 
@@ -24,23 +25,7 @@ namespace GetStoreApp.Converters.Formats
             }
 
             double result = System.Convert.ToDouble(value);
-
-            if (result / SizeDict["GB"] >= 1)
-            {
-                return string.Format("{0}{1}", Math.Round(System.Convert.ToDouble(result) / SizeDict["GB"], 2), "GB");
-            }
-            else if (result / SizeDict["MB"] >= 1)
-            {
-                return string.Format("{0}{1}", Math.Round(System.Convert.ToDouble(result) / SizeDict["MB"], 2), "MB");
-            }
-            else if (result / SizeDict["KB"] >= 1)
-            {
-                return string.Format("{0}{1}", Math.Round(System.Convert.ToDouble(result) / SizeDict["KB"], 2), "KB");
-            }
-            else
-            {
-                return string.Format("{0}{1}", result, "B");
-            }
+            return FileSizeHelper.ConvertFileSizeToString(result);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

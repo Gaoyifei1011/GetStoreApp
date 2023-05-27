@@ -42,7 +42,7 @@
 
         <experiment:NetWorkMonitorControl x:Name="NetWorkMonitor" />
 
-        <experiment:OpenConfigFIleControl />
+        <experiment:OpenConfigFileControl />
 
         <NavigationViewItemSeparator />
 

@@ -411,17 +411,8 @@
   <data name="RebootTitle" xml:space="preserve">
     <value>重启设备提示</value>
   </data>
-  <data name="UnInstallFailedContent" xml:space="preserve">
-    <value>{0}应用卸载失败，请检查您是否有卸载应用的权限</value>
-  </data>
   <data name="UnInstallNeedReboot" xml:space="preserve">
     <value>{0}应用已卸载完成，部分更改需要重启后生效，请问您是否需要重启设备？</value>
-  </data>
-  <data name="UnInstallFailedTitle" xml:space="preserve">
-    <value>卸载失败提示</value>
-  </data>
-  <data name="UnInstallInSettings" xml:space="preserve">
-    <value>您或者可以尝试在设置中卸载您的应用</value>
   </data>
   <data name="OpenSettings" xml:space="preserve">
     <value>打开"设置"</value>
@@ -431,17 +422,5 @@
   </data>
   <data name="SearchNeedReboot" xml:space="preserve">
     <value>{0}应用已安装完成，部分更改需要重启后生效，请问您是否需要重启设备？</value>
-  </data>
-  <data name="InstallFailedContent" xml:space="preserve">
-    <value>{0}应用安装失败，请检查您是否有安装应用的权限</value>
-  </data>
-  <data name="InstallFailedTitle" xml:space="preserve">
-    <value>安装失败提示</value>
-  </data>
-  <data name="InstallManually" xml:space="preserve">
-    <value>您或者可以尝试手动安装该应用</value>
-  </data>
-  <data name="OpenDownloadFolder" xml:space="preserve">
-    <value>打开下载目录</value>
   </data>
 </root>

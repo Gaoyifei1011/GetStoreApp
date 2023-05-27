@@ -61,7 +61,7 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
             }
         }
 
-        private void DisplayTimerTick(object sender, object e)
+        private void DisplayTimerTick(object sender, object args)
         {
             if (CountDown > 0)
             {
