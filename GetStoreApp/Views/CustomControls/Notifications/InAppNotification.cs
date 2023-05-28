@@ -118,7 +118,7 @@ namespace GetStoreApp.Views.CustomControls.Notifications
         }
 
         /// <summary>
-        /// 显示弹窗
+        /// 显示应用内通知
         /// </summary>
         public void Show()
         {
@@ -129,7 +129,7 @@ namespace GetStoreApp.Views.CustomControls.Notifications
         }
 
         /// <summary>
-        /// 设置PopUp的显示位置
+        /// 设置应用内通知的显示位置
         /// </summary>
         private void SetPopUpPlacement()
         {

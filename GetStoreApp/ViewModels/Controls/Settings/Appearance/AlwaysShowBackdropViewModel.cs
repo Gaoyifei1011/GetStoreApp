@@ -32,7 +32,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
             if (toggleSwitch is not null)
             {
                 await AlwaysShowBackdropService.SetAlwaysShowBackdropAsync(toggleSwitch.IsOn);
-                AlwaysShowBackdropValue = false;
+                AlwaysShowBackdropValue = toggleSwitch.IsOn;
             }
         }
     }

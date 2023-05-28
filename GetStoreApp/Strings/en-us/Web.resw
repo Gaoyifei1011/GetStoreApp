@@ -133,7 +133,7 @@
     <value>Unfortunately, the web page opens abnormally and the application detects that your system does not have Microsoft Edge WebView2 installed at runtime.</value>
   </data>
   <data name="LoadFailedTitle" xml:space="preserve">
-    <value>Welcome to the Get Store App Web version feature</value>
+    <value>Welcome to the Get Store App Web version</value>
   </data>
   <data name="Loading" xml:space="preserve">
     <value>(Loading)</value>

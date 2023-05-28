@@ -135,9 +135,6 @@
   <data name="BeginnerGuide" xml:space="preserve">
     <value>Beginner's guide</value>
   </data>
-  <data name="BeginnerGuideDescription" xml:space="preserve">
-    <value>Once the app opens, select the type of link and channel you want to get. When the selection is complete, enter the link content you want to get, and when the input is complete, click the 'Get Link' button to get the app installation package corresponding to the store link. After successful acquisition, your input record will be stored, and the next time you open the app, you can quickly get the app installation package corresponding to the store link.</value>
-  </data>
   <data name="BlockMapButton" xml:space="preserve">
     <value>Learn about BlockMap files</value>
   </data>
@@ -255,6 +252,9 @@
   <data name="LaunchParametersDescription" xml:space="preserve">
     <value>The desktop application now supports parameter operation, please click the parameter description below for specific usage</value>
   </data>
+  <data name="LearnWinGetConfig" xml:space="preserve">
+    <value>learn config options</value>
+  </data>
   <data name="LinkFilter" xml:space="preserve">
     <value>Link filtering instructions</value>
   </data>
@@ -263,6 +263,12 @@
   </data>
   <data name="MaintenanceDescription" xml:space="preserve">
     <value>View the project schedule</value>
+  </data>
+  <data name="MicrosoftStore" xml:space="preserve">
+    <value>1. Microsoft Store</value>
+  </data>
+  <data name="MicrosoftStoreDescription" xml:space="preserve">
+    <value>Once the app opens, select the type of link and channel you want to get. When the selection is complete, enter the link content you want to get, and when the input is complete, click the 'Get Link' button to get the app installation package corresponding to the store link. After successful acquisition, your input record will be stored, and the next time you open the app, you can quickly get the app installation package corresponding to the store link.</value>
   </data>
   <data name="Others" xml:space="preserve">
     <value>Others</value>
@@ -386,5 +392,20 @@
   </data>
   <data name="UseInstruction" xml:space="preserve">
     <value>Direction for use</value>
+  </data>
+  <data name="WinGetConfig" xml:space="preserve">
+    <value>WinGet config options description</value>
+  </data>
+  <data name="WinGetConfigDescription" xml:space="preserve">
+    <value>The Windows package Manager client experience can be customized by customizing WinGet's configuration file. You can change the default values and experiment with the experimental features already implemented in the client.</value>
+  </data>
+  <data name="WinGetPackage" xml:space="preserve">
+    <value>2. WinGet package</value>
+  </data>
+  <data name="WinGetPackageDescription1" xml:space="preserve">
+    <value>Windows Package Manager is a comprehensive package manager solution that consists of a command line tool and set of services for installing applications on Windows 10 and Windows 11.</value>
+  </data>
+  <data name="WinGetPackageDescription2" xml:space="preserve">
+    <value>The WinGet application provides a package-friendly graphical interface that includes searching and installing required applications, managing installed and upgradeable applications on the device. It is easy to operate and manage traditional applications (i.e. non-store applications) on the device.</value>
   </data>
 </root>

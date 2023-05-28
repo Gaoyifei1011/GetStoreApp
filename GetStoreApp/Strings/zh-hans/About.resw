@@ -135,9 +135,6 @@
   <data name="BeginnerGuide" xml:space="preserve">
     <value>新手指南</value>
   </data>
-  <data name="BeginnerGuideDescription" xml:space="preserve">
-    <value>应用打开后，选择您要获取的链接类型和通道类型。选择完成后，输入您要获取的链接内容，输入完成后，点击‘获取链接’按钮即可获取到商店链接对应的应用安装包。在成功获取后，您的输入记录将被储存，下一次打开应用后就可以快速获取到商店链接对应的应用安装包。</value>
-  </data>
   <data name="BlockMapButton" xml:space="preserve">
     <value>了解包块映射文件</value>
   </data>
@@ -252,6 +249,9 @@
   <data name="LaunchParametersDescription" xml:space="preserve">
     <value>桌面应用程序现在已经开始支持参数运行了，具体的使用方法请点击下方的参数说明</value>
   </data>
+  <data name="LearnWinGetConfig" xml:space="preserve">
+    <value>了解配置选项</value>
+  </data>
   <data name="LinkFilter" xml:space="preserve">
     <value>链接过滤说明</value>
   </data>
@@ -260,6 +260,12 @@
   </data>
   <data name="MaintenanceDescription" xml:space="preserve">
     <value>查看项目计划表</value>
+  </data>
+  <data name="MicrosoftStore" xml:space="preserve">
+    <value>1.微软商店</value>
+  </data>
+  <data name="MicrosoftStoreDescription" xml:space="preserve">
+    <value>应用打开后，选择您要获取的链接类型和通道类型。选择完成后，输入您要获取的链接内容，输入完成后，点击‘获取链接’按钮即可获取到商店链接对应的应用安装包。在成功获取后，您的输入记录将被储存，下一次打开应用后就可以快速获取到商店链接对应的应用安装包。</value>
   </data>
   <data name="Others" xml:space="preserve">
     <value>其他</value>
@@ -383,5 +389,20 @@
   </data>
   <data name="UseInstruction" xml:space="preserve">
     <value>使用说明</value>
+  </data>
+  <data name="WinGetConfig" xml:space="preserve">
+    <value>WinGet 配置选项说明</value>
+  </data>
+  <data name="WinGetConfigDescription" xml:space="preserve">
+    <value>通过自定义 WinGet 的配置文件可以自定义 Windows 程序包管理器客户端体验。 你可以更改默认值，并体验已在客户端中实现的试验性功能。</value>
+  </data>
+  <data name="WinGetPackage" xml:space="preserve">
+    <value>2.WinGet 程序包</value>
+  </data>
+  <data name="WinGetPackageDescription1" xml:space="preserve">
+    <value>Windows 程序包管理器是一个综合的程序包管理器解决方案，由一个命令行工具和一组用于在 Windows 10 和 Windows 11 上安装应用程序的服务组成。</value>
+  </data>
+  <data name="WinGetPackageDescription2" xml:space="preserve">
+    <value>应用提供了 WinGet 程序包友好的图形化操作界面，其中包括搜索并安装需要的应用，管理设备上已安装的应用和可升级的应用。方便对设备上的传统应用（即非商店应用）进行操作和管理。</value>
   </data>
 </root>

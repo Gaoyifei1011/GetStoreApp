@@ -147,11 +147,29 @@
   <data name="DownloadedProgressToolTip" xml:space="preserve">
     <value>Download progress: {0} completed</value>
   </data>
+  <data name="DownloadFromGithub" xml:space="preserve">
+    <value>Download from Gtihub</value>
+  </data>
+  <data name="DownloadFromGithubToolTip" xml:space="preserve">
+    <value>Download from Github (official, preview, developer, etc.)</value>
+  </data>
+  <data name="DownloadFromMicrosoftStore" xml:space="preserve">
+    <value>Download from the Microsoft Store</value>
+  </data>
+  <data name="DownloadFromMicrosoftStoreToolTip" xml:space="preserve">
+    <value>Download from Microsoft Store (official version)</value>
+  </data>
   <data name="DownloadingToolTip" xml:space="preserve">
     <value>Downloading...</value>
   </data>
   <data name="FinishedToolTip" xml:space="preserve">
     <value>Finished</value>
+  </data>
+  <data name="InitializeFailedDescription" xml:space="preserve">
+    <value>Unfortunately, the WinGet package manager initialization exception occurred and the application detected that the WinGet package manager was not installed on your system.</value>
+  </data>
+  <data name="InitializeFailedTitle" xml:space="preserve">
+    <value>Welcome to Get Store application WinGet Package Manager</value>
   </data>
   <data name="Install" xml:space="preserve">
     <value>Install</value>
@@ -182,6 +200,21 @@
   </data>
   <data name="InstallStateToolTip" xml:space="preserve">
     <value>Install state: {0}</value>
+  </data>
+  <data name="Introduce" xml:space="preserve">
+    <value>Introduction to WinGet Package Manager:</value>
+  </data>
+  <data name="IntroduceContent1" xml:space="preserve">
+    <value>Windows Package Manager is a comprehensive package manager solution that consists of a command line tool and set of services for installing applications on Windows 10 and Windows 11.</value>
+  </data>
+  <data name="IntroduceContent2" xml:space="preserve">
+    <value>The winget tool enables users to discover, install, upgrade, remove and configure applications on Windows 10 and Windows 11 computers.</value>
+  </data>
+  <data name="LearnMore" xml:space="preserve">
+    <value>Learn more</value>
+  </data>
+  <data name="LearnMoreToolTip" xml:space="preserve">
+    <value>Learn more about the WinGet package manager description</value>
   </data>
   <data name="LoadingInstalledApps" xml:space="preserve">
     <value>Please wait while loading the list of installed applications...</value>

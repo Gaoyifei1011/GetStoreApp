@@ -17,7 +17,7 @@
     <EnableUnsafeBinaryFormatterInDesigntimeLicenseContextSerialization>false</EnableUnsafeBinaryFormatterInDesigntimeLicenseContextSerialization>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <FileAlignment>512</FileAlignment>
-    <FileVersion>1.6.527.0</FileVersion>
+    <FileVersion>1.6.528.0</FileVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
@@ -47,7 +47,7 @@
     <TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
     <TrimMode>partial</TrimMode>
     <TrimUnusedDependencies>true</TrimUnusedDependencies>
-    <Version>1.6.527.0</Version>
+    <Version>1.6.528.0</Version>
     <UseWindowsForms>False</UseWindowsForms>
     <UseWinUI>true</UseWinUI>
     <UseWPF>False</UseWPF>
@@ -111,9 +111,10 @@
     <Content Update="Assets\Images\CloudflareValidation.png" CopyToOutputDirectory="Always" />
     <Content Update="Assets\Images\DesktopApps.png" CopyToOutputDirectory="Always" />
     <None Update="Assets\Resources\LICENSE" CopyToOutputDirectory="Never" />
+    
     <Content Include="Fonts\Segoe Fluent Icons.ttf" CopyToOutputDirectory="Always" />
     <Content Include="Fonts\Settings Fluent Icons.ttf" CopyToOutputDirectory="Always" />
-    <Content Include="lib\Microsoft.Management.Deployment.winmd" Link="Microsoft.Management.Deployment.winmd" CopyToOutputDirectory="Always" />
+    <Content Include="lib\Microsoft.Management.Deployment.winmd" ExcludeFromSingleFile="true" Link="Microsoft.Management.Deployment.winmd" CopyToOutputDirectory="Always" />
 
     <CsWinRTInputs Include="lib\Microsoft.Management.Deployment.winmd" />
 
@@ -165,78 +166,78 @@
     <None Remove="Styles\TextBlock.xaml" />
     <None Remove="Styles\ToggleSwitch.xaml" />
     <None Remove="Styles\WindowChrome.xaml" />
+    
+    <None Remove="UI\Controls\About\HeaderControl.xaml" />
+    <None Remove="UI\Controls\About\InstructionsControl.xaml" />
+    <None Remove="UI\Controls\About\IntroductionControl.xaml" />
+    <None Remove="UI\Controls\About\PrecautionControl.xaml" />
+    <None Remove="UI\Controls\About\ReferenceControl.xaml" />
+    <None Remove="UI\Controls\About\SettingsHelpControl.xaml" />
+    <None Remove="UI\Controls\About\ThanksControl.xaml" />
+    
+    <None Remove="UI\Controls\Download\CompletedControl.xaml" />
+    <None Remove="UI\Controls\Download\DownloadingControl.xaml" />
+    <None Remove="UI\Controls\Download\UnfinishedControl.xaml" />
+    
+    <None Remove="UI\Controls\Settings\Advanced\AppExitControl.xaml" />
+    <None Remove="UI\Controls\Settings\Advanced\ExperimentalFeaturesControl.xaml" />
+    <None Remove="UI\Controls\Settings\Advanced\InstallModeControl.xaml" />
+    <None Remove="UI\Controls\Settings\Advanced\TraceCleanupControl.xaml" />
+    
+    <None Remove="UI\Controls\Settings\Appearance\AlwaysShowBackdropControl.xaml" />    
+    <None Remove="UI\Controls\Settings\Appearance\BackdropControl.xaml" />
+    <None Remove="UI\Controls\Settings\Appearance\LanguageControl.xaml" />
+    <None Remove="UI\Controls\Settings\Appearance\ThemeControl.xaml" />
+    <None Remove="UI\Controls\Settings\Appearance\TopMostControl.xaml" />
+    
+    <None Remove="UI\Controls\Settings\Common\DownloadOptionsControl.xaml" />
+    <None Remove="UI\Controls\Settings\Common\HistoryRecordControl.xaml" />
+    <None Remove="UI\Controls\Settings\Common\LinkFilterControl.xaml" />
+    <None Remove="UI\Controls\Settings\Common\NotificationControl.xaml" />
+    <None Remove="UI\Controls\Settings\Common\RegionControl.xaml" />
+    <None Remove="UI\Controls\Settings\Common\UseInstructionControl.xaml" />
+    <None Remove="UI\Controls\Settings\Common\WinGetConfigControl.xaml" />
+    
+    <None Remove="UI\Controls\Settings\Experiment\NetWorkMonitorControl.xaml" />
+    <None Remove="UI\Controls\Settings\Experiment\OpenConfigFileControl.xaml" />
+
+    <None Remove="UI\Controls\Store\HistoryLiteControl.xaml" />
+    <None Remove="UI\Controls\Store\RequestControl.xaml" />
+    <None Remove="UI\Controls\Store\ResultControl.xaml" />
+    <None Remove="UI\Controls\Store\StatusBarControl.xaml" />
+
+    <None Remove="UI\Controls\Web\LoadFailedControl.xaml" />
+    
+    <None Remove="UI\Controls\Window\AppTitleBarControl.xaml" />
+    
+    <None Remove="UI\Controls\WinGet\InstalledAppsControl.xaml" />
+    <None Remove="UI\Controls\WinGet\SearchAppsControl.xaml" />
+    <None Remove="UI\Controls\WinGet\InitializeFailedControl.xaml" />
     <None Remove="UI\Controls\WinGet\UpgradableAppsControl.xaml" />
     
-    <None Remove="UI\Dialogs\Controls\About\HeaderControl.xaml" />
-    <None Remove="UI\Dialogs\Controls\About\InstructionsControl.xaml" />
-    <None Remove="UI\Dialogs\Controls\About\IntroductionControl.xaml" />
-    <None Remove="UI\Dialogs\Controls\About\PrecautionControl.xaml" />
-    <None Remove="UI\Dialogs\Controls\About\ReferenceControl.xaml" />
-    <None Remove="UI\Dialogs\Controls\About\SettingsHelpControl.xaml" />
-    <None Remove="UI\Dialogs\Controls\About\ThanksControl.xaml" />
-    
-    <None Remove="UI\Dialogs\Controls\Download\CompletedControl.xaml" />
-    <None Remove="UI\Dialogs\Controls\Download\DownloadingControl.xaml" />
-    <None Remove="UI\Dialogs\Controls\Download\UnfinishedControl.xaml" />
-    
-    <None Remove="UI\Dialogs\Controls\Settings\Advanced\AppExitControl.xaml" />
-    <None Remove="UI\Dialogs\Controls\Settings\Advanced\ExperimentalFeaturesControl.xaml" />
-    <None Remove="UI\Dialogs\Controls\Settings\Advanced\InstallModeControl.xaml" />
-    <None Remove="UI\Dialogs\Controls\Settings\Advanced\TraceCleanupControl.xaml" />
-
-    <None Remove="UI\Dialogs\Controls\Store\HistoryLiteControl.xaml" />
-    <None Remove="UI\Dialogs\Controls\Store\RequestControl.xaml" />
-    <None Remove="UI\Dialogs\Controls\Store\ResultControl.xaml" />
-    <None Remove="UI\Dialogs\Controls\Store\StatusBarControl.xaml" />
-    
-    <None Remove="UI\Dialogs\Controls\Settings\Appearance\AlwaysShowBackdropControl.xaml" />    
-    <None Remove="UI\Dialogs\Controls\Settings\Appearance\BackdropControl.xaml" />
-    <None Remove="UI\Dialogs\Controls\Settings\Appearance\LanguageControl.xaml" />
-    <None Remove="UI\Dialogs\Controls\Settings\Appearance\ThemeControl.xaml" />
-    <None Remove="UI\Dialogs\Controls\Settings\Appearance\TopMostControl.xaml" />
-    
-    <None Remove="UI\Dialogs\Controls\Settings\Common\DownloadOptionsControl.xaml" />
-    <None Remove="UI\Dialogs\Controls\Settings\Common\HistoryRecordControl.xaml" />
-    <None Remove="UI\Dialogs\Controls\Settings\Common\LinkFilterControl.xaml" />
-    <None Remove="UI\Dialogs\Controls\Settings\Common\NotificationControl.xaml" />
-    <None Remove="UI\Dialogs\Controls\Settings\Common\RegionControl.xaml" />
-    <None Remove="UI\Dialogs\Controls\Settings\Common\UseInstructionControl.xaml" />
-    
-    <None Remove="UI\Dialogs\Controls\Settings\Experiment\NetWorkMonitorControl.xaml" />
-    <None Remove="UI\Dialogs\Controls\Settings\Experiment\OpenConfigFileControl.xaml" />
-
-    <None Remove="UI\Dialogs\Controls\Web\LoadFailedControl.xaml" />
-    
-    <None Remove="UI\Dialogs\Controls\Window\AppTitleBarControl.xaml" />
-
-    <None Remove="UI\Dialogs\Controls\WinGet\InstalledAppsControl.xaml" />
-
-    <None Remove="UI\Dialogs\Controls\WinGet\SearchAppsControl.xaml" />
-    
     <None Remove="UI\Dialogs\About\AppInformationDialog.xaml" />
+    <None Remove="UI\Dialogs\About\CloudflareValidationDialog.xaml" />
     <None Remove="UI\Dialogs\About\ConsoleStartupArgsDialog.xaml" />
-    
+    <None Remove="UI\Dialogs\About\DesktopAppsDialog.xaml" />
+    <None Remove="UI\Dialogs\About\DesktopStartupArgsDialog.xaml" />
+    <None Remove="UI\Dialogs\About\LicenseDialog.xaml" />
+
+    <None Remove="UI\Dialogs\Common\AppRunningDialog.xaml" />
+    <None Remove="UI\Dialogs\Common\ClosingWindowDialog.xaml" />
+    <None Remove="UI\Dialogs\Common\DeletePromptDialog.xaml" />
+    <None Remove="UI\Dialogs\Common\DownloadNotifyDialog.xaml" />
     <None Remove="UI\Dialogs\Common\DPIChangedNotifyDialog.xaml" />
+    <None Remove="UI\Dialogs\Common\SelectEmptyPromptDialog.xaml" />
 
-    <None Remove="UI\Dialogs\ContentDialogs\About\CloudflareValidationDialog.xaml" />
-    <None Remove="UI\Dialogs\ContentDialogs\About\DesktopAppsDialog.xaml" />
-    <None Remove="UI\Dialogs\ContentDialogs\About\DesktopStartupArgsDialog.xaml" />
-    <None Remove="UI\Dialogs\ContentDialogs\About\LicenseDialog.xaml" />
-
-    <None Remove="UI\Dialogs\ContentDialogs\Common\AppRunningDialog.xaml" />
-    <None Remove="UI\Dialogs\ContentDialogs\Common\ClosingWindowDialog.xaml" />
-    <None Remove="UI\Dialogs\ContentDialogs\Common\DeletePromptDialog.xaml" />
-    <None Remove="UI\Dialogs\ContentDialogs\Common\DownloadNotifyDialog.xaml" />
-    <None Remove="UI\Dialogs\ContentDialogs\Common\SelectEmptyPromptDialog.xaml" />
+    <None Remove="UI\Dialogs\Download\FileInformationDialog.xaml" />
+    <None Remove="UI\Dialogs\Download\InstallingNotifyDialog.xaml" />
     
-    <None Remove="UI\Dialogs\ContentDialogs\Download\FileInformationDialog.xaml" />
-    <None Remove="UI\Dialogs\ContentDialogs\Download\InstallingNotifyDialog.xaml" />
+    <None Remove="UI\Dialogs\Settings\ExperimentalConfigDialog.xaml" />
+    <None Remove="UI\Dialogs\Settings\RestartAppsDialog.xaml" />
+    <None Remove="UI\Dialogs\Settings\TraceCleanupPromptDialog.xaml" />
     
-    <None Remove="UI\Dialogs\ContentDialogs\Settings\ExperimentalConfigDialog.xaml" />
-    <None Remove="UI\Dialogs\ContentDialogs\Settings\RestartAppsDialog.xaml" />
-    <None Remove="UI\Dialogs\ContentDialogs\Settings\TraceCleanupPromptDialog.xaml" />
+    <None Remove="UI\Dialogs\Web\CoreWebView2FailedDialog.xaml" />
     
-    <None Remove="UI\Dialogs\ContentDialogs\Web\CoreWebView2FailedDialog.xaml" />
     <None Remove="UI\Dialogs\WinGet\RebootDialog.xaml" />
     
     <None Remove="UI\Notifications\AppInformationCopyNotification.xaml" />
@@ -253,6 +254,7 @@
     <None Remove="UI\Notifications\ShareFailedNotification.xaml" />
     <None Remove="UI\Notifications\WebCacheCleanNotification.xaml" />
     <None Remove="UI\Notifications\WinGetCopyNotification.xaml" />
+    
     <None Remove="Views\CustomControls\Collections\AdaptiveGridView.xaml" />
     <None Remove="Views\CustomControls\DialogsAndFlyouts\AdaptiveFlyout.xaml" />
     <None Remove="Views\CustomControls\MenusAndToolbars\AdaptiveMenuFlyout.xaml" />
@@ -334,6 +336,7 @@
     <Page Update="UI\Controls\Settings\Common\LinkFilterControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Settings\Common\NotificationControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Settings\Common\UseInstructionControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\Settings\Common\WinGetConfigControl.xaml" Generator="MSBuild:Compile" />
 
     <Page Update="UI\Controls\Settings\Experiment\NetWorkMonitorControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Settings\Experiment\OpenConfigFileControl.xaml" Generator="MSBuild:Compile" />
@@ -345,6 +348,7 @@
 
     <Page Update="UI\Controls\Web\LoadFailedControl.xaml" Generator="MSBuild:Compile" />
 
+    <Page Update="UI\Controls\WinGet\InitializeFailedControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\WinGet\InstalledAppsControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\WinGet\SearchAppsControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\WinGet\UpgradableAppsControl.xaml" Generator="MSBuild:Compile" />
@@ -373,6 +377,7 @@
     <Page Update="UI\Dialogs\Settings\TraceCleanupPromptDialog.xaml" Generator="MSBuild:Compile" />
 
     <Page Update="UI\Dialogs\Web\CoreWebView2FailedDialog.xaml" Generator="MSBuild:Compile" />
+    
     <Page Update="UI\Dialogs\WinGet\RebootDialog.xaml" Generator="MSBuild:Compile" />
 
     <Page Update="UI\Notifications\AppInformationCopyNotification.xaml" Generator="MSBuild:Compile" />

@@ -139,6 +139,9 @@ namespace GetStoreApp.ViewModels.Window
             // 设置应用置顶状态
             TopMostService.SetAppTopMost();
 
+            // 初始化 WinGet 程序包安装信息
+            WinGetService.InitializeService();
+
             // 初始化下载监控服务
             DownloadSchedulerService.InitializeDownloadScheduler();
 

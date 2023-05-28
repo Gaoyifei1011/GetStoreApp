@@ -35,7 +35,6 @@
                     Grid.Column="0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
-                    x:Load="{x:Bind ViewModel.IsWebView2Installed}"
                     Background="Transparent"
                     DefaultLabelPosition="Right">
 
@@ -194,9 +193,6 @@
                 NavigationStarting="{x:Bind ViewModel.OnWebView2NavigationStarting}"
                 Source="{x:Bind ViewModel.Source, Mode=OneWay}" />
         </Grid>
-        <wc:LoadFailedControl
-            x:Name="LoadFailed"
-            Grid.Row="0"
-            x:Load="{x:Bind ViewModel.IsWebView2Installed, Converter={StaticResource BooleanToOppositeValueConverter}}" />
+        <wc:LoadFailedControl x:Name="LoadFailed" x:Load="{x:Bind ViewModel.IsWebView2Installed, Converter={StaticResource BooleanToOppositeValueConverter}}" />
     </Grid>
 </Page>

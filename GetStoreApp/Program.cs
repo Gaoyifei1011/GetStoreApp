@@ -51,8 +51,6 @@ namespace GetStoreApp
             {
                 AppNotificationService.Initialize();
                 DesktopLaunchService.InitializeLaunchAsync().Wait();
-
-                WinUILibrary.XamlCheckProcessRequirements();
                 ComWrappersSupport.InitializeComWrappers();
 
                 Application.Start((param) =>
@@ -129,6 +127,7 @@ namespace GetStoreApp
                 await HistoryRecordService.InitializeAsync();
                 await NotificationService.InitializeNotificationAsync();
                 await UseInstructionService.InitializeUseInsVisValueAsync();
+                await WinGetConfigService.InitializeUseDevVersionAsync();
 
                 // 实验功能设置配置
                 await NetWorkMonitorService.InitializeNetWorkMonitorValueAsync();

@@ -50,5 +50,7 @@
         public const string WindowPositionXAxisKey = "WindowPositionXAxis";
 
         public const string WindowPositionYAxisKey = "WindowPositionYAxis";
+
+        public const string WinGetConfigKey = "WinGetConfig";
     }
 }

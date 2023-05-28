@@ -1,4 +1,5 @@
-﻿using GetStoreApp.UI.Dialogs.About;
+﻿using GetStoreApp.Services.Controls.Settings.Appearance;
+using GetStoreApp.UI.Dialogs.About;
 using Microsoft.UI.Xaml;
 using System;
 using Windows.System;
@@ -27,19 +28,27 @@ namespace GetStoreApp.ViewModels.Controls.About
         }
 
         /// <summary>
-        /// 了解包块映射文件
+        /// 了解包文件
         /// </summary>
         public async void OnBlockMapClicked(object sender, RoutedEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri("https://docs.microsoft.com/en-us/uwp/schemas/blockmapschema/app-package-block-map"));
+            await Launcher.LaunchUriAsync(new Uri(string.Format(@"https://docs.microsoft.com/{0}/uwp/schemas/blockmapschema/app-package-block-map", LanguageService.AppLanguage.InternalName)));
         }
 
         /// <summary>
-        /// 了解以".e"开头的文件
+        /// 了解 WinGet 配置选项
+        /// </summary>
+        public async void OnLearnWinGetConfigClicked(object sender, RoutedEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri(string.Format(@"https://docs.microsoft.com/{0}/uwp/schemas/blockmapschema/app-package-block-map", LanguageService.AppLanguage.InternalName)));
+        }
+
+        /// <summary>
+        /// 了解以".e"开头的加密包文件
         /// </summary>
         public async void OnStartWithEClicked(object sender, RoutedEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri("https://datatypes.net/open-eappx-files#:~:text=EAPPX%20file%20is%20a%20Microsoft%20Windows%20Encrypted%20App,applications%20may%20also%20use%20the%20.eappx%20file%20extension."));
+            await Launcher.LaunchUriAsync(new Uri("https://github.com/MicrosoftDocs/msix-docs/blob/main/msix-src/package/create-app-package-with-makeappx-tool.md#encrypt-or-decrypt-a-package-or-bundle"));
         }
 
         /// <summary>

@@ -20,7 +20,11 @@
         <Expander.Content>
             <StackPanel Margin="14,0,10,0">
                 <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/BeginnerGuide')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/BeginnerGuideDescription')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/MicrosoftStore')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/MicrosoftStoreDescription')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/WinGetPackage')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/WinGetPackageDescription1')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/WinGetPackageDescription2')}" />
                 <MenuFlyoutSeparator Margin="0,0,0,8" />
 
                 <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/LaunchParameters')}" />

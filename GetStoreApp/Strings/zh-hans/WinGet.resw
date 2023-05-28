@@ -147,11 +147,29 @@
   <data name="DownloadedProgressToolTip" xml:space="preserve">
     <value>下载进度：已完成{0}%</value>
   </data>
+  <data name="DownloadFromGithub" xml:space="preserve">
+    <value>从 Gtihub 中下载</value>
+  </data>
+  <data name="DownloadFromGithubToolTip" xml:space="preserve">
+    <value>从 Github 中下载（正式版、预览版、开发版等）</value>
+  </data>
+  <data name="DownloadFromMicrosoftStore" xml:space="preserve">
+    <value>从微软商店中下载</value>
+  </data>
+  <data name="DownloadFromMicrosoftStoreToolTip" xml:space="preserve">
+    <value>从微软商店中下载（正式版）</value>
+  </data>
   <data name="DownloadingToolTip" xml:space="preserve">
     <value>下载中...</value>
   </data>
   <data name="FinishedToolTip" xml:space="preserve">
     <value>已完成</value>
+  </data>
+  <data name="InitializeFailedDescription" xml:space="preserve">
+    <value>很不幸的事情发生了，WinGet 程序包管理器初始化异常，应用检测到您的系统没有安装 WinGet 程序包管理器。</value>
+  </data>
+  <data name="InitializeFailedTitle" xml:space="preserve">
+    <value>欢迎使用获取商店应用 WinGet 程序包管理器</value>
   </data>
   <data name="Install" xml:space="preserve">
     <value>安装</value>
@@ -182,6 +200,21 @@
   </data>
   <data name="InstallStateToolTip" xml:space="preserve">
     <value>安装状态：{0}</value>
+  </data>
+  <data name="Introduce" xml:space="preserve">
+    <value>WinGet 程序包管理器介绍：</value>
+  </data>
+  <data name="IntroduceContent1" xml:space="preserve">
+    <value>Windows 程序包管理器是一个综合的程序包管理器解决方案，由一个命令行工具和一组用于在 Windows 10 和 Windows 11 上安装应用程序的服务组成。</value>
+  </data>
+  <data name="IntroduceContent2" xml:space="preserve">
+    <value>用户可以在 Windows 10 和 Windows 11 计算机上使用 winget 工具来发现、安装、升级、删除和配置应用程序。</value>
+  </data>
+  <data name="LearnMore" xml:space="preserve">
+    <value>了解更多</value>
+  </data>
+  <data name="LearnMoreToolTip" xml:space="preserve">
+    <value>了解更多有关 WinGet 程序包管理器的描述信息</value>
   </data>
   <data name="LoadingInstalledApps" xml:space="preserve">
     <value>正在加载已安装应用列表，请稍候...</value>

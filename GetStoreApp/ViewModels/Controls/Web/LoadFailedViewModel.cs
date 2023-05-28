@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using GetStoreApp.Services.Controls.Settings.Appearance;
+using Microsoft.UI.Xaml;
 using System;
 using Windows.System;
 
@@ -14,7 +15,7 @@ namespace GetStoreApp.ViewModels.Controls.Web
         /// </summary>
         public async void OnDownloadWebView2Clicked(object sender, RoutedEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri("https://developer.microsoft.com/zh-cn/microsoft-edge/webview2/"));
+            await Launcher.LaunchUriAsync(new Uri(string.Format(@"https://developer.microsoft.com/{0}/microsoft-edge/webview2/", LanguageService.AppLanguage.InternalName)));
         }
 
         /// <summary>

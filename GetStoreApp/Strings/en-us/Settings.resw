@@ -189,6 +189,18 @@
   <data name="Config" xml:space="preserve">
     <value>Config</value>
   </data>
+  <data name="DevVersion" xml:space="preserve">
+    <value>Dev version</value>
+  </data>
+  <data name="DevVersionInstall" xml:space="preserve">
+    <value>Install</value>
+  </data>
+  <data name="DevVersionInstalled" xml:space="preserve">
+    <value>Installed</value>
+  </data>
+  <data name="DevVersionInstallToolTip" xml:space="preserve">
+    <value>Click to install the dev version</value>
+  </data>
   <data name="DownloadFolder" xml:space="preserve">
     <value>File storage path</value>
   </data>
@@ -330,6 +342,18 @@
   <data name="NotifyIconMenuThemeDescription" xml:space="preserve">
     <value>Sets the theme mode of the context menu in the notification area</value>
   </data>
+  <data name="OfficialVersion" xml:space="preserve">
+    <value>Official version</value>
+  </data>
+  <data name="OfficialVersionInstall" xml:space="preserve">
+    <value>Install</value>
+  </data>
+  <data name="OfficialVersionInstalled" xml:space="preserve">
+    <value>Installed</value>
+  </data>
+  <data name="OfficialVersionInstallToolTip" xml:space="preserve">
+    <value>Click to install the official version</value>
+  </data>
   <data name="OpenConfigFile" xml:space="preserve">
     <value>Open the Aria2 configuration file</value>
   </data>
@@ -339,6 +363,12 @@
   <data name="OpenFolderToolTip" xml:space="preserve">
     <value>Click to access the folder</value>
   </data>
+  <data name="OpenWinGetSettings" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="OpenWinGetSettingsToolTip" xml:space="preserve">
+    <value>Open configuration file</value>
+  </data>
   <data name="RestartApp" xml:space="preserve">
     <value>Application restart</value>
   </data>
@@ -347,6 +377,12 @@
   </data>
   <data name="SelectFolder" xml:space="preserve">
     <value>Please select the directory you want to save</value>
+  </data>
+  <data name="ShowVersion" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="ShowVersionToolTip" xml:space="preserve">
+    <value>View WinGet version information for the device</value>
   </data>
   <data name="StartsWithE" xml:space="preserve">
     <value>Files whose file extension begins with '.e' is not displayed</value>
@@ -411,6 +447,18 @@
   <data name="UseDefaultFolder" xml:space="preserve">
     <value>Use default directory</value>
   </data>
+  <data name="UseDevFirst" xml:space="preserve">
+    <value>Priority use dev version</value>
+  </data>
+  <data name="UseDevFirstOffContent" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="UseDevFirstOnContent" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="UseDevFirstToolTip" xml:space="preserve">
+    <value>When both versions exist, the development version is preferred (takes effect after restart)</value>
+  </data>
   <data name="UseInstruction" xml:space="preserve">
     <value>Instructions for use button</value>
   </data>
@@ -428,5 +476,26 @@
   </data>
   <data name="WindowsNotificationSettings" xml:space="preserve">
     <value>Windows notification settings</value>
+  </data>
+  <data name="WinGetConfig" xml:space="preserve">
+    <value>WinGet config options</value>
+  </data>
+  <data name="WinGetConfigDescription" xml:space="preserve">
+    <value>Customize the WinGet package's function</value>
+  </data>
+  <data name="WinGetConfigInstruction" xml:space="preserve">
+    <value>Config option description</value>
+  </data>
+  <data name="WinGetSettings" xml:space="preserve">
+    <value>WinGet settings</value>
+  </data>
+  <data name="WinGetSettingsDescription" xml:space="preserve">
+    <value>Customizing the WinGet package's function</value>
+  </data>
+  <data name="WinGetVersion" xml:space="preserve">
+    <value>WinGet version</value>
+  </data>
+  <data name="WinGetVersionDescription" xml:space="preserve">
+    <value>Show the current version of the WinGet application</value>
   </data>
 </root>

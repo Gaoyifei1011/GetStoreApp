@@ -52,7 +52,7 @@ namespace GetStoreApp.Services.Root
                     Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
                 }
             }
-            else if(AppNotificationArguments is "OpenDownloadFolder")
+            else if (AppNotificationArguments is "OpenDownloadFolder")
             {
                 string wingetTempPath = Path.Combine(Path.GetTempPath(), "WinGet");
                 if (Directory.Exists(wingetTempPath))
@@ -68,7 +68,7 @@ namespace GetStoreApp.Services.Root
                     Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
                 }
             }
-            else if(AppNotificationArguments is "OpenSettings")
+            else if (AppNotificationArguments is "OpenSettings")
             {
                 await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
                 if (Program.ApplicationRoot is null)

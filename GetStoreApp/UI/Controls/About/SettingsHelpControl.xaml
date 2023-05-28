@@ -102,6 +102,23 @@
 
                 <MenuFlyoutSeparator Margin="0,0,0,8" />
 
+                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/WinGetConfig')}" />
+                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/WinGetConfigDescription')}" />
+
+                <HyperlinkButton
+                    Click="{x:Bind ViewModel.OnLearnWinGetConfigClicked}"
+                    Content="{x:Bind root:ResourceService.GetLocalized('About/LearnWinGetConfig')}"
+                    Style="{StaticResource AboutHyperlinkButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('About/LearnWinGetConfig')}"
+                            Placement="Bottom"
+                            VerticalOffset="25" />
+                    </ToolTipService.ToolTip>
+                </HyperlinkButton>
+
+                <MenuFlyoutSeparator Margin="0,0,0,8" />
+
                 <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/Download')}" />
                 <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/DownloadDescription1')}" />
                 <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/DownloadDescription2')}" />

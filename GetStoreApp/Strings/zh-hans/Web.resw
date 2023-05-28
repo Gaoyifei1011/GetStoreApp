@@ -133,7 +133,7 @@
     <value>很不幸的事情发生了，网页打开异常，应用检测到您的系统没有安装Microsoft Edge WebView2 运行时。</value>
   </data>
   <data name="LoadFailedTitle" xml:space="preserve">
-    <value>欢迎使用获取商店应用网页版功能</value>
+    <value>欢迎使用获取商店应用网页版</value>
   </data>
   <data name="Loading" xml:space="preserve">
     <value>（正在加载中）</value>

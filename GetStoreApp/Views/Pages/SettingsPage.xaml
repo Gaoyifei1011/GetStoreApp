@@ -93,6 +93,8 @@
 
                 <common:LinkFilterControl />
 
+                <common:WinGetConfigControl />
+
                 <common:DownloadOptionsControl x:Name="DownloadOptions" />
 
                 <TextBlock
