@@ -26,6 +26,7 @@
             <MenuFlyoutItem
                 Click="{x:Bind ViewModel.OnRestoreClicked}"
                 IsEnabled="{x:Bind ViewModel.IsWindowMaximized, Mode=OneWay}"
+                Tag="{x:Bind TitlebarMenuFlyout}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Window/Restore')}">
                 <MenuFlyoutItem.Icon>
                     <FontIcon Glyph="&#xEB91;" Style="{StaticResource SegoeFluentStyle}" />
@@ -34,6 +35,7 @@
             <MenuFlyoutItem
                 Click="{x:Bind ViewModel.OnMoveClicked}"
                 CommandParameter="{x:Bind TitlebarMenuFlyout}"
+                Tag="{x:Bind TitlebarMenuFlyout}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Window/Move')}">
                 <MenuFlyoutItem.Icon>
                     <FontIcon Glyph="&#xE7c2;" Style="{StaticResource SegoeFluentStyle}" />

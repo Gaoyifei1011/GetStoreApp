@@ -11,6 +11,7 @@
     Title="{x:Bind root:ResourceService.GetLocalized('Resources/AppDisplayName')}"
     MinWidth="600"
     MinHeight="768"
+    Activated="{x:Bind ViewModel.OnActivated}"
     Closed="{x:Bind ViewModel.OnClosed}"
     ExtendsContentIntoTitleBar="True"
     SystemBackdrop="{x:Bind ViewModel.SystemBackdrop, Mode=OneWay}"

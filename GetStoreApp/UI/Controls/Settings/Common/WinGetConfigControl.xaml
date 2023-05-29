@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dialogsAndFlyouts="using:GetStoreApp.Views.CustomControls.DialogsAndFlyouts"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Common"
     mc:Ignorable="d">
@@ -195,6 +196,75 @@
                                     VerticalOffset="20" />
                             </ToolTipService.ToolTip>
                         </Button>
+                    </Grid>
+                </StackPanel>
+
+                <MenuFlyoutSeparator Margin="0,0,0,4" />
+
+                <StackPanel Margin="0,0,0,6">
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Orientation="Vertical">
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Style="{StaticResource BodyTextBlockStyle}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetInstallMode')}" />
+                            <TextBlock
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetInstallModeDescription')}" />
+                        </StackPanel>
+
+                        <DropDownButton
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Content="{x:Bind ViewModel.WinGetInstallMode.DisplayName, Mode=OneWay}">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    Content="{x:Bind ViewModel.WinGetInstallMode.DisplayName, Mode=OneWay}"
+                                    Placement="Bottom"
+                                    VerticalOffset="20" />
+                            </ToolTipService.ToolTip>
+
+                            <DropDownButton.Flyout>
+                                <menusAndToolbars:AdaptiveMenuFlyout>
+                                    <RadioMenuFlyoutItem
+                                        Click="{x:Bind ViewModel.OnWinGetInstallModeSelectClicked}"
+                                        GroupName="WinGetInstallModeSetting"
+                                        IsChecked="{x:Bind IsItemChecked(ViewModel.WinGetInstallMode.InternalName, ViewModel.WinGetInstallModeList[0].InternalName), Mode=OneWay}"
+                                        Tag="0"
+                                        Text="{x:Bind ViewModel.WinGetInstallModeList[0].DisplayName}">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip
+                                                Content="{x:Bind ViewModel.WinGetInstallModeList[0].DisplayName}"
+                                                Placement="Bottom"
+                                                VerticalOffset="20" />
+                                        </ToolTipService.ToolTip>
+                                    </RadioMenuFlyoutItem>
+
+                                    <RadioMenuFlyoutItem
+                                        Click="{x:Bind ViewModel.OnWinGetInstallModeSelectClicked}"
+                                        GroupName="WinGetInstallModeSetting"
+                                        IsChecked="{x:Bind IsItemChecked(ViewModel.WinGetInstallMode.InternalName, ViewModel.WinGetInstallModeList[1].InternalName), Mode=OneWay}"
+                                        Tag="1"
+                                        Text="{x:Bind ViewModel.WinGetInstallModeList[1].DisplayName}">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip
+                                                Content="{x:Bind ViewModel.WinGetInstallModeList[1].DisplayName}"
+                                                Placement="Bottom"
+                                                VerticalOffset="20" />
+                                        </ToolTipService.ToolTip>
+                                    </RadioMenuFlyoutItem>
+                                </menusAndToolbars:AdaptiveMenuFlyout>
+                            </DropDownButton.Flyout>
+                        </DropDownButton>
                     </Grid>
                 </StackPanel>
 

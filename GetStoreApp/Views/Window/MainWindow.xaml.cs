@@ -275,12 +275,6 @@ namespace GetStoreApp.Views.Window
                         });
                         break;
                     }
-                // 任务栏窗口右键菜单弹出时消息
-                case WindowMessage.WM_SYSMENU:
-                    {
-                        WindowHelper.ShowAppWindow();
-                        return 0;
-                    }
             }
             return User32Library.CallWindowProc(oldWndProc, hWnd, Msg, wParam, lParam);
         }

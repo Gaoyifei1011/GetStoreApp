@@ -291,6 +291,9 @@
   <data name="InstallModeToolTip" xml:space="preserve">
     <value>帮助</value>
   </data>
+  <data name="InteractiveInstall" xml:space="preserve">
+    <value>以交互方式安装</value>
+  </data>
   <data name="Language" xml:space="preserve">
     <value>界面语言</value>
   </data>
@@ -383,6 +386,9 @@
   </data>
   <data name="ShowVersionToolTip" xml:space="preserve">
     <value>查看该设备的 WinGet 具体版本信息</value>
+  </data>
+  <data name="SlientInstall" xml:space="preserve">
+    <value>以静默方式安装</value>
   </data>
   <data name="StartsWithE" xml:space="preserve">
     <value>不显示文件扩展名称以'.e'开头的文件</value>
@@ -485,6 +491,12 @@
   </data>
   <data name="WinGetConfigInstruction" xml:space="preserve">
     <value>配置选项说明</value>
+  </data>
+  <data name="WinGetInstallMode" xml:space="preserve">
+    <value>WinGet 安装方式</value>
+  </data>
+  <data name="WinGetInstallModeDescription" xml:space="preserve">
+    <value>设置 WinGet 程序包安装应用时的交互方式</value>
   </data>
   <data name="WinGetSettings" xml:space="preserve">
     <value>WinGet 设置</value>

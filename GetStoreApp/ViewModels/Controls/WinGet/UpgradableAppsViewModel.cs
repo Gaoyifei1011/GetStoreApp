@@ -1,6 +1,7 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.WinGet;
+using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.WinGet;
 using GetStoreApp.UI.Notifications;
@@ -105,7 +106,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
 
                         InstallOptions installOptions = WinGetService.CreateInstallOptions();
 
-                        installOptions.PackageInstallMode = PackageInstallMode.Interactive;
+                        installOptions.PackageInstallMode = (PackageInstallMode)Enum.Parse(typeof(PackageInstallMode), WinGetConfigService.WinGetInstallMode.InternalName);
                         installOptions.PackageInstallScope = PackageInstallScope.Any;
 
                         // 更新升级进度

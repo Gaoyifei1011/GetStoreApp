@@ -9,7 +9,7 @@ using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Dialogs.Download;
 using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Base;
-using GetStoreApp.WindowsAPI.PInvoke.WinUI;
+using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;

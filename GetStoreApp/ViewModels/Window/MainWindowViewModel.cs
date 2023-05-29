@@ -381,17 +381,17 @@ namespace GetStoreApp.ViewModels.Window
             {
                 case "Mica":
                     {
-                        SystemBackdrop = new MicaBackdrop() { Kind = MicaKind.Base };
+                        SystemBackdrop = new MicaSystemBackdrop() { Kind = MicaKind.Base };
                         break;
                     }
                 case "MicaAlt":
                     {
-                        SystemBackdrop = new MicaBackdrop() { Kind = MicaKind.BaseAlt };
+                        SystemBackdrop = new MicaSystemBackdrop() { Kind = MicaKind.BaseAlt };
                         break;
                     }
                 case "Acrylic":
                     {
-                        SystemBackdrop = new DesktopAcrylicBackdrop();
+                        SystemBackdrop = new DesktopAcrylicSystemBackdrop();
                         break;
                     }
                 default:

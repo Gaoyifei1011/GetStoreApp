@@ -48,7 +48,7 @@ namespace GetStoreApp.Services.Controls.Settings.Advanced
         }
 
         /// <summary>
-        /// 应用安装方式发生修改时修改设置存储的背景色值
+        /// 应用安装方式发生修改时修改设置存储的应用安装方式值
         /// </summary>
         public static async Task SetInstallModeAsync(InstallModeModel installMode)
         {

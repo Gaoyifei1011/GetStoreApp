@@ -152,10 +152,10 @@ namespace GetStoreApp.ViewModels.Controls.Window
         /// </summary>
         public void OnMoveClicked(object sender, RoutedEventArgs args)
         {
-            Button button = sender as Button;
-            if (button.Tag is not null)
+            MenuFlyoutItem menuItem = sender as MenuFlyoutItem;
+            if (menuItem.Tag is not null)
             {
-                ((AdaptiveMenuFlyout)button.Tag).Hide();
+                ((AdaptiveMenuFlyout)menuItem.Tag).Hide();
                 User32Library.PostMessage(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), WindowMessage.WM_SYSCOMMAND, (int)SystemCommand.SC_MOVE, 0);
             }
         }
@@ -165,10 +165,10 @@ namespace GetStoreApp.ViewModels.Controls.Window
         /// </summary>
         public void OnSizeClicked(object sender, RoutedEventArgs args)
         {
-            Button button = sender as Button;
-            if (button.Tag is not null)
+            MenuFlyoutItem menuItem = sender as MenuFlyoutItem;
+            if (menuItem.Tag is not null)
             {
-                ((AdaptiveMenuFlyout)button.Tag).Hide();
+                ((AdaptiveMenuFlyout)menuItem.Tag).Hide();
                 User32Library.PostMessage(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), WindowMessage.WM_SYSCOMMAND, (int)SystemCommand.SC_SIZE, 0);
             }
         }

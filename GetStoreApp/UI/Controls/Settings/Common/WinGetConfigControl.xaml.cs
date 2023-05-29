@@ -27,5 +27,10 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         {
             return isOfficialVersionExisted || isDevVersionExisted;
         }
+
+        public bool IsItemChecked(string selectedInternalName, string internalName)
+        {
+            return selectedInternalName == internalName;
+        }
     }
 }

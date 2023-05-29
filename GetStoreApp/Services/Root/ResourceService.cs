@@ -5,6 +5,7 @@ using GetStoreApp.Models.Controls.Settings.Common;
 using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Models.Dialogs.Settings;
 using GetStoreApp.Properties;
+using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -48,11 +49,13 @@ namespace GetStoreApp.Services.Root
 
         public static List<InstallModeModel> InstallModeList { get; } = new List<InstallModeModel>();
 
-        public static List<ThemeModel> ThemeList { get; } = new List<ThemeModel>();
-
         public static List<NotifyIconMenuThemeModel> NotifyIconMenuThemeList { get; } = new List<NotifyIconMenuThemeModel>();
 
+        public static List<ThemeModel> ThemeList { get; } = new List<ThemeModel>();
+
         public static List<TraceCleanupModel> TraceCleanupList { get; } = new List<TraceCleanupModel>();
+
+        public static List<WinGetInstallModeModel> WinGetInstallModeList { get; } = new List<WinGetInstallModeModel>();
 
         /// <summary>
         /// 初始化应用本地化资源
@@ -84,9 +87,10 @@ namespace GetStoreApp.Services.Root
             InitializeHistoryLiteNumList();
             InitializeHistoryJumpListNumList();
             InitializeInstallModeList();
-            InitializeThemeList();
             InitializeNotifyIconMenuThemeList();
+            InitializeThemeList();
             InitializeTraceCleanupList();
+            InitializeWinGetInstallModeList();
         }
 
         /// <summary>
@@ -395,6 +399,23 @@ namespace GetStoreApp.Services.Root
                 DisplayName = GetLocalized("Dialog/LocalFile"),
                 InternalName = CleanArgs.LocalFile,
                 CleanFailedText = GetLocalized("Dialog/LocalFileCleanError")
+            });
+        }
+
+        /// <summary>
+        /// 初始化 WinGet 程序包安装模式信息列表
+        /// </summary>
+        private static void InitializeWinGetInstallModeList()
+        {
+            WinGetInstallModeList.Add(new WinGetInstallModeModel
+            {
+                DisplayName = GetLocalized("Settings/InteractiveInstall"),
+                InternalName = Convert.ToString(PackageInstallMode.Interactive),
+            });
+            WinGetInstallModeList.Add(new WinGetInstallModeModel
+            {
+                DisplayName = GetLocalized("Settings/SlientInstall"),
+                InternalName = Convert.ToString(PackageInstallMode.Silent),
             });
         }
 

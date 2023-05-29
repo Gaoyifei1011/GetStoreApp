@@ -8,7 +8,6 @@ using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Controls.Settings.Experiment;
 using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
-using GetStoreApp.WindowsAPI.PInvoke.WinUI;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using System;
@@ -127,7 +126,7 @@ namespace GetStoreApp
                 await HistoryRecordService.InitializeAsync();
                 await NotificationService.InitializeNotificationAsync();
                 await UseInstructionService.InitializeUseInsVisValueAsync();
-                await WinGetConfigService.InitializeUseDevVersionAsync();
+                await WinGetConfigService.InitializeWinGetConfigAsync();
 
                 // 实验功能设置配置
                 await NetWorkMonitorService.InitializeNetWorkMonitorValueAsync();

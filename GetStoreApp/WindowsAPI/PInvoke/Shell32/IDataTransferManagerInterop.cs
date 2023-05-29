@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using Windows.ApplicationModel.DataTransfer;
 
-namespace GetStoreApp.WindowsAPI.PInvoke.WinUI
+namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
 {
     /// <summary>
     /// 允许在管理多个窗口的 Windows 应用商店应用中访问 <see cref="DataTransferManager"> 方法。

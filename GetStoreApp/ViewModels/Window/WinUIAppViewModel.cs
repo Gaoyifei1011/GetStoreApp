@@ -6,6 +6,7 @@ using GetStoreApp.Helpers.Window;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
+using GetStoreApp.WindowsAPI.PInvoke.Comctl32;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI;
@@ -14,6 +15,7 @@ using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.AppNotifications;
 using System;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading.Tasks;
 using Windows.Graphics;
 using Windows.UI.StartScreen;
@@ -86,7 +88,42 @@ namespace GetStoreApp.ViewModels.Window
         public void OnUnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs args)
         {
             args.Handled = true;
-            Dispose();
+
+            // 系统背景色弹出的异常，不进行处理
+            if (args.Exception.HResult == -2147024809 && args.Exception.StackTrace.Contains("SystemBackdropConfiguration"))
+            {
+                return;
+            }
+            // 处理其他异常
+            else
+            {
+                Comctl32Library.TaskDialog(
+                    Program.ApplicationRoot.MainWindow.GetMainWindowHandle(),
+                    IntPtr.Zero,
+                    ResourceService.GetLocalized("Resources/AppDisplayName"),
+                    ResourceService.GetLocalized("MessageInfo/Title"),
+                    ResourceService.GetLocalized("MessageInfo/Content1") + Environment.NewLine + ResourceService.GetLocalized("MessageInfo/Content2"),
+                    TASKDIALOG_COMMON_BUTTON_FLAGS.TDCBF_OK_BUTTON | TASKDIALOG_COMMON_BUTTON_FLAGS.TDCBF_CANCEL_BUTTON,
+                    TASKDIALOGICON.TD_SHIELD_ERROR_RED_BAR,
+                    out TaskDialogResult Result
+                    );
+
+                // 复制异常信息到剪贴板
+                if (Result == TaskDialogResult.IDOK)
+                {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.AppendLine("HelpLink:" + args.Exception.HelpLink);
+                    stringBuilder.AppendLine("HResult:" + args.Exception.HResult);
+                    stringBuilder.AppendLine("Message:" + args.Exception.Message);
+                    stringBuilder.AppendLine("Source:" + args.Exception.Source);
+                    stringBuilder.AppendLine("StackTrace:" + args.Exception.StackTrace);
+
+                    CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
+                }
+
+                // 退出应用
+                Dispose();
+            }
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Models.Controls.Settings.Common;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
@@ -8,6 +9,7 @@ using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Windows.System;
 
@@ -22,6 +24,8 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
 
         public bool IsDevVersionExisted { get; set; } = WinGetService.IsDevVersionExisted;
 
+        public List<WinGetInstallModeModel> WinGetInstallModeList => WinGetConfigService.WinGetInstallModeList;
+
         private bool _useDevVersion = WinGetConfigService.UseDevVersion;
 
         public bool UseDevVersion
@@ -35,12 +39,38 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
             }
         }
 
+        private WinGetInstallModeModel _winGetInstallMode = WinGetConfigService.WinGetInstallMode;
+
+        public WinGetInstallModeModel WinGetInstallMode
+        {
+            get { return _winGetInstallMode; }
+
+            set
+            {
+                _winGetInstallMode = value;
+                OnPropertyChanged();
+            }
+        }
+
         /// <summary>
         /// 安装开发版本
         /// </summary>
         public async void OnDevVersionInstallClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("https://github.com/microsoft/winget-cli/releases"));
+        }
+
+        /// <summary>
+        /// WinGet 程序包安装方式设置
+        /// </summary>
+        public async void OnWinGetInstallModeSelectClicked(object sender, RoutedEventArgs args)
+        {
+            RadioMenuFlyoutItem item = sender as RadioMenuFlyoutItem;
+            if (item.Tag is not null)
+            {
+                WinGetInstallMode = WinGetInstallModeList[Convert.ToInt32(item.Tag)];
+                await WinGetConfigService.SetWinGetInstallModeAsync(WinGetInstallMode);
+            }
         }
 
         /// <summary>

@@ -9,48 +9,39 @@
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <Copyright>Copyright ©2022-2023 高怡飞, All Rights Reserved.</Copyright>
     <CsWinRTIncludes>Microsoft.Management.Deployment</CsWinRTIncludes>
-    <Defineconstants>DISABLE_XAML_GENERATED_MAIN</Defineconstants>
+    <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     <Deterministic>true</Deterministic>
     <DesktopCompatible>true</DesktopCompatible>
     <DisableXbfLineInfo>False</DisableXbfLineInfo>
     <EnableMsixTooling>false</EnableMsixTooling>
-    <EnableUnsafeBinaryFormatterInDesigntimeLicenseContextSerialization>false</EnableUnsafeBinaryFormatterInDesigntimeLicenseContextSerialization>
-    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <FileAlignment>512</FileAlignment>
-    <FileVersion>1.6.528.0</FileVersion>
+    <FileVersion>2.0.529.0</FileVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
     <ImplicitUsings>disable</ImplicitUsings>
     <IncludeSymbols>False</IncludeSymbols>
     <LangVersion>latest</LangVersion>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Nullable>disable</Nullable>
     <Optimize>False</Optimize>
     <OutputType>WinExe</OutputType>
     <PackageIcon>Assets\GetStoreApp.png</PackageIcon>
     <Platforms>x86;x64;ARM64</Platforms>
     <Product>获取商店应用 桌面程序</Product>
     <PublishProtocol>FileSystem</PublishProtocol>
-    <PublishReadyToRun>True</PublishReadyToRun>
+    <PublishReadyToRun>False</PublishReadyToRun>
     <PublishSingleFile>True</PublishSingleFile>
     <PublishTrimmed>true</PublishTrimmed>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <RootNamespace>GetStoreApp</RootNamespace>
-    <RootPackageReference>false</RootPackageReference>
     <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
     <SelfContained>false</SelfContained>
-    <SignAssembly>False</SignAssembly>
     <StartupObject>GetStoreApp.Program</StartupObject>
-    <SupportedOSPlatformVersion>10.0.18362.0</SupportedOSPlatformVersion>
     <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
     <TrimMode>partial</TrimMode>
-    <TrimUnusedDependencies>true</TrimUnusedDependencies>
-    <Version>1.6.528.0</Version>
-    <UseWindowsForms>False</UseWindowsForms>
+    <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
+    <Version>2.0.529.0</Version>
     <UseWinUI>true</UseWinUI>
-    <UseWPF>False</UseWPF>
     <WindowsAppSDKDeploymentManagerInitialize>false</WindowsAppSDKDeploymentManagerInitialize>
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
     <WindowsPackageType>MSIX</WindowsPackageType>

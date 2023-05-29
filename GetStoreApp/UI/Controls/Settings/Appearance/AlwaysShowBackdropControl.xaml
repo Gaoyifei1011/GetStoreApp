@@ -44,7 +44,6 @@
             Grid.Column="2"
             controlExtensions:CursorHelper.Cursor="Hand"
             FlowDirection="RightToLeft"
-            IsEnabled="False"
             IsOn="{x:Bind ViewModel.AlwaysShowBackdropValue, Mode=OneWay}"
             OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/AlwaysShowBackdropOffContent')}"
             OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/AlwaysShowBackdropOnContent')}"
