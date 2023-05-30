@@ -1,13 +1,13 @@
 ﻿<UserControl
     x:Class="GetStoreApp.UI.Controls.About.ReferenceControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:format="using:GetStoreApp.Converters.Formats"
+    xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:aboutViewModel="using:GetStoreApp.ViewModels.Controls.About"
     xmlns:collections="using:GetStoreApp.Views.CustomControls.Collections"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:format="using:GetStoreApp.Converters.Formats"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:root="using:GetStoreApp.Services.Root"
     mc:Ignorable="d">
 
     <UserControl.DataContext>
@@ -28,7 +28,7 @@
                 Padding="0"
                 HorizontalAlignment="Stretch"
                 HorizontalContentAlignment="Stretch"
-                DesiredWidth="280"
+                DesiredWidth="260"
                 ItemContainerStyle="{StaticResource GridViewItemStyle}"
                 ItemsSource="{x:Bind ViewModel.ReferenceDict}"
                 OneRowModeEnabled="False"

@@ -22,6 +22,7 @@
 > * 绕开微软商店下载并离线部署 Microsoft Store 应用
 > * 访问已经成功获取的历史链接和添加的下载任务
 > * 访问网页版（接口出现问题时），并使用应用内置的下载工具下载
+> * WinGet 程序包的安装、卸载和升级
 
 注意：该应用不能绕过微软商店的付费渠道，如果您要获取的应用是付费应用，请从微软商店购买后下载。
 
@@ -31,16 +32,20 @@
 
 
 #### <p align="center">应用成功获取界面</p>
-![image](https://user-images.githubusercontent.com/49179966/235410865-f0d02daa-b7ac-40f2-8ca6-1143366edb2f.png)
+![image](https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/441a6ad2-7829-4986-994e-f140f0b60853)
+#### <p align="center">WinGet 程序包管理界面</p>
+![image](https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/28200b23-8704-40d8-92ec-767eb38c57c3)
+![image](https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/91ae5f3b-eb7b-4c95-b603-0487fadd1534)
+![image](https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/d177cbec-1438-4496-9d6b-6cd8a2708493)
 #### <p align="center">历史记录</p>
-![image](https://user-images.githubusercontent.com/49179966/235410882-4d1da348-9e1f-4f7c-be1a-9921ff5b8b74.png)
+![image](https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/0aee441e-3714-4bf3-b817-8cb8cb516737)
 #### <p align="center">下载管理</p>
-![image](https://user-images.githubusercontent.com/49179966/235410909-a9ff827e-64fe-4e12-b647-f84fe8894ac6.png)
-![image](https://user-images.githubusercontent.com/49179966/235410932-63265a8c-46c8-4127-9d5f-04bcf8a2c2a0.png)
+![image](https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/42a5139a-f845-48f9-8b64-30efbadda13c)
+![image](https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/dc6bdb4a-1c6a-4c3c-be46-93db03c5b1fa)
 #### <p align="center">访问网页版</p>
-![image](https://user-images.githubusercontent.com/49179966/235410984-65e66521-4095-404b-96f8-7e7043257bba.png)
+![image](https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/6cad3ee4-9b81-49e0-8c8e-00492de005a2)
 #### <p align="center">应用说明</p>
-![image](https://user-images.githubusercontent.com/49179966/235411005-1209fd25-c0f8-483c-8a0d-f6f679630156.png)
+![image](https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/3a48382d-a53f-4960-951d-ee9f16a7a7d9)
 
 ------
 
@@ -49,7 +54,7 @@
 | 项目内容                        | 开发进展                                                           |
 | --------------------------------| -------------------------------------------------------------------|
 | 微软商店链接获取                | 已完成                                                             |
-| WinGet 程序包获取               | 进行中([#1](https://github.com/Gaoyifei1011/GetStoreApp/issues/1)) |
+| WinGet 程序包获取               | 已完成                                                             |
 | 历史记录（记录使用过的链接）    | 已完成                                                             |
 | 通过生成的链接下载文件          | 已完成                                                             |
 | 下载完成后离线部署应用          | 已完成                                                             |
@@ -88,7 +93,8 @@
 #### <p align="center">必须安装的工具</p>
 
 > * [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com/) 
-> * .NET桌面开发（Visual Studio Installer中安装，.NET SDK 版本 7.0 和 .NET Framework SDK 4.8.1）
+> * .NET桌面开发（Visual Studio Installer中安装，.NET SDK 版本 7.0）
+> * [WinGet 程序包管理器](https://www.microsoft.com/store/productId/9NBLGGH4NNS1) （推荐安装）
 > * [Microsoft Edge WebView2 运行时](https://developer.microsoft.com/zh-cn/microsoft-edge/webview2/) （推荐安装）
 
 #### <p align="center">编译步骤</p>
@@ -129,7 +135,7 @@
 ### 其他内容
 
 > * 这是我个人在学习c#时自己动手实践的第一个小项目，由于在关于c#的高级内容中涉及的并不是很深，所以在代码内容和质量上存在着很多的欠缺，希望能多多包涵。
-> * 该项目自2020年5月20日起，到2023年3月20日结束，共历时10个月。
+> * 该项目自2020年5月20日起，到2023年5月30日结束，共历时12个月零10天。
 > * 该项目是基于MIT协议许可的开源项目，您可以修改、分发该项目或将副本与新副本合并。如果您使用了该项目，请勿用于非法用途，本开发者不会承担任何责任。
 
 ------

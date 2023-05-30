@@ -394,6 +394,7 @@
                                     </Button>
 
                                     <Button
+                                        controlExtensions:CursorHelper.Cursor="Hand"
                                         xmlns:controlExtensions="using:GetStoreApp.Helpers.Controls.Extensions"
                                         Command="{Binding ElementName=DownloadingRoot, Path=DataContext.DeleteCommand, Mode=OneTime}"
                                         CommandParameter="{Binding}"

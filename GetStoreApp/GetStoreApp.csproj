@@ -15,7 +15,7 @@
     <DisableXbfLineInfo>False</DisableXbfLineInfo>
     <EnableMsixTooling>false</EnableMsixTooling>
     <FileAlignment>512</FileAlignment>
-    <FileVersion>2.0.529.0</FileVersion>
+    <FileVersion>2.0.530.0</FileVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
     <ImplicitUsings>disable</ImplicitUsings>
@@ -24,7 +24,6 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <Optimize>False</Optimize>
     <OutputType>WinExe</OutputType>
-    <PackageIcon>Assets\GetStoreApp.png</PackageIcon>
     <Platforms>x86;x64;ARM64</Platforms>
     <Product>获取商店应用 桌面程序</Product>
     <PublishProtocol>FileSystem</PublishProtocol>
@@ -40,7 +39,7 @@
     <TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
     <TrimMode>partial</TrimMode>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
-    <Version>2.0.529.0</Version>
+    <Version>2.0.530.0</Version>
     <UseWinUI>true</UseWinUI>
     <WindowsAppSDKDeploymentManagerInitialize>false</WindowsAppSDKDeploymentManagerInitialize>
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
