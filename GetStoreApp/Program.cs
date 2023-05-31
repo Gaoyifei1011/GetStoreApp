@@ -7,11 +7,13 @@ using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Controls.Settings.Experiment;
 using GetStoreApp.Services.Root;
+using GetStoreApp.WindowsAPI.PInvoke.Comctl32;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -40,6 +42,8 @@ namespace GetStoreApp
         [STAThread]
         public static void Main(string[] args)
         {
+            CheckAppBootState();
+
             CommandLineArgs = args.ToList();
             IsDesktopProgram = GetAppExecuteMode();
 
@@ -75,6 +79,28 @@ namespace GetStoreApp
 
                 // 退出应用程序
                 Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
+            }
+        }
+
+        /// <summary>
+        /// 检查应用的启动状态
+        /// </summary>
+        public static void CheckAppBootState()
+        {
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(CultureInfo.CurrentCulture.Parent.Name);
+            if (!RuntimeHelper.IsMsix())
+            {
+                Comctl32Library.TaskDialog(
+                    IntPtr.Zero,
+                    IntPtr.Zero,
+                    Properties.Resources.AppDisplayName,
+                    Properties.Resources.AppBootFailed,
+                    Properties.Resources.AppBootFailedContent1 + Environment.NewLine + Properties.Resources.AppBootFailedContent2 + Environment.NewLine + Properties.Resources.AppBootFailedContent3,
+                    TASKDIALOG_COMMON_BUTTON_FLAGS.TDCBF_OK_BUTTON,
+                    TASKDIALOGICON.TD_SHIELD_ERROR_RED_BAR,
+                    out TaskDialogResult Result
+                    );
+                Environment.Exit(Convert.ToInt32(AppExitCode.Failed));
             }
         }
 

@@ -9,11 +9,11 @@ using System.Runtime.Versioning;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyDescription("获取商店应用 桌面程序")]
-[assembly: AssemblyFileVersion("2.0.530.0")]
+[assembly: AssemblyFileVersion("2.0.531.0")]
 [assembly: AssemblyProduct("获取商店应用 桌面程序")]
 [assembly: AssemblyTitle("获取商店应用")]
 [assembly: AssemblyTrademark("")]
-[assembly: AssemblyVersion("2.0.530.0")]
+[assembly: AssemblyVersion("2.0.531.0")]
 
 // 设置程序集对COM组件的访问权限
 [assembly: ComVisible(false)]
