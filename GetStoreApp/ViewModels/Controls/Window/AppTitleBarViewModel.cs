@@ -1,12 +1,7 @@
 ﻿using GetStoreApp.Helpers.Window;
-using GetStoreApp.Services.Root;
 using GetStoreApp.ViewModels.Base;
-using GetStoreApp.Views.CustomControls.MenusAndToolbars;
-using GetStoreApp.WindowsAPI.PInvoke.User32;
-using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Input;
 using System;
 using Windows.Graphics;
 
@@ -17,191 +12,36 @@ namespace GetStoreApp.ViewModels.Controls.Window
     /// </summary>
     public sealed class AppTitleBarViewModel : ViewModelBase
     {
-        private bool isWindowMoving = false;
-        private int nX = 0;
-        private int nY = 0;
-        private int nXWindow = 0;
-        private int nYWindow = 0;
-
-        public string MaximizeToolTip { get; } = ResourceService.GetLocalized("Window/Maximize");
-
-        public string RestoreToolTip { get; } = ResourceService.GetLocalized("Window/Restore");
-
-        private bool _isWindowMaximized;
-
-        public bool IsWindowMaximized
+        /// <summary>
+        /// 初始化自定义标题栏
+        /// </summary>
+        public void OnLoaded(object sender, RoutedEventArgs args)
         {
-            get { return _isWindowMaximized; }
-
-            set
+            Grid appTitleBar = sender as Grid;
+            if (appTitleBar is not null)
             {
-                _isWindowMaximized = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _isWindowMaximizedToolTip;
-
-        public string IsWindowMaximizedToolTip
-        {
-            get { return _isWindowMaximizedToolTip; }
-
-            set
-            {
-                _isWindowMaximizedToolTip = value;
-                OnPropertyChanged();
+                SetDragRectangles(Convert.ToInt32(appTitleBar.Margin.Left), appTitleBar.ActualWidth, appTitleBar.ActualHeight);
             }
         }
 
         /// <summary>
-        /// 双击标题栏对应的事件（窗口最大化或还原窗口）
+        /// 控件大小发生变化时，修改拖动区域
         /// </summary>
-        public void OnDoubleTapped(object sender, DoubleTappedRoutedEventArgs args)
+        public void OnSizeChanged(object sender, RoutedEventArgs args)
         {
-            if (WindowHelper.IsWindowMaximized)
+            Grid appTitleBar = sender as Grid;
+            if (appTitleBar is not null)
             {
-                WindowHelper.RestoreAppWindow();
-            }
-            else
-            {
-                WindowHelper.MaximizeAppWindow();
+                SetDragRectangles(Convert.ToInt32(appTitleBar.Margin.Left), appTitleBar.ActualWidth, appTitleBar.ActualHeight);
             }
         }
 
         /// <summary>
-        /// 鼠标移动时对应的事件
+        /// 设置标题栏的可拖动区域
         /// </summary>
-        public void OnPointerMoved(object sender, PointerRoutedEventArgs args)
+        private void SetDragRectangles(int leftMargin, double actualWidth, double actualHeight)
         {
-            PointerPointProperties properties = args.GetCurrentPoint((Grid)sender).Properties;
-
-            if (properties.IsLeftButtonPressed)
-            {
-                unsafe
-                {
-                    PointInt32 pt = new PointInt32();
-                    User32Library.GetCursorPos(&pt);
-
-                    if (isWindowMoving)
-                    {
-                        if (!WindowHelper.IsWindowMaximized)
-                        {
-                            User32Library.SetWindowPos(
-                                Program.ApplicationRoot.MainWindow.GetMainWindowHandle(),
-                                IntPtr.Zero,
-                                nXWindow + (pt.X - nX),
-                                nYWindow + (pt.Y - nY),
-                                0,
-                                0,
-                                SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER
-                                );
-                        }
-                    }
-                }
-
-                args.Handled = true;
-            }
-        }
-
-        /// <summary>
-        /// 鼠标点击时对应的事件
-        /// </summary>
-        public void OnPointerPressed(object sender, PointerRoutedEventArgs args)
-        {
-            PointerPointProperties properties = args.GetCurrentPoint((Grid)sender).Properties;
-
-            if (properties.IsLeftButtonPressed)
-            {
-                ((Grid)sender).CapturePointer(args.Pointer);
-                nXWindow = Program.ApplicationRoot.MainWindow.AppWindow.Position.X;
-                nYWindow = Program.ApplicationRoot.MainWindow.AppWindow.Position.Y;
-
-                unsafe
-                {
-                    PointInt32 pt = new PointInt32() { X = 0, Y = 0 };
-                    User32Library.GetCursorPos(&pt);
-                    nX = pt.X;
-                    nY = pt.Y;
-                    if (!WindowHelper.IsWindowMaximized)
-                    {
-                        isWindowMoving = true;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 鼠标释放时对应的事件
-        /// </summary>
-        public void OnPointerReleased(object sender, PointerRoutedEventArgs args)
-        {
-            ((Grid)sender).ReleasePointerCaptures();
-            isWindowMoving = false;
-        }
-
-        /// <summary>
-        /// 窗口还原
-        /// </summary>
-        public void OnRestoreClicked(object sender, RoutedEventArgs args)
-        {
-            WindowHelper.RestoreAppWindow();
-        }
-
-        /// <summary>
-        /// 窗口移动
-        /// </summary>
-        public void OnMoveClicked(object sender, RoutedEventArgs args)
-        {
-            MenuFlyoutItem menuItem = sender as MenuFlyoutItem;
-            if (menuItem.Tag is not null)
-            {
-                ((AdaptiveMenuFlyout)menuItem.Tag).Hide();
-                User32Library.PostMessage(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), WindowMessage.WM_SYSCOMMAND, (int)SystemCommand.SC_MOVE, 0);
-            }
-        }
-
-        /// <summary>
-        /// 窗口大小
-        /// </summary>
-        public void OnSizeClicked(object sender, RoutedEventArgs args)
-        {
-            MenuFlyoutItem menuItem = sender as MenuFlyoutItem;
-            if (menuItem.Tag is not null)
-            {
-                ((AdaptiveMenuFlyout)menuItem.Tag).Hide();
-                User32Library.PostMessage(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), WindowMessage.WM_SYSCOMMAND, (int)SystemCommand.SC_SIZE, 0);
-            }
-        }
-
-        /// <summary>
-        /// 窗口最小化
-        /// </summary>
-        public void OnMinimizeClicked(object sender, RoutedEventArgs args)
-        {
-            WindowHelper.MinimizeAppWindow();
-        }
-
-        /// <summary>
-        /// 窗口最大化
-        /// </summary>
-        public void OnMaximizeClicked(object sender, RoutedEventArgs args)
-        {
-            if (WindowHelper.IsWindowMaximized)
-            {
-                WindowHelper.RestoreAppWindow();
-            }
-            else
-            {
-                WindowHelper.MaximizeAppWindow();
-            }
-        }
-
-        /// <summary>
-        /// 窗口关闭
-        /// </summary>
-        public void OnCloseClicked(object sender, RoutedEventArgs args)
-        {
-            Program.ApplicationRoot.MainWindow.Close();
+            Program.ApplicationRoot.MainWindow.AppWindow.TitleBar.SetDragRectangles(new RectInt32[] { new RectInt32(leftMargin, 0, DPICalcHelper.ConvertEpxToPixel(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), Convert.ToInt32(actualWidth)), DPICalcHelper.ConvertEpxToPixel(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), Convert.ToInt32(actualHeight))) });
         }
     }
 }

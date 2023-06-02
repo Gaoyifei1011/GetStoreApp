@@ -9,7 +9,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
     /// 为了配置而提交的结构任务栏图标。提供各种成员可以部分配置，根据 <see cref="IconDataMembers"/> 中的定义。
     /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    public struct NOTIFYICONDATA
+    public unsafe struct NOTIFYICONDATA
     {
         /// <summary>
         /// 此结构的大小（以字节为单位）。
@@ -129,7 +129,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
             data.dwStateMask = NotifyIconState.NIS_HIDDEN;
             data.uFlags = NotifyIconFlags.NIF_MESSAGE | NotifyIconFlags.NIF_ICON | NotifyIconFlags.NIF_TIP;
             data.szTip = toolTip;
-
             return data;
         }
 

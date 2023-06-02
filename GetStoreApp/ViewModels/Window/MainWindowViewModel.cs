@@ -10,8 +10,11 @@ using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
+using GetStoreApp.WindowsAPI.PInvoke.Uxtheme;
+using Microsoft.UI;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Dispatching;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -229,6 +232,22 @@ namespace GetStoreApp.ViewModels.Window
         private void OnColorValuesChanged(UISettings sender, object args)
         {
             Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, SetWindowBackground);
+            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
+            {
+                if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[0].InternalName)
+                {
+                    if (Application.Current.RequestedTheme is ApplicationTheme.Light)
+                    {
+                        SetTitleBarColor(ElementTheme.Light);
+                        SetTitleBarContextMenuColor(ElementTheme.Light);
+                    }
+                    else
+                    {
+                        SetTitleBarColor(ElementTheme.Dark);
+                        SetTitleBarContextMenuColor(ElementTheme.Dark);
+                    }
+                }
+            });
         }
 
         // 导航视图显示的样式发生改变时发生
@@ -353,6 +372,29 @@ namespace GetStoreApp.ViewModels.Window
             if (args.PropertyName == nameof(WindowTheme) || args.PropertyName == nameof(SystemBackdrop))
             {
                 Program.ApplicationRoot.TrayMenuWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, SetWindowBackground);
+                if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[0].InternalName)
+                {
+                    if (Application.Current.RequestedTheme is ApplicationTheme.Light)
+                    {
+                        SetTitleBarColor(ElementTheme.Light);
+                        SetTitleBarContextMenuColor(ElementTheme.Light);
+                    }
+                    else
+                    {
+                        SetTitleBarColor(ElementTheme.Dark);
+                        SetTitleBarContextMenuColor(ElementTheme.Dark);
+                    }
+                }
+                if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[1].InternalName)
+                {
+                    SetTitleBarColor(ElementTheme.Light);
+                    SetTitleBarContextMenuColor(ElementTheme.Light);
+                }
+                else if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[2].InternalName)
+                {
+                    SetTitleBarColor(ElementTheme.Dark);
+                    SetTitleBarContextMenuColor(ElementTheme.Dark);
+                }
             }
         }
 
@@ -432,6 +474,59 @@ namespace GetStoreApp.ViewModels.Window
             else
             {
                 WindowBackground = ResourceDictionaryHelper.WindowChromeDict["WindowSystemBackdropBrush"] as SolidColorBrush;
+            }
+        }
+
+        /// <summary>
+        /// 设置标题栏按钮的颜色
+        /// </summary>
+        private void SetTitleBarColor(ElementTheme theme)
+        {
+            AppWindowTitleBar titleBar = Program.ApplicationRoot.MainWindow.AppWindow.TitleBar;
+
+            titleBar.BackgroundColor = Colors.Transparent;
+            titleBar.ForegroundColor = Colors.Transparent;
+            titleBar.InactiveBackgroundColor = Colors.Transparent;
+            titleBar.InactiveForegroundColor = Colors.Transparent;
+
+            if (theme == ElementTheme.Light)
+            {
+                titleBar.ButtonBackgroundColor = Colors.Transparent;
+                titleBar.ButtonForegroundColor = Colors.Black;
+                titleBar.ButtonHoverBackgroundColor = ColorHelper.FromArgb(20, 0, 0, 0);
+                titleBar.ButtonHoverForegroundColor = Colors.Black;
+                titleBar.ButtonPressedBackgroundColor = ColorHelper.FromArgb(30, 0, 0, 0);
+                titleBar.ButtonPressedForegroundColor = Colors.Black;
+                titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+                titleBar.ButtonInactiveForegroundColor = Colors.Black;
+            }
+            else
+            {
+                titleBar.ButtonBackgroundColor = Colors.Transparent;
+                titleBar.ButtonForegroundColor = Colors.White;
+                titleBar.ButtonHoverBackgroundColor = ColorHelper.FromArgb(20, 255, 255, 255);
+                titleBar.ButtonHoverForegroundColor = Colors.White;
+                titleBar.ButtonPressedBackgroundColor = ColorHelper.FromArgb(30, 255, 255, 255);
+                titleBar.ButtonPressedForegroundColor = Colors.White;
+                titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+                titleBar.ButtonInactiveForegroundColor = Colors.White;
+            }
+        }
+
+        /// <summary>
+        /// 设置标题栏右键菜单的主题色
+        /// </summary>
+        private void SetTitleBarContextMenuColor(ElementTheme theme)
+        {
+            if (theme == ElementTheme.Light)
+            {
+                UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceLight);
+                UxthemeLibrary.FlushMenuThemes();
+            }
+            else
+            {
+                UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceDark);
+                UxthemeLibrary.FlushMenuThemes();
             }
         }
     }

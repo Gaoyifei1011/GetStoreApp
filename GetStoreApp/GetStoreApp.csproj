@@ -15,7 +15,7 @@
     <DisableXbfLineInfo>False</DisableXbfLineInfo>
     <EnableMsixTooling>false</EnableMsixTooling>
     <FileAlignment>512</FileAlignment>
-    <FileVersion>2.0.531.0</FileVersion>
+    <FileVersion>2.0.602.0</FileVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
     <ImplicitUsings>disable</ImplicitUsings>
@@ -39,7 +39,7 @@
     <TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
     <TrimMode>partial</TrimMode>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
-    <Version>2.0.531.0</Version>
+    <Version>2.0.602.0</Version>
     <UseWinUI>true</UseWinUI>
     <WindowsAppSDKDeploymentManagerInitialize>false</WindowsAppSDKDeploymentManagerInitialize>
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
@@ -153,7 +153,6 @@
     <None Remove="Styles\InfoBar.xaml" />
     <None Remove="Styles\ListView.xaml" />
     <None Remove="Styles\MenuFlyout.xaml" />
-    <None Remove="Styles\MinMaxCloseControl.xaml" />
     <None Remove="Styles\NavigationView.xaml" />
     <None Remove="Styles\Pivot.xaml" />
     <None Remove="Styles\ScrollViewer.xaml" />
@@ -161,7 +160,6 @@
     <None Remove="Styles\TeachingTip.xaml" />
     <None Remove="Styles\TextBlock.xaml" />
     <None Remove="Styles\ToggleSwitch.xaml" />
-    <None Remove="Styles\WindowChrome.xaml" />
     
     <None Remove="UI\Controls\About\HeaderControl.xaml" />
     <None Remove="UI\Controls\About\InstructionsControl.xaml" />
@@ -294,7 +292,6 @@
     <Page Update="Styles\InfoBar.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\ListView.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\MenuFlyout.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Styles\MinMaxCloseControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\NavigationView.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\Pivot.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\ScrollViewer.xaml" Generator="MSBuild:Compile" />
@@ -302,7 +299,6 @@
     <Page Update="Styles\TeachingTip.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\TextBlock.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\ToggleSwitch.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Styles\WindowChrome.xaml" Generator="MSBuild:Compile" />
     
     <Page Update="UI\Controls\About\HeaderControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\About\InstructionsControl.xaml" Generator="MSBuild:Compile" />

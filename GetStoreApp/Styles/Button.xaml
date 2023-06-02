@@ -16,7 +16,6 @@
         <Setter Property="HorizontalAlignment" Value="Right" />
         <Setter Property="Padding" Value="4" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Content" Value="&#xE711;" />
         <Setter Property="FocusVisualMargin" Value="-3" />
         <Setter Property="Template">
             <Setter.Value>

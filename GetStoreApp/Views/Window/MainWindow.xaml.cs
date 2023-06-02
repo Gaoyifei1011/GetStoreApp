@@ -6,6 +6,7 @@ using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.ViewModels.Controls.Store;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
@@ -28,15 +29,9 @@ namespace GetStoreApp.Views.Window
         public MainWindow()
         {
             InitializeComponent();
+            AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
+            AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
             NavigationService.NavigationFrame = WindowFrame;
-        }
-
-        /// <summary>
-        /// 设置标题栏状态
-        /// </summary>
-        public void AppTitlebarLoaded(object sender, RoutedEventArgs args)
-        {
-            AppTitlebar.SetTitlebarState(WindowHelper.IsWindowMaximized);
         }
 
         /// <summary>
@@ -176,19 +171,6 @@ namespace GetStoreApp.Views.Window
         {
             switch (Msg)
             {
-                // 窗口显示模式发生修改时的消息
-                case WindowMessage.WM_SIZE:
-                    {
-                        if ((SizeMode)wParam == SizeMode.SIZE_MAXIMIZED)
-                        {
-                            AppTitlebar.SetTitlebarState(true);
-                        }
-                        else if ((SizeMode)wParam == SizeMode.SIZE_RESTORED)
-                        {
-                            AppTitlebar.SetTitlebarState(false);
-                        }
-                        break;
-                    }
                 // 窗口大小发生更改时的消息
                 case WindowMessage.WM_GETMINMAXINFO:
                     {
@@ -250,18 +232,6 @@ namespace GetStoreApp.Views.Window
                             WindowHelper.ShowAppWindow();
                         }
 
-                        break;
-                    }
-                // 选择窗口右键菜单的条目时接收到的消息
-                case WindowMessage.WM_SYSCOMMAND:
-                    {
-                        SystemCommand sysCommand = (SystemCommand)(wParam.ToInt32() & 0xFFF0);
-
-                        if (sysCommand == SystemCommand.SC_MOUSEMENU || sysCommand == SystemCommand.SC_KEYMENU)
-                        {
-                            AppTitlebar.ShowTitlebarMenu();
-                            return 0;
-                        }
                         break;
                     }
                 // 屏幕缩放比例发生变化时的消息

@@ -123,9 +123,6 @@
   <data name="AppTitle" xml:space="preserve">
     <value>获取商店应用</value>
   </data>
-  <data name="Close" xml:space="preserve">
-    <value>关闭</value>
-  </data>
   <data name="Download" xml:space="preserve">
     <value>下载管理</value>
   </data>
@@ -135,26 +132,11 @@
   <data name="JumpListGroupName" xml:space="preserve">
     <value>历史记录</value>
   </data>
-  <data name="Maximize" xml:space="preserve">
-    <value>最大化</value>
-  </data>
-  <data name="Minimize" xml:space="preserve">
-    <value>最小化</value>
-  </data>
-  <data name="Move" xml:space="preserve">
-    <value>移动</value>
-  </data>
   <data name="NavigationFailed" xml:space="preserve">
     <value>页面{0}导航失败</value>
   </data>
-  <data name="Restore" xml:space="preserve">
-    <value>向下还原</value>
-  </data>
   <data name="Settings" xml:space="preserve">
     <value>设置</value>
-  </data>
-  <data name="Size" xml:space="preserve">
-    <value>大小</value>
   </data>
   <data name="Store" xml:space="preserve">
     <value>微软商店</value>

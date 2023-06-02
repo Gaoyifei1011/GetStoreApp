@@ -13,7 +13,6 @@
     MinHeight="768"
     Activated="{x:Bind ViewModel.OnActivated}"
     Closed="{x:Bind ViewModel.OnClosed}"
-    ExtendsContentIntoTitleBar="True"
     SystemBackdrop="{x:Bind ViewModel.SystemBackdrop, Mode=OneWay}"
     mc:Ignorable="d">
 
@@ -27,8 +26,7 @@
             x:Name="AppTitlebar"
             Height="45"
             Margin="{x:Bind ViewModel.AppTitleBarMargin, Mode=OneWay}"
-            VerticalAlignment="Top"
-            Loaded="{x:Bind AppTitlebarLoaded}" />
+            VerticalAlignment="Top" />
 
         <NavigationView
             BackRequested="{x:Bind ViewModel.OnNavigationViewBackRequested}"

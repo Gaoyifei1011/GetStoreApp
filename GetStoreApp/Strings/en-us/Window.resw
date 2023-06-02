@@ -123,9 +123,6 @@
   <data name="AppTitle" xml:space="preserve">
     <value>GetStoreApp</value>
   </data>
-  <data name="Close" xml:space="preserve">
-    <value>Close</value>
-  </data>
   <data name="Download" xml:space="preserve">
     <value>Download Management</value>
   </data>
@@ -135,26 +132,11 @@
   <data name="JumpListGroupName" xml:space="preserve">
     <value>History Record</value>
   </data>
-  <data name="Maximize" xml:space="preserve">
-    <value>Maximize</value>
-  </data>
-  <data name="Minimize" xml:space="preserve">
-    <value>Minimize</value>
-  </data>
-  <data name="Move" xml:space="preserve">
-    <value>Move</value>
-  </data>
   <data name="NavigationFailed" xml:space="preserve">
     <value>Page {0} navigation failed</value>
   </data>
-  <data name="Restore" xml:space="preserve">
-    <value>Restore Down</value>
-  </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
-  </data>
-  <data name="Size" xml:space="preserve">
-    <value>Size</value>
   </data>
   <data name="Store" xml:space="preserve">
     <value>Microsoft Store</value>

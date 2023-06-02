@@ -63,8 +63,8 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         /// 如果成功，则返回 TRUE ;否则返回 FALSE 。 如果 dwMessage 设置为 NIM_SETVERSION，则函数在成功更改版本时返回 TRUE ;
         /// 如果请求的版本不受支持，则 返回 FALSE 。
         /// </returns>
-        [LibraryImport(Shell32, EntryPoint = "Shell_NotifyIconW", SetLastError = true)]
+        [DllImport(Shell32, EntryPoint = "Shell_NotifyIconW", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool Shell_NotifyIcon(NotifyIconMessage dwMessage, IntPtr lpData);
+        public static extern bool Shell_NotifyIcon(NotifyIconMessage dwMessage, ref NOTIFYICONDATA lpData);
     }
 }

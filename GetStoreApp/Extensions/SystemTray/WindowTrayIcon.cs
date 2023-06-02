@@ -125,10 +125,7 @@ namespace GetStoreApp.Extensions.SystemTray
             data.uFlags = flags;
             lock (SyncRoot)
             {
-                IntPtr pdata = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(NOTIFYICONDATA)));
-                Marshal.StructureToPtr(data, pdata, false);
-                bool result = Shell32Library.Shell_NotifyIcon(message, pdata);
-                Marshal.FreeHGlobal(pdata);
+                bool result = Shell32Library.Shell_NotifyIcon(message, ref data);
                 return result;
             }
         }

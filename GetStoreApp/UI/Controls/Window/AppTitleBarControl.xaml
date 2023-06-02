@@ -4,75 +4,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:windowViewModel="using:GetStoreApp.ViewModels.Controls.Window"
     Background="Transparent"
-    Canvas.ZIndex="1"
-    DoubleTapped="{x:Bind ViewModel.OnDoubleTapped}"
-    IsDoubleTapEnabled="True"
-    PointerMoved="{x:Bind ViewModel.OnPointerMoved}"
-    PointerPressed="{x:Bind ViewModel.OnPointerPressed}"
-    PointerReleased="{x:Bind ViewModel.OnPointerReleased}"
+    Loaded="{x:Bind ViewModel.OnLoaded}"
+    SizeChanged="{x:Bind ViewModel.OnSizeChanged}"
     mc:Ignorable="d">
 
     <Grid.DataContext>
         <windowViewModel:AppTitleBarViewModel x:Name="ViewModel" />
     </Grid.DataContext>
-
-    <!--  标题栏右键菜单  -->
-    <Grid.ContextFlyout>
-        <menusAndToolbars:AdaptiveMenuFlyout x:Name="TitlebarMenuFlyout" AreOpenCloseAnimationsEnabled="False">
-            <MenuFlyoutItem
-                Click="{x:Bind ViewModel.OnRestoreClicked}"
-                IsEnabled="{x:Bind ViewModel.IsWindowMaximized, Mode=OneWay}"
-                Tag="{x:Bind TitlebarMenuFlyout}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Window/Restore')}">
-                <MenuFlyoutItem.Icon>
-                    <FontIcon Glyph="&#xEB91;" Style="{StaticResource SegoeFluentStyle}" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
-            <MenuFlyoutItem
-                Click="{x:Bind ViewModel.OnMoveClicked}"
-                CommandParameter="{x:Bind TitlebarMenuFlyout}"
-                Tag="{x:Bind TitlebarMenuFlyout}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Window/Move')}">
-                <MenuFlyoutItem.Icon>
-                    <FontIcon Glyph="&#xE7c2;" Style="{StaticResource SegoeFluentStyle}" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
-            <MenuFlyoutItem
-                Click="{x:Bind ViewModel.OnSizeClicked}"
-                CommandParameter="{x:Bind TitlebarMenuFlyout}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Window/Size')}">
-                <MenuFlyoutItem.Icon>
-                    <FontIcon Glyph="&#xE81D;" Style="{StaticResource SegoeFluentStyle}" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
-            <MenuFlyoutItem Click="{x:Bind ViewModel.OnMinimizeClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Window/Minimize')}">
-                <MenuFlyoutItem.Icon>
-                    <FontIcon Glyph="&#xE738;" Style="{StaticResource SegoeFluentStyle}" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
-            <MenuFlyoutItem
-                Click="{x:Bind ViewModel.OnMaximizeClicked}"
-                IsEnabled="{x:Bind ViewModel.IsWindowMaximized, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Window/Maximize')}">
-                <MenuFlyoutItem.Icon>
-                    <FontIcon Glyph="&#xE71A;" Style="{StaticResource SegoeFluentStyle}" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
-            <MenuFlyoutSeparator Width="200" />
-            <MenuFlyoutItem Click="{x:Bind ViewModel.OnCloseClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Window/Close')}">
-                <MenuFlyoutItem.Icon>
-                    <FontIcon Glyph="&#xE894;" Style="{StaticResource SegoeFluentStyle}" />
-                </MenuFlyoutItem.Icon>
-                <MenuFlyoutItem.KeyboardAccelerators>
-                    <KeyboardAccelerator Key="F4" Modifiers="Menu" />
-                </MenuFlyoutItem.KeyboardAccelerators>
-            </MenuFlyoutItem>
-        </menusAndToolbars:AdaptiveMenuFlyout>
-    </Grid.ContextFlyout>
 
     <!--  标题栏图标和应用名称  -->
     <Grid
@@ -97,117 +38,5 @@
             Style="{StaticResource CaptionTextBlockStyle}"
             Text="{x:Bind root:ResourceService.GetLocalized('Window/AppTitle')}"
             TextWrapping="NoWrap" />
-    </Grid>
-
-    <!--  标题栏右上角按钮  -->
-    <Grid
-        HorizontalAlignment="Right"
-        VerticalAlignment="Top"
-        Canvas.ZIndex="3">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="48" />
-            <ColumnDefinition Width="48" />
-            <ColumnDefinition Width="48" />
-        </Grid.ColumnDefinitions>
-
-        <Button
-            x:Name="MinButton"
-            Grid.Column="0"
-            Height="33"
-            MinWidth="48"
-            VerticalAlignment="Top"
-            AutomationProperties.AccessibilityView="Raw"
-            BorderThickness="0"
-            Click="{x:Bind ViewModel.OnMinimizeClicked}"
-            CornerRadius="0"
-            Style="{StaticResource CaptionButton}">
-            <Button.Resources>
-                <ResourceDictionary>
-                    <x:String x:Key="CaptionButtonPath">M 0 0 H 10</x:String>
-                </ResourceDictionary>
-            </Button.Resources>
-
-            <ToolTipService.ToolTip>
-                <ToolTip
-                    Content="{x:Bind root:ResourceService.GetLocalized('Window/Minimize')}"
-                    Placement="Bottom"
-                    VerticalOffset="20" />
-            </ToolTipService.ToolTip>
-        </Button>
-
-        <Button
-            x:Name="MaxButton"
-            Grid.Column="1"
-            Height="33"
-            MinWidth="48"
-            VerticalAlignment="Top"
-            BorderThickness="0"
-            Click="{x:Bind ViewModel.OnMaximizeClicked}"
-            CornerRadius="0"
-            Style="{StaticResource CaptionButton}">
-            <Button.Resources>
-                <!--  These paths are complicated, but taken directly from WinUI's WindowCaptionButton paths.  -->
-                <ResourceDictionary>
-                    <x:String x:Key="CaptionButtonPath">M 1.516 -0.001 L 7.451 0.009 C 8.751 0.019 9 1 8.981 1.477 L 9.002 7.558 M 9.002 7.547 C 8.929 8.669 8 9 7.43 9.015 L 1.464 9.005 C 0.374 8.973 0 8 -0.004 7.484 L -0.004 1.477 C 0 1 0.415 0.009 1.527 -0.001</x:String>
-                    <x:String x:Key="CaptionButtonPathWindowMaximized">M 1.516 -0.001 L 7.451 0.009 C 8.751 0.019 9 1 8.981 1.477 L 9.002 7.558 M 11 6 L 11 2 C 11 0 10 -2 8.011 -1.946 L 7.06 -1.969 L 3 -2 M 9.002 7.547 C 8.929 8.669 8 9 7.43 9.015 L 1.464 9.005 C 0.374 8.973 0 8 -0.004 7.484 L -0.004 1.477 C 0 1 0.415 0.009 1.527 -0.001</x:String>
-                </ResourceDictionary>
-            </Button.Resources>
-
-            <ToolTipService.ToolTip>
-                <ToolTip
-                    Content="{x:Bind ViewModel.IsWindowMaximizedToolTip, Mode=OneWay}"
-                    Placement="Bottom"
-                    VerticalOffset="20" />
-            </ToolTipService.ToolTip>
-        </Button>
-
-        <Button
-            x:Name="CloseButton"
-            Grid.Column="2"
-            Width="48"
-            Height="33"
-            VerticalAlignment="Top"
-            BorderThickness="0"
-            Click="{x:Bind ViewModel.OnCloseClicked}"
-            CornerRadius="0"
-            Style="{StaticResource CaptionButton}">
-            <Button.Resources>
-                <ResourceDictionary>
-                    <ResourceDictionary.ThemeDictionaries>
-                        <ResourceDictionary x:Key="Light">
-                            <StaticResource x:Key="CaptionButtonBackgroundPointerOver" ResourceKey="CloseButtonBackgroundPointerOver" />
-                            <StaticResource x:Key="CaptionButtonBackgroundPressed" ResourceKey="CloseButtonBackgroundPressed" />
-                            <StaticResource x:Key="CaptionButtonStrokePointerOver" ResourceKey="CloseButtonStrokePointerOver" />
-                            <StaticResource x:Key="CaptionButtonStrokePressed" ResourceKey="CloseButtonStrokePressed" />
-                            <StaticResource x:Key="CaptionButtonBackground" ResourceKey="CloseButtonBackground" />
-                            <StaticResource x:Key="CaptionButtonBackgroundColor" ResourceKey="CloseButtonBackgroundColor" />
-                        </ResourceDictionary>
-                        <ResourceDictionary x:Key="Dark">
-                            <StaticResource x:Key="CaptionButtonBackgroundPointerOver" ResourceKey="CloseButtonBackgroundPointerOver" />
-                            <StaticResource x:Key="CaptionButtonBackgroundPressed" ResourceKey="CloseButtonBackgroundPressed" />
-                            <StaticResource x:Key="CaptionButtonStrokePointerOver" ResourceKey="CloseButtonStrokePointerOver" />
-                            <StaticResource x:Key="CaptionButtonStrokePressed" ResourceKey="CloseButtonStrokePressed" />
-                            <StaticResource x:Key="CaptionButtonBackground" ResourceKey="CloseButtonBackground" />
-                            <StaticResource x:Key="CaptionButtonBackgroundColor" ResourceKey="CloseButtonBackgroundColor" />
-                        </ResourceDictionary>
-                        <ResourceDictionary x:Key="HighContrast">
-                            <StaticResource x:Key="CaptionButtonBackgroundPointerOver" ResourceKey="CloseButtonBackgroundPointerOver" />
-                            <StaticResource x:Key="CaptionButtonBackgroundPressed" ResourceKey="CloseButtonBackgroundPressed" />
-                            <StaticResource x:Key="CaptionButtonStrokePointerOver" ResourceKey="CloseButtonStrokePointerOver" />
-                            <StaticResource x:Key="CaptionButtonStrokePressed" ResourceKey="CloseButtonStrokePressed" />
-                        </ResourceDictionary>
-                    </ResourceDictionary.ThemeDictionaries>
-
-                    <x:String x:Key="CaptionButtonPath">M 0 0 L 10 10 M 10 0 L 0 10</x:String>
-                </ResourceDictionary>
-            </Button.Resources>
-
-            <ToolTipService.ToolTip>
-                <ToolTip
-                    Content="{x:Bind root:ResourceService.GetLocalized('Window/Close')}"
-                    Placement="Bottom"
-                    VerticalOffset="20" />
-            </ToolTipService.ToolTip>
-        </Button>
     </Grid>
 </Grid>
