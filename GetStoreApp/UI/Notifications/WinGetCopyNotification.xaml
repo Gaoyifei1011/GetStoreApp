@@ -19,32 +19,32 @@
         <TextBlock
             x:Name="SearchInstallCopySuccess"
             x:Load="{x:Bind ControlLoaded(ViewModel.CopyState,ViewModel.OptionArgs,'SearchInstallCopySuccess'), Mode=OneWay}"
-            Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
+            Foreground="{ThemeResource SystemFillColorSuccessBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/SearchInstallCopySuccessfully')}" />
         <TextBlock
             x:Name="SearchInstallCopyFailed"
             x:Load="{x:Bind ControlLoaded(ViewModel.CopyState,ViewModel.OptionArgs,'SearchInstallCopyFailed'), Mode=OneWay}"
-            Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
+            Foreground="{ThemeResource SystemFillColorCriticalBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/SearchInstallCopyFailed')}" />
         <TextBlock
             x:Name="UnInstallCopySuccess"
             x:Load="{x:Bind ControlLoaded(ViewModel.CopyState,ViewModel.OptionArgs,'UnInstallCopySuccess'), Mode=OneWay}"
-            Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
+            Foreground="{ThemeResource SystemFillColorSuccessBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/UnInstallCopySuccessfully')}" />
         <TextBlock
             x:Name="UnInstallCopyFailed"
             x:Load="{x:Bind ControlLoaded(ViewModel.CopyState,ViewModel.OptionArgs,'UnInstallCopyFailed'), Mode=OneWay}"
-            Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
+            Foreground="{ThemeResource SystemFillColorCriticalBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/UnInstallCopyFailed')}" />
         <TextBlock
             x:Name="UpgradeInstallCopySuccess"
             x:Load="{x:Bind ControlLoaded(ViewModel.CopyState,ViewModel.OptionArgs,'UpgradeInstallCopySuccess'), Mode=OneWay}"
-            Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
+            Foreground="{ThemeResource SystemFillColorSuccessBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/UpgradeInstallCopySuccessfully')}" />
         <TextBlock
             x:Name="UpgradeInstallCopyFailed"
             x:Load="{x:Bind ControlLoaded(ViewModel.CopyState,ViewModel.OptionArgs,'UpgradeInstallCopyFailed'), Mode=OneWay}"
-            Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
+            Foreground="{ThemeResource SystemFillColorCriticalBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/UpgradeInstallCopyFailed')}" />
     </Grid>
 </notification:InAppNotification>

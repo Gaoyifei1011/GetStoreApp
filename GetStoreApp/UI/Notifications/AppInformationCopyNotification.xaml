@@ -19,12 +19,12 @@
         <TextBlock
             x:Name="CopySuccess"
             x:Load="{x:Bind ViewModel.CopyState, Mode=OneWay}"
-            Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
+            Foreground="{ThemeResource SystemFillColorSuccessBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/CopyAppInformationSuccessfully')}" />
         <TextBlock
             x:Name="CopyFailed"
             x:Load="{x:Bind ViewModel.CopyState, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
-            Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
+            Foreground="{ThemeResource SystemFillColorCriticalBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/CopyAppInformationCopyFailed')}" />
     </Grid>
 </notification:InAppNotification>

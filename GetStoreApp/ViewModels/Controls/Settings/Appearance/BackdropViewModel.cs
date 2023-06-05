@@ -58,7 +58,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Appearance
 
         public BackdropViewModel()
         {
-            ulong BuildNumber = InfoHelper.GetSystemVersion().BuildNumber;
+            int BuildNumber = InfoHelper.GetSystemVersion().Build;
 
             CanUseMicaBackdrop = BuildNumber >= 20000;
         }

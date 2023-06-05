@@ -78,7 +78,7 @@ namespace GetStoreApp.ViewModels.Dialogs.About
             }
 
             // .NET 版本信息
-            DoNetVersion = Environment.Version.ToString();
+            DoNetVersion = Convert.ToString(Environment.Version);
         }
     }
 }

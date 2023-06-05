@@ -36,7 +36,8 @@ namespace GetStoreApp.ViewModels.Pages
                 PersistFile.Save(string.Format(@"{0}\{1}.lnk", Environment.GetFolderPath(Environment.SpecialFolder.Desktop), ResourceService.GetLocalized("Resources/AppDisplayName")), false);
                 IsCreatedSuccessfully = true;
             }
-            catch (Exception)
+            catch (Exception) { }
+            finally
             {
                 new QuickOperationNotification(QuickOperationType.DesktopShortcut, IsCreatedSuccessfully).Show();
             }
@@ -68,7 +69,8 @@ namespace GetStoreApp.ViewModels.Pages
                 }
                 IsPinnedSuccessfully = true;
             }
-            catch (Exception)
+            catch (Exception) { }
+            finally
             {
                 new QuickOperationNotification(QuickOperationType.StartScreen, IsPinnedSuccessfully).Show();
             }

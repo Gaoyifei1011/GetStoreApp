@@ -126,8 +126,7 @@ namespace GetStoreApp
             await LinkFilterService.InitializeLinkFilterValueAsnyc();
             await DownloadOptionsService.InitializeAsync();
 
-            // 初始化应用版本和系统版本信息
-            InfoHelper.InitializeAppVersion();
+            // 初始化系统版本信息
             InfoHelper.InitializeSystemVersion();
 
             // 初始化应用任务跳转列表信息

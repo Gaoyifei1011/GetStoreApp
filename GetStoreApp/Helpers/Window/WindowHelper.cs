@@ -114,19 +114,7 @@ namespace GetStoreApp.Helpers.Window
         /// </summary>
         private static void BringToFront()
         {
-            bool isWindowOnTop = WindowPresenter.IsAlwaysOnTop;
-
-            User32Library.SetWindowPos(
-                Program.ApplicationRoot.MainWindow.GetMainWindowHandle(),
-                new IntPtr(-1),
-                0,
-                0,
-                0,
-                0,
-                SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOACTIVATE
-                );
-
-            if (!isWindowOnTop) WindowPresenter.IsAlwaysOnTop = false;
+            User32Library.SetForegroundWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
         }
 
         /// <summary>

@@ -19,22 +19,22 @@
         <TextBlock
             x:Name="CopySuccess"
             x:Load="{x:Bind ControlLoad(ViewModel.CopyState, ViewModel.IsMultiSelected, 'CopySuccess'), Mode=OneWay}"
-            Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
+            Foreground="{ThemeResource SystemFillColorSuccessBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/HistoryCopySuccessfully')}" />
         <TextBlock
             x:Name="CopyFailed"
             x:Load="{x:Bind ControlLoad(ViewModel.CopyState, ViewModel.IsMultiSelected, 'CopyFailed'), Mode=OneWay}"
-            Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
+            Foreground="{ThemeResource SystemFillColorCriticalBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/HistoryCopyFailed')}" />
         <TextBlock
             x:Name="CopySelectedSuccess"
             x:Load="{x:Bind ControlLoad(ViewModel.CopyState, ViewModel.IsMultiSelected, 'CopySelectedSuccess'), Mode=OneWay}"
-            Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
+            Foreground="{ThemeResource SystemFillColorSuccessBrush}"
             Loaded="{x:Bind CopySelectedSuccessLoaded}" />
         <TextBlock
             x:Name="CopySelectedFailed"
             x:Load="{x:Bind ControlLoad(ViewModel.CopyState, ViewModel.IsMultiSelected, 'CopySelectedFailed'), Mode=OneWay}"
-            Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
+            Foreground="{ThemeResource SystemFillColorCriticalBrush}"
             Loaded="{x:Bind CopySelectedFailedLoaded}" />
     </Grid>
 </notification:InAppNotification>

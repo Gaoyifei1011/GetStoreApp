@@ -10,5 +10,5 @@
     RequestedTheme="{x:Bind getStoreApp:Program.ApplicationRoot.MainWindow.ViewModel.WindowTheme, Mode=OneWay}"
     mc:Ignorable="d">
 
-    <TextBlock Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}" Text="{x:Bind root:ResourceService.GetLocalized('Notification/NetWorkError')}" />
+    <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}" Text="{x:Bind root:ResourceService.GetLocalized('Notification/NetWorkError')}" />
 </notification:InAppNotification>

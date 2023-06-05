@@ -19,12 +19,12 @@
         <TextBlock
             x:Name="WebCacheCleanSuccess"
             x:Load="{x:Bind ViewModel.SetResult, Mode=OneWay}"
-            Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
+            Foreground="{ThemeResource SystemFillColorSuccessBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/WebCacheCleanSuccessfully')}" />
         <TextBlock
             x:Name="WebCacheCleanFailed"
             x:Load="{x:Bind ViewModel.SetResult, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
-            Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
+            Foreground="{ThemeResource SystemFillColorCriticalBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/WebCacheCleanChangeFailed')}" />
     </Grid>
 </notification:InAppNotification>

@@ -110,7 +110,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         {
             NOTIFYICONDATA data = new NOTIFYICONDATA();
 
-            if (InfoHelper.GetSystemVersion().MajorVersion >= 6)
+            if (InfoHelper.GetSystemVersion().Major >= 6)
             {
                 data.cbSize = (uint)Marshal.SizeOf(typeof(NOTIFYICONDATA));
             }

@@ -19,12 +19,12 @@
         <TextBlock
             x:Name="LanguageChangeSuccess"
             x:Load="{x:Bind ViewModel.SetResult, Mode=OneWay}"
-            Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
+            Foreground="{ThemeResource SystemFillColorSuccessBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/LanguageChangeSuccessfully')}" />
         <TextBlock
             x:Name="LanguageChangeFailed"
             x:Load="{x:Bind ViewModel.SetResult, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
-            Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
+            Foreground="{ThemeResource SystemFillColorCriticalBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/LanguageChangeFailed')}" />
     </Grid>
 </notification:InAppNotification>

@@ -19,32 +19,32 @@
         <TextBlock
             x:Name="DesktopShortcutSuccess"
             x:Load="{x:Bind ControlLoad(ViewModel.OperationType, ViewModel.IsPinnedSuccessfully, 'DesktopShortcutSuccess'), Mode=OneWay}"
-            Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
+            Foreground="{ThemeResource SystemFillColorSuccessBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/DesktopShortcutSuccessfully')}" />
         <TextBlock
             x:Name="DesktopShortcutFailed"
             x:Load="{x:Bind ControlLoad(ViewModel.OperationType, ViewModel.IsPinnedSuccessfully, 'DesktopShortcutFailed'), Mode=OneWay}"
-            Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
+            Foreground="{ThemeResource SystemFillColorCriticalBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/DesktopShortFailed')}" />
         <TextBlock
             x:Name="StartScreenSuccess"
             x:Load="{x:Bind ControlLoad(ViewModel.OperationType, ViewModel.IsPinnedSuccessfully, 'StartScreenSuccess'), Mode=OneWay}"
-            Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
+            Foreground="{ThemeResource SystemFillColorSuccessBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/StartScreenSuccessfully')}" />
         <TextBlock
             x:Name="StartScreenFailed"
             x:Load="{x:Bind ControlLoad(ViewModel.OperationType, ViewModel.IsPinnedSuccessfully, 'StartScreenFailed'), Mode=OneWay}"
-            Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
+            Foreground="{ThemeResource SystemFillColorCriticalBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/StartScreenFailed')}" />
         <TextBlock
             x:Name="TaskbarSuccess"
             x:Load="{x:Bind ControlLoad(ViewModel.OperationType, ViewModel.IsPinnedSuccessfully, 'TaskbarSuccess'), Mode=OneWay}"
-            Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
+            Foreground="{ThemeResource SystemFillColorSuccessBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/TaskbarSuccessfully')}" />
         <TextBlock
             x:Name="TaskbarFailed"
             x:Load="{x:Bind ControlLoad(ViewModel.OperationType, ViewModel.IsPinnedSuccessfully, 'TaskbarFailed'), Mode=OneWay}"
-            Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
+            Foreground="{ThemeResource SystemFillColorCriticalBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/TaskbarFailed')}" />
     </Grid>
 </notification:InAppNotification>

@@ -19,12 +19,12 @@
         <TextBlock
             x:Name="DownloadCreateSuccess"
             x:Load="{x:Bind ViewModel.IsDownloadCreated, Mode=OneWay}"
-            Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
+            Foreground="{ThemeResource SystemFillColorSuccessBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/DownloadCreateSuccessfully')}" />
         <TextBlock
             x:Name="DownloadCreateFailed"
             x:Load="{x:Bind ViewModel.IsDownloadCreated, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
-            Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
+            Foreground="{ThemeResource SystemFillColorCriticalBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/DownloadCreateFailed')}" />
     </Grid>
 </notification:InAppNotification>

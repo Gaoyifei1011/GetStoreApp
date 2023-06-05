@@ -19,12 +19,12 @@
         <TextBlock
             x:Name="ShareFailed"
             x:Load="{x:Bind ControlLoad(ViewModel.IsMultiSelected, 'ShareFailed'), Mode=OneWay}"
-            Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
+            Foreground="{ThemeResource SystemFillColorCriticalBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/ShareFailed')}" />
         <TextBlock
             x:Name="ShareSelectedFailed"
             x:Load="{x:Bind ControlLoad(ViewModel.IsMultiSelected, 'ShareSelectedFailed'), Mode=OneWay}"
-            Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
+            Foreground="{ThemeResource SystemFillColorCriticalBrush}"
             Loaded="{x:Bind ShareSelectedFailedLoaded}" />
     </Grid>
 </notification:InAppNotification>
