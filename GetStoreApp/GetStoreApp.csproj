@@ -7,7 +7,6 @@
     <AssemblyName>GetStoreApp</AssemblyName>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
-    <Copyright>Copyright ©2022-2023 高怡飞, All Rights Reserved.</Copyright>
     <CsWinRTIncludes>Microsoft.Management.Deployment</CsWinRTIncludes>
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     <Deterministic>true</Deterministic>
@@ -15,7 +14,6 @@
     <DisableXbfLineInfo>False</DisableXbfLineInfo>
     <EnableMsixTooling>false</EnableMsixTooling>
     <FileAlignment>512</FileAlignment>
-    <FileVersion>2.0.602.0</FileVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
     <ImplicitUsings>disable</ImplicitUsings>
@@ -25,7 +23,6 @@
     <Optimize>False</Optimize>
     <OutputType>WinExe</OutputType>
     <Platforms>x86;x64;ARM64</Platforms>
-    <Product>获取商店应用 桌面程序</Product>
     <PublishProtocol>FileSystem</PublishProtocol>
     <PublishReadyToRun>False</PublishReadyToRun>
     <PublishSingleFile>True</PublishSingleFile>
@@ -39,7 +36,6 @@
     <TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
     <TrimMode>partial</TrimMode>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
-    <Version>2.0.602.0</Version>
     <UseWinUI>true</UseWinUI>
     <WindowsAppSDKDeploymentManagerInitialize>false</WindowsAppSDKDeploymentManagerInitialize>
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
@@ -274,7 +270,7 @@
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.2" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.3.230502000" />
-    <PackageReference Include="Mile.Aria2" Version="1.0.8" />
+    <PackageReference Include="Mile.Aria2" Version="1.0.66" />
     
     <Page Update="Styles\Button.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\Checkbox.xaml" Generator="MSBuild:Compile" />

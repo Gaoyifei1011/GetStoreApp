@@ -221,12 +221,12 @@
                                     Margin="10,0,0,0"
                                     Command="{Binding ElementName=HistoryLiteRoot, Path=DataContext.FillinCommand, Mode=OneTime}"
                                     CommandParameter="{Binding}"
-                                    Content="{Binding ElementName=HistoryLiteRoot, Path=Fillin, Mode=OneTime}"
+                                    Content="{x:Bind root:ResourceService.GetLocalized('Store/Fillin')}"
                                     Style="{StaticResource HyperlinkButtonStyle}">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip
-                                            Content="{Binding ElementName=HistoryLiteRoot, Path=FillinToolTip, Mode=OneTime}"
+                                            Content="{x:Bind root:ResourceService.GetLocalized('Store/FillinToolTip')}"
                                             Placement="Bottom"
                                             VerticalOffset="25" />
                                     </ToolTipService.ToolTip>
@@ -236,12 +236,12 @@
                                     Grid.Column="4"
                                     Command="{Binding ElementName=HistoryLiteRoot, Path=DataContext.CopyCommand, Mode=OneTime}"
                                     CommandParameter="{Binding}"
-                                    Content="{Binding ElementName=HistoryLiteRoot, Path=Copy, Mode=OneTime}"
+                                    Content="{x:Bind root:ResourceService.GetLocalized('Store/Copy')}"
                                     Style="{StaticResource HyperlinkButtonStyle}">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip
-                                            Content="{Binding ElementName=HistoryLiteRoot, Path=CopyToolTip, Mode=OneTime}"
+                                            Content="{x:Bind root:ResourceService.GetLocalized('Store/CopyToolTip')}"
                                             Placement="Bottom"
                                             VerticalOffset="25" />
                                     </ToolTipService.ToolTip>

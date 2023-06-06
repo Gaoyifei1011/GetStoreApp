@@ -1,7 +1,4 @@
-﻿using GetStoreApp.Models.Controls.Store;
-using GetStoreApp.Services.Root;
-using Microsoft.UI.Xaml.Controls;
-using System.Collections.Generic;
+﻿using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.UI.Controls.Store
 {
@@ -10,10 +7,6 @@ namespace GetStoreApp.UI.Controls.Store
     /// </summary>
     public sealed partial class RequestControl : UserControl
     {
-        public List<TypeModel> TypeList { get; } = ResourceService.TypeList;
-
-        public List<ChannelModel> ChannelList { get; } = ResourceService.ChannelList;
-
         public RequestControl()
         {
             InitializeComponent();

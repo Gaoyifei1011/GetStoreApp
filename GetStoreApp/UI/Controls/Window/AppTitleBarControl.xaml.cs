@@ -1,6 +1,4 @@
-﻿using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Windows.Foundation;
+﻿using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.UI.Controls.Window
 {

@@ -25,10 +25,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void WebPageUnloaded(object sender, RoutedEventArgs args)
         {
-            if (WebView is not null)
-            {
-                WebView.Close();
-            }
+            WebView?.Close();
         }
     }
 }

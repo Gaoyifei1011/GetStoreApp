@@ -301,7 +301,7 @@
                                         <basicInput:ExtendedSplitButton.Flyout>
                                             <menusAndToolbars:AdaptiveMenuFlyout>
                                                 <MenuFlyoutItem
-                                                    Command="{Binding ElementName=SearchAppsRoot, Path=DataContext.CopyInstallTextCommand}"
+                                                    Command="{Binding ElementName=SearchAppsRoot, Path=DataContext.CopyInstallTextCommand, Mode=OneTime}"
                                                     CommandParameter="{x:Bind AppID}"
                                                     Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyInstallText')}">
 

@@ -380,11 +380,11 @@
                                     <TextBlock
                                         Grid.Column="0"
                                         Style="{StaticResource SubDownloadItemTextStyle}"
-                                        Text="{Binding ElementName=CompletedRoot, Path=Installing, Mode=OneTime}">
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Download/Installing')}">
 
                                         <ToolTipService.ToolTip>
                                             <ToolTip
-                                                Content="{Binding ElementName=CompletedRoot, Path=Installing, Mode=OneTime}"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('Download/Installing')}"
                                                 Placement="Bottom"
                                                 VerticalOffset="20" />
                                         </ToolTipService.ToolTip>
@@ -413,11 +413,11 @@
                                         Grid.Column="2"
                                         x:Load="{x:Bind InstallError, Mode=OneWay}"
                                         Style="{StaticResource SubDownloadItemTextStyle}"
-                                        Text="{Binding ElementName=CompletedRoot, Path=InstallError, Mode=OneTime}">
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Download/InstallError')}">
 
                                         <ToolTipService.ToolTip>
                                             <ToolTip
-                                                Content="{Binding ElementName=CompletedRoot, Path=InstallError, Mode=OneTime}"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('Download/InstallError')}"
                                                 Placement="Bottom"
                                                 VerticalOffset="20" />
                                         </ToolTipService.ToolTip>
@@ -451,7 +451,7 @@
 
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip
-                                                            Content="{Binding ElementName=CompletedRoot, Path=InstallToolTip, Mode=OneTime}"
+                                                            Content="{x:Bind root:ResourceService.GetLocalized('Download/InstallToolTip')}"
                                                             Placement="Bottom"
                                                             VerticalOffset="25" />
                                                     </ToolTipService.ToolTip>
@@ -470,7 +470,7 @@
 
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip
-                                                        Content="{Binding ElementName=CompletedRoot, Path=OpenItemFolderToolTip, Mode=OneTime}"
+                                                        Content="{x:Bind root:ResourceService.GetLocalized('Download/OpenItemFolderToolTip')}"
                                                         Placement="Bottom"
                                                         VerticalOffset="25" />
                                                 </ToolTipService.ToolTip>
@@ -489,7 +489,7 @@
 
                                         <ToolTipService.ToolTip>
                                             <ToolTip
-                                                Content="{Binding ElementName=CompletedRoot, Path=ViewMore, Mode=OneTime}"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('Download/ViewMore')}"
                                                 Placement="Bottom"
                                                 VerticalOffset="25" />
                                         </ToolTipService.ToolTip>
@@ -499,11 +499,11 @@
                                                 <MenuFlyoutItem
                                                     Command="{Binding ElementName=CompletedRoot, Path=DataContext.DeleteCommand, Mode=OneTime}"
                                                     CommandParameter="{Binding}"
-                                                    Text="{Binding ElementName=CompletedRoot, Path=Delete, Mode=OneTime}">
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('Download/Delete')}">
 
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip
-                                                            Content="{Binding ElementName=CompletedRoot, Path=DeleteToolTip, Mode=OneTime}"
+                                                            Content="{x:Bind root:ResourceService.GetLocalized('Download/DeleteToolTip')}"
                                                             Placement="Bottom"
                                                             VerticalOffset="20" />
                                                     </ToolTipService.ToolTip>
@@ -512,11 +512,11 @@
                                                     Command="{Binding ElementName=CompletedRoot, Path=DataContext.DeleteWithFileCommand, Mode=OneTime}"
                                                     CommandParameter="{Binding}"
                                                     IsEnabled="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}"
-                                                    Text="{Binding ElementName=CompletedRoot, Path=DeleteWithFile, Mode=OneTime}">
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteWithFile')}">
 
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip
-                                                            Content="{Binding ElementName=CompletedRoot, Path=DeleteWithFileToolTip, Mode=OneTime}"
+                                                            Content="{x:Bind root:ResourceService.GetLocalized('Download/DeleteWithFileToolTip')}"
                                                             Placement="Bottom"
                                                             VerticalOffset="20" />
                                                     </ToolTipService.ToolTip>
@@ -526,7 +526,7 @@
                                                     Command="{Binding ElementName=CompletedRoot, Path=DataContext.ShareFileCommand, Mode=OneTime}"
                                                     CommandParameter="{Binding}"
                                                     IsEnabled="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}"
-                                                    Text="{Binding ElementName=CompletedRoot, Path=ShareFile, Mode=OneTime}">
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('Download/ShareFile')}">
 
                                                     <MenuFlyoutItem.Icon>
                                                         <FontIcon Glyph="&#xE72d;" Style="{StaticResource SegoeFluentStyle}" />
@@ -534,7 +534,7 @@
 
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip
-                                                            Content="{Binding ElementName=CompletedRoot, Path=ShareFile, Mode=OneTime}"
+                                                            Content="{x:Bind root:ResourceService.GetLocalized('Download/ShareFile')}"
                                                             Placement="Bottom"
                                                             VerticalOffset="20" />
                                                     </ToolTipService.ToolTip>
@@ -543,7 +543,7 @@
                                                     Command="{Binding ElementName=CompletedRoot, Path=DataContext.FileInformationCommand, Mode=OneTime}"
                                                     CommandParameter="{Binding}"
                                                     IsEnabled="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}"
-                                                    Text="{Binding ElementName=CompletedRoot, Path=FileInformation, Mode=OneTime}">
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('Download/FileInformation')}">
 
                                                     <MenuFlyoutItem.Icon>
                                                         <FontIcon Glyph="&#xE946;" Style="{StaticResource SegoeFluentStyle}" />
@@ -551,7 +551,7 @@
 
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip
-                                                            Content="{Binding ElementName=CompletedRoot, Path=FileInformation, Mode=OneTime}"
+                                                            Content="{x:Bind root:ResourceService.GetLocalized('Download/FileInformation')}"
                                                             Placement="Bottom"
                                                             VerticalOffset="20" />
                                                     </ToolTipService.ToolTip>

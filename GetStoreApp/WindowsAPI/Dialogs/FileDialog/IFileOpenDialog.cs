@@ -15,7 +15,6 @@ namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
         ///  使用模态窗口显示对话框
         /// </summary>
         /// <param name="hwnd"></param>
-        /// <returns></returns>
         [PreserveSig]
         int Show([In] IntPtr hwnd);
 

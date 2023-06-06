@@ -8,18 +8,6 @@ namespace GetStoreApp.UI.Controls.Store
     /// </summary>
     public sealed partial class ResultControl : UserControl
     {
-        public string Copy { get; } = ResourceService.GetLocalized("Store/Copy");
-
-        public string CopyOptionsToolTip { get; } = ResourceService.GetLocalized("Store/CopyOptionsToolTip");
-
-        public string CopyLink { get; } = ResourceService.GetLocalized("Store/CopyLink");
-
-        public string CopyLinkToolTip { get; } = ResourceService.GetLocalized("Store/CopyLinkToolTip");
-
-        public string CopyContent { get; } = ResourceService.GetLocalized("Store/CopyContent");
-
-        public string CopyContentToolTip { get; } = ResourceService.GetLocalized("Store/CopyContentToolTip");
-
         public ResultControl()
         {
             InitializeComponent();
@@ -28,8 +16,6 @@ namespace GetStoreApp.UI.Controls.Store
         /// <summary>
         /// 本地化CategoryId信息
         /// </summary>
-        /// <param name="categoryId"></param>
-        /// <returns></returns>
         public string LocalizeCategoryId(string categoryId)
         {
             return string.Format(ResourceService.GetLocalized("Store/categoryId"), categoryId);

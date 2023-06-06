@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI.Xaml;
 using System;
-using System.Runtime.InteropServices;
 
 namespace GetStoreApp.Extensions.SystemTray
 {

@@ -12,14 +12,6 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class HistoryPage : Page
     {
-        public string Fillin { get; } = ResourceService.GetLocalized("History/Fillin");
-
-        public string FillinToolTip { get; } = ResourceService.GetLocalized("History/FillinToolTip");
-
-        public string Copy { get; } = ResourceService.GetLocalized("History/Copy");
-
-        public string CopyToolTip { get; } = ResourceService.GetLocalized("History/CopyToolTip");
-
         public AppNaviagtionArgs HistoryNavigationArgs { get; set; } = AppNaviagtionArgs.None;
 
         public HistoryPage()

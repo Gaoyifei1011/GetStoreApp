@@ -19,15 +19,15 @@ namespace GetStoreApp.Services.Controls.Settings.Advanced
         /// </summary>
         public static async Task<bool> CleanAppTraceAsync(CleanArgs cleanupArgs)
         {
-            switch (cleanupArgs)
+            return cleanupArgs switch
             {
-                case CleanArgs.ActionCenter: return ClearActionCenter();
-                case CleanArgs.Download: return await DownloadXmlService.ClearAsync();
-                case CleanArgs.History: return await HistoryXmlService.ClearAsync();
-                case CleanArgs.JumpList: return await CleanTaskbarJumpListAsync();
-                case CleanArgs.LocalFile: return IOHelper.CleanFolder(DownloadOptionsService.DefaultFolder);
-                default: return true;
-            }
+                CleanArgs.ActionCenter => ClearActionCenter(),
+                CleanArgs.Download => await DownloadXmlService.ClearAsync(),
+                CleanArgs.History => await HistoryXmlService.ClearAsync(),
+                CleanArgs.JumpList => await CleanTaskbarJumpListAsync(),
+                CleanArgs.LocalFile => IOHelper.CleanFolder(DownloadOptionsService.DefaultFolder),
+                _ => true,
+            };
         }
 
         /// <summary>

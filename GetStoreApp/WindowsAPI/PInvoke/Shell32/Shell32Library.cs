@@ -27,7 +27,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         /// <param name="pData">
         /// 指向 <see cref="APPBARDATA"> 结构的指针。 入口和退出结构的内容取决于 <param name="dwMessage"> 参数中设置的值。 有关具体信息，请参阅单独的邮件页。
         /// </param>
-        /// <returns></returns>
+        /// <returns>此函数返回依赖于消息的值。 </returns>
         [LibraryImport(Shell32, EntryPoint = "SHAppBarMessage", SetLastError = false)]
         [UnmanagedCallConv(CallConvs = new Type[] { typeof(CallConvStdcall) })]
         public static partial uint SHAppBarMessage(AppBarMessage dwMessage, ref APPBARDATA pData);

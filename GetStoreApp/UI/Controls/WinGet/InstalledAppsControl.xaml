@@ -279,7 +279,7 @@
                                         <basicInput:ExtendedSplitButton.Flyout>
                                             <menusAndToolbars:AdaptiveMenuFlyout>
                                                 <MenuFlyoutItem
-                                                    Command="{Binding ElementName=InstalledAppsRoot, Path=DataContext.CopyUnInstallTextCommand}"
+                                                    Command="{Binding ElementName=InstalledAppsRoot, Path=DataContext.CopyUnInstallTextCommand, Mode=OneTime}"
                                                     CommandParameter="{x:Bind AppID}"
                                                     Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUnInstallText')}">
 

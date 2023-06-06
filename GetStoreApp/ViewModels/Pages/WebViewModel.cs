@@ -125,10 +125,7 @@ namespace GetStoreApp.ViewModels.Pages
         /// </summary>
         public void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
-            if (CoreWebView is not null)
-            {
-                CoreWebView.Reload();
-            }
+            CoreWebView?.Reload();
         }
 
         /// <summary>

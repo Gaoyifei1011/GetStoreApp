@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Windowing;
-using System;
 
 namespace GetStoreApp.Helpers.Window
 {

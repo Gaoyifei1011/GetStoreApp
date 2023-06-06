@@ -30,8 +30,7 @@ namespace GetStoreApp.WindowsAPI.Controls
                 {
                     lock (_syncLock)
                     {
-                        if (_instance is null)
-                            _instance = new TaskbarManager();
+                        _instance ??= new TaskbarManager();
                     }
                 }
 
@@ -44,7 +43,7 @@ namespace GetStoreApp.WindowsAPI.Controls
         /// </summary>
         public static bool IsPlatformSupported
         {
-            get { return InfoHelper.GetDeviceFamily() is "Windows.Desktop" && InfoHelper.GetSystemVersion().Build > 7600; }
+            get { return InfoHelper.GetDeviceFamily() is "Windows.Desktop" && InfoHelper.SystemVersion.Build > 7600; }
         }
 
         /// <summary>

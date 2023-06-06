@@ -153,6 +153,9 @@
   <data name="Delete" xml:space="preserve">
     <value>删除</value>
   </data>
+  <data name="DeleteDownloadingToolTip" xml:space="preserve">
+    <value>删除当前下载的记录</value>
+  </data>
   <data name="DeleteOptions" xml:space="preserve">
     <value>删除选项</value>
   </data>
@@ -173,6 +176,9 @@
   </data>
   <data name="DeleteToolTip" xml:space="preserve">
     <value>仅删除当前记录，不删除文件</value>
+  </data>
+  <data name="DeleteUnfinishedToolTip" xml:space="preserve">
+    <value>删除未完成的下载记录</value>
   </data>
   <data name="DeleteWithFile" xml:space="preserve">
     <value>删除（包括文件）</value>

@@ -153,6 +153,9 @@
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="DeleteDownloadingToolTip" xml:space="preserve">
+    <value>Deletes the currently downloaded record</value>
+  </data>
   <data name="DeleteOptions" xml:space="preserve">
     <value>Delete options</value>
   </data>
@@ -173,6 +176,9 @@
   </data>
   <data name="DeleteToolTip" xml:space="preserve">
     <value>Deletes only the current record, not including the file</value>
+  </data>
+  <data name="DeleteUnfinishedToolTip" xml:space="preserve">
+    <value>Delete incomplete download records</value>
   </data>
   <data name="DeleteWithFile" xml:space="preserve">
     <value>Delete records (including files)</value>

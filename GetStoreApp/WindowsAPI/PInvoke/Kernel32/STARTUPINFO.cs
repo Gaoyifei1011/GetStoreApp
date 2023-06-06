@@ -110,21 +110,5 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// 如果 <see cref="dwFlags"/> 指定 <see cref="STARTF.STARTF_USESTDHANDLES"/>, 则此成员是进程的标准错误句柄。 否则，将忽略此成员，标准错误的默认值为控制台窗口的缓冲区。
         /// </summary>
         public IntPtr hStdError;
-
-        /// <summary>
-        /// 以字符串形式获取 <see cref="lpDesktop" /> 的值
-        /// </summary>
-        public string Desktop => lpDesktop is not null ? new string(lpDesktop) : null;
-
-        /// <summary>
-        /// 以字符串形式获取 <see cref="lpDesktop" /> 的值
-        /// </summary>
-        public string Title => lpTitle is not null ? new string(lpTitle) : null;
-
-        /// <summary>
-        /// 初始化 <see cref="STARTUPINFO"/> 结构体的一个新实例。
-        /// </summary>
-        /// <returns>结构的初始化实例。</returns>
-        public static STARTUPINFO Create() => new STARTUPINFO { cb = sizeof(STARTUPINFO) };
     }
 }

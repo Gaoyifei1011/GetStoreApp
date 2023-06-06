@@ -354,12 +354,12 @@
                                 <TextBlock
                                     Grid.Row="1"
                                     Style="{StaticResource SubDownloadItemTextStyle}"
-                                    Text="{Binding ElementName=DownloadingRoot, Path=WaitDownload, Mode=OneTime}"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Download/WaitDownload')}"
                                     Visibility="{x:Bind DownloadFlag, Converter={StaticResource DownloadFlagConverter}, ConverterParameter=1}">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip
-                                            Content="{Binding ElementName=DownloadingRoot, Path=WaitDownload, Mode=OneTime}"
+                                            Content="{x:Bind root:ResourceService.GetLocalized('Download/WaitDownload')}"
                                             Placement="Bottom"
                                             VerticalOffset="20" />
                                     </ToolTipService.ToolTip>
@@ -387,7 +387,7 @@
 
                                         <ToolTipService.ToolTip>
                                             <ToolTip
-                                                Content="{Binding ElementName=DownloadingRoot, Path=PauseToolTip, Mode=OneTime}"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('Download/PauseToolTip')}"
                                                 Placement="Bottom"
                                                 VerticalOffset="25" />
                                         </ToolTipService.ToolTip>
@@ -405,7 +405,7 @@
 
                                         <ToolTipService.ToolTip>
                                             <ToolTip
-                                                Content="{Binding ElementName=DownloadingRoot, Path=DeleteToolTip, Mode=OneTime}"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('Download/DeleteDownloadingToolTip')}"
                                                 Placement="Bottom"
                                                 VerticalOffset="25" />
                                         </ToolTipService.ToolTip>

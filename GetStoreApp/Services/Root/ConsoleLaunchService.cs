@@ -87,10 +87,10 @@ namespace GetStoreApp.Services.Root
             Console.Title = ResourceService.GetLocalized("Console/Title");
 
             Console.WriteLine(string.Format(ResourceService.GetLocalized("Console/HeaderDescription1"),
-                InfoHelper.GetAppVersion().Major,
-                InfoHelper.GetAppVersion().Minor,
-                InfoHelper.GetAppVersion().Build,
-                InfoHelper.GetAppVersion().Revision
+                InfoHelper.AppVersion.Major,
+                InfoHelper.AppVersion.Minor,
+                InfoHelper.AppVersion.Build,
+                InfoHelper.AppVersion.Revision
                 ) + LineBreaks);
             Console.WriteLine(ResourceService.GetLocalized("Console/HeaderDescription2"));
             Console.WriteLine(ResourceService.GetLocalized("Console/HeaderDescription3") + LineBreaks);

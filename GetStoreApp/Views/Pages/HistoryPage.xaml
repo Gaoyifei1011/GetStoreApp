@@ -715,13 +715,13 @@
                                         Margin="10,0,0,0"
                                         Command="{Binding ElementName=HistoryRoot, Path=DataContext.FillinCommand, Mode=OneTime}"
                                         CommandParameter="{Binding}"
-                                        Content="{Binding ElementName=HistoryRoot, Path=Fillin, Mode=OneTime}"
+                                        Content="{x:Bind root:ResourceService.GetLocalized('History/Fillin')}"
                                         IsEnabled="{Binding ElementName=HistoryRoot, Path=DataContext.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
                                         Style="{StaticResource HyperlinkButtonStyle}">
 
                                         <ToolTipService.ToolTip>
                                             <ToolTip
-                                                Content="{Binding ElementName=HistoryRoot, Path=FillinToolTip, Mode=OneTime}"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('History/FillinToolTip')}"
                                                 Placement="Bottom"
                                                 VerticalOffset="25" />
                                         </ToolTipService.ToolTip>
@@ -731,13 +731,13 @@
                                         Grid.Column="6"
                                         Command="{Binding ElementName=HistoryRoot, Path=DataContext.CopyCommand, Mode=OneTime}"
                                         CommandParameter="{Binding}"
-                                        Content="{Binding ElementName=HistoryRoot, Path=Copy, Mode=OneTime}"
+                                        Content="{x:Bind root:ResourceService.GetLocalized('History/Copy')}"
                                         IsEnabled="{Binding ElementName=HistoryRoot, Path=DataContext.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
                                         Style="{StaticResource HyperlinkButtonStyle}">
 
                                         <ToolTipService.ToolTip>
                                             <ToolTip
-                                                Content="{Binding ElementName=HistoryRoot, Path=CopyToolTip, Mode=OneTime}"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('History/CopyToolTip')}"
                                                 Placement="Bottom"
                                                 VerticalOffset="25" />
                                         </ToolTipService.ToolTip>

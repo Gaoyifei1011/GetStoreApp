@@ -296,12 +296,12 @@
                                 <TextBlock
                                     Grid.Row="1"
                                     Style="{StaticResource SubDownloadItemTextStyle}"
-                                    Text="{Binding ElementName=UnfinishedRoot, Path=PauseDownload, Mode=OneTime}"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Download/PauseDownload')}"
                                     Visibility="{x:Bind DownloadFlag, Converter={StaticResource DownloadFlagConverter}, ConverterParameter=2}">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip
-                                            Content="{Binding ElementName=UnfinishedRoot, Path=PauseDownload, Mode=OneTime}"
+                                            Content="{x:Bind root:ResourceService.GetLocalized('Download/PauseDownload')}"
                                             Placement="Bottom"
                                             VerticalOffset="20" />
                                     </ToolTipService.ToolTip>
@@ -311,12 +311,12 @@
                                     Grid.Row="1"
                                     Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
                                     Style="{StaticResource SubDownloadItemTextStyle}"
-                                    Text="{Binding ElementName=UnfinishedRoot, Path=DownloadFailed, Mode=OneTime}"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Download/DownloadFailed')}"
                                     Visibility="{x:Bind DownloadFlag, Converter={StaticResource DownloadFlagConverter}, ConverterParameter=0}">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip
-                                            Content="{Binding ElementName=UnfinishedRoot, Path=DownloadFailed, Mode=OneTime}"
+                                            Content="{x:Bind root:ResourceService.GetLocalized('Download/DownloadFailed')}"
                                             Placement="Bottom"
                                             VerticalOffset="20" />
                                     </ToolTipService.ToolTip>
@@ -345,7 +345,7 @@
 
                                         <ToolTipService.ToolTip>
                                             <ToolTip
-                                                Content="{Binding ElementName=UnfinishedRoot, Path=ContinueToolTip, Mode=OneTime}"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('Download/ContinueToolTip')}"
                                                 Placement="Bottom"
                                                 VerticalOffset="25" />
                                         </ToolTipService.ToolTip>
@@ -363,7 +363,7 @@
 
                                         <ToolTipService.ToolTip>
                                             <ToolTip
-                                                Content="{Binding ElementName=UnfinishedRoot, Path=DeleteToolTip, Mode=OneTime}"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('Download/DeleteUnfinishedToolTip')}"
                                                 Placement="Bottom"
                                                 VerticalOffset="25" />
                                         </ToolTipService.ToolTip>

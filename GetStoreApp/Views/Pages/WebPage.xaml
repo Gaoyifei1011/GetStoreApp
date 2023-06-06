@@ -77,7 +77,6 @@
                     <AppBarButton
                         controlExtensions:CursorHelper.Cursor="Hand"
                         Click="{x:Bind ViewModel.OnRefreshClicked}"
-                        CommandParameter="{Binding ElementName=WebView}"
                         Label="{x:Bind root:ResourceService.GetLocalized('Web/Refresh')}">
 
                         <AppBarButton.Icon>

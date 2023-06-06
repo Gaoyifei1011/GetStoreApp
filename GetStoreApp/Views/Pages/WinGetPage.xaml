@@ -143,7 +143,7 @@
                                                         Margin="10,0,0,0"
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center"
-                                                        Command="{Binding ElementName=TaskManagerFlyout, Path=DataContext.CancelInstallCommand}"
+                                                        Command="{Binding ElementName=TaskManagerFlyout, Path=DataContext.CancelInstallCommand, Mode=OneTime}"
                                                         CommandParameter="{x:Bind AppID}"
                                                         Style="{StaticResource ExperimentalHyperlinkButtonStyle}">
                                                         <HyperlinkButton.Content>

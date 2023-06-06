@@ -89,7 +89,6 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// <summary>
         /// 获取设置存储的下载方式值，如果设置没有存储，使用默认值
         /// </summary>
-        /// <returns></returns>
         private static async Task<DownloadModeModel> GetModeAsync()
         {
             string downloadMode = await ConfigService.ReadSettingAsync<string>(DownloadModeSettingsKey);

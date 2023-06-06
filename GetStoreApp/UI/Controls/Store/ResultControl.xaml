@@ -464,13 +464,13 @@
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
                             controlExtensions:CursorHelper.Cursor="Hand"
-                            Content="{Binding ElementName=ResultRoot, Path=Copy, Mode=OneTime}"
+                            Content="{x:Bind root:ResourceService.GetLocalized('Store/Copy')}"
                             IsEnabled="{Binding ElementName=ResultRoot, Path=DataContext.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
                             Style="{StaticResource HyperlinkDropDownButtonStyle}">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip
-                                    Content="{Binding ElementName=ResultRoot, Path=CopyOptionsToolTip, Mode=OneTime}"
+                                    Content="{x:Bind root:ResourceService.GetLocalized('Store/CopyOptionsToolTip')}"
                                     Placement="Bottom"
                                     VerticalOffset="25" />
                             </ToolTipService.ToolTip>
@@ -480,11 +480,11 @@
                                     <MenuFlyoutItem
                                         Command="{Binding ElementName=ResultRoot, Path=DataContext.CopyLinkCommand, Mode=OneTime}"
                                         CommandParameter="{x:Bind FileLink}"
-                                        Text="{Binding ElementName=ResultRoot, Path=CopyLink, Mode=OneTime}">
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Store/CopyLink')}">
 
                                         <ToolTipService.ToolTip>
                                             <ToolTip
-                                                Content="{Binding ElementName=ResultRoot, Path=CopyLinkToolTip, Mode=OneTime}"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('Store/CopyLinkToolTip')}"
                                                 Placement="Bottom"
                                                 VerticalOffset="20" />
                                         </ToolTipService.ToolTip>
@@ -493,11 +493,11 @@
                                     <MenuFlyoutItem
                                         Command="{Binding ElementName=ResultRoot, Path=DataContext.CopyContentCommand, Mode=OneTime}"
                                         CommandParameter="{Binding}"
-                                        Text="{Binding ElementName=ResultRoot, Path=CopyContent, Mode=OneTime}">
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Store/CopyContent')}">
 
                                         <ToolTipService.ToolTip>
                                             <ToolTip
-                                                Content="{Binding ElementName=ResultRoot, Path=CopyContentToolTip, Mode=OneTime}"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('Store/CopyContentToolTip')}"
                                                 Placement="Bottom"
                                                 VerticalOffset="20" />
                                         </ToolTipService.ToolTip>

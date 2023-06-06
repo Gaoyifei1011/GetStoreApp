@@ -264,7 +264,7 @@
                                     <basicInput:ExtendedSplitButton.Flyout>
                                         <menusAndToolbars:AdaptiveMenuFlyout>
                                             <MenuFlyoutItem
-                                                Command="{Binding ElementName=UpgradableAppsRoot, Path=DataContext.CopyUpgradeTextCommand}"
+                                                Command="{Binding ElementName=UpgradableAppsRoot, Path=DataContext.CopyUpgradeTextCommand, Mode=OneTime}"
                                                 CommandParameter="{x:Bind AppID}"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUpgradeText')}">
 

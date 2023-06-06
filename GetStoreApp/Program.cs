@@ -98,7 +98,7 @@ namespace GetStoreApp
                     Properties.Resources.AppBootFailedContent1 + Environment.NewLine + Properties.Resources.AppBootFailedContent2 + Environment.NewLine + Properties.Resources.AppBootFailedContent3,
                     TASKDIALOG_COMMON_BUTTON_FLAGS.TDCBF_OK_BUTTON,
                     TASKDIALOGICON.TD_SHIELD_ERROR_RED_BAR,
-                    out TaskDialogResult Result
+                    out _
                     );
                 Environment.Exit(Convert.ToInt32(AppExitCode.Failed));
             }
@@ -125,9 +125,6 @@ namespace GetStoreApp
             ResourceService.LocalizeReosurce();
             await LinkFilterService.InitializeLinkFilterValueAsnyc();
             await DownloadOptionsService.InitializeAsync();
-
-            // 初始化系统版本信息
-            InfoHelper.InitializeSystemVersion();
 
             // 初始化应用任务跳转列表信息
             AppJumpList.GroupName = ResourceService.GetLocalized("Window/JumpListGroupName");

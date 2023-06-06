@@ -34,7 +34,6 @@
                 <ResourceDictionary Source="ms-appx:///Styles/TextBlock.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/ToggleSwitch.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/WindowChrome.xaml" />
-
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
