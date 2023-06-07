@@ -301,58 +301,57 @@ namespace GetStoreApp.ViewModels.Window
 
             // 导航控件加载完成后初始化内容
 
-            if (sender is not NavigationView navigationView || sender is null)
+            NavigationView navigationView = sender as NavigationView;
+            if (navigationView is not null)
             {
-                return;
-            }
-
-            //初始化导航视图控件属性和应用的背景色
-            if (navigationView.DisplayMode == NavigationViewDisplayMode.Minimal)
-            {
-                IsPaneToggleButtonVisible = true;
-                AppTitleBarMargin = new Thickness(96, 0, 0, 0);
-            }
-            else
-            {
-                IsPaneToggleButtonVisible = false;
-                AppTitleBarMargin = new Thickness(48, 0, 0, 0);
-            }
-
-            foreach (object item in navigationView.MenuItems)
-            {
-                NavigationViewItem navigationViewItem = item as NavigationViewItem;
-                if (navigationViewItem is not null)
+                //初始化导航视图控件属性和应用的背景色
+                if (navigationView.DisplayMode == NavigationViewDisplayMode.Minimal)
                 {
-                    string Tag = Convert.ToString(navigationViewItem.Tag);
-
-                    NavigationService.NavigationItemList.Add(new NavigationModel()
-                    {
-                        NavigationTag = Tag,
-                        NavigationItem = navigationViewItem,
-                        NavigationPage = PageDict[Tag],
-                    });
+                    IsPaneToggleButtonVisible = true;
+                    AppTitleBarMargin = new Thickness(96, 0, 0, 0);
                 }
-            }
-
-            foreach (object item in navigationView.FooterMenuItems)
-            {
-                NavigationViewItem navigationViewItem = item as NavigationViewItem;
-                if (navigationViewItem is not null)
+                else
                 {
-                    string Tag = Convert.ToString(navigationViewItem.Tag);
-
-                    NavigationService.NavigationItemList.Add(new NavigationModel()
-                    {
-                        NavigationTag = Tag,
-                        NavigationItem = navigationViewItem,
-                        NavigationPage = PageDict[Tag],
-                    });
+                    IsPaneToggleButtonVisible = false;
+                    AppTitleBarMargin = new Thickness(48, 0, 0, 0);
                 }
-            }
 
-            SelectedItem = NavigationService.NavigationItemList[0].NavigationItem;
-            NavigationService.NavigateTo(typeof(StorePage));
-            IsBackEnabled = NavigationService.CanGoBack();
+                foreach (object item in navigationView.MenuItems)
+                {
+                    NavigationViewItem navigationViewItem = item as NavigationViewItem;
+                    if (navigationViewItem is not null)
+                    {
+                        string Tag = Convert.ToString(navigationViewItem.Tag);
+
+                        NavigationService.NavigationItemList.Add(new NavigationModel()
+                        {
+                            NavigationTag = Tag,
+                            NavigationItem = navigationViewItem,
+                            NavigationPage = PageDict[Tag],
+                        });
+                    }
+                }
+
+                foreach (object item in navigationView.FooterMenuItems)
+                {
+                    NavigationViewItem navigationViewItem = item as NavigationViewItem;
+                    if (navigationViewItem is not null)
+                    {
+                        string Tag = Convert.ToString(navigationViewItem.Tag);
+
+                        NavigationService.NavigationItemList.Add(new NavigationModel()
+                        {
+                            NavigationTag = Tag,
+                            NavigationItem = navigationViewItem,
+                            NavigationPage = PageDict[Tag],
+                        });
+                    }
+                }
+
+                SelectedItem = NavigationService.NavigationItemList[0].NavigationItem;
+                NavigationService.NavigateTo(typeof(StorePage));
+                IsBackEnabled = NavigationService.CanGoBack();
+            }
         }
 
         /// <summary>

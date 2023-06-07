@@ -99,118 +99,24 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListViewItem">
-                    <Border x:Name="OuterContainer" RenderTransformOrigin="0.5,0.5">
+                    <Border
+                        x:Name="ContentBorder"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        RenderTransformOrigin="0.5,0.5">
                         <Border.RenderTransform>
-                            <ScaleTransform x:Name="ContentScaleTransform" />
+                            <TranslateTransform x:Name="ContentBorderTranslateTransform" />
                         </Border.RenderTransform>
-                        <Grid x:Name="ReorderHintContent" Background="Transparent">
-                            <Border
-                                x:Name="CheckboxOuterContainer"
-                                Margin="{ThemeResource ListPickerFlyoutPresenterMultiselectCheckBoxMargin}"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top">
-                                <Border.Clip>
-                                    <RectangleGeometry Rect="0,0,25.5,25.5" />
-                                </Border.Clip>
-                                <Grid x:Name="CheckboxContainer">
-                                    <Grid.RenderTransform>
-                                        <TranslateTransform x:Name="CheckboxContainerTranslateTransform" X="{ThemeResource ListViewItemContentOffsetX}" />
-                                    </Grid.RenderTransform>
-                                    <Rectangle
-                                        x:Name="NormalRectangle"
-                                        Width="25.5"
-                                        Height="25.5"
-                                        Fill="{ThemeResource CheckBoxBackgroundThemeBrush}"
-                                        Stroke="{ThemeResource CheckBoxBorderThemeBrush}"
-                                        StrokeThickness="{ThemeResource CheckBoxBorderThemeThickness}" />
-                                    <Path
-                                        x:Name="CheckGlyph"
-                                        Width="18.5"
-                                        Height="17"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Data="M0,123 L39,93 L124,164 L256,18 L295,49 L124,240 z"
-                                        Fill="{ThemeResource CheckBoxForegroundThemeBrush}"
-                                        FlowDirection="LeftToRight"
-                                        IsHitTestVisible="False"
-                                        Opacity="0"
-                                        Stretch="Fill"
-                                        StrokeLineJoin="Round"
-                                        StrokeThickness="2.5" />
-                                </Grid>
-                            </Border>
-                            <Border x:Name="ContentContainer">
-                                <Border
-                                    x:Name="ContentBorder"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}">
-                                    <Border.RenderTransform>
-                                        <TranslateTransform x:Name="ContentBorderTranslateTransform" />
-                                    </Border.RenderTransform>
-                                    <Grid>
-                                        <ContentPresenter
-                                            x:Name="contentPresenter"
-                                            Margin="{TemplateBinding Padding}"
-                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                            Content="{TemplateBinding Content}"
-                                            ContentTemplate="{TemplateBinding ContentTemplate}"
-                                            ContentTransitions="{TemplateBinding ContentTransitions}"
-                                            Style="{ThemeResource FlyoutPickerListViewItemContentPresenterStyle}" />
-                                        <!--
-                                            The 'Xg' text simulates the amount of space one line of text will occupy.
-                                            In the DataPlaceholder state, the Content is not loaded yet so we
-                                            approximate the size of the item using placeholder text.
-                                        -->
-                                        <TextBlock
-                                            x:Name="PlaceholderTextBlock"
-                                            Margin="{TemplateBinding Padding}"
-                                            AutomationProperties.AccessibilityView="Raw"
-                                            Foreground="{x:Null}"
-                                            IsHitTestVisible="False"
-                                            Opacity="0"
-                                            Text="Xg" />
-                                        <Rectangle
-                                            x:Name="PlaceholderRect"
-                                            Fill="{ThemeResource FlyoutBackgroundThemeBrush}"
-                                            IsHitTestVisible="False"
-                                            Visibility="Collapsed" />
-                                    </Grid>
-                                </Border>
-                            </Border>
-                            <Border
-                                x:Name="SelectedBorder"
-                                BorderBrush="{ThemeResource ListViewItemSelectedBackgroundThemeBrush}"
-                                BorderThickness="{ThemeResource GridViewItemMultiselectBorderThickness}"
-                                IsHitTestVisible="False"
-                                Opacity="0">
-                                <Grid
-                                    x:Name="SelectedCheckMark"
-                                    Width="34"
-                                    Height="34"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Top"
-                                    Opacity="0">
-                                    <Path
-                                        x:Name="SelectedEarmark"
-                                        Data="M0,0 L40,0 L40,40 z"
-                                        Fill="{ThemeResource ListViewItemSelectedBackgroundThemeBrush}"
-                                        Stretch="Fill" />
-                                    <Path
-                                        x:Name="SelectedGlyph"
-                                        Width="17"
-                                        Height="14.5"
-                                        Margin="0,1,1,0"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Top"
-                                        Data="M0,123 L39,93 L124,164 L256,18 L295,49 L124,240 z"
-                                        Fill="{ThemeResource ListViewItemCheckThemeBrush}"
-                                        FlowDirection="LeftToRight"
-                                        Stretch="Fill" />
-                                </Grid>
-                            </Border>
-                        </Grid>
+                        <ContentPresenter
+                            x:Name="contentPresenter"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                            Style="{ThemeResource FlyoutPickerListViewItemContentPresenterStyle}" />
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
@@ -228,90 +134,15 @@
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="SelectionStates">
                                 <VisualState x:Name="Unselected" />
-                                <VisualState x:Name="Selected">
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="CheckGlyph"
-                                            Storyboard.TargetProperty="Opacity"
-                                            To="1"
-                                            Duration="0" />
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="SelectedCheckMark"
-                                            Storyboard.TargetProperty="Opacity"
-                                            To="1"
-                                            Duration="0" />
-                                        <ObjectAnimationUsingKeyFrames
-                                            Storyboard.TargetName="contentPresenter"
-                                            Storyboard.TargetProperty="Foreground"
-                                            Duration="0">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ListPickerFlyoutPresenterSelectedItemForegroundThemeBrush}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentBorder" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ListPickerFlyoutPresenterSelectedItemBackgroundThemeBrush}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="SelectedUnfocused">
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="CheckGlyph"
-                                            Storyboard.TargetProperty="Opacity"
-                                            To="1"
-                                            Duration="0" />
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="SelectedCheckMark"
-                                            Storyboard.TargetProperty="Opacity"
-                                            To="1"
-                                            Duration="0" />
-                                    </Storyboard>
-                                </VisualState>
+                                <VisualState x:Name="Selected" />
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="DataVirtualizationStates">
                                 <VisualState x:Name="DataAvailable" />
-                                <VisualState x:Name="DataPlaceholder">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames
-                                            Storyboard.TargetName="PlaceholderTextBlock"
-                                            Storyboard.TargetProperty="Visibility"
-                                            Duration="0">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames
-                                            Storyboard.TargetName="PlaceholderRect"
-                                            Storyboard.TargetProperty="Visibility"
-                                            Duration="0">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
+                                <VisualState x:Name="DataPlaceholder" />
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="MultiSelectStates">
                                 <VisualState x:Name="NoMultiSelect" />
-                                <VisualState x:Name="ListMultiSelect">
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="CheckboxContainerTranslateTransform"
-                                            Storyboard.TargetProperty="X"
-                                            To="0"
-                                            Duration="0" />
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="ContentBorderTranslateTransform"
-                                            Storyboard.TargetProperty="X"
-                                            To="25.5"
-                                            Duration="0" />
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="GridMultiSelect" />
-                                <VisualStateGroup.Transitions>
-                                    <VisualTransition
-                                        GeneratedDuration="0:0:0.15"
-                                        From="ListMultiSelect"
-                                        To="NoMultiSelect" />
-                                    <VisualTransition
-                                        GeneratedDuration="0:0:0.15"
-                                        From="NoMultiSelect"
-                                        To="ListMultiSelect" />
-                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="ListMultiSelect" />
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="HighlightStates">
                                 <VisualState x:Name="NoHighlight" />

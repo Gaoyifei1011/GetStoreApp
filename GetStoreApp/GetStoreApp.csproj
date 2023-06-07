@@ -135,7 +135,6 @@
     
     <None Remove="Styles\Button.xaml" />
     <None Remove="Styles\Checkbox.xaml" />
-    <None Remove="Styles\CommandBar.xaml" />
     <None Remove="Styles\ContentDialog.xaml" />
     <None Remove="Styles\Converter.xaml" />
     <None Remove="Styles\DropDownButton.xaml" />
@@ -274,7 +273,6 @@
     
     <Page Update="Styles\Button.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\Checkbox.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Styles\CommandBar.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\ContentDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\Converter.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\DropDownButton.xaml" Generator="MSBuild:Compile" />

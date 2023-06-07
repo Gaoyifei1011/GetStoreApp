@@ -34,6 +34,7 @@
 
         <Grid
             Grid.Row="0"
+            Height="66"
             Margin="30,0"
             Style="{StaticResource ListViewHeaderGridStyle}">
 
@@ -70,22 +71,25 @@
                 </ToolTipService.ToolTip>
             </TextBlock>
 
-            <CommandBar
+            <StackPanel
                 x:Name="NormalMode"
                 Grid.Column="4"
+                Margin="0,0,10,0"
                 VerticalAlignment="Center"
                 x:Load="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
                 Background="Transparent"
-                DefaultLabelPosition="Right">
+                Orientation="Horizontal"
+                Spacing="2">
 
-                <AppBarButton
+                <MenuFlyoutItem
                     controlExtensions:CursorHelper.Cursor="Hand"
                     Click="{x:Bind ViewModel.OnOpenFolderClicked}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolder')}">
+                    Style="{StaticResource AppBarButtonMenuItemStyle}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolder')}">
 
-                    <AppBarButton.Icon>
+                    <MenuFlyoutItem.Icon>
                         <FontIcon Glyph="&#xE8b7;" Style="{StaticResource SegoeFluentStyle}" />
-                    </AppBarButton.Icon>
+                    </MenuFlyoutItem.Icon>
 
                     <ToolTipService.ToolTip>
                         <ToolTip
@@ -93,17 +97,18 @@
                             Placement="Bottom"
                             VerticalOffset="25" />
                     </ToolTipService.ToolTip>
-                </AppBarButton>
+                </MenuFlyoutItem>
 
-                <AppBarButton
+                <MenuFlyoutItem
                     controlExtensions:CursorHelper.Cursor="Hand"
                     Click="{x:Bind ViewModel.OnSelectClicked}"
                     IsEnabled="{x:Bind sys:Convert.ToBoolean(ViewModel.CompletedDataList.Count), Mode=OneWay}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('Download/Select')}">
+                    Style="{StaticResource AppBarButtonMenuItemStyle}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Download/Select')}">
 
-                    <AppBarButton.Icon>
+                    <MenuFlyoutItem.Icon>
                         <FontIcon Glyph="&#xE762;" Style="{StaticResource SegoeFluentStyle}" />
-                    </AppBarButton.Icon>
+                    </MenuFlyoutItem.Icon>
 
                     <ToolTipService.ToolTip>
                         <ToolTip
@@ -111,25 +116,28 @@
                             Placement="Bottom"
                             VerticalOffset="25" />
                     </ToolTipService.ToolTip>
-                </AppBarButton>
-            </CommandBar>
+                </MenuFlyoutItem>
+            </StackPanel>
 
-            <CommandBar
+            <StackPanel
                 x:Name="SelectMode"
                 Grid.Column="4"
+                Margin="0,0,10,0"
                 VerticalAlignment="Center"
                 x:Load="{x:Bind ViewModel.IsSelectMode, Mode=OneWay}"
                 Background="Transparent"
-                DefaultLabelPosition="Right">
+                Orientation="Horizontal"
+                Spacing="2">
 
-                <AppBarButton
+                <MenuFlyoutItem
                     controlExtensions:CursorHelper.Cursor="Hand"
                     Click="{x:Bind ViewModel.OnSelectAllClicked}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('Download/SelectAll')}">
+                    Style="{StaticResource AppBarButtonMenuItemStyle}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Download/SelectAll')}">
 
-                    <AppBarButton.Icon>
+                    <MenuFlyoutItem.Icon>
                         <FontIcon Glyph="&#xE8b3;" Style="{StaticResource SegoeFluentStyle}" />
-                    </AppBarButton.Icon>
+                    </MenuFlyoutItem.Icon>
 
                     <ToolTipService.ToolTip>
                         <ToolTip
@@ -137,16 +145,17 @@
                             Placement="Bottom"
                             VerticalOffset="25" />
                     </ToolTipService.ToolTip>
-                </AppBarButton>
+                </MenuFlyoutItem>
 
-                <AppBarButton
+                <MenuFlyoutItem
                     controlExtensions:CursorHelper.Cursor="Hand"
                     Click="{x:Bind ViewModel.OnSelectNoneClicked}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('Download/SelectNone')}">
+                    Style="{StaticResource AppBarButtonMenuItemStyle}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Download/SelectNone')}">
 
-                    <AppBarButton.Icon>
+                    <MenuFlyoutItem.Icon>
                         <FontIcon Glyph="&#xE8e6;" Style="{StaticResource SegoeFluentStyle}" />
-                    </AppBarButton.Icon>
+                    </MenuFlyoutItem.Icon>
 
                     <ToolTipService.ToolTip>
                         <ToolTip
@@ -154,12 +163,17 @@
                             Placement="Bottom"
                             VerticalOffset="25" />
                     </ToolTipService.ToolTip>
-                </AppBarButton>
+                </MenuFlyoutItem>
 
-                <AppBarButton controlExtensions:CursorHelper.Cursor="Hand" Label="{x:Bind root:ResourceService.GetLocalized('Download/DeleteOptions')}">
-                    <AppBarButton.Icon>
+                <MenuFlyoutItem
+                    controlExtensions:CursorHelper.Cursor="Hand"
+                    Click="{x:Bind ViewModel.OnDeleteOptionsClicked}"
+                    Style="{StaticResource AppBarButtonMenuItemStyle}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteOptions')}">
+
+                    <MenuFlyoutItem.Icon>
                         <FontIcon Glyph="&#xE74d;" Style="{StaticResource SegoeFluentStyle}" />
-                    </AppBarButton.Icon>
+                    </MenuFlyoutItem.Icon>
 
                     <ToolTipService.ToolTip>
                         <ToolTip
@@ -168,7 +182,7 @@
                             VerticalOffset="25" />
                     </ToolTipService.ToolTip>
 
-                    <AppBarButton.Flyout>
+                    <FlyoutBase.AttachedFlyout>
                         <menusAndToolbars:AdaptiveMenuFlyout>
                             <MenuFlyoutItem Click="{x:Bind ViewModel.OnDelectSelectedClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelected')}">
                                 <ToolTipService.ToolTip>
@@ -188,17 +202,18 @@
                                 </ToolTipService.ToolTip>
                             </MenuFlyoutItem>
                         </menusAndToolbars:AdaptiveMenuFlyout>
-                    </AppBarButton.Flyout>
-                </AppBarButton>
+                    </FlyoutBase.AttachedFlyout>
+                </MenuFlyoutItem>
 
-                <AppBarButton
+                <MenuFlyoutItem
                     controlExtensions:CursorHelper.Cursor="Hand"
                     Click="{x:Bind ViewModel.OnShareSelectedFileClicked}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('Download/ShareSelectedFile')}">
+                    Style="{StaticResource AppBarButtonMenuItemStyle}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Download/ShareSelectedFile')}">
 
-                    <AppBarButton.Icon>
+                    <MenuFlyoutItem.Icon>
                         <FontIcon Glyph="&#xE72d;" Style="{StaticResource SegoeFluentStyle}" />
-                    </AppBarButton.Icon>
+                    </MenuFlyoutItem.Icon>
 
                     <ToolTipService.ToolTip>
                         <ToolTip
@@ -206,16 +221,17 @@
                             Placement="Bottom"
                             VerticalOffset="25" />
                     </ToolTipService.ToolTip>
-                </AppBarButton>
+                </MenuFlyoutItem>
 
-                <AppBarButton
+                <MenuFlyoutItem
                     controlExtensions:CursorHelper.Cursor="Hand"
                     Click="{x:Bind ViewModel.OnCancelClicked}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('Download/Cancel')}">
+                    Style="{StaticResource AppBarButtonMenuItemStyle}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Download/Cancel')}">
 
-                    <AppBarButton.Icon>
+                    <MenuFlyoutItem.Icon>
                         <FontIcon Glyph="&#xE711;" Style="{StaticResource SegoeFluentStyle}" />
-                    </AppBarButton.Icon>
+                    </MenuFlyoutItem.Icon>
 
                     <ToolTipService.ToolTip>
                         <ToolTip
@@ -223,8 +239,8 @@
                             Placement="Bottom"
                             VerticalOffset="25" />
                     </ToolTipService.ToolTip>
-                </AppBarButton>
-            </CommandBar>
+                </MenuFlyoutItem>
+            </StackPanel>
         </Grid>
 
         <Grid

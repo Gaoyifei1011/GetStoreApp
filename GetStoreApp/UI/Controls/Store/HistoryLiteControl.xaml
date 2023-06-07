@@ -44,30 +44,25 @@
                     VerticalAlignment="Center"
                     Text="{x:Bind root:ResourceService.GetLocalized('Store/Recent')}" />
 
-                <CommandBar
+                <MenuFlyoutItem
                     Grid.Column="2"
                     Margin="0,0,-15,0"
-                    VerticalAlignment="Center"
-                    Background="Transparent"
-                    DefaultLabelPosition="Right">
+                    controlExtensions:CursorHelper.Cursor="Hand"
+                    Click="{x:Bind ViewModel.OnViewAllClicked}"
+                    Style="{StaticResource AppBarButtonMenuItemStyle}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Store/ViewAll')}">
 
-                    <AppBarButton
-                        controlExtensions:CursorHelper.Cursor="Hand"
-                        Click="{x:Bind ViewModel.OnViewAllClicked}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('Store/ViewAll')}">
+                    <MenuFlyoutItem.Icon>
+                        <FontIcon Glyph="&#xE890;" Style="{StaticResource SegoeFluentStyle}" />
+                    </MenuFlyoutItem.Icon>
 
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE890;" Style="{StaticResource SegoeFluentStyle}" />
-                        </AppBarButton.Icon>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('Store/ViewAllToolTip')}"
-                                Placement="Bottom"
-                                VerticalOffset="25" />
-                        </ToolTipService.ToolTip>
-                    </AppBarButton>
-                </CommandBar>
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('Store/ViewAllToolTip')}"
+                            Placement="Bottom"
+                            VerticalOffset="25" />
+                    </ToolTipService.ToolTip>
+                </MenuFlyoutItem>
             </Grid>
         </Expander.Header>
 

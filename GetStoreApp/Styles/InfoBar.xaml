@@ -132,37 +132,15 @@
                                 Child="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.IconElement}"
                                 Visibility="Collapsed" />
 
-                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
-
-                                <TextBlock
-                                    x:Name="Title"
-                                    FontSize="{StaticResource InfoBarTitleFontSize}"
-                                    FontWeight="{StaticResource InfoBarTitleFontWeight}"
-                                    Foreground="{ThemeResource InfoBarTitleForeground}"
-                                    Text="{TemplateBinding Title}"
-                                    TextWrapping="WrapWholeWords"
-                                    Visibility="Collapsed" />
-
-                                <TextBlock
-                                    x:Name="Message"
-                                    FontSize="{StaticResource InfoBarMessageFontSize}"
-                                    FontWeight="{StaticResource InfoBarMessageFontWeight}"
-                                    Foreground="{ThemeResource InfoBarMessageForeground}"
-                                    Text="{TemplateBinding Message}"
-                                    TextWrapping="WrapWholeWords" />
-
-                                <ContentPresenter VerticalAlignment="Center" Content="{TemplateBinding ActionButton}">
-
-                                    <ContentPresenter.Resources>
-                                        <Style BasedOn="{StaticResource DefaultHyperlinkButtonStyle}" TargetType="HyperlinkButton">
-                                            <Style.Setters>
-                                                <Setter Property="Margin" Value="{StaticResource InfoBarHyperlinkButtonMargin}" />
-                                                <Setter Property="Foreground" Value="{ThemeResource InfoBarHyperlinkButtonForeground}" />
-                                            </Style.Setters>
-                                        </Style>
-                                    </ContentPresenter.Resources>
-                                </ContentPresenter>
-                            </StackPanel>
+                            <TextBlock
+                                x:Name="Message"
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                FontSize="{StaticResource InfoBarMessageFontSize}"
+                                FontWeight="{StaticResource InfoBarMessageFontWeight}"
+                                Foreground="{ThemeResource InfoBarMessageForeground}"
+                                Text="{TemplateBinding Message}"
+                                TextWrapping="WrapWholeWords" />
 
                             <ContentPresenter
                                 Grid.Column="2"
@@ -170,74 +148,6 @@
                                 VerticalAlignment="Center"
                                 Content="{TemplateBinding Content}"
                                 ContentTemplate="{TemplateBinding ContentTemplate}" />
-
-                            <Button
-                                Name="CloseButton"
-                                Grid.Column="3"
-                                Margin="0,0,10,0"
-                                Command="{TemplateBinding CloseButtonCommand}"
-                                CommandParameter="{TemplateBinding CloseButtonCommandParameter}"
-                                Style="{TemplateBinding CloseButtonStyle}">
-
-                                <Button.Resources>
-                                    <ResourceDictionary>
-                                        <ResourceDictionary.ThemeDictionaries>
-                                            <ResourceDictionary x:Key="Default">
-                                                <StaticResource x:Key="ButtonBackground" ResourceKey="AppBarButtonBackground" />
-                                                <StaticResource x:Key="ButtonBackgroundPointerOver" ResourceKey="AppBarButtonBackgroundPointerOver" />
-                                                <StaticResource x:Key="ButtonBackgroundPressed" ResourceKey="AppBarButtonBackgroundPressed" />
-                                                <StaticResource x:Key="ButtonBackgroundDisabled" ResourceKey="AppBarButtonBackgroundDisabled" />
-                                                <StaticResource x:Key="ButtonForeground" ResourceKey="AppBarButtonForeground" />
-                                                <StaticResource x:Key="ButtonForegroundPointerOver" ResourceKey="AppBarButtonForegroundPointerOver" />
-                                                <StaticResource x:Key="ButtonForegroundPressed" ResourceKey="AppBarButtonForegroundPressed" />
-                                                <StaticResource x:Key="ButtonForegroundDisabled" ResourceKey="AppBarButtonForegroundDisabled" />
-                                                <StaticResource x:Key="ButtonBorderBrush" ResourceKey="AppBarButtonBorderBrush" />
-                                                <StaticResource x:Key="ButtonBorderBrushPointerOver" ResourceKey="AppBarButtonBorderBrushPointerOver" />
-                                                <StaticResource x:Key="ButtonBorderBrushPressed" ResourceKey="AppBarButtonBorderBrushPressed" />
-                                                <StaticResource x:Key="ButtonBorderBrushDisabled" ResourceKey="AppBarButtonBorderBrushDisabled" />
-                                            </ResourceDictionary>
-
-                                            <ResourceDictionary x:Key="HighContrast">
-                                                <StaticResource x:Key="ButtonBackground" ResourceKey="AppBarButtonBackground" />
-                                                <StaticResource x:Key="ButtonBackgroundPointerOver" ResourceKey="AppBarButtonBackgroundPointerOver" />
-                                                <StaticResource x:Key="ButtonBackgroundPressed" ResourceKey="AppBarButtonBackgroundPressed" />
-                                                <StaticResource x:Key="ButtonBackgroundDisabled" ResourceKey="AppBarButtonBackgroundDisabled" />
-                                                <StaticResource x:Key="ButtonForeground" ResourceKey="AppBarButtonForeground" />
-                                                <StaticResource x:Key="ButtonForegroundPointerOver" ResourceKey="AppBarButtonForegroundPointerOver" />
-                                                <StaticResource x:Key="ButtonForegroundPressed" ResourceKey="AppBarButtonForegroundPressed" />
-                                                <StaticResource x:Key="ButtonForegroundDisabled" ResourceKey="AppBarButtonForegroundDisabled" />
-                                                <StaticResource x:Key="ButtonBorderBrush" ResourceKey="AppBarButtonBorderBrush" />
-                                                <StaticResource x:Key="ButtonBorderBrushPointerOver" ResourceKey="AppBarButtonBorderBrushPointerOver" />
-                                                <StaticResource x:Key="ButtonBorderBrushPressed" ResourceKey="AppBarButtonBorderBrushPressed" />
-                                                <StaticResource x:Key="ButtonBorderBrushDisabled" ResourceKey="AppBarButtonBorderBrushDisabled" />
-                                            </ResourceDictionary>
-
-                                            <ResourceDictionary x:Key="Light">
-                                                <StaticResource x:Key="ButtonBackground" ResourceKey="AppBarButtonBackground" />
-                                                <StaticResource x:Key="ButtonBackgroundPointerOver" ResourceKey="AppBarButtonBackgroundPointerOver" />
-                                                <StaticResource x:Key="ButtonBackgroundPressed" ResourceKey="AppBarButtonBackgroundPressed" />
-                                                <StaticResource x:Key="ButtonBackgroundDisabled" ResourceKey="AppBarButtonBackgroundDisabled" />
-                                                <StaticResource x:Key="ButtonForeground" ResourceKey="AppBarButtonForeground" />
-                                                <StaticResource x:Key="ButtonForegroundPointerOver" ResourceKey="AppBarButtonForegroundPointerOver" />
-                                                <StaticResource x:Key="ButtonForegroundPressed" ResourceKey="AppBarButtonForegroundPressed" />
-                                                <StaticResource x:Key="ButtonForegroundDisabled" ResourceKey="AppBarButtonForegroundDisabled" />
-                                                <StaticResource x:Key="ButtonBorderBrush" ResourceKey="AppBarButtonBorderBrush" />
-                                                <StaticResource x:Key="ButtonBorderBrushPointerOver" ResourceKey="AppBarButtonBorderBrushPointerOver" />
-                                                <StaticResource x:Key="ButtonBorderBrushPressed" ResourceKey="AppBarButtonBorderBrushPressed" />
-                                                <StaticResource x:Key="ButtonBorderBrushDisabled" ResourceKey="AppBarButtonBorderBrushDisabled" />
-                                            </ResourceDictionary>
-                                        </ResourceDictionary.ThemeDictionaries>
-                                    </ResourceDictionary>
-                                </Button.Resources>
-
-                                <Viewbox
-                                    Width="{StaticResource InfoBarCloseButtonGlyphSize}"
-                                    Height="{StaticResource InfoBarCloseButtonGlyphSize}"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center">
-                                    <FontIcon FontFamily="ms-appx:///Fonts/Segoe Fluent Icons.ttf#Segoe Fluent Icons" Glyph="&#xE711;" />
-                                </Viewbox>
-                            </Button>
                         </Grid>
 
                         <VisualStateManager.VisualStateGroups>
@@ -300,11 +210,7 @@
 
                             <VisualStateGroup>
                                 <VisualState x:Name="CloseButtonVisible" />
-                                <VisualState x:Name="CloseButtonCollapsed">
-                                    <VisualState.Setters>
-                                        <Setter Target="CloseButton.Visibility" Value="Collapsed" />
-                                    </VisualState.Setters>
-                                </VisualState>
+                                <VisualState x:Name="CloseButtonCollapsed" />
                             </VisualStateGroup>
 
                             <VisualStateGroup x:Name="InfoBarVisibility">
@@ -320,7 +226,6 @@
                                 <VisualState x:Name="ForegroundNotSet" />
                                 <VisualState x:Name="ForegroundSet">
                                     <VisualState.Setters>
-                                        <Setter Target="Title.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Foreground}" />
                                         <Setter Target="Message.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Foreground}" />
                                     </VisualState.Setters>
                                 </VisualState>

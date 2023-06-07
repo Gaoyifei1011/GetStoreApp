@@ -12,6 +12,7 @@ using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.Web.WebView2.Core;
 using System;
 using System.IO;
@@ -134,6 +135,14 @@ namespace GetStoreApp.ViewModels.Pages
         public async void OnOpenWithBrowserClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(Source);
+        }
+
+        /// <summary>
+        /// 显示浮出控件
+        /// </summary>
+        public void OnFlyoutShowClicked(object sender, RoutedEventArgs args)
+        {
+            FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
         }
 
         /// <summary>

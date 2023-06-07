@@ -11,6 +11,7 @@ using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
@@ -136,6 +137,14 @@ namespace GetStoreApp.ViewModels.Pages
             }
 
             IsSelectMode = true;
+        }
+
+        /// <summary>
+        /// 显示浮出控件
+        /// </summary>
+        public void OnFlyoutShowClicked(object sender, RoutedEventArgs args)
+        {
+            FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
         }
 
         /// <summary>

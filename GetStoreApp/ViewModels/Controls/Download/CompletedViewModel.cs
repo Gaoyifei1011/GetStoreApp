@@ -12,6 +12,7 @@ using GetStoreApp.ViewModels.Base;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
@@ -125,6 +126,14 @@ namespace GetStoreApp.ViewModels.Controls.Download
             }
 
             lock (CompletedDataListLock) isUpdatingNow = false;
+        }
+
+        /// <summary>
+        /// 显示删除选项浮出控件
+        /// </summary>
+        public void OnDeleteOptionsClicked(object sender, RoutedEventArgs args)
+        {
+            FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
         }
 
         /// <summary>

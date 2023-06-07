@@ -11,8 +11,6 @@ namespace GetStoreApp.Helpers.Root
 
         public static ResourceDictionary CheckboxResourceDict { get; private set; }
 
-        public static ResourceDictionary CommandBarResourceDict { get; private set; }
-
         public static ResourceDictionary ContentDialogResourceDict { get; private set; }
 
         public static ResourceDictionary DropDownButtonResourceDict { get; private set; }
@@ -60,27 +58,26 @@ namespace GetStoreApp.Helpers.Root
         {
             ButtonResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[2];
             CheckboxResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[3];
-            CommandBarResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[4];
-            ContentDialogResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[5];
-            DropDownButtonResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[6];
-            ExpanderResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[7];
-            FlyoutResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[8];
-            FontIconResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[9];
-            GridResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[10];
-            GridViewResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[11];
-            HyperlinkButtonResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[12];
-            InAppNotificationResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[13];
-            InfoBarResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[14];
-            ListViewResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[15];
-            MenuFlyoutResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[16];
-            NavigationViewResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[17];
-            PivotResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[18];
-            ScrollViewerResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[19];
-            SplitButtonResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[20];
-            TeachingTipResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[21];
-            TextBlockResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[22];
-            ToggleSwitchResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[23];
-            WindowChromeDict = Program.ApplicationRoot.Resources.MergedDictionaries[24];
+            ContentDialogResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[4];
+            DropDownButtonResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[5];
+            ExpanderResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[6];
+            FlyoutResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[7];
+            FontIconResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[8];
+            GridResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[9];
+            GridViewResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[10];
+            HyperlinkButtonResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[11];
+            InAppNotificationResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[12];
+            InfoBarResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[13];
+            ListViewResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[14];
+            MenuFlyoutResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[15];
+            NavigationViewResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[16];
+            PivotResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[17];
+            ScrollViewerResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[18];
+            SplitButtonResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[19];
+            TeachingTipResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[20];
+            TextBlockResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[21];
+            ToggleSwitchResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[22];
+            WindowChromeDict = Program.ApplicationRoot.Resources.MergedDictionaries[23];
         }
     }
 }
