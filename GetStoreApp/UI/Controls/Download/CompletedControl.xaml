@@ -263,324 +263,322 @@
             </TextBlock>
         </Grid>
 
-        <ScrollViewer
+        <ListView
             Grid.Row="2"
-            Padding="0,3,0,0"
-            HorizontalScrollBarVisibility="Disabled"
-            HorizontalScrollMode="Disabled"
-            Style="{StaticResource ScrollViewerStyle}"
-            VerticalScrollBarVisibility="Auto"
-            VerticalScrollMode="Enabled">
+            Padding="30,3,30,30"
+            IsItemClickEnabled="{x:Bind ViewModel.IsSelectMode, Mode=OneWay}"
+            ItemClick="{x:Bind ViewModel.OnItemClicked}"
+            ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
+            ItemsSource="{x:Bind ViewModel.CompletedDataList, Mode=OneWay}"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            ScrollViewer.HorizontalScrollMode="Disabled"
+            ScrollViewer.VerticalScrollBarVisibility="Auto"
+            ScrollViewer.VerticalScrollMode="Enabled"
+            SelectionMode="None"
+            Style="{StaticResource ListViewStyle}"
+            Visibility="{x:Bind ViewModel.CompletedDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
 
-            <ListView
-                Padding="30,0,30,30"
-                IsItemClickEnabled="{x:Bind ViewModel.IsSelectMode, Mode=OneWay}"
-                ItemClick="{x:Bind ViewModel.OnItemClicked}"
-                ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
-                ItemsSource="{x:Bind ViewModel.CompletedDataList, Mode=OneWay}"
-                SelectionMode="None"
-                Visibility="{x:Bind ViewModel.CompletedDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="download:CompletedModel">
+                    <Grid Padding="16,10" Style="{StaticResource CardGridStyle}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
 
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="download:CompletedModel">
-                        <Grid Style="{StaticResource CardGridStyle}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
+                        <CheckBox
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            controlExtensions:CursorHelper.Cursor="Hand"
+                            IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
+                            IsThreeState="False"
+                            Style="{StaticResource CheckBoxStyle}"
+                            Visibility="{Binding ElementName=CompletedRoot, Path=DataContext.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
 
-                            <CheckBox
-                                Grid.Column="0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                controlExtensions:CursorHelper.Cursor="Hand"
-                                IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
-                                IsThreeState="False"
-                                Style="{StaticResource CheckBoxStyle}"
-                                Visibility="{Binding ElementName=CompletedRoot, Path=DataContext.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    Content="{x:Bind IsSelected, Converter={StaticResource CheckBoxToolTipFormatConverter}, ConverterParameter=Download, Mode=OneWay}"
+                                    Placement="Bottom"
+                                    VerticalOffset="25" />
+                            </ToolTipService.ToolTip>
+                        </CheckBox>
 
-                                <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        Content="{x:Bind IsSelected, Converter={StaticResource CheckBoxToolTipFormatConverter}, ConverterParameter=Download, Mode=OneWay}"
-                                        Placement="Bottom"
-                                        VerticalOffset="25" />
-                                </ToolTipService.ToolTip>
-                            </CheckBox>
+                        <Grid
+                            Grid.Column="1"
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Center"
+                            RowSpacing="4">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
 
-                            <Grid
-                                Grid.Column="1"
-                                Margin="0,0,10,0"
-                                VerticalAlignment="Center"
-                                RowSpacing="8">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" ColumnSpacing="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
 
-                                <Grid Grid.Row="0" ColumnSpacing="5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    Grid.Column="0"
+                                    FontSize="16"
+                                    Style="{StaticResource CardTextStyle}"
+                                    Text="{x:Bind FileName}">
 
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        Style="{StaticResource DownloadItemTextStyle}"
-                                        Text="{x:Bind FileName}">
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="{x:Bind FileName}"
+                                            Placement="Bottom"
+                                            VerticalOffset="20" />
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
 
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind FileName}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
+                                <TextBlock
+                                    Grid.Column="1"
+                                    FontSize="16"
+                                    Style="{StaticResource CardTextStyle}"
+                                    Text="{x:Bind TotalSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}">
 
-                                    <TextBlock
-                                        Grid.Column="1"
-                                        Style="{StaticResource DownloadItemTextStyle}"
-                                        Text="{x:Bind TotalSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind TotalSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
-                                </Grid>
-
-                                <StackPanel Grid.Row="1" Visibility="{x:Bind IsInstalling, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}">
-                                    <TextBlock
-                                        x:Name="FileExist"
-                                        x:Load="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}"
-                                        Style="{StaticResource SubDownloadItemTextStyle}"
-                                        Text="{x:Bind FilePath, Converter={StaticResource FileExistTextCheckConverter}}">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind FilePath, Converter={StaticResource FileExistTextCheckConverter}}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
-                                    <TextBlock
-                                        x:Name="FileNotExist"
-                                        x:Load="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}, ConverterParameter=Reverse}"
-                                        Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
-                                        Style="{StaticResource SubDownloadItemTextStyle}"
-                                        Text="{x:Bind FilePath, Converter={StaticResource FileExistTextCheckConverter}}">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind FilePath, Converter={StaticResource FileExistTextCheckConverter}}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
-                                </StackPanel>
-
-                                <Grid
-                                    x:Name="InstallInfo"
-                                    Grid.Row="1"
-                                    x:Load="{x:Bind IsInstalling, Mode=OneWay}"
-                                    ColumnSpacing="10">
-
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        Style="{StaticResource SubDownloadItemTextStyle}"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('Download/Installing')}">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind root:ResourceService.GetLocalized('Download/Installing')}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
-                                    <ProgressBar
-                                        Grid.Column="1"
-                                        IsIndeterminate="False"
-                                        ShowError="{x:Bind InstallError, Mode=OneWay}"
-                                        Value="{x:Bind InstallValue, Mode=OneWay}" />
-                                    <TextBlock
-                                        x:Name="InstallStateInfo"
-                                        Grid.Column="2"
-                                        x:Load="{x:Bind InstallError, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
-                                        Style="{StaticResource SubDownloadItemTextStyle}"
-                                        Text="{x:Bind InstallValue, Converter={StaticResource InstallValueFormatConverter}, Mode=OneWay}">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind InstallValue, Converter={StaticResource InstallValueFormatConverter}, Mode=OneWay}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
-                                    <TextBlock
-                                        x:Name="InstallErrorInfo"
-                                        Grid.Column="2"
-                                        x:Load="{x:Bind InstallError, Mode=OneWay}"
-                                        Style="{StaticResource SubDownloadItemTextStyle}"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('Download/InstallError')}">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind root:ResourceService.GetLocalized('Download/InstallError')}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
-                                </Grid>
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="{x:Bind TotalSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}"
+                                            Placement="Bottom"
+                                            VerticalOffset="20" />
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
                             </Grid>
 
-                            <ContentControl
-                                Grid.Column="2"
-                                Margin="10,0,0,0"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                IsEnabled="{Binding ElementName=CompletedRoot, Path=DataContext.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}">
+                            <StackPanel Grid.Row="1" Visibility="{x:Bind IsInstalling, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}">
+                                <TextBlock
+                                    x:Name="FileExist"
+                                    x:Load="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}"
+                                    Style="{StaticResource CardTextStyle}"
+                                    Text="{x:Bind FilePath, Converter={StaticResource FileExistTextCheckConverter}}">
 
-                                <StackPanel Orientation="Horizontal">
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="{x:Bind FilePath, Converter={StaticResource FileExistTextCheckConverter}}"
+                                            Placement="Bottom"
+                                            VerticalOffset="20" />
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
+                                <TextBlock
+                                    x:Name="FileNotExist"
+                                    x:Load="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}, ConverterParameter=Reverse}"
+                                    Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
+                                    Style="{StaticResource CardTextStyle}"
+                                    Text="{x:Bind FilePath, Converter={StaticResource FileExistTextCheckConverter}}">
 
-                                    <ContentControl IsEnabled="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}">
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="{x:Bind FilePath, Converter={StaticResource FileExistTextCheckConverter}}"
+                                            Placement="Bottom"
+                                            VerticalOffset="20" />
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
+                            </StackPanel>
 
-                                        <StackPanel Orientation="Horizontal">
-                                            <ContentControl IsEnabled="{x:Bind FileName, Converter={StaticResource InstallFileCheckConverter}}">
-                                                <Button
-                                                    controlExtensions:CursorHelper.Cursor="Hand"
-                                                    Command="{Binding ElementName=CompletedRoot, Path=DataContext.InstallCommand, Mode=OneTime}"
-                                                    CommandParameter="{Binding}"
-                                                    IsEnabled="{x:Bind IsInstalling, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
-                                                    Style="{StaticResource ButtonDownloadStyle}">
+                            <Grid
+                                x:Name="InstallInfo"
+                                Grid.Row="1"
+                                x:Load="{x:Bind IsInstalling, Mode=OneWay}"
+                                ColumnSpacing="10">
 
-                                                    <Button.Content>
-                                                        <FontIcon Glyph="&#xF775;" Style="{StaticResource SettingsFluentStyle}" />
-                                                    </Button.Content>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip
-                                                            Content="{x:Bind root:ResourceService.GetLocalized('Download/InstallToolTip')}"
-                                                            Placement="Bottom"
-                                                            VerticalOffset="25" />
-                                                    </ToolTipService.ToolTip>
-                                                </Button>
-                                            </ContentControl>
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Style="{StaticResource CardTextStyle}"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Download/Installing')}">
 
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="{x:Bind root:ResourceService.GetLocalized('Download/Installing')}"
+                                            Placement="Bottom"
+                                            VerticalOffset="20" />
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
+                                <ProgressBar
+                                    Grid.Column="1"
+                                    IsIndeterminate="False"
+                                    ShowError="{x:Bind InstallError, Mode=OneWay}"
+                                    Value="{x:Bind InstallValue, Mode=OneWay}" />
+                                <TextBlock
+                                    x:Name="InstallStateInfo"
+                                    Grid.Column="2"
+                                    x:Load="{x:Bind InstallError, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
+                                    Style="{StaticResource CardTextStyle}"
+                                    Text="{x:Bind InstallValue, Converter={StaticResource InstallValueFormatConverter}, Mode=OneWay}">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="{x:Bind InstallValue, Converter={StaticResource InstallValueFormatConverter}, Mode=OneWay}"
+                                            Placement="Bottom"
+                                            VerticalOffset="20" />
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
+                                <TextBlock
+                                    x:Name="InstallErrorInfo"
+                                    Grid.Column="2"
+                                    x:Load="{x:Bind InstallError, Mode=OneWay}"
+                                    Style="{StaticResource CardTextStyle}"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Download/InstallError')}">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="{x:Bind root:ResourceService.GetLocalized('Download/InstallError')}"
+                                            Placement="Bottom"
+                                            VerticalOffset="20" />
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
+                            </Grid>
+                        </Grid>
+
+                        <ContentControl
+                            Grid.Column="2"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            IsEnabled="{Binding ElementName=CompletedRoot, Path=DataContext.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}">
+
+                            <StackPanel Orientation="Horizontal">
+
+                                <ContentControl IsEnabled="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}">
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <ContentControl IsEnabled="{x:Bind FileName, Converter={StaticResource InstallFileCheckConverter}}">
                                             <Button
                                                 controlExtensions:CursorHelper.Cursor="Hand"
-                                                Command="{Binding ElementName=CompletedRoot, Path=DataContext.OpenItemFolderCommand, Mode=OneTime}"
-                                                CommandParameter="{x:Bind FilePath}"
+                                                Command="{Binding ElementName=CompletedRoot, Path=DataContext.InstallCommand, Mode=OneTime}"
+                                                CommandParameter="{Binding}"
+                                                IsEnabled="{x:Bind IsInstalling, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
                                                 Style="{StaticResource ButtonDownloadStyle}">
 
                                                 <Button.Content>
-                                                    <FontIcon Glyph="&#xE8da;" Style="{StaticResource SegoeFluentStyle}" />
+                                                    <FontIcon Glyph="&#xF775;" Style="{StaticResource SettingsFluentStyle}" />
                                                 </Button.Content>
 
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip
-                                                        Content="{x:Bind root:ResourceService.GetLocalized('Download/OpenItemFolderToolTip')}"
+                                                        Content="{x:Bind root:ResourceService.GetLocalized('Download/InstallToolTip')}"
                                                         Placement="Bottom"
                                                         VerticalOffset="25" />
                                                 </ToolTipService.ToolTip>
                                             </Button>
-                                        </StackPanel>
-                                    </ContentControl>
+                                        </ContentControl>
 
-                                    <Button controlExtensions:CursorHelper.Cursor="Hand" Style="{StaticResource ButtonDownloadStyle}">
+                                        <Button
+                                            controlExtensions:CursorHelper.Cursor="Hand"
+                                            Command="{Binding ElementName=CompletedRoot, Path=DataContext.OpenItemFolderCommand, Mode=OneTime}"
+                                            CommandParameter="{x:Bind FilePath}"
+                                            Style="{StaticResource ButtonDownloadStyle}">
 
-                                        <Button.Content>
-                                            <FontIcon
-                                                FontSize="16"
-                                                Glyph="&#xE712;"
-                                                Style="{StaticResource SegoeFluentStyle}" />
-                                        </Button.Content>
+                                            <Button.Content>
+                                                <FontIcon Glyph="&#xE8da;" Style="{StaticResource SegoeFluentStyle}" />
+                                            </Button.Content>
 
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind root:ResourceService.GetLocalized('Download/ViewMore')}"
-                                                Placement="Bottom"
-                                                VerticalOffset="25" />
-                                        </ToolTipService.ToolTip>
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip
+                                                    Content="{x:Bind root:ResourceService.GetLocalized('Download/OpenItemFolderToolTip')}"
+                                                    Placement="Bottom"
+                                                    VerticalOffset="25" />
+                                            </ToolTipService.ToolTip>
+                                        </Button>
+                                    </StackPanel>
+                                </ContentControl>
 
-                                        <Button.Flyout>
-                                            <menusAndToolbars:AdaptiveMenuFlyout>
-                                                <MenuFlyoutItem
-                                                    Command="{Binding ElementName=CompletedRoot, Path=DataContext.DeleteCommand, Mode=OneTime}"
-                                                    CommandParameter="{Binding}"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Download/Delete')}">
+                                <Button controlExtensions:CursorHelper.Cursor="Hand" Style="{StaticResource ButtonDownloadStyle}">
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip
-                                                            Content="{x:Bind root:ResourceService.GetLocalized('Download/DeleteToolTip')}"
-                                                            Placement="Bottom"
-                                                            VerticalOffset="20" />
-                                                    </ToolTipService.ToolTip>
-                                                </MenuFlyoutItem>
-                                                <MenuFlyoutItem
-                                                    Command="{Binding ElementName=CompletedRoot, Path=DataContext.DeleteWithFileCommand, Mode=OneTime}"
-                                                    CommandParameter="{Binding}"
-                                                    IsEnabled="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteWithFile')}">
+                                    <Button.Content>
+                                        <FontIcon
+                                            FontSize="16"
+                                            Glyph="&#xE712;"
+                                            Style="{StaticResource SegoeFluentStyle}" />
+                                    </Button.Content>
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip
-                                                            Content="{x:Bind root:ResourceService.GetLocalized('Download/DeleteWithFileToolTip')}"
-                                                            Placement="Bottom"
-                                                            VerticalOffset="20" />
-                                                    </ToolTipService.ToolTip>
-                                                </MenuFlyoutItem>
-                                                <MenuFlyoutSeparator />
-                                                <MenuFlyoutItem
-                                                    Command="{Binding ElementName=CompletedRoot, Path=DataContext.ShareFileCommand, Mode=OneTime}"
-                                                    CommandParameter="{Binding}"
-                                                    IsEnabled="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Download/ShareFile')}">
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="{x:Bind root:ResourceService.GetLocalized('Download/ViewMore')}"
+                                            Placement="Bottom"
+                                            VerticalOffset="25" />
+                                    </ToolTipService.ToolTip>
 
-                                                    <MenuFlyoutItem.Icon>
-                                                        <FontIcon Glyph="&#xE72d;" Style="{StaticResource SegoeFluentStyle}" />
-                                                    </MenuFlyoutItem.Icon>
+                                    <Button.Flyout>
+                                        <menusAndToolbars:AdaptiveMenuFlyout>
+                                            <MenuFlyoutItem
+                                                Command="{Binding ElementName=CompletedRoot, Path=DataContext.DeleteCommand, Mode=OneTime}"
+                                                CommandParameter="{Binding}"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Download/Delete')}">
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip
-                                                            Content="{x:Bind root:ResourceService.GetLocalized('Download/ShareFile')}"
-                                                            Placement="Bottom"
-                                                            VerticalOffset="20" />
-                                                    </ToolTipService.ToolTip>
-                                                </MenuFlyoutItem>
-                                                <MenuFlyoutItem
-                                                    Command="{Binding ElementName=CompletedRoot, Path=DataContext.FileInformationCommand, Mode=OneTime}"
-                                                    CommandParameter="{Binding}"
-                                                    IsEnabled="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Download/FileInformation')}">
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip
+                                                        Content="{x:Bind root:ResourceService.GetLocalized('Download/DeleteToolTip')}"
+                                                        Placement="Bottom"
+                                                        VerticalOffset="20" />
+                                                </ToolTipService.ToolTip>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutItem
+                                                Command="{Binding ElementName=CompletedRoot, Path=DataContext.DeleteWithFileCommand, Mode=OneTime}"
+                                                CommandParameter="{Binding}"
+                                                IsEnabled="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteWithFile')}">
 
-                                                    <MenuFlyoutItem.Icon>
-                                                        <FontIcon Glyph="&#xE946;" Style="{StaticResource SegoeFluentStyle}" />
-                                                    </MenuFlyoutItem.Icon>
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip
+                                                        Content="{x:Bind root:ResourceService.GetLocalized('Download/DeleteWithFileToolTip')}"
+                                                        Placement="Bottom"
+                                                        VerticalOffset="20" />
+                                                </ToolTipService.ToolTip>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutSeparator />
+                                            <MenuFlyoutItem
+                                                Command="{Binding ElementName=CompletedRoot, Path=DataContext.ShareFileCommand, Mode=OneTime}"
+                                                CommandParameter="{Binding}"
+                                                IsEnabled="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Download/ShareFile')}">
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip
-                                                            Content="{x:Bind root:ResourceService.GetLocalized('Download/FileInformation')}"
-                                                            Placement="Bottom"
-                                                            VerticalOffset="20" />
-                                                    </ToolTipService.ToolTip>
-                                                </MenuFlyoutItem>
-                                            </menusAndToolbars:AdaptiveMenuFlyout>
-                                        </Button.Flyout>
-                                    </Button>
-                                </StackPanel>
-                            </ContentControl>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </ScrollViewer>
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xE72d;" Style="{StaticResource SegoeFluentStyle}" />
+                                                </MenuFlyoutItem.Icon>
+
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip
+                                                        Content="{x:Bind root:ResourceService.GetLocalized('Download/ShareFile')}"
+                                                        Placement="Bottom"
+                                                        VerticalOffset="20" />
+                                                </ToolTipService.ToolTip>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutItem
+                                                Command="{Binding ElementName=CompletedRoot, Path=DataContext.FileInformationCommand, Mode=OneTime}"
+                                                CommandParameter="{Binding}"
+                                                IsEnabled="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Download/FileInformation')}">
+
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xE946;" Style="{StaticResource SegoeFluentStyle}" />
+                                                </MenuFlyoutItem.Icon>
+
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip
+                                                        Content="{x:Bind root:ResourceService.GetLocalized('Download/FileInformation')}"
+                                                        Placement="Bottom"
+                                                        VerticalOffset="20" />
+                                                </ToolTipService.ToolTip>
+                                            </MenuFlyoutItem>
+                                        </menusAndToolbars:AdaptiveMenuFlyout>
+                                    </Button.Flyout>
+                                </Button>
+                            </StackPanel>
+                        </ContentControl>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </UserControl>

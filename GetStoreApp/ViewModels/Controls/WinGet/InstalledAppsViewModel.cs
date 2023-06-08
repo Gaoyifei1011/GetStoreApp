@@ -6,6 +6,7 @@ using GetStoreApp.UI.Dialogs.WinGet;
 using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
+using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -134,7 +135,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                         RebootStartupInfo.dwXCountChars = 500;
                                         RebootStartupInfo.dwYCountChars = 500;
                                         RebootStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-                                        RebootStartupInfo.wShowWindow = 0;
+                                        RebootStartupInfo.wShowWindow = WindowShowStyle.SW_HIDE;
                                         RebootStartupInfo.cbReserved2 = 0;
                                         RebootStartupInfo.lpReserved2 = IntPtr.Zero;
 

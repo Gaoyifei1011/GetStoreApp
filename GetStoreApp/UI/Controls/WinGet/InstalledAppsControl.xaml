@@ -144,18 +144,22 @@
             </StackPanel>
         </Grid>
 
-        <ScrollViewer
+        <Grid
             Grid.Row="2"
-            Padding="30,3,30,0"
-            HorizontalScrollBarVisibility="Disabled"
-            HorizontalScrollMode="Disabled"
-            Style="{StaticResource ScrollViewerStyle}"
-            VerticalScrollBarVisibility="Auto"
-            VerticalScrollMode="Enabled"
+            Padding="0,3,0,0"
             Visibility="{x:Bind ViewModel.IsLoadedCompleted, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
 
-            <StackPanel>
-                <Grid Style="{StaticResource CardGridStyle}" Visibility="{x:Bind ViewModel.IsInstalledAppsEmpty, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid
+                    Grid.Row="0"
+                    Margin="30,0"
+                    Style="{StaticResource CardGridStyle}"
+                    Visibility="{x:Bind ViewModel.IsInstalledAppsEmpty, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
                     <TextBlock
                         Margin="0,10"
                         VerticalAlignment="Center"
@@ -171,9 +175,18 @@
                     </TextBlock>
                 </Grid>
 
-                <Grid Padding="0" Visibility="{x:Bind ViewModel.IsInstalledAppsEmpty, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}">
+                <Grid Grid.Row="1" Visibility="{x:Bind ViewModel.IsInstalledAppsEmpty, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}">
 
-                    <Grid Style="{StaticResource CardGridStyle}" Visibility="{x:Bind ViewModel.InstalledAppsDataList.Count, Converter={StaticResource IntToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid
+                        Grid.Row="0"
+                        Margin="30,0"
+                        Style="{StaticResource CardGridStyle}"
+                        Visibility="{x:Bind ViewModel.InstalledAppsDataList.Count, Converter={StaticResource IntToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}">
                         <TextBlock
                             Margin="0,10"
                             VerticalAlignment="Center"
@@ -190,9 +203,16 @@
                     </Grid>
 
                     <ListView
+                        Grid.Row="1"
+                        Padding="30,0,30,30"
                         ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
                         ItemsSource="{x:Bind ViewModel.InstalledAppsDataList, Mode=OneWay}"
+                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                        ScrollViewer.HorizontalScrollMode="Disabled"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto"
+                        ScrollViewer.VerticalScrollMode="Enabled"
                         SelectionMode="None"
+                        Style="{StaticResource ListViewStyle}"
                         Visibility="{x:Bind ViewModel.InstalledAppsDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
 
                         <ItemsControl.ItemContainerTransitions>
@@ -216,7 +236,7 @@
                                         Grid.Column="0"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
-                                        Style="{StaticResource SubWinGetItemTextStyle}"
+                                        Style="{StaticResource CardTextStyle}"
                                         Text="{x:Bind AppName}">
 
                                         <ToolTipService.ToolTip>
@@ -231,7 +251,7 @@
                                         Grid.Column="1"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
-                                        Style="{StaticResource SubWinGetItemTextStyle}"
+                                        Style="{StaticResource CardTextStyle}"
                                         Text="{x:Bind AppPublisher}">
 
                                         <ToolTipService.ToolTip>
@@ -247,7 +267,7 @@
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
                                         HorizontalTextAlignment="Left"
-                                        Style="{StaticResource SubWinGetItemTextStyle}"
+                                        Style="{StaticResource CardTextStyle}"
                                         Text="{x:Bind AppVersion}">
 
                                         <ToolTipService.ToolTip>
@@ -298,7 +318,7 @@
                         </ListView.ItemTemplate>
                     </ListView>
                 </Grid>
-            </StackPanel>
-        </ScrollViewer>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>

@@ -4,6 +4,9 @@ using System.Runtime.InteropServices;
 
 namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
 {
+    /// <summary>
+    /// 包含有关系统应用栏消息的信息。
+    /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct APPBARDATA
     {

@@ -2,6 +2,7 @@
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 
@@ -40,6 +41,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (HistoryNavigationArgs == AppNaviagtionArgs.History)
             {
+                ScrollViewer HistoryScroll = (VisualTreeHelper.GetChild(HistoryListView, 0) as Border).Child as ScrollViewer;
                 HistoryScroll.ChangeView(null, 0, null);
             }
         }

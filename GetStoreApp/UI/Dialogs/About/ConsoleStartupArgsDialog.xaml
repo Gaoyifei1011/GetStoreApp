@@ -139,6 +139,7 @@
                             Grid.Column="0"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
+                            Style="{StaticResource CardTextStyle}"
                             Text="{x:Bind ArgumentName}">
 
                             <ToolTipService.ToolTip>
@@ -153,6 +154,7 @@
                             Grid.Column="1"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
+                            Style="{StaticResource CardTextStyle}"
                             Text="{x:Bind Argument}">
 
                             <ToolTipService.ToolTip>
@@ -167,6 +169,7 @@
                             Grid.Column="2"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
+                            Style="{StaticResource CardTextStyle}"
                             Text="{x:Bind IsRequired}">
 
                             <ToolTipService.ToolTip>
@@ -181,6 +184,7 @@
                             Grid.Column="3"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
+                            Style="{StaticResource CardTextStyle}"
                             Text="{x:Bind ArgumentContent}">
 
                             <ToolTipService.ToolTip>

@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
+using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;
 using System.Runtime.InteropServices;
 
@@ -31,7 +32,7 @@ namespace GetStoreApp.Helpers.Controls.Download
                 Aria2ProcessStartupInfo.dwXCountChars = 500;
                 Aria2ProcessStartupInfo.dwYCountChars = 500;
                 Aria2ProcessStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-                Aria2ProcessStartupInfo.wShowWindow = 0;
+                Aria2ProcessStartupInfo.wShowWindow = WindowShowStyle.SW_HIDE;
                 Aria2ProcessStartupInfo.cbReserved2 = 0;
                 Aria2ProcessStartupInfo.lpReserved2 = IntPtr.Zero;
                 Aria2ProcessStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));

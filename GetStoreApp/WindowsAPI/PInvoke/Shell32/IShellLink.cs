@@ -19,7 +19,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         /// <param name="pfd">指向 <see cref="WIN32_FIND_DATA"> 结构的指针，该结构接收有关 Shell 链接对象的目标的信息。 如果此参数为 NULL，则不会返回其他信息。</param>
         /// <param name="fFlags">指定要检索的路径信息的类型的标志。 </param>
         [PreserveSig]
-        void GetPath([MarshalAs(UnmanagedType.LPWStr, SizeParamIndex = 1)] out string pszFile, int cch, ref WIN32_FIND_DATA pfd, uint fFlags);
+        void GetPath([MarshalAs(UnmanagedType.LPWStr, SizeParamIndex = 1)] out string pszFile, int cch, ref IntPtr pfd, uint fFlags);
 
         /// <summary>
         /// 获取 Shell 链接对象目标的项目标识符列表。

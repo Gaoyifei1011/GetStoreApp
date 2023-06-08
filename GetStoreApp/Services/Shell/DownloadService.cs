@@ -2,6 +2,7 @@
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
+using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -133,7 +134,7 @@ namespace GetStoreApp.Services.Shell
                 DownloadProcessStartupInfo.dwXCountChars = 500;
                 DownloadProcessStartupInfo.dwYCountChars = 500;
                 DownloadProcessStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW | STARTF.STARTF_USESTDHANDLES;
-                DownloadProcessStartupInfo.wShowWindow = 0;
+                DownloadProcessStartupInfo.wShowWindow = WindowShowStyle.SW_HIDE;
                 DownloadProcessStartupInfo.cbReserved2 = 0;
                 DownloadProcessStartupInfo.lpReserved2 = IntPtr.Zero;
                 DownloadProcessStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));

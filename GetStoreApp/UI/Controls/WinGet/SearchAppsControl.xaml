@@ -184,143 +184,153 @@
                 </StackPanel>
             </Grid>
 
-            <ScrollViewer
+            <Grid
                 Grid.Row="2"
-                HorizontalScrollBarVisibility="Disabled"
-                HorizontalScrollMode="Disabled"
-                Style="{StaticResource ScrollViewerStyle}"
-                VerticalScrollBarVisibility="Auto"
-                VerticalScrollMode="Enabled"
+                Margin="0,3,0,0"
                 Visibility="{x:Bind ViewModel.IsSearchCompleted, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
 
-                <StackPanel Margin="30,3,30,30">
-                    <Grid Style="{StaticResource CardGridStyle}" Visibility="{x:Bind ViewModel.SearchAppsDataList.Count, Converter={StaticResource IntToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}">
-                        <TextBlock
-                            Margin="0,10"
-                            VerticalAlignment="Center"
-                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchAppsEmptyDescription')}"
-                            TextAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-                            <ToolTipService.ToolTip>
-                                <ToolTip
-                                    Content="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchAppsEmptyDescription')}"
-                                    Placement="Bottom"
-                                    VerticalOffset="20" />
-                            </ToolTipService.ToolTip>
-                        </TextBlock>
-                    </Grid>
+                <Grid
+                    Grid.Row="0"
+                    Margin="30,0"
+                    Style="{StaticResource CardGridStyle}"
+                    Visibility="{x:Bind ViewModel.SearchAppsDataList.Count, Converter={StaticResource IntToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}">
+                    <TextBlock
+                        Margin="0,10"
+                        VerticalAlignment="Center"
+                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchAppsEmptyDescription')}"
+                        TextAlignment="Center">
 
-                    <ListView
-                        ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
-                        ItemsSource="{x:Bind ViewModel.SearchAppsDataList, Mode=OneWay}"
-                        SelectionMode="None"
-                        Visibility="{x:Bind ViewModel.SearchAppsDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchAppsEmptyDescription')}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
+                </Grid>
 
-                        <ItemsControl.ItemContainerTransitions>
-                            <TransitionCollection />
-                        </ItemsControl.ItemContainerTransitions>
+                <ListView
+                    Grid.Row="1"
+                    Padding="30,0,30,30"
+                    ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
+                    ItemsSource="{x:Bind ViewModel.SearchAppsDataList, Mode=OneWay}"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    ScrollViewer.HorizontalScrollMode="Disabled"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                    ScrollViewer.VerticalScrollMode="Enabled"
+                    SelectionMode="None"
+                    Style="{StaticResource ListViewStyle}"
+                    Visibility="{x:Bind ViewModel.SearchAppsDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
 
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="winget:SearchAppsModel">
-                                <Grid
-                                    Padding="16,12"
-                                    ColumnSpacing="10"
-                                    Style="{StaticResource CardGridStyle}">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="120" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
+                    <ItemsControl.ItemContainerTransitions>
+                        <TransitionCollection />
+                    </ItemsControl.ItemContainerTransitions>
 
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        Style="{StaticResource SubWinGetItemTextStyle}"
-                                        Text="{x:Bind AppName}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="winget:SearchAppsModel">
+                            <Grid
+                                Padding="16,12"
+                                ColumnSpacing="10"
+                                Style="{StaticResource CardGridStyle}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
 
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind AppName, Converter={StaticResource WinGetAppsToolTipConverter}, ConverterParameter=AppName}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
+                                <TextBlock
+                                    Grid.Column="0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource CardTextStyle}"
+                                    Text="{x:Bind AppName}">
 
-                                    <TextBlock
-                                        Grid.Column="1"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        Style="{StaticResource SubWinGetItemTextStyle}"
-                                        Text="{x:Bind AppPublisher}">
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="{x:Bind AppName, Converter={StaticResource WinGetAppsToolTipConverter}, ConverterParameter=AppName}"
+                                            Placement="Bottom"
+                                            VerticalOffset="20" />
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
 
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind AppPublisher, Converter={StaticResource WinGetAppsToolTipConverter}, ConverterParameter=AppPublisher}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
+                                <TextBlock
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource CardTextStyle}"
+                                    Text="{x:Bind AppPublisher}">
 
-                                    <TextBlock
-                                        Grid.Column="2"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        HorizontalTextAlignment="Left"
-                                        Style="{StaticResource SubWinGetItemTextStyle}"
-                                        Text="{x:Bind AppVersion}">
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="{x:Bind AppPublisher, Converter={StaticResource WinGetAppsToolTipConverter}, ConverterParameter=AppPublisher}"
+                                            Placement="Bottom"
+                                            VerticalOffset="20" />
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
 
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind AppVersion, Converter={StaticResource WinGetAppsToolTipConverter}, ConverterParameter=AppVersion}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
+                                <TextBlock
+                                    Grid.Column="2"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    HorizontalTextAlignment="Left"
+                                    Style="{StaticResource CardTextStyle}"
+                                    Text="{x:Bind AppVersion}">
 
-                                    <basicInput:ExtendedSplitButton
-                                        Grid.Column="3"
-                                        MinWidth="100"
-                                        Command="{Binding ElementName=SearchAppsRoot, Path=DataContext.InstallCommand, Mode=OneTime}"
-                                        CommandParameter="{Binding}"
-                                        Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Install')}"
-                                        IsPrimaryButtonEnabled="{x:Bind IsInstalling, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}">
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="{x:Bind AppVersion, Converter={StaticResource WinGetAppsToolTipConverter}, ConverterParameter=AppVersion}"
+                                            Placement="Bottom"
+                                            VerticalOffset="20" />
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
 
-                                        <basicInput:ExtendedSplitButton.PrimaryButtonToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Install')}"
-                                                Placement="Bottom"
-                                                VerticalOffset="25" />
-                                        </basicInput:ExtendedSplitButton.PrimaryButtonToolTip>
+                                <basicInput:ExtendedSplitButton
+                                    Grid.Column="3"
+                                    MinWidth="100"
+                                    Command="{Binding ElementName=SearchAppsRoot, Path=DataContext.InstallCommand, Mode=OneTime}"
+                                    CommandParameter="{Binding}"
+                                    Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Install')}"
+                                    IsPrimaryButtonEnabled="{x:Bind IsInstalling, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}">
 
-                                        <basicInput:ExtendedSplitButton.SecondaryButtonToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind root:ResourceService.GetLocalized('WinGet/ViewMoreOptions')}"
-                                                Placement="Bottom"
-                                                VerticalOffset="25" />
-                                        </basicInput:ExtendedSplitButton.SecondaryButtonToolTip>
+                                    <basicInput:ExtendedSplitButton.PrimaryButtonToolTip>
+                                        <ToolTip
+                                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Install')}"
+                                            Placement="Bottom"
+                                            VerticalOffset="25" />
+                                    </basicInput:ExtendedSplitButton.PrimaryButtonToolTip>
 
-                                        <basicInput:ExtendedSplitButton.Flyout>
-                                            <menusAndToolbars:AdaptiveMenuFlyout>
-                                                <MenuFlyoutItem
-                                                    Command="{Binding ElementName=SearchAppsRoot, Path=DataContext.CopyInstallTextCommand, Mode=OneTime}"
-                                                    CommandParameter="{x:Bind AppID}"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyInstallText')}">
+                                    <basicInput:ExtendedSplitButton.SecondaryButtonToolTip>
+                                        <ToolTip
+                                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/ViewMoreOptions')}"
+                                            Placement="Bottom"
+                                            VerticalOffset="25" />
+                                    </basicInput:ExtendedSplitButton.SecondaryButtonToolTip>
 
-                                                    <MenuFlyoutItem.Icon>
-                                                        <FontIcon Glyph="&#xE8C8;" Style="{StaticResource SegoeFluentStyle}" />
-                                                    </MenuFlyoutItem.Icon>
-                                                </MenuFlyoutItem>
-                                            </menusAndToolbars:AdaptiveMenuFlyout>
-                                        </basicInput:ExtendedSplitButton.Flyout>
-                                    </basicInput:ExtendedSplitButton>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </StackPanel>
-            </ScrollViewer>
+                                    <basicInput:ExtendedSplitButton.Flyout>
+                                        <menusAndToolbars:AdaptiveMenuFlyout>
+                                            <MenuFlyoutItem
+                                                Command="{Binding ElementName=SearchAppsRoot, Path=DataContext.CopyInstallTextCommand, Mode=OneTime}"
+                                                CommandParameter="{x:Bind AppID}"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyInstallText')}">
+
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xE8C8;" Style="{StaticResource SegoeFluentStyle}" />
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
+                                        </menusAndToolbars:AdaptiveMenuFlyout>
+                                    </basicInput:ExtendedSplitButton.Flyout>
+                                </basicInput:ExtendedSplitButton>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

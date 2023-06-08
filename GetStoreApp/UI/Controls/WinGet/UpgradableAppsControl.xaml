@@ -128,161 +128,170 @@
             </StackPanel>
         </Grid>
 
-        <ScrollViewer
+        <Grid
             Grid.Row="2"
-            Padding="30,3,30,0"
-            HorizontalScrollBarVisibility="Disabled"
-            HorizontalScrollMode="Disabled"
-            Style="{StaticResource ScrollViewerStyle}"
-            VerticalScrollBarVisibility="Auto"
-            VerticalScrollMode="Enabled"
+            Padding="0,3,0,0"
             Visibility="{x:Bind ViewModel.IsLoadedCompleted, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
 
-            <StackPanel>
-                <Grid Style="{StaticResource CardGridStyle}" Visibility="{x:Bind ViewModel.IsUpgradableAppsEmpty, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
-                    <TextBlock
-                        Margin="0,10"
-                        VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradableAppsEmptyDescription')}"
-                        TextAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradableAppsEmptyDescription')}"
-                                Placement="Bottom"
-                                VerticalOffset="20" />
-                        </ToolTipService.ToolTip>
-                    </TextBlock>
-                </Grid>
+            <Grid
+                Grid.Row="0"
+                Margin="30,0"
+                Style="{StaticResource CardGridStyle}"
+                Visibility="{x:Bind ViewModel.IsUpgradableAppsEmpty, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                <TextBlock
+                    Margin="0,10"
+                    VerticalAlignment="Center"
+                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradableAppsEmptyDescription')}"
+                    TextAlignment="Center">
 
-                <ListView
-                    ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
-                    ItemsSource="{x:Bind ViewModel.UpgradableAppsDataList, Mode=OneWay}"
-                    SelectionMode="None"
-                    Visibility="{x:Bind ViewModel.UpgradableAppsDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradableAppsEmptyDescription')}"
+                            Placement="Bottom"
+                            VerticalOffset="20" />
+                    </ToolTipService.ToolTip>
+                </TextBlock>
+            </Grid>
 
-                    <ItemsControl.ItemContainerTransitions>
-                        <TransitionCollection />
-                    </ItemsControl.ItemContainerTransitions>
+            <ListView
+                Grid.Row="1"
+                Padding="30,0,30,30"
+                ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
+                ItemsSource="{x:Bind ViewModel.UpgradableAppsDataList, Mode=OneWay}"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                ScrollViewer.HorizontalScrollMode="Disabled"
+                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                ScrollViewer.VerticalScrollMode="Enabled"
+                SelectionMode="None"
+                Style="{StaticResource ListViewStyle}"
+                Visibility="{x:Bind ViewModel.UpgradableAppsDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
 
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="winget:UpgradableAppsModel">
-                            <Grid
-                                Padding="16,12"
-                                ColumnSpacing="10"
-                                Style="{StaticResource CardGridStyle}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*" />
-                                    <ColumnDefinition Width="2*" />
-                                    <ColumnDefinition Width="120" />
-                                    <ColumnDefinition Width="120" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
+                <ItemsControl.ItemContainerTransitions>
+                    <TransitionCollection />
+                </ItemsControl.ItemContainerTransitions>
 
-                                <TextBlock
-                                    Grid.Column="0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Style="{StaticResource SubWinGetItemTextStyle}"
-                                    Text="{x:Bind AppName}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="winget:UpgradableAppsModel">
+                        <Grid
+                            Padding="16,12"
+                            ColumnSpacing="10"
+                            Style="{StaticResource CardGridStyle}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="120" />
+                                <ColumnDefinition Width="120" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind AppName, Converter={StaticResource WinGetAppsToolTipConverter}, ConverterParameter=AppName}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                            <TextBlock
+                                Grid.Column="0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Style="{StaticResource CardTextStyle}"
+                                Text="{x:Bind AppName}">
 
-                                <TextBlock
-                                    Grid.Column="1"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Style="{StaticResource SubWinGetItemTextStyle}"
-                                    Text="{x:Bind AppPublisher}">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        Content="{x:Bind AppName, Converter={StaticResource WinGetAppsToolTipConverter}, ConverterParameter=AppName}"
+                                        Placement="Bottom"
+                                        VerticalOffset="20" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind AppPublisher, Converter={StaticResource WinGetAppsToolTipConverter}, ConverterParameter=AppPublisher}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                            <TextBlock
+                                Grid.Column="1"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Style="{StaticResource CardTextStyle}"
+                                Text="{x:Bind AppPublisher}">
 
-                                <TextBlock
-                                    Grid.Column="2"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    HorizontalTextAlignment="Left"
-                                    Style="{StaticResource SubWinGetItemTextStyle}"
-                                    Text="{x:Bind AppCurrentVersion}">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        Content="{x:Bind AppPublisher, Converter={StaticResource WinGetAppsToolTipConverter}, ConverterParameter=AppPublisher}"
+                                        Placement="Bottom"
+                                        VerticalOffset="20" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind AppCurrentVersion, Converter={StaticResource WinGetAppsToolTipConverter}, ConverterParameter=AppCurrentVersion}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                            <TextBlock
+                                Grid.Column="2"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                HorizontalTextAlignment="Left"
+                                Style="{StaticResource CardTextStyle}"
+                                Text="{x:Bind AppCurrentVersion}">
 
-                                <TextBlock
-                                    Grid.Column="3"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Foreground="{StaticResource HyperlinkButtonForeground}"
-                                    HorizontalTextAlignment="Left"
-                                    Style="{StaticResource SubWinGetItemTextStyle}"
-                                    Text="{x:Bind AppNewestVersion}">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        Content="{x:Bind AppCurrentVersion, Converter={StaticResource WinGetAppsToolTipConverter}, ConverterParameter=AppCurrentVersion}"
+                                        Placement="Bottom"
+                                        VerticalOffset="20" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind AppNewestVersion, Converter={StaticResource WinGetAppsToolTipConverter}, ConverterParameter=AppNewestVersion}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                            <TextBlock
+                                Grid.Column="3"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Foreground="{StaticResource HyperlinkButtonForeground}"
+                                HorizontalTextAlignment="Left"
+                                Style="{StaticResource CardTextStyle}"
+                                Text="{x:Bind AppNewestVersion}">
 
-                                <basicInput:ExtendedSplitButton
-                                    Grid.Column="4"
-                                    MinWidth="100"
-                                    Command="{Binding ElementName=UpgradableAppsRoot, Path=DataContext.UpdateCommand, Mode=OneTime}"
-                                    CommandParameter="{Binding}"
-                                    Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Update')}"
-                                    IsPrimaryButtonEnabled="{x:Bind IsUpgrading, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        Content="{x:Bind AppNewestVersion, Converter={StaticResource WinGetAppsToolTipConverter}, ConverterParameter=AppNewestVersion}"
+                                        Placement="Bottom"
+                                        VerticalOffset="20" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
 
-                                    <basicInput:ExtendedSplitButton.PrimaryButtonToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Update')}"
-                                            Placement="Bottom"
-                                            VerticalOffset="25" />
-                                    </basicInput:ExtendedSplitButton.PrimaryButtonToolTip>
+                            <basicInput:ExtendedSplitButton
+                                Grid.Column="4"
+                                MinWidth="100"
+                                Command="{Binding ElementName=UpgradableAppsRoot, Path=DataContext.UpdateCommand, Mode=OneTime}"
+                                CommandParameter="{Binding}"
+                                Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Update')}"
+                                IsPrimaryButtonEnabled="{x:Bind IsUpgrading, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}">
 
-                                    <basicInput:ExtendedSplitButton.SecondaryButtonToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/ViewMoreOptions')}"
-                                            Placement="Bottom"
-                                            VerticalOffset="25" />
-                                    </basicInput:ExtendedSplitButton.SecondaryButtonToolTip>
+                                <basicInput:ExtendedSplitButton.PrimaryButtonToolTip>
+                                    <ToolTip
+                                        Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Update')}"
+                                        Placement="Bottom"
+                                        VerticalOffset="25" />
+                                </basicInput:ExtendedSplitButton.PrimaryButtonToolTip>
 
-                                    <basicInput:ExtendedSplitButton.Flyout>
-                                        <menusAndToolbars:AdaptiveMenuFlyout>
-                                            <MenuFlyoutItem
-                                                Command="{Binding ElementName=UpgradableAppsRoot, Path=DataContext.CopyUpgradeTextCommand, Mode=OneTime}"
-                                                CommandParameter="{x:Bind AppID}"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUpgradeText')}">
+                                <basicInput:ExtendedSplitButton.SecondaryButtonToolTip>
+                                    <ToolTip
+                                        Content="{x:Bind root:ResourceService.GetLocalized('WinGet/ViewMoreOptions')}"
+                                        Placement="Bottom"
+                                        VerticalOffset="25" />
+                                </basicInput:ExtendedSplitButton.SecondaryButtonToolTip>
 
-                                                <MenuFlyoutItem.Icon>
-                                                    <FontIcon Glyph="&#xE8C8;" Style="{StaticResource SegoeFluentStyle}" />
-                                                </MenuFlyoutItem.Icon>
-                                            </MenuFlyoutItem>
-                                        </menusAndToolbars:AdaptiveMenuFlyout>
-                                    </basicInput:ExtendedSplitButton.Flyout>
-                                </basicInput:ExtendedSplitButton>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </StackPanel>
-        </ScrollViewer>
+                                <basicInput:ExtendedSplitButton.Flyout>
+                                    <menusAndToolbars:AdaptiveMenuFlyout>
+                                        <MenuFlyoutItem
+                                            Command="{Binding ElementName=UpgradableAppsRoot, Path=DataContext.CopyUpgradeTextCommand, Mode=OneTime}"
+                                            CommandParameter="{x:Bind AppID}"
+                                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUpgradeText')}">
+
+                                            <MenuFlyoutItem.Icon>
+                                                <FontIcon Glyph="&#xE8C8;" Style="{StaticResource SegoeFluentStyle}" />
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
+                                    </menusAndToolbars:AdaptiveMenuFlyout>
+                                </basicInput:ExtendedSplitButton.Flyout>
+                            </basicInput:ExtendedSplitButton>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </Grid>
 </UserControl>

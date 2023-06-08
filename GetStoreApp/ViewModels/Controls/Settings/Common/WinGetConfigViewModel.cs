@@ -6,6 +6,7 @@ using GetStoreApp.Services.Window;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
+using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -99,7 +100,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
                 WinGetSettingsStartupInfo.dwXCountChars = 500;
                 WinGetSettingsStartupInfo.dwYCountChars = 500;
                 WinGetSettingsStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-                WinGetSettingsStartupInfo.wShowWindow = 0;
+                WinGetSettingsStartupInfo.wShowWindow = WindowShowStyle.SW_HIDE;
                 WinGetSettingsStartupInfo.cbReserved2 = 0;
                 WinGetSettingsStartupInfo.lpReserved2 = IntPtr.Zero;
 

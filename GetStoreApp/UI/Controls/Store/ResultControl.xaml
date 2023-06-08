@@ -438,6 +438,7 @@
                             Grid.Column="2"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
+                            Style="{StaticResource CardTextStyle}"
                             Text="{x:Bind FileLinkExpireTime, Converter={StaticResource GMTFormatConverter}}">
 
                             <ToolTipService.ToolTip>
@@ -452,6 +453,7 @@
                             Grid.Column="3"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
+                            Style="{StaticResource CardTextStyle}"
                             Text="{x:Bind FileSHA1}">
 
                             <ToolTipService.ToolTip>
@@ -466,6 +468,7 @@
                             Grid.Column="4"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
+                            Style="{StaticResource CardTextStyle}"
                             Text="{x:Bind FileSize}">
 
                             <ToolTipService.ToolTip>
