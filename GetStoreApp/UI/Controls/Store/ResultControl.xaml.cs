@@ -6,7 +6,7 @@ namespace GetStoreApp.UI.Controls.Store
     /// <summary>
     /// 微软商店页面：请求结果用户控件视图
     /// </summary>
-    public sealed partial class ResultControl : UserControl
+    public sealed partial class ResultControl : Grid
     {
         public ResultControl()
         {

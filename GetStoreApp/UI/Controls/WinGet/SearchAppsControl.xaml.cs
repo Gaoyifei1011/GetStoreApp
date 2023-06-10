@@ -6,7 +6,7 @@ namespace GetStoreApp.UI.Controls.WinGet
     /// <summary>
     /// WinGet 程序包页面：搜索应用控件视图
     /// </summary>
-    public sealed partial class SearchAppsControl : UserControl
+    public sealed partial class SearchAppsControl : Grid
     {
         public SearchAppsControl()
         {

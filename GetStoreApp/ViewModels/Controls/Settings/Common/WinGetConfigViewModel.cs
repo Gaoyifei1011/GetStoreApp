@@ -105,10 +105,13 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
                 WinGetSettingsStartupInfo.lpReserved2 = IntPtr.Zero;
 
                 WinGetSettingsStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
-                Kernel32Library.CreateProcess(null, string.Format("{0} {1}", "winget.exe", "settings"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref WinGetSettingsStartupInfo, out PROCESS_INFORMATION RebootProcessInformation);
+                bool createResult = Kernel32Library.CreateProcess(null, string.Format("{0} {1}", "winget.exe", "settings"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref WinGetSettingsStartupInfo, out PROCESS_INFORMATION WinGetSettingsProcessInformation);
 
-                Kernel32Library.CloseHandle(RebootProcessInformation.hProcess);
-                Kernel32Library.CloseHandle(RebootProcessInformation.hThread);
+                if (createResult)
+                {
+                    if (WinGetSettingsProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetSettingsProcessInformation.hProcess);
+                    if (WinGetSettingsProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetSettingsProcessInformation.hThread);
+                }
             }
         }
 

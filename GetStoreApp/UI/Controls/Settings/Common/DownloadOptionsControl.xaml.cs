@@ -5,7 +5,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
     /// <summary>
     /// 设置页面：下载管理设置用户控件视图
     /// </summary>
-    public sealed partial class DownloadOptionsControl : UserControl
+    public sealed partial class DownloadOptionsControl : Expander
     {
         public DownloadOptionsControl()
         {

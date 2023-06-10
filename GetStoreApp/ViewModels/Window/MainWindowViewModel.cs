@@ -99,6 +99,19 @@ namespace GetStoreApp.ViewModels.Window
             }
         }
 
+        private NavigationViewPaneDisplayMode _paneDisplayMode = NavigationViewPaneDisplayMode.LeftCompact;
+
+        public NavigationViewPaneDisplayMode PaneDisplayMode
+        {
+            get { return _paneDisplayMode; }
+
+            set
+            {
+                _paneDisplayMode = value;
+                OnPropertyChanged();
+            }
+        }
+
         private NavigationViewItem _selectedItem;
 
         public NavigationViewItem SelectedItem
@@ -227,6 +240,14 @@ namespace GetStoreApp.ViewModels.Window
         }
 
         /// <summary>
+        /// 窗体大小发生改变时的事件
+        /// </summary>
+        public void OnSizeChanged(object sender, WindowSizeChangedEventArgs args)
+        {
+            PaneDisplayMode = args.Size.Width > 768 ? NavigationViewPaneDisplayMode.Left : NavigationViewPaneDisplayMode.LeftMinimal;
+        }
+
+        /// <summary>
         /// 应用主题设置跟随系统发生变化时，当系统主题设置发生变化时修改修改应用背景色
         /// </summary>
         private void OnColorValuesChanged(UISettings sender, object args)
@@ -248,21 +269,6 @@ namespace GetStoreApp.ViewModels.Window
                     }
                 }
             });
-        }
-
-        // 导航视图显示的样式发生改变时发生
-        public void OnDisplayModeChanged(object sender, NavigationViewDisplayModeChangedEventArgs args)
-        {
-            if (args.DisplayMode == NavigationViewDisplayMode.Minimal)
-            {
-                IsPaneToggleButtonVisible = true;
-                AppTitleBarMargin = new Thickness(96, 0, 0, 0);
-            }
-            else
-            {
-                IsPaneToggleButtonVisible = false;
-                AppTitleBarMargin = new Thickness(48, 0, 0, 0);
-            }
         }
 
         /// <summary>
@@ -299,23 +305,13 @@ namespace GetStoreApp.ViewModels.Window
             PropertyChanged += OnPropertyChanged;
             AppUISettings.ColorValuesChanged += OnColorValuesChanged;
 
+            PaneDisplayMode = Program.ApplicationRoot.MainWindow.Bounds.Width > 768 ? NavigationViewPaneDisplayMode.Left : NavigationViewPaneDisplayMode.LeftMinimal;
+
             // 导航控件加载完成后初始化内容
 
             NavigationView navigationView = sender as NavigationView;
             if (navigationView is not null)
             {
-                //初始化导航视图控件属性和应用的背景色
-                if (navigationView.DisplayMode == NavigationViewDisplayMode.Minimal)
-                {
-                    IsPaneToggleButtonVisible = true;
-                    AppTitleBarMargin = new Thickness(96, 0, 0, 0);
-                }
-                else
-                {
-                    IsPaneToggleButtonVisible = false;
-                    AppTitleBarMargin = new Thickness(48, 0, 0, 0);
-                }
-
                 foreach (object item in navigationView.MenuItems)
                 {
                     NavigationViewItem navigationViewItem = item as NavigationViewItem;
@@ -393,6 +389,19 @@ namespace GetStoreApp.ViewModels.Window
                 {
                     SetTitleBarColor(ElementTheme.Dark);
                     SetTitleBarContextMenuColor(ElementTheme.Dark);
+                }
+            }
+            else if (args.PropertyName == nameof(PaneDisplayMode))
+            {
+                if (PaneDisplayMode == NavigationViewPaneDisplayMode.Left)
+                {
+                    IsPaneToggleButtonVisible = false;
+                    AppTitleBarMargin = new Thickness(48, 0, 0, 0);
+                }
+                else if (PaneDisplayMode == NavigationViewPaneDisplayMode.LeftMinimal)
+                {
+                    IsPaneToggleButtonVisible = true;
+                    AppTitleBarMargin = new Thickness(96, 0, 0, 0);
                 }
             }
         }

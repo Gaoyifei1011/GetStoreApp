@@ -315,6 +315,7 @@
     &lt;/binding&gt;
   &lt;/visual&gt;
   &lt;actions&gt;
+    &lt;action content="Install with command" arguments="action=InstallWithCommand"/&gt;
     &lt;action content="Open the download folder" arguments="action=OpenDownloadFolder"/&gt;
   &lt;/actions&gt;
 &lt;/toast&gt;</value>
@@ -361,6 +362,7 @@
     &lt;/binding&gt;
   &lt;/visual&gt;
   &lt;actions&gt;
+    &lt;action content="Install with command" arguments="action=InstallWithCommand:{0}"/&gt;
     &lt;action content="Open the download folder" arguments="action=OpenDownloadFolder"/&gt;
   &lt;/actions&gt;
 &lt;/toast&gt;</value>

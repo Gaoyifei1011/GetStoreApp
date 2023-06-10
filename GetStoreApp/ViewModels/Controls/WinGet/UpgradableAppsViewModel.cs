@@ -30,6 +30,8 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
 
         internal WinGetViewModel WinGetVMInstance;
 
+        private bool isInitialized = false;
+
         private bool _isLoadedCompleted = false;
 
         public bool IsLoadedCompleted
@@ -64,6 +66,39 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
         public XamlUICommand UpdateCommand { get; } = new XamlUICommand();
 
         public XamlUICommand CopyUpgradeTextCommand { get; } = new XamlUICommand();
+
+        public XamlUICommand InstallWithCmdCommand { get; } = new XamlUICommand();
+
+        /// <summary>
+        /// 初始化可升级应用信息
+        /// </summary>
+        public async void OnLoaded(object sender, RoutedEventArgs args)
+        {
+            if (!isInitialized)
+            {
+                try
+                {
+                    UpgradableAppsManager = WinGetService.CreatePackageManager();
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+                await Task.Delay(500);
+                await GetUpgradableAppsAsync();
+                InitializeData();
+                if (MatchResultList is null || MatchResultList.Count is 0)
+                {
+                    IsUpgradableAppsEmpty = true;
+                }
+                else
+                {
+                    IsUpgradableAppsEmpty = false;
+                }
+                IsLoadedCompleted = true;
+                isInitialized = true;
+            }
+        }
 
         /// <summary>
         /// 更新可升级应用数据
@@ -253,10 +288,13 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                         RebootStartupInfo.lpReserved2 = IntPtr.Zero;
 
                                         RebootStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
-                                        Kernel32Library.CreateProcess(null, string.Format("{0} {1}", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), "System32", "Shutdown.exe"), "-r -t 120"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref RebootStartupInfo, out PROCESS_INFORMATION RebootProcessInformation);
+                                        bool createResult = Kernel32Library.CreateProcess(null, string.Format("{0} {1}", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), "System32", "Shutdown.exe"), "-r -t 120"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref RebootStartupInfo, out PROCESS_INFORMATION RebootProcessInformation);
 
-                                        Kernel32Library.CloseHandle(RebootProcessInformation.hProcess);
-                                        Kernel32Library.CloseHandle(RebootProcessInformation.hThread);
+                                        if (createResult)
+                                        {
+                                            if (RebootProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(RebootProcessInformation.hProcess);
+                                            if (RebootProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(RebootProcessInformation.hThread);
+                                        }
                                     }
                                 }
                             }
@@ -311,7 +349,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                 WinGetVMInstance.InstallingStateDict.Remove(upgradableApps.AppID);
                             }
 
-                            AppNotificationService.Show(NotificationArgs.UpgradeFailed, upgradableApps.AppName);
+                            AppNotificationService.Show(NotificationArgs.UpgradeFailed, upgradableApps.AppName, upgradableApps.AppID);
                         }
                     }
                     // 操作被用户所取消异常
@@ -368,7 +406,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                             WinGetVMInstance.InstallingStateDict.Remove(upgradableApps.AppID);
                         }
 
-                        AppNotificationService.Show(NotificationArgs.UpgradeFailed, upgradableApps.AppName);
+                        AppNotificationService.Show(NotificationArgs.UpgradeFailed, upgradableApps.AppName, upgradableApps.AppID);
                     }
                 }
             };
@@ -384,33 +422,40 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                     new WinGetCopyNotification(true, WinGetOptionArgs.UpgradeInstall).Show();
                 }
             };
-        }
 
-        /// <summary>
-        /// 初始化可升级应用信息
-        /// </summary>
-        public async void OnLoaded(object sender, RoutedEventArgs args)
-        {
-            try
+            InstallWithCmdCommand.ExecuteRequested += (sender, args) =>
             {
-                UpgradableAppsManager = WinGetService.CreatePackageManager();
-            }
-            catch (Exception)
-            {
-                return;
-            }
-            await Task.Delay(500);
-            await GetUpgradableAppsAsync();
-            InitializeData();
-            if (MatchResultList is null || MatchResultList.Count is 0)
-            {
-                IsUpgradableAppsEmpty = true;
-            }
-            else
-            {
-                IsUpgradableAppsEmpty = false;
-            }
-            IsLoadedCompleted = true;
+                string appId = args.Parameter as string;
+                if (appId is not null)
+                {
+                    unsafe
+                    {
+                        Kernel32Library.GetStartupInfo(out STARTUPINFO WinGetProcessStartupInfo);
+                        WinGetProcessStartupInfo.lpReserved = null;
+                        WinGetProcessStartupInfo.lpDesktop = null;
+                        WinGetProcessStartupInfo.lpTitle = null;
+                        WinGetProcessStartupInfo.dwX = 0;
+                        WinGetProcessStartupInfo.dwY = 0;
+                        WinGetProcessStartupInfo.dwXSize = 0;
+                        WinGetProcessStartupInfo.dwYSize = 0;
+                        WinGetProcessStartupInfo.dwXCountChars = 500;
+                        WinGetProcessStartupInfo.dwYCountChars = 500;
+                        WinGetProcessStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
+                        WinGetProcessStartupInfo.wShowWindow = WindowShowStyle.SW_SHOW;
+                        WinGetProcessStartupInfo.cbReserved2 = 0;
+                        WinGetProcessStartupInfo.lpReserved2 = IntPtr.Zero;
+                        WinGetProcessStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+
+                        bool createResult = Kernel32Library.CreateProcess(null, string.Format("winget install {0}", appId), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NEW_CONSOLE, IntPtr.Zero, null, ref WinGetProcessStartupInfo, out PROCESS_INFORMATION WinGetProcessInformation);
+
+                        if (createResult)
+                        {
+                            if (WinGetProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hProcess);
+                            if (WinGetProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hThread);
+                        }
+                    }
+                }
+            };
         }
 
         /// <summary>

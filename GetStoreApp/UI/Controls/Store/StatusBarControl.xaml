@@ -1,32 +1,29 @@
-﻿<UserControl
+﻿<InfoBar
     x:Class="GetStoreApp.UI.Controls.Store.StatusBarControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:storeViewModel="using:GetStoreApp.ViewModels.Controls.Store"
+    IsClosable="False"
+    IsOpen="True"
+    Message="{x:Bind ViewModel.StateInfoText, Mode=OneWay}"
+    Severity="{x:Bind ViewModel.InfoBarSeverity, Mode=OneWay}"
+    Style="{StaticResource InfoBarStyle}"
     mc:Ignorable="d">
 
-    <UserControl.DataContext>
+    <InfoBar.DataContext>
         <storeViewModel:StatusBarViewModel x:Name="ViewModel" x:FieldModifier="public" />
-    </UserControl.DataContext>
+    </InfoBar.DataContext>
 
-    <InfoBar
-        IsClosable="False"
-        IsOpen="True"
-        Message="{x:Bind ViewModel.StateInfoText, Mode=OneWay}"
-        Severity="{x:Bind ViewModel.InfoBarSeverity, Mode=OneWay}"
-        Style="{StaticResource InfoBarStyle}">
+    <InfoBar.Content>
+        <ProgressRing IsIndeterminate="{x:Bind ViewModel.StatePrRingActValue, Mode=OneWay}" Visibility="{x:Bind ViewModel.StatePrRingVisValue, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
+    </InfoBar.Content>
 
-        <InfoBar.Content>
-            <ProgressRing IsIndeterminate="{x:Bind ViewModel.StatePrRingActValue, Mode=OneWay}" Visibility="{x:Bind ViewModel.StatePrRingVisValue, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
-        </InfoBar.Content>
-
-        <ToolTipService.ToolTip>
-            <ToolTip
-                Content="{x:Bind ViewModel.StateInfoText, Mode=OneWay}"
-                Placement="Bottom"
-                VerticalOffset="20" />
-        </ToolTipService.ToolTip>
-    </InfoBar>
-</UserControl>
+    <ToolTipService.ToolTip>
+        <ToolTip
+            Content="{x:Bind ViewModel.StateInfoText, Mode=OneWay}"
+            Placement="Bottom"
+            VerticalOffset="20" />
+    </ToolTipService.ToolTip>
+</InfoBar>

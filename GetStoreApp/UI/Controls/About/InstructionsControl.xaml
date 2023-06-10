@@ -1,4 +1,4 @@
-﻿<UserControl
+﻿<Expander
     x:Class="GetStoreApp.UI.Controls.About.InstructionsControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -6,130 +6,129 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
+    Style="{StaticResource ExpanderAboutStyle}"
     mc:Ignorable="d">
 
-    <UserControl.DataContext>
+    <Expander.DataContext>
         <aboutViewModel:InstructionsViewModel x:Name="ViewModel" />
-    </UserControl.DataContext>
+    </Expander.DataContext>
 
-    <Expander Style="{StaticResource ExpanderAboutStyle}">
-        <Expander.Header>
-            <TextBlock Style="{StaticResource ExpanderHeaderStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/UseInstruction')}" />
-        </Expander.Header>
+    <Expander.Header>
+        <TextBlock Style="{StaticResource ExpanderHeaderStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/UseInstruction')}" />
+    </Expander.Header>
 
-        <Expander.Content>
-            <StackPanel Margin="14,0,10,0">
-                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/BeginnerGuide')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/MicrosoftStore')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/MicrosoftStoreDescription')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/WinGetPackage')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/WinGetPackageDescription1')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/WinGetPackageDescription2')}" />
-                <MenuFlyoutSeparator Margin="0,0,0,8" />
+    <Expander.Content>
+        <StackPanel Margin="14,0,10,0">
+            <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/BeginnerGuide')}" />
+            <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/MicrosoftStore')}" />
+            <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/MicrosoftStoreDescription')}" />
+            <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/WinGetPackage')}" />
+            <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/WinGetPackageDescription1')}" />
+            <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/WinGetPackageDescription2')}" />
+            <MenuFlyoutSeparator Margin="0,0,0,8" />
 
-                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/LaunchParameters')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/LaunchParametersDescription')}" />
+            <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/LaunchParameters')}" />
+            <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/LaunchParametersDescription')}" />
 
-                <StackPanel Orientation="Horizontal">
-                    <HyperlinkButton
-                        Click="{x:Bind ViewModel.OnDesktopLaunchClicked}"
-                        Content="{x:Bind root:ResourceService.GetLocalized('About/DesktopLaunch')}"
-                        Style="{StaticResource AboutHyperlinkButtonStyle}">
+            <StackPanel Orientation="Horizontal">
+                <HyperlinkButton
+                    Click="{x:Bind ViewModel.OnDesktopLaunchClicked}"
+                    Content="{x:Bind root:ResourceService.GetLocalized('About/DesktopLaunch')}"
+                    Style="{StaticResource AboutHyperlinkButtonStyle}">
 
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('About/DesktopLaunch')}"
-                                Placement="Bottom"
-                                VerticalOffset="25" />
-                        </ToolTipService.ToolTip>
-                    </HyperlinkButton>
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('About/DesktopLaunch')}"
+                            Placement="Bottom"
+                            VerticalOffset="25" />
+                    </ToolTipService.ToolTip>
+                </HyperlinkButton>
 
-                    <HyperlinkButton
-                        Click="{x:Bind ViewModel.OnConsoleLaunchClicked}"
-                        Content="{x:Bind root:ResourceService.GetLocalized('About/ConsoleLaunch')}"
-                        Style="{StaticResource AboutHyperlinkButtonStyle}">
+                <HyperlinkButton
+                    Click="{x:Bind ViewModel.OnConsoleLaunchClicked}"
+                    Content="{x:Bind root:ResourceService.GetLocalized('About/ConsoleLaunch')}"
+                    Style="{StaticResource AboutHyperlinkButtonStyle}">
 
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('About/ConsoleLaunch')}"
-                                Placement="Bottom"
-                                VerticalOffset="25" />
-                        </ToolTipService.ToolTip>
-                    </HyperlinkButton>
-                </StackPanel>
-
-                <MenuFlyoutSeparator Margin="0,0,0,8" />
-
-                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/RequestFailed')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/RequestFailedDescription')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/RequestFailedStep1')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/RequestFailedStep2')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/RequestFailedStep3')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/RequestFailedStep4')}" />
-
-                <StackPanel Orientation="Horizontal">
-                    <HyperlinkButton
-                        Click="{x:Bind ViewModel.OnCheckNetWorkClicked}"
-                        Content="{x:Bind root:ResourceService.GetLocalized('About/CheckNetwork')}"
-                        Style="{StaticResource AboutHyperlinkButtonStyle}">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('About/CheckNetwork')}"
-                                Placement="Bottom"
-                                VerticalOffset="25" />
-                        </ToolTipService.ToolTip>
-                    </HyperlinkButton>
-
-                    <HyperlinkButton
-                        Click="{x:Bind ViewModel.OnTroubleShootClicked}"
-                        Content="{x:Bind root:ResourceService.GetLocalized('About/TroubleShoot')}"
-                        Style="{StaticResource AboutHyperlinkButtonStyle}">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('About/TroubleShoot')}"
-                                Placement="Bottom"
-                                VerticalOffset="25" />
-                        </ToolTipService.ToolTip>
-                    </HyperlinkButton>
-
-                    <HyperlinkButton
-                        Click="{x:Bind ViewModel.OnCloudflareValidationClicked}"
-                        Content="{x:Bind root:ResourceService.GetLocalized('About/CloudflareValidation')}"
-                        Style="{StaticResource AboutHyperlinkButtonStyle}">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('About/CloudflareValidation')}"
-                                Placement="Bottom"
-                                VerticalOffset="25" />
-                        </ToolTipService.ToolTip>
-                    </HyperlinkButton>
-                </StackPanel>
-
-                <MenuFlyoutSeparator Margin="0,0,0,8" />
-
-                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/DownloadFailed')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/DownloadFailedDescription')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/DownloadFailedStep1')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/DownloadFailedStep2')}" />
-
-                <StackPanel Orientation="Horizontal">
-                    <HyperlinkButton
-                        Click="{x:Bind ViewModel.OnDownloadSettingsClicked}"
-                        Content="{x:Bind root:ResourceService.GetLocalized('About/DownloadSettings')}"
-                        Style="{StaticResource AboutHyperlinkButtonStyle}">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('About/DownloadSettings')}"
-                                Placement="Bottom"
-                                VerticalOffset="25" />
-                        </ToolTipService.ToolTip>
-                    </HyperlinkButton>
-                </StackPanel>
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('About/ConsoleLaunch')}"
+                            Placement="Bottom"
+                            VerticalOffset="25" />
+                    </ToolTipService.ToolTip>
+                </HyperlinkButton>
             </StackPanel>
-        </Expander.Content>
-    </Expander>
-</UserControl>
+
+            <MenuFlyoutSeparator Margin="0,0,0,8" />
+
+            <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/RequestFailed')}" />
+            <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/RequestFailedDescription')}" />
+            <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/RequestFailedStep1')}" />
+            <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/RequestFailedStep2')}" />
+            <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/RequestFailedStep3')}" />
+            <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/RequestFailedStep4')}" />
+
+            <StackPanel Orientation="Horizontal">
+                <HyperlinkButton
+                    Click="{x:Bind ViewModel.OnCheckNetWorkClicked}"
+                    Content="{x:Bind root:ResourceService.GetLocalized('About/CheckNetwork')}"
+                    Style="{StaticResource AboutHyperlinkButtonStyle}">
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('About/CheckNetwork')}"
+                            Placement="Bottom"
+                            VerticalOffset="25" />
+                    </ToolTipService.ToolTip>
+                </HyperlinkButton>
+
+                <HyperlinkButton
+                    Click="{x:Bind ViewModel.OnTroubleShootClicked}"
+                    Content="{x:Bind root:ResourceService.GetLocalized('About/TroubleShoot')}"
+                    Style="{StaticResource AboutHyperlinkButtonStyle}">
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('About/TroubleShoot')}"
+                            Placement="Bottom"
+                            VerticalOffset="25" />
+                    </ToolTipService.ToolTip>
+                </HyperlinkButton>
+
+                <HyperlinkButton
+                    Click="{x:Bind ViewModel.OnCloudflareValidationClicked}"
+                    Content="{x:Bind root:ResourceService.GetLocalized('About/CloudflareValidation')}"
+                    Style="{StaticResource AboutHyperlinkButtonStyle}">
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('About/CloudflareValidation')}"
+                            Placement="Bottom"
+                            VerticalOffset="25" />
+                    </ToolTipService.ToolTip>
+                </HyperlinkButton>
+            </StackPanel>
+
+            <MenuFlyoutSeparator Margin="0,0,0,8" />
+
+            <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/DownloadFailed')}" />
+            <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/DownloadFailedDescription')}" />
+            <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/DownloadFailedStep1')}" />
+            <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/DownloadFailedStep2')}" />
+
+            <StackPanel Orientation="Horizontal">
+                <HyperlinkButton
+                    Click="{x:Bind ViewModel.OnDownloadSettingsClicked}"
+                    Content="{x:Bind root:ResourceService.GetLocalized('About/DownloadSettings')}"
+                    Style="{StaticResource AboutHyperlinkButtonStyle}">
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip
+                            Content="{x:Bind root:ResourceService.GetLocalized('About/DownloadSettings')}"
+                            Placement="Bottom"
+                            VerticalOffset="25" />
+                    </ToolTipService.ToolTip>
+                </HyperlinkButton>
+            </StackPanel>
+        </StackPanel>
+    </Expander.Content>
+</Expander>

@@ -1,4 +1,4 @@
-﻿<UserControl
+﻿<Expander
     x:Class="GetStoreApp.UI.Controls.About.ThanksControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -8,59 +8,59 @@
     xmlns:format="using:GetStoreApp.Converters.Formats"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
+    Style="{StaticResource ExpanderAboutStyle}"
     mc:Ignorable="d">
 
-    <UserControl.DataContext>
+    <Expander.DataContext>
         <aboutViewModel:ThanksViewModel x:Name="ViewModel" />
-    </UserControl.DataContext>
+    </Expander.DataContext>
 
-    <UserControl.Resources>
+    <Expander.Resources>
         <format:AboutToolTipFormatConverter x:Name="AboutToolTipFormatConverter" />
-    </UserControl.Resources>
+    </Expander.Resources>
 
-    <Expander Style="{StaticResource ExpanderAboutStyle}">
-        <Expander.Header>
+    <Expander.Header>
+        <TextBlock
+            Style="{StaticResource ExpanderHeaderStyle}"
+            Text="{x:Bind root:ResourceService.GetLocalized('About/Thanks')}"
+            TextWrapping="Wrap" />
+    </Expander.Header>
+
+    <Expander.Content>
+        <StackPanel Margin="9,0,10,0">
             <TextBlock
-                Style="{StaticResource ExpanderHeaderStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('About/Thanks')}"
-                TextWrapping="Wrap" />
-        </Expander.Header>
-        <Expander.Content>
-            <StackPanel Margin="9,0,10,0">
-                <TextBlock
-                    Margin="5,0,0,3"
-                    Style="{StaticResource ExpanderContentTitleStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('About/ThanksDescription')}" />
-                <collections:AdaptiveGridView
-                    Padding="0"
-                    HorizontalAlignment="Stretch"
-                    HorizontalContentAlignment="Stretch"
-                    DesiredWidth="260"
-                    ItemContainerStyle="{StaticResource GridViewItemStyle}"
-                    ItemsSource="{x:Bind ViewModel.ThanksDict}"
-                    OneRowModeEnabled="False"
-                    SelectionMode="None"
-                    StretchContentForSingleRow="True">
-                    <collections:AdaptiveGridView.ItemTemplate>
-                        <DataTemplate>
-                            <HyperlinkButton
-                                Padding="5,8"
-                                HorizontalAlignment="Stretch"
-                                HorizontalContentAlignment="Left"
-                                Content="{Binding Key, Mode=OneTime}"
-                                NavigateUri="{Binding Value, Mode=OneTime}">
+                Margin="5,0,0,3"
+                Style="{StaticResource ExpanderContentTitleStyle}"
+                Text="{x:Bind root:ResourceService.GetLocalized('About/ThanksDescription')}" />
+            <collections:AdaptiveGridView
+                Padding="0"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                DesiredWidth="260"
+                ItemContainerStyle="{StaticResource GridViewItemStyle}"
+                ItemsSource="{x:Bind ViewModel.ThanksDict}"
+                OneRowModeEnabled="False"
+                SelectionMode="None"
+                StretchContentForSingleRow="True">
+                <collections:AdaptiveGridView.ItemTemplate>
+                    <DataTemplate>
+                        <HyperlinkButton
+                            Padding="5,8"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Left"
+                            Content="{Binding Key, Mode=OneTime}"
+                            NavigateUri="{Binding Value, Mode=OneTime}">
 
-                                <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        Content="{Binding Key, Converter={StaticResource AboutToolTipFormatConverter}, ConverterParameter=Thanks, Mode=OneTime}"
-                                        Placement="Bottom"
-                                        VerticalOffset="25" />
-                                </ToolTipService.ToolTip>
-                            </HyperlinkButton>
-                        </DataTemplate>
-                    </collections:AdaptiveGridView.ItemTemplate>
-                </collections:AdaptiveGridView>
-            </StackPanel>
-        </Expander.Content>
-    </Expander>
-</UserControl>
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    Content="{Binding Key, Converter={StaticResource AboutToolTipFormatConverter}, ConverterParameter=Thanks, Mode=OneTime}"
+                                    Placement="Bottom"
+                                    VerticalOffset="25" />
+                            </ToolTipService.ToolTip>
+                        </HyperlinkButton>
+                    </DataTemplate>
+                </collections:AdaptiveGridView.ItemTemplate>
+            </collections:AdaptiveGridView>
+        </StackPanel>
+    </Expander.Content>
+</Expander>

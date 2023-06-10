@@ -1,4 +1,4 @@
-﻿<UserControl
+﻿<Expander
     x:Class="GetStoreApp.UI.Controls.Store.HistoryLiteControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -10,99 +10,174 @@
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:storeViewModel="using:GetStoreApp.ViewModels.Controls.Store"
     x:Name="HistoryLiteRoot"
+    HorizontalContentAlignment="Stretch"
+    IsExpanded="True"
+    Style="{StaticResource HistoryLiteExpanderStyle}"
     mc:Ignorable="d">
 
-    <UserControl.DataContext>
+    <Expander.DataContext>
         <storeViewModel:HistoryLiteViewModel x:Name="ViewModel" x:FieldModifier="public" />
-    </UserControl.DataContext>
+    </Expander.DataContext>
 
-    <UserControl.Resources>
+    <Expander.Resources>
         <converter:TypeNameFormatConverter x:Name="TypeNameFormatConverter" />
         <converter:ChannelNameFormatConverter x:Name="ChannelNameFormatConverter" />
-    </UserControl.Resources>
+    </Expander.Resources>
 
-    <Expander
-        HorizontalContentAlignment="Stretch"
-        IsExpanded="True"
-        Style="{StaticResource HistoryLiteExpanderStyle}">
+    <Expander.Header>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
-        <Expander.Header>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+            <FontIcon
+                Grid.Column="0"
+                FontFamily="{StaticResource SegoeFluentFontFamily}"
+                Glyph="&#xE823;"
+                Style="{StaticResource FontIconStyle}" />
+            <TextBlock
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                Text="{x:Bind root:ResourceService.GetLocalized('Store/Recent')}" />
 
-                <FontIcon
-                    Grid.Column="0"
-                    FontFamily="{StaticResource SegoeFluentFontFamily}"
-                    Glyph="&#xE823;"
-                    Style="{StaticResource FontIconStyle}" />
-                <TextBlock
-                    Grid.Column="1"
-                    VerticalAlignment="Center"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Store/Recent')}" />
+            <MenuFlyoutItem
+                Grid.Column="2"
+                Margin="0,0,-15,0"
+                controlExtensions:CursorHelper.Cursor="Hand"
+                Click="{x:Bind ViewModel.OnViewAllClicked}"
+                Style="{StaticResource AppBarButtonMenuItemStyle}"
+                Text="{x:Bind root:ResourceService.GetLocalized('Store/ViewAll')}">
 
-                <MenuFlyoutItem
-                    Grid.Column="2"
-                    Margin="0,0,-15,0"
-                    controlExtensions:CursorHelper.Cursor="Hand"
-                    Click="{x:Bind ViewModel.OnViewAllClicked}"
-                    Style="{StaticResource AppBarButtonMenuItemStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Store/ViewAll')}">
+                <MenuFlyoutItem.Icon>
+                    <FontIcon Glyph="&#xE890;" Style="{StaticResource SegoeFluentStyle}" />
+                </MenuFlyoutItem.Icon>
 
-                    <MenuFlyoutItem.Icon>
-                        <FontIcon Glyph="&#xE890;" Style="{StaticResource SegoeFluentStyle}" />
-                    </MenuFlyoutItem.Icon>
+                <ToolTipService.ToolTip>
+                    <ToolTip
+                        Content="{x:Bind root:ResourceService.GetLocalized('Store/ViewAllToolTip')}"
+                        Placement="Bottom"
+                        VerticalOffset="25" />
+                </ToolTipService.ToolTip>
+            </MenuFlyoutItem>
+        </Grid>
+    </Expander.Header>
 
-                    <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind root:ResourceService.GetLocalized('Store/ViewAllToolTip')}"
-                            Placement="Bottom"
-                            VerticalOffset="25" />
-                    </ToolTipService.ToolTip>
-                </MenuFlyoutItem>
-            </Grid>
-        </Expander.Header>
+    <Expander.Content>
+        <Grid>
+            <TextBlock
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center"
+                Text="{x:Bind root:ResourceService.GetLocalized('Store/HistoryLiteEmpty')}"
+                TextAlignment="Center"
+                Visibility="{x:Bind ViewModel.HistoryLiteDataList.Count, Converter={StaticResource IntToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}" />
 
-        <Expander.Content>
-            <Grid>
-                <TextBlock
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Center"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Store/HistoryLiteEmpty')}"
-                    TextAlignment="Center"
-                    Visibility="{x:Bind ViewModel.HistoryLiteDataList.Count, Converter={StaticResource IntToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}" />
+            <ListView
+                ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
+                ItemsSource="{x:Bind ViewModel.HistoryLiteDataList, Mode=OneWay}"
+                SelectionMode="None"
+                Style="{StaticResource ListViewStyle}"
+                Visibility="{x:Bind ViewModel.HistoryLiteDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
 
-                <ListView
-                    ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
-                    ItemsSource="{x:Bind ViewModel.HistoryLiteDataList, Mode=OneWay}"
-                    SelectionMode="None"
-                    Visibility="{x:Bind ViewModel.HistoryLiteDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
+                <ItemsControl.ItemContainerTransitions>
+                    <TransitionCollection />
+                </ItemsControl.ItemContainerTransitions>
 
-                    <ItemsControl.ItemContainerTransitions>
-                        <TransitionCollection />
-                    </ItemsControl.ItemContainerTransitions>
+                <ListView.Header>
+                    <Grid Height="35" Padding="6,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="135" />
+                        </Grid.ColumnDefinitions>
 
-                    <ListView.Header>
-                        <Grid Height="35" Padding="6,0,0,0">
+                        <TextBlock
+                            Grid.Column="0"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Store/Type')}">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    Content="{x:Bind root:ResourceService.GetLocalized('Store/Type')}"
+                                    Placement="Bottom"
+                                    VerticalOffset="20" />
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
+
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Store/Channel')}">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    Content="{x:Bind root:ResourceService.GetLocalized('Store/Channel')}"
+                                    Placement="Bottom"
+                                    VerticalOffset="20" />
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
+
+                        <TextBlock
+                            Grid.Column="2"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Store/Link')}">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    Content="{x:Bind root:ResourceService.GetLocalized('Store/Link')}"
+                                    Placement="Bottom"
+                                    VerticalOffset="20" />
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
+
+                        <TextBlock
+                            Grid.Column="3"
+                            Grid.ColumnSpan="2"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Store/Options')}">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    Content="{x:Bind root:ResourceService.GetLocalized('Store/OptionsToolTip')}"
+                                    Placement="Bottom"
+                                    VerticalOffset="20" />
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
+                    </Grid>
+                </ListView.Header>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="history:HistoryModel">
+                        <Grid
+                            Height="35"
+                            Padding="6,0,0,0"
+                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                            BorderThickness="0,1,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="3*" />
-                                <ColumnDefinition Width="135" />
+                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition Width="65" />
                             </Grid.ColumnDefinitions>
 
                             <TextBlock
                                 Grid.Column="0"
                                 Margin="10,0,0,0"
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Store/Type')}">
+                                Style="{StaticResource CardTextStyle}"
+                                Text="{x:Bind HistoryType, Converter={StaticResource TypeNameFormatConverter}}">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip
-                                        Content="{x:Bind root:ResourceService.GetLocalized('Store/Type')}"
+                                        Content="{Binding HistoryType, Converter={StaticResource TypeNameFormatConverter}, Mode=OneTime}"
                                         Placement="Bottom"
                                         VerticalOffset="20" />
                                 </ToolTipService.ToolTip>
@@ -112,11 +187,12 @@
                                 Grid.Column="1"
                                 Margin="10,0,0,0"
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Store/Channel')}">
+                                Style="{StaticResource CardTextStyle}"
+                                Text="{x:Bind HistoryChannel, Converter={StaticResource ChannelNameFormatConverter}}">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip
-                                        Content="{x:Bind root:ResourceService.GetLocalized('Store/Channel')}"
+                                        Content="{x:Bind HistoryChannel, Converter={StaticResource ChannelNameFormatConverter}}"
                                         Placement="Bottom"
                                         VerticalOffset="20" />
                                 </ToolTipService.ToolTip>
@@ -126,129 +202,51 @@
                                 Grid.Column="2"
                                 Margin="10,0,0,0"
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Store/Link')}">
+                                Style="{StaticResource CardTextStyle}"
+                                Text="{x:Bind HistoryLink}">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip
-                                        Content="{x:Bind root:ResourceService.GetLocalized('Store/Link')}"
+                                        Content="{x:Bind HistoryLink}"
                                         Placement="Bottom"
                                         VerticalOffset="20" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
 
-                            <TextBlock
+                            <HyperlinkButton
                                 Grid.Column="3"
-                                Grid.ColumnSpan="2"
                                 Margin="10,0,0,0"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Store/Options')}">
+                                Command="{Binding ElementName=HistoryLiteRoot, Path=DataContext.FillinCommand, Mode=OneTime}"
+                                CommandParameter="{Binding}"
+                                Content="{x:Bind root:ResourceService.GetLocalized('Store/Fillin')}"
+                                Style="{StaticResource HyperlinkButtonStyle}">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip
-                                        Content="{x:Bind root:ResourceService.GetLocalized('Store/OptionsToolTip')}"
+                                        Content="{x:Bind root:ResourceService.GetLocalized('Store/FillinToolTip')}"
                                         Placement="Bottom"
-                                        VerticalOffset="20" />
+                                        VerticalOffset="25" />
                                 </ToolTipService.ToolTip>
-                            </TextBlock>
+                            </HyperlinkButton>
+
+                            <HyperlinkButton
+                                Grid.Column="4"
+                                Command="{Binding ElementName=HistoryLiteRoot, Path=DataContext.CopyCommand, Mode=OneTime}"
+                                CommandParameter="{Binding}"
+                                Content="{x:Bind root:ResourceService.GetLocalized('Store/Copy')}"
+                                Style="{StaticResource HyperlinkButtonStyle}">
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        Content="{x:Bind root:ResourceService.GetLocalized('Store/CopyToolTip')}"
+                                        Placement="Bottom"
+                                        VerticalOffset="25" />
+                                </ToolTipService.ToolTip>
+                            </HyperlinkButton>
                         </Grid>
-                    </ListView.Header>
-
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="history:HistoryModel">
-                            <Grid
-                                Height="35"
-                                Padding="6,0,0,0"
-                                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                BorderThickness="0,1,0,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="3*" />
-                                    <ColumnDefinition Width="70" />
-                                    <ColumnDefinition Width="65" />
-                                </Grid.ColumnDefinitions>
-
-                                <TextBlock
-                                    Grid.Column="0"
-                                    Margin="10,0,0,0"
-                                    VerticalAlignment="Center"
-                                    Style="{StaticResource CardTextStyle}"
-                                    Text="{x:Bind HistoryType, Converter={StaticResource TypeNameFormatConverter}}">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{Binding HistoryType, Converter={StaticResource TypeNameFormatConverter}, Mode=OneTime}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
-
-                                <TextBlock
-                                    Grid.Column="1"
-                                    Margin="10,0,0,0"
-                                    VerticalAlignment="Center"
-                                    Style="{StaticResource CardTextStyle}"
-                                    Text="{x:Bind HistoryChannel, Converter={StaticResource ChannelNameFormatConverter}}">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind HistoryChannel, Converter={StaticResource ChannelNameFormatConverter}}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
-
-                                <TextBlock
-                                    Grid.Column="2"
-                                    Margin="10,0,0,0"
-                                    VerticalAlignment="Center"
-                                    Style="{StaticResource CardTextStyle}"
-                                    Text="{x:Bind HistoryLink}">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind HistoryLink}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
-
-                                <HyperlinkButton
-                                    Grid.Column="3"
-                                    Margin="10,0,0,0"
-                                    Command="{Binding ElementName=HistoryLiteRoot, Path=DataContext.FillinCommand, Mode=OneTime}"
-                                    CommandParameter="{Binding}"
-                                    Content="{x:Bind root:ResourceService.GetLocalized('Store/Fillin')}"
-                                    Style="{StaticResource HyperlinkButtonStyle}">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind root:ResourceService.GetLocalized('Store/FillinToolTip')}"
-                                            Placement="Bottom"
-                                            VerticalOffset="25" />
-                                    </ToolTipService.ToolTip>
-                                </HyperlinkButton>
-
-                                <HyperlinkButton
-                                    Grid.Column="4"
-                                    Command="{Binding ElementName=HistoryLiteRoot, Path=DataContext.CopyCommand, Mode=OneTime}"
-                                    CommandParameter="{Binding}"
-                                    Content="{x:Bind root:ResourceService.GetLocalized('Store/Copy')}"
-                                    Style="{StaticResource HyperlinkButtonStyle}">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind root:ResourceService.GetLocalized('Store/CopyToolTip')}"
-                                            Placement="Bottom"
-                                            VerticalOffset="25" />
-                                    </ToolTipService.ToolTip>
-                                </HyperlinkButton>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
-        </Expander.Content>
-    </Expander>
-</UserControl>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </Expander.Content>
+</Expander>

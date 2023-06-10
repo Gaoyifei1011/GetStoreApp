@@ -314,7 +314,8 @@
       &lt;text&gt;您或者可以尝试手动安装该应用&lt;/text&gt;
     &lt;/binding&gt;
   &lt;/visual&gt;
-  &lt;actions&gt;
+  &lt;actions&gt;    
+    &lt;action content="使用命令安装" arguments="action=InstallWithCommand:{1}"/&gt;
     &lt;action content="打开下载目录" arguments="action=OpenDownloadFolder"/&gt;
   &lt;/actions&gt;
 &lt;/toast&gt;</value>
@@ -361,6 +362,7 @@
     &lt;/binding&gt;
   &lt;/visual&gt;
   &lt;actions&gt;
+    &lt;action content="使用命令安装" arguments="action=InstallWithCommand:{1}"/&gt;
     &lt;action content="打开下载目录" arguments="action=OpenDownloadFolder"/&gt;
   &lt;/actions&gt;
 &lt;/toast&gt;</value>

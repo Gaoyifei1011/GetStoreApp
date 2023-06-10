@@ -28,6 +28,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
     public sealed class InstalledAppsViewModel : ViewModelBase
     {
         private PackageManager InstalledAppsManager { get; set; }
+        private bool isInitialized = false;
 
         private bool _isLoadedCompleted = false;
 
@@ -79,6 +80,30 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
         public ObservableCollection<InstalledAppsModel> InstalledAppsDataList { get; set; } = new ObservableCollection<InstalledAppsModel>();
 
         /// <summary>
+        /// 初始化已安装应用信息
+        /// </summary>
+        public async void OnLoaded(object sender, RoutedEventArgs args)
+        {
+            if (!isInitialized)
+            {
+                try
+                {
+                    InstalledAppsManager = WinGetService.CreatePackageManager();
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+                await Task.Delay(500);
+                await GetInstalledAppsAsync();
+                InitializeData();
+                IsInstalledAppsEmpty = MatchResultList.Count is 0;
+                IsLoadedCompleted = true;
+                isInitialized = true;
+            }
+        }
+
+        /// <summary>
         /// 更新已安装应用数据
         /// </summary>
         public async void OnRefreshClicked(object sender, RoutedEventArgs args)
@@ -91,6 +116,28 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
             InitializeData();
             IsInstalledAppsEmpty = MatchResultList.Count is 0;
             IsLoadedCompleted = true;
+        }
+
+        /// <summary>
+        /// 根据输入的内容检索应用
+        /// </summary>
+        public void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            InitializeData(true);
+        }
+
+        /// <summary>
+        /// 文本输入框内容为空时，复原原来的内容
+        /// </summary>
+        public void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
+        {
+            if (args.PropertyName == nameof(SearchText))
+            {
+                if (SearchText == string.Empty && MatchResultList is not null)
+                {
+                    InitializeData();
+                }
+            }
         }
 
         public InstalledAppsViewModel()
@@ -140,10 +187,13 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                         RebootStartupInfo.lpReserved2 = IntPtr.Zero;
 
                                         RebootStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
-                                        Kernel32Library.CreateProcess(null, string.Format("{0} {1}", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), "System32", "Shutdown.exe"), "-r -t 120"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref RebootStartupInfo, out PROCESS_INFORMATION RebootProcessInformation);
+                                        bool createResult = Kernel32Library.CreateProcess(null, string.Format("{0} {1}", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), "System32", "Shutdown.exe"), "-r -t 120"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref RebootStartupInfo, out PROCESS_INFORMATION RebootProcessInformation);
 
-                                        Kernel32Library.CloseHandle(RebootProcessInformation.hProcess);
-                                        Kernel32Library.CloseHandle(RebootProcessInformation.hThread);
+                                        if (createResult)
+                                        {
+                                            if (RebootProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(RebootProcessInformation.hProcess);
+                                            if (RebootProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(RebootProcessInformation.hThread);
+                                        }
                                     }
                                 }
                             }
@@ -182,48 +232,6 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
         ~InstalledAppsViewModel()
         {
             PropertyChanged -= OnPropertyChanged;
-        }
-
-        /// <summary>
-        /// 初始化已安装应用信息
-        /// </summary>
-        public async void OnLoaded(object sender, RoutedEventArgs args)
-        {
-            try
-            {
-                InstalledAppsManager = WinGetService.CreatePackageManager();
-            }
-            catch (Exception)
-            {
-                return;
-            }
-            await Task.Delay(500);
-            await GetInstalledAppsAsync();
-            InitializeData();
-            IsInstalledAppsEmpty = MatchResultList.Count is 0;
-            IsLoadedCompleted = true;
-        }
-
-        /// <summary>
-        /// 根据输入的内容检索应用
-        /// </summary>
-        public void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
-        {
-            InitializeData(true);
-        }
-
-        /// <summary>
-        /// 文本输入框内容为空时，复原原来的内容
-        /// </summary>
-        public void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
-        {
-            if (args.PropertyName == nameof(SearchText))
-            {
-                if (SearchText == string.Empty && MatchResultList is not null)
-                {
-                    InitializeData();
-                }
-            }
         }
 
         /// <summary>

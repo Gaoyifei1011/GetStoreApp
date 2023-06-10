@@ -1,4 +1,4 @@
-﻿<UserControl
+﻿<Expander
     x:Class="GetStoreApp.UI.Controls.Settings.Appearance.ThemeControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -7,218 +7,217 @@
     xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Appearance"
+    Style="{StaticResource ExpanderSettingsStyle}"
     mc:Ignorable="d">
 
-    <UserControl.DataContext>
+    <Expander.DataContext>
         <settingsViewModel:ThemeViewModel x:Name="ViewModel" />
-    </UserControl.DataContext>
+    </Expander.DataContext>
 
-    <Expander Style="{StaticResource ExpanderSettingsStyle}">
-        <Expander.Header>
-            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+    <Expander.Header>
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
-                <FontIcon
-                    Grid.Column="0"
-                    FontFamily="{StaticResource SegoeFluentFontFamily}"
-                    Glyph="&#xE790;"
-                    Style="{StaticResource FontIconStyle}" />
+            <FontIcon
+                Grid.Column="0"
+                FontFamily="{StaticResource SegoeFluentFontFamily}"
+                Glyph="&#xE790;"
+                Style="{StaticResource FontIconStyle}" />
 
-                <StackPanel
-                    Grid.Column="1"
-                    Margin="0,12"
-                    Orientation="Vertical">
+            <StackPanel
+                Grid.Column="1"
+                Margin="0,12"
+                Orientation="Vertical">
 
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Style="{StaticResource BodyTextBlockStyle}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/ThemeMode')}" />
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Style="{StaticResource BodyTextBlockStyle}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/ThemeMode')}" />
 
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                        Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/ThemeModeDescription')}" />
-                </StackPanel>
-
-                <Button
-                    Grid.Column="2"
-                    Click="{x:Bind ViewModel.OnSettingsColorClicked}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/WindowsColorSettings')}">
-
-                    <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind root:ResourceService.GetLocalized('Settings/WindowsColorSettings')}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
-                    </ToolTipService.ToolTip>
-                </Button>
-            </Grid>
-        </Expander.Header>
-
-        <Expander.Content>
-            <StackPanel Padding="43,6,16,4" HorizontalAlignment="Stretch">
-                <StackPanel>
-                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <StackPanel Grid.Column="0" Orientation="Vertical">
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Style="{StaticResource BodyTextBlockStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/Theme')}" />
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                Style="{StaticResource CaptionTextBlockStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/ThemeDescription')}" />
-                        </StackPanel>
-
-                        <DropDownButton
-                            Grid.Column="1"
-                            VerticalAlignment="Center"
-                            Content="{x:Bind ViewModel.Theme.DisplayName, Mode=OneWay}">
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip
-                                    Content="{x:Bind ViewModel.Theme.DisplayName, Mode=OneWay}"
-                                    Placement="Bottom"
-                                    VerticalOffset="20" />
-                            </ToolTipService.ToolTip>
-
-                            <DropDownButton.Flyout>
-                                <menusAndToolbars:AdaptiveMenuFlyout>
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind ViewModel.OnThemeSelectClicked}"
-                                        GroupName="ThemeSetting"
-                                        IsChecked="{x:Bind IsItemChecked(ViewModel.Theme.InternalName, ViewModel.ThemeList[0].InternalName), Mode=OneWay}"
-                                        Tag="0"
-                                        Text="{x:Bind ViewModel.ThemeList[0].DisplayName}">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind ViewModel.ThemeList[0].DisplayName}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
-                                        </ToolTipService.ToolTip>
-                                    </RadioMenuFlyoutItem>
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind ViewModel.OnThemeSelectClicked}"
-                                        GroupName="ThemeSetting"
-                                        IsChecked="{x:Bind IsItemChecked(ViewModel.Theme.InternalName, ViewModel.ThemeList[1].InternalName), Mode=OneWay}"
-                                        Tag="1"
-                                        Text="{x:Bind ViewModel.ThemeList[1].DisplayName}">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind ViewModel.ThemeList[1].DisplayName}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
-                                        </ToolTipService.ToolTip>
-                                    </RadioMenuFlyoutItem>
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind ViewModel.OnThemeSelectClicked}"
-                                        GroupName="ThemeSetting"
-                                        IsChecked="{x:Bind IsItemChecked(ViewModel.Theme.InternalName, ViewModel.ThemeList[2].InternalName), Mode=OneWay}"
-                                        Tag="2"
-                                        Text="{x:Bind ViewModel.ThemeList[2].DisplayName}">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind ViewModel.ThemeList[2].DisplayName}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
-                                        </ToolTipService.ToolTip>
-                                    </RadioMenuFlyoutItem>
-                                </menusAndToolbars:AdaptiveMenuFlyout>
-                            </DropDownButton.Flyout>
-                        </DropDownButton>
-                    </Grid>
-                </StackPanel>
-
-                <MenuFlyoutSeparator Margin="0,4,0,4" />
-
-                <StackPanel Margin="0,0,0,6">
-                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <StackPanel Grid.Column="0" Orientation="Vertical">
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Style="{StaticResource BodyTextBlockStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/NotifyIconMenuTheme')}" />
-
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                Style="{StaticResource CaptionTextBlockStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/NotifyIconMenuThemeDescription')}" />
-                        </StackPanel>
-
-                        <DropDownButton
-                            Grid.Column="1"
-                            VerticalAlignment="Center"
-                            Content="{x:Bind ViewModel.NotifyIconMenuTheme.DisplayName, Mode=OneWay}">
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip
-                                    Content="{x:Bind ViewModel.NotifyIconMenuTheme.DisplayName, Mode=OneWay}"
-                                    Placement="Bottom"
-                                    VerticalOffset="20" />
-                            </ToolTipService.ToolTip>
-
-                            <DropDownButton.Flyout>
-                                <menusAndToolbars:AdaptiveMenuFlyout>
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind ViewModel.OnNotifyIconMenuThemeSelectClicked}"
-                                        GroupName="NotifyIconMenuThemeSetting"
-                                        IsChecked="{x:Bind IsItemChecked(ViewModel.NotifyIconMenuTheme.InternalName, ViewModel.NotifyIconMenuThemeList[0].InternalName), Mode=OneWay}"
-                                        Tag="0"
-                                        Text="{x:Bind ViewModel.NotifyIconMenuThemeList[0].DisplayName}">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind ViewModel.NotifyIconMenuThemeList[0].DisplayName}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
-                                        </ToolTipService.ToolTip>
-                                    </RadioMenuFlyoutItem>
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind ViewModel.OnNotifyIconMenuThemeSelectClicked}"
-                                        GroupName="NotifyIconMenuThemeSetting"
-                                        IsChecked="{x:Bind IsItemChecked(ViewModel.NotifyIconMenuTheme.InternalName, ViewModel.NotifyIconMenuThemeList[1].InternalName), Mode=OneWay}"
-                                        Tag="1"
-                                        Text="{x:Bind ViewModel.NotifyIconMenuThemeList[1].DisplayName}">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind ViewModel.NotifyIconMenuThemeList[1].DisplayName}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
-                                        </ToolTipService.ToolTip>
-                                    </RadioMenuFlyoutItem>
-                                </menusAndToolbars:AdaptiveMenuFlyout>
-                            </DropDownButton.Flyout>
-                        </DropDownButton>
-                    </Grid>
-                </StackPanel>
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/ThemeModeDescription')}" />
             </StackPanel>
-        </Expander.Content>
-    </Expander>
-</UserControl>
+
+            <Button
+                Grid.Column="2"
+                Click="{x:Bind ViewModel.OnSettingsColorClicked}"
+                Content="{x:Bind root:ResourceService.GetLocalized('Settings/WindowsColorSettings')}">
+
+                <ToolTipService.ToolTip>
+                    <ToolTip
+                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/WindowsColorSettings')}"
+                        Placement="Bottom"
+                        VerticalOffset="20" />
+                </ToolTipService.ToolTip>
+            </Button>
+        </Grid>
+    </Expander.Header>
+
+    <Expander.Content>
+        <StackPanel Padding="43,6,16,4" HorizontalAlignment="Stretch">
+            <StackPanel>
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Orientation="Vertical">
+
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/Theme')}" />
+
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                            Style="{StaticResource CaptionTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/ThemeDescription')}" />
+                    </StackPanel>
+
+                    <DropDownButton
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Content="{x:Bind ViewModel.Theme.DisplayName, Mode=OneWay}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind ViewModel.Theme.DisplayName, Mode=OneWay}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+
+                        <DropDownButton.Flyout>
+                            <menusAndToolbars:AdaptiveMenuFlyout>
+                                <RadioMenuFlyoutItem
+                                    Click="{x:Bind ViewModel.OnThemeSelectClicked}"
+                                    GroupName="ThemeSetting"
+                                    IsChecked="{x:Bind IsItemChecked(ViewModel.Theme.InternalName, ViewModel.ThemeList[0].InternalName), Mode=OneWay}"
+                                    Tag="0"
+                                    Text="{x:Bind ViewModel.ThemeList[0].DisplayName}">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="{x:Bind ViewModel.ThemeList[0].DisplayName}"
+                                            Placement="Bottom"
+                                            VerticalOffset="20" />
+                                    </ToolTipService.ToolTip>
+                                </RadioMenuFlyoutItem>
+
+                                <RadioMenuFlyoutItem
+                                    Click="{x:Bind ViewModel.OnThemeSelectClicked}"
+                                    GroupName="ThemeSetting"
+                                    IsChecked="{x:Bind IsItemChecked(ViewModel.Theme.InternalName, ViewModel.ThemeList[1].InternalName), Mode=OneWay}"
+                                    Tag="1"
+                                    Text="{x:Bind ViewModel.ThemeList[1].DisplayName}">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="{x:Bind ViewModel.ThemeList[1].DisplayName}"
+                                            Placement="Bottom"
+                                            VerticalOffset="20" />
+                                    </ToolTipService.ToolTip>
+                                </RadioMenuFlyoutItem>
+
+                                <RadioMenuFlyoutItem
+                                    Click="{x:Bind ViewModel.OnThemeSelectClicked}"
+                                    GroupName="ThemeSetting"
+                                    IsChecked="{x:Bind IsItemChecked(ViewModel.Theme.InternalName, ViewModel.ThemeList[2].InternalName), Mode=OneWay}"
+                                    Tag="2"
+                                    Text="{x:Bind ViewModel.ThemeList[2].DisplayName}">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="{x:Bind ViewModel.ThemeList[2].DisplayName}"
+                                            Placement="Bottom"
+                                            VerticalOffset="20" />
+                                    </ToolTipService.ToolTip>
+                                </RadioMenuFlyoutItem>
+                            </menusAndToolbars:AdaptiveMenuFlyout>
+                        </DropDownButton.Flyout>
+                    </DropDownButton>
+                </Grid>
+            </StackPanel>
+
+            <MenuFlyoutSeparator Margin="0,4,0,4" />
+
+            <StackPanel Margin="0,0,0,6">
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Orientation="Vertical">
+
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/NotifyIconMenuTheme')}" />
+
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                            Style="{StaticResource CaptionTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/NotifyIconMenuThemeDescription')}" />
+                    </StackPanel>
+
+                    <DropDownButton
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Content="{x:Bind ViewModel.NotifyIconMenuTheme.DisplayName, Mode=OneWay}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind ViewModel.NotifyIconMenuTheme.DisplayName, Mode=OneWay}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+
+                        <DropDownButton.Flyout>
+                            <menusAndToolbars:AdaptiveMenuFlyout>
+                                <RadioMenuFlyoutItem
+                                    Click="{x:Bind ViewModel.OnNotifyIconMenuThemeSelectClicked}"
+                                    GroupName="NotifyIconMenuThemeSetting"
+                                    IsChecked="{x:Bind IsItemChecked(ViewModel.NotifyIconMenuTheme.InternalName, ViewModel.NotifyIconMenuThemeList[0].InternalName), Mode=OneWay}"
+                                    Tag="0"
+                                    Text="{x:Bind ViewModel.NotifyIconMenuThemeList[0].DisplayName}">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="{x:Bind ViewModel.NotifyIconMenuThemeList[0].DisplayName}"
+                                            Placement="Bottom"
+                                            VerticalOffset="20" />
+                                    </ToolTipService.ToolTip>
+                                </RadioMenuFlyoutItem>
+
+                                <RadioMenuFlyoutItem
+                                    Click="{x:Bind ViewModel.OnNotifyIconMenuThemeSelectClicked}"
+                                    GroupName="NotifyIconMenuThemeSetting"
+                                    IsChecked="{x:Bind IsItemChecked(ViewModel.NotifyIconMenuTheme.InternalName, ViewModel.NotifyIconMenuThemeList[1].InternalName), Mode=OneWay}"
+                                    Tag="1"
+                                    Text="{x:Bind ViewModel.NotifyIconMenuThemeList[1].DisplayName}">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="{x:Bind ViewModel.NotifyIconMenuThemeList[1].DisplayName}"
+                                            Placement="Bottom"
+                                            VerticalOffset="20" />
+                                    </ToolTipService.ToolTip>
+                                </RadioMenuFlyoutItem>
+                            </menusAndToolbars:AdaptiveMenuFlyout>
+                        </DropDownButton.Flyout>
+                    </DropDownButton>
+                </Grid>
+            </StackPanel>
+        </StackPanel>
+    </Expander.Content>
+</Expander>

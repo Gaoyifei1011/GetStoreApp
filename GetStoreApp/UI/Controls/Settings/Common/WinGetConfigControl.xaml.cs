@@ -5,7 +5,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
     /// <summary>
     /// WinGet 程序包设置控件视图
     /// </summary>
-    public sealed partial class WinGetConfigControl : UserControl
+    public sealed partial class WinGetConfigControl : Expander
     {
         public WinGetConfigControl()
         {

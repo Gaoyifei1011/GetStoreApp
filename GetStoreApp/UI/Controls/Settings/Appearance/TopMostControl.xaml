@@ -1,4 +1,4 @@
-﻿<UserControl
+﻿<Grid
     x:Class="GetStoreApp.UI.Controls.Settings.Appearance.TopMostControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -7,47 +7,46 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Appearance"
+    Style="{StaticResource CardGridStyle}"
     mc:Ignorable="d">
 
-    <UserControl.DataContext>
+    <Grid.DataContext>
         <settingsViewModel:TopMostViewModel x:Name="ViewModel" />
-    </UserControl.DataContext>
+    </Grid.DataContext>
 
-    <Grid Style="{StaticResource CardGridStyle}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+    </Grid.ColumnDefinitions>
 
-        <FontIcon
-            Grid.Column="0"
-            FontFamily="{StaticResource SegoeFluentFontFamily}"
-            Glyph="&#xE840;"
-            Style="{StaticResource FontIconStyle}" />
+    <FontIcon
+        Grid.Column="0"
+        FontFamily="{StaticResource SegoeFluentFontFamily}"
+        Glyph="&#xE840;"
+        Style="{StaticResource FontIconStyle}" />
 
-        <StackPanel Grid.Column="1" Orientation="Vertical">
+    <StackPanel Grid.Column="1" Orientation="Vertical">
 
-            <TextBlock
-                VerticalAlignment="Center"
-                Style="{StaticResource BodyTextBlockStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Settings/TopMost')}" />
+        <TextBlock
+            VerticalAlignment="Center"
+            Style="{StaticResource BodyTextBlockStyle}"
+            Text="{x:Bind root:ResourceService.GetLocalized('Settings/TopMost')}" />
 
-            <TextBlock
-                VerticalAlignment="Center"
-                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                Style="{StaticResource CaptionTextBlockStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Settings/TopMostDescription')}" />
-        </StackPanel>
+        <TextBlock
+            VerticalAlignment="Center"
+            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+            Style="{StaticResource CaptionTextBlockStyle}"
+            Text="{x:Bind root:ResourceService.GetLocalized('Settings/TopMostDescription')}" />
+    </StackPanel>
 
-        <ToggleSwitch
-            Grid.Column="2"
-            controlExtensions:CursorHelper.Cursor="Hand"
-            FlowDirection="RightToLeft"
-            IsOn="{x:Bind ViewModel.TopMostValue, Mode=OneWay}"
-            OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/TopMostOffContent')}"
-            OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/TopMostOnContent')}"
-            Style="{StaticResource ToggleSwitchStyle}"
-            Toggled="{x:Bind ViewModel.OnToggled}" />
-    </Grid>
-</UserControl>
+    <ToggleSwitch
+        Grid.Column="2"
+        controlExtensions:CursorHelper.Cursor="Hand"
+        FlowDirection="RightToLeft"
+        IsOn="{x:Bind ViewModel.TopMostValue, Mode=OneWay}"
+        OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/TopMostOffContent')}"
+        OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/TopMostOnContent')}"
+        Style="{StaticResource ToggleSwitchStyle}"
+        Toggled="{x:Bind ViewModel.OnToggled}" />
+</Grid>

@@ -201,6 +201,9 @@
   <data name="InstallStateToolTip" xml:space="preserve">
     <value>安装状态：{0}</value>
   </data>
+  <data name="InstallWithCmd" xml:space="preserve">
+    <value>使用命令安装</value>
+  </data>
   <data name="Introduce" xml:space="preserve">
     <value>WinGet 程序包管理器介绍：</value>
   </data>

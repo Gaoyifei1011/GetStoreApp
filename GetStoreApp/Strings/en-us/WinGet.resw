@@ -201,6 +201,9 @@
   <data name="InstallStateToolTip" xml:space="preserve">
     <value>Install state: {0}</value>
   </data>
+  <data name="InstallWithCmd" xml:space="preserve">
+    <value>Install with command</value>
+  </data>
   <data name="Introduce" xml:space="preserve">
     <value>Introduction to WinGet Package Manager:</value>
   </data>

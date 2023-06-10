@@ -6,7 +6,7 @@ namespace GetStoreApp.UI.Controls.Download
     /// <summary>
     /// 下载页面：正在下载完成用户控件视图
     /// </summary>
-    public sealed partial class DownloadingControl : UserControl
+    public sealed partial class DownloadingControl : Grid
     {
         public DownloadingControl()
         {

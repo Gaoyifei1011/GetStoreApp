@@ -13,6 +13,7 @@
     MinHeight="768"
     Activated="{x:Bind ViewModel.OnActivated}"
     Closed="{x:Bind ViewModel.OnClosed}"
+    SizeChanged="{x:Bind ViewModel.OnSizeChanged}"
     SystemBackdrop="{x:Bind ViewModel.SystemBackdrop, Mode=OneWay}"
     mc:Ignorable="d">
 
@@ -31,15 +32,13 @@
         <NavigationView
             BackRequested="{x:Bind ViewModel.OnNavigationViewBackRequested}"
             Canvas.ZIndex="0"
-            CompactModeThresholdWidth="768"
-            DisplayModeChanged="{x:Bind ViewModel.OnDisplayModeChanged}"
-            ExpandedModeThresholdWidth="768"
             IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
             IsPaneToggleButtonVisible="{x:Bind ViewModel.IsPaneToggleButtonVisible, Mode=OneWay}"
             IsSettingsVisible="False"
             IsTitleBarAutoPaddingEnabled="True"
             Loaded="{x:Bind ViewModel.OnNavigationViewLoaded}"
             OpenPaneLength="220"
+            PaneDisplayMode="{x:Bind ViewModel.PaneDisplayMode, Mode=OneWay}"
             SelectedItem="{x:Bind ViewModel.SelectedItem, Mode=OneWay}"
             Style="{StaticResource NavigationViewStyle}"
             Unloaded="{x:Bind ViewModel.OnNavigationViewUnLoaded}">

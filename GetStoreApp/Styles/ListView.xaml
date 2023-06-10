@@ -65,7 +65,6 @@
                                 HeaderTransitions="{TemplateBinding HeaderTransitions}" />
                         </ScrollViewer>
                     </Border>
-
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

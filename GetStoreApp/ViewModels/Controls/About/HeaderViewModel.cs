@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Helpers.Root;
-using GetStoreApp.ViewModels.Base;
 using Microsoft.UI.Xaml;
 using System;
 using Windows.System;
@@ -9,7 +8,7 @@ namespace GetStoreApp.ViewModels.Controls.About
     /// <summary>
     /// 关于页面：顶部栏用户控件视图模型
     /// </summary>
-    public sealed class HeaderViewModel : ViewModelBase
+    public sealed class HeaderViewModel
     {
         private readonly int MajorVersion = InfoHelper.GetAppVersion().Major;
 
@@ -19,18 +18,7 @@ namespace GetStoreApp.ViewModels.Controls.About
 
         private readonly int RevisionVersion = InfoHelper.GetAppVersion().Revision;
 
-        private string _appVersion;
-
-        public string AppVersion
-        {
-            get { return _appVersion; }
-
-            set
-            {
-                _appVersion = value;
-                OnPropertyChanged();
-            }
-        }
+        public string AppVersion => string.Format("{0}.{1}.{2}.{3}", MajorVersion, MinorVersion, BuildVersion, RevisionVersion);
 
         /// <summary>
         /// 检查更新
@@ -46,14 +34,6 @@ namespace GetStoreApp.ViewModels.Controls.About
         public async void OnDeveloperDescriptionClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011"));
-        }
-
-        /// <summary>
-        /// 初始化应用版本信息
-        /// </summary>
-        public void OnLoaded(object sender, RoutedEventArgs args)
-        {
-            AppVersion = string.Format("{0}.{1}.{2}.{3}", MajorVersion, MinorVersion, BuildVersion, RevisionVersion);
         }
 
         /// <summary>

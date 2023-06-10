@@ -35,6 +35,8 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
 
         private string cachedSearchText;
 
+        private bool isInitialized = false;
+
         private bool _notSearched = true;
 
         public bool NotSearched
@@ -80,6 +82,9 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
         // 复制安装命令
         public XamlUICommand CopyInstallTextCommand { get; } = new XamlUICommand();
 
+        // 使用命令安装
+        public XamlUICommand InstallWithCmdCommand { get; } = new XamlUICommand();
+
         private List<MatchResult> MatchResultList;
 
         public ObservableCollection<SearchAppsModel> SearchAppsDataList { get; set; } = new ObservableCollection<SearchAppsModel>();
@@ -89,13 +94,20 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
         /// </summary>
         public void OnLoaded(object sender, RoutedEventArgs args)
         {
-            try
+            if (!isInitialized)
             {
-                SearchAppsManager = WinGetService.CreatePackageManager();
-            }
-            catch (Exception)
-            {
-                return;
+                try
+                {
+                    SearchAppsManager = WinGetService.CreatePackageManager();
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+                finally
+                {
+                    isInitialized = true;
+                }
             }
         }
 
@@ -301,17 +313,20 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                         RebootStartupInfo.lpReserved2 = IntPtr.Zero;
 
                                         RebootStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
-                                        Kernel32Library.CreateProcess(null, string.Format("{0} {1}", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), "System32", "Shutdown.exe"), "-r -t 120"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref RebootStartupInfo, out PROCESS_INFORMATION RebootProcessInformation);
+                                        bool createResult = Kernel32Library.CreateProcess(null, string.Format("{0} {1}", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), "System32", "Shutdown.exe"), "-r -t 120"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref RebootStartupInfo, out PROCESS_INFORMATION RebootProcessInformation);
 
-                                        Kernel32Library.CloseHandle(RebootProcessInformation.hProcess);
-                                        Kernel32Library.CloseHandle(RebootProcessInformation.hThread);
+                                        if (createResult)
+                                        {
+                                            if (RebootProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(RebootProcessInformation.hProcess);
+                                            if (RebootProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(RebootProcessInformation.hThread);
+                                        }
                                     }
                                 }
                             }
                         }
                         else
                         {
-                            AppNotificationService.Show(NotificationArgs.InstallFailed, searchApps.AppName);
+                            AppNotificationService.Show(NotificationArgs.InstallFailed, searchApps.AppName, searchApps.AppID);
                         }
 
                         // 应用安装失败，将当前任务状态修改为可安装状态
@@ -392,7 +407,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                             WinGetVMInstance.InstallingStateDict.Remove(searchApps.AppID);
                         }
 
-                        AppNotificationService.Show(NotificationArgs.InstallFailed, searchApps.AppName);
+                        AppNotificationService.Show(NotificationArgs.InstallFailed, searchApps.AppName, searchApps.AppID);
                     }
                 }
             };
@@ -406,6 +421,40 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                     CopyPasteHelper.CopyToClipBoard(copyContent);
 
                     new WinGetCopyNotification(true, WinGetOptionArgs.SearchInstall).Show();
+                }
+            };
+
+            InstallWithCmdCommand.ExecuteRequested += (sender, args) =>
+            {
+                string appId = args.Parameter as string;
+                if (appId is not null)
+                {
+                    unsafe
+                    {
+                        Kernel32Library.GetStartupInfo(out STARTUPINFO WinGetProcessStartupInfo);
+                        WinGetProcessStartupInfo.lpReserved = null;
+                        WinGetProcessStartupInfo.lpDesktop = null;
+                        WinGetProcessStartupInfo.lpTitle = null;
+                        WinGetProcessStartupInfo.dwX = 0;
+                        WinGetProcessStartupInfo.dwY = 0;
+                        WinGetProcessStartupInfo.dwXSize = 0;
+                        WinGetProcessStartupInfo.dwYSize = 0;
+                        WinGetProcessStartupInfo.dwXCountChars = 500;
+                        WinGetProcessStartupInfo.dwYCountChars = 500;
+                        WinGetProcessStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
+                        WinGetProcessStartupInfo.wShowWindow = WindowShowStyle.SW_SHOW;
+                        WinGetProcessStartupInfo.cbReserved2 = 0;
+                        WinGetProcessStartupInfo.lpReserved2 = IntPtr.Zero;
+                        WinGetProcessStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+
+                        bool createResult = Kernel32Library.CreateProcess(null, string.Format("winget install {0}", appId), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NEW_CONSOLE, IntPtr.Zero, null, ref WinGetProcessStartupInfo, out PROCESS_INFORMATION WinGetProcessInformation);
+
+                        if (createResult)
+                        {
+                            if (WinGetProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hProcess);
+                            if (WinGetProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hThread);
+                        }
+                    }
                 }
             };
         }

@@ -141,7 +141,7 @@ namespace GetStoreApp.Services.Shell
                 DownloadProcessStartupInfo.hStdError = hWrite;
                 DownloadProcessStartupInfo.hStdOutput = hWrite;
 
-                bool ProcessCreateResult = Kernel32Library.CreateProcess(
+                bool createResult = Kernel32Library.CreateProcess(
                     null,
                     string.Format(
                         @"{0}\{1} --file-allocation=none -d ""{2}"" ""{3}""",
@@ -162,7 +162,7 @@ namespace GetStoreApp.Services.Shell
                 Kernel32Library.SetStdHandle(StdHandle.STD_OUTPUT_HANDLE, Handle);
                 Kernel32Library.CloseHandle(hWrite);
 
-                if (ProcessCreateResult)
+                if (createResult)
                 {
                     while (Kernel32Library.ReadFile(hRead, ReadBuff, 100, out uint ReadNum, IntPtr.Zero))
                     {

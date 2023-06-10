@@ -5,7 +5,7 @@ namespace GetStoreApp.UI.Controls.Store
     /// <summary>
     /// 微软商店页面：请求用户控件视图
     /// </summary>
-    public sealed partial class RequestControl : UserControl
+    public sealed partial class RequestControl : Grid
     {
         public RequestControl()
         {

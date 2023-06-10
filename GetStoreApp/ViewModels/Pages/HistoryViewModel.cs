@@ -36,6 +36,19 @@ namespace GetStoreApp.ViewModels.Pages
 
         public ObservableCollection<HistoryModel> HistoryDataList { get; } = new ObservableCollection<HistoryModel>();
 
+        private bool _isLoadedCompleted;
+
+        public bool IsLoadedCompleted
+        {
+            get { return _isLoadedCompleted; }
+
+            set
+            {
+                _isLoadedCompleted = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _isSelectMode = false;
 
         public bool IsSelectMode
@@ -359,6 +372,8 @@ namespace GetStoreApp.ViewModels.Pages
         /// </summary>
         private async Task GetHistoryDataListAsync()
         {
+            IsLoadedCompleted = false;
+
             (List<HistoryModel>, bool, bool) HistoryAllData = await HistoryXmlService.QueryAllAsync(TimeSortOrder, TypeFilter, ChannelFilter);
 
             // 获取数据库的原始记录数据
@@ -368,6 +383,8 @@ namespace GetStoreApp.ViewModels.Pages
 
             // 经过筛选后历史记录是否为空
             IsHistoryEmptyAfterFilter = HistoryAllData.Item3;
+
+            await Task.Delay(500);
 
             // 保证线程安全
             lock (HistoryDataListLock)
@@ -380,6 +397,8 @@ namespace GetStoreApp.ViewModels.Pages
             {
                 HistoryRawList.ForEach(HistoryDataList.Add);
             }
+
+            IsLoadedCompleted = true;
         }
     }
 }

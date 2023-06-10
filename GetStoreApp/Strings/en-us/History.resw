@@ -180,6 +180,9 @@
   <data name="Link" xml:space="preserve">
     <value>Link</value>
   </data>
+  <data name="LoadingHistory" xml:space="preserve">
+    <value>Loading history, please wait...</value>
+  </data>
   <data name="None" xml:space="preserve">
     <value>None</value>
   </data>

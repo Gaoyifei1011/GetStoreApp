@@ -106,18 +106,6 @@
                             Foreground="{TemplateBinding Foreground}"
                             Text="{TemplateBinding Text}"
                             TextTrimming="{ThemeResource MenuFlyoutItemTextTrimming}" />
-                        <TextBlock
-                            x:Name="KeyboardAcceleratorTextBlock"
-                            Grid.Column="1"
-                            MinWidth="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.KeyboardAcceleratorTextMinWidth}"
-                            Margin="24,4,0,0"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                            AutomationProperties.AccessibilityView="Raw"
-                            Foreground="{ThemeResource MenuFlyoutItemKeyboardAcceleratorTextForeground}"
-                            Style="{ThemeResource CaptionTextBlockStyle}"
-                            Text="{TemplateBinding KeyboardAcceleratorTextOverride}"
-                            Visibility="Collapsed" />
 
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
@@ -128,7 +116,6 @@
                                         <Setter Target="LayoutRoot.Background" Value="{ThemeResource MenuFlyoutItemBackgroundPointerOver}" />
                                         <Setter Target="TextBlock.Foreground" Value="{ThemeResource MenuFlyoutItemForegroundPointerOver}" />
                                         <Setter Target="IconContent.Foreground" Value="{ThemeResource MenuFlyoutItemForegroundPointerOver}" />
-                                        <Setter Target="KeyboardAcceleratorTextBlock.Foreground" Value="{ThemeResource MenuFlyoutItemKeyboardAcceleratorTextForegroundPointerOver}" />
                                     </VisualState.Setters>
                                 </VisualState>
 
@@ -137,7 +124,6 @@
                                         <Setter Target="LayoutRoot.Background" Value="{ThemeResource MenuFlyoutItemBackgroundPressed}" />
                                         <Setter Target="TextBlock.Foreground" Value="{ThemeResource MenuFlyoutItemForegroundPressed}" />
                                         <Setter Target="IconContent.Foreground" Value="{ThemeResource MenuFlyoutItemForegroundPressed}" />
-                                        <Setter Target="KeyboardAcceleratorTextBlock.Foreground" Value="{ThemeResource MenuFlyoutItemKeyboardAcceleratorTextForegroundPressed}" />
                                     </VisualState.Setters>
                                 </VisualState>
 
@@ -146,7 +132,6 @@
                                         <Setter Target="LayoutRoot.Background" Value="{ThemeResource MenuFlyoutItemBackgroundDisabled}" />
                                         <Setter Target="TextBlock.Foreground" Value="{ThemeResource MenuFlyoutItemForegroundDisabled}" />
                                         <Setter Target="IconContent.Foreground" Value="{ThemeResource MenuFlyoutItemForegroundDisabled}" />
-                                        <Setter Target="KeyboardAcceleratorTextBlock.Foreground" Value="{ThemeResource MenuFlyoutItemKeyboardAcceleratorTextForegroundDisabled}" />
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>
@@ -186,11 +171,7 @@
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="KeyboardAcceleratorTextVisibility">
                                 <VisualState x:Name="KeyboardAcceleratorTextCollapsed" />
-                                <VisualState x:Name="KeyboardAcceleratorTextVisible">
-                                    <VisualState.Setters>
-                                        <Setter Target="KeyboardAcceleratorTextBlock.Visibility" Value="Visible" />
-                                    </VisualState.Setters>
-                                </VisualState>
+                                <VisualState x:Name="KeyboardAcceleratorTextVisible" />
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                     </Grid>

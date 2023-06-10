@@ -1,4 +1,4 @@
-﻿<UserControl
+﻿<Expander
     x:Class="GetStoreApp.UI.Controls.Settings.Common.DownloadOptionsControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -7,271 +7,270 @@
     xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Common"
+    Style="{StaticResource ExpanderSettingsStyle}"
     mc:Ignorable="d">
 
-    <UserControl.DataContext>
+    <Expander.DataContext>
         <settingsViewModel:DownloadOptionsViewModel x:Name="ViewModel" />
-    </UserControl.DataContext>
+    </Expander.DataContext>
 
-    <Expander Style="{StaticResource ExpanderSettingsStyle}">
-        <Expander.Header>
-            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+    <Expander.Header>
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
-                <FontIcon
-                    Grid.Column="0"
-                    FontFamily="{StaticResource SegoeFluentFontFamily}"
-                    Glyph="&#xE896;"
-                    Style="{StaticResource FontIconStyle}" />
+            <FontIcon
+                Grid.Column="0"
+                FontFamily="{StaticResource SegoeFluentFontFamily}"
+                Glyph="&#xE896;"
+                Style="{StaticResource FontIconStyle}" />
 
-                <StackPanel
-                    Grid.Column="1"
-                    Margin="0,12"
-                    Orientation="Vertical">
+            <StackPanel
+                Grid.Column="1"
+                Margin="0,12"
+                Orientation="Vertical">
 
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Style="{StaticResource BodyTextBlockStyle}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadOptions')}" />
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Style="{StaticResource BodyTextBlockStyle}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadOptions')}" />
 
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                        Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadOptionsDescription')}" />
-                </StackPanel>
-
-                <Button
-                    Grid.Column="2"
-                    Click="{x:Bind ViewModel.OnDownloadInstructionClicked}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadInstruction')}">
-
-                    <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadInstruction')}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
-                    </ToolTipService.ToolTip>
-                </Button>
-            </Grid>
-        </Expander.Header>
-
-        <Expander.Content>
-            <StackPanel Padding="43,6,16,4" HorizontalAlignment="Stretch">
-                <StackPanel>
-                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <StackPanel Grid.Column="0" Orientation="Vertical">
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Style="{StaticResource BodyTextBlockStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadFolder')}" />
-
-                            <HyperlinkButton
-                                Click="{x:Bind ViewModel.OnOpenFolderClicked}"
-                                Content="{x:Bind ViewModel.DownloadFolder.Path, Mode=OneWay}"
-                                Style="{StaticResource HyperlinkButtonStyle}">
-
-                                <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/OpenFolderToolTip')}"
-                                        Placement="Bottom"
-                                        VerticalOffset="25" />
-                                </ToolTipService.ToolTip>
-                            </HyperlinkButton>
-                        </StackPanel>
-
-                        <Button
-                            Grid.Column="1"
-                            Margin="6,0,6,0"
-                            Click="{x:Bind ViewModel.OnUseDefaultFolderClicked}"
-                            Content="{x:Bind root:ResourceService.GetLocalized('Settings/UseDefaultFolder')}">
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip
-                                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/UseDefaultFolder')}"
-                                    Placement="Bottom"
-                                    VerticalOffset="20" />
-                            </ToolTipService.ToolTip>
-                        </Button>
-
-                        <Button
-                            Grid.Column="2"
-                            Click="{x:Bind ViewModel.OnChangeFolderClicked}"
-                            Content="{x:Bind root:ResourceService.GetLocalized('Settings/ChangeFolder')}">
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip
-                                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/ChangeFolder')}"
-                                    Placement="Bottom"
-                                    VerticalOffset="20" />
-                            </ToolTipService.ToolTip>
-                        </Button>
-                    </Grid>
-                </StackPanel>
-
-                <MenuFlyoutSeparator Margin="0,4,0,4" />
-
-                <StackPanel>
-                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <StackPanel Grid.Column="0" Orientation="Vertical">
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Style="{StaticResource BodyTextBlockStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadItem')}" />
-                            <TextBlock
-                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                Style="{StaticResource CaptionTextBlockStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadItemDescription')}" />
-                        </StackPanel>
-
-                        <DropDownButton
-                            Grid.Column="1"
-                            VerticalAlignment="Center"
-                            Content="{x:Bind ViewModel.DownloadItem, Mode=OneWay}">
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip
-                                    Content="{x:Bind ViewModel.DownloadItem, Mode=OneWay}"
-                                    Placement="Bottom"
-                                    VerticalOffset="20" />
-                            </ToolTipService.ToolTip>
-
-                            <DropDownButton.Flyout>
-                                <menusAndToolbars:AdaptiveMenuFlyout>
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind ViewModel.OnDownloadItemSelectClicked}"
-                                        GroupName="DownloadItemSetting"
-                                        IsChecked="{x:Bind IsDownloadItemChecked(ViewModel.DownloadItem, 1), Mode=OneWay}"
-                                        Tag="1"
-                                        Text="1">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="1"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
-                                        </ToolTipService.ToolTip>
-                                    </RadioMenuFlyoutItem>
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind ViewModel.OnDownloadItemSelectClicked}"
-                                        GroupName="DownloadItemSetting"
-                                        IsChecked="{x:Bind IsDownloadItemChecked(ViewModel.DownloadItem, 2), Mode=OneWay}"
-                                        Tag="2"
-                                        Text="2">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="2"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
-                                        </ToolTipService.ToolTip>
-                                    </RadioMenuFlyoutItem>
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind ViewModel.OnDownloadItemSelectClicked}"
-                                        GroupName="DownloadItemSetting"
-                                        IsChecked="{x:Bind IsDownloadItemChecked(ViewModel.DownloadItem, 3), Mode=OneWay}"
-                                        Tag="3"
-                                        Text="3">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="3"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
-                                        </ToolTipService.ToolTip>
-                                    </RadioMenuFlyoutItem>
-                                </menusAndToolbars:AdaptiveMenuFlyout>
-                            </DropDownButton.Flyout>
-                        </DropDownButton>
-                    </Grid>
-                </StackPanel>
-
-                <MenuFlyoutSeparator Margin="0,4,0,4" />
-
-                <StackPanel Margin="0,0,0,6">
-                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <StackPanel Grid.Column="0" Orientation="Vertical">
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Style="{StaticResource BodyTextBlockStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadMode')}" />
-                            <TextBlock
-                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                Style="{StaticResource CaptionTextBlockStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadModeDescription')}" />
-                        </StackPanel>
-
-                        <DropDownButton
-                            Grid.Column="1"
-                            VerticalAlignment="Center"
-                            Content="{x:Bind ViewModel.DownloadMode.DisplayName, Mode=OneWay}">
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip
-                                    Content="{x:Bind ViewModel.DownloadMode.DisplayName, Mode=OneWay}"
-                                    Placement="Bottom"
-                                    VerticalOffset="20" />
-                            </ToolTipService.ToolTip>
-
-                            <DropDownButton.Flyout>
-                                <menusAndToolbars:AdaptiveMenuFlyout>
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind ViewModel.OnDownloadModeSelectClicked}"
-                                        GroupName="DownloadModeSetting"
-                                        IsChecked="{x:Bind IsDownloadModeChecked(ViewModel.DownloadMode.InternalName, ViewModel.DownloadModeList[0].InternalName), Mode=OneWay}"
-                                        Tag="0"
-                                        Text="{x:Bind ViewModel.DownloadModeList[0].DisplayName}">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind ViewModel.DownloadModeList[0].DisplayName}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
-                                        </ToolTipService.ToolTip>
-                                    </RadioMenuFlyoutItem>
-
-                                    <RadioMenuFlyoutItem
-                                        Click="{x:Bind ViewModel.OnDownloadModeSelectClicked}"
-                                        GroupName="DownloadModeSetting"
-                                        IsChecked="{x:Bind IsDownloadModeChecked(ViewModel.DownloadMode.InternalName, ViewModel.DownloadModeList[1].InternalName), Mode=OneWay}"
-                                        Tag="1"
-                                        Text="{x:Bind ViewModel.DownloadModeList[1].DisplayName}">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind ViewModel.DownloadModeList[1].DisplayName}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
-                                        </ToolTipService.ToolTip>
-                                    </RadioMenuFlyoutItem>
-                                </menusAndToolbars:AdaptiveMenuFlyout>
-                            </DropDownButton.Flyout>
-                        </DropDownButton>
-                    </Grid>
-                </StackPanel>
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadOptionsDescription')}" />
             </StackPanel>
-        </Expander.Content>
-    </Expander>
-</UserControl>
+
+            <Button
+                Grid.Column="2"
+                Click="{x:Bind ViewModel.OnDownloadInstructionClicked}"
+                Content="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadInstruction')}">
+
+                <ToolTipService.ToolTip>
+                    <ToolTip
+                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadInstruction')}"
+                        Placement="Bottom"
+                        VerticalOffset="20" />
+                </ToolTipService.ToolTip>
+            </Button>
+        </Grid>
+    </Expander.Header>
+
+    <Expander.Content>
+        <StackPanel Padding="43,6,16,4" HorizontalAlignment="Stretch">
+            <StackPanel>
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Orientation="Vertical">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadFolder')}" />
+
+                        <HyperlinkButton
+                            Click="{x:Bind ViewModel.OnOpenFolderClicked}"
+                            Content="{x:Bind ViewModel.DownloadFolder.Path, Mode=OneWay}"
+                            Style="{StaticResource HyperlinkButtonStyle}">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/OpenFolderToolTip')}"
+                                    Placement="Bottom"
+                                    VerticalOffset="25" />
+                            </ToolTipService.ToolTip>
+                        </HyperlinkButton>
+                    </StackPanel>
+
+                    <Button
+                        Grid.Column="1"
+                        Margin="6,0,6,0"
+                        Click="{x:Bind ViewModel.OnUseDefaultFolderClicked}"
+                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/UseDefaultFolder')}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/UseDefaultFolder')}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+                    </Button>
+
+                    <Button
+                        Grid.Column="2"
+                        Click="{x:Bind ViewModel.OnChangeFolderClicked}"
+                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/ChangeFolder')}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/ChangeFolder')}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+                    </Button>
+                </Grid>
+            </StackPanel>
+
+            <MenuFlyoutSeparator Margin="0,4,0,4" />
+
+            <StackPanel>
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Orientation="Vertical">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadItem')}" />
+                        <TextBlock
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                            Style="{StaticResource CaptionTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadItemDescription')}" />
+                    </StackPanel>
+
+                    <DropDownButton
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Content="{x:Bind ViewModel.DownloadItem, Mode=OneWay}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind ViewModel.DownloadItem, Mode=OneWay}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+
+                        <DropDownButton.Flyout>
+                            <menusAndToolbars:AdaptiveMenuFlyout>
+                                <RadioMenuFlyoutItem
+                                    Click="{x:Bind ViewModel.OnDownloadItemSelectClicked}"
+                                    GroupName="DownloadItemSetting"
+                                    IsChecked="{x:Bind IsDownloadItemChecked(ViewModel.DownloadItem, 1), Mode=OneWay}"
+                                    Tag="1"
+                                    Text="1">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="1"
+                                            Placement="Bottom"
+                                            VerticalOffset="20" />
+                                    </ToolTipService.ToolTip>
+                                </RadioMenuFlyoutItem>
+
+                                <RadioMenuFlyoutItem
+                                    Click="{x:Bind ViewModel.OnDownloadItemSelectClicked}"
+                                    GroupName="DownloadItemSetting"
+                                    IsChecked="{x:Bind IsDownloadItemChecked(ViewModel.DownloadItem, 2), Mode=OneWay}"
+                                    Tag="2"
+                                    Text="2">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="2"
+                                            Placement="Bottom"
+                                            VerticalOffset="20" />
+                                    </ToolTipService.ToolTip>
+                                </RadioMenuFlyoutItem>
+
+                                <RadioMenuFlyoutItem
+                                    Click="{x:Bind ViewModel.OnDownloadItemSelectClicked}"
+                                    GroupName="DownloadItemSetting"
+                                    IsChecked="{x:Bind IsDownloadItemChecked(ViewModel.DownloadItem, 3), Mode=OneWay}"
+                                    Tag="3"
+                                    Text="3">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="3"
+                                            Placement="Bottom"
+                                            VerticalOffset="20" />
+                                    </ToolTipService.ToolTip>
+                                </RadioMenuFlyoutItem>
+                            </menusAndToolbars:AdaptiveMenuFlyout>
+                        </DropDownButton.Flyout>
+                    </DropDownButton>
+                </Grid>
+            </StackPanel>
+
+            <MenuFlyoutSeparator Margin="0,4,0,4" />
+
+            <StackPanel Margin="0,0,0,6">
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Orientation="Vertical">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadMode')}" />
+                        <TextBlock
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                            Style="{StaticResource CaptionTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadModeDescription')}" />
+                    </StackPanel>
+
+                    <DropDownButton
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Content="{x:Bind ViewModel.DownloadMode.DisplayName, Mode=OneWay}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind ViewModel.DownloadMode.DisplayName, Mode=OneWay}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+
+                        <DropDownButton.Flyout>
+                            <menusAndToolbars:AdaptiveMenuFlyout>
+                                <RadioMenuFlyoutItem
+                                    Click="{x:Bind ViewModel.OnDownloadModeSelectClicked}"
+                                    GroupName="DownloadModeSetting"
+                                    IsChecked="{x:Bind IsDownloadModeChecked(ViewModel.DownloadMode.InternalName, ViewModel.DownloadModeList[0].InternalName), Mode=OneWay}"
+                                    Tag="0"
+                                    Text="{x:Bind ViewModel.DownloadModeList[0].DisplayName}">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="{x:Bind ViewModel.DownloadModeList[0].DisplayName}"
+                                            Placement="Bottom"
+                                            VerticalOffset="20" />
+                                    </ToolTipService.ToolTip>
+                                </RadioMenuFlyoutItem>
+
+                                <RadioMenuFlyoutItem
+                                    Click="{x:Bind ViewModel.OnDownloadModeSelectClicked}"
+                                    GroupName="DownloadModeSetting"
+                                    IsChecked="{x:Bind IsDownloadModeChecked(ViewModel.DownloadMode.InternalName, ViewModel.DownloadModeList[1].InternalName), Mode=OneWay}"
+                                    Tag="1"
+                                    Text="{x:Bind ViewModel.DownloadModeList[1].DisplayName}">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="{x:Bind ViewModel.DownloadModeList[1].DisplayName}"
+                                            Placement="Bottom"
+                                            VerticalOffset="20" />
+                                    </ToolTipService.ToolTip>
+                                </RadioMenuFlyoutItem>
+                            </menusAndToolbars:AdaptiveMenuFlyout>
+                        </DropDownButton.Flyout>
+                    </DropDownButton>
+                </Grid>
+            </StackPanel>
+        </StackPanel>
+    </Expander.Content>
+</Expander>

@@ -3,10 +3,13 @@ using GetStoreApp.Helpers.Window;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Window;
 using GetStoreApp.Views.Pages;
+using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
+using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Dispatching;
 using Microsoft.Windows.AppNotifications;
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Foundation;
 
@@ -71,6 +74,44 @@ namespace GetStoreApp.Services.Root
             else if (AppNotificationArguments is "OpenSettings")
             {
                 await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
+                if (Program.ApplicationRoot is null)
+                {
+                    Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
+                }
+            }
+            else if (AppNotificationArguments.Contains("InstallWithCommand"))
+            {
+                string[] splitList = AppNotificationArguments.Split(':');
+                if (splitList.Length > 1)
+                {
+                    string appId = splitList[1];
+                    unsafe
+                    {
+                        Kernel32Library.GetStartupInfo(out STARTUPINFO WinGetProcessStartupInfo);
+                        WinGetProcessStartupInfo.lpReserved = null;
+                        WinGetProcessStartupInfo.lpDesktop = null;
+                        WinGetProcessStartupInfo.lpTitle = null;
+                        WinGetProcessStartupInfo.dwX = 0;
+                        WinGetProcessStartupInfo.dwY = 0;
+                        WinGetProcessStartupInfo.dwXSize = 0;
+                        WinGetProcessStartupInfo.dwYSize = 0;
+                        WinGetProcessStartupInfo.dwXCountChars = 500;
+                        WinGetProcessStartupInfo.dwYCountChars = 500;
+                        WinGetProcessStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
+                        WinGetProcessStartupInfo.wShowWindow = WindowShowStyle.SW_SHOW;
+                        WinGetProcessStartupInfo.cbReserved2 = 0;
+                        WinGetProcessStartupInfo.lpReserved2 = IntPtr.Zero;
+                        WinGetProcessStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+
+                        bool createResult = Kernel32Library.CreateProcess(null, string.Format("winget install {0}", appId), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NEW_CONSOLE, IntPtr.Zero, null, ref WinGetProcessStartupInfo, out PROCESS_INFORMATION WinGetProcessInformation);
+
+                        if (createResult)
+                        {
+                            if (WinGetProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hProcess);
+                            if (WinGetProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hThread);
+                        }
+                    }
+                }
                 if (Program.ApplicationRoot is null)
                 {
                     Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
@@ -198,7 +239,7 @@ namespace GetStoreApp.Services.Root
                 // 应用安装失败通知
                 case NotificationArgs.InstallFailed:
                     {
-                        AppNotification notification = new AppNotification(string.Format(ResourceService.GetLocalized("Notification/WinGetInstallFailed"), notificationContent[0]));
+                        AppNotification notification = new AppNotification(string.Format(ResourceService.GetLocalized("Notification/WinGetInstallFailed"), notificationContent[0], notificationContent[1]));
                         notification.ExpiresOnReboot = true;
                         AppNotificationManager.Show(notification);
                         break;
@@ -230,7 +271,7 @@ namespace GetStoreApp.Services.Root
                 // 应用升级失败通知
                 case NotificationArgs.UpgradeFailed:
                     {
-                        AppNotification notification = new AppNotification(string.Format(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed"), notificationContent[0]));
+                        AppNotification notification = new AppNotification(string.Format(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed"), notificationContent[0], notificationContent[1]));
                         notification.ExpiresOnReboot = true;
                         AppNotificationManager.Show(notification);
                         break;

@@ -1,4 +1,4 @@
-﻿<UserControl
+﻿<Expander
     x:Class="GetStoreApp.UI.Controls.About.IntroductionControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -6,45 +6,44 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
+    Style="{StaticResource ExpanderAboutStyle}"
     mc:Ignorable="d">
 
-    <UserControl.DataContext>
+    <Expander.DataContext>
         <aboutViewModel:IntroductionViewModel x:Name="ViewModel" />
-    </UserControl.DataContext>
+    </Expander.DataContext>
 
-    <Expander Style="{StaticResource ExpanderAboutStyle}">
-        <Expander.Header>
-            <TextBlock Style="{StaticResource ExpanderHeaderStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/BriefIntroduction')}" />
-        </Expander.Header>
+    <Expander.Header>
+        <TextBlock Style="{StaticResource ExpanderHeaderStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/BriefIntroduction')}" />
+    </Expander.Header>
 
-        <Expander.Content>
-            <StackPanel Margin="14,0,10,0">
-                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/DevelopPurpose')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/DevelopPurposeDescription')}" />
-                <MenuFlyoutSeparator Margin="0,0,0,8" />
+    <Expander.Content>
+        <StackPanel Margin="14,0,10,0">
+            <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/DevelopPurpose')}" />
+            <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/DevelopPurposeDescription')}" />
+            <MenuFlyoutSeparator Margin="0,0,0,8" />
 
-                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/UpdatePath')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/UpdatePathDescription')}" />
-                <MenuFlyoutSeparator Margin="0,0,0,8" />
+            <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/UpdatePath')}" />
+            <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/UpdatePathDescription')}" />
+            <MenuFlyoutSeparator Margin="0,0,0,8" />
 
-                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/PrivacyandSecurity')}" />
-                <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/PrivacyandSecurityDescription')}" />
-                <MenuFlyoutSeparator Margin="0,0,0,8" />
+            <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/PrivacyandSecurity')}" />
+            <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/PrivacyandSecurityDescription')}" />
+            <MenuFlyoutSeparator Margin="0,0,0,8" />
 
-                <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/Maintenance')}" />
-                <HyperlinkButton
-                    Click="{x:Bind ViewModel.OnMaintenanceClicked}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('About/MaintenanceDescription')}"
-                    Style="{StaticResource AboutHyperlinkButtonStyle}">
+            <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/Maintenance')}" />
+            <HyperlinkButton
+                Click="{x:Bind ViewModel.OnMaintenanceClicked}"
+                Content="{x:Bind root:ResourceService.GetLocalized('About/MaintenanceDescription')}"
+                Style="{StaticResource AboutHyperlinkButtonStyle}">
 
-                    <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind root:ResourceService.GetLocalized('About/MaintenanceDescription')}"
-                            Placement="Bottom"
-                            VerticalOffset="25" />
-                    </ToolTipService.ToolTip>
-                </HyperlinkButton>
-            </StackPanel>
-        </Expander.Content>
-    </Expander>
-</UserControl>
+                <ToolTipService.ToolTip>
+                    <ToolTip
+                        Content="{x:Bind root:ResourceService.GetLocalized('About/MaintenanceDescription')}"
+                        Placement="Bottom"
+                        VerticalOffset="25" />
+                </ToolTipService.ToolTip>
+            </HyperlinkButton>
+        </StackPanel>
+    </Expander.Content>
+</Expander>
