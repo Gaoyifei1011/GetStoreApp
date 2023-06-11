@@ -385,7 +385,7 @@
                 Margin="0,0,10,0"
                 VerticalAlignment="Center"
                 IsEnabled="{x:Bind ViewModel.IsLoadedCompleted, Mode=OneWay}">
-                
+
                 <StackPanel
                     x:Name="SelectMode"
                     x:Load="{x:Bind ViewModel.IsSelectMode, Mode=OneWay}"

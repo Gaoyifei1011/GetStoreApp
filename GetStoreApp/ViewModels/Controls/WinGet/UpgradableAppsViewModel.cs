@@ -262,11 +262,11 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                         // 升级完成，从列表中删除该应用
                         if (installResult.Status == InstallResultStatus.Ok)
                         {
+                            AppNotificationService.Show(NotificationArgs.UpgradeSuccessfully, upgradableApps.AppName);
+
                             // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
                             if (installResult.RebootRequired)
                             {
-                                AppNotificationService.Show(NotificationArgs.UpgradeSuccessfully, upgradableApps.AppName);
-
                                 ContentDialogResult Result = await new RebootDialog(WinGetOptionArgs.UpgradeInstall, upgradableApps.AppName).ShowAsync();
                                 if (Result == ContentDialogResult.Primary)
                                 {

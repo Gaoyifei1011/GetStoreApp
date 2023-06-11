@@ -306,7 +306,7 @@ namespace GetStoreApp.ViewModels.Controls.Store
                     }
                     JumpListItem jumpListItem = JumpListItem.CreateWithArguments(string.Format("JumpList {0} {1} {2}", TypeList[currentType].ShortName, ChannelList[currentChannel].ShortName, currentLink), currentLink);
                     jumpListItem.GroupName = AppJumpList.GroupName;
-                    jumpListItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/History.png");
+                    jumpListItem.Logo = new Uri("ms-appx:///Assets/Images/Jumplist.png");
                     Program.ApplicationRoot.TaskbarJumpList.Items.Add(jumpListItem);
                 }
                 // 有重复元素，移动到最后一位

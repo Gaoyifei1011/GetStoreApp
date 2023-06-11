@@ -29,7 +29,6 @@
                 <ResourceDictionary Source="ms-appx:///Styles/Pivot.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/ScrollViewer.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/SplitButton.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/TeachingTip.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/TextBlock.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/ToggleSwitch.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/WindowChrome.xaml" />

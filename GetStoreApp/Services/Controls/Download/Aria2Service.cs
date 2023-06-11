@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Extensions.DataType.Exceptions;
-using GetStoreApp.Helpers.Controls.Download;
+﻿using GetStoreApp.Helpers.Controls.Download;
 using GetStoreApp.Helpers.Root;
 using System;
 using System.IO;
@@ -116,7 +115,7 @@ namespace GetStoreApp.Services.Controls.Download
                 // 判断下载进程是否存在
                 if (!Aria2ProcessHelper.IsAria2ProcessExisted())
                 {
-                    throw new ProcessNotExistException();
+                    return (false, string.Empty);
                 }
 
                 // 创建AddUri Json字符串对象
@@ -171,11 +170,7 @@ namespace GetStoreApp.Services.Controls.Download
                     throw new Exception();
                 }
             }
-            // 捕捉进程不存在异常
-            catch (ProcessNotExistException)
-            {
-                return (false, string.Empty);
-            }
+
             // 捕捉因访问超时引发的异常
             catch (OperationCanceledException)
             {
@@ -206,7 +201,7 @@ namespace GetStoreApp.Services.Controls.Download
                 // 判断下载进程是否存在
                 if (!Aria2ProcessHelper.IsAria2ProcessExisted())
                 {
-                    throw new ProcessNotExistException();
+                    return (false, string.Empty);
                 }
 
                 // 创建Pause Json字符串对象
@@ -254,11 +249,7 @@ namespace GetStoreApp.Services.Controls.Download
                     throw new Exception();
                 }
             }
-            // 捕捉进程不存在异常
-            catch (ProcessNotExistException)
-            {
-                return (false, string.Empty);
-            }
+
             // 捕捉因访问超时引发的异常
             catch (OperationCanceledException)
             {
@@ -289,7 +280,7 @@ namespace GetStoreApp.Services.Controls.Download
                 // 判断下载进程是否存在
                 if (!Aria2ProcessHelper.IsAria2ProcessExisted())
                 {
-                    throw new ProcessNotExistException();
+                    return (false, string.Empty);
                 }
 
                 // 创建Delete Json字符串对象
@@ -337,11 +328,7 @@ namespace GetStoreApp.Services.Controls.Download
                     throw new Exception();
                 }
             }
-            // 捕捉进程不存在异常
-            catch (ProcessNotExistException)
-            {
-                return (false, string.Empty);
-            }
+
             // 捕捉因访问超时引发的异常
             catch (OperationCanceledException)
             {
@@ -372,7 +359,7 @@ namespace GetStoreApp.Services.Controls.Download
                 // 判断下载进程是否存在
                 if (!Aria2ProcessHelper.IsAria2ProcessExisted())
                 {
-                    throw new ProcessNotExistException();
+                    return (false, string.Empty, default(double), default(double), default(double));
                 }
 
                 // 创建TellStatus Json字符串对象
@@ -440,11 +427,7 @@ namespace GetStoreApp.Services.Controls.Download
                     throw new Exception();
                 }
             }
-            // 捕捉进程不存在异常
-            catch (ProcessNotExistException)
-            {
-                return (false, string.Empty, default(double), default(double), default(double));
-            }
+
             // 捕捉因访问超时引发的异常
             catch (OperationCanceledException)
             {

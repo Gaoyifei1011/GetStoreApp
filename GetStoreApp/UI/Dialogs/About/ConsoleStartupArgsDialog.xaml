@@ -54,7 +54,7 @@
                     Height="35"
                     Padding="6,0,0,0"
                     BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}"
-                    BorderThickness="1,1,1,1">
+                    BorderThickness="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100" />
                         <ColumnDefinition Width="100" />

@@ -64,7 +64,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         public void OnDownloadSettingsClicked(object sender, RoutedEventArgs args)
         {
-            DownloadTeachingTip.IsOpen = false;
+            DownloadFlyout.Hide();
             ViewModel.OpenDownloadSettings();
         }
 
@@ -73,16 +73,8 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         public void OnLearnMoreClicked(object sender, RoutedEventArgs args)
         {
-            DownloadTeachingTip.IsOpen = false;
+            DownloadFlyout.Hide();
             ViewModel.LearnMore();
-        }
-
-        /// <summary>
-        /// 显示下载管理说明内容
-        /// </summary>
-        public void OnTeachingTipClicked(object sender, RoutedEventArgs args)
-        {
-            DownloadTeachingTip.IsOpen = true;
         }
     }
 }

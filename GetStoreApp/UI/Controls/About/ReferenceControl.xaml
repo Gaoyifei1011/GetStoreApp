@@ -3,7 +3,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:aboutViewModel="using:GetStoreApp.ViewModels.Controls.About"
-    xmlns:collections="using:GetStoreApp.Views.CustomControls.Collections"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:format="using:GetStoreApp.Converters.Formats"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -24,35 +23,36 @@
     </Expander.Header>
 
     <Expander.Content>
-        <collections:AdaptiveGridView
-            Margin="9,0"
-            Padding="0"
+        <GridView
+            Margin="14,0"
+            Padding="5"
             HorizontalAlignment="Stretch"
             HorizontalContentAlignment="Stretch"
-            DesiredWidth="260"
+            BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}"
+            BorderThickness="1"
+            CornerRadius="{ThemeResource ControlCornerRadius}"
             ItemContainerStyle="{StaticResource GridViewItemStyle}"
             ItemsSource="{x:Bind ViewModel.ReferenceDict}"
-            OneRowModeEnabled="False"
-            SelectionMode="None"
-            StretchContentForSingleRow="True">
-            <collections:AdaptiveGridView.ItemTemplate>
+            SelectionMode="None">
+
+            <GridView.ItemTemplate>
                 <DataTemplate>
                     <HyperlinkButton
+                        Width="250"
                         Padding="5,8"
-                        HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Left"
+                        HorizontalContentAlignment="Center"
                         Content="{Binding Key, Mode=OneTime}"
                         NavigateUri="{Binding Value, Mode=OneTime}">
 
                         <ToolTipService.ToolTip>
                             <ToolTip
-                                Content="{Binding Key, Converter={StaticResource AboutToolTipFormatConverter}, ConverterParameter=Reference, Mode=OneTime}"
+                                Content="{Binding Key, Converter={StaticResource AboutToolTipFormatConverter}, ConverterParameter=Thanks, Mode=OneTime}"
                                 Placement="Bottom"
                                 VerticalOffset="25" />
                         </ToolTipService.ToolTip>
                     </HyperlinkButton>
                 </DataTemplate>
-            </collections:AdaptiveGridView.ItemTemplate>
-        </collections:AdaptiveGridView>
+            </GridView.ItemTemplate>
+        </GridView>
     </Expander.Content>
 </Expander>

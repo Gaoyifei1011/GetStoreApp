@@ -96,6 +96,7 @@
     <Content Update="Assets\GetStoreApp.png" CopyToOutputDirectory="Always" />
     <Content Update="Assets\Images\CloudflareValidation.png" CopyToOutputDirectory="Always" />
     <Content Update="Assets\Images\DesktopApps.png" CopyToOutputDirectory="Always" />
+    <Content Update="Assets\Images\Jumplist.png" CopyToOutputDirectory="Always" />
     <None Update="Assets\Resources\LICENSE" CopyToOutputDirectory="Never" />
     
     <Content Include="Fonts\Segoe Fluent Icons.ttf" CopyToOutputDirectory="Always" />
@@ -152,7 +153,6 @@
     <None Remove="Styles\Pivot.xaml" />
     <None Remove="Styles\ScrollViewer.xaml" />
     <None Remove="Styles\SplitButton.xaml" />
-    <None Remove="Styles\TeachingTip.xaml" />
     <None Remove="Styles\TextBlock.xaml" />
     <None Remove="Styles\ToggleSwitch.xaml" />
     
@@ -243,8 +243,6 @@
     <None Remove="UI\Notifications\ShareFailedNotification.xaml" />
     <None Remove="UI\Notifications\WebCacheCleanNotification.xaml" />
     <None Remove="UI\Notifications\WinGetCopyNotification.xaml" />
-    
-    <None Remove="Views\CustomControls\Collections\AdaptiveGridView.xaml" />
     <None Remove="Views\CustomControls\DialogsAndFlyouts\AdaptiveFlyout.xaml" />
     <None Remove="Views\CustomControls\MenusAndToolbars\AdaptiveMenuFlyout.xaml" />
     
@@ -290,7 +288,6 @@
     <Page Update="Styles\Pivot.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\ScrollViewer.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\SplitButton.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Styles\TeachingTip.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\TextBlock.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\ToggleSwitch.xaml" Generator="MSBuild:Compile" />
     
@@ -380,8 +377,6 @@
     <Page Update="UI\Notifications\ShareFailedNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Notifications\WebCacheCleanNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Notifications\WinGetCopyNotification.xaml" Generator="MSBuild:Compile" />
-    
-    <Page Update="Views\CustomControls\Collections\AdaptiveGridView.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\CustomControls\DialogsAndFlyouts\AdaptiveFlyout.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\CustomControls\MenusAndToolbars\AdaptiveMenuFlyout.xaml" Generator="MSBuild:Compile" />
 

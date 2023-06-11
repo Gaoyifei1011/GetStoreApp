@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dc="using:GetStoreApp.UI.Controls.Download"
+    xmlns:dialogsAndFlyouts="using:GetStoreApp.Views.CustomControls.DialogsAndFlyouts"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pageViewModel="using:GetStoreApp.ViewModels.Pages"
     xmlns:root="using:GetStoreApp.Services.Root"
@@ -12,52 +13,6 @@
     <Page.DataContext>
         <pageViewModel:DownloadViewModel x:Name="ViewModel" />
     </Page.DataContext>
-
-    <Page.Resources>
-        <TeachingTip
-            x:Name="DownloadTeachingTip"
-            Title="{x:Bind root:ResourceService.GetLocalized('Download/ExplainTitle')}"
-            PreferredPlacement="Bottom"
-            Style="{StaticResource TeachingTipStyle}"
-            Target="{x:Bind TeachingTipButton}">
-            <TeachingTip.IconSource>
-                <FontIconSource
-                    FontFamily="{StaticResource SegoeFluentFontFamily}"
-                    FontSize="16"
-                    Glyph="&#xE8c9;" />
-            </TeachingTip.IconSource>
-            <TeachingTip.Content>
-                <StackPanel Spacing="5">
-                    <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Download/ExplanContent1')}" TextWrapping="Wrap" />
-                    <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Download/ExplanContent2')}" TextWrapping="Wrap" />
-                    <StackPanel
-                        HorizontalAlignment="Right"
-                        Orientation="Horizontal"
-                        Spacing="5">
-                        <Button Click="{x:Bind OnLearnMoreClicked}" Content="{x:Bind root:ResourceService.GetLocalized('Download/LearnMore')}">
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip
-                                    Content="{x:Bind root:ResourceService.GetLocalized('Download/LearnMore')}"
-                                    Placement="Bottom"
-                                    VerticalOffset="20" />
-                            </ToolTipService.ToolTip>
-                        </Button>
-
-                        <Button Click="{x:Bind OnDownloadSettingsClicked}" Content="{x:Bind root:ResourceService.GetLocalized('Download/OpenSettings')}">
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip
-                                    Content="{x:Bind root:ResourceService.GetLocalized('Download/OpenSettings')}"
-                                    Placement="Bottom"
-                                    VerticalOffset="20" />
-                            </ToolTipService.ToolTip>
-                        </Button>
-                    </StackPanel>
-                </StackPanel>
-            </TeachingTip.Content>
-        </TeachingTip>
-    </Page.Resources>
 
     <Pivot
         Margin="0,15,0,0"
@@ -78,11 +33,66 @@
 
         <Pivot.RightHeader>
             <Button
-                x:Name="TeachingTipButton"
                 VerticalAlignment="Center"
-                Click="{x:Bind OnTeachingTipClicked}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Download/DownloadDescription')}"
                 Visibility="{x:Bind ViewModel.UseInsVisValue, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+
+                <Button.Flyout>
+                    <dialogsAndFlyouts:AdaptiveFlyout x:Name="DownloadFlyout" Placement="BottomEdgeAlignedRight">
+                        <StackPanel
+                            Width="300"
+                            Padding="14"
+                            Spacing="5">
+
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon
+                                    Grid.Column="0"
+                                    FontFamily="{StaticResource SegoeFluentFontFamily}"
+                                    Glyph="&#xE8C9;"
+                                    Style="{StaticResource FontIconStyle}" />
+
+                                <TextBlock FontWeight="SemiBold" Text="{x:Bind root:ResourceService.GetLocalized('Download/ExplainTitle')}" />
+                            </StackPanel>
+
+                            <MenuFlyoutSeparator Margin="3,0,6,0" Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />
+
+                            <TextBlock
+                                Margin="0,0,2,0"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Download/ExplanContent1')}"
+                                TextAlignment="Justify"
+                                TextWrapping="Wrap" />
+                            <TextBlock
+                                Margin="0,0,2,0"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Download/ExplanContent2')}"
+                                TextAlignment="Justify"
+                                TextWrapping="Wrap" />
+                            <StackPanel
+                                HorizontalAlignment="Right"
+                                Orientation="Horizontal"
+                                Spacing="5">
+                                <Button Click="{x:Bind OnLearnMoreClicked}" Content="{x:Bind root:ResourceService.GetLocalized('Download/LearnMore')}">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="{x:Bind root:ResourceService.GetLocalized('Download/LearnMore')}"
+                                            Placement="Bottom"
+                                            VerticalOffset="20" />
+                                    </ToolTipService.ToolTip>
+                                </Button>
+
+                                <Button Click="{x:Bind OnDownloadSettingsClicked}" Content="{x:Bind root:ResourceService.GetLocalized('Download/OpenSettings')}">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            Content="{x:Bind root:ResourceService.GetLocalized('Download/OpenSettings')}"
+                                            Placement="Bottom"
+                                            VerticalOffset="20" />
+                                    </ToolTipService.ToolTip>
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </dialogsAndFlyouts:AdaptiveFlyout>
+                </Button.Flyout>
 
                 <ToolTipService.ToolTip>
                     <ToolTip

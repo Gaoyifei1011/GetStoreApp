@@ -6,6 +6,8 @@ namespace GetStoreApp.Converters.Formats
 {
     public class GMTFormatConverter : IValueConverter
     {
+        private static DateTimeFormatter dateTimeFormatter = new DateTimeFormatter("month day year hour minute second");
+
         /// <summary>
         /// GMT时间与当地地区时间转换器
         /// </summary>
@@ -17,10 +19,7 @@ namespace GetStoreApp.Converters.Formats
             }
 
             string RawDataTime = System.Convert.ToString(value);
-
             DateTime dateTime = System.Convert.ToDateTime(RawDataTime).ToLocalTime();
-
-            DateTimeFormatter dateTimeFormatter = new DateTimeFormatter("month day year hour minute second");
             return dateTimeFormatter.Format(dateTime);
         }
 
