@@ -286,7 +286,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <param name="nStdHandle">要为其设置句柄的标准设备。</param>
         /// <param name="handle">标准设备的句柄。</param>
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
-        [LibraryImport(Kernel32, SetLastError = true)]
+        [LibraryImport(Kernel32, EntryPoint = "SetStdHandle", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static partial bool SetStdHandle(StdHandle nStdHandle, IntPtr handle);
 

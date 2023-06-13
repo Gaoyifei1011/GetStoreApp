@@ -554,6 +554,7 @@
                                                     VerticalOffset="20" />
                                             </ToolTipService.ToolTip>
                                         </MenuFlyoutItem>
+
                                         <MenuFlyoutItem
                                             Command="{Binding ElementName=CompletedRoot, Path=DataContext.FileInformationCommand, Mode=OneTime}"
                                             CommandParameter="{Binding}"

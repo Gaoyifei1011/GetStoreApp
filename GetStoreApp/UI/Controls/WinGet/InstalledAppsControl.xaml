@@ -285,14 +285,14 @@
                                         <ToolTip
                                             Content="{x:Bind root:ResourceService.GetLocalized('WinGet/UnInstall')}"
                                             Placement="Bottom"
-                                            VerticalOffset="25" />
+                                            VerticalOffset="20" />
                                     </basicInput:ExtendedSplitButton.PrimaryButtonToolTip>
 
                                     <basicInput:ExtendedSplitButton.SecondaryButtonToolTip>
                                         <ToolTip
                                             Content="{x:Bind root:ResourceService.GetLocalized('WinGet/ViewMoreOptions')}"
                                             Placement="Bottom"
-                                            VerticalOffset="25" />
+                                            VerticalOffset="20" />
                                     </basicInput:ExtendedSplitButton.SecondaryButtonToolTip>
 
                                     <basicInput:ExtendedSplitButton.Flyout>
@@ -305,6 +305,13 @@
                                                 <MenuFlyoutItem.Icon>
                                                     <FontIcon Glyph="&#xE8C8;" Style="{StaticResource SegoeFluentStyle}" />
                                                 </MenuFlyoutItem.Icon>
+
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip
+                                                        Content="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUnInstallText')}"
+                                                        Placement="Bottom"
+                                                        VerticalOffset="20" />
+                                                </ToolTipService.ToolTip>
                                             </MenuFlyoutItem>
                                         </menusAndToolbars:AdaptiveMenuFlyout>
                                     </basicInput:ExtendedSplitButton.Flyout>

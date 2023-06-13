@@ -29,7 +29,7 @@ namespace GetStoreApp.Services.Root
         private static readonly Guid CLSID_CreateCompositePackageCatalogOptions_Dev = new Guid("EE160901-B317-4EA7-9CC6-5355C6D7D8A7");
 
         // COM接口：IUnknown 接口
-        private static readonly Guid IID = new Guid("00000000-0000-0000-C000-000000000046");
+        private static readonly Guid IID_IUnknown = new Guid("00000000-0000-0000-C000-000000000046");
 
         private static bool actuallyUseDev = false;
 
@@ -42,14 +42,14 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         public static unsafe void InitializeService()
         {
-            fixed (Guid* CLSID_PackageManager_Ptr = &CLSID_PackageManager, IID_Ptr = &IID)
+            fixed (Guid* CLSID_PackageManager_Ptr = &CLSID_PackageManager, IID_IUnknown_Ptr = &IID_IUnknown)
             {
-                Ole32Library.CoCreateInstance(CLSID_PackageManager_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_Ptr, out IntPtr obj);
+                Ole32Library.CoCreateInstance(CLSID_PackageManager_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
                 IsOfficialVersionExisted = obj != IntPtr.Zero;
             }
-            fixed (Guid* CLSID_PackageManager_Dev_Ptr = &CLSID_PackageManager_Dev, IID_Ptr = &IID)
+            fixed (Guid* CLSID_PackageManager_Dev_Ptr = &CLSID_PackageManager_Dev, IID_IUnknown_Ptr = &IID_IUnknown)
             {
-                Ole32Library.CoCreateInstance(CLSID_PackageManager_Dev_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_Ptr, out IntPtr obj);
+                Ole32Library.CoCreateInstance(CLSID_PackageManager_Dev_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
                 IsDevVersionExisted = obj != IntPtr.Zero;
             }
 
@@ -66,17 +66,17 @@ namespace GetStoreApp.Services.Root
         {
             if (actuallyUseDev)
             {
-                fixed (Guid* CLSID_PackageManager_Dev_Ptr = &CLSID_PackageManager_Dev, IID_Ptr = &IID)
+                fixed (Guid* CLSID_PackageManager_Dev_Ptr = &CLSID_PackageManager_Dev, IID_IUnknown_Ptr = &IID_IUnknown)
                 {
-                    Ole32Library.CoCreateInstance(CLSID_PackageManager_Dev_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_Ptr, out IntPtr obj);
+                    Ole32Library.CoCreateInstance(CLSID_PackageManager_Dev_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
                     return PackageManager.FromAbi(obj);
                 }
             }
             else
             {
-                fixed (Guid* CLSID_PackageManager_Ptr = &CLSID_PackageManager, IID_Ptr = &IID)
+                fixed (Guid* CLSID_PackageManager_Ptr = &CLSID_PackageManager, IID_IUnknown_Ptr = &IID_IUnknown)
                 {
-                    Ole32Library.CoCreateInstance(CLSID_PackageManager_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_Ptr, out IntPtr obj);
+                    Ole32Library.CoCreateInstance(CLSID_PackageManager_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
                     return PackageManager.FromAbi(obj);
                 }
             }
@@ -89,17 +89,17 @@ namespace GetStoreApp.Services.Root
         {
             if (actuallyUseDev)
             {
-                fixed (Guid* CLSID_InstallOptions_Dev_Ptr = &CLSID_InstallOptions_Dev, IID_Ptr = &IID)
+                fixed (Guid* CLSID_InstallOptions_Dev_Ptr = &CLSID_InstallOptions_Dev, IID_IUnknown_Ptr = &IID_IUnknown)
                 {
-                    Ole32Library.CoCreateInstance(CLSID_InstallOptions_Dev_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_Ptr, out IntPtr obj);
+                    Ole32Library.CoCreateInstance(CLSID_InstallOptions_Dev_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
                     return InstallOptions.FromAbi(obj);
                 }
             }
             else
             {
-                fixed (Guid* CLSID_InstallOptions_Ptr = &CLSID_InstallOptions, IID_Ptr = &IID)
+                fixed (Guid* CLSID_InstallOptions_Ptr = &CLSID_InstallOptions, IID_IUnknown_Ptr = &IID_IUnknown)
                 {
-                    Ole32Library.CoCreateInstance(CLSID_InstallOptions_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_Ptr, out IntPtr obj);
+                    Ole32Library.CoCreateInstance(CLSID_InstallOptions_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
                     return InstallOptions.FromAbi(obj);
                 }
             }
@@ -112,17 +112,17 @@ namespace GetStoreApp.Services.Root
         {
             if (actuallyUseDev)
             {
-                fixed (Guid* CLSID_UnInstallOptions_Dev_Ptr = &CLSID_UnInstallOptions_Dev, IID_Ptr = &IID)
+                fixed (Guid* CLSID_UnInstallOptions_Dev_Ptr = &CLSID_UnInstallOptions_Dev, IID_IUnknown_Ptr = &IID_IUnknown)
                 {
-                    Ole32Library.CoCreateInstance(CLSID_UnInstallOptions_Dev_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_Ptr, out IntPtr obj);
+                    Ole32Library.CoCreateInstance(CLSID_UnInstallOptions_Dev_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
                     return UninstallOptions.FromAbi(obj);
                 }
             }
             else
             {
-                fixed (Guid* CLSID_UnInstallOptions_Ptr = &CLSID_UnInstallOptions, IID_Ptr = &IID)
+                fixed (Guid* CLSID_UnInstallOptions_Ptr = &CLSID_UnInstallOptions, IID_IUnknown_Ptr = &IID_IUnknown)
                 {
-                    Ole32Library.CoCreateInstance(CLSID_UnInstallOptions_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_Ptr, out IntPtr obj);
+                    Ole32Library.CoCreateInstance(CLSID_UnInstallOptions_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
                     return UninstallOptions.FromAbi(obj);
                 }
             }
@@ -135,17 +135,17 @@ namespace GetStoreApp.Services.Root
         {
             if (actuallyUseDev)
             {
-                fixed (Guid* CLSID_FindPackagesOptions_Dev_Ptr = &CLSID_FindPackagesOptions_Dev, IID_Ptr = &IID)
+                fixed (Guid* CLSID_FindPackagesOptions_Dev_Ptr = &CLSID_FindPackagesOptions_Dev, IID_IUnknown_Ptr = &IID_IUnknown)
                 {
-                    Ole32Library.CoCreateInstance(CLSID_FindPackagesOptions_Dev_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_Ptr, out IntPtr obj);
+                    Ole32Library.CoCreateInstance(CLSID_FindPackagesOptions_Dev_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
                     return FindPackagesOptions.FromAbi(obj);
                 }
             }
             else
             {
-                fixed (Guid* CLSID_FindPackagesOptions_Ptr = &CLSID_FindPackagesOptions, IID_Ptr = &IID)
+                fixed (Guid* CLSID_FindPackagesOptions_Ptr = &CLSID_FindPackagesOptions, IID_IUnknown_Ptr = &IID_IUnknown)
                 {
-                    Ole32Library.CoCreateInstance(CLSID_FindPackagesOptions_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_Ptr, out IntPtr obj);
+                    Ole32Library.CoCreateInstance(CLSID_FindPackagesOptions_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
                     return FindPackagesOptions.FromAbi(obj);
                 }
             }
@@ -158,17 +158,17 @@ namespace GetStoreApp.Services.Root
         {
             if (actuallyUseDev)
             {
-                fixed (Guid* CLSID_CreateCompositePackageCatalogOptions_Dev_Ptr = &CLSID_CreateCompositePackageCatalogOptions_Dev, IID_Ptr = &IID)
+                fixed (Guid* CLSID_CreateCompositePackageCatalogOptions_Dev_Ptr = &CLSID_CreateCompositePackageCatalogOptions_Dev, IID_IUnknown_Ptr = &IID_IUnknown)
                 {
-                    Ole32Library.CoCreateInstance(CLSID_CreateCompositePackageCatalogOptions_Dev_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_Ptr, out IntPtr obj);
+                    Ole32Library.CoCreateInstance(CLSID_CreateCompositePackageCatalogOptions_Dev_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
                     return CreateCompositePackageCatalogOptions.FromAbi(obj);
                 }
             }
             else
             {
-                fixed (Guid* CLSID_CreateCompositePackageCatalogOptions_Ptr = &CLSID_CreateCompositePackageCatalogOptions, IID_Ptr = &IID)
+                fixed (Guid* CLSID_CreateCompositePackageCatalogOptions_Ptr = &CLSID_CreateCompositePackageCatalogOptions, IID_IUnknown_Ptr = &IID_IUnknown)
                 {
-                    Ole32Library.CoCreateInstance(CLSID_CreateCompositePackageCatalogOptions_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_Ptr, out IntPtr obj);
+                    Ole32Library.CoCreateInstance(CLSID_CreateCompositePackageCatalogOptions_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
                     return CreateCompositePackageCatalogOptions.FromAbi(obj);
                 }
             }
@@ -181,17 +181,17 @@ namespace GetStoreApp.Services.Root
         {
             if (actuallyUseDev)
             {
-                fixed (Guid* CLSID_PackageMatchFilter_Dev_Ptr = &CLSID_PackageMatchFilter_Dev, IID_Ptr = &IID)
+                fixed (Guid* CLSID_PackageMatchFilter_Dev_Ptr = &CLSID_PackageMatchFilter_Dev, IID_IUnknown_Ptr = &IID_IUnknown)
                 {
-                    Ole32Library.CoCreateInstance(CLSID_PackageMatchFilter_Dev_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_Ptr, out IntPtr obj);
+                    Ole32Library.CoCreateInstance(CLSID_PackageMatchFilter_Dev_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
                     return PackageMatchFilter.FromAbi(obj);
                 }
             }
             else
             {
-                fixed (Guid* CLSID_PackageMatchFilter_Ptr = &CLSID_PackageMatchFilter, IID_Ptr = &IID)
+                fixed (Guid* CLSID_PackageMatchFilter_Ptr = &CLSID_PackageMatchFilter, IID_IUnknown_Ptr = &IID_IUnknown)
                 {
-                    Ole32Library.CoCreateInstance(CLSID_PackageMatchFilter_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_Ptr, out IntPtr obj);
+                    Ole32Library.CoCreateInstance(CLSID_PackageMatchFilter_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
                     return PackageMatchFilter.FromAbi(obj);
                 }
             }

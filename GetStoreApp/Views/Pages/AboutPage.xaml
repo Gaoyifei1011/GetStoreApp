@@ -70,18 +70,15 @@
                             </ToolTipService.ToolTip>
                         </MenuFlyoutItem>
 
-                        <!--<MenuFlyoutItem
-                            x:Load="False"
-                            Click="{x:Bind ViewModel.OnPinToTaskbarClicked}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('About/PinToTaskbar')}">
+                        <MenuFlyoutItem Click="{x:Bind ViewModel.OnPinToTaskbarClicked}" Text="{x:Bind root:ResourceService.GetLocalized('About/PinToTaskbar')}">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip
-                                    Content="{x:Bind root:ResourceService.GetLocalized('About/PinToPinToTaskbarToolTip')}"
+                                    Content="{x:Bind root:ResourceService.GetLocalized('About/PinToTaskbarToolTip')}"
                                     Placement="Bottom"
                                     VerticalOffset="20" />
                             </ToolTipService.ToolTip>
-                        </MenuFlyoutItem>-->
+                        </MenuFlyoutItem>
 
                         <MenuFlyoutSeparator />
 
