@@ -77,7 +77,6 @@
                         SelectedPressedBackground="{ThemeResource GridViewItemBackgroundSelectedPressed}"
                         SelectedPressedBorderBrush="{ThemeResource GridViewItemSelectedPressedBorderBrush}"
                         SelectionCheckMarkVisualEnabled="{ThemeResource GridViewItemSelectionCheckMarkVisualEnabled}" />
-
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
