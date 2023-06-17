@@ -12,7 +12,7 @@ namespace GetStoreApp.ViewModels.Controls.About
         {
             {"Microsoft.Windows.CsWinRT","https://github.com/microsoft/cswinrt" },
             {"Microsoft.WindowsAppSDK","https://github.com/microsoft/windowsappsdk" },
-            {"Microsoft.Windows.SDK.BuildTools","https://aka.ms/WinSDKProjectURL" },
+            {"Microsoft.WindowsPackageManager.ComInterop","https://github.com/microsoft/winget-cl" },
             {"Mile.Aria2","https://github.com/ProjectMile/Mile.Aria2" },
         };
     }

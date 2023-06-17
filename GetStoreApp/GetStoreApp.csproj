@@ -15,11 +15,9 @@
     <EnableMsixTooling>false</EnableMsixTooling>
     <FileAlignment>512</FileAlignment>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
     <ImplicitUsings>disable</ImplicitUsings>
     <IncludeSymbols>False</IncludeSymbols>
     <LangVersion>latest</LangVersion>
-    <NeutralLanguage>en-US</NeutralLanguage>
     <Optimize>False</Optimize>
     <OutputType>WinExe</OutputType>
     <Platforms>x86;x64;ARM64</Platforms>
@@ -80,6 +78,8 @@
     
     <Content Include="Mile.Aria2.conf" CopyToOutputDirectory="Always" />
     
+    <Content Include="$(TargetDir)\Microsoft.Management.Deployment.winmd" ExcludeFromSingleFile="true" Link="Microsoft.Management.Deployment.winmd" CopyToOutputDirectory="Always" />
+    
     <Content Remove="Assets\ControlIcon\About.png" />
     <Content Remove="Assets\ControlIcon\Download.png" />
     <Content Remove="Assets\ControlIcon\History.png" />
@@ -101,10 +101,9 @@
     
     <Content Include="Fonts\Segoe Fluent Icons.ttf" CopyToOutputDirectory="Always" />
     <Content Include="Fonts\Settings Fluent Icons.ttf" CopyToOutputDirectory="Always" />
-    <Content Include="lib\Microsoft.Management.Deployment.winmd" ExcludeFromSingleFile="true" Link="Microsoft.Management.Deployment.winmd" CopyToOutputDirectory="Always" />
 
-    <CsWinRTInputs Include="lib\Microsoft.Management.Deployment.winmd" />
-
+    <CsWinRTInputs Include="$(TargetDir)\Microsoft.Management.Deployment.winmd" />
+    
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -131,9 +130,7 @@
     
     <None Remove="Fonts\Segoe Fluent Icons.ttf" />
     <None Remove="Fonts\Settings Fluent Icons.ttf" />
-    
-    <None Remove="lib\Microsoft.Management.Deployment.winmd" />
-    
+      
     <None Remove="Styles\Button.xaml" />
     <None Remove="Styles\Checkbox.xaml" />
     <None Remove="Styles\ContentDialog.xaml" />
@@ -265,8 +262,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.3" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.3.230602002" />
+    <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.5.1572">
+      <GeneratePathProperty>true</GeneratePathProperty>
+      <IncludeAssets>none</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Mile.Aria2" Version="1.0.66" />
     
     <Page Update="Styles\Button.xaml" Generator="MSBuild:Compile" />
@@ -406,5 +406,8 @@
     <TrimmableAssembly Include="Microsoft.WindowsAppRuntime.Release.Net" />
     <TrimmableAssembly Include="Microsoft.Windows.Widgets.Projection" />
   </ItemGroup>
+
+  <Target Name="CopyWinmdToTargetDir" BeforeTargets="BeforeBuild">
+    <Copy SourceFiles="$(PkgMicrosoft_WindowsPackageManager_ComInterop)\lib\Microsoft.Management.Deployment.winmd" DestinationFolder="$(TargetDir)" />
+  </Target>
 </Project>
-  

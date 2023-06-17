@@ -46,7 +46,7 @@
 
                         <ToolTipService.ToolTip>
                             <ToolTip
-                                Content="{Binding Key, Converter={StaticResource AboutToolTipFormatConverter}, ConverterParameter=Thanks, Mode=OneTime}"
+                                Content="{Binding Key, Converter={StaticResource AboutToolTipFormatConverter}, ConverterParameter=Reference, Mode=OneTime}"
                                 Placement="Bottom"
                                 VerticalOffset="25" />
                         </ToolTipService.ToolTip>
