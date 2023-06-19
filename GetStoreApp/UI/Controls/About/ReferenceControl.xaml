@@ -38,7 +38,7 @@
             <GridView.ItemTemplate>
                 <DataTemplate>
                     <HyperlinkButton
-                        Width="250"
+                        Width="320"
                         Padding="5,8"
                         HorizontalContentAlignment="Center"
                         Content="{Binding Key, Mode=OneTime}"

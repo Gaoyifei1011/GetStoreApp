@@ -8,7 +8,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Comctl32
     /// </summary>
     public static partial class Comctl32Library
     {
-        public const string Comctl32 = "Comctl32.dll";
+        public const string Comctl32 = "comctl32.dll";
 
         /// <summary>
         /// TaskDialog 函数创建、显示和操作任务对话框。 任务对话框包含应用程序定义的消息文本和标题、图标以及预定义的按钮的任意组合。 此函数不支持注册回调函数以接收通知。

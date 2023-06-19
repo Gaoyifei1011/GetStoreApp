@@ -1,6 +1,4 @@
-﻿using GetStoreApp.WindowsAPI.PInvoke.Version;
-using System;
-using System.Runtime.InteropServices;
+﻿using System;
 using Windows.ApplicationModel;
 using Windows.System.Profile;
 
@@ -44,19 +42,6 @@ namespace GetStoreApp.Helpers.Root
         public static string GetDeviceFamily()
         {
             return AnalyticsInfo.VersionInfo.DeviceFamily;
-        }
-
-        /// <summary>
-        /// 获取文件的信息
-        /// </summary>
-        public static VS_FIXEDFILEINFO GetFileInfo(string filePath)
-        {
-            int versionSize = VersionLibrary.GetFileVersionInfoSize(filePath, out _);
-            byte[] versionData = new byte[versionSize];
-            VersionLibrary.GetFileVersionInfo(filePath, 0, versionSize, versionData);
-            VersionLibrary.VerQueryValue(versionData, "\\", out nint pFixedVersionInfo, out _);
-
-            return (VS_FIXEDFILEINFO)Marshal.PtrToStructure(pFixedVersionInfo, typeof(VS_FIXEDFILEINFO));
         }
     }
 }

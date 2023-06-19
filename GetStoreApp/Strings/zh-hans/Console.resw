@@ -151,7 +151,7 @@
     <value>获取完成</value>
   </data>
   <data name="GettingNow" xml:space="preserve">
-    <value>正在从微软商店的服务器中进行查询，请耐心等待</value>
+    <value>正在从微软商店的服务器中进行查询，请耐心等待......</value>
   </data>
   <data name="HeaderDescription1" xml:space="preserve">
     <value>获取商店应用（控制台程序）版本：{0}.{1}.{2}.{3}</value>

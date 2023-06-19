@@ -10,7 +10,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
     /// </summary>
     public static partial class User32Library
     {
-        private const string User32 = "User32.dll";
+        private const string User32 = "user32.dll";
 
         /// <summary>
         /// 将消息信息传递给指定的窗口过程。
@@ -175,21 +175,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// 如果窗口不与显示监视器相交，则返回值取决于 <param name="dwFlags"> 的值。</returns>
         [LibraryImport(User32, EntryPoint = "MonitorFromWindow", SetLastError = false)]
         public static partial IntPtr MonitorFromWindow(IntPtr hwnd, MonitorFlags dwFlags);
-
-        /// <summary>
-        /// 将指定的消息发送到窗口或窗口。 <see cref="PostMessage"> 函数调用指定窗口的窗口过程，在窗口过程处理消息之前不会返回。
-        /// </summary>
-        /// <param name="hWnd">
-        /// 窗口过程的句柄将接收消息。 如果此参数 HWND_BROADCAST ( (HWND) 0xffff) ，则会将消息发送到系统中的所有顶级窗口，
-        /// 包括已禁用或不可见的未所有者窗口、重叠窗口和弹出窗口;但消息不会发送到子窗口。消息发送受 UIPI 的约束。
-        /// 进程的线程只能将消息发送到较低或等于完整性级别的线程的消息队列。
-        /// </param>
-        /// <param name="wMsg">要发送的消息。</param>
-        /// <param name="wParam">其他的消息特定信息。</param>
-        /// <param name="lParam">其他的消息特定信息。</param>
-        /// <returns>返回值指定消息处理的结果;这取决于发送的消息。</returns>
-        [LibraryImport(User32, EntryPoint = "PostMessageW", SetLastError = false)]
-        public static partial IntPtr PostMessage(IntPtr hWnd, WindowMessage wMsg, int wParam, IntPtr lParam);
 
         /// <summary>
         /// 创建从指定文件中提取的图标的句柄数组。

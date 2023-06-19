@@ -8,7 +8,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Ole32
     /// </summary>
     public static partial class Ole32Library
     {
-        private const string Ole32 = "Ole32.dll";
+        private const string Ole32 = "ole32.dll";
 
         /// <summary>
         /// 创建和默认初始化与指定 CLSID 关联的类的单个对象。

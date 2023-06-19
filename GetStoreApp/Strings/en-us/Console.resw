@@ -151,7 +151,7 @@
     <value>Get completed</value>
   </data>
   <data name="GettingNow" xml:space="preserve">
-    <value>Queries are being made from the servers in the Microsoft Store, please be patient</value>
+    <value>Queries are being made from the servers in the Microsoft Store, please be patient...</value>
   </data>
   <data name="HeaderDescription1" xml:space="preserve">
     <value>Get the Store app (console) version: {0}.{1}.{2}.{3}</value>

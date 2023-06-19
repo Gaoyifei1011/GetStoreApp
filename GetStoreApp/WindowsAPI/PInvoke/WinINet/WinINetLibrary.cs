@@ -7,7 +7,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.WinINet
     /// </summary>
     public static partial class WinINetLibrary
     {
-        private const string WinINet = "winInet.dll";
+        private const string WinINet = "wininet.dll";
 
         [LibraryImport(WinINet, EntryPoint = "InternetGetConnectedState", SetLastError = false)]
         [return: MarshalAs(UnmanagedType.Bool)]

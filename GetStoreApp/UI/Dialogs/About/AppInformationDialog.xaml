@@ -1,13 +1,13 @@
 <dialogsAndFlyouts:ExtendedContentDialog
     x:Class="GetStoreApp.UI.Dialogs.About.AppInformationDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:getStoreApp="using:GetStoreApp"
-    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dialogViewModel="using:GetStoreApp.ViewModels.Dialogs.About"
     xmlns:dialogsAndFlyouts="using:GetStoreApp.Views.CustomControls.DialogsAndFlyouts"
+    xmlns:getStoreApp="using:GetStoreApp"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
     Title="{x:Bind root:ResourceService.GetLocalized('Dialog/AppInformationTitle')}"
     CloseButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
     PrimaryButtonClick="{x:Bind ViewModel.OnCopyAppInformationClicked}"
@@ -37,7 +37,7 @@
             <TextBlock
                 Grid.Column="1"
                 Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind ViewModel.WindowsAppSDKVersion}"
+                Text="{x:Bind ViewModel.WindowsAppSDKVersion, Mode=OneWay}"
                 TextAlignment="DetectFromContent"
                 TextWrapping="Wrap" />
         </Grid>
@@ -54,7 +54,7 @@
             <TextBlock
                 Grid.Column="1"
                 Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind ViewModel.WinUI3Version}"
+                Text="{x:Bind ViewModel.WinUI3Version, Mode=OneWay}"
                 TextAlignment="DetectFromContent"
                 TextWrapping="Wrap" />
         </Grid>
@@ -71,7 +71,7 @@
             <TextBlock
                 Grid.Column="1"
                 Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind ViewModel.WebView2CoreVersion}"
+                Text="{x:Bind ViewModel.WebView2CoreVersion, Mode=OneWay}"
                 TextAlignment="DetectFromContent"
                 TextWrapping="Wrap" />
         </Grid>
@@ -88,7 +88,7 @@
             <TextBlock
                 Grid.Column="1"
                 Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind ViewModel.DoNetVersion}"
+                Text="{x:Bind ViewModel.DoNetVersion, Mode=OneWay}"
                 TextAlignment="DetectFromContent"
                 TextWrapping="Wrap" />
         </Grid>

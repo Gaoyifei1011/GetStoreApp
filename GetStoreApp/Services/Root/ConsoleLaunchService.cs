@@ -40,21 +40,22 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         public static async Task InitializeConsoleStartupAsync()
         {
-            Console.CancelKeyPress += OnConsoleCancelKeyPress;
+            ConsoleEventDelegate ctrlDelegate = new ConsoleEventDelegate(OnConsoleCtrlHandler);
+            Kernel32Library.SetConsoleCtrlHandler(ctrlDelegate, true);
+
             InitializeIntroduction();
             InitializeRequestContent();
             await RequestService.GetLinksAsync();
 
-            Console.WriteLine(LineBreaks + ResourceService.GetLocalized("Console/ApplicationExit"));
+            ConsoleHelper.WriteLine(LineBreaks + ResourceService.GetLocalized("Console/ApplicationExit"));
         }
 
         /// <summary>
-        /// 控制台程序捕捉键盘 Ctrl + C 退出事件并询问用户是否退出
+        /// 控制台程序捕捉键盘 Ctrl + C/Break 退出事件并询问用户是否退出
         /// </summary>
-        private static void OnConsoleCancelKeyPress(object sender, ConsoleCancelEventArgs args)
+        private static bool OnConsoleCtrlHandler(int dwCtrlType)
         {
-            args.Cancel = true;
-            if (args.SpecialKey is ConsoleSpecialKey.ControlC)
+            if (dwCtrlType == 0 || dwCtrlType == 2)
             {
                 IntPtr ConsoleHandle = Kernel32Library.GetConsoleWindow();
 
@@ -71,11 +72,20 @@ namespace GetStoreApp.Services.Root
 
                 if (Result is TaskDialogResult.IDOK)
                 {
-                    Console.WriteLine(LineBreaks + ResourceService.GetLocalized("Console/ApplicationExit"));
+                    ConsoleHelper.WriteLine(LineBreaks + ResourceService.GetLocalized("Console/ApplicationExit"));
                     IsAppRunning = false;
                     DownloadService.StopDownloadFile();
                     Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
+                    return false;
                 }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                return true;
             }
         }
 
@@ -84,16 +94,16 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeIntroduction()
         {
-            Console.Title = ResourceService.GetLocalized("Console/Title");
+            ConsoleHelper.SetTitle(ResourceService.GetLocalized("Console/Title"));
 
-            Console.WriteLine(string.Format(ResourceService.GetLocalized("Console/HeaderDescription1"),
+            ConsoleHelper.WriteLine(string.Format(ResourceService.GetLocalized("Console/HeaderDescription1"),
                 InfoHelper.AppVersion.Major,
                 InfoHelper.AppVersion.Minor,
                 InfoHelper.AppVersion.Build,
                 InfoHelper.AppVersion.Revision
                 ) + LineBreaks);
-            Console.WriteLine(ResourceService.GetLocalized("Console/HeaderDescription2"));
-            Console.WriteLine(ResourceService.GetLocalized("Console/HeaderDescription3") + LineBreaks);
+            ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/HeaderDescription2"));
+            ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/HeaderDescription3") + LineBreaks);
         }
 
         /// <summary>
@@ -109,12 +119,12 @@ namespace GetStoreApp.Services.Root
             else
             {
                 // 选择类型
-                Console.WriteLine(ResourceService.GetLocalized("Console/TypeInformation"));
-                Console.Write(ResourceService.GetLocalized("Console/SelectType"));
+                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/TypeInformation"));
+                ConsoleHelper.Write(ResourceService.GetLocalized("Console/SelectType"));
                 int typeIndex;
                 try
                 {
-                    typeIndex = int.Parse(Console.ReadLine());
+                    typeIndex = int.Parse(ConsoleHelper.ReadLine());
                     if (typeIndex < 1 || typeIndex > 4)
                     {
                         typeIndex = 1;
@@ -126,12 +136,12 @@ namespace GetStoreApp.Services.Root
                 }
 
                 // 选择通道
-                Console.WriteLine(ResourceService.GetLocalized("Console/ChannelInformation"));
-                Console.Write(ResourceService.GetLocalized("Console/SelectChannel"));
+                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/ChannelInformation"));
+                ConsoleHelper.Write(ResourceService.GetLocalized("Console/SelectChannel"));
                 int channelIndex;
                 try
                 {
-                    channelIndex = int.Parse(Console.ReadLine());
+                    channelIndex = int.Parse(ConsoleHelper.ReadLine());
                     if (channelIndex < 1 || channelIndex > 4)
                     {
                         channelIndex = 4;
@@ -143,8 +153,8 @@ namespace GetStoreApp.Services.Root
                 }
 
                 // 输入链接
-                Console.Write(ResourceService.GetLocalized("Console/InputLink"));
-                string link = Console.ReadLine();
+                ConsoleHelper.Write(ResourceService.GetLocalized("Console/InputLink"));
+                string link = ConsoleHelper.ReadLine();
 
                 RequestService.InitializeQueryData(typeIndex, channelIndex, link);
             }
@@ -178,7 +188,7 @@ namespace GetStoreApp.Services.Root
             {
                 if (Program.CommandLineArgs.Count % 2 is not 1)
                 {
-                    Console.WriteLine(ResourceService.GetLocalized("Console/ParameterError"));
+                    ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/ParameterError"));
                     return;
                 }
 

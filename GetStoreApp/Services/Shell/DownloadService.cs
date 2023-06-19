@@ -31,11 +31,11 @@ namespace GetStoreApp.Services.Shell
         {
             while (true)
             {
-                Console.WriteLine(ResourceService.GetLocalized("Console/DownloadFile"));
+                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/DownloadFile"));
 
                 try
                 {
-                    List<string> IndexList = Console.ReadLine().Split(',').ToList();
+                    List<string> IndexList = ConsoleHelper.ReadLine().Split(',').ToList();
                     bool CheckResult = true;
                     foreach (string indexItem in IndexList)
                     {
@@ -54,27 +54,27 @@ namespace GetStoreApp.Services.Shell
                             string IndexItem = IndexList[index];
                             if (ConsoleLaunchService.IsAppRunning)
                             {
-                                Console.WriteLine(ResourceService.GetLocalized("Console/DownloadingInformation"), index + 1, IndexList.Count);
+                                ConsoleHelper.WriteLine(string.Format(ResourceService.GetLocalized("Console/DownloadingInformation"), index + 1, IndexList.Count));
                                 DownloadFile(ParseService.ResultDataList[Convert.ToInt32(IndexItem) - 1].FileLink);
                             }
                         }
-                        Console.WriteLine(ResourceService.GetLocalized("Console/DownloadCompleted"));
-                        string InputString = Console.ReadLine();
+                        ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/DownloadCompleted"));
+                        string InputString = ConsoleHelper.ReadLine();
                         if (InputString is "Y" || InputString is "y")
                         {
                             continue;
                         }
                         else
                         {
-                            Console.WriteLine(ResourceService.GetLocalized("Console/OpenFolder"));
+                            ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/OpenFolder"));
                             await OpenDownloadFolderAsync();
                             break;
                         }
                     }
                     else
                     {
-                        Console.WriteLine(ResourceService.GetLocalized("Console/SerialNumberOutRange"));
-                        string InputString = Console.ReadLine();
+                        ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/SerialNumberOutRange"));
+                        string InputString = ConsoleHelper.ReadLine();
                         if (InputString is "Y" || InputString is "y")
                         {
                             continue;
@@ -87,8 +87,8 @@ namespace GetStoreApp.Services.Shell
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine(ResourceService.GetLocalized("Console/SerialNumberError"));
-                    string InputString = Console.ReadLine();
+                    ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/SerialNumberError"));
+                    string InputString = ConsoleHelper.ReadLine();
                     if (InputString is "Y" || InputString is "y")
                     {
                         continue;
@@ -167,7 +167,7 @@ namespace GetStoreApp.Services.Shell
                     while (Kernel32Library.ReadFile(hRead, ReadBuff, 100, out uint ReadNum, IntPtr.Zero))
                     {
                         ReadBuff[ReadNum] = (byte)'\0';
-                        Console.Write(Encoding.UTF8.GetString(ReadBuff));
+                        ConsoleHelper.Write(Encoding.UTF8.GetString(ReadBuff));
                     }
 
                     if (DownloadProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(DownloadProcessInformation.hProcess);

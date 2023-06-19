@@ -1,11 +1,11 @@
 ﻿using GetStoreApp.Extensions.Console;
 using GetStoreApp.Helpers.Controls.Store;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Windows.System.Threading;
 
 namespace GetStoreApp.Services.Shell
 {
@@ -19,10 +19,6 @@ namespace GetStoreApp.Services.Shell
         private static string SelectedChannel { get; set; }
 
         private static string LinkText { get; set; }
-
-        private static ThreadPoolTimer ConsoleTimer { get; set; }
-
-        private static int ElapsedTime { get; set; } = 0;
 
         private static List<string> TypeList { get; } = new List<string>()
         {
@@ -72,18 +68,12 @@ namespace GetStoreApp.Services.Shell
 
             while (RequestState)
             {
-                ConsoleTimer = ThreadPoolTimer.CreatePeriodicTimer(OnRequestElasped, TimeSpan.FromSeconds(1));
+                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/GettingNow"));
 
                 // 获取网页反馈回的原始数据
                 RequestModel httpRequestData = await HtmlRequestHelper.HttpRequestAsync(generateContent);
 
-                ConsoleTimer.Cancel();
-                ElapsedTime = 0;
-
-                Console.SetCursorPosition(0, Console.CursorTop);
-                Console.Write(new string(' ', Console.WindowWidth));
-                Console.SetCursorPosition(0, Console.CursorTop);
-                Console.WriteLine(ResourceService.GetLocalized("Console/GetCompleted"));
+                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/GetCompleted"));
 
                 int state = HtmlRequestStateHelper.CheckRequestState(httpRequestData);
 
@@ -91,48 +81,36 @@ namespace GetStoreApp.Services.Shell
                 {
                     case 1:
                         {
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.WriteLine(ResourceService.GetLocalized("Console/RequestSuccessfully"));
-                            Console.ResetColor();
+                            ConsoleHelper.SetTextColor(0x02);
+                            ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/RequestSuccessfully"));
+                            ConsoleHelper.ResetTextColor();
                             RequestState = false;
                             await ParseService.ParseDataAsync(httpRequestData);
                             break;
                         }
                     case 2:
                         {
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-                            Console.WriteLine(ResourceService.GetLocalized("Console/RequestFailed"));
-                            Console.ResetColor();
+                            ConsoleHelper.SetTextColor(0x06);
+                            ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/RequestFailed"));
+                            ConsoleHelper.ResetTextColor();
                             PrintRequestFailedData();
-                            Console.WriteLine(ResourceService.GetLocalized("Console/AskContinue"));
-                            string RegainString = Console.ReadLine();
+                            ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/AskContinue"));
+                            string RegainString = ConsoleHelper.ReadLine();
                             RequestState = RegainString is "Y" || RegainString is "y";
                             break;
                         }
                     case 3:
                         {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine(ResourceService.GetLocalized("Console/RequestError"));
-                            Console.ResetColor();
-                            Console.WriteLine(ResourceService.GetLocalized("Console/AskContinue"));
-                            string RegainString = Console.ReadLine();
+                            ConsoleHelper.SetTextColor(0x04);
+                            ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/RequestError"));
+                            ConsoleHelper.ResetTextColor();
+                            ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/AskContinue"));
+                            string RegainString = ConsoleHelper.ReadLine();
                             RequestState = RegainString is "Y" || RegainString is "y";
                             break;
                         }
                 }
             }
-        }
-
-        /// <summary>
-        /// 显示正在获取中的动画
-        /// </summary>
-        private static void OnRequestElasped(ThreadPoolTimer timer)
-        {
-            Console.SetCursorPosition(0, Console.CursorTop);
-            Console.Write(new string(' ', Console.WindowWidth));
-            Console.SetCursorPosition(0, Console.CursorTop);
-            Console.Write(ResourceService.GetLocalized("Console/GettingNow") + new string('.', ElapsedTime % 4));
-            ElapsedTime++;
         }
 
         /// <summary>
@@ -153,23 +131,23 @@ namespace GetStoreApp.Services.Shell
             int SerialNumberColumnLength = (SerialNumberHeaderLength > "1".Length ? SerialNumberHeaderLength : "1".Length) + 3;
             int FileNameColumnLength = (FileNameHeaderLength > NoneLength ? FileNameHeaderLength : NoneLength) + 3;
 
-            Console.Write(ConsoleLaunchService.LineBreaks);
-            Console.WriteLine(ResourceService.GetLocalized("Console/ResultDataList"));
+            ConsoleHelper.Write(ConsoleLaunchService.LineBreaks);
+            ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/ResultDataList"));
 
             // 打印标题
-            Console.Write(SerialNumberHeader + new string(ConsoleLaunchService.RowSplitCharacter, SerialNumberColumnLength - SerialNumberHeaderLength));
-            Console.Write(FileNameHeader + new string(ConsoleLaunchService.RowSplitCharacter, FileNameColumnLength - FileNameHeaderLength));
-            Console.Write(FileSizeHeader + ConsoleLaunchService.LineBreaks);
+            ConsoleHelper.Write(SerialNumberHeader + new string(ConsoleLaunchService.RowSplitCharacter, SerialNumberColumnLength - SerialNumberHeaderLength));
+            ConsoleHelper.Write(FileNameHeader + new string(ConsoleLaunchService.RowSplitCharacter, FileNameColumnLength - FileNameHeaderLength));
+            ConsoleHelper.Write(FileSizeHeader + ConsoleLaunchService.LineBreaks);
 
             // 打印标题与内容的分割线
-            Console.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, SerialNumberHeaderLength).PadRight(SerialNumberColumnLength));
-            Console.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, FileNameHeaderLength).PadRight(FileNameColumnLength));
-            Console.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, FileSizeHeaderLength) + ConsoleLaunchService.LineBreaks);
+            ConsoleHelper.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, SerialNumberHeaderLength).PadRight(SerialNumberColumnLength));
+            ConsoleHelper.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, FileNameHeaderLength).PadRight(FileNameColumnLength));
+            ConsoleHelper.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, FileSizeHeaderLength) + ConsoleLaunchService.LineBreaks);
 
             // 输出内容
-            Console.Write("1" + new string(ConsoleLaunchService.RowSplitCharacter, SerialNumberColumnLength - 1));
-            Console.Write(None + new string(ConsoleLaunchService.RowSplitCharacter, FileNameColumnLength - NoneLength));
-            Console.Write(None + ConsoleLaunchService.LineBreaks);
+            ConsoleHelper.Write("1" + new string(ConsoleLaunchService.RowSplitCharacter, SerialNumberColumnLength - 1));
+            ConsoleHelper.Write(None + new string(ConsoleLaunchService.RowSplitCharacter, FileNameColumnLength - NoneLength));
+            ConsoleHelper.Write(None + ConsoleLaunchService.LineBreaks);
         }
     }
 }

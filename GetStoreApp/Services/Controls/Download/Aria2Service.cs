@@ -18,11 +18,11 @@ namespace GetStoreApp.Services.Controls.Download
     {
         private static string Aria2FilePath { get; } = string.Format(@"{0}\{1}", InfoHelper.GetAppInstalledLocation(), @"Mile.Aria2.exe");
 
-        private static string DefaultAria2ConfPath { get; } = string.Format(@"{0}\{1}", InfoHelper.GetAppInstalledLocation(), @"Mile.Aria2.conf");
-
         public static string Aria2ConfPath { get; } = string.Format(@"{0}\{1}", ApplicationData.Current.LocalFolder.Path, "Aria2.conf");
 
         private static string Aria2Arguments { get; set; }
+
+        private static string DefaultAria2Arguments { get; } = "-c --file-allocation=none --max-concurrent-downloads=3 --max-connection-per-server=5 --min-split-size=10M --split=5 --enable-rpc=true --rpc-allow-origin-all=true --rpc-listen-all=true --rpc-listen-port=6300 -D";
 
         private static string RPCServerLink { get; } = "http://127.0.0.1:6300/jsonrpc";
 
@@ -36,22 +36,21 @@ namespace GetStoreApp.Services.Controls.Download
             try
             {
                 // 原配置文件存在且新的配置文件不存在，拷贝到指定目录
-                if (File.Exists(DefaultAria2ConfPath) && !File.Exists(Aria2ConfPath))
+                if (!File.Exists(Aria2ConfPath))
                 {
-                    new FileInfo(DefaultAria2ConfPath).CopyTo(Aria2ConfPath);
+                    FileStream file = new FileStream(Aria2ConfPath, FileMode.Create);
+                    file.Write(Properties.Resources.MileAria2, 0, Properties.Resources.MileAria2.Length);
+                    file.Flush();
+                    file.Close();
                 }
 
                 // 使用自定义的配置文件目录
                 Aria2Arguments = string.Format("--conf-path=\"{0}\" -D", Aria2ConfPath);
             }
-
-            //  发生异常时，使用默认的配置文件目录
+            //  发生异常时，使用默认的参数
             catch (Exception)
             {
-                if (File.Exists(DefaultAria2ConfPath))
-                {
-                    Aria2Arguments = string.Format("--conf-path=\"{0}\" -D", DefaultAria2ConfPath);
-                }
+                Aria2Arguments = DefaultAria2Arguments;
             }
         }
 
@@ -82,22 +81,18 @@ namespace GetStoreApp.Services.Controls.Download
             try
             {
                 // 原配置文件存在时，覆盖已经修改的配置文件
-                if (File.Exists(DefaultAria2ConfPath))
-                {
-                    new FileInfo(DefaultAria2ConfPath).CopyTo(Aria2ConfPath, true);
-                }
+                FileStream file = new FileStream(Aria2ConfPath, FileMode.Create);
+                file.Write(Properties.Resources.MileAria2, 0, Properties.Resources.MileAria2.Length);
+                file.Flush();
+                file.Close();
 
                 // 使用自定义的配置文件目录
                 Aria2Arguments = string.Format("--conf-path=\"{0}\" -D", Aria2ConfPath);
             }
-
-            //  发生异常时，使用默认的配置文件目录
+            //  发生异常时，使用默认的参数
             catch (Exception)
             {
-                if (File.Exists(DefaultAria2ConfPath))
-                {
-                    Aria2Arguments = string.Format("--conf-path=\"{0}\" -D", DefaultAria2ConfPath);
-                }
+                Aria2Arguments = DefaultAria2Arguments;
             }
         }
 

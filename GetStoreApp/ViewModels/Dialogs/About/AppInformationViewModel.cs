@@ -1,27 +1,76 @@
 ﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Notifications;
-using GetStoreApp.WindowsAPI.PInvoke.Version;
+using GetStoreApp.ViewModels.Base;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Windows.ApplicationModel;
+using Windows.Storage;
 
 namespace GetStoreApp.ViewModels.Dialogs.About
 {
     /// <summary>
     /// 应用信息对话框视图模型
     /// </summary>
-    public sealed class AppInformationViewModel
+    public sealed class AppInformationViewModel : ViewModelBase
     {
-        public string WindowsAppSDKVersion { get; set; }
+        private string FileVersionProperty { get; } = "System.FileVersion";
 
-        public string WinUI3Version { get; set; }
+        private List<string> PropertyNamesList => new List<string> { FileVersionProperty };
 
-        public string DoNetVersion { get; set; }
+        private string _windowsAppSDKVersion;
 
-        public string WebView2CoreVersion { get; set; }
+        public string WindowsAppSDKVersion
+        {
+            get { return _windowsAppSDKVersion; }
+
+            set
+            {
+                _windowsAppSDKVersion = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _winUI3Version;
+
+        public string WinUI3Version
+        {
+            get { return _winUI3Version; }
+
+            set
+            {
+                _winUI3Version = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _doNetVersion;
+
+        public string DoNetVersion
+        {
+            get { return _doNetVersion; }
+
+            set
+            {
+                _doNetVersion = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _webView2CoreVersion;
+
+        public string WebView2CoreVersion
+        {
+            get { return _webView2CoreVersion; }
+
+            set
+            {
+                _webView2CoreVersion = value;
+                OnPropertyChanged();
+            }
+        }
 
         /// <summary>
         /// 复制应用信息
@@ -44,7 +93,7 @@ namespace GetStoreApp.ViewModels.Dialogs.About
         /// <summary>
         /// 初始化应用信息
         /// </summary>
-        public void InitializeAppInformation()
+        public async void InitializeAppInformation()
         {
             IReadOnlyList<Package> DependencyList = Package.Current.Dependencies;
 
@@ -60,20 +109,28 @@ namespace GetStoreApp.ViewModels.Dialogs.About
                         dependency.Id.Version.Revision);
 
                     // WinUI3 版本信息
-                    VS_FIXEDFILEINFO WinUI3FileInfo = InfoHelper.GetFileInfo(string.Format(@"{0}\{1}", dependency.InstalledLocation.Path, "Microsoft.ui.xaml.Controls.dll"));
-                    WinUI3Version = string.Format("{0}.{1}.{2}.{3}",
-                        (WinUI3FileInfo.dwProductVersionMS >> 16) & 0xffff,
-                        (WinUI3FileInfo.dwProductVersionMS >> 0) & 0xffff,
-                        (WinUI3FileInfo.dwProductVersionLS >> 16) & 0xffff,
-                        (WinUI3FileInfo.dwProductVersionLS >> 0) & 0xffff);
+                    try
+                    {
+                        StorageFile WinUI3File = await StorageFile.GetFileFromPathAsync(string.Format(@"{0}\{1}", dependency.InstalledLocation.Path, "Microsoft.ui.xaml.Controls.dll"));
+                        IDictionary<string, object> WinUI3FileProperties = await WinUI3File.Properties.RetrievePropertiesAsync(PropertyNamesList);
+                        WinUI3Version = WinUI3FileProperties[FileVersionProperty] is not null ? Convert.ToString(WinUI3FileProperties[FileVersionProperty]) : string.Empty;
+                    }
+                    catch (Exception)
+                    {
+                        WinUI3Version = string.Empty;
+                    }
 
                     // WebView2 Core 版本信息
-                    VS_FIXEDFILEINFO WebView2CoreFileInfo = InfoHelper.GetFileInfo(string.Format(@"{0}\{1}", dependency.InstalledLocation.Path, "Microsoft.Web.WebView2.Core.dll"));
-                    WebView2CoreVersion = string.Format("{0}.{1}.{2}.{3}",
-                        (WebView2CoreFileInfo.dwFileVersionMS >> 16) & 0xffff,
-                        (WebView2CoreFileInfo.dwFileVersionMS >> 0) & 0xffff,
-                        (WebView2CoreFileInfo.dwFileVersionLS >> 16) & 0xffff,
-                        (WebView2CoreFileInfo.dwFileVersionLS >> 0) & 0xffff);
+                    try
+                    {
+                        StorageFile WebView2CoreFile = await StorageFile.GetFileFromPathAsync(string.Format(@"{0}\{1}", dependency.InstalledLocation.Path, "Microsoft.Web.WebView2.Core.dll"));
+                        IDictionary<string, object> WebView2CoreFileProperties = await WebView2CoreFile.Properties.RetrievePropertiesAsync(PropertyNamesList);
+                        WebView2CoreVersion = WebView2CoreFileProperties[FileVersionProperty] is not null ? Convert.ToString(WebView2CoreFileProperties[FileVersionProperty]) : string.Empty;
+                    }
+                    catch (Exception)
+                    {
+                        WebView2CoreVersion = string.Empty;
+                    }
                 }
             }
 
