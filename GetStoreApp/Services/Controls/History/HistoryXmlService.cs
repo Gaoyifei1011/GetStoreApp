@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
 
@@ -90,11 +89,7 @@ namespace GetStoreApp.Services.Controls.History
         /// <param name="typeFilter">选择过滤的类型，默认为None，不过滤</param>
         /// <param name="channelFilter">选择过的通道，默认为None，不过滤</param>
         /// <returns>返回历史记录列表</returns>
-        public static async Task<(List<HistoryModel>, bool, bool)> QueryAllAsync(
-            [Optional, DefaultParameterValue(false)] bool timeSortOrder,
-            [Optional, DefaultParameterValue("None")] string typeFilter,
-            [Optional, DefaultParameterValue("None")] string channelFilter
-            )
+        public static async Task<(List<HistoryModel>, bool, bool)> QueryAllAsync(bool timeSortOrder = false, string typeFilter = "None", string channelFilter = "None")
         {
             List<HistoryModel> historyRawList = new List<HistoryModel>();
             bool isHistoryEmpty = true;

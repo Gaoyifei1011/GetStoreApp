@@ -1,6 +1,5 @@
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Views.CustomControls.Notifications;
-using System.Runtime.InteropServices;
 
 namespace GetStoreApp.UI.Notifications
 {
@@ -9,7 +8,7 @@ namespace GetStoreApp.UI.Notifications
     /// </summary>
     public sealed partial class WinGetCopyNotification : InAppNotification
     {
-        public WinGetCopyNotification([Optional, DefaultParameterValue(false)] bool copyState, [Optional, DefaultParameterValue(WinGetOptionArgs.SearchInstall)] WinGetOptionArgs optionArgs)
+        public WinGetCopyNotification(bool copyState = false, WinGetOptionArgs optionArgs = WinGetOptionArgs.SearchInstall)
         {
             XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
             InitializeComponent();

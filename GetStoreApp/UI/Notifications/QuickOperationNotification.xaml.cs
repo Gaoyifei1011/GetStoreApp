@@ -1,6 +1,5 @@
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Views.CustomControls.Notifications;
-using System.Runtime.InteropServices;
 
 namespace GetStoreApp.UI.Notifications
 {
@@ -9,7 +8,7 @@ namespace GetStoreApp.UI.Notifications
     /// </summary>
     public sealed partial class QuickOperationNotification : InAppNotification
     {
-        public QuickOperationNotification(QuickOperationType operationType, [Optional, DefaultParameterValue(false)] bool isPinnedSuccessfully)
+        public QuickOperationNotification(QuickOperationType operationType, bool isPinnedSuccessfully = false)
         {
             XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
             InitializeComponent();

@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Views.CustomControls.Notifications;
-using System.Runtime.InteropServices;
 
 namespace GetStoreApp.UI.Notifications
 {
@@ -8,7 +7,7 @@ namespace GetStoreApp.UI.Notifications
     /// </summary>
     public sealed partial class ResultIDCopyNotification : InAppNotification
     {
-        public ResultIDCopyNotification([Optional, DefaultParameterValue(false)] bool copyState)
+        public ResultIDCopyNotification(bool copyState = false)
         {
             XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
             InitializeComponent();

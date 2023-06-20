@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Helpers.Controls.Download;
 using GetStoreApp.Helpers.Root;
+using GetStoreApp.Properties;
 using System;
 using System.IO;
 using System.Text;
@@ -39,7 +40,7 @@ namespace GetStoreApp.Services.Controls.Download
                 if (!File.Exists(Aria2ConfPath))
                 {
                     FileStream file = new FileStream(Aria2ConfPath, FileMode.Create);
-                    file.Write(Properties.Resources.MileAria2, 0, Properties.Resources.MileAria2.Length);
+                    file.Write(Resources.MileAria2, 0, Resources.MileAria2.Length);
                     file.Flush();
                     file.Close();
                 }
@@ -82,7 +83,7 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 // 原配置文件存在时，覆盖已经修改的配置文件
                 FileStream file = new FileStream(Aria2ConfPath, FileMode.Create);
-                file.Write(Properties.Resources.MileAria2, 0, Properties.Resources.MileAria2.Length);
+                file.Write(Resources.MileAria2, 0, Resources.MileAria2.Length);
                 file.Flush();
                 file.Close();
 

@@ -5,7 +5,6 @@ using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Controls.Settings.Appearance
@@ -96,7 +95,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// <summary>
         /// 应用主题发生修改时修改设置存储的主题值
         /// </summary>
-        public static async Task SetThemeAsync(ThemeModel theme, [Optional, DefaultParameterValue(true)] bool isNotFirstSet)
+        public static async Task SetThemeAsync(ThemeModel theme, bool isNotFirstSet = true)
         {
             if (isNotFirstSet)
             {
@@ -109,7 +108,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// <summary>
         /// 通知区域右键菜单主题发生修改时修改设置存储的主题值
         /// </summary>
-        public static async Task SetNotifyIconMenuThemeAsync(NotifyIconMenuThemeModel notifyIconMenuTheme, [Optional, DefaultParameterValue(true)] bool isNotFirstSet)
+        public static async Task SetNotifyIconMenuThemeAsync(NotifyIconMenuThemeModel notifyIconMenuTheme, bool isNotFirstSet = true)
         {
             if (isNotFirstSet)
             {

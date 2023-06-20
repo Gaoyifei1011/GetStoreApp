@@ -4,7 +4,6 @@ using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Globalization;
 
@@ -111,7 +110,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// <summary>
         /// 语言发生修改时修改设置存储的语言值
         /// </summary>
-        public static async Task SetLanguageAsync(LanguageModel language, [Optional, DefaultParameterValue(true)] bool isNotFirstSet)
+        public static async Task SetLanguageAsync(LanguageModel language, bool isNotFirstSet = true)
         {
             if (isNotFirstSet)
             {

@@ -33,7 +33,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
         [LibraryImport(Kernel32, EntryPoint = "AttachConsole", SetLastError = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool AttachConsole([Optional, DefaultParameterValue(-1)] int dwProcessId);
+        public static partial bool AttachConsole(int dwProcessId = -1);
 
         /// <summary>
         /// 关闭打开的对象句柄。

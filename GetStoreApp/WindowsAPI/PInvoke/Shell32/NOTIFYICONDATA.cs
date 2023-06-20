@@ -106,7 +106,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         /// <summary>
         /// 创建<see cref="NOTIFYICONDATA">结构体
         /// </summary>
-        public static NOTIFYICONDATA Initialize(IntPtr hWnd, [Optional, DefaultParameterValue("")] string toolTip)
+        public static NOTIFYICONDATA Initialize(IntPtr hWnd, string toolTip = "")
         {
             NOTIFYICONDATA data = new NOTIFYICONDATA();
 

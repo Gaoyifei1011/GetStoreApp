@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Services.Root;
 using GetStoreApp.Views.CustomControls.Notifications;
 using Microsoft.UI.Xaml;
-using System.Runtime.InteropServices;
 
 namespace GetStoreApp.UI.Notifications
 {
@@ -14,7 +13,7 @@ namespace GetStoreApp.UI.Notifications
 
         private bool IsMultiSelected = false;
 
-        public ResultContentCopyNotification([Optional, DefaultParameterValue(false)] bool copyState, [Optional, DefaultParameterValue(false)] bool isMultiSelected, [Optional, DefaultParameterValue(0)] int count)
+        public ResultContentCopyNotification(bool copyState = false, bool isMultiSelected = false, int count = 0)
         {
             IsMultiSelected = isMultiSelected;
             Count = count;

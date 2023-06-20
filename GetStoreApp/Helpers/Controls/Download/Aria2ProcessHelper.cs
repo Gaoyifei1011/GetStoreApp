@@ -17,7 +17,7 @@ namespace GetStoreApp.Helpers.Controls.Download
         /// <summary>
         /// 让Aria2以RPC方式启动，并让其在后台运行
         /// </summary>
-        public static unsafe bool RunAria2Process(string fileName, [Optional, DefaultParameterValue("")] string arguments)
+        public static unsafe bool RunAria2Process(string fileName, string arguments = "")
         {
             try
             {

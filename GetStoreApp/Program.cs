@@ -1,6 +1,7 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.SystemTray;
 using GetStoreApp.Helpers.Root;
+using GetStoreApp.Properties;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Advanced;
 using GetStoreApp.Services.Controls.Settings.Appearance;
@@ -13,6 +14,7 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -87,15 +89,15 @@ namespace GetStoreApp
         /// </summary>
         public static void CheckAppBootState()
         {
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo(CultureInfo.CurrentCulture.Parent.Name);
+            Resources.Culture = CultureInfo.CurrentCulture.Parent;
             if (!RuntimeHelper.IsMsix())
             {
                 Comctl32Library.TaskDialog(
                     IntPtr.Zero,
                     IntPtr.Zero,
-                    Properties.Resources.AppDisplayName,
-                    Properties.Resources.AppBootFailed,
-                    Properties.Resources.AppBootFailedContent1 + Environment.NewLine + Properties.Resources.AppBootFailedContent2 + Environment.NewLine + Properties.Resources.AppBootFailedContent3,
+                    Resources.AppDisplayName,
+                    Resources.AppBootFailed,
+                    Resources.AppBootFailedContent1 + Environment.NewLine + Resources.AppBootFailedContent2 + Environment.NewLine + Resources.AppBootFailedContent3,
                     TASKDIALOG_COMMON_BUTTON_FLAGS.TDCBF_OK_BUTTON,
                     TASKDIALOGICON.TD_SHIELD_ERROR_RED_BAR,
                     out _

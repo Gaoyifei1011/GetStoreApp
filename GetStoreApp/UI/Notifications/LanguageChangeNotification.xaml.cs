@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Views.CustomControls.Notifications;
-using System.Runtime.InteropServices;
 
 namespace GetStoreApp.UI.Notifications
 {
@@ -8,7 +7,7 @@ namespace GetStoreApp.UI.Notifications
     /// </summary>
     public sealed partial class LanguageChangeNotification : InAppNotification
     {
-        public LanguageChangeNotification([Optional, DefaultParameterValue(false)] bool setResult)
+        public LanguageChangeNotification(bool setResult = false)
         {
             InitializeComponent();
             XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();

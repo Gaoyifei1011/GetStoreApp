@@ -263,7 +263,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
         /// <summary>
         /// 初始化列表数据
         /// </summary>
-        private void InitializeData([Optional, DefaultValue(false)] bool hasSearchText)
+        private void InitializeData(bool hasSearchText = false)
         {
             InstalledAppsDataList.Clear();
             if (MatchResultList is not null)

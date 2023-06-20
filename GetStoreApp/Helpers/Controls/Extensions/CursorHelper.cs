@@ -1,7 +1,8 @@
 ﻿using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Input;
 using System;
-using System.Linq.Expressions;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace GetStoreApp.Helpers.Controls.Extensions
@@ -11,130 +12,77 @@ namespace GetStoreApp.Helpers.Controls.Extensions
     /// </summary>
     public static class CursorHelper
     {
-        private static object locker = new object();
-        private static Action<UIElement, InputCursor> setCursorFunc;
-        private static Func<UIElement, InputCursor> getCursorFunc;
+        private static readonly object _cursorLock = new object();
+        private static readonly InputCursor _defaultCursor = InputSystemCursor.Create(InputSystemCursorShape.Arrow);
 
-        public static InputSystemCursorShape? GetCursor(DependencyObject obj)
-        {
-            if (obj.GetValue(CursorOverrideStateProperty) is 0)
-            {
-                EnsureCursorFunctions();
-                var cursor = GetFrameworkElementCursor((FrameworkElement)obj);
-
-                obj.SetValue(CursorOverrideStateProperty, 1);
-
-                var shape = cursor switch
-                {
-                    InputSystemCursor inputSystemCursor => (InputSystemCursorShape?)inputSystemCursor.CursorShape,
-                    _ => null
-                };
-
-                SetCursor(obj, shape);
-
-                return shape;
-            }
-
-            return (InputSystemCursorShape?)obj.GetValue(CursorProperty);
-        }
-
-        public static void SetCursor(DependencyObject obj, InputSystemCursorShape? value)
-        {
-            obj.SetValue(CursorProperty, value);
-        }
+        private static readonly Dictionary<InputSystemCursorShape, InputCursor> _cursors =
+            new Dictionary<InputSystemCursorShape, InputCursor> { { InputSystemCursorShape.Arrow, _defaultCursor } };
 
         public static readonly DependencyProperty CursorProperty =
-            DependencyProperty.RegisterAttached("Cursor", typeof(InputSystemCursorShape?), typeof(CursorHelper), new PropertyMetadata(InputSystemCursorShape.Arrow, (s, a) =>
-            {
-                if (!Equals(a.NewValue, a.OldValue) && s is FrameworkElement sender)
-                {
-                    EnsureCursorFunctions();
+            DependencyProperty.RegisterAttached("Cursor", typeof(InputSystemCursorShape), typeof(CursorHelper), new PropertyMetadata(InputSystemCursorShape.Arrow, CursorChanged));
 
-                    if (sender.GetValue(CursorOverrideStateProperty) is int state)
-                    {
-                        if (state == 0 || state == 1)
-                        {
-                            sender.SetValue(CursorOverrideStateProperty, 2);
-                        }
-
-                        if (state == 0 || state == 2)
-                        {
-                            var cursor = a.NewValue switch
-                            {
-                                InputSystemCursorShape shape => InputSystemCursor.Create(shape),
-                                _ => null
-                            };
-                            SetFrameworkElementCursor(sender, cursor);
-                        }
-                    }
-                }
-            }));
-
-        public static readonly DependencyProperty CursorOverrideStateProperty =
-            DependencyProperty.RegisterAttached("CursorOverrideState", typeof(int), typeof(CursorHelper), new PropertyMetadata(0));
-
-        private static void EnsureCursorFunctions()
+        public static void SetCursor(FrameworkElement element, InputSystemCursorShape value)
         {
-            if (getCursorFunc == null || setCursorFunc == null)
+            element.SetValue(CursorProperty, value);
+        }
+
+        public static InputSystemCursorShape GetCursor(FrameworkElement element)
+        {
+            return (InputSystemCursorShape)element.GetValue(CursorProperty);
+        }
+
+        private static void CursorChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
+        {
+            if (d is not FrameworkElement element)
             {
-                lock (locker)
+                throw new NullReferenceException(nameof(element));
+            }
+
+            InputSystemCursorShape value = (InputSystemCursorShape)args.NewValue;
+
+            lock (_cursorLock)
+            {
+                if (!_cursors.ContainsKey(value))
                 {
-                    if (getCursorFunc == null || setCursorFunc == null)
-                    {
-                        var uiElementType = typeof(UIElement);
-                        var inputCursorType = typeof(InputCursor);
-
-                        var protectedCursorProp = uiElementType.GetProperty("ProtectedCursor", BindingFlags.Instance | BindingFlags.NonPublic);
-
-                        var p1 = Expression.Parameter(uiElementType, "element");
-
-                        if (getCursorFunc == null)
-                        {
-                            var body = Expression.Property(p1, protectedCursorProp);
-
-                            getCursorFunc = Expression.Lambda<Func<UIElement, InputCursor>>(body, p1)
-                                .Compile();
-                        }
-
-                        if (setCursorFunc == null)
-                        {
-                            var p2 = Expression.Parameter(inputCursorType, "cursor");
-
-                            var body = Expression.Assign(Expression.Property(p1, protectedCursorProp), p2);
-
-                            setCursorFunc = Expression.Lambda<Action<UIElement, InputCursor>>(body, p1, p2)
-                                .Compile();
-                        }
-                    }
+                    _cursors[value] = InputSystemCursor.Create(value);
                 }
+
+                element.PointerEntered -= Element_PointerEntered;
+                element.PointerEntered += Element_PointerEntered;
+                element.PointerExited -= Element_PointerExited;
+                element.PointerExited += Element_PointerExited;
+                element.Unloaded -= ElementOnUnloaded;
+                element.Unloaded += ElementOnUnloaded;
             }
         }
 
-        private static void SetFrameworkElementCursor(FrameworkElement element, InputCursor cursor)
+        private static void Element_PointerEntered(object sender, PointerRoutedEventArgs args)
         {
-            EnsureCursorFunctions();
+            InputSystemCursorShape cursor = GetCursor((FrameworkElement)sender);
+            FrameworkElement element = sender as FrameworkElement;
+            typeof(FrameworkElement).GetProperty("ProtectedCursor", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(element, InputSystemCursor.Create(cursor));
+        }
 
-            if (element.IsLoaded)
+        private static void Element_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            InputCursor cursor;
+            if (sender != e.OriginalSource && e.OriginalSource is FrameworkElement newElement)
             {
-                setCursorFunc(element, cursor);
+                cursor = _cursors[GetCursor(newElement)];
             }
             else
             {
-                element.Loaded += OnLoaded;
+                cursor = _defaultCursor;
             }
 
-            void OnLoaded(object sender, RoutedEventArgs args)
-            {
-                element.Loaded -= OnLoaded;
-                setCursorFunc(element, cursor);
-            }
+            FrameworkElement element = sender as FrameworkElement;
+            typeof(FrameworkElement).GetProperty("ProtectedCursor", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(element, cursor);
         }
 
-        private static InputCursor GetFrameworkElementCursor(FrameworkElement element)
+        private static void ElementOnUnloaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            EnsureCursorFunctions();
-
-            return getCursorFunc(element);
+            FrameworkElement element = sender as FrameworkElement;
+            typeof(FrameworkElement).GetProperty("ProtectedCursor", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(element, _defaultCursor);
         }
     }
 }
