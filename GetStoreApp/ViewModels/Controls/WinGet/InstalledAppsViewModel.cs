@@ -90,8 +90,9 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                 {
                     InstalledAppsManager = WinGetService.CreatePackageManager();
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    LogService.WriteLog(LogType.ERROR, "Installed apps information initialized failed.", e);
                     return;
                 }
                 await Task.Delay(500);
@@ -204,13 +205,15 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                         }
                     }
                     // 操作被用户所取消异常
-                    catch (OperationCanceledException)
+                    catch (OperationCanceledException e)
                     {
+                        LogService.WriteLog(LogType.INFO, "App uninstalling operation canceled.", e);
                         AppNotificationService.Show(NotificationArgs.UnInstallFailed, installedApps.AppName);
                     }
                     // 其他异常
-                    catch (Exception)
+                    catch (Exception e)
                     {
+                        LogService.WriteLog(LogType.ERROR, "App uninstalling failed.", e);
                         AppNotificationService.Show(NotificationArgs.UnInstallFailed, installedApps.AppName);
                     }
                 }
@@ -257,7 +260,10 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                     }
                 });
             }
-            catch (Exception) { }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LogType.ERROR, "Get installed apps information failed.", e);
+            }
         }
 
         /// <summary>

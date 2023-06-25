@@ -80,8 +80,9 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                 {
                     UpgradableAppsManager = WinGetService.CreatePackageManager();
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    LogService.WriteLog(LogType.ERROR, "Upgradable apps information initialized failed.", e);
                     return;
                 }
                 await Task.Delay(500);
@@ -353,8 +354,10 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                         }
                     }
                     // 操作被用户所取消异常
-                    catch (OperationCanceledException)
+                    catch (OperationCanceledException e)
                     {
+                        LogService.WriteLog(LogType.INFO, "App installing operation canceled.", e);
+
                         // 应用升级失败，将当前任务状态修改为可升级状态
                         foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsDataList)
                         {
@@ -380,8 +383,10 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                         }
                     }
                     // 其他异常
-                    catch (Exception)
+                    catch (Exception e)
                     {
+                        LogService.WriteLog(LogType.ERROR, "App installing failed.", e);
+
                         // 应用升级失败，从任务管理列表中移除当前任务
                         foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsDataList)
                         {
@@ -489,7 +494,10 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                     }
                 });
             }
-            catch (Exception) { }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LogType.WARNING, "Get upgradable apps information failed.", e);
+            }
         }
 
         private void InitializeData()

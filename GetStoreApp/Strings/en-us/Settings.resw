@@ -180,6 +180,15 @@
   <data name="ChangeFolder" xml:space="preserve">
     <value>Change directory</value>
   </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="ClearLog" xml:space="preserve">
+    <value>Clear log record</value>
+  </data>
+  <data name="ClearLogDescription" xml:space="preserve">
+    <value>Clear all log contents of the app</value>
+  </data>
   <data name="CloseApp" xml:space="preserve">
     <value>Quit the app</value>
   </data>
@@ -312,6 +321,18 @@
   <data name="LinkFilterInstruction" xml:space="preserve">
     <value>Link filtering instructions</value>
   </data>
+  <data name="LogFolder" xml:space="preserve">
+    <value>Log storage path</value>
+  </data>
+  <data name="LogFolderDescription" xml:space="preserve">
+    <value>Manage the log content of the app</value>
+  </data>
+  <data name="LogRecord" xml:space="preserve">
+    <value>Log record</value>
+  </data>
+  <data name="LogRecordDescription" xml:space="preserve">
+    <value>Manage app log record</value>
+  </data>
   <data name="NetWorkMonitor" xml:space="preserve">
     <value>Network monitoring status</value>
   </data>
@@ -365,6 +386,9 @@
   </data>
   <data name="OpenFolderToolTip" xml:space="preserve">
     <value>Click to access the folder</value>
+  </data>
+  <data name="OpenLogFolder" xml:space="preserve">
+    <value>Open folder</value>
   </data>
   <data name="OpenWinGetSettings" xml:space="preserve">
     <value>Open</value>

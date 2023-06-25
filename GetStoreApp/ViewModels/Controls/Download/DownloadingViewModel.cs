@@ -1,7 +1,9 @@
-﻿using GetStoreApp.Extensions.DataType.Events;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Extensions.DataType.Events;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Common;
+using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.ViewModels.Base;
 using Microsoft.UI.Xaml;
@@ -167,7 +169,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
                             File.Delete(downloadingItem.FilePath);
                         }
                     }
-                    catch (Exception) { }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LogType.WARNING, "Delete downloading file failed.", e);
+                    }
 
                     // 删除Aria2后缀下载信息记录文件
                     try
@@ -177,7 +182,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
                             File.Delete(string.Format("{0}.{1}", downloadingItem.FilePath, "aria2"));
                         }
                     }
-                    catch (Exception) { }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LogType.WARNING, "Delete downloading information file failed.", e);
+                    }
                 }
             });
 
@@ -255,7 +263,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
                                 File.Delete(downloadingItem.FilePath);
                             }
                         }
-                        catch (Exception) { }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LogType.WARNING, "Delete downloading file failed.", e);
+                        }
 
                         // 删除Aria2后缀下载信息记录文件
                         try
@@ -265,7 +276,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
                                 File.Delete(string.Format("{0}.{1}", downloadingItem.FilePath, "aria2"));
                             }
                         }
-                        catch (Exception) { }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LogType.WARNING, "Delete downloading information file failed.", e);
+                        }
                     }
 
                     // 信息更新完毕时，允许其他操作开始执行
@@ -379,8 +393,9 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     DownloadingDataList[index].TotalSize = backgroundItem.TotalSize;
                     DownloadingDataList[index].CurrentSpeed = backgroundItem.CurrentSpeed;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    LogService.WriteLog(LogType.WARNING, "Update downloading progress failed.", e);
                     continue;
                 }
             }
@@ -431,8 +446,9 @@ namespace GetStoreApp.ViewModels.Controls.Download
                         {
                             DownloadingDataList.Remove(DownloadingDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey && item.DownloadFlag is 3));
                         }
-                        catch (Exception)
+                        catch (Exception e)
                         {
+                            LogService.WriteLog(LogType.WARNING, "Downloading list remove items failed", e);
                             continue;
                         }
                     }
@@ -484,8 +500,9 @@ namespace GetStoreApp.ViewModels.Controls.Download
                         {
                             DownloadingDataList.Remove(DownloadingDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey && item.DownloadFlag is 1));
                         }
-                        catch (Exception)
+                        catch (Exception e)
                         {
+                            LogService.WriteLog(LogType.WARNING, "Waiting list remove items failed", e);
                             continue;
                         }
                     }

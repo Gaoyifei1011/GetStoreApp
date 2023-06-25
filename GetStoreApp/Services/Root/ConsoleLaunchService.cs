@@ -130,8 +130,9 @@ namespace GetStoreApp.Services.Root
                         typeIndex = 1;
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    LogService.WriteLog(LogType.WARNING, "Parse console params(type) failed.", e);
                     typeIndex = 1;
                 }
 
@@ -147,8 +148,9 @@ namespace GetStoreApp.Services.Root
                         channelIndex = 4;
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    LogService.WriteLog(LogType.WARNING, "Parse console params(channel) failed.", e);
                     channelIndex = 4;
                 }
 

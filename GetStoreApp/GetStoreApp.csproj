@@ -12,6 +12,7 @@
     <Deterministic>true</Deterministic>
     <DesktopCompatible>true</DesktopCompatible>
     <DisableXbfLineInfo>False</DisableXbfLineInfo>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
     <EnableMsixTooling>false</EnableMsixTooling>
     <FileAlignment>512</FileAlignment>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -165,6 +166,7 @@
     <None Remove="UI\Controls\Settings\Advanced\AppExitControl.xaml" />
     <None Remove="UI\Controls\Settings\Advanced\ExperimentalFeaturesControl.xaml" />
     <None Remove="UI\Controls\Settings\Advanced\InstallModeControl.xaml" />
+    <None Remove="UI\Controls\Settings\Advanced\LogControl.xaml" />
     <None Remove="UI\Controls\Settings\Advanced\TraceCleanupControl.xaml" />
     
     <None Remove="UI\Controls\Settings\Appearance\AlwaysShowBackdropControl.xaml" />    
@@ -229,6 +231,7 @@
     <None Remove="UI\Notifications\FileInformationCopyNotification.xaml" />
     <None Remove="UI\Notifications\HistoryCopyNotification.xaml" />
     <None Remove="UI\Notifications\LanguageChangeNotification.xaml" />
+    <None Remove="UI\Notifications\LogCleanNotification.xaml" />
     <None Remove="UI\Notifications\NetWorkErrorNotification.xaml" />
     <None Remove="UI\Notifications\QuickOperationNotification.xaml" />
     <None Remove="UI\Notifications\ResultContentCopyNotification.xaml" />
@@ -306,6 +309,7 @@
     <Page Update="UI\Controls\Settings\Advanced\AppExitControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Settings\Advanced\ExperimentalFeaturesControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Settings\Advanced\InstallModeControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\Settings\Advanced\LogControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Settings\Advanced\TraceCleanupControl.xaml" Generator="MSBuild:Compile" />
 
     <Page Update="UI\Controls\Settings\Appearance\AlwaysShowBackdropControl.xaml" Generator="MSBuild:Compile" />
@@ -369,6 +373,7 @@
     <Page Update="UI\Notifications\FileInformationCopyNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Notifications\HistoryCopyNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Notifications\LanguageChangeNotification.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Notifications\LogCleanNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Notifications\NetWorkErrorNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Notifications\QuickOperationNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Notifications\ResultContentCopyNotification.xaml" Generator="MSBuild:Compile" />

@@ -217,6 +217,12 @@
   <data name="LanguageChangeSuccessfully" xml:space="preserve">
     <value>语言设置修改成功，重启应用后生效</value>
   </data>
+  <data name="LogCleanFailed" xml:space="preserve">
+    <value>日志清除失败，您可以手动打开文件夹清理日志记录</value>
+  </data>
+  <data name="LogCleanSuccessfully" xml:space="preserve">
+    <value>所有日志记录清除成功</value>
+  </data>
   <data name="NetWorkError" xml:space="preserve">
     <value>网络连接异常，请检查您的网络连接后再尝试下载</value>
   </data>

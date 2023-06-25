@@ -1,4 +1,6 @@
-﻿using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Services.Root;
+using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -40,8 +42,9 @@ namespace GetStoreApp.Helpers.Root
                 Kernel32Library.CloseHandle(hSnapshot);
                 return ProcessEntry32PIDList;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                LogService.WriteLog(LogType.ERROR, "Get process Pid list failed.", e);
                 return ProcessEntry32PIDList;
             }
         }

@@ -139,7 +139,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
         /// <summary>
         /// 删除选中的任务
         /// </summary>
-        public async void OnDelectSelectedClicked(object sender, RoutedEventArgs args)
+        public async void OnDeleteSelectedClicked(object sender, RoutedEventArgs args)
         {
             List<BackgroundModel> SelectedCompletedDataList = new List<BackgroundModel>();
 
@@ -184,8 +184,9 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     {
                         CompletedDataList.Remove(CompletedDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey));
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
+                        LogService.WriteLog(LogType.WARNING, "Delete completed download record failed.", e);
                         continue;
                     }
                 }
@@ -245,7 +246,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
                             File.Delete(completedItem.FilePath);
                         }
                     }
-                    catch (Exception) { }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LogType.WARNING, "Delete completed download file failed.", e);
+                    }
 
                     // 删除记录
                     try
@@ -257,8 +261,9 @@ namespace GetStoreApp.ViewModels.Controls.Download
                             CompletedDataList.Remove(CompletedDataList.First(item => item.DownloadKey == item.DownloadKey));
                         }
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
+                        LogService.WriteLog(LogType.WARNING, "Delete completed download record failed.", e);
                         continue;
                     }
                 }
@@ -316,9 +321,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
                 interop.ShowShareUIForWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 new ShareFailedNotification(true, SelectedCompletedDataList.Count).Show();
+                LogService.WriteLog(LogType.WARNING, "Share selected files failed.", e);
             }
         }
 
@@ -447,14 +453,16 @@ namespace GetStoreApp.ViewModels.Controls.Download
                                         }
                                     }
                                 }
-                                catch (Exception)
+                                catch (Exception e)
                                 {
+                                    LogService.WriteLog(LogType.WARNING, "Install apps failed.", e);
                                     return;
                                 }
                             }
                         }
-                        catch (Exception)
+                        catch (Exception e)
                         {
+                            LogService.WriteLog(LogType.WARNING, "Install apps failed.", e);
                             return;
                         }
                     }
@@ -479,8 +487,9 @@ namespace GetStoreApp.ViewModels.Controls.Download
                             options.ItemsToSelect.Add(file);
                             await Launcher.LaunchFolderAsync(folder, options);
                         }
-                        catch (Exception)
+                        catch (Exception e)
                         {
+                            LogService.WriteLog(LogType.WARNING, "Completed download item folder located failed.", e);
                             await Launcher.LaunchFolderPathAsync(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
                         }
                     }
@@ -513,7 +522,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
                         {
                             CompletedDataList.Remove(completedItem);
                         }
-                        catch (Exception) { }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LogType.WARNING, "Delete completed download record failed.", e);
+                        }
 
                         lock (CompletedDataListLock) isUpdatingNow = false;
                     }
@@ -539,7 +551,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
                             File.Delete(completedItem.FilePath);
                         }
                     }
-                    catch (Exception) { }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LogType.WARNING, "Delete completed download file failed.", e);
+                    }
 
                     bool DeleteResult = await DownloadXmlService.DeleteAsync(completedItem.DownloadKey);
 
@@ -553,7 +568,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
                         {
                             CompletedDataList.Remove(completedItem);
                         }
-                        catch (Exception) { }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LogType.WARNING, "Delete completed download record failed.", e);
+                        }
 
                         lock (CompletedDataListLock) isUpdatingNow = false;
                     }
@@ -585,9 +603,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
                         interop.ShowShareUIForWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
                         new ShareFailedNotification(false).Show();
+                        LogService.WriteLog(LogType.WARNING, "Share file failed.", e);
                     }
                 }
             };

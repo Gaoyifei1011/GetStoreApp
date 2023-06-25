@@ -14,7 +14,6 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -120,6 +119,7 @@ namespace GetStoreApp
         private static async Task InitializeProgramResourcesAsync()
         {
             // 初始化应用资源，应用使用的语言信息和启动参数
+            await LogService.InitializeAsync();
             await LanguageService.InitializeLanguageAsync();
             ResourceService.InitializeResource(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
 

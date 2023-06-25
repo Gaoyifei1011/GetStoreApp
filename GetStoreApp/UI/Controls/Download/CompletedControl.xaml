@@ -184,7 +184,7 @@
 
                 <FlyoutBase.AttachedFlyout>
                     <menusAndToolbars:AdaptiveMenuFlyout>
-                        <MenuFlyoutItem Click="{x:Bind ViewModel.OnDelectSelectedClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelected')}">
+                        <MenuFlyoutItem Click="{x:Bind ViewModel.OnDeleteSelectedClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelected')}">
                             <ToolTipService.ToolTip>
                                 <ToolTip
                                     Content="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedToolTip')}"

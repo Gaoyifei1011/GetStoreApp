@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Base;
@@ -115,8 +116,9 @@ namespace GetStoreApp.ViewModels.Dialogs.About
                         IDictionary<string, object> WinUI3FileProperties = await WinUI3File.Properties.RetrievePropertiesAsync(PropertyNamesList);
                         WinUI3Version = WinUI3FileProperties[FileVersionProperty] is not null ? Convert.ToString(WinUI3FileProperties[FileVersionProperty]) : string.Empty;
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
+                        LogService.WriteLog(LogType.WARNING, "Get WinUI3 version failed.", e);
                         WinUI3Version = string.Empty;
                     }
 
@@ -127,8 +129,9 @@ namespace GetStoreApp.ViewModels.Dialogs.About
                         IDictionary<string, object> WebView2CoreFileProperties = await WebView2CoreFile.Properties.RetrievePropertiesAsync(PropertyNamesList);
                         WebView2CoreVersion = WebView2CoreFileProperties[FileVersionProperty] is not null ? Convert.ToString(WebView2CoreFileProperties[FileVersionProperty]) : string.Empty;
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
+                        LogService.WriteLog(LogType.WARNING, "Get WebView2 Core version failed.", e);
                         WebView2CoreVersion = string.Empty;
                     }
                 }

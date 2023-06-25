@@ -430,14 +430,16 @@ namespace GetStoreApp.Services.Root
                 {
                     return ResourceMap.GetValue(resource, CurrentResourceContext).ValueAsString;
                 }
-                catch (Exception)
+                catch (Exception currentResourceException)
                 {
+                    LogService.WriteLog(LogType.WARNING, string.Format("Get resource context with langauge {0} failed.", CurrentAppLanguage.InternalName), currentResourceException);
                     try
                     {
                         return ResourceMap.GetValue(resource, DefaultResourceContext).ValueAsString;
                     }
-                    catch (Exception)
+                    catch (Exception defaultResourceException)
                     {
+                        LogService.WriteLog(LogType.WARNING, string.Format("Get resource context with langauge {0} failed.", DefaultAppLanguage.InternalName), defaultResourceException);
                         return resource;
                     }
                 }

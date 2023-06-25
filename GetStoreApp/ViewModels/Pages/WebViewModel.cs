@@ -4,6 +4,7 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Common;
+using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Dialogs.Web;
@@ -236,8 +237,9 @@ namespace GetStoreApp.ViewModels.Pages
                     CoreWebView.SourceChanged -= OnSourceChanged;
                     CoreWebView.DownloadStarting -= OnDownloadStarting;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    LogService.WriteLog(LogType.WARNING, "Unregister CoreWebView event failed.", e);
                     return;
                 }
             }
@@ -320,7 +322,10 @@ namespace GetStoreApp.ViewModels.Pages
                                                 File.Delete(backgroundItem.FilePath);
                                             }
                                         }
-                                        catch (Exception) { }
+                                        catch (Exception e)
+                                        {
+                                            LogService.WriteLog(LogType.WARNING, "Delete duplicated unfinished downloaded file failed.", e);
+                                        }
                                         finally
                                         {
                                             bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
@@ -347,7 +352,10 @@ namespace GetStoreApp.ViewModels.Pages
                                                 File.Delete(backgroundItem.FilePath);
                                             }
                                         }
-                                        catch (Exception) { }
+                                        catch (Exception e)
+                                        {
+                                            LogService.WriteLog(LogType.WARNING, "Delete duplicated completed downloaded file failed.", e);
+                                        }
                                         finally
                                         {
                                             bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");

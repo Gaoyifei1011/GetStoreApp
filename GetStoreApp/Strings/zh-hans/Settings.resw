@@ -180,6 +180,15 @@
   <data name="ChangeFolder" xml:space="preserve">
     <value>更改目录</value>
   </data>
+  <data name="Clear" xml:space="preserve">
+    <value>清除</value>
+  </data>
+  <data name="ClearLog" xml:space="preserve">
+    <value>清除日志记录</value>
+  </data>
+  <data name="ClearLogDescription" xml:space="preserve">
+    <value>清除应用所有的日志内容</value>
+  </data>
   <data name="CloseApp" xml:space="preserve">
     <value>退出应用</value>
   </data>
@@ -312,6 +321,18 @@
   <data name="LinkFilterInstruction" xml:space="preserve">
     <value>链接过滤说明</value>
   </data>
+  <data name="LogFolder" xml:space="preserve">
+    <value>日志存放路径</value>
+  </data>
+  <data name="LogFolderDescription" xml:space="preserve">
+    <value>管理应用的日志内容</value>
+  </data>
+  <data name="LogRecord" xml:space="preserve">
+    <value>日志记录</value>
+  </data>
+  <data name="LogRecordDescription" xml:space="preserve">
+    <value>管理应用日志记录</value>
+  </data>
   <data name="NetWorkMonitor" xml:space="preserve">
     <value>网络监控状态</value>
   </data>
@@ -365,6 +386,9 @@
   </data>
   <data name="OpenFolderToolTip" xml:space="preserve">
     <value>单击访问该文件夹</value>
+  </data>
+  <data name="OpenLogFolder" xml:space="preserve">
+    <value>打开文件夹</value>
   </data>
   <data name="OpenWinGetSettings" xml:space="preserve">
     <value>打开</value>

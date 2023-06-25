@@ -100,8 +100,9 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                 {
                     SearchAppsManager = WinGetService.CreatePackageManager();
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    LogService.WriteLog(LogType.ERROR, "Search apps information initialized failed.", e);
                     return;
                 }
                 finally
@@ -354,8 +355,10 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                         }
                     }
                     // 操作被用户所取消异常
-                    catch (OperationCanceledException)
+                    catch (OperationCanceledException e)
                     {
+                        LogService.WriteLog(LogType.INFO, "App installing operation canceled.", e);
+
                         // 应用安装失败，将当前任务状态修改为可安装状态
                         foreach (SearchAppsModel searchAppsItem in SearchAppsDataList)
                         {
@@ -381,8 +384,10 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                         }
                     }
                     // 其他异常
-                    catch (Exception)
+                    catch (Exception e)
                     {
+                        LogService.WriteLog(LogType.ERROR, "App installing failed.", e);
+
                         // 应用安装失败，将当前任务状态修改为可安装状态
                         foreach (SearchAppsModel searchAppsItem in SearchAppsDataList)
                         {
@@ -492,7 +497,10 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                     }
                 });
             }
-            catch (Exception) { }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LogType.WARNING, "Get search apps information failed.", e);
+            }
         }
 
         /// <summary>

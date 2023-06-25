@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.WindowsAPI.PInvoke.Comctl32;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -44,18 +43,9 @@ namespace GetStoreApp.Services.Root
                     await InitializeHistoryDataAsync();
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                Comctl32Library.TaskDialog(
-                    IntPtr.Zero,
-                    IntPtr.Zero,
-                    ResourceService.GetLocalized("Resources/AppDisplayName"),
-                    ResourceService.GetLocalized("MessageInfo/CreateFileFailed"),
-                    string.Empty,
-                    TASKDIALOG_COMMON_BUTTON_FLAGS.TDCBF_OK_BUTTON,
-                    TASKDIALOGICON.TD_SHIELD_ERROR_RED_BAR,
-                    out TaskDialogResult _
-                    );
+                LogService.WriteLog(LogType.CRITICAL, "Create history storage file failed.", e);
                 Environment.Exit(Convert.ToInt32(AppExitCode.Failed));
             }
         }
@@ -77,18 +67,9 @@ namespace GetStoreApp.Services.Root
                     await InitializeDownloadDataAsync();
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                Comctl32Library.TaskDialog(
-                    IntPtr.Zero,
-                    IntPtr.Zero,
-                    ResourceService.GetLocalized("Resources/AppDisplayName"),
-                    ResourceService.GetLocalized("MessageInfo/CreateFileFailed"),
-                    string.Empty,
-                    TASKDIALOG_COMMON_BUTTON_FLAGS.TDCBF_OK_BUTTON,
-                    TASKDIALOGICON.TD_SHIELD_ERROR_RED_BAR,
-                    out TaskDialogResult _
-                    );
+                LogService.WriteLog(LogType.CRITICAL, "Create download storage file failed.", e);
                 Environment.Exit(Convert.ToInt32(AppExitCode.Failed));
             }
         }

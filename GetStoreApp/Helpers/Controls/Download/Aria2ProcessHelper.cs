@@ -1,4 +1,6 @@
-﻿using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Services.Root;
+using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;
 using System.Runtime.InteropServices;
@@ -39,8 +41,9 @@ namespace GetStoreApp.Helpers.Controls.Download
 
                 return Kernel32Library.CreateProcess(null, string.Format("{0} {1}", fileName, arguments), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref Aria2ProcessStartupInfo, out Aria2ProcessInformation);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                LogService.WriteLog(LogType.ERROR, "Aria2 Process create failed.", e);
                 return false;
             }
         }
@@ -64,8 +67,9 @@ namespace GetStoreApp.Helpers.Controls.Download
                 if (Aria2ProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(Aria2ProcessInformation.hProcess);
                 if (Aria2ProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(Aria2ProcessInformation.hThread);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                LogService.WriteLog(LogType.ERROR, "Aria2 Process kill failed.", e);
                 return;
             }
         }
@@ -97,8 +101,9 @@ namespace GetStoreApp.Helpers.Controls.Download
                 }
                 Kernel32Library.CloseHandle(hSnapshot);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                LogService.WriteLog(LogType.ERROR, "Aria2 Process search failed.", e);
                 SearchResult = false;
             }
             return SearchResult;

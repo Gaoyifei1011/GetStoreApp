@@ -1,8 +1,10 @@
-﻿using GetStoreApp.Extensions.DataType.Events;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Extensions.DataType.Events;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Controls.Settings.Experiment;
+using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Base;
@@ -104,8 +106,9 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     {
                         UnfinishedDataList.Remove(UnfinishedDataList.First(item => item.DownloadKey == item.DownloadKey));
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
+                        LogService.WriteLog(LogType.WARNING, "Unfinished download list remove item failed.", e);
                         continue;
                     }
                 }
@@ -205,7 +208,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
                         File.Delete(backgroundItem.FilePath);
                     }
                 }
-                catch (Exception) { }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LogType.WARNING, "Delete unfinished download list  file failed.", e);
+                }
 
                 // 删除Aria2后缀下载信息记录文件
                 try
@@ -215,7 +221,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
                         File.Delete(string.Format("{0}.{1}", backgroundItem.FilePath, "aria2"));
                     }
                 }
-                catch (Exception) { }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LogType.WARNING, "Delete unfinished download information file failed.", e);
+                }
 
                 // 删除记录
                 try
@@ -227,7 +236,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
                         UnfinishedDataList.Remove(UnfinishedDataList.First(item => item.DownloadKey == item.DownloadKey));
                     }
                 }
-                catch (Exception) { }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LogType.WARNING, "Delete unfinished download record failed.", e);
+                }
             }
 
             lock (UnfinishedDataListLock) isUpdatingNow = false;
@@ -298,7 +310,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
                             File.Delete(unfinishedItem.FilePath);
                         }
                     }
-                    catch (Exception) { }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LogType.WARNING, "Delete unfinished download file failed.", e);
+                    }
 
                     // 删除Aria2后缀下载信息记录文件
                     try
@@ -308,7 +323,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
                             File.Delete(string.Format("{0}.{1}", unfinishedItem.FilePath, "aria2"));
                         }
                     }
-                    catch (Exception) { }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LogType.WARNING, "Delete unfinished download information file failed.", e);
+                    }
 
                     // 删除记录
                     while (isUpdatingNow) await Task.Delay(50);
@@ -323,7 +341,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
                             UnfinishedDataList.Remove(unfinishedItem);
                         }
                     }
-                    catch (Exception) { }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LogType.WARNING, "Delete unfinished download record failed.", e);
+                    }
 
                     lock (UnfinishedDataListLock) isUpdatingNow = false;
                 }

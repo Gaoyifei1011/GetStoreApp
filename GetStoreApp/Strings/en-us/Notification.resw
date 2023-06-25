@@ -217,6 +217,12 @@
   <data name="LanguageChangeSuccessfully" xml:space="preserve">
     <value>The language setting is modified successfully and takes effect after restarting the application</value>
   </data>
+  <data name="LogCleanFailed" xml:space="preserve">
+    <value>Log cleanup failed.You can manually turn on folder cleanup logging</value>
+  </data>
+  <data name="LogCleanSuccessfully" xml:space="preserve">
+    <value>All log records were cleaned up successfully</value>
+  </data>
   <data name="NetWorkError" xml:space="preserve">
     <value>The network connection is abnormal, please check your network connection before trying to download</value>
   </data>

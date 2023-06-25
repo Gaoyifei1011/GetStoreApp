@@ -1,4 +1,6 @@
-﻿using GetStoreApp.WindowsAPI.Dialogs.FileDialog;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Services.Root;
+using GetStoreApp.WindowsAPI.Dialogs.FileDialog;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using System;
 using System.Runtime.InteropServices;
@@ -59,8 +61,9 @@ namespace GetStoreApp.WindowsAPI.Dialogs
                 Marshal.ReleaseComObject(pItem);
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                LogService.WriteLog(LogType.ERROR, "Show Folder picker(IFileDialog) failed.", e);
                 Marshal.FinalReleaseComObject(dialog);
                 return false;
             }

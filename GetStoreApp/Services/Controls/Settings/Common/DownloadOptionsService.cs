@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
+using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Models.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
 using System;
@@ -64,8 +65,9 @@ namespace GetStoreApp.Services.Controls.Settings.Common
             {
                 return await StorageFolder.GetFolderFromPathAsync(folder);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                LogService.WriteLog(LogType.WARNING, "Get download saved folder failed.", e);
                 await SetFolderAsync(DefaultFolder);
                 return DefaultFolder;
             }

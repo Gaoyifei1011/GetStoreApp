@@ -148,8 +148,9 @@ namespace GetStoreApp.Services.Controls.Download
                     WaitingList.Remove(WaitingList.Find(item => item.DownloadKey == downloadKey));
                     Result = await DownloadXmlService.UpdateFlagAsync(downloadKey, 2);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    LogService.WriteLog(LogType.WARNING, "Pause waiting list task failed.", e);
                     Result = false;
                 }
             }
@@ -167,8 +168,9 @@ namespace GetStoreApp.Services.Controls.Download
                         DownloadingList.Remove(DownloadingList.Find(item => item.DownloadKey == downloadKey));
                         Result = await DownloadXmlService.UpdateFlagAsync(downloadKey, 2);
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
+                        LogService.WriteLog(LogType.WARNING, "Pause downloading list task failed.", e);
                         Result = false;
                     }
                 }
@@ -205,8 +207,9 @@ namespace GetStoreApp.Services.Controls.Download
                     {
                         await DownloadXmlService.UpdateFlagAsync(backgroundItem.DownloadKey, 2);
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
+                        LogService.WriteLog(LogType.WARNING, "Pause all downloading list task failed.", e);
                         continue;
                     }
                 }
@@ -219,8 +222,9 @@ namespace GetStoreApp.Services.Controls.Download
                 {
                     await DownloadXmlService.UpdateFlagAsync(backgroundItem.DownloadKey, 2);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    LogService.WriteLog(LogType.WARNING, "Pause all waiting list task failed.", e);
                     continue;
                 }
             }
@@ -252,8 +256,9 @@ namespace GetStoreApp.Services.Controls.Download
                     WaitingList.RemoveAll(item => item.DownloadKey == downloadKey);
                     Result = await DownloadXmlService.DeleteAsync(downloadKey);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    LogService.WriteLog(LogType.WARNING, "Delete waiting list task failed.", e);
                     Result = false;
                 }
             }
@@ -272,8 +277,9 @@ namespace GetStoreApp.Services.Controls.Download
 
                         Result = await DownloadXmlService.DeleteAsync(downloadKey);
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
+                        LogService.WriteLog(LogType.WARNING, "Delete downloading list task failed.", e);
                         Result = false;
                     }
                 }
@@ -383,8 +389,9 @@ namespace GetStoreApp.Services.Controls.Download
 
                         await DownloadXmlService.UpdateFlagAsync(DownloadItem.DownloadKey, DownloadItem.DownloadFlag);
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
+                        LogService.WriteLog(LogType.WARNING, "Schedule add task failed.", e);
                         continue;
                     }
                 }
@@ -428,7 +435,7 @@ namespace GetStoreApp.Services.Controls.Download
                         }
 
                         // 当下载任务处于错误状态时，将当前任务标记为错误状态
-                        else if (TellStatusResult.Item2 is "error")
+                        else if (TellStatusResult.Item2 is "WARNING")
                         {
                             downloadItem.DownloadFlag = 0;
                             downloadItem.GID = string.Empty;

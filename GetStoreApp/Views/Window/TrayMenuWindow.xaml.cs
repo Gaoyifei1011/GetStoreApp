@@ -51,15 +51,7 @@ namespace GetStoreApp.Views.Window
             // 设置窗口扩展样式为工具窗口
             SetWindowLongAuto(GetWindowHandle(), WindowLongIndexFlags.GWL_EXSTYLE, WindowStyleEx.WS_EX_TOOLWINDOW);
 
-            User32Library.SetWindowPos(
-                GetWindowHandle(),
-                IntPtr.Zero,
-                0,
-                0,
-                0,
-                0,
-                SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOOWNERZORDER
-                );
+            AppWindow.MoveAndResize(new RectInt32(0, 0, 0, 0));
             AppWindow.Show();
             AppWindow.Hide();
         }
@@ -93,27 +85,11 @@ namespace GetStoreApp.Views.Window
                         bool outofScreen = windowPos.Y + AppWindow.Size.Height > monitorInfo.rcMonitor.bottom;
                         if (outofScreen)
                         {
-                            User32Library.SetWindowPos(
-                                GetWindowHandle(),
-                                IntPtr.Zero,
-                                windowPos.X,
-                                windowPos.Y - AppWindow.Size.Height,
-                                0,
-                                0,
-                                SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER
-                                );
+                            AppWindow.Move(new PointInt32(windowPos.X, windowPos.Y - AppWindow.Size.Height));
                         }
                         else
                         {
-                            User32Library.SetWindowPos(
-                                GetWindowHandle(),
-                                IntPtr.Zero,
-                                windowPos.X,
-                                windowPos.Y,
-                                0,
-                                0,
-                                SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER
-                                );
+                            AppWindow.Move(new PointInt32(windowPos.X, windowPos.Y));
                         }
                         break;
                     }
@@ -124,27 +100,11 @@ namespace GetStoreApp.Views.Window
                         bool outofScreen = windowPos.X + AppWindow.Size.Width > monitorInfo.rcMonitor.right;
                         if (outofScreen)
                         {
-                            User32Library.SetWindowPos(
-                                GetWindowHandle(),
-                                IntPtr.Zero,
-                                windowPos.X - AppWindow.Size.Width,
-                                windowPos.Y,
-                                0,
-                                0,
-                                SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER
-                                );
+                            AppWindow.Move(new PointInt32(windowPos.X - AppWindow.Size.Width, windowPos.Y));
                         }
                         else
                         {
-                            User32Library.SetWindowPos(
-                                GetWindowHandle(),
-                                IntPtr.Zero,
-                                windowPos.X,
-                                windowPos.Y,
-                                0,
-                                0,
-                                SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER
-                                );
+                            AppWindow.Move(new PointInt32(windowPos.X, windowPos.Y));
                         }
                         break;
                     }
@@ -155,26 +115,11 @@ namespace GetStoreApp.Views.Window
                         bool outofScreen = windowPos.Y + AppWindow.Size.Height > monitorInfo.rcMonitor.bottom;
                         if (outofScreen)
                         {
-                            User32Library.SetWindowPos(
-                                GetWindowHandle(),
-                                IntPtr.Zero,
-                                windowPos.X - AppWindow.Size.Width, windowPos.Y - AppWindow.Size.Height,
-                                0,
-                                0,
-                                SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER
-                                );
+                            AppWindow.Move(new PointInt32(windowPos.X - AppWindow.Size.Width, windowPos.Y - AppWindow.Size.Height));
                         }
                         else
                         {
-                            User32Library.SetWindowPos(
-                                GetWindowHandle(),
-                                IntPtr.Zero,
-                                windowPos.X - AppWindow.Size.Width,
-                                windowPos.Y,
-                                0,
-                                0,
-                                SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER
-                                );
+                            AppWindow.Move(new PointInt32(windowPos.X - AppWindow.Size.Width, windowPos.Y));
                         }
                         break;
                     }
@@ -185,27 +130,11 @@ namespace GetStoreApp.Views.Window
                         bool outofScreen = windowPos.X + AppWindow.Size.Width > monitorInfo.rcMonitor.right;
                         if (outofScreen)
                         {
-                            User32Library.SetWindowPos(
-                                GetWindowHandle(),
-                                IntPtr.Zero,
-                                windowPos.X - AppWindow.Size.Width,
-                                windowPos.Y - AppWindow.Size.Height,
-                                0,
-                                0,
-                                SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER
-                                );
+                            AppWindow.Move(new PointInt32(windowPos.X - AppWindow.Size.Width, windowPos.Y - AppWindow.Size.Height));
                         }
                         else
                         {
-                            User32Library.SetWindowPos(
-                                GetWindowHandle(),
-                                IntPtr.Zero,
-                                windowPos.X,
-                                windowPos.Y - AppWindow.Size.Height,
-                                0,
-                                0,
-                                SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER
-                                );
+                            AppWindow.Move(new PointInt32(windowPos.X, windowPos.Y - AppWindow.Size.Height));
                         }
                     }
                     break;
@@ -217,15 +146,10 @@ namespace GetStoreApp.Views.Window
         /// </summary>
         public void SetWindowSize()
         {
-            User32Library.SetWindowPos(
-                GetWindowHandle(),
-                IntPtr.Zero,
-                0,
-                0,
+            AppWindow.Resize(new SizeInt32(
                 DPICalcHelper.ConvertEpxToPixel(Program.ApplicationRoot.TrayIcon.Handle, Convert.ToInt32(TrayMenuFlyout.ActualWidth) + 2),
-                DPICalcHelper.ConvertEpxToPixel(Program.ApplicationRoot.TrayIcon.Handle, Convert.ToInt32(TrayMenuFlyout.ActualHeight) + 2),
-                SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER
-                );
+                DPICalcHelper.ConvertEpxToPixel(Program.ApplicationRoot.TrayIcon.Handle, Convert.ToInt32(TrayMenuFlyout.ActualHeight) + 2)
+                ));
         }
 
         /// <summary>

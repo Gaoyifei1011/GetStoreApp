@@ -110,6 +110,8 @@
                 <advanced:AppExitControl />
 
                 <advanced:ExperimentalFeaturesControl />
+
+                <advanced:LogControl />
             </StackPanel>
         </ScrollViewer>
     </Grid>

@@ -124,7 +124,10 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
                         await DownloadOptionsService.SetFolderAsync(folder);
                     }
                 }
-                catch (Exception) { }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LogType.ERROR, "Change download save folder failed", e);
+                }
             }
         }
 

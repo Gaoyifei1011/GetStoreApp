@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Models.Controls.History;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Models.Controls.History;
 using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
@@ -76,8 +77,9 @@ namespace GetStoreApp.Services.Controls.History
                     }
                 });
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                LogService.WriteLog(LogType.WARNING, "Add history record failed.", e);
                 return;
             }
         }
@@ -176,10 +178,11 @@ namespace GetStoreApp.Services.Controls.History
                 });
                 return (historyRawList, isHistoryEmpty, isHistoryEmptyAfterFilter);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 isHistoryEmpty = true;
                 isHistoryEmptyAfterFilter = true;
+                LogService.WriteLog(LogType.WARNING, "Query history record with condition failed.", e);
                 return (historyRawList, isHistoryEmpty, isHistoryEmptyAfterFilter);
             }
         }
@@ -237,8 +240,9 @@ namespace GetStoreApp.Services.Controls.History
 
                 return HistoryRawList;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                LogService.WriteLog(LogType.WARNING, "Query history record failed.", e);
                 return HistoryRawList;
             }
         }
@@ -284,8 +288,9 @@ namespace GetStoreApp.Services.Controls.History
                 });
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                LogService.WriteLog(LogType.WARNING, "Delete history record failed.", e);
                 return false;
             }
         }
@@ -319,8 +324,9 @@ namespace GetStoreApp.Services.Controls.History
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                LogService.WriteLog(LogType.WARNING, "Clear history record failed.", e);
                 return false;
             }
         }

@@ -1,4 +1,6 @@
-﻿using GetStoreApp.Models.Controls.Store;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Models.Controls.Store;
+using GetStoreApp.Services.Root;
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -55,6 +57,16 @@ namespace GetStoreApp.Helpers.Controls.Store
                     RequestId = 0;
                     RequestStatusCode = string.Format("{0}", response.StatusCode);
                     RequestContent = await response.Content.ReadAsStringAsync();
+
+                    StringBuilder responseSuccessBuilder = new StringBuilder();
+                    responseSuccessBuilder.Append("Headers:");
+                    responseSuccessBuilder.Append(response.Headers is null ? "" : LogService.WhiteSpaceRegex.Replace(response.Headers.ToString(), ""));
+                    responseSuccessBuilder.Append('\n');
+                    responseSuccessBuilder.Append("ResponseMessage:");
+                    responseSuccessBuilder.Append(response.RequestMessage is null ? "" : LogService.WhiteSpaceRegex.Replace(response.RequestMessage.ToString(), ""));
+                    responseSuccessBuilder.Append('\n');
+
+                    LogService.WriteLog(LogType.INFO, "Requested successfully.", responseSuccessBuilder);
                 }
 
                 // 请求失败
@@ -71,6 +83,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                 RequestStatusCode = string.Empty;
                 RequestExceptionContent = e.Message;
                 RequestContent = string.Empty;
+                LogService.WriteLog(LogType.WARNING, "Network disconnected.", e);
             }
 
             // 捕捉因访问超时引发的异常
@@ -80,6 +93,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                 RequestStatusCode = string.Empty;
                 RequestExceptionContent = e.Message;
                 RequestContent = string.Empty;
+                LogService.WriteLog(LogType.WARNING, "Network access timeout.", e);
             }
 
             // 其他异常
@@ -89,6 +103,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                 RequestStatusCode = string.Empty;
                 RequestExceptionContent = e.Message;
                 RequestContent = string.Empty;
+                LogService.WriteLog(LogType.WARNING, "Network state unknown.", e);
             }
             finally
             {

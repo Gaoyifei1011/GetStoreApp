@@ -44,7 +44,10 @@ namespace GetStoreApp.ViewModels.Pages
                 PersistFile.Save(string.Format(@"{0}\{1}.lnk", Environment.GetFolderPath(Environment.SpecialFolder.Desktop), ResourceService.GetLocalized("Resources/AppDisplayName")), false);
                 IsCreatedSuccessfully = true;
             }
-            catch (Exception) { }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LogType.ERROR, "Create desktop shortcut failed.", e);
+            }
             finally
             {
                 new QuickOperationNotification(QuickOperationType.DesktopShortcut, IsCreatedSuccessfully).Show();
@@ -77,7 +80,10 @@ namespace GetStoreApp.ViewModels.Pages
                 }
                 IsPinnedSuccessfully = true;
             }
-            catch (Exception) { }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LogType.ERROR, "Pin app to startscreen failed.", e);
+            }
             finally
             {
                 new QuickOperationNotification(QuickOperationType.StartScreen, IsPinnedSuccessfully).Show();
@@ -118,7 +124,10 @@ namespace GetStoreApp.ViewModels.Pages
                     }
                 }
             }
-            catch (Exception) { }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LogType.ERROR, "Pin app to taskbar failed.", e);
+            }
             finally
             {
                 new QuickOperationNotification(QuickOperationType.Taskbar, IsPinnedSuccessfully).Show();

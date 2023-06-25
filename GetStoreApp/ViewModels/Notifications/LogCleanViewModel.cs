@@ -3,9 +3,9 @@
 namespace GetStoreApp.ViewModels.Notifications
 {
     /// <summary>
-    /// 语言设置修改应用内通知视图模型
+    /// 日志记录清除通知视图模型
     /// </summary>
-    public sealed class LanguageChangeViewModel : ViewModelBase
+    public sealed class LogCleanViewModel : ViewModelBase
     {
         private bool _setResult = false;
 
