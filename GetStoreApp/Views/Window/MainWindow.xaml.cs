@@ -14,6 +14,7 @@ using System;
 using System.Runtime.InteropServices;
 using Windows.Storage.Streams;
 using Windows.System;
+using WinRT;
 using WinRT.Interop;
 
 namespace GetStoreApp.Views.Window
@@ -45,7 +46,7 @@ namespace GetStoreApp.Views.Window
             await datawriter.StoreAsync();
             BitmapImage image = new BitmapImage();
             await image.SetSourceAsync(memoryStream);
-            (sender as ImageIcon).Source = image;
+            sender.As<ImageIcon>().Source = image;
         }
 
         /// <summary>
@@ -59,7 +60,7 @@ namespace GetStoreApp.Views.Window
             await datawriter.StoreAsync();
             BitmapImage image = new BitmapImage();
             await image.SetSourceAsync(memoryStream);
-            (sender as ImageIcon).Source = image;
+            sender.As<ImageIcon>().Source = image;
         }
 
         /// <summary>
@@ -73,7 +74,7 @@ namespace GetStoreApp.Views.Window
             await datawriter.StoreAsync();
             BitmapImage image = new BitmapImage();
             await image.SetSourceAsync(memoryStream);
-            (sender as ImageIcon).Source = image;
+            sender.As<ImageIcon>().Source = image;
         }
 
         /// <summary>
@@ -87,7 +88,7 @@ namespace GetStoreApp.Views.Window
             await datawriter.StoreAsync();
             BitmapImage image = new BitmapImage();
             await image.SetSourceAsync(memoryStream);
-            (sender as ImageIcon).Source = image;
+            sender.As<ImageIcon>().Source = image;
         }
 
         /// <summary>
@@ -101,7 +102,7 @@ namespace GetStoreApp.Views.Window
             await datawriter.StoreAsync();
             BitmapImage image = new BitmapImage();
             await image.SetSourceAsync(memoryStream);
-            (sender as ImageIcon).Source = image;
+            sender.As<ImageIcon>().Source = image;
         }
 
         /// <summary>
@@ -115,7 +116,7 @@ namespace GetStoreApp.Views.Window
             await datawriter.StoreAsync();
             BitmapImage image = new BitmapImage();
             await image.SetSourceAsync(memoryStream);
-            (sender as ImageIcon).Source = image;
+            sender.As<ImageIcon>().Source = image;
         }
 
         /// <summary>
@@ -129,7 +130,7 @@ namespace GetStoreApp.Views.Window
             await datawriter.StoreAsync();
             BitmapImage image = new BitmapImage();
             await image.SetSourceAsync(memoryStream);
-            (sender as ImageIcon).Source = image;
+            sender.As<ImageIcon>().Source = image;
         }
 
         /// <summary>
@@ -219,7 +220,7 @@ namespace GetStoreApp.Views.Window
                                 NavigationService.NavigateTo(typeof(StorePage));
                             }
 
-                            StorePage storePage = NavigationService.NavigationFrame.Content as StorePage;
+                            StorePage storePage = NavigationService.NavigationFrame.Content.As<StorePage>();
                             if (storePage is not null)
                             {
                                 RequestViewModel viewModel = storePage.Request.ViewModel;
@@ -244,6 +245,10 @@ namespace GetStoreApp.Views.Window
                             await new DPIChangedNotifyDialog().ShowAsync();
                         });
                         break;
+                    }
+                case WindowMessage.WM_NCRBUTTONDOWN:
+                    {
+                        return 0;
                     }
             }
             return User32Library.CallWindowProc(oldWndProc, hWnd, Msg, wParam, lParam);

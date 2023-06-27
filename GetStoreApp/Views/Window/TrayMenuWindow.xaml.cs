@@ -2,6 +2,7 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Helpers.Window;
 using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
+using GetStoreApp.WindowsAPI.PInvoke.DwmApi;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Windowing;
@@ -42,6 +43,13 @@ namespace GetStoreApp.Views.Window
             IntPtr MainWindowHandle = GetWindowHandle();
             newWndProc = new WndProc(NewWindowProc);
             oldWndProc = SetWindowLongAuto(MainWindowHandle, WindowLongIndexFlags.GWL_WNDPROC, newWndProc);
+
+            int setValue = 0;
+            int setResult = DwmApiLibrary.DwmSetWindowAttribute(Program.ApplicationRoot.TrayMenuWindow.GetWindowHandle(), DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, ref setValue, Marshal.SizeOf<int>());
+            if (setResult is not 0)
+            {
+                DwmApiLibrary.DwmSetWindowAttribute(Program.ApplicationRoot.TrayMenuWindow.GetWindowHandle(), DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE_OLD, ref setValue, Marshal.SizeOf<int>());
+            }
 
             // 使用重叠的配置显示应用窗口。
             OverlappedPresenter presenter = OverlappedPresenter.CreateForContextMenu();

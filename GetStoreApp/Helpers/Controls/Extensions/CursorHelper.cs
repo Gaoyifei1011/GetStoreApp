@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using WinRT;
 
 namespace GetStoreApp.Helpers.Controls.Extensions
 {
@@ -58,7 +59,7 @@ namespace GetStoreApp.Helpers.Controls.Extensions
 
         private static void Element_PointerEntered(object sender, PointerRoutedEventArgs args)
         {
-            InputSystemCursorShape cursor = GetCursor((FrameworkElement)sender);
+            InputSystemCursorShape cursor = GetCursor(sender.As<FrameworkElement>());
             FrameworkElement element = sender as FrameworkElement;
             typeof(FrameworkElement).GetProperty("ProtectedCursor", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(element, InputSystemCursor.Create(cursor));
         }
