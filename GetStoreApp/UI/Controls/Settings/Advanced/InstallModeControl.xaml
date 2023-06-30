@@ -24,9 +24,10 @@
 
     <FontIcon
         Grid.Column="0"
-        FontFamily="{StaticResource SettingsFluentFontFamily}"
-        Glyph="&#xF775;"
-        Style="{StaticResource FontIconStyle}" />
+        Margin="0,0,12,0"
+        FontFamily="{ThemeResource SymbolThemeFontFamily}"
+        FontSize="16"
+        Glyph="&#xE710;" />
 
     <StackPanel Grid.Column="1" Orientation="Vertical">
 
@@ -51,9 +52,9 @@
 
         <Button.Content>
             <FontIcon
+                FontFamily="{ThemeResource SymbolThemeFontFamily}"
                 FontSize="16"
-                Glyph="&#xE946;"
-                Style="{StaticResource SegoeFluentStyle}" />
+                Glyph="&#xE946;" />
         </Button.Content>
 
         <ToolTipService.ToolTip>

@@ -46,9 +46,10 @@
 
             <FontIcon
                 Grid.Column="0"
-                FontFamily="{StaticResource SegoeFluentFontFamily}"
-                Glyph="&#xE74C;"
-                Style="{StaticResource FontIconStyle}" />
+                Margin="0,0,12,0"
+                FontSize="16"
+                Glyph="&#xE74C;" />
+
             <TextBlock
                 Grid.Column="1"
                 VerticalAlignment="Center"
@@ -85,7 +86,7 @@
                     Text="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolder')}">
 
                     <MenuFlyoutItem.Icon>
-                        <FontIcon Glyph="&#xE8b7;" Style="{StaticResource SegoeFluentStyle}" />
+                        <FontIcon Glyph="&#xE8b7;" />
                     </MenuFlyoutItem.Icon>
 
                     <ToolTipService.ToolTip>
@@ -104,7 +105,7 @@
                     Text="{x:Bind root:ResourceService.GetLocalized('Download/PauseAll')}">
 
                     <MenuFlyoutItem.Icon>
-                        <FontIcon Glyph="&#xE769;" Style="{StaticResource SegoeFluentStyle}" />
+                        <FontIcon Glyph="&#xE769;" />
                     </MenuFlyoutItem.Icon>
 
                     <ToolTipService.ToolTip>
@@ -123,7 +124,7 @@
                     Text="{x:Bind root:ResourceService.GetLocalized('Download/Select')}">
 
                     <MenuFlyoutItem.Icon>
-                        <FontIcon Glyph="&#xE762;" Style="{StaticResource SegoeFluentStyle}" />
+                        <FontIcon Glyph="&#xE762;" />
                     </MenuFlyoutItem.Icon>
 
                     <ToolTipService.ToolTip>
@@ -152,7 +153,7 @@
                     Text="{x:Bind root:ResourceService.GetLocalized('Download/SelectAll')}">
 
                     <MenuFlyoutItem.Icon>
-                        <FontIcon Glyph="&#xE8b3;" Style="{StaticResource SegoeFluentStyle}" />
+                        <FontIcon Glyph="&#xE8b3;" />
                     </MenuFlyoutItem.Icon>
 
                     <ToolTipService.ToolTip>
@@ -170,7 +171,7 @@
                     Text="{x:Bind root:ResourceService.GetLocalized('Download/SelectNone')}">
 
                     <MenuFlyoutItem.Icon>
-                        <FontIcon Glyph="&#xE8e6;" Style="{StaticResource SegoeFluentStyle}" />
+                        <FontIcon Glyph="&#xE8e6;" />
                     </MenuFlyoutItem.Icon>
 
                     <ToolTipService.ToolTip>
@@ -188,7 +189,7 @@
                     Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelected')}">
 
                     <MenuFlyoutItem.Icon>
-                        <FontIcon Glyph="&#xE74d;" Style="{StaticResource SegoeFluentStyle}" />
+                        <FontIcon Glyph="&#xE74d;" />
                     </MenuFlyoutItem.Icon>
 
                     <ToolTipService.ToolTip>
@@ -206,7 +207,7 @@
                     Text="{x:Bind root:ResourceService.GetLocalized('Download/Cancel')}">
 
                     <MenuFlyoutItem.Icon>
-                        <FontIcon Glyph="&#xE711;" Style="{StaticResource SegoeFluentStyle}" />
+                        <FontIcon Glyph="&#xE711;" />
                     </MenuFlyoutItem.Icon>
 
                     <ToolTipService.ToolTip>
@@ -400,7 +401,7 @@
                                     Style="{StaticResource ButtonDownloadStyle}">
 
                                     <Button.Content>
-                                        <FontIcon Glyph="&#xE769;" Style="{StaticResource SegoeFluentStyle}" />
+                                        <FontIcon Glyph="&#xE769;" />
                                     </Button.Content>
 
                                     <ToolTipService.ToolTip>
@@ -418,7 +419,7 @@
                                     Style="{StaticResource ButtonDownloadStyle}">
 
                                     <Button.Content>
-                                        <FontIcon Glyph="&#xE711;" Style="{StaticResource SegoeFluentStyle}" />
+                                        <FontIcon Glyph="&#xE711;" />
                                     </Button.Content>
 
                                     <ToolTipService.ToolTip>

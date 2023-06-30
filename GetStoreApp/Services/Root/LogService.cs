@@ -28,8 +28,6 @@ namespace GetStoreApp.Services.Root
 
         private static StorageFolder LogFolder { get; set; }
 
-        private static DateTimeFormatter dateTimeFormatter = new DateTimeFormatter("month day year hour minute second");
-
         private static DateTimeFormatter fileNameFormatter = new DateTimeFormatter("{year.full}_{month.integer}_{day.integer}");
 
         /// <summary>

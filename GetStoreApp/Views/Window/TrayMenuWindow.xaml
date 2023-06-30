@@ -35,7 +35,7 @@
             Text="{x:Bind root:ResourceService.GetLocalized('Resources/ProjectHomePage')}">
 
             <MenuFlyoutItem.Icon>
-                <FontIcon Glyph="&#xE80f;" Style="{StaticResource SegoeFluentStyle}" />
+                <FontIcon Glyph="&#xE80f;" />
             </MenuFlyoutItem.Icon>
         </MenuFlyoutItem>
 
@@ -45,7 +45,7 @@
             Text="{x:Bind root:ResourceService.GetLocalized('Resources/AboutApp')}">
 
             <MenuFlyoutItem.Icon>
-                <FontIcon Glyph="&#xE946;" Style="{StaticResource SegoeFluentStyle}" />
+                <FontIcon Glyph="&#xE946;" />
             </MenuFlyoutItem.Icon>
         </MenuFlyoutItem>
 
@@ -57,7 +57,7 @@
             Text="{x:Bind root:ResourceService.GetLocalized('Resources/ShowOrHideWindow')}">
 
             <MenuFlyoutItem.Icon>
-                <FontIcon Glyph="&#xE770;" Style="{StaticResource SegoeFluentStyle}" />
+                <FontIcon Glyph="&#xE770;" />
             </MenuFlyoutItem.Icon>
         </MenuFlyoutItem>
 
@@ -67,7 +67,7 @@
             Text="{x:Bind root:ResourceService.GetLocalized('Resources/Settings')}">
 
             <MenuFlyoutItem.Icon>
-                <FontIcon Glyph="&#xE713;" Style="{StaticResource SegoeFluentStyle}" />
+                <FontIcon Glyph="&#xE713;" />
             </MenuFlyoutItem.Icon>
         </MenuFlyoutItem>
 
@@ -77,7 +77,7 @@
             Text="{x:Bind root:ResourceService.GetLocalized('Resources/Exit')}">
 
             <MenuFlyoutItem.Icon>
-                <FontIcon Glyph="&#xE7e8;" Style="{StaticResource SegoeFluentStyle}" />
+                <FontIcon Glyph="&#xE7e8;" />
             </MenuFlyoutItem.Icon>
         </MenuFlyoutItem>
     </MenuFlyoutPresenter>

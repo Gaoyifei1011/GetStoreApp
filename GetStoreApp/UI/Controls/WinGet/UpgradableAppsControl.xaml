@@ -46,9 +46,10 @@
 
         <FontIcon
             Grid.Column="0"
-            FontFamily="{StaticResource SegoeFluentFontFamily}"
-            Glyph="&#xE74C;"
-            Style="{StaticResource FontIconStyle}" />
+            Margin="0,0,12,0"
+            FontFamily="{ThemeResource SymbolThemeFontFamily}"
+            FontSize="16"
+            Glyph="&#xE74C;" />
 
         <TextBlock
             Grid.Column="1"
@@ -84,7 +85,7 @@
                 Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Refresh')}">
 
                 <MenuFlyoutItem.Icon>
-                    <FontIcon Glyph="&#xE72C;" Style="{StaticResource SegoeFluentStyle}" />
+                    <FontIcon Glyph="&#xE72C;" />
                 </MenuFlyoutItem.Icon>
 
                 <ToolTipService.ToolTip>
@@ -278,7 +279,7 @@
                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUpgradeText')}">
 
                                         <MenuFlyoutItem.Icon>
-                                            <FontIcon Glyph="&#xE8C8;" Style="{StaticResource SegoeFluentStyle}" />
+                                            <FontIcon Glyph="&#xE8C8;" />
                                         </MenuFlyoutItem.Icon>
 
                                         <ToolTipService.ToolTip>
@@ -295,7 +296,7 @@
                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallWithCmd')}">
 
                                         <MenuFlyoutItem.Icon>
-                                            <FontIcon Glyph="&#xE74B;" Style="{StaticResource SegoeFluentStyle}" />
+                                            <FontIcon Glyph="&#xE74B;" />
                                         </MenuFlyoutItem.Icon>
 
                                         <ToolTipService.ToolTip>

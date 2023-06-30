@@ -54,15 +54,30 @@ namespace GetStoreApp.Views.Window
         /// <summary>
         /// 更改指定窗口的属性
         /// </summary>
-        public IntPtr SetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex, WndProc newProc)
+        public int GetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex)
         {
             if (IntPtr.Size == 8)
             {
-                return User32Library.SetWindowLongPtr(hWnd, nIndex, newProc);
+                return User32Library.GetWindowLongPtr(hWnd, nIndex);
             }
             else
             {
-                return User32Library.SetWindowLong(hWnd, nIndex, newProc);
+                return User32Library.GetWindowLong(hWnd, nIndex);
+            }
+        }
+
+        /// <summary>
+        /// 更改指定窗口的窗口过程
+        /// </summary>
+        public IntPtr SetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex, IntPtr dwNewLong)
+        {
+            if (IntPtr.Size == 8)
+            {
+                return User32Library.SetWindowLongPtr(hWnd, nIndex, dwNewLong);
+            }
+            else
+            {
+                return User32Library.SetWindowLong(hWnd, nIndex, dwNewLong);
             }
         }
     }

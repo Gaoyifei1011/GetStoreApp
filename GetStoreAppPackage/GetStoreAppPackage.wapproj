@@ -51,6 +51,7 @@
     <PackageCertificateKeyFile>GetStoreAppPackage_SignKey.pfx</PackageCertificateKeyFile>
     <ProjectGuid>ca6c2dc4-c96d-4c23-ae18-fc7150bef554</ProjectGuid>
     <TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
+    <TargetFrameworkMoniker>.NETCoreApp,Version=v7.0</TargetFrameworkMoniker>
     <TargetPlatformVersion>10.0.22621.0</TargetPlatformVersion>
     <UserSecretsId>ff1007a3-37e5-4856-a3d5-765555830f81</UserSecretsId>
   </PropertyGroup>

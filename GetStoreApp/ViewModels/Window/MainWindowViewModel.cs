@@ -23,6 +23,7 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Windows.UI;
 using Windows.UI.ViewManagement;
 
 namespace GetStoreApp.ViewModels.Window
@@ -501,9 +502,9 @@ namespace GetStoreApp.ViewModels.Window
             {
                 titleBar.ButtonBackgroundColor = Colors.Transparent;
                 titleBar.ButtonForegroundColor = Colors.Black;
-                titleBar.ButtonHoverBackgroundColor = ColorHelper.FromArgb(20, 0, 0, 0);
+                titleBar.ButtonHoverBackgroundColor = Color.FromArgb(20, 0, 0, 0);
                 titleBar.ButtonHoverForegroundColor = Colors.Black;
-                titleBar.ButtonPressedBackgroundColor = ColorHelper.FromArgb(30, 0, 0, 0);
+                titleBar.ButtonPressedBackgroundColor = Color.FromArgb(30, 0, 0, 0);
                 titleBar.ButtonPressedForegroundColor = Colors.Black;
                 titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
                 titleBar.ButtonInactiveForegroundColor = Colors.Black;
@@ -512,9 +513,9 @@ namespace GetStoreApp.ViewModels.Window
             {
                 titleBar.ButtonBackgroundColor = Colors.Transparent;
                 titleBar.ButtonForegroundColor = Colors.White;
-                titleBar.ButtonHoverBackgroundColor = ColorHelper.FromArgb(20, 255, 255, 255);
+                titleBar.ButtonHoverBackgroundColor = Color.FromArgb(20, 255, 255, 255);
                 titleBar.ButtonHoverForegroundColor = Colors.White;
-                titleBar.ButtonPressedBackgroundColor = ColorHelper.FromArgb(30, 255, 255, 255);
+                titleBar.ButtonPressedBackgroundColor = Color.FromArgb(30, 255, 255, 255);
                 titleBar.ButtonPressedForegroundColor = Colors.White;
                 titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
                 titleBar.ButtonInactiveForegroundColor = Colors.White;

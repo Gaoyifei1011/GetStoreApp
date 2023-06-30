@@ -57,9 +57,11 @@
 
             <FontIcon
                 Grid.Column="0"
-                FontFamily="{StaticResource SegoeFluentFontFamily}"
-                Glyph="&#xE74C;"
-                Style="{StaticResource FontIconStyle}" />
+                Margin="0,0,12,0"
+                FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                FontSize="16"
+                Glyph="&#xE74C;" />
+
             <TextBlock
                 Grid.Column="1"
                 VerticalAlignment="Center"
@@ -100,7 +102,7 @@
                         Text="{x:Bind root:ResourceService.GetLocalized('History/Select')}">
 
                         <MenuFlyoutItem.Icon>
-                            <FontIcon Glyph="&#xE762;" Style="{StaticResource SegoeFluentStyle}" />
+                            <FontIcon Glyph="&#xE762;" />
                         </MenuFlyoutItem.Icon>
 
                         <ToolTipService.ToolTip>
@@ -119,7 +121,7 @@
                         Text="{x:Bind root:ResourceService.GetLocalized('History/Sort')}">
 
                         <MenuFlyoutItem.Icon>
-                            <FontIcon Glyph="&#xE8cb;" Style="{StaticResource SegoeFluentStyle}" />
+                            <FontIcon Glyph="&#xE8cb;" />
                         </MenuFlyoutItem.Icon>
 
                         <ToolTipService.ToolTip>
@@ -139,7 +141,7 @@
                                     Text="{x:Bind root:ResourceService.GetLocalized('History/TimeIncreaseSort')}">
 
                                     <RadioMenuFlyoutItem.Icon>
-                                        <FontIcon Glyph="&#xE74a;" Style="{StaticResource SegoeFluentStyle}" />
+                                        <FontIcon Glyph="&#xE74a;" />
                                     </RadioMenuFlyoutItem.Icon>
 
                                     <ToolTipService.ToolTip>
@@ -157,7 +159,7 @@
                                     Text="{x:Bind root:ResourceService.GetLocalized('History/TimeDecreaseSort')}">
 
                                     <RadioMenuFlyoutItem.Icon>
-                                        <FontIcon Glyph="&#xE74b;" Style="{StaticResource SegoeFluentStyle}" />
+                                        <FontIcon Glyph="&#xE74b;" />
                                     </RadioMenuFlyoutItem.Icon>
 
                                     <ToolTipService.ToolTip>
@@ -178,7 +180,7 @@
                         Text="{x:Bind root:ResourceService.GetLocalized('History/Filter')}">
 
                         <MenuFlyoutItem.Icon>
-                            <FontIcon Glyph="&#xE71C;" Style="{StaticResource SegoeFluentStyle}" />
+                            <FontIcon Glyph="&#xE71C;" />
                         </MenuFlyoutItem.Icon>
 
                         <ToolTipService.ToolTip>
@@ -367,7 +369,7 @@
                         Text="{x:Bind root:ResourceService.GetLocalized('History/Refresh')}">
 
                         <MenuFlyoutItem.Icon>
-                            <FontIcon Glyph="&#xE72c;" Style="{StaticResource SegoeFluentStyle}" />
+                            <FontIcon Glyph="&#xE72c;" />
                         </MenuFlyoutItem.Icon>
 
                         <ToolTipService.ToolTip>
@@ -400,7 +402,7 @@
                         Text="{x:Bind root:ResourceService.GetLocalized('History/SelectAll')}">
 
                         <MenuFlyoutItem.Icon>
-                            <FontIcon Glyph="&#xE8b3;" Style="{StaticResource SegoeFluentStyle}" />
+                            <FontIcon Glyph="&#xE8b3;" />
                         </MenuFlyoutItem.Icon>
 
                         <ToolTipService.ToolTip>
@@ -418,7 +420,7 @@
                         Text="{x:Bind root:ResourceService.GetLocalized('History/SelectNone')}">
 
                         <MenuFlyoutItem.Icon>
-                            <FontIcon Glyph="&#xE8e6;" Style="{StaticResource SegoeFluentStyle}" />
+                            <FontIcon Glyph="&#xE8e6;" />
                         </MenuFlyoutItem.Icon>
 
                         <ToolTipService.ToolTip>
@@ -436,7 +438,7 @@
                         Text="{x:Bind root:ResourceService.GetLocalized('History/CopySelected')}">
 
                         <MenuFlyoutItem.Icon>
-                            <FontIcon Glyph="&#xE8c8;" Style="{StaticResource SegoeFluentStyle}" />
+                            <FontIcon Glyph="&#xE8c8;" />
                         </MenuFlyoutItem.Icon>
 
                         <ToolTipService.ToolTip>
@@ -454,7 +456,7 @@
                         Text="{x:Bind root:ResourceService.GetLocalized('History/Delete')}">
 
                         <MenuFlyoutItem.Icon>
-                            <FontIcon Glyph="&#xE74d;" Style="{StaticResource SegoeFluentStyle}" />
+                            <FontIcon Glyph="&#xE74d;" />
                         </MenuFlyoutItem.Icon>
 
                         <ToolTipService.ToolTip>
@@ -472,7 +474,7 @@
                         Text="{x:Bind root:ResourceService.GetLocalized('History/Cancel')}">
 
                         <MenuFlyoutItem.Icon>
-                            <FontIcon Glyph="&#xE711;" Style="{StaticResource SegoeFluentStyle}" />
+                            <FontIcon Glyph="&#xE711;" />
                         </MenuFlyoutItem.Icon>
 
                         <ToolTipService.ToolTip>

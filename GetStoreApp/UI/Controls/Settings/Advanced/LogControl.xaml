@@ -22,9 +22,10 @@
 
             <FontIcon
                 Grid.Column="0"
-                FontFamily="{StaticResource SegoeFluentFontFamily}"
-                Glyph="&#xE8A5;"
-                Style="{StaticResource FontIconStyle}" />
+                Margin="0,0,12,0"
+                FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                FontSize="16"
+                Glyph="&#xE8A5;" />
 
             <StackPanel
                 Grid.Column="1"

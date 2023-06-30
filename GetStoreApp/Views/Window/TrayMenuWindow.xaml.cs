@@ -18,7 +18,7 @@ namespace GetStoreApp.Views.Window
     /// </summary>
     public sealed partial class TrayMenuWindow : WinUIWindow
     {
-        private WndProc newWndProc = null;
+        private WNDPROC newWndProc = null;
         private IntPtr oldWndProc = IntPtr.Zero;
 
         public TrayMenuWindow()
@@ -41,8 +41,8 @@ namespace GetStoreApp.Views.Window
         public void InitializeWindow()
         {
             IntPtr MainWindowHandle = GetWindowHandle();
-            newWndProc = new WndProc(NewWindowProc);
-            oldWndProc = SetWindowLongAuto(MainWindowHandle, WindowLongIndexFlags.GWL_WNDPROC, newWndProc);
+            newWndProc = new WNDPROC(NewWindowProc);
+            oldWndProc = SetWindowLongAuto(MainWindowHandle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newWndProc));
 
             int setValue = 0;
             int setResult = DwmApiLibrary.DwmSetWindowAttribute(Program.ApplicationRoot.TrayMenuWindow.GetWindowHandle(), DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, ref setValue, Marshal.SizeOf<int>());
@@ -57,26 +57,11 @@ namespace GetStoreApp.Views.Window
             AppWindow.SetPresenter(presenter);
 
             // 设置窗口扩展样式为工具窗口
-            SetWindowLongAuto(GetWindowHandle(), WindowLongIndexFlags.GWL_EXSTYLE, WindowStyleEx.WS_EX_TOOLWINDOW);
+            SetWindowLongAuto(GetWindowHandle(), WindowLongIndexFlags.GWL_EXSTYLE, (IntPtr)WindowStyleEx.WS_EX_TOOLWINDOW);
 
             AppWindow.MoveAndResize(new RectInt32(0, 0, 0, 0));
             AppWindow.Show();
             AppWindow.Hide();
-        }
-
-        /// <summary>
-        /// 更改指定窗口的属性
-        /// </summary>
-        public IntPtr SetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex, WindowStyleEx styleEx)
-        {
-            if (IntPtr.Size == 8)
-            {
-                return User32Library.SetWindowLongPtr(hWnd, nIndex, styleEx);
-            }
-            else
-            {
-                return User32Library.SetWindowLong(hWnd, nIndex, styleEx);
-            }
         }
 
         /// <summary>

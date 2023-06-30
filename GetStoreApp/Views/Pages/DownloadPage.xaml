@@ -47,9 +47,10 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon
                                     Grid.Column="0"
-                                    FontFamily="{StaticResource SegoeFluentFontFamily}"
-                                    Glyph="&#xE8C9;"
-                                    Style="{StaticResource FontIconStyle}" />
+                                    Margin="0,0,12,0"
+                                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                    FontSize="16"
+                                    Glyph="&#xE8C9;" />
 
                                 <TextBlock FontWeight="SemiBold" Text="{x:Bind root:ResourceService.GetLocalized('Download/ExplainTitle')}" />
                             </StackPanel>

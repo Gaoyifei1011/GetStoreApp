@@ -51,6 +51,17 @@ namespace GetStoreApp.Helpers.Window
         }
 
         /// <summary>
+        /// 最小化窗口
+        /// </summary>
+        public static void MinimizeAppWindow()
+        {
+            if (WindowPresenter is not null && WindowPresenter.IsMinimizable)
+            {
+                WindowPresenter.Minimize();
+            }
+        }
+
+        /// <summary>
         /// 显示窗口
         /// </summary>
         public static void ShowAppWindow()

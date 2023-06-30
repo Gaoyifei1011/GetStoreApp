@@ -34,9 +34,11 @@
 
             <FontIcon
                 Grid.Column="0"
-                FontFamily="{StaticResource SegoeFluentFontFamily}"
-                Glyph="&#xE823;"
-                Style="{StaticResource FontIconStyle}" />
+                Margin="0,0,12,0"
+                FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                FontSize="16"
+                Glyph="&#xE823;" />
+
             <TextBlock
                 Grid.Column="1"
                 VerticalAlignment="Center"
@@ -51,7 +53,7 @@
                 Text="{x:Bind root:ResourceService.GetLocalized('Store/ViewAll')}">
 
                 <MenuFlyoutItem.Icon>
-                    <FontIcon Glyph="&#xE890;" Style="{StaticResource SegoeFluentStyle}" />
+                    <FontIcon Glyph="&#xE890;" />
                 </MenuFlyoutItem.Icon>
 
                 <ToolTipService.ToolTip>

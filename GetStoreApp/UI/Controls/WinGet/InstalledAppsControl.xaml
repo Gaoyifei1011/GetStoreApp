@@ -47,9 +47,10 @@
 
         <FontIcon
             Grid.Column="0"
-            FontFamily="{StaticResource SegoeFluentFontFamily}"
-            Glyph="&#xE74C;"
-            Style="{StaticResource FontIconStyle}" />
+            Margin="0,0,12,0"
+            FontFamily="{ThemeResource SymbolThemeFontFamily}"
+            FontSize="16"
+            Glyph="&#xE74C;" />
 
         <TextBlock
             Grid.Column="1"
@@ -81,7 +82,10 @@
             Text="{x:Bind ViewModel.SearchText, Mode=TwoWay}">
 
             <AutoSuggestBox.QueryIcon>
-                <FontIcon Glyph="&#xE71E;" Style="{StaticResource SegoeFluentStyle}" />
+                <FontIcon
+                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                    FontSize="14"
+                    Glyph="&#xE71E;" />
             </AutoSuggestBox.QueryIcon>
         </AutoSuggestBox>
 
@@ -100,7 +104,7 @@
                 Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Refresh')}">
 
                 <MenuFlyoutItem.Icon>
-                    <FontIcon Glyph="&#xE72C;" Style="{StaticResource SegoeFluentStyle}" />
+                    <FontIcon Glyph="&#xE72C;" />
                 </MenuFlyoutItem.Icon>
 
                 <ToolTipService.ToolTip>
@@ -303,7 +307,7 @@
                                                 Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUnInstallText')}">
 
                                                 <MenuFlyoutItem.Icon>
-                                                    <FontIcon Glyph="&#xE8C8;" Style="{StaticResource SegoeFluentStyle}" />
+                                                    <FontIcon Glyph="&#xE8C8;" />
                                                 </MenuFlyoutItem.Icon>
 
                                                 <ToolTipService.ToolTip>

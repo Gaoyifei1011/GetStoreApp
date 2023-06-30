@@ -148,7 +148,7 @@
                                                     CommandParameter="{x:Bind AppID}"
                                                     Style="{StaticResource ExperimentalHyperlinkButtonStyle}">
                                                     <HyperlinkButton.Content>
-                                                        <FontIcon Glyph="&#xE711;" Style="{StaticResource SegoeFluentStyle}" />
+                                                        <FontIcon FontSize="16" Glyph="&#xE711;" />
                                                     </HyperlinkButton.Content>
 
                                                     <ToolTipService.ToolTip>

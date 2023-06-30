@@ -44,9 +44,10 @@
 
         <FontIcon
             Grid.Column="0"
-            FontFamily="{StaticResource SegoeFluentFontFamily}"
-            Glyph="&#xE71e;"
-            Style="{StaticResource FontIconStyle}" />
+            Margin="0,0,12,0"
+            FontFamily="{ThemeResource SymbolThemeFontFamily}"
+            FontSize="16"
+            Glyph="&#xE71e;" />
 
         <TextBlock
             Grid.Column="1"
@@ -104,7 +105,7 @@
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Store/CopyID')}">
                 <MenuFlyoutItem.Icon>
-                    <FontIcon Glyph="&#xE8c8;" Style="{StaticResource SegoeFluentStyle}" />
+                    <FontIcon Glyph="&#xE8c8;" />
                 </MenuFlyoutItem.Icon>
 
                 <ToolTipService.ToolTip>
@@ -123,7 +124,7 @@
                 Text="{x:Bind root:ResourceService.GetLocalized('Store/Select')}">
 
                 <MenuFlyoutItem.Icon>
-                    <FontIcon Glyph="&#xE762;" Style="{StaticResource SegoeFluentStyle}" />
+                    <FontIcon Glyph="&#xE762;" />
                 </MenuFlyoutItem.Icon>
 
                 <ToolTipService.ToolTip>
@@ -152,7 +153,7 @@
                 Text="{x:Bind root:ResourceService.GetLocalized('Store/SelectAll')}">
 
                 <MenuFlyoutItem.Icon>
-                    <FontIcon Glyph="&#xE8b3;" Style="{StaticResource SegoeFluentStyle}" />
+                    <FontIcon Glyph="&#xE8b3;" />
                 </MenuFlyoutItem.Icon>
 
                 <ToolTipService.ToolTip>
@@ -170,7 +171,7 @@
                 Text="{x:Bind root:ResourceService.GetLocalized('Store/SelectNone')}">
 
                 <MenuFlyoutItem.Icon>
-                    <FontIcon Glyph="&#xE8e6;" Style="{StaticResource SegoeFluentStyle}" />
+                    <FontIcon Glyph="&#xE8e6;" />
                 </MenuFlyoutItem.Icon>
 
                 <ToolTipService.ToolTip>
@@ -188,7 +189,7 @@
                 Text="{x:Bind root:ResourceService.GetLocalized('Store/CopyOptions')}">
 
                 <MenuFlyoutItem.Icon>
-                    <FontIcon Glyph="&#xE8c8;" Style="{StaticResource SegoeFluentStyle}" />
+                    <FontIcon Glyph="&#xE8c8;" />
                 </MenuFlyoutItem.Icon>
 
                 <ToolTipService.ToolTip>
@@ -230,7 +231,7 @@
                 Text="{x:Bind root:ResourceService.GetLocalized('Store/DownloadSelected')}">
 
                 <MenuFlyoutItem.Icon>
-                    <FontIcon Glyph="&#xE74b;" Style="{StaticResource SegoeFluentStyle}" />
+                    <FontIcon Glyph="&#xE74b;" />
                 </MenuFlyoutItem.Icon>
 
                 <ToolTipService.ToolTip>
@@ -248,7 +249,7 @@
                 Text="{x:Bind root:ResourceService.GetLocalized('Store/Cancel')}">
 
                 <MenuFlyoutItem.Icon>
-                    <FontIcon Glyph="&#xE711;" Style="{StaticResource SegoeFluentStyle}" />
+                    <FontIcon Glyph="&#xE711;" />
                 </MenuFlyoutItem.Icon>
 
                 <ToolTipService.ToolTip>

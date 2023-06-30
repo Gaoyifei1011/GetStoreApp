@@ -38,7 +38,7 @@ namespace GetStoreApp.Services.Root
         {
             StartupKind = AppInstance.GetCurrent().GetActivatedEventArgs().Kind;
             await InitializeStartupKindAsync();
-            await RunSingleInstanceAppAsync();
+            RunSingleInstanceApp();
         }
 
         /// <summary>
@@ -127,62 +127,55 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 应用程序只运行单个实例
         /// </summary>
-        private static async Task RunSingleInstanceAppAsync()
+        private static void RunSingleInstanceApp()
         {
-            // 获取已经激活的参数
-            AppActivationArguments appArgs = AppInstance.GetCurrent().GetActivatedEventArgs();
+            bool isExisted = false;
 
-            // 获取或注册主实例
-            AppInstance mainInstance = AppInstance.FindOrRegisterForKey("Main");
+            string sendData = string.Format("{0} {1} {2}", LaunchArgs["TypeName"], LaunchArgs["ChannelName"], LaunchArgs["Link"] is null ? "PlaceHolderText" : LaunchArgs["Link"]);
 
-            // 如果主实例不是此当前实例
-            if (!mainInstance.IsCurrent)
+            // 向主实例发送数据
+            COPYDATASTRUCT copyDataStruct = new COPYDATASTRUCT();
+            copyDataStruct.dwData = NeedToSendMesage;
+            copyDataStruct.cbData = Encoding.Default.GetBytes(sendData).Length + 1;
+            copyDataStruct.lpData = sendData;
+
+            List<uint> GetStoreAppProcessPIDList = ProcessHelper.GetProcessPIDByName("GetStoreApp.exe");
+
+            if (GetStoreAppProcessPIDList.Count > 0)
             {
-                // 将激活重定向到主实例
-                await mainInstance.RedirectActivationToAsync(appArgs);
-
-                string sendData = string.Format("{0} {1} {2}", LaunchArgs["TypeName"], LaunchArgs["ChannelName"], LaunchArgs["Link"] is null ? "PlaceHolderText" : LaunchArgs["Link"]);
-
-                // 向主实例发送数据
-                COPYDATASTRUCT copyDataStruct = new COPYDATASTRUCT();
-                copyDataStruct.dwData = NeedToSendMesage;
-                copyDataStruct.cbData = Encoding.Default.GetBytes(sendData).Length + 1;
-                copyDataStruct.lpData = sendData;
-
-                List<uint> GetStoreAppProcessPIDList = ProcessHelper.GetProcessPIDByName("GetStoreApp.exe");
-
-                if (GetStoreAppProcessPIDList.Count > 0)
+                IntPtr hwnd = IntPtr.Zero;
+                do
                 {
-                    IntPtr hwnd = IntPtr.Zero;
-                    do
+                    hwnd = User32Library.FindWindowEx(IntPtr.Zero, hwnd, "WinUIDesktopWin32WindowClass", null);
+
+                    if (hwnd != IntPtr.Zero)
                     {
-                        hwnd = User32Library.FindWindowEx(IntPtr.Zero, hwnd, "WinUIDesktopWin32WindowClass", null);
+                        User32Library.GetWindowThreadProcessId(hwnd, out uint processId);
 
-                        if (hwnd != IntPtr.Zero)
+                        if (processId is not 0)
                         {
-                            User32Library.GetWindowThreadProcessId(hwnd, out uint processId);
-
-                            if (processId is not 0)
+                            foreach (uint ProcessID in GetStoreAppProcessPIDList)
                             {
-                                foreach (uint ProcessID in GetStoreAppProcessPIDList)
+                                if (ProcessID == processId)
                                 {
-                                    if (ProcessID == processId)
-                                    {
-                                        // 向主进程发送消息
-                                        IntPtr ptrCopyDataStruct = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(COPYDATASTRUCT)));
-                                        Marshal.StructureToPtr(copyDataStruct, ptrCopyDataStruct, false);
-                                        User32Library.SendMessage(hwnd, WindowMessage.WM_COPYDATA, 0, ptrCopyDataStruct);
-                                        Marshal.FreeHGlobal(ptrCopyDataStruct);
-                                        break;
-                                    }
+                                    // 向主进程发送消息
+                                    isExisted = true;
+                                    IntPtr ptrCopyDataStruct = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(COPYDATASTRUCT)));
+                                    Marshal.StructureToPtr(copyDataStruct, ptrCopyDataStruct, false);
+                                    User32Library.SendMessage(hwnd, WindowMessage.WM_COPYDATA, 0, ptrCopyDataStruct);
+                                    Marshal.FreeHGlobal(ptrCopyDataStruct);
+                                    User32Library.SetForegroundWindow(hwnd);
                                 }
                             }
                         }
                     }
-                    while (hwnd != IntPtr.Zero);
                 }
+                while (hwnd != IntPtr.Zero);
+            }
 
-                // 然后退出实例并停止
+            // 然后退出实例并停止
+            if (isExisted)
+            {
                 Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
             }
         }

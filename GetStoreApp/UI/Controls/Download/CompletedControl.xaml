@@ -48,9 +48,9 @@
 
         <FontIcon
             Grid.Column="0"
-            FontFamily="{StaticResource SegoeFluentFontFamily}"
-            Glyph="&#xE74C;"
-            Style="{StaticResource FontIconStyle}" />
+            Margin="0,0,12,0"
+            FontSize="16"
+            Glyph="&#xE74C;" />
 
         <TextBlock
             Grid.Column="1"
@@ -88,7 +88,7 @@
                 Text="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolder')}">
 
                 <MenuFlyoutItem.Icon>
-                    <FontIcon Glyph="&#xE8b7;" Style="{StaticResource SegoeFluentStyle}" />
+                    <FontIcon Glyph="&#xE8b7;" />
                 </MenuFlyoutItem.Icon>
 
                 <ToolTipService.ToolTip>
@@ -107,7 +107,7 @@
                 Text="{x:Bind root:ResourceService.GetLocalized('Download/Select')}">
 
                 <MenuFlyoutItem.Icon>
-                    <FontIcon Glyph="&#xE762;" Style="{StaticResource SegoeFluentStyle}" />
+                    <FontIcon Glyph="&#xE762;" />
                 </MenuFlyoutItem.Icon>
 
                 <ToolTipService.ToolTip>
@@ -136,7 +136,7 @@
                 Text="{x:Bind root:ResourceService.GetLocalized('Download/SelectAll')}">
 
                 <MenuFlyoutItem.Icon>
-                    <FontIcon Glyph="&#xE8b3;" Style="{StaticResource SegoeFluentStyle}" />
+                    <FontIcon Glyph="&#xE8b3;" />
                 </MenuFlyoutItem.Icon>
 
                 <ToolTipService.ToolTip>
@@ -154,7 +154,7 @@
                 Text="{x:Bind root:ResourceService.GetLocalized('Download/SelectNone')}">
 
                 <MenuFlyoutItem.Icon>
-                    <FontIcon Glyph="&#xE8e6;" Style="{StaticResource SegoeFluentStyle}" />
+                    <FontIcon Glyph="&#xE8e6;" />
                 </MenuFlyoutItem.Icon>
 
                 <ToolTipService.ToolTip>
@@ -172,7 +172,7 @@
                 Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteOptions')}">
 
                 <MenuFlyoutItem.Icon>
-                    <FontIcon Glyph="&#xE74d;" Style="{StaticResource SegoeFluentStyle}" />
+                    <FontIcon Glyph="&#xE74d;" />
                 </MenuFlyoutItem.Icon>
 
                 <ToolTipService.ToolTip>
@@ -212,7 +212,7 @@
                 Text="{x:Bind root:ResourceService.GetLocalized('Download/ShareSelectedFile')}">
 
                 <MenuFlyoutItem.Icon>
-                    <FontIcon Glyph="&#xE72d;" Style="{StaticResource SegoeFluentStyle}" />
+                    <FontIcon Glyph="&#xE72d;" />
                 </MenuFlyoutItem.Icon>
 
                 <ToolTipService.ToolTip>
@@ -230,7 +230,7 @@
                 Text="{x:Bind root:ResourceService.GetLocalized('Download/Cancel')}">
 
                 <MenuFlyoutItem.Icon>
-                    <FontIcon Glyph="&#xE711;" Style="{StaticResource SegoeFluentStyle}" />
+                    <FontIcon Glyph="&#xE711;" />
                 </MenuFlyoutItem.Icon>
 
                 <ToolTipService.ToolTip>
@@ -461,7 +461,7 @@
                                             Style="{StaticResource ButtonDownloadStyle}">
 
                                             <Button.Content>
-                                                <FontIcon Glyph="&#xF775;" Style="{StaticResource SettingsFluentStyle}" />
+                                                <FontIcon Glyph="&#xE710;" />
                                             </Button.Content>
 
                                             <ToolTipService.ToolTip>
@@ -480,7 +480,7 @@
                                         Style="{StaticResource ButtonDownloadStyle}">
 
                                         <Button.Content>
-                                            <FontIcon Glyph="&#xE8da;" Style="{StaticResource SegoeFluentStyle}" />
+                                            <FontIcon Glyph="&#xE8da;" />
                                         </Button.Content>
 
                                         <ToolTipService.ToolTip>
@@ -496,10 +496,7 @@
                             <Button controlExtensions:CursorHelper.Cursor="Hand" Style="{StaticResource ButtonDownloadStyle}">
 
                                 <Button.Content>
-                                    <FontIcon
-                                        FontSize="16"
-                                        Glyph="&#xE712;"
-                                        Style="{StaticResource SegoeFluentStyle}" />
+                                    <FontIcon FontSize="16" Glyph="&#xE712;" />
                                 </Button.Content>
 
                                 <ToolTipService.ToolTip>
@@ -544,7 +541,7 @@
                                             Text="{x:Bind root:ResourceService.GetLocalized('Download/ShareFile')}">
 
                                             <MenuFlyoutItem.Icon>
-                                                <FontIcon Glyph="&#xE72d;" Style="{StaticResource SegoeFluentStyle}" />
+                                                <FontIcon Glyph="&#xE72d;" />
                                             </MenuFlyoutItem.Icon>
 
                                             <ToolTipService.ToolTip>
@@ -562,7 +559,7 @@
                                             Text="{x:Bind root:ResourceService.GetLocalized('Download/FileInformation')}">
 
                                             <MenuFlyoutItem.Icon>
-                                                <FontIcon Glyph="&#xE946;" Style="{StaticResource SegoeFluentStyle}" />
+                                                <FontIcon Glyph="&#xE946;" />
                                             </MenuFlyoutItem.Icon>
 
                                             <ToolTipService.ToolTip>

@@ -54,7 +54,7 @@ namespace GetStoreApp
         private void InitializeMainWindow()
         {
             MainWindow = new MainWindow();
-            MainWindow.InitializeWindowProc();
+            MainWindow.InitializeWindow();
             WindowHelper.InitializePresenter(Program.ApplicationRoot.MainWindow.AppWindow);
         }
 

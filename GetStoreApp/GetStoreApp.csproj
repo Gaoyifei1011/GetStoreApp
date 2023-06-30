@@ -8,7 +8,7 @@
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <CsWinRTIncludes>Microsoft.Management.Deployment</CsWinRTIncludes>
-    <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
+    <DefineConstants>DISABLE_XAML_GENERATED_MAIN;EXPERIMENTAL</DefineConstants>
     <Deterministic>true</Deterministic>
     <DesktopCompatible>true</DesktopCompatible>
     <DisableXbfLineInfo>False</DisableXbfLineInfo>
@@ -97,9 +97,6 @@
     <Content Update="Assets\Images\DesktopApps.png" CopyToOutputDirectory="Always" />
     <Content Update="Assets\Images\Jumplist.png" CopyToOutputDirectory="Always" />
 
-    <Content Include="Fonts\Segoe Fluent Icons.ttf" CopyToOutputDirectory="Always" />
-    <Content Include="Fonts\Settings Fluent Icons.ttf" CopyToOutputDirectory="Always" />
-
     <CsWinRTInputs Include="$(TargetDir)\Microsoft.Management.Deployment.winmd" />
     
     <EmbeddedResource Update="Properties\Resources.resx">
@@ -125,9 +122,6 @@
     <None Remove="Assets\GetStoreApp.png" />
     <None Remove="Assets\Images\CloudflareValidation.png" />
     <None Remove="Assets\LICENSE" />
-    
-    <None Remove="Fonts\Segoe Fluent Icons.ttf" />
-    <None Remove="Fonts\Settings Fluent Icons.ttf" />
       
     <None Remove="Styles\Button.xaml" />
     <None Remove="Styles\Checkbox.xaml" />
@@ -136,7 +130,6 @@
     <None Remove="Styles\DropDownButton.xaml" />
     <None Remove="Styles\Expander.xaml" />
     <None Remove="Styles\Flyout.xaml" />
-    <None Remove="Styles\FontIcon.xaml" />
     <None Remove="Styles\Grid.xaml" />
     <None Remove="Styles\GridView.xaml" />
     <None Remove="Styles\HyperlinkButton.xaml" />
@@ -279,7 +272,6 @@
     <Page Update="Styles\DropDownButton.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\Expander.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\Flyout.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Styles\FontIcon.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\Grid.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\GridView.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\HyperlinkButton.xaml" Generator="MSBuild:Compile" />

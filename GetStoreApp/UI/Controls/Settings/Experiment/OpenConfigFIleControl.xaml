@@ -21,9 +21,10 @@
 
     <FontIcon
         Grid.Column="0"
-        FontFamily="{StaticResource SegoeFluentFontFamily}"
-        Glyph="&#xE70f;"
-        Style="{StaticResource FontIconStyle}" />
+        Margin="0,0,12,0"
+        FontFamily="{ThemeResource SymbolThemeFontFamily}"
+        FontSize="16"
+        Glyph="&#xE70f;" />
 
     <TextBlock
         Grid.Column="1"
@@ -37,7 +38,7 @@
         Style="{StaticResource ExperimentalHyperlinkButtonStyle}">
 
         <HyperlinkButton.Content>
-            <FontIcon FontFamily="{StaticResource SegoeFluentFontFamily}" Glyph="&#xE8a7;" />
+            <FontIcon Glyph="&#xE8a7;" />
         </HyperlinkButton.Content>
 
         <ToolTipService.ToolTip>

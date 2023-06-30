@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Helpers.Window;
+﻿using GetStoreApp.Helpers.Root;
+using GetStoreApp.Helpers.Window;
 using GetStoreApp.Properties;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
@@ -7,13 +8,15 @@ using GetStoreApp.ViewModels.Controls.Store;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Runtime.InteropServices;
+using Windows.Foundation;
+using Windows.Graphics;
 using Windows.Storage.Streams;
-using Windows.System;
 using WinRT;
 using WinRT.Interop;
 
@@ -24,7 +27,7 @@ namespace GetStoreApp.Views.Window
     /// </summary>
     public sealed partial class MainWindow : WinUIWindow
     {
-        private WndProc newWndProc = null;
+        private WNDPROC newWndProc = null;
         private IntPtr oldWndProc = IntPtr.Zero;
 
         public MainWindow()
@@ -156,13 +159,17 @@ namespace GetStoreApp.Views.Window
         }
 
         /// <summary>
-        /// 初始化窗口过程
+        /// 初始化窗口
         /// </summary>
-        public void InitializeWindowProc()
+        public void InitializeWindow()
         {
             IntPtr MainWindowHandle = GetMainWindowHandle();
-            newWndProc = new WndProc(NewWindowProc);
-            oldWndProc = SetWindowLongAuto(MainWindowHandle, WindowLongIndexFlags.GWL_WNDPROC, newWndProc);
+            newWndProc = new WNDPROC(NewWindowProc);
+            oldWndProc = SetWindowLongAuto(MainWindowHandle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newWndProc));
+#if EXPERIMENTAL
+            int style = GetWindowLongAuto(GetMainWindowHandle(), WindowLongIndexFlags.GWL_STYLE);
+            SetWindowLongAuto(GetMainWindowHandle(), WindowLongIndexFlags.GWL_STYLE, style & ~(int)WindowStyle.WS_SYSMENU);
+#endif
         }
 
         /// <summary>
@@ -172,6 +179,12 @@ namespace GetStoreApp.Views.Window
         {
             switch (Msg)
             {
+                // 窗口大小发生变化的消息
+                case WindowMessage.WM_SIZE:
+                    {
+                        AppTitlebar.ViewModel.IsWindowMaximized = WindowHelper.IsWindowMaximized;
+                        break;
+                    }
                 // 窗口大小发生更改时的消息
                 case WindowMessage.WM_GETMINMAXINFO:
                     {
@@ -205,7 +218,7 @@ namespace GetStoreApp.Views.Window
                         {
                             WindowHelper.ShowAppWindow();
 
-                            DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, async () =>
+                            DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
                             {
                                 await new AppRunningDialog().ShowAsync();
                             });
@@ -240,7 +253,7 @@ namespace GetStoreApp.Views.Window
                     {
                         WindowHelper.ShowAppWindow();
 
-                        Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, async () =>
+                        Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
                         {
                             await new DPIChangedNotifyDialog().ShowAsync();
                         });
@@ -248,7 +261,33 @@ namespace GetStoreApp.Views.Window
                     }
                 case WindowMessage.WM_NCRBUTTONDOWN:
                     {
+#if EXPERIMENTAL
+                        DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+                        {
+                            PointInt32 pt;
+                            unsafe
+                            {
+                                User32Library.GetCursorPos(&pt);
+                            }
+                            if (InfoHelper.SystemVersion.Build >= 22000)
+                            {
+                                AppTitlebar.TitlebarMenuFlyout.ShowAt(Content,
+                                    new Point(
+                                    DPICalcHelper.ConvertPixelToEpx(GetMainWindowHandle(), pt.X - AppWindow.Position.X),
+                                    DPICalcHelper.ConvertPixelToEpx(GetMainWindowHandle(), 32))
+                                    );
+                            }
+                            else
+                            {
+                                AppTitlebar.TitlebarMenuFlyout.ShowAt(Content, new Point(pt.X - AppWindow.Position.X, 32));
+                            }
+                        });
+
                         return 0;
+#endif
+#if !EXPERIMENTAL
+                        break;
+#endif
                     }
             }
             return User32Library.CallWindowProc(oldWndProc, hWnd, Msg, wParam, lParam);

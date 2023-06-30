@@ -21,9 +21,10 @@
 
     <FontIcon
         Grid.Column="0"
-        FontFamily="{StaticResource SettingsFluentFontFamily}"
-        Glyph="&#xf1ad;"
-        Style="{StaticResource FontIconStyle}" />
+        Margin="0,0,12,0"
+        FontFamily="{ThemeResource SymbolThemeFontFamily}"
+        FontSize="16"
+        Glyph="&#xE77B;" />
 
     <StackPanel Grid.Column="1" Orientation="Vertical">
 
