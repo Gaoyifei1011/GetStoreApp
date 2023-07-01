@@ -53,7 +53,6 @@ namespace GetStoreApp
             // 以桌面应用程序方式正常启动
             if (IsDesktopProgram)
             {
-                AppNotificationService.Initialize();
                 DesktopLaunchService.InitializeLaunchAsync().Wait();
                 ComWrappersSupport.InitializeComWrappers();
 

@@ -14,6 +14,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Graphics;
 using Windows.Storage.Streams;
@@ -224,7 +225,7 @@ namespace GetStoreApp.Views.Window
                             });
                         }
                         // 获取应用的命令参数
-                        else
+                        else if (copyDataStruct.dwData is 1)
                         {
                             string[] startupArgs = copyDataStruct.lpData.Split(' ');
 
@@ -244,6 +245,14 @@ namespace GetStoreApp.Views.Window
                             }
 
                             WindowHelper.ShowAppWindow();
+                        }
+                        // 处理通知启动的内容
+                        else if (copyDataStruct.dwData is 2)
+                        {
+                            Task.Run(async () =>
+                            {
+                                await AppNotificationService.HandleAppNotificationAsync(copyDataStruct.lpData);
+                            });
                         }
 
                         break;

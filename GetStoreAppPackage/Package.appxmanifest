@@ -15,7 +15,7 @@
   <Identity
     Name="Gaoyifei1011.GetStoreApp"
     Publisher="CN=高怡飞"
-    Version="2.1.630.1" />
+    Version="2.1.701.0" />
 
   <Properties>
     <DisplayName>ms-resource:PackageDisplayName</DisplayName>
@@ -74,19 +74,6 @@
             <uap5:ExecutionAlias Alias="GetStoreApp.exe" />
           </uap5:AppExecutionAlias>
         </uap5:Extension>
-
-        <!--应用通知启动-->
-        <desktop:Extension Category="windows.toastNotificationActivation">
-          <desktop:ToastNotificationActivation ToastActivatorCLSID="6CA254A3-8B8C-4441-AE81-0FBA18ADD8B0" />
-        </desktop:Extension>
-
-        <com:Extension Category="windows.comServer">
-          <com:ComServer>
-            <com:ExeServer Executable="GetStoreApp.exe" Arguments="----AppNotificationActivated:" DisplayName="App notification activator">
-              <com:Class Id="6CA254A3-8B8C-4441-AE81-0FBA18ADD8B0" DisplayName="App notification activator" />
-            </com:ExeServer>
-          </com:ComServer>
-        </com:Extension>
       </Extensions>
     </Application>
   </Applications>

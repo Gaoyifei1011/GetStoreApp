@@ -10,8 +10,6 @@ using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
-using Microsoft.Windows.AppLifecycle;
-using Microsoft.Windows.AppNotifications;
 using System;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -191,17 +189,6 @@ namespace GetStoreApp.ViewModels.Window
         }
 
         /// <summary>
-        /// 处理应用通知
-        /// </summary>
-        public async Task HandleAppNotificationAsync()
-        {
-            if (DesktopLaunchService.StartupKind is ExtendedActivationKind.AppNotification)
-            {
-                await AppNotificationService.HandleAppNotificationAsync(AppInstance.GetCurrent().GetActivatedEventArgs().Data as AppNotificationActivatedEventArgs, false);
-            }
-        }
-
-        /// <summary>
         /// 设置应用窗口图标
         /// </summary>
         private void SetAppIcon()
@@ -236,7 +223,6 @@ namespace GetStoreApp.ViewModels.Window
             Program.ApplicationRoot.TrayIcon.Dispose();
             Program.ApplicationRoot.TrayIcon.DoubleClick -= DoubleClick;
             Program.ApplicationRoot.TrayIcon.RightClick -= RightClick;
-            AppNotificationService.Unregister();
             Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
         }
 

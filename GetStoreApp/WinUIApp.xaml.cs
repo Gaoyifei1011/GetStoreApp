@@ -45,7 +45,6 @@ namespace GetStoreApp
 
             await InitializeJumpListAsync();
             ViewModel.Startup();
-            await ViewModel.HandleAppNotificationAsync();
         }
 
         /// <summary>
