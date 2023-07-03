@@ -120,10 +120,7 @@
   <data name="CheckNetWorkConnection" xml:space="preserve">
     <value>检查网络连接</value>
   </data>
-  <data name="CopyAppInformationCopyFailed" xml:space="preserve">
-    <value>应用信息复制失败，请检查剪贴板的访问权限</value>
-  </data>
-  <data name="CopyAppInformationSuccessfully" xml:space="preserve">
+  <data name="CopyAppInformation" xml:space="preserve">
     <value>应用信息信息已成功复制到剪贴板</value>
   </data>
   <data name="DesktopShortcutSuccessfully" xml:space="preserve">
@@ -165,31 +162,19 @@
   &lt;/actions&gt;
 &lt;/toast&gt;</value>
   </data>
-  <data name="ExceptionCopyFailed" xml:space="preserve">
-    <value>浏览器异常信息复制失败，请检查剪贴板的访问权限</value>
-  </data>
-  <data name="ExceptionCopySuccessfully" xml:space="preserve">
+  <data name="ExceptionCopy" xml:space="preserve">
     <value>浏览器异常信息已成功复制到剪贴板</value>
   </data>
-  <data name="FileInformationCopyFailed" xml:space="preserve">
-    <value>文件信息复制失败，请检查剪贴板的访问权限</value>
-  </data>
-  <data name="FileInformationCopySuccessfully" xml:space="preserve">
+  <data name="FileInformationCopy" xml:space="preserve">
     <value>文件信息复制成功</value>
   </data>
   <data name="FolderPickerOpenFailed" xml:space="preserve">
     <value>文件夹选取框不能在管理员模式下运行，请从普通用户模式运行应用后再尝试修改</value>
   </data>
-  <data name="HistoryCopyFailed" xml:space="preserve">
-    <value>该条历史记录复制失败，请检查剪贴板的访问权限</value>
-  </data>
-  <data name="HistoryCopySuccessfully" xml:space="preserve">
+  <data name="HistoryCopy" xml:space="preserve">
     <value>该条历史记录已成功复制到剪贴板</value>
   </data>
-  <data name="HistorySelectedCopyFailed" xml:space="preserve">
-    <value>{0}条历史记录复制失败，请检查剪贴板的访问权限</value>
-  </data>
-  <data name="HistorySelectedCopySuccessfully" xml:space="preserve">
+  <data name="HistorySelectedCopy" xml:space="preserve">
     <value>{0}条历史记录已经成功复制到剪贴板</value>
   </data>
   <data name="InstallError" xml:space="preserve">
@@ -211,10 +196,7 @@
   &lt;/visual&gt;
 &lt;/toast&gt;</value>
   </data>
-  <data name="LanguageChangeFailed" xml:space="preserve">
-    <value>语言设置修改失败，请重试</value>
-  </data>
-  <data name="LanguageChangeSuccessfully" xml:space="preserve">
+  <data name="LanguageChange" xml:space="preserve">
     <value>语言设置修改成功，重启应用后生效</value>
   </data>
   <data name="LogCleanFailed" xml:space="preserve">
@@ -239,40 +221,22 @@
   &lt;/actions&gt;
 &lt;/toast&gt;</value>
   </data>
-  <data name="ResultContentCopyFailed" xml:space="preserve">
-    <value>该条下载记录复制失败，请检查剪贴板的访问权限</value>
-  </data>
-  <data name="ResultContentCopySuccessfully" xml:space="preserve">
+  <data name="ResultContentCopy" xml:space="preserve">
     <value>该条下载记录已成功复制到剪贴板</value>
   </data>
-  <data name="ResultContentSelectedCopyFailed" xml:space="preserve">
-    <value>{0}条下载记录复制失败，请检查剪贴板的访问权限</value>
-  </data>
-  <data name="ResultContentSelectedCopySuccessfully" xml:space="preserve">
+  <data name="ResultContentSelectedCopy" xml:space="preserve">
     <value>{0}条下载记录已经成功复制到剪贴板</value>
   </data>
-  <data name="ResultIDCopyFailed" xml:space="preserve">
-    <value>该CategoryID复制失败，请检查剪贴板的访问权限</value>
-  </data>
-  <data name="ResultIDCopySuccessfully" xml:space="preserve">
+  <data name="ResultIDCopy" xml:space="preserve">
     <value>该CategoryID已成功复制到剪贴板</value>
   </data>
-  <data name="ResultLinkCopyFailed" xml:space="preserve">
-    <value>该条下载链接复制失败，请检查剪贴板的访问权限</value>
-  </data>
-  <data name="ResultLinkCopySuccessfully" xml:space="preserve">
+  <data name="ResultLinkCopy" xml:space="preserve">
     <value>该条下载链接已成功复制到剪贴板</value>
   </data>
-  <data name="ResultLinkSelectedCopyFailed" xml:space="preserve">
-    <value>{0}条下载链接复制失败，请检查剪贴板的访问权限</value>
-  </data>
-  <data name="ResultLinkSelectedCopySuccessfully" xml:space="preserve">
+  <data name="ResultLinkSelectedCopy" xml:space="preserve">
     <value>{0}条下载链接已经成功复制到剪贴板</value>
   </data>
-  <data name="SearchInstallCopyFailed" xml:space="preserve">
-    <value>安装命令复制失败，请检查剪贴板的访问权限</value>
-  </data>
-  <data name="SearchInstallCopySuccessfully" xml:space="preserve">
+  <data name="SearchInstallCopy" xml:space="preserve">
     <value>安装命令已复制到剪贴板</value>
   </data>
   <data name="ShareFailed" xml:space="preserve">
@@ -293,22 +257,13 @@
   <data name="TaskbarSuccessfully" xml:space="preserve">
     <value>已成功将应用固定到任务栏</value>
   </data>
-  <data name="UnInstallCopyFailed" xml:space="preserve">
-    <value>卸载命令复制失败，请检查剪贴板的访问权限</value>
-  </data>
-  <data name="UnInstallCopySuccessfully" xml:space="preserve">
+  <data name="UnInstallCopy" xml:space="preserve">
     <value>卸载命令已复制到剪贴板</value>
   </data>
-  <data name="UpgradeInstallCopyFailed" xml:space="preserve">
-    <value>升级命令复制失败，请检查剪贴板的访问权限</value>
-  </data>
-  <data name="UpgradeInstallCopySuccessfully" xml:space="preserve">
+  <data name="UpgradeInstallCopy" xml:space="preserve">
     <value>升级命令已复制到剪贴板</value>
   </data>
-  <data name="WebCacheCleanChangeFailed" xml:space="preserve">
-    <value>网页缓存清理失败</value>
-  </data>
-  <data name="WebCacheCleanSuccessfully" xml:space="preserve">
+  <data name="WebCacheClean" xml:space="preserve">
     <value>网页缓存清理成功</value>
   </data>
   <data name="WinGetInstallFailed" xml:space="preserve">

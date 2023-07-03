@@ -2,6 +2,7 @@
     x:Class="GetStoreApp.UI.Notifications.ResultContentCopyNotification"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:notification="using:GetStoreApp.Views.CustomControls.Notifications"
@@ -16,23 +17,13 @@
     <Grid>
         <TextBlock
             x:Name="CopySuccess"
-            x:Load="{x:Bind ControlLoad(ViewModel.CopyState, ViewModel.IsMultiSelected, 'CopySuccess'), Mode=OneWay}"
+            x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(ViewModel.IsMultiSelected), Mode=OneWay}"
             Foreground="{ThemeResource SystemFillColorSuccessBrush}"
-            Text="{x:Bind root:ResourceService.GetLocalized('Notification/ResultContentCopySuccessfully')}" />
-        <TextBlock
-            x:Name="CopyFailed"
-            x:Load="{x:Bind ControlLoad(ViewModel.CopyState, ViewModel.IsMultiSelected, 'CopyFailed'), Mode=OneWay}"
-            Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-            Text="{x:Bind root:ResourceService.GetLocalized('Notification/ResultContentCopyFailed')}" />
+            Text="{x:Bind root:ResourceService.GetLocalized('Notification/ResultContentCopy')}" />
         <TextBlock
             x:Name="CopySelectedSuccess"
-            x:Load="{x:Bind ControlLoad(ViewModel.CopyState, ViewModel.IsMultiSelected, 'CopySelectedSuccess'), Mode=OneWay}"
+            x:Load="{x:Bind ViewModel.IsMultiSelected, Mode=OneWay}"
             Foreground="{ThemeResource SystemFillColorSuccessBrush}"
             Loaded="{x:Bind CopySelectedSuccessLoaded}" />
-        <TextBlock
-            x:Name="CopySelectedFailed"
-            x:Load="{x:Bind ControlLoad(ViewModel.CopyState, ViewModel.IsMultiSelected, 'CopySelectedFailed'), Mode=OneWay}"
-            Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-            Loaded="{x:Bind CopySelectedFailedLoaded}" />
     </Grid>
 </notification:InAppNotification>

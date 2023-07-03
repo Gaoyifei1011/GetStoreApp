@@ -163,7 +163,7 @@
                         controlExtensions:CursorHelper.Cursor="Hand"
                         Click="{x:Bind ViewModel.OnFlyoutShowClicked}"
                         Style="{StaticResource AppBarButtonMenuItemStyle}"
-                        Text="显示更多">
+                        Text="{x:Bind root:ResourceService.GetLocalized('Web/ViewMore')}">
 
                         <MenuFlyoutItem.Icon>
                             <FontIcon Glyph="&#xE712;" />
@@ -171,7 +171,7 @@
 
                         <ToolTipService.ToolTip>
                             <ToolTip
-                                Content="显示更多"
+                                Content="{x:Bind root:ResourceService.GetLocalized('Web/ViewMore')}"
                                 Placement="Bottom"
                                 VerticalOffset="25" />
                         </ToolTipService.ToolTip>

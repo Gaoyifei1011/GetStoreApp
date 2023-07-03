@@ -2,7 +2,6 @@
     x:Class="GetStoreApp.UI.Notifications.ResultIDCopyNotification"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:notification="using:GetStoreApp.Views.CustomControls.Notifications"
@@ -14,16 +13,5 @@
         <notificationViewModel:ResultIDCopyViewModel x:Name="ViewModel" />
     </notification:InAppNotification.DataContext>
 
-    <Grid>
-        <TextBlock
-            x:Name="CopySuccess"
-            x:Load="{x:Bind ViewModel.CopyState, Mode=OneWay}"
-            Foreground="{ThemeResource SystemFillColorSuccessBrush}"
-            Text="{x:Bind root:ResourceService.GetLocalized('Notification/ResultIDCopySuccessfully')}" />
-        <TextBlock
-            x:Name="CopyFailed"
-            x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(ViewModel.CopyState), Mode=OneWay}"
-            Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-            Text="{x:Bind root:ResourceService.GetLocalized('Notification/ResultIDCopyFailed')}" />
-    </Grid>
+    <TextBlock Foreground="{ThemeResource SystemFillColorSuccessBrush}" Text="{x:Bind root:ResourceService.GetLocalized('Notification/ResultIDCopy')}" />
 </notification:InAppNotification>

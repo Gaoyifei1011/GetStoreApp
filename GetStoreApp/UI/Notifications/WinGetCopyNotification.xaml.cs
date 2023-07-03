@@ -8,35 +8,23 @@ namespace GetStoreApp.UI.Notifications
     /// </summary>
     public sealed partial class WinGetCopyNotification : InAppNotification
     {
-        public WinGetCopyNotification(bool copyState = false, WinGetOptionArgs optionArgs = WinGetOptionArgs.SearchInstall)
+        public WinGetCopyNotification(WinGetOptionArgs optionArgs)
         {
             InitializeComponent();
-            ViewModel.Initialize(copyState, optionArgs);
+            ViewModel.Initialize(optionArgs);
         }
 
-        public bool ControlLoaded(bool copyState, WinGetOptionArgs optionArgs, string controlName)
+        public bool ControlLoaded(WinGetOptionArgs optionArgs, string controlName)
         {
-            if (controlName is "SearchInstallCopySuccess" && copyState && optionArgs == WinGetOptionArgs.SearchInstall)
+            if (controlName is "SearchInstallCopySuccess" && optionArgs == WinGetOptionArgs.SearchInstall)
             {
                 return true;
             }
-            else if (controlName is "SearchInstallCopyFailed" && !copyState && optionArgs == WinGetOptionArgs.SearchInstall)
+            else if (controlName is "UnInstallCopySuccess" && optionArgs == WinGetOptionArgs.UnInstall)
             {
                 return true;
             }
-            else if (controlName is "UnInstallCopySuccess" && copyState && optionArgs == WinGetOptionArgs.UnInstall)
-            {
-                return true;
-            }
-            else if (controlName is "UnInstallCopyFailed" && !copyState && optionArgs == WinGetOptionArgs.UnInstall)
-            {
-                return true;
-            }
-            else if (controlName is "UpgradeInstallCopySuccess" && copyState && optionArgs == WinGetOptionArgs.UpgradeInstall)
-            {
-                return true;
-            }
-            else if (controlName is "UpgradeInstallCopyFailed" && !copyState && optionArgs == WinGetOptionArgs.UpgradeInstall)
+            else if (controlName is "UpgradeInstallCopySuccess" && optionArgs == WinGetOptionArgs.UpgradeInstall)
             {
                 return true;
             }

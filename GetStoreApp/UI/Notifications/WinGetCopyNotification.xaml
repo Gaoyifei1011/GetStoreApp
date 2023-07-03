@@ -16,33 +16,18 @@
     <Grid>
         <TextBlock
             x:Name="SearchInstallCopySuccess"
-            x:Load="{x:Bind ControlLoaded(ViewModel.CopyState,ViewModel.OptionArgs,'SearchInstallCopySuccess'), Mode=OneWay}"
+            x:Load="{x:Bind ControlLoaded(ViewModel.OptionArgs,'SearchInstallCopySuccess'), Mode=OneWay}"
             Foreground="{ThemeResource SystemFillColorSuccessBrush}"
-            Text="{x:Bind root:ResourceService.GetLocalized('Notification/SearchInstallCopySuccessfully')}" />
-        <TextBlock
-            x:Name="SearchInstallCopyFailed"
-            x:Load="{x:Bind ControlLoaded(ViewModel.CopyState,ViewModel.OptionArgs,'SearchInstallCopyFailed'), Mode=OneWay}"
-            Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-            Text="{x:Bind root:ResourceService.GetLocalized('Notification/SearchInstallCopyFailed')}" />
+            Text="{x:Bind root:ResourceService.GetLocalized('Notification/SearchInstallCopy')}" />
         <TextBlock
             x:Name="UnInstallCopySuccess"
-            x:Load="{x:Bind ControlLoaded(ViewModel.CopyState,ViewModel.OptionArgs,'UnInstallCopySuccess'), Mode=OneWay}"
+            x:Load="{x:Bind ControlLoaded(ViewModel.OptionArgs,'UnInstallCopySuccess'), Mode=OneWay}"
             Foreground="{ThemeResource SystemFillColorSuccessBrush}"
-            Text="{x:Bind root:ResourceService.GetLocalized('Notification/UnInstallCopySuccessfully')}" />
-        <TextBlock
-            x:Name="UnInstallCopyFailed"
-            x:Load="{x:Bind ControlLoaded(ViewModel.CopyState,ViewModel.OptionArgs,'UnInstallCopyFailed'), Mode=OneWay}"
-            Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-            Text="{x:Bind root:ResourceService.GetLocalized('Notification/UnInstallCopyFailed')}" />
+            Text="{x:Bind root:ResourceService.GetLocalized('Notification/UnInstallCopy')}" />
         <TextBlock
             x:Name="UpgradeInstallCopySuccess"
-            x:Load="{x:Bind ControlLoaded(ViewModel.CopyState,ViewModel.OptionArgs,'UpgradeInstallCopySuccess'), Mode=OneWay}"
+            x:Load="{x:Bind ControlLoaded(ViewModel.OptionArgs,'UpgradeInstallCopySuccess'), Mode=OneWay}"
             Foreground="{ThemeResource SystemFillColorSuccessBrush}"
-            Text="{x:Bind root:ResourceService.GetLocalized('Notification/UpgradeInstallCopySuccessfully')}" />
-        <TextBlock
-            x:Name="UpgradeInstallCopyFailed"
-            x:Load="{x:Bind ControlLoaded(ViewModel.CopyState,ViewModel.OptionArgs,'UpgradeInstallCopyFailed'), Mode=OneWay}"
-            Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-            Text="{x:Bind root:ResourceService.GetLocalized('Notification/UpgradeInstallCopyFailed')}" />
+            Text="{x:Bind root:ResourceService.GetLocalized('Notification/UpgradeInstallCopy')}" />
     </Grid>
 </notification:InAppNotification>

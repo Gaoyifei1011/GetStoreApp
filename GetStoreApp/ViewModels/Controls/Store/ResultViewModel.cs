@@ -87,7 +87,7 @@ namespace GetStoreApp.ViewModels.Controls.Store
         public void OnCopyIDClicked(object sender, RoutedEventArgs args)
         {
             CopyPasteHelper.CopyToClipBoard(CategoryId);
-            new ResultIDCopyNotification(true).Show();
+            new ResultIDCopyNotification().Show();
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace GetStoreApp.ViewModels.Controls.Store
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
 
-            new ResultContentCopyNotification(true, true, SelectedResultDataList.Count).Show();
+            new ResultContentCopyNotification(true, SelectedResultDataList.Count).Show();
         }
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace GetStoreApp.ViewModels.Controls.Store
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
 
-            new ResultLinkCopyNotification(true, true, SelectedResultDataList.Count).Show();
+            new ResultLinkCopyNotification(true, SelectedResultDataList.Count).Show();
         }
 
         /// <summary>
@@ -452,7 +452,7 @@ namespace GetStoreApp.ViewModels.Controls.Store
                 {
                     CopyPasteHelper.CopyToClipBoard(fileLink);
 
-                    new ResultLinkCopyNotification(true, false).Show();
+                    new ResultLinkCopyNotification(false).Show();
                 }
             };
 
@@ -469,7 +469,7 @@ namespace GetStoreApp.ViewModels.Controls.Store
                         );
 
                     CopyPasteHelper.CopyToClipBoard(copyContent);
-                    new ResultContentCopyNotification(true, false).Show();
+                    new ResultContentCopyNotification(false).Show();
                 }
             };
         }

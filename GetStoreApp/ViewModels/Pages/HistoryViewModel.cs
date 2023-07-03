@@ -261,7 +261,7 @@ namespace GetStoreApp.ViewModels.Pages
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
 
-            new HistoryCopyNotification(true, true, SelectedHistoryDataList.Count).Show();
+            new HistoryCopyNotification(true, SelectedHistoryDataList.Count).Show();
         }
 
         /// <summary>
@@ -372,7 +372,7 @@ namespace GetStoreApp.ViewModels.Pages
                         ChannelList.Find(item => item.InternalName.Equals(historyItem.HistoryChannel)).DisplayName,
                         historyItem.HistoryLink);
                     CopyPasteHelper.CopyToClipBoard(copyContent);
-                    new HistoryCopyNotification(true, false).Show();
+                    new HistoryCopyNotification(false).Show();
                 }
             };
         }

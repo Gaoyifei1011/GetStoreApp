@@ -170,7 +170,7 @@ namespace GetStoreApp.ViewModels.Pages
             {
                 CoreWebView2Profile coreWebView2Profile = CoreWebView.Profile;
                 await coreWebView2Profile.ClearBrowsingDataAsync();
-                new WebCacheCleanNotification(true).Show();
+                new WebCacheCleanNotification().Show();
             }
         }
 

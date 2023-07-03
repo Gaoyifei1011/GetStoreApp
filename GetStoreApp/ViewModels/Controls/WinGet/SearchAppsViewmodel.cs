@@ -425,7 +425,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                     string copyContent = string.Format("winget install {0}", appId);
                     CopyPasteHelper.CopyToClipBoard(copyContent);
 
-                    new WinGetCopyNotification(true, WinGetOptionArgs.SearchInstall).Show();
+                    new WinGetCopyNotification(WinGetOptionArgs.SearchInstall).Show();
                 }
             };
 

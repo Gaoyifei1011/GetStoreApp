@@ -11,11 +11,8 @@ namespace GetStoreApp.UI.Notifications
     {
         private int Count = 0;
 
-        private bool IsMultiSelected = false;
-
         public ShareFailedNotification(bool isMultiSelected = false, int count = 0)
         {
-            IsMultiSelected = isMultiSelected;
             Count = count;
 
             InitializeComponent();
@@ -24,26 +21,7 @@ namespace GetStoreApp.UI.Notifications
 
         public void ShareSelectedFailedLoaded(object sender, RoutedEventArgs args)
         {
-            if (IsMultiSelected)
-            {
-                ShareSelectedFailed.Text = string.Format(ResourceService.GetLocalized("Notification/ShareSelectedFailed"), Count);
-            }
-        }
-
-        public bool ControlLoad(bool isMultiSelected, string controlName)
-        {
-            if (controlName is "ShareFailed" && !isMultiSelected)
-            {
-                return true;
-            }
-            else if (controlName is "ShareSelectedFailed" && isMultiSelected)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            ShareSelectedFailed.Text = string.Format(ResourceService.GetLocalized("Notification/ShareSelectedFailed"), Count);
         }
     }
 }

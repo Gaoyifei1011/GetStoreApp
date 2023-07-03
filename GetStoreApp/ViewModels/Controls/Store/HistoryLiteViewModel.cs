@@ -63,7 +63,7 @@ namespace GetStoreApp.ViewModels.Controls.Store
                         historyItem.HistoryLink);
                     CopyPasteHelper.CopyToClipBoard(copyContent);
 
-                    new HistoryCopyNotification(true, false).Show();
+                    new HistoryCopyNotification(false).Show();
                 }
             };
 

@@ -120,10 +120,7 @@
   <data name="CheckNetWorkConnection" xml:space="preserve">
     <value>Check the network connection</value>
   </data>
-  <data name="CopyAppInformationCopyFailed" xml:space="preserve">
-    <value>App information replication failed. Please check the access permissions of the clipboard</value>
-  </data>
-  <data name="CopyAppInformationSuccessfully" xml:space="preserve">
+  <data name="CopyAppInformation" xml:space="preserve">
     <value>The app information has been successfully copied to the clipboard</value>
   </data>
   <data name="DesktopShortcutSuccessfully" xml:space="preserve">
@@ -165,31 +162,19 @@
   &lt;/actions&gt;
 &lt;/toast&gt;</value>
   </data>
-  <data name="ExceptionCopyFailed" xml:space="preserve">
-    <value>Browser exception information replication failed. Please check the access permissions of the clipboard</value>
-  </data>
-  <data name="ExceptionCopySuccessfully" xml:space="preserve">
+  <data name="ExceptionCopy" xml:space="preserve">
     <value>The browser exception information has been successfully copied to the clipboard</value>
   </data>
-  <data name="FileInformationCopyFailed" xml:space="preserve">
-    <value>File information copy failed.Please check the access permissions of the clipboard</value>
-  </data>
-  <data name="FileInformationCopySuccessfully" xml:space="preserve">
+  <data name="FileInformationCopy" xml:space="preserve">
     <value>The file information is copied successfully</value>
   </data>
   <data name="FolderPickerOpenFailed" xml:space="preserve">
     <value>The folder marquee does not work in administrator mode, please run the app from normal user mode before trying to modify it</value>
   </data>
-  <data name="HistoryCopyFailed" xml:space="preserve">
-    <value>The history record copy failed. Please check the access rights of the clipboard</value>
-  </data>
-  <data name="HistoryCopySuccessfully" xml:space="preserve">
+  <data name="HistoryCopy" xml:space="preserve">
     <value>The history record was successfully copied to the clipboard</value>
   </data>
-  <data name="HistorySelectedCopyFailed" xml:space="preserve">
-    <value>{0} history records copy failed. Please check the access rights of the clipboard</value>
-  </data>
-  <data name="HistorySelectedCopySuccessfully" xml:space="preserve">
+  <data name="HistorySelectedCopy" xml:space="preserve">
     <value>{0} history records has been successfully copied to the clipboard</value>
   </data>
   <data name="InstallError" xml:space="preserve">
@@ -211,10 +196,7 @@
   &lt;/visual&gt;
 &lt;/toast&gt;</value>
   </data>
-  <data name="LanguageChangeFailed" xml:space="preserve">
-    <value>Language setting modification failed, please try again</value>
-  </data>
-  <data name="LanguageChangeSuccessfully" xml:space="preserve">
+  <data name="LanguageChange" xml:space="preserve">
     <value>The language setting is modified successfully and takes effect after restarting the application</value>
   </data>
   <data name="LogCleanFailed" xml:space="preserve">
@@ -239,40 +221,22 @@
   &lt;/actions&gt;
 &lt;/toast&gt;</value>
   </data>
-  <data name="ResultContentCopyFailed" xml:space="preserve">
-    <value>The download record copy failed. Please check the access rights of the clipboard</value>
-  </data>
-  <data name="ResultContentCopySuccessfully" xml:space="preserve">
+  <data name="ResultContentCopy" xml:space="preserve">
     <value>The download record was successfully copied to the clipboard</value>
   </data>
-  <data name="ResultContentSelectedCopyFailed" xml:space="preserve">
-    <value>{0} download records copy failed. Please check the access rights of the clipboard</value>
-  </data>
-  <data name="ResultContentSelectedCopySuccessfully" xml:space="preserve">
+  <data name="ResultContentSelectedCopy" xml:space="preserve">
     <value>{0} download records has been successfully copied to the clipboard</value>
   </data>
-  <data name="ResultIDCopyFailed" xml:space="preserve">
-    <value>The CategoryID copy failed. Please check the access rights of the clipboard</value>
-  </data>
-  <data name="ResultIDCopySuccessfully" xml:space="preserve">
+  <data name="ResultIDCopy" xml:space="preserve">
     <value>The CategoryID was successfully copied to the clipboard</value>
   </data>
-  <data name="ResultLinkCopyFailed" xml:space="preserve">
-    <value>The download link copy failed. Please check the access rights of the clipboard</value>
-  </data>
-  <data name="ResultLinkCopySuccessfully" xml:space="preserve">
+  <data name="ResultLinkCopy" xml:space="preserve">
     <value>The download link was successfully copied to the clipboard</value>
   </data>
-  <data name="ResultLinkSelectedCopyFailed" xml:space="preserve">
-    <value>{0} download links copy failed. Please check the access rights of the clipboard</value>
-  </data>
-  <data name="ResultLinkSelectedCopySuccessfully" xml:space="preserve">
+  <data name="ResultLinkSelectedCopy" xml:space="preserve">
     <value>{0} download links has been successfully copied to the clipboard</value>
   </data>
-  <data name="SearchInstallCopyFailed" xml:space="preserve">
-    <value>Install command copy failed. Please check the access rights of the clipboard</value>
-  </data>
-  <data name="SearchInstallCopySuccessfully" xml:space="preserve">
+  <data name="SearchInstallCopy" xml:space="preserve">
     <value>Install command was successfully copied to the clipboard</value>
   </data>
   <data name="ShareFailed" xml:space="preserve">
@@ -293,22 +257,13 @@
   <data name="TaskbarSuccessfully" xml:space="preserve">
     <value>The app was successfully pinned to the taskbar</value>
   </data>
-  <data name="UnInstallCopyFailed" xml:space="preserve">
-    <value>Uninstall command copy failed. Please check the access rights of the clipboard</value>
-  </data>
-  <data name="UnInstallCopySuccessfully" xml:space="preserve">
+  <data name="UnInstallCopy" xml:space="preserve">
     <value>Uninstall command was successfully copied to the clipboard</value>
   </data>
-  <data name="UpgradeInstallCopyFailed" xml:space="preserve">
-    <value>Upgrade command copy failed. Please check the access rights of the clipboard</value>
-  </data>
-  <data name="UpgradeInstallCopySuccessfully" xml:space="preserve">
+  <data name="UpgradeInstallCopy" xml:space="preserve">
     <value>Upgrade command was successfully copied to the clipboard</value>
   </data>
-  <data name="WebCacheCleanChangeFailed" xml:space="preserve">
-    <value>Web page cache cleanup failed</value>
-  </data>
-  <data name="WebCacheCleanSuccessfully" xml:space="preserve">
+  <data name="WebCacheClean" xml:space="preserve">
     <value>Web page cache cleanup successfully</value>
   </data>
   <data name="WinGetInstallFailed" xml:space="preserve">

@@ -36,7 +36,7 @@ namespace GetStoreApp.ViewModels.Dialogs.Web
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
             sender.Hide();
-            new ExceptionCopyNotification(true).Show();
+            new ExceptionCopyNotification().Show();
         }
 
         /// <summary>

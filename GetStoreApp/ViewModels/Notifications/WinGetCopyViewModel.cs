@@ -8,19 +8,6 @@ namespace GetStoreApp.ViewModels.Notifications
     /// </summary>
     public class WinGetCopyViewModel : ViewModelBase
     {
-        private bool _copyState = false;
-
-        public bool CopyState
-        {
-            get { return _copyState; }
-
-            set
-            {
-                _copyState = value;
-                OnPropertyChanged();
-            }
-        }
-
         private WinGetOptionArgs _optionArgs;
 
         public WinGetOptionArgs OptionArgs
@@ -34,9 +21,8 @@ namespace GetStoreApp.ViewModels.Notifications
             }
         }
 
-        public void Initialize(bool copyState, WinGetOptionArgs optionArgs)
+        public void Initialize(WinGetOptionArgs optionArgs)
         {
-            CopyState = copyState;
             OptionArgs = optionArgs;
         }
     }
