@@ -16,7 +16,6 @@ namespace GetStoreApp.UI.Notifications
         public HistoryCopyNotification(bool copyState = false, bool isMultiSelected = false, int count = 0)
         {
             InitializeComponent();
-            XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
             ViewModel.Initialize(copyState, isMultiSelected);
         }
 

@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Helpers.Root;
-using GetStoreApp.Helpers.Window;
 using GetStoreApp.Properties;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
@@ -9,8 +8,10 @@ using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI;
 using Microsoft.UI.Dispatching;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Runtime.InteropServices;
@@ -31,12 +32,18 @@ namespace GetStoreApp.Views.Window
         private WNDPROC newWndProc = null;
         private IntPtr oldWndProc = IntPtr.Zero;
 
+        public IntPtr Handle { get; }
+
+        public OverlappedPresenter Presenter { get; }
+
         public MainWindow()
         {
             InitializeComponent();
+            Handle = WindowNative.GetWindowHandle(this);
+            NavigationService.NavigationFrame = WindowFrame;
+            Presenter = AppWindow.Presenter.As<OverlappedPresenter>();
             AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
             AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
-            NavigationService.NavigationFrame = WindowFrame;
         }
 
         /// <summary>
@@ -138,18 +145,6 @@ namespace GetStoreApp.Views.Window
         }
 
         /// <summary>
-        /// 获取主窗口的窗口句柄
-        /// </summary>
-        public IntPtr GetMainWindowHandle()
-        {
-            IntPtr MainWindowHandle = WindowNative.GetWindowHandle(this);
-
-            return MainWindowHandle != IntPtr.Zero
-                ? MainWindowHandle
-                : throw new ApplicationException(ResourceService.GetLocalized("Resources/WindowHandleInitializeFailed"));
-        }
-
-        /// <summary>
         /// 获取主窗口的XamlRoot
         /// </summary>
         public XamlRoot GetMainWindowXamlRoot()
@@ -164,13 +159,53 @@ namespace GetStoreApp.Views.Window
         /// </summary>
         public void InitializeWindow()
         {
-            IntPtr MainWindowHandle = GetMainWindowHandle();
             newWndProc = new WNDPROC(NewWindowProc);
-            oldWndProc = SetWindowLongAuto(MainWindowHandle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newWndProc));
+            oldWndProc = SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newWndProc));
 #if EXPERIMENTAL
-            int style = GetWindowLongAuto(GetMainWindowHandle(), WindowLongIndexFlags.GWL_STYLE);
-            SetWindowLongAuto(GetMainWindowHandle(), WindowLongIndexFlags.GWL_STYLE, style & ~(int)WindowStyle.WS_SYSMENU);
+            int style = GetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_STYLE);
+            SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_STYLE, style & ~(int)WindowStyle.WS_SYSMENU);
 #endif
+        }
+
+        /// <summary>
+        /// 显示窗口
+        /// </summary>
+        public void Show()
+        {
+            if (Presenter.State == OverlappedPresenterState.Maximized)
+            {
+                Presenter.Maximize();
+            }
+            else
+            {
+                Presenter.Restore();
+            }
+
+            AppWindow.MoveInZOrderAtTop();
+            User32Library.SetForegroundWindow(Handle);
+        }
+
+        /// <summary>
+        /// 最大化窗口
+        /// </summary>
+        public void MaximizeOrRestore()
+        {
+            if (Presenter.State == OverlappedPresenterState.Maximized)
+            {
+                Presenter.Restore();
+            }
+            else
+            {
+                Presenter.Maximize();
+            }
+        }
+
+        /// <summary>
+        /// 最小化窗口
+        /// </summary>
+        public void Minimize()
+        {
+            Presenter.Minimize();
         }
 
         /// <summary>
@@ -180,10 +215,23 @@ namespace GetStoreApp.Views.Window
         {
             switch (Msg)
             {
+                // 窗口移动的消息
+                case WindowMessage.WM_MOVE:
+                    {
+                        if (AppTitlebar.TitlebarMenuFlyout.IsOpen)
+                        {
+                            AppTitlebar.TitlebarMenuFlyout.Hide();
+                        }
+                        break;
+                    }
                 // 窗口大小发生变化的消息
                 case WindowMessage.WM_SIZE:
                     {
-                        AppTitlebar.ViewModel.IsWindowMaximized = WindowHelper.IsWindowMaximized;
+                        AppTitlebar.ViewModel.IsWindowMaximized = Presenter.State == OverlappedPresenterState.Maximized;
+                        if (AppTitlebar.TitlebarMenuFlyout.IsOpen)
+                        {
+                            AppTitlebar.TitlebarMenuFlyout.Hide();
+                        }
                         break;
                     }
                 // 窗口大小发生更改时的消息
@@ -215,9 +263,9 @@ namespace GetStoreApp.Views.Window
                         COPYDATASTRUCT copyDataStruct = Marshal.PtrToStructure<COPYDATASTRUCT>(lParam);
 
                         // 没有任何命令参数，正常启动，应用可能被重复启动
-                        if (copyDataStruct.dwData is 0)
+                        if (copyDataStruct.dwData is 1)
                         {
-                            WindowHelper.ShowAppWindow();
+                            Show();
 
                             DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
                             {
@@ -225,7 +273,7 @@ namespace GetStoreApp.Views.Window
                             });
                         }
                         // 获取应用的命令参数
-                        else if (copyDataStruct.dwData is 1)
+                        else if (copyDataStruct.dwData is 2)
                         {
                             string[] startupArgs = copyDataStruct.lpData.Split(' ');
 
@@ -244,23 +292,43 @@ namespace GetStoreApp.Views.Window
                                 viewModel.LinkText = startupArgs[2] is "PlaceHolderText" ? string.Empty : startupArgs[2];
                             }
 
-                            WindowHelper.ShowAppWindow();
+                            Show();
                         }
                         // 处理通知启动的内容
-                        else if (copyDataStruct.dwData is 2)
+                        else if (copyDataStruct.dwData is 3)
                         {
                             Task.Run(async () =>
                             {
                                 await AppNotificationService.HandleAppNotificationAsync(copyDataStruct.lpData);
                             });
+
+                            Show();
                         }
 
+                        break;
+                    }
+                // 选择窗口右键菜单的条目时接收到的消息
+                case WindowMessage.WM_SYSCOMMAND:
+                    {
+#if EXPERIMENTAL
+                        SystemCommand sysCommand = (SystemCommand)(wParam.ToInt32() & 0xFFF0);
+
+                        if (sysCommand == SystemCommand.SC_MOUSEMENU || sysCommand == SystemCommand.SC_KEYMENU)
+                        {
+                            FlyoutShowOptions options = new FlyoutShowOptions();
+                            options.Position = new Point(0, 45);
+                            options.Placement = FlyoutPlacementMode.BottomEdgeAlignedLeft;
+                            options.ShowMode = FlyoutShowMode.Standard;
+                            AppTitlebar.TitlebarMenuFlyout.ShowAt(Content, options);
+                            return 0;
+                        }
+# endif
                         break;
                     }
                 // 屏幕缩放比例发生变化时的消息
                 case WindowMessage.WM_DPICHANGED:
                     {
-                        WindowHelper.ShowAppWindow();
+                        Show();
 
                         Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
                         {
@@ -280,15 +348,22 @@ namespace GetStoreApp.Views.Window
                             }
                             if (InfoHelper.SystemVersion.Build >= 22000)
                             {
-                                AppTitlebar.TitlebarMenuFlyout.ShowAt(Content,
-                                    new Point(
-                                    DPICalcHelper.ConvertPixelToEpx(GetMainWindowHandle(), pt.X - AppWindow.Position.X),
-                                    DPICalcHelper.ConvertPixelToEpx(GetMainWindowHandle(), 32))
-                                    );
+                                FlyoutShowOptions options = new FlyoutShowOptions();
+                                options.Position = new Point(
+                                    DPICalcHelper.ConvertPixelToEpx(Handle, pt.X - AppWindow.Position.X),
+                                    DPICalcHelper.ConvertPixelToEpx(Handle, 32));
+                                options.Placement = FlyoutPlacementMode.BottomEdgeAlignedLeft;
+                                options.ShowMode = FlyoutShowMode.Standard;
+                                AppTitlebar.TitlebarMenuFlyout.ShowAt(Content, options);
                             }
                             else
                             {
-                                AppTitlebar.TitlebarMenuFlyout.ShowAt(Content, new Point(pt.X - AppWindow.Position.X, 32));
+                                FlyoutShowOptions options = new FlyoutShowOptions();
+                                options.Position = new Point(pt.X - AppWindow.Position.X, 32);
+                                options.Placement = FlyoutPlacementMode.BottomEdgeAlignedLeft;
+                                options.ShowMode = FlyoutShowMode.Standard;
+                                AppTitlebar.TitlebarMenuFlyout.ShowAt(Content, options);
+                                AppTitlebar.TitlebarMenuFlyout.ShowAt(Content, options);
                             }
                         });
 

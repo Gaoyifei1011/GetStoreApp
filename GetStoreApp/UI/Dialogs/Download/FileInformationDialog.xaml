@@ -2,10 +2,10 @@
     x:Class="GetStoreApp.UI.Dialogs.Download.FileInformationDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dialogViewModel="using:GetStoreApp.ViewModels.Dialogs.Download"
     xmlns:dialogsAndFlyouts="using:GetStoreApp.Views.CustomControls.DialogsAndFlyouts"
-    xmlns:getStoreApp="using:GetStoreApp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     Title="{x:Bind root:ResourceService.GetLocalized('Dialog/FileInformationTitle')}"
@@ -14,7 +14,6 @@
     Loaded="{x:Bind ViewModel.OnLoaded}"
     PrimaryButtonClick="{x:Bind ViewModel.OnCopyFileInformationClicked}"
     PrimaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CopyFileInformation')}"
-    RequestedTheme="{x:Bind getStoreApp:Program.ApplicationRoot.MainWindow.ViewModel.WindowTheme, Mode=OneWay}"
     Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">
 
@@ -94,7 +93,7 @@
 
         <StackPanel
             x:Name="FileChecking"
-            x:Load="{x:Bind ViewModel.FileCheckState, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
+            x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(ViewModel.FileCheckState), Mode=OneWay}"
             Orientation="Horizontal"
             Spacing="5">
             <ProgressRing

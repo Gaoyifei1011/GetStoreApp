@@ -1,7 +1,8 @@
-﻿using GetStoreApp.Helpers.Window;
+﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.ViewModels.Base;
-using GetStoreApp.Views.CustomControls.MenusAndToolbars;
+using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -45,7 +46,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
             {
                 SetDragRectangles(Convert.ToInt32(appTitleBar.Margin.Left), appTitleBar.ActualWidth, appTitleBar.ActualHeight);
             }
-            IsWindowMaximized = WindowHelper.IsWindowMaximized;
+            IsWindowMaximized = Program.ApplicationRoot.MainWindow.Presenter.State == OverlappedPresenterState.Maximized;
         }
 
         /// <summary>
@@ -53,14 +54,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
         /// </summary>
         public void OnMaximizeClicked(object sender, RoutedEventArgs args)
         {
-            if (WindowHelper.IsWindowMaximized)
-            {
-                WindowHelper.RestoreAppWindow();
-            }
-            else
-            {
-                WindowHelper.MaximizeAppWindow();
-            }
+            Program.ApplicationRoot.MainWindow.MaximizeOrRestore();
         }
 
         /// <summary>
@@ -68,7 +62,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
         /// </summary>
         public void OnMinimizeClicked(object sender, RoutedEventArgs args)
         {
-            WindowHelper.MinimizeAppWindow();
+            Program.ApplicationRoot.MainWindow.Minimize();
         }
 
         /// <summary>
@@ -79,8 +73,8 @@ namespace GetStoreApp.ViewModels.Controls.Window
             MenuFlyoutItem menuItem = sender as MenuFlyoutItem;
             if (menuItem.Tag is not null)
             {
-                ((AdaptiveMenuFlyout)menuItem.Tag).Hide();
-                User32Library.SendMessage(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), WindowMessage.WM_SYSCOMMAND, 0xF010, 0);
+                ((AdaptiveFlyout)menuItem.Tag).Hide();
+                User32Library.SendMessage(Program.ApplicationRoot.MainWindow.Handle, WindowMessage.WM_SYSCOMMAND, 0xF010, 0);
             }
         }
 
@@ -89,7 +83,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
         /// </summary>
         public void OnRestoreClicked(object sender, RoutedEventArgs args)
         {
-            WindowHelper.RestoreAppWindow();
+            Program.ApplicationRoot.MainWindow.MaximizeOrRestore();
         }
 
         /// <summary>
@@ -100,8 +94,8 @@ namespace GetStoreApp.ViewModels.Controls.Window
             MenuFlyoutItem menuItem = sender as MenuFlyoutItem;
             if (menuItem.Tag is not null)
             {
-                ((AdaptiveMenuFlyout)menuItem.Tag).Hide();
-                User32Library.SendMessage(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), WindowMessage.WM_SYSCOMMAND, 0xF000, 0);
+                ((AdaptiveFlyout)menuItem.Tag).Hide();
+                User32Library.SendMessage(Program.ApplicationRoot.MainWindow.Handle, WindowMessage.WM_SYSCOMMAND, 0xF000, 0);
             }
         }
 
@@ -125,8 +119,8 @@ namespace GetStoreApp.ViewModels.Controls.Window
             Program.ApplicationRoot.MainWindow.AppWindow.TitleBar.SetDragRectangles(new RectInt32[] { new RectInt32(
                 leftMargin,
                 0,
-                DPICalcHelper.ConvertEpxToPixel(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), Convert.ToInt32(actualWidth)),
-                DPICalcHelper.ConvertEpxToPixel(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), Convert.ToInt32(actualHeight))
+                DPICalcHelper.ConvertEpxToPixel(Program.ApplicationRoot.MainWindow.Handle, Convert.ToInt32(actualWidth)),
+                DPICalcHelper.ConvertEpxToPixel(Program.ApplicationRoot.MainWindow.Handle, Convert.ToInt32(actualHeight))
                 )});
         }
     }

@@ -101,7 +101,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
                     Path = DownloadFolder.Path
                 };
 
-                bool Result = dialog.ShowDialog(Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
+                bool Result = dialog.ShowDialog(Program.ApplicationRoot.MainWindow.Handle);
 
                 if (Result)
                 {
@@ -115,7 +115,7 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
                 {
                     FolderPicker folderPicker = new FolderPicker();
                     folderPicker.SuggestedStartLocation = PickerLocationId.Downloads;
-                    InitializeWithWindow.Initialize(folderPicker, Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
+                    InitializeWithWindow.Initialize(folderPicker, Program.ApplicationRoot.MainWindow.Handle);
                     StorageFolder folder = await folderPicker.PickSingleFolderAsync();
 
                     if (folder is not null)

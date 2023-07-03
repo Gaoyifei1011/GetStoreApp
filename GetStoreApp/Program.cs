@@ -8,14 +8,11 @@ using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Controls.Settings.Experiment;
 using GetStoreApp.Services.Root;
-using GetStoreApp.WindowsAPI.PInvoke.Comctl32;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.UI.StartScreen;
@@ -30,12 +27,10 @@ namespace GetStoreApp
     {
         private static bool IsDesktopProgram { get; set; } = true;
 
-        public static List<string> CommandLineArgs { get; private set; }
+        public static bool IsAppLaunched { get; set; } = false;
 
         // 应用程序实例
         public static WinUIApp ApplicationRoot { get; private set; }
-
-        public static bool IsAppLaunched { get; set; } = false;
 
         /// <summary>
         /// 应用程序的主入口点
@@ -45,15 +40,14 @@ namespace GetStoreApp
         {
             CheckAppBootState();
 
-            CommandLineArgs = args.ToList();
-            IsDesktopProgram = GetAppExecuteMode();
+            IsDesktopProgram = GetAppExecuteMode(args);
 
             InitializeProgramResourcesAsync().Wait();
 
             // 以桌面应用程序方式正常启动
             if (IsDesktopProgram)
             {
-                DesktopLaunchService.InitializeLaunchAsync().Wait();
+                DesktopLaunchService.InitializeLaunchAsync(args).Wait();
                 ComWrappersSupport.InitializeComWrappers();
 
                 Application.Start((param) =>
@@ -73,7 +67,7 @@ namespace GetStoreApp
                 {
                     Kernel32Library.AllocConsole();
                 }
-                ConsoleLaunchService.InitializeConsoleStartupAsync().Wait();
+                ConsoleLaunchService.InitializeLaunchAsync(args).Wait();
 
                 Kernel32Library.FreeConsole();
 
@@ -88,18 +82,8 @@ namespace GetStoreApp
         public static void CheckAppBootState()
         {
             Resources.Culture = CultureInfo.CurrentCulture.Parent;
-            if (!RuntimeHelper.IsMsix())
+            if (!RuntimeHelper.IsMSIX)
             {
-                Comctl32Library.TaskDialog(
-                    IntPtr.Zero,
-                    IntPtr.Zero,
-                    Resources.AppDisplayName,
-                    Resources.AppBootFailed,
-                    Resources.AppBootFailedContent1 + Environment.NewLine + Resources.AppBootFailedContent2 + Environment.NewLine + Resources.AppBootFailedContent3,
-                    TASKDIALOG_COMMON_BUTTON_FLAGS.TDCBF_OK_BUTTON,
-                    TASKDIALOGICON.TD_SHIELD_ERROR_RED_BAR,
-                    out _
-                    );
                 Environment.Exit(Convert.ToInt32(AppExitCode.Failed));
             }
         }
@@ -107,9 +91,9 @@ namespace GetStoreApp
         /// <summary>
         /// 检查命令参数是否以桌面方式启动
         /// </summary>
-        private static bool GetAppExecuteMode()
+        private static bool GetAppExecuteMode(string[] args)
         {
-            return CommandLineArgs.Count is 0 || !CommandLineArgs[0].Equals("Console", StringComparison.OrdinalIgnoreCase);
+            return args.Length is 0 || !args[0].Equals("Console", StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>

@@ -2,9 +2,10 @@
     x:Class="GetStoreApp.UI.Controls.Window.AppTitleBarControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dialogAndFlyouts="using:GetStoreApp.Views.CustomControls.DialogsAndFlyouts"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:windowViewModel="using:GetStoreApp.ViewModels.Controls.Window"
     Loaded="{x:Bind ViewModel.OnLoaded}"
@@ -41,62 +42,120 @@
 
         <!--  标题栏右键菜单  -->
         <Grid.Resources>
-            <menusAndToolbars:AdaptiveMenuFlyout
+            <dialogAndFlyouts:AdaptiveFlyout
                 x:Name="TitlebarMenuFlyout"
                 x:FieldModifier="public"
-                AreOpenCloseAnimationsEnabled="False"
+                AreOpenCloseAnimationsEnabled="True"
                 Closing="{x:Bind OnClosing}"
                 Opening="{x:Bind OnOpening}">
 
-                <MenuFlyoutItem
-                    MaxHeight="40"
-                    Click="{x:Bind ViewModel.OnRestoreClicked}"
-                    IsEnabled="{x:Bind ViewModel.IsWindowMaximized, Mode=OneWay}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Window/Restore')}">
-                    <MenuFlyoutItem.Icon>
-                        <FontIcon Glyph="&#xE7C4;" />
-                    </MenuFlyoutItem.Icon>
-                </MenuFlyoutItem>
-                <MenuFlyoutItem
-                    MaxHeight="40"
-                    Click="{x:Bind ViewModel.OnMoveClicked}"
-                    Tag="{x:Bind TitlebarMenuFlyout}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Window/Move')}" />
-                <MenuFlyoutItem
-                    MaxHeight="40"
-                    Click="{x:Bind ViewModel.OnSizeClicked}"
-                    Tag="{x:Bind TitlebarMenuFlyout}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Window/Size')}" />
-                <MenuFlyoutItem
-                    MaxHeight="40"
-                    Click="{x:Bind ViewModel.OnMinimizeClicked}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Window/Minimize')}">
-                    <MenuFlyoutItem.Icon>
-                        <FontIcon Glyph="&#xE738;" />
-                    </MenuFlyoutItem.Icon>
-                </MenuFlyoutItem>
-                <MenuFlyoutItem
-                    MaxHeight="40"
-                    Click="{x:Bind ViewModel.OnMaximizeClicked}"
-                    IsEnabled="{x:Bind ViewModel.IsWindowMaximized, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Window/Maximize')}">
-                    <MenuFlyoutItem.Icon>
-                        <FontIcon Glyph="&#xE71A;" />
-                    </MenuFlyoutItem.Icon>
-                </MenuFlyoutItem>
-                <MenuFlyoutSeparator Width="200" />
-                <MenuFlyoutItem
-                    MaxHeight="40"
-                    Click="{x:Bind ViewModel.OnCloseClicked}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Window/Close')}">
-                    <MenuFlyoutItem.Icon>
-                        <FontIcon Glyph="&#xE894;" />
-                    </MenuFlyoutItem.Icon>
-                    <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="F4" Modifiers="Menu" />
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
-            </menusAndToolbars:AdaptiveMenuFlyout>
+                <MenuFlyoutPresenter
+                    Width="200"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Style="{StaticResource MenuFlyoutPresenterStyle}">
+
+                    <MenuFlyoutItem
+                        Click="{x:Bind ViewModel.OnRestoreClicked}"
+                        IsEnabled="{x:Bind ViewModel.IsWindowMaximized, Mode=OneWay}"
+                        Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Window/Restore')}">
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Glyph="&#xE7C4;" />
+                        </MenuFlyoutItem.Icon>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind root:ResourceService.GetLocalized('Window/Restore')}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+                    </MenuFlyoutItem>
+
+                    <MenuFlyoutItem
+                        Click="{x:Bind ViewModel.OnMoveClicked}"
+                        Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
+                        Tag="{x:Bind TitlebarMenuFlyout}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Window/Move')}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind root:ResourceService.GetLocalized('Window/Move')}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+                    </MenuFlyoutItem>
+
+                    <MenuFlyoutItem
+                        Click="{x:Bind ViewModel.OnSizeClicked}"
+                        Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
+                        Tag="{x:Bind TitlebarMenuFlyout}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Window/Size')}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind root:ResourceService.GetLocalized('Window/Size')}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+                    </MenuFlyoutItem>
+
+                    <MenuFlyoutItem
+                        Click="{x:Bind ViewModel.OnMinimizeClicked}"
+                        Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Window/Minimize')}">
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Glyph="&#xE738;" />
+                        </MenuFlyoutItem.Icon>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind root:ResourceService.GetLocalized('Window/Minimize')}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+                    </MenuFlyoutItem>
+
+                    <MenuFlyoutItem
+                        Click="{x:Bind ViewModel.OnMaximizeClicked}"
+                        IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(ViewModel.IsWindowMaximized), Mode=OneWay}"
+                        Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Window/Maximize')}">
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Glyph="&#xE71A;" />
+                        </MenuFlyoutItem.Icon>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind root:ResourceService.GetLocalized('Window/Maximize')}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+                    </MenuFlyoutItem>
+
+                    <MenuFlyoutSeparator />
+
+                    <MenuFlyoutItem
+                        Click="{x:Bind ViewModel.OnCloseClicked}"
+                        Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Window/Close')}">
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Glyph="&#xE894;" />
+                        </MenuFlyoutItem.Icon>
+
+                        <MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="F4" Modifiers="Menu" />
+                        </MenuFlyoutItem.KeyboardAccelerators>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                Content="{x:Bind root:ResourceService.GetLocalized('Window/Close')}"
+                                Placement="Bottom"
+                                VerticalOffset="20" />
+                        </ToolTipService.ToolTip>
+                    </MenuFlyoutItem>
+                </MenuFlyoutPresenter>
+            </dialogAndFlyouts:AdaptiveFlyout>
         </Grid.Resources>
     </Grid>
 </Grid>

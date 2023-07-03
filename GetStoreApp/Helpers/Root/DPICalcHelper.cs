@@ -1,7 +1,7 @@
 ﻿using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;
 
-namespace GetStoreApp.Helpers.Window
+namespace GetStoreApp.Helpers.Root
 {
     /// <summary>
     /// DPI（每英寸点数）缩放计算辅助类
@@ -11,7 +11,7 @@ namespace GetStoreApp.Helpers.Window
         /// <summary>
         /// 有效像素值转换为实际的像素值
         /// </summary>
-        public static int ConvertEpxToPixel(IntPtr hwnd, int effectivePixels)
+        public static int ConvertEpxToPixel(nint hwnd, int effectivePixels)
         {
             float scalingFactor = GetScalingFactor(hwnd);
             return Convert.ToInt32(effectivePixels * scalingFactor);
@@ -20,7 +20,7 @@ namespace GetStoreApp.Helpers.Window
         /// <summary>
         /// 实际的像素值转换为有效像素值
         /// </summary>
-        public static int ConvertPixelToEpx(IntPtr hwnd, int pixels)
+        public static int ConvertPixelToEpx(nint hwnd, int pixels)
         {
             float scalingFactor = GetScalingFactor(hwnd);
             return (int)(pixels / scalingFactor);
@@ -29,7 +29,7 @@ namespace GetStoreApp.Helpers.Window
         /// <summary>
         /// 获取实际的系统缩放比例
         /// </summary>
-        private static float GetScalingFactor(IntPtr hwnd)
+        private static float GetScalingFactor(nint hwnd)
         {
             int dpi = User32Library.GetDpiForWindow(hwnd);
             float scalingFactor = (float)dpi / 96;

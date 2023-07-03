@@ -24,6 +24,22 @@ namespace GetStoreApp.Models.Controls.Download
         }
 
         /// <summary>
+        /// 是否处于多选模式
+        /// </summary>
+        private bool _isSelectMode;
+
+        public bool IsSelectMode
+        {
+            get { return _isSelectMode; }
+
+            set
+            {
+                _isSelectMode = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
         /// 任务在下载状态时，获取的GID码。该值唯一
         /// </summary>
         public string GID { get; set; }

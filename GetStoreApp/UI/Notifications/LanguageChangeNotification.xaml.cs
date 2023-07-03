@@ -10,7 +10,6 @@ namespace GetStoreApp.UI.Notifications
         public LanguageChangeNotification(bool setResult = false)
         {
             InitializeComponent();
-            XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
             ViewModel.Initialize(setResult);
         }
     }

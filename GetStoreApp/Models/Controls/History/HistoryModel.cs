@@ -23,6 +23,19 @@ namespace GetStoreApp.Models.Controls.History
             }
         }
 
+        private bool _isSelectMode;
+
+        public bool IsSelectMode
+        {
+            get { return _isSelectMode; }
+
+            set
+            {
+                _isSelectMode = value;
+                OnPropertyChanged();
+            }
+        }
+
         /// <summary>
         /// 历史记录生成时对应的时间戳，本地存储时使用的是格林尼治标准时间（GMT+0）
         /// </summary>

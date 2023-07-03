@@ -18,19 +18,6 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
     {
         public List<TraceCleanupModel> TraceCleanupList { get; set; } = new List<TraceCleanupModel>();
 
-        private bool _isFirstInitialize = true;
-
-        public bool IsFirstInitialize
-        {
-            get { return _isFirstInitialize; }
-
-            set
-            {
-                _isFirstInitialize = value;
-                OnPropertyChanged();
-            }
-        }
-
         private bool _isSelected;
 
         public bool IsSelected
@@ -64,8 +51,11 @@ namespace GetStoreApp.ViewModels.Dialogs.Settings
         {
             args.Cancel = true;
 
-            IsFirstInitialize = false;
-            TraceCleanupList.ForEach(traceCleanupItem => traceCleanupItem.IsCleanFailed = false);
+            foreach (TraceCleanupModel traceCleanupItem in TraceCleanupList)
+            {
+                traceCleanupItem.IsCleanFailed = false;
+            }
+
             IsCleaning = true;
             TraceCleanup();
             await Task.Delay(1000);

@@ -3,6 +3,7 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,8 +20,9 @@ namespace GetStoreApp.Services.Root
     {
         private static IActivatedEventArgs ActivatedEventArgs;
 
-        // 0 表示不需要发送消息，1表示发送的是应用启动时重定向的消息
-        private static int SendMessageDataType;
+        private static List<string> DesktopLaunchArgs;
+
+        private static MessageType SendMessageType = MessageType.None;
 
         // 应用启动时使用的参数
         public static Dictionary<string, object> LaunchArgs { get; set; } = new Dictionary<string, object>()
@@ -33,10 +35,11 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 处理桌面应用启动的方式
         /// </summary>
-        public static async Task InitializeLaunchAsync()
+        public static async Task InitializeLaunchAsync(string[] args)
         {
+            DesktopLaunchArgs = args.ToList();
             ActivatedEventArgs = AppInstance.GetActivatedEventArgs();
-            await ParseStartupKindAsync(ActivatedEventArgs.Kind);
+            await ParseStartupKindAsync(ActivatedEventArgs is null ? ActivationKind.Launch : ActivatedEventArgs.Kind);
             await DealLaunchArgsAsync();
         }
 
@@ -56,7 +59,7 @@ namespace GetStoreApp.Services.Root
                 // 使用共享目标方式启动
                 case ActivationKind.ShareTarget:
                     {
-                        SendMessageDataType = 1;
+                        SendMessageType = MessageType.Information;
                         ShareOperation shareOperation = (ActivatedEventArgs as ShareTargetActivatedEventArgs).ShareOperation;
                         shareOperation.ReportCompleted();
                         LaunchArgs["Link"] = Convert.ToString(await shareOperation.Data.GetUriAsync());
@@ -65,7 +68,7 @@ namespace GetStoreApp.Services.Root
                 // 从系统通知处启动
                 case ActivationKind.ToastNotification:
                     {
-                        SendMessageDataType = 2;
+                        SendMessageType = MessageType.Notification;
                         break;
                     }
                 // 其他方式
@@ -82,40 +85,48 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void ParseLaunchArgs()
         {
-            if (Program.CommandLineArgs.Count is 0)
+            if (DesktopLaunchArgs.Count is 0)
             {
-                SendMessageDataType = 0;
+                SendMessageType = MessageType.Normal;
                 return;
             }
-            else if (Program.CommandLineArgs.Count is 1)
+            else if (DesktopLaunchArgs.Count is 1)
             {
-                SendMessageDataType = 1;
-                LaunchArgs["Link"] = Program.CommandLineArgs[0];
+                if (DesktopLaunchArgs[0] == "Restart")
+                {
+                    SendMessageType = MessageType.None;
+                    return;
+                }
+                else
+                {
+                    SendMessageType = MessageType.Information;
+                    LaunchArgs["Link"] = DesktopLaunchArgs[0];
+                }
             }
             else
             {
-                SendMessageDataType = 1;
+                SendMessageType = MessageType.Information;
 
                 // 跳转列表启动的参数
-                if (Program.CommandLineArgs[0] is "JumpList")
+                if (DesktopLaunchArgs[0] is "JumpList")
                 {
-                    LaunchArgs["TypeName"] = ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(Program.CommandLineArgs[1], StringComparison.OrdinalIgnoreCase));
-                    LaunchArgs["ChannelName"] = ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(Program.CommandLineArgs[2], StringComparison.OrdinalIgnoreCase));
-                    LaunchArgs["Link"] = Program.CommandLineArgs[3];
+                    LaunchArgs["TypeName"] = ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(DesktopLaunchArgs[1], StringComparison.OrdinalIgnoreCase));
+                    LaunchArgs["ChannelName"] = ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(DesktopLaunchArgs[2], StringComparison.OrdinalIgnoreCase));
+                    LaunchArgs["Link"] = DesktopLaunchArgs[3];
                 }
 
                 // 正常启动的参数
                 else
                 {
-                    if (Program.CommandLineArgs.Count % 2 is not 0) return;
+                    if (DesktopLaunchArgs.Count % 2 is not 0) return;
 
-                    int TypeNameIndex = Program.CommandLineArgs.FindIndex(item => item.Equals("-t", StringComparison.OrdinalIgnoreCase) || item.Equals("--type", StringComparison.OrdinalIgnoreCase));
-                    int ChannelNameIndex = Program.CommandLineArgs.FindIndex(item => item.Equals("-c", StringComparison.OrdinalIgnoreCase) || item.Equals("--channel", StringComparison.OrdinalIgnoreCase));
-                    int LinkIndex = Program.CommandLineArgs.FindIndex(item => item.Equals("-l", StringComparison.OrdinalIgnoreCase) || item.Equals("--link", StringComparison.OrdinalIgnoreCase));
+                    int TypeNameIndex = DesktopLaunchArgs.FindIndex(item => item.Equals("-t", StringComparison.OrdinalIgnoreCase) || item.Equals("--type", StringComparison.OrdinalIgnoreCase));
+                    int ChannelNameIndex = DesktopLaunchArgs.FindIndex(item => item.Equals("-c", StringComparison.OrdinalIgnoreCase) || item.Equals("--channel", StringComparison.OrdinalIgnoreCase));
+                    int LinkIndex = DesktopLaunchArgs.FindIndex(item => item.Equals("-l", StringComparison.OrdinalIgnoreCase) || item.Equals("--link", StringComparison.OrdinalIgnoreCase));
 
-                    LaunchArgs["TypeName"] = TypeNameIndex is -1 ? LaunchArgs["TypeName"] : ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(Program.CommandLineArgs[TypeNameIndex + 1], StringComparison.OrdinalIgnoreCase));
-                    LaunchArgs["ChannelName"] = ChannelNameIndex is -1 ? LaunchArgs["ChannelName"] : ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(Program.CommandLineArgs[ChannelNameIndex + 1], StringComparison.OrdinalIgnoreCase));
-                    LaunchArgs["Link"] = LinkIndex is -1 ? LaunchArgs["Link"] : Program.CommandLineArgs[LinkIndex + 1];
+                    LaunchArgs["TypeName"] = TypeNameIndex is -1 ? LaunchArgs["TypeName"] : ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(DesktopLaunchArgs[TypeNameIndex + 1], StringComparison.OrdinalIgnoreCase));
+                    LaunchArgs["ChannelName"] = ChannelNameIndex is -1 ? LaunchArgs["ChannelName"] : ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(DesktopLaunchArgs[ChannelNameIndex + 1], StringComparison.OrdinalIgnoreCase));
+                    LaunchArgs["Link"] = LinkIndex is -1 ? LaunchArgs["Link"] : DesktopLaunchArgs[LinkIndex + 1];
                 }
             }
         }
@@ -125,7 +136,11 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static async Task DealLaunchArgsAsync()
         {
-            if (SendMessageDataType == 0 || SendMessageDataType == 1)
+            if (SendMessageType == MessageType.None)
+            {
+                return;
+            }
+            else if (SendMessageType == MessageType.Normal || SendMessageType == MessageType.Information)
             {
                 bool isExisted = false;
 
@@ -133,7 +148,7 @@ namespace GetStoreApp.Services.Root
 
                 // 向主实例发送数据
                 COPYDATASTRUCT copyDataStruct = new COPYDATASTRUCT();
-                copyDataStruct.dwData = SendMessageDataType;
+                copyDataStruct.dwData = (IntPtr)SendMessageType;
                 copyDataStruct.cbData = Encoding.Default.GetBytes(sendData).Length + 1;
                 copyDataStruct.lpData = sendData;
 
@@ -155,14 +170,14 @@ namespace GetStoreApp.Services.Root
                     Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
                 }
             }
-            else if (SendMessageDataType == 2)
+            else if (SendMessageType == MessageType.Notification)
             {
                 bool isExisted = false;
-                string sendData = Program.CommandLineArgs[0];
+                string sendData = DesktopLaunchArgs[0];
 
                 // 向主实例发送数据
                 COPYDATASTRUCT copyDataStruct = new COPYDATASTRUCT();
-                copyDataStruct.dwData = SendMessageDataType;
+                copyDataStruct.dwData = (IntPtr)SendMessageType;
                 copyDataStruct.cbData = Encoding.Default.GetBytes(sendData).Length + 1;
                 copyDataStruct.lpData = sendData;
 
@@ -175,7 +190,6 @@ namespace GetStoreApp.Services.Root
                     Marshal.StructureToPtr(copyDataStruct, ptrCopyDataStruct, false);
                     User32Library.SendMessage(hwnd, WindowMessage.WM_COPYDATA, 0, ptrCopyDataStruct);
                     Marshal.FreeHGlobal(ptrCopyDataStruct);
-                    User32Library.SetForegroundWindow(hwnd);
                 }
 
                 // 然后退出实例并停止
@@ -185,7 +199,7 @@ namespace GetStoreApp.Services.Root
                 }
                 else
                 {
-                    await AppNotificationService.HandleAppNotificationAsync(Program.CommandLineArgs[0]);
+                    await AppNotificationService.HandleAppNotificationAsync(DesktopLaunchArgs[0]);
                 }
             }
         }

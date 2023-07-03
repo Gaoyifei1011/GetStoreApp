@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controlExtensions="using:GetStoreApp.Helpers.Controls.Extensions"
+    xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
@@ -49,7 +50,7 @@
         controlExtensions:CursorHelper.Cursor="Hand"
         Click="{x:Bind ViewModel.OnBackdropTipClicked}"
         Style="{StaticResource ButtonInfoStyle}"
-        Visibility="{x:Bind ViewModel.CanUseMicaBackdrop, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Reverse}">
+        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(ViewModel.CanUseMicaBackdrop), Mode=OneWay}">
 
         <Button.Content>
             <FontIcon
@@ -101,7 +102,7 @@
                     IsChecked="{x:Bind IsItemChecked(ViewModel.Backdrop.InternalName, ViewModel.BackdropList[1].InternalName), Mode=OneWay}"
                     Tag="1"
                     Text="{x:Bind ViewModel.BackdropList[1].DisplayName}"
-                    Visibility="{x:Bind ViewModel.CanUseMicaBackdrop, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(ViewModel.CanUseMicaBackdrop), Mode=OneWay}">
 
                     <ToolTipService.ToolTip>
                         <ToolTip
@@ -117,7 +118,7 @@
                     IsChecked="{x:Bind IsItemChecked(ViewModel.Backdrop.InternalName, ViewModel.BackdropList[2].InternalName), Mode=OneWay}"
                     Tag="2"
                     Text="{x:Bind ViewModel.BackdropList[2].DisplayName}"
-                    Visibility="{x:Bind ViewModel.CanUseMicaBackdrop, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(ViewModel.CanUseMicaBackdrop), Mode=OneWay}">
 
                     <ToolTipService.ToolTip>
                         <ToolTip

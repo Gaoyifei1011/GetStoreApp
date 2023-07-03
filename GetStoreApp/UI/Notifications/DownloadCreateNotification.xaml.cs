@@ -10,7 +10,6 @@ namespace GetStoreApp.UI.Notifications
         public DownloadCreateNotification(bool isDownloadCreated = false)
         {
             InitializeComponent();
-            XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
             ViewModel.Initialize(isDownloadCreated);
         }
     }

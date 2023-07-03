@@ -131,6 +131,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
             foreach (UnfinishedModel unfinishedItem in UnfinishedDataList)
             {
+                unfinishedItem.IsSelectMode = true;
                 unfinishedItem.IsSelected = false;
             }
 
@@ -198,6 +199,11 @@ namespace GetStoreApp.ViewModels.Controls.Download
             while (isUpdatingNow) await Task.Delay(50);
             lock (UnfinishedDataListLock) isUpdatingNow = true;
 
+            foreach (UnfinishedModel unfinishedItem in UnfinishedDataList)
+            {
+                unfinishedItem.IsSelectMode = false;
+            }
+
             foreach (BackgroundModel backgroundItem in SelectedUnfinishedDataList)
             {
                 // 删除下载文件
@@ -251,6 +257,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
         public void OnCancelClicked(object sender, RoutedEventArgs args)
         {
             IsSelectMode = false;
+            foreach (UnfinishedModel unfinishedItem in UnfinishedDataList)
+            {
+                unfinishedItem.IsSelectMode = false;
+            }
         }
 
         public UnfinishedViewModel()

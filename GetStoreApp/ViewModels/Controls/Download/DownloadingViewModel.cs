@@ -90,6 +90,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
             foreach (DownloadingModel downloadingItem in DownloadingDataList)
             {
+                downloadingItem.IsSelectMode = true;
                 downloadingItem.IsSelected = false;
             }
 
@@ -155,6 +156,11 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
             IsSelectMode = false;
 
+            foreach (DownloadingModel downloadingItem in DownloadingDataList)
+            {
+                downloadingItem.IsSelectMode = false;
+            }
+
             SelectedDownloadingDataList.ForEach(async downloadingItem =>
             {
                 bool DeleteResult = await DownloadSchedulerService.DeleteTaskAsync(downloadingItem.DownloadKey, downloadingItem.GID, downloadingItem.DownloadFlag);
@@ -196,6 +202,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
         public void OnCancelClicked(object sender, RoutedEventArgs args)
         {
             IsSelectMode = false;
+            foreach (DownloadingModel downloadingItem in DownloadingDataList)
+            {
+                downloadingItem.IsSelectMode = false;
+            }
         }
 
         /// <summary>

@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controlExtensions="using:GetStoreApp.Helpers.Controls.Extensions"
-    xmlns:converter="using:GetStoreApp.Converters.Formats"
+    xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:download="using:GetStoreApp.Models.Controls.Download"
     xmlns:downloadViewModel="using:GetStoreApp.ViewModels.Controls.Download"
@@ -17,10 +17,6 @@
     <Grid.DataContext>
         <downloadViewModel:UnfinishedViewModel x:Name="ViewModel" x:FieldModifier="public" />
     </Grid.DataContext>
-
-    <Grid.Resources>
-        <converter:CheckBoxToolTipFormatConverter x:Name="CheckBoxToolTipFormatConverter" />
-    </Grid.Resources>
 
     <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
@@ -73,7 +69,7 @@
             Grid.Column="4"
             Margin="0,0,10,0"
             VerticalAlignment="Center"
-            x:Load="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
+            x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(ViewModel.IsSelectMode), Mode=OneWay}"
             Background="Transparent"
             Orientation="Horizontal"
             Spacing="2">
@@ -223,7 +219,7 @@
         Grid.Row="1"
         Margin="30,3,30,0"
         Style="{StaticResource CardGridStyle}"
-        Visibility="{x:Bind ViewModel.UnfinishedDataList.Count, Converter={StaticResource IntToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}">
+        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(ViewModel.UnfinishedDataList.Count), Mode=OneWay}">
         <TextBlock
             Margin="0,10"
             VerticalAlignment="Center"
@@ -252,7 +248,7 @@
         ScrollViewer.VerticalScrollMode="Enabled"
         SelectionMode="None"
         Style="{StaticResource ListViewStyle}"
-        Visibility="{x:Bind ViewModel.UnfinishedDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
+        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(ViewModel.UnfinishedDataList.Count), Mode=OneWay}">
 
         <ListView.ItemTemplate>
             <DataTemplate x:DataType="download:UnfinishedModel">
@@ -271,11 +267,11 @@
                         IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
                         IsThreeState="False"
                         Style="{StaticResource CheckBoxStyle}"
-                        Visibility="{Binding ElementName=UnfinishedRoot, Path=DataContext.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsSelectMode), Mode=OneWay}">
 
                         <ToolTipService.ToolTip>
                             <ToolTip
-                                Content="{x:Bind IsSelected, Converter={StaticResource CheckBoxToolTipFormatConverter}, ConverterParameter=Download, Mode=OneWay}"
+                                Content="{x:Bind converter:StringConverterHelper.CheckBoxToolTipFormat(IsSelected,'Download'),Mode=OneWay}"
                                 Placement="Bottom"
                                 VerticalOffset="25" />
                         </ToolTipService.ToolTip>
@@ -309,7 +305,7 @@
                             Grid.Row="1"
                             Style="{StaticResource CardTextStyle}"
                             Text="{x:Bind root:ResourceService.GetLocalized('Download/PauseDownload')}"
-                            Visibility="{x:Bind DownloadFlag, Converter={StaticResource DownloadFlagConverter}, ConverterParameter=2}">
+                            Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 2)}">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip
@@ -324,7 +320,7 @@
                             Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
                             Style="{StaticResource CardTextStyle}"
                             Text="{x:Bind root:ResourceService.GetLocalized('Download/DownloadFailed')}"
-                            Visibility="{x:Bind DownloadFlag, Converter={StaticResource DownloadFlagConverter}, ConverterParameter=0}">
+                            Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 0)}">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip
@@ -340,7 +336,7 @@
                         Margin="10,0,0,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                        IsEnabled="{Binding ElementName=UnfinishedRoot, Path=DataContext.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}">
+                        IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsSelectMode), Mode=OneWay}">
 
                         <StackPanel Orientation="Horizontal">
 
@@ -349,10 +345,10 @@
                                 Command="{Binding ElementName=UnfinishedRoot, Path=DataContext.ContinueCommand, Mode=OneTime}"
                                 CommandParameter="{Binding}"
                                 Style="{StaticResource ButtonDownloadStyle}"
-                                Visibility="{x:Bind DownloadFlag, Converter={StaticResource ContinueDownloadCheckConverter}}">
+                                Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 2)}">
 
                                 <Button.Content>
-                                    <FontIcon Glyph="&#xE74b;" />
+                                    <FontIcon FontSize="14" Glyph="&#xE74b;" />
                                 </Button.Content>
 
                                 <ToolTipService.ToolTip>
@@ -370,7 +366,7 @@
                                 Style="{StaticResource ButtonDownloadStyle}">
 
                                 <Button.Content>
-                                    <FontIcon Glyph="&#xE711;" />
+                                    <FontIcon FontSize="14" Glyph="&#xE711;" />
                                 </Button.Content>
 
                                 <ToolTipService.ToolTip>

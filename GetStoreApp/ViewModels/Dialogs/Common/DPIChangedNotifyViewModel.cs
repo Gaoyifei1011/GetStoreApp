@@ -1,6 +1,4 @@
-﻿using GetStoreApp.Services.Controls.Download;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.Windows.AppLifecycle;
+﻿using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.ViewModels.Dialogs.Common
 {
@@ -14,19 +12,7 @@ namespace GetStoreApp.ViewModels.Dialogs.Common
         /// </summary>
         public void OnRestartClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            RestartApps();
-        }
-
-        /// <summary>
-        /// 重启应用，并关闭其他进程
-        /// </summary>
-        private void RestartApps()
-        {
-            DownloadSchedulerService.CloseDownloadScheduler();
-            Aria2Service.CloseAria2();
-
-            // 重启应用
-            AppInstance.Restart(string.Empty);
+            Program.ApplicationRoot.Restart();
         }
     }
 }

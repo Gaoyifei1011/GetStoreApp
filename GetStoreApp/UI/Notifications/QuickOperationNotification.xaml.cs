@@ -10,7 +10,6 @@ namespace GetStoreApp.UI.Notifications
     {
         public QuickOperationNotification(QuickOperationType operationType, bool isPinnedSuccessfully = false)
         {
-            XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
             InitializeComponent();
             ViewModel.Initialize(operationType, isPinnedSuccessfully);
         }

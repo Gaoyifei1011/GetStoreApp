@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Extensions.Backdrop;
 using GetStoreApp.Helpers.Root;
-using GetStoreApp.Helpers.Window;
 using GetStoreApp.Models.Window;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Advanced;
@@ -10,6 +9,7 @@ using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
+using GetStoreApp.Views.Window;
 using GetStoreApp.WindowsAPI.PInvoke.Uxtheme;
 using Microsoft.UI;
 using Microsoft.UI.Composition.SystemBackdrops;
@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Windows.UI;
 using Windows.UI.ViewManagement;
+using WinRT;
 
 namespace GetStoreApp.ViewModels.Window
 {
@@ -209,14 +210,14 @@ namespace GetStoreApp.ViewModels.Window
 
             if (AppExitService.AppExit.InternalName == AppExitService.AppExitList[0].InternalName)
             {
-                WindowHelper.HideAppWindow();
+                sender.As<MainWindow>().AppWindow.Hide();
             }
             else
             {
                 // 下载队列存在任务时，弹出对话窗口确认是否要关闭窗口
                 if (DownloadSchedulerService.DownloadingList.Count > 0 || DownloadSchedulerService.WaitingList.Count > 0)
                 {
-                    WindowHelper.ShowAppWindow();
+                    sender.As<MainWindow>().Show();
 
                     // 关闭窗口提示对话框是否已经处于打开状态，如果是，不再弹出
                     ContentDialogResult result = await new ClosingWindowDialog().ShowAsync();

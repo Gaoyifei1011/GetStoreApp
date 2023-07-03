@@ -27,7 +27,8 @@
             x:Name="AppTitlebar"
             Height="45"
             Margin="{x:Bind ViewModel.AppTitleBarMargin, Mode=OneWay}"
-            VerticalAlignment="Top" />
+            VerticalAlignment="Top"
+            x:FieldModifier="public" />
 
         <NavigationView
             BackRequested="{x:Bind ViewModel.OnNavigationViewBackRequested}"

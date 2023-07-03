@@ -1,10 +1,10 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Shell;
-using GetStoreApp.WindowsAPI.PInvoke.Comctl32;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Root
@@ -25,6 +25,8 @@ namespace GetStoreApp.Services.Root
 
         public static bool IsAppRunning = true;
 
+        private static List<string> ConsoleLaunchArgs;
+
         /// <summary>
         /// 应用启动时使用的参数
         /// </summary>
@@ -38,8 +40,9 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 处理控制台应用启动的方式
         /// </summary>
-        public static async Task InitializeConsoleStartupAsync()
+        public static async Task InitializeLaunchAsync(string[] args)
         {
+            ConsoleLaunchArgs = args.ToList();
             ConsoleEventDelegate ctrlDelegate = new ConsoleEventDelegate(OnConsoleCtrlHandler);
             Kernel32Library.SetConsoleCtrlHandler(ctrlDelegate, true);
 
@@ -55,38 +58,12 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static bool OnConsoleCtrlHandler(int dwCtrlType)
         {
-            if (dwCtrlType == 0 || dwCtrlType == 2)
-            {
-                IntPtr ConsoleHandle = Kernel32Library.GetConsoleWindow();
-
-                Comctl32Library.TaskDialog(
-                    ConsoleHandle,
-                    IntPtr.Zero,
-                    ResourceService.GetLocalized("Resources/AppDisplayName"),
-                    ResourceService.GetLocalized("Console/ExitPrompt"),
-                    string.Empty,
-                    TASKDIALOG_COMMON_BUTTON_FLAGS.TDCBF_OK_BUTTON | TASKDIALOG_COMMON_BUTTON_FLAGS.TDCBF_CANCEL_BUTTON,
-                    TASKDIALOGICON.TD_SHIELD_WARNING_YELLOW_BAR,
-                    out TaskDialogResult Result
-                    );
-
-                if (Result is TaskDialogResult.IDOK)
-                {
-                    ConsoleHelper.WriteLine(LineBreaks + ResourceService.GetLocalized("Console/ApplicationExit"));
-                    IsAppRunning = false;
-                    DownloadService.StopDownloadFile();
-                    Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                return true;
-            }
+            ConsoleHelper.WriteLine(LineBreaks + ResourceService.GetLocalized("Console/ApplicationExit"));
+            ConsoleHelper.IsExited = true;
+            IsAppRunning = false;
+            DownloadService.StopDownloadFile();
+            Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
+            return true;
         }
 
         /// <summary>
@@ -167,7 +144,7 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static ConsoleLaunchModeArgs GetLaunchMode()
         {
-            if (Program.CommandLineArgs.Count is 1)
+            if (ConsoleLaunchArgs.Count is 1)
             {
                 return ConsoleLaunchModeArgs.NeedQuery;
             }
@@ -182,25 +159,25 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void ParseLaunchArgs()
         {
-            if (Program.CommandLineArgs.Count is 2)
+            if (ConsoleLaunchArgs.Count is 2)
             {
-                LaunchArgs["Link"] = Program.CommandLineArgs[1];
+                LaunchArgs["Link"] = ConsoleLaunchArgs[1];
             }
             else
             {
-                if (Program.CommandLineArgs.Count % 2 is not 1)
+                if (ConsoleLaunchArgs.Count % 2 is not 1)
                 {
                     ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/ParameterError"));
                     return;
                 }
 
-                int TypeNameIndex = Program.CommandLineArgs.FindIndex(item => item.Equals("-t", StringComparison.OrdinalIgnoreCase) || item.Equals("--type", StringComparison.OrdinalIgnoreCase));
-                int ChannelNameIndex = Program.CommandLineArgs.FindIndex(item => item.Equals("-c", StringComparison.OrdinalIgnoreCase) || item.Equals("--channel", StringComparison.OrdinalIgnoreCase));
-                int LinkIndex = Program.CommandLineArgs.FindIndex(item => item.Equals("-l", StringComparison.OrdinalIgnoreCase) || item.Equals("--link", StringComparison.OrdinalIgnoreCase));
+                int TypeNameIndex = ConsoleLaunchArgs.FindIndex(item => item.Equals("-t", StringComparison.OrdinalIgnoreCase) || item.Equals("--type", StringComparison.OrdinalIgnoreCase));
+                int ChannelNameIndex = ConsoleLaunchArgs.FindIndex(item => item.Equals("-c", StringComparison.OrdinalIgnoreCase) || item.Equals("--channel", StringComparison.OrdinalIgnoreCase));
+                int LinkIndex = ConsoleLaunchArgs.FindIndex(item => item.Equals("-l", StringComparison.OrdinalIgnoreCase) || item.Equals("--link", StringComparison.OrdinalIgnoreCase));
 
-                LaunchArgs["TypeName"] = TypeNameIndex is -1 ? LaunchArgs["TypeName"] : ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(Program.CommandLineArgs[TypeNameIndex + 1], StringComparison.OrdinalIgnoreCase));
-                LaunchArgs["ChannelName"] = ChannelNameIndex is -1 ? LaunchArgs["ChannelName"] : ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(Program.CommandLineArgs[ChannelNameIndex + 1], StringComparison.OrdinalIgnoreCase));
-                LaunchArgs["Link"] = LinkIndex is -1 ? LaunchArgs["Link"] : Program.CommandLineArgs[LinkIndex + 1];
+                LaunchArgs["TypeName"] = TypeNameIndex is -1 ? LaunchArgs["TypeName"] : ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(ConsoleLaunchArgs[TypeNameIndex + 1], StringComparison.OrdinalIgnoreCase));
+                LaunchArgs["ChannelName"] = ChannelNameIndex is -1 ? LaunchArgs["ChannelName"] : ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(ConsoleLaunchArgs[ChannelNameIndex + 1], StringComparison.OrdinalIgnoreCase));
+                LaunchArgs["Link"] = LinkIndex is -1 ? LaunchArgs["Link"] : ConsoleLaunchArgs[LinkIndex + 1];
             }
         }
     }

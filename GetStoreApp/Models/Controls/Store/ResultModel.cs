@@ -24,6 +24,22 @@ namespace GetStoreApp.Models.Controls.Store
         }
 
         /// <summary>
+        /// 是否处于多选模式
+        /// </summary>
+        private bool _isSelectMode;
+
+        public bool IsSelectMode
+        {
+            get { return _isSelectMode; }
+
+            set
+            {
+                _isSelectMode = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
         /// 文件名称
         /// </summary>
         public string FileName { get; set; }

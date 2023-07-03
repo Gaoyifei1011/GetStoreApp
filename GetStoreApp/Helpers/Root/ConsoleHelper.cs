@@ -9,10 +9,11 @@ namespace GetStoreApp.Helpers.Root
     /// </summary>
     public static class ConsoleHelper
     {
+        public static bool IsExited { get; set; } = false;
+
         /// <summary>
         /// 将控制台的前景色设置为默认值。
         /// </summary>
-        /// <returns></returns>
         public static int ResetTextColor()
         {
             IntPtr consoleHandle = Kernel32Library.GetStdHandle(StdHandle.STD_OUTPUT_HANDLE);
@@ -64,9 +65,16 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         public static bool Write(string value)
         {
-            IntPtr consoleHandle = Kernel32Library.GetStdHandle(StdHandle.STD_OUTPUT_HANDLE);
+            if (!IsExited)
+            {
+                IntPtr consoleHandle = Kernel32Library.GetStdHandle(StdHandle.STD_OUTPUT_HANDLE);
 
-            return Kernel32Library.WriteConsole(consoleHandle, value, value.Length, out _, IntPtr.Zero);
+                return Kernel32Library.WriteConsole(consoleHandle, value, value.Length, out _, IntPtr.Zero);
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -74,12 +82,19 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         public static bool WriteLine(string value)
         {
-            IntPtr consoleHandle = Kernel32Library.GetStdHandle(StdHandle.STD_OUTPUT_HANDLE);
+            if (!IsExited)
+            {
+                IntPtr consoleHandle = Kernel32Library.GetStdHandle(StdHandle.STD_OUTPUT_HANDLE);
 
-            StringBuilder valueBuilder = new StringBuilder();
-            valueBuilder.AppendLine(value);
+                StringBuilder valueBuilder = new StringBuilder();
+                valueBuilder.AppendLine(value);
 
-            return Kernel32Library.WriteConsole(consoleHandle, valueBuilder.ToString(), valueBuilder.Length, out _, IntPtr.Zero);
+                return Kernel32Library.WriteConsole(consoleHandle, valueBuilder.ToString(), valueBuilder.Length, out _, IntPtr.Zero);
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

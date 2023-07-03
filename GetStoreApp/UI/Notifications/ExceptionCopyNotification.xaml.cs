@@ -10,7 +10,6 @@ namespace GetStoreApp.UI.Notifications
         public ExceptionCopyNotification(bool copyState = false)
         {
             InitializeComponent();
-            XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
             ViewModel.Initialize(copyState);
         }
     }

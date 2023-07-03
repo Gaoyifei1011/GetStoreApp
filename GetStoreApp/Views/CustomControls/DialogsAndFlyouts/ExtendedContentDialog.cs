@@ -18,6 +18,7 @@ namespace GetStoreApp.Views.CustomControls.DialogsAndFlyouts
             {
                 IsDialogOpening = true;
                 XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
+                RequestedTheme = Program.ApplicationRoot.MainWindow.ViewModel.WindowTheme;
                 dialogResult = await base.ShowAsync();
                 IsDialogOpening = false;
             }

@@ -2,7 +2,6 @@
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.SystemTray;
 using GetStoreApp.Helpers.Root;
-using GetStoreApp.Helpers.Window;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
@@ -35,14 +34,14 @@ namespace GetStoreApp.ViewModels.Window
             Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
             {
                 // 隐藏窗口
-                if (WindowHelper.IsWindowVisible)
+                if (Program.ApplicationRoot.MainWindow.Visible)
                 {
-                    WindowHelper.HideAppWindow();
+                    Program.ApplicationRoot.MainWindow.AppWindow.Hide();
                 }
                 // 显示窗口
                 else
                 {
-                    WindowHelper.ShowAppWindow();
+                    Program.ApplicationRoot.MainWindow.Show();
                 }
             });
         }
@@ -63,7 +62,7 @@ namespace GetStoreApp.ViewModels.Window
                 Shell32Library.SHAppBarMessage(AppBarMessage.ABM_GETTASKBARPOS, ref appbarData);
 
                 // 获取屏幕信息
-                IntPtr hMonitor = User32Library.MonitorFromWindow(Program.ApplicationRoot.TrayMenuWindow.GetWindowHandle(), MonitorFlags.MONITOR_DEFAULTTONEAREST);
+                IntPtr hMonitor = User32Library.MonitorFromWindow(Program.ApplicationRoot.TrayMenuWindow.Handle, MonitorFlags.MONITOR_DEFAULTTONEAREST);
                 MONITORINFO monitorInfo = new MONITORINFO();
                 monitorInfo.cbSize = Marshal.SizeOf(typeof(MONITORINFO));
                 User32Library.GetMonitorInfo(hMonitor, out monitorInfo);
@@ -74,7 +73,7 @@ namespace GetStoreApp.ViewModels.Window
                 Program.ApplicationRoot.TrayMenuWindow.SetWindowPosition(appbarData, monitorInfo, pt);
 
                 Program.ApplicationRoot.TrayMenuWindow.AppWindow.Show();
-                User32Library.SetForegroundWindow(Program.ApplicationRoot.TrayMenuWindow.GetWindowHandle());
+                User32Library.SetForegroundWindow(Program.ApplicationRoot.TrayMenuWindow.Handle);
             }
         }
 
@@ -114,7 +113,7 @@ namespace GetStoreApp.ViewModels.Window
 
             if (IsWindowMaximized.HasValue && IsWindowMaximized.Value == true)
             {
-                WindowHelper.MaximizeAppWindow();
+                Program.ApplicationRoot.MainWindow.Presenter.Maximize();
             }
             else
             {
@@ -231,7 +230,7 @@ namespace GetStoreApp.ViewModels.Window
         /// </summary>
         private async Task SaveWindowInformationAsync()
         {
-            await ConfigService.SaveSettingAsync(ConfigKey.IsWindowMaximizedKey, WindowHelper.IsWindowMaximized);
+            await ConfigService.SaveSettingAsync(ConfigKey.IsWindowMaximizedKey, Program.ApplicationRoot.MainWindow.AppTitlebar.ViewModel.IsWindowMaximized);
             await ConfigService.SaveSettingAsync(ConfigKey.WindowWidthKey, Program.ApplicationRoot.MainWindow.AppWindow.Size.Width);
             await ConfigService.SaveSettingAsync(ConfigKey.WindowHeightKey, Program.ApplicationRoot.MainWindow.AppWindow.Size.Height);
             await ConfigService.SaveSettingAsync(ConfigKey.WindowPositionXAxisKey, Program.ApplicationRoot.MainWindow.AppWindow.Position.X);
@@ -241,7 +240,6 @@ namespace GetStoreApp.ViewModels.Window
         /// <summary>
         /// 释放对象。
         /// </summary>
-        /// <remarks>此方法在设计上不是虚拟的。派生类应重写 <see cref="Dispose(bool)"/>.</remarks>
         public void Dispose()
         {
             Dispose(true);

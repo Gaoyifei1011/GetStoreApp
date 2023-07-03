@@ -9,7 +9,6 @@ namespace GetStoreApp.UI.Notifications
     {
         public NetWorkErrorNotification()
         {
-            XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
             InitializeComponent();
         }
     }

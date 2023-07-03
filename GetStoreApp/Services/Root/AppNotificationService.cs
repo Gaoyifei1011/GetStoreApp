@@ -1,11 +1,11 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Window;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Window;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml;
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -33,7 +33,7 @@ namespace GetStoreApp.Services.Root
             if (AppNotificationArguments is "CheckNetWorkConnection")
             {
                 await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
-                if (Program.ApplicationRoot is null)
+                if (Application.Current is null)
                 {
                     Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
                 }
@@ -49,7 +49,7 @@ namespace GetStoreApp.Services.Root
                 {
                     await Windows.System.Launcher.LaunchFolderPathAsync(Path.GetTempPath());
                 }
-                if (Program.ApplicationRoot is null)
+                if (Application.Current is null)
                 {
                     Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
                 }
@@ -57,7 +57,7 @@ namespace GetStoreApp.Services.Root
             else if (AppNotificationArguments is "OpenSettings")
             {
                 await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
-                if (Program.ApplicationRoot is null)
+                if (Application.Current is null)
                 {
                     Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
                 }
@@ -95,7 +95,7 @@ namespace GetStoreApp.Services.Root
                         }
                     }
                 }
-                if (Program.ApplicationRoot is null)
+                if (Application.Current is null)
                 {
                     Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
                 }
@@ -117,7 +117,7 @@ namespace GetStoreApp.Services.Root
             Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
             {
                 // 先设置应用窗口的显示方式
-                WindowHelper.ShowAppWindow();
+                Program.ApplicationRoot.MainWindow.Show();
 
                 switch (args)
                 {

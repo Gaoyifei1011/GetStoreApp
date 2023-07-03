@@ -175,21 +175,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         public static partial IntPtr GetConsoleWindow();
 
         /// <summary>
-        /// 获取调用进程的包全名。
-        /// </summary>
-        /// <param name="packageFullNameLength">
-        /// 输入时， packageFullName 缓冲区的大小（以字符为单位）。 在输出中，返回的包全名的大小（以字符为单位，包括 null 终止符）。
-        /// </param>
-        /// <param name="packageFullName">包全名。</param>
-        /// <returns>
-        /// 如果函数成功，它将返回 ERROR_SUCCESS。 否则，该函数将返回错误代码。 可能的错误代码包括以下内容。
-        /// APPMODEL_ERROR_NO_PACKAGE：此过程没有包标识。
-        /// ERROR_INSUFFICIENT_BUFFER：缓冲区不够大，无法保存数据。 所需大小由 packageFullNameLength 指定。
-        /// </returns>
-        [LibraryImport(Kernel32, EntryPoint = "GetCurrentPackageFullName", SetLastError = true)]
-        public static unsafe partial int GetCurrentPackageFullName(ref int packageFullNameLength, char* packageFullName);
-
-        /// <summary>
         /// 检索创建调用进程时指定的 <see cref="STARTUPINFO"> 结构的内容。
         /// </summary>
         /// <param name="lpStartupInfo">指向接收启动信息的 <see cref="STARTUPINFO"> 结构的指针。</param>

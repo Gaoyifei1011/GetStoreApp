@@ -2,12 +2,11 @@
     x:Class="GetStoreApp.UI.Controls.Download.CompletedControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:check="using:GetStoreApp.Converters.Checks"
     xmlns:controlExtensions="using:GetStoreApp.Helpers.Controls.Extensions"
+    xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:download="using:GetStoreApp.Models.Controls.Download"
     xmlns:downloadViewModel="using:GetStoreApp.ViewModels.Controls.Download"
-    xmlns:format="using:GetStoreApp.Converters.Formats"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
     xmlns:root="using:GetStoreApp.Services.Root"
@@ -19,12 +18,6 @@
     <Grid.DataContext>
         <downloadViewModel:CompletedViewModel x:Name="ViewModel" x:FieldModifier="public" />
     </Grid.DataContext>
-
-    <Grid.Resources>
-        <check:FileExistTextCheckConverter x:Name="FileExistTextCheckConverter" />
-        <format:CheckBoxToolTipFormatConverter x:Name="CheckBoxToolTipFormatConverter" />
-        <format:InstallValueFormatConverter x:Name="InstallValueFormatConverter" />
-    </Grid.Resources>
 
     <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
@@ -76,7 +69,7 @@
             Grid.Column="4"
             Margin="0,0,10,0"
             VerticalAlignment="Center"
-            x:Load="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
+            x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(ViewModel.IsSelectMode), Mode=OneWay}"
             Background="Transparent"
             Orientation="Horizontal"
             Spacing="2">
@@ -247,7 +240,7 @@
         Grid.Row="1"
         Margin="30,3,30,0"
         Style="{StaticResource CardGridStyle}"
-        Visibility="{x:Bind ViewModel.CompletedDataList.Count, Converter={StaticResource IntToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}">
+        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(ViewModel.CompletedDataList.Count), Mode=OneWay}">
         <TextBlock
             Margin="0,10"
             VerticalAlignment="Center"
@@ -276,7 +269,7 @@
         ScrollViewer.VerticalScrollMode="Enabled"
         SelectionMode="None"
         Style="{StaticResource ListViewStyle}"
-        Visibility="{x:Bind ViewModel.CompletedDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
+        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(ViewModel.CompletedDataList.Count), Mode=OneWay}">
 
         <ListView.ItemTemplate>
             <DataTemplate x:DataType="download:CompletedModel">
@@ -295,11 +288,11 @@
                         IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
                         IsThreeState="False"
                         Style="{StaticResource CheckBoxStyle}"
-                        Visibility="{Binding ElementName=CompletedRoot, Path=DataContext.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsSelectMode), Mode=OneWay}">
 
                         <ToolTipService.ToolTip>
                             <ToolTip
-                                Content="{x:Bind IsSelected, Converter={StaticResource CheckBoxToolTipFormatConverter}, ConverterParameter=Download, Mode=OneWay}"
+                                Content="{x:Bind converter:StringConverterHelper.CheckBoxToolTipFormat(IsSelected,'Download'),Mode=OneWay}"
                                 Placement="Bottom"
                                 VerticalOffset="25" />
                         </ToolTipService.ToolTip>
@@ -339,41 +332,41 @@
                                 Grid.Column="1"
                                 FontSize="16"
                                 Style="{StaticResource CardTextStyle}"
-                                Text="{x:Bind TotalSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}">
+                                Text="{x:Bind converter:StringConverterHelper.DownloadSizeFormat(TotalSize), Mode=OneWay}">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip
-                                        Content="{x:Bind TotalSize, Mode=OneWay, Converter={StaticResource DownloadSizeFormatConverter}}"
+                                        Content="{x:Bind converter:StringConverterHelper.DownloadSizeFormat(TotalSize), Mode=OneWay}"
                                         Placement="Bottom"
                                         VerticalOffset="20" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
                         </Grid>
 
-                        <StackPanel Grid.Row="1" Visibility="{x:Bind IsInstalling, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}">
+                        <StackPanel Grid.Row="1" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsInstalling), Mode=OneWay}">
                             <TextBlock
                                 x:Name="FileExist"
-                                x:Load="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}"
+                                x:Load="{x:Bind converter:ValueCheckConverterHelper.FileExistCheck(FilePath)}"
                                 Style="{StaticResource CardTextStyle}"
-                                Text="{x:Bind FilePath, Converter={StaticResource FileExistTextCheckConverter}}">
+                                Text="{x:Bind converter:ValueCheckConverterHelper.FileExistTextCheck(FilePath)}">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip
-                                        Content="{x:Bind FilePath, Converter={StaticResource FileExistTextCheckConverter}}"
+                                        Content="{x:Bind converter:ValueCheckConverterHelper.FileExistTextCheck(FilePath)}"
                                         Placement="Bottom"
                                         VerticalOffset="20" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
                             <TextBlock
                                 x:Name="FileNotExist"
-                                x:Load="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}, ConverterParameter=Reverse}"
+                                x:Load="{x:Bind converter:ValueCheckConverterHelper.FileExistReverseCheck(FilePath)}"
                                 Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
                                 Style="{StaticResource CardTextStyle}"
-                                Text="{x:Bind FilePath, Converter={StaticResource FileExistTextCheckConverter}}">
+                                Text="{x:Bind converter:ValueCheckConverterHelper.FileExistTextCheck(FilePath)}">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip
-                                        Content="{x:Bind FilePath, Converter={StaticResource FileExistTextCheckConverter}}"
+                                        Content="{x:Bind converter:ValueCheckConverterHelper.FileExistTextCheck(FilePath)}"
                                         Placement="Bottom"
                                         VerticalOffset="20" />
                                 </ToolTipService.ToolTip>
@@ -412,13 +405,13 @@
                             <TextBlock
                                 x:Name="InstallStateInfo"
                                 Grid.Column="2"
-                                x:Load="{x:Bind InstallError, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
+                                x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(InstallError), Mode=OneWay}"
                                 Style="{StaticResource CardTextStyle}"
-                                Text="{x:Bind InstallValue, Converter={StaticResource InstallValueFormatConverter}, Mode=OneWay}">
+                                Text="{x:Bind converter:StringConverterHelper.InstallValueFormat(InstallValue), Mode=OneWay}">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip
-                                        Content="{x:Bind InstallValue, Converter={StaticResource InstallValueFormatConverter}, Mode=OneWay}"
+                                        Content="{x:Bind converter:StringConverterHelper.InstallValueFormat(InstallValue), Mode=OneWay}"
                                         Placement="Bottom"
                                         VerticalOffset="20" />
                                 </ToolTipService.ToolTip>
@@ -445,23 +438,23 @@
                         Margin="10,0,0,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                        IsEnabled="{Binding ElementName=CompletedRoot, Path=DataContext.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}">
+                        IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsSelectMode), Mode=OneWay}">
 
                         <StackPanel Orientation="Horizontal">
 
-                            <ContentControl IsEnabled="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}">
+                            <ContentControl IsEnabled="{x:Bind converter:ValueCheckConverterHelper.FileExistCheck(FilePath)}">
 
                                 <StackPanel Orientation="Horizontal">
-                                    <ContentControl IsEnabled="{x:Bind FileName, Converter={StaticResource InstallFileCheckConverter}}">
+                                    <ContentControl IsEnabled="{x:Bind converter:ValueCheckConverterHelper.InstallFileExistsCheck(FileName)}">
                                         <Button
                                             controlExtensions:CursorHelper.Cursor="Hand"
                                             Command="{Binding ElementName=CompletedRoot, Path=DataContext.InstallCommand, Mode=OneTime}"
                                             CommandParameter="{Binding}"
-                                            IsEnabled="{x:Bind IsInstalling, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
+                                            IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsInstalling), Mode=OneWay}"
                                             Style="{StaticResource ButtonDownloadStyle}">
 
                                             <Button.Content>
-                                                <FontIcon Glyph="&#xE710;" />
+                                                <FontIcon FontSize="14" Glyph="&#xE710;" />
                                             </Button.Content>
 
                                             <ToolTipService.ToolTip>
@@ -480,7 +473,7 @@
                                         Style="{StaticResource ButtonDownloadStyle}">
 
                                         <Button.Content>
-                                            <FontIcon Glyph="&#xE8da;" />
+                                            <FontIcon FontSize="14" Glyph="&#xE8da;" />
                                         </Button.Content>
 
                                         <ToolTipService.ToolTip>
@@ -496,7 +489,7 @@
                             <Button controlExtensions:CursorHelper.Cursor="Hand" Style="{StaticResource ButtonDownloadStyle}">
 
                                 <Button.Content>
-                                    <FontIcon FontSize="16" Glyph="&#xE712;" />
+                                    <FontIcon FontSize="14" Glyph="&#xE712;" />
                                 </Button.Content>
 
                                 <ToolTipService.ToolTip>
@@ -523,7 +516,7 @@
                                         <MenuFlyoutItem
                                             Command="{Binding ElementName=CompletedRoot, Path=DataContext.DeleteWithFileCommand, Mode=OneTime}"
                                             CommandParameter="{Binding}"
-                                            IsEnabled="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}"
+                                            IsEnabled="{x:Bind converter:ValueCheckConverterHelper.FileExistCheck(FilePath)}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteWithFile')}">
 
                                             <ToolTipService.ToolTip>
@@ -537,7 +530,7 @@
                                         <MenuFlyoutItem
                                             Command="{Binding ElementName=CompletedRoot, Path=DataContext.ShareFileCommand, Mode=OneTime}"
                                             CommandParameter="{Binding}"
-                                            IsEnabled="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}"
+                                            IsEnabled="{x:Bind converter:ValueCheckConverterHelper.FileExistCheck(FilePath)}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Download/ShareFile')}">
 
                                             <MenuFlyoutItem.Icon>
@@ -555,7 +548,7 @@
                                         <MenuFlyoutItem
                                             Command="{Binding ElementName=CompletedRoot, Path=DataContext.FileInformationCommand, Mode=OneTime}"
                                             CommandParameter="{Binding}"
-                                            IsEnabled="{x:Bind FilePath, Converter={StaticResource FileExistCheckConverter}}"
+                                            IsEnabled="{x:Bind converter:ValueCheckConverterHelper.FileExistCheck(FilePath)}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Download/FileInformation')}">
 
                                             <MenuFlyoutItem.Icon>

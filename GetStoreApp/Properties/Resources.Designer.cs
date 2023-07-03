@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GetStoreApp.Properties
-{
-
-
+namespace GetStoreApp.Properties {
+    using System;
+    
+    
     /// <summary>
     ///   一个强类型的资源类，用于查找本地化的字符串等。
     /// </summary>
@@ -67,51 +67,6 @@ namespace GetStoreApp.Properties
             get {
                 object obj = ResourceManager.GetObject("About", resourceCulture);
                 return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Application boot failed 的本地化字符串。
-        /// </summary>
-        public static string AppBootFailed {
-            get {
-                return ResourceManager.GetString("AppBootFailed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Applications can only run within the MSIX container. 的本地化字符串。
-        /// </summary>
-        public static string AppBootFailedContent1 {
-            get {
-                return ResourceManager.GetString("AppBootFailedContent1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 1. Check whether your application is correctly installed in the system. 的本地化字符串。
-        /// </summary>
-        public static string AppBootFailedContent2 {
-            get {
-                return ResourceManager.GetString("AppBootFailedContent2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 2. Check whether your application starts from the Start screen. 的本地化字符串。
-        /// </summary>
-        public static string AppBootFailedContent3 {
-            get {
-                return ResourceManager.GetString("AppBootFailedContent3", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 GetStoreApp 的本地化字符串。
-        /// </summary>
-        public static string AppDisplayName {
-            get {
-                return ResourceManager.GetString("AppDisplayName", resourceCulture);
             }
         }
         

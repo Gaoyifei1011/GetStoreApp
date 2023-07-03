@@ -97,6 +97,7 @@ namespace GetStoreApp.ViewModels.Controls.Store
         {
             foreach (ResultModel resultItem in ResultDataList)
             {
+                resultItem.IsSelectMode = true;
                 resultItem.IsSelected = false;
             }
 
@@ -282,6 +283,12 @@ namespace GetStoreApp.ViewModels.Controls.Store
 
                 // 显示下载任务创建成功消息
                 new DownloadCreateNotification(IsDownloadSuccessfully).Show();
+
+                foreach (ResultModel resultItem in ResultDataList)
+                {
+                    resultItem.IsSelectMode = false;
+                }
+                IsSelectMode = false;
             }
 
             // 使用浏览器下载
@@ -300,6 +307,10 @@ namespace GetStoreApp.ViewModels.Controls.Store
         public void OnCancelClicked(object sender, RoutedEventArgs args)
         {
             IsSelectMode = false;
+            foreach (ResultModel resultItem in ResultDataList)
+            {
+                resultItem.IsSelectMode = false;
+            }
         }
 
         /// <summary>

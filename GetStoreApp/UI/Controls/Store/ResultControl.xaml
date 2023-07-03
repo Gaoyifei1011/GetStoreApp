@@ -3,8 +3,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controlExtensions="using:GetStoreApp.Helpers.Controls.Extensions"
+    xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:formats="using:GetStoreApp.Converters.Formats"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
     xmlns:root="using:GetStoreApp.Services.Root"
@@ -13,17 +13,12 @@
     xmlns:system="using:System"
     x:Name="ResultRoot"
     CornerRadius="{ThemeResource ColorPickerSliderCornerRadius}"
-    Visibility="{x:Bind ViewModel.ResultControlVisable, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"
+    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(ViewModel.ResultControlVisable), Mode=OneWay}"
     mc:Ignorable="d">
 
     <Grid.DataContext>
         <storeViewModel:ResultViewModel x:Name="ViewModel" x:FieldModifier="public" />
     </Grid.DataContext>
-
-    <Grid.Resources>
-        <formats:CheckBoxToolTipFormatConverter x:Name="CheckBoxToolTipFormatConverter" />
-        <formats:FileNameToolTipFormatConverter x:Name="FileNameToolTipFormatConverter" />
-    </Grid.Resources>
 
     <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
@@ -59,7 +54,7 @@
         <StackPanel
             Grid.Column="3"
             VerticalAlignment="Center"
-            Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
+            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(ViewModel.ResultDataList.Count), Mode=OneWay}">
 
             <TextBlock Text="{x:Bind LocalizeCategoryId(ViewModel.CategoryId), Mode=OneWay}">
 
@@ -86,14 +81,14 @@
             Grid.Column="3"
             VerticalAlignment="Center"
             Text="{x:Bind root:ResourceService.GetLocalized('Store/SearchResultEmpty')}"
-            Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}" />
+            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(ViewModel.ResultDataList.Count), Mode=OneWay}" />
 
         <StackPanel
             x:Name="NormalMode"
             Grid.Column="4"
             Margin="0,0,10,0"
             VerticalAlignment="Center"
-            x:Load="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
+            x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(ViewModel.IsSelectMode), Mode=OneWay}"
             Background="Transparent"
             Orientation="Horizontal"
             Spacing="2">
@@ -269,7 +264,7 @@
         ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
         ItemsSource="{x:Bind ViewModel.ResultDataList, Mode=OneWay}"
         SelectionMode="None"
-        Visibility="{x:Bind ViewModel.ResultDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
+        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(ViewModel.ResultDataList.Count), Mode=OneWay}">
 
         <ListView.Header>
             <Grid
@@ -293,7 +288,7 @@
                     Margin="10,0,0,0"
                     VerticalAlignment="Center"
                     Text="{x:Bind root:ResourceService.GetLocalized('Store/Select')}"
-                    Visibility="{x:Bind ViewModel.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(ViewModel.IsSelectMode), Mode=OneWay}">
 
                     <ToolTipService.ToolTip>
                         <ToolTip
@@ -404,11 +399,11 @@
                         IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
                         IsThreeState="False"
                         Style="{StaticResource CheckBoxStyle}"
-                        Visibility="{Binding ElementName=ResultRoot, Path=DataContext.IsSelectMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsSelectMode), Mode=OneWay}">
 
                         <ToolTipService.ToolTip>
                             <ToolTip
-                                Content="{Binding IsSelected, Converter={StaticResource CheckBoxToolTipFormatConverter}, ConverterParameter=Store, Mode=OneWay}"
+                                Content="{x:Bind converter:StringConverterHelper.CheckBoxToolTipFormat(IsSelected,'Store'),Mode=OneWay}"
                                 Placement="Bottom"
                                 VerticalOffset="25" />
                         </ToolTipService.ToolTip>
@@ -425,7 +420,7 @@
 
                         <ToolTipService.ToolTip>
                             <ToolTip
-                                Content="{x:Bind FileName, Converter={StaticResource FileNameToolTipFormatConverter}}"
+                                Content="{x:Bind converter:StringConverterHelper.FileNameToolTipFormat(FileName)}"
                                 Placement="Bottom"
                                 VerticalOffset="25" />
                         </ToolTipService.ToolTip>
@@ -436,11 +431,11 @@
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
                         Style="{StaticResource CardTextStyle}"
-                        Text="{x:Bind FileLinkExpireTime, Converter={StaticResource GMTFormatConverter}}">
+                        Text="{x:Bind converter:StringConverterHelper.GMTFormat(FileLinkExpireTime)}">
 
                         <ToolTipService.ToolTip>
                             <ToolTip
-                                Content="{x:Bind FileLinkExpireTime, Converter={StaticResource GMTFormatConverter}}"
+                                Content="{x:Bind converter:StringConverterHelper.GMTFormat(FileLinkExpireTime)}"
                                 Placement="Bottom"
                                 VerticalOffset="20" />
                         </ToolTipService.ToolTip>
@@ -482,7 +477,7 @@
                         VerticalAlignment="Center"
                         controlExtensions:CursorHelper.Cursor="Hand"
                         Content="{x:Bind root:ResourceService.GetLocalized('Store/Copy')}"
-                        IsEnabled="{Binding ElementName=ResultRoot, Path=DataContext.IsSelectMode, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
+                        IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsSelectMode), Mode=OneWay}"
                         Style="{StaticResource HyperlinkDropDownButtonStyle}">
 
                         <ToolTipService.ToolTip>

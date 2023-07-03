@@ -10,7 +10,6 @@ namespace GetStoreApp.UI.Notifications
     {
         public WinGetCopyNotification(bool copyState = false, WinGetOptionArgs optionArgs = WinGetOptionArgs.SearchInstall)
         {
-            XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
             InitializeComponent();
             ViewModel.Initialize(copyState, optionArgs);
         }

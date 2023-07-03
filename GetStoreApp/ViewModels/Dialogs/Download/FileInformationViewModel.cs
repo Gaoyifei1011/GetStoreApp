@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Converters.Formats;
+﻿using GetStoreApp.Helpers.Converters;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Root;
@@ -6,7 +6,6 @@ using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Base;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using System;
 using System.Text;
 
 namespace GetStoreApp.ViewModels.Dialogs.Download
@@ -88,7 +87,7 @@ namespace GetStoreApp.ViewModels.Dialogs.Download
         {
             FileName = completedItem.FileName;
             FilePath = completedItem.FilePath;
-            FileSize = Convert.ToString(new DownloadSizeFormatConverter().Convert(completedItem.TotalSize, null, null, null));
+            FileSize = StringConverterHelper.DownloadSizeFormat(completedItem.TotalSize);
             if (FileSHA1 is "WebDownloadUnknown")
             {
                 FileSHA1Load = false;

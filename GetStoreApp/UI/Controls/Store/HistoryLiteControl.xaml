@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controlExtensions="using:GetStoreApp.Helpers.Controls.Extensions"
-    xmlns:converter="using:GetStoreApp.Converters.Formats"
+    xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:history="using:GetStoreApp.Models.Controls.History"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -18,11 +18,6 @@
     <Expander.DataContext>
         <storeViewModel:HistoryLiteViewModel x:Name="ViewModel" x:FieldModifier="public" />
     </Expander.DataContext>
-
-    <Expander.Resources>
-        <converter:TypeNameFormatConverter x:Name="TypeNameFormatConverter" />
-        <converter:ChannelNameFormatConverter x:Name="ChannelNameFormatConverter" />
-    </Expander.Resources>
 
     <Expander.Header>
         <Grid>
@@ -73,14 +68,14 @@
                 VerticalAlignment="Center"
                 Text="{x:Bind root:ResourceService.GetLocalized('Store/HistoryLiteEmpty')}"
                 TextAlignment="Center"
-                Visibility="{x:Bind ViewModel.HistoryLiteDataList.Count, Converter={StaticResource IntToVisibilityConverter}, ConverterParameter=Reverse, Mode=OneWay}" />
+                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(ViewModel.HistoryLiteDataList.Count), Mode=OneWay}" />
 
             <ListView
                 ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
                 ItemsSource="{x:Bind ViewModel.HistoryLiteDataList, Mode=OneWay}"
                 SelectionMode="None"
                 Style="{StaticResource ListViewStyle}"
-                Visibility="{x:Bind ViewModel.HistoryLiteDataList.Count, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}">
+                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(ViewModel.HistoryLiteDataList.Count), Mode=OneWay}">
 
                 <ItemsControl.ItemContainerTransitions>
                     <TransitionCollection />
@@ -175,11 +170,11 @@
                                 Margin="10,0,0,0"
                                 VerticalAlignment="Center"
                                 Style="{StaticResource CardTextStyle}"
-                                Text="{x:Bind HistoryType, Converter={StaticResource TypeNameFormatConverter}}">
+                                Text="{x:Bind converter:StringConverterHelper.TypeNameFormat(HistoryType)}">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip
-                                        Content="{Binding HistoryType, Converter={StaticResource TypeNameFormatConverter}, Mode=OneTime}"
+                                        Content="{x:Bind converter:StringConverterHelper.TypeNameFormat(HistoryType)}"
                                         Placement="Bottom"
                                         VerticalOffset="20" />
                                 </ToolTipService.ToolTip>
@@ -190,11 +185,11 @@
                                 Margin="10,0,0,0"
                                 VerticalAlignment="Center"
                                 Style="{StaticResource CardTextStyle}"
-                                Text="{x:Bind HistoryChannel, Converter={StaticResource ChannelNameFormatConverter}}">
+                                Text="{x:Bind converter:StringConverterHelper.ChannelNameFormat(HistoryChannel)}">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip
-                                        Content="{x:Bind HistoryChannel, Converter={StaticResource ChannelNameFormatConverter}}"
+                                        Content="{x:Bind converter:StringConverterHelper.ChannelNameFormat(HistoryChannel)}"
                                         Placement="Bottom"
                                         VerticalOffset="20" />
                                 </ToolTipService.ToolTip>

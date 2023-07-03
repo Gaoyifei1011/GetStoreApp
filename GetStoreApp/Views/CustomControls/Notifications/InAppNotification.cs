@@ -54,6 +54,8 @@ namespace GetStoreApp.Views.CustomControls.Notifications
         {
             DefaultStyleKey = typeof(InAppNotification);
             Style = ResourceDictionaryHelper.InAppNotificationResourceDict["InAppNotificationStyle"] as Style;
+            RequestedTheme = Program.ApplicationRoot.MainWindow.ViewModel.WindowTheme;
+            XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
         }
 
         protected override void OnApplyTemplate()

@@ -103,12 +103,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Properties\Resources.en-us.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Properties\Resources.zh-hans.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
     
     <Manifest Include="$(ApplicationManifest)" />
 
@@ -126,7 +120,6 @@
     <None Remove="Styles\Button.xaml" />
     <None Remove="Styles\Checkbox.xaml" />
     <None Remove="Styles\ContentDialog.xaml" />
-    <None Remove="Styles\Converter.xaml" />
     <None Remove="Styles\DropDownButton.xaml" />
     <None Remove="Styles\Expander.xaml" />
     <None Remove="Styles\Flyout.xaml" />
@@ -268,7 +261,6 @@
     <Page Update="Styles\Button.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\Checkbox.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\ContentDialog.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Styles\Converter.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\DropDownButton.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\Expander.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\Flyout.xaml" Generator="MSBuild:Compile" />
@@ -388,10 +380,11 @@
     <Page Update="Views\Window\MainWindow.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Window\TrayMenuWindow.xaml" Generator="MSBuild:Compile" />
 
+    <TrimmableAssembly Include="Microsoft.InteractiveExperiences.Projection" />
     <TrimmableAssembly Include="Microsoft.Windows.ApplicationModel.DynamicDependency.Projection" />
     <TrimmableAssembly Include="Microsoft.Windows.ApplicationModel.Resources.Projection" />
     <TrimmableAssembly Include="Microsoft.Windows.ApplicationModel.WindowsAppRuntime.Projection" />
-    <TrimmableAssembly Include="Microsoft.Windows.ApplicationModel.WindowsAppRuntime.Projection" />
+    <TrimmableAssembly Include="Microsoft.Windows.AppLifecycle.Projection" />
     <TrimmableAssembly Include="Microsoft.Windows.AppNotifications.Builder.Projection" />
     <TrimmableAssembly Include="Microsoft.Windows.AppNotifications.Projection" />
     <TrimmableAssembly Include="Microsoft.Windows.PushNotifications.Projection" />

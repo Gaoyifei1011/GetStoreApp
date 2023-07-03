@@ -4,7 +4,6 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Windows.Globalization.DateTimeFormatting;
 using Windows.Storage;
 using Windows.System;
 
@@ -27,8 +26,6 @@ namespace GetStoreApp.Services.Root
         private static bool IsInitialized { get; set; } = false;
 
         private static StorageFolder LogFolder { get; set; }
-
-        private static DateTimeFormatter fileNameFormatter = new DateTimeFormatter("{year.full}_{month.integer}_{day.integer}");
 
         /// <summary>
         /// 初始化日志记录
@@ -58,7 +55,7 @@ namespace GetStoreApp.Services.Root
                     Task.Run(() =>
                     {
                         File.AppendAllText(
-                            Path.Combine(LogFolder.Path, string.Format("GetStoreApp_{0}.log", fileNameFormatter.Format(DateTime.Now))),
+                            Path.Combine(LogFolder.Path, string.Format("GetStoreApp_{0}.log", DateTime.Now.ToString("yyyy_MM_dd"))),
                             string.Format("{0}\t{1}\n{2}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), Convert.ToString(logType), logBuilder)
                             );
                     });
@@ -96,7 +93,7 @@ namespace GetStoreApp.Services.Root
                         exceptionBuilder.Append(lineBreak);
 
                         File.AppendAllText(
-                            Path.Combine(LogFolder.Path, string.Format("GetStoreApp_{0}.log", fileNameFormatter.Format(DateTime.Now))),
+                            Path.Combine(LogFolder.Path, string.Format("GetStoreApp_{0}.log", DateTime.Now.ToString("yyyy_MM_dd"))),
                             string.Format("{0}\t{1}\n{2}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), Convert.ToString(logType), exceptionBuilder.ToString())
                             );
                     });

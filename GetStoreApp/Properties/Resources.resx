@@ -121,21 +121,6 @@
   <data name="About" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\ControlIcon\About.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="AppBootFailed" xml:space="preserve">
-    <value>Application boot failed</value>
-  </data>
-  <data name="AppBootFailedContent1" xml:space="preserve">
-    <value>Applications can only run within the MSIX container.</value>
-  </data>
-  <data name="AppBootFailedContent2" xml:space="preserve">
-    <value>1. Check whether your application is correctly installed in the system.</value>
-  </data>
-  <data name="AppBootFailedContent3" xml:space="preserve">
-    <value>2. Check whether your application starts from the Start screen.</value>
-  </data>
-  <data name="AppDisplayName" xml:space="preserve">
-    <value>GetStoreApp</value>
-  </data>
   <data name="Download" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\ControlIcon\Download.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

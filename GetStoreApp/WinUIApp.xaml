@@ -10,8 +10,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
 
-                <ResourceDictionary Source="ms-appx:///Styles/Converter.xaml" />
-
                 <ResourceDictionary Source="ms-appx:///Styles/Button.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Checkbox.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/ContentDialog.xaml" />

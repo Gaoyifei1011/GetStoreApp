@@ -2,19 +2,18 @@
     x:Class="GetStoreApp.UI.Dialogs.Settings.TraceCleanupPromptDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dialogViewModel="using:GetStoreApp.ViewModels.Dialogs.Settings"
     xmlns:dialogsAndFlyouts="using:GetStoreApp.Views.CustomControls.DialogsAndFlyouts"
-    xmlns:getStoreApp="using:GetStoreApp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:settings="using:GetStoreApp.Models.Dialogs.Settings"
     Title="{x:Bind root:ResourceService.GetLocalized('Dialog/TraceCleanupTitle')}"
     IsPrimaryButtonEnabled="{x:Bind IsButtonEnabled(ViewModel.IsSelected, ViewModel.IsCleaning), Mode=OneWay}"
-    IsSecondaryButtonEnabled="{x:Bind ViewModel.IsCleaning, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}"
+    IsSecondaryButtonEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(ViewModel.IsCleaning), Mode=OneWay}"
     PrimaryButtonClick="{x:Bind ViewModel.OnCleanupNowClicked}"
     PrimaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CleanupNow')}"
-    RequestedTheme="{x:Bind getStoreApp:Program.ApplicationRoot.MainWindow.ViewModel.WindowTheme, Mode=OneWay}"
     SecondaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
     Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">
@@ -44,13 +43,13 @@
                             Content="{x:Bind DisplayName}"
                             IsChecked="{x:Bind IsSelected, Mode=TwoWay}" />
 
-                        <ContentControl Visibility="{Binding ElementName=TraceCleanupRoot, Path=DataContext.IsFirstInitialize, Converter={StaticResource BooleanToOppositeValueConverter}, Mode=OneWay}">
+                        <ContentControl>
                             <TextBlock
                                 Margin="0,5,0,0"
                                 VerticalAlignment="Center"
                                 Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
                                 Text="{x:Bind root:ResourceService.GetLocalized('Dialog/CleanFailed')}"
-                                Visibility="{x:Bind IsCleanFailed, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsCleanFailed), Mode=OneWay}">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip
@@ -65,7 +64,7 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <StackPanel Orientation="Horizontal" Visibility="{x:Bind ViewModel.IsCleaning, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+        <StackPanel Orientation="Horizontal" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(ViewModel.IsCleaning), Mode=OneWay}">
             <ProgressRing
                 Width="20"
                 Height="20"

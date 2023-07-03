@@ -6,7 +6,6 @@
     xmlns:dialogViewModel="using:GetStoreApp.ViewModels.Dialogs.Settings"
     xmlns:dialogsAndFlyouts="using:GetStoreApp.Views.CustomControls.DialogsAndFlyouts"
     xmlns:experiment="using:GetStoreApp.UI.Controls.Settings.Experiment"
-    xmlns:getStoreApp="using:GetStoreApp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     Title="{x:Bind root:ResourceService.GetLocalized('Dialog/ExperimentalFeatures')}"
@@ -14,7 +13,6 @@
     Opened="{x:Bind ViewModel.OnOpened}"
     PrimaryButtonClick="{x:Bind ViewModel.OnRestoreDefaultClicked}"
     PrimaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/RestoreDefualt')}"
-    RequestedTheme="{x:Bind getStoreApp:Program.ApplicationRoot.MainWindow.ViewModel.WindowTheme, Mode=OneWay}"
     Style="{StaticResource ContentDialogStyle}"
     Tag="{x:Bind NetWorkMonitor}"
     mc:Ignorable="d">

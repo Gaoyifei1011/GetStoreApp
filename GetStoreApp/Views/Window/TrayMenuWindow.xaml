@@ -26,7 +26,7 @@
         Background="{x:Bind ViewModel.WindowBackground, Mode=OneWay}"
         Loaded="{x:Bind ViewModel.OnLoaded}"
         RequestedTheme="{x:Bind ViewModel.WindowTheme, Mode=OneWay}"
-        Style="{StaticResource TrayMenuFlyoutPresenterStyle}"
+        Style="{StaticResource MenuFlyoutPresenterStyle}"
         Unloaded="{x:Bind ViewModel.OnUnloaded}">
 
         <MenuFlyoutItem

@@ -52,26 +52,26 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         public static void InitializeResourceDictionary()
         {
-            ButtonResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[2];
-            CheckboxResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[3];
-            ContentDialogResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[4];
-            DropDownButtonResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[5];
-            ExpanderResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[6];
-            FlyoutResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[7];
-            GridResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[8];
-            GridViewResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[9];
-            HyperlinkButtonResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[10];
-            InAppNotificationResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[11];
-            InfoBarResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[12];
-            ListViewResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[13];
-            MenuFlyoutResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[14];
-            NavigationViewResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[15];
-            PivotResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[16];
-            ScrollViewerResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[17];
-            SplitButtonResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[18];
-            TextBlockResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[19];
-            ToggleSwitchResourceDict = Program.ApplicationRoot.Resources.MergedDictionaries[20];
-            WindowChromeDict = Program.ApplicationRoot.Resources.MergedDictionaries[21];
+            ButtonResourceDict = Application.Current.Resources.MergedDictionaries[1];
+            CheckboxResourceDict = Application.Current.Resources.MergedDictionaries[2];
+            ContentDialogResourceDict = Application.Current.Resources.MergedDictionaries[3];
+            DropDownButtonResourceDict = Application.Current.Resources.MergedDictionaries[4];
+            ExpanderResourceDict = Application.Current.Resources.MergedDictionaries[5];
+            FlyoutResourceDict = Application.Current.Resources.MergedDictionaries[6];
+            GridResourceDict = Application.Current.Resources.MergedDictionaries[7];
+            GridViewResourceDict = Application.Current.Resources.MergedDictionaries[8];
+            HyperlinkButtonResourceDict = Application.Current.Resources.MergedDictionaries[9];
+            InAppNotificationResourceDict = Application.Current.Resources.MergedDictionaries[10];
+            InfoBarResourceDict = Application.Current.Resources.MergedDictionaries[11];
+            ListViewResourceDict = Application.Current.Resources.MergedDictionaries[12];
+            MenuFlyoutResourceDict = Application.Current.Resources.MergedDictionaries[13];
+            NavigationViewResourceDict = Application.Current.Resources.MergedDictionaries[14];
+            PivotResourceDict = Application.Current.Resources.MergedDictionaries[15];
+            ScrollViewerResourceDict = Application.Current.Resources.MergedDictionaries[16];
+            SplitButtonResourceDict = Application.Current.Resources.MergedDictionaries[17];
+            TextBlockResourceDict = Application.Current.Resources.MergedDictionaries[18];
+            ToggleSwitchResourceDict = Application.Current.Resources.MergedDictionaries[19];
+            WindowChromeDict = Application.Current.Resources.MergedDictionaries[20];
         }
     }
 }

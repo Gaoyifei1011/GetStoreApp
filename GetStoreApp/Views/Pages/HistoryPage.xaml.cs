@@ -1,8 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Root;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 
@@ -31,18 +29,6 @@ namespace GetStoreApp.Views.Pages
             else
             {
                 HistoryNavigationArgs = AppNaviagtionArgs.None;
-            }
-        }
-
-        /// <summary>
-        /// 页面加载完成后如果有具体的要求，将页面滚动到指定位置
-        /// </summary>
-        public void HistoryPageLoaded(object sender, RoutedEventArgs args)
-        {
-            if (HistoryNavigationArgs == AppNaviagtionArgs.History)
-            {
-                ScrollViewer HistoryScroll = (VisualTreeHelper.GetChild(HistoryListView, 0) as Border).Child as ScrollViewer;
-                HistoryScroll.ChangeView(null, 0, null);
             }
         }
 

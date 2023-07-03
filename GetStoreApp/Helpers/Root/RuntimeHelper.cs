@@ -1,4 +1,5 @@
-﻿using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
+﻿using System;
+using Windows.ApplicationModel;
 
 namespace GetStoreApp.Helpers.Root
 {
@@ -7,13 +8,29 @@ namespace GetStoreApp.Helpers.Root
     /// </summary>
     public static class RuntimeHelper
     {
+        public static bool IsMSIX { get; }
+
         /// <summary>
         /// 判断应用是否在 Msix 容器中运行
         /// </summary>
-        public static unsafe bool IsMsix()
+        static RuntimeHelper()
         {
-            int length = 0;
-            return Kernel32Library.GetCurrentPackageFullName(ref length, null) != Kernel32Library.APPMODEL_ERROR_NO_PACKAGE;
+            try
+            {
+                Package currentPackage = Package.Current;
+                if (currentPackage is not null)
+                {
+                    IsMSIX = true;
+                }
+                else
+                {
+                    IsMSIX = false;
+                }
+            }
+            catch (Exception)
+            {
+                IsMSIX = false;
+            }
         }
     }
 }

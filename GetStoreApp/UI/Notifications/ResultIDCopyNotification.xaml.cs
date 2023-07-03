@@ -9,7 +9,6 @@ namespace GetStoreApp.UI.Notifications
     {
         public ResultIDCopyNotification(bool copyState = false)
         {
-            XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
             InitializeComponent();
             ViewModel.Initialize(copyState);
         }

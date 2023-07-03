@@ -89,6 +89,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
             foreach (CompletedModel completedItem in CompletedDataList)
             {
+                completedItem.IsSelectMode = true;
                 completedItem.IsSelected = false;
             }
 
@@ -178,6 +179,11 @@ namespace GetStoreApp.ViewModels.Controls.Download
                 while (isUpdatingNow) await Task.Delay(50);
                 lock (CompletedDataListLock) isUpdatingNow = true;
 
+                foreach (CompletedModel completedItem in CompletedDataList)
+                {
+                    completedItem.IsSelectMode = false;
+                }
+
                 foreach (BackgroundModel backgroundItem in SelectedCompletedDataList)
                 {
                     try
@@ -235,6 +241,11 @@ namespace GetStoreApp.ViewModels.Controls.Download
 
                 while (isUpdatingNow) await Task.Delay(50);
                 lock (CompletedDataListLock) isUpdatingNow = true;
+
+                foreach (CompletedModel completedItem in CompletedDataList)
+                {
+                    completedItem.IsSelectMode = false;
+                }
 
                 foreach (BackgroundModel completedItem in SelectedCompletedDataList)
                 {
@@ -300,7 +311,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
             {
                 IDataTransferManagerInterop interop = DataTransferManager.As<IDataTransferManagerInterop>();
 
-                IntPtr result = interop.GetForWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), new Guid(0xa5caee9b, 0x8708, 0x49d1, 0x8d, 0x36, 0x67, 0xd2, 0x5a, 0x8d, 0xa0, 0x0c));
+                IntPtr result = interop.GetForWindow(Program.ApplicationRoot.MainWindow.Handle, new Guid(0xa5caee9b, 0x8708, 0x49d1, 0x8d, 0x36, 0x67, 0xd2, 0x5a, 0x8d, 0xa0, 0x0c));
 
                 DataTransferManager dataTransferManager = MarshalInterface<DataTransferManager>.FromAbi(result);
 
@@ -319,7 +330,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     deferral.Complete();
                 };
 
-                interop.ShowShareUIForWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
+                interop.ShowShareUIForWindow(Program.ApplicationRoot.MainWindow.Handle);
             }
             catch (Exception e)
             {
@@ -334,6 +345,10 @@ namespace GetStoreApp.ViewModels.Controls.Download
         public void OnCancelClicked(object sender, RoutedEventArgs args)
         {
             IsSelectMode = false;
+            foreach (CompletedModel completedItem in CompletedDataList)
+            {
+                completedItem.IsSelectMode = false;
+            }
         }
 
         /// <summary>
@@ -588,7 +603,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                     {
                         IDataTransferManagerInterop interop = DataTransferManager.As<IDataTransferManagerInterop>();
 
-                        IntPtr result = interop.GetForWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle(), new Guid(0xa5caee9b, 0x8708, 0x49d1, 0x8d, 0x36, 0x67, 0xd2, 0x5a, 0x8d, 0xa0, 0x0c));
+                        IntPtr result = interop.GetForWindow(Program.ApplicationRoot.MainWindow.Handle, new Guid(0xa5caee9b, 0x8708, 0x49d1, 0x8d, 0x36, 0x67, 0xd2, 0x5a, 0x8d, 0xa0, 0x0c));
 
                         DataTransferManager dataTransferManager = MarshalInterface<DataTransferManager>.FromAbi(result);
 
@@ -601,7 +616,7 @@ namespace GetStoreApp.ViewModels.Controls.Download
                             deferral.Complete();
                         };
 
-                        interop.ShowShareUIForWindow(Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
+                        interop.ShowShareUIForWindow(Program.ApplicationRoot.MainWindow.Handle);
                     }
                     catch (Exception e)
                     {

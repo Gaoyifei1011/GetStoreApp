@@ -1,7 +1,5 @@
 using GetStoreApp.Helpers.Root;
-using GetStoreApp.Helpers.Window;
 using GetStoreApp.Services.Controls.Settings.Appearance;
-using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.PInvoke.DwmApi;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
@@ -21,34 +19,24 @@ namespace GetStoreApp.Views.Window
         private WNDPROC newWndProc = null;
         private IntPtr oldWndProc = IntPtr.Zero;
 
+        public IntPtr Handle { get; }
+
         public TrayMenuWindow()
         {
             InitializeComponent();
-        }
-
-        /// <summary>
-        /// 获取主窗口的窗口句柄
-        /// </summary>
-        public IntPtr GetWindowHandle()
-        {
-            IntPtr MainWindowHandle = WindowNative.GetWindowHandle(this);
-
-            return MainWindowHandle != IntPtr.Zero
-                ? MainWindowHandle
-                : throw new ApplicationException(ResourceService.GetLocalized("Resources/WindowHandleInitializeFailed"));
+            Handle = WindowNative.GetWindowHandle(this);
         }
 
         public void InitializeWindow()
         {
-            IntPtr MainWindowHandle = GetWindowHandle();
             newWndProc = new WNDPROC(NewWindowProc);
-            oldWndProc = SetWindowLongAuto(MainWindowHandle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newWndProc));
+            oldWndProc = SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newWndProc));
 
             int setValue = 0;
-            int setResult = DwmApiLibrary.DwmSetWindowAttribute(Program.ApplicationRoot.TrayMenuWindow.GetWindowHandle(), DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, ref setValue, Marshal.SizeOf<int>());
+            int setResult = DwmApiLibrary.DwmSetWindowAttribute(Program.ApplicationRoot.TrayMenuWindow.Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, ref setValue, Marshal.SizeOf<int>());
             if (setResult is not 0)
             {
-                DwmApiLibrary.DwmSetWindowAttribute(Program.ApplicationRoot.TrayMenuWindow.GetWindowHandle(), DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE_OLD, ref setValue, Marshal.SizeOf<int>());
+                DwmApiLibrary.DwmSetWindowAttribute(Program.ApplicationRoot.TrayMenuWindow.Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE_OLD, ref setValue, Marshal.SizeOf<int>());
             }
 
             // 使用重叠的配置显示应用窗口。
@@ -57,7 +45,7 @@ namespace GetStoreApp.Views.Window
             AppWindow.SetPresenter(presenter);
 
             // 设置窗口扩展样式为工具窗口
-            SetWindowLongAuto(GetWindowHandle(), WindowLongIndexFlags.GWL_EXSTYLE, (IntPtr)WindowStyleEx.WS_EX_TOOLWINDOW);
+            SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_EXSTYLE, (IntPtr)WindowStyleEx.WS_EX_TOOLWINDOW);
 
             AppWindow.MoveAndResize(new RectInt32(0, 0, 0, 0));
             AppWindow.Show();

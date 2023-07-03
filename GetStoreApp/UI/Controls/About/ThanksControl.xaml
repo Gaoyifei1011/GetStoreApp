@@ -3,9 +3,10 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:aboutViewModel="using:GetStoreApp.ViewModels.Controls.About"
+    xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:format="using:GetStoreApp.Converters.Formats"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:GetStoreApp.Models.Base"
     xmlns:root="using:GetStoreApp.Services.Root"
     Style="{StaticResource ExpanderAboutStyle}"
     mc:Ignorable="d">
@@ -13,10 +14,6 @@
     <Expander.DataContext>
         <aboutViewModel:ThanksViewModel x:Name="ViewModel" />
     </Expander.DataContext>
-
-    <Expander.Resources>
-        <format:AboutToolTipFormatConverter x:Name="AboutToolTipFormatConverter" />
-    </Expander.Resources>
 
     <Expander.Header>
         <TextBlock
@@ -41,21 +38,21 @@
                 BorderThickness="1"
                 CornerRadius="{ThemeResource ControlCornerRadius}"
                 ItemContainerStyle="{StaticResource GridViewItemStyle}"
-                ItemsSource="{x:Bind ViewModel.ThanksDict}"
+                ItemsSource="{x:Bind ViewModel.ThanksList}"
                 SelectionMode="None">
 
                 <GridView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="model:KeyValuePairModel">
                         <HyperlinkButton
                             Width="150"
                             Padding="5,8"
                             HorizontalContentAlignment="Center"
-                            Content="{Binding Key, Mode=OneTime}"
-                            NavigateUri="{Binding Value, Mode=OneTime}">
+                            Content="{x:Bind Key}"
+                            NavigateUri="{x:Bind Value}">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip
-                                    Content="{Binding Key, Converter={StaticResource AboutToolTipFormatConverter}, ConverterParameter=Thanks, Mode=OneTime}"
+                                    Content="{x:Bind converter:StringConverterHelper.AboutThanksToolTipFormat(Key)}"
                                     Placement="Bottom"
                                     VerticalOffset="25" />
                             </ToolTipService.ToolTip>

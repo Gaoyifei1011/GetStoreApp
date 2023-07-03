@@ -9,7 +9,6 @@ namespace GetStoreApp.UI.Notifications
     {
         public WebCacheCleanNotification(bool setResult = false)
         {
-            XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
             InitializeComponent();
             ViewModel.Initialize(setResult);
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using GetStoreApp.Models.Base;
+using System.Collections.Generic;
 
 namespace GetStoreApp.ViewModels.Controls.About
 {
@@ -7,14 +8,15 @@ namespace GetStoreApp.ViewModels.Controls.About
     /// </summary>
     public sealed class ThanksViewModel
     {
-        public Dictionary<string, string> ThanksDict { get; } = new Dictionary<string, string>
+        //项目感谢者信息
+        public List<KeyValuePairModel> ThanksList { get; } = new List<KeyValuePairModel>()
         {
-            {"AndromedaMelody","https://github.com/AndromedaMelody" },
-            {"cnbluefire","https://github.com/cnbluefire" },
-            {"飞翔","https://fionlen.azurewebsites.net"},
-            {"MouriNaruto","https://github.com/MouriNaruto" },
-            {"TaylorShi","https://github.com/TaylorShi" },
-            {"wherewhere","https://github.com/wherewhere" }
+            new KeyValuePairModel(){ Key = "AndromedaMelody",Value = "https://github.com/AndromedaMelody" },
+            new KeyValuePairModel(){ Key = "cnbluefire",Value = "https://github.com/cnbluefire" },
+            new KeyValuePairModel(){ Key = "飞翔",Value = "https://fionlen.azurewebsites.net" },
+            new KeyValuePairModel(){ Key = "MouriNaruto",Value = "https://github.com/MouriNaruto" },
+            new KeyValuePairModel(){ Key = "TaylorShi",Value = "https://github.com/TaylorShi" },
+            new KeyValuePairModel(){ Key = "wherewhere",Value = "https://github.com/wherewhere" },
         };
     }
 }

@@ -145,6 +145,7 @@ namespace GetStoreApp.ViewModels.Pages
             {
                 foreach (HistoryModel historyItem in HistoryDataList)
                 {
+                    historyItem.IsSelectMode = true;
                     historyItem.IsSelected = false;
                 }
             }
@@ -284,6 +285,11 @@ namespace GetStoreApp.ViewModels.Pages
             {
                 IsSelectMode = false;
 
+                foreach (HistoryModel historyItem in HistoryDataList)
+                {
+                    historyItem.IsSelectMode = false;
+                }
+
                 bool DeleteResult = await HistoryXmlService.DeleteAsync(SelectedHistoryDataList);
 
                 if (DeleteResult)
@@ -317,6 +323,10 @@ namespace GetStoreApp.ViewModels.Pages
         public void OnCancelClicked(object sender, RoutedEventArgs args)
         {
             IsSelectMode = false;
+            foreach (HistoryModel historyItem in HistoryDataList)
+            {
+                historyItem.IsSelectMode = false;
+            }
         }
 
         /// <summary>

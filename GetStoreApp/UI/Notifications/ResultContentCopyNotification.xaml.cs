@@ -18,7 +18,6 @@ namespace GetStoreApp.UI.Notifications
             IsMultiSelected = isMultiSelected;
             Count = count;
 
-            XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
             InitializeComponent();
             ViewModel.Initialize(copyState, isMultiSelected);
         }

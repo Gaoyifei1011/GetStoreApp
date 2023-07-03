@@ -97,11 +97,11 @@ namespace GetStoreApp.ViewModels.Controls.Store
             {
                 if (StatePrRingActValue)
                 {
-                    Taskbar.SetProgressState(TBPFLAG.TBPF_INDETERMINATE, Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
+                    Taskbar.SetProgressState(TBPFLAG.TBPF_INDETERMINATE, Program.ApplicationRoot.MainWindow.Handle);
                 }
                 else
                 {
-                    Taskbar.SetProgressState(TBPFLAG.TBPF_NOPROGRESS, Program.ApplicationRoot.MainWindow.GetMainWindowHandle());
+                    Taskbar.SetProgressState(TBPFLAG.TBPF_NOPROGRESS, Program.ApplicationRoot.MainWindow.Handle);
                 }
             }
         }

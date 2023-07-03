@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Helpers.Root;
-using GetStoreApp.Helpers.Window;
 using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Window;
 using GetStoreApp.ViewModels.Base;
@@ -95,7 +94,7 @@ namespace GetStoreApp.ViewModels.Controls
             Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
             {
                 // 窗口置前端
-                WindowHelper.ShowAppWindow();
+                Program.ApplicationRoot.MainWindow.Show();
 
                 if (NavigationService.GetCurrentPageType() != typeof(AboutPage))
                 {
@@ -154,7 +153,7 @@ namespace GetStoreApp.ViewModels.Controls
             Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
             {
                 // 窗口置前端
-                WindowHelper.ShowAppWindow();
+                Program.ApplicationRoot.MainWindow.Show();
 
                 if (NavigationService.GetCurrentPageType() != typeof(SettingsPage))
                 {
@@ -172,14 +171,14 @@ namespace GetStoreApp.ViewModels.Controls
             Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
             {
                 // 隐藏窗口
-                if (WindowHelper.IsWindowVisible)
+                if (Program.ApplicationRoot.MainWindow.Visible)
                 {
-                    WindowHelper.HideAppWindow();
+                    Program.ApplicationRoot.MainWindow.AppWindow.Hide();
                 }
                 // 显示窗口
                 else
                 {
-                    WindowHelper.ShowAppWindow();
+                    Program.ApplicationRoot.MainWindow.Show();
                 }
             });
             Program.ApplicationRoot.TrayMenuWindow.AppWindow.Hide();
