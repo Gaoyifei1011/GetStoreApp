@@ -238,7 +238,7 @@
                                         </Grid.RenderTransform>
                                         <ContentPresenter
                                             x:Name="LeftHeaderPresenter"
-                                            Margin="30,0,0,0"
+                                            Margin="20,0,0,0"
                                             HorizontalAlignment="Stretch"
                                             VerticalAlignment="Stretch"
                                             Content="{TemplateBinding LeftHeader}"
@@ -279,7 +279,7 @@
                                             Grid.Column="1"
                                             Width="20"
                                             Height="36"
-                                            Margin="{ThemeResource PivotNavButtonMargin}"
+                                            Margin="10,6,0,0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Center"
                                             Background="Transparent"

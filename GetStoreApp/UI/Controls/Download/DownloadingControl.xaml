@@ -393,7 +393,7 @@
                                     controlExtensions:CursorHelper.Cursor="Hand"
                                     Command="{Binding ElementName=DownloadingRoot, Path=DataContext.PauseCommand, Mode=OneTime}"
                                     CommandParameter="{Binding}"
-                                    Style="{StaticResource ButtonDownloadStyle}">
+                                    Style="{StaticResource ButtonSquareStyle}">
 
                                     <Button.Content>
                                         <FontIcon FontSize="14" Glyph="&#xE769;" />
@@ -411,7 +411,7 @@
                                     controlExtensions:CursorHelper.Cursor="Hand"
                                     Command="{Binding ElementName=DownloadingRoot, Path=DataContext.DeleteCommand, Mode=OneTime}"
                                     CommandParameter="{Binding}"
-                                    Style="{StaticResource ButtonDownloadStyle}">
+                                    Style="{StaticResource ButtonSquareStyle}">
 
                                     <Button.Content>
                                         <FontIcon FontSize="14" Glyph="&#xE711;" />

@@ -83,12 +83,12 @@
 
                     <ToggleSwitch
                         Grid.Column="1"
+                        MinWidth="0"
                         controlExtensions:CursorHelper.Cursor="Hand"
                         FlowDirection="RightToLeft"
                         IsOn="{x:Bind ViewModel.StartsWithEFilterValue, Mode=OneWay}"
                         OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/StartsWithEOffContent')}"
                         OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/StartsWithEOnContent')}"
-                        Style="{StaticResource ToggleSwitchStyle}"
                         Toggled="{x:Bind ViewModel.OnStartWithEToggled}" />
                 </Grid>
             </StackPanel>
@@ -115,12 +115,12 @@
 
                     <ToggleSwitch
                         Grid.Column="1"
+                        MinWidth="0"
                         controlExtensions:CursorHelper.Cursor="Hand"
                         FlowDirection="RightToLeft"
                         IsOn="{x:Bind ViewModel.BlockMapFilterValue, Mode=OneWay}"
                         OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapOffContent')}"
                         OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapOnContent')}"
-                        Style="{StaticResource ToggleSwitchStyle}"
                         Toggled="{x:Bind ViewModel.OnBlockMapToggled}" />
                 </Grid>
             </StackPanel>

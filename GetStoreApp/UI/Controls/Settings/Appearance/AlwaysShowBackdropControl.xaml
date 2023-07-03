@@ -43,11 +43,11 @@
 
     <ToggleSwitch
         Grid.Column="2"
+        MinWidth="0"
         controlExtensions:CursorHelper.Cursor="Hand"
         FlowDirection="RightToLeft"
         IsOn="{x:Bind ViewModel.AlwaysShowBackdropValue, Mode=OneWay}"
         OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/AlwaysShowBackdropOffContent')}"
         OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/AlwaysShowBackdropOnContent')}"
-        Style="{StaticResource ToggleSwitchStyle}"
         Toggled="{x:Bind ViewModel.OnToggled}" />
 </Grid>

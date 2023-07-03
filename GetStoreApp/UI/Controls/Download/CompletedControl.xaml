@@ -451,7 +451,7 @@
                                             Command="{Binding ElementName=CompletedRoot, Path=DataContext.InstallCommand, Mode=OneTime}"
                                             CommandParameter="{Binding}"
                                             IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsInstalling), Mode=OneWay}"
-                                            Style="{StaticResource ButtonDownloadStyle}">
+                                            Style="{StaticResource ButtonSquareStyle}">
 
                                             <Button.Content>
                                                 <FontIcon FontSize="14" Glyph="&#xE710;" />
@@ -470,7 +470,7 @@
                                         controlExtensions:CursorHelper.Cursor="Hand"
                                         Command="{Binding ElementName=CompletedRoot, Path=DataContext.OpenItemFolderCommand, Mode=OneTime}"
                                         CommandParameter="{x:Bind FilePath}"
-                                        Style="{StaticResource ButtonDownloadStyle}">
+                                        Style="{StaticResource ButtonSquareStyle}">
 
                                         <Button.Content>
                                             <FontIcon FontSize="14" Glyph="&#xE8da;" />
@@ -486,7 +486,7 @@
                                 </StackPanel>
                             </ContentControl>
 
-                            <Button controlExtensions:CursorHelper.Cursor="Hand" Style="{StaticResource ButtonDownloadStyle}">
+                            <Button controlExtensions:CursorHelper.Cursor="Hand" Style="{StaticResource ButtonSquareStyle}">
 
                                 <Button.Content>
                                     <FontIcon FontSize="14" Glyph="&#xE712;" />

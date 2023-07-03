@@ -43,11 +43,11 @@
 
     <ToggleSwitch
         Grid.Column="2"
+        MinWidth="0"
         controlExtensions:CursorHelper.Cursor="Hand"
         FlowDirection="RightToLeft"
         IsOn="{x:Bind ViewModel.TopMostValue, Mode=OneWay}"
         OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/TopMostOffContent')}"
         OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/TopMostOnContent')}"
-        Style="{StaticResource ToggleSwitchStyle}"
         Toggled="{x:Bind ViewModel.OnToggled}" />
 </Grid>

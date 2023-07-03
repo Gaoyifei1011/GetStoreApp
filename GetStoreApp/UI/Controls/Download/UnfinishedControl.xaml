@@ -344,7 +344,7 @@
                                 controlExtensions:CursorHelper.Cursor="Hand"
                                 Command="{Binding ElementName=UnfinishedRoot, Path=DataContext.ContinueCommand, Mode=OneTime}"
                                 CommandParameter="{Binding}"
-                                Style="{StaticResource ButtonDownloadStyle}"
+                                Style="{StaticResource ButtonSquareStyle}"
                                 Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 2)}">
 
                                 <Button.Content>
@@ -363,7 +363,7 @@
                                 controlExtensions:CursorHelper.Cursor="Hand"
                                 Command="{Binding ElementName=UnfinishedRoot, Path=DataContext.DeleteCommand, Mode=OneTime}"
                                 CommandParameter="{Binding}"
-                                Style="{StaticResource ButtonDownloadStyle}">
+                                Style="{StaticResource ButtonSquareStyle}">
 
                                 <Button.Content>
                                     <FontIcon FontSize="14" Glyph="&#xE711;" />

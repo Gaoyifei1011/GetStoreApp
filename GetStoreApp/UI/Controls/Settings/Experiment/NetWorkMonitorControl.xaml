@@ -35,11 +35,11 @@
 
     <ToggleSwitch
         Grid.Column="2"
+        MinWidth="0"
         controlExtensions:CursorHelper.Cursor="Hand"
         FlowDirection="RightToLeft"
         IsOn="{x:Bind ViewModel.NetWorkMonitorValue, Mode=OneWay}"
         OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/NetWorkMonitorOffContent')}"
         OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/NetWorkMonitorOnContent')}"
-        Style="{StaticResource ToggleSwitchStyle}"
         Toggled="{x:Bind ViewModel.OnToggled}" />
 </Grid>

@@ -135,7 +135,6 @@
     <None Remove="Styles\ScrollViewer.xaml" />
     <None Remove="Styles\SplitButton.xaml" />
     <None Remove="Styles\TextBlock.xaml" />
-    <None Remove="Styles\ToggleSwitch.xaml" />
     
     <None Remove="UI\Controls\About\HeaderControl.xaml" />
     <None Remove="UI\Controls\About\InstructionsControl.xaml" />
@@ -259,7 +258,7 @@
     <PackageReference Include="Mile.Aria2" Version="1.0.66" />
     
     <Page Update="Styles\Button.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Styles\Checkbox.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\CheckBox.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\ContentDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\DropDownButton.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\Expander.xaml" Generator="MSBuild:Compile" />
@@ -276,7 +275,6 @@
     <Page Update="Styles\ScrollViewer.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\SplitButton.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\TextBlock.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Styles\ToggleSwitch.xaml" Generator="MSBuild:Compile" />
     
     <Page Update="UI\Controls\About\HeaderControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\About\InstructionsControl.xaml" Generator="MSBuild:Compile" />

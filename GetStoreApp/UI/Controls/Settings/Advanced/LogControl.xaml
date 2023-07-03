@@ -25,7 +25,7 @@
                 Margin="0,0,12,0"
                 FontFamily="{ThemeResource SymbolThemeFontFamily}"
                 FontSize="16"
-                Glyph="&#xE8A5;" />
+                Glyph="&#xE70B;" />
 
             <StackPanel
                 Grid.Column="1"

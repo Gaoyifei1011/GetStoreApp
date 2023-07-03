@@ -333,7 +333,7 @@
                                             Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallWithCmd')}">
 
                                             <MenuFlyoutItem.Icon>
-                                                <FontIcon Glyph="&#xE74B;" />
+                                                <FontIcon Glyph="&#xE756;" />
                                             </MenuFlyoutItem.Icon>
 
                                             <ToolTipService.ToolTip>
