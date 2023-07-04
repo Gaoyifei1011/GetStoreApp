@@ -307,7 +307,6 @@ namespace GetStoreApp.Views.Window
                         {
                             FlyoutShowOptions options = new FlyoutShowOptions();
                             options.Position = new Point(0, 45);
-                            options.Placement = FlyoutPlacementMode.BottomEdgeAlignedLeft;
                             options.ShowMode = FlyoutShowMode.Standard;
                             AppTitlebar.TitlebarMenuFlyout.ShowAt(Content, options);
                             return 0;
@@ -318,45 +317,34 @@ namespace GetStoreApp.Views.Window
                 // 屏幕缩放比例发生变化时的消息
                 case WindowMessage.WM_DPICHANGED:
                     {
-                        Show();
-
-                        Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
+                        if (Visible)
                         {
-                            await new DPIChangedNotifyDialog().ShowAsync();
-                        });
+                            Show();
+                            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
+                            {
+                                await new DPIChangedNotifyDialog().ShowAsync();
+                            });
+                        }
+
                         break;
                     }
+                // 当用户按下鼠标右键时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCRBUTTONDOWN:
                     {
 #if EXPERIMENTAL
-                        DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+                        PointInt32 pt;
+                        unsafe
                         {
-                            PointInt32 pt;
-                            unsafe
-                            {
-                                User32Library.GetCursorPos(&pt);
-                            }
-                            if (InfoHelper.SystemVersion.Build >= 22000)
-                            {
-                                FlyoutShowOptions options = new FlyoutShowOptions();
-                                options.Position = new Point(
-                                    DPICalcHelper.ConvertPixelToEpx(Handle, pt.X - AppWindow.Position.X),
-                                    DPICalcHelper.ConvertPixelToEpx(Handle, 32));
-                                options.Placement = FlyoutPlacementMode.BottomEdgeAlignedLeft;
-                                options.ShowMode = FlyoutShowMode.Standard;
-                                AppTitlebar.TitlebarMenuFlyout.ShowAt(Content, options);
-                            }
-                            else
-                            {
-                                FlyoutShowOptions options = new FlyoutShowOptions();
-                                options.Position = new Point(pt.X - AppWindow.Position.X, 32);
-                                options.Placement = FlyoutPlacementMode.BottomEdgeAlignedLeft;
-                                options.ShowMode = FlyoutShowMode.Standard;
-                                AppTitlebar.TitlebarMenuFlyout.ShowAt(Content, options);
-                                AppTitlebar.TitlebarMenuFlyout.ShowAt(Content, options);
-                            }
-                        });
+                            User32Library.GetCursorPos(&pt);
+                        }
 
+                        FlyoutShowOptions options = new FlyoutShowOptions();
+                        options.ShowMode = FlyoutShowMode.Standard;
+                        options.Position = InfoHelper.SystemVersion.Build >= 22000 ?
+                        new Point(DPICalcHelper.ConvertPixelToEpx(Handle, pt.X - AppWindow.Position.X - 8), DPICalcHelper.ConvertPixelToEpx(Handle, 32)) :
+                        new Point(pt.X - AppWindow.Position.X - 8, 32);
+
+                        AppTitlebar.TitlebarMenuFlyout.ShowAt(Content, options);
                         return 0;
 #endif
 #if !EXPERIMENTAL
