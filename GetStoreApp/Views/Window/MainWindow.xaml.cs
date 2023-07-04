@@ -145,16 +145,6 @@ namespace GetStoreApp.Views.Window
         }
 
         /// <summary>
-        /// 获取主窗口的XamlRoot
-        /// </summary>
-        public XamlRoot GetMainWindowXamlRoot()
-        {
-            return Content.XamlRoot is not null
-                ? Content.XamlRoot
-                : throw new ApplicationException(ResourceService.GetLocalized("Resources/WindowXamlRootInitializeFailed"));
-        }
-
-        /// <summary>
         /// 初始化窗口
         /// </summary>
         public void InitializeWindow()

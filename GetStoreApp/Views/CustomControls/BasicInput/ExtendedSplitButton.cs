@@ -21,7 +21,6 @@ namespace GetStoreApp.Views.CustomControls.BasicInput
             set { SetValue(IsPrimaryButtonEnabledProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for IsPrimaryButtonEnabled.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsPrimaryButtonEnabledProperty =
             DependencyProperty.Register("IsPrimaryButtonEnabled", typeof(bool), typeof(ExtendedSplitButton), new PropertyMetadata(true));
 
@@ -31,7 +30,6 @@ namespace GetStoreApp.Views.CustomControls.BasicInput
             set { SetValue(IsSecondaryButtonEnabledProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for IsSecondaryButtonEnabled.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsSecondaryButtonEnabledProperty =
             DependencyProperty.Register("IsSecondaryButtonEnabled", typeof(bool), typeof(ExtendedSplitButton), new PropertyMetadata(true));
 
@@ -41,7 +39,6 @@ namespace GetStoreApp.Views.CustomControls.BasicInput
             set { SetValue(PrimaryButtonToolTipProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for PrimaryButtonToolTip.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty PrimaryButtonToolTipProperty =
             DependencyProperty.Register("PrimaryButtonToolTip", typeof(object), typeof(ExtendedSplitButton), new PropertyMetadata(null));
 
@@ -51,7 +48,6 @@ namespace GetStoreApp.Views.CustomControls.BasicInput
             set { SetValue(SecondaryButtonToolTipProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for SecondaryButtonToolTip.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SecondaryButtonToolTipProperty =
             DependencyProperty.Register("SecondaryButtonToolTip", typeof(object), typeof(ExtendedSplitButton), new PropertyMetadata(null));
     }

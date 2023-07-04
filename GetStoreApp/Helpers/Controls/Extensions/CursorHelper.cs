@@ -60,14 +60,14 @@ namespace GetStoreApp.Helpers.Controls.Extensions
         private static void Element_PointerEntered(object sender, PointerRoutedEventArgs args)
         {
             InputSystemCursorShape cursor = GetCursor(sender.As<FrameworkElement>());
-            FrameworkElement element = sender as FrameworkElement;
+            FrameworkElement element = sender.As<FrameworkElement>();
             typeof(FrameworkElement).GetProperty("ProtectedCursor", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(element, InputSystemCursor.Create(cursor));
         }
 
-        private static void Element_PointerExited(object sender, PointerRoutedEventArgs e)
+        private static void Element_PointerExited(object sender, PointerRoutedEventArgs args)
         {
             InputCursor cursor;
-            if (sender != e.OriginalSource && e.OriginalSource is FrameworkElement newElement)
+            if (sender != args.OriginalSource && args.OriginalSource is FrameworkElement newElement)
             {
                 cursor = _cursors[GetCursor(newElement)];
             }
@@ -76,13 +76,13 @@ namespace GetStoreApp.Helpers.Controls.Extensions
                 cursor = _defaultCursor;
             }
 
-            FrameworkElement element = sender as FrameworkElement;
+            FrameworkElement element = sender.As<FrameworkElement>();
             typeof(FrameworkElement).GetProperty("ProtectedCursor", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(element, cursor);
         }
 
         private static void ElementOnUnloaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            FrameworkElement element = sender as FrameworkElement;
+            FrameworkElement element = sender.As<FrameworkElement>();
             typeof(FrameworkElement).GetProperty("ProtectedCursor", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(element, _defaultCursor);
         }
     }

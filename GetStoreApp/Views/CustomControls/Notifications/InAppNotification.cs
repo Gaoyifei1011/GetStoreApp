@@ -26,7 +26,6 @@ namespace GetStoreApp.Views.CustomControls.Notifications
             set { SetValue(DurationProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for Duration.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DurationProperty =
             DependencyProperty.Register("Duration", typeof(int), typeof(InAppNotification), new PropertyMetadata(2000));
 
@@ -36,7 +35,6 @@ namespace GetStoreApp.Views.CustomControls.Notifications
             set { SetValue(HorizontalOffsetProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for HorizontalOffset.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty HorizontalOffsetProperty =
             DependencyProperty.Register("HorizontalOffset", typeof(double), typeof(InAppNotification), new PropertyMetadata(0.0));
 
@@ -46,7 +44,6 @@ namespace GetStoreApp.Views.CustomControls.Notifications
             set { SetValue(VerticalOffsetProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for VerticalOffset.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty VerticalOffsetProperty =
             DependencyProperty.Register("VerticalOffset", typeof(double), typeof(InAppNotification), new PropertyMetadata(0.0));
 
@@ -54,8 +51,8 @@ namespace GetStoreApp.Views.CustomControls.Notifications
         {
             DefaultStyleKey = typeof(InAppNotification);
             Style = ResourceDictionaryHelper.InAppNotificationResourceDict["InAppNotificationStyle"] as Style;
-            RequestedTheme = Program.ApplicationRoot.MainWindow.ViewModel.WindowTheme;
-            XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
+            XamlRoot = Program.ApplicationRoot.MainWindow.Content.XamlRoot;
+            popup.RequestedTheme = Program.ApplicationRoot.MainWindow.ViewModel.WindowTheme;
         }
 
         protected override void OnApplyTemplate()
@@ -80,6 +77,7 @@ namespace GetStoreApp.Views.CustomControls.Notifications
         {
             popupIn.Begin();
             XamlRoot.Changed += NotificationPlaceChanged;
+            Program.ApplicationRoot.MainWindow.ViewModel.PropertyChanged += OnPropertyChanged;
         }
 
         /// <summary>
@@ -88,6 +86,12 @@ namespace GetStoreApp.Views.CustomControls.Notifications
         private void NotificationUnLoaded(object sender, RoutedEventArgs args)
         {
             XamlRoot.Changed -= NotificationPlaceChanged;
+            Program.ApplicationRoot.MainWindow.ViewModel.PropertyChanged -= OnPropertyChanged;
+        }
+
+        private void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs args)
+        {
+            popup.RequestedTheme = Program.ApplicationRoot.MainWindow.ViewModel.WindowTheme;
         }
 
         /// <summary>

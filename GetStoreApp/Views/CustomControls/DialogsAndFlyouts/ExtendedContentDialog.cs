@@ -17,12 +17,19 @@ namespace GetStoreApp.Views.CustomControls.DialogsAndFlyouts
             if (!IsDialogOpening)
             {
                 IsDialogOpening = true;
-                XamlRoot = Program.ApplicationRoot.MainWindow.GetMainWindowXamlRoot();
                 RequestedTheme = Program.ApplicationRoot.MainWindow.ViewModel.WindowTheme;
+                XamlRoot = Program.ApplicationRoot.MainWindow.Content.XamlRoot;
+                Program.ApplicationRoot.MainWindow.ViewModel.PropertyChanged += OnPropertyChanged;
                 dialogResult = await base.ShowAsync();
+                Program.ApplicationRoot.MainWindow.ViewModel.PropertyChanged -= OnPropertyChanged;
                 IsDialogOpening = false;
             }
             return dialogResult;
+        }
+
+        private void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs args)
+        {
+            RequestedTheme = Program.ApplicationRoot.MainWindow.ViewModel.WindowTheme;
         }
     }
 }
