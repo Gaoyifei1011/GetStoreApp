@@ -45,6 +45,7 @@
             <dialogAndFlyouts:AdaptiveFlyout
                 x:Name="TitlebarMenuFlyout"
                 x:FieldModifier="public"
+                AreOpenCloseAnimationsEnabled="False"
                 Closing="{x:Bind OnClosing}"
                 Opening="{x:Bind OnOpening}"
                 Placement="BottomEdgeAlignedLeft">
