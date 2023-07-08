@@ -6,9 +6,9 @@
     <ApplicationManifest>App.manifest</ApplicationManifest>
     <AssemblyName>GetStoreApp</AssemblyName>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
     <CsWinRTIncludes>Microsoft.Management.Deployment</CsWinRTIncludes>
-    <DefineConstants>DISABLE_XAML_GENERATED_MAIN;EXPERIMENTAL</DefineConstants>
+    <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     <Deterministic>true</Deterministic>
     <DesktopCompatible>true</DesktopCompatible>
     <DisableXbfLineInfo>False</DisableXbfLineInfo>
@@ -226,7 +226,6 @@
     <None Remove="UI\Notifications\WebCacheCleanNotification.xaml" />
     <None Remove="UI\Notifications\WinGetCopyNotification.xaml" />
     <None Remove="Views\CustomControls\DialogsAndFlyouts\AdaptiveFlyout.xaml" />
-    <None Remove="Views\CustomControls\MenusAndToolbars\AdaptiveMenuFlyout.xaml" />
     
     <None Remove="Views\Pages\AboutPage.xaml" />
     <None Remove="Views\Pages\DownloadPage.xaml" />
@@ -365,7 +364,6 @@
     <Page Update="UI\Notifications\WebCacheCleanNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Notifications\WinGetCopyNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\CustomControls\DialogsAndFlyouts\AdaptiveFlyout.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Views\CustomControls\MenusAndToolbars\AdaptiveMenuFlyout.xaml" Generator="MSBuild:Compile" />
 
     <Page Update="Views\Pages\AboutPage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\DownloadPage.xaml" Generator="MSBuild:Compile" />
@@ -392,7 +390,7 @@
     <TrimmableAssembly Include="Microsoft.WindowsAppRuntime.Bootstrap" />
     <TrimmableAssembly Include="Microsoft.WindowsAppRuntime.Bootstrap.Net" />
     <TrimmableAssembly Include="Microsoft.WindowsAppRuntime.Release.Net" />
-    <TrimmableAssembly Include="Microsoft.Windows.Widgets.Projection" />
+    <TrimmableAssembly Include="Microsoft.Windows.Widgets.Providers.Projection" />
   </ItemGroup>
 
   <Target Name="CopyWinmdToTargetDir" BeforeTargets="BeforeBuild">

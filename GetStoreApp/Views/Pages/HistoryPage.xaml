@@ -7,7 +7,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:history="using:GetStoreApp.Models.Controls.History"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
     xmlns:pageViewModel="using:GetStoreApp.ViewModels.Pages"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:sys="using:System"
@@ -67,10 +66,7 @@
                 Text="{x:Bind LocalizeHistoryCountInfo(ViewModel.HistoryDataList.Count), Mode=OneWay}">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip
-                        Content="{x:Bind LocalizeHistoryCountInfo(ViewModel.HistoryDataList.Count), Mode=OneWay}"
-                        Placement="Bottom"
-                        VerticalOffset="20" />
+                    <ToolTip Content="{x:Bind LocalizeHistoryCountInfo(ViewModel.HistoryDataList.Count), Mode=OneWay}" Placement="Mouse" />
                 </ToolTipService.ToolTip>
             </TextBlock>
 
@@ -99,10 +95,7 @@
                         </MenuFlyoutItem.Icon>
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('History/SelectToolTip')}"
-                                Placement="Bottom"
-                                VerticalOffset="25" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/SelectToolTip')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </MenuFlyoutItem>
 
@@ -118,14 +111,11 @@
                         </MenuFlyoutItem.Icon>
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('History/SortToolTip')}"
-                                Placement="Bottom"
-                                VerticalOffset="25" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/SortToolTip')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
 
                         <FlyoutBase.AttachedFlyout>
-                            <menusAndToolbars:AdaptiveMenuFlyout>
+                            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
 
                                 <RadioMenuFlyoutItem
                                     Click="{x:Bind ViewModel.OnTimeSortClicked}"
@@ -138,10 +128,7 @@
                                     </RadioMenuFlyoutItem.Icon>
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind root:ResourceService.GetLocalized('History/TimeIncreaseSortToolTip')}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/TimeIncreaseSortToolTip')}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
 
@@ -156,13 +143,10 @@
                                     </RadioMenuFlyoutItem.Icon>
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind root:ResourceService.GetLocalized('History/TimeDecreaseSortToolTip')}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/TimeDecreaseSortToolTip')}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
-                            </menusAndToolbars:AdaptiveMenuFlyout>
+                            </MenuFlyout>
                         </FlyoutBase.AttachedFlyout>
                     </MenuFlyoutItem>
 
@@ -177,14 +161,11 @@
                         </MenuFlyoutItem.Icon>
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('History/FilterToolTip')}"
-                                Placement="Bottom"
-                                VerticalOffset="25" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/FilterToolTip')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
 
                         <FlyoutBase.AttachedFlyout>
-                            <menusAndToolbars:AdaptiveMenuFlyout>
+                            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                                 <MenuFlyoutSubItem Text="{x:Bind root:ResourceService.GetLocalized('History/Type')}">
                                     <RadioMenuFlyoutItem
                                         Click="{x:Bind ViewModel.OnTypeFilterClicked}"
@@ -194,10 +175,7 @@
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/URL')}">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind root:ResourceService.GetLocalized('Resources/URL')}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
+                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Resources/URL')}" Placement="Mouse" />
                                         </ToolTipService.ToolTip>
                                     </RadioMenuFlyoutItem>
 
@@ -209,10 +187,7 @@
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/ProductID')}">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind root:ResourceService.GetLocalized('Resources/ProductID')}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
+                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Resources/ProductID')}" Placement="Mouse" />
                                         </ToolTipService.ToolTip>
                                     </RadioMenuFlyoutItem>
 
@@ -224,10 +199,7 @@
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/PackageFamilyName')}">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind root:ResourceService.GetLocalized('Resources/PackageFamilyName')}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
+                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Resources/PackageFamilyName')}" Placement="Mouse" />
                                         </ToolTipService.ToolTip>
                                     </RadioMenuFlyoutItem>
 
@@ -239,10 +211,7 @@
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/CategoryID')}">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind root:ResourceService.GetLocalized('Resources/CategoryID')}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
+                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Resources/CategoryID')}" Placement="Mouse" />
                                         </ToolTipService.ToolTip>
                                     </RadioMenuFlyoutItem>
 
@@ -256,10 +225,7 @@
                                         Text="{x:Bind root:ResourceService.GetLocalized('History/None')}">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind root:ResourceService.GetLocalized('History/None')}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
+                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/None')}" Placement="Mouse" />
                                         </ToolTipService.ToolTip>
                                     </RadioMenuFlyoutItem>
                                 </MenuFlyoutSubItem>
@@ -267,10 +233,7 @@
                                 <MenuFlyoutSubItem Text="{x:Bind root:ResourceService.GetLocalized('History/Channel')}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind root:ResourceService.GetLocalized('History/Channel')}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/Channel')}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
 
                                     <RadioMenuFlyoutItem
@@ -281,10 +244,7 @@
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/Fast')}">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind root:ResourceService.GetLocalized('Resources/Fast')}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
+                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Resources/Fast')}" Placement="Mouse" />
                                         </ToolTipService.ToolTip>
                                     </RadioMenuFlyoutItem>
 
@@ -296,10 +256,7 @@
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/Slow')}">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind root:ResourceService.GetLocalized('Resources/Slow')}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
+                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Resources/Slow')}" Placement="Mouse" />
                                         </ToolTipService.ToolTip>
                                     </RadioMenuFlyoutItem>
 
@@ -311,10 +268,7 @@
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/RP')}">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind root:ResourceService.GetLocalized('Resources/RP')}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
+                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Resources/RP')}" Placement="Mouse" />
                                         </ToolTipService.ToolTip>
                                     </RadioMenuFlyoutItem>
 
@@ -326,10 +280,7 @@
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/Retail')}">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind root:ResourceService.GetLocalized('Resources/Retail')}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
+                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Resources/Retail')}" Placement="Mouse" />
                                         </ToolTipService.ToolTip>
                                     </RadioMenuFlyoutItem>
 
@@ -343,14 +294,11 @@
                                         Text="{x:Bind root:ResourceService.GetLocalized('History/None')}">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind root:ResourceService.GetLocalized('History/None')}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
+                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/None')}" Placement="Mouse" />
                                         </ToolTipService.ToolTip>
                                     </RadioMenuFlyoutItem>
                                 </MenuFlyoutSubItem>
-                            </menusAndToolbars:AdaptiveMenuFlyout>
+                            </MenuFlyout>
                         </FlyoutBase.AttachedFlyout>
                     </MenuFlyoutItem>
 
@@ -366,10 +314,7 @@
                         </MenuFlyoutItem.Icon>
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('History/RefreshToolTip')}"
-                                Placement="Bottom"
-                                VerticalOffset="25" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/RefreshToolTip')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </MenuFlyoutItem>
                 </StackPanel>
@@ -399,10 +344,7 @@
                         </MenuFlyoutItem.Icon>
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('History/SelectAll')}"
-                                Placement="Bottom"
-                                VerticalOffset="25" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/SelectAll')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </MenuFlyoutItem>
 
@@ -417,10 +359,7 @@
                         </MenuFlyoutItem.Icon>
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('History/SelectNone')}"
-                                Placement="Bottom"
-                                VerticalOffset="25" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/SelectNone')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </MenuFlyoutItem>
 
@@ -435,10 +374,7 @@
                         </MenuFlyoutItem.Icon>
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('History/CopySelectedToolTip')}"
-                                Placement="Bottom"
-                                VerticalOffset="25" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/CopySelectedToolTip')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </MenuFlyoutItem>
 
@@ -453,10 +389,7 @@
                         </MenuFlyoutItem.Icon>
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('History/DeleteToolTip')}"
-                                Placement="Bottom"
-                                VerticalOffset="25" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/DeleteToolTip')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </MenuFlyoutItem>
 
@@ -471,10 +404,7 @@
                         </MenuFlyoutItem.Icon>
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('History/CancelToolTip')}"
-                                Placement="Bottom"
-                                VerticalOffset="25" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/CancelToolTip')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </MenuFlyoutItem>
                 </StackPanel>
@@ -503,10 +433,7 @@
                     TextAlignment="Center">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind root:ResourceService.GetLocalized('History/LoadingHistory')}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/LoadingHistory')}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </TextBlock>
             </StackPanel>
@@ -583,10 +510,7 @@
                         Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(ViewModel.IsSelectMode), Mode=OneWay}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('History/Select')}"
-                                Placement="Bottom"
-                                VerticalOffset="20" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/Select')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
 
@@ -597,10 +521,7 @@
                         Text="{x:Bind root:ResourceService.GetLocalized('History/DateTime')}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('History/DateTime')}"
-                                Placement="Bottom"
-                                VerticalOffset="20" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/DateTime')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
 
@@ -611,10 +532,7 @@
                         Text="{x:Bind root:ResourceService.GetLocalized('History/Type')}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('History/Type')}"
-                                Placement="Bottom"
-                                VerticalOffset="20" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/Type')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
 
@@ -625,10 +543,7 @@
                         Text="{x:Bind root:ResourceService.GetLocalized('History/Channel')}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('History/Channel')}"
-                                Placement="Bottom"
-                                VerticalOffset="20" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/Channel')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
 
@@ -639,10 +554,7 @@
                         Text="{x:Bind root:ResourceService.GetLocalized('History/Link')}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('History/Link')}"
-                                Placement="Bottom"
-                                VerticalOffset="20" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/Link')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
 
@@ -655,10 +567,7 @@
                         Text="{x:Bind root:ResourceService.GetLocalized('History/Options')}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('History/OptionsToolTip')}"
-                                Placement="Bottom"
-                                VerticalOffset="20" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/OptionsToolTip')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </Grid>
@@ -709,10 +618,7 @@
                                     Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsSelectMode), Mode=OneWay}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind converter:StringConverterHelper.CheckBoxToolTipFormat(IsSelected,'History'),Mode=OneWay}"
-                                            Placement="Bottom"
-                                            VerticalOffset="25" />
+                                        <ToolTip Content="{x:Bind converter:StringConverterHelper.CheckBoxToolTipFormat(IsSelected,'History'),Mode=OneWay}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </CheckBox>
 
@@ -724,10 +630,7 @@
                                     Text="{x:Bind converter:StringConverterHelper.TimeStampFormat(CreateTimeStamp)}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind converter:StringConverterHelper.TimeStampFormat(CreateTimeStamp)}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind converter:StringConverterHelper.TimeStampFormat(CreateTimeStamp)}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
@@ -739,10 +642,7 @@
                                     Text="{x:Bind converter:StringConverterHelper.TypeNameFormat(HistoryType)}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind converter:StringConverterHelper.TypeNameFormat(HistoryType)}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind converter:StringConverterHelper.TypeNameFormat(HistoryType)}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
@@ -754,10 +654,7 @@
                                     Text="{x:Bind converter:StringConverterHelper.ChannelNameFormat(HistoryChannel)}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind converter:StringConverterHelper.ChannelNameFormat(HistoryChannel)}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind converter:StringConverterHelper.ChannelNameFormat(HistoryChannel)}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
@@ -769,10 +666,7 @@
                                     Text="{x:Bind HistoryLink}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind HistoryLink}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind HistoryLink}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
@@ -786,10 +680,7 @@
                                     Style="{StaticResource HyperlinkButtonStyle}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind root:ResourceService.GetLocalized('History/FillinToolTip')}"
-                                            Placement="Bottom"
-                                            VerticalOffset="25" />
+                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/FillinToolTip')}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </HyperlinkButton>
 
@@ -802,10 +693,7 @@
                                     Style="{StaticResource HyperlinkButtonStyle}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind root:ResourceService.GetLocalized('History/CopyToolTip')}"
-                                            Placement="Bottom"
-                                            VerticalOffset="25" />
+                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/CopyToolTip')}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </HyperlinkButton>
                             </Grid>

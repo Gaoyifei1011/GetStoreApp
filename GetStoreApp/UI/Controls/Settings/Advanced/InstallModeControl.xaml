@@ -5,7 +5,6 @@
     xmlns:controlExtensions="using:GetStoreApp.Helpers.Controls.Extensions"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Advanced"
     Style="{StaticResource CardGridStyle}"
@@ -58,10 +57,7 @@
         </Button.Content>
 
         <ToolTipService.ToolTip>
-            <ToolTip
-                Content="{x:Bind root:ResourceService.GetLocalized('Settings/InstallModeToolTip')}"
-                Placement="Bottom"
-                VerticalOffset="25" />
+            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/InstallModeToolTip')}" Placement="Mouse" />
         </ToolTipService.ToolTip>
     </Button>
 
@@ -71,14 +67,11 @@
         Content="{x:Bind ViewModel.InstallMode.DisplayName, Mode=OneWay}">
 
         <ToolTipService.ToolTip>
-            <ToolTip
-                Content="{x:Bind ViewModel.InstallMode.DisplayName, Mode=OneWay}"
-                Placement="Bottom"
-                VerticalOffset="20" />
+            <ToolTip Content="{x:Bind ViewModel.InstallMode.DisplayName, Mode=OneWay}" Placement="Mouse" />
         </ToolTipService.ToolTip>
 
         <DropDownButton.Flyout>
-            <menusAndToolbars:AdaptiveMenuFlyout>
+            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                 <RadioMenuFlyoutItem
                     Click="{x:Bind ViewModel.OnInstallModeSelectClicked}"
                     GroupName="InstallModeSetting"
@@ -87,10 +80,7 @@
                     Text="{x:Bind ViewModel.InstallModeList[0].DisplayName}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind ViewModel.InstallModeList[0].DisplayName}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind ViewModel.InstallModeList[0].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </RadioMenuFlyoutItem>
 
@@ -102,13 +92,10 @@
                     Text="{x:Bind ViewModel.InstallModeList[1].DisplayName}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind ViewModel.InstallModeList[1].DisplayName}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind ViewModel.InstallModeList[1].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </RadioMenuFlyoutItem>
-            </menusAndToolbars:AdaptiveMenuFlyout>
+            </MenuFlyout>
         </DropDownButton.Flyout>
     </DropDownButton>
 </Grid>

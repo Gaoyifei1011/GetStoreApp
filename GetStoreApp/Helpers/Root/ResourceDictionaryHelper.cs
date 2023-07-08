@@ -43,8 +43,6 @@ namespace GetStoreApp.Helpers.Root
 
         public static ResourceDictionary TextBlockResourceDict { get; private set; }
 
-        public static ResourceDictionary WindowChromeDict { get; private set; }
-
         /// <summary>
         /// 初始化资源字典信息
         /// </summary>
@@ -68,7 +66,6 @@ namespace GetStoreApp.Helpers.Root
             ScrollViewerResourceDict = Application.Current.Resources.MergedDictionaries[16];
             SplitButtonResourceDict = Application.Current.Resources.MergedDictionaries[17];
             TextBlockResourceDict = Application.Current.Resources.MergedDictionaries[18];
-            WindowChromeDict = Application.Current.Resources.MergedDictionaries[19];
         }
     }
 }

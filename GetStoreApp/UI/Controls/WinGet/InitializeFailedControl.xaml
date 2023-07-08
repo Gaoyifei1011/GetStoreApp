@@ -95,10 +95,7 @@
             Content="{x:Bind root:ResourceService.GetLocalized('WinGet/LearnMore')}"
             Style="{StaticResource AccentButtonStyle}">
             <ToolTipService.ToolTip>
-                <ToolTip
-                    Content="{x:Bind root:ResourceService.GetLocalized('WinGet/LearnMoreToolTip')}"
-                    Placement="Bottom"
-                    VerticalOffset="20" />
+                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('WinGet/LearnMoreToolTip')}" Placement="Mouse" />
             </ToolTipService.ToolTip>
         </Button>
         <Button
@@ -107,10 +104,7 @@
             Click="{x:Bind ViewModel.OnDownloadFromMicrosoftStoreClicked}"
             Content="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadFromMicrosoftStore')}">
             <ToolTipService.ToolTip>
-                <ToolTip
-                    Content="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadFromMicrosoftStoreToolTip')}"
-                    Placement="Bottom"
-                    VerticalOffset="20" />
+                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadFromMicrosoftStoreToolTip')}" Placement="Mouse" />
             </ToolTipService.ToolTip>
         </Button>
         <Button
@@ -119,10 +113,7 @@
             Click="{x:Bind ViewModel.OnDownloadFromGithubClicked}"
             Content="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadFromGithub')}">
             <ToolTipService.ToolTip>
-                <ToolTip
-                    Content="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadFromGithubToolTip')}"
-                    Placement="Bottom"
-                    VerticalOffset="20" />
+                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadFromGithubToolTip')}" Placement="Mouse" />
             </ToolTipService.ToolTip>
         </Button>
     </Grid>

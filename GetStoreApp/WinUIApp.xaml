@@ -28,7 +28,6 @@
                 <ResourceDictionary Source="ms-appx:///Styles/ScrollViewer.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/SplitButton.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/TextBlock.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/WindowChrome.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

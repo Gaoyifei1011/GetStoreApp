@@ -6,7 +6,6 @@
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
     xmlns:pageViewModel="using:GetStoreApp.ViewModels.Pages"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:wc="using:GetStoreApp.UI.Controls.Web"
@@ -57,10 +56,7 @@
                         </MenuFlyoutItem.Icon>
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('Web/Back')}"
-                                Placement="Bottom"
-                                VerticalOffset="25" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Web/Back')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </MenuFlyoutItem>
 
@@ -76,10 +72,7 @@
                         </MenuFlyoutItem.Icon>
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('Web/Forward')}"
-                                Placement="Bottom"
-                                VerticalOffset="25" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Web/Forward')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </MenuFlyoutItem>
 
@@ -94,10 +87,7 @@
                         </MenuFlyoutItem.Icon>
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('Web/Refresh')}"
-                                Placement="Bottom"
-                                VerticalOffset="25" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Web/Refresh')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </MenuFlyoutItem>
                 </StackPanel>
@@ -152,10 +142,7 @@
                         </MenuFlyoutItem.Icon>
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('Web/OpenWithBrowser')}"
-                                Placement="Bottom"
-                                VerticalOffset="25" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Web/OpenWithBrowser')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </MenuFlyoutItem>
 
@@ -170,14 +157,11 @@
                         </MenuFlyoutItem.Icon>
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('Web/ViewMore')}"
-                                Placement="Bottom"
-                                VerticalOffset="25" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Web/ViewMore')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
 
                         <FlyoutBase.AttachedFlyout>
-                            <menusAndToolbars:AdaptiveMenuFlyout>
+                            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                                 <MenuFlyoutItem Click="{x:Bind ViewModel.OnOpenCacheFolderClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Web/OpenCacheFolder')}">
 
                                     <MenuFlyoutItem.Icon>
@@ -185,10 +169,7 @@
                                     </MenuFlyoutItem.Icon>
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind root:ResourceService.GetLocalized('Web/OpenCacheFolder')}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Web/OpenCacheFolder')}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </MenuFlyoutItem>
 
@@ -202,13 +183,10 @@
                                     </MenuFlyoutItem.Icon>
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind root:ResourceService.GetLocalized('Web/ClearWebCache')}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Web/ClearWebCache')}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </MenuFlyoutItem>
-                            </menusAndToolbars:AdaptiveMenuFlyout>
+                            </MenuFlyout>
                         </FlyoutBase.AttachedFlyout>
                     </MenuFlyoutItem>
                 </StackPanel>

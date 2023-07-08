@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Appearance"
     Style="{StaticResource ExpanderSettingsStyle}"
@@ -52,10 +51,7 @@
                 Content="{x:Bind root:ResourceService.GetLocalized('Settings/WindowsColorSettings')}">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip
-                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/WindowsColorSettings')}"
-                        Placement="Bottom"
-                        VerticalOffset="20" />
+                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/WindowsColorSettings')}" Placement="Mouse" />
                 </ToolTipService.ToolTip>
             </Button>
         </Grid>
@@ -90,14 +86,11 @@
                         Content="{x:Bind ViewModel.Theme.DisplayName, Mode=OneWay}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind ViewModel.Theme.DisplayName, Mode=OneWay}"
-                                Placement="Bottom"
-                                VerticalOffset="20" />
+                            <ToolTip Content="{x:Bind ViewModel.Theme.DisplayName, Mode=OneWay}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
 
                         <DropDownButton.Flyout>
-                            <menusAndToolbars:AdaptiveMenuFlyout>
+                            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                                 <RadioMenuFlyoutItem
                                     Click="{x:Bind ViewModel.OnThemeSelectClicked}"
                                     GroupName="ThemeSetting"
@@ -106,10 +99,7 @@
                                     Text="{x:Bind ViewModel.ThemeList[0].DisplayName}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind ViewModel.ThemeList[0].DisplayName}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind ViewModel.ThemeList[0].DisplayName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
 
@@ -121,10 +111,7 @@
                                     Text="{x:Bind ViewModel.ThemeList[1].DisplayName}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind ViewModel.ThemeList[1].DisplayName}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind ViewModel.ThemeList[1].DisplayName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
 
@@ -136,13 +123,10 @@
                                     Text="{x:Bind ViewModel.ThemeList[2].DisplayName}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind ViewModel.ThemeList[2].DisplayName}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind ViewModel.ThemeList[2].DisplayName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
-                            </menusAndToolbars:AdaptiveMenuFlyout>
+                            </MenuFlyout>
                         </DropDownButton.Flyout>
                     </DropDownButton>
                 </Grid>
@@ -177,14 +161,11 @@
                         Content="{x:Bind ViewModel.NotifyIconMenuTheme.DisplayName, Mode=OneWay}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind ViewModel.NotifyIconMenuTheme.DisplayName, Mode=OneWay}"
-                                Placement="Bottom"
-                                VerticalOffset="20" />
+                            <ToolTip Content="{x:Bind ViewModel.NotifyIconMenuTheme.DisplayName, Mode=OneWay}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
 
                         <DropDownButton.Flyout>
-                            <menusAndToolbars:AdaptiveMenuFlyout>
+                            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                                 <RadioMenuFlyoutItem
                                     Click="{x:Bind ViewModel.OnNotifyIconMenuThemeSelectClicked}"
                                     GroupName="NotifyIconMenuThemeSetting"
@@ -193,10 +174,7 @@
                                     Text="{x:Bind ViewModel.NotifyIconMenuThemeList[0].DisplayName}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind ViewModel.NotifyIconMenuThemeList[0].DisplayName}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind ViewModel.NotifyIconMenuThemeList[0].DisplayName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
 
@@ -208,13 +186,10 @@
                                     Text="{x:Bind ViewModel.NotifyIconMenuThemeList[1].DisplayName}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind ViewModel.NotifyIconMenuThemeList[1].DisplayName}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind ViewModel.NotifyIconMenuThemeList[1].DisplayName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
-                            </menusAndToolbars:AdaptiveMenuFlyout>
+                            </MenuFlyout>
                         </DropDownButton.Flyout>
                     </DropDownButton>
                 </Grid>

@@ -39,7 +39,10 @@
                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(ViewModel.UseInsVisValue), Mode=OneWay}">
 
                 <Button.Flyout>
-                    <dialogsAndFlyouts:AdaptiveFlyout x:Name="DownloadFlyout" Placement="BottomEdgeAlignedRight">
+                    <dialogsAndFlyouts:AdaptiveFlyout
+                        x:Name="DownloadFlyout"
+                        Placement="Bottom"
+                        ShouldConstrainToRootBounds="False">
                         <StackPanel
                             Width="300"
                             Padding="14"
@@ -75,20 +78,14 @@
                                 <Button Click="{x:Bind OnLearnMoreClicked}" Content="{x:Bind root:ResourceService.GetLocalized('Download/LearnMore')}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind root:ResourceService.GetLocalized('Download/LearnMore')}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Download/LearnMore')}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </Button>
 
                                 <Button Click="{x:Bind OnDownloadSettingsClicked}" Content="{x:Bind root:ResourceService.GetLocalized('Download/OpenSettings')}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind root:ResourceService.GetLocalized('Download/OpenSettings')}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Download/OpenSettings')}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </Button>
                             </StackPanel>
@@ -97,10 +94,7 @@
                 </Button.Flyout>
 
                 <ToolTipService.ToolTip>
-                    <ToolTip
-                        Content="{x:Bind root:ResourceService.GetLocalized('Download/DownloadDescription')}"
-                        Placement="Bottom"
-                        VerticalOffset="20" />
+                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Download/DownloadDescription')}" Placement="Mouse" />
                 </ToolTipService.ToolTip>
             </Button>
         </Pivot.RightHeader>

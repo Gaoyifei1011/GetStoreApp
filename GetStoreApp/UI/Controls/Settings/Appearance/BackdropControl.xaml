@@ -6,7 +6,6 @@
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Appearance"
     Style="{StaticResource CardGridStyle}"
@@ -60,10 +59,7 @@
         </Button.Content>
 
         <ToolTipService.ToolTip>
-            <ToolTip
-                Content="{x:Bind root:ResourceService.GetLocalized('Settings/BackdropToolTip')}"
-                Placement="Bottom"
-                VerticalOffset="25" />
+            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/BackdropToolTip')}" Placement="Mouse" />
         </ToolTipService.ToolTip>
     </Button>
 
@@ -73,14 +69,11 @@
         Content="{x:Bind ViewModel.Backdrop.DisplayName, Mode=OneWay}">
 
         <ToolTipService.ToolTip>
-            <ToolTip
-                Content="{x:Bind ViewModel.Backdrop.DisplayName, Mode=OneWay}"
-                Placement="Bottom"
-                VerticalOffset="20" />
+            <ToolTip Content="{x:Bind ViewModel.Backdrop.DisplayName, Mode=OneWay}" Placement="Mouse" />
         </ToolTipService.ToolTip>
 
         <DropDownButton.Flyout>
-            <menusAndToolbars:AdaptiveMenuFlyout>
+            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                 <RadioMenuFlyoutItem
                     Click="{x:Bind ViewModel.OnBackdropSelectClicked}"
                     GroupName="BackdropSetting"
@@ -89,10 +82,7 @@
                     Text="{x:Bind ViewModel.BackdropList[0].DisplayName}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind ViewModel.BackdropList[0].DisplayName}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind ViewModel.BackdropList[0].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </RadioMenuFlyoutItem>
 
@@ -105,10 +95,7 @@
                     Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(ViewModel.CanUseMicaBackdrop), Mode=OneWay}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind ViewModel.BackdropList[1].DisplayName}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind ViewModel.BackdropList[1].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </RadioMenuFlyoutItem>
 
@@ -121,10 +108,7 @@
                     Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(ViewModel.CanUseMicaBackdrop), Mode=OneWay}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind ViewModel.BackdropList[2].DisplayName}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind ViewModel.BackdropList[2].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </RadioMenuFlyoutItem>
 
@@ -136,13 +120,10 @@
                     Text="{x:Bind ViewModel.BackdropList[3].DisplayName}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind ViewModel.BackdropList[3].DisplayName}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind ViewModel.BackdropList[3].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </RadioMenuFlyoutItem>
-            </menusAndToolbars:AdaptiveMenuFlyout>
+            </MenuFlyout>
         </DropDownButton.Flyout>
     </DropDownButton>
 </Grid>

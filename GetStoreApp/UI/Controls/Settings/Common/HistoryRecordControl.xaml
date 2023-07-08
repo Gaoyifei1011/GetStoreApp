@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Common"
     Style="{StaticResource ExpanderSettingsStyle}"
@@ -75,14 +74,11 @@
                         Content="{x:Bind ViewModel.HistoryLiteItem.HistoryLiteNumName, Mode=OneWay}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind ViewModel.HistoryLiteItem.HistoryLiteNumName, Mode=OneWay}"
-                                Placement="Bottom"
-                                VerticalOffset="20" />
+                            <ToolTip Content="{x:Bind ViewModel.HistoryLiteItem.HistoryLiteNumName, Mode=OneWay}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
 
                         <DropDownButton.Flyout>
-                            <menusAndToolbars:AdaptiveMenuFlyout>
+                            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                                 <RadioMenuFlyoutItem
                                     Click="{x:Bind ViewModel.OnHistoryLiteSelectClicked}"
                                     GroupName="HistoryLiteSetting"
@@ -91,10 +87,7 @@
                                     Text="{x:Bind ViewModel.HistoryLiteNumList[0].HistoryLiteNumName}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind ViewModel.HistoryLiteNumList[0].HistoryLiteNumName}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind ViewModel.HistoryLiteNumList[0].HistoryLiteNumName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
 
@@ -106,13 +99,10 @@
                                     Text="{x:Bind ViewModel.HistoryLiteNumList[1].HistoryLiteNumName}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind ViewModel.HistoryLiteNumList[1].HistoryLiteNumName}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind ViewModel.HistoryLiteNumList[1].HistoryLiteNumName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
-                            </menusAndToolbars:AdaptiveMenuFlyout>
+                            </MenuFlyout>
                         </DropDownButton.Flyout>
                     </DropDownButton>
                 </Grid>
@@ -146,14 +136,11 @@
                         Content="{x:Bind ViewModel.HistoryJumpListItem.HistoryJumpListNumName, Mode=OneWay}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind ViewModel.HistoryJumpListItem.HistoryJumpListNumName, Mode=OneWay}"
-                                Placement="Bottom"
-                                VerticalOffset="20" />
+                            <ToolTip Content="{x:Bind ViewModel.HistoryJumpListItem.HistoryJumpListNumName, Mode=OneWay}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
 
                         <DropDownButton.Flyout>
-                            <menusAndToolbars:AdaptiveMenuFlyout>
+                            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                                 <RadioMenuFlyoutItem
                                     Click="{x:Bind ViewModel.OnHistoryJumpListSelectClicked}"
                                     GroupName="HistoryJumpListSetting"
@@ -162,10 +149,7 @@
                                     Text="{x:Bind ViewModel.HistoryJumpListNumList[0].HistoryJumpListNumName}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind ViewModel.HistoryJumpListNumList[0].HistoryJumpListNumName}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind ViewModel.HistoryJumpListNumList[0].HistoryJumpListNumName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
 
@@ -177,10 +161,7 @@
                                     Text="{x:Bind ViewModel.HistoryJumpListNumList[1].HistoryJumpListNumName}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind ViewModel.HistoryJumpListNumList[1].HistoryJumpListNumName}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind ViewModel.HistoryJumpListNumList[1].HistoryJumpListNumName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
 
@@ -192,10 +173,7 @@
                                     Text="{x:Bind ViewModel.HistoryJumpListNumList[2].HistoryJumpListNumName}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind ViewModel.HistoryJumpListNumList[2].HistoryJumpListNumName}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind ViewModel.HistoryJumpListNumList[2].HistoryJumpListNumName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
 
@@ -207,10 +185,7 @@
                                     Text="{x:Bind ViewModel.HistoryJumpListNumList[3].HistoryJumpListNumName}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind ViewModel.HistoryJumpListNumList[3].HistoryJumpListNumName}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind ViewModel.HistoryJumpListNumList[3].HistoryJumpListNumName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
 
@@ -222,13 +197,10 @@
                                     Text="{x:Bind ViewModel.HistoryJumpListNumList[4].HistoryJumpListNumName}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind ViewModel.HistoryJumpListNumList[4].HistoryJumpListNumName}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind ViewModel.HistoryJumpListNumList[4].HistoryJumpListNumName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
-                            </menusAndToolbars:AdaptiveMenuFlyout>
+                            </MenuFlyout>
                         </DropDownButton.Flyout>
                     </DropDownButton>
                 </Grid>

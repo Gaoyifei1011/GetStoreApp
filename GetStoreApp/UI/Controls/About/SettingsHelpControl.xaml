@@ -28,10 +28,7 @@
                 Style="{StaticResource AboutHyperlinkButtonStyle}">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip
-                        Content="{x:Bind root:ResourceService.GetLocalized('About/SystemInformation')}"
-                        Placement="Bottom"
-                        VerticalOffset="25" />
+                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/SystemInformation')}" Placement="Mouse" />
                 </ToolTipService.ToolTip>
             </HyperlinkButton>
             <MenuFlyoutSeparator Margin="0,0,0,8" />
@@ -46,10 +43,7 @@
                     Style="{StaticResource AboutHyperlinkButtonStyle}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind root:ResourceService.GetLocalized('About/AppInformation')}"
-                            Placement="Bottom"
-                            VerticalOffset="25" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/AppInformation')}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </HyperlinkButton>
 
@@ -59,10 +53,7 @@
                     Style="{StaticResource AboutHyperlinkButtonStyle}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind root:ResourceService.GetLocalized('About/AppSettings')}"
-                            Placement="Bottom"
-                            VerticalOffset="25" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/AppSettings')}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </HyperlinkButton>
             </StackPanel>
@@ -80,10 +71,7 @@
                     Style="{StaticResource AboutHyperlinkButtonStyle}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind root:ResourceService.GetLocalized('About/StartsWithEButton')}"
-                            Placement="Bottom"
-                            VerticalOffset="25" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/StartsWithEButton')}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </HyperlinkButton>
 
@@ -93,10 +81,7 @@
                     Style="{StaticResource AboutHyperlinkButtonStyle}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind root:ResourceService.GetLocalized('About/BlockMapButton')}"
-                            Placement="Bottom"
-                            VerticalOffset="25" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/BlockMapButton')}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </HyperlinkButton>
             </StackPanel>
@@ -111,10 +96,7 @@
                 Content="{x:Bind root:ResourceService.GetLocalized('About/LearnWinGetConfig')}"
                 Style="{StaticResource AboutHyperlinkButtonStyle}">
                 <ToolTipService.ToolTip>
-                    <ToolTip
-                        Content="{x:Bind root:ResourceService.GetLocalized('About/LearnWinGetConfig')}"
-                        Placement="Bottom"
-                        VerticalOffset="25" />
+                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/LearnWinGetConfig')}" Placement="Mouse" />
                 </ToolTipService.ToolTip>
             </HyperlinkButton>
 

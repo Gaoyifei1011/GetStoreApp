@@ -42,10 +42,7 @@
                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(ViewModel.UseInsVisValue), Mode=OneWay}">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip
-                        Content="{x:Bind root:ResourceService.GetLocalized('Store/UseInstructionToolTip')}"
-                        Placement="Bottom"
-                        VerticalOffset="20" />
+                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/UseInstructionToolTip')}" Placement="Mouse" />
                 </ToolTipService.ToolTip>
             </Button>
         </Grid>

@@ -7,7 +7,6 @@
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:winGetViewModel="using:GetStoreApp.ViewModels.Controls.WinGet"
     xmlns:winget="using:GetStoreApp.Models.Controls.WinGet"
@@ -59,10 +58,7 @@
             Text="{x:Bind LocalizeUpgradableAppsCountInfo(ViewModel.UpgradableAppsDataList.Count), Mode=OneWay}">
 
             <ToolTipService.ToolTip>
-                <ToolTip
-                    Content="{x:Bind LocalizeUpgradableAppsCountInfo(ViewModel.UpgradableAppsDataList.Count), Mode=OneWay}"
-                    Placement="Bottom"
-                    VerticalOffset="20" />
+                <ToolTip Content="{x:Bind LocalizeUpgradableAppsCountInfo(ViewModel.UpgradableAppsDataList.Count), Mode=OneWay}" Placement="Mouse" />
             </ToolTipService.ToolTip>
         </TextBlock>
 
@@ -85,10 +81,7 @@
                 </MenuFlyoutItem.Icon>
 
                 <ToolTipService.ToolTip>
-                    <ToolTip
-                        Content="{x:Bind root:ResourceService.GetLocalized('WinGet/RefreshToolTip')}"
-                        Placement="Bottom"
-                        VerticalOffset="25" />
+                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('WinGet/RefreshToolTip')}" Placement="Mouse" />
                 </ToolTipService.ToolTip>
             </MenuFlyoutItem>
         </StackPanel>
@@ -116,10 +109,7 @@
                 TextAlignment="Center">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip
-                        Content="{x:Bind root:ResourceService.GetLocalized('WinGet/LoadingUpgradableApps')}"
-                        Placement="Bottom"
-                        VerticalOffset="20" />
+                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('WinGet/LoadingUpgradableApps')}" Placement="Mouse" />
                 </ToolTipService.ToolTip>
             </TextBlock>
         </StackPanel>
@@ -147,10 +137,7 @@
                 TextAlignment="Center">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip
-                        Content="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradableAppsEmptyDescription')}"
-                        Placement="Bottom"
-                        VerticalOffset="20" />
+                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradableAppsEmptyDescription')}" Placement="Mouse" />
                 </ToolTipService.ToolTip>
             </TextBlock>
         </Grid>
@@ -190,10 +177,7 @@
                             Text="{x:Bind AppName}">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip
-                                    Content="{x:Bind converter:StringConverterHelper.WinGetAppsToolTipFormat(AppName,'AppName')}"
-                                    Placement="Bottom"
-                                    VerticalOffset="20" />
+                                <ToolTip Content="{x:Bind converter:StringConverterHelper.WinGetAppsToolTipFormat(AppName,'AppName')}" Placement="Mouse" />
                             </ToolTipService.ToolTip>
                         </TextBlock>
 
@@ -205,10 +189,7 @@
                             Text="{x:Bind AppPublisher}">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip
-                                    Content="{x:Bind converter:StringConverterHelper.WinGetAppsToolTipFormat(AppPublisher,'AppPublisher')}"
-                                    Placement="Bottom"
-                                    VerticalOffset="20" />
+                                <ToolTip Content="{x:Bind converter:StringConverterHelper.WinGetAppsToolTipFormat(AppPublisher,'AppPublisher')}" Placement="Mouse" />
                             </ToolTipService.ToolTip>
                         </TextBlock>
 
@@ -221,10 +202,7 @@
                             Text="{x:Bind AppCurrentVersion}">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip
-                                    Content="{x:Bind converter:StringConverterHelper.WinGetAppsToolTipFormat(AppCurrentVersion,'AppCurrentVersion')}"
-                                    Placement="Bottom"
-                                    VerticalOffset="20" />
+                                <ToolTip Content="{x:Bind converter:StringConverterHelper.WinGetAppsToolTipFormat(AppCurrentVersion,'AppCurrentVersion')}" Placement="Mouse" />
                             </ToolTipService.ToolTip>
                         </TextBlock>
 
@@ -238,10 +216,7 @@
                             Text="{x:Bind AppNewestVersion}">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip
-                                    Content="{x:Bind converter:StringConverterHelper.WinGetAppsToolTipFormat(AppNewestVersion,'AppNewestVersion')}"
-                                    Placement="Bottom"
-                                    VerticalOffset="20" />
+                                <ToolTip Content="{x:Bind converter:StringConverterHelper.WinGetAppsToolTipFormat(AppNewestVersion,'AppNewestVersion')}" Placement="Mouse" />
                             </ToolTipService.ToolTip>
                         </TextBlock>
 
@@ -254,21 +229,15 @@
                             IsPrimaryButtonEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsUpgrading), Mode=OneWay}">
 
                             <basicInput:ExtendedSplitButton.PrimaryButtonToolTip>
-                                <ToolTip
-                                    Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Update')}"
-                                    Placement="Bottom"
-                                    VerticalOffset="20" />
+                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Update')}" Placement="Mouse" />
                             </basicInput:ExtendedSplitButton.PrimaryButtonToolTip>
 
                             <basicInput:ExtendedSplitButton.SecondaryButtonToolTip>
-                                <ToolTip
-                                    Content="{x:Bind root:ResourceService.GetLocalized('WinGet/ViewMoreOptions')}"
-                                    Placement="Bottom"
-                                    VerticalOffset="20" />
+                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('WinGet/ViewMoreOptions')}" Placement="Mouse" />
                             </basicInput:ExtendedSplitButton.SecondaryButtonToolTip>
 
                             <basicInput:ExtendedSplitButton.Flyout>
-                                <menusAndToolbars:AdaptiveMenuFlyout>
+                                <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                                     <MenuFlyoutItem
                                         Command="{Binding ElementName=UpgradableAppsRoot, Path=DataContext.CopyUpgradeTextCommand, Mode=OneTime}"
                                         CommandParameter="{x:Bind AppID}"
@@ -279,10 +248,7 @@
                                         </MenuFlyoutItem.Icon>
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUpgradeText')}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
+                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUpgradeText')}" Placement="Mouse" />
                                         </ToolTipService.ToolTip>
                                     </MenuFlyoutItem>
 
@@ -296,13 +262,10 @@
                                         </MenuFlyoutItem.Icon>
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                Content="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallWithCmd')}"
-                                                Placement="Bottom"
-                                                VerticalOffset="20" />
+                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallWithCmd')}" Placement="Mouse" />
                                         </ToolTipService.ToolTip>
                                     </MenuFlyoutItem>
-                                </menusAndToolbars:AdaptiveMenuFlyout>
+                                </MenuFlyout>
                             </basicInput:ExtendedSplitButton.Flyout>
                         </basicInput:ExtendedSplitButton>
                     </Grid>

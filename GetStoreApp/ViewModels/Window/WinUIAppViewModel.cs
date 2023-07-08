@@ -5,13 +5,12 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
-using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using System;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.Graphics;
 using Windows.UI.StartScreen;
 
@@ -57,23 +56,36 @@ namespace GetStoreApp.ViewModels.Window
                 PointInt32 pt;
                 User32Library.GetCursorPos(&pt);
 
-                // 获取当前状态栏信息
-                APPBARDATA appbarData = new APPBARDATA();
-                Shell32Library.SHAppBarMessage(AppBarMessage.ABM_GETTASKBARPOS, ref appbarData);
+                int x = DPICalcHelper.ConvertPixelToEpx(Program.ApplicationRoot.MainWindow.Handle, pt.X);
+                int y = DPICalcHelper.ConvertPixelToEpx(Program.ApplicationRoot.MainWindow.Handle, pt.Y);
 
-                // 获取屏幕信息
-                IntPtr hMonitor = User32Library.MonitorFromWindow(Program.ApplicationRoot.TrayMenuWindow.Handle, MonitorFlags.MONITOR_DEFAULTTONEAREST);
-                MONITORINFO monitorInfo = new MONITORINFO();
-                monitorInfo.cbSize = Marshal.SizeOf(typeof(MONITORINFO));
-                User32Library.GetMonitorInfo(hMonitor, out monitorInfo);
-
-                // 调整窗口的大小
-                Program.ApplicationRoot.TrayMenuWindow.SetWindowSize();
-                // 计算窗口应该具体显示的位置，防止超出屏幕边界
-                Program.ApplicationRoot.TrayMenuWindow.SetWindowPosition(appbarData, monitorInfo, pt);
-
-                Program.ApplicationRoot.TrayMenuWindow.AppWindow.Show();
                 User32Library.SetForegroundWindow(Program.ApplicationRoot.TrayMenuWindow.Handle);
+                if (InfoHelper.SystemVersion.Build >= 22000)
+                {
+                    Program.ApplicationRoot.TrayMenuWindow.TrayMenuFlyout.ShowAt(null, new Point(x, y));
+                }
+                else
+                {
+                    // 取消托盘窗口置顶
+                    IntPtr hwnd = User32Library.FindWindowEx(IntPtr.Zero, IntPtr.Zero, "NotifyIconOverflowWindow", null);
+
+                    if (hwnd != IntPtr.Zero)
+                    {
+                        User32Library.SetWindowPos(hwnd, -2, 0, 0, 0, 0, SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOMOVE);
+
+                        do
+                        {
+                            hwnd = User32Library.FindWindowEx(hwnd, IntPtr.Zero, "ToolbarWindow32", null);
+
+                            if (hwnd != IntPtr.Zero)
+                            {
+                                User32Library.SetWindowPos(hwnd, -2, 0, 0, 0, 0, SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOMOVE);
+                            }
+                        } while (hwnd != IntPtr.Zero);
+                    }
+
+                    Program.ApplicationRoot.TrayMenuWindow.TrayMenuFlyout.ShowAt(null, new Point(pt.X, pt.Y));
+                }
             }
         }
 

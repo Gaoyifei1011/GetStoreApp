@@ -22,9 +22,6 @@
     </InfoBar.Content>
 
     <ToolTipService.ToolTip>
-        <ToolTip
-            Content="{x:Bind ViewModel.StateInfoText, Mode=OneWay}"
-            Placement="Bottom"
-            VerticalOffset="20" />
+        <ToolTip Content="{x:Bind ViewModel.StateInfoText, Mode=OneWay}" Placement="Mouse" />
     </ToolTipService.ToolTip>
 </InfoBar>

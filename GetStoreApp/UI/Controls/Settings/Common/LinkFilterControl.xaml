@@ -52,10 +52,7 @@
                 Content="{x:Bind root:ResourceService.GetLocalized('Settings/LinkFilterInstruction')}">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip
-                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/LinkFilterInstruction')}"
-                        Placement="Bottom"
-                        VerticalOffset="20" />
+                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/LinkFilterInstruction')}" Placement="Mouse" />
                 </ToolTipService.ToolTip>
             </Button>
         </Grid>

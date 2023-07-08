@@ -6,7 +6,6 @@
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:store="using:GetStoreApp.Models.Controls.Store"
     xmlns:storeViewModel="using:GetStoreApp.ViewModels.Controls.Store"
@@ -59,20 +58,14 @@
             <TextBlock Text="{x:Bind LocalizeCategoryId(ViewModel.CategoryId), Mode=OneWay}">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip
-                        Content="{x:Bind ViewModel.CategoryId, Mode=OneWay}"
-                        Placement="Bottom"
-                        VerticalOffset="20" />
+                    <ToolTip Content="{x:Bind ViewModel.CategoryId, Mode=OneWay}" Placement="Mouse" />
                 </ToolTipService.ToolTip>
             </TextBlock>
 
             <TextBlock Text="{x:Bind LocalizeResultCountInfo(ViewModel.ResultDataList.Count), Mode=OneWay}">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip
-                        Content="{x:Bind LocalizeResultCountInfo(ViewModel.ResultDataList.Count), Mode=OneWay}"
-                        Placement="Bottom"
-                        VerticalOffset="20" />
+                    <ToolTip Content="{x:Bind LocalizeResultCountInfo(ViewModel.ResultDataList.Count), Mode=OneWay}" Placement="Mouse" />
                 </ToolTipService.ToolTip>
             </TextBlock>
         </StackPanel>
@@ -104,10 +97,7 @@
                 </MenuFlyoutItem.Icon>
 
                 <ToolTipService.ToolTip>
-                    <ToolTip
-                        Content="{x:Bind root:ResourceService.GetLocalized('Store/CopyIDToolTip')}"
-                        Placement="Bottom"
-                        VerticalOffset="25" />
+                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/CopyIDToolTip')}" Placement="Mouse" />
                 </ToolTipService.ToolTip>
             </MenuFlyoutItem>
 
@@ -123,10 +113,7 @@
                 </MenuFlyoutItem.Icon>
 
                 <ToolTipService.ToolTip>
-                    <ToolTip
-                        Content="{x:Bind root:ResourceService.GetLocalized('Store/SelectToolTip')}"
-                        Placement="Bottom"
-                        VerticalOffset="25" />
+                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/SelectToolTip')}" Placement="Mouse" />
                 </ToolTipService.ToolTip>
             </MenuFlyoutItem>
         </StackPanel>
@@ -152,10 +139,7 @@
                 </MenuFlyoutItem.Icon>
 
                 <ToolTipService.ToolTip>
-                    <ToolTip
-                        Content="{x:Bind root:ResourceService.GetLocalized('Store/SelectAll')}"
-                        Placement="Bottom"
-                        VerticalOffset="25" />
+                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/SelectAll')}" Placement="Mouse" />
                 </ToolTipService.ToolTip>
             </MenuFlyoutItem>
 
@@ -170,10 +154,7 @@
                 </MenuFlyoutItem.Icon>
 
                 <ToolTipService.ToolTip>
-                    <ToolTip
-                        Content="{x:Bind root:ResourceService.GetLocalized('Store/SelectNone')}"
-                        Placement="Bottom"
-                        VerticalOffset="25" />
+                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/SelectNone')}" Placement="Mouse" />
                 </ToolTipService.ToolTip>
             </MenuFlyoutItem>
 
@@ -188,34 +169,25 @@
                 </MenuFlyoutItem.Icon>
 
                 <ToolTipService.ToolTip>
-                    <ToolTip
-                        Content="{x:Bind root:ResourceService.GetLocalized('Store/CopyOptionsToolTip')}"
-                        Placement="Bottom"
-                        VerticalOffset="25" />
+                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/CopyOptionsToolTip')}" Placement="Mouse" />
                 </ToolTipService.ToolTip>
 
                 <FlyoutBase.AttachedFlyout>
-                    <menusAndToolbars:AdaptiveMenuFlyout>
+                    <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                         <MenuFlyoutItem Click="{x:Bind ViewModel.OnCopySelectedLinkClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedLink')}">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip
-                                    Content="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedLinkToolTip')}"
-                                    Placement="Bottom"
-                                    VerticalOffset="20" />
+                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedLinkToolTip')}" Placement="Mouse" />
                             </ToolTipService.ToolTip>
                         </MenuFlyoutItem>
 
                         <MenuFlyoutItem Click="{x:Bind ViewModel.OnCopySelectedClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedContent')}">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip
-                                    Content="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedContentToolTip')}"
-                                    Placement="Bottom"
-                                    VerticalOffset="20" />
+                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedContentToolTip')}" Placement="Mouse" />
                             </ToolTipService.ToolTip>
                         </MenuFlyoutItem>
-                    </menusAndToolbars:AdaptiveMenuFlyout>
+                    </MenuFlyout>
                 </FlyoutBase.AttachedFlyout>
             </MenuFlyoutItem>
 
@@ -230,10 +202,7 @@
                 </MenuFlyoutItem.Icon>
 
                 <ToolTipService.ToolTip>
-                    <ToolTip
-                        Content="{x:Bind root:ResourceService.GetLocalized('Store/DownloadSelected')}"
-                        Placement="Bottom"
-                        VerticalOffset="25" />
+                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/DownloadSelected')}" Placement="Mouse" />
                 </ToolTipService.ToolTip>
             </MenuFlyoutItem>
 
@@ -248,10 +217,7 @@
                 </MenuFlyoutItem.Icon>
 
                 <ToolTipService.ToolTip>
-                    <ToolTip
-                        Content="{x:Bind root:ResourceService.GetLocalized('Store/CancelToolTip')}"
-                        Placement="Bottom"
-                        VerticalOffset="25" />
+                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/CancelToolTip')}" Placement="Mouse" />
                 </ToolTipService.ToolTip>
             </MenuFlyoutItem>
         </StackPanel>
@@ -291,10 +257,7 @@
                     Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(ViewModel.IsSelectMode), Mode=OneWay}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind root:ResourceService.GetLocalized('Store/Select')}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/Select')}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </TextBlock>
 
@@ -305,10 +268,7 @@
                     Text="{x:Bind root:ResourceService.GetLocalized('Store/FileName')}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind root:ResourceService.GetLocalized('Store/FileName')}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/FileName')}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </TextBlock>
 
@@ -319,10 +279,7 @@
                     Text="{x:Bind root:ResourceService.GetLocalized('Store/LinkExpireTime')}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind root:ResourceService.GetLocalized('Store/LinkExpireTime')}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/LinkExpireTime')}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </TextBlock>
 
@@ -333,10 +290,7 @@
                     Text="{x:Bind root:ResourceService.GetLocalized('Store/FileSHA1')}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind root:ResourceService.GetLocalized('Store/FileSHA1')}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/FileSHA1')}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </TextBlock>
 
@@ -347,10 +301,7 @@
                     Text="{x:Bind root:ResourceService.GetLocalized('Store/FileSize')}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind root:ResourceService.GetLocalized('Store/FileSize')}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/FileSize')}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </TextBlock>
 
@@ -363,10 +314,7 @@
                     Text="{x:Bind root:ResourceService.GetLocalized('History/Options')}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind root:ResourceService.GetLocalized('History/OptionsToolTip')}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/OptionsToolTip')}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </TextBlock>
             </Grid>
@@ -402,10 +350,7 @@
                         Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsSelectMode), Mode=OneWay}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind converter:StringConverterHelper.CheckBoxToolTipFormat(IsSelected,'Store'),Mode=OneWay}"
-                                Placement="Bottom"
-                                VerticalOffset="25" />
+                            <ToolTip Content="{x:Bind converter:StringConverterHelper.CheckBoxToolTipFormat(IsSelected,'Store'),Mode=OneWay}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </CheckBox>
 
@@ -419,10 +364,7 @@
                         Style="{StaticResource HyperlinkButtonStyle}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind converter:StringConverterHelper.FileNameToolTipFormat(FileName)}"
-                                Placement="Bottom"
-                                VerticalOffset="25" />
+                            <ToolTip Content="{x:Bind converter:StringConverterHelper.FileNameToolTipFormat(FileName)}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </HyperlinkButton>
 
@@ -434,10 +376,7 @@
                         Text="{x:Bind converter:StringConverterHelper.GMTFormat(FileLinkExpireTime)}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind converter:StringConverterHelper.GMTFormat(FileLinkExpireTime)}"
-                                Placement="Bottom"
-                                VerticalOffset="20" />
+                            <ToolTip Content="{x:Bind converter:StringConverterHelper.GMTFormat(FileLinkExpireTime)}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
 
@@ -449,10 +388,7 @@
                         Text="{x:Bind FileSHA1}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind FileSHA1}"
-                                Placement="Bottom"
-                                VerticalOffset="20" />
+                            <ToolTip Content="{x:Bind FileSHA1}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
 
@@ -464,10 +400,7 @@
                         Text="{x:Bind FileSize}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind FileSize}"
-                                Placement="Bottom"
-                                VerticalOffset="20" />
+                            <ToolTip Content="{x:Bind FileSize}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
 
@@ -481,24 +414,18 @@
                         Style="{StaticResource HyperlinkDropDownButtonStyle}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('Store/CopyOptionsToolTip')}"
-                                Placement="Bottom"
-                                VerticalOffset="25" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/CopyOptionsToolTip')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
 
                         <DropDownButton.Flyout>
-                            <menusAndToolbars:AdaptiveMenuFlyout>
+                            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                                 <MenuFlyoutItem
                                     Command="{Binding ElementName=ResultRoot, Path=DataContext.CopyLinkCommand, Mode=OneTime}"
                                     CommandParameter="{x:Bind FileLink}"
                                     Text="{x:Bind root:ResourceService.GetLocalized('Store/CopyLink')}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind root:ResourceService.GetLocalized('Store/CopyLinkToolTip')}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/CopyLinkToolTip')}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </MenuFlyoutItem>
 
@@ -508,13 +435,10 @@
                                     Text="{x:Bind root:ResourceService.GetLocalized('Store/CopyContent')}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind root:ResourceService.GetLocalized('Store/CopyContentToolTip')}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/CopyContentToolTip')}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </MenuFlyoutItem>
-                            </menusAndToolbars:AdaptiveMenuFlyout>
+                            </MenuFlyout>
                         </DropDownButton.Flyout>
                     </DropDownButton>
                 </Grid>

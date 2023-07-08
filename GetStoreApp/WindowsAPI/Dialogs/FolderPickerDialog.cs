@@ -50,7 +50,7 @@ namespace GetStoreApp.WindowsAPI.Dialogs
 
                 int result = dialog.Show(hwnd);
 
-                if (result != 0)
+                if (result is not 0)
                 {
                     return false;
                 }

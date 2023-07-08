@@ -10,8 +10,6 @@
     Title="{x:Bind root:ResourceService.GetLocalized('Window/TrayMenuWindow')}"
     MinWidth="0"
     MinHeight="0"
-    Activated="{x:Bind ViewModel.OnActivated}"
-    ExtendsContentIntoTitleBar="True"
     SystemBackdrop="{x:Bind ViewModel.SystemBackdrop, Mode=OneWay}"
     mc:Ignorable="d">
 
@@ -19,66 +17,85 @@
         <controls:TrayMenuViewModel x:Name="ViewModel" x:FieldModifier="public" />
     </window:WinUIWindow.DataContext>
 
-    <MenuFlyoutPresenter
-        x:Name="TrayMenuFlyout"
-        HorizontalAlignment="Left"
-        VerticalAlignment="Top"
-        Background="{x:Bind ViewModel.WindowBackground, Mode=OneWay}"
-        Loaded="{x:Bind ViewModel.OnLoaded}"
-        RequestedTheme="{x:Bind ViewModel.WindowTheme, Mode=OneWay}"
-        Style="{StaticResource MenuFlyoutPresenterStyle}"
-        Unloaded="{x:Bind ViewModel.OnUnloaded}">
+    <Grid RequestedTheme="{x:Bind ViewModel.WindowTheme, Mode=OneWay}">
+        <Grid.Resources>
+            <MenuFlyout
+                x:Name="TrayMenuFlyout"
+                x:FieldModifier="public"
+                MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}">
 
-        <MenuFlyoutItem
-            Click="{x:Bind ViewModel.OnProjectDescriptionClicked}"
-            Style="{StaticResource TrayMenuFlyoutItemStyle}"
-            Text="{x:Bind root:ResourceService.GetLocalized('Resources/ProjectHomePage')}">
+                <MenuFlyoutItem
+                    Click="{x:Bind ViewModel.OnProjectDescriptionClicked}"
+                    Style="{StaticResource TrayMenuFlyoutItemStyle}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Resources/ProjectHomePage')}">
 
-            <MenuFlyoutItem.Icon>
-                <FontIcon Glyph="&#xE80f;" />
-            </MenuFlyoutItem.Icon>
-        </MenuFlyoutItem>
+                    <MenuFlyoutItem.Icon>
+                        <FontIcon Glyph="&#xE80f;" />
+                    </MenuFlyoutItem.Icon>
 
-        <MenuFlyoutItem
-            Click="{x:Bind ViewModel.OnAboutAppClicked}"
-            Style="{StaticResource TrayMenuFlyoutItemStyle}"
-            Text="{x:Bind root:ResourceService.GetLocalized('Resources/AboutApp')}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Resources/ProjectHomePage')}" Placement="Mouse" />
+                    </ToolTipService.ToolTip>
+                </MenuFlyoutItem>
 
-            <MenuFlyoutItem.Icon>
-                <FontIcon Glyph="&#xE946;" />
-            </MenuFlyoutItem.Icon>
-        </MenuFlyoutItem>
+                <MenuFlyoutItem
+                    Click="{x:Bind ViewModel.OnAboutAppClicked}"
+                    Style="{StaticResource TrayMenuFlyoutItemStyle}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Resources/AboutApp')}">
 
-        <MenuFlyoutSeparator />
+                    <MenuFlyoutItem.Icon>
+                        <FontIcon Glyph="&#xE946;" />
+                    </MenuFlyoutItem.Icon>
 
-        <MenuFlyoutItem
-            Click="{x:Bind ViewModel.OnShowOrHideWindowClicked}"
-            Style="{StaticResource TrayMenuFlyoutItemStyle}"
-            Text="{x:Bind root:ResourceService.GetLocalized('Resources/ShowOrHideWindow')}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Resources/AboutApp')}" Placement="Mouse" />
+                    </ToolTipService.ToolTip>
+                </MenuFlyoutItem>
 
-            <MenuFlyoutItem.Icon>
-                <FontIcon Glyph="&#xE770;" />
-            </MenuFlyoutItem.Icon>
-        </MenuFlyoutItem>
+                <MenuFlyoutSeparator />
 
-        <MenuFlyoutItem
-            Click="{x:Bind ViewModel.OnSettingsClicked}"
-            Style="{StaticResource TrayMenuFlyoutItemStyle}"
-            Text="{x:Bind root:ResourceService.GetLocalized('Resources/Settings')}">
+                <MenuFlyoutItem
+                    Click="{x:Bind ViewModel.OnShowOrHideWindowClicked}"
+                    Style="{StaticResource TrayMenuFlyoutItemStyle}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Resources/ShowOrHideWindow')}">
 
-            <MenuFlyoutItem.Icon>
-                <FontIcon Glyph="&#xE713;" />
-            </MenuFlyoutItem.Icon>
-        </MenuFlyoutItem>
+                    <MenuFlyoutItem.Icon>
+                        <FontIcon Glyph="&#xE770;" />
+                    </MenuFlyoutItem.Icon>
 
-        <MenuFlyoutItem
-            Click="{x:Bind ViewModel.OnExitClicked}"
-            Style="{StaticResource TrayMenuFlyoutItemStyle}"
-            Text="{x:Bind root:ResourceService.GetLocalized('Resources/Exit')}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Resources/ShowOrHideWindow')}" Placement="Mouse" />
+                    </ToolTipService.ToolTip>
+                </MenuFlyoutItem>
 
-            <MenuFlyoutItem.Icon>
-                <FontIcon Glyph="&#xE7e8;" />
-            </MenuFlyoutItem.Icon>
-        </MenuFlyoutItem>
-    </MenuFlyoutPresenter>
+                <MenuFlyoutItem
+                    Click="{x:Bind ViewModel.OnSettingsClicked}"
+                    Style="{StaticResource TrayMenuFlyoutItemStyle}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Resources/Settings')}">
+
+                    <MenuFlyoutItem.Icon>
+                        <FontIcon Glyph="&#xE713;" />
+                    </MenuFlyoutItem.Icon>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Resources/Settings')}" Placement="Mouse" />
+                    </ToolTipService.ToolTip>
+                </MenuFlyoutItem>
+
+                <MenuFlyoutItem
+                    Click="{x:Bind ViewModel.OnExitClicked}"
+                    Style="{StaticResource TrayMenuFlyoutItemStyle}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Resources/Exit')}">
+
+                    <MenuFlyoutItem.Icon>
+                        <FontIcon Glyph="&#xE7e8;" />
+                    </MenuFlyoutItem.Icon>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Resources/Exit')}" Placement="Mouse" />
+                    </ToolTipService.ToolTip>
+                </MenuFlyoutItem>
+            </MenuFlyout>
+        </Grid.Resources>
+    </Grid>
 </window:WinUIWindow>

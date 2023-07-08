@@ -59,10 +59,7 @@
                         Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ArgumentName')}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('Dialog/ArgumentName')}"
-                                Placement="Bottom"
-                                VerticalOffset="20" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Dialog/ArgumentName')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
 
@@ -73,10 +70,7 @@
                         Text="{x:Bind root:ResourceService.GetLocalized('Dialog/Argument')}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('Dialog/Argument')}"
-                                Placement="Bottom"
-                                VerticalOffset="20" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Dialog/Argument')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
 
@@ -87,10 +81,7 @@
                         Text="{x:Bind root:ResourceService.GetLocalized('Dialog/IsRequired')}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('Dialog/IsRequired')}"
-                                Placement="Bottom"
-                                VerticalOffset="20" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Dialog/IsRequired')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
 
@@ -101,10 +92,7 @@
                         Text="{x:Bind root:ResourceService.GetLocalized('Dialog/InputContent')}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('Dialog/InputContent')}"
-                                Placement="Bottom"
-                                VerticalOffset="20" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Dialog/InputContent')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
                 </Grid>
@@ -133,10 +121,7 @@
                             Text="{x:Bind ArgumentName}">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip
-                                    Content="{x:Bind ArgumentName}"
-                                    Placement="Bottom"
-                                    VerticalOffset="20" />
+                                <ToolTip Content="{x:Bind ArgumentName}" Placement="Mouse" />
                             </ToolTipService.ToolTip>
                         </TextBlock>
 
@@ -148,10 +133,7 @@
                             Text="{x:Bind Argument}">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip
-                                    Content="{x:Bind Argument}"
-                                    Placement="Bottom"
-                                    VerticalOffset="20" />
+                                <ToolTip Content="{x:Bind Argument}" Placement="Mouse" />
                             </ToolTipService.ToolTip>
                         </TextBlock>
 
@@ -163,10 +145,7 @@
                             Text="{x:Bind IsRequired}">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip
-                                    Content="{x:Bind IsRequired}"
-                                    Placement="Bottom"
-                                    VerticalOffset="20" />
+                                <ToolTip Content="{x:Bind IsRequired}" Placement="Mouse" />
                             </ToolTipService.ToolTip>
                         </TextBlock>
 
@@ -178,10 +157,7 @@
                             Text="{x:Bind ArgumentContent}">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip
-                                    Content="{x:Bind ArgumentContent}"
-                                    Placement="Bottom"
-                                    VerticalOffset="20" />
+                                <ToolTip Content="{x:Bind ArgumentContent}" Placement="Mouse" />
                             </ToolTipService.ToolTip>
                         </TextBlock>
                     </Grid>
@@ -205,10 +181,7 @@
             TextAlignment="Left">
 
             <ToolTipService.ToolTip>
-                <ToolTip
-                    Content="{x:Bind ViewModel.SampleShort}"
-                    Placement="Bottom"
-                    VerticalOffset="20" />
+                <ToolTip Content="{x:Bind ViewModel.SampleShort}" Placement="Mouse" />
             </ToolTipService.ToolTip>
         </TextBlock>
 
@@ -218,10 +191,7 @@
             Text="{x:Bind ViewModel.SampleFull}">
 
             <ToolTipService.ToolTip>
-                <ToolTip
-                    Content="{x:Bind ViewModel.SampleFull}"
-                    Placement="Bottom"
-                    VerticalOffset="20" />
+                <ToolTip Content="{x:Bind ViewModel.SampleFull}" Placement="Mouse" />
             </ToolTipService.ToolTip>
         </TextBlock>
     </StackPanel>

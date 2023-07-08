@@ -47,10 +47,7 @@
         Content="{x:Bind root:ResourceService.GetLocalized('Settings/Config')}">
 
         <ToolTipService.ToolTip>
-            <ToolTip
-                Content="{x:Bind root:ResourceService.GetLocalized('Settings/Config')}"
-                Placement="Bottom"
-                VerticalOffset="20" />
+            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/Config')}" Placement="Mouse" />
         </ToolTipService.ToolTip>
     </Button>
 </Grid>

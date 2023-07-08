@@ -123,10 +123,7 @@
                                             Style="{TemplateBinding PrimaryButtonStyle}">
                                             <!--  内容对话框控件修改处  -->
                                             <ToolTipService.ToolTip>
-                                                <ToolTip
-                                                    Content="{TemplateBinding PrimaryButtonText}"
-                                                    Placement="Bottom"
-                                                    VerticalOffset="20" />
+                                                <ToolTip Content="{TemplateBinding PrimaryButtonText}" Placement="Mouse" />
                                             </ToolTipService.ToolTip>
                                         </Button>
                                         <Button
@@ -139,10 +136,7 @@
                                             Style="{TemplateBinding SecondaryButtonStyle}">
                                             <!--  内容对话框控件修改处  -->
                                             <ToolTipService.ToolTip>
-                                                <ToolTip
-                                                    Content="{TemplateBinding SecondaryButtonText}"
-                                                    Placement="Bottom"
-                                                    VerticalOffset="20" />
+                                                <ToolTip Content="{TemplateBinding SecondaryButtonText}" Placement="Mouse" />
                                             </ToolTipService.ToolTip>
                                         </Button>
                                         <Button
@@ -155,10 +149,7 @@
                                             Style="{TemplateBinding CloseButtonStyle}">
                                             <!--  内容对话框控件修改处  -->
                                             <ToolTipService.ToolTip>
-                                                <ToolTip
-                                                    Content="{TemplateBinding CloseButtonText}"
-                                                    Placement="Bottom"
-                                                    VerticalOffset="20" />
+                                                <ToolTip Content="{TemplateBinding CloseButtonText}" Placement="Mouse" />
                                             </ToolTipService.ToolTip>
                                         </Button>
                                     </Grid>

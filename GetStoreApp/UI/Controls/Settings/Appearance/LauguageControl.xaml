@@ -57,10 +57,7 @@
         </Button.Content>
 
         <ToolTipService.ToolTip>
-            <ToolTip
-                Content="{x:Bind root:ResourceService.GetLocalized('Settings/LanguageToolTip')}"
-                Placement="Bottom"
-                VerticalOffset="25" />
+            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/LanguageToolTip')}" Placement="Mouse" />
         </ToolTipService.ToolTip>
     </Button>
 
@@ -74,10 +71,7 @@
         SelectionChanged="{x:Bind ViewModel.OnSelectionChanged}">
 
         <ToolTipService.ToolTip>
-            <ToolTip
-                Content="{x:Bind ViewModel.Language.DisplayName, Mode=OneWay}"
-                Placement="Bottom"
-                VerticalOffset="20" />
+            <ToolTip Content="{x:Bind ViewModel.Language.DisplayName, Mode=OneWay}" Placement="Mouse" />
         </ToolTipService.ToolTip>
     </ComboBox>
 </Grid>

@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dialogsAndFlyouts="using:GetStoreApp.Views.CustomControls.DialogsAndFlyouts"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Common"
     Style="{StaticResource ExpanderSettingsStyle}"
@@ -54,10 +53,7 @@
                 Content="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetConfigInstruction')}">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip
-                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetConfigInstruction')}"
-                        Placement="Bottom"
-                        VerticalOffset="20" />
+                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetConfigInstruction')}" Placement="Mouse" />
                 </ToolTipService.ToolTip>
             </Button>
         </Grid>
@@ -113,10 +109,7 @@
                                             Style="{StaticResource HyperlinkButtonStyle}">
 
                                             <ToolTipService.ToolTip>
-                                                <ToolTip
-                                                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/OfficialVersionInstallToolTip')}"
-                                                    Placement="Bottom"
-                                                    VerticalOffset="25" />
+                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/OfficialVersionInstallToolTip')}" Placement="Mouse" />
                                             </ToolTipService.ToolTip>
                                         </HyperlinkButton>
                                     </Grid>
@@ -147,10 +140,7 @@
                                             Style="{StaticResource HyperlinkButtonStyle}">
 
                                             <ToolTipService.ToolTip>
-                                                <ToolTip
-                                                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/DevVersionInstallToolTip')}"
-                                                    Placement="Bottom"
-                                                    VerticalOffset="25" />
+                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/DevVersionInstallToolTip')}" Placement="Mouse" />
                                             </ToolTipService.ToolTip>
                                         </HyperlinkButton>
                                     </Grid>
@@ -172,10 +162,7 @@
                                             Text="{x:Bind root:ResourceService.GetLocalized('Settings/UseDevFirst')}">
 
                                             <ToolTipService.ToolTip>
-                                                <ToolTip
-                                                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/UseDevFirstToolTip')}"
-                                                    Placement="Bottom"
-                                                    VerticalOffset="25" />
+                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/UseDevFirstToolTip')}" Placement="Mouse" />
                                             </ToolTipService.ToolTip>
                                         </TextBlock>
                                         <ToggleSwitch
@@ -192,10 +179,7 @@
                         </Button.Flyout>
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/ShowVersionToolTip')}"
-                                Placement="Bottom"
-                                VerticalOffset="20" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/ShowVersionToolTip')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </Button>
                 </Grid>
@@ -227,14 +211,11 @@
                         Content="{x:Bind ViewModel.WinGetInstallMode.DisplayName, Mode=OneWay}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind ViewModel.WinGetInstallMode.DisplayName, Mode=OneWay}"
-                                Placement="Bottom"
-                                VerticalOffset="20" />
+                            <ToolTip Content="{x:Bind ViewModel.WinGetInstallMode.DisplayName, Mode=OneWay}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
 
                         <DropDownButton.Flyout>
-                            <menusAndToolbars:AdaptiveMenuFlyout>
+                            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                                 <RadioMenuFlyoutItem
                                     Click="{x:Bind ViewModel.OnWinGetInstallModeSelectClicked}"
                                     GroupName="WinGetInstallModeSetting"
@@ -243,10 +224,7 @@
                                     Text="{x:Bind ViewModel.WinGetInstallModeList[0].DisplayName}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind ViewModel.WinGetInstallModeList[0].DisplayName}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind ViewModel.WinGetInstallModeList[0].DisplayName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
 
@@ -258,13 +236,10 @@
                                     Text="{x:Bind ViewModel.WinGetInstallModeList[1].DisplayName}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind ViewModel.WinGetInstallModeList[1].DisplayName}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind ViewModel.WinGetInstallModeList[1].DisplayName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
-                            </menusAndToolbars:AdaptiveMenuFlyout>
+                            </MenuFlyout>
                         </DropDownButton.Flyout>
                     </DropDownButton>
                 </Grid>
@@ -297,10 +272,7 @@
                         IsEnabled="{x:Bind IsWinGetExisted(ViewModel.IsOfficialVersionExisted, ViewModel.IsDevVersionExisted)}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/OpenWinGetSettingsToolTip')}"
-                                Placement="Bottom"
-                                VerticalOffset="20" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/OpenWinGetSettingsToolTip')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </Button>
                 </Grid>

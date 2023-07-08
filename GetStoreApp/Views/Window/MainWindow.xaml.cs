@@ -44,6 +44,7 @@ namespace GetStoreApp.Views.Window
             Presenter = AppWindow.Presenter.As<OverlappedPresenter>();
             AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
             AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
+            AppWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
         }
 
         /// <summary>
@@ -151,10 +152,6 @@ namespace GetStoreApp.Views.Window
         {
             newWndProc = new WNDPROC(NewWindowProc);
             oldWndProc = SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newWndProc));
-#if EXPERIMENTAL
-            int style = GetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_STYLE);
-            SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_STYLE, style & ~(int)WindowStyle.WS_SYSMENU);
-#endif
         }
 
         /// <summary>
@@ -300,18 +297,16 @@ namespace GetStoreApp.Views.Window
                 // 选择窗口右键菜单的条目时接收到的消息
                 case WindowMessage.WM_SYSCOMMAND:
                     {
-#if EXPERIMENTAL
                         SystemCommand sysCommand = (SystemCommand)(wParam.ToInt32() & 0xFFF0);
 
-                        if (sysCommand == SystemCommand.SC_MOUSEMENU || sysCommand == SystemCommand.SC_KEYMENU)
+                        if (sysCommand == SystemCommand.SC_KEYMENU)
                         {
                             FlyoutShowOptions options = new FlyoutShowOptions();
                             options.Position = new Point(0, 45);
                             options.ShowMode = FlyoutShowMode.Standard;
-                            AppTitlebar.TitlebarMenuFlyout.ShowAt(Content, options);
+                            AppTitlebar.TitlebarMenuFlyout.ShowAt(null, options);
                             return 0;
                         }
-# endif
                         break;
                     }
                 // 屏幕缩放比例发生变化时的消息
@@ -331,7 +326,6 @@ namespace GetStoreApp.Views.Window
                 // 当用户按下鼠标右键时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCRBUTTONDOWN:
                     {
-#if EXPERIMENTAL
                         PointInt32 pt;
                         unsafe
                         {
@@ -346,10 +340,6 @@ namespace GetStoreApp.Views.Window
 
                         AppTitlebar.TitlebarMenuFlyout.ShowAt(Content, options);
                         return 0;
-#endif
-#if !EXPERIMENTAL
-                        break;
-#endif
                     }
             }
             return User32Library.CallWindowProc(oldWndProc, hWnd, Msg, wParam, lParam);

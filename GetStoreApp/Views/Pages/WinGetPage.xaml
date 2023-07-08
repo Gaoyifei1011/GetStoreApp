@@ -41,10 +41,7 @@
             <Pivot.RightHeader>
                 <Button VerticalAlignment="Center">
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/TaskManager')}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('WinGet/TaskManager')}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
 
                     <Button.Content>
@@ -64,7 +61,7 @@
                     </Button.Content>
 
                     <Button.Flyout>
-                        <dialogsAndFlyouts:AdaptiveFlyout Placement="BottomEdgeAlignedRight">
+                        <dialogsAndFlyouts:AdaptiveFlyout Placement="Bottom" ShouldConstrainToRootBounds="False">
                             <Grid x:Name="TaskManagerFlyout" DataContext="{x:Bind WinGetRoot.DataContext}">
                                 <Grid
                                     Width="300"
@@ -102,10 +99,7 @@
                                                 </Grid.ColumnDefinitions>
 
                                                 <ToolTipService.ToolTip>
-                                                    <ToolTip
-                                                        Content="{x:Bind InstallToolTip(AppName, InstallProgressState, DownloadProgress, DownloadedFileSize, TotalFileSize), Mode=OneWay}"
-                                                        Placement="Bottom"
-                                                        VerticalOffset="20" />
+                                                    <ToolTip Content="{x:Bind InstallToolTip(AppName, InstallProgressState, DownloadProgress, DownloadedFileSize, TotalFileSize), Mode=OneWay}" Placement="Mouse" />
                                                 </ToolTipService.ToolTip>
 
                                                 <Grid Grid.Column="0" VerticalAlignment="Center">
@@ -153,10 +147,7 @@
                                                     </HyperlinkButton.Content>
 
                                                     <ToolTipService.ToolTip>
-                                                        <ToolTip
-                                                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/CancelInstalling')}"
-                                                            Placement="Bottom"
-                                                            VerticalOffset="25" />
+                                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('WinGet/CancelInstalling')}" Placement="Mouse" />
                                                     </ToolTipService.ToolTip>
                                                 </HyperlinkButton>
                                             </Grid>

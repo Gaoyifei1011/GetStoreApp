@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.WindowsAPI.Dialogs.FileDialog;
 using System;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
@@ -11,18 +10,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
     public static partial class Shell32Library
     {
         private const string Shell32 = "shell32.dll";
-
-        /// <summary>
-        /// 将应用栏消息发送到系统。
-        /// </summary>
-        /// <param name="dwMessage">要发送的 Appbar 消息值。</param>
-        /// <param name="pData">
-        /// 指向 <see cref="APPBARDATA"> 结构的指针。 入口和退出结构的内容取决于 <param name="dwMessage"> 参数中设置的值。 有关具体信息，请参阅单独的邮件页。
-        /// </param>
-        /// <returns>此函数返回依赖于消息的值。 </returns>
-        [LibraryImport(Shell32, EntryPoint = "SHAppBarMessage", SetLastError = false)]
-        [UnmanagedCallConv(CallConvs = new Type[] { typeof(CallConvStdcall) })]
-        public static partial uint SHAppBarMessage(AppBarMessage dwMessage, ref APPBARDATA pData);
 
         /// <summary>
         /// 从分析名称创建和初始化命令行管理程序项对象。

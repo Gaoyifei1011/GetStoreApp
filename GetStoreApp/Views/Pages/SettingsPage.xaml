@@ -41,10 +41,7 @@
                 Content="{x:Bind root:ResourceService.GetLocalized('Settings/RestartApp')}">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip
-                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/RestartAppToolTip')}"
-                        Placement="Bottom"
-                        VerticalOffset="20" />
+                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/RestartAppToolTip')}" Placement="Mouse" />
                 </ToolTipService.ToolTip>
             </Button>
         </Grid>

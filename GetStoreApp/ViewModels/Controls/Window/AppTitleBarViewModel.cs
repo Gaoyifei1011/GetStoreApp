@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.ViewModels.Base;
-using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -73,7 +72,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
             MenuFlyoutItem menuItem = sender as MenuFlyoutItem;
             if (menuItem.Tag is not null)
             {
-                ((AdaptiveFlyout)menuItem.Tag).Hide();
+                ((MenuFlyout)menuItem.Tag).Hide();
                 User32Library.SendMessage(Program.ApplicationRoot.MainWindow.Handle, WindowMessage.WM_SYSCOMMAND, 0xF010, 0);
             }
         }
@@ -94,7 +93,7 @@ namespace GetStoreApp.ViewModels.Controls.Window
             MenuFlyoutItem menuItem = sender as MenuFlyoutItem;
             if (menuItem.Tag is not null)
             {
-                ((AdaptiveFlyout)menuItem.Tag).Hide();
+                ((MenuFlyout)menuItem.Tag).Hide();
                 User32Library.SendMessage(Program.ApplicationRoot.MainWindow.Handle, WindowMessage.WM_SYSCOMMAND, 0xF000, 0);
             }
         }

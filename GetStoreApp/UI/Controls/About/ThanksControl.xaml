@@ -51,10 +51,7 @@
                             NavigateUri="{x:Bind Value}">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip
-                                    Content="{x:Bind converter:StringConverterHelper.AboutThanksToolTipFormat(Key)}"
-                                    Placement="Bottom"
-                                    VerticalOffset="25" />
+                                <ToolTip Content="{x:Bind converter:StringConverterHelper.AboutThanksToolTipFormat(Key)}" Placement="Mouse" />
                             </ToolTipService.ToolTip>
                         </HyperlinkButton>
                     </DataTemplate>

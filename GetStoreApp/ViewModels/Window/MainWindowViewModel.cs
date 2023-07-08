@@ -163,10 +163,11 @@ namespace GetStoreApp.ViewModels.Window
         };
 
         /// <summary>
-        /// 设置窗口处于非激活状态时的背景色
+        /// 窗口激活状态发生变化的事件
         /// </summary>
         public void OnActivated(object sender, WindowActivatedEventArgs args)
         {
+            // 设置窗口处于非激活状态时的背景色
             if (BackdropService.AppBackdrop.InternalName == BackdropService.BackdropList[1].InternalName || BackdropService.AppBackdrop.InternalName == BackdropService.BackdropList[2].InternalName)
             {
                 MicaSystemBackdrop micaBackdrop = SystemBackdrop as MicaSystemBackdrop;
@@ -349,6 +350,31 @@ namespace GetStoreApp.ViewModels.Window
                 SelectedItem = NavigationService.NavigationItemList[0].NavigationItem;
                 NavigationService.NavigateTo(typeof(StorePage));
                 IsBackEnabled = NavigationService.CanGoBack();
+
+                // 设置标题栏和窗口菜单的主题色
+                if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[0].InternalName)
+                {
+                    if (Application.Current.RequestedTheme is ApplicationTheme.Light)
+                    {
+                        SetTitleBarColor(ElementTheme.Light);
+                        SetTitleBarContextMenuColor(ElementTheme.Light);
+                    }
+                    else
+                    {
+                        SetTitleBarColor(ElementTheme.Dark);
+                        SetTitleBarContextMenuColor(ElementTheme.Dark);
+                    }
+                }
+                if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[1].InternalName)
+                {
+                    SetTitleBarColor(ElementTheme.Light);
+                    SetTitleBarContextMenuColor(ElementTheme.Light);
+                }
+                else if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[2].InternalName)
+                {
+                    SetTitleBarColor(ElementTheme.Dark);
+                    SetTitleBarContextMenuColor(ElementTheme.Dark);
+                }
             }
         }
 
@@ -465,25 +491,25 @@ namespace GetStoreApp.ViewModels.Window
                 {
                     if (Application.Current.RequestedTheme is ApplicationTheme.Light)
                     {
-                        WindowBackground = ResourceDictionaryHelper.WindowChromeDict["WindowLightBrush"] as SolidColorBrush;
+                        WindowBackground = ResourceDictionaryHelper.GridResourceDict["WindowLightBrush"] as SolidColorBrush;
                     }
                     else
                     {
-                        WindowBackground = ResourceDictionaryHelper.WindowChromeDict["WindowDarkBrush"] as SolidColorBrush;
+                        WindowBackground = ResourceDictionaryHelper.GridResourceDict["WindowDarkBrush"] as SolidColorBrush;
                     }
                 }
                 else if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[1].InternalName)
                 {
-                    WindowBackground = ResourceDictionaryHelper.WindowChromeDict["WindowLightBrush"] as SolidColorBrush;
+                    WindowBackground = ResourceDictionaryHelper.GridResourceDict["WindowLightBrush"] as SolidColorBrush;
                 }
                 else if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[2].InternalName)
                 {
-                    WindowBackground = ResourceDictionaryHelper.WindowChromeDict["WindowDarkBrush"] as SolidColorBrush;
+                    WindowBackground = ResourceDictionaryHelper.GridResourceDict["WindowDarkBrush"] as SolidColorBrush;
                 }
             }
             else
             {
-                WindowBackground = ResourceDictionaryHelper.WindowChromeDict["WindowSystemBackdropBrush"] as SolidColorBrush;
+                WindowBackground = ResourceDictionaryHelper.GridResourceDict["WindowSystemBackdropBrush"] as SolidColorBrush;
             }
         }
 

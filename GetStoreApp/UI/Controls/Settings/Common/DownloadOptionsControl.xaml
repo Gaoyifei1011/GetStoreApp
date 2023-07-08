@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Common"
     Style="{StaticResource ExpanderSettingsStyle}"
@@ -52,10 +51,7 @@
                 Content="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadInstruction')}">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip
-                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadInstruction')}"
-                        Placement="Bottom"
-                        VerticalOffset="20" />
+                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadInstruction')}" Placement="Mouse" />
                 </ToolTipService.ToolTip>
             </Button>
         </Grid>
@@ -83,10 +79,7 @@
                             Style="{StaticResource HyperlinkButtonStyle}">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip
-                                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/OpenFolderToolTip')}"
-                                    Placement="Bottom"
-                                    VerticalOffset="25" />
+                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/OpenFolderToolTip')}" Placement="Mouse" />
                             </ToolTipService.ToolTip>
                         </HyperlinkButton>
                     </StackPanel>
@@ -98,10 +91,7 @@
                         Content="{x:Bind root:ResourceService.GetLocalized('Settings/UseDefaultFolder')}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/UseDefaultFolder')}"
-                                Placement="Bottom"
-                                VerticalOffset="20" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/UseDefaultFolder')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </Button>
 
@@ -111,10 +101,7 @@
                         Content="{x:Bind root:ResourceService.GetLocalized('Settings/ChangeFolder')}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/ChangeFolder')}"
-                                Placement="Bottom"
-                                VerticalOffset="20" />
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/ChangeFolder')}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
                     </Button>
                 </Grid>
@@ -146,14 +133,11 @@
                         Content="{x:Bind ViewModel.DownloadItem, Mode=OneWay}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind ViewModel.DownloadItem, Mode=OneWay}"
-                                Placement="Bottom"
-                                VerticalOffset="20" />
+                            <ToolTip Content="{x:Bind ViewModel.DownloadItem, Mode=OneWay}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
 
                         <DropDownButton.Flyout>
-                            <menusAndToolbars:AdaptiveMenuFlyout>
+                            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                                 <RadioMenuFlyoutItem
                                     Click="{x:Bind ViewModel.OnDownloadItemSelectClicked}"
                                     GroupName="DownloadItemSetting"
@@ -162,10 +146,7 @@
                                     Text="1">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="1"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="1" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
 
@@ -177,10 +158,7 @@
                                     Text="2">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="2"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="2" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
 
@@ -192,13 +170,10 @@
                                     Text="3">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="3"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="3" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
-                            </menusAndToolbars:AdaptiveMenuFlyout>
+                            </MenuFlyout>
                         </DropDownButton.Flyout>
                     </DropDownButton>
                 </Grid>
@@ -230,14 +205,11 @@
                         Content="{x:Bind ViewModel.DownloadMode.DisplayName, Mode=OneWay}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip
-                                Content="{x:Bind ViewModel.DownloadMode.DisplayName, Mode=OneWay}"
-                                Placement="Bottom"
-                                VerticalOffset="20" />
+                            <ToolTip Content="{x:Bind ViewModel.DownloadMode.DisplayName, Mode=OneWay}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
 
                         <DropDownButton.Flyout>
-                            <menusAndToolbars:AdaptiveMenuFlyout>
+                            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                                 <RadioMenuFlyoutItem
                                     Click="{x:Bind ViewModel.OnDownloadModeSelectClicked}"
                                     GroupName="DownloadModeSetting"
@@ -246,10 +218,7 @@
                                     Text="{x:Bind ViewModel.DownloadModeList[0].DisplayName}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind ViewModel.DownloadModeList[0].DisplayName}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind ViewModel.DownloadModeList[0].DisplayName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
 
@@ -261,13 +230,10 @@
                                     Text="{x:Bind ViewModel.DownloadModeList[1].DisplayName}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            Content="{x:Bind ViewModel.DownloadModeList[1].DisplayName}"
-                                            Placement="Bottom"
-                                            VerticalOffset="20" />
+                                        <ToolTip Content="{x:Bind ViewModel.DownloadModeList[1].DisplayName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
-                            </menusAndToolbars:AdaptiveMenuFlyout>
+                            </MenuFlyout>
                         </DropDownButton.Flyout>
                     </DropDownButton>
                 </Grid>

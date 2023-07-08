@@ -50,10 +50,7 @@
         Content="{x:Bind root:ResourceService.GetLocalized('Settings/WindowsNotificationSettings')}">
 
         <ToolTipService.ToolTip>
-            <ToolTip
-                Content="{x:Bind root:ResourceService.GetLocalized('Settings/WindowsNotificationSettings')}"
-                Placement="Bottom"
-                VerticalOffset="25" />
+            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/WindowsNotificationSettings')}" Placement="Mouse" />
         </ToolTipService.ToolTip>
     </HyperlinkButton>
 

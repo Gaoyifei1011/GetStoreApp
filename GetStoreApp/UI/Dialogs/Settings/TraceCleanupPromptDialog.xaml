@@ -52,10 +52,7 @@
                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsCleanFailed), Mode=OneWay}">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        Content="{x:Bind CleanFailedText}"
-                                        Placement="Bottom"
-                                        VerticalOffset="20" />
+                                    <ToolTip Content="{x:Bind CleanFailedText}" Placement="Mouse" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
                         </ContentControl>

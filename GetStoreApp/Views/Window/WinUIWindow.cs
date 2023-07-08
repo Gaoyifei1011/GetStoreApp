@@ -18,15 +18,6 @@ namespace GetStoreApp.Views.Window
         }
 
         /// <summary>
-        /// 是否扩展内容到标题栏
-        /// </summary>
-        public new bool ExtendsContentIntoTitleBar
-        {
-            get => base.ExtendsContentIntoTitleBar;
-            set => base.ExtendsContentIntoTitleBar = value;
-        }
-
-        /// <summary>
         /// 窗口类参与数据绑定时的数据上下文
         /// </summary>
         public object DataContext { get; set; }

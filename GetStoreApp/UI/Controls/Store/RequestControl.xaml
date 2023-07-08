@@ -5,7 +5,6 @@
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:menusAndToolbars="using:GetStoreApp.Views.CustomControls.MenusAndToolbars"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:storeViewModel="using:GetStoreApp.ViewModels.Controls.Store"
     ColumnSpacing="6"
@@ -28,14 +27,11 @@
         Content="{x:Bind ViewModel.SelectedType.DisplayName, Mode=OneWay}">
 
         <ToolTipService.ToolTip>
-            <ToolTip
-                Content="{x:Bind ViewModel.SelectedType.DisplayName, Mode=OneWay}"
-                Placement="Bottom"
-                VerticalOffset="20" />
+            <ToolTip Content="{x:Bind ViewModel.SelectedType.DisplayName, Mode=OneWay}" Placement="Mouse" />
         </ToolTipService.ToolTip>
 
         <DropDownButton.Flyout>
-            <menusAndToolbars:AdaptiveMenuFlyout>
+            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                 <RadioMenuFlyoutItem
                     Click="{x:Bind ViewModel.OnTypeSelectClicked}"
                     GroupName="TypeSelect"
@@ -44,10 +40,7 @@
                     Text="{x:Bind ViewModel.TypeList[0].DisplayName}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind ViewModel.TypeList[0].DisplayName}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind ViewModel.TypeList[0].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </RadioMenuFlyoutItem>
 
@@ -59,10 +52,7 @@
                     Text="{x:Bind ViewModel.TypeList[1].DisplayName}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind ViewModel.TypeList[1].DisplayName}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind ViewModel.TypeList[1].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </RadioMenuFlyoutItem>
 
@@ -74,10 +64,7 @@
                     Text="{x:Bind ViewModel.TypeList[2].DisplayName}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind ViewModel.TypeList[2].DisplayName}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind ViewModel.TypeList[2].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </RadioMenuFlyoutItem>
 
@@ -89,13 +76,10 @@
                     Text="{x:Bind ViewModel.TypeList[3].DisplayName}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind ViewModel.TypeList[3].DisplayName}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind ViewModel.TypeList[3].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </RadioMenuFlyoutItem>
-            </menusAndToolbars:AdaptiveMenuFlyout>
+            </MenuFlyout>
         </DropDownButton.Flyout>
     </DropDownButton>
 
@@ -105,14 +89,11 @@
         Content="{x:Bind ViewModel.SelectedChannel.DisplayName, Mode=OneWay}">
 
         <ToolTipService.ToolTip>
-            <ToolTip
-                Content="{x:Bind ViewModel.SelectedChannel.DisplayName, Mode=OneWay}"
-                Placement="Bottom"
-                VerticalOffset="20" />
+            <ToolTip Content="{x:Bind ViewModel.SelectedChannel.DisplayName, Mode=OneWay}" Placement="Mouse" />
         </ToolTipService.ToolTip>
 
         <DropDownButton.Flyout>
-            <menusAndToolbars:AdaptiveMenuFlyout>
+            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                 <RadioMenuFlyoutItem
                     Click="{x:Bind ViewModel.OnChannelSelectClicked}"
                     GroupName="ChannelSelect"
@@ -121,10 +102,7 @@
                     Text="{x:Bind ViewModel.ChannelList[0].DisplayName}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind ViewModel.ChannelList[0].DisplayName}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind ViewModel.ChannelList[0].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </RadioMenuFlyoutItem>
 
@@ -136,10 +114,7 @@
                     Text="{x:Bind ViewModel.ChannelList[1].DisplayName}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind ViewModel.ChannelList[1].DisplayName}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind ViewModel.ChannelList[1].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </RadioMenuFlyoutItem>
 
@@ -151,10 +126,7 @@
                     Text="{x:Bind ViewModel.ChannelList[2].DisplayName}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind ViewModel.ChannelList[2].DisplayName}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind ViewModel.ChannelList[2].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </RadioMenuFlyoutItem>
 
@@ -166,13 +138,10 @@
                     Text="{x:Bind ViewModel.ChannelList[3].DisplayName}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind ViewModel.ChannelList[3].DisplayName}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind ViewModel.ChannelList[3].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </RadioMenuFlyoutItem>
-            </menusAndToolbars:AdaptiveMenuFlyout>
+            </MenuFlyout>
         </DropDownButton.Flyout>
     </DropDownButton>
 
@@ -194,10 +163,7 @@
         Style="{StaticResource AccentButtonStyle}">
 
         <ToolTipService.ToolTip>
-            <ToolTip
-                Content="{x:Bind root:ResourceService.GetLocalized('Store/GetLinks')}"
-                Placement="Bottom"
-                VerticalOffset="20" />
+            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/GetLinks')}" Placement="Mouse" />
         </ToolTipService.ToolTip>
     </Button>
 </Grid>

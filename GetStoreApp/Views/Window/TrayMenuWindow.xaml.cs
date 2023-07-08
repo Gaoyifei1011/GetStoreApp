@@ -1,12 +1,11 @@
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Controls.Settings.Appearance;
-using GetStoreApp.WindowsAPI.PInvoke.DwmApi;
-using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Windowing;
 using System;
 using System.Runtime.InteropServices;
 using Windows.Graphics;
+using WinRT;
 using WinRT.Interop;
 
 namespace GetStoreApp.Views.Window
@@ -25,6 +24,7 @@ namespace GetStoreApp.Views.Window
         {
             InitializeComponent();
             Handle = WindowNative.GetWindowHandle(this);
+            TrayMenuFlyout.XamlRoot = Content.XamlRoot;
         }
 
         public void InitializeWindow()
@@ -32,105 +32,13 @@ namespace GetStoreApp.Views.Window
             newWndProc = new WNDPROC(NewWindowProc);
             oldWndProc = SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newWndProc));
 
-            int setValue = 0;
-            int setResult = DwmApiLibrary.DwmSetWindowAttribute(Program.ApplicationRoot.TrayMenuWindow.Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, ref setValue, Marshal.SizeOf<int>());
-            if (setResult is not 0)
-            {
-                DwmApiLibrary.DwmSetWindowAttribute(Program.ApplicationRoot.TrayMenuWindow.Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE_OLD, ref setValue, Marshal.SizeOf<int>());
-            }
-
-            // 使用重叠的配置显示应用窗口。
-            OverlappedPresenter presenter = OverlappedPresenter.CreateForContextMenu();
-            presenter.IsAlwaysOnTop = true;
-            AppWindow.SetPresenter(presenter);
-
-            // 设置窗口扩展样式为工具窗口
+            unchecked { SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_STYLE, (IntPtr)WindowStyle.WS_POPUPWINDOW); }
             SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_EXSTYLE, (IntPtr)WindowStyleEx.WS_EX_TOOLWINDOW);
 
-            AppWindow.MoveAndResize(new RectInt32(0, 0, 0, 0));
+            // 调整窗口的大小
+            AppWindow.MoveAndResize(new RectInt32(-1, -1, 1, 1));
+            AppWindow.Presenter.As<OverlappedPresenter>().IsAlwaysOnTop = true;
             AppWindow.Show();
-            AppWindow.Hide();
-        }
-
-        /// <summary>
-        /// 设置窗口的位置
-        /// </summary>
-        public void SetWindowPosition(APPBARDATA appbarData, MONITORINFO monitorInfo, PointInt32 windowPos)
-        {
-            switch (appbarData.uEdge)
-            {
-                // 任务栏位置在屏幕左侧
-                // 此时只需要判断窗口底部是否超过屏幕的底部边界
-                case AppBarEdge.ABE_LEFT:
-                    {
-                        bool outofScreen = windowPos.Y + AppWindow.Size.Height > monitorInfo.rcMonitor.bottom;
-                        if (outofScreen)
-                        {
-                            AppWindow.Move(new PointInt32(windowPos.X, windowPos.Y - AppWindow.Size.Height));
-                        }
-                        else
-                        {
-                            AppWindow.Move(new PointInt32(windowPos.X, windowPos.Y));
-                        }
-                        break;
-                    }
-                // 任务栏位置在屏幕顶部
-                // 此时只需判断窗口右侧是否超过屏幕的右侧边界
-                case AppBarEdge.ABE_TOP:
-                    {
-                        bool outofScreen = windowPos.X + AppWindow.Size.Width > monitorInfo.rcMonitor.right;
-                        if (outofScreen)
-                        {
-                            AppWindow.Move(new PointInt32(windowPos.X - AppWindow.Size.Width, windowPos.Y));
-                        }
-                        else
-                        {
-                            AppWindow.Move(new PointInt32(windowPos.X, windowPos.Y));
-                        }
-                        break;
-                    }
-                // 任务栏位置在屏幕右侧
-                // 此时只需要判断窗口底部是否超过屏幕的底部边界
-                case AppBarEdge.ABE_RIGHT:
-                    {
-                        bool outofScreen = windowPos.Y + AppWindow.Size.Height > monitorInfo.rcMonitor.bottom;
-                        if (outofScreen)
-                        {
-                            AppWindow.Move(new PointInt32(windowPos.X - AppWindow.Size.Width, windowPos.Y - AppWindow.Size.Height));
-                        }
-                        else
-                        {
-                            AppWindow.Move(new PointInt32(windowPos.X - AppWindow.Size.Width, windowPos.Y));
-                        }
-                        break;
-                    }
-                // 任务栏位置在屏幕底部
-                // 此时只需判断窗口右侧是否超过屏幕的右侧边界
-                case AppBarEdge.ABE_BOTTOM:
-                    {
-                        bool outofScreen = windowPos.X + AppWindow.Size.Width > monitorInfo.rcMonitor.right;
-                        if (outofScreen)
-                        {
-                            AppWindow.Move(new PointInt32(windowPos.X - AppWindow.Size.Width, windowPos.Y - AppWindow.Size.Height));
-                        }
-                        else
-                        {
-                            AppWindow.Move(new PointInt32(windowPos.X, windowPos.Y - AppWindow.Size.Height));
-                        }
-                    }
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// 调整窗口的大小
-        /// </summary>
-        public void SetWindowSize()
-        {
-            AppWindow.Resize(new SizeInt32(
-                DPICalcHelper.ConvertEpxToPixel(Program.ApplicationRoot.TrayIcon.Handle, Convert.ToInt32(TrayMenuFlyout.ActualWidth) + 2),
-                DPICalcHelper.ConvertEpxToPixel(Program.ApplicationRoot.TrayIcon.Handle, Convert.ToInt32(TrayMenuFlyout.ActualHeight) + 2)
-                ));
         }
 
         /// <summary>

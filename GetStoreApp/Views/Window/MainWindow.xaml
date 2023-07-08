@@ -57,10 +57,7 @@
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind root:ResourceService.GetLocalized('Window/Store')}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Store')}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
@@ -74,10 +71,7 @@
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
@@ -91,10 +85,7 @@
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind root:ResourceService.GetLocalized('Window/History')}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/History')}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
@@ -108,10 +99,7 @@
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind root:ResourceService.GetLocalized('Window/Download')}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Download')}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
@@ -125,10 +113,7 @@
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind root:ResourceService.GetLocalized('Window/Web')}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Web')}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
@@ -144,10 +129,7 @@
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind root:ResourceService.GetLocalized('Window/About')}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/About')}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
@@ -161,10 +143,7 @@
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
-                        <ToolTip
-                            Content="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}"
-                            Placement="Bottom"
-                            VerticalOffset="20" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
             </NavigationView.FooterMenuItems>
