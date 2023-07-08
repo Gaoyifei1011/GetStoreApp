@@ -6,14 +6,11 @@ using GetStoreApp.Services.Window;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.Dialogs;
-using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using Windows.Storage;
-using Windows.Storage.Pickers;
-using WinRT.Interop;
 
 namespace GetStoreApp.ViewModels.Controls.Settings.Common
 {
@@ -93,41 +90,18 @@ namespace GetStoreApp.ViewModels.Controls.Settings.Common
         /// </summary>
         public async void OnChangeFolderClicked(object sender, RoutedEventArgs args)
         {
-            if (Shell32Library.IsUserAnAdmin())
+            FolderPickerDialog dialog = new FolderPickerDialog()
             {
-                FolderPickerDialog dialog = new FolderPickerDialog()
-                {
-                    Title = ResourceService.GetLocalized("Settings/SelectFolder"),
-                    Path = DownloadFolder.Path
-                };
+                Title = ResourceService.GetLocalized("Settings/SelectFolder"),
+                Path = DownloadFolder.Path
+            };
 
-                bool Result = dialog.ShowDialog(Program.ApplicationRoot.MainWindow.Handle);
+            bool Result = dialog.ShowDialog(Program.ApplicationRoot.MainWindow.Handle);
 
-                if (Result)
-                {
-                    DownloadFolder = await StorageFolder.GetFolderFromPathAsync(dialog.Path);
-                    await DownloadOptionsService.SetFolderAsync(DownloadFolder);
-                }
-            }
-            else
+            if (Result)
             {
-                try
-                {
-                    FolderPicker folderPicker = new FolderPicker();
-                    folderPicker.SuggestedStartLocation = PickerLocationId.Downloads;
-                    InitializeWithWindow.Initialize(folderPicker, Program.ApplicationRoot.MainWindow.Handle);
-                    StorageFolder folder = await folderPicker.PickSingleFolderAsync();
-
-                    if (folder is not null)
-                    {
-                        DownloadFolder = folder;
-                        await DownloadOptionsService.SetFolderAsync(folder);
-                    }
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LogType.ERROR, "Change download save folder failed", e);
-                }
+                DownloadFolder = await StorageFolder.GetFolderFromPathAsync(dialog.Path);
+                await DownloadOptionsService.SetFolderAsync(DownloadFolder);
             }
         }
 

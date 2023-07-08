@@ -13,14 +13,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         private const string Shell32 = "shell32.dll";
 
         /// <summary>
-        /// 测试当前用户是否是管理员组的成员。
-        /// </summary>
-        /// <returns>如果用户是管理员组的成员，则返回 TRUE ;否则为 FALSE。</returns>
-        [LibraryImport(Shell32, EntryPoint = "IsUserAnAdmin", SetLastError = false)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool IsUserAnAdmin();
-
-        /// <summary>
         /// 将应用栏消息发送到系统。
         /// </summary>
         /// <param name="dwMessage">要发送的 Appbar 消息值。</param>
