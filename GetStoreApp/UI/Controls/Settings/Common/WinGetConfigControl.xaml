@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:dialogsAndFlyouts="using:GetStoreApp.Views.CustomControls.DialogsAndFlyouts"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Common"
@@ -81,101 +80,106 @@
 
                     <Button Grid.Column="1" Content="{x:Bind root:ResourceService.GetLocalized('Settings/ShowVersion')}">
                         <Button.Flyout>
-                            <dialogsAndFlyouts:AdaptiveFlyout Placement="Bottom">
-                                <StackPanel Width="250" Padding="16,15,16,10">
-                                    <Grid Margin="0,0,0,8">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
+                            <Flyout
+                                FlyoutPresenterStyle="{StaticResource FlyoutPresenterStyle}"
+                                Placement="Bottom"
+                                ShouldConstrainToRootBounds="False">
+                                <FlyoutPresenter Padding="0">
+                                    <StackPanel Width="250" Padding="16,15,16,10">
+                                        <Grid Margin="0,0,0,8">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
 
-                                        <TextBlock
-                                            Grid.Column="0"
-                                            VerticalAlignment="Center"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/OfficialVersion')}" />
-                                        <TextBlock
-                                            x:Name="OfficialVersionInstalledText"
-                                            Grid.Column="1"
-                                            VerticalAlignment="Center"
-                                            x:Load="{x:Bind ViewModel.IsOfficialVersionExisted}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/OfficialVersionInstalled')}" />
-                                        <HyperlinkButton
-                                            x:Name="OfficialVersionInstall"
-                                            Grid.Column="1"
-                                            HorizontalAlignment="Right"
-                                            x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(ViewModel.IsOfficialVersionExisted), Mode=OneWay}"
-                                            Click="{x:Bind ViewModel.OnOfficialVersionInstallClicked}"
-                                            Content="{x:Bind root:ResourceService.GetLocalized('Settings/OfficialVersionInstall')}"
-                                            Style="{StaticResource HyperlinkButtonStyle}">
+                                            <TextBlock
+                                                Grid.Column="0"
+                                                VerticalAlignment="Center"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/OfficialVersion')}" />
+                                            <TextBlock
+                                                x:Name="OfficialVersionInstalledText"
+                                                Grid.Column="1"
+                                                VerticalAlignment="Center"
+                                                x:Load="{x:Bind ViewModel.IsOfficialVersionExisted}"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/OfficialVersionInstalled')}" />
+                                            <HyperlinkButton
+                                                x:Name="OfficialVersionInstall"
+                                                Grid.Column="1"
+                                                HorizontalAlignment="Right"
+                                                x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(ViewModel.IsOfficialVersionExisted), Mode=OneWay}"
+                                                Click="{x:Bind ViewModel.OnOfficialVersionInstallClicked}"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/OfficialVersionInstall')}"
+                                                Style="{StaticResource HyperlinkButtonStyle}">
 
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/OfficialVersionInstallToolTip')}" Placement="Mouse" />
-                                            </ToolTipService.ToolTip>
-                                        </HyperlinkButton>
-                                    </Grid>
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/OfficialVersionInstallToolTip')}" Placement="Mouse" />
+                                                </ToolTipService.ToolTip>
+                                            </HyperlinkButton>
+                                        </Grid>
 
-                                    <Grid Margin="0,0,0,8">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
+                                        <Grid Margin="0,0,0,8">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
 
-                                        <TextBlock
-                                            Grid.Column="0"
-                                            VerticalAlignment="Center"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/DevVersion')}" />
-                                        <TextBlock
-                                            x:Name="DevVersionInstalledText"
-                                            Grid.Column="1"
-                                            VerticalAlignment="Center"
-                                            x:Load="{x:Bind ViewModel.IsDevVersionExisted}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/DevVersionInstalled')}" />
-                                        <HyperlinkButton
-                                            x:Name="DevVersionInstall"
-                                            Grid.Column="1"
-                                            HorizontalAlignment="Right"
-                                            x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(ViewModel.IsDevVersionExisted), Mode=OneWay}"
-                                            Click="{x:Bind ViewModel.OnDevVersionInstallClicked}"
-                                            Content="{x:Bind root:ResourceService.GetLocalized('Settings/DevVersionInstall')}"
-                                            Style="{StaticResource HyperlinkButtonStyle}">
+                                            <TextBlock
+                                                Grid.Column="0"
+                                                VerticalAlignment="Center"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/DevVersion')}" />
+                                            <TextBlock
+                                                x:Name="DevVersionInstalledText"
+                                                Grid.Column="1"
+                                                VerticalAlignment="Center"
+                                                x:Load="{x:Bind ViewModel.IsDevVersionExisted}"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/DevVersionInstalled')}" />
+                                            <HyperlinkButton
+                                                x:Name="DevVersionInstall"
+                                                Grid.Column="1"
+                                                HorizontalAlignment="Right"
+                                                x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(ViewModel.IsDevVersionExisted), Mode=OneWay}"
+                                                Click="{x:Bind ViewModel.OnDevVersionInstallClicked}"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/DevVersionInstall')}"
+                                                Style="{StaticResource HyperlinkButtonStyle}">
 
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/DevVersionInstallToolTip')}" Placement="Mouse" />
-                                            </ToolTipService.ToolTip>
-                                        </HyperlinkButton>
-                                    </Grid>
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/DevVersionInstallToolTip')}" Placement="Mouse" />
+                                                </ToolTipService.ToolTip>
+                                            </HyperlinkButton>
+                                        </Grid>
 
-                                    <MenuFlyoutSeparator
-                                        x:Name="FlyoutSeperator"
-                                        x:Load="{x:Bind IsBothVersionExisted(ViewModel.IsOfficialVersionExisted, ViewModel.IsDevVersionExisted)}"
-                                        Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />
+                                        <MenuFlyoutSeparator
+                                            x:Name="FlyoutSeperator"
+                                            x:Load="{x:Bind IsBothVersionExisted(ViewModel.IsOfficialVersionExisted, ViewModel.IsDevVersionExisted)}"
+                                            Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />
 
-                                    <Grid x:Name="WinGetVersionSwitch" x:Load="{x:Bind IsBothVersionExisted(ViewModel.IsOfficialVersionExisted, ViewModel.IsDevVersionExisted)}">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
+                                        <Grid x:Name="WinGetVersionSwitch" x:Load="{x:Bind IsBothVersionExisted(ViewModel.IsOfficialVersionExisted, ViewModel.IsDevVersionExisted)}">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
 
-                                        <TextBlock
-                                            Grid.Column="0"
-                                            VerticalAlignment="Center"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/UseDevFirst')}">
+                                            <TextBlock
+                                                Grid.Column="0"
+                                                VerticalAlignment="Center"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/UseDevFirst')}">
 
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/UseDevFirstToolTip')}" Placement="Mouse" />
-                                            </ToolTipService.ToolTip>
-                                        </TextBlock>
-                                        <ToggleSwitch
-                                            Grid.Column="1"
-                                            MinWidth="0"
-                                            FlowDirection="RightToLeft"
-                                            IsOn="{x:Bind ViewModel.UseDevVersion, Mode=OneWay}"
-                                            OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/UseDevFirstOffContent')}"
-                                            OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/UseDevFirstOnContent')}"
-                                            Toggled="{x:Bind ViewModel.OnToggled}" />
-                                    </Grid>
-                                </StackPanel>
-                            </dialogsAndFlyouts:AdaptiveFlyout>
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/UseDevFirstToolTip')}" Placement="Mouse" />
+                                                </ToolTipService.ToolTip>
+                                            </TextBlock>
+                                            <ToggleSwitch
+                                                Grid.Column="1"
+                                                MinWidth="0"
+                                                FlowDirection="RightToLeft"
+                                                IsOn="{x:Bind ViewModel.UseDevVersion, Mode=OneWay}"
+                                                OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/UseDevFirstOffContent')}"
+                                                OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/UseDevFirstOnContent')}"
+                                                Toggled="{x:Bind ViewModel.OnToggled}" />
+                                        </Grid>
+                                    </StackPanel>
+                                </FlyoutPresenter>
+                            </Flyout>
                         </Button.Flyout>
 
                         <ToolTipService.ToolTip>

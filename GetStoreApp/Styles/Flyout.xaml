@@ -2,19 +2,37 @@
 
     <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter" />
 
-    <Style
-        x:Key="AdaptiveFlyoutLightPresenterStyle"
-        BasedOn="{StaticResource DefaultFlyoutPresenterStyle}"
-        TargetType="FlyoutPresenter">
+    <Style x:Key="FlyoutPresenterStyle" TargetType="FlyoutPresenter">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="IsTabStop" Value="False" />
+        <!--  修改浮出控件的默认背景  -->
+        <Setter Property="Background" Value="{ThemeResource AcrylicInAppFillColorDefaultBrush}" />
+        <Setter Property="BorderBrush" Value="{ThemeResource FlyoutBorderThemeBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="0" />
-        <Setter Property="RequestedTheme" Value="Light" />
-    </Style>
-
-    <Style
-        x:Key="AdaptiveFlyoutDarkPresenterStyle"
-        BasedOn="{StaticResource DefaultFlyoutPresenterStyle}"
-        TargetType="FlyoutPresenter">
-        <Setter Property="Padding" Value="0" />
-        <Setter Property="RequestedTheme" Value="Dark" />
+        <Setter Property="MinWidth" Value="{ThemeResource FlyoutThemeMinWidth}" />
+        <Setter Property="MaxWidth" Value="{ThemeResource FlyoutThemeMaxWidth}" />
+        <Setter Property="MinHeight" Value="{ThemeResource FlyoutThemeMinHeight}" />
+        <Setter Property="MaxHeight" Value="{ThemeResource FlyoutThemeMaxHeight}" />
+        <Setter Property="CornerRadius" Value="{ThemeResource OverlayCornerRadius}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="FlyoutPresenter">
+                    <ContentPresenter
+                        Margin="{TemplateBinding Padding}"
+                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                        Background="{TemplateBinding Background}"
+                        BackgroundSizing="InnerBorderEdge"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        ContentTransitions="{TemplateBinding ContentTransitions}"
+                        CornerRadius="{TemplateBinding CornerRadius}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>

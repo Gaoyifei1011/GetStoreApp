@@ -208,7 +208,6 @@
                 ScrollViewer.VerticalScrollBarVisibility="Auto"
                 ScrollViewer.VerticalScrollMode="Enabled"
                 SelectionMode="None"
-                Style="{StaticResource ListViewStyle}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(ViewModel.SearchAppsDataList.Count), Mode=OneWay}">
 
                 <ListView.ItemTemplate>

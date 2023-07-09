@@ -584,7 +584,6 @@
                     ScrollViewer.VerticalScrollBarVisibility="Auto"
                     ScrollViewer.VerticalScrollMode="Enabled"
                     SelectionMode="None"
-                    Style="{StaticResource ListViewStyle}"
                     Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(ViewModel.IsHistoryEmptyAfterFilter), Mode=OneWay}">
 
                     <ListView.ItemTemplate>
@@ -608,13 +607,13 @@
                                 <CheckBox
                                     Grid.Column="0"
                                     Width="50"
+                                    MinWidth="0"
                                     Margin="10,0,0,0"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     controlExtensions:CursorHelper.Cursor="Hand"
                                     IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
                                     IsThreeState="False"
-                                    Style="{StaticResource CheckBoxStyle}"
                                     Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsSelectMode), Mode=OneWay}">
 
                                     <ToolTipService.ToolTip>

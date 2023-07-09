@@ -1,7 +1,8 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="MenuFlyoutPresenterStyle" TargetType="MenuFlyoutPresenter">
-        <Setter Property="Background" Value="{ThemeResource CardStrokeColorDefaultSolidBrush}" />
+        <!--  修改菜单浮出控件的默认背景  -->
+        <Setter Property="Background" Value="{ThemeResource AcrylicInAppFillColorDefaultBrush}" />
         <Setter Property="BorderBrush" Value="{ThemeResource MenuFlyoutPresenterBorderBrush}" />
         <Setter Property="BorderThickness" Value="{ThemeResource MenuFlyoutPresenterBorderThemeThickness}" />
         <Setter Property="Margin" Value="0" />

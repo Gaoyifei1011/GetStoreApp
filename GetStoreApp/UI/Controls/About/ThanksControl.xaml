@@ -37,9 +37,15 @@
                 BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}"
                 BorderThickness="1"
                 CornerRadius="{ThemeResource ControlCornerRadius}"
-                ItemContainerStyle="{StaticResource GridViewItemStyle}"
                 ItemsSource="{x:Bind ViewModel.ThanksList}"
                 SelectionMode="None">
+
+                <GridView.ItemContainerStyle>
+                    <Style TargetType="GridViewItem">
+                        <Setter Property="Margin" Value="0" />
+                        <Setter Property="MinHeight" Value="0" />
+                    </Style>
+                </GridView.ItemContainerStyle>
 
                 <GridView.ItemTemplate>
                     <DataTemplate x:DataType="model:KeyValuePairModel">

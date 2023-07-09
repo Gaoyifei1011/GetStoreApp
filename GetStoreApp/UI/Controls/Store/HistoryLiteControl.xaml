@@ -71,7 +71,6 @@
                 ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
                 ItemsSource="{x:Bind ViewModel.HistoryLiteDataList, Mode=OneWay}"
                 SelectionMode="None"
-                Style="{StaticResource ListViewStyle}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(ViewModel.HistoryLiteDataList.Count), Mode=OneWay}">
 
                 <ItemsControl.ItemContainerTransitions>

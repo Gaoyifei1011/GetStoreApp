@@ -28,8 +28,7 @@
         <ListView
             ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
             ItemsSource="{x:Bind ViewModel.TraceCleanupList}"
-            SelectionMode="None"
-            Style="{StaticResource ListViewStyle}">
+            SelectionMode="None">
 
             <ItemsControl.ItemContainerTransitions>
                 <TransitionCollection />

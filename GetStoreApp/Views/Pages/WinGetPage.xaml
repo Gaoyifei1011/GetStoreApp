@@ -61,101 +61,105 @@
                     </Button.Content>
 
                     <Button.Flyout>
-                        <dialogsAndFlyouts:AdaptiveFlyout Placement="Bottom" ShouldConstrainToRootBounds="False">
-                            <Grid x:Name="TaskManagerFlyout" DataContext="{x:Bind WinGetRoot.DataContext}">
-                                <Grid
-                                    Width="300"
-                                    Height="100"
-                                    Padding="20"
-                                    Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(ViewModel.InstallingAppsList.Count), Mode=OneWay}">
-                                    <TextBlock
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallingAppsListEmpty')}"
-                                        TextAlignment="Center"
-                                        TextWrapping="WrapWholeWords" />
-                                </Grid>
-                                <ListView
-                                    Width="300"
-                                    Height="200"
-                                    ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
-                                    ItemsSource="{x:Bind ViewModel.InstallingAppsList, Mode=OneWay}"
-                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                    ScrollViewer.HorizontalScrollMode="Disabled"
-                                    ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                    ScrollViewer.VerticalScrollMode="Enabled"
-                                    SelectionMode="None"
-                                    Style="{StaticResource ListViewStyle}"
-                                    Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(ViewModel.InstallingAppsList.Count), Mode=OneWay}">
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate x:DataType="model:InstallingAppsModel">
-                                            <Grid
-                                                Height="60"
-                                                Margin="2,0"
-                                                Style="{StaticResource CardGridStyle}">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                </Grid.ColumnDefinitions>
-
-                                                <ToolTipService.ToolTip>
-                                                    <ToolTip Content="{x:Bind InstallToolTip(AppName, InstallProgressState, DownloadProgress, DownloadedFileSize, TotalFileSize), Mode=OneWay}" Placement="Mouse" />
-                                                </ToolTipService.ToolTip>
-
-                                                <Grid Grid.Column="0" VerticalAlignment="Center">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="Auto" />
-                                                        <RowDefinition Height="Auto" />
-                                                    </Grid.RowDefinitions>
-
-                                                    <Grid Grid.Row="0" Margin="0,0,0,5">
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="*" />
-                                                            <ColumnDefinition Width="Auto" />
-                                                        </Grid.ColumnDefinitions>
-
-                                                        <TextBlock
-                                                            Grid.Column="0"
-                                                            FontSize="16"
-                                                            Style="{StaticResource CardTextStyle}"
-                                                            Text="{x:Bind AppName}" />
-
-                                                        <TextBlock
-                                                            Grid.Column="1"
-                                                            FontSize="16"
-                                                            Style="{StaticResource CardTextStyle}"
-                                                            Text="{x:Bind GetDownloadProgress(DownloadProgress), Mode=OneWay}"
-                                                            TextAlignment="Right" />
-                                                    </Grid>
-
-                                                    <ProgressBar
-                                                        Grid.Row="1"
-                                                        IsIndeterminate="{x:Bind IsDownloading(InstallProgressState), Mode=OneWay}"
-                                                        Value="{x:Bind DownloadProgress, Mode=OneWay}" />
-                                                </Grid>
-
-                                                <HyperlinkButton
-                                                    Grid.Column="1"
-                                                    Margin="10,0,0,0"
-                                                    HorizontalAlignment="Center"
-                                                    VerticalAlignment="Center"
-                                                    Command="{Binding ElementName=TaskManagerFlyout, Path=DataContext.CancelInstallCommand, Mode=OneTime}"
-                                                    CommandParameter="{x:Bind AppID}"
-                                                    Style="{StaticResource ExperimentalHyperlinkButtonStyle}">
-                                                    <HyperlinkButton.Content>
-                                                        <FontIcon FontSize="16" Glyph="&#xE711;" />
-                                                    </HyperlinkButton.Content>
+                        <Flyout
+                            FlyoutPresenterStyle="{StaticResource FlyoutPresenterStyle}"
+                            Placement="Bottom"
+                            ShouldConstrainToRootBounds="False">
+                            <FlyoutPresenter Padding="0">
+                                <Grid x:Name="TaskManagerFlyout" DataContext="{x:Bind WinGetRoot.DataContext}">
+                                    <Grid
+                                        Width="300"
+                                        Height="100"
+                                        Padding="20"
+                                        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(ViewModel.InstallingAppsList.Count), Mode=OneWay}">
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallingAppsListEmpty')}"
+                                            TextAlignment="Center"
+                                            TextWrapping="WrapWholeWords" />
+                                    </Grid>
+                                    <ListView
+                                        Width="300"
+                                        Height="200"
+                                        ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
+                                        ItemsSource="{x:Bind ViewModel.InstallingAppsList, Mode=OneWay}"
+                                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                        ScrollViewer.HorizontalScrollMode="Disabled"
+                                        ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                        ScrollViewer.VerticalScrollMode="Enabled"
+                                        SelectionMode="None"
+                                        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(ViewModel.InstallingAppsList.Count), Mode=OneWay}">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate x:DataType="model:InstallingAppsModel">
+                                                <Grid
+                                                    Height="60"
+                                                    Margin="2,0"
+                                                    Style="{StaticResource CardGridStyle}">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
 
                                                     <ToolTipService.ToolTip>
-                                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('WinGet/CancelInstalling')}" Placement="Mouse" />
+                                                        <ToolTip Content="{x:Bind InstallToolTip(AppName, InstallProgressState, DownloadProgress, DownloadedFileSize, TotalFileSize), Mode=OneWay}" Placement="Mouse" />
                                                     </ToolTipService.ToolTip>
-                                                </HyperlinkButton>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-                            </Grid>
-                        </dialogsAndFlyouts:AdaptiveFlyout>
+
+                                                    <Grid Grid.Column="0" VerticalAlignment="Center">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="Auto" />
+                                                        </Grid.RowDefinitions>
+
+                                                        <Grid Grid.Row="0" Margin="0,0,0,5">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*" />
+                                                                <ColumnDefinition Width="Auto" />
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <TextBlock
+                                                                Grid.Column="0"
+                                                                FontSize="16"
+                                                                Style="{StaticResource CardTextStyle}"
+                                                                Text="{x:Bind AppName}" />
+
+                                                            <TextBlock
+                                                                Grid.Column="1"
+                                                                FontSize="16"
+                                                                Style="{StaticResource CardTextStyle}"
+                                                                Text="{x:Bind GetDownloadProgress(DownloadProgress), Mode=OneWay}"
+                                                                TextAlignment="Right" />
+                                                        </Grid>
+
+                                                        <ProgressBar
+                                                            Grid.Row="1"
+                                                            IsIndeterminate="{x:Bind IsDownloading(InstallProgressState), Mode=OneWay}"
+                                                            Value="{x:Bind DownloadProgress, Mode=OneWay}" />
+                                                    </Grid>
+
+                                                    <HyperlinkButton
+                                                        Grid.Column="1"
+                                                        Margin="10,0,0,0"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Command="{Binding ElementName=TaskManagerFlyout, Path=DataContext.CancelInstallCommand, Mode=OneTime}"
+                                                        CommandParameter="{x:Bind AppID}"
+                                                        Style="{StaticResource ExperimentalHyperlinkButtonStyle}">
+                                                        <HyperlinkButton.Content>
+                                                            <FontIcon FontSize="16" Glyph="&#xE711;" />
+                                                        </HyperlinkButton.Content>
+
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('WinGet/CancelInstalling')}" Placement="Mouse" />
+                                                        </ToolTipService.ToolTip>
+                                                    </HyperlinkButton>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </Grid>
+                            </FlyoutPresenter>
+                        </Flyout>
                     </Button.Flyout>
                 </Button>
             </Pivot.RightHeader>

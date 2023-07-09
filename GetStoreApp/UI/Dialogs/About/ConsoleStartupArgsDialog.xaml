@@ -40,8 +40,7 @@
             Margin="0,0,0,5"
             ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
             ItemsSource="{x:Bind ViewModel.ConsoleStartupArgsList}"
-            SelectionMode="None"
-            Style="{StaticResource ListViewStyle}">
+            SelectionMode="None">
 
             <ItemsControl.ItemContainerTransitions>
                 <TransitionCollection />
