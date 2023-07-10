@@ -46,12 +46,11 @@
                                         <ControlTemplate TargetType="Button">
                                             <Grid x:Name="RootGrid" Background="Transparent">
                                                 <ContentPresenter
-                                                    xmlns:local="using:Microsoft.UI.Xaml.Controls"
                                                     x:Name="ContentPresenter"
                                                     Padding="{TemplateBinding Padding}"
                                                     HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                    local:AnimatedIcon.State="Normal"
+                                                    AnimatedIcon.State="Normal"
                                                     AutomationProperties.AccessibilityView="Raw"
                                                     BorderBrush="{TemplateBinding BorderBrush}"
                                                     BorderThickness="{TemplateBinding BorderThickness}"

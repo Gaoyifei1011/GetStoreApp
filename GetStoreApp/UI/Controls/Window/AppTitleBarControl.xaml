@@ -44,7 +44,6 @@
             <MenuFlyout
                 x:Name="TitlebarMenuFlyout"
                 x:FieldModifier="public"
-                AreOpenCloseAnimationsEnabled="False"
                 MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}"
                 Placement="BottomEdgeAlignedLeft">
 

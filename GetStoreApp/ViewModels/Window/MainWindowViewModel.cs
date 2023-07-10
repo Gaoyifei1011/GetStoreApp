@@ -10,7 +10,6 @@ using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.ViewModels.Base;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.Views.Window;
-using GetStoreApp.WindowsAPI.PInvoke.Uxtheme;
 using Microsoft.UI;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Dispatching;
@@ -262,13 +261,13 @@ namespace GetStoreApp.ViewModels.Window
                 {
                     if (Application.Current.RequestedTheme is ApplicationTheme.Light)
                     {
+                        WindowTheme = ElementTheme.Light;
                         SetTitleBarColor(ElementTheme.Light);
-                        SetTitleBarContextMenuColor(ElementTheme.Light);
                     }
                     else
                     {
+                        WindowTheme = ElementTheme.Dark;
                         SetTitleBarColor(ElementTheme.Dark);
-                        SetTitleBarContextMenuColor(ElementTheme.Dark);
                     }
                 }
             });
@@ -289,7 +288,7 @@ namespace GetStoreApp.ViewModels.Window
         /// </summary>
         public void OnFrameNavigationFailed(object sender, NavigationFailedEventArgs args)
         {
-            throw new ApplicationException(string.Format(ResourceService.GetLocalized("/Window/NavigationFailed"), args.SourcePageType.FullName));
+            throw new ApplicationException(string.Format(ResourceService.GetLocalized("Window/NavigationFailed"), args.SourcePageType.FullName));
         }
 
         /// <summary>
@@ -351,29 +350,25 @@ namespace GetStoreApp.ViewModels.Window
                 NavigationService.NavigateTo(typeof(StorePage));
                 IsBackEnabled = NavigationService.CanGoBack();
 
-                // 设置标题栏和窗口菜单的主题色
+                // 应用初次加载时设置标题栏和窗口菜单的主题色
                 if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[0].InternalName)
                 {
                     if (Application.Current.RequestedTheme is ApplicationTheme.Light)
                     {
                         SetTitleBarColor(ElementTheme.Light);
-                        SetTitleBarContextMenuColor(ElementTheme.Light);
                     }
                     else
                     {
                         SetTitleBarColor(ElementTheme.Dark);
-                        SetTitleBarContextMenuColor(ElementTheme.Dark);
                     }
                 }
                 if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[1].InternalName)
                 {
                     SetTitleBarColor(ElementTheme.Light);
-                    SetTitleBarContextMenuColor(ElementTheme.Light);
                 }
                 else if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[2].InternalName)
                 {
                     SetTitleBarColor(ElementTheme.Dark);
-                    SetTitleBarContextMenuColor(ElementTheme.Dark);
                 }
             }
         }
@@ -392,6 +387,7 @@ namespace GetStoreApp.ViewModels.Window
         /// </summary>
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
+            // 应用的主题值或窗口背景色值发生改变时设置标题栏的颜色
             if (args.PropertyName == nameof(WindowTheme) || args.PropertyName == nameof(SystemBackdrop))
             {
                 Program.ApplicationRoot.TrayMenuWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, SetWindowBackground);
@@ -400,23 +396,19 @@ namespace GetStoreApp.ViewModels.Window
                     if (Application.Current.RequestedTheme is ApplicationTheme.Light)
                     {
                         SetTitleBarColor(ElementTheme.Light);
-                        SetTitleBarContextMenuColor(ElementTheme.Light);
                     }
                     else
                     {
                         SetTitleBarColor(ElementTheme.Dark);
-                        SetTitleBarContextMenuColor(ElementTheme.Dark);
                     }
                 }
                 if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[1].InternalName)
                 {
                     SetTitleBarColor(ElementTheme.Light);
-                    SetTitleBarContextMenuColor(ElementTheme.Light);
                 }
                 else if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[2].InternalName)
                 {
                     SetTitleBarColor(ElementTheme.Dark);
-                    SetTitleBarContextMenuColor(ElementTheme.Dark);
                 }
             }
             else if (args.PropertyName == nameof(PaneDisplayMode))
@@ -451,7 +443,7 @@ namespace GetStoreApp.ViewModels.Window
         }
 
         /// <summary>
-        /// 设置应用的背景主题色和控件的背景色
+        /// 设置应用的背景色
         /// </summary>
         public void SetSystemBackdrop(string backdropName)
         {
@@ -546,23 +538,6 @@ namespace GetStoreApp.ViewModels.Window
                 titleBar.ButtonPressedForegroundColor = Colors.White;
                 titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
                 titleBar.ButtonInactiveForegroundColor = Colors.White;
-            }
-        }
-
-        /// <summary>
-        /// 设置标题栏右键菜单的主题色
-        /// </summary>
-        private void SetTitleBarContextMenuColor(ElementTheme theme)
-        {
-            if (theme == ElementTheme.Light)
-            {
-                UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceLight);
-                UxthemeLibrary.FlushMenuThemes();
-            }
-            else
-            {
-                UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceDark);
-                UxthemeLibrary.FlushMenuThemes();
             }
         }
     }

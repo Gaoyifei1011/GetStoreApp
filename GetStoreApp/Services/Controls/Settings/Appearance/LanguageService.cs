@@ -117,7 +117,6 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
             }
 
             await ConfigService.SaveSettingAsync(SettingsKey, language.InternalName);
-            ApplicationLanguages.PrimaryLanguageOverride = language.InternalName;
         }
     }
 }

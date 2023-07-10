@@ -123,7 +123,21 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// </summary>
         public static void SetWindowTheme()
         {
-            Program.ApplicationRoot.MainWindow.ViewModel.WindowTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme.InternalName);
+            if (AppTheme.InternalName == ThemeList[0].InternalName)
+            {
+                if (Application.Current.RequestedTheme == ApplicationTheme.Light)
+                {
+                    Program.ApplicationRoot.MainWindow.ViewModel.WindowTheme = ElementTheme.Light;
+                }
+                else
+                {
+                    Program.ApplicationRoot.MainWindow.ViewModel.WindowTheme = ElementTheme.Dark;
+                }
+            }
+            else
+            {
+                Program.ApplicationRoot.MainWindow.ViewModel.WindowTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme.InternalName);
+            }
         }
 
         /// <summary>

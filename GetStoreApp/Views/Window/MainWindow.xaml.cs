@@ -29,8 +29,11 @@ namespace GetStoreApp.Views.Window
     /// </summary>
     public sealed partial class MainWindow : WinUIWindow
     {
-        private WNDPROC newWndProc = null;
-        private IntPtr oldWndProc = IntPtr.Zero;
+        private WNDPROC newMainWindowWndProc = null;
+        private IntPtr oldMainWindowWndProc = IntPtr.Zero;
+
+        private WNDPROC newDragAreaWindowWndProc = null;
+        private IntPtr oldDragAreaWindowWndProc = IntPtr.Zero;
 
         public IntPtr Handle { get; }
 
@@ -42,9 +45,10 @@ namespace GetStoreApp.Views.Window
             Handle = WindowNative.GetWindowHandle(this);
             NavigationService.NavigationFrame = WindowFrame;
             Presenter = AppWindow.Presenter.As<OverlappedPresenter>();
-            AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
+            ExtendsContentIntoTitleBar = true;
             AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
             AppWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
+            AppTitlebar.TitlebarMenuFlyout.XamlRoot = Content.XamlRoot;
         }
 
         /// <summary>
@@ -150,8 +154,19 @@ namespace GetStoreApp.Views.Window
         /// </summary>
         public void InitializeWindow()
         {
-            newWndProc = new WNDPROC(NewWindowProc);
-            oldWndProc = SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newWndProc));
+            newMainWindowWndProc = new WNDPROC(NewWindowProc);
+            oldMainWindowWndProc = SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newMainWindowWndProc));
+
+            IntPtr childHandle = User32Library.FindWindowEx(Handle, IntPtr.Zero, "InputNonClientPointerSource", null);
+
+            if (childHandle != IntPtr.Zero)
+            {
+                int style = GetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_STYLE);
+                SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_STYLE, style & ~(int)WindowStyle.WS_SYSMENU);
+
+                newDragAreaWindowWndProc = new WNDPROC(NewDragAreaWindowProc);
+                oldDragAreaWindowWndProc = SetWindowLongAuto(childHandle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newDragAreaWindowWndProc));
+            }
         }
 
         /// <summary>
@@ -196,7 +211,7 @@ namespace GetStoreApp.Views.Window
         }
 
         /// <summary>
-        /// 窗口消息处理
+        /// 应用主窗口消息处理
         /// </summary>
         private IntPtr NewWindowProc(IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam)
         {
@@ -299,7 +314,15 @@ namespace GetStoreApp.Views.Window
                     {
                         SystemCommand sysCommand = (SystemCommand)(wParam.ToInt32() & 0xFFF0);
 
-                        if (sysCommand == SystemCommand.SC_KEYMENU)
+                        if (sysCommand == SystemCommand.SC_MOUSEMENU)
+                        {
+                            FlyoutShowOptions options = new FlyoutShowOptions();
+                            options.Position = new Point(0, 15);
+                            options.ShowMode = FlyoutShowMode.Standard;
+                            AppTitlebar.TitlebarMenuFlyout.ShowAt(null, options);
+                            return 0;
+                        }
+                        else if (sysCommand == SystemCommand.SC_KEYMENU)
                         {
                             FlyoutShowOptions options = new FlyoutShowOptions();
                             options.Position = new Point(0, 45);
@@ -323,6 +346,17 @@ namespace GetStoreApp.Views.Window
 
                         break;
                     }
+            }
+            return User32Library.CallWindowProc(oldMainWindowWndProc, hWnd, Msg, wParam, lParam);
+        }
+
+        /// <summary>
+        /// 应用拖拽区域窗口消息处理
+        /// </summary>
+        private IntPtr NewDragAreaWindowProc(IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam)
+        {
+            switch (Msg)
+            {
                 // 当用户按下鼠标右键时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCRBUTTONDOWN:
                     {
@@ -335,14 +369,14 @@ namespace GetStoreApp.Views.Window
                         FlyoutShowOptions options = new FlyoutShowOptions();
                         options.ShowMode = FlyoutShowMode.Standard;
                         options.Position = InfoHelper.SystemVersion.Build >= 22000 ?
-                        new Point(DPICalcHelper.ConvertPixelToEpx(Handle, pt.X - AppWindow.Position.X - 8), DPICalcHelper.ConvertPixelToEpx(Handle, 32)) :
-                        new Point(pt.X - AppWindow.Position.X - 8, 32);
+                        new Point(DPICalcHelper.ConvertPixelToEpx(Handle, pt.X - AppWindow.Position.X - 8), DPICalcHelper.ConvertPixelToEpx(Handle, pt.Y - AppWindow.Position.Y)) :
+                        new Point(pt.X - AppWindow.Position.X - 8, pt.Y - AppWindow.Position.Y);
 
                         AppTitlebar.TitlebarMenuFlyout.ShowAt(Content, options);
                         return 0;
                     }
             }
-            return User32Library.CallWindowProc(oldWndProc, hWnd, Msg, wParam, lParam);
+            return User32Library.CallWindowProc(oldDragAreaWindowWndProc, hWnd, Msg, wParam, lParam);
         }
     }
 }
