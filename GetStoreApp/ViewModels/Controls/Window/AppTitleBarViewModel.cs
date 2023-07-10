@@ -1,11 +1,7 @@
-﻿using GetStoreApp.Helpers.Root;
-using GetStoreApp.ViewModels.Base;
+﻿using GetStoreApp.ViewModels.Base;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
-using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using System;
-using Windows.Graphics;
 
 namespace GetStoreApp.ViewModels.Controls.Window
 {
@@ -33,19 +29,6 @@ namespace GetStoreApp.ViewModels.Controls.Window
         public void OnCloseClicked(object sender, RoutedEventArgs args)
         {
             Program.ApplicationRoot.MainWindow.Close();
-        }
-
-        /// <summary>
-        /// 初始化自定义标题栏
-        /// </summary>
-        public void OnLoaded(object sender, RoutedEventArgs args)
-        {
-            Grid appTitleBar = sender as Grid;
-            if (appTitleBar is not null)
-            {
-                SetDragRectangles(Convert.ToInt32(appTitleBar.Margin.Left), appTitleBar.ActualWidth, appTitleBar.ActualHeight);
-            }
-            IsWindowMaximized = Program.ApplicationRoot.MainWindow.Presenter.State == OverlappedPresenterState.Maximized;
         }
 
         /// <summary>
@@ -96,31 +79,6 @@ namespace GetStoreApp.ViewModels.Controls.Window
                 ((MenuFlyout)menuItem.Tag).Hide();
                 User32Library.SendMessage(Program.ApplicationRoot.MainWindow.Handle, WindowMessage.WM_SYSCOMMAND, 0xF000, 0);
             }
-        }
-
-        /// <summary>
-        /// 控件大小发生变化时，修改拖动区域
-        /// </summary>
-        public void OnSizeChanged(object sender, RoutedEventArgs args)
-        {
-            Grid appTitleBar = sender as Grid;
-            if (appTitleBar is not null)
-            {
-                SetDragRectangles(Convert.ToInt32(appTitleBar.Margin.Left), appTitleBar.ActualWidth, appTitleBar.ActualHeight);
-            }
-        }
-
-        /// <summary>
-        /// 设置标题栏的可拖动区域
-        /// </summary>
-        public void SetDragRectangles(int leftMargin, double actualWidth, double actualHeight)
-        {
-            Program.ApplicationRoot.MainWindow.AppWindow.TitleBar.SetDragRectangles(new RectInt32[] { new RectInt32(
-                leftMargin,
-                0,
-                DPICalcHelper.ConvertEpxToPixel(Program.ApplicationRoot.MainWindow.Handle, Convert.ToInt32(actualWidth)),
-                DPICalcHelper.ConvertEpxToPixel(Program.ApplicationRoot.MainWindow.Handle, Convert.ToInt32(actualHeight))
-                )});
         }
     }
 }

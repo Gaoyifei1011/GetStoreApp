@@ -48,7 +48,8 @@ namespace GetStoreApp.Views.Window
             ExtendsContentIntoTitleBar = true;
             AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
             AppWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
-            AppTitlebar.TitlebarMenuFlyout.XamlRoot = Content.XamlRoot;
+            AppTitlebar.ViewModel.IsWindowMaximized = Presenter.State == OverlappedPresenterState.Maximized;
+            SetTitleBar(AppTitlebar);
         }
 
         /// <summary>

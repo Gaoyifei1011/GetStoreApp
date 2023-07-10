@@ -7,8 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:windowViewModel="using:GetStoreApp.ViewModels.Controls.Window"
-    Loaded="{x:Bind ViewModel.OnLoaded}"
-    SizeChanged="{x:Bind ViewModel.OnSizeChanged}"
     mc:Ignorable="d">
 
     <Grid.DataContext>
