@@ -56,7 +56,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
 
             if (sender.Tag is not null)
             {
-                ((NetWorkMonitorControl)sender.Tag).ViewModel.NetWorkMonitorValue = true;
+                ((NetWorkMonitorControl)sender.Tag).NetWorkMonitorValue = true;
                 Aria2Service.RestoreDefault();
                 await NetWorkMonitorService.RestoreDefaultValueAsync();
 

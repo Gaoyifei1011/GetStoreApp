@@ -233,7 +233,7 @@ namespace GetStoreApp.Views.Pages
                 CoreWebView.SourceChanged += OnSourceChanged;
                 CoreWebView.DownloadStarting += OnDownloadStarting;
 
-                IsEnabled = true;
+                IsClearWebCacheEnabled = true;
             }
         }
 

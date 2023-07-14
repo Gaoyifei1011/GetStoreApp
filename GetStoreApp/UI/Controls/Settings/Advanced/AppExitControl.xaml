@@ -5,13 +5,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Advanced"
     Style="{StaticResource CardGridStyle}"
     mc:Ignorable="d">
-
-    <Grid.DataContext>
-        <settingsViewModel:AppExitViewModel x:Name="ViewModel" />
-    </Grid.DataContext>
 
     <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
@@ -42,35 +37,35 @@
     <DropDownButton
         Grid.Column="2"
         VerticalAlignment="Center"
-        Content="{x:Bind ViewModel.AppExit.DisplayName, Mode=OneWay}">
+        Content="{x:Bind AppExit.DisplayName, Mode=OneWay}">
 
         <ToolTipService.ToolTip>
-            <ToolTip Content="{x:Bind ViewModel.AppExit.DisplayName, Mode=OneWay}" Placement="Mouse" />
+            <ToolTip Content="{x:Bind AppExit.DisplayName, Mode=OneWay}" Placement="Mouse" />
         </ToolTipService.ToolTip>
 
         <DropDownButton.Flyout>
             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                 <RadioMenuFlyoutItem
-                    Click="{x:Bind ViewModel.OnAppExitSelectClicked}"
+                    Click="{x:Bind OnAppExitSelectClicked}"
                     GroupName="AppExitSetting"
-                    IsChecked="{x:Bind IsItemChecked(ViewModel.AppExit.InternalName, ViewModel.AppExitList[0].InternalName), Mode=OneWay}"
+                    IsChecked="{x:Bind IsItemChecked(AppExit.InternalName, AppExitList[0].InternalName), Mode=OneWay}"
                     Tag="0"
-                    Text="{x:Bind ViewModel.AppExitList[0].DisplayName}">
+                    Text="{x:Bind AppExitList[0].DisplayName}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind ViewModel.AppExitList[0].DisplayName}" Placement="Mouse" />
+                        <ToolTip Content="{x:Bind AppExitList[0].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </RadioMenuFlyoutItem>
 
                 <RadioMenuFlyoutItem
-                    Click="{x:Bind ViewModel.OnAppExitSelectClicked}"
+                    Click="{x:Bind OnAppExitSelectClicked}"
                     GroupName="AppExitSetting"
-                    IsChecked="{x:Bind IsItemChecked(ViewModel.AppExit.InternalName, ViewModel.AppExitList[1].InternalName), Mode=OneWay}"
+                    IsChecked="{x:Bind IsItemChecked(AppExit.InternalName, AppExitList[1].InternalName), Mode=OneWay}"
                     Tag="1"
-                    Text="{x:Bind ViewModel.AppExitList[1].DisplayName}">
+                    Text="{x:Bind AppExitList[1].DisplayName}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind ViewModel.AppExitList[1].DisplayName}" Placement="Mouse" />
+                        <ToolTip Content="{x:Bind AppExitList[1].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </RadioMenuFlyoutItem>
             </MenuFlyout>

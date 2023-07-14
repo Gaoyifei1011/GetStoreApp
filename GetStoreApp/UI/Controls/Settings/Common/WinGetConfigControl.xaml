@@ -6,13 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Common"
     Style="{StaticResource ExpanderSettingsStyle}"
     mc:Ignorable="d">
-
-    <Expander.DataContext>
-        <settingsViewModel:WinGetConfigViewModel x:Name="ViewModel" />
-    </Expander.DataContext>
 
     <Expander.Header>
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
@@ -48,7 +43,7 @@
 
             <Button
                 Grid.Column="2"
-                Click="{x:Bind ViewModel.OnWinGetConfigInstructionClicked}"
+                Click="{x:Bind OnWinGetConfigInstructionClicked}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetConfigInstruction')}">
 
                 <ToolTipService.ToolTip>
@@ -100,14 +95,14 @@
                                                 x:Name="OfficialVersionInstalledText"
                                                 Grid.Column="1"
                                                 VerticalAlignment="Center"
-                                                x:Load="{x:Bind ViewModel.IsOfficialVersionExisted}"
+                                                x:Load="{x:Bind IsOfficialVersionExisted}"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('Settings/OfficialVersionInstalled')}" />
                                             <HyperlinkButton
                                                 x:Name="OfficialVersionInstall"
                                                 Grid.Column="1"
                                                 HorizontalAlignment="Right"
-                                                x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(ViewModel.IsOfficialVersionExisted), Mode=OneWay}"
-                                                Click="{x:Bind ViewModel.OnOfficialVersionInstallClicked}"
+                                                x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsOfficialVersionExisted), Mode=OneWay}"
+                                                Click="{x:Bind OnOfficialVersionInstallClicked}"
                                                 Content="{x:Bind root:ResourceService.GetLocalized('Settings/OfficialVersionInstall')}"
                                                 Style="{StaticResource HyperlinkButtonStyle}">
 
@@ -131,14 +126,14 @@
                                                 x:Name="DevVersionInstalledText"
                                                 Grid.Column="1"
                                                 VerticalAlignment="Center"
-                                                x:Load="{x:Bind ViewModel.IsDevVersionExisted}"
+                                                x:Load="{x:Bind IsDevVersionExisted}"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('Settings/DevVersionInstalled')}" />
                                             <HyperlinkButton
                                                 x:Name="DevVersionInstall"
                                                 Grid.Column="1"
                                                 HorizontalAlignment="Right"
-                                                x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(ViewModel.IsDevVersionExisted), Mode=OneWay}"
-                                                Click="{x:Bind ViewModel.OnDevVersionInstallClicked}"
+                                                x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsDevVersionExisted), Mode=OneWay}"
+                                                Click="{x:Bind OnDevVersionInstallClicked}"
                                                 Content="{x:Bind root:ResourceService.GetLocalized('Settings/DevVersionInstall')}"
                                                 Style="{StaticResource HyperlinkButtonStyle}">
 
@@ -150,10 +145,10 @@
 
                                         <MenuFlyoutSeparator
                                             x:Name="FlyoutSeperator"
-                                            x:Load="{x:Bind IsBothVersionExisted(ViewModel.IsOfficialVersionExisted, ViewModel.IsDevVersionExisted)}"
+                                            x:Load="{x:Bind IsBothVersionExisted(IsOfficialVersionExisted, IsDevVersionExisted)}"
                                             Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />
 
-                                        <Grid x:Name="WinGetVersionSwitch" x:Load="{x:Bind IsBothVersionExisted(ViewModel.IsOfficialVersionExisted, ViewModel.IsDevVersionExisted)}">
+                                        <Grid x:Name="WinGetVersionSwitch" x:Load="{x:Bind IsBothVersionExisted(IsOfficialVersionExisted, IsDevVersionExisted)}">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="Auto" />
@@ -172,10 +167,10 @@
                                                 Grid.Column="1"
                                                 MinWidth="0"
                                                 FlowDirection="RightToLeft"
-                                                IsOn="{x:Bind ViewModel.UseDevVersion, Mode=OneWay}"
+                                                IsOn="{x:Bind UseDevVersion, Mode=OneWay}"
                                                 OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/UseDevFirstOffContent')}"
                                                 OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/UseDevFirstOnContent')}"
-                                                Toggled="{x:Bind ViewModel.OnToggled}" />
+                                                Toggled="{x:Bind OnToggled}" />
                                         </Grid>
                                     </StackPanel>
                                 </FlyoutPresenter>
@@ -212,35 +207,35 @@
                     <DropDownButton
                         Grid.Column="1"
                         VerticalAlignment="Center"
-                        Content="{x:Bind ViewModel.WinGetInstallMode.DisplayName, Mode=OneWay}">
+                        Content="{x:Bind WinGetInstallMode.DisplayName, Mode=OneWay}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind ViewModel.WinGetInstallMode.DisplayName, Mode=OneWay}" Placement="Mouse" />
+                            <ToolTip Content="{x:Bind WinGetInstallMode.DisplayName, Mode=OneWay}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
 
                         <DropDownButton.Flyout>
                             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                                 <RadioMenuFlyoutItem
-                                    Click="{x:Bind ViewModel.OnWinGetInstallModeSelectClicked}"
+                                    Click="{x:Bind OnWinGetInstallModeSelectClicked}"
                                     GroupName="WinGetInstallModeSetting"
-                                    IsChecked="{x:Bind IsItemChecked(ViewModel.WinGetInstallMode.InternalName, ViewModel.WinGetInstallModeList[0].InternalName), Mode=OneWay}"
+                                    IsChecked="{x:Bind IsItemChecked(WinGetInstallMode.InternalName, WinGetInstallModeList[0].InternalName), Mode=OneWay}"
                                     Tag="0"
-                                    Text="{x:Bind ViewModel.WinGetInstallModeList[0].DisplayName}">
+                                    Text="{x:Bind WinGetInstallModeList[0].DisplayName}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind ViewModel.WinGetInstallModeList[0].DisplayName}" Placement="Mouse" />
+                                        <ToolTip Content="{x:Bind WinGetInstallModeList[0].DisplayName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
 
                                 <RadioMenuFlyoutItem
-                                    Click="{x:Bind ViewModel.OnWinGetInstallModeSelectClicked}"
+                                    Click="{x:Bind OnWinGetInstallModeSelectClicked}"
                                     GroupName="WinGetInstallModeSetting"
-                                    IsChecked="{x:Bind IsItemChecked(ViewModel.WinGetInstallMode.InternalName, ViewModel.WinGetInstallModeList[1].InternalName), Mode=OneWay}"
+                                    IsChecked="{x:Bind IsItemChecked(WinGetInstallMode.InternalName, WinGetInstallModeList[1].InternalName), Mode=OneWay}"
                                     Tag="1"
-                                    Text="{x:Bind ViewModel.WinGetInstallModeList[1].DisplayName}">
+                                    Text="{x:Bind WinGetInstallModeList[1].DisplayName}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind ViewModel.WinGetInstallModeList[1].DisplayName}" Placement="Mouse" />
+                                        <ToolTip Content="{x:Bind WinGetInstallModeList[1].DisplayName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
                             </MenuFlyout>
@@ -271,9 +266,9 @@
 
                     <Button
                         Grid.Column="1"
-                        Click="{x:Bind ViewModel.OnOpenWinGetSettingsClicked}"
+                        Click="{x:Bind OnOpenWinGetSettingsClicked}"
                         Content="{x:Bind root:ResourceService.GetLocalized('Settings/OpenWinGetSettings')}"
-                        IsEnabled="{x:Bind IsWinGetExisted(ViewModel.IsOfficialVersionExisted, ViewModel.IsDevVersionExisted)}">
+                        IsEnabled="{x:Bind IsWinGetExisted(IsOfficialVersionExisted, IsDevVersionExisted)}">
 
                         <ToolTipService.ToolTip>
                             <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/OpenWinGetSettingsToolTip')}" Placement="Mouse" />

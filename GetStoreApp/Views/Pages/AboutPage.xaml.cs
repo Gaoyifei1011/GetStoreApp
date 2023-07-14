@@ -16,7 +16,6 @@ using Windows.Foundation;
 using Windows.System;
 using Windows.UI.StartScreen;
 
-
 namespace GetStoreApp.Views.Pages
 {
     /// <summary>
@@ -29,7 +28,6 @@ namespace GetStoreApp.Views.Pages
         // COM接口：IUnknown 接口
 
         private static readonly Guid IID_IUnknown = new Guid("00000000-0000-0000-C000-000000000046");
-
 
         private AppNaviagtionArgs AboutNavigationArgs { get; set; } = AppNaviagtionArgs.None;
 

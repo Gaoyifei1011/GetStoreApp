@@ -6,13 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Advanced"
     Style="{StaticResource CardGridStyle}"
     mc:Ignorable="d">
-
-    <Grid.DataContext>
-        <settingsViewModel:InstallModeViewModel x:Name="ViewModel" />
-    </Grid.DataContext>
 
     <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
@@ -46,7 +41,7 @@
         Grid.Column="2"
         VerticalAlignment="Center"
         controlExtensions:CursorHelper.Cursor="Hand"
-        Click="{x:Bind ViewModel.OnInstallModeTipClicked}"
+        Click="{x:Bind OnInstallModeTipClicked}"
         Style="{StaticResource ButtonInfoStyle}">
 
         <Button.Content>
@@ -64,35 +59,35 @@
     <DropDownButton
         Grid.Column="3"
         VerticalAlignment="Center"
-        Content="{x:Bind ViewModel.InstallMode.DisplayName, Mode=OneWay}">
+        Content="{x:Bind InstallMode.DisplayName, Mode=OneWay}">
 
         <ToolTipService.ToolTip>
-            <ToolTip Content="{x:Bind ViewModel.InstallMode.DisplayName, Mode=OneWay}" Placement="Mouse" />
+            <ToolTip Content="{x:Bind InstallMode.DisplayName, Mode=OneWay}" Placement="Mouse" />
         </ToolTipService.ToolTip>
 
         <DropDownButton.Flyout>
             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                 <RadioMenuFlyoutItem
-                    Click="{x:Bind ViewModel.OnInstallModeSelectClicked}"
+                    Click="{x:Bind OnInstallModeSelectClicked}"
                     GroupName="InstallModeSetting"
-                    IsChecked="{x:Bind IsItemChecked(ViewModel.InstallMode.InternalName, ViewModel.InstallModeList[0].InternalName), Mode=OneWay}"
+                    IsChecked="{x:Bind IsItemChecked(InstallMode.InternalName, InstallModeList[0].InternalName), Mode=OneWay}"
                     Tag="0"
-                    Text="{x:Bind ViewModel.InstallModeList[0].DisplayName}">
+                    Text="{x:Bind InstallModeList[0].DisplayName}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind ViewModel.InstallModeList[0].DisplayName}" Placement="Mouse" />
+                        <ToolTip Content="{x:Bind InstallModeList[0].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </RadioMenuFlyoutItem>
 
                 <RadioMenuFlyoutItem
-                    Click="{x:Bind ViewModel.OnInstallModeSelectClicked}"
+                    Click="{x:Bind OnInstallModeSelectClicked}"
                     GroupName="InstallModeSetting"
-                    IsChecked="{x:Bind IsItemChecked(ViewModel.InstallMode.InternalName, ViewModel.InstallModeList[1].InternalName), Mode=OneWay}"
+                    IsChecked="{x:Bind IsItemChecked(InstallMode.InternalName, InstallModeList[1].InternalName), Mode=OneWay}"
                     Tag="1"
-                    Text="{x:Bind ViewModel.InstallModeList[1].DisplayName}">
+                    Text="{x:Bind InstallModeList[1].DisplayName}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind ViewModel.InstallModeList[1].DisplayName}" Placement="Mouse" />
+                        <ToolTip Content="{x:Bind InstallModeList[1].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </RadioMenuFlyoutItem>
             </MenuFlyout>

@@ -6,13 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Common"
     Style="{StaticResource CardGridStyle}"
     mc:Ignorable="d">
-
-    <Grid.DataContext>
-        <settingsViewModel:NotificationViewModel x:Name="ViewModel" />
-    </Grid.DataContext>
 
     <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
@@ -46,7 +41,7 @@
         Grid.Column="2"
         Margin="0,0,6,0"
         VerticalAlignment="Center"
-        Click="{x:Bind ViewModel.OnSettingsNotificationClicked}"
+        Click="{x:Bind OnSettingsNotificationClicked}"
         Content="{x:Bind root:ResourceService.GetLocalized('Settings/WindowsNotificationSettings')}">
 
         <ToolTipService.ToolTip>
@@ -59,8 +54,8 @@
         MinWidth="0"
         controlExtensions:CursorHelper.Cursor="Hand"
         FlowDirection="RightToLeft"
-        IsOn="{x:Bind ViewModel.Notification, Mode=OneWay}"
+        IsOn="{x:Bind Notification, Mode=OneWay}"
         OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/NotificationOffContent')}"
         OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/NotificationOnContent')}"
-        Toggled="{x:Bind ViewModel.OnToggled}" />
+        Toggled="{x:Bind OnToggled}" />
 </Grid>

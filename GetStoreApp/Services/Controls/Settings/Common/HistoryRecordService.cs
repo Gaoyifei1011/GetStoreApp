@@ -39,7 +39,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
 
             DefaultHistoryLiteNum = HistoryLiteNumList.Find(item => item.HistoryLiteNumValue is 3);
 
-            DefaultHistoryJumpListNum = HistoryJumpListNumList.Find(item => item.HistoryJumpListNumValue is "Unlimited");
+            DefaultHistoryJumpListNum = HistoryJumpListNumList.Find(item => item.HistoryJumpListNumValue is "5");
 
             HistoryLiteNum = await GetHistoryLiteNumAsync();
 

@@ -6,13 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Advanced"
     Style="{StaticResource CardGridStyle}"
     mc:Ignorable="d">
-
-    <Grid.DataContext>
-        <settingsViewModel:TraceCleanupViewModel x:Name="ViewModel" />
-    </Grid.DataContext>
 
     <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
@@ -46,7 +41,7 @@
         Grid.Column="2"
         VerticalAlignment="Center"
         controlExtensions:CursorHelper.Cursor="Hand"
-        Click="{x:Bind ViewModel.OnTraceCleanupTipClicked}"
+        Click="{x:Bind OnTraceCleanupTipClicked}"
         Style="{StaticResource ButtonInfoStyle}">
 
         <Button.Content>
@@ -64,7 +59,7 @@
     <Button
         Grid.Column="3"
         MinWidth="100"
-        Click="{x:Bind ViewModel.OnTraceCleanupClicked}"
+        Click="{x:Bind OnTraceCleanupClicked}"
         Content="{x:Bind root:ResourceService.GetLocalized('Settings/TraceClear')}">
 
         <ToolTipService.ToolTip>

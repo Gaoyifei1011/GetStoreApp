@@ -61,12 +61,12 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 初始化 WinGet 程序包视图模型
+        /// 初始化 WinGet 程序包
         /// </summary>
         private void OnInitializeSuccessLoaded()
         {
-            SearchApps.ViewModel.WinGetInstance = this;
-            UpgradableApps.ViewModel.WinGetInstance = this;
+            SearchApps.WinGetInstance = this;
+            UpgradableApps.WinGetInstance = this;
         }
 
         /// <summary>

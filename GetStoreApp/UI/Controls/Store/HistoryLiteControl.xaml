@@ -8,16 +8,11 @@
     xmlns:history="using:GetStoreApp.Models.Controls.History"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:storeViewModel="using:GetStoreApp.ViewModels.Controls.Store"
     x:Name="HistoryLiteRoot"
     HorizontalContentAlignment="Stretch"
     IsExpanded="True"
     Style="{StaticResource HistoryLiteExpanderStyle}"
     mc:Ignorable="d">
-
-    <Expander.DataContext>
-        <storeViewModel:HistoryLiteViewModel x:Name="ViewModel" x:FieldModifier="public" />
-    </Expander.DataContext>
 
     <Expander.Header>
         <Grid>
@@ -43,7 +38,7 @@
                 Grid.Column="2"
                 Margin="0,0,-15,0"
                 controlExtensions:CursorHelper.Cursor="Hand"
-                Click="{x:Bind ViewModel.OnViewAllClicked}"
+                Click="{x:Bind OnViewAllClicked}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Store/ViewAll')}">
 
@@ -65,13 +60,13 @@
                 VerticalAlignment="Center"
                 Text="{x:Bind root:ResourceService.GetLocalized('Store/HistoryLiteEmpty')}"
                 TextAlignment="Center"
-                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(ViewModel.HistoryLiteDataList.Count), Mode=OneWay}" />
+                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(HistoryLiteDataList.Count), Mode=OneWay}" />
 
             <ListView
                 ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
-                ItemsSource="{x:Bind ViewModel.HistoryLiteDataList, Mode=OneWay}"
+                ItemsSource="{x:Bind HistoryLiteDataList, Mode=OneWay}"
                 SelectionMode="None"
-                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(ViewModel.HistoryLiteDataList.Count), Mode=OneWay}">
+                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(HistoryLiteDataList.Count), Mode=OneWay}">
 
                 <ItemsControl.ItemContainerTransitions>
                     <TransitionCollection />
@@ -188,7 +183,7 @@
                             <HyperlinkButton
                                 Grid.Column="3"
                                 Margin="10,0,0,0"
-                                Command="{Binding ElementName=HistoryLiteRoot, Path=DataContext.FillinCommand, Mode=OneTime}"
+                                Command="{Binding ElementName=HistoryLiteRoot, Path=FillinCommand, Mode=OneTime}"
                                 CommandParameter="{Binding}"
                                 Content="{x:Bind root:ResourceService.GetLocalized('Store/Fillin')}"
                                 Style="{StaticResource HyperlinkButtonStyle}">
@@ -200,7 +195,7 @@
 
                             <HyperlinkButton
                                 Grid.Column="4"
-                                Command="{Binding ElementName=HistoryLiteRoot, Path=DataContext.CopyCommand, Mode=OneTime}"
+                                Command="{Binding ElementName=HistoryLiteRoot, Path=CopyCommand, Mode=OneTime}"
                                 CommandParameter="{Binding}"
                                 Content="{x:Bind root:ResourceService.GetLocalized('Store/Copy')}"
                                 Style="{StaticResource HyperlinkButtonStyle}">

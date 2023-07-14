@@ -5,13 +5,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Experiment"
     Style="{StaticResource CardGridStyle}"
     mc:Ignorable="d">
-
-    <Grid.DataContext>
-        <settingsViewModel:OpenConfigFileViewModel x:Name="ViewModel" />
-    </Grid.DataContext>
 
     <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
@@ -34,7 +29,7 @@
 
     <HyperlinkButton
         Grid.Column="2"
-        Click="{x:Bind ViewModel.OnOpenConfigFileClicked}"
+        Click="{x:Bind OnOpenConfigFileClicked}"
         Style="{StaticResource ExperimentalHyperlinkButtonStyle}">
 
         <HyperlinkButton.Content>

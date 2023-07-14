@@ -8,16 +8,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:winGetViewModel="using:GetStoreApp.ViewModels.Controls.WinGet"
     xmlns:winget="using:GetStoreApp.Models.Controls.WinGet"
     x:Name="InstalledAppsRoot"
     Padding="0"
-    Loaded="{x:Bind ViewModel.OnLoaded}"
+    Loaded="{x:Bind OnLoaded}"
     mc:Ignorable="d">
-
-    <Grid.DataContext>
-        <winGetViewModel:InstalledAppsViewModel x:Name="ViewModel" x:FieldModifier="public" />
-    </Grid.DataContext>
 
     <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
@@ -56,10 +51,10 @@
         <TextBlock
             Grid.Column="3"
             VerticalAlignment="Center"
-            Text="{x:Bind LocalizeInstalledAppsCountInfo(ViewModel.InstalledAppsDataList.Count), Mode=OneWay}">
+            Text="{x:Bind LocalizeInstalledAppsCountInfo(InstalledAppsDataList.Count), Mode=OneWay}">
 
             <ToolTipService.ToolTip>
-                <ToolTip Content="{x:Bind LocalizeInstalledAppsCountInfo(ViewModel.InstalledAppsDataList.Count), Mode=OneWay}" Placement="Mouse" />
+                <ToolTip Content="{x:Bind LocalizeInstalledAppsCountInfo(InstalledAppsDataList.Count), Mode=OneWay}" Placement="Mouse" />
             </ToolTipService.ToolTip>
         </TextBlock>
 
@@ -68,10 +63,10 @@
             Width="170"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(ViewModel.IsInstalledAppsEmpty), Mode=OneWay}"
+            IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsInstalledAppsEmpty), Mode=OneWay}"
             PlaceholderText="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledAppsPlaceHolderText')}"
-            QuerySubmitted="{x:Bind ViewModel.OnQuerySubmitted}"
-            Text="{x:Bind ViewModel.SearchText, Mode=TwoWay}">
+            QuerySubmitted="{x:Bind OnQuerySubmitted}"
+            Text="{x:Bind SearchText, Mode=TwoWay}">
 
             <AutoSuggestBox.QueryIcon>
                 <FontIcon
@@ -90,8 +85,8 @@
 
             <MenuFlyoutItem
                 controlExtensions:CursorHelper.Cursor="Hand"
-                Click="{x:Bind ViewModel.OnRefreshClicked}"
-                IsEnabled="{x:Bind ViewModel.IsLoadedCompleted, Mode=OneWay}"
+                Click="{x:Bind OnRefreshClicked}"
+                IsEnabled="{x:Bind IsLoadedCompleted, Mode=OneWay}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                 Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Refresh')}">
 
@@ -110,7 +105,7 @@
         x:Name="LoadingGrid"
         Grid.Row="1"
         Margin="30,3,30,0"
-        x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(ViewModel.IsLoadedCompleted), Mode=OneWay}"
+        x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsLoadedCompleted), Mode=OneWay}"
         Style="{StaticResource CardGridStyle}">
 
         <StackPanel
@@ -137,7 +132,7 @@
     <Grid
         Grid.Row="2"
         Padding="0,3,0,0"
-        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(ViewModel.IsLoadedCompleted), Mode=OneWay}">
+        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsLoadedCompleted), Mode=OneWay}">
 
         <Grid>
             <Grid.RowDefinitions>
@@ -149,7 +144,7 @@
                 Grid.Row="0"
                 Margin="30,0"
                 Style="{StaticResource CardGridStyle}"
-                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(ViewModel.IsInstalledAppsEmpty), Mode=OneWay}">
+                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsInstalledAppsEmpty), Mode=OneWay}">
                 <TextBlock
                     Margin="0,10"
                     VerticalAlignment="Center"
@@ -162,7 +157,7 @@
                 </TextBlock>
             </Grid>
 
-            <Grid Grid.Row="1" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(ViewModel.IsInstalledAppsEmpty), Mode=OneWay}">
+            <Grid Grid.Row="1" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsInstalledAppsEmpty), Mode=OneWay}">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -173,7 +168,7 @@
                     Grid.Row="0"
                     Margin="30,0"
                     Style="{StaticResource CardGridStyle}"
-                    Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(ViewModel.InstalledAppsDataList.Count), Mode=OneWay}">
+                    Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(InstalledAppsDataList.Count), Mode=OneWay}">
                     <TextBlock
                         Margin="0,10"
                         VerticalAlignment="Center"
@@ -190,13 +185,13 @@
                     Grid.Row="1"
                     Padding="30,0,30,30"
                     ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
-                    ItemsSource="{x:Bind ViewModel.InstalledAppsDataList, Mode=OneWay}"
+                    ItemsSource="{x:Bind InstalledAppsDataList, Mode=OneWay}"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     ScrollViewer.HorizontalScrollMode="Disabled"
                     ScrollViewer.VerticalScrollBarVisibility="Auto"
                     ScrollViewer.VerticalScrollMode="Enabled"
                     SelectionMode="None"
-                    Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(ViewModel.InstalledAppsDataList.Count), Mode=OneWay}">
+                    Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(InstalledAppsDataList.Count), Mode=OneWay}">
 
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="winget:InstalledAppsModel">
@@ -251,7 +246,7 @@
                                 <basicInput:ExtendedSplitButton
                                     Grid.Column="3"
                                     MinWidth="100"
-                                    Command="{Binding ElementName=InstalledAppsRoot, Path=DataContext.UnInstallCommand, Mode=OneTime}"
+                                    Command="{Binding ElementName=InstalledAppsRoot, Path=UnInstallCommand, Mode=OneTime}"
                                     CommandParameter="{Binding}"
                                     Content="{x:Bind root:ResourceService.GetLocalized('WinGet/UnInstall')}">
 
@@ -266,7 +261,7 @@
                                     <basicInput:ExtendedSplitButton.Flyout>
                                         <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                                             <MenuFlyoutItem
-                                                Command="{Binding ElementName=InstalledAppsRoot, Path=DataContext.CopyUnInstallTextCommand, Mode=OneTime}"
+                                                Command="{Binding ElementName=InstalledAppsRoot, Path=CopyUnInstallTextCommand, Mode=OneTime}"
                                                 CommandParameter="{x:Bind AppID}"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUnInstallText')}">
 

@@ -6,17 +6,12 @@
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:download="using:GetStoreApp.Models.Controls.Download"
-    xmlns:downloadViewModel="using:GetStoreApp.ViewModels.Controls.Download"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:sys="using:System"
     x:Name="CompletedRoot"
     Padding="0"
     mc:Ignorable="d">
-
-    <Grid.DataContext>
-        <downloadViewModel:CompletedViewModel x:Name="ViewModel" x:FieldModifier="public" />
-    </Grid.DataContext>
 
     <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
@@ -53,10 +48,10 @@
         <TextBlock
             Grid.Column="3"
             VerticalAlignment="Center"
-            Text="{x:Bind LocalizeCompletedCountInfo(ViewModel.CompletedDataList.Count), Mode=OneWay}">
+            Text="{x:Bind LocalizeCompletedCountInfo(CompletedDataList.Count), Mode=OneWay}">
 
             <ToolTipService.ToolTip>
-                <ToolTip Content="{x:Bind LocalizeCompletedCountInfo(ViewModel.CompletedDataList.Count), Mode=OneWay}" Placement="Mouse" />
+                <ToolTip Content="{x:Bind LocalizeCompletedCountInfo(CompletedDataList.Count), Mode=OneWay}" Placement="Mouse" />
             </ToolTipService.ToolTip>
         </TextBlock>
 
@@ -65,14 +60,14 @@
             Grid.Column="4"
             Margin="0,0,10,0"
             VerticalAlignment="Center"
-            x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(ViewModel.IsSelectMode), Mode=OneWay}"
+            x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsSelectMode), Mode=OneWay}"
             Background="Transparent"
             Orientation="Horizontal"
             Spacing="2">
 
             <MenuFlyoutItem
                 controlExtensions:CursorHelper.Cursor="Hand"
-                Click="{x:Bind ViewModel.OnOpenFolderClicked}"
+                Click="{x:Bind OnOpenFolderClicked}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolder')}">
 
@@ -87,8 +82,8 @@
 
             <MenuFlyoutItem
                 controlExtensions:CursorHelper.Cursor="Hand"
-                Click="{x:Bind ViewModel.OnSelectClicked}"
-                IsEnabled="{x:Bind sys:Convert.ToBoolean(ViewModel.CompletedDataList.Count), Mode=OneWay}"
+                Click="{x:Bind OnSelectClicked}"
+                IsEnabled="{x:Bind sys:Convert.ToBoolean(CompletedDataList.Count), Mode=OneWay}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Download/Select')}">
 
@@ -107,14 +102,14 @@
             Grid.Column="4"
             Margin="0,0,10,0"
             VerticalAlignment="Center"
-            x:Load="{x:Bind ViewModel.IsSelectMode, Mode=OneWay}"
+            x:Load="{x:Bind IsSelectMode, Mode=OneWay}"
             Background="Transparent"
             Orientation="Horizontal"
             Spacing="2">
 
             <MenuFlyoutItem
                 controlExtensions:CursorHelper.Cursor="Hand"
-                Click="{x:Bind ViewModel.OnSelectAllClicked}"
+                Click="{x:Bind OnSelectAllClicked}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Download/SelectAll')}">
 
@@ -129,7 +124,7 @@
 
             <MenuFlyoutItem
                 controlExtensions:CursorHelper.Cursor="Hand"
-                Click="{x:Bind ViewModel.OnSelectNoneClicked}"
+                Click="{x:Bind OnSelectNoneClicked}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Download/SelectNone')}">
 
@@ -144,7 +139,7 @@
 
             <MenuFlyoutItem
                 controlExtensions:CursorHelper.Cursor="Hand"
-                Click="{x:Bind ViewModel.OnDeleteOptionsClicked}"
+                Click="{x:Bind OnDeleteOptionsClicked}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteOptions')}">
 
@@ -158,13 +153,13 @@
 
                 <FlyoutBase.AttachedFlyout>
                     <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
-                        <MenuFlyoutItem Click="{x:Bind ViewModel.OnDeleteSelectedClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelected')}">
+                        <MenuFlyoutItem Click="{x:Bind OnDeleteSelectedClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelected')}">
                             <ToolTipService.ToolTip>
                                 <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedToolTip')}" Placement="Mouse" />
                             </ToolTipService.ToolTip>
                         </MenuFlyoutItem>
 
-                        <MenuFlyoutItem Click="{x:Bind ViewModel.OnDeleteSelectedWithFileClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedWithFile')}">
+                        <MenuFlyoutItem Click="{x:Bind OnDeleteSelectedWithFileClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedWithFile')}">
                             <ToolTipService.ToolTip>
                                 <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedWithFileToolTip')}" Placement="Mouse" />
                             </ToolTipService.ToolTip>
@@ -175,7 +170,7 @@
 
             <MenuFlyoutItem
                 controlExtensions:CursorHelper.Cursor="Hand"
-                Click="{x:Bind ViewModel.OnShareSelectedFileClicked}"
+                Click="{x:Bind OnShareSelectedFileClicked}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Download/ShareSelectedFile')}">
 
@@ -190,7 +185,7 @@
 
             <MenuFlyoutItem
                 controlExtensions:CursorHelper.Cursor="Hand"
-                Click="{x:Bind ViewModel.OnCancelClicked}"
+                Click="{x:Bind OnCancelClicked}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Download/Cancel')}">
 
@@ -209,7 +204,7 @@
         Grid.Row="1"
         Margin="30,3,30,0"
         Style="{StaticResource CardGridStyle}"
-        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(ViewModel.CompletedDataList.Count), Mode=OneWay}">
+        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(CompletedDataList.Count), Mode=OneWay}">
         <TextBlock
             Margin="0,10"
             VerticalAlignment="Center"
@@ -225,16 +220,16 @@
     <ListView
         Grid.Row="2"
         Padding="30,3,30,30"
-        IsItemClickEnabled="{x:Bind ViewModel.IsSelectMode, Mode=OneWay}"
-        ItemClick="{x:Bind ViewModel.OnItemClicked}"
+        IsItemClickEnabled="{x:Bind IsSelectMode, Mode=OneWay}"
+        ItemClick="{x:Bind OnItemClicked}"
         ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
-        ItemsSource="{x:Bind ViewModel.CompletedDataList, Mode=OneWay}"
+        ItemsSource="{x:Bind CompletedDataList, Mode=OneWay}"
         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
         ScrollViewer.HorizontalScrollMode="Disabled"
         ScrollViewer.VerticalScrollBarVisibility="Auto"
         ScrollViewer.VerticalScrollMode="Enabled"
         SelectionMode="None"
-        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(ViewModel.CompletedDataList.Count), Mode=OneWay}">
+        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(CompletedDataList.Count), Mode=OneWay}">
 
         <ListView.ItemTemplate>
             <DataTemplate x:DataType="download:CompletedModel">
@@ -389,7 +384,7 @@
                                     <ContentControl IsEnabled="{x:Bind converter:ValueCheckConverterHelper.InstallFileExistsCheck(FileName)}">
                                         <Button
                                             controlExtensions:CursorHelper.Cursor="Hand"
-                                            Command="{Binding ElementName=CompletedRoot, Path=DataContext.InstallCommand, Mode=OneTime}"
+                                            Command="{Binding ElementName=CompletedRoot, Path=InstallCommand, Mode=OneTime}"
                                             CommandParameter="{Binding}"
                                             IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsInstalling), Mode=OneWay}"
                                             Style="{StaticResource ButtonSquareStyle}">
@@ -406,7 +401,7 @@
 
                                     <Button
                                         controlExtensions:CursorHelper.Cursor="Hand"
-                                        Command="{Binding ElementName=CompletedRoot, Path=DataContext.OpenItemFolderCommand, Mode=OneTime}"
+                                        Command="{Binding ElementName=CompletedRoot, Path=OpenItemFolderCommand, Mode=OneTime}"
                                         CommandParameter="{x:Bind FilePath}"
                                         Style="{StaticResource ButtonSquareStyle}">
 
@@ -434,7 +429,7 @@
                                 <Button.Flyout>
                                     <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                                         <MenuFlyoutItem
-                                            Command="{Binding ElementName=CompletedRoot, Path=DataContext.DeleteCommand, Mode=OneTime}"
+                                            Command="{Binding ElementName=CompletedRoot, Path=DeleteCommand, Mode=OneTime}"
                                             CommandParameter="{Binding}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Download/Delete')}">
 
@@ -443,7 +438,7 @@
                                             </ToolTipService.ToolTip>
                                         </MenuFlyoutItem>
                                         <MenuFlyoutItem
-                                            Command="{Binding ElementName=CompletedRoot, Path=DataContext.DeleteWithFileCommand, Mode=OneTime}"
+                                            Command="{Binding ElementName=CompletedRoot, Path=DeleteWithFileCommand, Mode=OneTime}"
                                             CommandParameter="{Binding}"
                                             IsEnabled="{x:Bind converter:ValueCheckConverterHelper.FileExistCheck(FilePath)}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteWithFile')}">
@@ -454,7 +449,7 @@
                                         </MenuFlyoutItem>
                                         <MenuFlyoutSeparator />
                                         <MenuFlyoutItem
-                                            Command="{Binding ElementName=CompletedRoot, Path=DataContext.ShareFileCommand, Mode=OneTime}"
+                                            Command="{Binding ElementName=CompletedRoot, Path=ShareFileCommand, Mode=OneTime}"
                                             CommandParameter="{Binding}"
                                             IsEnabled="{x:Bind converter:ValueCheckConverterHelper.FileExistCheck(FilePath)}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Download/ShareFile')}">
@@ -469,7 +464,7 @@
                                         </MenuFlyoutItem>
 
                                         <MenuFlyoutItem
-                                            Command="{Binding ElementName=CompletedRoot, Path=DataContext.FileInformationCommand, Mode=OneTime}"
+                                            Command="{Binding ElementName=CompletedRoot, Path=FileInformationCommand, Mode=OneTime}"
                                             CommandParameter="{Binding}"
                                             IsEnabled="{x:Bind converter:ValueCheckConverterHelper.FileExistCheck(FilePath)}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Download/FileInformation')}">

@@ -8,7 +8,6 @@ using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Common;
-using GetStoreApp.ViewModels.Controls.Store;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI;
@@ -439,7 +438,7 @@ namespace GetStoreApp.Views.Window
         }
 
         /// <summary>
-        /// 导航控件加载完成后初始化内容，初始化导航视图控件属性、屏幕缩放比例值和应用的背景色
+        /// 导航控件加载完成后初始化内容，初始化导航控件属性、屏幕缩放比例值和应用的背景色
         /// </summary>
         public void OnNavigationViewLoaded(object sender, RoutedEventArgs args)
         {
@@ -798,11 +797,9 @@ namespace GetStoreApp.Views.Window
                             StorePage storePage = NavigationService.NavigationFrame.Content.As<StorePage>();
                             if (storePage is not null)
                             {
-                                RequestViewModel viewModel = storePage.Request.ViewModel;
-
-                                viewModel.SelectedType = Convert.ToInt32(startupArgs[0]) is -1 ? viewModel.TypeList[0] : viewModel.TypeList[Convert.ToInt32(startupArgs[0])];
-                                viewModel.SelectedChannel = Convert.ToInt32(startupArgs[1]) is -1 ? viewModel.ChannelList[3] : viewModel.ChannelList[Convert.ToInt32(startupArgs[1])];
-                                viewModel.LinkText = startupArgs[2] is "PlaceHolderText" ? string.Empty : startupArgs[2];
+                                storePage.Request.SelectedType = Convert.ToInt32(startupArgs[0]) is -1 ? storePage.Request.TypeList[0] : storePage.Request.TypeList[Convert.ToInt32(startupArgs[0])];
+                                storePage.Request.SelectedChannel = Convert.ToInt32(startupArgs[1]) is -1 ? storePage.Request.ChannelList[3] : storePage.Request.ChannelList[Convert.ToInt32(startupArgs[1])];
+                                storePage.Request.LinkText = startupArgs[2] is "PlaceHolderText" ? string.Empty : startupArgs[2];
                             }
 
                             Show();

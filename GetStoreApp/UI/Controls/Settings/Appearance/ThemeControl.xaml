@@ -5,13 +5,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Appearance"
     Style="{StaticResource ExpanderSettingsStyle}"
     mc:Ignorable="d">
-
-    <Expander.DataContext>
-        <settingsViewModel:ThemeViewModel x:Name="ViewModel" />
-    </Expander.DataContext>
 
     <Expander.Header>
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
@@ -47,7 +42,7 @@
 
             <Button
                 Grid.Column="2"
-                Click="{x:Bind ViewModel.OnSettingsColorClicked}"
+                Click="{x:Bind OnSettingsColorClicked}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Settings/WindowsColorSettings')}">
 
                 <ToolTipService.ToolTip>
@@ -83,47 +78,47 @@
                     <DropDownButton
                         Grid.Column="1"
                         VerticalAlignment="Center"
-                        Content="{x:Bind ViewModel.Theme.DisplayName, Mode=OneWay}">
+                        Content="{x:Bind Theme.DisplayName, Mode=OneWay}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind ViewModel.Theme.DisplayName, Mode=OneWay}" Placement="Mouse" />
+                            <ToolTip Content="{x:Bind Theme.DisplayName, Mode=OneWay}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
 
                         <DropDownButton.Flyout>
                             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                                 <RadioMenuFlyoutItem
-                                    Click="{x:Bind ViewModel.OnThemeSelectClicked}"
+                                    Click="{x:Bind OnThemeSelectClicked}"
                                     GroupName="ThemeSetting"
-                                    IsChecked="{x:Bind IsItemChecked(ViewModel.Theme.InternalName, ViewModel.ThemeList[0].InternalName), Mode=OneWay}"
+                                    IsChecked="{x:Bind IsItemChecked(Theme.InternalName, ThemeList[0].InternalName), Mode=OneWay}"
                                     Tag="0"
-                                    Text="{x:Bind ViewModel.ThemeList[0].DisplayName}">
+                                    Text="{x:Bind ThemeList[0].DisplayName}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind ViewModel.ThemeList[0].DisplayName}" Placement="Mouse" />
+                                        <ToolTip Content="{x:Bind ThemeList[0].DisplayName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
 
                                 <RadioMenuFlyoutItem
-                                    Click="{x:Bind ViewModel.OnThemeSelectClicked}"
+                                    Click="{x:Bind OnThemeSelectClicked}"
                                     GroupName="ThemeSetting"
-                                    IsChecked="{x:Bind IsItemChecked(ViewModel.Theme.InternalName, ViewModel.ThemeList[1].InternalName), Mode=OneWay}"
+                                    IsChecked="{x:Bind IsItemChecked(Theme.InternalName, ThemeList[1].InternalName), Mode=OneWay}"
                                     Tag="1"
-                                    Text="{x:Bind ViewModel.ThemeList[1].DisplayName}">
+                                    Text="{x:Bind ThemeList[1].DisplayName}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind ViewModel.ThemeList[1].DisplayName}" Placement="Mouse" />
+                                        <ToolTip Content="{x:Bind ThemeList[1].DisplayName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
 
                                 <RadioMenuFlyoutItem
-                                    Click="{x:Bind ViewModel.OnThemeSelectClicked}"
+                                    Click="{x:Bind OnThemeSelectClicked}"
                                     GroupName="ThemeSetting"
-                                    IsChecked="{x:Bind IsItemChecked(ViewModel.Theme.InternalName, ViewModel.ThemeList[2].InternalName), Mode=OneWay}"
+                                    IsChecked="{x:Bind IsItemChecked(Theme.InternalName, ThemeList[2].InternalName), Mode=OneWay}"
                                     Tag="2"
-                                    Text="{x:Bind ViewModel.ThemeList[2].DisplayName}">
+                                    Text="{x:Bind ThemeList[2].DisplayName}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind ViewModel.ThemeList[2].DisplayName}" Placement="Mouse" />
+                                        <ToolTip Content="{x:Bind ThemeList[2].DisplayName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
                             </MenuFlyout>
@@ -158,35 +153,35 @@
                     <DropDownButton
                         Grid.Column="1"
                         VerticalAlignment="Center"
-                        Content="{x:Bind ViewModel.NotifyIconMenuTheme.DisplayName, Mode=OneWay}">
+                        Content="{x:Bind NotifyIconMenuTheme.DisplayName, Mode=OneWay}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind ViewModel.NotifyIconMenuTheme.DisplayName, Mode=OneWay}" Placement="Mouse" />
+                            <ToolTip Content="{x:Bind NotifyIconMenuTheme.DisplayName, Mode=OneWay}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
 
                         <DropDownButton.Flyout>
                             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                                 <RadioMenuFlyoutItem
-                                    Click="{x:Bind ViewModel.OnNotifyIconMenuThemeSelectClicked}"
+                                    Click="{x:Bind OnNotifyIconMenuThemeSelectClicked}"
                                     GroupName="NotifyIconMenuThemeSetting"
-                                    IsChecked="{x:Bind IsItemChecked(ViewModel.NotifyIconMenuTheme.InternalName, ViewModel.NotifyIconMenuThemeList[0].InternalName), Mode=OneWay}"
+                                    IsChecked="{x:Bind IsItemChecked(NotifyIconMenuTheme.InternalName, NotifyIconMenuThemeList[0].InternalName), Mode=OneWay}"
                                     Tag="0"
-                                    Text="{x:Bind ViewModel.NotifyIconMenuThemeList[0].DisplayName}">
+                                    Text="{x:Bind NotifyIconMenuThemeList[0].DisplayName}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind ViewModel.NotifyIconMenuThemeList[0].DisplayName}" Placement="Mouse" />
+                                        <ToolTip Content="{x:Bind NotifyIconMenuThemeList[0].DisplayName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
 
                                 <RadioMenuFlyoutItem
-                                    Click="{x:Bind ViewModel.OnNotifyIconMenuThemeSelectClicked}"
+                                    Click="{x:Bind OnNotifyIconMenuThemeSelectClicked}"
                                     GroupName="NotifyIconMenuThemeSetting"
-                                    IsChecked="{x:Bind IsItemChecked(ViewModel.NotifyIconMenuTheme.InternalName, ViewModel.NotifyIconMenuThemeList[1].InternalName), Mode=OneWay}"
+                                    IsChecked="{x:Bind IsItemChecked(NotifyIconMenuTheme.InternalName, NotifyIconMenuThemeList[1].InternalName), Mode=OneWay}"
                                     Tag="1"
-                                    Text="{x:Bind ViewModel.NotifyIconMenuThemeList[1].DisplayName}">
+                                    Text="{x:Bind NotifyIconMenuThemeList[1].DisplayName}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind ViewModel.NotifyIconMenuThemeList[1].DisplayName}" Placement="Mouse" />
+                                        <ToolTip Content="{x:Bind NotifyIconMenuThemeList[1].DisplayName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
                             </MenuFlyout>

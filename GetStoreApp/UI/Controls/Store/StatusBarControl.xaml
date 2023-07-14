@@ -5,23 +5,18 @@
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:storeViewModel="using:GetStoreApp.ViewModels.Controls.Store"
     IsClosable="False"
     IsOpen="True"
-    Message="{x:Bind ViewModel.StateInfoText, Mode=OneWay}"
-    Severity="{x:Bind ViewModel.InfoBarSeverity, Mode=OneWay}"
+    Message="{x:Bind StateInfoText, Mode=OneWay}"
+    Severity="{x:Bind InfoBarSeverity, Mode=OneWay}"
     Style="{StaticResource InfoBarStyle}"
     mc:Ignorable="d">
 
-    <InfoBar.DataContext>
-        <storeViewModel:StatusBarViewModel x:Name="ViewModel" x:FieldModifier="public" />
-    </InfoBar.DataContext>
-
     <InfoBar.Content>
-        <ProgressRing IsIndeterminate="{x:Bind ViewModel.StatePrRingActValue, Mode=OneWay}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(ViewModel.StatePrRingVisValue), Mode=OneWay}" />
+        <ProgressRing IsIndeterminate="{x:Bind StatePrRingActValue, Mode=OneWay}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(StatePrRingVisValue), Mode=OneWay}" />
     </InfoBar.Content>
 
     <ToolTipService.ToolTip>
-        <ToolTip Content="{x:Bind ViewModel.StateInfoText, Mode=OneWay}" Placement="Mouse" />
+        <ToolTip Content="{x:Bind StateInfoText, Mode=OneWay}" Placement="Mouse" />
     </ToolTipService.ToolTip>
 </InfoBar>

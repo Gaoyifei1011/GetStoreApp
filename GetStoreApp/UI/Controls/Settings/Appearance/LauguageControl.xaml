@@ -6,13 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Appearance"
     Style="{StaticResource CardGridStyle}"
     mc:Ignorable="d">
-
-    <Grid.DataContext>
-        <settingsViewModel:LanguageViewModel x:Name="ViewModel" />
-    </Grid.DataContext>
 
     <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
@@ -46,7 +41,7 @@
         Grid.Column="2"
         VerticalAlignment="Center"
         controlExtensions:CursorHelper.Cursor="Hand"
-        Click="{x:Bind ViewModel.OnLanguageTipClicked}"
+        Click="{x:Bind OnLanguageTipClicked}"
         Style="{StaticResource ButtonInfoStyle}">
 
         <Button.Content>
@@ -66,12 +61,12 @@
         Width="Auto"
         VerticalAlignment="Center"
         DisplayMemberPath="DisplayName"
-        ItemsSource="{x:Bind ViewModel.LanguageList}"
-        SelectedItem="{x:Bind ViewModel.Language, Mode=OneWay}"
-        SelectionChanged="{x:Bind ViewModel.OnSelectionChanged}">
+        ItemsSource="{x:Bind LanguageList}"
+        SelectedItem="{x:Bind AppLanguage, Mode=OneWay}"
+        SelectionChanged="{x:Bind OnSelectionChanged}">
 
         <ToolTipService.ToolTip>
-            <ToolTip Content="{x:Bind ViewModel.Language.DisplayName, Mode=OneWay}" Placement="Mouse" />
+            <ToolTip Content="{x:Bind AppLanguage.DisplayName, Mode=OneWay}" Placement="Mouse" />
         </ToolTipService.ToolTip>
     </ComboBox>
 </Grid>

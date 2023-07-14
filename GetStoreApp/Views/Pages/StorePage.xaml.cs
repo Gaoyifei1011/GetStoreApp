@@ -35,7 +35,7 @@ namespace GetStoreApp.Views.Pages
         {
             InitializeComponent();
             UseInsVisValue = UseInstructionService.UseInsVisValue;
-            Request.ViewModel.InitializeStorePageOtherViewModel(HistoryLite.ViewModel, StatusBar.ViewModel, Result.ViewModel);
+            Request.InitializeStorePageControl(HistoryLite, StatusBar, Result);
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs args)
@@ -48,9 +48,9 @@ namespace GetStoreApp.Views.Pages
                 StoreNavigationArgs = (AppNaviagtionArgs)navigationArgs[0];
                 if (navigationArgs.Length == 4)
                 {
-                    Request.ViewModel.SelectedType = Request.ViewModel.TypeList.Find(item => item.InternalName.Equals(navigationArgs[1]));
-                    Request.ViewModel.SelectedChannel = Request.ViewModel.ChannelList.Find(item => item.InternalName.Equals(navigationArgs[2]));
-                    Request.ViewModel.LinkText = Convert.ToString(navigationArgs[3]);
+                    Request.SelectedType = Request.TypeList.Find(item => item.InternalName.Equals(navigationArgs[1]));
+                    Request.SelectedChannel = Request.ChannelList.Find(item => item.InternalName.Equals(navigationArgs[2]));
+                    Request.LinkText = Convert.ToString(navigationArgs[3]);
                 }
             }
             else
@@ -58,11 +58,11 @@ namespace GetStoreApp.Views.Pages
                 StoreNavigationArgs = AppNaviagtionArgs.None;
             }
 
-            if (HistoryLite.ViewModel.HistoryLiteItem != HistoryRecordService.HistoryLiteNum)
+            if (HistoryLite.HistoryLiteItem != HistoryRecordService.HistoryLiteNum)
             {
-                HistoryLite.ViewModel.HistoryLiteItem = HistoryRecordService.HistoryLiteNum;
+                HistoryLite.HistoryLiteItem = HistoryRecordService.HistoryLiteNum;
             }
-            await HistoryLite.ViewModel.GetHistoryLiteDataListAsync();
+            await HistoryLite.GetHistoryLiteDataListAsync();
         }
 
         /// <summary>

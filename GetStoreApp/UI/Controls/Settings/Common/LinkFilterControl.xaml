@@ -6,13 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Common"
     Style="{StaticResource ExpanderSettingsStyle}"
     mc:Ignorable="d">
-
-    <Expander.DataContext>
-        <settingsViewModel:LinkFilterViewModel x:Name="ViewModel" />
-    </Expander.DataContext>
 
     <Expander.Header>
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
@@ -48,7 +43,7 @@
 
             <Button
                 Grid.Column="2"
-                Click="{x:Bind ViewModel.OnLinkFilterInstructionClicked}"
+                Click="{x:Bind OnLinkFilterInstructionClicked}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Settings/LinkFilterInstruction')}">
 
                 <ToolTipService.ToolTip>
@@ -83,10 +78,10 @@
                         MinWidth="0"
                         controlExtensions:CursorHelper.Cursor="Hand"
                         FlowDirection="RightToLeft"
-                        IsOn="{x:Bind ViewModel.StartsWithEFilterValue, Mode=OneWay}"
+                        IsOn="{x:Bind StartsWithEFilterValue, Mode=OneWay}"
                         OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/StartsWithEOffContent')}"
                         OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/StartsWithEOnContent')}"
-                        Toggled="{x:Bind ViewModel.OnStartWithEToggled}" />
+                        Toggled="{x:Bind OnStartWithEToggled}" />
                 </Grid>
             </StackPanel>
 
@@ -115,10 +110,10 @@
                         MinWidth="0"
                         controlExtensions:CursorHelper.Cursor="Hand"
                         FlowDirection="RightToLeft"
-                        IsOn="{x:Bind ViewModel.BlockMapFilterValue, Mode=OneWay}"
+                        IsOn="{x:Bind BlockMapFilterValue, Mode=OneWay}"
                         OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapOffContent')}"
                         OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapOnContent')}"
-                        Toggled="{x:Bind ViewModel.OnBlockMapToggled}" />
+                        Toggled="{x:Bind OnBlockMapToggled}" />
                 </Grid>
             </StackPanel>
         </StackPanel>

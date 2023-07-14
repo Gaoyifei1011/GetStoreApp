@@ -2,7 +2,6 @@
     x:Class="GetStoreApp.UI.Controls.About.ThanksControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:aboutViewModel="using:GetStoreApp.ViewModels.Controls.About"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -10,10 +9,6 @@
     xmlns:root="using:GetStoreApp.Services.Root"
     Style="{StaticResource ExpanderAboutStyle}"
     mc:Ignorable="d">
-
-    <Expander.DataContext>
-        <aboutViewModel:ThanksViewModel x:Name="ViewModel" />
-    </Expander.DataContext>
 
     <Expander.Header>
         <TextBlock
@@ -37,7 +32,7 @@
                 BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}"
                 BorderThickness="1"
                 CornerRadius="{ThemeResource ControlCornerRadius}"
-                ItemsSource="{x:Bind ViewModel.ThanksList}"
+                ItemsSource="{x:Bind ThanksList}"
                 SelectionMode="None">
 
                 <GridView.ItemContainerStyle>

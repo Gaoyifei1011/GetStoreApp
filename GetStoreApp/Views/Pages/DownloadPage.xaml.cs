@@ -38,15 +38,15 @@ namespace GetStoreApp.Views.Pages
         {
             base.OnNavigatedTo(args);
             UseInsVisValue = UseInstructionService.UseInsVisValue;
-            Downloading.ViewModel.StartDownloadingTimer();
+            Downloading.StartDownloadingTimer();
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs args)
         {
             base.OnNavigatingFrom(args);
-            Downloading.ViewModel.StopDownloadingTimer(true);
-            DownloadSchedulerService.DownloadingList.ItemsChanged -= Unfinished.ViewModel.OnDownloadingListItemsChanged;
-            DownloadSchedulerService.DownloadingList.ItemsChanged -= Completed.ViewModel.OnDownloadingListItemsChanged;
+            Downloading.StopDownloadingTimer(true);
+            DownloadSchedulerService.DownloadingList.ItemsChanged -= Unfinished.OnDownloadingListItemsChanged;
+            DownloadSchedulerService.DownloadingList.ItemsChanged -= Completed.OnDownloadingListItemsChanged;
         }
 
         /// <summary>
@@ -61,17 +61,17 @@ namespace GetStoreApp.Views.Pages
                 {
                     if (pivot.SelectedIndex == 0)
                     {
-                        Downloading.ViewModel.StartDownloadingTimer();
+                        Downloading.StartDownloadingTimer();
                     }
                     else if (pivot.SelectedIndex == 1)
                     {
-                        Downloading.ViewModel.StopDownloadingTimer(false);
-                        await Unfinished.ViewModel.GetUnfinishedDataListAsync();
+                        Downloading.StopDownloadingTimer(false);
+                        await Unfinished.GetUnfinishedDataListAsync();
                     }
                     else if (pivot.SelectedIndex == 2)
                     {
-                        Downloading.ViewModel.StopDownloadingTimer(false);
-                        await Completed.ViewModel.GetCompletedDataListAsync();
+                        Downloading.StopDownloadingTimer(false);
+                        await Completed.GetCompletedDataListAsync();
                     }
                 }
             }

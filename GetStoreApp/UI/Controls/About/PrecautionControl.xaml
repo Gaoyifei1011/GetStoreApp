@@ -2,16 +2,11 @@
     x:Class="GetStoreApp.UI.Controls.About.PrecautionControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:aboutViewModel="using:GetStoreApp.ViewModels.Controls.About"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     Style="{StaticResource ExpanderAboutStyle}"
     mc:Ignorable="d">
-
-    <Expander.DataContext>
-        <aboutViewModel:PrecautionViewModel x:Name="ViewModel" />
-    </Expander.DataContext>
 
     <Expander.Header>
         <TextBlock Style="{StaticResource ExpanderHeaderStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/Precaution')}" />
@@ -28,7 +23,7 @@
             <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/DesktopAppsDescription')}" />
 
             <HyperlinkButton
-                Click="{x:Bind ViewModel.OnRecognizeClicked}"
+                Click="{x:Bind OnRecognizeClicked}"
                 Content="{x:Bind root:ResourceService.GetLocalized('About/RecognizeDesktopApps')}"
                 Style="{StaticResource AboutHyperlinkButtonStyle}">
 

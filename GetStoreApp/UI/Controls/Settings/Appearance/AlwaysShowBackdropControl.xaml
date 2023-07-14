@@ -6,13 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Appearance"
     Style="{StaticResource CardGridStyle}"
     mc:Ignorable="d">
-
-    <Grid.DataContext>
-        <settingsViewModel:AlwaysShowBackdropViewModel x:Name="ViewModel" />
-    </Grid.DataContext>
 
     <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
@@ -46,8 +41,8 @@
         MinWidth="0"
         controlExtensions:CursorHelper.Cursor="Hand"
         FlowDirection="RightToLeft"
-        IsOn="{x:Bind ViewModel.AlwaysShowBackdropValue, Mode=OneWay}"
+        IsOn="{x:Bind AlwaysShowBackdropValue, Mode=OneWay}"
         OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/AlwaysShowBackdropOffContent')}"
         OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/AlwaysShowBackdropOnContent')}"
-        Toggled="{x:Bind ViewModel.OnToggled}" />
+        Toggled="{x:Bind OnToggled}" />
 </Grid>

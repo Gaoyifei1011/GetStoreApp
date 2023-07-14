@@ -6,13 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:storeViewModel="using:GetStoreApp.ViewModels.Controls.Store"
     ColumnSpacing="6"
     mc:Ignorable="d">
-
-    <Grid.DataContext>
-        <storeViewModel:RequestViewModel x:Name="ViewModel" x:FieldModifier="public" />
-    </Grid.DataContext>
 
     <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
@@ -24,59 +19,59 @@
     <DropDownButton
         Grid.Column="0"
         VerticalAlignment="Center"
-        Content="{x:Bind ViewModel.SelectedType.DisplayName, Mode=OneWay}">
+        Content="{x:Bind SelectedType.DisplayName, Mode=OneWay}">
 
         <ToolTipService.ToolTip>
-            <ToolTip Content="{x:Bind ViewModel.SelectedType.DisplayName, Mode=OneWay}" Placement="Mouse" />
+            <ToolTip Content="{x:Bind SelectedType.DisplayName, Mode=OneWay}" Placement="Mouse" />
         </ToolTipService.ToolTip>
 
         <DropDownButton.Flyout>
             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                 <RadioMenuFlyoutItem
-                    Click="{x:Bind ViewModel.OnTypeSelectClicked}"
+                    Click="{x:Bind OnTypeSelectClicked}"
                     GroupName="TypeSelect"
-                    IsChecked="{x:Bind IsTypeItemChecked(ViewModel.SelectedType.InternalName, ViewModel.TypeList[0].InternalName), Mode=OneWay}"
+                    IsChecked="{x:Bind IsTypeItemChecked(SelectedType.InternalName, TypeList[0].InternalName), Mode=OneWay}"
                     Tag="0"
-                    Text="{x:Bind ViewModel.TypeList[0].DisplayName}">
+                    Text="{x:Bind TypeList[0].DisplayName}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind ViewModel.TypeList[0].DisplayName}" Placement="Mouse" />
+                        <ToolTip Content="{x:Bind TypeList[0].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </RadioMenuFlyoutItem>
 
                 <RadioMenuFlyoutItem
-                    Click="{x:Bind ViewModel.OnTypeSelectClicked}"
+                    Click="{x:Bind OnTypeSelectClicked}"
                     GroupName="TypeSelect"
-                    IsChecked="{x:Bind IsTypeItemChecked(ViewModel.SelectedType.InternalName, ViewModel.TypeList[1].InternalName), Mode=OneWay}"
+                    IsChecked="{x:Bind IsTypeItemChecked(SelectedType.InternalName, TypeList[1].InternalName), Mode=OneWay}"
                     Tag="1"
-                    Text="{x:Bind ViewModel.TypeList[1].DisplayName}">
+                    Text="{x:Bind TypeList[1].DisplayName}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind ViewModel.TypeList[1].DisplayName}" Placement="Mouse" />
+                        <ToolTip Content="{x:Bind TypeList[1].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </RadioMenuFlyoutItem>
 
                 <RadioMenuFlyoutItem
-                    Click="{x:Bind ViewModel.OnTypeSelectClicked}"
+                    Click="{x:Bind OnTypeSelectClicked}"
                     GroupName="TypeSelect"
-                    IsChecked="{x:Bind IsTypeItemChecked(ViewModel.SelectedType.InternalName, ViewModel.TypeList[2].InternalName), Mode=OneWay}"
+                    IsChecked="{x:Bind IsTypeItemChecked(SelectedType.InternalName, TypeList[2].InternalName), Mode=OneWay}"
                     Tag="2"
-                    Text="{x:Bind ViewModel.TypeList[2].DisplayName}">
+                    Text="{x:Bind TypeList[2].DisplayName}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind ViewModel.TypeList[2].DisplayName}" Placement="Mouse" />
+                        <ToolTip Content="{x:Bind TypeList[2].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </RadioMenuFlyoutItem>
 
                 <RadioMenuFlyoutItem
-                    Click="{x:Bind ViewModel.OnTypeSelectClicked}"
+                    Click="{x:Bind OnTypeSelectClicked}"
                     GroupName="TypeSelect"
-                    IsChecked="{x:Bind IsTypeItemChecked(ViewModel.SelectedType.InternalName, ViewModel.TypeList[3].InternalName), Mode=OneWay}"
+                    IsChecked="{x:Bind IsTypeItemChecked(SelectedType.InternalName, TypeList[3].InternalName), Mode=OneWay}"
                     Tag="3"
-                    Text="{x:Bind ViewModel.TypeList[3].DisplayName}">
+                    Text="{x:Bind TypeList[3].DisplayName}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind ViewModel.TypeList[3].DisplayName}" Placement="Mouse" />
+                        <ToolTip Content="{x:Bind TypeList[3].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </RadioMenuFlyoutItem>
             </MenuFlyout>
@@ -86,59 +81,59 @@
     <DropDownButton
         Grid.Column="1"
         VerticalAlignment="Center"
-        Content="{x:Bind ViewModel.SelectedChannel.DisplayName, Mode=OneWay}">
+        Content="{x:Bind SelectedChannel.DisplayName, Mode=OneWay}">
 
         <ToolTipService.ToolTip>
-            <ToolTip Content="{x:Bind ViewModel.SelectedChannel.DisplayName, Mode=OneWay}" Placement="Mouse" />
+            <ToolTip Content="{x:Bind SelectedChannel.DisplayName, Mode=OneWay}" Placement="Mouse" />
         </ToolTipService.ToolTip>
 
         <DropDownButton.Flyout>
             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                 <RadioMenuFlyoutItem
-                    Click="{x:Bind ViewModel.OnChannelSelectClicked}"
+                    Click="{x:Bind OnChannelSelectClicked}"
                     GroupName="ChannelSelect"
-                    IsChecked="{x:Bind IsChannelItemChecked(ViewModel.SelectedChannel.InternalName, ViewModel.ChannelList[0].InternalName), Mode=OneWay}"
+                    IsChecked="{x:Bind IsChannelItemChecked(SelectedChannel.InternalName, ChannelList[0].InternalName), Mode=OneWay}"
                     Tag="0"
-                    Text="{x:Bind ViewModel.ChannelList[0].DisplayName}">
+                    Text="{x:Bind ChannelList[0].DisplayName}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind ViewModel.ChannelList[0].DisplayName}" Placement="Mouse" />
+                        <ToolTip Content="{x:Bind ChannelList[0].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </RadioMenuFlyoutItem>
 
                 <RadioMenuFlyoutItem
-                    Click="{x:Bind ViewModel.OnChannelSelectClicked}"
+                    Click="{x:Bind OnChannelSelectClicked}"
                     GroupName="ChannelSelect"
-                    IsChecked="{x:Bind IsChannelItemChecked(ViewModel.SelectedChannel.InternalName, ViewModel.ChannelList[1].InternalName), Mode=OneWay}"
+                    IsChecked="{x:Bind IsChannelItemChecked(SelectedChannel.InternalName, ChannelList[1].InternalName), Mode=OneWay}"
                     Tag="1"
-                    Text="{x:Bind ViewModel.ChannelList[1].DisplayName}">
+                    Text="{x:Bind ChannelList[1].DisplayName}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind ViewModel.ChannelList[1].DisplayName}" Placement="Mouse" />
+                        <ToolTip Content="{x:Bind ChannelList[1].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </RadioMenuFlyoutItem>
 
                 <RadioMenuFlyoutItem
-                    Click="{x:Bind ViewModel.OnChannelSelectClicked}"
+                    Click="{x:Bind OnChannelSelectClicked}"
                     GroupName="ChannelSelect"
-                    IsChecked="{x:Bind IsChannelItemChecked(ViewModel.SelectedChannel.InternalName, ViewModel.ChannelList[2].InternalName), Mode=OneWay}"
+                    IsChecked="{x:Bind IsChannelItemChecked(SelectedChannel.InternalName, ChannelList[2].InternalName), Mode=OneWay}"
                     Tag="2"
-                    Text="{x:Bind ViewModel.ChannelList[2].DisplayName}">
+                    Text="{x:Bind ChannelList[2].DisplayName}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind ViewModel.ChannelList[2].DisplayName}" Placement="Mouse" />
+                        <ToolTip Content="{x:Bind ChannelList[2].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </RadioMenuFlyoutItem>
 
                 <RadioMenuFlyoutItem
-                    Click="{x:Bind ViewModel.OnChannelSelectClicked}"
+                    Click="{x:Bind OnChannelSelectClicked}"
                     GroupName="ChannelSelect"
-                    IsChecked="{x:Bind IsChannelItemChecked(ViewModel.SelectedChannel.InternalName, ViewModel.ChannelList[3].InternalName), Mode=OneWay}"
+                    IsChecked="{x:Bind IsChannelItemChecked(SelectedChannel.InternalName, ChannelList[3].InternalName), Mode=OneWay}"
                     Tag="3"
-                    Text="{x:Bind ViewModel.ChannelList[3].DisplayName}">
+                    Text="{x:Bind ChannelList[3].DisplayName}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind ViewModel.ChannelList[3].DisplayName}" Placement="Mouse" />
+                        <ToolTip Content="{x:Bind ChannelList[3].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </RadioMenuFlyoutItem>
             </MenuFlyout>
@@ -147,19 +142,19 @@
 
     <AutoSuggestBox
         Grid.Column="2"
-        IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(ViewModel.IsGettingLinks), Mode=OneWay}"
+        IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsGettingLinks), Mode=OneWay}"
         IsSuggestionListOpen="False"
-        PlaceholderText="{x:Bind ViewModel.LinkPlaceHolderText, Mode=OneWay}"
-        QuerySubmitted="{x:Bind ViewModel.OnQuerySubmitted}"
-        Text="{x:Bind ViewModel.LinkText, Mode=TwoWay}" />
+        PlaceholderText="{x:Bind LinkPlaceHolderText, Mode=OneWay}"
+        QuerySubmitted="{x:Bind OnQuerySubmitted}"
+        Text="{x:Bind LinkText, Mode=TwoWay}" />
 
     <Button
         Grid.Column="3"
         HorizontalAlignment="Center"
         VerticalAlignment="Bottom"
-        Click="{x:Bind ViewModel.OnGetLinksClicked}"
+        Click="{x:Bind OnGetLinksClicked}"
         Content="{x:Bind root:ResourceService.GetLocalized('Store/GetLinks')}"
-        IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(ViewModel.IsGettingLinks), Mode=OneWay}"
+        IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsGettingLinks), Mode=OneWay}"
         Style="{StaticResource AccentButtonStyle}">
 
         <ToolTipService.ToolTip>

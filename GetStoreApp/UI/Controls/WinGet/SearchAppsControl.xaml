@@ -8,16 +8,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:winGetViewModel="using:GetStoreApp.ViewModels.Controls.WinGet"
     xmlns:winget="using:GetStoreApp.Models.Controls.WinGet"
     x:Name="SearchAppsRoot"
     Padding="0"
-    Loaded="{x:Bind ViewModel.OnLoaded}"
+    Loaded="{x:Bind OnLoaded}"
     mc:Ignorable="d">
-
-    <Grid.DataContext>
-        <winGetViewModel:SearchAppsViewModel x:Name="ViewModel" x:FieldModifier="public" />
-    </Grid.DataContext>
 
     <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
@@ -57,10 +52,10 @@
         <TextBlock
             Grid.Column="3"
             VerticalAlignment="Center"
-            Text="{x:Bind LocalizeSearchAppsCountInfo(ViewModel.SearchAppsDataList.Count), Mode=OneWay}">
+            Text="{x:Bind LocalizeSearchAppsCountInfo(SearchAppsDataList.Count), Mode=OneWay}">
 
             <ToolTipService.ToolTip>
-                <ToolTip Content="{x:Bind LocalizeSearchAppsCountInfo(ViewModel.SearchAppsDataList.Count), Mode=OneWay}" Placement="Mouse" />
+                <ToolTip Content="{x:Bind LocalizeSearchAppsCountInfo(SearchAppsDataList.Count), Mode=OneWay}" Placement="Mouse" />
             </ToolTipService.ToolTip>
         </TextBlock>
 
@@ -69,10 +64,10 @@
             Width="170"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            IsEnabled="{x:Bind IsSearchBoxEnabled(ViewModel.NotSearched, ViewModel.IsSearchCompleted), Mode=OneWay}"
+            IsEnabled="{x:Bind IsSearchBoxEnabled(NotSearched, IsSearchCompleted), Mode=OneWay}"
             PlaceholderText="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchAppsPlaceHolderText')}"
-            QuerySubmitted="{x:Bind ViewModel.OnQuerySubmitted}"
-            Text="{x:Bind ViewModel.SearchText, Mode=TwoWay}">
+            QuerySubmitted="{x:Bind OnQuerySubmitted}"
+            Text="{x:Bind SearchText, Mode=TwoWay}">
 
             <AutoSuggestBox.QueryIcon>
                 <FontIcon
@@ -91,8 +86,8 @@
 
             <MenuFlyoutItem
                 controlExtensions:CursorHelper.Cursor="Hand"
-                Click="{x:Bind ViewModel.OnRefreshClicked}"
-                IsEnabled="{x:Bind ViewModel.IsSearchCompleted, Mode=OneWay}"
+                Click="{x:Bind OnRefreshClicked}"
+                IsEnabled="{x:Bind IsSearchCompleted, Mode=OneWay}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                 Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Refresh')}">
 
@@ -111,7 +106,7 @@
         x:Name="NotSearchedGrid"
         Grid.Row="1"
         Margin="30,3,30,0"
-        x:Load="{x:Bind ViewModel.NotSearched, Mode=OneWay}"
+        x:Load="{x:Bind NotSearched, Mode=OneWay}"
         Style="{StaticResource CardGridStyle}">
 
         <StackPanel
@@ -136,7 +131,7 @@
     <Grid
         Grid.Row="2"
         Padding="0"
-        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(ViewModel.NotSearched), Mode=OneWay}">
+        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(NotSearched), Mode=OneWay}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -147,7 +142,7 @@
             x:Name="SearchingGrid"
             Grid.Row="0"
             Margin="30,3,30,0"
-            x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(ViewModel.IsSearchCompleted), Mode=OneWay}"
+            x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsSearchCompleted), Mode=OneWay}"
             Style="{StaticResource CardGridStyle}">
 
             <StackPanel
@@ -174,7 +169,7 @@
         <Grid
             Grid.Row="2"
             Margin="0,3,0,0"
-            Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(ViewModel.IsSearchCompleted), Mode=OneWay}">
+            Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsSearchCompleted), Mode=OneWay}">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -185,7 +180,7 @@
                 Grid.Row="0"
                 Margin="30,0"
                 Style="{StaticResource CardGridStyle}"
-                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(ViewModel.SearchAppsDataList.Count), Mode=OneWay}">
+                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(SearchAppsDataList.Count), Mode=OneWay}">
                 <TextBlock
                     Margin="0,10"
                     VerticalAlignment="Center"
@@ -202,13 +197,13 @@
                 Grid.Row="1"
                 Padding="30,0,30,30"
                 ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
-                ItemsSource="{x:Bind ViewModel.SearchAppsDataList, Mode=OneWay}"
+                ItemsSource="{x:Bind SearchAppsDataList, Mode=OneWay}"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 ScrollViewer.HorizontalScrollMode="Disabled"
                 ScrollViewer.VerticalScrollBarVisibility="Auto"
                 ScrollViewer.VerticalScrollMode="Enabled"
                 SelectionMode="None"
-                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(ViewModel.SearchAppsDataList.Count), Mode=OneWay}">
+                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(SearchAppsDataList.Count), Mode=OneWay}">
 
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="winget:SearchAppsModel">
@@ -263,7 +258,7 @@
                             <basicInput:ExtendedSplitButton
                                 Grid.Column="3"
                                 MinWidth="100"
-                                Command="{Binding ElementName=SearchAppsRoot, Path=DataContext.InstallCommand, Mode=OneTime}"
+                                Command="{Binding ElementName=SearchAppsRoot, Path=InstallCommand, Mode=OneTime}"
                                 CommandParameter="{Binding}"
                                 Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Install')}"
                                 IsPrimaryButtonEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsInstalling), Mode=OneWay}">
@@ -279,7 +274,7 @@
                                 <basicInput:ExtendedSplitButton.Flyout>
                                     <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                                         <MenuFlyoutItem
-                                            Command="{Binding ElementName=SearchAppsRoot, Path=DataContext.CopyInstallTextCommand, Mode=OneTime}"
+                                            Command="{Binding ElementName=SearchAppsRoot, Path=CopyInstallTextCommand, Mode=OneTime}"
                                             CommandParameter="{x:Bind AppID}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyInstallText')}">
 
@@ -293,7 +288,7 @@
                                         </MenuFlyoutItem>
 
                                         <MenuFlyoutItem
-                                            Command="{Binding ElementName=SearchAppsRoot, Path=DataContext.InstallWithCmdCommand, Mode=OneTime}"
+                                            Command="{Binding ElementName=SearchAppsRoot, Path=InstallWithCmdCommand, Mode=OneTime}"
                                             CommandParameter="{x:Bind AppID}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallWithCmd')}">
 

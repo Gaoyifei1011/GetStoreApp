@@ -8,16 +8,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:store="using:GetStoreApp.Models.Controls.Store"
-    xmlns:storeViewModel="using:GetStoreApp.ViewModels.Controls.Store"
     xmlns:system="using:System"
     x:Name="ResultRoot"
     CornerRadius="{ThemeResource ColorPickerSliderCornerRadius}"
-    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(ViewModel.ResultControlVisable), Mode=OneWay}"
+    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(ResultControlVisable), Mode=OneWay}"
     mc:Ignorable="d">
-
-    <Grid.DataContext>
-        <storeViewModel:ResultViewModel x:Name="ViewModel" x:FieldModifier="public" />
-    </Grid.DataContext>
 
     <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
@@ -53,19 +48,19 @@
         <StackPanel
             Grid.Column="3"
             VerticalAlignment="Center"
-            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(ViewModel.ResultDataList.Count), Mode=OneWay}">
+            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(ResultDataList.Count), Mode=OneWay}">
 
-            <TextBlock Text="{x:Bind LocalizeCategoryId(ViewModel.CategoryId), Mode=OneWay}">
+            <TextBlock Text="{x:Bind LocalizeCategoryId(CategoryId), Mode=OneWay}">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind ViewModel.CategoryId, Mode=OneWay}" Placement="Mouse" />
+                    <ToolTip Content="{x:Bind CategoryId, Mode=OneWay}" Placement="Mouse" />
                 </ToolTipService.ToolTip>
             </TextBlock>
 
-            <TextBlock Text="{x:Bind LocalizeResultCountInfo(ViewModel.ResultDataList.Count), Mode=OneWay}">
+            <TextBlock Text="{x:Bind LocalizeResultCountInfo(ResultDataList.Count), Mode=OneWay}">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind LocalizeResultCountInfo(ViewModel.ResultDataList.Count), Mode=OneWay}" Placement="Mouse" />
+                    <ToolTip Content="{x:Bind LocalizeResultCountInfo(ResultDataList.Count), Mode=OneWay}" Placement="Mouse" />
                 </ToolTipService.ToolTip>
             </TextBlock>
         </StackPanel>
@@ -74,22 +69,22 @@
             Grid.Column="3"
             VerticalAlignment="Center"
             Text="{x:Bind root:ResourceService.GetLocalized('Store/SearchResultEmpty')}"
-            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(ViewModel.ResultDataList.Count), Mode=OneWay}" />
+            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(ResultDataList.Count), Mode=OneWay}" />
 
         <StackPanel
             x:Name="NormalMode"
             Grid.Column="4"
             Margin="0,0,10,0"
             VerticalAlignment="Center"
-            x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(ViewModel.IsSelectMode), Mode=OneWay}"
+            x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsSelectMode), Mode=OneWay}"
             Background="Transparent"
             Orientation="Horizontal"
             Spacing="2">
 
             <MenuFlyoutItem
                 controlExtensions:CursorHelper.Cursor="Hand"
-                Click="{x:Bind ViewModel.OnCopyIDClicked}"
-                IsEnabled="{x:Bind system:Convert.ToBoolean(ViewModel.ResultDataList.Count), Mode=OneWay}"
+                Click="{x:Bind OnCopyIDClicked}"
+                IsEnabled="{x:Bind system:Convert.ToBoolean(ResultDataList.Count), Mode=OneWay}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Store/CopyID')}">
                 <MenuFlyoutItem.Icon>
@@ -103,8 +98,8 @@
 
             <MenuFlyoutItem
                 controlExtensions:CursorHelper.Cursor="Hand"
-                Click="{x:Bind ViewModel.OnSelectClicked}"
-                IsEnabled="{x:Bind system:Convert.ToBoolean(ViewModel.ResultDataList.Count), Mode=OneWay}"
+                Click="{x:Bind OnSelectClicked}"
+                IsEnabled="{x:Bind system:Convert.ToBoolean(ResultDataList.Count), Mode=OneWay}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Store/Select')}">
 
@@ -123,14 +118,14 @@
             Grid.Column="4"
             Margin="0,0,10,0"
             VerticalAlignment="Center"
-            x:Load="{x:Bind ViewModel.IsSelectMode, Mode=OneWay}"
+            x:Load="{x:Bind IsSelectMode, Mode=OneWay}"
             Background="Transparent"
             Orientation="Horizontal"
             Spacing="2">
 
             <MenuFlyoutItem
                 controlExtensions:CursorHelper.Cursor="Hand"
-                Click="{x:Bind ViewModel.OnSelectAllClicked}"
+                Click="{x:Bind OnSelectAllClicked}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Store/SelectAll')}">
 
@@ -145,7 +140,7 @@
 
             <MenuFlyoutItem
                 controlExtensions:CursorHelper.Cursor="Hand"
-                Click="{x:Bind ViewModel.OnSelectNoneClicked}"
+                Click="{x:Bind OnSelectNoneClicked}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Store/SelectNone')}">
 
@@ -160,7 +155,7 @@
 
             <MenuFlyoutItem
                 controlExtensions:CursorHelper.Cursor="Hand"
-                Click="{x:Bind ViewModel.OnCopyOptionsClicked}"
+                Click="{x:Bind OnCopyOptionsClicked}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Store/CopyOptions')}">
 
@@ -174,14 +169,14 @@
 
                 <FlyoutBase.AttachedFlyout>
                     <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
-                        <MenuFlyoutItem Click="{x:Bind ViewModel.OnCopySelectedLinkClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedLink')}">
+                        <MenuFlyoutItem Click="{x:Bind OnCopySelectedLinkClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedLink')}">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedLinkToolTip')}" Placement="Mouse" />
                             </ToolTipService.ToolTip>
                         </MenuFlyoutItem>
 
-                        <MenuFlyoutItem Click="{x:Bind ViewModel.OnCopySelectedClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedContent')}">
+                        <MenuFlyoutItem Click="{x:Bind OnCopySelectedClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedContent')}">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedContentToolTip')}" Placement="Mouse" />
@@ -193,7 +188,7 @@
 
             <MenuFlyoutItem
                 controlExtensions:CursorHelper.Cursor="Hand"
-                Click="{x:Bind ViewModel.OnDownloadSelectedClicked}"
+                Click="{x:Bind OnDownloadSelectedClicked}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Store/DownloadSelected')}">
 
@@ -208,7 +203,7 @@
 
             <MenuFlyoutItem
                 controlExtensions:CursorHelper.Cursor="Hand"
-                Click="{x:Bind ViewModel.OnCancelClicked}"
+                Click="{x:Bind OnCancelClicked}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Store/Cancel')}">
 
@@ -225,12 +220,12 @@
 
     <ListView
         Grid.Row="1"
-        IsItemClickEnabled="{x:Bind ViewModel.IsSelectMode, Mode=OneWay}"
-        ItemClick="{x:Bind ViewModel.OnItemClicked}"
+        IsItemClickEnabled="{x:Bind IsSelectMode, Mode=OneWay}"
+        ItemClick="{x:Bind OnItemClicked}"
         ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
-        ItemsSource="{x:Bind ViewModel.ResultDataList, Mode=OneWay}"
+        ItemsSource="{x:Bind ResultDataList, Mode=OneWay}"
         SelectionMode="None"
-        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(ViewModel.ResultDataList.Count), Mode=OneWay}">
+        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(ResultDataList.Count), Mode=OneWay}">
 
         <ListView.Header>
             <Grid
@@ -254,7 +249,7 @@
                     Margin="10,0,0,0"
                     VerticalAlignment="Center"
                     Text="{x:Bind root:ResourceService.GetLocalized('Store/Select')}"
-                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(ViewModel.IsSelectMode), Mode=OneWay}">
+                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsSelectMode), Mode=OneWay}">
 
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/Select')}" Placement="Mouse" />
@@ -358,7 +353,7 @@
                         Grid.Column="1"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Command="{Binding ElementName=ResultRoot, Path=DataContext.DownloadCommand, Mode=OneTime}"
+                        Command="{Binding ElementName=ResultRoot, Path=DownloadCommand, Mode=OneTime}"
                         CommandParameter="{Binding}"
                         Content="{x:Bind FileName}"
                         Style="{StaticResource HyperlinkButtonStyle}">
@@ -420,7 +415,7 @@
                         <DropDownButton.Flyout>
                             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                                 <MenuFlyoutItem
-                                    Command="{Binding ElementName=ResultRoot, Path=DataContext.CopyLinkCommand, Mode=OneTime}"
+                                    Command="{Binding ElementName=ResultRoot, Path=CopyLinkCommand, Mode=OneTime}"
                                     CommandParameter="{x:Bind FileLink}"
                                     Text="{x:Bind root:ResourceService.GetLocalized('Store/CopyLink')}">
 
@@ -430,7 +425,7 @@
                                 </MenuFlyoutItem>
 
                                 <MenuFlyoutItem
-                                    Command="{Binding ElementName=ResultRoot, Path=DataContext.CopyContentCommand, Mode=OneTime}"
+                                    Command="{Binding ElementName=ResultRoot, Path=CopyContentCommand, Mode=OneTime}"
                                     CommandParameter="{Binding}"
                                     Text="{x:Bind root:ResourceService.GetLocalized('Store/CopyContent')}">
 

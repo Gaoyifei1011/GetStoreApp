@@ -5,13 +5,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:settingsViewModel="using:GetStoreApp.ViewModels.Controls.Settings.Common"
     Style="{StaticResource ExpanderSettingsStyle}"
     mc:Ignorable="d">
-
-    <Expander.DataContext>
-        <settingsViewModel:DownloadOptionsViewModel x:Name="ViewModel" />
-    </Expander.DataContext>
 
     <Expander.Header>
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
@@ -47,7 +42,7 @@
 
             <Button
                 Grid.Column="2"
-                Click="{x:Bind ViewModel.OnDownloadInstructionClicked}"
+                Click="{x:Bind OnDownloadInstructionClicked}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadInstruction')}">
 
                 <ToolTipService.ToolTip>
@@ -74,8 +69,8 @@
                             Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadFolder')}" />
 
                         <HyperlinkButton
-                            Click="{x:Bind ViewModel.OnOpenFolderClicked}"
-                            Content="{x:Bind ViewModel.DownloadFolder.Path, Mode=OneWay}"
+                            Click="{x:Bind OnOpenFolderClicked}"
+                            Content="{x:Bind DownloadFolder.Path, Mode=OneWay}"
                             Style="{StaticResource HyperlinkButtonStyle}">
 
                             <ToolTipService.ToolTip>
@@ -87,7 +82,7 @@
                     <Button
                         Grid.Column="1"
                         Margin="6,0,6,0"
-                        Click="{x:Bind ViewModel.OnUseDefaultFolderClicked}"
+                        Click="{x:Bind OnUseDefaultFolderClicked}"
                         Content="{x:Bind root:ResourceService.GetLocalized('Settings/UseDefaultFolder')}">
 
                         <ToolTipService.ToolTip>
@@ -97,7 +92,7 @@
 
                     <Button
                         Grid.Column="2"
-                        Click="{x:Bind ViewModel.OnChangeFolderClicked}"
+                        Click="{x:Bind OnChangeFolderClicked}"
                         Content="{x:Bind root:ResourceService.GetLocalized('Settings/ChangeFolder')}">
 
                         <ToolTipService.ToolTip>
@@ -130,18 +125,18 @@
                     <DropDownButton
                         Grid.Column="1"
                         VerticalAlignment="Center"
-                        Content="{x:Bind ViewModel.DownloadItem, Mode=OneWay}">
+                        Content="{x:Bind DownloadItem, Mode=OneWay}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind ViewModel.DownloadItem, Mode=OneWay}" Placement="Mouse" />
+                            <ToolTip Content="{x:Bind DownloadItem, Mode=OneWay}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
 
                         <DropDownButton.Flyout>
                             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                                 <RadioMenuFlyoutItem
-                                    Click="{x:Bind ViewModel.OnDownloadItemSelectClicked}"
+                                    Click="{x:Bind OnDownloadItemSelectClicked}"
                                     GroupName="DownloadItemSetting"
-                                    IsChecked="{x:Bind IsDownloadItemChecked(ViewModel.DownloadItem, 1), Mode=OneWay}"
+                                    IsChecked="{x:Bind IsDownloadItemChecked(DownloadItem, 1), Mode=OneWay}"
                                     Tag="1"
                                     Text="1">
 
@@ -151,9 +146,9 @@
                                 </RadioMenuFlyoutItem>
 
                                 <RadioMenuFlyoutItem
-                                    Click="{x:Bind ViewModel.OnDownloadItemSelectClicked}"
+                                    Click="{x:Bind OnDownloadItemSelectClicked}"
                                     GroupName="DownloadItemSetting"
-                                    IsChecked="{x:Bind IsDownloadItemChecked(ViewModel.DownloadItem, 2), Mode=OneWay}"
+                                    IsChecked="{x:Bind IsDownloadItemChecked(DownloadItem, 2), Mode=OneWay}"
                                     Tag="2"
                                     Text="2">
 
@@ -163,9 +158,9 @@
                                 </RadioMenuFlyoutItem>
 
                                 <RadioMenuFlyoutItem
-                                    Click="{x:Bind ViewModel.OnDownloadItemSelectClicked}"
+                                    Click="{x:Bind OnDownloadItemSelectClicked}"
                                     GroupName="DownloadItemSetting"
-                                    IsChecked="{x:Bind IsDownloadItemChecked(ViewModel.DownloadItem, 3), Mode=OneWay}"
+                                    IsChecked="{x:Bind IsDownloadItemChecked(DownloadItem, 3), Mode=OneWay}"
                                     Tag="3"
                                     Text="3">
 
@@ -202,35 +197,35 @@
                     <DropDownButton
                         Grid.Column="1"
                         VerticalAlignment="Center"
-                        Content="{x:Bind ViewModel.DownloadMode.DisplayName, Mode=OneWay}">
+                        Content="{x:Bind DownloadMode.DisplayName, Mode=OneWay}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind ViewModel.DownloadMode.DisplayName, Mode=OneWay}" Placement="Mouse" />
+                            <ToolTip Content="{x:Bind DownloadMode.DisplayName, Mode=OneWay}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
 
                         <DropDownButton.Flyout>
                             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                                 <RadioMenuFlyoutItem
-                                    Click="{x:Bind ViewModel.OnDownloadModeSelectClicked}"
+                                    Click="{x:Bind OnDownloadModeSelectClicked}"
                                     GroupName="DownloadModeSetting"
-                                    IsChecked="{x:Bind IsDownloadModeChecked(ViewModel.DownloadMode.InternalName, ViewModel.DownloadModeList[0].InternalName), Mode=OneWay}"
+                                    IsChecked="{x:Bind IsDownloadModeChecked(DownloadMode.InternalName, DownloadModeList[0].InternalName), Mode=OneWay}"
                                     Tag="0"
-                                    Text="{x:Bind ViewModel.DownloadModeList[0].DisplayName}">
+                                    Text="{x:Bind DownloadModeList[0].DisplayName}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind ViewModel.DownloadModeList[0].DisplayName}" Placement="Mouse" />
+                                        <ToolTip Content="{x:Bind DownloadModeList[0].DisplayName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
 
                                 <RadioMenuFlyoutItem
-                                    Click="{x:Bind ViewModel.OnDownloadModeSelectClicked}"
+                                    Click="{x:Bind OnDownloadModeSelectClicked}"
                                     GroupName="DownloadModeSetting"
-                                    IsChecked="{x:Bind IsDownloadModeChecked(ViewModel.DownloadMode.InternalName, ViewModel.DownloadModeList[1].InternalName), Mode=OneWay}"
+                                    IsChecked="{x:Bind IsDownloadModeChecked(DownloadMode.InternalName, DownloadModeList[1].InternalName), Mode=OneWay}"
                                     Tag="1"
-                                    Text="{x:Bind ViewModel.DownloadModeList[1].DisplayName}">
+                                    Text="{x:Bind DownloadModeList[1].DisplayName}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind ViewModel.DownloadModeList[1].DisplayName}" Placement="Mouse" />
+                                        <ToolTip Content="{x:Bind DownloadModeList[1].DisplayName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </RadioMenuFlyoutItem>
                             </MenuFlyout>
