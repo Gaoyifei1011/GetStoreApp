@@ -6,12 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:windowViewModel="using:GetStoreApp.ViewModels.Controls.Window"
     mc:Ignorable="d">
-
-    <Grid.DataContext>
-        <windowViewModel:AppTitleBarViewModel x:Name="ViewModel" x:FieldModifier="public" />
-    </Grid.DataContext>
 
     <!--  标题栏图标和应用名称  -->
     <Grid
@@ -46,8 +41,8 @@
                 Placement="BottomEdgeAlignedLeft">
 
                 <MenuFlyoutItem
-                    Click="{x:Bind ViewModel.OnRestoreClicked}"
-                    IsEnabled="{x:Bind ViewModel.IsWindowMaximized, Mode=OneWay}"
+                    Click="{x:Bind OnRestoreClicked}"
+                    IsEnabled="{x:Bind IsWindowMaximized, Mode=OneWay}"
                     Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
                     Text="{x:Bind root:ResourceService.GetLocalized('Window/Restore')}">
                     <MenuFlyoutItem.Icon>
@@ -60,7 +55,7 @@
                 </MenuFlyoutItem>
 
                 <MenuFlyoutItem
-                    Click="{x:Bind ViewModel.OnMoveClicked}"
+                    Click="{x:Bind OnMoveClicked}"
                     Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
                     Tag="{x:Bind TitlebarMenuFlyout}"
                     Text="{x:Bind root:ResourceService.GetLocalized('Window/Move')}">
@@ -71,7 +66,7 @@
                 </MenuFlyoutItem>
 
                 <MenuFlyoutItem
-                    Click="{x:Bind ViewModel.OnSizeClicked}"
+                    Click="{x:Bind OnSizeClicked}"
                     Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
                     Tag="{x:Bind TitlebarMenuFlyout}"
                     Text="{x:Bind root:ResourceService.GetLocalized('Window/Size')}">
@@ -82,7 +77,7 @@
                 </MenuFlyoutItem>
 
                 <MenuFlyoutItem
-                    Click="{x:Bind ViewModel.OnMinimizeClicked}"
+                    Click="{x:Bind OnMinimizeClicked}"
                     Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
                     Text="{x:Bind root:ResourceService.GetLocalized('Window/Minimize')}">
                     <MenuFlyoutItem.Icon>
@@ -95,8 +90,8 @@
                 </MenuFlyoutItem>
 
                 <MenuFlyoutItem
-                    Click="{x:Bind ViewModel.OnMaximizeClicked}"
-                    IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(ViewModel.IsWindowMaximized), Mode=OneWay}"
+                    Click="{x:Bind OnMaximizeClicked}"
+                    IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsWindowMaximized), Mode=OneWay}"
                     Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
                     Text="{x:Bind root:ResourceService.GetLocalized('Window/Maximize')}">
                     <MenuFlyoutItem.Icon>
@@ -111,7 +106,7 @@
                 <MenuFlyoutSeparator Width="200" />
 
                 <MenuFlyoutItem
-                    Click="{x:Bind ViewModel.OnCloseClicked}"
+                    Click="{x:Bind OnCloseClicked}"
                     Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
                     Text="{x:Bind root:ResourceService.GetLocalized('Window/Close')}">
                     <MenuFlyoutItem.Icon>

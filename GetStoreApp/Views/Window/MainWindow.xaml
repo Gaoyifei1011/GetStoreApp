@@ -6,51 +6,45 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:viewModel="using:GetStoreApp.ViewModels.Window"
     xmlns:wc="using:GetStoreApp.UI.Controls.Window"
     Title="{x:Bind root:ResourceService.GetLocalized('Resources/AppDisplayName')}"
     MinWidth="600"
     MinHeight="768"
-    Activated="{x:Bind ViewModel.OnActivated}"
-    Closed="{x:Bind ViewModel.OnClosed}"
-    SizeChanged="{x:Bind ViewModel.OnSizeChanged}"
-    SystemBackdrop="{x:Bind ViewModel.SystemBackdrop, Mode=OneWay}"
+    Activated="{x:Bind OnActivated}"
+    Closed="{x:Bind OnClosed}"
+    SizeChanged="{x:Bind OnSizeChanged}"
     mc:Ignorable="d">
 
-    <WinUI:WinUIWindow.DataContext>
-        <viewModel:MainWindowViewModel x:Name="ViewModel" x:FieldModifier="public" />
-    </WinUI:WinUIWindow.DataContext>
-
-    <Grid Background="{x:Bind ViewModel.WindowBackground, Mode=OneWay}" RequestedTheme="{x:Bind ViewModel.WindowTheme, Mode=OneWay}">
+    <Grid Background="{x:Bind WindowBackground, Mode=OneWay}" RequestedTheme="{x:Bind WindowTheme, Mode=OneWay}">
 
         <wc:AppTitleBarControl
             x:Name="AppTitlebar"
             Height="45"
-            Margin="{x:Bind ViewModel.AppTitleBarMargin, Mode=OneWay}"
+            Margin="{x:Bind AppTitleBarMargin, Mode=OneWay}"
             VerticalAlignment="Top"
             x:FieldModifier="public" />
 
         <NavigationView
-            BackRequested="{x:Bind ViewModel.OnNavigationViewBackRequested}"
+            BackRequested="{x:Bind OnNavigationViewBackRequested}"
             Canvas.ZIndex="0"
-            IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
-            IsPaneToggleButtonVisible="{x:Bind ViewModel.IsPaneToggleButtonVisible, Mode=OneWay}"
+            IsBackEnabled="{x:Bind IsBackEnabled, Mode=OneWay}"
+            IsPaneToggleButtonVisible="{x:Bind IsPaneToggleButtonVisible, Mode=OneWay}"
             IsSettingsVisible="False"
             IsTitleBarAutoPaddingEnabled="True"
-            Loaded="{x:Bind ViewModel.OnNavigationViewLoaded}"
+            Loaded="{x:Bind OnNavigationViewLoaded}"
             OpenPaneLength="220"
-            PaneDisplayMode="{x:Bind ViewModel.PaneDisplayMode, Mode=OneWay}"
-            SelectedItem="{x:Bind ViewModel.SelectedItem, Mode=OneWay}"
+            PaneDisplayMode="{x:Bind PaneDisplayMode, Mode=OneWay}"
+            SelectedItem="{x:Bind SelectedItem, Mode=OneWay}"
             Style="{StaticResource NavigationViewStyle}"
-            Unloaded="{x:Bind ViewModel.OnNavigationViewUnLoaded}">
+            Unloaded="{x:Bind OnNavigationViewUnLoaded}">
 
             <NavigationView.MenuItems>
                 <NavigationViewItemHeader Content="{x:Bind root:ResourceService.GetLocalized('Window/Title')}" Foreground="{ThemeResource NavigationViewItemForeground}" />
 
                 <NavigationViewItem
                     Content="{x:Bind root:ResourceService.GetLocalized('Window/Store')}"
-                    Tag="{x:Bind ViewModel.TagList[0]}"
-                    Tapped="{x:Bind ViewModel.OnTapped}">
+                    Tag="{x:Bind TagList[0]}"
+                    Tapped="{x:Bind OnTapped}">
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind StoreIconLoaded}" />
@@ -63,8 +57,8 @@
 
                 <NavigationViewItem
                     Content="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}"
-                    Tag="{x:Bind ViewModel.TagList[1]}"
-                    Tapped="{x:Bind ViewModel.OnTapped}">
+                    Tag="{x:Bind TagList[1]}"
+                    Tapped="{x:Bind OnTapped}">
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind WinGetIconLoaded}" />
@@ -77,8 +71,8 @@
 
                 <NavigationViewItem
                     Content="{x:Bind root:ResourceService.GetLocalized('Window/History')}"
-                    Tag="{x:Bind ViewModel.TagList[2]}"
-                    Tapped="{x:Bind ViewModel.OnTapped}">
+                    Tag="{x:Bind TagList[2]}"
+                    Tapped="{x:Bind OnTapped}">
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind HistoryIconLoaded}" />
@@ -91,8 +85,8 @@
 
                 <NavigationViewItem
                     Content="{x:Bind root:ResourceService.GetLocalized('Window/Download')}"
-                    Tag="{x:Bind ViewModel.TagList[3]}"
-                    Tapped="{x:Bind ViewModel.OnTapped}">
+                    Tag="{x:Bind TagList[3]}"
+                    Tapped="{x:Bind OnTapped}">
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind DownloadIconLoaded}" />
@@ -105,8 +99,8 @@
 
                 <NavigationViewItem
                     Content="{x:Bind root:ResourceService.GetLocalized('Window/Web')}"
-                    Tag="{x:Bind ViewModel.TagList[4]}"
-                    Tapped="{x:Bind ViewModel.OnTapped}">
+                    Tag="{x:Bind TagList[4]}"
+                    Tapped="{x:Bind OnTapped}">
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind WebIconLoaded}" />
@@ -121,8 +115,8 @@
             <NavigationView.FooterMenuItems>
                 <NavigationViewItem
                     Content="{x:Bind root:ResourceService.GetLocalized('Window/About')}"
-                    Tag="{x:Bind ViewModel.TagList[5]}"
-                    Tapped="{x:Bind ViewModel.OnTapped}">
+                    Tag="{x:Bind TagList[5]}"
+                    Tapped="{x:Bind OnTapped}">
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind AboutIconLoaded}" />
@@ -135,8 +129,8 @@
 
                 <NavigationViewItem
                     Content="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}"
-                    Tag="{x:Bind ViewModel.TagList[6]}"
-                    Tapped="{x:Bind ViewModel.OnTapped}">
+                    Tag="{x:Bind TagList[6]}"
+                    Tapped="{x:Bind OnTapped}">
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind SettingsIconLoaded}" />
@@ -150,8 +144,8 @@
 
             <Frame
                 x:Name="WindowFrame"
-                Navigated="{x:Bind ViewModel.OnFrameNavigated}"
-                NavigationFailed="{x:Bind ViewModel.OnFrameNavigationFailed}">
+                Navigated="{x:Bind OnFrameNavigated}"
+                NavigationFailed="{x:Bind OnFrameNavigationFailed}">
                 <Frame.ContentTransitions>
                     <TransitionCollection>
                         <NavigationThemeTransition />

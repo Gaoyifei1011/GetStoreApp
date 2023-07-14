@@ -18,11 +18,6 @@ namespace GetStoreApp.Views.Window
         }
 
         /// <summary>
-        /// 窗口类参与数据绑定时的数据上下文
-        /// </summary>
-        public object DataContext { get; set; }
-
-        /// <summary>
         /// 窗口最小宽度
         /// </summary>
         public int MinWidth { get; set; } = -1;
@@ -58,7 +53,7 @@ namespace GetStoreApp.Views.Window
         }
 
         /// <summary>
-        /// 更改指定窗口的窗口过程
+        /// 更改指定窗口的窗口属性
         /// </summary>
         public IntPtr SetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex, IntPtr dwNewLong)
         {

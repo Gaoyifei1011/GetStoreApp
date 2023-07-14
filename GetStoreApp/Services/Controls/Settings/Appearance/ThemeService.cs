@@ -127,16 +127,16 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
             {
                 if (Application.Current.RequestedTheme == ApplicationTheme.Light)
                 {
-                    Program.ApplicationRoot.MainWindow.ViewModel.WindowTheme = ElementTheme.Light;
+                    Program.ApplicationRoot.MainWindow.WindowTheme = ElementTheme.Light;
                 }
                 else
                 {
-                    Program.ApplicationRoot.MainWindow.ViewModel.WindowTheme = ElementTheme.Dark;
+                    Program.ApplicationRoot.MainWindow.WindowTheme = ElementTheme.Dark;
                 }
             }
             else
             {
-                Program.ApplicationRoot.MainWindow.ViewModel.WindowTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme.InternalName);
+                Program.ApplicationRoot.MainWindow.WindowTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme.InternalName);
             }
         }
 
@@ -147,11 +147,11 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         {
             if (NotifyIconMenuTheme == NotifyIconMenuThemeList[0])
             {
-                Program.ApplicationRoot.TrayMenuWindow.ViewModel.WindowTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme.InternalName);
+                Program.ApplicationRoot.TrayMenuWindow.WindowTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme.InternalName);
             }
             else
             {
-                Program.ApplicationRoot.TrayMenuWindow.ViewModel.WindowTheme = RegistryHelper.GetSystemUsesTheme();
+                Program.ApplicationRoot.TrayMenuWindow.WindowTheme = RegistryHelper.GetSystemUsesTheme();
             }
         }
     }

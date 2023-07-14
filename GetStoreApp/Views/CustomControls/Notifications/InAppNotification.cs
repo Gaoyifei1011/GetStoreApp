@@ -52,7 +52,7 @@ namespace GetStoreApp.Views.CustomControls.Notifications
             DefaultStyleKey = typeof(InAppNotification);
             Style = ResourceDictionaryHelper.InAppNotificationResourceDict["InAppNotificationStyle"] as Style;
             XamlRoot = Program.ApplicationRoot.MainWindow.Content.XamlRoot;
-            popup.RequestedTheme = Program.ApplicationRoot.MainWindow.ViewModel.WindowTheme;
+            popup.RequestedTheme = Program.ApplicationRoot.MainWindow.WindowTheme;
         }
 
         protected override void OnApplyTemplate()
@@ -77,7 +77,7 @@ namespace GetStoreApp.Views.CustomControls.Notifications
         {
             popupIn.Begin();
             XamlRoot.Changed += NotificationPlaceChanged;
-            Program.ApplicationRoot.MainWindow.ViewModel.PropertyChanged += OnPropertyChanged;
+            Program.ApplicationRoot.MainWindow.PropertyChanged += OnPropertyChanged;
         }
 
         /// <summary>
@@ -86,12 +86,12 @@ namespace GetStoreApp.Views.CustomControls.Notifications
         private void NotificationUnLoaded(object sender, RoutedEventArgs args)
         {
             XamlRoot.Changed -= NotificationPlaceChanged;
-            Program.ApplicationRoot.MainWindow.ViewModel.PropertyChanged -= OnPropertyChanged;
+            Program.ApplicationRoot.MainWindow.PropertyChanged -= OnPropertyChanged;
         }
 
         private void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs args)
         {
-            popup.RequestedTheme = Program.ApplicationRoot.MainWindow.ViewModel.WindowTheme;
+            popup.RequestedTheme = Program.ApplicationRoot.MainWindow.WindowTheme;
         }
 
         /// <summary>
