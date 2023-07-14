@@ -6,7 +6,7 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.WinGet;
 using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Base;
-using GetStoreApp.ViewModels.Pages;
+using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.Management.Deployment;
@@ -28,7 +28,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
     {
         private PackageManager UpgradableAppsManager { get; set; }
 
-        internal WinGetViewModel WinGetVMInstance;
+        internal WinGetPage WinGetInstance;
 
         private bool isInitialized = false;
 
@@ -154,9 +154,9 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                 // 处于等待中状态
                                 case PackageInstallProgressState.Queued:
                                     {
-                                        lock (WinGetVMInstance.InstallingAppsObject)
+                                        lock (WinGetInstance.InstallingAppsObject)
                                         {
-                                            foreach (InstallingAppsModel installingItem in WinGetVMInstance.InstallingAppsList)
+                                            foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsList)
                                             {
                                                 if (installingItem.AppID == upgradableApps.AppID)
                                                 {
@@ -170,9 +170,9 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                 // 处于下载中状态
                                 case PackageInstallProgressState.Downloading:
                                     {
-                                        lock (WinGetVMInstance.InstallingAppsObject)
+                                        lock (WinGetInstance.InstallingAppsObject)
                                         {
-                                            foreach (InstallingAppsModel installingItem in WinGetVMInstance.InstallingAppsList)
+                                            foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsList)
                                             {
                                                 if (installingItem.AppID == upgradableApps.AppID)
                                                 {
@@ -189,9 +189,9 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                 // 处于安装中状态
                                 case PackageInstallProgressState.Installing:
                                     {
-                                        lock (WinGetVMInstance.InstallingAppsObject)
+                                        lock (WinGetInstance.InstallingAppsObject)
                                         {
-                                            foreach (InstallingAppsModel installingItem in WinGetVMInstance.InstallingAppsList)
+                                            foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsList)
                                             {
                                                 if (installingItem.AppID == upgradableApps.AppID)
                                                 {
@@ -206,9 +206,9 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                 // 挂起状态
                                 case PackageInstallProgressState.PostInstall:
                                     {
-                                        lock (WinGetVMInstance.InstallingAppsObject)
+                                        lock (WinGetInstance.InstallingAppsObject)
                                         {
-                                            foreach (InstallingAppsModel installingItem in WinGetVMInstance.InstallingAppsList)
+                                            foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsList)
                                             {
                                                 if (installingItem.AppID == upgradableApps.AppID)
                                                 {
@@ -222,9 +222,9 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                 // 处于安装完成状态
                                 case PackageInstallProgressState.Finished:
                                     {
-                                        lock (WinGetVMInstance.InstallingAppsObject)
+                                        lock (WinGetInstance.InstallingAppsObject)
                                         {
-                                            foreach (InstallingAppsModel installingItem in WinGetVMInstance.InstallingAppsList)
+                                            foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsList)
                                             {
                                                 if (installingItem.AppID == upgradableApps.AppID)
                                                 {
@@ -243,9 +243,9 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                         CancellationTokenSource upgradeTokenSource = new CancellationTokenSource();
 
                         // 添加任务
-                        lock (WinGetVMInstance.InstallingAppsObject)
+                        lock (WinGetInstance.InstallingAppsObject)
                         {
-                            WinGetVMInstance.InstallingAppsList.Add(new InstallingAppsModel()
+                            WinGetInstance.InstallingAppsList.Add(new InstallingAppsModel()
                             {
                                 AppID = upgradableApps.AppID,
                                 AppName = upgradableApps.AppName,
@@ -254,7 +254,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                 DownloadedFileSize = FileSizeHelper.ConvertFileSizeToString(0),
                                 TotalFileSize = FileSizeHelper.ConvertFileSizeToString(0)
                             });
-                            WinGetVMInstance.InstallingStateDict.Add(upgradableApps.AppID, upgradeTokenSource);
+                            WinGetInstance.InstallingStateDict.Add(upgradableApps.AppID, upgradeTokenSource);
                         }
 
                         InstallResult installResult = await UpgradableAppsManager.UpgradePackageAsync(MatchResultList.Find(item => item.CatalogPackage.DefaultInstallVersion.Id == upgradableApps.AppID).CatalogPackage, installOptions).AsTask(upgradeTokenSource.Token, progressCallBack);
@@ -301,17 +301,17 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                             }
 
                             // 完成任务后从任务管理中删除任务
-                            lock (WinGetVMInstance.InstallingAppsObject)
+                            lock (WinGetInstance.InstallingAppsObject)
                             {
-                                foreach (InstallingAppsModel installingAppsItem in WinGetVMInstance.InstallingAppsList)
+                                foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsList)
                                 {
                                     if (installingAppsItem.AppID == upgradableApps.AppID)
                                     {
-                                        WinGetVMInstance.InstallingAppsList.Remove(installingAppsItem);
+                                        WinGetInstance.InstallingAppsList.Remove(installingAppsItem);
                                         break;
                                     }
                                 }
-                                WinGetVMInstance.InstallingStateDict.Remove(upgradableApps.AppID);
+                                WinGetInstance.InstallingStateDict.Remove(upgradableApps.AppID);
                             }
 
                             // 从升级列表中移除已升级完成的任务
@@ -337,17 +337,17 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                             }
 
                             // 应用升级失败，将当前任务状态修改为可升级状态
-                            lock (WinGetVMInstance.InstallingAppsObject)
+                            lock (WinGetInstance.InstallingAppsObject)
                             {
-                                foreach (InstallingAppsModel installingAppsItem in WinGetVMInstance.InstallingAppsList)
+                                foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsList)
                                 {
                                     if (installingAppsItem.AppID == upgradableApps.AppID)
                                     {
-                                        WinGetVMInstance.InstallingAppsList.Remove(installingAppsItem);
+                                        WinGetInstance.InstallingAppsList.Remove(installingAppsItem);
                                         break;
                                     }
                                 }
-                                WinGetVMInstance.InstallingStateDict.Remove(upgradableApps.AppID);
+                                WinGetInstance.InstallingStateDict.Remove(upgradableApps.AppID);
                             }
 
                             AppNotificationService.Show(NotificationArgs.UpgradeFailed, upgradableApps.AppName, upgradableApps.AppID);
@@ -369,17 +369,17 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                         }
 
                         // 应用升级失败，将当前任务状态修改为可升级状态
-                        lock (WinGetVMInstance.InstallingAppsObject)
+                        lock (WinGetInstance.InstallingAppsObject)
                         {
-                            foreach (InstallingAppsModel installingAppsItem in WinGetVMInstance.InstallingAppsList)
+                            foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsList)
                             {
                                 if (installingAppsItem.AppID == upgradableApps.AppID)
                                 {
-                                    WinGetVMInstance.InstallingAppsList.Remove(installingAppsItem);
+                                    WinGetInstance.InstallingAppsList.Remove(installingAppsItem);
                                     break;
                                 }
                             }
-                            WinGetVMInstance.InstallingStateDict.Remove(upgradableApps.AppID);
+                            WinGetInstance.InstallingStateDict.Remove(upgradableApps.AppID);
                         }
                     }
                     // 其他异常
@@ -398,17 +398,17 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                         }
 
                         // 应用升级失败，从任务管理列表中移除当前任务
-                        lock (WinGetVMInstance.InstallingAppsObject)
+                        lock (WinGetInstance.InstallingAppsObject)
                         {
-                            foreach (InstallingAppsModel installingAppsItem in WinGetVMInstance.InstallingAppsList)
+                            foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsList)
                             {
                                 if (installingAppsItem.AppID == upgradableApps.AppID)
                                 {
-                                    WinGetVMInstance.InstallingAppsList.Remove(installingAppsItem);
+                                    WinGetInstance.InstallingAppsList.Remove(installingAppsItem);
                                     break;
                                 }
                             }
-                            WinGetVMInstance.InstallingStateDict.Remove(upgradableApps.AppID);
+                            WinGetInstance.InstallingStateDict.Remove(upgradableApps.AppID);
                         }
 
                         AppNotificationService.Show(NotificationArgs.UpgradeFailed, upgradableApps.AppName, upgradableApps.AppID);
@@ -508,7 +508,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                 foreach (MatchResult matchItem in MatchResultList)
                 {
                     bool isUpgrading = false;
-                    foreach (InstallingAppsModel installingAppsItem in WinGetVMInstance.InstallingAppsList)
+                    foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsList)
                     {
                         if (matchItem.CatalogPackage.DefaultInstallVersion.Id == installingAppsItem.AppID)
                         {

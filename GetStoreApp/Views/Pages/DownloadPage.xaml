@@ -6,13 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dc="using:GetStoreApp.UI.Controls.Download"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pageViewModel="using:GetStoreApp.ViewModels.Pages"
     xmlns:root="using:GetStoreApp.Services.Root"
     mc:Ignorable="d">
-
-    <Page.DataContext>
-        <pageViewModel:DownloadViewModel x:Name="ViewModel" />
-    </Page.DataContext>
 
     <Pivot
         Margin="0,15,0,0"
@@ -35,7 +30,7 @@
             <Button
                 VerticalAlignment="Center"
                 Content="{x:Bind root:ResourceService.GetLocalized('Download/DownloadDescription')}"
-                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(ViewModel.UseInsVisValue), Mode=OneWay}">
+                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(UseInsVisValue), Mode=OneWay}">
 
                 <Button.Flyout>
                     <Flyout

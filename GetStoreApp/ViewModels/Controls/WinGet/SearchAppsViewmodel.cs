@@ -6,7 +6,7 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.WinGet;
 using GetStoreApp.UI.Notifications;
 using GetStoreApp.ViewModels.Base;
-using GetStoreApp.ViewModels.Pages;
+using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.Management.Deployment;
@@ -31,7 +31,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
     {
         private PackageManager SearchAppsManager { get; set; }
 
-        internal WinGetViewModel WinGetVMInstance;
+        internal WinGetPage WinGetInstance;
 
         private string cachedSearchText;
 
@@ -181,9 +181,9 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                 // 处于等待中状态
                                 case PackageInstallProgressState.Queued:
                                     {
-                                        lock (WinGetVMInstance.InstallingAppsObject)
+                                        lock (WinGetInstance.InstallingAppsObject)
                                         {
-                                            foreach (InstallingAppsModel installingItem in WinGetVMInstance.InstallingAppsList)
+                                            foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsList)
                                             {
                                                 if (installingItem.AppID == searchApps.AppID)
                                                 {
@@ -197,9 +197,9 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                 // 处于下载中状态
                                 case PackageInstallProgressState.Downloading:
                                     {
-                                        lock (WinGetVMInstance.InstallingAppsObject)
+                                        lock (WinGetInstance.InstallingAppsObject)
                                         {
-                                            foreach (InstallingAppsModel installingItem in WinGetVMInstance.InstallingAppsList)
+                                            foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsList)
                                             {
                                                 if (installingItem.AppID == searchApps.AppID)
                                                 {
@@ -215,9 +215,9 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                 // 处于安装中状态
                                 case PackageInstallProgressState.Installing:
                                     {
-                                        lock (WinGetVMInstance.InstallingAppsObject)
+                                        lock (WinGetInstance.InstallingAppsObject)
                                         {
-                                            foreach (InstallingAppsModel installingItem in WinGetVMInstance.InstallingAppsList)
+                                            foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsList)
                                             {
                                                 if (installingItem.AppID == searchApps.AppID)
                                                 {
@@ -232,9 +232,9 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                 // 安装完成后等待其他操作状态
                                 case PackageInstallProgressState.PostInstall:
                                     {
-                                        lock (WinGetVMInstance.InstallingAppsObject)
+                                        lock (WinGetInstance.InstallingAppsObject)
                                         {
-                                            foreach (InstallingAppsModel installingItem in WinGetVMInstance.InstallingAppsList)
+                                            foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsList)
                                             {
                                                 if (installingItem.AppID == searchApps.AppID)
                                                 {
@@ -248,9 +248,9 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                 // 处于安装完成状态
                                 case PackageInstallProgressState.Finished:
                                     {
-                                        lock (WinGetVMInstance.InstallingAppsObject)
+                                        lock (WinGetInstance.InstallingAppsObject)
                                         {
-                                            foreach (InstallingAppsModel installingItem in WinGetVMInstance.InstallingAppsList)
+                                            foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsList)
                                             {
                                                 if (installingItem.AppID == searchApps.AppID)
                                                 {
@@ -269,9 +269,9 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                         CancellationTokenSource installTokenSource = new CancellationTokenSource();
 
                         // 添加任务
-                        lock (WinGetVMInstance.InstallingAppsObject)
+                        lock (WinGetInstance.InstallingAppsObject)
                         {
-                            WinGetVMInstance.InstallingAppsList.Add(new InstallingAppsModel()
+                            WinGetInstance.InstallingAppsList.Add(new InstallingAppsModel()
                             {
                                 AppID = searchApps.AppID,
                                 AppName = searchApps.AppName,
@@ -280,7 +280,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                                 DownloadedFileSize = FileSizeHelper.ConvertFileSizeToString(0),
                                 TotalFileSize = FileSizeHelper.ConvertFileSizeToString(0)
                             });
-                            WinGetVMInstance.InstallingStateDict.Add(searchApps.AppID, installTokenSource);
+                            WinGetInstance.InstallingStateDict.Add(searchApps.AppID, installTokenSource);
                         }
 
                         InstallResult installResult = await SearchAppsManager.InstallPackageAsync(MatchResultList.Find(item => item.CatalogPackage.DefaultInstallVersion.Id == searchApps.AppID).CatalogPackage, installOptions).AsTask(installTokenSource.Token, progressCallBack);
@@ -341,17 +341,17 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                         }
 
                         // 完成任务后从任务管理中删除任务
-                        lock (WinGetVMInstance.InstallingAppsObject)
+                        lock (WinGetInstance.InstallingAppsObject)
                         {
-                            foreach (InstallingAppsModel installingAppsItem in WinGetVMInstance.InstallingAppsList)
+                            foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsList)
                             {
                                 if (installingAppsItem.AppID == searchApps.AppID)
                                 {
-                                    WinGetVMInstance.InstallingAppsList.Remove(installingAppsItem);
+                                    WinGetInstance.InstallingAppsList.Remove(installingAppsItem);
                                     break;
                                 }
                             }
-                            WinGetVMInstance.InstallingStateDict.Remove(searchApps.AppID);
+                            WinGetInstance.InstallingStateDict.Remove(searchApps.AppID);
                         }
                     }
                     // 操作被用户所取消异常
@@ -370,17 +370,17 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                         }
 
                         // 完成任务后从任务管理中删除任务
-                        lock (WinGetVMInstance.InstallingAppsObject)
+                        lock (WinGetInstance.InstallingAppsObject)
                         {
-                            foreach (InstallingAppsModel installingAppsItem in WinGetVMInstance.InstallingAppsList)
+                            foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsList)
                             {
                                 if (installingAppsItem.AppID == searchApps.AppID)
                                 {
-                                    WinGetVMInstance.InstallingAppsList.Remove(installingAppsItem);
+                                    WinGetInstance.InstallingAppsList.Remove(installingAppsItem);
                                     break;
                                 }
                             }
-                            WinGetVMInstance.InstallingStateDict.Remove(searchApps.AppID);
+                            WinGetInstance.InstallingStateDict.Remove(searchApps.AppID);
                         }
                     }
                     // 其他异常
@@ -399,17 +399,17 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                         }
 
                         // 完成任务后从任务管理中删除任务
-                        lock (WinGetVMInstance.InstallingAppsObject)
+                        lock (WinGetInstance.InstallingAppsObject)
                         {
-                            foreach (InstallingAppsModel installingAppsItem in WinGetVMInstance.InstallingAppsList)
+                            foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsList)
                             {
                                 if (installingAppsItem.AppID == searchApps.AppID)
                                 {
-                                    WinGetVMInstance.InstallingAppsList.Remove(installingAppsItem);
+                                    WinGetInstance.InstallingAppsList.Remove(installingAppsItem);
                                     break;
                                 }
                             }
-                            WinGetVMInstance.InstallingStateDict.Remove(searchApps.AppID);
+                            WinGetInstance.InstallingStateDict.Remove(searchApps.AppID);
                         }
 
                         AppNotificationService.Show(NotificationArgs.InstallFailed, searchApps.AppName, searchApps.AppID);
@@ -516,7 +516,7 @@ namespace GetStoreApp.ViewModels.Controls.WinGet
                     if (matchItem.CatalogPackage.DefaultInstallVersion is not null)
                     {
                         bool isInstalling = false;
-                        foreach (InstallingAppsModel installingAppsItem in WinGetVMInstance.InstallingAppsList)
+                        foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsList)
                         {
                             if (matchItem.CatalogPackage.DefaultInstallVersion.Id == installingAppsItem.AppID)
                             {

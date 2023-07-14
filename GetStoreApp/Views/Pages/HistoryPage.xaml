@@ -7,16 +7,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:history="using:GetStoreApp.Models.Controls.History"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pageViewModel="using:GetStoreApp.ViewModels.Pages"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:sys="using:System"
     x:Name="HistoryRoot"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
-
-    <Page.DataContext>
-        <pageViewModel:HistoryViewModel x:Name="ViewModel" />
-    </Page.DataContext>
 
     <Grid Padding="0">
 
@@ -63,10 +58,10 @@
             <TextBlock
                 Grid.Column="3"
                 VerticalAlignment="Center"
-                Text="{x:Bind LocalizeHistoryCountInfo(ViewModel.HistoryDataList.Count), Mode=OneWay}">
+                Text="{x:Bind LocalizeHistoryCountInfo(HistoryDataList.Count), Mode=OneWay}">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind LocalizeHistoryCountInfo(ViewModel.HistoryDataList.Count), Mode=OneWay}" Placement="Mouse" />
+                    <ToolTip Content="{x:Bind LocalizeHistoryCountInfo(HistoryDataList.Count), Mode=OneWay}" Placement="Mouse" />
                 </ToolTipService.ToolTip>
             </TextBlock>
 
@@ -74,19 +69,19 @@
                 Grid.Column="4"
                 Margin="0,0,10,0"
                 VerticalAlignment="Center"
-                IsEnabled="{x:Bind ViewModel.IsLoadedCompleted, Mode=OneWay}">
+                IsEnabled="{x:Bind IsLoadedCompleted, Mode=OneWay}">
 
                 <StackPanel
                     x:Name="NormalMode"
-                    x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(ViewModel.IsSelectMode), Mode=OneWay}"
+                    x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsSelectMode), Mode=OneWay}"
                     Background="Transparent"
                     Orientation="Horizontal"
                     Spacing="2">
 
                     <MenuFlyoutItem
                         controlExtensions:CursorHelper.Cursor="Hand"
-                        Click="{x:Bind ViewModel.OnSelectClicked}"
-                        IsEnabled="{x:Bind sys:Convert.ToBoolean(ViewModel.HistoryDataList.Count), Mode=OneWay}"
+                        Click="{x:Bind OnSelectClicked}"
+                        IsEnabled="{x:Bind sys:Convert.ToBoolean(HistoryDataList.Count), Mode=OneWay}"
                         Style="{StaticResource AppBarButtonMenuItemStyle}"
                         Text="{x:Bind root:ResourceService.GetLocalized('History/Select')}">
 
@@ -101,8 +96,8 @@
 
                     <MenuFlyoutItem
                         controlExtensions:CursorHelper.Cursor="Hand"
-                        Click="{x:Bind ViewModel.OnFlyoutShowClicked}"
-                        IsEnabled="{x:Bind sys:Convert.ToBoolean(ViewModel.HistoryDataList.Count), Mode=OneWay}"
+                        Click="{x:Bind OnFlyoutShowClicked}"
+                        IsEnabled="{x:Bind sys:Convert.ToBoolean(HistoryDataList.Count), Mode=OneWay}"
                         Style="{StaticResource AppBarButtonMenuItemStyle}"
                         Text="{x:Bind root:ResourceService.GetLocalized('History/Sort')}">
 
@@ -118,8 +113,8 @@
                             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
 
                                 <RadioMenuFlyoutItem
-                                    Click="{x:Bind ViewModel.OnTimeSortClicked}"
-                                    IsChecked="{x:Bind converter:ValueCheckConverterHelper.TimeSortValueCheck(ViewModel.TimeSortOrder, x:True), Mode=OneWay}"
+                                    Click="{x:Bind OnTimeSortClicked}"
+                                    IsChecked="{x:Bind converter:ValueCheckConverterHelper.TimeSortValueCheck(TimeSortOrder, x:True), Mode=OneWay}"
                                     Tag="True"
                                     Text="{x:Bind root:ResourceService.GetLocalized('History/TimeIncreaseSort')}">
 
@@ -133,8 +128,8 @@
                                 </RadioMenuFlyoutItem>
 
                                 <RadioMenuFlyoutItem
-                                    Click="{x:Bind ViewModel.OnTimeSortClicked}"
-                                    IsChecked="{x:Bind converter:ValueCheckConverterHelper.TimeSortValueCheck(ViewModel.TimeSortOrder, x:False), Mode=OneWay}"
+                                    Click="{x:Bind OnTimeSortClicked}"
+                                    IsChecked="{x:Bind converter:ValueCheckConverterHelper.TimeSortValueCheck(TimeSortOrder, x:False), Mode=OneWay}"
                                     Tag="False"
                                     Text="{x:Bind root:ResourceService.GetLocalized('History/TimeDecreaseSort')}">
 
@@ -152,7 +147,7 @@
 
                     <MenuFlyoutItem
                         controlExtensions:CursorHelper.Cursor="Hand"
-                        Click="{x:Bind ViewModel.OnFlyoutShowClicked}"
+                        Click="{x:Bind OnFlyoutShowClicked}"
                         Style="{StaticResource AppBarButtonMenuItemStyle}"
                         Text="{x:Bind root:ResourceService.GetLocalized('History/Filter')}">
 
@@ -168,9 +163,9 @@
                             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                                 <MenuFlyoutSubItem Text="{x:Bind root:ResourceService.GetLocalized('History/Type')}">
                                     <RadioMenuFlyoutItem
-                                        Click="{x:Bind ViewModel.OnTypeFilterClicked}"
+                                        Click="{x:Bind OnTypeFilterClicked}"
                                         GroupName="TypeFilter"
-                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(ViewModel.TypeFilter,'url'),Mode=OneWay}"
+                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'url'),Mode=OneWay}"
                                         Tag="url"
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/URL')}">
 
@@ -180,9 +175,9 @@
                                     </RadioMenuFlyoutItem>
 
                                     <RadioMenuFlyoutItem
-                                        Click="{x:Bind ViewModel.OnTypeFilterClicked}"
+                                        Click="{x:Bind OnTypeFilterClicked}"
                                         GroupName="TypeFilter"
-                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(ViewModel.TypeFilter,'ProductId'),Mode=OneWay}"
+                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'ProductId'),Mode=OneWay}"
                                         Tag="ProductId"
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/ProductID')}">
 
@@ -192,9 +187,9 @@
                                     </RadioMenuFlyoutItem>
 
                                     <RadioMenuFlyoutItem
-                                        Click="{x:Bind ViewModel.OnTypeFilterClicked}"
+                                        Click="{x:Bind OnTypeFilterClicked}"
                                         GroupName="TypeFilter"
-                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(ViewModel.TypeFilter,'PackageFamilyName'),Mode=OneWay}"
+                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'PackageFamilyName'),Mode=OneWay}"
                                         Tag="PackageFamilyName"
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/PackageFamilyName')}">
 
@@ -204,9 +199,9 @@
                                     </RadioMenuFlyoutItem>
 
                                     <RadioMenuFlyoutItem
-                                        Click="{x:Bind ViewModel.OnTypeFilterClicked}"
+                                        Click="{x:Bind OnTypeFilterClicked}"
                                         GroupName="TypeFilter"
-                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(ViewModel.TypeFilter,'CategoryId'),Mode=OneWay}"
+                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'CategoryId'),Mode=OneWay}"
                                         Tag="CategoryId"
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/CategoryID')}">
 
@@ -218,9 +213,9 @@
                                     <MenuFlyoutSeparator />
 
                                     <RadioMenuFlyoutItem
-                                        Click="{x:Bind ViewModel.OnTypeFilterClicked}"
+                                        Click="{x:Bind OnTypeFilterClicked}"
                                         GroupName="TypeFilter"
-                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(ViewModel.TypeFilter,'None'),Mode=OneWay}"
+                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'None'),Mode=OneWay}"
                                         Tag="None"
                                         Text="{x:Bind root:ResourceService.GetLocalized('History/None')}">
 
@@ -237,9 +232,9 @@
                                     </ToolTipService.ToolTip>
 
                                     <RadioMenuFlyoutItem
-                                        Click="{x:Bind ViewModel.OnChannelFilterClicked}"
+                                        Click="{x:Bind OnChannelFilterClicked}"
                                         GroupName="ChannelFilter"
-                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(ViewModel.TypeFilter,'WIF'),Mode=OneWay}"
+                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'WIF'),Mode=OneWay}"
                                         Tag="WIF"
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/Fast')}">
 
@@ -249,9 +244,9 @@
                                     </RadioMenuFlyoutItem>
 
                                     <RadioMenuFlyoutItem
-                                        Click="{x:Bind ViewModel.OnChannelFilterClicked}"
+                                        Click="{x:Bind OnChannelFilterClicked}"
                                         GroupName="ChannelFilter"
-                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(ViewModel.TypeFilter,'WIS'),Mode=OneWay}"
+                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'WIS'),Mode=OneWay}"
                                         Tag="WIS"
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/Slow')}">
 
@@ -261,9 +256,9 @@
                                     </RadioMenuFlyoutItem>
 
                                     <RadioMenuFlyoutItem
-                                        Click="{x:Bind ViewModel.OnChannelFilterClicked}"
+                                        Click="{x:Bind OnChannelFilterClicked}"
                                         GroupName="ChannelFilter"
-                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(ViewModel.TypeFilter,'RP'),Mode=OneWay}"
+                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'RP'),Mode=OneWay}"
                                         Tag="RP"
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/RP')}">
 
@@ -273,9 +268,9 @@
                                     </RadioMenuFlyoutItem>
 
                                     <RadioMenuFlyoutItem
-                                        Click="{x:Bind ViewModel.OnChannelFilterClicked}"
+                                        Click="{x:Bind OnChannelFilterClicked}"
                                         GroupName="ChannelFilter"
-                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(ViewModel.TypeFilter,'Retail'),Mode=OneWay}"
+                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'Retail'),Mode=OneWay}"
                                         Tag="Retail"
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/Retail')}">
 
@@ -287,9 +282,9 @@
                                     <MenuFlyoutSeparator />
 
                                     <RadioMenuFlyoutItem
-                                        Click="{x:Bind ViewModel.OnChannelFilterClicked}"
+                                        Click="{x:Bind OnChannelFilterClicked}"
                                         GroupName="ChannelFilter"
-                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(ViewModel.TypeFilter,'None'),Mode=OneWay}"
+                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'None'),Mode=OneWay}"
                                         Tag="None"
                                         Text="{x:Bind root:ResourceService.GetLocalized('History/None')}">
 
@@ -304,8 +299,8 @@
 
                     <MenuFlyoutItem
                         controlExtensions:CursorHelper.Cursor="Hand"
-                        Click="{x:Bind ViewModel.OnRefreshClicked}"
-                        IsEnabled="{x:Bind sys:Convert.ToBoolean(ViewModel.HistoryDataList.Count), Mode=OneWay}"
+                        Click="{x:Bind OnRefreshClicked}"
+                        IsEnabled="{x:Bind sys:Convert.ToBoolean(HistoryDataList.Count), Mode=OneWay}"
                         Style="{StaticResource AppBarButtonMenuItemStyle}"
                         Text="{x:Bind root:ResourceService.GetLocalized('History/Refresh')}">
 
@@ -324,18 +319,18 @@
                 Grid.Column="4"
                 Margin="0,0,10,0"
                 VerticalAlignment="Center"
-                IsEnabled="{x:Bind ViewModel.IsLoadedCompleted, Mode=OneWay}">
+                IsEnabled="{x:Bind IsLoadedCompleted, Mode=OneWay}">
 
                 <StackPanel
                     x:Name="SelectMode"
-                    x:Load="{x:Bind ViewModel.IsSelectMode, Mode=OneWay}"
+                    x:Load="{x:Bind IsSelectMode, Mode=OneWay}"
                     Background="Transparent"
                     Orientation="Horizontal"
                     Spacing="2">
 
                     <MenuFlyoutItem
                         controlExtensions:CursorHelper.Cursor="Hand"
-                        Click="{x:Bind ViewModel.OnSelectAllClicked}"
+                        Click="{x:Bind OnSelectAllClicked}"
                         Style="{StaticResource AppBarButtonMenuItemStyle}"
                         Text="{x:Bind root:ResourceService.GetLocalized('History/SelectAll')}">
 
@@ -350,7 +345,7 @@
 
                     <MenuFlyoutItem
                         controlExtensions:CursorHelper.Cursor="Hand"
-                        Click="{x:Bind ViewModel.OnSelectNoneClicked}"
+                        Click="{x:Bind OnSelectNoneClicked}"
                         Style="{StaticResource AppBarButtonMenuItemStyle}"
                         Text="{x:Bind root:ResourceService.GetLocalized('History/SelectNone')}">
 
@@ -365,7 +360,7 @@
 
                     <MenuFlyoutItem
                         controlExtensions:CursorHelper.Cursor="Hand"
-                        Click="{x:Bind ViewModel.OnCopySelectedClicked}"
+                        Click="{x:Bind OnCopySelectedClicked}"
                         Style="{StaticResource AppBarButtonMenuItemStyle}"
                         Text="{x:Bind root:ResourceService.GetLocalized('History/CopySelected')}">
 
@@ -380,7 +375,7 @@
 
                     <MenuFlyoutItem
                         controlExtensions:CursorHelper.Cursor="Hand"
-                        Click="{x:Bind ViewModel.OnDeleteClicked}"
+                        Click="{x:Bind OnDeleteClicked}"
                         Style="{StaticResource AppBarButtonMenuItemStyle}"
                         Text="{x:Bind root:ResourceService.GetLocalized('History/Delete')}">
 
@@ -395,7 +390,7 @@
 
                     <MenuFlyoutItem
                         controlExtensions:CursorHelper.Cursor="Hand"
-                        Click="{x:Bind ViewModel.OnCancelClicked}"
+                        Click="{x:Bind OnCancelClicked}"
                         Style="{StaticResource AppBarButtonMenuItemStyle}"
                         Text="{x:Bind root:ResourceService.GetLocalized('History/Cancel')}">
 
@@ -415,7 +410,7 @@
             x:Name="LoadingGrid"
             Grid.Row="2"
             Margin="30,3,30,0"
-            x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(ViewModel.IsLoadedCompleted), Mode=OneWay}"
+            x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsLoadedCompleted), Mode=OneWay}"
             Style="{StaticResource CardGridStyle}">
 
             <StackPanel
@@ -442,7 +437,7 @@
         <Grid
             Grid.Row="3"
             Margin="0,3,0,0"
-            Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(ViewModel.IsLoadedCompleted), Mode=OneWay}">
+            Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsLoadedCompleted), Mode=OneWay}">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -453,7 +448,7 @@
                 Grid.Row="0"
                 Margin="30,0"
                 Style="{StaticResource CardGridStyle}"
-                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(ViewModel.IsHistoryEmpty), Mode=OneWay}">
+                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsHistoryEmpty), Mode=OneWay}">
 
                 <TextBlock
                     Margin="0,10,0,10"
@@ -462,7 +457,7 @@
                     TextAlignment="Center" />
             </Grid>
 
-            <Grid Grid.Row="1" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(ViewModel.IsHistoryEmpty), Mode=OneWay}">
+            <Grid Grid.Row="1" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsHistoryEmpty), Mode=OneWay}">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -474,7 +469,7 @@
                     Grid.Row="0"
                     Margin="30,0"
                     Style="{StaticResource CardGridStyle}"
-                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(ViewModel.IsHistoryEmptyAfterFilter), Mode=OneWay}">
+                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsHistoryEmptyAfterFilter), Mode=OneWay}">
                     <TextBlock
                         Margin="0,10,0,10"
                         VerticalAlignment="Center"
@@ -490,7 +485,7 @@
                     Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                     BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1"
-                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(ViewModel.IsHistoryEmptyAfterFilter), Mode=OneWay}">
+                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsHistoryEmptyAfterFilter), Mode=OneWay}">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -507,7 +502,7 @@
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
                         Text="{x:Bind root:ResourceService.GetLocalized('History/Select')}"
-                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(ViewModel.IsSelectMode), Mode=OneWay}">
+                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsSelectMode), Mode=OneWay}">
 
                         <ToolTipService.ToolTip>
                             <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/Select')}" Placement="Mouse" />
@@ -575,16 +570,16 @@
                 <ListView
                     Grid.Row="2"
                     Padding="30,0,30,30"
-                    IsItemClickEnabled="{x:Bind ViewModel.IsSelectMode, Mode=OneWay}"
-                    ItemClick="{x:Bind ViewModel.OnItemClicked}"
+                    IsItemClickEnabled="{x:Bind IsSelectMode, Mode=OneWay}"
+                    ItemClick="{x:Bind OnItemClicked}"
                     ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
-                    ItemsSource="{x:Bind ViewModel.HistoryDataList, Mode=OneWay}"
+                    ItemsSource="{x:Bind HistoryDataList, Mode=OneWay}"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     ScrollViewer.HorizontalScrollMode="Disabled"
                     ScrollViewer.VerticalScrollBarVisibility="Auto"
                     ScrollViewer.VerticalScrollMode="Enabled"
                     SelectionMode="None"
-                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(ViewModel.IsHistoryEmptyAfterFilter), Mode=OneWay}">
+                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsHistoryEmptyAfterFilter), Mode=OneWay}">
 
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="history:HistoryModel">
@@ -672,7 +667,7 @@
                                 <HyperlinkButton
                                     Grid.Column="5"
                                     Margin="10,0,0,0"
-                                    Command="{Binding ElementName=HistoryRoot, Path=DataContext.FillinCommand, Mode=OneTime}"
+                                    Command="{Binding ElementName=HistoryRoot, Path=FillinCommand, Mode=OneTime}"
                                     CommandParameter="{Binding}"
                                     Content="{x:Bind root:ResourceService.GetLocalized('History/Fillin')}"
                                     IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsSelectMode), Mode=OneWay}"
@@ -685,7 +680,7 @@
 
                                 <HyperlinkButton
                                     Grid.Column="6"
-                                    Command="{Binding ElementName=HistoryRoot, Path=DataContext.CopyCommand, Mode=OneTime}"
+                                    Command="{Binding ElementName=HistoryRoot, Path=CopyCommand, Mode=OneTime}"
                                     CommandParameter="{Binding}"
                                     Content="{x:Bind root:ResourceService.GetLocalized('History/Copy')}"
                                     IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsSelectMode), Mode=OneWay}"

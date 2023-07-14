@@ -6,16 +6,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:GetStoreApp.Models.Controls.WinGet"
-    xmlns:pageViewModel="using:GetStoreApp.ViewModels.Pages"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:wc="using:GetStoreApp.UI.Controls.WinGet"
     x:Name="WinGetRoot"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
-
-    <Page.DataContext>
-        <pageViewModel:WinGetViewModel x:Name="ViewModel" />
-    </Page.DataContext>
 
     <Grid Padding="0">
         <Pivot
@@ -54,8 +49,8 @@
                             <InfoBadge
                                 Grid.Column="1"
                                 Margin="5,0,0,0"
-                                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(ViewModel.InstallingAppsList.Count), Mode=OneWay}"
-                                Value="{x:Bind ViewModel.InstallingAppsList.Count, Mode=OneWay}" />
+                                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(InstallingAppsList.Count), Mode=OneWay}"
+                                Value="{x:Bind InstallingAppsList.Count, Mode=OneWay}" />
                         </Grid>
                     </Button.Content>
 
@@ -65,12 +60,12 @@
                             Placement="Bottom"
                             ShouldConstrainToRootBounds="False">
                             <FlyoutPresenter Padding="0">
-                                <Grid x:Name="TaskManagerFlyout" DataContext="{x:Bind WinGetRoot.DataContext}">
+                                <Grid x:Name="TaskManagerFlyout" DataContext="{x:Bind WinGetRoot}">
                                     <Grid
                                         Width="300"
                                         Height="100"
                                         Padding="20"
-                                        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(ViewModel.InstallingAppsList.Count), Mode=OneWay}">
+                                        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(InstallingAppsList.Count), Mode=OneWay}">
                                         <TextBlock
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
@@ -82,13 +77,13 @@
                                         Width="300"
                                         Height="200"
                                         ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
-                                        ItemsSource="{x:Bind ViewModel.InstallingAppsList, Mode=OneWay}"
+                                        ItemsSource="{x:Bind InstallingAppsList, Mode=OneWay}"
                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                         ScrollViewer.HorizontalScrollMode="Disabled"
                                         ScrollViewer.VerticalScrollBarVisibility="Auto"
                                         ScrollViewer.VerticalScrollMode="Enabled"
                                         SelectionMode="None"
-                                        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(ViewModel.InstallingAppsList.Count), Mode=OneWay}">
+                                        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(InstallingAppsList.Count), Mode=OneWay}">
                                         <ListView.ItemTemplate>
                                             <DataTemplate x:DataType="model:InstallingAppsModel">
                                                 <Grid

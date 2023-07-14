@@ -105,17 +105,17 @@ namespace GetStoreApp
         /// </summary>
         public void DoubleClick(object sender, RoutedEventArgs args)
         {
-            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
+            MainWindow.DispatcherQueue.TryEnqueue(() =>
             {
                 // 隐藏窗口
-                if (Program.ApplicationRoot.MainWindow.Visible)
+                if (MainWindow.Visible)
                 {
-                    Program.ApplicationRoot.MainWindow.AppWindow.Hide();
+                    MainWindow.AppWindow.Hide();
                 }
                 // 显示窗口
                 else
                 {
-                    Program.ApplicationRoot.MainWindow.Show();
+                    MainWindow.Show();
                 }
             });
         }
@@ -131,13 +131,13 @@ namespace GetStoreApp
                 PointInt32 pt;
                 User32Library.GetCursorPos(&pt);
 
-                int x = DPICalcHelper.ConvertPixelToEpx(Program.ApplicationRoot.MainWindow.Handle, pt.X);
-                int y = DPICalcHelper.ConvertPixelToEpx(Program.ApplicationRoot.MainWindow.Handle, pt.Y);
+                int x = DPICalcHelper.ConvertPixelToEpx(MainWindow.Handle, pt.X);
+                int y = DPICalcHelper.ConvertPixelToEpx(MainWindow.Handle, pt.Y);
 
-                User32Library.SetForegroundWindow(Program.ApplicationRoot.TrayMenuWindow.Handle);
+                User32Library.SetForegroundWindow(TrayMenuWindow.Handle);
                 if (InfoHelper.SystemVersion.Build >= 22000)
                 {
-                    Program.ApplicationRoot.TrayMenuWindow.TrayMenuFlyout.ShowAt(null, new Point(x, y));
+                    TrayMenuWindow.TrayMenuFlyout.ShowAt(null, new Point(x, y));
                 }
                 else
                 {
@@ -159,7 +159,7 @@ namespace GetStoreApp
                         } while (hwnd != IntPtr.Zero);
                     }
 
-                    Program.ApplicationRoot.TrayMenuWindow.TrayMenuFlyout.ShowAt(null, new Point(pt.X, pt.Y));
+                    TrayMenuWindow.TrayMenuFlyout.ShowAt(null, new Point(pt.X, pt.Y));
                 }
             }
         }
@@ -200,13 +200,13 @@ namespace GetStoreApp
 
             if (IsWindowMaximized.HasValue && IsWindowMaximized.Value == true)
             {
-                Program.ApplicationRoot.MainWindow.Presenter.Maximize();
+                MainWindow.Presenter.Maximize();
             }
             else
             {
                 if (WindowWidth.HasValue && WindowHeight.HasValue && WindowPositionXAxis.HasValue && WindowPositionYAxis.HasValue)
                 {
-                    Program.ApplicationRoot.MainWindow.AppWindow.MoveAndResize(new RectInt32(
+                    MainWindow.AppWindow.MoveAndResize(new RectInt32(
                         WindowPositionXAxis.Value,
                         WindowPositionYAxis.Value,
                         WindowWidth.Value,
@@ -216,7 +216,7 @@ namespace GetStoreApp
             }
 
             SetAppIcon();
-            Program.ApplicationRoot.MainWindow.AppWindow.Show();
+            MainWindow.AppWindow.Show();
         }
 
         /// <summary>
@@ -253,11 +253,11 @@ namespace GetStoreApp
         public void RemoveUnusedItems()
         {
             // 如果某一条目被用户主动删除，应用初始化时则自动删除该条目
-            for (int index = 0; index < Program.ApplicationRoot.TaskbarJumpList.Items.Count; index++)
+            for (int index = 0; index < TaskbarJumpList.Items.Count; index++)
             {
-                if (Program.ApplicationRoot.TaskbarJumpList.Items[index].RemovedByUser)
+                if (TaskbarJumpList.Items[index].RemovedByUser)
                 {
-                    Program.ApplicationRoot.TaskbarJumpList.Items.RemoveAt(index);
+                    TaskbarJumpList.Items.RemoveAt(index);
                     index--;
                 }
             }
@@ -268,7 +268,7 @@ namespace GetStoreApp
         /// </summary>
         public void UpdateJumpListGroupName()
         {
-            foreach (JumpListItem jumpListItem in Program.ApplicationRoot.TaskbarJumpList.Items)
+            foreach (JumpListItem jumpListItem in TaskbarJumpList.Items)
             {
                 jumpListItem.GroupName = AppJumpList.GroupName;
             }
@@ -294,7 +294,7 @@ namespace GetStoreApp
             // GetStoreApp.exe 应用程序只有一个图标
             if (successCount >= 1 && hIcons[0] != IntPtr.Zero)
             {
-                Program.ApplicationRoot.MainWindow.AppWindow.SetIcon(Win32Interop.GetIconIdFromIcon(hIcons[0]));
+                MainWindow.AppWindow.SetIcon(Win32Interop.GetIconIdFromIcon(hIcons[0]));
             }
         }
 
@@ -306,9 +306,9 @@ namespace GetStoreApp
             await SaveWindowInformationAsync();
             DownloadSchedulerService.CloseDownloadScheduler();
             Aria2Service.CloseAria2();
-            Program.ApplicationRoot.TrayIcon.Dispose();
-            Program.ApplicationRoot.TrayIcon.DoubleClick -= DoubleClick;
-            Program.ApplicationRoot.TrayIcon.RightClick -= RightClick;
+            TrayIcon.Dispose();
+            TrayIcon.DoubleClick -= DoubleClick;
+            TrayIcon.RightClick -= RightClick;
             Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
         }
 
@@ -317,11 +317,11 @@ namespace GetStoreApp
         /// </summary>
         private async Task SaveWindowInformationAsync()
         {
-            await ConfigService.SaveSettingAsync(ConfigKey.IsWindowMaximizedKey, Program.ApplicationRoot.MainWindow.AppTitlebar.IsWindowMaximized);
-            await ConfigService.SaveSettingAsync(ConfigKey.WindowWidthKey, Program.ApplicationRoot.MainWindow.AppWindow.Size.Width);
-            await ConfigService.SaveSettingAsync(ConfigKey.WindowHeightKey, Program.ApplicationRoot.MainWindow.AppWindow.Size.Height);
-            await ConfigService.SaveSettingAsync(ConfigKey.WindowPositionXAxisKey, Program.ApplicationRoot.MainWindow.AppWindow.Position.X);
-            await ConfigService.SaveSettingAsync(ConfigKey.WindowPositionYAxisKey, Program.ApplicationRoot.MainWindow.AppWindow.Position.Y);
+            await ConfigService.SaveSettingAsync(ConfigKey.IsWindowMaximizedKey, MainWindow.AppTitlebar.IsWindowMaximized);
+            await ConfigService.SaveSettingAsync(ConfigKey.WindowWidthKey, MainWindow.AppWindow.Size.Width);
+            await ConfigService.SaveSettingAsync(ConfigKey.WindowHeightKey, MainWindow.AppWindow.Size.Height);
+            await ConfigService.SaveSettingAsync(ConfigKey.WindowPositionXAxisKey, MainWindow.AppWindow.Position.X);
+            await ConfigService.SaveSettingAsync(ConfigKey.WindowPositionYAxisKey, MainWindow.AppWindow.Position.Y);
         }
 
         /// <summary>
@@ -329,7 +329,7 @@ namespace GetStoreApp
         /// </summary>
         public void Restart()
         {
-            Program.ApplicationRoot.MainWindow.AppWindow.Hide();
+            MainWindow.AppWindow.Hide();
             unsafe
             {
                 Kernel32Library.GetStartupInfo(out STARTUPINFO WinGetProcessStartupInfo);

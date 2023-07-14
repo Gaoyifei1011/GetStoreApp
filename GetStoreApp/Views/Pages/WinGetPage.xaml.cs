@@ -1,15 +1,63 @@
+using GetStoreApp.Models.Controls.WinGet;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Threading;
 
 namespace GetStoreApp.Views.Pages
 {
     /// <summary>
     /// WinGet ³ÌÐò°üÒ³Ãæ
     /// </summary>
-    public sealed partial class WinGetPage : Page
+    public sealed partial class WinGetPage : Page, INotifyPropertyChanged
     {
+        public readonly object InstallingAppsObject = new object();
+
+        private int _selectedIndex;
+
+        public int SelectedIndex
+        {
+            get { return _selectedIndex; }
+
+            set
+            {
+                _selectedIndex = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedIndex)));
+            }
+        }
+
+        public XamlUICommand CancelInstallCommand { get; } = new XamlUICommand();
+
+        public ObservableCollection<InstallingAppsModel> InstallingAppsList = new ObservableCollection<InstallingAppsModel>();
+
+        public Dictionary<string, CancellationTokenSource> InstallingStateDict = new Dictionary<string, CancellationTokenSource>();
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public WinGetPage()
         {
             InitializeComponent();
+
+            CancelInstallCommand.ExecuteRequested += (sender, args) =>
+            {
+                string appId = args.Parameter as string;
+                if (appId is not null)
+                {
+                    lock (InstallingAppsObject)
+                    {
+                        if (InstallingStateDict.TryGetValue(appId, out CancellationTokenSource tokenSource))
+                        {
+                            if (!tokenSource.IsCancellationRequested)
+                            {
+                                tokenSource.Cancel();
+                                tokenSource.Dispose();
+                            }
+                        }
+                    }
+                }
+            };
         }
 
         /// <summary>
@@ -17,8 +65,8 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnInitializeSuccessLoaded()
         {
-            SearchApps.ViewModel.WinGetVMInstance = ViewModel;
-            UpgradableApps.ViewModel.WinGetVMInstance = ViewModel;
+            SearchApps.ViewModel.WinGetInstance = this;
+            UpgradableApps.ViewModel.WinGetInstance = this;
         }
 
         /// <summary>

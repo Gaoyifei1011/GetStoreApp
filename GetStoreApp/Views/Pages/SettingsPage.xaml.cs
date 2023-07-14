@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.UI.Dialogs.Settings;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -35,7 +36,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 页面加载完成后如果有具体的要求，将页面滚动到指定位置
         /// </summary>
-        public void SettingsLoaded(object sender, RoutedEventArgs args)
+        public void OnLoaded(object sender, RoutedEventArgs args)
         {
             double CurrentScrollPosition = SettingsScroll.VerticalOffset;
             Point CurrentPoint = new Point(0, (int)CurrentScrollPosition);
@@ -49,6 +50,14 @@ namespace GetStoreApp.Views.Pages
             {
                 SettingsScroll.ChangeView(null, 0, null);
             }
+        }
+
+        /// <summary>
+        /// 打开重启应用确认的窗口对话框
+        /// </summary>
+        public async void OnRestartAppsClicked(object sender, RoutedEventArgs args)
+        {
+            await new RestartAppsDialog().ShowAsync();
         }
     }
 }

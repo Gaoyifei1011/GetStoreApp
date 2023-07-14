@@ -7,15 +7,10 @@
     xmlns:common="using:GetStoreApp.UI.Controls.Settings.Common"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pageViewModel="using:GetStoreApp.ViewModels.Pages"
     xmlns:root="using:GetStoreApp.Services.Root"
-    Loaded="{x:Bind SettingsLoaded}"
+    Loaded="{x:Bind OnLoaded}"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
-
-    <Page.DataContext>
-        <pageViewModel:SettingsViewModel x:Name="ViewModel" />
-    </Page.DataContext>
 
     <Grid Padding="0">
 
@@ -37,7 +32,7 @@
 
             <Button
                 Grid.Column="1"
-                Click="{x:Bind ViewModel.OnRestartAppsClicked}"
+                Click="{x:Bind OnRestartAppsClicked}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Settings/RestartApp')}">
 
                 <ToolTipService.ToolTip>

@@ -1,16 +1,34 @@
-﻿using GetStoreApp.Services.Controls.Download;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Common;
+using GetStoreApp.Services.Window;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
+using System.ComponentModel;
 
 namespace GetStoreApp.Views.Pages
 {
     /// <summary>
     /// 下载页面
     /// </summary>
-    public sealed partial class DownloadPage : Page
+    public sealed partial class DownloadPage : Page, INotifyPropertyChanged
     {
+        private bool _useInsVisValue;
+
+        public bool UseInsVisValue
+        {
+            get { return _useInsVisValue; }
+
+            set
+            {
+                _useInsVisValue = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UseInsVisValue)));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public DownloadPage()
         {
             InitializeComponent();
@@ -19,7 +37,7 @@ namespace GetStoreApp.Views.Pages
         protected override void OnNavigatedTo(NavigationEventArgs args)
         {
             base.OnNavigatedTo(args);
-            ViewModel.UseInsVisValue = UseInstructionService.UseInsVisValue;
+            UseInsVisValue = UseInstructionService.UseInsVisValue;
             Downloading.ViewModel.StartDownloadingTimer();
         }
 
@@ -65,7 +83,7 @@ namespace GetStoreApp.Views.Pages
         public void OnDownloadSettingsClicked(object sender, RoutedEventArgs args)
         {
             DownloadFlyout.Hide();
-            ViewModel.OpenDownloadSettings();
+            NavigationService.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.DownloadOptions);
         }
 
         /// <summary>
@@ -74,7 +92,7 @@ namespace GetStoreApp.Views.Pages
         public void OnLearnMoreClicked(object sender, RoutedEventArgs args)
         {
             DownloadFlyout.Hide();
-            ViewModel.LearnMore();
+            NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
         }
     }
 }
