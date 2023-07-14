@@ -5,7 +5,7 @@ using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
 namespace GetStoreApp.UI.Dialogs.Common
 {
     /// <summary>
-    /// 删除提示对话框视图
+    /// 删除提示对话框
     /// </summary>
     public sealed partial class DeletePromptDialog : ExtendedContentDialog
     {

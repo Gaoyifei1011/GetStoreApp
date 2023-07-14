@@ -6,23 +6,18 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:notification="using:GetStoreApp.Views.CustomControls.Notifications"
-    xmlns:notificationViewModel="using:GetStoreApp.ViewModels.Notifications"
     xmlns:root="using:GetStoreApp.Services.Root"
     mc:Ignorable="d">
-
-    <notification:InAppNotification.DataContext>
-        <notificationViewModel:LogCleanViewModel x:Name="ViewModel" />
-    </notification:InAppNotification.DataContext>
 
     <Grid>
         <TextBlock
             x:Name="LogCleanSuccess"
-            x:Load="{x:Bind ViewModel.SetResult, Mode=OneWay}"
+            x:Load="{x:Bind SetResult, Mode=OneWay}"
             Foreground="{ThemeResource SystemFillColorSuccessBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/LogCleanSuccessfully')}" />
         <TextBlock
             x:Name="LogCleanFailed"
-            x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(ViewModel.SetResult), Mode=OneWay}"
+            x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(SetResult), Mode=OneWay}"
             Foreground="{ThemeResource SystemFillColorCriticalBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/LogCleanFailed')}" />
     </Grid>

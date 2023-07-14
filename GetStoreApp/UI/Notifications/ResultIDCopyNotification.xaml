@@ -5,13 +5,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:notification="using:GetStoreApp.Views.CustomControls.Notifications"
-    xmlns:notificationViewModel="using:GetStoreApp.ViewModels.Notifications"
     xmlns:root="using:GetStoreApp.Services.Root"
     mc:Ignorable="d">
-
-    <notification:InAppNotification.DataContext>
-        <notificationViewModel:ResultIDCopyViewModel x:Name="ViewModel" />
-    </notification:InAppNotification.DataContext>
 
     <TextBlock Foreground="{ThemeResource SystemFillColorSuccessBrush}" Text="{x:Bind root:ResourceService.GetLocalized('Notification/ResultIDCopy')}" />
 </notification:InAppNotification>

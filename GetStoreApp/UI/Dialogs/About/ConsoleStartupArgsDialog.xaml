@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:about="using:GetStoreApp.Models.Dialogs.About"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:dialogViewModel="using:GetStoreApp.ViewModels.Dialogs.About"
     xmlns:dialogsAndFlyouts="using:GetStoreApp.Views.CustomControls.DialogsAndFlyouts"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
@@ -12,10 +11,6 @@
     CloseButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
     Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">
-
-    <dialogsAndFlyouts:ExtendedContentDialog.DataContext>
-        <dialogViewModel:ConsoleStartupArgsViewModel x:Name="ViewModel" />
-    </dialogsAndFlyouts:ExtendedContentDialog.DataContext>
 
     <dialogsAndFlyouts:ExtendedContentDialog.Resources>
         <x:Double x:Key="ContentDialogMaxWidth">560</x:Double>
@@ -39,7 +34,7 @@
         <ListView
             Margin="0,0,0,5"
             ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
-            ItemsSource="{x:Bind ViewModel.ConsoleStartupArgsList}"
+            ItemsSource="{x:Bind ConsoleStartupArgsList}"
             SelectionMode="None">
 
             <ItemsControl.ItemContainerTransitions>
@@ -191,21 +186,21 @@
         <TextBlock
             Margin="0"
             Style="{StaticResource ContentDialogContentStyle}"
-            Text="{x:Bind ViewModel.SampleShort}"
+            Text="{x:Bind SampleShort}"
             TextAlignment="Left">
 
             <ToolTipService.ToolTip>
-                <ToolTip Content="{x:Bind ViewModel.SampleShort}" Placement="Mouse" />
+                <ToolTip Content="{x:Bind SampleShort}" Placement="Mouse" />
             </ToolTipService.ToolTip>
         </TextBlock>
 
         <TextBlock
             Margin="0"
             Style="{StaticResource ContentDialogContentStyle}"
-            Text="{x:Bind ViewModel.SampleFull}">
+            Text="{x:Bind SampleFull}">
 
             <ToolTipService.ToolTip>
-                <ToolTip Content="{x:Bind ViewModel.SampleFull}" Placement="Mouse" />
+                <ToolTip Content="{x:Bind SampleFull}" Placement="Mouse" />
             </ToolTipService.ToolTip>
         </TextBlock>
 
@@ -220,10 +215,10 @@
         <TextBlock
             Margin="0"
             Style="{StaticResource ContentDialogContentStyle}"
-            Text="{x:Bind ViewModel.SampleWithoutParameter}">
+            Text="{x:Bind SampleWithoutParameter}">
 
             <ToolTipService.ToolTip>
-                <ToolTip Content="{x:Bind ViewModel.SampleWithoutParameter}" Placement="Mouse" />
+                <ToolTip Content="{x:Bind SampleWithoutParameter}" Placement="Mouse" />
             </ToolTipService.ToolTip>
         </TextBlock>
     </StackPanel>

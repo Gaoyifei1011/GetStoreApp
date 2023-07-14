@@ -5,28 +5,23 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:notification="using:GetStoreApp.Views.CustomControls.Notifications"
-    xmlns:notificationViewModel="using:GetStoreApp.ViewModels.Notifications"
     xmlns:root="using:GetStoreApp.Services.Root"
     mc:Ignorable="d">
-
-    <notification:InAppNotification.DataContext>
-        <notificationViewModel:WinGetCopyViewModel x:Name="ViewModel" />
-    </notification:InAppNotification.DataContext>
 
     <Grid>
         <TextBlock
             x:Name="SearchInstallCopySuccess"
-            x:Load="{x:Bind ControlLoaded(ViewModel.OptionArgs,'SearchInstallCopySuccess'), Mode=OneWay}"
+            x:Load="{x:Bind ControlLoaded(OptionArgs,'SearchInstallCopySuccess'), Mode=OneWay}"
             Foreground="{ThemeResource SystemFillColorSuccessBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/SearchInstallCopy')}" />
         <TextBlock
             x:Name="UnInstallCopySuccess"
-            x:Load="{x:Bind ControlLoaded(ViewModel.OptionArgs,'UnInstallCopySuccess'), Mode=OneWay}"
+            x:Load="{x:Bind ControlLoaded(OptionArgs,'UnInstallCopySuccess'), Mode=OneWay}"
             Foreground="{ThemeResource SystemFillColorSuccessBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/UnInstallCopy')}" />
         <TextBlock
             x:Name="UpgradeInstallCopySuccess"
-            x:Load="{x:Bind ControlLoaded(ViewModel.OptionArgs,'UpgradeInstallCopySuccess'), Mode=OneWay}"
+            x:Load="{x:Bind ControlLoaded(OptionArgs,'UpgradeInstallCopySuccess'), Mode=OneWay}"
             Foreground="{ThemeResource SystemFillColorSuccessBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/UpgradeInstallCopy')}" />
     </Grid>

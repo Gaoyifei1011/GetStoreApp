@@ -3,23 +3,18 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:dialogViewModel="using:GetStoreApp.ViewModels.Dialogs.Settings"
     xmlns:dialogsAndFlyouts="using:GetStoreApp.Views.CustomControls.DialogsAndFlyouts"
     xmlns:experiment="using:GetStoreApp.UI.Controls.Settings.Experiment"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     Title="{x:Bind root:ResourceService.GetLocalized('Dialog/ExperimentalFeatures')}"
     CloseButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
-    Opened="{x:Bind ViewModel.OnOpened}"
-    PrimaryButtonClick="{x:Bind ViewModel.OnRestoreDefaultClicked}"
+    Opened="{x:Bind OnOpened}"
+    PrimaryButtonClick="{x:Bind OnRestoreDefaultClicked}"
     PrimaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/RestoreDefualt')}"
     Style="{StaticResource ContentDialogStyle}"
     Tag="{x:Bind NetWorkMonitor}"
     mc:Ignorable="d">
-
-    <dialogsAndFlyouts:ExtendedContentDialog.DataContext>
-        <dialogViewModel:ExperimentalConfigViewModel x:Name="ViewModel" />
-    </dialogsAndFlyouts:ExtendedContentDialog.DataContext>
 
     <StackPanel Spacing="3">
         <TextBlock
@@ -28,7 +23,7 @@
             VerticalAlignment="Center"
             Style="{StaticResource ContentDialogContentStyle}"
             Text="{x:Bind root:ResourceService.GetLocalized('Dialog/RestoreDefaultSuccessfully')}"
-            Visibility="{x:Bind ViewModel.IsMessageVisable, Mode=OneWay}" />
+            Visibility="{x:Bind IsMessageVisable, Mode=OneWay}" />
 
         <InfoBar
             Margin="0"

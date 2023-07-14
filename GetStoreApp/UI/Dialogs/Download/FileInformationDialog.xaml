@@ -4,22 +4,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:dialogViewModel="using:GetStoreApp.ViewModels.Dialogs.Download"
     xmlns:dialogsAndFlyouts="using:GetStoreApp.Views.CustomControls.DialogsAndFlyouts"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     Title="{x:Bind root:ResourceService.GetLocalized('Dialog/FileInformationTitle')}"
     CloseButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
-    IsPrimaryButtonEnabled="{x:Bind ViewModel.FileCheckState, Mode=OneWay}"
-    Loaded="{x:Bind ViewModel.OnLoaded}"
-    PrimaryButtonClick="{x:Bind ViewModel.OnCopyFileInformationClicked}"
+    IsPrimaryButtonEnabled="{x:Bind FileCheckState, Mode=OneWay}"
+    Loaded="{x:Bind OnLoaded}"
+    PrimaryButtonClick="{x:Bind OnCopyFileInformationClicked}"
     PrimaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CopyFileInformation')}"
     Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">
-
-    <dialogsAndFlyouts:ExtendedContentDialog.DataContext>
-        <dialogViewModel:FileInformationViewModel x:Name="ViewModel" />
-    </dialogsAndFlyouts:ExtendedContentDialog.DataContext>
 
     <StackPanel>
         <Grid>
@@ -34,7 +29,7 @@
             <TextBlock
                 Grid.Column="1"
                 Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind ViewModel.FileName}"
+                Text="{x:Bind FileName}"
                 TextAlignment="DetectFromContent"
                 TextWrapping="Wrap" />
         </Grid>
@@ -51,7 +46,7 @@
             <TextBlock
                 Grid.Column="1"
                 Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind ViewModel.FilePath}"
+                Text="{x:Bind FilePath}"
                 TextAlignment="DetectFromContent"
                 TextWrapping="Wrap" />
         </Grid>
@@ -68,7 +63,7 @@
             <TextBlock
                 Grid.Column="1"
                 Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind ViewModel.FileSize}"
+                Text="{x:Bind FileSize}"
                 TextAlignment="DetectFromContent"
                 TextWrapping="Wrap" />
         </Grid>
@@ -85,15 +80,15 @@
             <TextBlock
                 x:Name="FileSHA1Info"
                 Grid.Column="1"
-                x:Load="{x:Bind ViewModel.FileSHA1Load}"
+                x:Load="{x:Bind FileSHA1Load}"
                 Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind ViewModel.FileSHA1}"
+                Text="{x:Bind FileSHA1}"
                 TextWrapping="Wrap" />
         </Grid>
 
         <StackPanel
             x:Name="FileChecking"
-            x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(ViewModel.FileCheckState), Mode=OneWay}"
+            x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(FileCheckState), Mode=OneWay}"
             Orientation="Horizontal"
             Spacing="5">
             <ProgressRing
@@ -103,7 +98,7 @@
             <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Dialog/CheckingFile')}" />
         </StackPanel>
 
-        <Grid x:Name="FileChecked" x:Load="{x:Bind ViewModel.FileCheckState, Mode=OneWay}">
+        <Grid x:Name="FileChecked" x:Load="{x:Bind FileCheckState, Mode=OneWay}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
@@ -115,7 +110,7 @@
             <TextBlock
                 Grid.Column="1"
                 Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind ViewModel.CheckFileSHA1, Mode=OneWay}"
+                Text="{x:Bind CheckFileSHA1, Mode=OneWay}"
                 TextWrapping="Wrap" />
         </Grid>
     </StackPanel>

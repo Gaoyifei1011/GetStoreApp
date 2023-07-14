@@ -6,23 +6,18 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:notification="using:GetStoreApp.Views.CustomControls.Notifications"
-    xmlns:notificationViewModel="using:GetStoreApp.ViewModels.Notifications"
     xmlns:root="using:GetStoreApp.Services.Root"
     mc:Ignorable="d">
-
-    <notification:InAppNotification.DataContext>
-        <notificationViewModel:ResultContentCopyViewModel x:Name="ViewModel" />
-    </notification:InAppNotification.DataContext>
 
     <Grid>
         <TextBlock
             x:Name="CopySuccess"
-            x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(ViewModel.IsMultiSelected), Mode=OneWay}"
+            x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsMultiSelected), Mode=OneWay}"
             Foreground="{ThemeResource SystemFillColorSuccessBrush}"
             Text="{x:Bind root:ResourceService.GetLocalized('Notification/ResultContentCopy')}" />
         <TextBlock
             x:Name="CopySelectedSuccess"
-            x:Load="{x:Bind ViewModel.IsMultiSelected, Mode=OneWay}"
+            x:Load="{x:Bind IsMultiSelected, Mode=OneWay}"
             Foreground="{ThemeResource SystemFillColorSuccessBrush}"
             Loaded="{x:Bind CopySelectedSuccessLoaded}" />
     </Grid>

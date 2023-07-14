@@ -4,30 +4,25 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:dialogViewModel="using:GetStoreApp.ViewModels.Dialogs.Settings"
     xmlns:dialogsAndFlyouts="using:GetStoreApp.Views.CustomControls.DialogsAndFlyouts"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:settings="using:GetStoreApp.Models.Dialogs.Settings"
     Title="{x:Bind root:ResourceService.GetLocalized('Dialog/TraceCleanupTitle')}"
-    IsPrimaryButtonEnabled="{x:Bind IsButtonEnabled(ViewModel.IsSelected, ViewModel.IsCleaning), Mode=OneWay}"
-    IsSecondaryButtonEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(ViewModel.IsCleaning), Mode=OneWay}"
-    PrimaryButtonClick="{x:Bind ViewModel.OnCleanupNowClicked}"
+    IsPrimaryButtonEnabled="{x:Bind IsButtonEnabled(IsSelected, IsCleaning), Mode=OneWay}"
+    IsSecondaryButtonEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsCleaning), Mode=OneWay}"
+    PrimaryButtonClick="{x:Bind OnCleanupNowClicked}"
     PrimaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CleanupNow')}"
     SecondaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
     Style="{StaticResource ContentDialogStyle}"
     mc:Ignorable="d">
-
-    <dialogsAndFlyouts:ExtendedContentDialog.DataContext>
-        <dialogViewModel:TraceCleanupPromptViewModel x:Name="ViewModel" />
-    </dialogsAndFlyouts:ExtendedContentDialog.DataContext>
 
     <StackPanel>
         <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Dialog/TraceCleanupContent')}" />
 
         <ListView
             ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
-            ItemsSource="{x:Bind ViewModel.TraceCleanupList}"
+            ItemsSource="{x:Bind TraceCleanupList}"
             SelectionMode="None">
 
             <ItemsControl.ItemContainerTransitions>
@@ -60,7 +55,7 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <StackPanel Orientation="Horizontal" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(ViewModel.IsCleaning), Mode=OneWay}">
+        <StackPanel Orientation="Horizontal" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsCleaning), Mode=OneWay}">
             <ProgressRing
                 Width="20"
                 Height="20"
