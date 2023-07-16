@@ -5,6 +5,7 @@
     xmlns:WinUI="using:GetStoreApp.Views.Window"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:properties="using:GetStoreApp.Properties"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:wc="using:GetStoreApp.UI.Controls.Window"
     Title="{x:Bind root:ResourceService.GetLocalized('Resources/AppDisplayName')}"
@@ -47,7 +48,7 @@
                     Tapped="{x:Bind OnTapped}">
 
                     <NavigationViewItem.Icon>
-                        <ImageIcon Loaded="{x:Bind StoreIconLoaded}" />
+                        <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.Store}" />
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
@@ -61,7 +62,7 @@
                     Tapped="{x:Bind OnTapped}">
 
                     <NavigationViewItem.Icon>
-                        <ImageIcon Loaded="{x:Bind WinGetIconLoaded}" />
+                        <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.WinGet}" />
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
@@ -75,7 +76,7 @@
                     Tapped="{x:Bind OnTapped}">
 
                     <NavigationViewItem.Icon>
-                        <ImageIcon Loaded="{x:Bind HistoryIconLoaded}" />
+                        <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.History}" />
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
@@ -89,7 +90,7 @@
                     Tapped="{x:Bind OnTapped}">
 
                     <NavigationViewItem.Icon>
-                        <ImageIcon Loaded="{x:Bind DownloadIconLoaded}" />
+                        <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.Download}" />
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
@@ -103,7 +104,7 @@
                     Tapped="{x:Bind OnTapped}">
 
                     <NavigationViewItem.Icon>
-                        <ImageIcon Loaded="{x:Bind WebIconLoaded}" />
+                        <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.Web}" />
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
@@ -119,7 +120,7 @@
                     Tapped="{x:Bind OnTapped}">
 
                     <NavigationViewItem.Icon>
-                        <ImageIcon Loaded="{x:Bind AboutIconLoaded}" />
+                        <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.About}" />
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
@@ -133,7 +134,7 @@
                     Tapped="{x:Bind OnTapped}">
 
                     <NavigationViewItem.Icon>
-                        <ImageIcon Loaded="{x:Bind SettingsIconLoaded}" />
+                        <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.Settings}" />
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>

@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Windows.UI.StartScreen;
+using WinRT;
 
 namespace GetStoreApp.UI.Controls.Store
 {
@@ -141,7 +142,7 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         public void OnTypeSelectClicked(object sender, RoutedEventArgs args)
         {
-            RadioMenuFlyoutItem item = sender as RadioMenuFlyoutItem;
+            RadioMenuFlyoutItem item = sender.As<RadioMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 SelectedType = TypeList[Convert.ToInt32(item.Tag)];
@@ -157,7 +158,7 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         public void OnChannelSelectClicked(object sender, RoutedEventArgs args)
         {
-            RadioMenuFlyoutItem item = sender as RadioMenuFlyoutItem;
+            RadioMenuFlyoutItem item = sender.As<RadioMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 SelectedChannel = ChannelList[Convert.ToInt32(item.Tag)];

@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using Windows.System;
+using WinRT;
 
 namespace GetStoreApp.UI.Controls.Settings.Common
 {
@@ -94,7 +95,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// </summary>
         public async void OnWinGetInstallModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            RadioMenuFlyoutItem item = sender as RadioMenuFlyoutItem;
+            RadioMenuFlyoutItem item = sender.As<RadioMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 WinGetInstallMode = WinGetInstallModeList[Convert.ToInt32(item.Tag)];
@@ -148,7 +149,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// </summary>
         public async void OnToggled(object sender, RoutedEventArgs args)
         {
-            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
+            ToggleSwitch toggleSwitch = sender.As<ToggleSwitch>();
             if (toggleSwitch is not null)
             {
                 await WinGetConfigService.SetUseDevVersionAsync(toggleSwitch.IsOn);

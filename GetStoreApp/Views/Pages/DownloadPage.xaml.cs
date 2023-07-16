@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System.ComponentModel;
+using WinRT;
 
 namespace GetStoreApp.Views.Pages
 {
@@ -56,7 +57,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.RemovedItems.Count > 0)
             {
-                Pivot pivot = sender as Pivot;
+                Pivot pivot = sender.As<Pivot>();
                 if (pivot is not null)
                 {
                     if (pivot.SelectedIndex == 0)

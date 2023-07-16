@@ -9,6 +9,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using WinRT;
 
 namespace GetStoreApp.UI.Controls.Settings.Appearance
 {
@@ -61,7 +62,7 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
         /// </summary>
         public async void OnBackdropSelectClicked(object sender, RoutedEventArgs args)
         {
-            RadioMenuFlyoutItem item = sender as RadioMenuFlyoutItem;
+            RadioMenuFlyoutItem item = sender.As<RadioMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 Backdrop = BackdropList[Convert.ToInt32(item.Tag)];

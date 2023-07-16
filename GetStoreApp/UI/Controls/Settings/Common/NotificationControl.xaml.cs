@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.ComponentModel;
 using Windows.System;
+using WinRT;
 
 namespace GetStoreApp.UI.Controls.Settings.Common
 {
@@ -45,7 +46,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// </summary>
         public async void OnToggled(object sender, RoutedEventArgs args)
         {
-            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
+            ToggleSwitch toggleSwitch = sender.As<ToggleSwitch>();
             if (toggleSwitch is not null)
             {
                 await NotificationService.SetNotificationAsync(toggleSwitch.IsOn);

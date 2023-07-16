@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Extensions.Backdrop;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Window;
-using GetStoreApp.Properties;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Advanced;
 using GetStoreApp.Services.Controls.Settings.Appearance;
@@ -179,6 +178,7 @@ namespace GetStoreApp.Views.Window
             AppWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
             AppTitlebar.IsWindowMaximized = Presenter.State == OverlappedPresenterState.Maximized;
             SetTitleBar(AppTitlebar);
+            AppWindow.Changed += OnAppWindowChanged;
         }
 
         /// <summary>
@@ -199,104 +199,6 @@ namespace GetStoreApp.Views.Window
                 newDragAreaWindowWndProc = new WNDPROC(NewDragAreaWindowProc);
                 oldDragAreaWindowWndProc = SetWindowLongAuto(childHandle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newDragAreaWindowWndProc));
             }
-        }
-
-        /// <summary>
-        /// 加载“微软商店”图标
-        /// </summary>
-        public async void StoreIconLoaded(object sender, RoutedEventArgs args)
-        {
-            InMemoryRandomAccessStream memoryStream = new InMemoryRandomAccessStream();
-            DataWriter datawriter = new DataWriter(memoryStream.GetOutputStreamAt(0));
-            datawriter.WriteBytes(Resources.Store);
-            await datawriter.StoreAsync();
-            BitmapImage image = new BitmapImage();
-            await image.SetSourceAsync(memoryStream);
-            sender.As<ImageIcon>().Source = image;
-        }
-
-        /// <summary>
-        /// 加载“WinGet 程序包”图标
-        /// </summary>
-        public async void WinGetIconLoaded(object sender, RoutedEventArgs args)
-        {
-            InMemoryRandomAccessStream memoryStream = new InMemoryRandomAccessStream();
-            DataWriter datawriter = new DataWriter(memoryStream.GetOutputStreamAt(0));
-            datawriter.WriteBytes(Resources.WinGet);
-            await datawriter.StoreAsync();
-            BitmapImage image = new BitmapImage();
-            await image.SetSourceAsync(memoryStream);
-            sender.As<ImageIcon>().Source = image;
-        }
-
-        /// <summary>
-        /// 加载“历史记录”图标
-        /// </summary>
-        public async void HistoryIconLoaded(object sender, RoutedEventArgs args)
-        {
-            InMemoryRandomAccessStream memoryStream = new InMemoryRandomAccessStream();
-            DataWriter datawriter = new DataWriter(memoryStream.GetOutputStreamAt(0));
-            datawriter.WriteBytes(Resources.History);
-            await datawriter.StoreAsync();
-            BitmapImage image = new BitmapImage();
-            await image.SetSourceAsync(memoryStream);
-            sender.As<ImageIcon>().Source = image;
-        }
-
-        /// <summary>
-        /// 加载“下载管理”图标
-        /// </summary>
-        public async void DownloadIconLoaded(object sender, RoutedEventArgs args)
-        {
-            InMemoryRandomAccessStream memoryStream = new InMemoryRandomAccessStream();
-            DataWriter datawriter = new DataWriter(memoryStream.GetOutputStreamAt(0));
-            datawriter.WriteBytes(Resources.Download);
-            await datawriter.StoreAsync();
-            BitmapImage image = new BitmapImage();
-            await image.SetSourceAsync(memoryStream);
-            sender.As<ImageIcon>().Source = image;
-        }
-
-        /// <summary>
-        /// 加载“访问网页版”图标
-        /// </summary>
-        public async void WebIconLoaded(object sender, RoutedEventArgs args)
-        {
-            InMemoryRandomAccessStream memoryStream = new InMemoryRandomAccessStream();
-            DataWriter datawriter = new DataWriter(memoryStream.GetOutputStreamAt(0));
-            datawriter.WriteBytes(Resources.Web);
-            await datawriter.StoreAsync();
-            BitmapImage image = new BitmapImage();
-            await image.SetSourceAsync(memoryStream);
-            sender.As<ImageIcon>().Source = image;
-        }
-
-        /// <summary>
-        /// 加载“关于”图标
-        /// </summary>
-        public async void AboutIconLoaded(object sender, RoutedEventArgs args)
-        {
-            InMemoryRandomAccessStream memoryStream = new InMemoryRandomAccessStream();
-            DataWriter datawriter = new DataWriter(memoryStream.GetOutputStreamAt(0));
-            datawriter.WriteBytes(Resources.About);
-            await datawriter.StoreAsync();
-            BitmapImage image = new BitmapImage();
-            await image.SetSourceAsync(memoryStream);
-            sender.As<ImageIcon>().Source = image;
-        }
-
-        /// <summary>
-        /// 加载“设置”图标
-        /// </summary>
-        public async void SettingsIconLoaded(object sender, RoutedEventArgs args)
-        {
-            InMemoryRandomAccessStream memoryStream = new InMemoryRandomAccessStream();
-            DataWriter datawriter = new DataWriter(memoryStream.GetOutputStreamAt(0));
-            datawriter.WriteBytes(Resources.Settings);
-            await datawriter.StoreAsync();
-            BitmapImage image = new BitmapImage();
-            await image.SetSourceAsync(memoryStream);
-            sender.As<ImageIcon>().Source = image;
         }
 
         /// <summary>
@@ -385,6 +287,21 @@ namespace GetStoreApp.Views.Window
         public void OnSizeChanged(object sender, WindowSizeChangedEventArgs args)
         {
             PaneDisplayMode = args.Size.Width > 768 ? NavigationViewPaneDisplayMode.Left : NavigationViewPaneDisplayMode.LeftMinimal;
+            if (AppTitlebar.TitlebarMenuFlyout.IsOpen)
+            {
+                AppTitlebar.TitlebarMenuFlyout.Hide();
+            }
+        }
+
+        public void OnAppWindowChanged(AppWindow sender, AppWindowChangedEventArgs args)
+        {
+            if (args.DidPositionChange)
+            {
+                if (AppTitlebar.TitlebarMenuFlyout.IsOpen)
+                {
+                    AppTitlebar.TitlebarMenuFlyout.Hide();
+                }
+            }
         }
 
         /// <summary>
@@ -449,7 +366,7 @@ namespace GetStoreApp.Views.Window
 
             // 导航控件加载完成后初始化内容
 
-            NavigationView navigationView = sender as NavigationView;
+            NavigationView navigationView = sender.As<NavigationView>();
             if (navigationView is not null)
             {
                 foreach (object item in navigationView.MenuItems)
@@ -516,6 +433,7 @@ namespace GetStoreApp.Views.Window
         /// </summary>
         public void OnNavigationViewUnLoaded(object sender, RoutedEventArgs args)
         {
+            AppWindow.Changed -= OnAppWindowChanged;
             AppUISettings.ColorValuesChanged -= OnColorValuesChanged;
             PropertyChanged -= OnPropertyChanged;
         }
@@ -569,7 +487,7 @@ namespace GetStoreApp.Views.Window
         /// </summary>
         public void OnTapped(object sender, TappedRoutedEventArgs args)
         {
-            NavigationViewItem navigationViewItem = sender as NavigationViewItem;
+            NavigationViewItem navigationViewItem = sender.As<NavigationViewItem>();
             if (navigationViewItem.Tag is not null)
             {
                 NavigationModel navigationItem = NavigationService.NavigationItemList.Find(item => item.NavigationTag == Convert.ToString(navigationViewItem.Tag));
@@ -577,6 +495,24 @@ namespace GetStoreApp.Views.Window
                 {
                     NavigationService.NavigateTo(navigationItem.NavigationPage);
                 }
+            }
+        }
+
+        /// <summary>
+        /// 加载导航控件按钮的图标
+        /// </summary>
+        public async void OnIconLoaded(object sender, RoutedEventArgs args)
+        {
+            ImageIcon imageIcon = sender.As<ImageIcon>();
+            if (imageIcon is not null)
+            {
+                InMemoryRandomAccessStream memoryStream = new InMemoryRandomAccessStream();
+                DataWriter datawriter = new DataWriter(memoryStream.GetOutputStreamAt(0));
+                datawriter.WriteBytes((byte[])imageIcon.Tag);
+                await datawriter.StoreAsync();
+                BitmapImage image = new BitmapImage();
+                await image.SetSourceAsync(memoryStream);
+                sender.As<ImageIcon>().Source = image;
             }
         }
 
@@ -727,25 +663,6 @@ namespace GetStoreApp.Views.Window
         {
             switch (Msg)
             {
-                // 窗口移动的消息
-                case WindowMessage.WM_MOVE:
-                    {
-                        if (AppTitlebar.TitlebarMenuFlyout.IsOpen)
-                        {
-                            AppTitlebar.TitlebarMenuFlyout.Hide();
-                        }
-                        break;
-                    }
-                // 窗口大小发生变化的消息
-                case WindowMessage.WM_SIZE:
-                    {
-                        AppTitlebar.IsWindowMaximized = Presenter.State == OverlappedPresenterState.Maximized;
-                        if (AppTitlebar.TitlebarMenuFlyout.IsOpen)
-                        {
-                            AppTitlebar.TitlebarMenuFlyout.Hide();
-                        }
-                        break;
-                    }
                 // 窗口大小发生更改时的消息
                 case WindowMessage.WM_GETMINMAXINFO:
                     {

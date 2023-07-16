@@ -2,6 +2,7 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.ComponentModel;
+using WinRT;
 
 namespace GetStoreApp.UI.Controls.Settings.Appearance
 {
@@ -35,7 +36,7 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
         /// </summary>
         public async void OnToggled(object sender, RoutedEventArgs args)
         {
-            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
+            ToggleSwitch toggleSwitch = sender.As<ToggleSwitch>();
             if (toggleSwitch is not null)
             {
                 await TopMostService.SetTopMostValueAsync(toggleSwitch.IsOn);

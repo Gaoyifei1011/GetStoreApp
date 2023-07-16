@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Windows.Storage;
+using WinRT;
 
 namespace GetStoreApp.UI.Controls.Settings.Common
 {
@@ -127,7 +128,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// </summary>
         public async void OnDownloadItemSelectClicked(object sender, RoutedEventArgs args)
         {
-            RadioMenuFlyoutItem item = sender as RadioMenuFlyoutItem;
+            RadioMenuFlyoutItem item = sender.As<RadioMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 DownloadItem = Convert.ToInt32(item.Tag);
@@ -140,7 +141,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// </summary>
         public async void OnDownloadModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            RadioMenuFlyoutItem item = sender as RadioMenuFlyoutItem;
+            RadioMenuFlyoutItem item = sender.As<RadioMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 DownloadMode = DownloadModeList[Convert.ToInt32(item.Tag)];

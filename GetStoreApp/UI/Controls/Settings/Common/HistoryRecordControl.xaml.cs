@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using WinRT;
 
 namespace GetStoreApp.UI.Controls.Settings.Common
 {
@@ -65,7 +66,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// </summary>
         public async void OnHistoryLiteSelectClicked(object sender, RoutedEventArgs args)
         {
-            RadioMenuFlyoutItem item = sender as RadioMenuFlyoutItem;
+            RadioMenuFlyoutItem item = sender.As<RadioMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 HistoryLiteItem = HistoryLiteNumList[Convert.ToInt32(item.Tag)];
@@ -78,7 +79,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// </summary>
         public async void OnHistoryJumpListSelectClicked(object sender, RoutedEventArgs args)
         {
-            RadioMenuFlyoutItem item = sender as RadioMenuFlyoutItem;
+            RadioMenuFlyoutItem item = sender.As<RadioMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 HistoryJumpListItem = HistoryJumpListNumList[Convert.ToInt32(item.Tag)];

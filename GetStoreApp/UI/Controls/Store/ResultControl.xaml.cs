@@ -23,6 +23,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Windows.System;
+using WinRT;
 
 namespace GetStoreApp.UI.Controls.Store
 {
@@ -298,7 +299,7 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         public void OnCopyOptionsClicked(object sender, RoutedEventArgs args)
         {
-            FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
+            FlyoutBase.ShowAttachedFlyout(sender.As<MenuFlyoutItem>());
         }
 
         /// <summary>

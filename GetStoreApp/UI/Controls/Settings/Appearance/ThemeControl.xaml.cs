@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Windows.System;
+using WinRT;
 
 namespace GetStoreApp.UI.Controls.Settings.Appearance
 {
@@ -69,7 +70,7 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
         /// </summary>
         public async void OnThemeSelectClicked(object sender, RoutedEventArgs args)
         {
-            RadioMenuFlyoutItem item = sender as RadioMenuFlyoutItem;
+            RadioMenuFlyoutItem item = sender.As<RadioMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 Theme = ThemeList[Convert.ToInt32(item.Tag)];
@@ -84,7 +85,7 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
         /// </summary>
         public async void OnNotifyIconMenuThemeSelectClicked(object sender, RoutedEventArgs args)
         {
-            RadioMenuFlyoutItem item = sender as RadioMenuFlyoutItem;
+            RadioMenuFlyoutItem item = sender.As<RadioMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 NotifyIconMenuTheme = NotifyIconMenuThemeList[Convert.ToInt32(item.Tag)];

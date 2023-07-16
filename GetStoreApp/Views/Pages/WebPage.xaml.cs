@@ -21,6 +21,7 @@ using System.Threading;
 using Windows.Foundation;
 using Windows.Storage;
 using Windows.System;
+using WinRT;
 
 namespace GetStoreApp.Views.Pages
 {
@@ -177,7 +178,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         public void OnFlyoutShowClicked(object sender, RoutedEventArgs args)
         {
-            FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
+            FlyoutBase.ShowAttachedFlyout(sender.As<MenuFlyoutItem>());
         }
 
         /// <summary>
@@ -222,7 +223,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         public void OnCoreWebView2Initialized(object sender, CoreWebView2InitializedEventArgs args)
         {
-            WebView2 webView = sender as WebView2;
+            WebView2 webView = sender.As<WebView2>();
 
             if (CoreWebView is null && webView.CoreWebView2 is not null)
             {

@@ -5,6 +5,7 @@ using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.ComponentModel;
+using WinRT;
 
 namespace GetStoreApp.UI.Controls.Settings.Common
 {
@@ -59,7 +60,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// </summary>
         public async void OnStartWithEToggled(object sender, RoutedEventArgs args)
         {
-            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
+            ToggleSwitch toggleSwitch = sender.As<ToggleSwitch>();
             if (toggleSwitch is not null)
             {
                 await LinkFilterService.SetStartsWithEFilterValueAsync(toggleSwitch.IsOn);
@@ -72,7 +73,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// </summary>
         public async void OnBlockMapToggled(object sender, RoutedEventArgs args)
         {
-            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
+            ToggleSwitch toggleSwitch = sender.As<ToggleSwitch>();
             if (toggleSwitch is not null)
             {
                 await LinkFilterService.SetBlockMapFilterValueAsync(toggleSwitch.IsOn);
