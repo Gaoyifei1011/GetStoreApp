@@ -865,6 +865,15 @@ namespace GetStoreApp.Views.Window
         {
             switch (Msg)
             {
+                // 当用户按下鼠标左键时，光标位于窗口的非工作区内的消息
+                case WindowMessage.WM_NCLBUTTONDOWN:
+                    {
+                        if (AppTitlebar.TitlebarMenuFlyout.IsOpen)
+                        {
+                            AppTitlebar.TitlebarMenuFlyout.Hide();
+                        }
+                        break;
+                    }
                 // 当用户按下鼠标右键时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCRBUTTONDOWN:
                     {
