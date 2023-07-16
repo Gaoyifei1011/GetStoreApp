@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
+namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
 {
     /// <summary>
     /// 通过添加特定于打开对话框的方法扩展 <see cref="IFileOpenDialog"> 接口。
     /// </summary>
-    [ComImport]
-    [Guid("42f85136-db7e-439c-85f1-e4075d135fc8")]
-    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    [ComImport, Guid("42f85136-db7e-439c-85f1-e4075d135fc8"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IFileOpenDialog
     {
         /// <summary>
@@ -16,7 +14,7 @@ namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
         /// </summary>
         /// <param name="hwnd"></param>
         [PreserveSig]
-        int Show([In] IntPtr hwnd);
+        int Show([In] nint hwnd);
 
         /// <summary>
         /// 设置对话框可以打开或保存的文件类型。

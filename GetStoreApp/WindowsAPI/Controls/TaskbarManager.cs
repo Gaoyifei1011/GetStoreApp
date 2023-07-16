@@ -1,5 +1,5 @@
 ﻿using GetStoreApp.Helpers.Root;
-using GetStoreApp.WindowsAPI.Controls.Taskbar;
+using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using System;
 
 namespace GetStoreApp.WindowsAPI.Controls
@@ -9,9 +9,13 @@ namespace GetStoreApp.WindowsAPI.Controls
     /// </summary>
     public class TaskbarManager
     {
+        private ITaskbarList4 TaskbarList { get; }
+
         // 隐藏默认构造函数
         private TaskbarManager()
         {
+            TaskbarList = (ITaskbarList4)new CTaskbarList();
+            TaskbarList.HrInit();
         }
 
         // 最佳做法建议定义要锁定的私有对象
@@ -43,7 +47,7 @@ namespace GetStoreApp.WindowsAPI.Controls
         /// </summary>
         public static bool IsPlatformSupported
         {
-            get { return InfoHelper.GetDeviceFamily() is "Windows.Desktop" && InfoHelper.SystemVersion.Build > 7600; }
+            get { return InfoHelper.DeviceFamily is "Windows.Desktop" && InfoHelper.SystemVersion.Build > 7600; }
         }
 
         /// <summary>
@@ -55,7 +59,7 @@ namespace GetStoreApp.WindowsAPI.Controls
         {
             if (IsPlatformSupported)
             {
-                TaskbarList.Instance.SetProgressValue(OwnerHandle, Convert.ToUInt32(currentValue), Convert.ToUInt32(maximumValue));
+                TaskbarList.SetProgressValue(OwnerHandle, Convert.ToUInt32(currentValue), Convert.ToUInt32(maximumValue));
             }
         }
 
@@ -70,7 +74,7 @@ namespace GetStoreApp.WindowsAPI.Controls
         {
             if (IsPlatformSupported)
             {
-                TaskbarList.Instance.SetProgressValue(windowHandle, Convert.ToUInt32(currentValue), Convert.ToUInt32(maximumValue));
+                TaskbarList.SetProgressValue(windowHandle, Convert.ToUInt32(currentValue), Convert.ToUInt32(maximumValue));
             }
         }
 
@@ -82,7 +86,7 @@ namespace GetStoreApp.WindowsAPI.Controls
         {
             if (IsPlatformSupported)
             {
-                TaskbarList.Instance.SetProgressState(OwnerHandle, flags);
+                TaskbarList.SetProgressState(OwnerHandle, flags);
             }
         }
 
@@ -95,7 +99,7 @@ namespace GetStoreApp.WindowsAPI.Controls
         public void SetProgressState(TBPFLAG flags, IntPtr windowHandle)
         {
             if (IsPlatformSupported)
-                TaskbarList.Instance.SetProgressState(windowHandle, (TBPFLAG)flags);
+                TaskbarList.SetProgressState(windowHandle, flags);
         }
 
         private IntPtr _ownerHandle;

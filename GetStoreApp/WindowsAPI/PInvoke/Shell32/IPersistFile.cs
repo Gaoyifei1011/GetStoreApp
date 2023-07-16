@@ -6,9 +6,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
     /// <summary>
     /// 使对象能够从磁盘文件加载或保存到磁盘文件，而不是存储对象或流。 由于打开文件所需的信息因应用程序而异，因此对象上的 <see cref="Load"> 的实现还必须打开其磁盘文件。
     /// </summary>
-    [Guid("0000010b-0000-0000-C000-000000000046")]
-    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    [ComImport]
+    [ComImport, Guid("0000010b-0000-0000-C000-000000000046"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IPersistFile
     {
         /// <summary>

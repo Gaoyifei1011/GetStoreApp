@@ -22,5 +22,5 @@
     <NoWarn>CA1069;CA1401;CA1822;CA2211;IDE0017;IDE0028;IDE0044;IDE0060;IDE0090;NU1701;NU1702</NoWarn>
     <DirectoryBuildPropsPath>$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))</DirectoryBuildPropsPath>
   </PropertyGroup>
-  <Import Project="$(DirectoryBuildPropsPath)" Condition="'$(DirectoryBuildPropsPath)' != ''"/>
+  <Import Project="$(DirectoryBuildPropsPath)" Condition="'$(DirectoryBuildPropsPath)' != ''" />
 </Project>

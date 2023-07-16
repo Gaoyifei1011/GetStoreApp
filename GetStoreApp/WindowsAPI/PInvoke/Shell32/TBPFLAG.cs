@@ -1,4 +1,4 @@
-﻿namespace GetStoreApp.WindowsAPI.Controls.Taskbar
+﻿namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
 {
     /// <summary>
     /// 控制进度按钮当前状态的标志。 仅指定以下标志之一;所有状态都是相互排斥的。

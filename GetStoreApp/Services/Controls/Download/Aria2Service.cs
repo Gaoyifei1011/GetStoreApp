@@ -19,9 +19,9 @@ namespace GetStoreApp.Services.Controls.Download
     /// </summary>
     public static class Aria2Service
     {
-        private static string Aria2FilePath { get; } = string.Format(@"{0}\{1}", InfoHelper.GetAppInstalledLocation(), @"Mile.Aria2.exe");
+        private static string Aria2FilePath { get; } = Path.Combine(InfoHelper.AppInstalledLocation, "Mile.Aria2.exe");
 
-        public static string Aria2ConfPath { get; } = string.Format(@"{0}\{1}", ApplicationData.Current.LocalFolder.Path, "Aria2.conf");
+        public static string Aria2ConfPath { get; } = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Aria2.conf");
 
         private static string Aria2Arguments { get; set; }
 

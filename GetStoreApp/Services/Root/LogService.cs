@@ -56,7 +56,7 @@ namespace GetStoreApp.Services.Root
                     {
                         File.AppendAllText(
                             Path.Combine(LogFolder.Path, string.Format("GetStoreApp_{0}.log", DateTime.Now.ToString("yyyy_MM_dd"))),
-                            string.Format("{0}\t{1}\n{2}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), Convert.ToString(logType), logBuilder)
+                            string.Format("{0}\t{1}\t{2}\n{3}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), Convert.ToString(logType), logContent, logBuilder)
                             );
                     });
                 }
@@ -94,7 +94,7 @@ namespace GetStoreApp.Services.Root
 
                         File.AppendAllText(
                             Path.Combine(LogFolder.Path, string.Format("GetStoreApp_{0}.log", DateTime.Now.ToString("yyyy_MM_dd"))),
-                            string.Format("{0}\t{1}\n{2}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), Convert.ToString(logType), exceptionBuilder.ToString())
+                            string.Format("{0}\t{1}\t{2}\n{3}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), Convert.ToString(logType), logContent, exceptionBuilder.ToString())
                             );
                     });
                 }

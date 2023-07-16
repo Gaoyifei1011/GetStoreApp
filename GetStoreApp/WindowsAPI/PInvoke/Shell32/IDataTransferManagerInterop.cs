@@ -7,9 +7,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
     /// <summary>
     /// 允许在管理多个窗口的 Windows 应用商店应用中访问 <see cref="DataTransferManager"> 方法。
     /// </summary>
-    [ComImport]
-    [Guid("3A3DCD6C-3EAB-43DC-BCDE-45671CE800C8")]
-    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    [ComImport, Guid("3A3DCD6C-3EAB-43DC-BCDE-45671CE800C8"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IDataTransferManagerInterop
     {
         /// <summary>

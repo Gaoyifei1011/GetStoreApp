@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.WindowsAPI.PInvoke.Shell32;
+using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml;
 using System;
 
@@ -52,17 +53,17 @@ namespace GetStoreApp.Extensions.SystemTray
         /// <summary>
         /// 鼠标事件接收后的操作
         /// </summary>
-        private void OnMouseEventReceived(MouseEvent mouseEvent)
+        private void OnMouseEventReceived(WindowMessage mouseMessage)
         {
-            if (mouseEvent is MouseEvent.IconLeftMouseUp)
+            if (mouseMessage is WindowMessage.WM_LBUTTONUP)
             {
                 Click?.Invoke(this, null);
             }
-            else if (mouseEvent is MouseEvent.IconRightMouseUp)
+            else if (mouseMessage is WindowMessage.WM_RBUTTONUP)
             {
                 RightClick?.Invoke(this, null);
             }
-            else if (mouseEvent is MouseEvent.IconDoubleClick)
+            else if (mouseMessage is WindowMessage.WM_LBUTTONDBLCLK)
             {
                 DoubleClick?.Invoke(this, null);
             }

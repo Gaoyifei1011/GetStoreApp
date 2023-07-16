@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Services.Controls.Download;
+﻿using GetStoreApp.Helpers.Root;
+using GetStoreApp.Services.Controls.Download;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -39,12 +40,12 @@ namespace GetStoreApp.UI.Controls.Settings.Experiment
                     }
                     catch (Exception)
                     {
-                        await Launcher.LaunchFolderPathAsync(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
+                        await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
                     }
                 }
                 else
                 {
-                    await Launcher.LaunchFolderPathAsync(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
+                    await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
                 }
             }
         }

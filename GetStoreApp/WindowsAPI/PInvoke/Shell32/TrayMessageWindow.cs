@@ -27,7 +27,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         public IntPtr TrayMessagehWnd { get; private set; }
 
         // 如果用户在任务栏图标区域内单击或移动，则触发。
-        public event Action<MouseEvent> MouseEventReceived;
+        public event Action<WindowMessage> MouseEventReceived;
 
         // 如果任务栏已创建或重新启动，则触发。需要重置任务栏图标。
         public event Action TaskbarCreated;
@@ -109,18 +109,18 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
                         case WindowMessage.WM_LBUTTONUP:
                             if (!isDoubleClick)
                             {
-                                MouseEventReceived?.Invoke(MouseEvent.IconLeftMouseUp);
+                                MouseEventReceived?.Invoke(WindowMessage.WM_LBUTTONUP);
                             }
                             isDoubleClick = false;
                             break;
                         // 处理单击右键消息
                         case WindowMessage.WM_RBUTTONUP:
-                            MouseEventReceived?.Invoke(MouseEvent.IconRightMouseUp);
+                            MouseEventReceived?.Invoke(WindowMessage.WM_RBUTTONUP);
                             break;
                         // 处理双击左键消息
                         case WindowMessage.WM_LBUTTONDBLCLK:
                             isDoubleClick = true;
-                            MouseEventReceived?.Invoke(MouseEvent.IconDoubleClick);
+                            MouseEventReceived?.Invoke(WindowMessage.WM_LBUTTONDBLCLK);
                             break;
 
                         default:

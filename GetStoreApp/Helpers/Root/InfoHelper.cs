@@ -1,5 +1,6 @@
 ﻿using System;
 using Windows.ApplicationModel;
+using Windows.Storage;
 using Windows.System.Profile;
 
 namespace GetStoreApp.Helpers.Root
@@ -18,30 +19,30 @@ namespace GetStoreApp.Helpers.Root
             );
 
         // 系统版本信息
-        public static Version SystemVersion { get; } = Environment.OSVersion.Version;
+        public static Version SystemVersion { get; }
 
-        /// <summary>
-        /// 获取应用安装根目录
-        /// </summary>
-        public static string GetAppInstalledLocation()
-        {
-            return Package.Current.InstalledLocation.Path;
-        }
+        // 系统范围文件夹位置
+        public static SystemDataPaths SystemDataPath { get; } = SystemDataPaths.GetDefault();
 
-        /// <summary>
-        /// 获取应用版本信息
-        /// </summary>
-        public static Version GetAppVersion()
-        {
-            return AppVersion;
-        }
+        // 常见用户数据文件夹的完整路径
+        public static UserDataPaths UserDataPath { get; } = UserDataPaths.GetDefault();
 
-        /// <summary>
-        /// 获取表示应用程序正在运行的设备类型
-        /// </summary>
-        public static string GetDeviceFamily()
+        // 应用安装根目录
+        public static string AppInstalledLocation { get; } = Package.Current.InstalledLocation.Path;
+
+        // 应用程序正在运行的设备类型
+        public static string DeviceFamily { get; } = AnalyticsInfo.VersionInfo.DeviceFamily;
+
+        static InfoHelper()
         {
-            return AnalyticsInfo.VersionInfo.DeviceFamily;
+            string systemVersion = AnalyticsInfo.VersionInfo.DeviceFamilyVersion;
+            ulong version = ulong.Parse(systemVersion);
+            SystemVersion = new Version(
+                (int)((version & 0xFFFF000000000000L) >> 48),
+                (int)((version & 0x0000FFFF00000000L) >> 32),
+                (int)((version & 0x00000000FFFF0000L) >> 16),
+                (int)(version & 0x000000000000FFFFL)
+                );
         }
     }
 }

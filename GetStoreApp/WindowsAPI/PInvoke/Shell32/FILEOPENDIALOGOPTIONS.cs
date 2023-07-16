@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
+namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
 {
     /// <summary>
     /// 定义可用于“打开”或“保存”对话框的选项集

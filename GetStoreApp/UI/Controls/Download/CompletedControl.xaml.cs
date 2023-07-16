@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Extensions.DataType.Events;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Advanced;
@@ -173,12 +174,12 @@ namespace GetStoreApp.UI.Controls.Download
                         catch (Exception e)
                         {
                             LogService.WriteLog(LogType.WARNING, "Completed download item folder located failed.", e);
-                            await Launcher.LaunchFolderPathAsync(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
+                            await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
                         }
                     }
                     else
                     {
-                        await Launcher.LaunchFolderPathAsync(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
+                        await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
                     }
                 }
             };

@@ -1,6 +1,7 @@
 ﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;
+using System.IO;
 using System.Runtime.InteropServices;
 
 namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
@@ -87,7 +88,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         /// <summary>
         /// Windows 2000 及更高版本。 可以设置为修改气球通知的行为和外观的标志。 图标放置在标题的左侧。 如果 szInfoTitle 成员的长度为零，则不显示图标。
         /// </summary>
-        public NotifyIconInfoFlags dwInfoFlags;
+        public int dwInfoFlags;
 
         /// <summary>
         /// Windows XP 及更高版本。
@@ -138,7 +139,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         private static IntPtr LoadIcon()
         {
             // 选中文件中的图标总数
-            int iconTotalCount = User32Library.PrivateExtractIcons(string.Format(@"{0}\{1}", InfoHelper.GetAppInstalledLocation(), "GetStoreApp.exe"), 0, 0, 0, null, null, 0, 0);
+            int iconTotalCount = User32Library.PrivateExtractIcons(Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreApp.exe"), 0, 0, 0, null, null, 0, 0);
 
             // 用于接收获取到的图标指针
             IntPtr[] hIcons = new IntPtr[iconTotalCount];
@@ -147,7 +148,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
             int[] ids = new int[iconTotalCount];
 
             // 成功获取到的图标个数
-            int successCount = User32Library.PrivateExtractIcons(string.Format(@"{0}\{1}", InfoHelper.GetAppInstalledLocation(), "GetStoreApp.exe"), 0, 16, 16, hIcons, ids, iconTotalCount, 0);
+            int successCount = User32Library.PrivateExtractIcons(Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreApp.exe"), 0, 16, 16, hIcons, ids, iconTotalCount, 0);
 
             // GetStoreApp.exe 应用程序只有一个图标，返回该应用程序的图标句柄
             if (successCount >= 1 && hIcons[0] != IntPtr.Zero)

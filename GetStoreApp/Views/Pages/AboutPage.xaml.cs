@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.About;
 using GetStoreApp.UI.Notifications;
@@ -64,7 +65,7 @@ namespace GetStoreApp.Views.Pages
                 AppLink.SetPath(string.Format(@"shell:AppsFolder\{0}", DefaultEntry.AppUserModelId));
 
                 IPersistFile PersistFile = (IPersistFile)AppLink;
-                PersistFile.Save(string.Format(@"{0}\{1}.lnk", Environment.GetFolderPath(Environment.SpecialFolder.Desktop), ResourceService.GetLocalized("Resources/AppDisplayName")), false);
+                PersistFile.Save(string.Format(@"{0}\{1}.lnk", InfoHelper.UserDataPath.Desktop, ResourceService.GetLocalized("Resources/AppDisplayName")), false);
                 IsCreatedSuccessfully = true;
             }
             catch (Exception e)

@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
+namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
 {
     /// <summary>
     /// 公开检索有关 Shell 项的信息的方法。 <see cref="IShellItem"> 和 IShellItem2 是任何新代码中项的首选表示形式。
     /// <see cref="IShellItem"> 接口继承自 IUnknown 接口。
     /// </summary>
-    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    [Guid("43826d1e-e718-42ee-bc55-a1e261c37bfe")]
+    [ComImport, Guid("43826d1e-e718-42ee-bc55-a1e261c37bfe"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IShellItem
     {
         /// <summary>
@@ -23,7 +22,7 @@ namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
         /// <param name="ppv">此方法返回时，包含由 riid 指定的处理程序返回的类型 riid 的指针。</param>
         /// <returns>如果项相同，则返回S_OK项，如果项不同，则返回S_FALSE，否则返回错误值。</returns>
         [return: MarshalAs(UnmanagedType.IUnknown)]
-        void BindToHandler(IntPtr pbc, [MarshalAs(UnmanagedType.LPStruct)] Guid bhid, [MarshalAs(UnmanagedType.LPStruct)] Guid riid, out IntPtr ppv);
+        void BindToHandler(nint pbc, [MarshalAs(UnmanagedType.LPStruct)] Guid bhid, [MarshalAs(UnmanagedType.LPStruct)] Guid riid, out nint ppv);
 
         /// <summary>
         /// 获取 <see cref="IShellItem"> 对象的父对象。
@@ -37,7 +36,7 @@ namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
         /// </summary>
         /// <param name="sigdnName">指示名称外观的 <see cref="SIGDN"> 值之一。</param>
         /// <param name="ppszName">一个值，当此函数成功返回时，接收指向检索的显示名称的指针的地址。</param>
-        void GetDisplayName(SIGDN sigdnName, out IntPtr ppszName);
+        void GetDisplayName(SIGDN sigdnName, out nint ppszName);
 
         /// <summary>
         /// 获取 <see cref="IShellItem"> 对象的请求属性集。

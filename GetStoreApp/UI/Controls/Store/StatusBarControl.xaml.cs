@@ -1,7 +1,7 @@
 ﻿using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.Controls;
-using GetStoreApp.WindowsAPI.Controls.Taskbar;
+using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
 using System.ComponentModel;

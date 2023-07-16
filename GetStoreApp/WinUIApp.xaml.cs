@@ -11,6 +11,7 @@ using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Foundation;
@@ -280,7 +281,7 @@ namespace GetStoreApp
         private void SetAppIcon()
         {
             // 选中文件中的图标总数
-            int iconTotalCount = User32Library.PrivateExtractIcons(string.Format(@"{0}\{1}", InfoHelper.GetAppInstalledLocation(), "GetStoreApp.exe"), 0, 0, 0, null, null, 0, 0);
+            int iconTotalCount = User32Library.PrivateExtractIcons(Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreApp.exe"), 0, 0, 0, null, null, 0, 0);
 
             // 用于接收获取到的图标指针
             hIcons = new IntPtr[iconTotalCount];
@@ -289,7 +290,7 @@ namespace GetStoreApp
             int[] ids = new int[iconTotalCount];
 
             // 成功获取到的图标个数
-            int successCount = User32Library.PrivateExtractIcons(string.Format(@"{0}\{1}", InfoHelper.GetAppInstalledLocation(), "GetStoreApp.exe"), 0, 256, 256, hIcons, ids, iconTotalCount, 0);
+            int successCount = User32Library.PrivateExtractIcons(Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreApp.exe"), 0, 256, 256, hIcons, ids, iconTotalCount, 0);
 
             // GetStoreApp.exe 应用程序只有一个图标
             if (successCount >= 1 && hIcons[0] != IntPtr.Zero)

@@ -1,4 +1,4 @@
-﻿namespace GetStoreApp.WindowsAPI.Dialogs.FileDialog
+﻿namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
 {
     /// <summary>
     /// 请求通过 <see cref="IShellItem.GetDisplayName"> 和 SHGetNameFromIDList 检索项的显示名称的形式。

@@ -12,13 +12,13 @@ namespace GetStoreApp.UI.Controls.About
     /// </summary>
     public sealed partial class HeaderControl : Grid
     {
-        private readonly int MajorVersion = InfoHelper.GetAppVersion().Major;
+        private readonly int MajorVersion = InfoHelper.AppVersion.Major;
 
-        private readonly int MinorVersion = InfoHelper.GetAppVersion().Minor;
+        private readonly int MinorVersion = InfoHelper.AppVersion.Minor;
 
-        private readonly int BuildVersion = InfoHelper.GetAppVersion().Build;
+        private readonly int BuildVersion = InfoHelper.AppVersion.Build;
 
-        private readonly int RevisionVersion = InfoHelper.GetAppVersion().Revision;
+        private readonly int RevisionVersion = InfoHelper.AppVersion.Revision;
 
         public string AppVersion => string.Format("{0}.{1}.{2}.{3}", MajorVersion, MinorVersion, BuildVersion, RevisionVersion);
 

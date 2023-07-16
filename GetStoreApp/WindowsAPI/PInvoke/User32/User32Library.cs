@@ -1,5 +1,4 @@
-﻿using GetStoreApp.WindowsAPI.PInvoke.Shell32;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using Windows.Graphics;
 
@@ -144,20 +143,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         public static partial int GetDpiForWindow(IntPtr hwnd);
 
         /// <summary>
-        /// <see cref="GetMonitorInfo"> 函数检索有关显示监视器的信息。
-        /// </summary>
-        /// <param name="hMonitor">感兴趣的显示监视器的句柄。</param>
-        /// <param name="lpmi">
-        /// 指向 <see cref="MONITORINFO"> 或 MONITORINFOEX 结构的指针，该结构接收有关指定显示监视器的信息。
-        /// 在调用 GetMonitorInfo 函数之前，必须将结构的 cbSize 成员设置为 sizeof (MONITORINFO) 或 sizeof (MONITORINFOEX) 。 这样，函数就可以确定要传递给它的结构类型。
-        /// <see cref="MONITORINFO"> 结构是 MONITORINFO 结构的超集。 它具有一个附加成员：一个字符串，其中包含显示监视器的名称。 大多数应用程序没有用于显示监视器名称，因此可以使用 MONITORINFO 结构保存某些字节。
-        /// </param>
-        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
-        [LibraryImport(User32, EntryPoint = "GetMonitorInfoW", SetLastError = false)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool GetMonitorInfo(IntPtr hMonitor, out MONITORINFO lpmi);
-
-        /// <summary>
         /// 检索有关指定窗口的信息。 该函数还会检索 32 位 (DWORD) 值，该值位于指定偏移量处，并进入额外的窗口内存。
         /// </summary>
         /// <param name="hWnd">窗口的句柄，间接地是窗口所属的类。</param>
@@ -185,16 +170,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <returns>返回值是创建窗口的线程的标识符。</returns>
         [LibraryImport(User32, EntryPoint = "GetWindowThreadProcessId", SetLastError = true)]
         public static partial int GetWindowThreadProcessId(IntPtr hwnd, out uint lpdwProcessId);
-
-        /// <summary>
-        /// <see cref="MonitorFromWindow"> 函数检索显示监视器的句柄，该监视器具有与指定窗口的边界矩形相交的最大区域。
-        /// </summary>
-        /// <param name="hwnd">感兴趣的窗口的句柄。</param>
-        /// <param name="dwFlags">如果窗口不与任何显示监视器相交，则确定函数的返回值。</param>
-        /// <returns>如果窗口与一个或多个显示监视器矩形相交，则返回值是显示监视器的 HMONITOR 句柄，该监视器具有与窗口的最大交集区域。
-        /// 如果窗口不与显示监视器相交，则返回值取决于 <param name="dwFlags"> 的值。</returns>
-        [LibraryImport(User32, EntryPoint = "MonitorFromWindow", SetLastError = false)]
-        public static partial IntPtr MonitorFromWindow(IntPtr hwnd, MonitorFlags dwFlags);
 
         /// <summary>
         /// 创建从指定文件中提取的图标的句柄数组。

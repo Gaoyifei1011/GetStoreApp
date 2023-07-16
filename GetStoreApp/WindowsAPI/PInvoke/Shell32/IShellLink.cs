@@ -6,9 +6,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
     /// <summary>
     /// 公开创建、修改和解析 Shell 链接的方法。
     /// </summary>
-    [ComImport]
-    [Guid("000214F9-0000-0000-C000-000000000046")]
-    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    [ComImport, Guid("000214F9-0000-0000-C000-000000000046"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IShellLink
     {
         /// <summary>
