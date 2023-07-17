@@ -177,15 +177,15 @@ namespace GetStoreApp.Views.Window
             AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
             AppWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
             AppTitlebar.IsWindowMaximized = Presenter.State == OverlappedPresenterState.Maximized;
-            SetTitleBar(AppTitlebar);
-            AppWindow.Changed += OnAppWindowChanged;
-        }
+            PaneDisplayMode = Bounds.Width > 768 ? NavigationViewPaneDisplayMode.Left : NavigationViewPaneDisplayMode.LeftMinimal;
 
-        /// <summary>
-        /// 初始化窗口
-        /// </summary>
-        public void InitializeWindow()
-        {
+            SetTitleBar(AppTitlebar);
+            SetTitleBarColor(Content.As<FrameworkElement>().ActualTheme);
+
+            AppWindow.Changed += OnAppWindowChanged;
+            AppUISettings.ColorValuesChanged += OnColorValuesChanged;
+            Content.As<FrameworkElement>().ActualThemeChanged += OnActualThemeChanged;
+
             newMainWindowWndProc = new WNDPROC(NewWindowProc);
             oldMainWindowWndProc = SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newMainWindowWndProc));
 
@@ -199,6 +199,15 @@ namespace GetStoreApp.Views.Window
                 newDragAreaWindowWndProc = new WNDPROC(NewDragAreaWindowProc);
                 oldDragAreaWindowWndProc = SetWindowLongAuto(childHandle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newDragAreaWindowWndProc));
             }
+        }
+
+        /// <summary>
+        /// 应用主题变化时设置标题栏按钮的颜色
+        /// </summary>
+        private void OnActualThemeChanged(FrameworkElement sender, object args)
+        {
+            SetTitleBarColor(sender.ActualTheme);
+            SetWindowBackground();
         }
 
         /// <summary>
@@ -293,6 +302,9 @@ namespace GetStoreApp.Views.Window
             }
         }
 
+        /// <summary>
+        /// 窗口位置变化发生的事件
+        /// </summary>
         public void OnAppWindowChanged(AppWindow sender, AppWindowChangedEventArgs args)
         {
             if (args.DidPositionChange)
@@ -309,7 +321,6 @@ namespace GetStoreApp.Views.Window
         /// </summary>
         private void OnColorValuesChanged(UISettings sender, object args)
         {
-            DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, SetWindowBackground);
             DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
             {
                 if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[0].InternalName)
@@ -317,13 +328,12 @@ namespace GetStoreApp.Views.Window
                     if (Application.Current.RequestedTheme is ApplicationTheme.Light)
                     {
                         WindowTheme = ElementTheme.Light;
-                        SetTitleBarColor(ElementTheme.Light);
                     }
                     else
                     {
                         WindowTheme = ElementTheme.Dark;
-                        SetTitleBarColor(ElementTheme.Dark);
                     }
+                    Program.ApplicationRoot.TrayMenuWindow.WindowTheme = WindowTheme;
                 }
             });
         }
@@ -359,11 +369,6 @@ namespace GetStoreApp.Views.Window
         /// </summary>
         public void OnNavigationViewLoaded(object sender, RoutedEventArgs args)
         {
-            PropertyChanged += OnPropertyChanged;
-            AppUISettings.ColorValuesChanged += OnColorValuesChanged;
-
-            PaneDisplayMode = Bounds.Width > 768 ? NavigationViewPaneDisplayMode.Left : NavigationViewPaneDisplayMode.LeftMinimal;
-
             // 导航控件加载完成后初始化内容
 
             NavigationView navigationView = sender.As<NavigationView>();
@@ -404,27 +409,6 @@ namespace GetStoreApp.Views.Window
                 SelectedItem = NavigationService.NavigationItemList[0].NavigationItem;
                 NavigationService.NavigateTo(typeof(StorePage));
                 IsBackEnabled = NavigationService.CanGoBack();
-
-                // 应用初次加载时设置标题栏和窗口菜单的主题色
-                if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[0].InternalName)
-                {
-                    if (Application.Current.RequestedTheme is ApplicationTheme.Light)
-                    {
-                        SetTitleBarColor(ElementTheme.Light);
-                    }
-                    else
-                    {
-                        SetTitleBarColor(ElementTheme.Dark);
-                    }
-                }
-                if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[1].InternalName)
-                {
-                    SetTitleBarColor(ElementTheme.Light);
-                }
-                else if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[2].InternalName)
-                {
-                    SetTitleBarColor(ElementTheme.Dark);
-                }
             }
         }
 
@@ -435,50 +419,22 @@ namespace GetStoreApp.Views.Window
         {
             AppWindow.Changed -= OnAppWindowChanged;
             AppUISettings.ColorValuesChanged -= OnColorValuesChanged;
-            PropertyChanged -= OnPropertyChanged;
         }
 
         /// <summary>
-        /// 可通知的属性发生更改时的事件处理
+        /// 导航控件显示方式发生变化时触发的事件
         /// </summary>
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
+        public void OnDisplayModeChanged(object sender, NavigationViewDisplayModeChangedEventArgs args)
         {
-            // 应用的主题值或窗口背景色值发生改变时设置标题栏的颜色
-            if (args.PropertyName == nameof(WindowTheme) || args.PropertyName == nameof(SystemBackdrop))
+            if (args.DisplayMode == NavigationViewDisplayMode.Expanded)
             {
-                Program.ApplicationRoot.TrayMenuWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, SetWindowBackground);
-                if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[0].InternalName)
-                {
-                    if (Application.Current.RequestedTheme is ApplicationTheme.Light)
-                    {
-                        SetTitleBarColor(ElementTheme.Light);
-                    }
-                    else
-                    {
-                        SetTitleBarColor(ElementTheme.Dark);
-                    }
-                }
-                if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[1].InternalName)
-                {
-                    SetTitleBarColor(ElementTheme.Light);
-                }
-                else if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[2].InternalName)
-                {
-                    SetTitleBarColor(ElementTheme.Dark);
-                }
+                IsPaneToggleButtonVisible = false;
+                AppTitleBarMargin = new Thickness(48, 0, 0, 0);
             }
-            else if (args.PropertyName == nameof(PaneDisplayMode))
+            else
             {
-                if (PaneDisplayMode == NavigationViewPaneDisplayMode.Left)
-                {
-                    IsPaneToggleButtonVisible = false;
-                    AppTitleBarMargin = new Thickness(48, 0, 0, 0);
-                }
-                else if (PaneDisplayMode == NavigationViewPaneDisplayMode.LeftMinimal)
-                {
-                    IsPaneToggleButtonVisible = true;
-                    AppTitleBarMargin = new Thickness(96, 0, 0, 0);
-                }
+                IsPaneToggleButtonVisible = true;
+                AppTitleBarMargin = new Thickness(96, 0, 0, 0);
             }
         }
 
@@ -544,6 +500,7 @@ namespace GetStoreApp.Views.Window
                         break;
                     }
             }
+            SetWindowBackground();
         }
 
         /// <summary>
@@ -553,22 +510,11 @@ namespace GetStoreApp.Views.Window
         {
             if (BackdropService.AppBackdrop.InternalName == BackdropService.BackdropList[0].InternalName)
             {
-                if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[0].InternalName)
-                {
-                    if (Application.Current.RequestedTheme is ApplicationTheme.Light)
-                    {
-                        WindowBackground = ResourceDictionaryHelper.GridResourceDict["WindowLightBrush"] as SolidColorBrush;
-                    }
-                    else
-                    {
-                        WindowBackground = ResourceDictionaryHelper.GridResourceDict["WindowDarkBrush"] as SolidColorBrush;
-                    }
-                }
-                else if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[1].InternalName)
+                if (Content.As<FrameworkElement>().ActualTheme == ElementTheme.Light)
                 {
                     WindowBackground = ResourceDictionaryHelper.GridResourceDict["WindowLightBrush"] as SolidColorBrush;
                 }
-                else if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[2].InternalName)
+                else
                 {
                     WindowBackground = ResourceDictionaryHelper.GridResourceDict["WindowDarkBrush"] as SolidColorBrush;
                 }
@@ -755,20 +701,6 @@ namespace GetStoreApp.Views.Window
                             AppTitlebar.TitlebarMenuFlyout.ShowAt(null, options);
                             return 0;
                         }
-                        break;
-                    }
-                // 屏幕缩放比例发生变化时的消息
-                case WindowMessage.WM_DPICHANGED:
-                    {
-                        if (Visible)
-                        {
-                            Show();
-                            DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
-                            {
-                                await new DPIChangedNotifyDialog().ShowAsync();
-                            });
-                        }
-
                         break;
                     }
             }

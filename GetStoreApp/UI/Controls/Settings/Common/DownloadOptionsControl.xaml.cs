@@ -128,7 +128,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// </summary>
         public async void OnDownloadItemSelectClicked(object sender, RoutedEventArgs args)
         {
-            RadioMenuFlyoutItem item = sender.As<RadioMenuFlyoutItem>();
+            ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 DownloadItem = Convert.ToInt32(item.Tag);
@@ -141,7 +141,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// </summary>
         public async void OnDownloadModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            RadioMenuFlyoutItem item = sender.As<RadioMenuFlyoutItem>();
+            ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 DownloadMode = DownloadModeList[Convert.ToInt32(item.Tag)];

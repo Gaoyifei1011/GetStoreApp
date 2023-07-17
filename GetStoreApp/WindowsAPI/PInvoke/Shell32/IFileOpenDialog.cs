@@ -14,7 +14,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         /// </summary>
         /// <param name="hwnd"></param>
         [PreserveSig]
-        int Show([In] nint hwnd);
+        int Show([In] IntPtr hwnd);
 
         /// <summary>
         /// 设置对话框可以打开或保存的文件类型。

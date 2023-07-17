@@ -145,9 +145,9 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// </summary>
         public static void SetTrayWindowTheme()
         {
-            if (NotifyIconMenuTheme == NotifyIconMenuThemeList[0])
+            if (NotifyIconMenuTheme.InternalName == NotifyIconMenuThemeList[0].InternalName)
             {
-                Program.ApplicationRoot.TrayMenuWindow.WindowTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme.InternalName);
+                Program.ApplicationRoot.TrayMenuWindow.WindowTheme = Program.ApplicationRoot.MainWindow.WindowTheme;
             }
             else
             {

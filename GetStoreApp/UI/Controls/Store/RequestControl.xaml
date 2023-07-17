@@ -27,53 +27,53 @@
 
         <DropDownButton.Flyout>
             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
-                <RadioMenuFlyoutItem
+                <ToggleMenuFlyoutItem
                     Click="{x:Bind OnTypeSelectClicked}"
-                    GroupName="TypeSelect"
                     IsChecked="{x:Bind IsTypeItemChecked(SelectedType.InternalName, TypeList[0].InternalName), Mode=OneWay}"
+                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="0"
                     Text="{x:Bind TypeList[0].DisplayName}">
 
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind TypeList[0].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
-                </RadioMenuFlyoutItem>
+                </ToggleMenuFlyoutItem>
 
-                <RadioMenuFlyoutItem
+                <ToggleMenuFlyoutItem
                     Click="{x:Bind OnTypeSelectClicked}"
-                    GroupName="TypeSelect"
                     IsChecked="{x:Bind IsTypeItemChecked(SelectedType.InternalName, TypeList[1].InternalName), Mode=OneWay}"
+                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="1"
                     Text="{x:Bind TypeList[1].DisplayName}">
 
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind TypeList[1].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
-                </RadioMenuFlyoutItem>
+                </ToggleMenuFlyoutItem>
 
-                <RadioMenuFlyoutItem
+                <ToggleMenuFlyoutItem
                     Click="{x:Bind OnTypeSelectClicked}"
-                    GroupName="TypeSelect"
                     IsChecked="{x:Bind IsTypeItemChecked(SelectedType.InternalName, TypeList[2].InternalName), Mode=OneWay}"
+                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="2"
                     Text="{x:Bind TypeList[2].DisplayName}">
 
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind TypeList[2].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
-                </RadioMenuFlyoutItem>
+                </ToggleMenuFlyoutItem>
 
-                <RadioMenuFlyoutItem
+                <ToggleMenuFlyoutItem
                     Click="{x:Bind OnTypeSelectClicked}"
-                    GroupName="TypeSelect"
                     IsChecked="{x:Bind IsTypeItemChecked(SelectedType.InternalName, TypeList[3].InternalName), Mode=OneWay}"
+                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="3"
                     Text="{x:Bind TypeList[3].DisplayName}">
 
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind TypeList[3].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
-                </RadioMenuFlyoutItem>
+                </ToggleMenuFlyoutItem>
             </MenuFlyout>
         </DropDownButton.Flyout>
     </DropDownButton>
@@ -89,53 +89,53 @@
 
         <DropDownButton.Flyout>
             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
-                <RadioMenuFlyoutItem
+                <ToggleMenuFlyoutItem
                     Click="{x:Bind OnChannelSelectClicked}"
-                    GroupName="ChannelSelect"
                     IsChecked="{x:Bind IsChannelItemChecked(SelectedChannel.InternalName, ChannelList[0].InternalName), Mode=OneWay}"
+                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="0"
                     Text="{x:Bind ChannelList[0].DisplayName}">
 
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind ChannelList[0].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
-                </RadioMenuFlyoutItem>
+                </ToggleMenuFlyoutItem>
 
-                <RadioMenuFlyoutItem
+                <ToggleMenuFlyoutItem
                     Click="{x:Bind OnChannelSelectClicked}"
-                    GroupName="ChannelSelect"
                     IsChecked="{x:Bind IsChannelItemChecked(SelectedChannel.InternalName, ChannelList[1].InternalName), Mode=OneWay}"
+                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="1"
                     Text="{x:Bind ChannelList[1].DisplayName}">
 
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind ChannelList[1].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
-                </RadioMenuFlyoutItem>
+                </ToggleMenuFlyoutItem>
 
-                <RadioMenuFlyoutItem
+                <ToggleMenuFlyoutItem
                     Click="{x:Bind OnChannelSelectClicked}"
-                    GroupName="ChannelSelect"
                     IsChecked="{x:Bind IsChannelItemChecked(SelectedChannel.InternalName, ChannelList[2].InternalName), Mode=OneWay}"
+                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="2"
                     Text="{x:Bind ChannelList[2].DisplayName}">
 
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind ChannelList[2].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
-                </RadioMenuFlyoutItem>
+                </ToggleMenuFlyoutItem>
 
-                <RadioMenuFlyoutItem
+                <ToggleMenuFlyoutItem
                     Click="{x:Bind OnChannelSelectClicked}"
-                    GroupName="ChannelSelect"
                     IsChecked="{x:Bind IsChannelItemChecked(SelectedChannel.InternalName, ChannelList[3].InternalName), Mode=OneWay}"
+                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="3"
                     Text="{x:Bind ChannelList[3].DisplayName}">
 
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind ChannelList[3].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
-                </RadioMenuFlyoutItem>
+                </ToggleMenuFlyoutItem>
             </MenuFlyout>
         </DropDownButton.Flyout>
     </DropDownButton>

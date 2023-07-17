@@ -62,7 +62,7 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
         /// </summary>
         public async void OnBackdropSelectClicked(object sender, RoutedEventArgs args)
         {
-            RadioMenuFlyoutItem item = sender.As<RadioMenuFlyoutItem>();
+            ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 Backdrop = BackdropList[Convert.ToInt32(item.Tag)];

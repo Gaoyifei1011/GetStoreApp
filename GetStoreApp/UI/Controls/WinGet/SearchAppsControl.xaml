@@ -290,6 +290,7 @@
                                         <MenuFlyoutItem
                                             Command="{Binding ElementName=SearchAppsRoot, Path=InstallWithCmdCommand, Mode=OneTime}"
                                             CommandParameter="{x:Bind AppID}"
+                                            Style="{StaticResource MenuFlyoutItemStyle}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallWithCmd')}">
 
                                             <MenuFlyoutItem.Icon>

@@ -13,8 +13,6 @@ namespace GetStoreApp.UI.Controls.Store
     /// </summary>
     public sealed partial class StatusBarControl : InfoBar, INotifyPropertyChanged
     {
-        private TaskbarManager Taskbar { get; } = TaskbarManager.Instance;
-
         private List<StatusBarStateModel> StatusBarStateList => ResourceService.StatusBarStateList;
 
         private InfoBarSeverity _infoSeverity = InfoBarSeverity.Informational;
@@ -98,11 +96,11 @@ namespace GetStoreApp.UI.Controls.Store
             {
                 if (StatePrRingActValue)
                 {
-                    Taskbar.SetProgressState(TBPFLAG.TBPF_INDETERMINATE, Program.ApplicationRoot.MainWindow.Handle);
+                    TaskbarStateManager.SetProgressState(TBPFLAG.TBPF_INDETERMINATE, Program.ApplicationRoot.MainWindow.Handle);
                 }
                 else
                 {
-                    Taskbar.SetProgressState(TBPFLAG.TBPF_NOPROGRESS, Program.ApplicationRoot.MainWindow.Handle);
+                    TaskbarStateManager.SetProgressState(TBPFLAG.TBPF_NOPROGRESS, Program.ApplicationRoot.MainWindow.Handle);
                 }
             }
         }

@@ -157,7 +157,10 @@
 
                         <FlyoutBase.AttachedFlyout>
                             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
-                                <MenuFlyoutItem Click="{x:Bind OnOpenCacheFolderClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Web/OpenCacheFolder')}">
+                                <MenuFlyoutItem
+                                    Click="{x:Bind OnOpenCacheFolderClicked}"
+                                    Style="{StaticResource MenuFlyoutItemStyle}"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Web/OpenCacheFolder')}">
 
                                     <MenuFlyoutItem.Icon>
                                         <FontIcon Glyph="&#xE8b7;" />
@@ -171,6 +174,7 @@
                                 <MenuFlyoutItem
                                     Click="{x:Bind OnClearWebCacheClicked}"
                                     IsEnabled="{x:Bind IsClearWebCacheEnabled, Mode=OneWay}"
+                                    Style="{StaticResource MenuFlyoutItemStyle}"
                                     Text="{x:Bind root:ResourceService.GetLocalized('Web/ClearWebCache')}">
 
                                     <MenuFlyoutItem.Icon>

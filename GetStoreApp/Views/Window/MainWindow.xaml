@@ -28,6 +28,7 @@
         <NavigationView
             BackRequested="{x:Bind OnNavigationViewBackRequested}"
             Canvas.ZIndex="0"
+            DisplayModeChanged="{x:Bind OnDisplayModeChanged}"
             IsBackEnabled="{x:Bind IsBackEnabled, Mode=OneWay}"
             IsPaneToggleButtonVisible="{x:Bind IsPaneToggleButtonVisible, Mode=OneWay}"
             IsSettingsVisible="False"

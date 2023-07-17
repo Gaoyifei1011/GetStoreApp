@@ -3,10 +3,8 @@ using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Window;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
-using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Media;
 using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
@@ -46,13 +44,7 @@ namespace GetStoreApp.Views.Window
         {
             InitializeComponent();
             Handle = WindowNative.GetWindowHandle(this);
-        }
 
-        /// <summary>
-        /// 初始化窗口
-        /// </summary>
-        public void InitializeWindow()
-        {
             newWndProc = new WNDPROC(NewWindowProc);
             oldWndProc = SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newWndProc));
 
@@ -78,16 +70,13 @@ namespace GetStoreApp.Views.Window
         /// </summary>
         public void OnAboutAppClicked(object sender, RoutedEventArgs args)
         {
-            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
-            {
-                // 窗口置前端
-                Program.ApplicationRoot.MainWindow.Show();
+            // 窗口置前端
+            Program.ApplicationRoot.MainWindow.Show();
 
-                if (NavigationService.GetCurrentPageType() != typeof(AboutPage))
-                {
-                    NavigationService.NavigateTo(typeof(AboutPage));
-                }
-            });
+            if (NavigationService.GetCurrentPageType() != typeof(AboutPage))
+            {
+                NavigationService.NavigateTo(typeof(AboutPage));
+            }
         }
 
         /// <summary>
@@ -95,7 +84,7 @@ namespace GetStoreApp.Views.Window
         /// </summary>
         public void OnExitClicked(object sender, RoutedEventArgs args)
         {
-            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(Program.ApplicationRoot.MainWindow.Close);
+            Program.ApplicationRoot.MainWindow.Close();
         }
 
         /// <summary>
@@ -103,16 +92,13 @@ namespace GetStoreApp.Views.Window
         /// </summary>
         public void OnSettingsClicked(object sender, RoutedEventArgs args)
         {
-            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
-            {
-                // 窗口置前端
-                Program.ApplicationRoot.MainWindow.Show();
+            // 窗口置前端
+            Program.ApplicationRoot.MainWindow.Show();
 
-                if (NavigationService.GetCurrentPageType() != typeof(SettingsPage))
-                {
-                    NavigationService.NavigateTo(typeof(SettingsPage));
-                }
-            });
+            if (NavigationService.GetCurrentPageType() != typeof(SettingsPage))
+            {
+                NavigationService.NavigateTo(typeof(SettingsPage));
+            }
         }
 
         /// <summary>
@@ -120,48 +106,15 @@ namespace GetStoreApp.Views.Window
         /// </summary>
         public void OnShowOrHideWindowClicked(object sender, RoutedEventArgs args)
         {
-            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
+            // 隐藏窗口
+            if (Program.ApplicationRoot.MainWindow.Visible)
             {
-                // 隐藏窗口
-                if (Program.ApplicationRoot.MainWindow.Visible)
-                {
-                    Program.ApplicationRoot.MainWindow.AppWindow.Hide();
-                }
-                // 显示窗口
-                else
-                {
-                    Program.ApplicationRoot.MainWindow.Show();
-                }
-            });
-        }
-
-        /// <summary>
-        /// 设置应用的背景主题色
-        /// </summary>
-        public void SetSystemBackdrop(string backdropName)
-        {
-            switch (backdropName)
+                Program.ApplicationRoot.MainWindow.AppWindow.Hide();
+            }
+            // 显示窗口
+            else
             {
-                case "Mica":
-                    {
-                        SystemBackdrop = new MicaBackdrop() { Kind = MicaKind.Base };
-                        break;
-                    }
-                case "MicaAlt":
-                    {
-                        SystemBackdrop = new MicaBackdrop() { Kind = MicaKind.BaseAlt };
-                        break;
-                    }
-                case "Acrylic":
-                    {
-                        SystemBackdrop = new DesktopAcrylicBackdrop();
-                        break;
-                    }
-                default:
-                    {
-                        SystemBackdrop = null;
-                        break;
-                    }
+                Program.ApplicationRoot.MainWindow.Show();
             }
         }
 

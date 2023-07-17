@@ -153,13 +153,21 @@
 
                 <FlyoutBase.AttachedFlyout>
                     <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
-                        <MenuFlyoutItem Click="{x:Bind OnDeleteSelectedClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelected')}">
+                        <MenuFlyoutItem
+                            Click="{x:Bind OnDeleteSelectedClicked}"
+                            Style="{StaticResource MenuFlyoutItemStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelected')}">
+
                             <ToolTipService.ToolTip>
                                 <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedToolTip')}" Placement="Mouse" />
                             </ToolTipService.ToolTip>
                         </MenuFlyoutItem>
 
-                        <MenuFlyoutItem Click="{x:Bind OnDeleteSelectedWithFileClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedWithFile')}">
+                        <MenuFlyoutItem
+                            Click="{x:Bind OnDeleteSelectedWithFileClicked}"
+                            Style="{StaticResource MenuFlyoutItemStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedWithFile')}">
+
                             <ToolTipService.ToolTip>
                                 <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedWithFileToolTip')}" Placement="Mouse" />
                             </ToolTipService.ToolTip>
@@ -431,27 +439,33 @@
                                         <MenuFlyoutItem
                                             Command="{Binding ElementName=CompletedRoot, Path=DeleteCommand, Mode=OneTime}"
                                             CommandParameter="{Binding}"
+                                            Style="{StaticResource MenuFlyoutItemStyle}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Download/Delete')}">
 
                                             <ToolTipService.ToolTip>
                                                 <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Download/DeleteToolTip')}" Placement="Mouse" />
                                             </ToolTipService.ToolTip>
                                         </MenuFlyoutItem>
+
                                         <MenuFlyoutItem
                                             Command="{Binding ElementName=CompletedRoot, Path=DeleteWithFileCommand, Mode=OneTime}"
                                             CommandParameter="{Binding}"
                                             IsEnabled="{x:Bind converter:ValueCheckConverterHelper.FileExistCheck(FilePath)}"
+                                            Style="{StaticResource MenuFlyoutItemStyle}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteWithFile')}">
 
                                             <ToolTipService.ToolTip>
                                                 <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Download/DeleteWithFileToolTip')}" Placement="Mouse" />
                                             </ToolTipService.ToolTip>
                                         </MenuFlyoutItem>
+
                                         <MenuFlyoutSeparator />
+
                                         <MenuFlyoutItem
                                             Command="{Binding ElementName=CompletedRoot, Path=ShareFileCommand, Mode=OneTime}"
                                             CommandParameter="{Binding}"
                                             IsEnabled="{x:Bind converter:ValueCheckConverterHelper.FileExistCheck(FilePath)}"
+                                            Style="{StaticResource MenuFlyoutItemStyle}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Download/ShareFile')}">
 
                                             <MenuFlyoutItem.Icon>
@@ -467,6 +481,7 @@
                                             Command="{Binding ElementName=CompletedRoot, Path=FileInformationCommand, Mode=OneTime}"
                                             CommandParameter="{Binding}"
                                             IsEnabled="{x:Bind converter:ValueCheckConverterHelper.FileExistCheck(FilePath)}"
+                                            Style="{StaticResource MenuFlyoutItemStyle}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Download/FileInformation')}">
 
                                             <MenuFlyoutItem.Icon>

@@ -133,41 +133,41 @@
 
                         <DropDownButton.Flyout>
                             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
-                                <RadioMenuFlyoutItem
+                                <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnDownloadItemSelectClicked}"
-                                    GroupName="DownloadItemSetting"
                                     IsChecked="{x:Bind IsDownloadItemChecked(DownloadItem, 1), Mode=OneWay}"
+                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="1"
                                     Text="1">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip Content="1" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
-                                </RadioMenuFlyoutItem>
+                                </ToggleMenuFlyoutItem>
 
-                                <RadioMenuFlyoutItem
+                                <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnDownloadItemSelectClicked}"
-                                    GroupName="DownloadItemSetting"
                                     IsChecked="{x:Bind IsDownloadItemChecked(DownloadItem, 2), Mode=OneWay}"
+                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="2"
                                     Text="2">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip Content="2" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
-                                </RadioMenuFlyoutItem>
+                                </ToggleMenuFlyoutItem>
 
-                                <RadioMenuFlyoutItem
+                                <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnDownloadItemSelectClicked}"
-                                    GroupName="DownloadItemSetting"
                                     IsChecked="{x:Bind IsDownloadItemChecked(DownloadItem, 3), Mode=OneWay}"
+                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="3"
                                     Text="3">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip Content="3" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
-                                </RadioMenuFlyoutItem>
+                                </ToggleMenuFlyoutItem>
                             </MenuFlyout>
                         </DropDownButton.Flyout>
                     </DropDownButton>
@@ -205,29 +205,29 @@
 
                         <DropDownButton.Flyout>
                             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
-                                <RadioMenuFlyoutItem
+                                <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnDownloadModeSelectClicked}"
-                                    GroupName="DownloadModeSetting"
                                     IsChecked="{x:Bind IsDownloadModeChecked(DownloadMode.InternalName, DownloadModeList[0].InternalName), Mode=OneWay}"
+                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="0"
                                     Text="{x:Bind DownloadModeList[0].DisplayName}">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip Content="{x:Bind DownloadModeList[0].DisplayName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
-                                </RadioMenuFlyoutItem>
+                                </ToggleMenuFlyoutItem>
 
-                                <RadioMenuFlyoutItem
+                                <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnDownloadModeSelectClicked}"
-                                    GroupName="DownloadModeSetting"
                                     IsChecked="{x:Bind IsDownloadModeChecked(DownloadMode.InternalName, DownloadModeList[1].InternalName), Mode=OneWay}"
+                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="1"
                                     Text="{x:Bind DownloadModeList[1].DisplayName}">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip Content="{x:Bind DownloadModeList[1].DisplayName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
-                                </RadioMenuFlyoutItem>
+                                </ToggleMenuFlyoutItem>
                             </MenuFlyout>
                         </DropDownButton.Flyout>
                     </DropDownButton>

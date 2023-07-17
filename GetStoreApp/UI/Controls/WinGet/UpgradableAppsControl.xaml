@@ -235,6 +235,7 @@
                                     <MenuFlyoutItem
                                         Command="{Binding ElementName=UpgradableAppsRoot, Path=CopyUpgradeTextCommand, Mode=OneTime}"
                                         CommandParameter="{x:Bind AppID}"
+                                        Style="{StaticResource MenuFlyoutItemStyle}"
                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUpgradeText')}">
 
                                         <MenuFlyoutItem.Icon>
@@ -249,6 +250,7 @@
                                     <MenuFlyoutItem
                                         Command="{Binding ElementName=UpgradableAppsRoot, Path=InstallWithCmdCommand, Mode=OneTime}"
                                         CommandParameter="{x:Bind AppID}"
+                                        Style="{StaticResource MenuFlyoutItemStyle}"
                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallWithCmd')}">
 
                                         <MenuFlyoutItem.Icon>

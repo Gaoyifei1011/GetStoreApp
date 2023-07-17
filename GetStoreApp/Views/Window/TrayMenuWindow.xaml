@@ -20,9 +20,8 @@
 
                 <MenuFlyoutItem
                     Click="{x:Bind OnProjectDescriptionClicked}"
-                    Style="{StaticResource TrayMenuFlyoutItemStyle}"
+                    Style="{StaticResource MenuFlyoutItemStyle}"
                     Text="{x:Bind root:ResourceService.GetLocalized('Resources/ProjectHomePage')}">
-
                     <MenuFlyoutItem.Icon>
                         <FontIcon Glyph="&#xE80f;" />
                     </MenuFlyoutItem.Icon>
@@ -34,9 +33,8 @@
 
                 <MenuFlyoutItem
                     Click="{x:Bind OnAboutAppClicked}"
-                    Style="{StaticResource TrayMenuFlyoutItemStyle}"
+                    Style="{StaticResource MenuFlyoutItemStyle}"
                     Text="{x:Bind root:ResourceService.GetLocalized('Resources/AboutApp')}">
-
                     <MenuFlyoutItem.Icon>
                         <FontIcon Glyph="&#xE946;" />
                     </MenuFlyoutItem.Icon>
@@ -50,9 +48,8 @@
 
                 <MenuFlyoutItem
                     Click="{x:Bind OnShowOrHideWindowClicked}"
-                    Style="{StaticResource TrayMenuFlyoutItemStyle}"
+                    Style="{StaticResource MenuFlyoutItemStyle}"
                     Text="{x:Bind root:ResourceService.GetLocalized('Resources/ShowOrHideWindow')}">
-
                     <MenuFlyoutItem.Icon>
                         <FontIcon Glyph="&#xE770;" />
                     </MenuFlyoutItem.Icon>
@@ -64,9 +61,8 @@
 
                 <MenuFlyoutItem
                     Click="{x:Bind OnSettingsClicked}"
-                    Style="{StaticResource TrayMenuFlyoutItemStyle}"
+                    Style="{StaticResource MenuFlyoutItemStyle}"
                     Text="{x:Bind root:ResourceService.GetLocalized('Resources/Settings')}">
-
                     <MenuFlyoutItem.Icon>
                         <FontIcon Glyph="&#xE713;" />
                     </MenuFlyoutItem.Icon>
@@ -78,9 +74,8 @@
 
                 <MenuFlyoutItem
                     Click="{x:Bind OnExitClicked}"
-                    Style="{StaticResource TrayMenuFlyoutItemStyle}"
+                    Style="{StaticResource MenuFlyoutItemStyle}"
                     Text="{x:Bind root:ResourceService.GetLocalized('Resources/Exit')}">
-
                     <MenuFlyoutItem.Icon>
                         <FontIcon Glyph="&#xE7e8;" />
                     </MenuFlyoutItem.Icon>

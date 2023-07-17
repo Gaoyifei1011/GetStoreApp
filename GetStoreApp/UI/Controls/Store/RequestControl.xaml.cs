@@ -142,7 +142,7 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         public void OnTypeSelectClicked(object sender, RoutedEventArgs args)
         {
-            RadioMenuFlyoutItem item = sender.As<RadioMenuFlyoutItem>();
+            ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 SelectedType = TypeList[Convert.ToInt32(item.Tag)];
@@ -158,7 +158,7 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         public void OnChannelSelectClicked(object sender, RoutedEventArgs args)
         {
-            RadioMenuFlyoutItem item = sender.As<RadioMenuFlyoutItem>();
+            ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 SelectedChannel = ChannelList[Convert.ToInt32(item.Tag)];

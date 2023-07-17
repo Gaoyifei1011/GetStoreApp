@@ -27,11 +27,12 @@
 
         <InfoBar
             Margin="0"
+            Padding="0,10,0,10"
             IsClosable="False"
             IsOpen="True"
             Message="{x:Bind root:ResourceService.GetLocalized('Dialog/ExperimentalWarning')}"
             Severity="Warning"
-            Style="{StaticResource ExperimentalInfoBarStyle}" />
+            Style="{StaticResource InfoBarStyle}" />
 
         <experiment:NetWorkMonitorControl x:Name="NetWorkMonitor" />
 

@@ -213,7 +213,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         public async void OnTimeSortClicked(object sender, RoutedEventArgs args)
         {
-            RadioMenuFlyoutItem item = sender.As<RadioMenuFlyoutItem>();
+            ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 TimeSortOrder = Convert.ToBoolean(item.Tag);
@@ -226,7 +226,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         public async void OnTypeFilterClicked(object sender, RoutedEventArgs args)
         {
-            RadioMenuFlyoutItem item = sender.As<RadioMenuFlyoutItem>();
+            ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 TypeFilter = Convert.ToString(item.Tag);
@@ -239,7 +239,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         public async void OnChannelFilterClicked(object sender, RoutedEventArgs args)
         {
-            RadioMenuFlyoutItem item = sender.As<RadioMenuFlyoutItem>();
+            ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 ChannelFilter = Convert.ToString(item.Tag);

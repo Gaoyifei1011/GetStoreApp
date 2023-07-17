@@ -194,7 +194,6 @@
     <None Remove="UI\Dialogs\Common\ClosingWindowDialog.xaml" />
     <None Remove="UI\Dialogs\Common\DeletePromptDialog.xaml" />
     <None Remove="UI\Dialogs\Common\DownloadNotifyDialog.xaml" />
-    <None Remove="UI\Dialogs\Common\DPIChangedNotifyDialog.xaml" />
     <None Remove="UI\Dialogs\Common\SelectEmptyPromptDialog.xaml" />
 
     <None Remove="UI\Dialogs\Download\FileInformationDialog.xaml" />
@@ -329,7 +328,6 @@
     <Page Update="UI\Dialogs\Common\ClosingWindowDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\Common\DeletePromptDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\Common\DownloadNotifyDialog.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Dialogs\Common\DPIChangedNotifyDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\Common\SelectEmptyPromptDialog.xaml" Generator="MSBuild:Compile" />
 
     <Page Update="UI\Dialogs\Download\FileInformationDialog.xaml" Generator="MSBuild:Compile" />

@@ -48,42 +48,16 @@ namespace GetStoreApp
             base.OnLaunched(args);
             ResourceDictionaryHelper.InitializeResourceDictionary();
 
-            InitializeMainWindow();
-            InitializeTrayMenuWindow();
-            InitializeTrayIcon();
+            MainWindow = new MainWindow();
+            TrayMenuWindow = new TrayMenuWindow();
+            TrayIcon = new WindowTrayIcon(ResourceService.GetLocalized("Resources/AppDisplayName"));
+            TrayIcon.DoubleClick += DoubleClick;
+            TrayIcon.RightClick += RightClick;
             Program.IsAppLaunched = true;
             await ActivateAsync();
 
             await InitializeJumpListAsync();
             Startup();
-        }
-
-        /// <summary>
-        /// 初始化应用的主窗口
-        /// </summary>
-        private void InitializeMainWindow()
-        {
-            MainWindow = new MainWindow();
-            MainWindow.InitializeWindow();
-        }
-
-        /// <summary>
-        /// 初始化应用的托盘右键菜单窗口
-        /// </summary>
-        private void InitializeTrayMenuWindow()
-        {
-            TrayMenuWindow = new TrayMenuWindow();
-            TrayMenuWindow.InitializeWindow();
-        }
-
-        /// <summary>
-        /// 初始化应用的托盘图标
-        /// </summary>
-        private void InitializeTrayIcon()
-        {
-            TrayIcon = new WindowTrayIcon(ResourceService.GetLocalized("Resources/AppDisplayName"));
-            TrayIcon.DoubleClick += DoubleClick;
-            TrayIcon.RightClick += RightClick;
         }
 
         /// <summary>

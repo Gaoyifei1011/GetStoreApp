@@ -67,29 +67,29 @@
 
         <DropDownButton.Flyout>
             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
-                <RadioMenuFlyoutItem
+                <ToggleMenuFlyoutItem
                     Click="{x:Bind OnInstallModeSelectClicked}"
-                    GroupName="InstallModeSetting"
                     IsChecked="{x:Bind IsItemChecked(InstallMode.InternalName, InstallModeList[0].InternalName), Mode=OneWay}"
+                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="0"
                     Text="{x:Bind InstallModeList[0].DisplayName}">
 
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind InstallModeList[0].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
-                </RadioMenuFlyoutItem>
+                </ToggleMenuFlyoutItem>
 
-                <RadioMenuFlyoutItem
+                <ToggleMenuFlyoutItem
                     Click="{x:Bind OnInstallModeSelectClicked}"
-                    GroupName="InstallModeSetting"
                     IsChecked="{x:Bind IsItemChecked(InstallMode.InternalName, InstallModeList[1].InternalName), Mode=OneWay}"
+                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="1"
                     Text="{x:Bind InstallModeList[1].DisplayName}">
 
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind InstallModeList[1].DisplayName}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
-                </RadioMenuFlyoutItem>
+                </ToggleMenuFlyoutItem>
             </MenuFlyout>
         </DropDownButton.Flyout>
     </DropDownButton>

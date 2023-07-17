@@ -12,14 +12,6 @@
         <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
     </Style>
 
-    <Style x:Key="ResultHeaderGridStyle" TargetType="Grid">
-        <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
-        <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
-        <Setter Property="Padding" Value="16,8,2,8" />
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="CornerRadius" Value="4,4,0,0" />
-    </Style>
-
     <Style x:Key="CardGridStyle" TargetType="Grid">
         <Setter Property="Padding" Value="16,12" />
         <Setter Property="BorderThickness" Value="1" />

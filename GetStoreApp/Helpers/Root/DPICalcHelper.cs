@@ -11,7 +11,7 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 有效像素值转换为实际的像素值
         /// </summary>
-        public static int ConvertEpxToPixel(nint hwnd, int effectivePixels)
+        public static int ConvertEpxToPixel(IntPtr hwnd, int effectivePixels)
         {
             float scalingFactor = GetScalingFactor(hwnd);
             return Convert.ToInt32(effectivePixels * scalingFactor);
@@ -20,7 +20,7 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 实际的像素值转换为有效像素值
         /// </summary>
-        public static int ConvertPixelToEpx(nint hwnd, int pixels)
+        public static int ConvertPixelToEpx(IntPtr hwnd, int pixels)
         {
             float scalingFactor = GetScalingFactor(hwnd);
             return (int)(pixels / scalingFactor);
@@ -29,7 +29,7 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 获取实际的系统缩放比例
         /// </summary>
-        private static float GetScalingFactor(nint hwnd)
+        private static float GetScalingFactor(IntPtr hwnd)
         {
             int dpi = User32Library.GetDpiForWindow(hwnd);
             float scalingFactor = (float)dpi / 96;

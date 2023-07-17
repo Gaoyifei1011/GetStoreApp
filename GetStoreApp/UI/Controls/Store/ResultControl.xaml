@@ -22,7 +22,11 @@
     <Grid
         Grid.Row="0"
         Height="66"
-        Style="{StaticResource ResultHeaderGridStyle}">
+        Padding="16,8,2,8"
+        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+        BorderThickness="1"
+        CornerRadius="4,4,0,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
@@ -169,14 +173,20 @@
 
                 <FlyoutBase.AttachedFlyout>
                     <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
-                        <MenuFlyoutItem Click="{x:Bind OnCopySelectedLinkClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedLink')}">
+                        <MenuFlyoutItem
+                            Click="{x:Bind OnCopySelectedLinkClicked}"
+                            Style="{StaticResource MenuFlyoutItemStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedLink')}">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedLinkToolTip')}" Placement="Mouse" />
                             </ToolTipService.ToolTip>
                         </MenuFlyoutItem>
 
-                        <MenuFlyoutItem Click="{x:Bind OnCopySelectedClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedContent')}">
+                        <MenuFlyoutItem
+                            Click="{x:Bind OnCopySelectedClicked}"
+                            Style="{StaticResource MenuFlyoutItemStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedContent')}">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedContentToolTip')}" Placement="Mouse" />
@@ -417,6 +427,7 @@
                                 <MenuFlyoutItem
                                     Command="{Binding ElementName=ResultRoot, Path=CopyLinkCommand, Mode=OneTime}"
                                     CommandParameter="{x:Bind FileLink}"
+                                    Style="{StaticResource MenuFlyoutItemStyle}"
                                     Text="{x:Bind root:ResourceService.GetLocalized('Store/CopyLink')}">
 
                                     <ToolTipService.ToolTip>
@@ -427,6 +438,7 @@
                                 <MenuFlyoutItem
                                     Command="{Binding ElementName=ResultRoot, Path=CopyContentCommand, Mode=OneTime}"
                                     CommandParameter="{Binding}"
+                                    Style="{StaticResource MenuFlyoutItemStyle}"
                                     Text="{x:Bind root:ResourceService.GetLocalized('Store/CopyContent')}">
 
                                     <ToolTipService.ToolTip>

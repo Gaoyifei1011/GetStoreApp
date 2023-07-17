@@ -95,7 +95,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// </summary>
         public async void OnWinGetInstallModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            RadioMenuFlyoutItem item = sender.As<RadioMenuFlyoutItem>();
+            ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 WinGetInstallMode = WinGetInstallModeList[Convert.ToInt32(item.Tag)];

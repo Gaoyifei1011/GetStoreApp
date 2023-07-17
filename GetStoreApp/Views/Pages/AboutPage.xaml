@@ -41,21 +41,30 @@
                 <DropDownButton.Flyout>
                     <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
 
-                        <MenuFlyoutItem Click="{x:Bind OnCreateDesktopShortcutClicked}" Text="{x:Bind root:ResourceService.GetLocalized('About/CreateDesktopShortcut')}">
+                        <MenuFlyoutItem
+                            Click="{x:Bind OnCreateDesktopShortcutClicked}"
+                            Style="{StaticResource MenuFlyoutItemStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('About/CreateDesktopShortcut')}">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/CreateDesktopShortcutToolTip')}" Placement="Mouse" />
                             </ToolTipService.ToolTip>
                         </MenuFlyoutItem>
 
-                        <MenuFlyoutItem Click="{x:Bind OnPinToStartScreenClicked}" Text="{x:Bind root:ResourceService.GetLocalized('About/PinToStartScreen')}">
+                        <MenuFlyoutItem
+                            Click="{x:Bind OnPinToStartScreenClicked}"
+                            Style="{StaticResource MenuFlyoutItemStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('About/PinToStartScreen')}">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/PinToStartScreenToolTip')}" Placement="Mouse" />
                             </ToolTipService.ToolTip>
                         </MenuFlyoutItem>
 
-                        <MenuFlyoutItem Click="{x:Bind OnPinToTaskbarClicked}" Text="{x:Bind root:ResourceService.GetLocalized('About/PinToTaskbar')}">
+                        <MenuFlyoutItem
+                            Click="{x:Bind OnPinToTaskbarClicked}"
+                            Style="{StaticResource MenuFlyoutItemStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('About/PinToTaskbar')}">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/PinToTaskbarToolTip')}" Placement="Mouse" />
@@ -64,14 +73,20 @@
 
                         <MenuFlyoutSeparator />
 
-                        <MenuFlyoutItem Click="{x:Bind OnShowReleaseNotesClicked}" Text="{x:Bind root:ResourceService.GetLocalized('About/ShowReleaseNotes')}">
+                        <MenuFlyoutItem
+                            Click="{x:Bind OnShowReleaseNotesClicked}"
+                            Style="{StaticResource MenuFlyoutItemStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('About/ShowReleaseNotes')}">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/ShowReleaseNotesToolTip')}" Placement="Mouse" />
                             </ToolTipService.ToolTip>
                         </MenuFlyoutItem>
 
-                        <MenuFlyoutItem Click="{x:Bind OnShowLicenseClicked}" Text="{x:Bind root:ResourceService.GetLocalized('About/ShowLicense')}">
+                        <MenuFlyoutItem
+                            Click="{x:Bind OnShowLicenseClicked}"
+                            Style="{StaticResource MenuFlyoutItemStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('About/ShowLicense')}">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/ShowLicenseToolTip')}" Placement="Mouse" />

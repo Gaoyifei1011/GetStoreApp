@@ -70,7 +70,7 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
         /// </summary>
         public async void OnThemeSelectClicked(object sender, RoutedEventArgs args)
         {
-            RadioMenuFlyoutItem item = sender.As<RadioMenuFlyoutItem>();
+            ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 Theme = ThemeList[Convert.ToInt32(item.Tag)];
@@ -85,7 +85,7 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
         /// </summary>
         public async void OnNotifyIconMenuThemeSelectClicked(object sender, RoutedEventArgs args)
         {
-            RadioMenuFlyoutItem item = sender.As<RadioMenuFlyoutItem>();
+            ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 NotifyIconMenuTheme = NotifyIconMenuThemeList[Convert.ToInt32(item.Tag)];

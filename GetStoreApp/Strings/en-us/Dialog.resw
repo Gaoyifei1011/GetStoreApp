@@ -375,12 +375,6 @@
   <data name="JumpListCleanError" xml:space="preserve">
     <value>The taskbar right-click menu record failed to cleanup, please manually clean the right-click menu record</value>
   </data>
-  <data name="DPIChangedNotifyTitle" xml:space="preserve">
-    <value>Screen scaling</value>
-  </data>
-  <data name="DPIChangedNotifyContent" xml:space="preserve">
-    <value>The app has detected a change in your screen scaling and recommends that you restart the app to ensure that it works correctly</value>
-  </data>
   <data name="AppInformationTitle" xml:space="preserve">
     <value>App information</value>
   </data>

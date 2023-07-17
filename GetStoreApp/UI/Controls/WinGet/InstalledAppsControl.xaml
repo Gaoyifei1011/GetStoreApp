@@ -263,6 +263,7 @@
                                             <MenuFlyoutItem
                                                 Command="{Binding ElementName=InstalledAppsRoot, Path=CopyUnInstallTextCommand, Mode=OneTime}"
                                                 CommandParameter="{x:Bind AppID}"
+                                                Style="{StaticResource MenuFlyoutItemStyle}"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUnInstallText')}">
 
                                                 <MenuFlyoutItem.Icon>

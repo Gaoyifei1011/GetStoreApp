@@ -57,7 +57,7 @@ namespace GetStoreApp.UI.Controls.Settings.Advanced
         /// </summary>
         public async void OnInstallModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            RadioMenuFlyoutItem item = sender.As<RadioMenuFlyoutItem>();
+            ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 InstallMode = InstallModeList[Convert.ToInt32(item.Tag)];

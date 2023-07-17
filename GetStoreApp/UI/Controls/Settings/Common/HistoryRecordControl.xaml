@@ -74,29 +74,29 @@
 
                         <DropDownButton.Flyout>
                             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
-                                <RadioMenuFlyoutItem
+                                <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnHistoryLiteSelectClicked}"
-                                    GroupName="HistoryLiteSetting"
                                     IsChecked="{x:Bind IsHistoryLiteItemChecked(HistoryLiteItem.HistoryLiteNumValue, HistoryLiteNumList[0].HistoryLiteNumValue), Mode=OneWay}"
+                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="0"
                                     Text="{x:Bind HistoryLiteNumList[0].HistoryLiteNumName}">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip Content="{x:Bind HistoryLiteNumList[0].HistoryLiteNumName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
-                                </RadioMenuFlyoutItem>
+                                </ToggleMenuFlyoutItem>
 
-                                <RadioMenuFlyoutItem
+                                <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnHistoryLiteSelectClicked}"
-                                    GroupName="HistoryLiteSetting"
                                     IsChecked="{x:Bind IsHistoryLiteItemChecked(HistoryLiteItem.HistoryLiteNumValue, HistoryLiteNumList[1].HistoryLiteNumValue), Mode=OneWay}"
+                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="1"
                                     Text="{x:Bind HistoryLiteNumList[1].HistoryLiteNumName}">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip Content="{x:Bind HistoryLiteNumList[1].HistoryLiteNumName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
-                                </RadioMenuFlyoutItem>
+                                </ToggleMenuFlyoutItem>
                             </MenuFlyout>
                         </DropDownButton.Flyout>
                     </DropDownButton>
@@ -136,65 +136,65 @@
 
                         <DropDownButton.Flyout>
                             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
-                                <RadioMenuFlyoutItem
+                                <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnHistoryJumpListSelectClicked}"
-                                    GroupName="HistoryJumpListSetting"
                                     IsChecked="{x:Bind IsHistoryJumpListItemChecked(HistoryJumpListItem.HistoryJumpListNumValue, HistoryJumpListNumList[0].HistoryJumpListNumValue), Mode=OneWay}"
+                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="0"
                                     Text="{x:Bind HistoryJumpListNumList[0].HistoryJumpListNumName}">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip Content="{x:Bind HistoryJumpListNumList[0].HistoryJumpListNumName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
-                                </RadioMenuFlyoutItem>
+                                </ToggleMenuFlyoutItem>
 
-                                <RadioMenuFlyoutItem
+                                <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnHistoryJumpListSelectClicked}"
-                                    GroupName="HistoryJumpListSetting"
                                     IsChecked="{x:Bind IsHistoryJumpListItemChecked(HistoryJumpListItem.HistoryJumpListNumValue, HistoryJumpListNumList[1].HistoryJumpListNumValue), Mode=OneWay}"
+                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="1"
                                     Text="{x:Bind HistoryJumpListNumList[1].HistoryJumpListNumName}">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip Content="{x:Bind HistoryJumpListNumList[1].HistoryJumpListNumName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
-                                </RadioMenuFlyoutItem>
+                                </ToggleMenuFlyoutItem>
 
-                                <RadioMenuFlyoutItem
+                                <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnHistoryJumpListSelectClicked}"
-                                    GroupName="HistoryJumpListSetting"
                                     IsChecked="{x:Bind IsHistoryJumpListItemChecked(HistoryJumpListItem.HistoryJumpListNumValue, HistoryJumpListNumList[2].HistoryJumpListNumValue), Mode=OneWay}"
+                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="2"
                                     Text="{x:Bind HistoryJumpListNumList[2].HistoryJumpListNumName}">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip Content="{x:Bind HistoryJumpListNumList[2].HistoryJumpListNumName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
-                                </RadioMenuFlyoutItem>
+                                </ToggleMenuFlyoutItem>
 
-                                <RadioMenuFlyoutItem
+                                <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnHistoryJumpListSelectClicked}"
-                                    GroupName="HistoryJumpListSetting"
                                     IsChecked="{x:Bind IsHistoryJumpListItemChecked(HistoryJumpListItem.HistoryJumpListNumValue, HistoryJumpListNumList[3].HistoryJumpListNumValue), Mode=OneWay}"
+                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="3"
                                     Text="{x:Bind HistoryJumpListNumList[3].HistoryJumpListNumName}">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip Content="{x:Bind HistoryJumpListNumList[3].HistoryJumpListNumName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
-                                </RadioMenuFlyoutItem>
+                                </ToggleMenuFlyoutItem>
 
-                                <RadioMenuFlyoutItem
+                                <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnHistoryJumpListSelectClicked}"
-                                    GroupName="HistoryJumpListSetting"
                                     IsChecked="{x:Bind IsHistoryJumpListItemChecked(HistoryJumpListItem.HistoryJumpListNumValue, HistoryJumpListNumList[4].HistoryJumpListNumValue), Mode=OneWay}"
+                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="4"
                                     Text="{x:Bind HistoryJumpListNumList[4].HistoryJumpListNumName}">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip Content="{x:Bind HistoryJumpListNumList[4].HistoryJumpListNumName}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
-                                </RadioMenuFlyoutItem>
+                                </ToggleMenuFlyoutItem>
                             </MenuFlyout>
                         </DropDownButton.Flyout>
                     </DropDownButton>

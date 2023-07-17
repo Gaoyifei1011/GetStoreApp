@@ -66,7 +66,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// </summary>
         public async void OnHistoryLiteSelectClicked(object sender, RoutedEventArgs args)
         {
-            RadioMenuFlyoutItem item = sender.As<RadioMenuFlyoutItem>();
+            ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 HistoryLiteItem = HistoryLiteNumList[Convert.ToInt32(item.Tag)];
@@ -79,7 +79,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// </summary>
         public async void OnHistoryJumpListSelectClicked(object sender, RoutedEventArgs args)
         {
-            RadioMenuFlyoutItem item = sender.As<RadioMenuFlyoutItem>();
+            ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 HistoryJumpListItem = HistoryJumpListNumList[Convert.ToInt32(item.Tag)];

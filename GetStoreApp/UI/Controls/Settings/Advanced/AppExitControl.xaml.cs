@@ -46,7 +46,7 @@ namespace GetStoreApp.UI.Controls.Settings.Advanced
         /// </summary>
         public async void OnAppExitSelectClicked(object sender, RoutedEventArgs args)
         {
-            RadioMenuFlyoutItem item = sender.As<RadioMenuFlyoutItem>();
+            ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 AppExit = AppExitList[Convert.ToInt32(item.Tag)];
