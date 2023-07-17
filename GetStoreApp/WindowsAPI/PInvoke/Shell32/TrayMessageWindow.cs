@@ -133,20 +133,15 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
             return User32Library.DefWindowProc(hWnd, msg, wParam, lParam);
         }
 
+        /// <summary>
+        /// 释放资源
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
-
-            // 此对象将由 Dispose 方法清理。因此，您应该调用 GC.SuppressFinalize() 将此对象从终结队列中删除，并防止此对象的终结代码再次执行。
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// 仅当 <see cref="Dispose()"/> 方法未被调用时，此析构函数才会运行。这使此基类有机会完成。
-        /// <para>
-        /// 注意： 不要在从此类派生的类型中提供析构函数。
-        /// </para>
-        /// </summary>
         ~TrayMessageWindow()
         {
             Dispose(false);
@@ -157,12 +152,10 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         /// </summary>
         private void Dispose(bool disposing)
         {
-            // 如果组件已释放，则不执行任何操作
             if (IsDisposed) return;
 
             if (disposing)
             {
-                // 始终销毁非托管句柄（即使从 GC 调用）
                 User32Library.DestroyWindow(TrayMessagehWnd);
                 wc.lpfnWndProc = null;
             }

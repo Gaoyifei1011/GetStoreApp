@@ -63,7 +63,14 @@ namespace GetStoreApp.Services.Controls.Settings.Common
 
             try
             {
-                return await StorageFolder.GetFolderFromPathAsync(folder);
+                if (string.IsNullOrEmpty(folder))
+                {
+                    return DefaultFolder;
+                }
+                else
+                {
+                    return await StorageFolder.GetFolderFromPathAsync(folder);
+                }
             }
             catch (Exception e)
             {
