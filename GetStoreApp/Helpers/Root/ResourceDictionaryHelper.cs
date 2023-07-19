@@ -9,8 +9,6 @@ namespace GetStoreApp.Helpers.Root
     {
         public static ResourceDictionary ButtonResourceDict { get; private set; }
 
-        public static ResourceDictionary ContentDialogResourceDict { get; private set; }
-
         public static ResourceDictionary DropDownButtonResourceDict { get; private set; }
 
         public static ResourceDictionary ExpanderResourceDict { get; private set; }
@@ -29,8 +27,6 @@ namespace GetStoreApp.Helpers.Root
 
         public static ResourceDictionary MenuFlyoutResourceDict { get; private set; }
 
-        public static ResourceDictionary NavigationViewResourceDict { get; private set; }
-
         public static ResourceDictionary PivotResourceDict { get; private set; }
 
         public static ResourceDictionary ScrollBarResourceDict { get; private set; }
@@ -45,21 +41,19 @@ namespace GetStoreApp.Helpers.Root
         public static void InitializeResourceDictionary()
         {
             ButtonResourceDict = Application.Current.Resources.MergedDictionaries[1];
-            ContentDialogResourceDict = Application.Current.Resources.MergedDictionaries[2];
-            DropDownButtonResourceDict = Application.Current.Resources.MergedDictionaries[3];
-            ExpanderResourceDict = Application.Current.Resources.MergedDictionaries[4];
-            FlyoutResourceDict = Application.Current.Resources.MergedDictionaries[5];
-            GridResourceDict = Application.Current.Resources.MergedDictionaries[6];
-            HyperlinkButtonResourceDict = Application.Current.Resources.MergedDictionaries[7];
-            InAppNotificationResourceDict = Application.Current.Resources.MergedDictionaries[8];
-            InfoBarResourceDict = Application.Current.Resources.MergedDictionaries[9];
-            ListViewResourceDict = Application.Current.Resources.MergedDictionaries[10];
-            MenuFlyoutResourceDict = Application.Current.Resources.MergedDictionaries[11];
-            NavigationViewResourceDict = Application.Current.Resources.MergedDictionaries[12];
-            PivotResourceDict = Application.Current.Resources.MergedDictionaries[13];
-            ScrollBarResourceDict = Application.Current.Resources.MergedDictionaries[14];
-            SplitButtonResourceDict = Application.Current.Resources.MergedDictionaries[15];
-            TextBlockResourceDict = Application.Current.Resources.MergedDictionaries[16];
+            DropDownButtonResourceDict = Application.Current.Resources.MergedDictionaries[2];
+            ExpanderResourceDict = Application.Current.Resources.MergedDictionaries[3];
+            FlyoutResourceDict = Application.Current.Resources.MergedDictionaries[4];
+            GridResourceDict = Application.Current.Resources.MergedDictionaries[5];
+            HyperlinkButtonResourceDict = Application.Current.Resources.MergedDictionaries[6];
+            InAppNotificationResourceDict = Application.Current.Resources.MergedDictionaries[7];
+            InfoBarResourceDict = Application.Current.Resources.MergedDictionaries[8];
+            ListViewResourceDict = Application.Current.Resources.MergedDictionaries[9];
+            MenuFlyoutResourceDict = Application.Current.Resources.MergedDictionaries[10];
+            PivotResourceDict = Application.Current.Resources.MergedDictionaries[11];
+            ScrollBarResourceDict = Application.Current.Resources.MergedDictionaries[12];
+            SplitButtonResourceDict = Application.Current.Resources.MergedDictionaries[13];
+            TextBlockResourceDict = Application.Current.Resources.MergedDictionaries[14];
         }
     }
 }

@@ -7,8 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     Title="{x:Bind root:ResourceService.GetLocalized('Dialog/RebootTitle')}"
+    BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
     CloseButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
     Content="{x:Bind RebootContent}"
+    PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
     PrimaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/Reboot')}"
-    Style="{StaticResource ContentDialogStyle}"
+    Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d" />

@@ -23,6 +23,7 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Foundation;
@@ -359,9 +360,42 @@ namespace GetStoreApp.Views.Window
         /// <summary>
         /// 当后退按钮收到交互（如单击或点击）时发生
         /// </summary>
-        public void OnNavigationViewBackRequested(object sender, NavigationViewBackRequestedEventArgs args)
+        public void OnBackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
         {
             NavigationService.NavigationFrom();
+        }
+
+        /// <summary>
+        /// 导航控件显示方式发生变化时触发的事件
+        /// </summary>
+        public void OnDisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)
+        {
+            if (args.DisplayMode == NavigationViewDisplayMode.Expanded)
+            {
+                IsPaneToggleButtonVisible = false;
+                AppTitleBarMargin = new Thickness(48, 0, 0, 0);
+            }
+            else
+            {
+                IsPaneToggleButtonVisible = true;
+                AppTitleBarMargin = new Thickness(96, 0, 0, 0);
+            }
+        }
+
+        /// <summary>
+        /// 当菜单中的项收到交互（如单击或点击）时发生
+        /// </summary>
+        public void OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        {
+            NavigationViewItemBase navigationViewItem = args.InvokedItemContainer;
+            if (navigationViewItem.Tag is not null)
+            {
+                NavigationModel navigationItem = NavigationService.NavigationItemList.Find(item => item.NavigationTag == Convert.ToString(navigationViewItem.Tag));
+                if (SelectedItem != navigationItem.NavigationItem)
+                {
+                    NavigationService.NavigateTo(navigationItem.NavigationPage);
+                }
+            }
         }
 
         /// <summary>
@@ -419,39 +453,6 @@ namespace GetStoreApp.Views.Window
         {
             AppWindow.Changed -= OnAppWindowChanged;
             AppUISettings.ColorValuesChanged -= OnColorValuesChanged;
-        }
-
-        /// <summary>
-        /// 导航控件显示方式发生变化时触发的事件
-        /// </summary>
-        public void OnDisplayModeChanged(object sender, NavigationViewDisplayModeChangedEventArgs args)
-        {
-            if (args.DisplayMode == NavigationViewDisplayMode.Expanded)
-            {
-                IsPaneToggleButtonVisible = false;
-                AppTitleBarMargin = new Thickness(48, 0, 0, 0);
-            }
-            else
-            {
-                IsPaneToggleButtonVisible = true;
-                AppTitleBarMargin = new Thickness(96, 0, 0, 0);
-            }
-        }
-
-        /// <summary>
-        /// 当菜单中的项收到交互（如单击或点击）时发生
-        /// </summary>
-        public void OnTapped(object sender, TappedRoutedEventArgs args)
-        {
-            NavigationViewItem navigationViewItem = sender.As<NavigationViewItem>();
-            if (navigationViewItem.Tag is not null)
-            {
-                NavigationModel navigationItem = NavigationService.NavigationItemList.Find(item => item.NavigationTag == Convert.ToString(navigationViewItem.Tag));
-                if (SelectedItem != navigationItem.NavigationItem)
-                {
-                    NavigationService.NavigateTo(navigationItem.NavigationPage);
-                }
-            }
         }
 
         /// <summary>

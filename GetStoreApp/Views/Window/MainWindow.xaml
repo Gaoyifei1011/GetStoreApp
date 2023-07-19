@@ -26,27 +26,31 @@
             x:FieldModifier="public" />
 
         <NavigationView
-            BackRequested="{x:Bind OnNavigationViewBackRequested}"
+            BackRequested="{x:Bind OnBackRequested}"
             Canvas.ZIndex="0"
             DisplayModeChanged="{x:Bind OnDisplayModeChanged}"
             IsBackEnabled="{x:Bind IsBackEnabled, Mode=OneWay}"
             IsPaneToggleButtonVisible="{x:Bind IsPaneToggleButtonVisible, Mode=OneWay}"
             IsSettingsVisible="False"
             IsTitleBarAutoPaddingEnabled="True"
+            ItemInvoked="{x:Bind OnItemInvoked}"
             Loaded="{x:Bind OnNavigationViewLoaded}"
             OpenPaneLength="220"
             PaneDisplayMode="{x:Bind PaneDisplayMode, Mode=OneWay}"
             SelectedItem="{x:Bind SelectedItem, Mode=OneWay}"
-            Style="{StaticResource NavigationViewStyle}"
             Unloaded="{x:Bind OnNavigationViewUnLoaded}">
+
+            <NavigationView.Resources>
+                <Thickness x:Key="NavigationViewContentMargin">0,30,0,0</Thickness>
+                <Thickness x:Key="NavigationViewMinimalContentMargin">0,30,0,0</Thickness>
+                <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent" />
+                <SolidColorBrush x:Key="NavigationViewContentGridBorderBrush" Color="Transparent" />
+            </NavigationView.Resources>
 
             <NavigationView.MenuItems>
                 <NavigationViewItemHeader Content="{x:Bind root:ResourceService.GetLocalized('Window/Title')}" Foreground="{ThemeResource NavigationViewItemForeground}" />
 
-                <NavigationViewItem
-                    Content="{x:Bind root:ResourceService.GetLocalized('Window/Store')}"
-                    Tag="{x:Bind TagList[0]}"
-                    Tapped="{x:Bind OnTapped}">
+                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('Window/Store')}" Tag="{x:Bind TagList[0]}">
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.Store}" />
@@ -57,10 +61,7 @@
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
-                <NavigationViewItem
-                    Content="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}"
-                    Tag="{x:Bind TagList[1]}"
-                    Tapped="{x:Bind OnTapped}">
+                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}" Tag="{x:Bind TagList[1]}">
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.WinGet}" />
@@ -71,10 +72,7 @@
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
-                <NavigationViewItem
-                    Content="{x:Bind root:ResourceService.GetLocalized('Window/History')}"
-                    Tag="{x:Bind TagList[2]}"
-                    Tapped="{x:Bind OnTapped}">
+                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('Window/History')}" Tag="{x:Bind TagList[2]}">
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.History}" />
@@ -85,10 +83,7 @@
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
-                <NavigationViewItem
-                    Content="{x:Bind root:ResourceService.GetLocalized('Window/Download')}"
-                    Tag="{x:Bind TagList[3]}"
-                    Tapped="{x:Bind OnTapped}">
+                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('Window/Download')}" Tag="{x:Bind TagList[3]}">
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.Download}" />
@@ -99,10 +94,7 @@
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
-                <NavigationViewItem
-                    Content="{x:Bind root:ResourceService.GetLocalized('Window/Web')}"
-                    Tag="{x:Bind TagList[4]}"
-                    Tapped="{x:Bind OnTapped}">
+                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('Window/Web')}" Tag="{x:Bind TagList[4]}">
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.Web}" />
@@ -115,10 +107,7 @@
             </NavigationView.MenuItems>
 
             <NavigationView.FooterMenuItems>
-                <NavigationViewItem
-                    Content="{x:Bind root:ResourceService.GetLocalized('Window/About')}"
-                    Tag="{x:Bind TagList[5]}"
-                    Tapped="{x:Bind OnTapped}">
+                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('Window/About')}" Tag="{x:Bind TagList[5]}">
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.About}" />
@@ -129,10 +118,7 @@
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
-                <NavigationViewItem
-                    Content="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}"
-                    Tag="{x:Bind TagList[6]}"
-                    Tapped="{x:Bind OnTapped}">
+                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}" Tag="{x:Bind TagList[6]}">
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.Settings}" />

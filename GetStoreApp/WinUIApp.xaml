@@ -11,7 +11,6 @@
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
 
                 <ResourceDictionary Source="ms-appx:///Styles/Button.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/ContentDialog.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/DropDownButton.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Expander.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Flyout.xaml" />
@@ -21,7 +20,6 @@
                 <ResourceDictionary Source="ms-appx:///Styles/InfoBar.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/ListView.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/MenuFlyout.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/NavigationView.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Pivot.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/ScrollBar.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/SplitButton.xaml" />

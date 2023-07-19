@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style BasedOn="{StaticResource DefaultPivotStyle}" TargetType="Pivot" />
-    <Style BasedOn="{StaticResource DefaultPivotItemStyle}" TargetType="PivotItem" />
 
     <Style
         x:Key="PivotStyle"
@@ -412,35 +411,7 @@
         x:Key="PivotItemStyle"
         BasedOn="{StaticResource DefaultPivotItemStyle}"
         TargetType="PivotItem">
-        <Setter Property="Background" Value="{ThemeResource PivotItemBackground}" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="Padding" Value="0" />
-        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
-        <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="PivotItem">
-                    <Grid
-                        HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                        VerticalAlignment="{TemplateBinding VerticalAlignment}"
-                        Background="{TemplateBinding Background}">
-                        <ContentPresenter
-                            Margin="{TemplateBinding Padding}"
-                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                            Content="{TemplateBinding Content}"
-                            ContentTemplate="{TemplateBinding ContentTemplate}" />
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="Pivot">
-                                <VisualState x:Name="Right" />
-                                <VisualState x:Name="Left" />
-                                <VisualState x:Name="Center" />
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
     </Style>
 </ResourceDictionary>

@@ -9,12 +9,14 @@
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:settings="using:GetStoreApp.Models.Dialogs.Settings"
     Title="{x:Bind root:ResourceService.GetLocalized('Dialog/TraceCleanupTitle')}"
+    BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
     IsPrimaryButtonEnabled="{x:Bind IsButtonEnabled(IsSelected, IsCleaning), Mode=OneWay}"
     IsSecondaryButtonEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsCleaning), Mode=OneWay}"
     PrimaryButtonClick="{x:Bind OnCleanupNowClicked}"
+    PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
     PrimaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CleanupNow')}"
     SecondaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
-    Style="{StaticResource ContentDialogStyle}"
+    Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d">
 
     <StackPanel>
