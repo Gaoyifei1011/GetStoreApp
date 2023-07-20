@@ -513,16 +513,16 @@ namespace GetStoreApp.Views.Window
             {
                 if (Content.As<FrameworkElement>().ActualTheme == ElementTheme.Light)
                 {
-                    WindowBackground = ResourceDictionaryHelper.GridResourceDict["WindowLightBrush"] as SolidColorBrush;
+                    WindowBackground = new SolidColorBrush(Color.FromArgb(255, 240, 243, 249));
                 }
                 else
                 {
-                    WindowBackground = ResourceDictionaryHelper.GridResourceDict["WindowDarkBrush"] as SolidColorBrush;
+                    WindowBackground = new SolidColorBrush(Color.FromArgb(255, 20, 20, 20));
                 }
             }
             else
             {
-                WindowBackground = ResourceDictionaryHelper.GridResourceDict["WindowSystemBackdropBrush"] as SolidColorBrush;
+                WindowBackground = new SolidColorBrush(Colors.Transparent);
             }
         }
 

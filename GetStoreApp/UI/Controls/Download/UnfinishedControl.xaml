@@ -296,10 +296,14 @@
                         <StackPanel Orientation="Horizontal">
 
                             <Button
+                                Width="32"
+                                Height="32"
+                                Margin="5,0,0,0"
+                                Padding="0"
                                 controlExtensions:CursorHelper.Cursor="Hand"
                                 Command="{Binding ElementName=UnfinishedRoot, Path=ContinueCommand, Mode=OneTime}"
                                 CommandParameter="{Binding}"
-                                Style="{StaticResource ButtonSquareStyle}"
+                                CornerRadius="{StaticResource ControlCornerRadius}"
                                 Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 2)}">
 
                                 <Button.Content>
@@ -312,10 +316,14 @@
                             </Button>
 
                             <Button
+                                Width="32"
+                                Height="32"
+                                Margin="5,0,0,0"
+                                Padding="0"
                                 controlExtensions:CursorHelper.Cursor="Hand"
                                 Command="{Binding ElementName=UnfinishedRoot, Path=DeleteCommand, Mode=OneTime}"
                                 CommandParameter="{Binding}"
-                                Style="{StaticResource ButtonSquareStyle}">
+                                CornerRadius="{StaticResource ControlCornerRadius}">
 
                                 <Button.Content>
                                     <FontIcon FontSize="14" Glyph="&#xE711;" />

@@ -5,7 +5,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    Style="{StaticResource ExpanderAboutStyle}"
+    Padding="16,5,0,5"
+    HorizontalAlignment="Stretch"
+    HorizontalContentAlignment="Stretch"
+    IsExpanded="True"
     mc:Ignorable="d">
 
     <Expander.Header>
@@ -28,9 +31,10 @@
 
             <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/Maintenance')}" />
             <HyperlinkButton
+                Margin="-5,0,10,0"
+                Padding="5"
                 Click="{x:Bind OnMaintenanceClicked}"
-                Content="{x:Bind root:ResourceService.GetLocalized('About/MaintenanceDescription')}"
-                Style="{StaticResource AboutHyperlinkButtonStyle}">
+                Content="{x:Bind root:ResourceService.GetLocalized('About/MaintenanceDescription')}">
 
                 <ToolTipService.ToolTip>
                     <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/MaintenanceDescription')}" Placement="Mouse" />

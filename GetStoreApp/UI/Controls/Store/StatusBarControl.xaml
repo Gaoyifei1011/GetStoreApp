@@ -9,7 +9,7 @@
     IsOpen="True"
     Message="{x:Bind StateInfoText, Mode=OneWay}"
     Severity="{x:Bind InfoBarSeverity, Mode=OneWay}"
-    Style="{StaticResource InfoBarStyle}"
+    Style="{StaticResource DefaultInfoBarStyle}"
     mc:Ignorable="d">
 
     <InfoBar.Content>

@@ -391,11 +391,15 @@
                                 <StackPanel Orientation="Horizontal">
                                     <ContentControl IsEnabled="{x:Bind converter:ValueCheckConverterHelper.InstallFileExistsCheck(FileName)}">
                                         <Button
+                                            Width="32"
+                                            Height="32"
+                                            Margin="5,0,0,0"
+                                            Padding="0"
                                             controlExtensions:CursorHelper.Cursor="Hand"
                                             Command="{Binding ElementName=CompletedRoot, Path=InstallCommand, Mode=OneTime}"
                                             CommandParameter="{Binding}"
-                                            IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsInstalling), Mode=OneWay}"
-                                            Style="{StaticResource ButtonSquareStyle}">
+                                            CornerRadius="{StaticResource ControlCornerRadius}"
+                                            IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsInstalling), Mode=OneWay}">
 
                                             <Button.Content>
                                                 <FontIcon FontSize="14" Glyph="&#xE710;" />
@@ -408,10 +412,14 @@
                                     </ContentControl>
 
                                     <Button
+                                        Width="32"
+                                        Height="32"
+                                        Margin="5,0,0,0"
+                                        Padding="0"
                                         controlExtensions:CursorHelper.Cursor="Hand"
                                         Command="{Binding ElementName=CompletedRoot, Path=OpenItemFolderCommand, Mode=OneTime}"
                                         CommandParameter="{x:Bind FilePath}"
-                                        Style="{StaticResource ButtonSquareStyle}">
+                                        CornerRadius="{StaticResource ControlCornerRadius}">
 
                                         <Button.Content>
                                             <FontIcon FontSize="14" Glyph="&#xE8da;" />
@@ -424,7 +432,13 @@
                                 </StackPanel>
                             </ContentControl>
 
-                            <Button controlExtensions:CursorHelper.Cursor="Hand" Style="{StaticResource ButtonSquareStyle}">
+                            <Button
+                                Width="32"
+                                Height="32"
+                                Margin="5,0,0,0"
+                                Padding="0"
+                                controlExtensions:CursorHelper.Cursor="Hand"
+                                CornerRadius="{StaticResource ControlCornerRadius}">
 
                                 <Button.Content>
                                     <FontIcon FontSize="14" Glyph="&#xE712;" />

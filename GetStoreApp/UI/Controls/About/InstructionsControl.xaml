@@ -5,7 +5,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    Style="{StaticResource ExpanderAboutStyle}"
+    Padding="16,5,0,5"
+    HorizontalAlignment="Stretch"
+    HorizontalContentAlignment="Stretch"
+    IsExpanded="True"
     mc:Ignorable="d">
 
     <Expander.Header>
@@ -27,9 +30,10 @@
 
             <StackPanel Orientation="Horizontal">
                 <HyperlinkButton
+                    Margin="-5,0,10,0"
+                    Padding="5"
                     Click="{x:Bind OnDesktopLaunchClicked}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('About/DesktopLaunch')}"
-                    Style="{StaticResource AboutHyperlinkButtonStyle}">
+                    Content="{x:Bind root:ResourceService.GetLocalized('About/DesktopLaunch')}">
 
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/DesktopLaunch')}" Placement="Mouse" />
@@ -37,9 +41,10 @@
                 </HyperlinkButton>
 
                 <HyperlinkButton
+                    Margin="-5,0,10,0"
+                    Padding="5"
                     Click="{x:Bind OnConsoleLaunchClicked}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('About/ConsoleLaunch')}"
-                    Style="{StaticResource AboutHyperlinkButtonStyle}">
+                    Content="{x:Bind root:ResourceService.GetLocalized('About/ConsoleLaunch')}">
 
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/ConsoleLaunch')}" Placement="Mouse" />
@@ -58,9 +63,10 @@
 
             <StackPanel Orientation="Horizontal">
                 <HyperlinkButton
+                    Margin="-5,0,10,0"
+                    Padding="5"
                     Click="{x:Bind OnCheckNetWorkClicked}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('About/CheckNetwork')}"
-                    Style="{StaticResource AboutHyperlinkButtonStyle}">
+                    Content="{x:Bind root:ResourceService.GetLocalized('About/CheckNetwork')}">
 
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/CheckNetwork')}" Placement="Mouse" />
@@ -68,9 +74,10 @@
                 </HyperlinkButton>
 
                 <HyperlinkButton
+                    Margin="-5,0,10,0"
+                    Padding="5"
                     Click="{x:Bind OnTroubleShootClicked}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('About/TroubleShoot')}"
-                    Style="{StaticResource AboutHyperlinkButtonStyle}">
+                    Content="{x:Bind root:ResourceService.GetLocalized('About/TroubleShoot')}">
 
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/TroubleShoot')}" Placement="Mouse" />
@@ -78,9 +85,10 @@
                 </HyperlinkButton>
 
                 <HyperlinkButton
+                    Margin="-5,0,10,0"
+                    Padding="5"
                     Click="{x:Bind OnCloudflareValidationClicked}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('About/CloudflareValidation')}"
-                    Style="{StaticResource AboutHyperlinkButtonStyle}">
+                    Content="{x:Bind root:ResourceService.GetLocalized('About/CloudflareValidation')}">
 
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/CloudflareValidation')}" Placement="Mouse" />
@@ -97,9 +105,10 @@
 
             <StackPanel Orientation="Horizontal">
                 <HyperlinkButton
+                    Margin="-5,0,10,0"
+                    Padding="5"
                     Click="{x:Bind OnDownloadSettingsClicked}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('About/DownloadSettings')}"
-                    Style="{StaticResource AboutHyperlinkButtonStyle}">
+                    Content="{x:Bind root:ResourceService.GetLocalized('About/DownloadSettings')}">
 
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/DownloadSettings')}" Placement="Mouse" />

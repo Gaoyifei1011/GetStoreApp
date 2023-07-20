@@ -5,7 +5,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    Style="{StaticResource ExpanderAboutStyle}"
+    Padding="16,5,0,5"
+    HorizontalAlignment="Stretch"
+    HorizontalContentAlignment="Stretch"
+    IsExpanded="True"
     mc:Ignorable="d">
 
     <Expander.Header>
@@ -18,9 +21,10 @@
             <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/BackdropDescription')}" />
 
             <HyperlinkButton
+                Margin="-5,0,10,0"
+                Padding="5"
                 Click="{x:Bind OnSystemInformationClicked}"
-                Content="{x:Bind root:ResourceService.GetLocalized('About/SystemInformation')}"
-                Style="{StaticResource AboutHyperlinkButtonStyle}">
+                Content="{x:Bind root:ResourceService.GetLocalized('About/SystemInformation')}">
 
                 <ToolTipService.ToolTip>
                     <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/SystemInformation')}" Placement="Mouse" />
@@ -33,9 +37,10 @@
 
             <StackPanel Orientation="Horizontal">
                 <HyperlinkButton
+                    Margin="-5,0,10,0"
+                    Padding="5"
                     Click="{x:Bind OnAppInformationClicked}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('About/AppInformation')}"
-                    Style="{StaticResource AboutHyperlinkButtonStyle}">
+                    Content="{x:Bind root:ResourceService.GetLocalized('About/AppInformation')}">
 
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/AppInformation')}" Placement="Mouse" />
@@ -43,9 +48,10 @@
                 </HyperlinkButton>
 
                 <HyperlinkButton
+                    Margin="-5,0,10,0"
+                    Padding="5"
                     Click="{x:Bind OnAppSettingsClicked}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('About/AppSettings')}"
-                    Style="{StaticResource AboutHyperlinkButtonStyle}">
+                    Content="{x:Bind root:ResourceService.GetLocalized('About/AppSettings')}">
 
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/AppSettings')}" Placement="Mouse" />
@@ -61,9 +67,10 @@
 
             <StackPanel Orientation="Horizontal">
                 <HyperlinkButton
+                    Margin="-5,0,10,0"
+                    Padding="5"
                     Click="{x:Bind OnStartWithEClicked}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('About/StartsWithEButton')}"
-                    Style="{StaticResource AboutHyperlinkButtonStyle}">
+                    Content="{x:Bind root:ResourceService.GetLocalized('About/StartsWithEButton')}">
 
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/StartsWithEButton')}" Placement="Mouse" />
@@ -71,9 +78,10 @@
                 </HyperlinkButton>
 
                 <HyperlinkButton
+                    Margin="-5,0,10,0"
+                    Padding="5"
                     Click="{x:Bind OnBlockMapClicked}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('About/BlockMapButton')}"
-                    Style="{StaticResource AboutHyperlinkButtonStyle}">
+                    Content="{x:Bind root:ResourceService.GetLocalized('About/BlockMapButton')}">
 
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/BlockMapButton')}" Placement="Mouse" />
@@ -87,9 +95,10 @@
             <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/WinGetConfigDescription')}" />
 
             <HyperlinkButton
+                Margin="-5,0,10,0"
+                Padding="5"
                 Click="{x:Bind OnLearnWinGetConfigClicked}"
-                Content="{x:Bind root:ResourceService.GetLocalized('About/LearnWinGetConfig')}"
-                Style="{StaticResource AboutHyperlinkButtonStyle}">
+                Content="{x:Bind root:ResourceService.GetLocalized('About/LearnWinGetConfig')}">
                 <ToolTipService.ToolTip>
                     <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/LearnWinGetConfig')}" Placement="Mouse" />
                 </ToolTipService.ToolTip>

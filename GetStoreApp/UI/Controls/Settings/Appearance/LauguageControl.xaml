@@ -37,24 +37,24 @@
             Text="{x:Bind root:ResourceService.GetLocalized('Settings/LanguageDescription')}" />
     </StackPanel>
 
-    <Button
+    <MenuFlyoutItem
         Grid.Column="2"
         VerticalAlignment="Center"
         controlExtensions:CursorHelper.Cursor="Hand"
         Click="{x:Bind OnLanguageTipClicked}"
-        Style="{StaticResource ButtonInfoStyle}">
+        Style="{StaticResource ButtonNormalMenuItemStyle}">
 
-        <Button.Content>
+        <MenuFlyoutItem.Icon>
             <FontIcon
                 FontFamily="{ThemeResource SymbolThemeFontFamily}"
                 FontSize="16"
                 Glyph="&#xE946;" />
-        </Button.Content>
+        </MenuFlyoutItem.Icon>
 
         <ToolTipService.ToolTip>
             <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/LanguageToolTip')}" Placement="Mouse" />
         </ToolTipService.ToolTip>
-    </Button>
+    </MenuFlyoutItem>
 
     <ComboBox
         Grid.Column="3"

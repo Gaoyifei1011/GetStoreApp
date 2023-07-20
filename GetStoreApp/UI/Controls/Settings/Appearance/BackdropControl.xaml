@@ -38,25 +38,25 @@
             Text="{x:Bind root:ResourceService.GetLocalized('Settings/BackdropDescription')}" />
     </StackPanel>
 
-    <Button
+    <MenuFlyoutItem
         Grid.Column="2"
         VerticalAlignment="Center"
         controlExtensions:CursorHelper.Cursor="Hand"
         Click="{x:Bind OnBackdropTipClicked}"
-        Style="{StaticResource ButtonInfoStyle}"
+        Style="{StaticResource ButtonNormalMenuItemStyle}"
         Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(CanUseMicaBackdrop), Mode=OneWay}">
 
-        <Button.Content>
+        <MenuFlyoutItem.Icon>
             <FontIcon
                 FontFamily="{ThemeResource SymbolThemeFontFamily}"
                 FontSize="16"
                 Glyph="&#xE946;" />
-        </Button.Content>
+        </MenuFlyoutItem.Icon>
 
         <ToolTipService.ToolTip>
             <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/BackdropToolTip')}" Placement="Mouse" />
         </ToolTipService.ToolTip>
-    </Button>
+    </MenuFlyoutItem>
 
     <DropDownButton
         Grid.Column="3"

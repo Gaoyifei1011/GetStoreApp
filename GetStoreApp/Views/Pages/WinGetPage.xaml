@@ -131,22 +131,23 @@
                                                             Value="{x:Bind DownloadProgress, Mode=OneWay}" />
                                                     </Grid>
 
-                                                    <HyperlinkButton
+                                                    <MenuFlyoutItem
                                                         Grid.Column="1"
                                                         Margin="10,0,0,0"
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center"
                                                         Command="{Binding ElementName=TaskManagerFlyout, Path=DataContext.CancelInstallCommand, Mode=OneTime}"
                                                         CommandParameter="{x:Bind AppID}"
-                                                        Style="{StaticResource ExperimentalHyperlinkButtonStyle}">
-                                                        <HyperlinkButton.Content>
+                                                        Style="{StaticResource ButtonNormalMenuItemStyle}">
+
+                                                        <MenuFlyoutItem.Icon>
                                                             <FontIcon FontSize="16" Glyph="&#xE711;" />
-                                                        </HyperlinkButton.Content>
+                                                        </MenuFlyoutItem.Icon>
 
                                                         <ToolTipService.ToolTip>
                                                             <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('WinGet/CancelInstalling')}" Placement="Mouse" />
                                                         </ToolTipService.ToolTip>
-                                                    </HyperlinkButton>
+                                                    </MenuFlyoutItem>
                                                 </Grid>
                                             </DataTemplate>
                                         </ListView.ItemTemplate>

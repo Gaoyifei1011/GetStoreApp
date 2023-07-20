@@ -339,10 +339,14 @@
                             <StackPanel Orientation="Horizontal">
 
                                 <Button
+                                    Width="32"
+                                    Height="32"
+                                    Margin="5,0,0,0"
+                                    Padding="0"
                                     controlExtensions:CursorHelper.Cursor="Hand"
                                     Command="{Binding ElementName=DownloadingRoot, Path=PauseCommand, Mode=OneTime}"
                                     CommandParameter="{Binding}"
-                                    Style="{StaticResource ButtonSquareStyle}">
+                                    CornerRadius="{StaticResource ControlCornerRadius}">
 
                                     <Button.Content>
                                         <FontIcon FontSize="14" Glyph="&#xE769;" />
@@ -354,10 +358,14 @@
                                 </Button>
 
                                 <Button
+                                    Width="32"
+                                    Height="32"
+                                    Margin="5,0,0,0"
+                                    Padding="0"
                                     controlExtensions:CursorHelper.Cursor="Hand"
                                     Command="{Binding ElementName=DownloadingRoot, Path=DeleteCommand, Mode=OneTime}"
                                     CommandParameter="{Binding}"
-                                    Style="{StaticResource ButtonSquareStyle}">
+                                    CornerRadius="{StaticResource ControlCornerRadius}">
 
                                     <Button.Content>
                                         <FontIcon FontSize="14" Glyph="&#xE711;" />

@@ -33,8 +33,7 @@
             IsClosable="False"
             IsOpen="True"
             Message="{x:Bind root:ResourceService.GetLocalized('Dialog/ExperimentalWarning')}"
-            Severity="Warning"
-            Style="{StaticResource InfoBarStyle}" />
+            Severity="Warning" />
 
         <experiment:NetWorkMonitorControl x:Name="NetWorkMonitor" />
 
