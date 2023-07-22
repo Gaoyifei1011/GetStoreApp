@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Extensions.DataType.Events;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Common;
@@ -14,6 +13,7 @@ using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -154,7 +154,7 @@ namespace GetStoreApp.UI.Controls.Download
             };
 
             // 订阅事件
-            DownloadSchedulerService.DownloadingList.ItemsChanged += OnDownloadingListItemsChanged;
+            DownloadSchedulerService.DownloadingList.CollectionChanged += OnDownloadingListItemsChanged;
         }
 
         /// <summary>
@@ -405,36 +405,40 @@ namespace GetStoreApp.UI.Controls.Download
         /// <summary>
         /// 订阅事件，下载中列表内容有暂停下载或下载失败的项目时通知UI更改
         /// </summary>
-        public void OnDownloadingListItemsChanged(object sender, ItemsChangedEventArgs<BackgroundModel> args)
+        public void OnDownloadingListItemsChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
-            if (args.RemovedItems.Any(item => item.DownloadFlag is 0 || item.DownloadFlag is 2))
+            if (args.Action == NotifyCollectionChangedAction.Remove)
             {
-                Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(async () =>
+                foreach (object item in args.OldItems)
                 {
-                    while (isUpdatingNow) await Task.Delay(50);
-                    lock (UnfinishedDataListLock) isUpdatingNow = true;
-
-                    foreach (BackgroundModel backgroundItem in args.RemovedItems)
+                    BackgroundModel backgroundItem = item as BackgroundModel;
+                    if (backgroundItem is not null)
                     {
                         if (backgroundItem.DownloadFlag is 0 || backgroundItem.DownloadFlag is 2)
                         {
-                            BackgroundModel item = await DownloadXmlService.QueryWithKeyAsync(backgroundItem.DownloadKey);
-
-                            UnfinishedDataList.Add(new UnfinishedModel
+                            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(async () =>
                             {
-                                DownloadKey = item.DownloadKey,
-                                FileName = item.FileName,
-                                FilePath = item.FilePath,
-                                FileLink = item.FileLink,
-                                FileSHA1 = item.FileSHA1,
-                                TotalSize = item.TotalSize,
-                                DownloadFlag = item.DownloadFlag
+                                while (isUpdatingNow) await Task.Delay(50);
+                                lock (UnfinishedDataListLock) isUpdatingNow = true;
+
+                                BackgroundModel item = await DownloadXmlService.QueryWithKeyAsync(backgroundItem.DownloadKey);
+
+                                UnfinishedDataList.Add(new UnfinishedModel
+                                {
+                                    DownloadKey = item.DownloadKey,
+                                    FileName = item.FileName,
+                                    FilePath = item.FilePath,
+                                    FileLink = item.FileLink,
+                                    FileSHA1 = item.FileSHA1,
+                                    TotalSize = item.TotalSize,
+                                    DownloadFlag = item.DownloadFlag
+                                });
+
+                                lock (UnfinishedDataListLock) isUpdatingNow = false;
                             });
                         }
                     }
-
-                    lock (UnfinishedDataListLock) isUpdatingNow = false;
-                });
+                }
             }
         }
 

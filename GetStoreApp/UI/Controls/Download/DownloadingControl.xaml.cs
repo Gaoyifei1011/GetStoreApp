@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Extensions.DataType.Events;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Common;
@@ -11,6 +10,7 @@ using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -128,8 +128,8 @@ namespace GetStoreApp.UI.Controls.Download
             };
 
             // 订阅事件
-            DownloadSchedulerService.DownloadingList.ItemsChanged += OnDownloadingListItemsChanged;
-            DownloadSchedulerService.WaitingList.ItemsChanged += OnWaitingListItemsChanged;
+            DownloadSchedulerService.DownloadingList.CollectionChanged += OnDownloadingListItemsChanged;
+            DownloadSchedulerService.WaitingList.CollectionChanged += OnWaitingListItemsChanged;
         }
 
         /// <summary>
@@ -345,8 +345,8 @@ namespace GetStoreApp.UI.Controls.Download
                 // 取消订阅所有事件
                 DownloadingTimer.Tick -= DownloadInfoTimerTick;
 
-                DownloadSchedulerService.DownloadingList.ItemsChanged -= OnDownloadingListItemsChanged;
-                DownloadSchedulerService.WaitingList.ItemsChanged -= OnWaitingListItemsChanged;
+                DownloadSchedulerService.DownloadingList.CollectionChanged -= OnDownloadingListItemsChanged;
+                DownloadSchedulerService.WaitingList.CollectionChanged -= OnWaitingListItemsChanged;
             }
         }
 
@@ -360,7 +360,7 @@ namespace GetStoreApp.UI.Controls.Download
 
             DownloadingDataList.Clear();
 
-            DownloadSchedulerService.DownloadingList.ForEach(downloadItem =>
+            foreach (BackgroundModel downloadItem in DownloadSchedulerService.DownloadingList)
             {
                 DownloadingDataList.Add(new DownloadingModel
                 {
@@ -372,9 +372,9 @@ namespace GetStoreApp.UI.Controls.Download
                     TotalSize = downloadItem.TotalSize,
                     DownloadFlag = downloadItem.DownloadFlag
                 });
-            });
+            }
 
-            DownloadSchedulerService.WaitingList.ForEach(downloadItem =>
+            foreach (BackgroundModel downloadItem in DownloadSchedulerService.WaitingList)
             {
                 DownloadingDataList.Add(new DownloadingModel
                 {
@@ -386,7 +386,7 @@ namespace GetStoreApp.UI.Controls.Download
                     TotalSize = downloadItem.TotalSize,
                     DownloadFlag = downloadItem.DownloadFlag
                 });
-            });
+            }
 
             // 有信息在更新时，等待操作
             lock (DownloadingNowLock)
@@ -410,7 +410,7 @@ namespace GetStoreApp.UI.Controls.Download
             // 当有信息处于更新状态中时，暂停其他操作
             lock (DownloadingNowLock) IsUpdatingNow = true;
 
-            List<BackgroundModel> DownloadingList = DownloadSchedulerService.DownloadingList;
+            ObservableCollection<BackgroundModel> DownloadingList = DownloadSchedulerService.DownloadingList;
 
             foreach (BackgroundModel backgroundItem in DownloadingList)
             {
@@ -436,21 +436,91 @@ namespace GetStoreApp.UI.Controls.Download
         /// <summary>
         /// 订阅事件，下载中列表内容发生改变时通知UI更改
         /// </summary>
-        private async void OnDownloadingListItemsChanged(object sender, ItemsChangedEventArgs<BackgroundModel> args)
+        private void OnDownloadingListItemsChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
-            // 有信息在更新时，等待操作
-            while (IsUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
-            lock (DownloadingNowLock) IsUpdatingNow = true;
-
             // 下载中列表添加项目时，更新UI
-            if (args.AddedItems.Count > 0)
+            if (args.Action == NotifyCollectionChangedAction.Add)
             {
-                Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
+                Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(async () =>
                 {
-                    foreach (BackgroundModel downloadItem in args.AddedItems)
+                    // 有信息在更新时，等待操作
+                    while (IsUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
+                    lock (DownloadingNowLock) IsUpdatingNow = true;
+
+                    foreach (object newItem in args.NewItems)
                     {
-                        DownloadingDataList.Insert(DownloadingDataList.Count(item => item.DownloadFlag is 3),
-                            new DownloadingModel
+                        BackgroundModel downloadItem = newItem as BackgroundModel;
+                        if (downloadItem is not null)
+                        {
+                            DownloadingDataList.Insert(DownloadingDataList.Count(item => item.DownloadFlag is 3),
+                                new DownloadingModel
+                                {
+                                    DownloadKey = downloadItem.DownloadKey,
+                                    FileName = downloadItem.FileName,
+                                    FileLink = downloadItem.FileLink,
+                                    FilePath = downloadItem.FilePath,
+                                    FileSHA1 = downloadItem.FileSHA1,
+                                    TotalSize = downloadItem.TotalSize,
+                                    DownloadFlag = downloadItem.DownloadFlag
+                                });
+                        }
+                    }
+
+                    lock (DownloadingNowLock) IsUpdatingNow = false;
+                });
+            }
+
+            // 下载中列表删除项目时，更新UI
+            if (args.Action == NotifyCollectionChangedAction.Remove)
+            {
+                Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(async () =>
+                {
+                    // 有信息在更新时，等待操作
+                    while (IsUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
+                    lock (DownloadingNowLock) IsUpdatingNow = true;
+
+                    foreach (object oldItem in args.OldItems)
+                    {
+                        BackgroundModel downloadItem = oldItem as BackgroundModel;
+                        if (downloadItem is not null)
+                        {
+                            try
+                            {
+                                DownloadingDataList.Remove(DownloadingDataList.First(item => item.DownloadKey == downloadItem.DownloadKey && item.DownloadFlag is 3));
+                            }
+                            catch (Exception e)
+                            {
+                                LogService.WriteLog(LogType.WARNING, "Downloading list remove items failed", e);
+                                continue;
+                            }
+                        }
+                    }
+
+                    lock (DownloadingNowLock) IsUpdatingNow = false;
+                });
+            }
+        }
+
+        /// <summary>
+        /// 订阅事件，等待列表内容发生改变时通知UI更改
+        /// </summary>
+        private void OnWaitingListItemsChanged(object sender, NotifyCollectionChangedEventArgs args)
+        {
+            // 等待列表添加项目时，更新UI
+            if (args.Action == NotifyCollectionChangedAction.Add)
+            {
+                Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(async () =>
+                {
+                    // 有信息在更新时，等待操作
+                    while (IsUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
+                    lock (DownloadingNowLock) IsUpdatingNow = true;
+
+                    foreach (object newItem in args.NewItems)
+                    {
+                        BackgroundModel downloadItem = newItem as BackgroundModel;
+                        if (downloadItem is not null)
+                        {
+                            DownloadingDataList.Add(new DownloadingModel
                             {
                                 DownloadKey = downloadItem.DownloadKey,
                                 FileName = downloadItem.FileName,
@@ -460,86 +530,42 @@ namespace GetStoreApp.UI.Controls.Download
                                 TotalSize = downloadItem.TotalSize,
                                 DownloadFlag = downloadItem.DownloadFlag
                             });
-                    }
-                });
-            }
-
-            // 下载中列表删除项目时，更新UI
-            if (args.RemovedItems.Count > 0)
-            {
-                Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
-                {
-                    foreach (BackgroundModel backgroundItem in args.RemovedItems)
-                    {
-                        try
-                        {
-                            DownloadingDataList.Remove(DownloadingDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey && item.DownloadFlag is 3));
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LogType.WARNING, "Downloading list remove items failed", e);
-                            continue;
                         }
                     }
+
+                    lock (DownloadingNowLock) IsUpdatingNow = false;
                 });
             }
-
-            // 信息更新完毕时，允许其他操作开始执行
-            lock (DownloadingNowLock) IsUpdatingNow = false;
-        }
-
-        /// <summary>
-        /// 订阅事件，等待列表内容发生改变时通知UI更改
-        /// </summary>
-        private async void OnWaitingListItemsChanged(object sender, ItemsChangedEventArgs<BackgroundModel> args)
-        {
-            // 有信息在更新时，等待操作
-            while (IsUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
-            lock (DownloadingNowLock) IsUpdatingNow = true;
 
             // 等待列表添加项目时，更新UI
-            if (args.AddedItems.Count > 0)
+            if (args.Action == NotifyCollectionChangedAction.Remove)
             {
-                Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
+                Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(async () =>
                 {
-                    foreach (BackgroundModel downloadItem in args.AddedItems)
-                    {
-                        DownloadingDataList.Add(new DownloadingModel
-                        {
-                            DownloadKey = downloadItem.DownloadKey,
-                            FileName = downloadItem.FileName,
-                            FileLink = downloadItem.FileLink,
-                            FilePath = downloadItem.FilePath,
-                            FileSHA1 = downloadItem.FileSHA1,
-                            TotalSize = downloadItem.TotalSize,
-                            DownloadFlag = downloadItem.DownloadFlag
-                        });
-                    }
-                });
-            }
+                    // 有信息在更新时，等待操作
+                    while (IsUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
+                    lock (DownloadingNowLock) IsUpdatingNow = true;
 
-            // 等待列表删除项目时，更新UI
-            if (args.RemovedItems.Count > 0)
-            {
-                Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
-                {
-                    foreach (BackgroundModel backgroundItem in args.RemovedItems)
+                    foreach (object oldItem in args.OldItems)
                     {
-                        try
+                        BackgroundModel downloadItem = oldItem as BackgroundModel;
+                        if (downloadItem is not null)
                         {
-                            DownloadingDataList.Remove(DownloadingDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey && item.DownloadFlag is 1));
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LogType.WARNING, "Waiting list remove items failed", e);
-                            continue;
+                            try
+                            {
+                                DownloadingDataList.Remove(DownloadingDataList.First(item => item.DownloadKey == downloadItem.DownloadKey && item.DownloadFlag is 1));
+                            }
+                            catch (Exception e)
+                            {
+                                LogService.WriteLog(LogType.WARNING, "Waiting list remove items failed", e);
+                                continue;
+                            }
                         }
                     }
+
+                    lock (DownloadingNowLock) IsUpdatingNow = false;
                 });
             }
-
-            // 信息更新完毕时，允许其他操作开始执行
-            lock (DownloadingNowLock) IsUpdatingNow = false;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Extensions.SystemTray;
+﻿using GetStoreApp.Extensions.SystemTray;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Properties;
 using GetStoreApp.Services.Controls.Download;
@@ -29,6 +28,8 @@ namespace GetStoreApp
 
         public static bool IsAppLaunched { get; set; } = false;
 
+        public static bool IsNeedAppLaunch { get; set; } = true;
+
         // 应用程序实例
         public static WinUIApp ApplicationRoot { get; private set; }
 
@@ -38,7 +39,11 @@ namespace GetStoreApp
         [STAThread]
         public static void Main(string[] args)
         {
-            CheckAppBootState();
+            Resources.Culture = CultureInfo.CurrentCulture.Parent;
+            if (!RuntimeHelper.IsMSIX)
+            {
+                return;
+            }
 
             IsDesktopProgram = GetAppExecuteMode(args);
 
@@ -48,14 +53,19 @@ namespace GetStoreApp
             if (IsDesktopProgram)
             {
                 DesktopLaunchService.InitializeLaunchAsync(args).Wait();
-                ComWrappersSupport.InitializeComWrappers();
 
-                Application.Start((param) =>
+                // 启动桌面程序
+                if (IsNeedAppLaunch)
                 {
-                    DispatcherQueueSynchronizationContext context = new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread());
-                    SynchronizationContext.SetSynchronizationContext(context);
-                    ApplicationRoot = new WinUIApp();
-                });
+                    ComWrappersSupport.InitializeComWrappers();
+
+                    Application.Start((param) =>
+                    {
+                        DispatcherQueueSynchronizationContext context = new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread());
+                        SynchronizationContext.SetSynchronizationContext(context);
+                        ApplicationRoot = new WinUIApp();
+                    });
+                }
             }
 
             // 以控制台程序方式启动
@@ -70,21 +80,6 @@ namespace GetStoreApp
                 ConsoleLaunchService.InitializeLaunchAsync(args).Wait();
 
                 Kernel32Library.FreeConsole();
-
-                // 退出应用程序
-                Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
-            }
-        }
-
-        /// <summary>
-        /// 检查应用的启动状态
-        /// </summary>
-        public static void CheckAppBootState()
-        {
-            Resources.Culture = CultureInfo.CurrentCulture.Parent;
-            if (!RuntimeHelper.IsMSIX)
-            {
-                Environment.Exit(Convert.ToInt32(AppExitCode.Failed));
             }
         }
 

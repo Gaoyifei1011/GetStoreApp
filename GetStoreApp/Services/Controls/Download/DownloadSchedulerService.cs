@@ -1,11 +1,12 @@
-﻿using GetStoreApp.Extensions.DataType.Collections;
-using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Controls.Settings.Experiment;
 using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.PInvoke.WinINet;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.System.Threading;
@@ -31,10 +32,10 @@ namespace GetStoreApp.Services.Controls.Download
         private static ThreadPoolTimer DownloadSchedulerTimer { get; set; }
 
         // 下载中任务列表（带通知）
-        public static NotifyList<BackgroundModel> DownloadingList { get; } = new NotifyList<BackgroundModel>();
+        public static ObservableCollection<BackgroundModel> DownloadingList { get; } = new ObservableCollection<BackgroundModel>();
 
         // 等待下载任务列表（带通知）
-        public static NotifyList<BackgroundModel> WaitingList { get; } = new NotifyList<BackgroundModel>();
+        public static ObservableCollection<BackgroundModel> WaitingList { get; } = new ObservableCollection<BackgroundModel>();
 
         /// <summary>
         /// 先获取当前网络状态信息，然后初始化下载监控任务
@@ -145,7 +146,7 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 try
                 {
-                    WaitingList.Remove(WaitingList.Find(item => item.DownloadKey == downloadKey));
+                    WaitingList.Remove(WaitingList.First(item => item.DownloadKey == downloadKey));
                     Result = await DownloadXmlService.UpdateFlagAsync(downloadKey, 2);
                 }
                 catch (Exception e)
@@ -165,7 +166,7 @@ namespace GetStoreApp.Services.Controls.Download
                 {
                     try
                     {
-                        DownloadingList.Remove(DownloadingList.Find(item => item.DownloadKey == downloadKey));
+                        DownloadingList.Remove(DownloadingList.First(item => item.DownloadKey == downloadKey));
                         Result = await DownloadXmlService.UpdateFlagAsync(downloadKey, 2);
                     }
                     catch (Exception e)
@@ -230,8 +231,8 @@ namespace GetStoreApp.Services.Controls.Download
             }
 
             // 清空所有正在下载和等待下载的列表内容
-            DownloadingList.Clear();
-            WaitingList.Clear();
+            while (DownloadingList.Count > 0) DownloadingList.RemoveAt(0);
+            while (WaitingList.Count > 0) WaitingList.RemoveAt(0);
 
             // 信息更新完毕时，退出写模式，让其他线程执行操作
             lock (DownloadSchedulerLock) IsUpdatingNow = false;
@@ -253,7 +254,12 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 try
                 {
-                    WaitingList.RemoveAll(item => item.DownloadKey == downloadKey);
+                    List<BackgroundModel> waitingList = WaitingList.Where(item => item.DownloadKey == downloadKey).ToList();
+                    foreach (BackgroundModel backgroundItem in waitingList)
+                    {
+                        WaitingList.Remove(backgroundItem);
+                    }
+
                     Result = await DownloadXmlService.DeleteAsync(downloadKey);
                 }
                 catch (Exception e)
@@ -273,7 +279,11 @@ namespace GetStoreApp.Services.Controls.Download
                 {
                     try
                     {
-                        DownloadingList.RemoveAll(item => item.DownloadKey == downloadKey);
+                        List<BackgroundModel> downloadingList = DownloadingList.Where(item => item.DownloadKey == downloadKey).ToList();
+                        foreach (BackgroundModel backgroundItem in downloadingList)
+                        {
+                            DownloadingList.Remove(backgroundItem);
+                        }
 
                         Result = await DownloadXmlService.DeleteAsync(downloadKey);
                     }
@@ -377,13 +387,17 @@ namespace GetStoreApp.Services.Controls.Download
 
                 if (AddResult.Item1 && DownloadItem is not null)
                 {
-                    // 将当前任务的下载状态标记为正在下载状态
-                    DownloadItem.DownloadFlag = 3;
-                    DownloadItem.GID = AddResult.Item2;
-
                     try
                     {
-                        WaitingList.RemoveAll(item => item.DownloadKey == DownloadItem.DownloadKey);
+                        List<BackgroundModel> downloadingList = WaitingList.Where(item => item.DownloadKey == DownloadItem.DownloadKey).ToList();
+                        foreach (BackgroundModel backgroundItem in downloadingList)
+                        {
+                            WaitingList.Remove(backgroundItem);
+                        }
+
+                        // 将当前任务的下载状态标记为正在下载状态
+                        DownloadItem.DownloadFlag = 3;
+                        DownloadItem.GID = AddResult.Item2;
 
                         DownloadingList.Add(DownloadItem);
 
@@ -458,7 +472,11 @@ namespace GetStoreApp.Services.Controls.Download
                 }
 
                 // 正在下载列表中删除掉不是处于下载状态的任务
-                DownloadingList.RemoveAll(item => item.DownloadFlag is not 3);
+                List<BackgroundModel> downloadingList = DownloadingList.Where(item => item.DownloadFlag is not 3).ToList();
+                foreach (BackgroundModel backgroundItem in downloadingList)
+                {
+                    DownloadingList.Remove(backgroundItem);
+                }
 
                 // 下载完成后发送通知
                 if (DownloadingList.Count is 0 && WaitingList.Count is 0)

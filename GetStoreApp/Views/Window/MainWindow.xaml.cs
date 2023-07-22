@@ -16,14 +16,12 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Foundation;
@@ -184,6 +182,7 @@ namespace GetStoreApp.Views.Window
             SetTitleBarColor(Content.As<FrameworkElement>().ActualTheme);
 
             AppWindow.Changed += OnAppWindowChanged;
+            AppWindow.Closing += OnAppWindowClosing;
             AppUISettings.ColorValuesChanged += OnColorValuesChanged;
             Content.As<FrameworkElement>().ActualThemeChanged += OnActualThemeChanged;
 
@@ -203,50 +202,70 @@ namespace GetStoreApp.Views.Window
         }
 
         /// <summary>
-        /// 应用主题变化时设置标题栏按钮的颜色
-        /// </summary>
-        private void OnActualThemeChanged(FrameworkElement sender, object args)
-        {
-            SetTitleBarColor(sender.ActualTheme);
-            SetWindowBackground();
-        }
-
-        /// <summary>
         /// 窗口激活状态发生变化的事件
         /// </summary>
         public void OnActivated(object sender, WindowActivatedEventArgs args)
         {
-            // 设置窗口处于非激活状态时的背景色
-            if (BackdropService.AppBackdrop.InternalName == BackdropService.BackdropList[1].InternalName || BackdropService.AppBackdrop.InternalName == BackdropService.BackdropList[2].InternalName)
+            if (Program.ApplicationRoot.IsAppRunning)
             {
-                MicaSystemBackdrop micaBackdrop = SystemBackdrop as MicaSystemBackdrop;
-
-                if (micaBackdrop is not null && micaBackdrop.BackdropConfiguration is not null)
+                // 设置窗口处于非激活状态时的背景色
+                if (BackdropService.AppBackdrop.InternalName == BackdropService.BackdropList[1].InternalName || BackdropService.AppBackdrop.InternalName == BackdropService.BackdropList[2].InternalName)
                 {
-                    if (AlwaysShowBackdropService.AlwaysShowBackdropValue)
+                    MicaSystemBackdrop micaBackdrop = SystemBackdrop as MicaSystemBackdrop;
+
+                    if (micaBackdrop is not null && micaBackdrop.BackdropConfiguration is not null)
                     {
-                        micaBackdrop.BackdropConfiguration.IsInputActive = true;
+                        if (AlwaysShowBackdropService.AlwaysShowBackdropValue)
+                        {
+                            micaBackdrop.BackdropConfiguration.IsInputActive = true;
+                        }
+                        else
+                        {
+                            micaBackdrop.BackdropConfiguration.IsInputActive = args.WindowActivationState is not WindowActivationState.Deactivated;
+                        }
                     }
-                    else
+                }
+                else if (BackdropService.AppBackdrop.InternalName == BackdropService.BackdropList[3].InternalName)
+                {
+                    DesktopAcrylicSystemBackdrop desktopAcrylicSystemBackdrop = SystemBackdrop as DesktopAcrylicSystemBackdrop;
+
+                    if (desktopAcrylicSystemBackdrop is not null && desktopAcrylicSystemBackdrop.BackdropConfiguration is not null)
                     {
-                        micaBackdrop.BackdropConfiguration.IsInputActive = args.WindowActivationState is not WindowActivationState.Deactivated;
+                        if (AlwaysShowBackdropService.AlwaysShowBackdropValue)
+                        {
+                            desktopAcrylicSystemBackdrop.BackdropConfiguration.IsInputActive = true;
+                        }
+                        else
+                        {
+                            desktopAcrylicSystemBackdrop.BackdropConfiguration.IsInputActive = args.WindowActivationState is not WindowActivationState.Deactivated;
+                        }
                     }
                 }
             }
-            else if (BackdropService.AppBackdrop.InternalName == BackdropService.BackdropList[3].InternalName)
-            {
-                DesktopAcrylicSystemBackdrop desktopAcrylicSystemBackdrop = SystemBackdrop as DesktopAcrylicSystemBackdrop;
+        }
 
-                if (desktopAcrylicSystemBackdrop is not null && desktopAcrylicSystemBackdrop.BackdropConfiguration is not null)
+        /// <summary>
+        /// 窗体大小发生改变时的事件
+        /// </summary>
+        public void OnSizeChanged(object sender, WindowSizeChangedEventArgs args)
+        {
+            PaneDisplayMode = args.Size.Width > 768 ? NavigationViewPaneDisplayMode.Left : NavigationViewPaneDisplayMode.LeftMinimal;
+            if (AppTitlebar.TitlebarMenuFlyout.IsOpen)
+            {
+                AppTitlebar.TitlebarMenuFlyout.Hide();
+            }
+        }
+
+        /// <summary>
+        /// 窗口位置变化发生的事件
+        /// </summary>
+        public void OnAppWindowChanged(AppWindow sender, AppWindowChangedEventArgs args)
+        {
+            if (args.DidPositionChange)
+            {
+                if (AppTitlebar.TitlebarMenuFlyout.IsOpen)
                 {
-                    if (AlwaysShowBackdropService.AlwaysShowBackdropValue)
-                    {
-                        desktopAcrylicSystemBackdrop.BackdropConfiguration.IsInputActive = true;
-                    }
-                    else
-                    {
-                        desktopAcrylicSystemBackdrop.BackdropConfiguration.IsInputActive = args.WindowActivationState is not WindowActivationState.Deactivated;
-                    }
+                    AppTitlebar.TitlebarMenuFlyout.Hide();
                 }
             }
         }
@@ -254,9 +273,9 @@ namespace GetStoreApp.Views.Window
         /// <summary>
         /// 关闭窗口之后关闭其他服务
         /// </summary>
-        public async void OnClosed(object sender, WindowEventArgs args)
+        public async void OnAppWindowClosing(object sender, AppWindowClosingEventArgs args)
         {
-            args.Handled = true;
+            args.Cancel = true;
 
             if (AppExitService.AppExit.InternalName == AppExitService.AppExitList[0].InternalName)
             {
@@ -292,32 +311,6 @@ namespace GetStoreApp.Views.Window
         }
 
         /// <summary>
-        /// 窗体大小发生改变时的事件
-        /// </summary>
-        public void OnSizeChanged(object sender, WindowSizeChangedEventArgs args)
-        {
-            PaneDisplayMode = args.Size.Width > 768 ? NavigationViewPaneDisplayMode.Left : NavigationViewPaneDisplayMode.LeftMinimal;
-            if (AppTitlebar.TitlebarMenuFlyout.IsOpen)
-            {
-                AppTitlebar.TitlebarMenuFlyout.Hide();
-            }
-        }
-
-        /// <summary>
-        /// 窗口位置变化发生的事件
-        /// </summary>
-        public void OnAppWindowChanged(AppWindow sender, AppWindowChangedEventArgs args)
-        {
-            if (args.DidPositionChange)
-            {
-                if (AppTitlebar.TitlebarMenuFlyout.IsOpen)
-                {
-                    AppTitlebar.TitlebarMenuFlyout.Hide();
-                }
-            }
-        }
-
-        /// <summary>
         /// 应用主题设置跟随系统发生变化时，当系统主题设置发生变化时修改修改应用背景色
         /// </summary>
         private void OnColorValuesChanged(UISettings sender, object args)
@@ -337,6 +330,15 @@ namespace GetStoreApp.Views.Window
                     Program.ApplicationRoot.TrayMenuWindow.WindowTheme = WindowTheme;
                 }
             });
+        }
+
+        /// <summary>
+        /// 应用主题变化时设置标题栏按钮的颜色
+        /// </summary>
+        private void OnActualThemeChanged(FrameworkElement sender, object args)
+        {
+            SetTitleBarColor(sender.ActualTheme);
+            SetWindowBackground();
         }
 
         /// <summary>
@@ -451,7 +453,6 @@ namespace GetStoreApp.Views.Window
         /// </summary>
         public void OnNavigationViewUnLoaded(object sender, RoutedEventArgs args)
         {
-            AppWindow.Changed -= OnAppWindowChanged;
             AppUISettings.ColorValuesChanged -= OnColorValuesChanged;
         }
 

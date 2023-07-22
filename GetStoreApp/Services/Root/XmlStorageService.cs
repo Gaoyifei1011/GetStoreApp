@@ -46,7 +46,7 @@ namespace GetStoreApp.Services.Root
             catch (Exception e)
             {
                 LogService.WriteLog(LogType.CRITICAL, "Create history storage file failed.", e);
-                Environment.Exit(Convert.ToInt32(AppExitCode.Failed));
+                Environment.Exit(82);
             }
         }
 
@@ -70,7 +70,7 @@ namespace GetStoreApp.Services.Root
             catch (Exception e)
             {
                 LogService.WriteLog(LogType.CRITICAL, "Create download storage file failed.", e);
-                Environment.Exit(Convert.ToInt32(AppExitCode.Failed));
+                Environment.Exit(82);
             }
         }
 

@@ -241,7 +241,10 @@
 
         <ListView.ItemTemplate>
             <DataTemplate x:DataType="download:CompletedModel">
-                <Grid Padding="16,10" Style="{StaticResource CardGridStyle}">
+                <Grid
+                    Height="66"
+                    Padding="16,10"
+                    Style="{StaticResource CardGridStyle}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />

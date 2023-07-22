@@ -33,10 +33,7 @@ namespace GetStoreApp.Services.Root
             if (AppNotificationArguments is "CheckNetWorkConnection")
             {
                 await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
-                if (Application.Current is null)
-                {
-                    Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
-                }
+                Program.IsNeedAppLaunch = Application.Current is null ? false : true;
             }
             else if (AppNotificationArguments is "OpenDownloadFolder")
             {
@@ -49,18 +46,12 @@ namespace GetStoreApp.Services.Root
                 {
                     await Windows.System.Launcher.LaunchFolderPathAsync(Path.GetTempPath());
                 }
-                if (Application.Current is null)
-                {
-                    Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
-                }
+                Program.IsNeedAppLaunch = Application.Current is null ? false : true;
             }
             else if (AppNotificationArguments is "OpenSettings")
             {
                 await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
-                if (Application.Current is null)
-                {
-                    Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
-                }
+                Program.IsNeedAppLaunch = Application.Current is null ? false : true;
             }
             else if (AppNotificationArguments.Contains("InstallWithCommand"))
             {
@@ -95,10 +86,7 @@ namespace GetStoreApp.Services.Root
                         }
                     }
                 }
-                if (Application.Current is null)
-                {
-                    Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
-                }
+                Program.IsNeedAppLaunch = Application.Current is null ? false : true;
             }
             else
             {

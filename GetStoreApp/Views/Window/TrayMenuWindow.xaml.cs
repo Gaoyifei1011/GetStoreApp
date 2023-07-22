@@ -84,7 +84,7 @@ namespace GetStoreApp.Views.Window
         /// </summary>
         public void OnExitClicked(object sender, RoutedEventArgs args)
         {
-            Program.ApplicationRoot.MainWindow.Close();
+            Program.ApplicationRoot.Dispose();
         }
 
         /// <summary>

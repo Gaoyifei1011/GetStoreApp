@@ -62,8 +62,7 @@ namespace GetStoreApp.Services.Root
             ConsoleHelper.IsExited = true;
             IsAppRunning = false;
             DownloadService.StopDownloadFile();
-            Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
-            return true;
+            return false;
         }
 
         /// <summary>

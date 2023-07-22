@@ -46,8 +46,8 @@ namespace GetStoreApp.Views.Pages
         {
             base.OnNavigatingFrom(args);
             Downloading.StopDownloadingTimer(true);
-            DownloadSchedulerService.DownloadingList.ItemsChanged -= Unfinished.OnDownloadingListItemsChanged;
-            DownloadSchedulerService.DownloadingList.ItemsChanged -= Completed.OnDownloadingListItemsChanged;
+            DownloadSchedulerService.DownloadingList.CollectionChanged -= Unfinished.OnDownloadingListItemsChanged;
+            DownloadSchedulerService.DownloadingList.CollectionChanged -= Completed.OnDownloadingListItemsChanged;
         }
 
         /// <summary>

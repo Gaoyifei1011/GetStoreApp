@@ -1,4 +1,6 @@
-﻿using GetStoreApp.Models.Base;
+﻿using GetStoreApp.Helpers.Converters;
+using GetStoreApp.Models.Base;
+using GetStoreApp.Services.Root;
 using System;
 
 namespace GetStoreApp.Models.Controls.Download
@@ -8,6 +10,12 @@ namespace GetStoreApp.Models.Controls.Download
     /// </summary>
     public class DownloadingModel : ModelBase
     {
+        private static string FinishedSizeToolTip = ResourceService.GetLocalized("Download/FinishedSizeToolTip");
+
+        private static string TotalSizeToolTip = ResourceService.GetLocalized("Download/TotalSizeToolTip");
+
+        private static string CurrentSpeedToolTip = ResourceService.GetLocalized("Download/CurrentSpeedToolTip");
+
         /*
         1.下载的通用信息
         */
@@ -176,6 +184,26 @@ namespace GetStoreApp.Models.Controls.Download
             {
                 IsFileDownloading = true;
                 return Math.Round(finishedSize / totalSize, 4) * 100;
+            }
+        }
+
+        public string GetDownloadingToolTip(double size, string toolTipType)
+        {
+            if (toolTipType is "FinishedSize")
+            {
+                return string.Format(FinishedSizeToolTip, StringConverterHelper.DownloadSizeFormat(size));
+            }
+            else if (toolTipType is "TotalSize")
+            {
+                return string.Format(TotalSizeToolTip, StringConverterHelper.DownloadSizeFormat(size));
+            }
+            else if (toolTipType is "CurrentSpeed")
+            {
+                return string.Format(CurrentSpeedToolTip, StringConverterHelper.DownloadSizeFormat(size));
+            }
+            else
+            {
+                return string.Empty;
             }
         }
     }

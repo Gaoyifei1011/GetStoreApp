@@ -22,9 +22,11 @@ namespace GetStoreApp
 {
     public partial class WinUIApp : Application, IDisposable
     {
-        private bool IsDisposed;
+        private bool isDisposed;
 
         private IntPtr[] hIcons;
+
+        public bool IsAppRunning { get; set; } = true;
 
         public MainWindow MainWindow { get; private set; }
 
@@ -278,13 +280,14 @@ namespace GetStoreApp
         /// </summary>
         private async Task CloseAppAsync()
         {
+            IsAppRunning = false;
             await SaveWindowInformationAsync();
             DownloadSchedulerService.CloseDownloadScheduler();
             Aria2Service.CloseAria2();
             TrayIcon.Dispose();
             TrayIcon.DoubleClick -= DoubleClick;
             TrayIcon.RightClick -= RightClick;
-            Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
+            Exit();
         }
 
         /// <summary>
@@ -335,49 +338,40 @@ namespace GetStoreApp
         }
 
         /// <summary>
-        /// 释放对象。
+        /// 释放资源
         /// </summary>
         public void Dispose()
         {
             Dispose(true);
-
-            // 此对象将由 Dispose 方法清理。因此，您应该调用 GC.SuppressFinalize() 将此对象从终结队列中删除，并防止此对象的终结代码再次执行。
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// 仅当 <see cref="Dispose()"/> 方法未被调用时，此析构函数才会运行。这使此基类有机会完成。
-        /// <para>注意： 不要在从此类派生的类型中提供析构函数。</para>
-        /// </summary>
         ~WinUIApp()
         {
             Dispose(false);
         }
 
         /// <summary>
-        /// 删除接收窗口消息的窗口挂钩并关闭基础帮助程序窗口。
+        /// 释放资源
         /// </summary>
-        private void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
-            // 如果组件已释放，则不执行任何操作
-            if (IsDisposed)
+            if (!isDisposed)
             {
-                return;
-            };
-
-            if (disposing)
-            {
-                // 始终销毁非托管句柄（即使从 GC 调用）
-                if (hIcons is not null)
+                if (disposing)
                 {
-                    foreach (IntPtr hIcon in hIcons)
+                    if (hIcons is not null)
                     {
-                        User32Library.DestroyIcon(hIcon);
+                        foreach (IntPtr hIcon in hIcons)
+                        {
+                            User32Library.DestroyIcon(hIcon);
+                        }
                     }
+                    CloseAppAsync().Wait();
                 }
-                CloseAppAsync().Wait();
+
+                isDisposed = true;
             }
-            IsDisposed = true;
         }
     }
 }

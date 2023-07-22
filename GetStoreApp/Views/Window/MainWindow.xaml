@@ -12,7 +12,6 @@
     MinWidth="600"
     MinHeight="768"
     Activated="{x:Bind OnActivated}"
-    Closed="{x:Bind OnClosed}"
     SizeChanged="{x:Bind OnSizeChanged}"
     mc:Ignorable="d">
 

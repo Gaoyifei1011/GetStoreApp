@@ -131,15 +131,11 @@ namespace GetStoreApp.Extensions.SystemTray
         }
 
         /// <summary>
-        /// 释放对象。
+        /// 释放资源
         /// </summary>
-        /// <remarks>此方法在设计上不是虚拟的。派生类应重写 <see cref="Dispose(bool)"/>.
-        /// </remarks>
         public void Dispose()
         {
             Dispose(true);
-
-            // 此对象将由 Dispose 方法清理。因此，您应该调用 GC.SuppressFinalize() 将此对象从终结队列中删除，并防止此对象的终结代码再次执行。
             GC.SuppressFinalize(this);
         }
 
@@ -148,24 +144,27 @@ namespace GetStoreApp.Extensions.SystemTray
             Dispose(false);
         }
 
-        private void Dispose(bool disposing)
+        /// <summary>
+        /// 释放资源
+        /// </summary>
+        protected virtual void Dispose(bool disposing)
         {
-            // 如果组件已释放，则不执行任何操作
-            if (isDisposed) return;
-
-            if (disposing)
+            if (isDisposed)
             {
-                // 始终销毁非托管句柄（即使从 GC 调用）
-                trayMessageWindow.Dispose();
+                if (disposing)
+                {
+                    // 始终销毁非托管句柄（即使从 GC 调用）
+                    trayMessageWindow.Dispose();
 
-                // 移除任务栏图标
-                RemoveTaskbarIcon();
+                    // 移除任务栏图标
+                    RemoveTaskbarIcon();
 
-                // 注销事件监听器
-                trayMessageWindow.MouseEventReceived -= OnMouseEventReceived;
-                trayMessageWindow.TaskbarCreated -= OnTaskbarCreated;
+                    // 注销事件监听器
+                    trayMessageWindow.MouseEventReceived -= OnMouseEventReceived;
+                    trayMessageWindow.TaskbarCreated -= OnTaskbarCreated;
+                }
+                isDisposed = true;
             }
-            isDisposed = true;
         }
     }
 }

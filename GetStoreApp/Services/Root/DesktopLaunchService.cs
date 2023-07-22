@@ -165,10 +165,7 @@ namespace GetStoreApp.Services.Root
                 }
 
                 // 然后退出实例并停止
-                if (isExisted)
-                {
-                    Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
-                }
+                Program.IsNeedAppLaunch = !isExisted;
             }
             else if (SendMessageType == MessageType.Notification)
             {
@@ -195,7 +192,8 @@ namespace GetStoreApp.Services.Root
                 // 然后退出实例并停止
                 if (isExisted)
                 {
-                    Environment.Exit(Convert.ToInt32(AppExitCode.Successfully));
+                    Program.IsNeedAppLaunch = !isExisted;
+                    return;
                 }
                 else
                 {

@@ -21,7 +21,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         private bool isDoubleClick;
 
         // 在调用释放后立即设置为 true。
-        private bool IsDisposed;
+        private bool isDisposed;
 
         // 消息窗口的句柄
         public IntPtr TrayMessagehWnd { get; private set; }
@@ -148,18 +148,19 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         }
 
         /// <summary>
-        /// 删除接收窗口消息的窗口挂钩并关闭基础帮助程序窗口。
+        /// 释放资源
         /// </summary>
-        private void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
-            if (IsDisposed) return;
-
-            if (disposing)
+            if (!isDisposed)
             {
-                User32Library.DestroyWindow(TrayMessagehWnd);
-                wc.lpfnWndProc = null;
+                if (disposing)
+                {
+                    User32Library.DestroyWindow(TrayMessagehWnd);
+                    wc.lpfnWndProc = null;
+                }
+                isDisposed = true;
             }
-            IsDisposed = true;
         }
     }
 }

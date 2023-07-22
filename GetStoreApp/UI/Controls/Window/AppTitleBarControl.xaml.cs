@@ -36,7 +36,7 @@ namespace GetStoreApp.UI.Controls.Window
         /// </summary>
         public void OnCloseClicked(object sender, RoutedEventArgs args)
         {
-            Program.ApplicationRoot.MainWindow.Close();
+            Program.ApplicationRoot.Dispose();
         }
 
         /// <summary>

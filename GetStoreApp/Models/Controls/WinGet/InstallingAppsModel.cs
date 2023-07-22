@@ -7,21 +7,21 @@ namespace GetStoreApp.Models.Controls.WinGet
 {
     public class InstallingAppsModel : ModelBase
     {
-        public static string AppNameToolTip = ResourceService.GetLocalized("WinGet/AppNameToolTip");
+        private static string AppNameToolTip = ResourceService.GetLocalized("WinGet/AppNameToolTip");
 
-        public static string InstallStateToolTip = ResourceService.GetLocalized("WinGet/InstallStateToolTip");
+        private static string InstallStateToolTip = ResourceService.GetLocalized("WinGet/InstallStateToolTip");
 
-        public static string DownloadedProgressToolTip = ResourceService.GetLocalized("WinGet/DownloadedProgressToolTip");
+        private static string DownloadedProgressToolTip = ResourceService.GetLocalized("WinGet/DownloadedProgressToolTip");
 
-        public static string QueuedToolTip = ResourceService.GetLocalized("WinGet/QueuedToolTip");
+        private static string QueuedToolTip = ResourceService.GetLocalized("WinGet/QueuedToolTip");
 
-        public static string DownloadingToolTip = ResourceService.GetLocalized("WinGet/DownloadingToolTip");
+        private static string DownloadingToolTip = ResourceService.GetLocalized("WinGet/DownloadingToolTip");
 
-        public static string InstallingToolTip = ResourceService.GetLocalized("WinGet/InstallingToolTip");
+        private static string InstallingToolTip = ResourceService.GetLocalized("WinGet/InstallingToolTip");
 
-        public static string PostInstallToolTip = ResourceService.GetLocalized("WinGet/PostInstallToolTip");
+        private static string PostInstallToolTip = ResourceService.GetLocalized("WinGet/PostInstallToolTip");
 
-        public static string FinishedToolTip = ResourceService.GetLocalized("WinGet/FinishedToolTip");
+        private static string FinishedToolTip = ResourceService.GetLocalized("WinGet/FinishedToolTip");
 
         /// <summary>
         /// 应用ID
