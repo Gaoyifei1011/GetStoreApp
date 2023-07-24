@@ -24,7 +24,11 @@
         Grid.Row="0"
         Height="66"
         Margin="30,0"
-        Style="{StaticResource ListViewHeaderGridStyle}">
+        Padding="16,8,2,8"
+        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+        BorderThickness="1"
+        CornerRadius="{StaticResource ControlCornerRadius}">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -86,8 +90,12 @@
         x:Name="LoadingGrid"
         Grid.Row="1"
         Margin="30,3,30,0"
+        Padding="16,12"
         x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsLoadedCompleted), Mode=OneWay}"
-        Style="{StaticResource CardGridStyle}">
+        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+        BorderThickness="1"
+        CornerRadius="{StaticResource ControlCornerRadius}">
 
         <StackPanel
             HorizontalAlignment="Center"
@@ -123,7 +131,11 @@
         <Grid
             Grid.Row="0"
             Margin="30,0"
-            Style="{StaticResource CardGridStyle}"
+            Padding="16,12"
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            BorderThickness="1"
+            CornerRadius="{StaticResource ControlCornerRadius}"
             Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsUpgradableAppsEmpty), Mode=OneWay}">
             <TextBlock
                 Margin="0,10"
@@ -153,8 +165,11 @@
                 <DataTemplate x:DataType="winget:UpgradableAppsModel">
                     <Grid
                         Padding="16,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
                         ColumnSpacing="10"
-                        Style="{StaticResource CardGridStyle}">
+                        CornerRadius="{StaticResource ControlCornerRadius}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*" />
                             <ColumnDefinition Width="2*" />
@@ -165,10 +180,12 @@
 
                         <TextBlock
                             Grid.Column="0"
+                            MinWidth="50"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
-                            Style="{StaticResource CardTextStyle}"
-                            Text="{x:Bind AppName}">
+                            FontSize="14"
+                            Text="{x:Bind AppName}"
+                            TextAlignment="Left">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip Content="{x:Bind converter:StringConverterHelper.WinGetAppsToolTipFormat(AppName,'AppName')}" Placement="Mouse" />
@@ -177,10 +194,12 @@
 
                         <TextBlock
                             Grid.Column="1"
+                            MinWidth="50"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
-                            Style="{StaticResource CardTextStyle}"
-                            Text="{x:Bind AppPublisher}">
+                            FontSize="14"
+                            Text="{x:Bind AppPublisher}"
+                            TextAlignment="Left">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip Content="{x:Bind converter:StringConverterHelper.WinGetAppsToolTipFormat(AppPublisher,'AppPublisher')}" Placement="Mouse" />
@@ -189,11 +208,13 @@
 
                         <TextBlock
                             Grid.Column="2"
+                            MinWidth="50"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
+                            FontSize="14"
                             HorizontalTextAlignment="Left"
-                            Style="{StaticResource CardTextStyle}"
-                            Text="{x:Bind AppCurrentVersion}">
+                            Text="{x:Bind AppCurrentVersion}"
+                            TextAlignment="Left">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip Content="{x:Bind converter:StringConverterHelper.WinGetAppsToolTipFormat(AppCurrentVersion,'AppCurrentVersion')}" Placement="Mouse" />
@@ -202,12 +223,14 @@
 
                         <TextBlock
                             Grid.Column="3"
+                            MinWidth="50"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
+                            FontSize="14"
                             Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
                             HorizontalTextAlignment="Left"
-                            Style="{StaticResource CardTextStyle}"
-                            Text="{x:Bind AppNewestVersion}">
+                            Text="{x:Bind AppNewestVersion}"
+                            TextAlignment="Left">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip Content="{x:Bind converter:StringConverterHelper.WinGetAppsToolTipFormat(AppNewestVersion,'AppNewestVersion')}" Placement="Mouse" />

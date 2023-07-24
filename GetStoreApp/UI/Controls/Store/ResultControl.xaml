@@ -375,10 +375,12 @@
 
                     <TextBlock
                         Grid.Column="2"
+                        MinWidth="50"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Style="{StaticResource CardTextStyle}"
-                        Text="{x:Bind converter:StringConverterHelper.GMTFormat(FileLinkExpireTime)}">
+                        FontSize="14"
+                        Text="{x:Bind converter:StringConverterHelper.GMTFormat(FileLinkExpireTime)}"
+                        TextAlignment="Left">
 
                         <ToolTipService.ToolTip>
                             <ToolTip Content="{x:Bind converter:StringConverterHelper.GMTFormat(FileLinkExpireTime)}" Placement="Mouse" />
@@ -387,10 +389,12 @@
 
                     <TextBlock
                         Grid.Column="3"
+                        MinWidth="50"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Style="{StaticResource CardTextStyle}"
-                        Text="{x:Bind FileSHA1}">
+                        FontSize="14"
+                        Text="{x:Bind FileSHA1}"
+                        TextAlignment="Left">
 
                         <ToolTipService.ToolTip>
                             <ToolTip Content="{x:Bind FileSHA1}" Placement="Mouse" />
@@ -399,10 +403,12 @@
 
                     <TextBlock
                         Grid.Column="4"
+                        MinWidth="50"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Style="{StaticResource CardTextStyle}"
-                        Text="{x:Bind FileSize}">
+                        FontSize="14"
+                        Text="{x:Bind FileSize}"
+                        TextAlignment="Left">
 
                         <ToolTipService.ToolTip>
                             <ToolTip Content="{x:Bind FileSize}" Placement="Mouse" />

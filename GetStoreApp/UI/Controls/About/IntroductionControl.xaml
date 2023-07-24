@@ -12,24 +12,69 @@
     mc:Ignorable="d">
 
     <Expander.Header>
-        <TextBlock Style="{StaticResource ExpanderHeaderStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/BriefIntroduction')}" />
+        <TextBlock
+            Padding="15,0,0,0"
+            FontSize="15"
+            FontWeight="Medium"
+            Text="{x:Bind root:ResourceService.GetLocalized('About/BriefIntroduction')}" />
     </Expander.Header>
 
     <Expander.Content>
         <StackPanel Margin="14,0,10,0">
-            <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/DevelopPurpose')}" />
-            <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/DevelopPurposeDescription')}" />
+            <TextBlock
+                Margin="0,0,0,10"
+                FontSize="15"
+                FontWeight="Normal"
+                Text="{x:Bind root:ResourceService.GetLocalized('About/DevelopPurpose')}"
+                TextAlignment="Left" />
+            <TextBlock
+                Margin="0,0,0,5"
+                Padding="0,0,2,0"
+                FontSize="13.5"
+                FontWeight="Normal"
+                Text="{x:Bind root:ResourceService.GetLocalized('About/DevelopPurposeDescription')}"
+                TextAlignment="Justify"
+                TextWrapping="Wrap" />
             <MenuFlyoutSeparator Margin="0,0,0,8" />
 
-            <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/UpdatePath')}" />
-            <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/UpdatePathDescription')}" />
+            <TextBlock
+                Margin="0,0,0,10"
+                FontSize="15"
+                FontWeight="Normal"
+                Text="{x:Bind root:ResourceService.GetLocalized('About/UpdatePath')}"
+                TextAlignment="Left" />
+            <TextBlock
+                Margin="0,0,0,5"
+                Padding="0,0,2,0"
+                FontSize="13.5"
+                FontWeight="Normal"
+                Text="{x:Bind root:ResourceService.GetLocalized('About/UpdatePathDescription')}"
+                TextAlignment="Justify"
+                TextWrapping="Wrap" />
             <MenuFlyoutSeparator Margin="0,0,0,8" />
 
-            <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/PrivacyandSecurity')}" />
-            <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/PrivacyandSecurityDescription')}" />
+            <TextBlock
+                Margin="0,0,0,10"
+                FontSize="15"
+                FontWeight="Normal"
+                Text="{x:Bind root:ResourceService.GetLocalized('About/PrivacyandSecurity')}"
+                TextAlignment="Left" />
+            <TextBlock
+                Margin="0,0,0,5"
+                Padding="0,0,2,0"
+                FontSize="13.5"
+                FontWeight="Normal"
+                Text="{x:Bind root:ResourceService.GetLocalized('About/PrivacyandSecurityDescription')}"
+                TextAlignment="Justify"
+                TextWrapping="Wrap" />
             <MenuFlyoutSeparator Margin="0,0,0,8" />
 
-            <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/Maintenance')}" />
+            <TextBlock
+                Margin="0,0,0,10"
+                FontSize="15"
+                FontWeight="Normal"
+                Text="{x:Bind root:ResourceService.GetLocalized('About/Maintenance')}"
+                TextAlignment="Left" />
             <HyperlinkButton
                 Margin="-5,0,10,0"
                 Padding="5"

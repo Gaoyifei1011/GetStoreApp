@@ -23,7 +23,11 @@
         Grid.Row="0"
         Height="66"
         Margin="30,0"
-        Style="{StaticResource ListViewHeaderGridStyle}">
+        Padding="16,8,2,8"
+        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+        BorderThickness="1"
+        CornerRadius="{StaticResource ControlCornerRadius}">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -189,7 +193,11 @@
     <Grid
         Grid.Row="1"
         Margin="30,3,30,0"
-        Style="{StaticResource CardGridStyle}"
+        Padding="16,12"
+        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+        BorderThickness="1"
+        CornerRadius="{StaticResource ControlCornerRadius}"
         Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(UnfinishedDataList.Count), Mode=OneWay}">
         <TextBlock
             Margin="0,10"
@@ -222,7 +230,10 @@
                 <Grid
                     Height="66"
                     Padding="16,10"
-                    Style="{StaticResource CardGridStyle}">
+                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1"
+                    CornerRadius="{StaticResource ControlCornerRadius}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
@@ -256,9 +267,11 @@
 
                         <TextBlock
                             Grid.Row="0"
+                            MinWidth="50"
+                            VerticalAlignment="Center"
                             FontSize="16"
-                            Style="{StaticResource CardTextStyle}"
-                            Text="{x:Bind FileName}">
+                            Text="{x:Bind FileName}"
+                            TextAlignment="Left">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip Content="{x:Bind FileName}" Placement="Mouse" />
@@ -267,8 +280,11 @@
 
                         <TextBlock
                             Grid.Row="1"
-                            Style="{StaticResource CardTextStyle}"
+                            MinWidth="50"
+                            VerticalAlignment="Center"
+                            FontSize="14"
                             Text="{x:Bind root:ResourceService.GetLocalized('Download/PauseDownload')}"
+                            TextAlignment="Left"
                             Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 2)}">
 
                             <ToolTipService.ToolTip>
@@ -278,9 +294,12 @@
 
                         <TextBlock
                             Grid.Row="1"
+                            MinWidth="50"
+                            VerticalAlignment="Center"
+                            FontSize="14"
                             Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
-                            Style="{StaticResource CardTextStyle}"
                             Text="{x:Bind root:ResourceService.GetLocalized('Download/DownloadFailed')}"
+                            TextAlignment="Left"
                             Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 0)}">
 
                             <ToolTipService.ToolTip>

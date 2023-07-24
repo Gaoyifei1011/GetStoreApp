@@ -23,7 +23,11 @@
         Grid.Row="0"
         Height="66"
         Margin="30,0"
-        Style="{StaticResource ListViewHeaderGridStyle}">
+        Padding="16,8,2,8"
+        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+        BorderThickness="1"
+        CornerRadius="{StaticResource ControlCornerRadius}">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -211,7 +215,11 @@
     <Grid
         Grid.Row="1"
         Margin="30,3,30,0"
-        Style="{StaticResource CardGridStyle}"
+        Padding="16,12"
+        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+        BorderThickness="1"
+        CornerRadius="{StaticResource ControlCornerRadius}"
         Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(CompletedDataList.Count), Mode=OneWay}">
         <TextBlock
             Margin="0,10"
@@ -244,7 +252,10 @@
                 <Grid
                     Height="66"
                     Padding="16,10"
-                    Style="{StaticResource CardGridStyle}">
+                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1"
+                    CornerRadius="{StaticResource ControlCornerRadius}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
@@ -284,9 +295,11 @@
 
                             <TextBlock
                                 Grid.Column="0"
+                                MinWidth="50"
+                                VerticalAlignment="Center"
                                 FontSize="16"
-                                Style="{StaticResource CardTextStyle}"
-                                Text="{x:Bind FileName}">
+                                Text="{x:Bind FileName}"
+                                TextAlignment="Left">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip Content="{x:Bind FileName}" Placement="Mouse" />
@@ -295,9 +308,11 @@
 
                             <TextBlock
                                 Grid.Column="1"
+                                MinWidth="50"
+                                VerticalAlignment="Center"
                                 FontSize="16"
-                                Style="{StaticResource CardTextStyle}"
-                                Text="{x:Bind converter:StringConverterHelper.DownloadSizeFormat(TotalSize), Mode=OneWay}">
+                                Text="{x:Bind converter:StringConverterHelper.DownloadSizeFormat(TotalSize), Mode=OneWay}"
+                                TextAlignment="Left">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip Content="{x:Bind converter:StringConverterHelper.DownloadSizeFormat(TotalSize), Mode=OneWay}" Placement="Mouse" />
@@ -308,9 +323,12 @@
                         <StackPanel Grid.Row="1" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsInstalling), Mode=OneWay}">
                             <TextBlock
                                 x:Name="FileExist"
+                                MinWidth="50"
+                                VerticalAlignment="Center"
                                 x:Load="{x:Bind converter:ValueCheckConverterHelper.FileExistCheck(FilePath)}"
-                                Style="{StaticResource CardTextStyle}"
-                                Text="{x:Bind converter:ValueCheckConverterHelper.FileExistTextCheck(FilePath)}">
+                                FontSize="14"
+                                Text="{x:Bind converter:ValueCheckConverterHelper.FileExistTextCheck(FilePath)}"
+                                TextAlignment="Left">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip Content="{x:Bind converter:ValueCheckConverterHelper.FileExistTextCheck(FilePath)}" Placement="Mouse" />
@@ -318,10 +336,13 @@
                             </TextBlock>
                             <TextBlock
                                 x:Name="FileNotExist"
+                                MinWidth="50"
+                                VerticalAlignment="Center"
                                 x:Load="{x:Bind converter:ValueCheckConverterHelper.FileExistReverseCheck(FilePath)}"
+                                FontSize="14"
                                 Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
-                                Style="{StaticResource CardTextStyle}"
-                                Text="{x:Bind converter:ValueCheckConverterHelper.FileExistTextCheck(FilePath)}">
+                                Text="{x:Bind converter:ValueCheckConverterHelper.FileExistTextCheck(FilePath)}"
+                                TextAlignment="Left">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip Content="{x:Bind converter:ValueCheckConverterHelper.FileExistTextCheck(FilePath)}" Placement="Mouse" />
@@ -343,8 +364,11 @@
 
                             <TextBlock
                                 Grid.Column="0"
-                                Style="{StaticResource CardTextStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Download/Installing')}">
+                                MinWidth="50"
+                                VerticalAlignment="Center"
+                                FontSize="14"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Download/Installing')}"
+                                TextAlignment="Left">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Download/Installing')}" Placement="Mouse" />
@@ -358,9 +382,12 @@
                             <TextBlock
                                 x:Name="InstallStateInfo"
                                 Grid.Column="2"
+                                MinWidth="50"
+                                VerticalAlignment="Center"
                                 x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(InstallError), Mode=OneWay}"
-                                Style="{StaticResource CardTextStyle}"
-                                Text="{x:Bind converter:StringConverterHelper.InstallValueFormat(InstallValue), Mode=OneWay}">
+                                FontSize="14"
+                                Text="{x:Bind converter:StringConverterHelper.InstallValueFormat(InstallValue), Mode=OneWay}"
+                                TextAlignment="Left">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip Content="{x:Bind converter:StringConverterHelper.InstallValueFormat(InstallValue), Mode=OneWay}" Placement="Mouse" />
@@ -369,9 +396,12 @@
                             <TextBlock
                                 x:Name="InstallErrorInfo"
                                 Grid.Column="2"
+                                MinWidth="50"
+                                VerticalAlignment="Center"
                                 x:Load="{x:Bind InstallError, Mode=OneWay}"
-                                Style="{StaticResource CardTextStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Download/InstallError')}">
+                                FontSize="14"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Download/InstallError')}"
+                                TextAlignment="Left">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Download/InstallError')}" Placement="Mouse" />

@@ -7,7 +7,6 @@
         <Setter Property="Background" Value="{ThemeResource HyperlinkButtonBackground}" />
         <Setter Property="Foreground" Value="{ThemeResource HyperlinkButtonForeground}" />
         <Setter Property="BorderBrush" Value="{ThemeResource HyperlinkButtonBorderBrush}" />
-        <!--  修改下拉按钮的默认边界宽度和内容间隔  -->
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="HorizontalAlignment" Value="Left" />

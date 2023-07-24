@@ -12,18 +12,46 @@
     mc:Ignorable="d">
 
     <Expander.Header>
-        <TextBlock Style="{StaticResource ExpanderHeaderStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/Precaution')}" />
+        <TextBlock
+            Padding="15,0,0,0"
+            FontSize="15"
+            FontWeight="Medium"
+            Text="{x:Bind root:ResourceService.GetLocalized('About/Precaution')}" />
     </Expander.Header>
 
     <Expander.Content>
         <StackPanel Margin="14,0,10,0">
 
-            <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/PaidApps')}" />
-            <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/PaidAppsDescription')}" />
+            <TextBlock
+                Margin="0,0,0,10"
+                FontSize="15"
+                FontWeight="Normal"
+                Text="{x:Bind root:ResourceService.GetLocalized('About/PaidApps')}"
+                TextAlignment="Left" />
+            <TextBlock
+                Margin="0,0,0,5"
+                Padding="0,0,2,0"
+                FontSize="13.5"
+                FontWeight="Normal"
+                Text="{x:Bind root:ResourceService.GetLocalized('About/PaidAppsDescription')}"
+                TextAlignment="Justify"
+                TextWrapping="Wrap" />
             <MenuFlyoutSeparator Margin="0,0,0,8" />
 
-            <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/DesktopApps')}" />
-            <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/DesktopAppsDescription')}" />
+            <TextBlock
+                Margin="0,0,0,10"
+                FontSize="15"
+                FontWeight="Normal"
+                Text="{x:Bind root:ResourceService.GetLocalized('About/DesktopApps')}"
+                TextAlignment="Left" />
+            <TextBlock
+                Margin="0,0,0,5"
+                Padding="0,0,2,0"
+                FontSize="13.5"
+                FontWeight="Normal"
+                Text="{x:Bind root:ResourceService.GetLocalized('About/DesktopAppsDescription')}"
+                TextAlignment="Justify"
+                TextWrapping="Wrap" />
 
             <HyperlinkButton
                 Margin="-5,0,10,0"
@@ -37,8 +65,20 @@
             </HyperlinkButton>
             <MenuFlyoutSeparator Margin="0,0,0,8" />
 
-            <TextBlock Style="{StaticResource ExpanderContentTitleStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/DataStorage')}" />
-            <TextBlock Style="{StaticResource ExpanderContentDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/DataStorageDescription')}" />
+            <TextBlock
+                Margin="0,0,0,10"
+                FontSize="15"
+                FontWeight="Normal"
+                Text="{x:Bind root:ResourceService.GetLocalized('About/DataStorage')}"
+                TextAlignment="Left" />
+            <TextBlock
+                Margin="0,0,0,5"
+                Padding="0,0,2,0"
+                FontSize="13.5"
+                FontWeight="Normal"
+                Text="{x:Bind root:ResourceService.GetLocalized('About/DataStorageDescription')}"
+                TextAlignment="Justify"
+                TextWrapping="Wrap" />
         </StackPanel>
     </Expander.Content>
 </Expander>

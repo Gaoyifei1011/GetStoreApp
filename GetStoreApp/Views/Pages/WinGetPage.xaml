@@ -89,7 +89,11 @@
                                                 <Grid
                                                     Height="60"
                                                     Margin="2,0"
-                                                    Style="{StaticResource CardGridStyle}">
+                                                    Padding="16,12"
+                                                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                    BorderThickness="1"
+                                                    CornerRadius="{StaticResource ControlCornerRadius}">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*" />
                                                         <ColumnDefinition Width="Auto" />
@@ -113,14 +117,17 @@
 
                                                             <TextBlock
                                                                 Grid.Column="0"
+                                                                MinWidth="50"
+                                                                VerticalAlignment="Center"
                                                                 FontSize="16"
-                                                                Style="{StaticResource CardTextStyle}"
-                                                                Text="{x:Bind AppName}" />
+                                                                Text="{x:Bind AppName}"
+                                                                TextAlignment="Left" />
 
                                                             <TextBlock
                                                                 Grid.Column="1"
+                                                                MinWidth="50"
+                                                                VerticalAlignment="Center"
                                                                 FontSize="16"
-                                                                Style="{StaticResource CardTextStyle}"
                                                                 Text="{x:Bind GetDownloadProgress(DownloadProgress), Mode=OneWay}"
                                                                 TextAlignment="Right" />
                                                         </Grid>

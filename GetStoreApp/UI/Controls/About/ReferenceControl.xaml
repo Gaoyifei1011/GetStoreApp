@@ -14,7 +14,11 @@
     mc:Ignorable="d">
 
     <Expander.Header>
-        <TextBlock Style="{StaticResource ExpanderHeaderStyle}" Text="{x:Bind root:ResourceService.GetLocalized('About/Reference')}" />
+        <TextBlock
+            Padding="15,0,0,0"
+            FontSize="15"
+            FontWeight="Medium"
+            Text="{x:Bind root:ResourceService.GetLocalized('About/Reference')}" />
     </Expander.Header>
 
     <Expander.Content>

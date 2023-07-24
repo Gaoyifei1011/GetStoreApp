@@ -20,17 +20,24 @@
     <StackPanel>
         <TextBlock
             Margin="0"
-            Style="{StaticResource ContentDialogContentStyle}"
-            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ConsoleStartupArgsDescription1')}" />
+            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ConsoleStartupArgsDescription1')}"
+            TextAlignment="Justify"
+            TextWrapping="Wrap" />
         <TextBlock
             Margin="0"
-            Style="{StaticResource ContentDialogContentStyle}"
-            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ConsoleStartupArgsDescription2')}" />
+            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ConsoleStartupArgsDescription2')}"
+            TextAlignment="Justify"
+            TextWrapping="Wrap" />
         <TextBlock
             Margin="0"
-            Style="{StaticResource ContentDialogContentStyle}"
-            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ConsoleStartupArgsDescription3')}" />
-        <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ConsoleStartupArgsDescription4')}" />
+            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ConsoleStartupArgsDescription3')}"
+            TextAlignment="Justify"
+            TextWrapping="Wrap" />
+        <TextBlock
+            Margin="0,0,0,5"
+            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ConsoleStartupArgsDescription4')}"
+            TextAlignment="Justify"
+            TextWrapping="Wrap" />
 
         <ListView
             Margin="0,0,0,5"
@@ -119,10 +126,12 @@
 
                         <TextBlock
                             Grid.Column="0"
+                            MinWidth="50"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
-                            Style="{StaticResource CardTextStyle}"
-                            Text="{x:Bind ArgumentName}">
+                            FontSize="14"
+                            Text="{x:Bind ArgumentName}"
+                            TextAlignment="Left">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip Content="{x:Bind ArgumentName}" Placement="Mouse" />
@@ -131,10 +140,12 @@
 
                         <TextBlock
                             Grid.Column="1"
+                            MinWidth="50"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
-                            Style="{StaticResource CardTextStyle}"
-                            Text="{x:Bind Argument}">
+                            FontSize="14"
+                            Text="{x:Bind Argument}"
+                            TextAlignment="Left">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip Content="{x:Bind Argument}" Placement="Mouse" />
@@ -143,10 +154,12 @@
 
                         <TextBlock
                             Grid.Column="2"
+                            MinWidth="50"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
-                            Style="{StaticResource CardTextStyle}"
-                            Text="{x:Bind IsRequired}">
+                            FontSize="14"
+                            Text="{x:Bind IsRequired}"
+                            TextAlignment="Left">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip Content="{x:Bind IsRequired}" Placement="Mouse" />
@@ -155,10 +168,12 @@
 
                         <TextBlock
                             Grid.Column="3"
+                            MinWidth="50"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
-                            Style="{StaticResource CardTextStyle}"
-                            Text="{x:Bind ArgumentContent}">
+                            FontSize="14"
+                            Text="{x:Bind ArgumentContent}"
+                            TextAlignment="Left">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip Content="{x:Bind ArgumentContent}" Placement="Mouse" />
@@ -175,20 +190,21 @@
             Margin="0,0,0,2"
             FontSize="16"
             FontWeight="Bold"
-            Style="{StaticResource ContentDialogContentStyle}"
-            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/StartupArgsSample')}" />
+            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/StartupArgsSample')}"
+            TextAlignment="Justify"
+            TextWrapping="Wrap" />
 
         <TextBlock
             Margin="0"
-            Style="{StaticResource ContentDialogContentStyle}"
             Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ParameterMode')}"
-            TextAlignment="Left" />
+            TextAlignment="Left"
+            TextWrapping="Wrap" />
 
         <TextBlock
             Margin="0"
-            Style="{StaticResource ContentDialogContentStyle}"
             Text="{x:Bind SampleShort}"
-            TextAlignment="Left">
+            TextAlignment="Left"
+            TextWrapping="Wrap">
 
             <ToolTipService.ToolTip>
                 <ToolTip Content="{x:Bind SampleShort}" Placement="Mouse" />
@@ -197,8 +213,9 @@
 
         <TextBlock
             Margin="0"
-            Style="{StaticResource ContentDialogContentStyle}"
-            Text="{x:Bind SampleFull}">
+            Text="{x:Bind SampleFull}"
+            TextAlignment="Justify"
+            TextWrapping="Wrap">
 
             <ToolTipService.ToolTip>
                 <ToolTip Content="{x:Bind SampleFull}" Placement="Mouse" />
@@ -209,14 +226,15 @@
 
         <TextBlock
             Margin="0"
-            Style="{StaticResource ContentDialogContentStyle}"
             Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ParameterlessMode')}"
-            TextAlignment="Left" />
+            TextAlignment="Left"
+            TextWrapping="Wrap" />
 
         <TextBlock
             Margin="0"
-            Style="{StaticResource ContentDialogContentStyle}"
-            Text="{x:Bind SampleWithoutParameter}">
+            Text="{x:Bind SampleWithoutParameter}"
+            TextAlignment="Justify"
+            TextWrapping="Wrap">
 
             <ToolTipService.ToolTip>
                 <ToolTip Content="{x:Bind SampleWithoutParameter}" Placement="Mouse" />

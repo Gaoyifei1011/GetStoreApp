@@ -23,11 +23,13 @@
             </Grid.ColumnDefinitions>
             <TextBlock
                 Grid.Column="0"
-                Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ProcessFailedKind')}" />
+                Margin="0,0,0,5"
+                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ProcessFailedKind')}"
+                TextAlignment="Justify"
+                TextWrapping="Wrap" />
             <TextBlock
                 Grid.Column="1"
-                Style="{StaticResource ContentDialogContentStyle}"
+                Margin="0,0,0,5"
                 Text="{x:Bind ProcessFailedKind}"
                 TextAlignment="DetectFromContent"
                 TextWrapping="Wrap" />
@@ -40,11 +42,13 @@
             </Grid.ColumnDefinitions>
             <TextBlock
                 Grid.Column="0"
-                Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/Reason')}" />
+                Margin="0,0,0,5"
+                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/Reason')}"
+                TextAlignment="Justify"
+                TextWrapping="Wrap" />
             <TextBlock
                 Grid.Column="1"
-                Style="{StaticResource ContentDialogContentStyle}"
+                Margin="0,0,0,5"
                 Text="{x:Bind Reason}"
                 TextAlignment="DetectFromContent"
                 TextWrapping="Wrap" />
@@ -57,11 +61,13 @@
             </Grid.ColumnDefinitions>
             <TextBlock
                 Grid.Column="0"
-                Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ExitCode')}" />
+                Margin="0,0,0,5"
+                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ExitCode')}"
+                TextAlignment="Justify"
+                TextWrapping="Wrap" />
             <TextBlock
                 Grid.Column="1"
-                Style="{StaticResource ContentDialogContentStyle}"
+                Margin="0,0,0,5"
                 Text="{x:Bind ExitCode}"
                 TextAlignment="DetectFromContent"
                 TextWrapping="Wrap" />
@@ -74,11 +80,13 @@
             </Grid.ColumnDefinitions>
             <TextBlock
                 Grid.Column="0"
-                Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ProcessDescription')}" />
+                Margin="0,0,0,5"
+                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ProcessDescription')}"
+                TextAlignment="Justify"
+                TextWrapping="Wrap" />
             <TextBlock
                 Grid.Column="1"
-                Style="{StaticResource ContentDialogContentStyle}"
+                Margin="0,0,0,5"
                 Text="{x:Bind ProcessDescription}"
                 TextAlignment="DetectFromContent"
                 TextWrapping="Wrap" />

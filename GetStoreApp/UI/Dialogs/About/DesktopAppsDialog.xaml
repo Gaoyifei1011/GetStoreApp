@@ -17,8 +17,16 @@
     </dialogsAndFlyouts:ExtendedContentDialog.Resources>
 
     <StackPanel>
-        <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Dialog/DesktopAppsContent1')}" />
-        <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Dialog/DesktopAppsContent2')}" />
+        <TextBlock
+            Margin="0,0,0,5"
+            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/DesktopAppsContent1')}"
+            TextAlignment="Justify"
+            TextWrapping="Wrap" />
+        <TextBlock
+            Margin="0,0,0,5"
+            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/DesktopAppsContent2')}"
+            TextAlignment="Justify"
+            TextWrapping="Wrap" />
 
         <Border
             HorizontalAlignment="Left"

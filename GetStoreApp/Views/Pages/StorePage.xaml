@@ -55,9 +55,21 @@
                 Padding="0,0,0,30"
                 Spacing="3">
 
-                <TextBlock Style="{StaticResource TitleDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Store/TitleDescription1')}" />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="15"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Store/TitleDescription1')}"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap" />
 
-                <TextBlock Style="{StaticResource TitleDescriptionStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Store/TitleDescription2')}" />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="15"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Store/TitleDescription2')}"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap" />
 
                 <sc:RequestControl x:Name="Request" x:FieldModifier="public" />
 

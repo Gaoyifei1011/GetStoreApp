@@ -15,15 +15,13 @@
   <Identity
     Name="Gaoyifei1011.GetStoreApp"
     Publisher="CN=高怡飞"
-    Version="2.2.722.0" />
+    Version="2.2.723.0" />
 
   <Properties>
     <DisplayName>ms-resource:PackageDisplayName</DisplayName>
     <PublisherDisplayName>高怡飞</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
-    <!--为桌面应用程序禁用注册表虚拟化-->
     <desktop6:RegistryWriteVirtualization>disabled</desktop6:RegistryWriteVirtualization>
-
     <virtualization:RegistryWriteVirtualization>
       <virtualization:ExcludedKeys>
         <virtualization:ExcludedKey>HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Taskband</virtualization:ExcludedKey>
@@ -55,20 +53,18 @@
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="wide310x150Logo" />
             <uap:ShowOn Tile="square310x310Logo" />
-            <uap:ShowOn Tile="square150x150Logo"/>
+            <uap:ShowOn Tile="square150x150Logo" />
           </uap:ShowNameOnTiles>
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
-        <!--共享目标-->
         <uap:Extension Category="windows.shareTarget" Executable="GetStoreApp.exe" EntryPoint="Windows.FullTrustApplication">
           <uap:ShareTarget>
             <uap:DataFormat>Uri</uap:DataFormat>
           </uap:ShareTarget>
         </uap:Extension>
 
-        <!--应用执行别名-->
         <uap5:Extension Category="windows.appExecutionAlias" Executable="GetStoreApp.exe" EntryPoint="Windows.FullTrustApplication">
           <uap5:AppExecutionAlias>
             <uap5:ExecutionAlias Alias="GetStoreApp.exe" />
@@ -79,20 +75,19 @@
   </Applications>
 
   <Extensions>
-    <!--Mile.Aria2.exe进程预定义的防火墙规则-->
     <desktop2:Extension Category="windows.firewallRules">
       <desktop2:FirewallRules Executable="Mile.Aria2.exe">
-        <desktop2:Rule Direction="in" IPProtocol="TCP" Profile="all"/>
-        <desktop2:Rule Direction="in" IPProtocol="UDP" Profile="all"/>
+        <desktop2:Rule Direction="in" IPProtocol="TCP" Profile="all" />
+        <desktop2:Rule Direction="in" IPProtocol="UDP" Profile="all" />
       </desktop2:FirewallRules>
     </desktop2:Extension>
   </Extensions>
-  
+
   <Capabilities>
     <Capability Name="internetClient" />
     <rescap:Capability Name="broadFileSystemAccess" />
     <rescap:Capability Name="packageManagement" />
     <rescap:Capability Name="runFullTrust" />
-    <rescap:Capability Name="unvirtualizedResources"/>
+    <rescap:Capability Name="unvirtualizedResources" />
   </Capabilities>
 </Package>

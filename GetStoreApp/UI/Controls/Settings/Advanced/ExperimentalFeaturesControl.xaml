@@ -5,7 +5,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    Style="{StaticResource CardGridStyle}"
+    Padding="16,12"
+    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+    BorderThickness="1"
+    CornerRadius="{StaticResource ControlCornerRadius}"
     mc:Ignorable="d">
 
     <Grid.ColumnDefinitions>

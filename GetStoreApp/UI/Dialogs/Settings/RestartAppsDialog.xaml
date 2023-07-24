@@ -15,5 +15,9 @@
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d">
 
-    <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Dialog/RestartContent')}" />
+    <TextBlock
+        Margin="0,0,0,5"
+        Text="{x:Bind root:ResourceService.GetLocalized('Dialog/RestartContent')}"
+        TextAlignment="Justify"
+        TextWrapping="Wrap" />
 </dialogsAndFlyouts:ExtendedContentDialog>

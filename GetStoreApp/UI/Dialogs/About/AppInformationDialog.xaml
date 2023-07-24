@@ -28,11 +28,13 @@
             </Grid.ColumnDefinitions>
             <TextBlock
                 Grid.Column="0"
-                Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/WindowsAppSDKVersion')}" />
+                Margin="0,0,0,5"
+                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/WindowsAppSDKVersion')}"
+                TextAlignment="Justify"
+                TextWrapping="Wrap" />
             <TextBlock
                 Grid.Column="1"
-                Style="{StaticResource ContentDialogContentStyle}"
+                Margin="0,0,0,5"
                 Text="{x:Bind WindowsAppSDKVersion, Mode=OneWay}"
                 TextAlignment="DetectFromContent"
                 TextWrapping="Wrap" />
@@ -45,11 +47,13 @@
             </Grid.ColumnDefinitions>
             <TextBlock
                 Grid.Column="0"
-                Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/WinUI3Version')}" />
+                Margin="0,0,0,5"
+                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/WinUI3Version')}"
+                TextAlignment="Justify"
+                TextWrapping="Wrap" />
             <TextBlock
                 Grid.Column="1"
-                Style="{StaticResource ContentDialogContentStyle}"
+                Margin="0,0,0,5"
                 Text="{x:Bind WinUI3Version, Mode=OneWay}"
                 TextAlignment="DetectFromContent"
                 TextWrapping="Wrap" />
@@ -62,11 +66,13 @@
             </Grid.ColumnDefinitions>
             <TextBlock
                 Grid.Column="0"
-                Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/WebView2CoreVersion')}" />
+                Margin="0,0,0,5"
+                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/WebView2CoreVersion')}"
+                TextAlignment="Justify"
+                TextWrapping="Wrap" />
             <TextBlock
                 Grid.Column="1"
-                Style="{StaticResource ContentDialogContentStyle}"
+                Margin="0,0,0,5"
                 Text="{x:Bind WebView2CoreVersion, Mode=OneWay}"
                 TextAlignment="DetectFromContent"
                 TextWrapping="Wrap" />
@@ -79,11 +85,13 @@
             </Grid.ColumnDefinitions>
             <TextBlock
                 Grid.Column="0"
-                Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/DoNetVersion')}" />
+                Margin="0,0,0,5"
+                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/DoNetVersion')}"
+                TextAlignment="Justify"
+                TextWrapping="Wrap" />
             <TextBlock
                 Grid.Column="1"
-                Style="{StaticResource ContentDialogContentStyle}"
+                Margin="0,0,0,5"
                 Text="{x:Bind DoNetVersion, Mode=OneWay}"
                 TextAlignment="DetectFromContent"
                 TextWrapping="Wrap" />

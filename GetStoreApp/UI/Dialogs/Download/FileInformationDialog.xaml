@@ -26,11 +26,13 @@
             </Grid.ColumnDefinitions>
             <TextBlock
                 Grid.Column="0"
-                Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/FileName')}" />
+                Margin="0,0,0,5"
+                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/FileName')}"
+                TextAlignment="Justify"
+                TextWrapping="Wrap" />
             <TextBlock
                 Grid.Column="1"
-                Style="{StaticResource ContentDialogContentStyle}"
+                Margin="0,0,0,5"
                 Text="{x:Bind FileName}"
                 TextAlignment="DetectFromContent"
                 TextWrapping="Wrap" />
@@ -43,11 +45,13 @@
             </Grid.ColumnDefinitions>
             <TextBlock
                 Grid.Column="0"
-                Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/FilePath')}" />
+                Margin="0,0,0,5"
+                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/FilePath')}"
+                TextAlignment="Justify"
+                TextWrapping="Wrap" />
             <TextBlock
                 Grid.Column="1"
-                Style="{StaticResource ContentDialogContentStyle}"
+                Margin="0,0,0,5"
                 Text="{x:Bind FilePath}"
                 TextAlignment="DetectFromContent"
                 TextWrapping="Wrap" />
@@ -60,11 +64,13 @@
             </Grid.ColumnDefinitions>
             <TextBlock
                 Grid.Column="0"
-                Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/FileSize')}" />
+                Margin="0,0,0,5"
+                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/FileSize')}"
+                TextAlignment="Justify"
+                TextWrapping="Wrap" />
             <TextBlock
                 Grid.Column="1"
-                Style="{StaticResource ContentDialogContentStyle}"
+                Margin="0,0,0,5"
                 Text="{x:Bind FileSize}"
                 TextAlignment="DetectFromContent"
                 TextWrapping="Wrap" />
@@ -77,14 +83,17 @@
             </Grid.ColumnDefinitions>
             <TextBlock
                 Grid.Column="0"
-                Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/FileSHA1')}" />
+                Margin="0,0,0,5"
+                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/FileSHA1')}"
+                TextAlignment="Justify"
+                TextWrapping="Wrap" />
             <TextBlock
                 x:Name="FileSHA1Info"
                 Grid.Column="1"
+                Margin="0,0,0,5"
                 x:Load="{x:Bind FileSHA1Load}"
-                Style="{StaticResource ContentDialogContentStyle}"
                 Text="{x:Bind FileSHA1}"
+                TextAlignment="Justify"
                 TextWrapping="Wrap" />
         </Grid>
 
@@ -97,7 +106,11 @@
                 Width="20"
                 Height="20"
                 IsActive="True" />
-            <TextBlock Style="{StaticResource ContentDialogContentStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Dialog/CheckingFile')}" />
+            <TextBlock
+                Margin="0,0,0,5"
+                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/CheckingFile')}"
+                TextAlignment="Justify"
+                TextWrapping="Wrap" />
         </StackPanel>
 
         <Grid x:Name="FileChecked" x:Load="{x:Bind FileCheckState, Mode=OneWay}">
@@ -107,12 +120,15 @@
             </Grid.ColumnDefinitions>
             <TextBlock
                 Grid.Column="0"
-                Style="{StaticResource ContentDialogContentStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/CheckFileSHA1')}" />
+                Margin="0,0,0,5"
+                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/CheckFileSHA1')}"
+                TextAlignment="Justify"
+                TextWrapping="Wrap" />
             <TextBlock
                 Grid.Column="1"
-                Style="{StaticResource ContentDialogContentStyle}"
+                Margin="0,0,0,5"
                 Text="{x:Bind CheckFileSHA1, Mode=OneWay}"
+                TextAlignment="Justify"
                 TextWrapping="Wrap" />
         </Grid>
     </StackPanel>

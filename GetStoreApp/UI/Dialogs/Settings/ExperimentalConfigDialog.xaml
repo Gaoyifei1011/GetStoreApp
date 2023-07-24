@@ -23,8 +23,9 @@
             Margin="0,-50,2,0"
             HorizontalAlignment="Right"
             VerticalAlignment="Center"
-            Style="{StaticResource ContentDialogContentStyle}"
             Text="{x:Bind root:ResourceService.GetLocalized('Dialog/RestoreDefaultSuccessfully')}"
+            TextAlignment="Justify"
+            TextWrapping="Wrap"
             Visibility="{x:Bind IsMessageVisable, Mode=OneWay}" />
 
         <InfoBar

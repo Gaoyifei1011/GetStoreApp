@@ -154,10 +154,12 @@
 
                             <TextBlock
                                 Grid.Column="0"
+                                MinWidth="50"
                                 Margin="10,0,0,0"
                                 VerticalAlignment="Center"
-                                Style="{StaticResource CardTextStyle}"
-                                Text="{x:Bind converter:StringConverterHelper.TypeNameFormat(HistoryType)}">
+                                FontSize="14"
+                                Text="{x:Bind converter:StringConverterHelper.TypeNameFormat(HistoryType)}"
+                                TextAlignment="Left">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip Content="{x:Bind converter:StringConverterHelper.TypeNameFormat(HistoryType)}" Placement="Mouse" />
@@ -166,10 +168,12 @@
 
                             <TextBlock
                                 Grid.Column="1"
+                                MinWidth="50"
                                 Margin="10,0,0,0"
                                 VerticalAlignment="Center"
-                                Style="{StaticResource CardTextStyle}"
-                                Text="{x:Bind converter:StringConverterHelper.ChannelNameFormat(HistoryChannel)}">
+                                FontSize="14"
+                                Text="{x:Bind converter:StringConverterHelper.ChannelNameFormat(HistoryChannel)}"
+                                TextAlignment="Left">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip Content="{x:Bind converter:StringConverterHelper.ChannelNameFormat(HistoryChannel)}" Placement="Mouse" />
@@ -178,10 +182,12 @@
 
                             <TextBlock
                                 Grid.Column="2"
+                                MinWidth="50"
                                 Margin="10,0,0,0"
                                 VerticalAlignment="Center"
-                                Style="{StaticResource CardTextStyle}"
-                                Text="{x:Bind HistoryLink}">
+                                FontSize="14"
+                                Text="{x:Bind HistoryLink}"
+                                TextAlignment="Left">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip Content="{x:Bind HistoryLink}" Placement="Mouse" />

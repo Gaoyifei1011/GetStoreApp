@@ -24,7 +24,11 @@
             Grid.Row="0"
             Height="66"
             Margin="30,0"
-            Style="{StaticResource ListViewHeaderGridStyle}">
+            Padding="16,8,2,8"
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            BorderThickness="1"
+            CornerRadius="{StaticResource ControlCornerRadius}">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -189,7 +193,11 @@
         <Grid
             Grid.Row="1"
             Margin="30,3,30,0"
-            Style="{StaticResource CardGridStyle}"
+            Padding="16,12"
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            BorderThickness="1"
+            CornerRadius="{StaticResource ControlCornerRadius}"
             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(DownloadingDataList.Count), Mode=OneWay}">
 
             <TextBlock
@@ -220,7 +228,13 @@
 
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="download:DownloadingModel">
-                    <Grid Height="66" Style="{StaticResource CardGridStyle}">
+                    <Grid
+                        Height="66"
+                        Padding="16,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
@@ -266,9 +280,11 @@
 
                                 <TextBlock
                                     Grid.Column="0"
+                                    MinWidth="50"
+                                    VerticalAlignment="Center"
                                     FontSize="16"
-                                    Style="{StaticResource CardTextStyle}"
-                                    Text="{x:Bind FileName}">
+                                    Text="{x:Bind FileName}"
+                                    TextAlignment="Left">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip Content="{x:Bind FileName}" Placement="Mouse" />
@@ -277,9 +293,11 @@
 
                                 <TextBlock
                                     Grid.Column="1"
+                                    MinWidth="50"
+                                    VerticalAlignment="Center"
                                     FontSize="16"
-                                    Style="{StaticResource CardTextStyle}"
                                     Text="{x:Bind converter:StringConverterHelper.DownloadSizeFormat(FinishedSize), Mode=OneWay}"
+                                    TextAlignment="Left"
                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 3), Mode=OneWay}">
 
                                     <ToolTipService.ToolTip>
@@ -289,9 +307,11 @@
 
                                 <TextBlock
                                     Grid.Column="2"
+                                    MinWidth="50"
+                                    VerticalAlignment="Center"
                                     FontSize="16"
-                                    Style="{StaticResource CardTextStyle}"
                                     Text="{x:Bind converter:StringConverterHelper.DownloadSizeFormat(TotalSize), Mode=OneWay}"
+                                    TextAlignment="Left"
                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 3), Mode=OneWay}">
 
                                     <ToolTipService.ToolTip>
@@ -301,9 +321,11 @@
 
                                 <TextBlock
                                     Grid.Column="3"
+                                    MinWidth="50"
+                                    VerticalAlignment="Center"
                                     FontSize="16"
-                                    Style="{StaticResource CardTextStyle}"
                                     Text="{x:Bind converter:StringConverterHelper.DownloadSpeedFormat(CurrentSpeed), Mode=OneWay}"
+                                    TextAlignment="Left"
                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 3), Mode=OneWay}">
 
                                     <ToolTipService.ToolTip>
@@ -319,9 +341,12 @@
                                 Value="{x:Bind DownloadProgress(FinishedSize, TotalSize), Mode=OneWay}" />
                             <TextBlock
                                 Grid.Row="1"
+                                MinWidth="50"
                                 Margin="0,-8,0,0"
-                                Style="{StaticResource CardTextStyle}"
+                                VerticalAlignment="Center"
+                                FontSize="14"
                                 Text="{x:Bind root:ResourceService.GetLocalized('Download/WaitDownload')}"
+                                TextAlignment="Left"
                                 Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 1)}">
 
                                 <ToolTipService.ToolTip>

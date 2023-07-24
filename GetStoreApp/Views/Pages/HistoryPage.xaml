@@ -32,7 +32,11 @@
             Grid.Row="1"
             Height="66"
             Margin="30,5,30,0"
-            Style="{StaticResource ListViewHeaderGridStyle}">
+            Padding="16,8,2,8"
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            BorderThickness="1"
+            CornerRadius="{StaticResource ControlCornerRadius}">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -417,8 +421,12 @@
             x:Name="LoadingGrid"
             Grid.Row="2"
             Margin="30,3,30,0"
+            Padding="16,12"
             x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsLoadedCompleted), Mode=OneWay}"
-            Style="{StaticResource CardGridStyle}">
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            BorderThickness="1"
+            CornerRadius="{StaticResource ControlCornerRadius}">
 
             <StackPanel
                 HorizontalAlignment="Center"
@@ -454,7 +462,11 @@
             <Grid
                 Grid.Row="0"
                 Margin="30,0"
-                Style="{StaticResource CardGridStyle}"
+                Padding="16,12"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="{StaticResource ControlCornerRadius}"
                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsHistoryEmpty), Mode=OneWay}">
 
                 <TextBlock
@@ -475,7 +487,11 @@
                 <Grid
                     Grid.Row="0"
                     Margin="30,0"
-                    Style="{StaticResource CardGridStyle}"
+                    Padding="16,12"
+                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1"
+                    CornerRadius="{StaticResource ControlCornerRadius}"
                     Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsHistoryEmptyAfterFilter), Mode=OneWay}">
                     <TextBlock
                         Margin="0,10,0,10"
@@ -625,10 +641,12 @@
 
                                 <TextBlock
                                     Grid.Column="1"
+                                    MinWidth="50"
                                     Margin="10,0,0,0"
                                     VerticalAlignment="Center"
-                                    Style="{StaticResource CardTextStyle}"
-                                    Text="{x:Bind converter:StringConverterHelper.TimeStampFormat(CreateTimeStamp)}">
+                                    FontSize="14"
+                                    Text="{x:Bind converter:StringConverterHelper.TimeStampFormat(CreateTimeStamp)}"
+                                    TextAlignment="Left">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip Content="{x:Bind converter:StringConverterHelper.TimeStampFormat(CreateTimeStamp)}" Placement="Mouse" />
@@ -637,10 +655,12 @@
 
                                 <TextBlock
                                     Grid.Column="2"
+                                    MinWidth="50"
                                     Margin="10,0,0,0"
                                     VerticalAlignment="Center"
-                                    Style="{StaticResource CardTextStyle}"
-                                    Text="{x:Bind converter:StringConverterHelper.TypeNameFormat(HistoryType)}">
+                                    FontSize="14"
+                                    Text="{x:Bind converter:StringConverterHelper.TypeNameFormat(HistoryType)}"
+                                    TextAlignment="Left">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip Content="{x:Bind converter:StringConverterHelper.TypeNameFormat(HistoryType)}" Placement="Mouse" />
@@ -649,10 +669,12 @@
 
                                 <TextBlock
                                     Grid.Column="3"
+                                    MinWidth="50"
                                     Margin="10,0,0,0"
                                     VerticalAlignment="Center"
-                                    Style="{StaticResource CardTextStyle}"
-                                    Text="{x:Bind converter:StringConverterHelper.ChannelNameFormat(HistoryChannel)}">
+                                    FontSize="14"
+                                    Text="{x:Bind converter:StringConverterHelper.ChannelNameFormat(HistoryChannel)}"
+                                    TextAlignment="Left">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip Content="{x:Bind converter:StringConverterHelper.ChannelNameFormat(HistoryChannel)}" Placement="Mouse" />
@@ -661,10 +683,12 @@
 
                                 <TextBlock
                                     Grid.Column="4"
+                                    MinWidth="50"
                                     Margin="10,0,0,0"
                                     VerticalAlignment="Center"
-                                    Style="{StaticResource CardTextStyle}"
-                                    Text="{x:Bind HistoryLink}">
+                                    FontSize="14"
+                                    Text="{x:Bind HistoryLink}"
+                                    TextAlignment="Left">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip Content="{x:Bind HistoryLink}" Placement="Mouse" />
