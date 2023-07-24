@@ -5,7 +5,7 @@
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:model="using:GetStoreApp.Models.Base"
+    xmlns:model="using:GetStoreApp.Models.Controls.About"
     xmlns:root="using:GetStoreApp.Services.Root"
     Padding="16,5,0,5"
     HorizontalAlignment="Stretch"

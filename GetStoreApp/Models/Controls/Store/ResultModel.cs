@@ -1,11 +1,11 @@
-﻿using GetStoreApp.Models.Base;
+﻿using System.ComponentModel;
 
 namespace GetStoreApp.Models.Controls.Store
 {
     /// <summary>
     /// 网页请求返回结果的数据模型
     /// </summary>
-    public class ResultModel : ModelBase
+    public class ResultModel : INotifyPropertyChanged
     {
         /// <summary>
         /// 在多选模式下，该行信息是否被选择的标志
@@ -19,7 +19,7 @@ namespace GetStoreApp.Models.Controls.Store
             set
             {
                 _isSelected = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelected)));
             }
         }
 
@@ -35,7 +35,7 @@ namespace GetStoreApp.Models.Controls.Store
             set
             {
                 _isSelectMode = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelectMode)));
             }
         }
 
@@ -63,5 +63,7 @@ namespace GetStoreApp.Models.Controls.Store
         /// 文件大小
         /// </summary>
         public string FileSize { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

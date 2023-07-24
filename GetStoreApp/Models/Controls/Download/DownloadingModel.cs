@@ -1,14 +1,14 @@
 ﻿using GetStoreApp.Helpers.Converters;
-using GetStoreApp.Models.Base;
 using GetStoreApp.Services.Root;
 using System;
+using System.ComponentModel;
 
 namespace GetStoreApp.Models.Controls.Download
 {
     /// <summary>
     /// 正在下载文件信息数据模型
     /// </summary>
-    public class DownloadingModel : ModelBase
+    public class DownloadingModel : INotifyPropertyChanged
     {
         private static string FinishedSizeToolTip = ResourceService.GetLocalized("Download/FinishedSizeToolTip");
 
@@ -32,7 +32,7 @@ namespace GetStoreApp.Models.Controls.Download
             set
             {
                 _isSelected = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelected)));
             }
         }
 
@@ -48,7 +48,7 @@ namespace GetStoreApp.Models.Controls.Download
             set
             {
                 _isSelectMode = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelectMode)));
             }
         }
 
@@ -102,7 +102,7 @@ namespace GetStoreApp.Models.Controls.Download
             set
             {
                 _downloadFlag = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadFlag)));
             }
         }
 
@@ -118,7 +118,7 @@ namespace GetStoreApp.Models.Controls.Download
             set
             {
                 _totalSize = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalSize)));
             }
         }
 
@@ -134,7 +134,7 @@ namespace GetStoreApp.Models.Controls.Download
             set
             {
                 _finishedSize = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FinishedSize)));
             }
         }
 
@@ -150,7 +150,7 @@ namespace GetStoreApp.Models.Controls.Download
             set
             {
                 _currentSpeed = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentSpeed)));
             }
         }
 
@@ -166,9 +166,11 @@ namespace GetStoreApp.Models.Controls.Download
             set
             {
                 _isFileDownloading = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsFileDownloading)));
             }
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// 计算当前文件的下载进度（如果文件暂未下载，修改下载文件的进度显示状态为未确定）

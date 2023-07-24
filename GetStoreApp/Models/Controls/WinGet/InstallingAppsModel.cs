@@ -1,11 +1,11 @@
-﻿using GetStoreApp.Models.Base;
-using GetStoreApp.Services.Root;
+﻿using GetStoreApp.Services.Root;
 using Microsoft.Management.Deployment;
+using System.ComponentModel;
 using System.Text;
 
 namespace GetStoreApp.Models.Controls.WinGet
 {
-    public class InstallingAppsModel : ModelBase
+    public class InstallingAppsModel : INotifyPropertyChanged
     {
         private static string AppNameToolTip = ResourceService.GetLocalized("WinGet/AppNameToolTip");
 
@@ -45,7 +45,7 @@ namespace GetStoreApp.Models.Controls.WinGet
             set
             {
                 _downloadProgress = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadProgress)));
             }
         }
 
@@ -61,7 +61,7 @@ namespace GetStoreApp.Models.Controls.WinGet
             set
             {
                 _downloadedFileSize = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadedFileSize)));
             }
         }
 
@@ -77,7 +77,7 @@ namespace GetStoreApp.Models.Controls.WinGet
             set
             {
                 _totalFileSize = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalFileSize)));
             }
         }
 
@@ -93,9 +93,11 @@ namespace GetStoreApp.Models.Controls.WinGet
             set
             {
                 _installProgressState = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallProgressState)));
             }
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// 获取应用是否处于下载状态

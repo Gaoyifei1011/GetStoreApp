@@ -1,11 +1,11 @@
-﻿using GetStoreApp.Models.Base;
+﻿using System.ComponentModel;
 
 namespace GetStoreApp.Models.Controls.Download
 {
     /// <summary>
     /// 已下载完成文件信息数据模型
     /// </summary>
-    public class CompletedModel : ModelBase
+    public class CompletedModel : INotifyPropertyChanged
     {
         /// <summary>
         /// 在多选模式下，该行历史记录是否被选择的标志
@@ -19,7 +19,7 @@ namespace GetStoreApp.Models.Controls.Download
             set
             {
                 _isSelected = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelected)));
             }
         }
 
@@ -35,7 +35,7 @@ namespace GetStoreApp.Models.Controls.Download
             set
             {
                 _isSelectMode = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelectMode)));
             }
         }
 
@@ -91,7 +91,7 @@ namespace GetStoreApp.Models.Controls.Download
             set
             {
                 _isInstalling = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsInstalling)));
             }
         }
 
@@ -107,7 +107,7 @@ namespace GetStoreApp.Models.Controls.Download
             set
             {
                 _installValue = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallValue)));
             }
         }
 
@@ -121,8 +121,10 @@ namespace GetStoreApp.Models.Controls.Download
             set
             {
                 _installError = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallError)));
             }
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

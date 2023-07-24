@@ -1,11 +1,11 @@
-﻿using GetStoreApp.Models.Base;
+﻿using System.ComponentModel;
 
 namespace GetStoreApp.Models.Controls.WinGet
 {
     /// <summary>
     /// 搜索应用数据模型
     /// </summary>
-    public class SearchAppsModel : ModelBase
+    public class SearchAppsModel : INotifyPropertyChanged
     {
         /// <summary>
         /// 应用ID
@@ -39,8 +39,10 @@ namespace GetStoreApp.Models.Controls.WinGet
             set
             {
                 _isInstalling = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsInstalling)));
             }
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

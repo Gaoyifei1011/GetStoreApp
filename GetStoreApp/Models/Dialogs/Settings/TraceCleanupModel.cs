@@ -1,12 +1,12 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Models.Base;
+using System.ComponentModel;
 
 namespace GetStoreApp.Models.Dialogs.Settings
 {
     /// <summary>
     /// 清理选项数据模型
     /// </summary>
-    public class TraceCleanupModel : ModelBase
+    public class TraceCleanupModel : INotifyPropertyChanged
     {
         /// <summary>
         /// 清理选项是否被选择的标志
@@ -20,7 +20,7 @@ namespace GetStoreApp.Models.Dialogs.Settings
             set
             {
                 _isSelected = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelected)));
             }
         }
 
@@ -36,7 +36,7 @@ namespace GetStoreApp.Models.Dialogs.Settings
             set
             {
                 _isCleanFailed = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsCleanFailed)));
             }
         }
 
@@ -54,5 +54,7 @@ namespace GetStoreApp.Models.Dialogs.Settings
         /// 清理失败时详细的错误文字信息
         /// </summary>
         public string CleanFailedText { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

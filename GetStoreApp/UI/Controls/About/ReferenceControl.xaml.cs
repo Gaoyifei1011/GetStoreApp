@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Models.Base;
+﻿using GetStoreApp.Models.Controls.About;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
 

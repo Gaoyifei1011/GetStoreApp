@@ -1,11 +1,11 @@
-﻿using GetStoreApp.Models.Base;
+﻿using System.ComponentModel;
 
 namespace GetStoreApp.Models.Controls.History
 {
     /// <summary>
     /// 历史记录数据模型
     /// </summary>
-    public class HistoryModel : ModelBase
+    public class HistoryModel : INotifyPropertyChanged
     {
         /// <summary>
         /// 在多选模式下，该行历史记录是否被选择的标志
@@ -19,7 +19,7 @@ namespace GetStoreApp.Models.Controls.History
             set
             {
                 _isSelected = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelected)));
             }
         }
 
@@ -32,7 +32,7 @@ namespace GetStoreApp.Models.Controls.History
             set
             {
                 _isSelectMode = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelectMode)));
             }
         }
 
@@ -60,5 +60,7 @@ namespace GetStoreApp.Models.Controls.History
         /// 历史记录包含的链接
         /// </summary>
         public string HistoryLink { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

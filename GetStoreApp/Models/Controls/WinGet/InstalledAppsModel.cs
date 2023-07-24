@@ -1,11 +1,9 @@
-﻿using GetStoreApp.Models.Base;
-
-namespace GetStoreApp.Models.Controls.WinGet
+﻿namespace GetStoreApp.Models.Controls.WinGet
 {
     /// <summary>
     /// 已安装应用数据模型
     /// </summary>
-    public class InstalledAppsModel : ModelBase
+    public class InstalledAppsModel
     {
         /// <summary>
         /// 应用ID

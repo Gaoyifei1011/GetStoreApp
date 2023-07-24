@@ -1,11 +1,11 @@
-﻿using GetStoreApp.Models.Base;
+﻿using System.ComponentModel;
 
 namespace GetStoreApp.Models.Controls.Download
 {
     /// <summary>
     /// 未下载完成文件信息数据模型
     /// </summary>
-    public class UnfinishedModel : ModelBase
+    public class UnfinishedModel : INotifyPropertyChanged
     {
         /// <summary>
         /// 在多选模式下，该行历史记录是否被选择的标志
@@ -19,7 +19,7 @@ namespace GetStoreApp.Models.Controls.Download
             set
             {
                 _isSelected = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelected)));
             }
         }
 
@@ -35,7 +35,7 @@ namespace GetStoreApp.Models.Controls.Download
             set
             {
                 _isSelectMode = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelectMode)));
             }
         }
 
@@ -78,5 +78,7 @@ namespace GetStoreApp.Models.Controls.Download
         /// 下载文件的总大小
         /// </summary>
         public double TotalSize { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

@@ -1,11 +1,11 @@
-﻿using GetStoreApp.Models.Base;
+﻿using System.ComponentModel;
 
 namespace GetStoreApp.Models.Controls.WinGet
 {
     /// <summary>
     /// 可升级应用数据模型
     /// </summary>
-    public class UpgradableAppsModel : ModelBase
+    public class UpgradableAppsModel : INotifyPropertyChanged
     {
         /// <summary>
         /// 应用ID
@@ -44,8 +44,10 @@ namespace GetStoreApp.Models.Controls.WinGet
             set
             {
                 _isUpgrading = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUpgrading)));
             }
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }
