@@ -370,7 +370,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                     string copyContent = string.Format("winget install {0}", appId);
                     CopyPasteHelper.CopyToClipBoard(copyContent);
 
-                    new WinGetCopyNotification(WinGetOptionArgs.SearchInstall).Show();
+                    new WinGetCopyNotification(this, WinGetOptionArgs.SearchInstall).Show();
                 }
             };
 

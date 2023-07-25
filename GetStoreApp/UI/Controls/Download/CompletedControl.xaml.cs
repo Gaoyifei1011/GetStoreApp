@@ -291,7 +291,7 @@ namespace GetStoreApp.UI.Controls.Download
                     }
                     catch (Exception e)
                     {
-                        new ShareFailedNotification(false).Show();
+                        new ShareFailedNotification(this, false).Show();
                         LogService.WriteLog(LogType.WARNING, "Share file failed.", e);
                     }
                 }
@@ -589,7 +589,7 @@ namespace GetStoreApp.UI.Controls.Download
             }
             catch (Exception e)
             {
-                new ShareFailedNotification(true, SelectedCompletedDataList.Count).Show();
+                new ShareFailedNotification(this, true, SelectedCompletedDataList.Count).Show();
                 LogService.WriteLog(LogType.WARNING, "Share selected files failed.", e);
             }
         }

@@ -102,7 +102,7 @@ namespace GetStoreApp.UI.Dialogs.About
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
             sender.Hide();
-            new AppInformationCopyNotification().Show();
+            new AppInformationCopyNotification(this).Show();
         }
 
         /// <summary>

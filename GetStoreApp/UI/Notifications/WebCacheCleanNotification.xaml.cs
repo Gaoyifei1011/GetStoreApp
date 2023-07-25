@@ -1,4 +1,5 @@
 using GetStoreApp.Views.CustomControls.Notifications;
+using Microsoft.UI.Xaml;
 
 namespace GetStoreApp.UI.Notifications
 {
@@ -7,7 +8,7 @@ namespace GetStoreApp.UI.Notifications
     /// </summary>
     public sealed partial class WebCacheCleanNotification : InAppNotification
     {
-        public WebCacheCleanNotification()
+        public WebCacheCleanNotification(FrameworkElement element) : base(element)
         {
             InitializeComponent();
         }

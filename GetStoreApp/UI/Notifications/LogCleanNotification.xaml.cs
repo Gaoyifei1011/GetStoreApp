@@ -1,4 +1,5 @@
 using GetStoreApp.Views.CustomControls.Notifications;
+using Microsoft.UI.Xaml;
 using System.ComponentModel;
 
 namespace GetStoreApp.UI.Notifications
@@ -23,7 +24,7 @@ namespace GetStoreApp.UI.Notifications
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public LogCleanNotification(bool setResult = false)
+        public LogCleanNotification(FrameworkElement element, bool setResult = false) : base(element)
         {
             InitializeComponent();
             SetResult = setResult;

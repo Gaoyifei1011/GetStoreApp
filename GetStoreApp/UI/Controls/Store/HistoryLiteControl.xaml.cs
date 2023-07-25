@@ -58,7 +58,7 @@ namespace GetStoreApp.UI.Controls.Store
                         historyItem.HistoryLink);
                     CopyPasteHelper.CopyToClipBoard(copyContent);
 
-                    new HistoryCopyNotification(false).Show();
+                    new HistoryCopyNotification(this, false).Show();
                 }
             };
 

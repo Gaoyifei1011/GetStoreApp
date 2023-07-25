@@ -1,5 +1,6 @@
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Views.CustomControls.Notifications;
+using Microsoft.UI.Xaml;
 using System.ComponentModel;
 
 namespace GetStoreApp.UI.Notifications
@@ -24,7 +25,7 @@ namespace GetStoreApp.UI.Notifications
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public WinGetCopyNotification(WinGetOptionArgs optionArgs)
+        public WinGetCopyNotification(FrameworkElement element, WinGetOptionArgs optionArgs) : base(element)
         {
             InitializeComponent();
             OptionArgs = optionArgs;

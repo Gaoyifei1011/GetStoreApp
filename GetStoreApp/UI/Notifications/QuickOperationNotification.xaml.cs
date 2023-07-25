@@ -1,5 +1,6 @@
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Views.CustomControls.Notifications;
+using Microsoft.UI.Xaml;
 using System.ComponentModel;
 
 namespace GetStoreApp.UI.Notifications
@@ -37,7 +38,7 @@ namespace GetStoreApp.UI.Notifications
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public QuickOperationNotification(QuickOperationType operationType, bool isPinnedSuccessfully = false)
+        public QuickOperationNotification(FrameworkElement element, QuickOperationType operationType, bool isPinnedSuccessfully = false) : base(element)
         {
             InitializeComponent();
             OperationType = operationType;

@@ -207,7 +207,7 @@ namespace GetStoreApp.Views.Pages
             {
                 CoreWebView2Profile coreWebView2Profile = CoreWebView.Profile;
                 await coreWebView2Profile.ClearBrowsingDataAsync();
-                new WebCacheCleanNotification().Show();
+                new WebCacheCleanNotification(this).Show();
             }
         }
 
@@ -342,7 +342,7 @@ namespace GetStoreApp.Views.Pages
                             case DuplicatedDataInfoArgs.None:
                                 {
                                     bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add");
-                                    new DownloadCreateNotification(AddResult).Show();
+                                    new DownloadCreateNotification(this, AddResult).Show();
                                     break;
                                 }
 
@@ -366,7 +366,7 @@ namespace GetStoreApp.Views.Pages
                                         finally
                                         {
                                             bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                            new DownloadCreateNotification(AddResult).Show();
+                                            new DownloadCreateNotification(this, AddResult).Show();
                                         }
                                     }
                                     else if (result is ContentDialogResult.Secondary)
@@ -396,7 +396,7 @@ namespace GetStoreApp.Views.Pages
                                         finally
                                         {
                                             bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                            new DownloadCreateNotification(AddResult).Show();
+                                            new DownloadCreateNotification(this, AddResult).Show();
                                         }
                                     }
                                     else if (result is ContentDialogResult.Secondary)

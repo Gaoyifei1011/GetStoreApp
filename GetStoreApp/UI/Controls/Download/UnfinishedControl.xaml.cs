@@ -71,7 +71,7 @@ namespace GetStoreApp.UI.Controls.Download
                         INTERNET_CONNECTION_FLAGS flags = INTERNET_CONNECTION_FLAGS.INTERNET_CONNECTION_OFFLINE;
                         if (!WinINetLibrary.InternetGetConnectedState(ref flags, 0))
                         {
-                            new NetWorkErrorNotification().Show();
+                            new NetWorkErrorNotification(this).Show();
                             return;
                         }
                     }
@@ -193,7 +193,7 @@ namespace GetStoreApp.UI.Controls.Download
                 INTERNET_CONNECTION_FLAGS flags = INTERNET_CONNECTION_FLAGS.INTERNET_CONNECTION_OFFLINE;
                 if (!WinINetLibrary.InternetGetConnectedState(ref flags, 0))
                 {
-                    new NetWorkErrorNotification().Show();
+                    new NetWorkErrorNotification(this).Show();
                     return;
                 }
             }

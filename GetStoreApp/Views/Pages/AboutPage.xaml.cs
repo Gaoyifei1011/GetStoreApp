@@ -75,7 +75,7 @@ namespace GetStoreApp.Views.Pages
             }
             finally
             {
-                new QuickOperationNotification(QuickOperationType.DesktopShortcut, IsCreatedSuccessfully).Show();
+                new QuickOperationNotification(this, QuickOperationType.DesktopShortcut, IsCreatedSuccessfully).Show();
             }
         }
 
@@ -141,7 +141,7 @@ namespace GetStoreApp.Views.Pages
             }
             finally
             {
-                new QuickOperationNotification(QuickOperationType.StartScreen, IsPinnedSuccessfully).Show();
+                new QuickOperationNotification(this, QuickOperationType.StartScreen, IsPinnedSuccessfully).Show();
             }
         }
 
@@ -185,7 +185,7 @@ namespace GetStoreApp.Views.Pages
             }
             finally
             {
-                new QuickOperationNotification(QuickOperationType.Taskbar, IsPinnedSuccessfully).Show();
+                new QuickOperationNotification(this, QuickOperationType.Taskbar, IsPinnedSuccessfully).Show();
             }
         }
 

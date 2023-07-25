@@ -27,7 +27,7 @@ namespace GetStoreApp.UI.Notifications
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ShareFailedNotification(bool isMultiSelected = false, int count = 0)
+        public ShareFailedNotification(FrameworkElement element, bool isMultiSelected = false, int count = 0) : base(element)
         {
             InitializeComponent();
             IsMultiSelected = isMultiSelected;

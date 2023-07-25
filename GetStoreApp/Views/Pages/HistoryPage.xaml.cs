@@ -165,7 +165,7 @@ namespace GetStoreApp.Views.Pages
                         ChannelList.Find(item => item.InternalName.Equals(historyItem.HistoryChannel)).DisplayName,
                         historyItem.HistoryLink);
                     CopyPasteHelper.CopyToClipBoard(copyContent);
-                    new HistoryCopyNotification(false).Show();
+                    new HistoryCopyNotification(this, false).Show();
                 }
             };
         }
@@ -309,7 +309,7 @@ namespace GetStoreApp.Views.Pages
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
 
-            new HistoryCopyNotification(true, SelectedHistoryDataList.Count).Show();
+            new HistoryCopyNotification(this, true, SelectedHistoryDataList.Count).Show();
         }
 
         /// <summary>

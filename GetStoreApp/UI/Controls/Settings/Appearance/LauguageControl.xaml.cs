@@ -55,7 +55,7 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
             {
                 AppLanguage = args.AddedItems[0] as LanguageModel;
                 await LanguageService.SetLanguageAsync(AppLanguage);
-                new LanguageChangeNotification().Show();
+                new LanguageChangeNotification(this).Show();
             }
         }
     }

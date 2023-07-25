@@ -27,7 +27,7 @@ namespace GetStoreApp.UI.Notifications
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public HistoryCopyNotification(bool isMultiSelected = false, int count = 0)
+        public HistoryCopyNotification(FrameworkElement element, bool isMultiSelected = false, int count = 0) : base(element)
         {
             InitializeComponent();
             IsMultiSelected = isMultiSelected;

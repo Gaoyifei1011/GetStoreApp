@@ -47,12 +47,19 @@ namespace GetStoreApp.Views.CustomControls.Notifications
         public static readonly DependencyProperty VerticalOffsetProperty =
             DependencyProperty.Register("VerticalOffset", typeof(double), typeof(InAppNotification), new PropertyMetadata(0.0));
 
-        public InAppNotification()
+        public InAppNotification(FrameworkElement element)
         {
             DefaultStyleKey = typeof(InAppNotification);
             Style = ResourceDictionaryHelper.InAppNotificationResourceDict["InAppNotificationStyle"] as Style;
-            XamlRoot = Program.ApplicationRoot.MainWindow.Content.XamlRoot;
-            popup.RequestedTheme = Program.ApplicationRoot.MainWindow.WindowTheme;
+            if (element is not null)
+            {
+                XamlRoot = element.XamlRoot;
+                RequestedTheme = element.ActualTheme;
+                element.ActualThemeChanged += (sender, args) =>
+                {
+                    RequestedTheme = sender.ActualTheme;
+                };
+            }
         }
 
         protected override void OnApplyTemplate()

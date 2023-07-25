@@ -86,7 +86,7 @@ namespace GetStoreApp.UI.Dialogs.Download
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
             sender.Hide();
-            new FileInformationCopyNotification().Show();
+            new FileInformationCopyNotification(this).Show();
         }
 
         /// <summary>

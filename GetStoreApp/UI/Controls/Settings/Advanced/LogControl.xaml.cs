@@ -29,7 +29,7 @@ namespace GetStoreApp.UI.Controls.Settings.Advanced
         public void OnClearClicked(object sender, RoutedEventArgs args)
         {
             bool result = LogService.ClearLog();
-            new LogCleanNotification(result).Show();
+            new LogCleanNotification(this, result).Show();
         }
     }
 }

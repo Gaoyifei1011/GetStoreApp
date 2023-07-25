@@ -101,7 +101,7 @@ namespace GetStoreApp.UI.Controls.Store
                         INTERNET_CONNECTION_FLAGS flags = INTERNET_CONNECTION_FLAGS.INTERNET_CONNECTION_OFFLINE;
                         if (!WinINetLibrary.InternetGetConnectedState(ref flags, 0))
                         {
-                            new NetWorkErrorNotification().Show();
+                            new NetWorkErrorNotification(this).Show();
                             return;
                         }
                     }
@@ -130,7 +130,7 @@ namespace GetStoreApp.UI.Controls.Store
                             case DuplicatedDataInfoArgs.None:
                                 {
                                     bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add");
-                                    new DownloadCreateNotification(AddResult).Show();
+                                    new DownloadCreateNotification(this, AddResult).Show();
                                     break;
                                 }
 
@@ -154,7 +154,7 @@ namespace GetStoreApp.UI.Controls.Store
                                         finally
                                         {
                                             bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                            new DownloadCreateNotification(AddResult).Show();
+                                            new DownloadCreateNotification(this, AddResult).Show();
                                         }
                                     }
                                     else if (result is ContentDialogResult.Secondary)
@@ -184,7 +184,7 @@ namespace GetStoreApp.UI.Controls.Store
                                         finally
                                         {
                                             bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                            new DownloadCreateNotification(AddResult).Show();
+                                            new DownloadCreateNotification(this, AddResult).Show();
                                         }
                                     }
                                     else if (result is ContentDialogResult.Secondary)
@@ -212,7 +212,7 @@ namespace GetStoreApp.UI.Controls.Store
                 {
                     CopyPasteHelper.CopyToClipBoard(fileLink);
 
-                    new ResultLinkCopyNotification(false).Show();
+                    new ResultLinkCopyNotification(this, false).Show();
                 }
             };
 
@@ -229,7 +229,7 @@ namespace GetStoreApp.UI.Controls.Store
                         );
 
                     CopyPasteHelper.CopyToClipBoard(copyContent);
-                    new ResultContentCopyNotification(false).Show();
+                    new ResultContentCopyNotification(this, false).Show();
                 }
             };
         }
@@ -256,7 +256,7 @@ namespace GetStoreApp.UI.Controls.Store
         public void OnCopyIDClicked(object sender, RoutedEventArgs args)
         {
             CopyPasteHelper.CopyToClipBoard(CategoryId);
-            new ResultIDCopyNotification().Show();
+            new ResultIDCopyNotification(this).Show();
         }
 
         /// <summary>
@@ -331,7 +331,7 @@ namespace GetStoreApp.UI.Controls.Store
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
 
-            new ResultContentCopyNotification(true, SelectedResultDataList.Count).Show();
+            new ResultContentCopyNotification(this, true, SelectedResultDataList.Count).Show();
         }
 
         /// <summary>
@@ -354,7 +354,7 @@ namespace GetStoreApp.UI.Controls.Store
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
 
-            new ResultLinkCopyNotification(true, SelectedResultDataList.Count).Show();
+            new ResultLinkCopyNotification(this, true, SelectedResultDataList.Count).Show();
         }
 
         /// <summary>
@@ -369,7 +369,7 @@ namespace GetStoreApp.UI.Controls.Store
                 INTERNET_CONNECTION_FLAGS flags = INTERNET_CONNECTION_FLAGS.INTERNET_CONNECTION_OFFLINE;
                 if (!WinINetLibrary.InternetGetConnectedState(ref flags, 0))
                 {
-                    new NetWorkErrorNotification().Show();
+                    new NetWorkErrorNotification(this).Show();
                     return;
                 }
             }
@@ -451,7 +451,7 @@ namespace GetStoreApp.UI.Controls.Store
                 }
 
                 // 显示下载任务创建成功消息
-                new DownloadCreateNotification(IsDownloadSuccessfully).Show();
+                new DownloadCreateNotification(this, IsDownloadSuccessfully).Show();
 
                 foreach (ResultModel resultItem in ResultDataList)
                 {
