@@ -71,6 +71,10 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <ApplicationDefinition Update="App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -229,14 +233,7 @@
 
     <None Update="Assets\Resources\LICENSE" CopyToOutputDirectory="Never" />
     <None Update="Mile.Aria2.conf" CopyToOutputDirectory="Never" />
-
-    <None Remove="WinUIApp.xaml" />
-    <Page Remove="WinUIApp.xaml" />
-    <ApplicationDefinition Include="WinUIApp.xaml" />
-    <ApplicationDefinition Update="WinUIApp.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
+    
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.3" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.230628000-preview1" />
     <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.5.1572">

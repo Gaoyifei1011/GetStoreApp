@@ -20,7 +20,7 @@ using Windows.UI.StartScreen;
 
 namespace GetStoreApp
 {
-    public partial class WinUIApp : Application, IDisposable
+    public partial class App : Application, IDisposable
     {
         private bool isDisposed;
 
@@ -36,7 +36,7 @@ namespace GetStoreApp
 
         public JumpList TaskbarJumpList { get; private set; }
 
-        public WinUIApp()
+        public App()
         {
             InitializeComponent();
             UnhandledException += OnUnhandledException;
@@ -346,7 +346,7 @@ namespace GetStoreApp
             GC.SuppressFinalize(this);
         }
 
-        ~WinUIApp()
+        ~App()
         {
             Dispose(false);
         }

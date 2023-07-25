@@ -1,16 +1,13 @@
-﻿<WinUI:WinUIWindow
+﻿<Window
     x:Class="GetStoreApp.Views.Window.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:WinUI="using:GetStoreApp.Views.Window"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:properties="using:GetStoreApp.Properties"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:wc="using:GetStoreApp.UI.Controls.Window"
     Title="{x:Bind root:ResourceService.GetLocalized('Resources/AppDisplayName')}"
-    MinWidth="600"
-    MinHeight="768"
     Activated="{x:Bind OnActivated}"
     SizeChanged="{x:Bind OnSizeChanged}"
     mc:Ignorable="d">
@@ -141,4 +138,4 @@
             </Frame>
         </NavigationView>
     </Grid>
-</WinUI:WinUIWindow>
+</Window>

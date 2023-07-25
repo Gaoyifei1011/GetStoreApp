@@ -31,7 +31,7 @@ namespace GetStoreApp
         public static bool IsNeedAppLaunch { get; set; } = true;
 
         // 应用程序实例
-        public static WinUIApp ApplicationRoot { get; private set; }
+        public static App ApplicationRoot { get; private set; }
 
         /// <summary>
         /// 应用程序的主入口点
@@ -63,7 +63,7 @@ namespace GetStoreApp
                     {
                         DispatcherQueueSynchronizationContext context = new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread());
                         SynchronizationContext.SetSynchronizationContext(context);
-                        ApplicationRoot = new WinUIApp();
+                        ApplicationRoot = new App();
                     });
                 }
             }

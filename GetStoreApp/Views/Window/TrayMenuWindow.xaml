@@ -1,14 +1,11 @@
-<window:WinUIWindow
+<Window
     x:Class="GetStoreApp.Views.Window.TrayMenuWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:window="using:GetStoreApp.Views.Window"
     Title="{x:Bind root:ResourceService.GetLocalized('Window/TrayMenuWindow')}"
-    MinWidth="0"
-    MinHeight="0"
     mc:Ignorable="d">
 
     <Grid RequestedTheme="{x:Bind WindowTheme, Mode=OneWay}">
@@ -87,4 +84,4 @@
             </MenuFlyout>
         </Grid.Resources>
     </Grid>
-</window:WinUIWindow>
+</Window>

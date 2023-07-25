@@ -18,7 +18,7 @@ namespace GetStoreApp.Views.Window
     /// <summary>
     /// 应用任务栏右键菜单窗口
     /// </summary>
-    public sealed partial class TrayMenuWindow : WinUIWindow, INotifyPropertyChanged
+    public sealed partial class TrayMenuWindow : Microsoft.UI.Xaml.Window, INotifyPropertyChanged
     {
         private WNDPROC newWndProc = null;
         private IntPtr oldWndProc = IntPtr.Zero;
@@ -119,6 +119,36 @@ namespace GetStoreApp.Views.Window
         }
 
         /// <summary>
+        /// 更改指定窗口的属性
+        /// </summary>
+        private int GetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex)
+        {
+            if (IntPtr.Size == 8)
+            {
+                return User32Library.GetWindowLongPtr(hWnd, nIndex);
+            }
+            else
+            {
+                return User32Library.GetWindowLong(hWnd, nIndex);
+            }
+        }
+
+        /// <summary>
+        /// 更改指定窗口的窗口属性
+        /// </summary>
+        private IntPtr SetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex, IntPtr dwNewLong)
+        {
+            if (IntPtr.Size == 8)
+            {
+                return User32Library.SetWindowLongPtr(hWnd, nIndex, dwNewLong);
+            }
+            else
+            {
+                return User32Library.SetWindowLong(hWnd, nIndex, dwNewLong);
+            }
+        }
+
+        /// <summary>
         /// 窗口消息处理
         /// </summary>
         private IntPtr NewWindowProc(IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam)
@@ -129,24 +159,8 @@ namespace GetStoreApp.Views.Window
                 case WindowMessage.WM_GETMINMAXINFO:
                     {
                         MINMAXINFO minMaxInfo = Marshal.PtrToStructure<MINMAXINFO>(lParam);
-                        if (MinWidth >= 0)
-                        {
-                            minMaxInfo.ptMinTrackSize.X = DPICalcHelper.ConvertEpxToPixel(hWnd, MinWidth);
-                        }
-                        if (MinHeight >= 0)
-                        {
-                            minMaxInfo.ptMinTrackSize.Y = DPICalcHelper.ConvertEpxToPixel(hWnd, MinHeight);
-                        }
-                        if (MaxWidth > 0)
-                        {
-                            minMaxInfo.ptMaxTrackSize.X = DPICalcHelper.ConvertEpxToPixel(hWnd, MaxWidth);
-                        }
-                        if (MaxHeight > 0)
-                        {
-                            minMaxInfo.ptMaxTrackSize.Y = DPICalcHelper.ConvertEpxToPixel(hWnd, MaxHeight);
-                        }
-
-                        minMaxInfo.ptMinTrackSize.Y = 0;
+                        minMaxInfo.ptMinTrackSize.X = DPICalcHelper.ConvertEpxToPixel(hWnd, 0);
+                        minMaxInfo.ptMinTrackSize.Y = DPICalcHelper.ConvertEpxToPixel(hWnd, 0);
                         Marshal.StructureToPtr(minMaxInfo, lParam, true);
                         break;
                     }
