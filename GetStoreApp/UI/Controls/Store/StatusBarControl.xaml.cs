@@ -5,6 +5,7 @@ using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace GetStoreApp.UI.Controls.Store
 {
@@ -24,7 +25,7 @@ namespace GetStoreApp.UI.Controls.Store
             set
             {
                 _infoSeverity = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InfoBarSeverity)));
+                OnPropertyChanged();
             }
         }
 
@@ -37,7 +38,7 @@ namespace GetStoreApp.UI.Controls.Store
             set
             {
                 _stateInfoText = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StateInfoText)));
+                OnPropertyChanged();
             }
         }
 
@@ -50,7 +51,7 @@ namespace GetStoreApp.UI.Controls.Store
             set
             {
                 _statePrRingActValue = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StatePrRingActValue)));
+                OnPropertyChanged();
             }
         }
 
@@ -63,7 +64,7 @@ namespace GetStoreApp.UI.Controls.Store
             set
             {
                 _statePrRingVisValue = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StatePrRingVisValue)));
+                OnPropertyChanged();
             }
         }
 
@@ -73,7 +74,7 @@ namespace GetStoreApp.UI.Controls.Store
         {
             InitializeComponent();
             StateInfoText = ResourceService.GetLocalized("Store/StatusInfoWelcome");
-            PropertyChanged += OnPropertyChanged;
+            PropertyChanged += OnStatusBarPropertyChanged;
         }
 
         /// <summary>
@@ -88,9 +89,17 @@ namespace GetStoreApp.UI.Controls.Store
         }
 
         /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        /// <summary>
         /// 圆环动画状态修改时修改任务栏的动画显示
         /// </summary>
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
+        private void OnStatusBarPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
             if (args.PropertyName == nameof(StatePrRingActValue))
             {

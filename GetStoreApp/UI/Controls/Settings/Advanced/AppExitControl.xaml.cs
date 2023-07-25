@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using WinRT;
 
 namespace GetStoreApp.UI.Controls.Settings.Advanced
@@ -23,7 +24,7 @@ namespace GetStoreApp.UI.Controls.Settings.Advanced
             set
             {
                 _appExit = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AppExit)));
+                OnPropertyChanged();
             }
         }
 
@@ -52,6 +53,14 @@ namespace GetStoreApp.UI.Controls.Settings.Advanced
                 AppExit = AppExitList[Convert.ToInt32(item.Tag)];
                 await AppExitService.SetAppExitAsync(AppExit);
             }
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

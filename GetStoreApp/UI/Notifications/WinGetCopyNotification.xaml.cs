@@ -2,6 +2,7 @@ using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Views.CustomControls.Notifications;
 using Microsoft.UI.Xaml;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace GetStoreApp.UI.Notifications
 {
@@ -19,7 +20,7 @@ namespace GetStoreApp.UI.Notifications
             set
             {
                 _optionArgs = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(OptionArgs)));
+                OnPropertyChanged();
             }
         }
 
@@ -49,6 +50,14 @@ namespace GetStoreApp.UI.Notifications
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

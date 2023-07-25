@@ -18,6 +18,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.UI.Controls.Download
@@ -41,7 +42,7 @@ namespace GetStoreApp.UI.Controls.Download
             set
             {
                 _isSelectMode = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelectMode)));
+                OnPropertyChanged();
             }
         }
 
@@ -486,6 +487,14 @@ namespace GetStoreApp.UI.Controls.Download
             });
 
             lock (UnfinishedDataListLock) isUpdatingNow = false;
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

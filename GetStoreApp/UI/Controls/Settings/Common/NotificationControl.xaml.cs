@@ -3,6 +3,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Windows.System;
 using WinRT;
 
@@ -22,7 +23,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
             set
             {
                 _notification = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Notification)));
+                OnPropertyChanged();
             }
         }
 
@@ -52,6 +53,14 @@ namespace GetStoreApp.UI.Controls.Settings.Common
                 await NotificationService.SetNotificationAsync(toggleSwitch.IsOn);
                 Notification = toggleSwitch.IsOn;
             }
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

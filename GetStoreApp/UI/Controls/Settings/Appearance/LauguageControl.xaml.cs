@@ -8,6 +8,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace GetStoreApp.UI.Controls.Settings.Appearance
 {
@@ -25,7 +26,7 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
             set
             {
                 _appLanguage = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AppLanguage)));
+                OnPropertyChanged();
             }
         }
 
@@ -57,6 +58,14 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
                 await LanguageService.SetLanguageAsync(AppLanguage);
                 new LanguageChangeNotification(this).Show();
             }
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

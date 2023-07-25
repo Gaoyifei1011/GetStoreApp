@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace GetStoreApp.UI.Dialogs.Settings
 {
@@ -26,7 +27,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
             set
             {
                 _isMessageVisable = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsMessageVisable)));
+                OnPropertyChanged();
             }
         }
 
@@ -66,6 +67,14 @@ namespace GetStoreApp.UI.Dialogs.Settings
                 }
                 CountDown = 3;
             }
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void DisplayTimerTick(object sender, object args)

@@ -2,6 +2,7 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using WinRT;
 
 namespace GetStoreApp.UI.Controls.Window
@@ -20,7 +21,7 @@ namespace GetStoreApp.UI.Controls.Window
             set
             {
                 _isWindowMaximized = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsWindowMaximized)));
+                OnPropertyChanged();
             }
         }
 
@@ -87,6 +88,14 @@ namespace GetStoreApp.UI.Controls.Window
                 ((MenuFlyout)menuItem.Tag).Hide();
                 User32Library.SendMessage(Program.ApplicationRoot.MainWindow.Handle, WindowMessage.WM_SYSCOMMAND, 0xF000, 0);
             }
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

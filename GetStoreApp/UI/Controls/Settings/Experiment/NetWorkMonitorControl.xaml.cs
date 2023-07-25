@@ -2,6 +2,7 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using WinRT;
 
 namespace GetStoreApp.UI.Controls.Settings.Experiment
@@ -20,7 +21,7 @@ namespace GetStoreApp.UI.Controls.Settings.Experiment
             set
             {
                 _netWorkMonitorValue = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NetWorkMonitorValue)));
+                OnPropertyChanged();
             }
         }
 
@@ -42,6 +43,14 @@ namespace GetStoreApp.UI.Controls.Settings.Experiment
                 await NetWorkMonitorService.SetNetWorkMonitorValueAsync(toggleSwitch.IsOn);
                 NetWorkMonitorValue = toggleSwitch.IsOn;
             }
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

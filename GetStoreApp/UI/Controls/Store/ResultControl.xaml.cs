@@ -22,6 +22,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Windows.System;
 using WinRT;
@@ -42,7 +43,7 @@ namespace GetStoreApp.UI.Controls.Store
             set
             {
                 _resultCotnrolVisable = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ResultControlVisable)));
+                OnPropertyChanged();
             }
         }
 
@@ -55,7 +56,7 @@ namespace GetStoreApp.UI.Controls.Store
             set
             {
                 _categoryId = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CategoryId)));
+                OnPropertyChanged();
             }
         }
 
@@ -68,7 +69,7 @@ namespace GetStoreApp.UI.Controls.Store
             set
             {
                 _isSelectMode = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelectMode)));
+                OnPropertyChanged();
             }
         }
 
@@ -494,6 +495,14 @@ namespace GetStoreApp.UI.Controls.Store
                 int ClickedIndex = ResultDataList.IndexOf(resultItem);
                 ResultDataList[ClickedIndex].IsSelected = !ResultDataList[ClickedIndex].IsSelected;
             }
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

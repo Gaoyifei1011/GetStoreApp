@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using WinRT;
 
 namespace GetStoreApp.Views.Pages
@@ -24,7 +25,7 @@ namespace GetStoreApp.Views.Pages
             set
             {
                 _useInsVisValue = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UseInsVisValue)));
+                OnPropertyChanged();
             }
         }
 
@@ -94,6 +95,14 @@ namespace GetStoreApp.Views.Pages
         {
             DownloadFlyout.Hide();
             NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

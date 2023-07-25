@@ -6,7 +6,6 @@ using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Advanced;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
-using GetStoreApp.UI.Dialogs.About;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Dialogs.Download;
 using GetStoreApp.UI.Notifications;
@@ -22,6 +21,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Management.Deployment;
@@ -49,7 +49,7 @@ namespace GetStoreApp.UI.Controls.Download
             set
             {
                 _isSelectMode = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelectMode)));
+                OnPropertyChanged();
             }
         }
 
@@ -692,6 +692,14 @@ namespace GetStoreApp.UI.Controls.Download
             }
 
             lock (CompletedDataListLock) isUpdatingNow = false;
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

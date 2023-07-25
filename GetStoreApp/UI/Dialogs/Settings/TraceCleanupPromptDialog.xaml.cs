@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.UI.Dialogs.Settings
@@ -24,7 +25,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
             set
             {
                 _isSelected = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelected)));
+                OnPropertyChanged();
             }
         }
 
@@ -37,7 +38,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
             set
             {
                 _isCleaning = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsCleaning)));
+                OnPropertyChanged();
             }
         }
 
@@ -52,7 +53,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
             {
                 traceCleanupItem.IsSelected = false;
                 traceCleanupItem.IsCleanFailed = false;
-                traceCleanupItem.PropertyChanged += OnPropertyChanged;
+                traceCleanupItem.PropertyChanged += OnTraceCleanupPropertyChanged;
 
                 TraceCleanupList.Add(traceCleanupItem);
             });
@@ -95,7 +96,15 @@ namespace GetStoreApp.UI.Dialogs.Settings
             IsCleaning = false;
         }
 
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void OnTraceCleanupPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
             IsSelected = TraceCleanupList.Exists(item => item.IsSelected);
         }

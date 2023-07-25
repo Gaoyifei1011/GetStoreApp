@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using WinRT;
 
 namespace GetStoreApp.UI.Controls.Settings.Common
@@ -23,7 +24,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
             set
             {
                 _historyLiteItem = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HistoryLiteItem)));
+                OnPropertyChanged();
             }
         }
 
@@ -36,7 +37,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
             set
             {
                 _historyJumpListItem = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HistoryJumpListItem)));
+                OnPropertyChanged();
             }
         }
 
@@ -86,6 +87,14 @@ namespace GetStoreApp.UI.Controls.Settings.Common
                 await HistoryRecordService.SetHistoryJumpListNumAsync(HistoryJumpListItem);
                 await HistoryRecordService.UpdateHistoryJumpListAsync(HistoryJumpListItem);
             }
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

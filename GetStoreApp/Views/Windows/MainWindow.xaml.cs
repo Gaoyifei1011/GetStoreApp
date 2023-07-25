@@ -23,6 +23,7 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Foundation;
@@ -33,12 +34,12 @@ using Windows.UI.ViewManagement;
 using WinRT;
 using WinRT.Interop;
 
-namespace GetStoreApp.Views.Window
+namespace GetStoreApp.Views.Windows
 {
     /// <summary>
     /// 应用主窗口
     /// </summary>
-    public sealed partial class MainWindow : Microsoft.UI.Xaml.Window, INotifyPropertyChanged
+    public sealed partial class MainWindow : Window, INotifyPropertyChanged
     {
         private WNDPROC newMainWindowWndProc = null;
         private IntPtr oldMainWindowWndProc = IntPtr.Zero;
@@ -61,7 +62,7 @@ namespace GetStoreApp.Views.Window
             set
             {
                 _windowTheme = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WindowTheme)));
+                OnPropertyChanged();
             }
         }
 
@@ -74,7 +75,7 @@ namespace GetStoreApp.Views.Window
             set
             {
                 _windowBackground = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WindowBackground)));
+                OnPropertyChanged();
             }
         }
 
@@ -87,7 +88,7 @@ namespace GetStoreApp.Views.Window
             set
             {
                 _appTitleBarMargin = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AppTitleBarMargin)));
+                OnPropertyChanged();
             }
         }
 
@@ -100,7 +101,7 @@ namespace GetStoreApp.Views.Window
             set
             {
                 _isBackEnabled = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsBackEnabled)));
+                OnPropertyChanged();
             }
         }
 
@@ -113,7 +114,7 @@ namespace GetStoreApp.Views.Window
             set
             {
                 _isPaneToggleButtonVisible = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsPaneToggleButtonVisible)));
+                OnPropertyChanged();
             }
         }
 
@@ -126,7 +127,7 @@ namespace GetStoreApp.Views.Window
             set
             {
                 _paneDisplayMode = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PaneDisplayMode)));
+                OnPropertyChanged();
             }
         }
 
@@ -139,7 +140,7 @@ namespace GetStoreApp.Views.Window
             set
             {
                 _selectedItem = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedItem)));
+                OnPropertyChanged();
             }
         }
 
@@ -473,6 +474,14 @@ namespace GetStoreApp.Views.Window
                 await image.SetSourceAsync(memoryStream);
                 sender.As<ImageIcon>().Source = image;
             }
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         /// <summary>

@@ -2,6 +2,7 @@
 using GetStoreApp.Views.CustomControls.Notifications;
 using Microsoft.UI.Xaml;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace GetStoreApp.UI.Notifications
 {
@@ -21,7 +22,7 @@ namespace GetStoreApp.UI.Notifications
             set
             {
                 _isMultiSelected = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsMultiSelected)));
+                OnPropertyChanged();
             }
         }
 
@@ -37,6 +38,14 @@ namespace GetStoreApp.UI.Notifications
         public void CopySelectedSuccessLoaded(object sender, RoutedEventArgs args)
         {
             CopySelectedSuccess.Text = string.Format(ResourceService.GetLocalized("Notification/HistorySelectedCopy"), Count);
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

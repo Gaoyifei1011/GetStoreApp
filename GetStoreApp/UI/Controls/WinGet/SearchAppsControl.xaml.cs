@@ -19,6 +19,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -47,7 +48,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             set
             {
                 _notSearched = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NotSearched)));
+                OnPropertyChanged();
             }
         }
 
@@ -60,7 +61,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             set
             {
                 _isSearchCompleted = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSearchCompleted)));
+                OnPropertyChanged();
             }
         }
 
@@ -73,7 +74,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             set
             {
                 _searchText = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SearchText)));
+                OnPropertyChanged();
             }
         }
 
@@ -574,6 +575,14 @@ namespace GetStoreApp.UI.Controls.WinGet
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

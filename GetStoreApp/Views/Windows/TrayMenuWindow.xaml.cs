@@ -7,18 +7,19 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Windows.Graphics;
 using Windows.System;
 using WinRT;
 using WinRT.Interop;
 
-namespace GetStoreApp.Views.Window
+namespace GetStoreApp.Views.Windows
 {
     /// <summary>
     /// 应用任务栏右键菜单窗口
     /// </summary>
-    public sealed partial class TrayMenuWindow : Microsoft.UI.Xaml.Window, INotifyPropertyChanged
+    public sealed partial class TrayMenuWindow : Window, INotifyPropertyChanged
     {
         private WNDPROC newWndProc = null;
         private IntPtr oldWndProc = IntPtr.Zero;
@@ -34,7 +35,7 @@ namespace GetStoreApp.Views.Window
             set
             {
                 _windowTheme = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WindowTheme)));
+                OnPropertyChanged();
             }
         }
 
@@ -119,21 +120,6 @@ namespace GetStoreApp.Views.Window
         }
 
         /// <summary>
-        /// 更改指定窗口的属性
-        /// </summary>
-        private int GetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex)
-        {
-            if (IntPtr.Size == 8)
-            {
-                return User32Library.GetWindowLongPtr(hWnd, nIndex);
-            }
-            else
-            {
-                return User32Library.GetWindowLong(hWnd, nIndex);
-            }
-        }
-
-        /// <summary>
         /// 更改指定窗口的窗口属性
         /// </summary>
         private IntPtr SetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex, IntPtr dwNewLong)
@@ -146,6 +132,14 @@ namespace GetStoreApp.Views.Window
             {
                 return User32Library.SetWindowLong(hWnd, nIndex, dwNewLong);
             }
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         /// <summary>

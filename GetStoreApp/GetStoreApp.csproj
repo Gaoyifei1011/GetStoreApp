@@ -228,8 +228,8 @@
     <None Remove="Views\Pages\WebPage.xaml" />
     <None Remove="Views\Pages\WinGetPage.xaml" />
     
-    <None Remove="Views\Window\MainWindow.xaml" />
-    <None Remove="Views\Window\TrayMenuWindow.xaml" />
+    <None Remove="Views\Windows\MainWindow.xaml" />
+    <None Remove="Views\Windows\TrayMenuWindow.xaml" />
 
     <None Update="Assets\Resources\LICENSE" CopyToOutputDirectory="Never" />
     <None Update="Mile.Aria2.conf" CopyToOutputDirectory="Never" />
@@ -348,8 +348,8 @@
     <Page Update="Views\Pages\WebPage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\WinGetPage.xaml" Generator="MSBuild:Compile" />
     
-    <Page Update="Views\Window\MainWindow.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Views\Window\TrayMenuWindow.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Views\Windows\MainWindow.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Views\Windows\TrayMenuWindow.xaml" Generator="MSBuild:Compile" />
 
     <TrimmableAssembly Include="Microsoft.InteractiveExperiences.Projection" />
     <TrimmableAssembly Include="Microsoft.Windows.ApplicationModel.DynamicDependency.Projection" />

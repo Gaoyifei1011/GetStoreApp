@@ -11,6 +11,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Windows.System;
 using WinRT;
@@ -35,7 +36,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
             set
             {
                 _useDevVersion = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UseDevVersion)));
+                OnPropertyChanged();
             }
         }
 
@@ -48,7 +49,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
             set
             {
                 _winGetInstallMode = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WinGetInstallMode)));
+                OnPropertyChanged();
             }
         }
 
@@ -163,6 +164,14 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         public void OnWinGetConfigInstructionClicked(object sender, RoutedEventArgs args)
         {
             NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

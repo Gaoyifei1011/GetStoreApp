@@ -5,6 +5,7 @@ using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using WinRT;
 
 namespace GetStoreApp.UI.Controls.Settings.Common
@@ -23,7 +24,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
             set
             {
                 _startsWithEFilterValue = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StartsWithEFilterValue)));
+                OnPropertyChanged();
             }
         }
 
@@ -36,7 +37,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
             set
             {
                 _blockMapFilterValue = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BlockMapFilterValue)));
+                OnPropertyChanged();
             }
         }
 
@@ -79,6 +80,14 @@ namespace GetStoreApp.UI.Controls.Settings.Common
                 await LinkFilterService.SetBlockMapFilterValueAsync(toggleSwitch.IsOn);
                 BlockMapFilterValue = toggleSwitch.IsOn;
             }
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

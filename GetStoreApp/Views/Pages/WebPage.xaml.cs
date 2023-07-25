@@ -8,7 +8,6 @@ using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Common;
-using GetStoreApp.UI.Dialogs.Download;
 using GetStoreApp.UI.Dialogs.Web;
 using GetStoreApp.UI.Notifications;
 using Microsoft.UI.Xaml;
@@ -19,6 +18,7 @@ using Microsoft.Web.WebView2.Core;
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using Windows.Foundation;
 using Windows.Storage;
@@ -47,7 +47,7 @@ namespace GetStoreApp.Views.Pages
             set
             {
                 _canGoBack = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CanGoBack)));
+                OnPropertyChanged();
             }
         }
 
@@ -60,7 +60,7 @@ namespace GetStoreApp.Views.Pages
             set
             {
                 _canGoForward = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CanGoForward)));
+                OnPropertyChanged();
             }
         }
 
@@ -73,7 +73,7 @@ namespace GetStoreApp.Views.Pages
             set
             {
                 _source = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Source)));
+                OnPropertyChanged();
             }
         }
 
@@ -86,7 +86,7 @@ namespace GetStoreApp.Views.Pages
             set
             {
                 _isLoading = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsLoading)));
+                OnPropertyChanged();
             }
         }
 
@@ -99,7 +99,7 @@ namespace GetStoreApp.Views.Pages
             set
             {
                 _isClearWebCacheEnabled = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsClearWebCacheEnabled)));
+                OnPropertyChanged();
             }
         }
 
@@ -280,6 +280,14 @@ namespace GetStoreApp.Views.Pages
                     return;
                 }
             }
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         /// <summary>

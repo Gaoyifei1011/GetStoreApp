@@ -11,6 +11,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.UI.StartScreen;
 using WinRT;
@@ -53,7 +54,7 @@ namespace GetStoreApp.UI.Controls.Store
             set
             {
                 _selectedType = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedType)));
+                OnPropertyChanged();
             }
         }
 
@@ -66,7 +67,7 @@ namespace GetStoreApp.UI.Controls.Store
             set
             {
                 _selectedChannel = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedChannel)));
+                OnPropertyChanged();
             }
         }
 
@@ -79,7 +80,7 @@ namespace GetStoreApp.UI.Controls.Store
             set
             {
                 _linkPlaceHolderText = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LinkPlaceHolderText)));
+                OnPropertyChanged();
             }
         }
 
@@ -92,7 +93,7 @@ namespace GetStoreApp.UI.Controls.Store
             set
             {
                 _linkText = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LinkText)));
+                OnPropertyChanged();
             }
         }
 
@@ -105,7 +106,7 @@ namespace GetStoreApp.UI.Controls.Store
             set
             {
                 _isGettingLinks = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsGettingLinks)));
+                OnPropertyChanged();
             }
         }
 
@@ -189,6 +190,14 @@ namespace GetStoreApp.UI.Controls.Store
             historyLiteInstance = historyLiteControl;
             statusBarInstance = statusBarControl;
             resultInstance = resultControl;
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         /// <summary>

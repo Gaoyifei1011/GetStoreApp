@@ -19,6 +19,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -42,7 +43,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             set
             {
                 _isLoadedCompleted = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsLoadedCompleted)));
+                OnPropertyChanged();
             }
         }
 
@@ -55,7 +56,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             set
             {
                 _isUpgradableAppsEmpty = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUpgradableAppsEmpty)));
+                OnPropertyChanged();
             }
         }
 
@@ -483,6 +484,14 @@ namespace GetStoreApp.UI.Controls.WinGet
                 IsUpgradableAppsEmpty = false;
             }
             IsLoadedCompleted = true;
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         /// <summary>

@@ -6,6 +6,7 @@ using GetStoreApp.UI.Notifications;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace GetStoreApp.UI.Dialogs.Download
@@ -34,7 +35,7 @@ namespace GetStoreApp.UI.Dialogs.Download
             set
             {
                 _fileCheckState = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FileCheckState)));
+                OnPropertyChanged();
             }
         }
 
@@ -47,7 +48,7 @@ namespace GetStoreApp.UI.Dialogs.Download
             set
             {
                 _checkFileSHA1 = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CheckFileSHA1)));
+                OnPropertyChanged();
             }
         }
 
@@ -96,6 +97,14 @@ namespace GetStoreApp.UI.Dialogs.Download
         {
             CheckFileSHA1 = await IOHelper.GetFileSHA1Async(FilePath);
             FileCheckState = true;
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

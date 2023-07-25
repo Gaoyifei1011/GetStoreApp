@@ -10,6 +10,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Windows.Storage;
 using WinRT;
 
@@ -29,7 +30,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
             set
             {
                 _downloadFolder = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadFolder)));
+                OnPropertyChanged();
             }
         }
 
@@ -42,7 +43,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
             set
             {
                 _downloadItem = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadItem)));
+                OnPropertyChanged();
             }
         }
 
@@ -55,7 +56,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
             set
             {
                 _downloadMode = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadMode)));
+                OnPropertyChanged();
             }
         }
 
@@ -147,6 +148,14 @@ namespace GetStoreApp.UI.Controls.Settings.Common
                 DownloadMode = DownloadModeList[Convert.ToInt32(item.Tag)];
                 await DownloadOptionsService.SetModeAsync(DownloadMode);
             }
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

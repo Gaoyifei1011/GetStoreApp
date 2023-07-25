@@ -1,6 +1,7 @@
 ﻿using GetStoreApp.Services.Root;
 using Microsoft.Management.Deployment;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace GetStoreApp.Models.Controls.WinGet
@@ -45,7 +46,7 @@ namespace GetStoreApp.Models.Controls.WinGet
             set
             {
                 _downloadProgress = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadProgress)));
+                OnPropertyChanged();
             }
         }
 
@@ -61,7 +62,7 @@ namespace GetStoreApp.Models.Controls.WinGet
             set
             {
                 _downloadedFileSize = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadedFileSize)));
+                OnPropertyChanged();
             }
         }
 
@@ -77,7 +78,7 @@ namespace GetStoreApp.Models.Controls.WinGet
             set
             {
                 _totalFileSize = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalFileSize)));
+                OnPropertyChanged();
             }
         }
 
@@ -93,7 +94,7 @@ namespace GetStoreApp.Models.Controls.WinGet
             set
             {
                 _installProgressState = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallProgressState)));
+                OnPropertyChanged();
             }
         }
 
@@ -155,6 +156,14 @@ namespace GetStoreApp.Models.Controls.WinGet
                 default: break;
             }
             return builder.ToString();
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

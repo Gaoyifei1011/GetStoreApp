@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml.Input;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Threading;
 
 namespace GetStoreApp.Views.Pages
@@ -24,7 +25,7 @@ namespace GetStoreApp.Views.Pages
             set
             {
                 _selectedIndex = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedIndex)));
+                OnPropertyChanged();
             }
         }
 
@@ -61,15 +62,6 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 初始化 WinGet 程序包
-        /// </summary>
-        private void OnInitializeSuccessLoaded()
-        {
-            SearchApps.WinGetInstance = this;
-            UpgradableApps.WinGetInstance = this;
-        }
-
-        /// <summary>
         /// 判断 WinGet 程序包是否存在
         /// </summary>
         public bool IsWinGetExisted(bool isOfficialVersionExisted, bool isDevVersionExisted, bool needReverseValue)
@@ -83,6 +75,23 @@ namespace GetStoreApp.Views.Pages
             {
                 return result;
             }
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        /// <summary>
+        /// 初始化 WinGet 程序包
+        /// </summary>
+        private void OnInitializeSuccessLoaded()
+        {
+            SearchApps.WinGetInstance = this;
+            UpgradableApps.WinGetInstance = this;
         }
     }
 }

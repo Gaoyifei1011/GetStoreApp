@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using WinRT;
@@ -49,7 +50,7 @@ namespace GetStoreApp.Views.Pages
             set
             {
                 _isLoadedCompleted = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsLoadedCompleted)));
+                OnPropertyChanged();
             }
         }
 
@@ -62,7 +63,7 @@ namespace GetStoreApp.Views.Pages
             set
             {
                 _isSelectMode = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelectMode)));
+                OnPropertyChanged();
             }
         }
 
@@ -75,7 +76,7 @@ namespace GetStoreApp.Views.Pages
             set
             {
                 _isHistoryEmpty = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsHistoryEmpty)));
+                OnPropertyChanged();
             }
         }
 
@@ -88,7 +89,7 @@ namespace GetStoreApp.Views.Pages
             set
             {
                 _isHistoryEmptyAfterFilter = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsHistoryEmptyAfterFilter)));
+                OnPropertyChanged();
             }
         }
 
@@ -104,7 +105,7 @@ namespace GetStoreApp.Views.Pages
             set
             {
                 _timeSortOrder = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TimeSortOrder)));
+                OnPropertyChanged();
             }
         }
 
@@ -117,7 +118,7 @@ namespace GetStoreApp.Views.Pages
             set
             {
                 _typeFilter = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TypeFilter)));
+                OnPropertyChanged();
             }
         }
 
@@ -130,7 +131,7 @@ namespace GetStoreApp.Views.Pages
             set
             {
                 _channelFilter = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ChannelFilter)));
+                OnPropertyChanged();
             }
         }
 
@@ -404,6 +405,14 @@ namespace GetStoreApp.Views.Pages
             {
                 return string.Format(ResourceService.GetLocalized("History/HistoryCountInfo"), count);
             }
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         /// <summary>

@@ -2,6 +2,7 @@
 using GetStoreApp.Services.Root;
 using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace GetStoreApp.Models.Controls.Download
 {
@@ -32,7 +33,7 @@ namespace GetStoreApp.Models.Controls.Download
             set
             {
                 _isSelected = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelected)));
+                OnPropertyChanged();
             }
         }
 
@@ -48,7 +49,7 @@ namespace GetStoreApp.Models.Controls.Download
             set
             {
                 _isSelectMode = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelectMode)));
+                OnPropertyChanged();
             }
         }
 
@@ -102,7 +103,7 @@ namespace GetStoreApp.Models.Controls.Download
             set
             {
                 _downloadFlag = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadFlag)));
+                OnPropertyChanged();
             }
         }
 
@@ -118,7 +119,7 @@ namespace GetStoreApp.Models.Controls.Download
             set
             {
                 _totalSize = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalSize)));
+                OnPropertyChanged();
             }
         }
 
@@ -134,7 +135,7 @@ namespace GetStoreApp.Models.Controls.Download
             set
             {
                 _finishedSize = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FinishedSize)));
+                OnPropertyChanged();
             }
         }
 
@@ -150,7 +151,7 @@ namespace GetStoreApp.Models.Controls.Download
             set
             {
                 _currentSpeed = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentSpeed)));
+                OnPropertyChanged();
             }
         }
 
@@ -166,7 +167,7 @@ namespace GetStoreApp.Models.Controls.Download
             set
             {
                 _isFileDownloading = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsFileDownloading)));
+                OnPropertyChanged();
             }
         }
 
@@ -207,6 +208,14 @@ namespace GetStoreApp.Models.Controls.Download
             {
                 return string.Empty;
             }
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

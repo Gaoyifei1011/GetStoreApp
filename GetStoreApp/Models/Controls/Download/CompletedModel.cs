@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace GetStoreApp.Models.Controls.Download
 {
@@ -19,7 +20,7 @@ namespace GetStoreApp.Models.Controls.Download
             set
             {
                 _isSelected = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelected)));
+                OnPropertyChanged();
             }
         }
 
@@ -35,7 +36,7 @@ namespace GetStoreApp.Models.Controls.Download
             set
             {
                 _isSelectMode = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelectMode)));
+                OnPropertyChanged();
             }
         }
 
@@ -91,7 +92,7 @@ namespace GetStoreApp.Models.Controls.Download
             set
             {
                 _isInstalling = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsInstalling)));
+                OnPropertyChanged();
             }
         }
 
@@ -107,7 +108,7 @@ namespace GetStoreApp.Models.Controls.Download
             set
             {
                 _installValue = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallValue)));
+                OnPropertyChanged();
             }
         }
 
@@ -121,10 +122,18 @@ namespace GetStoreApp.Models.Controls.Download
             set
             {
                 _installError = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallError)));
+                OnPropertyChanged();
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

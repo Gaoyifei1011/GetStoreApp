@@ -82,11 +82,6 @@ namespace GetStoreApp.UI.Dialogs.About
             InitializeComponent();
         }
 
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         /// <summary>
         /// 复制应用信息
         /// </summary>
@@ -153,6 +148,11 @@ namespace GetStoreApp.UI.Dialogs.About
 
             // .NET 版本信息
             DoNetVersion = Convert.ToString(Environment.Version);
+        }
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

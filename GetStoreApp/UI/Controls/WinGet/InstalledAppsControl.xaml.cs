@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
@@ -39,7 +40,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             set
             {
                 _isLoadedCompleted = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsLoadedCompleted)));
+                OnPropertyChanged();
             }
         }
 
@@ -52,7 +53,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             set
             {
                 _isInstalledAppsEmpty = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsInstalledAppsEmpty)));
+                OnPropertyChanged();
             }
         }
 
@@ -65,7 +66,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             set
             {
                 _searchText = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SearchText)));
+                OnPropertyChanged();
             }
         }
 
@@ -85,7 +86,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         {
             InitializeComponent();
 
-            PropertyChanged += OnPropertyChanged;
+            PropertyChanged += OnInstalledAppsPropertyChanged;
             UnInstallCommand.ExecuteRequested += async (sender, args) =>
             {
                 InstalledAppsModel installedApps = args.Parameter as InstalledAppsModel;
@@ -176,7 +177,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
         ~InstalledAppsControl()
         {
-            PropertyChanged -= OnPropertyChanged;
+            PropertyChanged -= OnInstalledAppsPropertyChanged;
         }
 
         /// <summary>
@@ -245,7 +246,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 文本输入框内容为空时，复原原来的内容
         /// </summary>
-        public void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
+        public void OnInstalledAppsPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
             if (args.PropertyName == nameof(SearchText))
             {
@@ -254,6 +255,14 @@ namespace GetStoreApp.UI.Controls.WinGet
                     InitializeData();
                 }
             }
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         /// <summary>
