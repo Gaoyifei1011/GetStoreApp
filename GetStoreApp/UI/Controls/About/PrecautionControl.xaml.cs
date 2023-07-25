@@ -1,4 +1,5 @@
-﻿using GetStoreApp.UI.Dialogs.About;
+﻿using GetStoreApp.Helpers.Controls.Extensions;
+using GetStoreApp.UI.Dialogs.About;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
@@ -19,7 +20,7 @@ namespace GetStoreApp.UI.Controls.About
         /// </summary>
         public async void OnRecognizeClicked(object sender, RoutedEventArgs args)
         {
-            await new DesktopAppsDialog().ShowAsync();
+            await ContentDialogHelper.ShowAsync(new DesktopAppsDialog(), this);
         }
     }
 }

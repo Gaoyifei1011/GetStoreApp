@@ -3,7 +3,6 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Notifications;
-using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.ComponentModel;
@@ -14,7 +13,7 @@ namespace GetStoreApp.UI.Dialogs.Download
     /// <summary>
     /// 文件信息对话框
     /// </summary>
-    public sealed partial class FileInformationDialog : ExtendedContentDialog, INotifyPropertyChanged
+    public sealed partial class FileInformationDialog : ContentDialog, INotifyPropertyChanged
     {
         public string FileName { get; set; }
 

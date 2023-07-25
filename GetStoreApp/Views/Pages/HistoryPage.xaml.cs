@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.History;
 using GetStoreApp.Models.Controls.Store;
@@ -292,7 +293,7 @@ namespace GetStoreApp.Views.Pages
 
             if (SelectedHistoryDataList.Count is 0)
             {
-                await new SelectEmptyPromptDialog().ShowAsync();
+                await ContentDialogHelper.ShowAsync(new SelectEmptyPromptDialog(), this);
                 return;
             };
 
@@ -321,12 +322,12 @@ namespace GetStoreApp.Views.Pages
             // 没有选中任何内容时显示空提示对话框
             if (SelectedHistoryDataList.Count is 0)
             {
-                await new SelectEmptyPromptDialog().ShowAsync();
+                await ContentDialogHelper.ShowAsync(new SelectEmptyPromptDialog(), this);
                 return;
             };
 
             // 删除时显示删除确认对话框
-            ContentDialogResult result = await new DeletePromptDialog(DeleteArgs.History).ShowAsync();
+            ContentDialogResult result = await ContentDialogHelper.ShowAsync(new DeletePromptDialog(DeleteArgs.History), this);
 
             if (result is ContentDialogResult.Primary)
             {

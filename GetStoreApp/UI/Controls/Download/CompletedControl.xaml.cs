@@ -1,10 +1,12 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Advanced;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
+using GetStoreApp.UI.Dialogs.About;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Dialogs.Download;
 using GetStoreApp.UI.Notifications;
@@ -191,7 +193,7 @@ namespace GetStoreApp.UI.Controls.Download
                 {
                     if (completedItem.IsInstalling is true)
                     {
-                        await new InstallingNotifyDialog().ShowAsync();
+                        await ContentDialogHelper.ShowAsync(new InstallingNotifyDialog(), this);
                         return;
                     }
 
@@ -223,7 +225,7 @@ namespace GetStoreApp.UI.Controls.Download
                 {
                     if (completedItem.IsInstalling is true)
                     {
-                        await new InstallingNotifyDialog().ShowAsync();
+                        await ContentDialogHelper.ShowAsync(new InstallingNotifyDialog(), this);
                         return;
                     }
 
@@ -301,7 +303,7 @@ namespace GetStoreApp.UI.Controls.Download
 
                 if (completedItem is not null)
                 {
-                    await new FileInformationDialog(completedItem).ShowAsync();
+                    await ContentDialogHelper.ShowAsync(new FileInformationDialog(completedItem), this);
                 }
             };
 
@@ -409,19 +411,19 @@ namespace GetStoreApp.UI.Controls.Download
             // 没有选中任何内容时显示空提示对话框
             if (SelectedCompletedDataList.Count is 0)
             {
-                await new SelectEmptyPromptDialog().ShowAsync();
+                await ContentDialogHelper.ShowAsync(new SelectEmptyPromptDialog(), this);
                 return;
             }
 
             // 当前任务正在安装时，不进行其他任何操作
             if (SelectedCompletedDataList.Exists(item => item.IsInstalling is true))
             {
-                await new InstallingNotifyDialog().ShowAsync();
+                await ContentDialogHelper.ShowAsync(new InstallingNotifyDialog(), this);
                 return;
             }
 
             // 删除时显示删除确认对话框
-            ContentDialogResult result = await new DeletePromptDialog(DeleteArgs.Download).ShowAsync();
+            ContentDialogResult result = await ContentDialogHelper.ShowAsync(new DeletePromptDialog(DeleteArgs.Download), this);
 
             if (result is ContentDialogResult.Primary)
             {
@@ -474,19 +476,19 @@ namespace GetStoreApp.UI.Controls.Download
             // 没有选中任何内容时显示空提示对话框
             if (SelectedCompletedDataList.Count is 0)
             {
-                await new SelectEmptyPromptDialog().ShowAsync();
+                await ContentDialogHelper.ShowAsync(new SelectEmptyPromptDialog(), this);
                 return;
             }
 
             // 当前任务正在安装时，不进行其他任何操作
             if (SelectedCompletedDataList.Exists(item => item.IsInstalling is true))
             {
-                await new InstallingNotifyDialog().ShowAsync();
+                await ContentDialogHelper.ShowAsync(new InstallingNotifyDialog(), this);
                 return;
             }
 
             // 删除时显示删除确认对话框
-            ContentDialogResult result = await new DeletePromptDialog(DeleteArgs.DownloadWithFile).ShowAsync();
+            ContentDialogResult result = await ContentDialogHelper.ShowAsync(new DeletePromptDialog(DeleteArgs.DownloadWithFile), this);
 
             if (result is ContentDialogResult.Primary)
             {
@@ -556,7 +558,7 @@ namespace GetStoreApp.UI.Controls.Download
             // 没有选中任何内容时显示空提示对话框
             if (SelectedCompletedDataList.Count is 0)
             {
-                await new SelectEmptyPromptDialog().ShowAsync();
+                await ContentDialogHelper.ShowAsync(new SelectEmptyPromptDialog(), this);
                 return;
             }
 

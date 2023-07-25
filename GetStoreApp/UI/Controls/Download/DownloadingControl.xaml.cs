@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Common;
@@ -242,7 +243,7 @@ namespace GetStoreApp.UI.Controls.Download
             // 没有选中任何内容时显示空提示对话框
             if (SelectedDownloadingDataList.Count is 0)
             {
-                await new SelectEmptyPromptDialog().ShowAsync();
+                await ContentDialogHelper.ShowAsync(new SelectEmptyPromptDialog(), this);
                 return;
             }
 

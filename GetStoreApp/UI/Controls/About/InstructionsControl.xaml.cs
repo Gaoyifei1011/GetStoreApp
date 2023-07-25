@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.About;
 using GetStoreApp.Views.Pages;
@@ -24,7 +25,7 @@ namespace GetStoreApp.UI.Controls.About
         /// </summary>
         public async void OnDesktopLaunchClicked(object sender, RoutedEventArgs args)
         {
-            await new DesktopStartupArgsDialog().ShowAsync();
+            await ContentDialogHelper.ShowAsync(new DesktopStartupArgsDialog(), this);
         }
 
         /// <summary>
@@ -32,7 +33,7 @@ namespace GetStoreApp.UI.Controls.About
         /// </summary>
         public async void OnConsoleLaunchClicked(object sender, RoutedEventArgs args)
         {
-            await new ConsoleStartupArgsDialog().ShowAsync();
+            await ContentDialogHelper.ShowAsync(new ConsoleStartupArgsDialog(), this);
         }
 
         /// <summary>
@@ -56,7 +57,7 @@ namespace GetStoreApp.UI.Controls.About
         /// </summary>
         public async void OnCloudflareValidationClicked(object sender, RoutedEventArgs args)
         {
-            await new CloudflareValidationDialog().ShowAsync();
+            await ContentDialogHelper.ShowAsync(new CloudflareValidationDialog(), this);
         }
 
         /// <summary>

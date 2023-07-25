@@ -1,4 +1,5 @@
-﻿using GetStoreApp.UI.Dialogs.Settings;
+﻿using GetStoreApp.Helpers.Controls.Extensions;
+using GetStoreApp.UI.Dialogs.Settings;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
@@ -19,7 +20,7 @@ namespace GetStoreApp.UI.Controls.Settings.Advanced
         /// </summary>
         public async void OnConfigClicked(object sender, RoutedEventArgs args)
         {
-            await new ExperimentalConfigDialog().ShowAsync();
+            await ContentDialogHelper.ShowAsync(new ExperimentalConfigDialog(), this);
         }
     }
 }

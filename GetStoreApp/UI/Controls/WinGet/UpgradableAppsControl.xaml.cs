@@ -1,4 +1,5 @@
 using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Controls.Settings.Common;
@@ -221,7 +222,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
                             if (installResult.RebootRequired)
                             {
-                                ContentDialogResult Result = await new RebootDialog(WinGetOptionArgs.UpgradeInstall, upgradableApps.AppName).ShowAsync();
+                                ContentDialogResult Result = await ContentDialogHelper.ShowAsync(new RebootDialog(WinGetOptionArgs.UpgradeInstall, upgradableApps.AppName), this);
                                 if (Result == ContentDialogResult.Primary)
                                 {
                                     unsafe

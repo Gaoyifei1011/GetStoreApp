@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Services.Controls.Settings.Appearance;
+﻿using GetStoreApp.Helpers.Controls.Extensions;
+using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.UI.Dialogs.About;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -22,7 +23,7 @@ namespace GetStoreApp.UI.Controls.About
         /// </summary>
         public async void OnAppInformationClicked(object sender, RoutedEventArgs args)
         {
-            await new AppInformationDialog().ShowAsync();
+            await ContentDialogHelper.ShowAsync(new AppInformationDialog(), this);
         }
 
         /// <summary>

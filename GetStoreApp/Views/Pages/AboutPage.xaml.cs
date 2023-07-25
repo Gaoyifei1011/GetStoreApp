@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.About;
@@ -193,7 +194,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         public async void OnShowLicenseClicked(object sender, RoutedEventArgs args)
         {
-            await new LicenseDialog().ShowAsync();
+            await ContentDialogHelper.ShowAsync(new LicenseDialog(), this);
         }
 
         /// <summary>

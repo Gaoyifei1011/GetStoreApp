@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Experiment;
 using GetStoreApp.UI.Controls.Settings.Experiment;
-using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -12,7 +11,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
     /// <summary>
     /// 实验性功能配置对话框
     /// </summary>
-    public sealed partial class ExperimentalConfigDialog : ExtendedContentDialog, INotifyPropertyChanged
+    public sealed partial class ExperimentalConfigDialog : ContentDialog, INotifyPropertyChanged
     {
         private DispatcherTimer DisplayTimer = new DispatcherTimer();
 

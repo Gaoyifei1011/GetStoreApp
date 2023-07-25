@@ -1,4 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Controls.Extensions;
+using GetStoreApp.UI.Dialogs.Download;
 using GetStoreApp.UI.Dialogs.Settings;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -57,7 +59,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         public async void OnRestartAppsClicked(object sender, RoutedEventArgs args)
         {
-            await new RestartAppsDialog().ShowAsync();
+            await ContentDialogHelper.ShowAsync(new RestartAppsDialog(), this);
         }
     }
 }

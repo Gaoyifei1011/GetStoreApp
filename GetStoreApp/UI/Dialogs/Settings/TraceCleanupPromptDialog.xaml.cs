@@ -2,7 +2,6 @@
 using GetStoreApp.Models.Dialogs.Settings;
 using GetStoreApp.Services.Controls.Settings.Advanced;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +13,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
     /// <summary>
     /// 痕迹清理对话框
     /// </summary>
-    public sealed partial class TraceCleanupPromptDialog : ExtendedContentDialog, INotifyPropertyChanged
+    public sealed partial class TraceCleanupPromptDialog : ContentDialog, INotifyPropertyChanged
     {
         private bool _isSelected;
 

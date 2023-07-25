@@ -1,6 +1,6 @@
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
+using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.UI.Dialogs.WinGet
 {
@@ -8,7 +8,7 @@ namespace GetStoreApp.UI.Dialogs.WinGet
     /// <summary>
     /// 重启设备对话框
     /// </summary>
-    public sealed partial class RebootDialog : ExtendedContentDialog
+    public sealed partial class RebootDialog : ContentDialog
     {
         public string RebootContent { get; set; }
 

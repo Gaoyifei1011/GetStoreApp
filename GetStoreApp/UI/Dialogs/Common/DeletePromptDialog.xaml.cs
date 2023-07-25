@@ -1,13 +1,13 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
+using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.UI.Dialogs.Common
 {
     /// <summary>
     /// 删除提示对话框
     /// </summary>
-    public sealed partial class DeletePromptDialog : ExtendedContentDialog
+    public sealed partial class DeletePromptDialog : ContentDialog
     {
         public string DeleteContent { get; set; }
 

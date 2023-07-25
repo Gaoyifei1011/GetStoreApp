@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Notifications;
-using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Web.WebView2.Core;
 using System;
@@ -12,7 +11,7 @@ namespace GetStoreApp.UI.Dialogs.Web
     /// <summary>
     /// 浏览器内核初始化失败错误信息对话框
     /// </summary>
-    public sealed partial class CoreWebView2FailedDialog : ExtendedContentDialog
+    public sealed partial class CoreWebView2FailedDialog : ContentDialog
     {
         public string ProcessFailedKind { get; set; }
 

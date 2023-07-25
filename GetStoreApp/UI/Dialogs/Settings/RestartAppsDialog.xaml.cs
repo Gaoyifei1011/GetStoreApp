@@ -1,12 +1,11 @@
-﻿using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
-using Microsoft.UI.Xaml.Controls;
+﻿using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.UI.Dialogs.Settings
 {
     /// <summary>
     /// 应用重启对话框
     /// </summary>
-    public sealed partial class RestartAppsDialog : ExtendedContentDialog
+    public sealed partial class RestartAppsDialog : ContentDialog
     {
         public RestartAppsDialog()
         {

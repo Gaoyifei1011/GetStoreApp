@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Controls.Web;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
@@ -7,6 +8,7 @@ using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Common;
+using GetStoreApp.UI.Dialogs.Download;
 using GetStoreApp.UI.Dialogs.Web;
 using GetStoreApp.UI.Notifications;
 using Microsoft.UI.Xaml;
@@ -215,7 +217,7 @@ namespace GetStoreApp.Views.Pages
         public async void OnCoreProcessFailed(object sender, CoreWebView2ProcessFailedEventArgs args)
         {
             // 显示异常信息错误原因，弹出对话框
-            await new CoreWebView2FailedDialog(args).ShowAsync();
+            await ContentDialogHelper.ShowAsync(new CoreWebView2FailedDialog(args), this);
         }
 
         /// <summary>
@@ -346,7 +348,7 @@ namespace GetStoreApp.Views.Pages
 
                             case DuplicatedDataInfoArgs.Unfinished:
                                 {
-                                    ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Unfinished).ShowAsync();
+                                    ContentDialogResult result = await ContentDialogHelper.ShowAsync(new DownloadNotifyDialog(DuplicatedDataInfoArgs.Unfinished), this);
 
                                     if (result is ContentDialogResult.Primary)
                                     {
@@ -376,7 +378,7 @@ namespace GetStoreApp.Views.Pages
 
                             case DuplicatedDataInfoArgs.Completed:
                                 {
-                                    ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Completed).ShowAsync();
+                                    ContentDialogResult result = await ContentDialogHelper.ShowAsync(new DownloadNotifyDialog(DuplicatedDataInfoArgs.Completed), this);
 
                                     if (result is ContentDialogResult.Primary)
                                     {

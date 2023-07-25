@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Models.Controls.Store;
@@ -135,7 +136,7 @@ namespace GetStoreApp.UI.Controls.Store
 
                             case DuplicatedDataInfoArgs.Unfinished:
                                 {
-                                    ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Unfinished).ShowAsync();
+                                    ContentDialogResult result = await ContentDialogHelper.ShowAsync(new DownloadNotifyDialog(DuplicatedDataInfoArgs.Unfinished), this);
 
                                     if (result is ContentDialogResult.Primary)
                                     {
@@ -165,7 +166,7 @@ namespace GetStoreApp.UI.Controls.Store
 
                             case DuplicatedDataInfoArgs.Completed:
                                 {
-                                    ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.Completed).ShowAsync();
+                                    ContentDialogResult result = await ContentDialogHelper.ShowAsync(new DownloadNotifyDialog(DuplicatedDataInfoArgs.Completed), this);
 
                                     if (result is ContentDialogResult.Primary)
                                     {
@@ -312,7 +313,7 @@ namespace GetStoreApp.UI.Controls.Store
             // 内容为空时显示空提示对话框
             if (SelectedResultDataList.Count is 0)
             {
-                await new SelectEmptyPromptDialog().ShowAsync();
+                await ContentDialogHelper.ShowAsync(new SelectEmptyPromptDialog(), this);
                 return;
             };
 
@@ -343,7 +344,7 @@ namespace GetStoreApp.UI.Controls.Store
             // 内容为空时显示空提示对话框
             if (SelectedResultDataList.Count is 0)
             {
-                await new SelectEmptyPromptDialog().ShowAsync();
+                await ContentDialogHelper.ShowAsync(new SelectEmptyPromptDialog(), this);
                 return;
             };
 
@@ -378,7 +379,7 @@ namespace GetStoreApp.UI.Controls.Store
             // 内容为空时显示空提示对话框
             if (SelectedResultDataList.Count is 0)
             {
-                await new SelectEmptyPromptDialog().ShowAsync();
+                await ContentDialogHelper.ShowAsync(new SelectEmptyPromptDialog(), this);
                 return;
             };
 
@@ -419,7 +420,7 @@ namespace GetStoreApp.UI.Controls.Store
 
                 if (duplicatedList.Count > 0)
                 {
-                    ContentDialogResult result = await new DownloadNotifyDialog(DuplicatedDataInfoArgs.MultiRecord).ShowAsync();
+                    ContentDialogResult result = await ContentDialogHelper.ShowAsync(new DownloadNotifyDialog(DuplicatedDataInfoArgs.MultiRecord), this);
 
                     if (result is ContentDialogResult.Primary)
                     {

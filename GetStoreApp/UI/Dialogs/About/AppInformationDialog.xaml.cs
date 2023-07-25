@@ -2,12 +2,12 @@ using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Notifications;
-using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Windows.ApplicationModel;
 using Windows.Storage;
@@ -17,7 +17,7 @@ namespace GetStoreApp.UI.Dialogs.About
     /// <summary>
     /// 应用信息对话框
     /// </summary>
-    public sealed partial class AppInformationDialog : ExtendedContentDialog, INotifyPropertyChanged
+    public sealed partial class AppInformationDialog : ContentDialog, INotifyPropertyChanged
     {
         private string FileVersionProperty { get; } = "System.FileVersion";
 
@@ -32,7 +32,7 @@ namespace GetStoreApp.UI.Dialogs.About
             set
             {
                 _windowsAppSDKVersion = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WindowsAppSDKVersion)));
+                OnPropertyChanged();
             }
         }
 
@@ -45,7 +45,7 @@ namespace GetStoreApp.UI.Dialogs.About
             set
             {
                 _winUI3Version = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WinUI3Version)));
+                OnPropertyChanged();
             }
         }
 
@@ -58,7 +58,7 @@ namespace GetStoreApp.UI.Dialogs.About
             set
             {
                 _doNetVersion = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DoNetVersion)));
+                OnPropertyChanged();
             }
         }
 
@@ -71,7 +71,7 @@ namespace GetStoreApp.UI.Dialogs.About
             set
             {
                 _webView2CoreVersion = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WebView2CoreVersion)));
+                OnPropertyChanged();
             }
         }
 
@@ -80,6 +80,11 @@ namespace GetStoreApp.UI.Dialogs.About
         public AppInformationDialog()
         {
             InitializeComponent();
+        }
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         /// <summary>

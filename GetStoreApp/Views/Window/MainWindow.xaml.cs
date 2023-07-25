@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.Backdrop;
+using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Window;
 using GetStoreApp.Services.Controls.Download;
@@ -6,6 +7,7 @@ using GetStoreApp.Services.Controls.Settings.Advanced;
 using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
+using GetStoreApp.UI.Dialogs.About;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
@@ -289,7 +291,7 @@ namespace GetStoreApp.Views.Window
                     sender.As<MainWindow>().Show();
 
                     // 关闭窗口提示对话框是否已经处于打开状态，如果是，不再弹出
-                    ContentDialogResult result = await new ClosingWindowDialog().ShowAsync();
+                    ContentDialogResult result = await ContentDialogHelper.ShowAsync(new ClosingWindowDialog(), Content.As<FrameworkElement>());
 
                     if (result is ContentDialogResult.Primary)
                     {
@@ -646,7 +648,7 @@ namespace GetStoreApp.Views.Window
 
                             DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
                             {
-                                await new AppRunningDialog().ShowAsync();
+                                await ContentDialogHelper.ShowAsync(new AppRunningDialog(), Content.As<FrameworkElement>());
                             });
                         }
                         // 获取应用的命令参数

@@ -1,13 +1,13 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Views.CustomControls.DialogsAndFlyouts;
+using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.UI.Dialogs.Common
 {
     /// <summary>
     /// 重复下载提示对话框
     /// </summary>
-    public sealed partial class DownloadNotifyDialog : ExtendedContentDialog
+    public sealed partial class DownloadNotifyDialog : ContentDialog
     {
         public string DownloadNotifyContent { get; set; }
 
