@@ -44,8 +44,8 @@
 
             <HyperlinkButton
                 VerticalAlignment="Center"
-                Click="{x:Bind OnDeveloperDescriptionClicked}"
                 Content="{x:Bind root:ResourceService.GetLocalized('About/DeveloperName')}"
+                NavigateUri="https://github.com/Gaoyifei1011"
                 Style="{StaticResource HyperlinkButtonStyle}">
 
                 <ToolTipService.ToolTip>

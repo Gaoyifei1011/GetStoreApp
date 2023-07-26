@@ -501,6 +501,9 @@
   <data name="UseInstructionOnContent" xml:space="preserve">
     <value>Displayed</value>
   </data>
+  <data name="WindowsBackdropSettings" xml:space="preserve">
+    <value>Windows backdrop settings</value>
+  </data>
   <data name="WindowsColorSettings" xml:space="preserve">
     <value>Windows color settings</value>
   </data>

@@ -44,14 +44,6 @@ namespace GetStoreApp.UI.Controls.About
         }
 
         /// <summary>
-        /// 开发者个人信息
-        /// </summary>
-        public async void OnDeveloperDescriptionClicked(object sender, RoutedEventArgs args)
-        {
-            await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011"));
-        }
-
-        /// <summary>
         /// 项目主页
         /// </summary>
         public async void OnProjectDescriptionClicked(object sender, RoutedEventArgs args)

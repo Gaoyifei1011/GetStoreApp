@@ -1,7 +1,4 @@
-﻿using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using System;
-using Windows.System;
+﻿using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.UI.Controls.About
 {
@@ -13,14 +10,6 @@ namespace GetStoreApp.UI.Controls.About
         public IntroductionControl()
         {
             InitializeComponent();
-        }
-
-        /// <summary>
-        /// 查看项目后续的维护信息
-        /// </summary>
-        public async void OnMaintenanceClicked(object sender, RoutedEventArgs args)
-        {
-            await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp"));
         }
     }
 }

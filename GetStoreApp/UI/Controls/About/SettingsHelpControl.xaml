@@ -116,8 +116,8 @@
                 <HyperlinkButton
                     Margin="-5,0,10,0"
                     Padding="5"
-                    Click="{x:Bind OnStartWithEClicked}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('About/StartsWithEButton')}">
+                    Content="{x:Bind root:ResourceService.GetLocalized('About/StartsWithEButton')}"
+                    NavigateUri="https://github.com/MicrosoftDocs/msix-docs/blob/main/msix-src/package/create-app-package-with-makeappx-tool.md#encrypt-or-decrypt-a-package-or-bundle">
 
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/StartsWithEButton')}" Placement="Mouse" />
@@ -127,8 +127,8 @@
                 <HyperlinkButton
                     Margin="-5,0,10,0"
                     Padding="5"
-                    Click="{x:Bind OnBlockMapClicked}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('About/BlockMapButton')}">
+                    Content="{x:Bind root:ResourceService.GetLocalized('About/BlockMapButton')}"
+                    NavigateUri="https://docs.microsoft.com/uwp/schemas/blockmapschema/app-package-block-map">
 
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/BlockMapButton')}" Placement="Mouse" />
@@ -156,8 +156,8 @@
             <HyperlinkButton
                 Margin="-5,0,10,0"
                 Padding="5"
-                Click="{x:Bind OnLearnWinGetConfigClicked}"
-                Content="{x:Bind root:ResourceService.GetLocalized('About/LearnWinGetConfig')}">
+                Content="{x:Bind root:ResourceService.GetLocalized('About/LearnWinGetConfig')}"
+                NavigateUri="https://learn.microsoft.com/windows/package-manager/configuration">
                 <ToolTipService.ToolTip>
                     <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/LearnWinGetConfig')}" Placement="Mouse" />
                 </ToolTipService.ToolTip>

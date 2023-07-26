@@ -13,13 +13,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Windows.System;
 using WinRT;
 
 namespace GetStoreApp.UI.Controls.Settings.Common
 {
     /// <summary>
-    /// WinGet ³ÌĞò°üÉèÖÃ¿Ø¼ş
+    /// WinGet ç¨‹åºåŒ…è®¾ç½®æ§ä»¶
     /// </summary>
     public sealed partial class WinGetConfigControl : Expander, INotifyPropertyChanged
     {
@@ -63,7 +62,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         }
 
         /// <summary>
-        /// ÅĞ¶ÏÁ½¸ö°æ±¾ÊÇ·ñ¹²Í¬´æÔÚ
+        /// åˆ¤æ–­ä¸¤ä¸ªç‰ˆæœ¬æ˜¯å¦å…±åŒå­˜åœ¨
         /// </summary>
         public bool IsBothVersionExisted(bool isOfficialVersionExisted, bool isDevVersionExisted)
         {
@@ -71,7 +70,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         }
 
         /// <summary>
-        /// ÅĞ¶Ï WinGet ³ÌĞò°üÊÇ·ñ´æÔÚ
+        /// åˆ¤æ–­ WinGet ç¨‹åºåŒ…æ˜¯å¦å­˜åœ¨
         /// </summary>
         public bool IsWinGetExisted(bool isOfficialVersionExisted, bool isDevVersionExisted)
         {
@@ -84,15 +83,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         }
 
         /// <summary>
-        /// °²×°¿ª·¢°æ±¾
-        /// </summary>
-        public async void OnDevVersionInstallClicked(object sender, RoutedEventArgs args)
-        {
-            await Launcher.LaunchUriAsync(new Uri("https://github.com/microsoft/winget-cli/releases"));
-        }
-
-        /// <summary>
-        /// WinGet ³ÌĞò°ü°²×°·½Ê½ÉèÖÃ
+        /// WinGet ç¨‹åºåŒ…å®‰è£…æ–¹å¼è®¾ç½®
         /// </summary>
         public async void OnWinGetInstallModeSelectClicked(object sender, RoutedEventArgs args)
         {
@@ -105,15 +96,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         }
 
         /// <summary>
-        /// °²×°¹Ù·½°æ±¾
-        /// </summary>
-        public async void OnOfficialVersionInstallClicked(object sender, RoutedEventArgs args)
-        {
-            await Launcher.LaunchUriAsync(new Uri("https://github.com/microsoft/winget-cli/releases"));
-        }
-
-        /// <summary>
-        /// ´ò¿ª WinGet ³ÌĞò°üÉèÖÃ
+        /// æ‰“å¼€ WinGet ç¨‹åºåŒ…è®¾ç½®
         /// </summary>
         public void OnOpenWinGetSettingsClicked(object sender, RoutedEventArgs args)
         {
@@ -146,7 +129,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         }
 
         /// <summary>
-        /// µ±Á½¸ö°æ±¾¹²´æÊ±£¬ÉèÖÃÊÇ·ñÓÅÏÈÊ¹ÓÃ¿ª·¢°æ±¾
+        /// å½“ä¸¤ä¸ªç‰ˆæœ¬å…±å­˜æ—¶ï¼Œè®¾ç½®æ˜¯å¦ä¼˜å…ˆä½¿ç”¨å¼€å‘ç‰ˆæœ¬
         /// </summary>
         public async void OnToggled(object sender, RoutedEventArgs args)
         {
@@ -159,7 +142,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         }
 
         /// <summary>
-        /// WinGet ³ÌĞò°üÅäÖÃÑ¡ÏîËµÃ÷
+        /// WinGet ç¨‹åºåŒ…é…ç½®é€‰é¡¹è¯´æ˜
         /// </summary>
         public void OnWinGetConfigInstructionClicked(object sender, RoutedEventArgs args)
         {
@@ -167,7 +150,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         }
 
         /// <summary>
-        /// ÊôĞÔÖµ·¢Éú±ä»¯Ê±Í¨Öª¸ü¸Ä
+        /// å±æ€§å€¼å‘ç”Ÿå˜åŒ–æ—¶é€šçŸ¥æ›´æ”¹
         /// </summary>
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

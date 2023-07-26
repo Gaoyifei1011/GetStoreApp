@@ -1,15 +1,13 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings.Appearance;
 using GetStoreApp.Services.Controls.Settings.Appearance;
-using GetStoreApp.Services.Window;
-using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Windows.System;
 using WinRT;
 
 namespace GetStoreApp.UI.Controls.Settings.Appearance
@@ -51,14 +49,6 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
         }
 
         /// <summary>
-        /// 背景色不可用时具体信息了解
-        /// </summary>
-        public void OnBackdropTipClicked(object sender, RoutedEventArgs args)
-        {
-            NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
-        }
-
-        /// <summary>
         /// 背景色修改设置
         /// </summary>
         public async void OnBackdropSelectClicked(object sender, RoutedEventArgs args)
@@ -70,6 +60,14 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
                 await BackdropService.SetBackdropAsync(Backdrop);
                 BackdropService.SetAppBackdrop();
             }
+        }
+
+        /// <summary>
+        /// 打开系统背景色设置
+        /// </summary>
+        public async void OnSettingsBackdropClicked(object sender, RoutedEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri("ms-settings:easeofaccess-visualeffects"));
         }
 
         /// <summary>

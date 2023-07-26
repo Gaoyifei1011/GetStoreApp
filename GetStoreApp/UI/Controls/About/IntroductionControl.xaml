@@ -78,8 +78,8 @@
             <HyperlinkButton
                 Margin="-5,0,10,0"
                 Padding="5"
-                Click="{x:Bind OnMaintenanceClicked}"
-                Content="{x:Bind root:ResourceService.GetLocalized('About/MaintenanceDescription')}">
+                Content="{x:Bind root:ResourceService.GetLocalized('About/MaintenanceDescription')}"
+                NavigateUri="https://github.com/Gaoyifei1011/GetStoreApp">
 
                 <ToolTipService.ToolTip>
                     <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/MaintenanceDescription')}" Placement="Mouse" />

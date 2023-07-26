@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
+    Height="61"
     Padding="16,12"
     Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
     BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
@@ -43,6 +44,7 @@
     <ToggleSwitch
         Grid.Column="2"
         MinWidth="0"
+        Margin="0,-2,0,0"
         controlExtensions:CursorHelper.Cursor="Hand"
         FlowDirection="RightToLeft"
         IsOn="{x:Bind TopMostValue, Mode=OneWay}"

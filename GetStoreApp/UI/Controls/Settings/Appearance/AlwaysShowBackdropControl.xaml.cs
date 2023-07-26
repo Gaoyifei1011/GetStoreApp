@@ -1,4 +1,8 @@
+using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Controls.Settings.Appearance;
+using GetStoreApp.Services.Window;
+using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.ComponentModel;
@@ -8,10 +12,12 @@ using WinRT;
 namespace GetStoreApp.UI.Controls.Settings.Appearance
 {
     /// <summary>
-    /// ÉèÖÃÒ³Ãæ£ºÊ¼ÖÕÏÔÊ¾±³¾°É«ÉèÖÃ¿Ø¼ş
+    /// è®¾ç½®é¡µé¢ï¼šå§‹ç»ˆæ˜¾ç¤ºèƒŒæ™¯è‰²è®¾ç½®æ§ä»¶
     /// </summary>
     public sealed partial class AlwaysShowBackdropControl : Grid, INotifyPropertyChanged
     {
+        public bool CanUseMicaBackdrop { get; set; }
+
         private bool _alwaysShowBackdropValue = AlwaysShowBackdropService.AlwaysShowBackdropValue;
 
         public bool AlwaysShowBackdropValue
@@ -30,10 +36,20 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
         public AlwaysShowBackdropControl()
         {
             InitializeComponent();
+            int BuildNumber = InfoHelper.SystemVersion.Build;
+            CanUseMicaBackdrop = BuildNumber >= 20000;
         }
 
         /// <summary>
-        /// ¿ª¹Ø°´Å¥ÇĞ»»Ê±ĞŞ¸ÄÏàÓ¦ÉèÖÃ
+        /// èƒŒæ™¯è‰²ä¸å¯ç”¨æ—¶å…·ä½“ä¿¡æ¯äº†è§£
+        /// </summary>
+        public void OnBackdropTipClicked(object sender, RoutedEventArgs args)
+        {
+            NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
+        }
+
+        /// <summary>
+        /// å¼€å…³æŒ‰é’®åˆ‡æ¢æ—¶ä¿®æ”¹ç›¸åº”è®¾ç½®
         /// </summary>
         public async void OnToggled(object sender, RoutedEventArgs args)
         {
@@ -46,7 +62,7 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
         }
 
         /// <summary>
-        /// ÊôĞÔÖµ·¢Éú±ä»¯Ê±Í¨Öª¸ü¸Ä
+        /// å±æ€§å€¼å‘ç”Ÿå˜åŒ–æ—¶é€šçŸ¥æ›´æ”¹
         /// </summary>
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

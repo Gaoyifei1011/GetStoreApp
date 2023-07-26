@@ -105,8 +105,8 @@
                                                 Grid.Column="1"
                                                 HorizontalAlignment="Right"
                                                 x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsOfficialVersionExisted), Mode=OneWay}"
-                                                Click="{x:Bind OnOfficialVersionInstallClicked}"
                                                 Content="{x:Bind root:ResourceService.GetLocalized('Settings/OfficialVersionInstall')}"
+                                                NavigateUri="https://github.com/microsoft/winget-cli/releases"
                                                 Style="{StaticResource HyperlinkButtonStyle}">
 
                                                 <ToolTipService.ToolTip>
@@ -136,8 +136,8 @@
                                                 Grid.Column="1"
                                                 HorizontalAlignment="Right"
                                                 x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsDevVersionExisted), Mode=OneWay}"
-                                                Click="{x:Bind OnDevVersionInstallClicked}"
                                                 Content="{x:Bind root:ResourceService.GetLocalized('Settings/DevVersionInstall')}"
+                                                NavigateUri="https://github.com/microsoft/winget-cli/releases"
                                                 Style="{StaticResource HyperlinkButtonStyle}">
 
                                                 <ToolTipService.ToolTip>
