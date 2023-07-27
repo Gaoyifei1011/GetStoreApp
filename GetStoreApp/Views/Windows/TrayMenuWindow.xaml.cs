@@ -17,7 +17,7 @@ using WinRT.Interop;
 namespace GetStoreApp.Views.Windows
 {
     /// <summary>
-    /// Ó¦ÓÃÈÎÎñÀ¸ÓÒ¼ü²Ëµ¥´°¿Ú
+    /// åº”ç”¨ä»»åŠ¡æ å³é”®èœå•çª—å£
     /// </summary>
     public sealed partial class TrayMenuWindow : Window, INotifyPropertyChanged
     {
@@ -52,14 +52,14 @@ namespace GetStoreApp.Views.Windows
             unchecked { SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_STYLE, (IntPtr)WindowStyle.WS_POPUPWINDOW); }
             SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_EXSTYLE, (IntPtr)WindowStyleEx.WS_EX_TOOLWINDOW);
 
-            // µ÷Õû´°¿ÚµÄ´óĞ¡
+            // è°ƒæ•´çª—å£çš„å¤§å°
             AppWindow.MoveAndResize(new RectInt32(-1, -1, 1, 1));
             AppWindow.Presenter.As<OverlappedPresenter>().IsAlwaysOnTop = true;
             AppWindow.Show();
         }
 
         /// <summary>
-        /// ´ò¿ªÓ¦ÓÃµÄÏîÄ¿Ö÷Ò³
+        /// æ‰“å¼€åº”ç”¨çš„é¡¹ç›®ä¸»é¡µ
         /// </summary>
         public async void OnProjectDescriptionClicked(object sender, RoutedEventArgs args)
         {
@@ -67,11 +67,11 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
-        /// ´ò¿ªÓ¦ÓÃ¡°¹ØÓÚ¡±Ò³Ãæ
+        /// æ‰“å¼€åº”ç”¨â€œå…³äºâ€é¡µé¢
         /// </summary>
         public void OnAboutAppClicked(object sender, RoutedEventArgs args)
         {
-            // ´°¿ÚÖÃÇ°¶Ë
+            // çª—å£ç½®å‰ç«¯
             Program.ApplicationRoot.MainWindow.Show();
 
             if (NavigationService.GetCurrentPageType() != typeof(AboutPage))
@@ -81,7 +81,7 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
-        /// ÍË³öÓ¦ÓÃ
+        /// é€€å‡ºåº”ç”¨
         /// </summary>
         public void OnExitClicked(object sender, RoutedEventArgs args)
         {
@@ -89,11 +89,11 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
-        /// ´ò¿ªÉèÖÃ
+        /// æ‰“å¼€è®¾ç½®
         /// </summary>
         public void OnSettingsClicked(object sender, RoutedEventArgs args)
         {
-            // ´°¿ÚÖÃÇ°¶Ë
+            // çª—å£ç½®å‰ç«¯
             Program.ApplicationRoot.MainWindow.Show();
 
             if (NavigationService.GetCurrentPageType() != typeof(SettingsPage))
@@ -103,16 +103,16 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
-        /// ÏÔÊ¾ / Òş²Ø´°¿Ú
+        /// æ˜¾ç¤º / éšè—çª—å£
         /// </summary>
         public void OnShowOrHideWindowClicked(object sender, RoutedEventArgs args)
         {
-            // Òş²Ø´°¿Ú
+            // éšè—çª—å£
             if (Program.ApplicationRoot.MainWindow.Visible)
             {
                 Program.ApplicationRoot.MainWindow.AppWindow.Hide();
             }
-            // ÏÔÊ¾´°¿Ú
+            // æ˜¾ç¤ºçª—å£
             else
             {
                 Program.ApplicationRoot.MainWindow.Show();
@@ -120,7 +120,7 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
-        /// ¸ü¸ÄÖ¸¶¨´°¿ÚµÄ´°¿ÚÊôĞÔ
+        /// æ›´æ”¹æŒ‡å®šçª—å£çš„çª—å£å±æ€§
         /// </summary>
         private IntPtr SetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex, IntPtr dwNewLong)
         {
@@ -135,7 +135,7 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
-        /// ÊôĞÔÖµ·¢Éú±ä»¯Ê±Í¨Öª¸ü¸Ä
+        /// å±æ€§å€¼å‘ç”Ÿå˜åŒ–æ—¶é€šçŸ¥æ›´æ”¹
         /// </summary>
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -143,13 +143,13 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
-        /// ´°¿ÚÏûÏ¢´¦Àí
+        /// çª—å£æ¶ˆæ¯å¤„ç†
         /// </summary>
         private IntPtr NewWindowProc(IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam)
         {
             switch (Msg)
             {
-                // ´°¿Ú´óĞ¡·¢Éú¸ü¸ÄÊ±µÄÏûÏ¢
+                // çª—å£å¤§å°å‘ç”Ÿæ›´æ”¹æ—¶çš„æ¶ˆæ¯
                 case WindowMessage.WM_GETMINMAXINFO:
                     {
                         MINMAXINFO minMaxInfo = Marshal.PtrToStructure<MINMAXINFO>(lParam);
@@ -158,7 +158,7 @@ namespace GetStoreApp.Views.Windows
                         Marshal.StructureToPtr(minMaxInfo, lParam, true);
                         break;
                     }
-                // ÏµÍ³ÉèÖÃÑ¡Ïî·¢Éú¸ü¸ÄÊ±µÄÏûÏ¢
+                // ç³»ç»Ÿè®¾ç½®é€‰é¡¹å‘ç”Ÿæ›´æ”¹æ—¶çš„æ¶ˆæ¯
                 case WindowMessage.WM_SETTINGCHANGE:
                     {
                         DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>

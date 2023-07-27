@@ -24,7 +24,7 @@ using System.Threading.Tasks;
 namespace GetStoreApp.UI.Controls.WinGet
 {
     /// <summary>
-    /// WinGet ³ÌĞò°üÒ³Ãæ£ºÒÑ°²×°Ó¦ÓÃ¿Ø¼ş
+    /// WinGet ç¨‹åºåŒ…é¡µé¢ï¼šå·²å®‰è£…åº”ç”¨æ§ä»¶
     /// </summary>
     public sealed partial class InstalledAppsControl : Grid, INotifyPropertyChanged
     {
@@ -72,10 +72,10 @@ namespace GetStoreApp.UI.Controls.WinGet
 
         private List<MatchResult> MatchResultList;
 
-        // Ğ¶ÔØÓ¦ÓÃ
+        // å¸è½½åº”ç”¨
         public XamlUICommand UnInstallCommand { get; } = new XamlUICommand();
 
-        // ¸´ÖÆĞ¶ÔØÃüÁî
+        // å¤åˆ¶å¸è½½å‘½ä»¤
         public XamlUICommand CopyUnInstallTextCommand { get; } = new XamlUICommand();
 
         public ObservableCollection<InstalledAppsModel> InstalledAppsDataList { get; set; } = new ObservableCollection<InstalledAppsModel>();
@@ -101,13 +101,13 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                         UninstallResult unInstallResult = await InstalledAppsManager.UninstallPackageAsync(MatchResultList.Find(item => item.CatalogPackage.InstalledVersion.Id == installedApps.AppID).CatalogPackage, uninstallOptions);
 
-                        // »ñÈ¡Ğ¶ÔØºóµÄ½á¹ûĞÅÏ¢
-                        // Ğ¶ÔØ³É¹¦£¬´ÓÁĞ±íÖĞÉ¾³ı¸ÃÓ¦ÓÃ
+                        // è·å–å¸è½½åçš„ç»“æœä¿¡æ¯
+                        // å¸è½½æˆåŠŸï¼Œä»åˆ—è¡¨ä¸­åˆ é™¤è¯¥åº”ç”¨
                         if (unInstallResult.Status == UninstallResultStatus.Ok)
                         {
                             AppNotificationService.Show(NotificationArgs.UnInstallSuccessfully, installedApps.AppName);
 
-                            // ¼ì²âÊÇ·ñĞèÒªÖØÆôÉè±¸Íê³ÉÓ¦ÓÃµÄĞ¶ÔØ£¬Èç¹ûÊÇ£¬Ñ¯ÎÊÓÃ»§ÊÇ·ñĞèÒªÖØÆôÉè±¸
+                            // æ£€æµ‹æ˜¯å¦éœ€è¦é‡å¯è®¾å¤‡å®Œæˆåº”ç”¨çš„å¸è½½ï¼Œå¦‚æœæ˜¯ï¼Œè¯¢é—®ç”¨æˆ·æ˜¯å¦éœ€è¦é‡å¯è®¾å¤‡
                             if (unInstallResult.RebootRequired)
                             {
                                 ContentDialogResult Result = await ContentDialogHelper.ShowAsync(new RebootDialog(WinGetOptionArgs.UnInstall, installedApps.AppName), this);
@@ -147,13 +147,13 @@ namespace GetStoreApp.UI.Controls.WinGet
                             AppNotificationService.Show(NotificationArgs.UnInstallFailed, installedApps.AppName);
                         }
                     }
-                    // ²Ù×÷±»ÓÃ»§ËùÈ¡ÏûÒì³£
+                    // æ“ä½œè¢«ç”¨æˆ·æ‰€å–æ¶ˆå¼‚å¸¸
                     catch (OperationCanceledException e)
                     {
                         LogService.WriteLog(LogType.INFO, "App uninstalling operation canceled.", e);
                         AppNotificationService.Show(NotificationArgs.UnInstallFailed, installedApps.AppName);
                     }
-                    // ÆäËûÒì³£
+                    // å…¶ä»–å¼‚å¸¸
                     catch (Exception e)
                     {
                         LogService.WriteLog(LogType.ERROR, "App uninstalling failed.", e);
@@ -181,7 +181,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         }
 
         /// <summary>
-        /// ±¾µØ»¯Ó¦ÓÃÊıÁ¿Í³¼ÆĞÅÏ¢
+        /// æœ¬åœ°åŒ–åº”ç”¨æ•°é‡ç»Ÿè®¡ä¿¡æ¯
         /// </summary>
         public string LocalizeInstalledAppsCountInfo(int count)
         {
@@ -196,7 +196,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         }
 
         /// <summary>
-        /// ³õÊ¼»¯ÒÑ°²×°Ó¦ÓÃĞÅÏ¢
+        /// åˆå§‹åŒ–å·²å®‰è£…åº”ç”¨ä¿¡æ¯
         /// </summary>
         public async void OnLoaded(object sender, RoutedEventArgs args)
         {
@@ -221,7 +221,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         }
 
         /// <summary>
-        /// ¸üĞÂÒÑ°²×°Ó¦ÓÃÊı¾İ
+        /// æ›´æ–°å·²å®‰è£…åº”ç”¨æ•°æ®
         /// </summary>
         public async void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
@@ -236,7 +236,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         }
 
         /// <summary>
-        /// ¸ù¾İÊäÈëµÄÄÚÈİ¼ìË÷Ó¦ÓÃ
+        /// æ ¹æ®è¾“å…¥çš„å†…å®¹æ£€ç´¢åº”ç”¨
         /// </summary>
         public void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
@@ -244,7 +244,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         }
 
         /// <summary>
-        /// ÎÄ±¾ÊäÈë¿òÄÚÈİÎª¿ÕÊ±£¬¸´Ô­Ô­À´µÄÄÚÈİ
+        /// æ–‡æœ¬è¾“å…¥æ¡†å†…å®¹ä¸ºç©ºæ—¶ï¼Œå¤åŸåŸæ¥çš„å†…å®¹
         /// </summary>
         public void OnInstalledAppsPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
@@ -258,7 +258,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         }
 
         /// <summary>
-        /// ÊôĞÔÖµ·¢Éú±ä»¯Ê±Í¨Öª¸ü¸Ä
+        /// å±æ€§å€¼å‘ç”Ÿå˜åŒ–æ—¶é€šçŸ¥æ›´æ”¹
         /// </summary>
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -266,7 +266,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         }
 
         /// <summary>
-        /// ¼ÓÔØÏµÍ³ÒÑ°²×°µÄÓ¦ÓÃĞÅÏ¢
+        /// åŠ è½½ç³»ç»Ÿå·²å®‰è£…çš„åº”ç”¨ä¿¡æ¯
         /// </summary>
         private async Task GetInstalledAppsAsync()
         {
@@ -295,7 +295,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         }
 
         /// <summary>
-        /// ³õÊ¼»¯ÁĞ±íÊı¾İ
+        /// åˆå§‹åŒ–åˆ—è¡¨æ•°æ®
         /// </summary>
         private void InitializeData(bool hasSearchText = false)
         {

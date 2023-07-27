@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 namespace GetStoreApp.UI.Notifications
 {
     /// <summary>
-    /// 分享失败信息提示通知
+    /// 鍒嗕韩澶辫触淇℃伅鎻愮ず閫氱煡
     /// </summary>
     public sealed partial class ShareFailedNotification : InAppNotification, INotifyPropertyChanged
     {
@@ -41,7 +41,7 @@ namespace GetStoreApp.UI.Notifications
         }
 
         /// <summary>
-        /// 属性值发生变化时通知更改
+        /// 灞炴�у�煎彂鐢熷彉鍖栨椂閫氱煡鏇存敼
         /// </summary>
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

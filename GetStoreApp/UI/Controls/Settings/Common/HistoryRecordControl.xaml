@@ -28,15 +28,12 @@
             <StackPanel
                 Grid.Column="1"
                 Margin="0,12"
+                VerticalAlignment="Center"
                 Orientation="Vertical">
 
-                <TextBlock
-                    VerticalAlignment="Center"
-                    Style="{StaticResource BodyTextBlockStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/HistoryRecord')}" />
+                <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/HistoryRecord')}" />
 
                 <TextBlock
-                    VerticalAlignment="Center"
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Style="{StaticResource CaptionTextBlockStyle}"
                     Text="{x:Bind root:ResourceService.GetLocalized('Settings/HistoryRecordDescription')}" />

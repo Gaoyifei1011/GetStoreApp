@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 namespace GetStoreApp.UI.Notifications
 {
     /// <summary>
-    /// 日志记录清除通知
+    /// 鏃ュ織璁板綍娓呴櫎閫氱煡
     /// </summary>
     public sealed partial class LogCleanNotification : InAppNotification, INotifyPropertyChanged
     {
@@ -32,7 +32,7 @@ namespace GetStoreApp.UI.Notifications
         }
 
         /// <summary>
-        /// 属性值发生变化时通知更改
+        /// 灞炴�у�煎彂鐢熷彉鍖栨椂閫氱煡鏇存敼
         /// </summary>
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

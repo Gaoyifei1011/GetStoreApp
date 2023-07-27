@@ -15,7 +15,7 @@ using Windows.Storage;
 namespace GetStoreApp.UI.Dialogs.About
 {
     /// <summary>
-    /// Ó¦ÓÃĞÅÏ¢¶Ô»°¿ò
+    /// åº”ç”¨ä¿¡æ¯å¯¹è¯æ¡†
     /// </summary>
     public sealed partial class AppInformationDialog : ContentDialog, INotifyPropertyChanged
     {
@@ -83,7 +83,7 @@ namespace GetStoreApp.UI.Dialogs.About
         }
 
         /// <summary>
-        /// ¸´ÖÆÓ¦ÓÃĞÅÏ¢
+        /// å¤åˆ¶åº”ç”¨ä¿¡æ¯
         /// </summary>
         public void OnCopyAppInformationClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
@@ -101,7 +101,7 @@ namespace GetStoreApp.UI.Dialogs.About
         }
 
         /// <summary>
-        /// ³õÊ¼»¯Ó¦ÓÃĞÅÏ¢
+        /// åˆå§‹åŒ–åº”ç”¨ä¿¡æ¯
         /// </summary>
         public async void OnLoaded(object sender, RoutedEventArgs args)
         {
@@ -111,14 +111,14 @@ namespace GetStoreApp.UI.Dialogs.About
             {
                 if (dependency.DisplayName.Contains("WindowsAppRuntime"))
                 {
-                    // Windows Ó¦ÓÃ SDK °æ±¾ĞÅÏ¢
+                    // Windows åº”ç”¨ SDK ç‰ˆæœ¬ä¿¡æ¯
                     WindowsAppSDKVersion = string.Format("{0}.{1}.{2}.{3}",
                         dependency.Id.Version.Major,
                         dependency.Id.Version.Minor,
                         dependency.Id.Version.Build,
                         dependency.Id.Version.Revision);
 
-                    // WinUI3 °æ±¾ĞÅÏ¢
+                    // WinUI3 ç‰ˆæœ¬ä¿¡æ¯
                     try
                     {
                         StorageFile WinUI3File = await StorageFile.GetFileFromPathAsync(string.Format(@"{0}\{1}", dependency.InstalledLocation.Path, "Microsoft.ui.xaml.Controls.dll"));
@@ -131,7 +131,7 @@ namespace GetStoreApp.UI.Dialogs.About
                         WinUI3Version = string.Empty;
                     }
 
-                    // WebView2 Core °æ±¾ĞÅÏ¢
+                    // WebView2 Core ç‰ˆæœ¬ä¿¡æ¯
                     try
                     {
                         StorageFile WebView2CoreFile = await StorageFile.GetFileFromPathAsync(string.Format(@"{0}\{1}", dependency.InstalledLocation.Path, "Microsoft.Web.WebView2.Core.dll"));
@@ -146,7 +146,7 @@ namespace GetStoreApp.UI.Dialogs.About
                 }
             }
 
-            // .NET °æ±¾ĞÅÏ¢
+            // .NET ç‰ˆæœ¬ä¿¡æ¯
             DoNetVersion = Convert.ToString(Environment.Version);
         }
 

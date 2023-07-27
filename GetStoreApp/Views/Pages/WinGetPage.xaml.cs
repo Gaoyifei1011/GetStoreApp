@@ -10,7 +10,7 @@ using System.Threading;
 namespace GetStoreApp.Views.Pages
 {
     /// <summary>
-    /// WinGet ³ÌĞò°üÒ³Ãæ
+    /// WinGet ç¨‹åºåŒ…é¡µé¢
     /// </summary>
     public sealed partial class WinGetPage : Page, INotifyPropertyChanged
     {
@@ -62,7 +62,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ÅĞ¶Ï WinGet ³ÌĞò°üÊÇ·ñ´æÔÚ
+        /// åˆ¤æ–­ WinGet ç¨‹åºåŒ…æ˜¯å¦å­˜åœ¨
         /// </summary>
         public bool IsWinGetExisted(bool isOfficialVersionExisted, bool isDevVersionExisted, bool needReverseValue)
         {
@@ -78,7 +78,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ÊôĞÔÖµ·¢Éú±ä»¯Ê±Í¨Öª¸ü¸Ä
+        /// å±æ€§å€¼å‘ç”Ÿå˜åŒ–æ—¶é€šçŸ¥æ›´æ”¹
         /// </summary>
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -86,7 +86,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ³õÊ¼»¯ WinGet ³ÌĞò°ü
+        /// åˆå§‹åŒ– WinGet ç¨‹åºåŒ…
         /// </summary>
         private void OnInitializeSuccessLoaded()
         {

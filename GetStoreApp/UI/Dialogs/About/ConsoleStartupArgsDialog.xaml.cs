@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace GetStoreApp.UI.Dialogs.About
 {
     /// <summary>
-    /// 控制台程序参数对话框
+    /// 鎺у埗鍙扮▼搴忓弬鏁板璇濇
     /// </summary>
     public sealed partial class ConsoleStartupArgsDialog : ContentDialog
     {

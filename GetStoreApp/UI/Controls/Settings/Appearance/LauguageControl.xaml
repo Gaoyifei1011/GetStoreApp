@@ -28,15 +28,14 @@
         FontSize="16"
         Glyph="&#xF2B7;" />
 
-    <StackPanel Grid.Column="1" Orientation="Vertical">
+    <StackPanel
+        Grid.Column="1"
+        VerticalAlignment="Center"
+        Orientation="Vertical">
+
+        <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/Language')}" />
 
         <TextBlock
-            VerticalAlignment="Center"
-            Style="{StaticResource BodyTextBlockStyle}"
-            Text="{x:Bind root:ResourceService.GetLocalized('Settings/Language')}" />
-
-        <TextBlock
-            VerticalAlignment="Center"
             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
             Style="{StaticResource CaptionTextBlockStyle}"
             Text="{x:Bind root:ResourceService.GetLocalized('Settings/LanguageDescription')}" />
@@ -61,17 +60,20 @@
         </ToolTipService.ToolTip>
     </MenuFlyoutItem>
 
-    <ComboBox
+    <DropDownButton
         Grid.Column="3"
-        Width="Auto"
         VerticalAlignment="Center"
-        DisplayMemberPath="DisplayName"
-        ItemsSource="{x:Bind LanguageList}"
-        SelectedItem="{x:Bind AppLanguage, Mode=OneWay}"
-        SelectionChanged="{x:Bind OnSelectionChanged}">
+        Content="{x:Bind AppLanguage.DisplayName, Mode=OneWay}">
+
+        <DropDownButton.Flyout>
+            <MenuFlyout
+                x:Name="LanguageFlyout"
+                MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}"
+                Placement="Bottom" />
+        </DropDownButton.Flyout>
 
         <ToolTipService.ToolTip>
             <ToolTip Content="{x:Bind AppLanguage.DisplayName, Mode=OneWay}" Placement="Mouse" />
         </ToolTipService.ToolTip>
-    </ComboBox>
+    </DropDownButton>
 </Grid>

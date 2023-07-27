@@ -6,7 +6,7 @@ namespace GetStoreApp.UI.Dialogs.WinGet
 {
     /// <summary>
     /// <summary>
-    /// ÖØÆôÉè±¸¶Ô»°¿ò
+    /// é‡å¯è®¾å¤‡å¯¹è¯æ¡†
     /// </summary>
     public sealed partial class RebootDialog : ContentDialog
     {

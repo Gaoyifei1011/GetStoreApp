@@ -28,15 +28,14 @@
         FontSize="16"
         Glyph="&#xECC8;" />
 
-    <StackPanel Grid.Column="1" Orientation="Vertical">
+    <StackPanel
+        Grid.Column="1"
+        VerticalAlignment="Center"
+        Orientation="Vertical">
+
+        <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/InstallMode')}" />
 
         <TextBlock
-            VerticalAlignment="Center"
-            Style="{StaticResource BodyTextBlockStyle}"
-            Text="{x:Bind root:ResourceService.GetLocalized('Settings/InstallMode')}" />
-
-        <TextBlock
-            VerticalAlignment="Center"
             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
             Style="{StaticResource CaptionTextBlockStyle}"
             Text="{x:Bind root:ResourceService.GetLocalized('Settings/InstallModeDescription')}" />

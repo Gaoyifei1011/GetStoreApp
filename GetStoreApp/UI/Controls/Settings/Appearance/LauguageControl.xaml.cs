@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings.Appearance;
 using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Window;
@@ -6,9 +7,11 @@ using GetStoreApp.UI.Notifications;
 using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using WinRT;
 
 namespace GetStoreApp.UI.Controls.Settings.Appearance
 {
@@ -37,6 +40,44 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
         public LauguageControl()
         {
             InitializeComponent();
+
+            for (int index = 0; index < LanguageList.Count; index++)
+            {
+                LanguageModel languageItem = LanguageList[index];
+                ToggleMenuFlyoutItem toggleMenuFlyoutItem = new ToggleMenuFlyoutItem()
+                {
+                    Text = languageItem.DisplayName,
+                    Style = ResourceDictionaryHelper.MenuFlyoutResourceDict["ToggleMenuFlyoutItemStyle"] as Style,
+                    Tag = index
+                };
+                if (AppLanguage.InternalName == LanguageList[index].InternalName)
+                {
+                    toggleMenuFlyoutItem.IsChecked = true;
+                }
+
+                toggleMenuFlyoutItem.Click += async (sender, args) =>
+                {
+                    foreach (MenuFlyoutItemBase menuFlyoutItemBase in LanguageFlyout.Items)
+                    {
+                        ToggleMenuFlyoutItem toggleMenuFlyoutItem = menuFlyoutItemBase.As<ToggleMenuFlyoutItem>();
+                        if (toggleMenuFlyoutItem is not null && toggleMenuFlyoutItem.IsChecked)
+                        {
+                            toggleMenuFlyoutItem.IsChecked = false;
+                        }
+                    }
+
+                    int selectedIndex = Convert.ToInt32(sender.As<ToggleMenuFlyoutItem>().Tag);
+                    LanguageFlyout.Items[selectedIndex].As<ToggleMenuFlyoutItem>().IsChecked = true;
+
+                    if (AppLanguage.InternalName != LanguageList[selectedIndex].InternalName)
+                    {
+                        AppLanguage = LanguageList[selectedIndex];
+                        await LanguageService.SetLanguageAsync(AppLanguage);
+                        new LanguageChangeNotification(this).Show();
+                    }
+                };
+                LanguageFlyout.Items.Add(toggleMenuFlyoutItem);
+            }
         }
 
         /// <summary>
@@ -45,19 +86,6 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
         public void OnLanguageTipClicked(object sender, RoutedEventArgs args)
         {
             NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
-        }
-
-        /// <summary>
-        /// 应用默认语言修改
-        /// </summary>
-        public async void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
-        {
-            if (args.RemovedItems.Count > 0)
-            {
-                AppLanguage = args.AddedItems[0] as LanguageModel;
-                await LanguageService.SetLanguageAsync(AppLanguage);
-                new LanguageChangeNotification(this).Show();
-            }
         }
 
         /// <summary>

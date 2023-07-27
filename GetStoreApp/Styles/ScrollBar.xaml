@@ -432,7 +432,7 @@
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <!--  Òþ²ØÄ¬ÈÏ¹ö¶¯ÌõµÄ±³¾°É«  -->
+                            <!--  éšè—é»˜è®¤æ»šåŠ¨æ¡çš„èƒŒæ™¯è‰²  -->
                             <Rectangle
                                 x:Name="VerticalTrackRect"
                                 Grid.RowSpan="5"
@@ -532,7 +532,7 @@
                                         <Setter Target="HorizontalTrackRect.Stroke" Value="{ThemeResource ScrollBarTrackStrokeDisabled}" />
                                         <Setter Target="VerticalTrackRect.Stroke" Value="{ThemeResource ScrollBarTrackStrokeDisabled}" />
                                         <Setter Target="HorizontalTrackRect.Fill" Value="{ThemeResource ScrollBarTrackFillDisabled}" />
-                                        <!--  Òþ²ØÄ¬ÈÏ¹ö¶¯ÌõµÄ±³¾°É«  -->
+                                        <!--  éšè—é»˜è®¤æ»šåŠ¨æ¡çš„èƒŒæ™¯è‰²  -->
                                         <Setter Target="VerticalTrackRect.Fill" Value="Transparent" />
                                         <Setter Target="HorizontalPanningThumb.Background" Value="{ThemeResource ScrollBarPanningThumbBackgroundDisabled}" />
                                         <Setter Target="VerticalPanningThumb.Background" Value="{ThemeResource ScrollBarPanningThumbBackgroundDisabled}" />
@@ -823,7 +823,7 @@
                                         <Setter Target="HorizontalTrackRect.Stroke" Value="{ThemeResource ScrollBarTrackStrokePointerOver}" />
                                         <Setter Target="VerticalTrackRect.Stroke" Value="{ThemeResource ScrollBarTrackStrokePointerOver}" />
                                         <Setter Target="HorizontalTrackRect.Fill" Value="{ThemeResource ScrollBarTrackFillPointerOver}" />
-                                        <!--  Òþ²ØÄ¬ÈÏ¹ö¶¯ÌõµÄ±³¾°É«  -->
+                                        <!--  éšè—é»˜è®¤æ»šåŠ¨æ¡çš„èƒŒæ™¯è‰²  -->
                                         <Setter Target="VerticalTrackRect.Fill" Value="Transparent" />
                                         <Setter Target="HorizontalThumb.Background" Value="{ThemeResource ScrollBarThumbBackground}" />
                                         <Setter Target="VerticalThumb.Background" Value="{ThemeResource ScrollBarThumbBackground}" />
@@ -938,7 +938,7 @@
                                         <Setter Target="HorizontalTrackRect.Stroke" Value="{ThemeResource ScrollBarTrackStrokePointerOver}" />
                                         <Setter Target="VerticalTrackRect.Stroke" Value="{ThemeResource ScrollBarTrackStrokePointerOver}" />
                                         <Setter Target="HorizontalTrackRect.Fill" Value="{ThemeResource ScrollBarTrackFillPointerOver}" />
-                                        <!--  Òþ²ØÄ¬ÈÏ¹ö¶¯ÌõµÄ±³¾°É«  -->
+                                        <!--  éšè—é»˜è®¤æ»šåŠ¨æ¡çš„èƒŒæ™¯è‰²  -->
                                         <Setter Target="VerticalTrackRect.Fill" Value="Transparent" />
                                         <Setter Target="HorizontalThumb.Background" Value="{ThemeResource ScrollBarThumbBackground}" />
                                         <Setter Target="VerticalThumb.Background" Value="{ThemeResource ScrollBarThumbBackground}" />

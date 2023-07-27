@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 namespace GetStoreApp.UI.Notifications
 {
     /// <summary>
-    /// ��ݲ���Ӧ����֪ͨ
+    /// 快捷操作应用内通知
     /// </summary>
     public sealed partial class QuickOperationNotification : InAppNotification, INotifyPropertyChanged
     {
@@ -79,7 +79,7 @@ namespace GetStoreApp.UI.Notifications
         }
 
         /// <summary>
-        /// ����ֵ�����仯ʱ֪ͨ����
+        /// 属性值发生变化时通知更改
         /// </summary>
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

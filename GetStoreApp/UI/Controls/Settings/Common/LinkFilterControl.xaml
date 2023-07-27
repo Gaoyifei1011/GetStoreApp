@@ -30,15 +30,12 @@
             <StackPanel
                 Grid.Column="1"
                 Margin="0,12"
+                VerticalAlignment="Center"
                 Orientation="Vertical">
 
-                <TextBlock
-                    VerticalAlignment="Center"
-                    Style="{StaticResource BodyTextBlockStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/LinkFilter')}" />
+                <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/LinkFilter')}" />
 
                 <TextBlock
-                    VerticalAlignment="Center"
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Style="{StaticResource CaptionTextBlockStyle}"
                     Text="{x:Bind root:ResourceService.GetLocalized('Settings/LinkFilterDescription')}" />

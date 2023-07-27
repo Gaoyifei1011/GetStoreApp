@@ -27,7 +27,7 @@ using System.Threading.Tasks;
 namespace GetStoreApp.UI.Controls.WinGet
 {
     /// <summary>
-    /// WinGet ³ÌĞò°üÒ³Ãæ£ºËÑË÷Ó¦ÓÃ¿Ø¼ş
+    /// WinGet ç¨‹åºåŒ…é¡µé¢ï¼šæœç´¢åº”ç”¨æ§ä»¶
     /// </summary>
     public sealed partial class SearchAppsControl : Grid, INotifyPropertyChanged
     {
@@ -78,13 +78,13 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
-        // °²×°Ó¦ÓÃ
+        // å®‰è£…åº”ç”¨
         public XamlUICommand InstallCommand { get; } = new XamlUICommand();
 
-        // ¸´ÖÆ°²×°ÃüÁî
+        // å¤åˆ¶å®‰è£…å‘½ä»¤
         public XamlUICommand CopyInstallTextCommand { get; } = new XamlUICommand();
 
-        // Ê¹ÓÃÃüÁî°²×°
+        // ä½¿ç”¨å‘½ä»¤å®‰è£…
         public XamlUICommand InstallWithCmdCommand { get; } = new XamlUICommand();
 
         private List<MatchResult> MatchResultList;
@@ -104,7 +104,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 {
                     try
                     {
-                        // ½ûÓÃµ±Ç°Ó¦ÓÃµÄ¿É°²×°×´Ì¬
+                        // ç¦ç”¨å½“å‰åº”ç”¨çš„å¯å®‰è£…çŠ¶æ€
                         foreach (SearchAppsModel searchAppsItem in SearchAppsDataList)
                         {
                             if (searchAppsItem.AppID == searchApps.AppID)
@@ -119,12 +119,12 @@ namespace GetStoreApp.UI.Controls.WinGet
                         installOptions.PackageInstallMode = (PackageInstallMode)Enum.Parse(typeof(PackageInstallMode), WinGetConfigService.WinGetInstallMode.InternalName);
                         installOptions.PackageInstallScope = PackageInstallScope.Any;
 
-                        // ¸üĞÂ°²×°½ø¶È
+                        // æ›´æ–°å®‰è£…è¿›åº¦
                         Progress<InstallProgress> progressCallBack = new Progress<InstallProgress>((installProgress) =>
                         {
                             switch (installProgress.State)
                             {
-                                // ´¦ÓÚµÈ´ıÖĞ×´Ì¬
+                                // å¤„äºç­‰å¾…ä¸­çŠ¶æ€
                                 case PackageInstallProgressState.Queued:
                                     {
                                         lock (WinGetInstance.InstallingAppsObject)
@@ -140,7 +140,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                         }
                                         break;
                                     }
-                                // ´¦ÓÚÏÂÔØÖĞ×´Ì¬
+                                // å¤„äºä¸‹è½½ä¸­çŠ¶æ€
                                 case PackageInstallProgressState.Downloading:
                                     {
                                         lock (WinGetInstance.InstallingAppsObject)
@@ -158,7 +158,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                         }
                                         break;
                                     }
-                                // ´¦ÓÚ°²×°ÖĞ×´Ì¬
+                                // å¤„äºå®‰è£…ä¸­çŠ¶æ€
                                 case PackageInstallProgressState.Installing:
                                     {
                                         lock (WinGetInstance.InstallingAppsObject)
@@ -175,7 +175,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                         }
                                         break;
                                     }
-                                // °²×°Íê³ÉºóµÈ´ıÆäËû²Ù×÷×´Ì¬
+                                // å®‰è£…å®Œæˆåç­‰å¾…å…¶ä»–æ“ä½œçŠ¶æ€
                                 case PackageInstallProgressState.PostInstall:
                                     {
                                         lock (WinGetInstance.InstallingAppsObject)
@@ -191,7 +191,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                         }
                                         break;
                                     }
-                                // ´¦ÓÚ°²×°Íê³É×´Ì¬
+                                // å¤„äºå®‰è£…å®ŒæˆçŠ¶æ€
                                 case PackageInstallProgressState.Finished:
                                     {
                                         lock (WinGetInstance.InstallingAppsObject)
@@ -211,10 +211,10 @@ namespace GetStoreApp.UI.Controls.WinGet
                             }
                         });
 
-                        // ÈÎÎñÈ¡ÏûÖ´ĞĞ²Ù×÷
+                        // ä»»åŠ¡å–æ¶ˆæ‰§è¡Œæ“ä½œ
                         CancellationTokenSource installTokenSource = new CancellationTokenSource();
 
-                        // Ìí¼ÓÈÎÎñ
+                        // æ·»åŠ ä»»åŠ¡
                         lock (WinGetInstance.InstallingAppsObject)
                         {
                             WinGetInstance.InstallingAppsList.Add(new InstallingAppsModel()
@@ -231,12 +231,12 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                         InstallResult installResult = await SearchAppsManager.InstallPackageAsync(MatchResultList.Find(item => item.CatalogPackage.DefaultInstallVersion.Id == searchApps.AppID).CatalogPackage, installOptions).AsTask(installTokenSource.Token, progressCallBack);
 
-                        // »ñÈ¡°²×°Íê³ÉºóµÄ½á¹ûĞÅÏ¢
+                        // è·å–å®‰è£…å®Œæˆåçš„ç»“æœä¿¡æ¯
                         if (installResult.Status == InstallResultStatus.Ok)
                         {
                             AppNotificationService.Show(NotificationArgs.InstallSuccessfully, searchApps.AppName);
 
-                            // ¼ì²âÊÇ·ñĞèÒªÖØÆôÉè±¸Íê³ÉÓ¦ÓÃµÄĞ¶ÔØ£¬Èç¹ûÊÇ£¬Ñ¯ÎÊÓÃ»§ÊÇ·ñĞèÒªÖØÆôÉè±¸
+                            // æ£€æµ‹æ˜¯å¦éœ€è¦é‡å¯è®¾å¤‡å®Œæˆåº”ç”¨çš„å¸è½½ï¼Œå¦‚æœæ˜¯ï¼Œè¯¢é—®ç”¨æˆ·æ˜¯å¦éœ€è¦é‡å¯è®¾å¤‡
                             if (installResult.RebootRequired)
                             {
                                 ContentDialogResult Result = await ContentDialogHelper.ShowAsync(new RebootDialog(WinGetOptionArgs.UpgradeInstall, searchApps.AppName), this);
@@ -276,7 +276,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             AppNotificationService.Show(NotificationArgs.InstallFailed, searchApps.AppName, searchApps.AppID);
                         }
 
-                        // Ó¦ÓÃ°²×°Ê§°Ü£¬½«µ±Ç°ÈÎÎñ×´Ì¬ĞŞ¸ÄÎª¿É°²×°×´Ì¬
+                        // åº”ç”¨å®‰è£…å¤±è´¥ï¼Œå°†å½“å‰ä»»åŠ¡çŠ¶æ€ä¿®æ”¹ä¸ºå¯å®‰è£…çŠ¶æ€
                         foreach (SearchAppsModel searchAppsItem in SearchAppsDataList)
                         {
                             if (searchAppsItem.AppID == searchApps.AppID)
@@ -286,7 +286,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             }
                         }
 
-                        // Íê³ÉÈÎÎñºó´ÓÈÎÎñ¹ÜÀíÖĞÉ¾³ıÈÎÎñ
+                        // å®Œæˆä»»åŠ¡åä»ä»»åŠ¡ç®¡ç†ä¸­åˆ é™¤ä»»åŠ¡
                         lock (WinGetInstance.InstallingAppsObject)
                         {
                             foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsList)
@@ -300,12 +300,12 @@ namespace GetStoreApp.UI.Controls.WinGet
                             WinGetInstance.InstallingStateDict.Remove(searchApps.AppID);
                         }
                     }
-                    // ²Ù×÷±»ÓÃ»§ËùÈ¡ÏûÒì³£
+                    // æ“ä½œè¢«ç”¨æˆ·æ‰€å–æ¶ˆå¼‚å¸¸
                     catch (OperationCanceledException e)
                     {
                         LogService.WriteLog(LogType.INFO, "App installing operation canceled.", e);
 
-                        // Ó¦ÓÃ°²×°Ê§°Ü£¬½«µ±Ç°ÈÎÎñ×´Ì¬ĞŞ¸ÄÎª¿É°²×°×´Ì¬
+                        // åº”ç”¨å®‰è£…å¤±è´¥ï¼Œå°†å½“å‰ä»»åŠ¡çŠ¶æ€ä¿®æ”¹ä¸ºå¯å®‰è£…çŠ¶æ€
                         foreach (SearchAppsModel searchAppsItem in SearchAppsDataList)
                         {
                             if (searchAppsItem.AppID == searchApps.AppID)
@@ -315,7 +315,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             }
                         }
 
-                        // Íê³ÉÈÎÎñºó´ÓÈÎÎñ¹ÜÀíÖĞÉ¾³ıÈÎÎñ
+                        // å®Œæˆä»»åŠ¡åä»ä»»åŠ¡ç®¡ç†ä¸­åˆ é™¤ä»»åŠ¡
                         lock (WinGetInstance.InstallingAppsObject)
                         {
                             foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsList)
@@ -329,12 +329,12 @@ namespace GetStoreApp.UI.Controls.WinGet
                             WinGetInstance.InstallingStateDict.Remove(searchApps.AppID);
                         }
                     }
-                    // ÆäËûÒì³£
+                    // å…¶ä»–å¼‚å¸¸
                     catch (Exception e)
                     {
                         LogService.WriteLog(LogType.ERROR, "App installing failed.", e);
 
-                        // Ó¦ÓÃ°²×°Ê§°Ü£¬½«µ±Ç°ÈÎÎñ×´Ì¬ĞŞ¸ÄÎª¿É°²×°×´Ì¬
+                        // åº”ç”¨å®‰è£…å¤±è´¥ï¼Œå°†å½“å‰ä»»åŠ¡çŠ¶æ€ä¿®æ”¹ä¸ºå¯å®‰è£…çŠ¶æ€
                         foreach (SearchAppsModel searchAppsItem in SearchAppsDataList)
                         {
                             if (searchAppsItem.AppID == searchApps.AppID)
@@ -344,7 +344,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             }
                         }
 
-                        // Íê³ÉÈÎÎñºó´ÓÈÎÎñ¹ÜÀíÖĞÉ¾³ıÈÎÎñ
+                        // å®Œæˆä»»åŠ¡åä»ä»»åŠ¡ç®¡ç†ä¸­åˆ é™¤ä»»åŠ¡
                         lock (WinGetInstance.InstallingAppsObject)
                         {
                             foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsList)
@@ -411,7 +411,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         }
 
         /// <summary>
-        /// ±¾µØ»¯Ó¦ÓÃÊıÁ¿Í³¼ÆĞÅÏ¢
+        /// æœ¬åœ°åŒ–åº”ç”¨æ•°é‡ç»Ÿè®¡ä¿¡æ¯
         /// </summary>
         public string LocalizeSearchAppsCountInfo(int count)
         {
@@ -445,7 +445,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         }
 
         /// <summary>
-        /// ³õÊ¼»¯ËÑË÷Ó¦ÓÃÄÚÈİ
+        /// åˆå§‹åŒ–æœç´¢åº”ç”¨å†…å®¹
         /// </summary>
         public void OnLoaded(object sender, RoutedEventArgs args)
         {
@@ -468,7 +468,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         }
 
         /// <summary>
-        /// ¸üĞÂÒÑ°²×°Ó¦ÓÃÊı¾İ
+        /// æ›´æ–°å·²å®‰è£…åº”ç”¨æ•°æ®
         /// </summary>
         public async void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
@@ -486,7 +486,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         }
 
         /// <summary>
-        /// ¸ù¾İÊäÈëµÄÄÚÈİ¼ìË÷Ó¦ÓÃ
+        /// æ ¹æ®è¾“å…¥çš„å†…å®¹æ£€ç´¢åº”ç”¨
         /// </summary>
         public async void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
@@ -505,7 +505,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         }
 
         /// <summary>
-        /// ËÑË÷Ó¦ÓÃ
+        /// æœç´¢åº”ç”¨
         /// </summary>
         public async Task GetSearchAppsAsync()
         {
@@ -527,7 +527,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                     {
                         FindPackagesOptions findPackagesOptions = WinGetService.CreateFindPackagesOptions();
                         PackageMatchFilter nameMatchFilter = WinGetService.CreatePacakgeMatchFilter();
-                        // ¸ù¾İÓ¦ÓÃµÄÃû³ÆÑ°ÕÒ·ûºÏÌõ¼şµÄ½á¹û
+                        // æ ¹æ®åº”ç”¨çš„åç§°å¯»æ‰¾ç¬¦åˆæ¡ä»¶çš„ç»“æœ
                         nameMatchFilter.Field = PackageMatchField.Name;
                         nameMatchFilter.Option = PackageFieldMatchOption.ContainsCaseInsensitive;
                         nameMatchFilter.Value = cachedSearchText;
@@ -544,7 +544,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         }
 
         /// <summary>
-        /// ³õÊ¼»¯ÁĞ±íÊı¾İ
+        /// åˆå§‹åŒ–åˆ—è¡¨æ•°æ®
         /// </summary>
         public void InitializeData()
         {
@@ -578,7 +578,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         }
 
         /// <summary>
-        /// ÊôĞÔÖµ·¢Éú±ä»¯Ê±Í¨Öª¸ü¸Ä
+        /// å±æ€§å€¼å‘ç”Ÿå˜åŒ–æ—¶é€šçŸ¥æ›´æ”¹
         /// </summary>
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

@@ -4,7 +4,7 @@ using Microsoft.UI.Xaml;
 namespace GetStoreApp.UI.Notifications
 {
     /// <summary>
-    /// 网页缓存清理应用内通知
+    /// 缃戦〉缂撳瓨娓呯悊搴旂敤鍐呴�氱煡
     /// </summary>
     public sealed partial class WebCacheCleanNotification : InAppNotification
     {

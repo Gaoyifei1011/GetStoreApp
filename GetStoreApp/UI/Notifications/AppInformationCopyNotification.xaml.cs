@@ -4,7 +4,7 @@ using Microsoft.UI.Xaml;
 namespace GetStoreApp.UI.Notifications
 {
     /// <summary>
-    /// 应用信息复制应用内通知
+    /// 搴旂敤淇℃伅澶嶅埗搴旂敤鍐呴�氱煡
     /// </summary>
     public sealed partial class AppInformationCopyNotification : InAppNotification
     {

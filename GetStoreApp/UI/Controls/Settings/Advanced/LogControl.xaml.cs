@@ -6,7 +6,7 @@ using Microsoft.UI.Xaml.Controls;
 namespace GetStoreApp.UI.Controls.Settings.Advanced
 {
     /// <summary>
-    /// ÈÕÖ¾¼ÇÂ¼¿Ø¼þ
+    /// æ—¥å¿—è®°å½•æŽ§ä»¶
     /// </summary>
     public sealed partial class LogControl : Expander
     {
@@ -16,7 +16,7 @@ namespace GetStoreApp.UI.Controls.Settings.Advanced
         }
 
         /// <summary>
-        /// ´ò¿ªÈÕÖ¾ÎÄ¼þ¼Ð
+        /// æ‰“å¼€æ—¥å¿—æ–‡ä»¶å¤¹
         /// </summary>
         public async void OnOpenLogFolderClicked(object sender, RoutedEventArgs args)
         {
@@ -24,7 +24,7 @@ namespace GetStoreApp.UI.Controls.Settings.Advanced
         }
 
         /// <summary>
-        /// Çå³ýËùÓÐÈÕÖ¾¼ÇÂ¼
+        /// æ¸…é™¤æ‰€æœ‰æ—¥å¿—è®°å½•
         /// </summary>
         public void OnClearClicked(object sender, RoutedEventArgs args)
         {

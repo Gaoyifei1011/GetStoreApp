@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 namespace GetStoreApp.UI.Notifications
 {
     /// <summary>
-    /// WinGet �����Ӧ�ð�װ��ж�ء�����ָ���Ӧ����֪ͨ
+    /// WinGet 程序包应用安装、卸载、升级指令复制应用内通知
     /// </summary>
     public sealed partial class WinGetCopyNotification : InAppNotification, INotifyPropertyChanged
     {
@@ -53,7 +53,7 @@ namespace GetStoreApp.UI.Notifications
         }
 
         /// <summary>
-        /// ����ֵ�����仯ʱ֪ͨ����
+        /// 属性值发生变化时通知更改
         /// </summary>
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

@@ -62,13 +62,13 @@ namespace GetStoreApp.UI.Controls.WinGet
 
         private List<MatchResult> MatchResultList;
 
-        // Ó¦ÓÃÉı¼¶
+        // åº”ç”¨å‡çº§
         public XamlUICommand UpdateCommand { get; } = new XamlUICommand();
 
-        // ¸´ÖÆÉı¼¶ÃüÁî
+        // å¤åˆ¶å‡çº§å‘½ä»¤
         public XamlUICommand CopyUpgradeTextCommand { get; } = new XamlUICommand();
 
-        // Ê¹ÓÃÃüÁîĞĞ°²×°
+        // ä½¿ç”¨å‘½ä»¤è¡Œå®‰è£…
         public XamlUICommand InstallWithCmdCommand { get; } = new XamlUICommand();
 
         public ObservableCollection<UpgradableAppsModel> UpgradableAppsDataList { get; } = new ObservableCollection<UpgradableAppsModel>();
@@ -86,7 +86,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 {
                     try
                     {
-                        // ½ûÓÃµ±Ç°Ó¦ÓÃµÄ¿ÉÉı¼¶×´Ì¬
+                        // ç¦ç”¨å½“å‰åº”ç”¨çš„å¯å‡çº§çŠ¶æ€
                         foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsDataList)
                         {
                             if (upgradableAppsItem.AppID == upgradableApps.AppID)
@@ -101,12 +101,12 @@ namespace GetStoreApp.UI.Controls.WinGet
                         installOptions.PackageInstallMode = (PackageInstallMode)Enum.Parse(typeof(PackageInstallMode), WinGetConfigService.WinGetInstallMode.InternalName);
                         installOptions.PackageInstallScope = PackageInstallScope.Any;
 
-                        // ¸üĞÂÉı¼¶½ø¶È
+                        // æ›´æ–°å‡çº§è¿›åº¦
                         Progress<InstallProgress> progressCallBack = new Progress<InstallProgress>((installProgress) =>
                         {
                             switch (installProgress.State)
                             {
-                                // ´¦ÓÚµÈ´ıÖĞ×´Ì¬
+                                // å¤„äºç­‰å¾…ä¸­çŠ¶æ€
                                 case PackageInstallProgressState.Queued:
                                     {
                                         lock (WinGetInstance.InstallingAppsObject)
@@ -122,7 +122,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                         }
                                         break;
                                     }
-                                // ´¦ÓÚÏÂÔØÖĞ×´Ì¬
+                                // å¤„äºä¸‹è½½ä¸­çŠ¶æ€
                                 case PackageInstallProgressState.Downloading:
                                     {
                                         lock (WinGetInstance.InstallingAppsObject)
@@ -141,7 +141,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                         }
                                         break;
                                     }
-                                // ´¦ÓÚ°²×°ÖĞ×´Ì¬
+                                // å¤„äºå®‰è£…ä¸­çŠ¶æ€
                                 case PackageInstallProgressState.Installing:
                                     {
                                         lock (WinGetInstance.InstallingAppsObject)
@@ -158,7 +158,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                         }
                                         break;
                                     }
-                                // ¹ÒÆğ×´Ì¬
+                                // æŒ‚èµ·çŠ¶æ€
                                 case PackageInstallProgressState.PostInstall:
                                     {
                                         lock (WinGetInstance.InstallingAppsObject)
@@ -174,7 +174,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                         }
                                         break;
                                     }
-                                // ´¦ÓÚ°²×°Íê³É×´Ì¬
+                                // å¤„äºå®‰è£…å®ŒæˆçŠ¶æ€
                                 case PackageInstallProgressState.Finished:
                                     {
                                         lock (WinGetInstance.InstallingAppsObject)
@@ -194,10 +194,10 @@ namespace GetStoreApp.UI.Controls.WinGet
                             }
                         });
 
-                        // ÈÎÎñÈ¡ÏûÖ´ĞĞ²Ù×÷
+                        // ä»»åŠ¡å–æ¶ˆæ‰§è¡Œæ“ä½œ
                         CancellationTokenSource upgradeTokenSource = new CancellationTokenSource();
 
-                        // Ìí¼ÓÈÎÎñ
+                        // æ·»åŠ ä»»åŠ¡
                         lock (WinGetInstance.InstallingAppsObject)
                         {
                             WinGetInstance.InstallingAppsList.Add(new InstallingAppsModel()
@@ -214,13 +214,13 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                         InstallResult installResult = await UpgradableAppsManager.UpgradePackageAsync(MatchResultList.Find(item => item.CatalogPackage.DefaultInstallVersion.Id == upgradableApps.AppID).CatalogPackage, installOptions).AsTask(upgradeTokenSource.Token, progressCallBack);
 
-                        // »ñÈ¡Éı¼¶Íê³ÉºóµÄ½á¹ûĞÅÏ¢
-                        // Éı¼¶Íê³É£¬´ÓÁĞ±íÖĞÉ¾³ı¸ÃÓ¦ÓÃ
+                        // è·å–å‡çº§å®Œæˆåçš„ç»“æœä¿¡æ¯
+                        // å‡çº§å®Œæˆï¼Œä»åˆ—è¡¨ä¸­åˆ é™¤è¯¥åº”ç”¨
                         if (installResult.Status == InstallResultStatus.Ok)
                         {
                             AppNotificationService.Show(NotificationArgs.UpgradeSuccessfully, upgradableApps.AppName);
 
-                            // ¼ì²âÊÇ·ñĞèÒªÖØÆôÉè±¸Íê³ÉÓ¦ÓÃµÄĞ¶ÔØ£¬Èç¹ûÊÇ£¬Ñ¯ÎÊÓÃ»§ÊÇ·ñĞèÒªÖØÆôÉè±¸
+                            // æ£€æµ‹æ˜¯å¦éœ€è¦é‡å¯è®¾å¤‡å®Œæˆåº”ç”¨çš„å¸è½½ï¼Œå¦‚æœæ˜¯ï¼Œè¯¢é—®ç”¨æˆ·æ˜¯å¦éœ€è¦é‡å¯è®¾å¤‡
                             if (installResult.RebootRequired)
                             {
                                 ContentDialogResult Result = await ContentDialogHelper.ShowAsync(new RebootDialog(WinGetOptionArgs.UpgradeInstall, upgradableApps.AppName), this);
@@ -255,7 +255,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                 }
                             }
 
-                            // Íê³ÉÈÎÎñºó´ÓÈÎÎñ¹ÜÀíÖĞÉ¾³ıÈÎÎñ
+                            // å®Œæˆä»»åŠ¡åä»ä»»åŠ¡ç®¡ç†ä¸­åˆ é™¤ä»»åŠ¡
                             lock (WinGetInstance.InstallingAppsObject)
                             {
                                 foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsList)
@@ -269,7 +269,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                 WinGetInstance.InstallingStateDict.Remove(upgradableApps.AppID);
                             }
 
-                            // ´ÓÉı¼¶ÁĞ±íÖĞÒÆ³ıÒÑÉı¼¶Íê³ÉµÄÈÎÎñ
+                            // ä»å‡çº§åˆ—è¡¨ä¸­ç§»é™¤å·²å‡çº§å®Œæˆçš„ä»»åŠ¡
                             foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsDataList)
                             {
                                 if (upgradableAppsItem.AppID == upgradableApps.AppID)
@@ -282,7 +282,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         }
                         else
                         {
-                            // Ó¦ÓÃÉı¼¶Ê§°Ü£¬½«µ±Ç°ÈÎÎñ×´Ì¬ĞŞ¸ÄÎª¿ÉÉı¼¶×´Ì¬
+                            // åº”ç”¨å‡çº§å¤±è´¥ï¼Œå°†å½“å‰ä»»åŠ¡çŠ¶æ€ä¿®æ”¹ä¸ºå¯å‡çº§çŠ¶æ€
                             foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsDataList)
                             {
                                 if (upgradableAppsItem.AppID == upgradableApps.AppID)
@@ -291,7 +291,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                 }
                             }
 
-                            // Ó¦ÓÃÉı¼¶Ê§°Ü£¬½«µ±Ç°ÈÎÎñ×´Ì¬ĞŞ¸ÄÎª¿ÉÉı¼¶×´Ì¬
+                            // åº”ç”¨å‡çº§å¤±è´¥ï¼Œå°†å½“å‰ä»»åŠ¡çŠ¶æ€ä¿®æ”¹ä¸ºå¯å‡çº§çŠ¶æ€
                             lock (WinGetInstance.InstallingAppsObject)
                             {
                                 foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsList)
@@ -308,12 +308,12 @@ namespace GetStoreApp.UI.Controls.WinGet
                             AppNotificationService.Show(NotificationArgs.UpgradeFailed, upgradableApps.AppName, upgradableApps.AppID);
                         }
                     }
-                    // ²Ù×÷±»ÓÃ»§ËùÈ¡ÏûÒì³£
+                    // æ“ä½œè¢«ç”¨æˆ·æ‰€å–æ¶ˆå¼‚å¸¸
                     catch (OperationCanceledException e)
                     {
                         LogService.WriteLog(LogType.INFO, "App installing operation canceled.", e);
 
-                        // Ó¦ÓÃÉı¼¶Ê§°Ü£¬½«µ±Ç°ÈÎÎñ×´Ì¬ĞŞ¸ÄÎª¿ÉÉı¼¶×´Ì¬
+                        // åº”ç”¨å‡çº§å¤±è´¥ï¼Œå°†å½“å‰ä»»åŠ¡çŠ¶æ€ä¿®æ”¹ä¸ºå¯å‡çº§çŠ¶æ€
                         foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsDataList)
                         {
                             if (upgradableAppsItem.AppID == upgradableApps.AppID)
@@ -323,7 +323,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             }
                         }
 
-                        // Ó¦ÓÃÉı¼¶Ê§°Ü£¬½«µ±Ç°ÈÎÎñ×´Ì¬ĞŞ¸ÄÎª¿ÉÉı¼¶×´Ì¬
+                        // åº”ç”¨å‡çº§å¤±è´¥ï¼Œå°†å½“å‰ä»»åŠ¡çŠ¶æ€ä¿®æ”¹ä¸ºå¯å‡çº§çŠ¶æ€
                         lock (WinGetInstance.InstallingAppsObject)
                         {
                             foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsList)
@@ -337,12 +337,12 @@ namespace GetStoreApp.UI.Controls.WinGet
                             WinGetInstance.InstallingStateDict.Remove(upgradableApps.AppID);
                         }
                     }
-                    // ÆäËûÒì³£
+                    // å…¶ä»–å¼‚å¸¸
                     catch (Exception e)
                     {
                         LogService.WriteLog(LogType.ERROR, "App installing failed.", e);
 
-                        // Ó¦ÓÃÉı¼¶Ê§°Ü£¬´ÓÈÎÎñ¹ÜÀíÁĞ±íÖĞÒÆ³ıµ±Ç°ÈÎÎñ
+                        // åº”ç”¨å‡çº§å¤±è´¥ï¼Œä»ä»»åŠ¡ç®¡ç†åˆ—è¡¨ä¸­ç§»é™¤å½“å‰ä»»åŠ¡
                         foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsDataList)
                         {
                             if (upgradableAppsItem.AppID == upgradableApps.AppID)
@@ -352,7 +352,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             }
                         }
 
-                        // Ó¦ÓÃÉı¼¶Ê§°Ü£¬´ÓÈÎÎñ¹ÜÀíÁĞ±íÖĞÒÆ³ıµ±Ç°ÈÎÎñ
+                        // åº”ç”¨å‡çº§å¤±è´¥ï¼Œä»ä»»åŠ¡ç®¡ç†åˆ—è¡¨ä¸­ç§»é™¤å½“å‰ä»»åŠ¡
                         lock (WinGetInstance.InstallingAppsObject)
                         {
                             foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsList)
@@ -419,7 +419,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         }
 
         /// <summary>
-        /// ±¾µØ»¯Ó¦ÓÃÊıÁ¿Í³¼ÆĞÅÏ¢
+        /// æœ¬åœ°åŒ–åº”ç”¨æ•°é‡ç»Ÿè®¡ä¿¡æ¯
         /// </summary>
         public string LocalizeUpgradableAppsCountInfo(int count)
         {
@@ -434,7 +434,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         }
 
         /// <summary>
-        /// ³õÊ¼»¯¿ÉÉı¼¶Ó¦ÓÃĞÅÏ¢
+        /// åˆå§‹åŒ–å¯å‡çº§åº”ç”¨ä¿¡æ¯
         /// </summary>
         public async void OnLoaded(object sender, RoutedEventArgs args)
         {
@@ -466,7 +466,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         }
 
         /// <summary>
-        /// ¸üĞÂ¿ÉÉı¼¶Ó¦ÓÃÊı¾İ
+        /// æ›´æ–°å¯å‡çº§åº”ç”¨æ•°æ®
         /// </summary>
         public async void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
@@ -487,7 +487,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         }
 
         /// <summary>
-        /// ÊôĞÔÖµ·¢Éú±ä»¯Ê±Í¨Öª¸ü¸Ä
+        /// å±æ€§å€¼å‘ç”Ÿå˜åŒ–æ—¶é€šçŸ¥æ›´æ”¹
         /// </summary>
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -495,7 +495,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         }
 
         /// <summary>
-        /// ¼ÓÔØÏµÍ³¿ÉÉı¼¶µÄÓ¦ÓÃĞÅÏ¢
+        /// åŠ è½½ç³»ç»Ÿå¯å‡çº§çš„åº”ç”¨ä¿¡æ¯
         /// </summary>
         private async Task GetUpgradableAppsAsync()
         {

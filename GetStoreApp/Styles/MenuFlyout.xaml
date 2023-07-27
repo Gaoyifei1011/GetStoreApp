@@ -1,7 +1,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="MenuFlyoutPresenterStyle" TargetType="MenuFlyoutPresenter">
-        <!--  ÐÞ¸Ä²Ëµ¥¸¡³ö¿Ø¼þµÄÄ¬ÈÏ±³¾°  -->
+        <!--  ä¿®æ”¹èœå•æµ®å‡ºæŽ§ä»¶çš„é»˜è®¤èƒŒæ™¯  -->
         <Setter Property="Background" Value="{ThemeResource AcrylicInAppFillColorDefaultBrush}" />
         <Setter Property="BorderBrush" Value="{ThemeResource MenuFlyoutPresenterBorderBrush}" />
         <Setter Property="BorderThickness" Value="{ThemeResource MenuFlyoutPresenterBorderThemeThickness}" />

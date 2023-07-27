@@ -3,7 +3,7 @@ using Microsoft.UI.Xaml.Controls;
 namespace GetStoreApp.UI.Dialogs.Common
 {
     /// <summary>
-    /// 应用程序正在运行中对话框
+    /// 搴旂敤绋嬪簭姝ｅ湪杩愯涓璇濇
     /// </summary>
     public sealed partial class AppRunningDialog : ContentDialog
     {
