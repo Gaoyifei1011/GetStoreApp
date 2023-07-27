@@ -75,6 +75,8 @@ namespace GetStoreApp.UI.Dialogs.Download
         /// </summary>
         public void OnCopyFileInformationClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            args.Cancel = true;
+
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileName") + FileName);
             stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FilePath") + FilePath);

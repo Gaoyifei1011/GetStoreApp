@@ -85,6 +85,9 @@ namespace GetStoreApp.Services.Root
                         exceptionBuilder.Append("\t\tMessage:");
                         exceptionBuilder.Append(string.IsNullOrEmpty(exception.Message) ? unknown : WhiteSpaceRegex.Replace(exception.Message, " "));
                         exceptionBuilder.Append(lineBreak);
+                        exceptionBuilder.Append("\t\tHResult:");
+                        exceptionBuilder.Append(exception.HResult);
+                        exceptionBuilder.Append(lineBreak);
                         exceptionBuilder.Append("\t\tSource:");
                         exceptionBuilder.Append(string.IsNullOrEmpty(exception.Source) ? unknown : WhiteSpaceRegex.Replace(exception.Source, " "));
                         exceptionBuilder.Append(lineBreak);
