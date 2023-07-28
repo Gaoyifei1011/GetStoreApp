@@ -66,10 +66,13 @@
         Content="{x:Bind AppLanguage.DisplayName, Mode=OneWay}">
 
         <DropDownButton.Flyout>
-            <MenuFlyout
-                x:Name="LanguageFlyout"
-                MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}"
-                Placement="Bottom" />
+            <MenuFlyout x:Name="LanguageFlyout" Placement="Bottom">
+                <MenuFlyout.MenuFlyoutPresenterStyle>
+                    <Style BasedOn="{StaticResource MenuFlyoutPresenterStyle}" TargetType="MenuFlyoutPresenter">
+                        <Setter Property="MaxHeight" Value="200" />
+                    </Style>
+                </MenuFlyout.MenuFlyoutPresenterStyle>
+            </MenuFlyout>
         </DropDownButton.Flyout>
 
         <ToolTipService.ToolTip>

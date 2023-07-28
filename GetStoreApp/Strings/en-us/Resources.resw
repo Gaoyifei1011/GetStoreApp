@@ -162,9 +162,6 @@
   <data name="OK" xml:space="preserve">
     <value>OK</value>
   </data>
-  <data name="WindowXamlRootInitializeFailed" xml:space="preserve">
-    <value>Window XamlRoot initialization failed, window XamlRoot is empty</value>
-  </data>
   <data name="SystemBackdropControllerInitializeFailed" xml:space="preserve">
     <value>The app's sytstem backdrop controller failed to initialize</value>
   </data>

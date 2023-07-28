@@ -168,13 +168,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         public static partial bool FreeConsole();
 
         /// <summary>
-        /// 检索与调用进程关联的控制台所使用的窗口句柄。
-        /// </summary>
-        /// <returns>返回值是与调用进程关联的控制台所使用的窗口的句柄; 如果没有此类关联的控制台，则为 NULL 。</returns>
-        [LibraryImport(Kernel32, EntryPoint = "GetConsoleWindow", SetLastError = false)]
-        public static partial IntPtr GetConsoleWindow();
-
-        /// <summary>
         /// 检索创建调用进程时指定的 <see cref="STARTUPINFO"> 结构的内容。
         /// </summary>
         /// <param name="lpStartupInfo">指向接收启动信息的 <see cref="STARTUPINFO"> 结构的指针。</param>
