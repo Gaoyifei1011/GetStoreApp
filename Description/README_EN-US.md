@@ -118,7 +118,7 @@ All the content of the program has been developed
 
 > * [AndromedaMelody](https://github.com/AndromedaMelody)&emsp;
 > * [cnbluefire](https://github.com/cnbluefire)&emsp;
-> * [·ÉÏè](https://fionlen.azurewebsites.net)&emsp;
+> * [é£žç¿”](https://fionlen.azurewebsites.net)&emsp;
 > * [MouriNaruto](https://github.com/MouriNaruto)&emsp;
 > * [TaylorShi](https://github.com/TaylorShi)&emsp;
 > * [wherewhere](https://github.com/wherewhere)&emsp;
@@ -128,7 +128,7 @@ All the content of the program has been developed
 ### Other content
 
 > * This is the first small project I personally practiced when learning C#, because the advanced content about C# is not very deep, so there are many deficiencies in code content and quality, I hope to cover more.
-> * The project will last 12 months and 10 days from 20 May 2020 to 30 May 2023.
+> * The project will last 12 months and 10 days from 20 May 2022 to 30 May 2023.
 > * This project is an open source project licensed under the MIT license, and you may modify, distribute, or merge copies with new copies. If you use the project, please do not use it for illegal purposes, and the developer will not be held responsible.
 
 ------
