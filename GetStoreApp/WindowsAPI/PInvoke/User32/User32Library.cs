@@ -46,14 +46,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         public static unsafe partial bool GetCursorPos(PointInt32* lpPoint);
 
         /// <summary>
-        /// 返回指定窗口的每英寸点 (dpi) 值。
-        /// </summary>
-        /// <param name="hwnd">要获取相关信息的窗口。</param>
-        /// <returns>窗口的 DPI，无效 的 <param name="hwnd"> 值将导致返回值 0。</returns>
-        [LibraryImport(User32, EntryPoint = "GetDpiForWindow", SetLastError = false)]
-        public static partial int GetDpiForWindow(IntPtr hwnd);
-
-        /// <summary>
         /// 检索有关指定窗口的信息。 该函数还会检索 32 位 (DWORD) 值，该值位于指定偏移量处，并进入额外的窗口内存。
         /// </summary>
         /// <param name="hWnd">窗口的句柄，间接地是窗口所属的类。</param>

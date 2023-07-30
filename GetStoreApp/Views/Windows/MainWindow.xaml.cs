@@ -645,10 +645,14 @@ namespace GetStoreApp.Views.Windows
                 // 窗口大小发生更改时的消息
                 case WindowMessage.WM_GETMINMAXINFO:
                     {
-                        MINMAXINFO minMaxInfo = Marshal.PtrToStructure<MINMAXINFO>(lParam);
-                        minMaxInfo.ptMinTrackSize.X = DPICalcHelper.ConvertEpxToPixel(hWnd, 600);
-                        minMaxInfo.ptMinTrackSize.Y = DPICalcHelper.ConvertEpxToPixel(hWnd, 768);
-                        Marshal.StructureToPtr(minMaxInfo, lParam, true);
+                        if (Content is not null && Content.XamlRoot is not null)
+                        {
+                            MINMAXINFO minMaxInfo = Marshal.PtrToStructure<MINMAXINFO>(lParam);
+                            minMaxInfo.ptMinTrackSize.X = (int)(600 * Content.XamlRoot.RasterizationScale);
+                            minMaxInfo.ptMinTrackSize.Y = (int)(768 * Content.XamlRoot.RasterizationScale);
+                            Marshal.StructureToPtr(minMaxInfo, lParam, true);
+                        }
+
                         break;
                     }
                 // 窗口接收其他数据消息
@@ -745,19 +749,22 @@ namespace GetStoreApp.Views.Windows
                 // 当用户按下鼠标右键时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCRBUTTONDOWN:
                     {
-                        PointInt32 pt;
-                        unsafe
+                        if (Content is not null && Content.XamlRoot is not null)
                         {
-                            User32Library.GetCursorPos(&pt);
+                            PointInt32 pt;
+                            unsafe
+                            {
+                                User32Library.GetCursorPos(&pt);
+                            }
+
+                            FlyoutShowOptions options = new FlyoutShowOptions();
+                            options.ShowMode = FlyoutShowMode.Standard;
+                            options.Position = InfoHelper.SystemVersion.Build >= 22000 ?
+                            new Point((pt.X - AppWindow.Position.X - 8) / Content.XamlRoot.RasterizationScale, (pt.Y - AppWindow.Position.Y) / Content.XamlRoot.RasterizationScale) :
+                            new Point(pt.X - AppWindow.Position.X - 8, pt.Y - AppWindow.Position.Y);
+
+                            AppTitlebar.TitlebarMenuFlyout.ShowAt(Content, options);
                         }
-
-                        FlyoutShowOptions options = new FlyoutShowOptions();
-                        options.ShowMode = FlyoutShowMode.Standard;
-                        options.Position = InfoHelper.SystemVersion.Build >= 22000 ?
-                        new Point(DPICalcHelper.ConvertPixelToEpx(Handle, pt.X - AppWindow.Position.X - 8), DPICalcHelper.ConvertPixelToEpx(Handle, pt.Y - AppWindow.Position.Y)) :
-                        new Point(pt.X - AppWindow.Position.X - 8, pt.Y - AppWindow.Position.Y);
-
-                        AppTitlebar.TitlebarMenuFlyout.ShowAt(Content, options);
                         return 0;
                     }
             }
