@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Services.Root;
 using System;
-using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Controls.Settings.Experiment
 {
@@ -19,17 +18,17 @@ namespace GetStoreApp.Services.Controls.Settings.Experiment
         /// <summary>
         /// 应用在初始化前获取设置存储的网络监控开启值
         /// </summary>
-        public static async Task InitializeNetWorkMonitorValueAsync()
+        public static void InitializeNetWorkMonitorValue()
         {
-            NetWorkMonitorValue = await GetNetWorkMonitorValueAsync();
+            NetWorkMonitorValue = GetNetWorkMonitorValue();
         }
 
         /// <summary>
         /// 获取设置存储的网络监控开启值，如果设置没有存储，使用默认值
         /// </summary>
-        private static async Task<bool> GetNetWorkMonitorValueAsync()
+        private static bool GetNetWorkMonitorValue()
         {
-            bool? netWorkMonitorValue = await ConfigService.ReadSettingAsync<bool?>(SettingsKey);
+            bool? netWorkMonitorValue = ConfigService.ReadSetting<bool?>(SettingsKey);
 
             if (!netWorkMonitorValue.HasValue)
             {
@@ -42,21 +41,21 @@ namespace GetStoreApp.Services.Controls.Settings.Experiment
         /// <summary>
         /// 网络监控开启值发生修改时修改设置存储的网络监控开启值
         /// </summary>
-        public static async Task SetNetWorkMonitorValueAsync(bool netWorkMonitorValue)
+        public static void SetNetWorkMonitorValue(bool netWorkMonitorValue)
         {
             NetWorkMonitorValue = netWorkMonitorValue;
 
-            await ConfigService.SaveSettingAsync(SettingsKey, netWorkMonitorValue);
+            ConfigService.SaveSetting(SettingsKey, netWorkMonitorValue);
         }
 
         /// <summary>
         /// 恢复默认网络监控开启值
         /// </summary>
-        public static async Task RestoreDefaultValueAsync()
+        public static void RestoreDefaultValue()
         {
             NetWorkMonitorValue = DefaultNetWorkMonitorValue;
 
-            await ConfigService.SaveSettingAsync(SettingsKey, DefaultNetWorkMonitorValue);
+            ConfigService.SaveSetting(SettingsKey, DefaultNetWorkMonitorValue);
         }
     }
 }

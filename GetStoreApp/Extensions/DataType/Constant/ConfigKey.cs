@@ -17,8 +17,6 @@
 
         public const string DownloadModeKey = "DownloadMode";
 
-        public const string ExitKey = "AppExit";
-
         public const string HistoryLiteNumKey = "HistoryLiteNum";
 
         public const string HistoryJumpListNumKey = "HistoryJumpListNum";
@@ -33,15 +31,11 @@
 
         public const string NotificationKey = "AppNotification";
 
-        public const string NotifyIconMenuThemeKey = "NotifyIconMenuTheme";
-
         public const string StartsWithEFilterKey = "StartsWithEFilterValue";
 
         public const string ThemeKey = "AppTheme";
 
         public const string TopMostKey = "TopMostValue";
-
-        public const string UseInstructionKey = "UseInsVisValue";
 
         public const string WindowWidthKey = "WindowWidth";
 

@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Models.Controls.Settings.Common;
+﻿using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Services.Controls.Settings.Common;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -15,9 +15,9 @@ namespace GetStoreApp.UI.Controls.Settings.Common
     /// </summary>
     public sealed partial class HistoryRecordControl : Expander, INotifyPropertyChanged
     {
-        private HistoryLiteNumModel _historyLiteItem = HistoryRecordService.HistoryLiteNum;
+        private GroupOptionsModel _historyLiteItem = HistoryRecordService.HistoryLiteNum;
 
-        public HistoryLiteNumModel HistoryLiteItem
+        public GroupOptionsModel HistoryLiteItem
         {
             get { return _historyLiteItem; }
 
@@ -28,9 +28,9 @@ namespace GetStoreApp.UI.Controls.Settings.Common
             }
         }
 
-        private HistoryJumpListNumModel _historyJumpListItem = HistoryRecordService.HistoryJumpListNum;
+        private GroupOptionsModel _historyJumpListItem = HistoryRecordService.HistoryJumpListNum;
 
-        public HistoryJumpListNumModel HistoryJumpListItem
+        public GroupOptionsModel HistoryJumpListItem
         {
             get { return _historyJumpListItem; }
 
@@ -41,9 +41,9 @@ namespace GetStoreApp.UI.Controls.Settings.Common
             }
         }
 
-        public List<HistoryLiteNumModel> HistoryLiteNumList { get; } = HistoryRecordService.HistoryLiteNumList;
+        public List<GroupOptionsModel> HistoryLiteNumList { get; } = HistoryRecordService.HistoryLiteNumList;
 
-        public List<HistoryJumpListNumModel> HistoryJumpListNumList { get; } = HistoryRecordService.HistoryJumpListNumList;
+        public List<GroupOptionsModel> HistoryJumpListNumList { get; } = HistoryRecordService.HistoryJumpListNumList;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -52,26 +52,26 @@ namespace GetStoreApp.UI.Controls.Settings.Common
             InitializeComponent();
         }
 
-        public bool IsHistoryLiteItemChecked(int selectedIHistoryLiteNumValue, int historyLiteNumValue)
+        public bool IsHistoryLiteItemChecked(GroupOptionsModel selectedMember, GroupOptionsModel comparedMember)
         {
-            return selectedIHistoryLiteNumValue == historyLiteNumValue;
+            return selectedMember.SelectedValue == comparedMember.SelectedValue;
         }
 
-        public bool IsHistoryJumpListItemChecked(string selectedIHistoryJumpListNumValue, string historyJumpListNumValue)
+        public bool IsHistoryJumpListItemChecked(GroupOptionsModel selectedMember, GroupOptionsModel comparedMember)
         {
-            return selectedIHistoryJumpListNumValue == historyJumpListNumValue;
+            return selectedMember.SelectedValue == comparedMember.SelectedValue;
         }
 
         /// <summary>
         /// 微软商店页面“历史记录”显示数目修改
         /// </summary>
-        public async void OnHistoryLiteSelectClicked(object sender, RoutedEventArgs args)
+        public void OnHistoryLiteSelectClicked(object sender, RoutedEventArgs args)
         {
             ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 HistoryLiteItem = HistoryLiteNumList[Convert.ToInt32(item.Tag)];
-                await HistoryRecordService.SetHistoryLiteNumAsync(HistoryLiteItem);
+                HistoryRecordService.SetHistoryLiteNum(HistoryLiteItem);
             }
         }
 
@@ -84,7 +84,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
             if (item.Tag is not null)
             {
                 HistoryJumpListItem = HistoryJumpListNumList[Convert.ToInt32(item.Tag)];
-                await HistoryRecordService.SetHistoryJumpListNumAsync(HistoryJumpListItem);
+                HistoryRecordService.SetHistoryJumpListNum(HistoryJumpListItem);
                 await HistoryRecordService.UpdateHistoryJumpListAsync(HistoryJumpListItem);
             }
         }

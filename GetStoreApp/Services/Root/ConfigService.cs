@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Windows.Storage;
+﻿using Windows.Storage;
 
 namespace GetStoreApp.Services.Root
 {
@@ -11,22 +10,22 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 读取设置选项存储信息
         /// </summary>
-        public static async Task<T> ReadSettingAsync<T>(string key)
+        public static T ReadSetting<T>(string key)
         {
             if (ApplicationData.Current.LocalSettings.Values[key] is null)
             {
                 return default;
             }
 
-            return await Task.FromResult((T)ApplicationData.Current.LocalSettings.Values[key]);
+            return (T)ApplicationData.Current.LocalSettings.Values[key];
         }
 
         /// <summary>
         /// 保存设置选项存储信息
         /// </summary>
-        public static async Task SaveSettingAsync<T>(string key, T value)
+        public static void SaveSetting<T>(string key, T value)
         {
-            ApplicationData.Current.LocalSettings.Values[key] = await Task.FromResult(value);
+            ApplicationData.Current.LocalSettings.Values[key] = value;
         }
     }
 }

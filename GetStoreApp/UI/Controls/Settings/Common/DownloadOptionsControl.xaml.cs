@@ -1,9 +1,6 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Models.Controls.Settings.Common;
+﻿using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Services.Window;
-using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.Dialogs;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -47,9 +44,9 @@ namespace GetStoreApp.UI.Controls.Settings.Common
             }
         }
 
-        private DownloadModeModel _downloadMode = DownloadOptionsService.DownloadMode;
+        private GroupOptionsModel _downloadMode = DownloadOptionsService.DownloadMode;
 
-        public DownloadModeModel DownloadMode
+        public GroupOptionsModel DownloadMode
         {
             get { return _downloadMode; }
 
@@ -60,7 +57,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
             }
         }
 
-        public List<DownloadModeModel> DownloadModeList { get; } = DownloadOptionsService.DownloadModeList;
+        public List<GroupOptionsModel> DownloadModeList { get; } = DownloadOptionsService.DownloadModeList;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -74,17 +71,9 @@ namespace GetStoreApp.UI.Controls.Settings.Common
             return selectedIndex == index;
         }
 
-        public bool IsDownloadModeChecked(string selectedInternalName, string internalName)
+        public bool IsDownloadModeChecked(GroupOptionsModel selectedMember, GroupOptionsModel comparedMember)
         {
-            return selectedInternalName == internalName;
-        }
-
-        /// <summary>
-        /// 下载管理说明
-        /// </summary>
-        public void OnDownloadInstructionClicked(object sender, RoutedEventArgs args)
-        {
-            NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
+            return selectedMember.SelectedValue == comparedMember.SelectedValue;
         }
 
         /// <summary>
@@ -98,10 +87,10 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// <summary>
         /// 使用默认目录
         /// </summary>
-        public async void OnUseDefaultFolderClicked(object sender, RoutedEventArgs args)
+        public void OnUseDefaultFolderClicked(object sender, RoutedEventArgs args)
         {
             DownloadFolder = DownloadOptionsService.DefaultFolder;
-            await DownloadOptionsService.SetFolderAsync(DownloadOptionsService.DefaultFolder);
+            DownloadOptionsService.SetFolder(DownloadOptionsService.DefaultFolder);
         }
 
         /// <summary>
@@ -120,33 +109,33 @@ namespace GetStoreApp.UI.Controls.Settings.Common
             if (Result)
             {
                 DownloadFolder = await StorageFolder.GetFolderFromPathAsync(dialog.Path);
-                await DownloadOptionsService.SetFolderAsync(DownloadFolder);
+                DownloadOptionsService.SetFolder(DownloadFolder);
             }
         }
 
         /// <summary>
         /// 修改同时下载文件数
         /// </summary>
-        public async void OnDownloadItemSelectClicked(object sender, RoutedEventArgs args)
+        public void OnDownloadItemSelectClicked(object sender, RoutedEventArgs args)
         {
             ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 DownloadItem = Convert.ToInt32(item.Tag);
-                await DownloadOptionsService.SetItemAsync(DownloadItem);
+                DownloadOptionsService.SetItem(DownloadItem);
             }
         }
 
         /// <summary>
         /// 修改下载文件的方式
         /// </summary>
-        public async void OnDownloadModeSelectClicked(object sender, RoutedEventArgs args)
+        public void OnDownloadModeSelectClicked(object sender, RoutedEventArgs args)
         {
             ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 DownloadMode = DownloadModeList[Convert.ToInt32(item.Tag)];
-                await DownloadOptionsService.SetModeAsync(DownloadMode);
+                DownloadOptionsService.SetMode(DownloadMode);
             }
         }
 

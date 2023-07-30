@@ -5,44 +5,25 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace GetStoreApp.Views.Pages
 {
     /// <summary>
     /// 微软商店页面
     /// </summary>
-    public sealed partial class StorePage : Page, INotifyPropertyChanged
+    public sealed partial class StorePage : Page
     {
         private AppNaviagtionArgs StoreNavigationArgs { get; set; } = AppNaviagtionArgs.None;
-
-        private bool _useInsVisValue;
-
-        public bool UseInsVisValue
-        {
-            get { return _useInsVisValue; }
-
-            set
-            {
-                _useInsVisValue = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public StorePage()
         {
             InitializeComponent();
-            UseInsVisValue = UseInstructionService.UseInsVisValue;
             Request.InitializeStorePageControl(HistoryLite, StatusBar, Result);
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs args)
         {
             base.OnNavigatedTo(args);
-            UseInsVisValue = UseInstructionService.UseInsVisValue;
             if (args.Parameter is not null)
             {
                 object[] navigationArgs = args.Parameter as object[];
@@ -83,14 +64,6 @@ namespace GetStoreApp.Views.Pages
         public void OnUseInstructionClicked(object sender, RoutedEventArgs args)
         {
             NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.Instructions);
-        }
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

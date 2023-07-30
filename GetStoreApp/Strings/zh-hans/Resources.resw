@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AboutApp" xml:space="preserve">
-    <value>关于</value>
-  </data>
   <data name="AppDescription" xml:space="preserve">
     <value>获取商店应用</value>
   </data>
@@ -134,9 +131,6 @@
   </data>
   <data name="CategoryID" xml:space="preserve">
     <value>CategoryID</value>
-  </data>
-  <data name="Exit" xml:space="preserve">
-    <value>退出</value>
   </data>
   <data name="Fast" xml:space="preserve">
     <value>快速</value>
@@ -153,9 +147,6 @@
   <data name="ProductID" xml:space="preserve">
     <value>ProductID</value>
   </data>
-  <data name="ProjectHomePage" xml:space="preserve">
-    <value>项目主页</value>
-  </data>
   <data name="ProtocolName" xml:space="preserve">
     <value>获取商店应用 桌面应用</value>
   </data>
@@ -164,12 +155,6 @@
   </data>
   <data name="RP" xml:space="preserve">
     <value>发布预览</value>
-  </data>
-  <data name="Settings" xml:space="preserve">
-    <value>设置</value>
-  </data>
-  <data name="ShowOrHideWindow" xml:space="preserve">
-    <value>显示 / 隐藏窗口</value>
   </data>
   <data name="Slow" xml:space="preserve">
     <value>慢速</value>

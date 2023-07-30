@@ -165,19 +165,4 @@
   <data name="SystemBackdropControllerInitializeFailed" xml:space="preserve">
     <value>The app's sytstem backdrop controller failed to initialize</value>
   </data>
-  <data name="AboutApp" xml:space="preserve">
-    <value>About</value>
-  </data>
-  <data name="Exit" xml:space="preserve">
-    <value>Exit</value>
-  </data>
-  <data name="ProjectHomePage" xml:space="preserve">
-    <value>Project home page</value>
-  </data>
-  <data name="Settings" xml:space="preserve">
-    <value>Settings</value>
-  </data>
-  <data name="ShowOrHideWindow" xml:space="preserve">
-    <value>Show / Hide window</value>
-  </data>
 </root>

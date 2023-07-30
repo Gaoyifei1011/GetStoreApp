@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Models.Controls.Settings.Appearance;
+﻿using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Services.Controls.Settings.Appearance;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -14,11 +14,11 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
     /// <summary>
     /// 设置页面：应用主题设置控件
     /// </summary>
-    public sealed partial class ThemeControl : Expander, INotifyPropertyChanged
+    public sealed partial class ThemeControl : Grid, INotifyPropertyChanged
     {
-        private ThemeModel _theme = ThemeService.AppTheme;
+        private GroupOptionsModel _theme = ThemeService.AppTheme;
 
-        public ThemeModel Theme
+        public GroupOptionsModel Theme
         {
             get { return _theme; }
 
@@ -29,22 +29,7 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
             }
         }
 
-        private NotifyIconMenuThemeModel _notifyIconMenuTheme = ThemeService.NotifyIconMenuTheme;
-
-        public NotifyIconMenuThemeModel NotifyIconMenuTheme
-        {
-            get { return _notifyIconMenuTheme; }
-
-            set
-            {
-                _notifyIconMenuTheme = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public List<ThemeModel> ThemeList { get; } = ThemeService.ThemeList;
-
-        public List<NotifyIconMenuThemeModel> NotifyIconMenuThemeList { get; } = ThemeService.NotifyIconMenuThemeList;
+        public List<GroupOptionsModel> ThemeList { get; } = ThemeService.ThemeList;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -53,15 +38,15 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
             InitializeComponent();
         }
 
-        public bool IsItemChecked(string selectedInternalName, string internalName)
+        public bool IsItemChecked(GroupOptionsModel selectedMember, GroupOptionsModel comparedMember)
         {
-            return selectedInternalName == internalName;
+            return selectedMember.SelectedValue == comparedMember.SelectedValue;
         }
 
         /// <summary>
         /// 打开系统主题设置
         /// </summary>
-        public async void OnSettingsColorClicked(object sender, RoutedEventArgs args)
+        public async void OnSystemColorSettingsClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:colors"));
         }
@@ -69,29 +54,14 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
         /// <summary>
         /// 主题修改设置
         /// </summary>
-        public async void OnThemeSelectClicked(object sender, RoutedEventArgs args)
+        public void OnThemeSelectClicked(object sender, RoutedEventArgs args)
         {
             ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 Theme = ThemeList[Convert.ToInt32(item.Tag)];
-                await ThemeService.SetThemeAsync(Theme);
+                ThemeService.SetTheme(Theme);
                 ThemeService.SetWindowTheme();
-                ThemeService.SetTrayWindowTheme();
-            }
-        }
-
-        /// <summary>
-        /// 通知区域右键菜单主题设置
-        /// </summary>
-        public async void OnNotifyIconMenuThemeSelectClicked(object sender, RoutedEventArgs args)
-        {
-            ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
-            if (item.Tag is not null)
-            {
-                NotifyIconMenuTheme = NotifyIconMenuThemeList[Convert.ToInt32(item.Tag)];
-                await ThemeService.SetNotifyIconMenuThemeAsync(NotifyIconMenuTheme);
-                ThemeService.SetTrayWindowTheme();
             }
         }
 

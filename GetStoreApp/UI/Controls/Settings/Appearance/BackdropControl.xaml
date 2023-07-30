@@ -45,72 +45,72 @@
         Grid.Column="2"
         Margin="0,0,6,0"
         VerticalAlignment="Center"
-        Click="{x:Bind OnSettingsBackdropClicked}"
-        Content="{x:Bind root:ResourceService.GetLocalized('Settings/WindowsBackdropSettings')}">
+        Click="{x:Bind OnSystemBackdropSettingsClicked}"
+        Content="{x:Bind root:ResourceService.GetLocalized('Settings/SystemBackdropSettings')}">
 
         <ToolTipService.ToolTip>
-            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/WindowsBackdropSettings')}" Placement="Mouse" />
+            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/SystemBackdropSettings')}" Placement="Mouse" />
         </ToolTipService.ToolTip>
     </HyperlinkButton>
 
     <DropDownButton
         Grid.Column="3"
         VerticalAlignment="Center"
-        Content="{x:Bind Backdrop.DisplayName, Mode=OneWay}">
+        Content="{x:Bind Backdrop.DisplayMember, Mode=OneWay}">
 
         <ToolTipService.ToolTip>
-            <ToolTip Content="{x:Bind Backdrop.DisplayName, Mode=OneWay}" Placement="Mouse" />
+            <ToolTip Content="{x:Bind Backdrop.DisplayMember, Mode=OneWay}" Placement="Mouse" />
         </ToolTipService.ToolTip>
 
         <DropDownButton.Flyout>
             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                 <ToggleMenuFlyoutItem
                     Click="{x:Bind OnBackdropSelectClicked}"
-                    IsChecked="{x:Bind IsItemChecked(Backdrop.InternalName, BackdropList[0].InternalName), Mode=OneWay}"
+                    IsChecked="{x:Bind IsItemChecked(Backdrop, BackdropList[0]), Mode=OneWay}"
                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="0"
-                    Text="{x:Bind BackdropList[0].DisplayName}">
+                    Text="{x:Bind BackdropList[0].DisplayMember}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind BackdropList[0].DisplayName}" Placement="Mouse" />
+                        <ToolTip Content="{x:Bind BackdropList[0].DisplayMember}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </ToggleMenuFlyoutItem>
 
                 <ToggleMenuFlyoutItem
                     Click="{x:Bind OnBackdropSelectClicked}"
-                    IsChecked="{x:Bind IsItemChecked(Backdrop.InternalName, BackdropList[1].InternalName), Mode=OneWay}"
+                    IsChecked="{x:Bind IsItemChecked(Backdrop, BackdropList[1]), Mode=OneWay}"
                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="1"
-                    Text="{x:Bind BackdropList[1].DisplayName}"
+                    Text="{x:Bind BackdropList[1].DisplayMember}"
                     Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(CanUseMicaBackdrop)}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind BackdropList[1].DisplayName}" Placement="Mouse" />
+                        <ToolTip Content="{x:Bind BackdropList[1].DisplayMember}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </ToggleMenuFlyoutItem>
 
                 <ToggleMenuFlyoutItem
                     Click="{x:Bind OnBackdropSelectClicked}"
-                    IsChecked="{x:Bind IsItemChecked(Backdrop.InternalName, BackdropList[2].InternalName), Mode=OneWay}"
+                    IsChecked="{x:Bind IsItemChecked(Backdrop, BackdropList[2]), Mode=OneWay}"
                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="2"
-                    Text="{x:Bind BackdropList[2].DisplayName}"
+                    Text="{x:Bind BackdropList[2].DisplayMember}"
                     Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(CanUseMicaBackdrop), Mode=OneWay}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind BackdropList[2].DisplayName}" Placement="Mouse" />
+                        <ToolTip Content="{x:Bind BackdropList[2].DisplayMember}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </ToggleMenuFlyoutItem>
 
                 <ToggleMenuFlyoutItem
                     Click="{x:Bind OnBackdropSelectClicked}"
-                    IsChecked="{x:Bind IsItemChecked(Backdrop.InternalName, BackdropList[3].InternalName), Mode=OneWay}"
+                    IsChecked="{x:Bind IsItemChecked(Backdrop, BackdropList[3]), Mode=OneWay}"
                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="3"
-                    Text="{x:Bind BackdropList[3].DisplayName}">
+                    Text="{x:Bind BackdropList[3].DisplayMember}">
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind BackdropList[3].DisplayName}" Placement="Mouse" />
+                        <ToolTip Content="{x:Bind BackdropList[3].DisplayMember}" Placement="Mouse" />
                     </ToolTipService.ToolTip>
                 </ToggleMenuFlyoutItem>
             </MenuFlyout>

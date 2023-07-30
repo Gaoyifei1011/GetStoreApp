@@ -3,7 +3,6 @@ using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Window;
 using GetStoreApp.Services.Controls.Download;
-using GetStoreApp.Services.Controls.Settings.Advanced;
 using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
@@ -211,7 +210,7 @@ namespace GetStoreApp.Views.Windows
             if (Program.ApplicationRoot.IsAppRunning)
             {
                 // 设置窗口处于非激活状态时的背景色
-                if (BackdropService.AppBackdrop.InternalName == BackdropService.BackdropList[1].InternalName || BackdropService.AppBackdrop.InternalName == BackdropService.BackdropList[2].InternalName)
+                if (BackdropService.AppBackdrop.SelectedValue == BackdropService.BackdropList[1].SelectedValue || BackdropService.AppBackdrop.SelectedValue == BackdropService.BackdropList[2].SelectedValue)
                 {
                     MicaSystemBackdrop micaBackdrop = SystemBackdrop as MicaSystemBackdrop;
 
@@ -227,7 +226,7 @@ namespace GetStoreApp.Views.Windows
                         }
                     }
                 }
-                else if (BackdropService.AppBackdrop.InternalName == BackdropService.BackdropList[3].InternalName)
+                else if (BackdropService.AppBackdrop.SelectedValue == BackdropService.BackdropList[3].SelectedValue)
                 {
                     DesktopAcrylicSystemBackdrop desktopAcrylicSystemBackdrop = SystemBackdrop as DesktopAcrylicSystemBackdrop;
 
@@ -279,36 +278,29 @@ namespace GetStoreApp.Views.Windows
         {
             args.Cancel = true;
 
-            if (AppExitService.AppExit.InternalName == AppExitService.AppExitList[0].InternalName)
+            // 下载队列存在任务时，弹出对话窗口确认是否要关闭窗口
+            if (DownloadSchedulerService.DownloadingList.Count > 0 || DownloadSchedulerService.WaitingList.Count > 0)
             {
-                sender.As<MainWindow>().AppWindow.Hide();
-            }
-            else
-            {
-                // 下载队列存在任务时，弹出对话窗口确认是否要关闭窗口
-                if (DownloadSchedulerService.DownloadingList.Count > 0 || DownloadSchedulerService.WaitingList.Count > 0)
-                {
-                    sender.As<MainWindow>().Show();
+                sender.As<MainWindow>().Show();
 
-                    // 关闭窗口提示对话框是否已经处于打开状态，如果是，不再弹出
-                    ContentDialogResult result = await ContentDialogHelper.ShowAsync(new ClosingWindowDialog(), Content.As<FrameworkElement>());
+                // 关闭窗口提示对话框是否已经处于打开状态，如果是，不再弹出
+                ContentDialogResult result = await ContentDialogHelper.ShowAsync(new ClosingWindowDialog(), Content.As<FrameworkElement>());
 
-                    if (result is ContentDialogResult.Primary)
-                    {
-                        Program.ApplicationRoot.Dispose();
-                    }
-                    else if (result is ContentDialogResult.Secondary)
-                    {
-                        if (NavigationService.GetCurrentPageType() != typeof(DownloadPage))
-                        {
-                            NavigationService.NavigateTo(typeof(DownloadPage));
-                        }
-                    }
-                }
-                else
+                if (result is ContentDialogResult.Primary)
                 {
                     Program.ApplicationRoot.Dispose();
                 }
+                else if (result is ContentDialogResult.Secondary)
+                {
+                    if (NavigationService.GetCurrentPageType() != typeof(DownloadPage))
+                    {
+                        NavigationService.NavigateTo(typeof(DownloadPage));
+                    }
+                }
+            }
+            else
+            {
+                Program.ApplicationRoot.Dispose();
             }
         }
 
@@ -319,7 +311,7 @@ namespace GetStoreApp.Views.Windows
         {
             DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
             {
-                if (ThemeService.AppTheme.InternalName == ThemeService.ThemeList[0].InternalName)
+                if (ThemeService.AppTheme.SelectedValue == ThemeService.ThemeList[0].SelectedValue)
                 {
                     if (Application.Current.RequestedTheme is ApplicationTheme.Light)
                     {
@@ -329,7 +321,6 @@ namespace GetStoreApp.Views.Windows
                     {
                         WindowTheme = ElementTheme.Dark;
                     }
-                    Program.ApplicationRoot.TrayMenuWindow.WindowTheme = WindowTheme;
                 }
             });
         }
@@ -520,7 +511,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         public void SetWindowBackground()
         {
-            if (BackdropService.AppBackdrop.InternalName == BackdropService.BackdropList[0].InternalName)
+            if (BackdropService.AppBackdrop.SelectedValue == BackdropService.BackdropList[0].SelectedValue)
             {
                 if (Content.As<FrameworkElement>().ActualTheme == ElementTheme.Light)
                 {

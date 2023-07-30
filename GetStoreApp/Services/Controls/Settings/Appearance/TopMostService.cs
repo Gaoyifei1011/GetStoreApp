@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Services.Root;
 using System;
-using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Controls.Settings.Appearance
 {
@@ -19,17 +18,17 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// <summary>
         /// 应用在初始化前获取设置存储的窗口置顶值
         /// </summary>
-        public static async Task InitializeTopMostValueAsync()
+        public static void InitializeTopMostValue()
         {
-            TopMostValue = await GetTopMostValueAsync();
+            TopMostValue = GetTopMostValue();
         }
 
         /// <summary>
         /// 获取设置存储的窗口置顶值，如果设置没有存储，使用默认值
         /// </summary>
-        private static async Task<bool> GetTopMostValueAsync()
+        private static bool GetTopMostValue()
         {
-            bool? topMostValue = await ConfigService.ReadSettingAsync<bool?>(SettingsKey);
+            bool? topMostValue = ConfigService.ReadSetting<bool?>(SettingsKey);
 
             if (!topMostValue.HasValue)
             {
@@ -42,11 +41,11 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// <summary>
         /// 使用说明按钮显示发生修改时修改设置存储的使用说明按钮显示值
         /// </summary>
-        public static async Task SetTopMostValueAsync(bool topMostValue)
+        public static void SetTopMostValue(bool topMostValue)
         {
             TopMostValue = topMostValue;
 
-            await ConfigService.SaveSettingAsync(SettingsKey, topMostValue);
+            ConfigService.SaveSetting(SettingsKey, topMostValue);
         }
 
         /// <summary>

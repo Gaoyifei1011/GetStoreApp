@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Controls.Extensions;
+using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Settings;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -59,6 +60,14 @@ namespace GetStoreApp.Views.Pages
         public async void OnRestartAppsClicked(object sender, RoutedEventArgs args)
         {
             await ContentDialogHelper.ShowAsync(new RestartAppsDialog(), this);
+        }
+
+        /// <summary>
+        /// 设置说明
+        /// </summary>
+        public void OnSettingsInstructionClicked(object sender, RoutedEventArgs args)
+        {
+            NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
         }
     }
 }

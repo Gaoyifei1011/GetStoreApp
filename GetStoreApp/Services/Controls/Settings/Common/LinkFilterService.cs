@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Services.Root;
 using System;
-using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Controls.Settings.Common
 {
@@ -23,19 +22,19 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// <summary>
         /// 应用在初始化前获取设置存储的链接过滤值
         /// </summary>
-        public static async Task InitializeLinkFilterValueAsnyc()
+        public static void InitializeLinkFilterValue()
         {
-            StartWithEFilterValue = await GetStartWithEFilterValueAsync();
+            StartWithEFilterValue = GetStartWithEFilterValue();
 
-            BlockMapFilterValue = await GetBlockMapFilterValueAsync();
+            BlockMapFilterValue = GetBlockMapFilterValue();
         }
 
         /// <summary>
         /// 获取设置存储的以".e"开头的文件扩展名的过滤值，如果设置没有存储，使用默认值
         /// </summary>
-        private static async Task<bool> GetStartWithEFilterValueAsync()
+        private static bool GetStartWithEFilterValue()
         {
-            bool? startWithEFilterValue = await ConfigService.ReadSettingAsync<bool?>(StartWithESettingsKey);
+            bool? startWithEFilterValue = ConfigService.ReadSetting<bool?>(StartWithESettingsKey);
 
             if (!startWithEFilterValue.HasValue)
             {
@@ -48,9 +47,9 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// <summary>
         /// 获取设置存储的以".blockmap"的文件扩展名的过滤值，如果设置没有存储，使用默认值
         /// </summary>
-        private static async Task<bool> GetBlockMapFilterValueAsync()
+        private static bool GetBlockMapFilterValue()
         {
-            bool? blockMapFilterValue = await ConfigService.ReadSettingAsync<bool?>(BlockMapSettingsKey);
+            bool? blockMapFilterValue = ConfigService.ReadSetting<bool?>(BlockMapSettingsKey);
 
             if (!blockMapFilterValue.HasValue)
             {
@@ -63,21 +62,21 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// <summary>
         /// 以".e"开头的文件扩展名的过滤值发生修改时修改设置存储的以".e"开头的文件扩展名的过滤值
         /// </summary>
-        public static async Task SetStartsWithEFilterValueAsync(bool startWithEFilterValue)
+        public static void SetStartsWithEFilterValue(bool startWithEFilterValue)
         {
             StartWithEFilterValue = startWithEFilterValue;
 
-            await ConfigService.SaveSettingAsync(StartWithESettingsKey, startWithEFilterValue);
+            ConfigService.SaveSetting(StartWithESettingsKey, startWithEFilterValue);
         }
 
         /// <summary>
         /// 以".blockmap"的文件扩展名的过滤值发生修改时修改设置存储的以".blockmap"的文件扩展名的过滤值
         /// </summary>
-        public static async Task SetBlockMapFilterValueAsync(bool blockMapFilterValue)
+        public static void SetBlockMapFilterValue(bool blockMapFilterValue)
         {
             BlockMapFilterValue = blockMapFilterValue;
 
-            await ConfigService.SaveSettingAsync(BlockMapSettingsKey, blockMapFilterValue);
+            ConfigService.SaveSetting(BlockMapSettingsKey, blockMapFilterValue);
         }
     }
 }

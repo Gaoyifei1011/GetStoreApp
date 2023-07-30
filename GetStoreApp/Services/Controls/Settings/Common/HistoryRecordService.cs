@@ -1,5 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
-using GetStoreApp.Models.Controls.Settings.Common;
+using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
@@ -16,92 +16,92 @@ namespace GetStoreApp.Services.Controls.Settings.Common
 
         private static string HistoryJumpListSettingsKey { get; } = ConfigKey.HistoryJumpListNumKey;
 
-        private static HistoryLiteNumModel DefaultHistoryLiteNum { get; set; }
+        private static GroupOptionsModel DefaultHistoryLiteNum { get; set; }
 
-        private static HistoryJumpListNumModel DefaultHistoryJumpListNum { get; set; }
+        private static GroupOptionsModel DefaultHistoryJumpListNum { get; set; }
 
-        public static HistoryLiteNumModel HistoryLiteNum { get; set; }
+        public static GroupOptionsModel HistoryLiteNum { get; set; }
 
-        public static HistoryJumpListNumModel HistoryJumpListNum { get; set; }
+        public static GroupOptionsModel HistoryJumpListNum { get; set; }
 
-        public static List<HistoryLiteNumModel> HistoryLiteNumList { get; set; }
+        public static List<GroupOptionsModel> HistoryLiteNumList { get; set; }
 
-        public static List<HistoryJumpListNumModel> HistoryJumpListNumList { get; set; }
+        public static List<GroupOptionsModel> HistoryJumpListNumList { get; set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的历史记录显示数量值
         /// </summary>
-        public static async Task InitializeAsync()
+        public static void Initialize()
         {
             HistoryLiteNumList = ResourceService.HistoryLiteNumList;
 
             HistoryJumpListNumList = ResourceService.HistoryJumpListNumList;
 
-            DefaultHistoryLiteNum = HistoryLiteNumList.Find(item => item.HistoryLiteNumValue is 3);
+            DefaultHistoryLiteNum = HistoryLiteNumList.Find(item => item.SelectedValue is "3");
 
-            DefaultHistoryJumpListNum = HistoryJumpListNumList.Find(item => item.HistoryJumpListNumValue is "5");
+            DefaultHistoryJumpListNum = HistoryJumpListNumList.Find(item => item.SelectedValue is "5");
 
-            HistoryLiteNum = await GetHistoryLiteNumAsync();
+            HistoryLiteNum = GetHistoryLiteNum();
 
-            HistoryJumpListNum = await GetHistoryJumpListNumAsync();
+            HistoryJumpListNum = GetHistoryJumpListNum();
         }
 
         /// <summary>
         /// 获取设置存储的微软商店页面历史记录显示的最多项目值，如果设置没有存储，使用默认值
         /// </summary>
-        private static async Task<HistoryLiteNumModel> GetHistoryLiteNumAsync()
+        private static GroupOptionsModel GetHistoryLiteNum()
         {
-            int? historyLiteNumValue = await ConfigService.ReadSettingAsync<int?>(HistoryLiteSettingsKey);
+            string historyLiteNumValue = ConfigService.ReadSetting<string>(HistoryLiteSettingsKey);
 
-            if (!historyLiteNumValue.HasValue)
+            if (string.IsNullOrEmpty(historyLiteNumValue))
             {
-                return HistoryLiteNumList.Find(item => item.HistoryLiteNumValue == DefaultHistoryLiteNum.HistoryLiteNumValue);
+                return HistoryLiteNumList.Find(item => item.SelectedValue == DefaultHistoryLiteNum.SelectedValue);
             }
 
-            return HistoryLiteNumList.Find(item => item.HistoryLiteNumValue == historyLiteNumValue);
+            return HistoryLiteNumList.Find(item => item.SelectedValue == historyLiteNumValue);
         }
 
         /// <summary>
         /// 获取设置存储的任务栏右键菜单列表历史记录显示的最多项目值，如果设置没有存储，使用默认值
         /// </summary>
-        private static async Task<HistoryJumpListNumModel> GetHistoryJumpListNumAsync()
+        private static GroupOptionsModel GetHistoryJumpListNum()
         {
-            string historyJumpListValue = await ConfigService.ReadSettingAsync<string>(HistoryJumpListSettingsKey);
+            string historyJumpListValue = ConfigService.ReadSetting<string>(HistoryJumpListSettingsKey);
 
             if (string.IsNullOrEmpty(historyJumpListValue))
             {
-                return HistoryJumpListNumList.Find(item => item.HistoryJumpListNumValue.Equals(DefaultHistoryJumpListNum.HistoryJumpListNumValue, StringComparison.OrdinalIgnoreCase));
+                return HistoryJumpListNumList.Find(item => item.SelectedValue.Equals(DefaultHistoryJumpListNum.SelectedValue, StringComparison.OrdinalIgnoreCase));
             }
 
-            return HistoryJumpListNumList.Find(item => item.HistoryJumpListNumValue.Equals(historyJumpListValue, StringComparison.OrdinalIgnoreCase));
+            return HistoryJumpListNumList.Find(item => item.SelectedValue.Equals(historyJumpListValue, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
         /// 历史记录显示数量发生修改时修改设置存储的微软商店页面历史记录显示数量值
         /// </summary>
-        public static async Task SetHistoryLiteNumAsync(HistoryLiteNumModel historyLiteNum)
+        public static void SetHistoryLiteNum(GroupOptionsModel historyLiteNum)
         {
             HistoryLiteNum = historyLiteNum;
 
-            await ConfigService.SaveSettingAsync(HistoryLiteSettingsKey, historyLiteNum.HistoryLiteNumValue);
+            ConfigService.SaveSetting(HistoryLiteSettingsKey, historyLiteNum.SelectedValue);
         }
 
         /// <summary>
         /// 历史记录显示数量发生修改时修改设置存储的任务栏右键菜单跳转列表历史记录显示数量值
         /// </summary>
-        public static async Task SetHistoryJumpListNumAsync(HistoryJumpListNumModel historyJumpListNum)
+        public static void SetHistoryJumpListNum(GroupOptionsModel historyJumpListNum)
         {
             HistoryJumpListNum = historyJumpListNum;
 
-            await ConfigService.SaveSettingAsync(HistoryJumpListSettingsKey, historyJumpListNum.HistoryJumpListNumValue);
+            ConfigService.SaveSetting(HistoryJumpListSettingsKey, historyJumpListNum.SelectedValue);
         }
 
         /// <summary>
         /// 历史记录显示数量发生修改时修改应用任务栏右键菜单跳转列表的内容
         /// </summary>
-        public static async Task UpdateHistoryJumpListAsync(HistoryJumpListNumModel historyJumpListNum)
+        public static async Task UpdateHistoryJumpListAsync(GroupOptionsModel historyJumpListNum)
         {
-            if (historyJumpListNum.HistoryJumpListNumValue == "Unlimited")
+            if (historyJumpListNum.SelectedValue == "Unlimited")
             {
                 return;
             }
@@ -109,7 +109,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
             {
                 if (Program.ApplicationRoot.TaskbarJumpList is not null)
                 {
-                    int count = Convert.ToInt32(historyJumpListNum.HistoryJumpListNumValue);
+                    int count = Convert.ToInt32(historyJumpListNum.SelectedValue);
                     while (Program.ApplicationRoot.TaskbarJumpList.Items.Count > count)
                     {
                         Program.ApplicationRoot.TaskbarJumpList.Items.RemoveAt(0);

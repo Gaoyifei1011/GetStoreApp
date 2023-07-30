@@ -1,6 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Models.Controls.Settings.Common;
+using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
@@ -22,19 +22,19 @@ namespace GetStoreApp.Services.Controls.Settings.Common
 
         private static string DownloadModeSettingsKey { get; } = ConfigKey.DownloadModeKey;
 
-        public static List<DownloadModeModel> DownloadModeList { get; set; }
+        public static List<GroupOptionsModel> DownloadModeList { get; set; }
 
         public static StorageFolder DefaultFolder { get; private set; }
 
         private static int DefaultItem { get; } = 1;
 
-        private static DownloadModeModel DefaultDownloadMode { get; set; }
+        private static GroupOptionsModel DefaultDownloadMode { get; set; }
 
         public static StorageFolder DownloadFolder { get; set; }
 
         public static int DownloadItem { get; set; }
 
-        public static DownloadModeModel DownloadMode { get; set; }
+        public static GroupOptionsModel DownloadMode { get; set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的下载相关内容设置值，并创建默认下载目录
@@ -45,13 +45,13 @@ namespace GetStoreApp.Services.Controls.Settings.Common
 
             DefaultFolder = await ApplicationData.Current.LocalCacheFolder.CreateFolderAsync("Downloads", CreationCollisionOption.OpenIfExists);
 
-            DefaultDownloadMode = DownloadModeList.Find(item => item.InternalName.Equals("DownloadInApp", StringComparison.OrdinalIgnoreCase));
+            DefaultDownloadMode = DownloadModeList.Find(item => item.SelectedValue.Equals("DownloadInApp", StringComparison.OrdinalIgnoreCase));
 
             DownloadFolder = await GetFolderAsync();
 
-            DownloadItem = await GetItemAsync();
+            DownloadItem = GetItem();
 
-            DownloadMode = await GetModeAsync();
+            DownloadMode = GetMode();
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// </summary>
         private static async Task<StorageFolder> GetFolderAsync()
         {
-            string folder = await ConfigService.ReadSettingAsync<string>(FolderSettingsKey);
+            string folder = ConfigService.ReadSetting<string>(FolderSettingsKey);
 
             try
             {
@@ -75,7 +75,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
             catch (Exception e)
             {
                 LogService.WriteLog(LogType.WARNING, "Get download saved folder failed.", e);
-                await SetFolderAsync(DefaultFolder);
+                SetFolder(DefaultFolder);
                 return DefaultFolder;
             }
         }
@@ -83,9 +83,9 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// <summary>
         /// 获取设置存储的同时下载任务数值，如果设置没有存储，使用默认值
         /// </summary>
-        private static async Task<int> GetItemAsync()
+        private static int GetItem()
         {
-            int? downloadItemValue = await ConfigService.ReadSettingAsync<int?>(DownloadItemSettingsKey);
+            int? downloadItemValue = ConfigService.ReadSetting<int?>(DownloadItemSettingsKey);
 
             if (!downloadItemValue.HasValue)
             {
@@ -98,46 +98,46 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// <summary>
         /// 获取设置存储的下载方式值，如果设置没有存储，使用默认值
         /// </summary>
-        private static async Task<DownloadModeModel> GetModeAsync()
+        private static GroupOptionsModel GetMode()
         {
-            string downloadMode = await ConfigService.ReadSettingAsync<string>(DownloadModeSettingsKey);
+            string downloadMode = ConfigService.ReadSetting<string>(DownloadModeSettingsKey);
 
             if (string.IsNullOrEmpty(downloadMode))
             {
-                return DownloadModeList.Find(item => item.InternalName.Equals(DefaultDownloadMode.InternalName, StringComparison.OrdinalIgnoreCase));
+                return DownloadModeList.Find(item => item.SelectedValue.Equals(DefaultDownloadMode.SelectedValue, StringComparison.OrdinalIgnoreCase));
             }
 
-            return DownloadModeList.Find(item => item.InternalName.Equals(downloadMode, StringComparison.OrdinalIgnoreCase));
+            return DownloadModeList.Find(item => item.SelectedValue.Equals(downloadMode, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
         /// 下载位置发生修改时修改设置存储的下载位置值
         /// </summary>
-        public static async Task SetFolderAsync(StorageFolder downloadFolder)
+        public static void SetFolder(StorageFolder downloadFolder)
         {
             DownloadFolder = downloadFolder;
 
-            await ConfigService.SaveSettingAsync(FolderSettingsKey, downloadFolder.Path);
+            ConfigService.SaveSetting(FolderSettingsKey, downloadFolder.Path);
         }
 
         /// <summary>
         /// 同时下载任务数发生修改时修改设置存储的同时下载任务数值
         /// </summary>
-        public static async Task SetItemAsync(int downloadItem)
+        public static void SetItem(int downloadItem)
         {
             DownloadItem = downloadItem;
 
-            await ConfigService.SaveSettingAsync(DownloadItemSettingsKey, downloadItem);
+            ConfigService.SaveSetting(DownloadItemSettingsKey, downloadItem);
         }
 
         /// <summary>
         /// 下载方式设定值发送改变时修改涉嫌存储的下载方式设定值
         /// </summary>
-        public static async Task SetModeAsync(DownloadModeModel downloadMode)
+        public static void SetMode(GroupOptionsModel downloadMode)
         {
             DownloadMode = downloadMode;
 
-            await ConfigService.SaveSettingAsync(DownloadModeSettingsKey, downloadMode.InternalName);
+            ConfigService.SaveSetting(DownloadModeSettingsKey, downloadMode.SelectedValue);
         }
 
         /// <summary>

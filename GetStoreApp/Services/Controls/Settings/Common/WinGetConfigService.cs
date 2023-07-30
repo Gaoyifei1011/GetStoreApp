@@ -1,10 +1,9 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
-using GetStoreApp.Models.Controls.Settings.Common;
+using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Services.Root;
 using Microsoft.Management.Deployment;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Controls.Settings.Common
 {
@@ -21,32 +20,32 @@ namespace GetStoreApp.Services.Controls.Settings.Common
 
         public static bool UseDevVersion { get; set; }
 
-        public static WinGetInstallModeModel DefaultWinGetInstallMode { get; set; }
+        public static GroupOptionsModel DefaultWinGetInstallMode { get; set; }
 
-        public static WinGetInstallModeModel WinGetInstallMode { get; set; }
+        public static GroupOptionsModel WinGetInstallMode { get; set; }
 
-        public static List<WinGetInstallModeModel> WinGetInstallModeList { get; set; }
+        public static List<GroupOptionsModel> WinGetInstallModeList { get; set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的是否使用开发版本布尔值和 WinGet 程序包安装方式值
         /// </summary>
-        public static async Task InitializeWinGetConfigAsync()
+        public static void InitializeWinGetConfig()
         {
-            UseDevVersion = await GetUseDevVersionAsync();
+            UseDevVersion = GetUseDevVersion();
 
             WinGetInstallModeList = ResourceService.WinGetInstallModeList;
 
-            DefaultWinGetInstallMode = WinGetInstallModeList.Find(item => item.InternalName.Equals(Convert.ToString(PackageInstallMode.Interactive), StringComparison.OrdinalIgnoreCase));
+            DefaultWinGetInstallMode = WinGetInstallModeList.Find(item => item.SelectedValue.Equals(Convert.ToString(PackageInstallMode.Interactive), StringComparison.OrdinalIgnoreCase));
 
-            WinGetInstallMode = await GetWinGetInstallModeAsync();
+            WinGetInstallMode = GetWinGetInstallMode();
         }
 
         /// <summary>
         /// 获取设置存储的是否使用开发版本布尔值，如果设置没有存储，使用默认值
         /// </summary>
-        private static async Task<bool> GetUseDevVersionAsync()
+        private static bool GetUseDevVersion()
         {
-            bool? useDevVersion = await ConfigService.ReadSettingAsync<bool?>(WinGetConfigSettingsKey);
+            bool? useDevVersion = ConfigService.ReadSetting<bool?>(WinGetConfigSettingsKey);
 
             if (!useDevVersion.HasValue)
             {
@@ -59,36 +58,36 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// <summary>
         /// 使用说明按钮显示发生修改时修改设置存储的是否使用开发版本布尔值
         /// </summary>
-        public static async Task SetUseDevVersionAsync(bool useDevVersion)
+        public static void SetUseDevVersion(bool useDevVersion)
         {
             UseDevVersion = useDevVersion;
 
-            await ConfigService.SaveSettingAsync(WinGetConfigSettingsKey, useDevVersion);
+            ConfigService.SaveSetting(WinGetConfigSettingsKey, useDevVersion);
         }
 
         /// <summary>
         /// 获取设置存储的 WinGet 程序包安装方式值，如果设置没有存储，使用默认值
         /// </summary>
-        private static async Task<WinGetInstallModeModel> GetWinGetInstallModeAsync()
+        private static GroupOptionsModel GetWinGetInstallMode()
         {
-            string winGetInstallMode = await ConfigService.ReadSettingAsync<string>(WinGetInstallModeSettingsKey);
+            string winGetInstallMode = ConfigService.ReadSetting<string>(WinGetInstallModeSettingsKey);
 
             if (string.IsNullOrEmpty(winGetInstallMode))
             {
-                return WinGetInstallModeList.Find(item => item.InternalName.Equals(DefaultWinGetInstallMode.InternalName, StringComparison.OrdinalIgnoreCase));
+                return WinGetInstallModeList.Find(item => item.SelectedValue.Equals(DefaultWinGetInstallMode.SelectedValue, StringComparison.OrdinalIgnoreCase));
             }
 
-            return WinGetInstallModeList.Find(item => item.InternalName.Equals(winGetInstallMode, StringComparison.OrdinalIgnoreCase));
+            return WinGetInstallModeList.Find(item => item.SelectedValue.Equals(winGetInstallMode, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
         /// 应用安装方式发生修改时修改设置存储的 WinGet 程序包安装方式
         /// </summary>
-        public static async Task SetWinGetInstallModeAsync(WinGetInstallModeModel winGetInstallMode)
+        public static void SetWinGetInstallMode(GroupOptionsModel winGetInstallMode)
         {
             WinGetInstallMode = winGetInstallMode;
 
-            await ConfigService.SaveSettingAsync(WinGetInstallModeSettingsKey, winGetInstallMode.InternalName);
+            ConfigService.SaveSetting(WinGetInstallModeSettingsKey, winGetInstallMode.SelectedValue);
         }
     }
 }

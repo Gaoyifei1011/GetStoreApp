@@ -1,9 +1,8 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
-using GetStoreApp.Models.Controls.Settings.Appearance;
+using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Controls.Settings.Appearance
 {
@@ -14,47 +13,47 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
     {
         private static string SettingsKey { get; } = ConfigKey.BackdropKey;
 
-        private static BackdropModel DefaultAppBackdrop { get; set; }
+        private static GroupOptionsModel DefaultAppBackdrop { get; set; }
 
-        public static BackdropModel AppBackdrop { get; set; }
+        public static GroupOptionsModel AppBackdrop { get; set; }
 
-        public static List<BackdropModel> BackdropList { get; set; }
+        public static List<GroupOptionsModel> BackdropList { get; set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的背景色值
         /// </summary>
-        public static async Task InitializeBackdropAsync()
+        public static void InitializeBackdrop()
         {
             BackdropList = ResourceService.BackdropList;
 
-            DefaultAppBackdrop = BackdropList.Find(item => item.InternalName.Equals("Default", StringComparison.OrdinalIgnoreCase));
+            DefaultAppBackdrop = BackdropList.Find(item => item.SelectedValue.Equals("Default", StringComparison.OrdinalIgnoreCase));
 
-            AppBackdrop = await GetBackdropAsync();
+            AppBackdrop = GetBackdrop();
         }
 
         /// <summary>
         /// 获取设置存储的背景色值，如果设置没有存储，使用默认值
         /// </summary>
-        private static async Task<BackdropModel> GetBackdropAsync()
+        private static GroupOptionsModel GetBackdrop()
         {
-            string backdrop = await ConfigService.ReadSettingAsync<string>(SettingsKey);
+            string backdrop = ConfigService.ReadSetting<string>(SettingsKey);
 
             if (string.IsNullOrEmpty(backdrop))
             {
-                return BackdropList.Find(item => item.InternalName.Equals(DefaultAppBackdrop.InternalName, StringComparison.OrdinalIgnoreCase));
+                return BackdropList.Find(item => item.SelectedValue.Equals(DefaultAppBackdrop.SelectedValue, StringComparison.OrdinalIgnoreCase));
             }
 
-            return BackdropList.Find(item => item.InternalName.Equals(backdrop, StringComparison.OrdinalIgnoreCase));
+            return BackdropList.Find(item => item.SelectedValue.Equals(backdrop, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
         /// 应用背景色发生修改时修改设置存储的背景色值
         /// </summary>
-        public static async Task SetBackdropAsync(BackdropModel backdrop)
+        public static void SetBackdrop(GroupOptionsModel backdrop)
         {
             AppBackdrop = backdrop;
 
-            await ConfigService.SaveSettingAsync(SettingsKey, backdrop.InternalName);
+            ConfigService.SaveSetting(SettingsKey, backdrop.SelectedValue);
         }
 
         /// <summary>
@@ -62,7 +61,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// </summary>
         public static void SetAppBackdrop()
         {
-            Program.ApplicationRoot.MainWindow.SetSystemBackdrop(AppBackdrop.InternalName);
+            Program.ApplicationRoot.MainWindow.SetSystemBackdrop(AppBackdrop.SelectedValue);
         }
     }
 }

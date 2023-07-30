@@ -50,7 +50,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
         /// <summary>
         /// 还原默认值
         /// </summary>
-        public async void OnRestoreDefaultClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        public void OnRestoreDefaultClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             args.Cancel = true;
 
@@ -58,7 +58,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
             {
                 ((NetWorkMonitorControl)sender.Tag).NetWorkMonitorValue = true;
                 Aria2Service.RestoreDefault();
-                await NetWorkMonitorService.RestoreDefaultValueAsync();
+                NetWorkMonitorService.RestoreDefaultValue();
 
                 if (!DisplayTimer.IsEnabled)
                 {

@@ -151,7 +151,4 @@
   <data name="WinGet" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\ControlIcon\Winget.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="WinUIWindowClassName" xml:space="preserve">
-    <value>GetStoreAppWindow</value>
-  </data>
 </root>

@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Services.Controls.Settings.Appearance;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using Windows.System;
@@ -21,7 +20,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         public async void OnLearnMoreClicked(object sender, RoutedEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri(string.Format(@"https://learn.microsoft.com/{0}/windows/package-manager/", LanguageService.AppLanguage.InternalName)));
+            await Launcher.LaunchUriAsync(new Uri(@"https://learn.microsoft.com/windows/package-manager/"));
         }
 
         /// <summary>

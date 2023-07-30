@@ -16,7 +16,6 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <FontIcon
@@ -39,16 +38,6 @@
                     Style="{StaticResource CaptionTextBlockStyle}"
                     Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadOptionsDescription')}" />
             </StackPanel>
-
-            <Button
-                Grid.Column="2"
-                Click="{x:Bind OnDownloadInstructionClicked}"
-                Content="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadInstruction')}">
-
-                <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadInstruction')}" Placement="Mouse" />
-                </ToolTipService.ToolTip>
-            </Button>
         </Grid>
     </Expander.Header>
 
@@ -197,35 +186,35 @@
                     <DropDownButton
                         Grid.Column="1"
                         VerticalAlignment="Center"
-                        Content="{x:Bind DownloadMode.DisplayName, Mode=OneWay}">
+                        Content="{x:Bind DownloadMode.DisplayMember, Mode=OneWay}">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind DownloadMode.DisplayName, Mode=OneWay}" Placement="Mouse" />
+                            <ToolTip Content="{x:Bind DownloadMode.DisplayMember, Mode=OneWay}" Placement="Mouse" />
                         </ToolTipService.ToolTip>
 
                         <DropDownButton.Flyout>
                             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnDownloadModeSelectClicked}"
-                                    IsChecked="{x:Bind IsDownloadModeChecked(DownloadMode.InternalName, DownloadModeList[0].InternalName), Mode=OneWay}"
+                                    IsChecked="{x:Bind IsDownloadModeChecked(DownloadMode, DownloadModeList[0]), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="0"
-                                    Text="{x:Bind DownloadModeList[0].DisplayName}">
+                                    Text="{x:Bind DownloadModeList[0].DisplayMember}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind DownloadModeList[0].DisplayName}" Placement="Mouse" />
+                                        <ToolTip Content="{x:Bind DownloadModeList[0].DisplayMember}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </ToggleMenuFlyoutItem>
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnDownloadModeSelectClicked}"
-                                    IsChecked="{x:Bind IsDownloadModeChecked(DownloadMode.InternalName, DownloadModeList[1].InternalName), Mode=OneWay}"
+                                    IsChecked="{x:Bind IsDownloadModeChecked(DownloadMode, DownloadModeList[1]), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="1"
-                                    Text="{x:Bind DownloadModeList[1].DisplayName}">
+                                    Text="{x:Bind DownloadModeList[1].DisplayMember}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind DownloadModeList[1].DisplayName}" Placement="Mouse" />
+                                        <ToolTip Content="{x:Bind DownloadModeList[1].DisplayMember}" Placement="Mouse" />
                                     </ToolTipService.ToolTip>
                                 </ToggleMenuFlyoutItem>
                             </MenuFlyout>

@@ -90,11 +90,11 @@ namespace GetStoreApp.Helpers.Converters
         /// </summary>
         public static string FileNameToolTipFormat(string content)
         {
-            if (DownloadOptionsService.DownloadMode.InternalName == DownloadOptionsService.DownloadModeList[0].InternalName)
+            if (DownloadOptionsService.DownloadMode.SelectedValue == DownloadOptionsService.DownloadModeList[0].SelectedValue)
             {
                 return string.Format("{0}\n{1}", content, ResourceService.GetLocalized("Store/ClickToDownload"));
             }
-            else if (DownloadOptionsService.DownloadMode.InternalName == DownloadOptionsService.DownloadModeList[1].InternalName)
+            else if (DownloadOptionsService.DownloadMode.SelectedValue == DownloadOptionsService.DownloadModeList[1].SelectedValue)
             {
                 return string.Format("{0}\n{1}", content, ResourceService.GetLocalized("Store/ClickToAccess"));
             }

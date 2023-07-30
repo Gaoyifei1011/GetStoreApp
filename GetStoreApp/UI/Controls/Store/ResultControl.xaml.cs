@@ -108,7 +108,7 @@ namespace GetStoreApp.UI.Controls.Store
                     }
 
                     // 使用应用内提供的下载方式
-                    if (DownloadOptionsService.DownloadMode.InternalName == DownloadOptionsService.DownloadModeList[0].InternalName)
+                    if (DownloadOptionsService.DownloadMode.SelectedValue == DownloadOptionsService.DownloadModeList[0].SelectedValue)
                     {
                         string DownloadFilePath = string.Format("{0}\\{1}", DownloadOptionsService.DownloadFolder.Path, resultItem.FileName);
 
@@ -385,7 +385,7 @@ namespace GetStoreApp.UI.Controls.Store
             };
 
             // 使用应用内提供的下载方式
-            if (DownloadOptionsService.DownloadMode.InternalName == DownloadOptionsService.DownloadModeList[0].InternalName)
+            if (DownloadOptionsService.DownloadMode.SelectedValue == DownloadOptionsService.DownloadModeList[0].SelectedValue)
             {
                 List<BackgroundModel> duplicatedList = new List<BackgroundModel>();
 

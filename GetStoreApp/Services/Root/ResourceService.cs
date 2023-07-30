@@ -1,7 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Models.Controls.Settings.Advanced;
-using GetStoreApp.Models.Controls.Settings.Appearance;
-using GetStoreApp.Models.Controls.Settings.Common;
+using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Models.Dialogs.Settings;
 using GetStoreApp.Properties;
@@ -21,9 +19,9 @@ namespace GetStoreApp.Services.Root
     {
         private static bool IsInitialized { get; set; } = false;
 
-        private static LanguageModel DefaultAppLanguage { get; set; }
+        private static GroupOptionsModel DefaultAppLanguage { get; set; }
 
-        private static LanguageModel CurrentAppLanguage { get; set; }
+        private static GroupOptionsModel CurrentAppLanguage { get; set; }
 
         private static ResourceContext DefaultResourceContext { get; set; } = new ResourceContext();
 
@@ -37,38 +35,34 @@ namespace GetStoreApp.Services.Root
 
         public static List<StatusBarStateModel> StatusBarStateList { get; } = new List<StatusBarStateModel>();
 
-        public static List<AppExitModel> AppExitList { get; } = new List<AppExitModel>();
+        public static List<GroupOptionsModel> BackdropList { get; } = new List<GroupOptionsModel>();
 
-        public static List<BackdropModel> BackdropList { get; } = new List<BackdropModel>();
+        public static List<GroupOptionsModel> DownloadModeList { get; } = new List<GroupOptionsModel>();
 
-        public static List<DownloadModeModel> DownloadModeList { get; } = new List<DownloadModeModel>();
+        public static List<GroupOptionsModel> HistoryLiteNumList { get; } = new List<GroupOptionsModel>();
 
-        public static List<HistoryLiteNumModel> HistoryLiteNumList { get; } = new List<HistoryLiteNumModel>();
+        public static List<GroupOptionsModel> HistoryJumpListNumList { get; } = new List<GroupOptionsModel>();
 
-        public static List<HistoryJumpListNumModel> HistoryJumpListNumList { get; } = new List<HistoryJumpListNumModel>();
+        public static List<GroupOptionsModel> InstallModeList { get; } = new List<GroupOptionsModel>();
 
-        public static List<InstallModeModel> InstallModeList { get; } = new List<InstallModeModel>();
-
-        public static List<NotifyIconMenuThemeModel> NotifyIconMenuThemeList { get; } = new List<NotifyIconMenuThemeModel>();
-
-        public static List<ThemeModel> ThemeList { get; } = new List<ThemeModel>();
+        public static List<GroupOptionsModel> ThemeList { get; } = new List<GroupOptionsModel>();
 
         public static List<TraceCleanupModel> TraceCleanupList { get; } = new List<TraceCleanupModel>();
 
-        public static List<WinGetInstallModeModel> WinGetInstallModeList { get; } = new List<WinGetInstallModeModel>();
+        public static List<GroupOptionsModel> WinGetInstallModeList { get; } = new List<GroupOptionsModel>();
 
         /// <summary>
         /// 初始化应用本地化资源
         /// </summary>
         /// <param name="defaultAppLanguage">默认语言名称</param>
         /// <param name="currentAppLanguage">当前语言名称</param>
-        public static void InitializeResource(LanguageModel defaultAppLanguage, LanguageModel currentAppLanguage)
+        public static void InitializeResource(GroupOptionsModel defaultAppLanguage, GroupOptionsModel currentAppLanguage)
         {
             DefaultAppLanguage = defaultAppLanguage;
             CurrentAppLanguage = currentAppLanguage;
 
-            DefaultResourceContext.QualifierValues["Language"] = DefaultAppLanguage.InternalName;
-            CurrentResourceContext.QualifierValues["Language"] = CurrentAppLanguage.InternalName;
+            DefaultResourceContext.QualifierValues["Language"] = DefaultAppLanguage.SelectedValue;
+            CurrentResourceContext.QualifierValues["Language"] = CurrentAppLanguage.SelectedValue;
 
             IsInitialized = true;
         }
@@ -81,13 +75,11 @@ namespace GetStoreApp.Services.Root
             InitializeTypeList();
             InitializeChannelList();
             InitializeStatusBarStateList();
-            InitializeAppExitList();
             InitializeBackdropList();
             InitializeDownloadModeList();
             InitializeHistoryLiteNumList();
             InitializeHistoryJumpListNumList();
             InitializeInstallModeList();
-            InitializeNotifyIconMenuThemeList();
             InitializeThemeList();
             InitializeTraceCleanupList();
             InitializeWinGetInstallModeList();
@@ -197,49 +189,32 @@ namespace GetStoreApp.Services.Root
         }
 
         /// <summary>
-        /// 初始化应用退出内容列表
-        /// </summary>
-        private static void InitializeAppExitList()
-        {
-            AppExitList.Add(new AppExitModel
-            {
-                DisplayName = GetLocalized("Settings/HideToTray"),
-                InternalName = "HideToTray"
-            });
-            AppExitList.Add(new AppExitModel
-            {
-                DisplayName = GetLocalized("Settings/CloseApp"),
-                InternalName = "CloseApp"
-            });
-        }
-
-        /// <summary>
         /// 初始化应用背景色信息列表
         /// </summary>
         private static void InitializeBackdropList()
         {
-            BackdropList.Add(new BackdropModel
+            BackdropList.Add(new GroupOptionsModel
             {
-                DisplayName = GetLocalized("Settings/BackdropDefault"),
-                InternalName = "Default"
+                DisplayMember = GetLocalized("Settings/BackdropDefault"),
+                SelectedValue = "Default"
             });
 
-            BackdropList.Add(new BackdropModel
+            BackdropList.Add(new GroupOptionsModel
             {
-                DisplayName = GetLocalized("Settings/BackdropMica"),
-                InternalName = "Mica"
+                DisplayMember = GetLocalized("Settings/BackdropMica"),
+                SelectedValue = "Mica"
             });
 
-            BackdropList.Add(new BackdropModel
+            BackdropList.Add(new GroupOptionsModel
             {
-                DisplayName = GetLocalized("Settings/BackdropMicaAlt"),
-                InternalName = "MicaAlt"
+                DisplayMember = GetLocalized("Settings/BackdropMicaAlt"),
+                SelectedValue = "MicaAlt"
             });
 
-            BackdropList.Add(new BackdropModel
+            BackdropList.Add(new GroupOptionsModel
             {
-                DisplayName = GetLocalized("Settings/BackdropAcrylic"),
-                InternalName = "Acrylic"
+                DisplayMember = GetLocalized("Settings/BackdropAcrylic"),
+                SelectedValue = "Acrylic"
             });
         }
 
@@ -248,15 +223,15 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeDownloadModeList()
         {
-            DownloadModeList.Add(new DownloadModeModel
+            DownloadModeList.Add(new GroupOptionsModel
             {
-                DisplayName = GetLocalized("Settings/DownloadInApp"),
-                InternalName = "DownloadInApp"
+                DisplayMember = GetLocalized("Settings/DownloadInApp"),
+                SelectedValue = "DownloadInApp"
             });
-            DownloadModeList.Add(new DownloadModeModel
+            DownloadModeList.Add(new GroupOptionsModel
             {
-                DisplayName = GetLocalized("Settings/DownloadWithBrowser"),
-                InternalName = "DownloadWithBrowser"
+                DisplayMember = GetLocalized("Settings/DownloadWithBrowser"),
+                SelectedValue = "DownloadWithBrowser"
             });
         }
 
@@ -265,15 +240,15 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeHistoryLiteNumList()
         {
-            HistoryLiteNumList.Add(new HistoryLiteNumModel
+            HistoryLiteNumList.Add(new GroupOptionsModel
             {
-                HistoryLiteNumName = GetLocalized("Settings/HistoryLite3Items"),
-                HistoryLiteNumValue = 3
+                DisplayMember = GetLocalized("Settings/HistoryLite3Items"),
+                SelectedValue = "3"
             });
-            HistoryLiteNumList.Add(new HistoryLiteNumModel
+            HistoryLiteNumList.Add(new GroupOptionsModel
             {
-                HistoryLiteNumName = GetLocalized("Settings/HistoryLite5Items"),
-                HistoryLiteNumValue = 5
+                DisplayMember = GetLocalized("Settings/HistoryLite5Items"),
+                SelectedValue = "5"
             });
         }
 
@@ -282,30 +257,30 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeHistoryJumpListNumList()
         {
-            HistoryJumpListNumList.Add(new HistoryJumpListNumModel
+            HistoryJumpListNumList.Add(new GroupOptionsModel
             {
-                HistoryJumpListNumName = GetLocalized("Settings/HistoryJumpList3Items"),
-                HistoryJumpListNumValue = "3"
+                DisplayMember = GetLocalized("Settings/HistoryJumpList3Items"),
+                SelectedValue = "3"
             });
-            HistoryJumpListNumList.Add(new HistoryJumpListNumModel
+            HistoryJumpListNumList.Add(new GroupOptionsModel
             {
-                HistoryJumpListNumName = GetLocalized("Settings/HistoryJumpList5Items"),
-                HistoryJumpListNumValue = "5"
+                DisplayMember = GetLocalized("Settings/HistoryJumpList5Items"),
+                SelectedValue = "5"
             });
-            HistoryJumpListNumList.Add(new HistoryJumpListNumModel
+            HistoryJumpListNumList.Add(new GroupOptionsModel
             {
-                HistoryJumpListNumName = GetLocalized("Settings/HistoryJumpList7Items"),
-                HistoryJumpListNumValue = "7"
+                DisplayMember = GetLocalized("Settings/HistoryJumpList7Items"),
+                SelectedValue = "7"
             });
-            HistoryJumpListNumList.Add(new HistoryJumpListNumModel
+            HistoryJumpListNumList.Add(new GroupOptionsModel
             {
-                HistoryJumpListNumName = GetLocalized("Settings/HistoryJumpList9Items"),
-                HistoryJumpListNumValue = "9"
+                DisplayMember = GetLocalized("Settings/HistoryJumpList9Items"),
+                SelectedValue = "9"
             });
-            HistoryJumpListNumList.Add(new HistoryJumpListNumModel
+            HistoryJumpListNumList.Add(new GroupOptionsModel
             {
-                HistoryJumpListNumName = GetLocalized("Settings/HistoryJumpListUnlimited"),
-                HistoryJumpListNumValue = "Unlimited"
+                DisplayMember = GetLocalized("Settings/HistoryJumpListUnlimited"),
+                SelectedValue = "Unlimited"
             });
         }
 
@@ -314,15 +289,15 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeInstallModeList()
         {
-            InstallModeList.Add(new InstallModeModel
+            InstallModeList.Add(new GroupOptionsModel
             {
-                DisplayName = GetLocalized("Settings/AppInstall"),
-                InternalName = "AppInstall"
+                DisplayMember = GetLocalized("Settings/AppInstall"),
+                SelectedValue = "AppInstall"
             });
-            InstallModeList.Add(new InstallModeModel
+            InstallModeList.Add(new GroupOptionsModel
             {
-                DisplayName = GetLocalized("Settings/CodeInstall"),
-                InternalName = "CodeInstall"
+                DisplayMember = GetLocalized("Settings/CodeInstall"),
+                SelectedValue = "CodeInstall"
             });
         }
 
@@ -331,37 +306,20 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeThemeList()
         {
-            ThemeList.Add(new ThemeModel
+            ThemeList.Add(new GroupOptionsModel
             {
-                DisplayName = GetLocalized("Settings/ThemeDefault"),
-                InternalName = Convert.ToString(ElementTheme.Default)
+                DisplayMember = GetLocalized("Settings/ThemeDefault"),
+                SelectedValue = Convert.ToString(ElementTheme.Default)
             });
-            ThemeList.Add(new ThemeModel
+            ThemeList.Add(new GroupOptionsModel
             {
-                DisplayName = GetLocalized("Settings/ThemeLight"),
-                InternalName = Convert.ToString(ElementTheme.Light)
+                DisplayMember = GetLocalized("Settings/ThemeLight"),
+                SelectedValue = Convert.ToString(ElementTheme.Light)
             });
-            ThemeList.Add(new ThemeModel
+            ThemeList.Add(new GroupOptionsModel
             {
-                DisplayName = GetLocalized("Settings/ThemeDark"),
-                InternalName = Convert.ToString(ElementTheme.Dark)
-            });
-        }
-
-        /// <summary>
-        /// 初始化通知区域右键菜单主题信息列表
-        /// </summary>
-        private static void InitializeNotifyIconMenuThemeList()
-        {
-            NotifyIconMenuThemeList.Add(new NotifyIconMenuThemeModel
-            {
-                DisplayName = GetLocalized("Settings/NotifyIconMenuAppTheme"),
-                InternalName = "NotifyIconMenuAppTheme"
-            });
-            NotifyIconMenuThemeList.Add(new NotifyIconMenuThemeModel
-            {
-                DisplayName = GetLocalized("Settings/NotifyIconMenuSystemTheme"),
-                InternalName = "NotifyIconMenuSystemTheme"
+                DisplayMember = GetLocalized("Settings/ThemeDark"),
+                SelectedValue = Convert.ToString(ElementTheme.Dark)
             });
         }
 
@@ -407,15 +365,15 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeWinGetInstallModeList()
         {
-            WinGetInstallModeList.Add(new WinGetInstallModeModel
+            WinGetInstallModeList.Add(new GroupOptionsModel
             {
-                DisplayName = GetLocalized("Settings/InteractiveInstall"),
-                InternalName = Convert.ToString(PackageInstallMode.Interactive),
+                DisplayMember = GetLocalized("Settings/InteractiveInstall"),
+                SelectedValue = Convert.ToString(PackageInstallMode.Interactive),
             });
-            WinGetInstallModeList.Add(new WinGetInstallModeModel
+            WinGetInstallModeList.Add(new GroupOptionsModel
             {
-                DisplayName = GetLocalized("Settings/SlientInstall"),
-                InternalName = Convert.ToString(PackageInstallMode.Silent),
+                DisplayMember = GetLocalized("Settings/SlientInstall"),
+                SelectedValue = Convert.ToString(PackageInstallMode.Silent),
             });
         }
 
@@ -432,14 +390,14 @@ namespace GetStoreApp.Services.Root
                 }
                 catch (Exception currentResourceException)
                 {
-                    LogService.WriteLog(LogType.WARNING, string.Format("Get resource context with langauge {0} failed.", CurrentAppLanguage.InternalName), currentResourceException);
+                    LogService.WriteLog(LogType.WARNING, string.Format("Get resource context with langauge {0} failed.", CurrentAppLanguage.SelectedValue), currentResourceException);
                     try
                     {
                         return ResourceMap.GetValue(resource, DefaultResourceContext).ValueAsString;
                     }
                     catch (Exception defaultResourceException)
                     {
-                        LogService.WriteLog(LogType.WARNING, string.Format("Get resource context with langauge {0} failed.", DefaultAppLanguage.InternalName), defaultResourceException);
+                        LogService.WriteLog(LogType.WARNING, string.Format("Get resource context with langauge {0} failed.", DefaultAppLanguage.SelectedValue), defaultResourceException);
                         return resource;
                     }
                 }

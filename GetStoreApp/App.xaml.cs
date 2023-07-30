@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Extensions.SystemTray;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Appearance;
@@ -8,13 +7,10 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
-using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using System;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using Windows.Foundation;
 using Windows.Graphics;
 using Windows.UI.StartScreen;
 
@@ -24,15 +20,9 @@ namespace GetStoreApp
     {
         private bool isDisposed;
 
-        private IntPtr[] hIcons;
-
         public bool IsAppRunning { get; set; } = true;
 
         public MainWindow MainWindow { get; private set; }
-
-        public TrayMenuWindow TrayMenuWindow { get; private set; }
-
-        public WindowTrayIcon TrayIcon { get; private set; }
 
         public JumpList TaskbarJumpList { get; private set; }
 
@@ -51,12 +41,8 @@ namespace GetStoreApp
             ResourceDictionaryHelper.InitializeResourceDictionary();
 
             MainWindow = new MainWindow();
-            TrayMenuWindow = new TrayMenuWindow();
-            TrayIcon = new WindowTrayIcon(ResourceService.GetLocalized("Resources/AppDisplayName"));
-            TrayIcon.DoubleClick += DoubleClick;
-            TrayIcon.RightClick += RightClick;
             Program.IsAppLaunched = true;
-            await ActivateAsync();
+            ActivateWindow();
 
             await InitializeJumpListAsync();
             Startup();
@@ -70,74 +56,9 @@ namespace GetStoreApp
             if (JumpList.IsSupported())
             {
                 TaskbarJumpList = await JumpList.LoadCurrentAsync();
-                TaskbarJumpList.SystemGroupKind = AppJumpList.GroupKind;
                 RemoveUnusedItems();
                 UpdateJumpListGroupName();
                 await TaskbarJumpList.SaveAsync();
-            }
-        }
-
-        /// <summary>
-        /// 双击任务栏图标：显示 / 隐藏窗口
-        /// </summary>
-        public void DoubleClick(object sender, RoutedEventArgs args)
-        {
-            MainWindow.DispatcherQueue.TryEnqueue(() =>
-            {
-                // 隐藏窗口
-                if (MainWindow.Visible)
-                {
-                    MainWindow.AppWindow.Hide();
-                }
-                // 显示窗口
-                else
-                {
-                    MainWindow.Show();
-                }
-            });
-        }
-
-        /// <summary>
-        /// 右键任务栏图标：显示菜单窗口
-        /// </summary>
-        public void RightClick(object sender, RoutedEventArgs args)
-        {
-            unsafe
-            {
-                // 获取当前鼠标位置信息
-                PointInt32 pt;
-                User32Library.GetCursorPos(&pt);
-
-                int x = DPICalcHelper.ConvertPixelToEpx(MainWindow.Handle, pt.X);
-                int y = DPICalcHelper.ConvertPixelToEpx(MainWindow.Handle, pt.Y);
-
-                User32Library.SetForegroundWindow(TrayMenuWindow.Handle);
-                if (InfoHelper.SystemVersion.Build >= 22000)
-                {
-                    TrayMenuWindow.TrayMenuFlyout.ShowAt(null, new Point(x, y));
-                }
-                else
-                {
-                    // 取消托盘窗口置顶
-                    IntPtr hwnd = User32Library.FindWindowEx(IntPtr.Zero, IntPtr.Zero, "NotifyIconOverflowWindow", null);
-
-                    if (hwnd != IntPtr.Zero)
-                    {
-                        User32Library.SetWindowPos(hwnd, -2, 0, 0, 0, 0, SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOMOVE);
-
-                        do
-                        {
-                            hwnd = User32Library.FindWindowEx(hwnd, IntPtr.Zero, "ToolbarWindow32", null);
-
-                            if (hwnd != IntPtr.Zero)
-                            {
-                                User32Library.SetWindowPos(hwnd, -2, 0, 0, 0, 0, SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOMOVE);
-                            }
-                        } while (hwnd != IntPtr.Zero);
-                    }
-
-                    TrayMenuWindow.TrayMenuFlyout.ShowAt(null, new Point(pt.X, pt.Y));
-                }
             }
         }
 
@@ -167,13 +88,13 @@ namespace GetStoreApp
         /// <summary>
         /// 窗口激活前进行配置
         /// </summary>
-        public async Task ActivateAsync()
+        public void ActivateWindow()
         {
-            bool? IsWindowMaximized = await ConfigService.ReadSettingAsync<bool?>(ConfigKey.IsWindowMaximizedKey);
-            int? WindowWidth = await ConfigService.ReadSettingAsync<int?>(ConfigKey.WindowWidthKey);
-            int? WindowHeight = await ConfigService.ReadSettingAsync<int?>(ConfigKey.WindowHeightKey);
-            int? WindowPositionXAxis = await ConfigService.ReadSettingAsync<int?>(ConfigKey.WindowPositionXAxisKey);
-            int? WindowPositionYAxis = await ConfigService.ReadSettingAsync<int?>(ConfigKey.WindowPositionYAxisKey);
+            bool? IsWindowMaximized = ConfigService.ReadSetting<bool?>(ConfigKey.IsWindowMaximizedKey);
+            int? WindowWidth = ConfigService.ReadSetting<int?>(ConfigKey.WindowWidthKey);
+            int? WindowHeight = ConfigService.ReadSetting<int?>(ConfigKey.WindowHeightKey);
+            int? WindowPositionXAxis = ConfigService.ReadSetting<int?>(ConfigKey.WindowPositionXAxisKey);
+            int? WindowPositionYAxis = ConfigService.ReadSetting<int?>(ConfigKey.WindowPositionYAxisKey);
 
             if (IsWindowMaximized.HasValue && IsWindowMaximized.Value == true)
             {
@@ -192,7 +113,6 @@ namespace GetStoreApp
                 }
             }
 
-            SetAppIcon();
             MainWindow.AppWindow.Show();
         }
 
@@ -203,7 +123,6 @@ namespace GetStoreApp
         {
             // 设置应用主题
             ThemeService.SetWindowTheme();
-            ThemeService.SetTrayWindowTheme();
 
             // 设置应用背景色
             BackdropService.SetAppBackdrop();
@@ -247,59 +166,32 @@ namespace GetStoreApp
         {
             foreach (JumpListItem jumpListItem in TaskbarJumpList.Items)
             {
-                jumpListItem.GroupName = AppJumpList.GroupName;
-            }
-        }
-
-        /// <summary>
-        /// 设置应用窗口图标
-        /// </summary>
-        private void SetAppIcon()
-        {
-            // 选中文件中的图标总数
-            int iconTotalCount = User32Library.PrivateExtractIcons(Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreApp.exe"), 0, 0, 0, null, null, 0, 0);
-
-            // 用于接收获取到的图标指针
-            hIcons = new IntPtr[iconTotalCount];
-
-            // 对应的图标id
-            int[] ids = new int[iconTotalCount];
-
-            // 成功获取到的图标个数
-            int successCount = User32Library.PrivateExtractIcons(Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreApp.exe"), 0, 256, 256, hIcons, ids, iconTotalCount, 0);
-
-            // GetStoreApp.exe 应用程序只有一个图标
-            if (successCount >= 1 && hIcons[0] != IntPtr.Zero)
-            {
-                MainWindow.AppWindow.SetIcon(Win32Interop.GetIconIdFromIcon(hIcons[0]));
+                jumpListItem.GroupName = ResourceService.GetLocalized("Window/JumpListGroupName");
             }
         }
 
         /// <summary>
         /// 关闭应用并释放所有资源
         /// </summary>
-        private async Task CloseAppAsync()
+        private void CloseApp()
         {
             IsAppRunning = false;
-            await SaveWindowInformationAsync();
+            SaveWindowInformation();
             DownloadSchedulerService.CloseDownloadScheduler();
             Aria2Service.CloseAria2();
-            TrayIcon.Dispose();
-            TrayIcon.DoubleClick -= DoubleClick;
-            TrayIcon.RightClick -= RightClick;
             Exit();
         }
 
         /// <summary>
         /// 关闭窗口时保存窗口的大小和位置信息
         /// </summary>
-        private async Task SaveWindowInformationAsync()
+        private void SaveWindowInformation()
         {
-            await ConfigService.SaveSettingAsync(ConfigKey.IsWindowMaximizedKey, MainWindow.AppTitlebar.IsWindowMaximized);
-            await ConfigService.SaveSettingAsync(ConfigKey.WindowWidthKey, MainWindow.AppWindow.Size.Width);
-            await ConfigService.SaveSettingAsync(ConfigKey.WindowHeightKey, MainWindow.AppWindow.Size.Height);
-            await ConfigService.SaveSettingAsync(ConfigKey.WindowPositionXAxisKey, MainWindow.AppWindow.Position.X);
-            await ConfigService.SaveSettingAsync(ConfigKey.WindowPositionYAxisKey, MainWindow.AppWindow.Position.Y);
+            ConfigService.SaveSetting(ConfigKey.IsWindowMaximizedKey, MainWindow.AppTitlebar.IsWindowMaximized);
+            ConfigService.SaveSetting(ConfigKey.WindowWidthKey, MainWindow.AppWindow.Size.Width);
+            ConfigService.SaveSetting(ConfigKey.WindowHeightKey, MainWindow.AppWindow.Size.Height);
+            ConfigService.SaveSetting(ConfigKey.WindowPositionXAxisKey, MainWindow.AppWindow.Position.X);
+            ConfigService.SaveSetting(ConfigKey.WindowPositionYAxisKey, MainWindow.AppWindow.Position.Y);
         }
 
         /// <summary>
@@ -360,14 +252,7 @@ namespace GetStoreApp
             {
                 if (disposing)
                 {
-                    if (hIcons is not null)
-                    {
-                        foreach (IntPtr hIcon in hIcons)
-                        {
-                            User32Library.DestroyIcon(hIcon);
-                        }
-                    }
-                    CloseAppAsync().Wait();
+                    CloseApp();
                 }
 
                 isDisposed = true;

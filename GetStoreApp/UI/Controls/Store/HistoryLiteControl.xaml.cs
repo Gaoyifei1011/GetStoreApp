@@ -1,7 +1,7 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.History;
-using GetStoreApp.Models.Controls.Settings.Common;
+using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Services.Controls.History;
 using GetStoreApp.Services.Controls.Settings.Common;
@@ -12,6 +12,7 @@ using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -26,7 +27,7 @@ namespace GetStoreApp.UI.Controls.Store
         // 临界区资源访问互斥锁
         private readonly object HistoryLiteDataListLock = new object();
 
-        public HistoryLiteNumModel HistoryLiteItem { get; set; }
+        public GroupOptionsModel HistoryLiteItem { get; set; }
 
         public List<TypeModel> TypeList { get; } = ResourceService.TypeList;
 
@@ -93,7 +94,7 @@ namespace GetStoreApp.UI.Controls.Store
         public async Task GetHistoryLiteDataListAsync()
         {
             // 获取数据库的原始记录数据
-            List<HistoryModel> HistoryRawList = await HistoryXmlService.QueryAsync(HistoryLiteItem.HistoryLiteNumValue);
+            List<HistoryModel> HistoryRawList = await HistoryXmlService.QueryAsync(Convert.ToInt32(HistoryLiteItem.SelectedValue));
 
             lock (HistoryLiteDataListLock)
             {

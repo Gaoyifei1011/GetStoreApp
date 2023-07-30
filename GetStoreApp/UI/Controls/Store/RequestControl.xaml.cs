@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Extensions.SystemTray;
-using GetStoreApp.Helpers.Controls.Store;
+﻿using GetStoreApp.Helpers.Controls.Store;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.History;
 using GetStoreApp.Models.Controls.Store;
@@ -318,9 +317,9 @@ namespace GetStoreApp.UI.Controls.Store
                 // 无重复元素，直接添加
                 if (isDuplicatedIndex is -1)
                 {
-                    if (HistoryRecordService.HistoryJumpListNum.HistoryJumpListNumValue is not "Unlimited")
+                    if (HistoryRecordService.HistoryJumpListNum.SelectedValue is not "Unlimited")
                     {
-                        int count = Convert.ToInt32(HistoryRecordService.HistoryJumpListNum.HistoryJumpListNumValue);
+                        int count = Convert.ToInt32(HistoryRecordService.HistoryJumpListNum.SelectedValue);
 
                         while (Program.ApplicationRoot.TaskbarJumpList.Items.Count >= count)
                         {
@@ -328,7 +327,7 @@ namespace GetStoreApp.UI.Controls.Store
                         }
                     }
                     JumpListItem jumpListItem = JumpListItem.CreateWithArguments(string.Format("JumpList {0} {1} {2}", TypeList[currentType].ShortName, ChannelList[currentChannel].ShortName, currentLink), currentLink);
-                    jumpListItem.GroupName = AppJumpList.GroupName;
+                    jumpListItem.GroupName = ResourceService.GetLocalized("Window/JumpListGroupName");
                     jumpListItem.Logo = new Uri("ms-appx:///Assets/Images/Jumplist.png");
                     Program.ApplicationRoot.TaskbarJumpList.Items.Add(jumpListItem);
                 }

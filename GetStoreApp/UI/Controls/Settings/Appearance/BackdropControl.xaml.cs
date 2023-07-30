@@ -1,5 +1,5 @@
 ﻿using GetStoreApp.Helpers.Root;
-using GetStoreApp.Models.Controls.Settings.Appearance;
+using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Services.Controls.Settings.Appearance;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -19,9 +19,9 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
     {
         public bool CanUseMicaBackdrop { get; set; }
 
-        private BackdropModel _backdrop = BackdropService.AppBackdrop;
+        private GroupOptionsModel _backdrop = BackdropService.AppBackdrop;
 
-        public BackdropModel Backdrop
+        public GroupOptionsModel Backdrop
         {
             get { return _backdrop; }
 
@@ -32,7 +32,7 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
             }
         }
 
-        public List<BackdropModel> BackdropList { get; } = BackdropService.BackdropList;
+        public List<GroupOptionsModel> BackdropList { get; } = BackdropService.BackdropList;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -43,21 +43,21 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
             CanUseMicaBackdrop = BuildNumber >= 20000;
         }
 
-        public bool IsItemChecked(string selectedInternalName, string internalName)
+        public bool IsItemChecked(GroupOptionsModel selectedMember, GroupOptionsModel comparedMember)
         {
-            return selectedInternalName == internalName;
+            return selectedMember.SelectedValue == comparedMember.SelectedValue;
         }
 
         /// <summary>
         /// 背景色修改设置
         /// </summary>
-        public async void OnBackdropSelectClicked(object sender, RoutedEventArgs args)
+        public void OnBackdropSelectClicked(object sender, RoutedEventArgs args)
         {
             ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 Backdrop = BackdropList[Convert.ToInt32(item.Tag)];
-                await BackdropService.SetBackdropAsync(Backdrop);
+                BackdropService.SetBackdrop(Backdrop);
                 BackdropService.SetAppBackdrop();
             }
         }
@@ -65,7 +65,7 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
         /// <summary>
         /// 打开系统背景色设置
         /// </summary>
-        public async void OnSettingsBackdropClicked(object sender, RoutedEventArgs args)
+        public async void OnSystemBackdropSettingsClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:easeofaccess-visualeffects"));
         }

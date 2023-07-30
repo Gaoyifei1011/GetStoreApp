@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Services.Root;
 using System;
-using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Controls.Settings.Common
 {
@@ -19,17 +18,17 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// <summary>
         /// 应用在初始化前获取设置存储的应用通知显示值
         /// </summary>
-        public static async Task InitializeNotificationAsync()
+        public static void InitializeNotification()
         {
-            AppNotification = await GetNotificationAsync();
+            AppNotification = GetNotification();
         }
 
         /// <summary>
         /// 获取设置存储的应用通知显示值，如果设置没有存储，使用默认值
         /// </summary>
-        private static async Task<bool> GetNotificationAsync()
+        private static bool GetNotification()
         {
-            bool? appNotification = await ConfigService.ReadSettingAsync<bool?>(SettingsKey);
+            bool? appNotification = ConfigService.ReadSetting<bool?>(SettingsKey);
 
             if (!appNotification.HasValue)
             {
@@ -42,11 +41,11 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// <summary>
         /// 应用通知显示发生修改时修改设置存储的使用说明按钮显示值
         /// </summary>
-        public static async Task SetNotificationAsync(bool appNotification)
+        public static void SetNotification(bool appNotification)
         {
             AppNotification = appNotification;
 
-            await ConfigService.SaveSettingAsync(SettingsKey, appNotification);
+            ConfigService.SaveSetting(SettingsKey, appNotification);
         }
     }
 }

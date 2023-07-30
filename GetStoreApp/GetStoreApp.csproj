@@ -143,7 +143,6 @@
     <None Remove="UI\Controls\Download\DownloadingControl.xaml" />
     <None Remove="UI\Controls\Download\UnfinishedControl.xaml" />
     
-    <None Remove="UI\Controls\Settings\Advanced\AppExitControl.xaml" />
     <None Remove="UI\Controls\Settings\Advanced\ExperimentalFeaturesControl.xaml" />
     <None Remove="UI\Controls\Settings\Advanced\InstallModeControl.xaml" />
     <None Remove="UI\Controls\Settings\Advanced\LogControl.xaml" />
@@ -160,7 +159,6 @@
     <None Remove="UI\Controls\Settings\Common\LinkFilterControl.xaml" />
     <None Remove="UI\Controls\Settings\Common\NotificationControl.xaml" />
     <None Remove="UI\Controls\Settings\Common\RegionControl.xaml" />
-    <None Remove="UI\Controls\Settings\Common\UseInstructionControl.xaml" />
     <None Remove="UI\Controls\Settings\Common\WinGetConfigControl.xaml" />
     
     <None Remove="UI\Controls\Settings\Experiment\NetWorkMonitorControl.xaml" />
@@ -229,7 +227,6 @@
     <None Remove="Views\Pages\WinGetPage.xaml" />
     
     <None Remove="Views\Windows\MainWindow.xaml" />
-    <None Remove="Views\Windows\TrayMenuWindow.xaml" />
 
     <None Update="Assets\Resources\LICENSE" CopyToOutputDirectory="Never" />
     <None Update="Mile.Aria2.conf" CopyToOutputDirectory="Never" />
@@ -263,8 +260,6 @@
     <Page Update="UI\Controls\Download\CompletedControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Download\DownloadingControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Download\UnfinishedControl.xaml" Generator="MSBuild:Compile" />
-
-    <Page Update="UI\Controls\Settings\Advanced\AppExitControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Settings\Advanced\ExperimentalFeaturesControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Settings\Advanced\InstallModeControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Settings\Advanced\LogControl.xaml" Generator="MSBuild:Compile" />
@@ -280,7 +275,6 @@
     <Page Update="UI\Controls\Settings\Common\HistoryRecordControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Settings\Common\LinkFilterControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Settings\Common\NotificationControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\Settings\Common\UseInstructionControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Settings\Common\WinGetConfigControl.xaml" Generator="MSBuild:Compile" />
 
     <Page Update="UI\Controls\Settings\Experiment\NetWorkMonitorControl.xaml" Generator="MSBuild:Compile" />
@@ -349,7 +343,6 @@
     <Page Update="Views\Pages\WinGetPage.xaml" Generator="MSBuild:Compile" />
     
     <Page Update="Views\Windows\MainWindow.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Views\Windows\TrayMenuWindow.xaml" Generator="MSBuild:Compile" />
 
     <TrimmableAssembly Include="Microsoft.InteractiveExperiences.Projection" />
     <TrimmableAssembly Include="Microsoft.Windows.ApplicationModel.DynamicDependency.Projection" />

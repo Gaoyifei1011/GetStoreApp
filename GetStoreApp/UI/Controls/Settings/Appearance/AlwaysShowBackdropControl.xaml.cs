@@ -1,8 +1,4 @@
-using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Controls.Settings.Appearance;
-using GetStoreApp.Services.Window;
-using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.ComponentModel;
@@ -16,8 +12,6 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
     /// </summary>
     public sealed partial class AlwaysShowBackdropControl : Grid, INotifyPropertyChanged
     {
-        public bool CanUseMicaBackdrop { get; set; }
-
         private bool _alwaysShowBackdropValue = AlwaysShowBackdropService.AlwaysShowBackdropValue;
 
         public bool AlwaysShowBackdropValue
@@ -36,27 +30,17 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
         public AlwaysShowBackdropControl()
         {
             InitializeComponent();
-            int BuildNumber = InfoHelper.SystemVersion.Build;
-            CanUseMicaBackdrop = BuildNumber >= 20000;
-        }
-
-        /// <summary>
-        /// 背景色不可用时具体信息了解
-        /// </summary>
-        public void OnBackdropTipClicked(object sender, RoutedEventArgs args)
-        {
-            NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
         }
 
         /// <summary>
         /// 开关按钮切换时修改相应设置
         /// </summary>
-        public async void OnToggled(object sender, RoutedEventArgs args)
+        public void OnToggled(object sender, RoutedEventArgs args)
         {
             ToggleSwitch toggleSwitch = sender.As<ToggleSwitch>();
             if (toggleSwitch is not null)
             {
-                await AlwaysShowBackdropService.SetAlwaysShowBackdropAsync(toggleSwitch.IsOn);
+                AlwaysShowBackdropService.SetAlwaysShowBackdrop(toggleSwitch.IsOn);
                 AlwaysShowBackdropValue = toggleSwitch.IsOn;
             }
         }

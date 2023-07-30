@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Extensions.SystemTray;
-using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Properties;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Advanced;
@@ -14,7 +13,6 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.UI.StartScreen;
 using WinRT;
 
 namespace GetStoreApp
@@ -98,17 +96,13 @@ namespace GetStoreApp
         {
             // 初始化应用资源，应用使用的语言信息和启动参数
             await LogService.InitializeAsync();
-            await LanguageService.InitializeLanguageAsync();
+            LanguageService.InitializeLanguage();
             ResourceService.InitializeResource(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
 
             // 初始化通用设置选项（桌面应用程序和控制台应用程序）
             ResourceService.LocalizeReosurce();
-            await LinkFilterService.InitializeLinkFilterValueAsnyc();
+            LinkFilterService.InitializeLinkFilterValue();
             await DownloadOptionsService.InitializeAsync();
-
-            // 初始化应用任务跳转列表信息
-            AppJumpList.GroupName = ResourceService.GetLocalized("Window/JumpListGroupName");
-            AppJumpList.GroupKind = JumpListSystemGroupKind.Recent;
 
             if (IsDesktopProgram)
             {
@@ -117,21 +111,19 @@ namespace GetStoreApp
                 await DownloadXmlService.InitializeDownloadXmlAsync();
 
                 // 初始化应用配置信息
-                await AppExitService.InitializeAppExitAsync();
-                await InstallModeService.InitializeInstallModeAsync();
+                InstallModeService.InitializeInstallMode();
 
-                await AlwaysShowBackdropService.InitializeAlwaysShowBackdropAsync();
-                await BackdropService.InitializeBackdropAsync();
-                await ThemeService.InitializeAsync();
-                await TopMostService.InitializeTopMostValueAsync();
+                AlwaysShowBackdropService.InitializeAlwaysShowBackdrop();
+                BackdropService.InitializeBackdrop();
+                ThemeService.InitializeTheme();
+                TopMostService.InitializeTopMostValue();
 
-                await HistoryRecordService.InitializeAsync();
-                await NotificationService.InitializeNotificationAsync();
-                await UseInstructionService.InitializeUseInsVisValueAsync();
-                await WinGetConfigService.InitializeWinGetConfigAsync();
+                HistoryRecordService.Initialize();
+                NotificationService.InitializeNotification();
+                WinGetConfigService.InitializeWinGetConfig();
 
                 // 实验功能设置配置
-                await NetWorkMonitorService.InitializeNetWorkMonitorValueAsync();
+                NetWorkMonitorService.InitializeNetWorkMonitorValue();
             }
         }
     }

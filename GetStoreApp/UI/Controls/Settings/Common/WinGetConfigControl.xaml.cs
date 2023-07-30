@@ -1,9 +1,6 @@
-using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Models.Controls.Settings.Common;
+using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Services.Window;
-using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml;
@@ -39,9 +36,9 @@ namespace GetStoreApp.UI.Controls.Settings.Common
             }
         }
 
-        private WinGetInstallModeModel _winGetInstallMode = WinGetConfigService.WinGetInstallMode;
+        private GroupOptionsModel _winGetInstallMode = WinGetConfigService.WinGetInstallMode;
 
-        public WinGetInstallModeModel WinGetInstallMode
+        public GroupOptionsModel WinGetInstallMode
         {
             get { return _winGetInstallMode; }
 
@@ -52,7 +49,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
             }
         }
 
-        public List<WinGetInstallModeModel> WinGetInstallModeList => WinGetConfigService.WinGetInstallModeList;
+        public List<GroupOptionsModel> WinGetInstallModeList => WinGetConfigService.WinGetInstallModeList;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -77,21 +74,21 @@ namespace GetStoreApp.UI.Controls.Settings.Common
             return isOfficialVersionExisted || isDevVersionExisted;
         }
 
-        public bool IsItemChecked(string selectedInternalName, string internalName)
+        public bool IsItemChecked(GroupOptionsModel selectedMember, GroupOptionsModel comparedMember)
         {
-            return selectedInternalName == internalName;
+            return selectedMember.SelectedValue == comparedMember.SelectedValue;
         }
 
         /// <summary>
         /// WinGet 程序包安装方式设置
         /// </summary>
-        public async void OnWinGetInstallModeSelectClicked(object sender, RoutedEventArgs args)
+        public void OnWinGetInstallModeSelectClicked(object sender, RoutedEventArgs args)
         {
             ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 WinGetInstallMode = WinGetInstallModeList[Convert.ToInt32(item.Tag)];
-                await WinGetConfigService.SetWinGetInstallModeAsync(WinGetInstallMode);
+                WinGetConfigService.SetWinGetInstallMode(WinGetInstallMode);
             }
         }
 
@@ -131,22 +128,14 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// <summary>
         /// 当两个版本共存时，设置是否优先使用开发版本
         /// </summary>
-        public async void OnToggled(object sender, RoutedEventArgs args)
+        public void OnToggled(object sender, RoutedEventArgs args)
         {
             ToggleSwitch toggleSwitch = sender.As<ToggleSwitch>();
             if (toggleSwitch is not null)
             {
-                await WinGetConfigService.SetUseDevVersionAsync(toggleSwitch.IsOn);
+                WinGetConfigService.SetUseDevVersion(toggleSwitch.IsOn);
                 UseDevVersion = toggleSwitch.IsOn;
             }
-        }
-
-        /// <summary>
-        /// WinGet 程序包配置选项说明
-        /// </summary>
-        public void OnWinGetConfigInstructionClicked(object sender, RoutedEventArgs args)
-        {
-            NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
         }
 
         /// <summary>

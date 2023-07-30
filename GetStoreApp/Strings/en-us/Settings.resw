@@ -135,12 +135,6 @@
   <data name="Appearance" xml:space="preserve">
     <value>Appearance</value>
   </data>
-  <data name="AppExit" xml:space="preserve">
-    <value>Application closing mode</value>
-  </data>
-  <data name="AppExitDescription" xml:space="preserve">
-    <value>Set the action that needs to be taken when the app closes</value>
-  </data>
   <data name="AppInstall" xml:space="preserve">
     <value>Install using the app installer</value>
   </data>
@@ -161,9 +155,6 @@
   </data>
   <data name="BackdropMicaAlt" xml:space="preserve">
     <value>Mica alt</value>
-  </data>
-  <data name="BackdropToolTip" xml:space="preserve">
-    <value>Help</value>
   </data>
   <data name="BlockMap" xml:space="preserve">
     <value>Files with file name extensions called BlockMap are not displayed</value>
@@ -189,9 +180,6 @@
   <data name="ClearLogDescription" xml:space="preserve">
     <value>Clear all log contents of the app</value>
   </data>
-  <data name="CloseApp" xml:space="preserve">
-    <value>Quit the app</value>
-  </data>
   <data name="CodeInstall" xml:space="preserve">
     <value>Direct installation</value>
   </data>
@@ -215,9 +203,6 @@
   </data>
   <data name="DownloadInApp" xml:space="preserve">
     <value>Use the in-app download manager to download</value>
-  </data>
-  <data name="DownloadInstruction" xml:space="preserve">
-    <value>Download management instructions</value>
   </data>
   <data name="DownloadItem" xml:space="preserve">
     <value>The number of simultaneous download tasks</value>
@@ -248,9 +233,6 @@
   </data>
   <data name="General" xml:space="preserve">
     <value>General Options</value>
-  </data>
-  <data name="HideToTray" xml:space="preserve">
-    <value>Minimize to the system tray</value>
   </data>
   <data name="HistoryJumpList" xml:space="preserve">
     <value>The number of taskbar history item displays</value>
@@ -297,9 +279,6 @@
   <data name="InstallModeDescription" xml:space="preserve">
     <value>Select how the Windows app package is installed</value>
   </data>
-  <data name="InstallModeToolTip" xml:space="preserve">
-    <value>Help</value>
-  </data>
   <data name="InteractiveInstall" xml:space="preserve">
     <value>Install interactively</value>
   </data>
@@ -309,17 +288,11 @@
   <data name="LanguageDescription" xml:space="preserve">
     <value>Modify the language displayed in the app interface</value>
   </data>
-  <data name="LanguageToolTip" xml:space="preserve">
-    <value>Help</value>
-  </data>
   <data name="LinkFilter" xml:space="preserve">
     <value>Link filtering</value>
   </data>
   <data name="LinkFilterDescription" xml:space="preserve">
     <value>Filter out links that you won't use to make finding apps more efficient</value>
-  </data>
-  <data name="LinkFilterInstruction" xml:space="preserve">
-    <value>Link filtering instructions</value>
   </data>
   <data name="LogFolder" xml:space="preserve">
     <value>Log storage path</value>
@@ -353,18 +326,6 @@
   </data>
   <data name="NotificationOnContent" xml:space="preserve">
     <value>Opening</value>
-  </data>
-  <data name="NotifyIconMenuAppTheme" xml:space="preserve">
-    <value>Follow app theme</value>
-  </data>
-  <data name="NotifyIconMenuSystemTheme" xml:space="preserve">
-    <value>Follow system topic</value>
-  </data>
-  <data name="NotifyIconMenuTheme" xml:space="preserve">
-    <value>Notification area right-click menu theme</value>
-  </data>
-  <data name="NotifyIconMenuThemeDescription" xml:space="preserve">
-    <value>Sets the theme mode of the context menu in the notification area</value>
   </data>
   <data name="OfficialVersion" xml:space="preserve">
     <value>Official version</value>
@@ -405,6 +366,9 @@
   <data name="SelectFolder" xml:space="preserve">
     <value>Please select the directory you want to save</value>
   </data>
+  <data name="SettingsInstruction" xml:space="preserve">
+    <value>Settings instruction</value>
+  </data>
   <data name="ShowVersion" xml:space="preserve">
     <value>Show</value>
   </data>
@@ -426,6 +390,18 @@
   <data name="StartsWithEOnContent" xml:space="preserve">
     <value>filter</value>
   </data>
+  <data name="SystemBackdropSettings" xml:space="preserve">
+    <value>System backdrop settings</value>
+  </data>
+  <data name="SystemColorSettings" xml:space="preserve">
+    <value>System color settings</value>
+  </data>
+  <data name="SystemLanguageSettings" xml:space="preserve">
+    <value>System language settings</value>
+  </data>
+  <data name="SystemNotificationSettings" xml:space="preserve">
+    <value>System notification settings</value>
+  </data>
   <data name="Theme" xml:space="preserve">
     <value>Application theme</value>
   </data>
@@ -440,12 +416,6 @@
   </data>
   <data name="ThemeLight" xml:space="preserve">
     <value>Light</value>
-  </data>
-  <data name="ThemeMode" xml:space="preserve">
-    <value>Theme mode</value>
-  </data>
-  <data name="ThemeModeDescription" xml:space="preserve">
-    <value>Set the theme mode for the app as a whole</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Settings</value>
@@ -468,9 +438,6 @@
   <data name="TraceCleanupDescription" xml:space="preserve">
     <value>Clean up all traces of use within the app</value>
   </data>
-  <data name="TraceCleanupToolTip" xml:space="preserve">
-    <value>Help</value>
-  </data>
   <data name="TraceClear" xml:space="preserve">
     <value>Select what you want to clean</value>
   </data>
@@ -489,35 +456,11 @@
   <data name="UseDevFirstToolTip" xml:space="preserve">
     <value>When both versions exist, the development version is preferred (takes effect after restart)</value>
   </data>
-  <data name="UseInstruction" xml:space="preserve">
-    <value>Instructions for use button</value>
-  </data>
-  <data name="UseInstructionDescription" xml:space="preserve">
-    <value>Whether to quickly learn about the function on the corresponding page</value>
-  </data>
-  <data name="UseInstructionOffContent" xml:space="preserve">
-    <value>Closed</value>
-  </data>
-  <data name="UseInstructionOnContent" xml:space="preserve">
-    <value>Displayed</value>
-  </data>
-  <data name="WindowsBackdropSettings" xml:space="preserve">
-    <value>Windows backdrop settings</value>
-  </data>
-  <data name="WindowsColorSettings" xml:space="preserve">
-    <value>Windows color settings</value>
-  </data>
-  <data name="WindowsNotificationSettings" xml:space="preserve">
-    <value>Windows notification settings</value>
-  </data>
   <data name="WinGetConfig" xml:space="preserve">
     <value>WinGet config options</value>
   </data>
   <data name="WinGetConfigDescription" xml:space="preserve">
     <value>Customize the WinGet package's function</value>
-  </data>
-  <data name="WinGetConfigInstruction" xml:space="preserve">
-    <value>Config option description</value>
   </data>
   <data name="WinGetInstallMode" xml:space="preserve">
     <value>WinGet install mode</value>

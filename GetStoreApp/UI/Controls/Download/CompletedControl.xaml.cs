@@ -91,13 +91,13 @@ namespace GetStoreApp.UI.Controls.Download
                         {
                             StorageFile CompletedFile = await StorageFile.GetFileFromPathAsync(completedItem.FilePath);
 
-                            if (InstallModeService.InstallMode.InternalName == InstallModeService.InstallModeList[0].InternalName)
+                            if (InstallModeService.InstallMode.SelectedValue == InstallModeService.InstallModeList[0].SelectedValue)
                             {
                                 await Launcher.LaunchFileAsync(CompletedFile);
                             }
 
                             // 直接安装
-                            else if (InstallModeService.InstallMode.InternalName == InstallModeService.InstallModeList[1].InternalName)
+                            else if (InstallModeService.InstallMode.SelectedValue == InstallModeService.InstallModeList[1].SelectedValue)
                             {
                                 // 标记安装状态
                                 try

@@ -1,8 +1,5 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Models.Controls.Settings.Advanced;
+﻿using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Services.Controls.Settings.Advanced;
-using GetStoreApp.Services.Window;
-using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -18,9 +15,9 @@ namespace GetStoreApp.UI.Controls.Settings.Advanced
     /// </summary>
     public sealed partial class InstallModeControl : Grid, INotifyPropertyChanged
     {
-        private InstallModeModel _installMode = InstallModeService.InstallMode;
+        private GroupOptionsModel _installMode = InstallModeService.InstallMode;
 
-        public InstallModeModel InstallMode
+        public GroupOptionsModel InstallMode
         {
             get { return _installMode; }
 
@@ -31,7 +28,7 @@ namespace GetStoreApp.UI.Controls.Settings.Advanced
             }
         }
 
-        public List<InstallModeModel> InstallModeList => InstallModeService.InstallModeList;
+        public List<GroupOptionsModel> InstallModeList => InstallModeService.InstallModeList;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -40,29 +37,21 @@ namespace GetStoreApp.UI.Controls.Settings.Advanced
             InitializeComponent();
         }
 
-        public bool IsItemChecked(string selectedInternalName, string internalName)
+        public bool IsItemChecked(GroupOptionsModel selectedMember, GroupOptionsModel comparedMember)
         {
-            return selectedInternalName == internalName;
-        }
-
-        /// <summary>
-        /// 应用安装方式说明
-        /// </summary>
-        public void OnInstallModeTipClicked(object sender, RoutedEventArgs args)
-        {
-            NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
+            return selectedMember.SelectedValue == comparedMember.SelectedValue;
         }
 
         /// <summary>
         /// 应用安装方式设置
         /// </summary>
-        public async void OnInstallModeSelectClicked(object sender, RoutedEventArgs args)
+        public void OnInstallModeSelectClicked(object sender, RoutedEventArgs args)
         {
             ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
             if (item.Tag is not null)
             {
                 InstallMode = InstallModeList[Convert.ToInt32(item.Tag)];
-                await InstallModeService.SetInstallModeAsync(InstallMode);
+                InstallModeService.SetInstallMode(InstallMode);
             }
         }
 

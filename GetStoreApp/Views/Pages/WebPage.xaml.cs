@@ -323,7 +323,7 @@ namespace GetStoreApp.Views.Pages
                     args.Handled = true;
 
                     // 使用应用内提供的下载方式（链接是通过网页抓取的，无法获得SHA1）
-                    if (DownloadOptionsService.DownloadMode.InternalName == DownloadOptionsService.DownloadModeList[0].InternalName)
+                    if (DownloadOptionsService.DownloadMode.SelectedValue == DownloadOptionsService.DownloadModeList[0].SelectedValue)
                     {
                         string DownloadFileName = Path.GetFileName(args.DownloadOperation.ResultFilePath);
                         string DownloadFilePath = string.Format("{0}\\{1}", DownloadOptionsService.DownloadFolder.Path, DownloadFileName);

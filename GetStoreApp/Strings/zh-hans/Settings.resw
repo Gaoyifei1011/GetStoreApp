@@ -135,12 +135,6 @@
   <data name="Appearance" xml:space="preserve">
     <value>外观</value>
   </data>
-  <data name="AppExit" xml:space="preserve">
-    <value>应用关闭方式</value>
-  </data>
-  <data name="AppExitDescription" xml:space="preserve">
-    <value>设置应用关闭时需要执行的操作</value>
-  </data>
   <data name="AppInstall" xml:space="preserve">
     <value>使用应用安装程序安装</value>
   </data>
@@ -161,9 +155,6 @@
   </data>
   <data name="BackdropMicaAlt" xml:space="preserve">
     <value>云母（Alt）</value>
-  </data>
-  <data name="BackdropToolTip" xml:space="preserve">
-    <value>帮助</value>
   </data>
   <data name="BlockMap" xml:space="preserve">
     <value>不显示文件扩展名称为BlockMap的文件</value>
@@ -189,9 +180,6 @@
   <data name="ClearLogDescription" xml:space="preserve">
     <value>清除应用所有的日志内容</value>
   </data>
-  <data name="CloseApp" xml:space="preserve">
-    <value>退出应用</value>
-  </data>
   <data name="CodeInstall" xml:space="preserve">
     <value>直接安装</value>
   </data>
@@ -215,9 +203,6 @@
   </data>
   <data name="DownloadInApp" xml:space="preserve">
     <value>使用应用内下载管理器下载</value>
-  </data>
-  <data name="DownloadInstruction" xml:space="preserve">
-    <value>下载管理说明</value>
   </data>
   <data name="DownloadItem" xml:space="preserve">
     <value>同时下载任务数</value>
@@ -248,9 +233,6 @@
   </data>
   <data name="General" xml:space="preserve">
     <value>常规选项</value>
-  </data>
-  <data name="HideToTray" xml:space="preserve">
-    <value>最小化到系统托盘</value>
   </data>
   <data name="HistoryJumpList" xml:space="preserve">
     <value>任务栏“历史记录”显示数目</value>
@@ -297,9 +279,6 @@
   <data name="InstallModeDescription" xml:space="preserve">
     <value>选择Windows 应用包的安装方式</value>
   </data>
-  <data name="InstallModeToolTip" xml:space="preserve">
-    <value>帮助</value>
-  </data>
   <data name="InteractiveInstall" xml:space="preserve">
     <value>以交互方式安装</value>
   </data>
@@ -309,17 +288,11 @@
   <data name="LanguageDescription" xml:space="preserve">
     <value>修改应用界面显示的语言</value>
   </data>
-  <data name="LanguageToolTip" xml:space="preserve">
-    <value>帮助</value>
-  </data>
   <data name="LinkFilter" xml:space="preserve">
     <value>链接过滤</value>
   </data>
   <data name="LinkFilterDescription" xml:space="preserve">
     <value>过滤掉不会使用的链接，提升查找应用的效率</value>
-  </data>
-  <data name="LinkFilterInstruction" xml:space="preserve">
-    <value>链接过滤说明</value>
   </data>
   <data name="LogFolder" xml:space="preserve">
     <value>日志存放路径</value>
@@ -353,18 +326,6 @@
   </data>
   <data name="NotificationOnContent" xml:space="preserve">
     <value>开启</value>
-  </data>
-  <data name="NotifyIconMenuAppTheme" xml:space="preserve">
-    <value>遵循应用主题</value>
-  </data>
-  <data name="NotifyIconMenuSystemTheme" xml:space="preserve">
-    <value>遵循系统主题</value>
-  </data>
-  <data name="NotifyIconMenuTheme" xml:space="preserve">
-    <value>通知区域右键菜单主题</value>
-  </data>
-  <data name="NotifyIconMenuThemeDescription" xml:space="preserve">
-    <value>设置通知区域右键菜单的主题模式</value>
   </data>
   <data name="OfficialVersion" xml:space="preserve">
     <value>官方版本</value>
@@ -405,6 +366,9 @@
   <data name="SelectFolder" xml:space="preserve">
     <value>请选择要保存的目录</value>
   </data>
+  <data name="SettingsInstruction" xml:space="preserve">
+    <value>设置说明</value>
+  </data>
   <data name="ShowVersion" xml:space="preserve">
     <value>查看</value>
   </data>
@@ -426,6 +390,18 @@
   <data name="StartsWithEOnContent" xml:space="preserve">
     <value>过滤</value>
   </data>
+  <data name="SystemBackdropSettings" xml:space="preserve">
+    <value>系统背景色设置</value>
+  </data>
+  <data name="SystemColorSettings" xml:space="preserve">
+    <value>系统颜色设置</value>
+  </data>
+  <data name="SystemLanguageSettings" xml:space="preserve">
+    <value>系统语言设置</value>
+  </data>
+  <data name="SystemNotificationSettings" xml:space="preserve">
+    <value>系统通知设置</value>
+  </data>
   <data name="Theme" xml:space="preserve">
     <value>应用主题</value>
   </data>
@@ -440,12 +416,6 @@
   </data>
   <data name="ThemeLight" xml:space="preserve">
     <value>浅色</value>
-  </data>
-  <data name="ThemeMode" xml:space="preserve">
-    <value>主题模式</value>
-  </data>
-  <data name="ThemeModeDescription" xml:space="preserve">
-    <value>设置应用整体的主题模式</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>设置</value>
@@ -468,9 +438,6 @@
   <data name="TraceCleanupDescription" xml:space="preserve">
     <value>清理应用内使用过的所有痕迹</value>
   </data>
-  <data name="TraceCleanupToolTip" xml:space="preserve">
-    <value>帮助</value>
-  </data>
   <data name="TraceClear" xml:space="preserve">
     <value>选择要清理的内容</value>
   </data>
@@ -489,35 +456,11 @@
   <data name="UseDevFirstToolTip" xml:space="preserve">
     <value>当两个版本共同存在时，优先使用开发版本（重启后生效）</value>
   </data>
-  <data name="UseInstruction" xml:space="preserve">
-    <value>“使用说明”按钮</value>
-  </data>
-  <data name="UseInstructionDescription" xml:space="preserve">
-    <value>是否在相应的页面上显示快速了解相应功能的使用情况</value>
-  </data>
-  <data name="UseInstructionOffContent" xml:space="preserve">
-    <value>关闭</value>
-  </data>
-  <data name="UseInstructionOnContent" xml:space="preserve">
-    <value>显示</value>
-  </data>
-  <data name="WindowsBackdropSettings" xml:space="preserve">
-    <value>Windows 背景色设置</value>
-  </data>
-  <data name="WindowsColorSettings" xml:space="preserve">
-    <value>Windows 颜色设置</value>
-  </data>
-  <data name="WindowsNotificationSettings" xml:space="preserve">
-    <value>Windows 通知设置</value>
-  </data>
   <data name="WinGetConfig" xml:space="preserve">
     <value>WinGet 配置选项</value>
   </data>
   <data name="WinGetConfigDescription" xml:space="preserve">
     <value>对 WinGet 程序包的功能进行自定义</value>
-  </data>
-  <data name="WinGetConfigInstruction" xml:space="preserve">
-    <value>配置选项说明</value>
   </data>
   <data name="WinGetInstallMode" xml:space="preserve">
     <value>WinGet 安装方式</value>

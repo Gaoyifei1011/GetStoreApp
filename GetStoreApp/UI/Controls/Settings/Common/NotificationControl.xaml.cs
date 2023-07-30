@@ -37,7 +37,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// <summary>
         /// 打开系统通知设置
         /// </summary>
-        public async void OnSettingsNotificationClicked(object sender, RoutedEventArgs args)
+        public async void OnSystemNotificationSettingsClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:notifications"));
         }
@@ -45,12 +45,12 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// <summary>
         /// 设置是否开启应用通知
         /// </summary>
-        public async void OnToggled(object sender, RoutedEventArgs args)
+        public void OnToggled(object sender, RoutedEventArgs args)
         {
             ToggleSwitch toggleSwitch = sender.As<ToggleSwitch>();
             if (toggleSwitch is not null)
             {
-                await NotificationService.SetNotificationAsync(toggleSwitch.IsOn);
+                NotificationService.SetNotification(toggleSwitch.IsOn);
                 Notification = toggleSwitch.IsOn;
             }
         }

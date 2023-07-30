@@ -35,12 +35,12 @@ namespace GetStoreApp.UI.Controls.Settings.Experiment
         /// <summary>
         /// 下载文件时“网络状态监控”开启设置
         /// </summary>
-        public async void OnToggled(object sender, RoutedEventArgs args)
+        public void OnToggled(object sender, RoutedEventArgs args)
         {
             ToggleSwitch toggleSwitch = sender.As<ToggleSwitch>();
             if (toggleSwitch is not null)
             {
-                await NetWorkMonitorService.SetNetWorkMonitorValueAsync(toggleSwitch.IsOn);
+                NetWorkMonitorService.SetNetWorkMonitorValue(toggleSwitch.IsOn);
                 NetWorkMonitorValue = toggleSwitch.IsOn;
             }
         }

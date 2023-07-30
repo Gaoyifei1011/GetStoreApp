@@ -1,12 +1,9 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Controls.Download;
-using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Window;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using WinRT;
 
 namespace GetStoreApp.Views.Pages
@@ -14,23 +11,8 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// 下载页面
     /// </summary>
-    public sealed partial class DownloadPage : Page, INotifyPropertyChanged
+    public sealed partial class DownloadPage : Page
     {
-        private bool _useInsVisValue;
-
-        public bool UseInsVisValue
-        {
-            get { return _useInsVisValue; }
-
-            set
-            {
-                _useInsVisValue = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public DownloadPage()
         {
             InitializeComponent();
@@ -39,7 +21,6 @@ namespace GetStoreApp.Views.Pages
         protected override void OnNavigatedTo(NavigationEventArgs args)
         {
             base.OnNavigatedTo(args);
-            UseInsVisValue = UseInstructionService.UseInsVisValue;
             Downloading.StartDownloadingTimer();
         }
 
@@ -95,14 +76,6 @@ namespace GetStoreApp.Views.Pages
         {
             DownloadFlyout.Hide();
             NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
-        }
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

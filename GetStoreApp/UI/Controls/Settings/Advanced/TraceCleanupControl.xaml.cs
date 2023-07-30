@@ -1,8 +1,5 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Controls.Extensions;
-using GetStoreApp.Services.Window;
+﻿using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.UI.Dialogs.Settings;
-using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
@@ -16,14 +13,6 @@ namespace GetStoreApp.UI.Controls.Settings.Advanced
         public TraceCleanupControl()
         {
             InitializeComponent();
-        }
-
-        /// <summary>
-        /// 痕迹清理说明
-        /// </summary>
-        public void OnTraceCleanupTipClicked(object sender, RoutedEventArgs args)
-        {
-            NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
         }
 
         /// <summary>
