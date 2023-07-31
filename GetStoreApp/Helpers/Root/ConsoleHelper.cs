@@ -5,7 +5,7 @@ using System.Text;
 namespace GetStoreApp.Helpers.Root
 {
     /// <summary>
-    /// 表示控制台应用程序的标准输入流、输出流和错误流。
+    /// 表示控制台应用程序的标准输入流、输出流和错误流
     /// </summary>
     public static class ConsoleHelper
     {

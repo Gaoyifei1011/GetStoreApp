@@ -66,7 +66,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                 {
                     GroupCollection ResultDataListGroups = matchItem.Groups;
 
-                    if (ResultDataListGroups.Count == 6)
+                    if (ResultDataListGroups.Count is 6)
                     {
                         ResultModel resultData = new ResultModel();
                         resultData.FileLink = ResultDataListGroups[1].Value;

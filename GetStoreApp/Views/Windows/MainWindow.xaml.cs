@@ -176,7 +176,7 @@ namespace GetStoreApp.Views.Windows
             ExtendsContentIntoTitleBar = true;
             AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
             AppWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
-            AppTitlebar.IsWindowMaximized = Presenter.State == OverlappedPresenterState.Maximized;
+            AppTitlebar.IsWindowMaximized = Presenter.State is OverlappedPresenterState.Maximized;
             PaneDisplayMode = Bounds.Width > 768 ? NavigationViewPaneDisplayMode.Left : NavigationViewPaneDisplayMode.LeftMinimal;
 
             SetTitleBar(AppTitlebar);
@@ -365,7 +365,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         public void OnDisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)
         {
-            if (args.DisplayMode == NavigationViewDisplayMode.Expanded)
+            if (args.DisplayMode is NavigationViewDisplayMode.Expanded)
             {
                 IsPaneToggleButtonVisible = false;
                 AppTitleBarMargin = new Thickness(48, 0, 0, 0);
@@ -513,7 +513,7 @@ namespace GetStoreApp.Views.Windows
         {
             if (BackdropService.AppBackdrop.SelectedValue == BackdropService.BackdropList[0].SelectedValue)
             {
-                if (Content.As<FrameworkElement>().ActualTheme == ElementTheme.Light)
+                if (Content.As<FrameworkElement>().ActualTheme is ElementTheme.Light)
                 {
                     WindowBackground = new SolidColorBrush(Color.FromArgb(255, 240, 243, 249));
                 }
@@ -540,7 +540,7 @@ namespace GetStoreApp.Views.Windows
             titleBar.InactiveBackgroundColor = Colors.Transparent;
             titleBar.InactiveForegroundColor = Colors.Transparent;
 
-            if (theme == ElementTheme.Light)
+            if (theme is ElementTheme.Light)
             {
                 titleBar.ButtonBackgroundColor = Colors.Transparent;
                 titleBar.ButtonForegroundColor = Colors.Black;
@@ -569,7 +569,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         public void Show()
         {
-            if (Presenter.State == OverlappedPresenterState.Maximized)
+            if (Presenter.State is OverlappedPresenterState.Maximized)
             {
                 Presenter.Maximize();
             }
@@ -587,7 +587,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         public void MaximizeOrRestore()
         {
-            if (Presenter.State == OverlappedPresenterState.Maximized)
+            if (Presenter.State is OverlappedPresenterState.Maximized)
             {
                 Presenter.Restore();
             }
@@ -610,7 +610,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private int GetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex)
         {
-            if (IntPtr.Size == 8)
+            if (IntPtr.Size is 8)
             {
                 return User32Library.GetWindowLongPtr(hWnd, nIndex);
             }
@@ -625,7 +625,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private IntPtr SetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex, IntPtr dwNewLong)
         {
-            if (IntPtr.Size == 8)
+            if (IntPtr.Size is 8)
             {
                 return User32Library.SetWindowLongPtr(hWnd, nIndex, dwNewLong);
             }
@@ -708,7 +708,7 @@ namespace GetStoreApp.Views.Windows
                     {
                         SystemCommand sysCommand = (SystemCommand)(wParam.ToInt32() & 0xFFF0);
 
-                        if (sysCommand == SystemCommand.SC_MOUSEMENU)
+                        if (sysCommand is SystemCommand.SC_MOUSEMENU)
                         {
                             FlyoutShowOptions options = new FlyoutShowOptions();
                             options.Position = new Point(0, 15);
@@ -716,7 +716,7 @@ namespace GetStoreApp.Views.Windows
                             AppTitlebar.TitlebarMenuFlyout.ShowAt(null, options);
                             return 0;
                         }
-                        else if (sysCommand == SystemCommand.SC_KEYMENU)
+                        else if (sysCommand is SystemCommand.SC_KEYMENU)
                         {
                             FlyoutShowOptions options = new FlyoutShowOptions();
                             options.Position = new Point(0, 45);

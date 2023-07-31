@@ -7,8 +7,10 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Graphics;
@@ -16,9 +18,14 @@ using Windows.UI.StartScreen;
 
 namespace GetStoreApp
 {
+    /// <summary>
+    /// 获取商店应用程序
+    /// </summary>
     public partial class App : Application, IDisposable
     {
         private bool isDisposed;
+
+        private IntPtr[] hIcons;
 
         public bool IsAppRunning { get; set; } = true;
 
@@ -70,7 +77,7 @@ namespace GetStoreApp
             args.Handled = true;
 
             // 系统背景色弹出的异常，不进行处理
-            if (args.Exception.HResult == -2147024809 && args.Exception.StackTrace.Contains("SystemBackdropConfiguration"))
+            if (args.Exception.HResult is -2147024809 && args.Exception.StackTrace.Contains("SystemBackdropConfiguration"))
             {
                 LogService.WriteLog(LogType.WARNING, "System backdrop config warning.", args.Exception);
                 return;
@@ -96,7 +103,7 @@ namespace GetStoreApp
             int? WindowPositionXAxis = ConfigService.ReadSetting<int?>(ConfigKey.WindowPositionXAxisKey);
             int? WindowPositionYAxis = ConfigService.ReadSetting<int?>(ConfigKey.WindowPositionYAxisKey);
 
-            if (IsWindowMaximized.HasValue && IsWindowMaximized.Value == true)
+            if (IsWindowMaximized.HasValue && IsWindowMaximized.Value is true)
             {
                 MainWindow.Presenter.Maximize();
             }
@@ -113,6 +120,7 @@ namespace GetStoreApp
                 }
             }
 
+            SetAppIcon();
             MainWindow.AppWindow.Show();
         }
 
@@ -167,6 +175,30 @@ namespace GetStoreApp
             foreach (JumpListItem jumpListItem in TaskbarJumpList.Items)
             {
                 jumpListItem.GroupName = ResourceService.GetLocalized("Window/JumpListGroupName");
+            }
+        }
+
+        /// <summary>
+        /// 设置应用窗口图标
+        /// </summary>
+        private void SetAppIcon()
+        {
+            // 选中文件中的图标总数
+            int iconTotalCount = User32Library.PrivateExtractIcons(Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreApp.exe"), 0, 0, 0, null, null, 0, 0);
+
+            // 用于接收获取到的图标指针
+            hIcons = new IntPtr[iconTotalCount];
+
+            // 对应的图标id
+            int[] ids = new int[iconTotalCount];
+
+            // 成功获取到的图标个数
+            int successCount = User32Library.PrivateExtractIcons(Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreApp.exe"), 0, 256, 256, hIcons, ids, iconTotalCount, 0);
+
+            // GetStoreApp.exe 应用程序只有一个图标
+            if (successCount >= 1 && hIcons[0] != IntPtr.Zero)
+            {
+                MainWindow.AppWindow.SetIcon(Win32Interop.GetIconIdFromIcon(hIcons[0]));
             }
         }
 

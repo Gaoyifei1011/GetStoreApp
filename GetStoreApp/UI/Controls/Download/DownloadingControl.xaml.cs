@@ -449,7 +449,7 @@ namespace GetStoreApp.UI.Controls.Download
         private void OnDownloadingListItemsChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
             // 下载中列表添加项目时，更新UI
-            if (args.Action == NotifyCollectionChangedAction.Add)
+            if (args.Action is NotifyCollectionChangedAction.Add)
             {
                 Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(async () =>
                 {
@@ -481,7 +481,7 @@ namespace GetStoreApp.UI.Controls.Download
             }
 
             // 下载中列表删除项目时，更新UI
-            if (args.Action == NotifyCollectionChangedAction.Remove)
+            if (args.Action is NotifyCollectionChangedAction.Remove)
             {
                 Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(async () =>
                 {
@@ -517,7 +517,7 @@ namespace GetStoreApp.UI.Controls.Download
         private void OnWaitingListItemsChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
             // 等待列表添加项目时，更新UI
-            if (args.Action == NotifyCollectionChangedAction.Add)
+            if (args.Action is NotifyCollectionChangedAction.Add)
             {
                 Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(async () =>
                 {
@@ -548,7 +548,7 @@ namespace GetStoreApp.UI.Controls.Download
             }
 
             // 等待列表添加项目时，更新UI
-            if (args.Action == NotifyCollectionChangedAction.Remove)
+            if (args.Action is NotifyCollectionChangedAction.Remove)
             {
                 Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(async () =>
                 {

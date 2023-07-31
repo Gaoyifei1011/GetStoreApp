@@ -92,7 +92,7 @@ namespace GetStoreApp.Services.Root
             }
             else if (DesktopLaunchArgs.Count is 1)
             {
-                if (DesktopLaunchArgs[0] == "Restart")
+                if (DesktopLaunchArgs[0] is "Restart")
                 {
                     SendMessageType = MessageType.None;
                     return;
@@ -136,11 +136,11 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static async Task DealLaunchArgsAsync()
         {
-            if (SendMessageType == MessageType.None)
+            if (SendMessageType is MessageType.None)
             {
                 return;
             }
-            else if (SendMessageType == MessageType.Normal || SendMessageType == MessageType.Information)
+            else if (SendMessageType is MessageType.Normal || SendMessageType is MessageType.Information)
             {
                 bool isExisted = false;
 
@@ -167,7 +167,7 @@ namespace GetStoreApp.Services.Root
                 // 然后退出实例并停止
                 Program.IsNeedAppLaunch = !isExisted;
             }
-            else if (SendMessageType == MessageType.Notification)
+            else if (SendMessageType is MessageType.Notification)
             {
                 bool isExisted = false;
                 string sendData = DesktopLaunchArgs[0];

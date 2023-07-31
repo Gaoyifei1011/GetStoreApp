@@ -7,6 +7,9 @@ using System.Runtime.InteropServices;
 
 namespace GetStoreApp.Helpers.Root
 {
+    /// <summary>
+    /// 进程辅助类
+    /// </summary>
     public static class ProcessHelper
     {
         /// <summary>

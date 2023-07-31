@@ -42,16 +42,16 @@ namespace GetStoreApp.Views.Pages
                 Pivot pivot = sender.As<Pivot>();
                 if (pivot is not null)
                 {
-                    if (pivot.SelectedIndex == 0)
+                    if (pivot.SelectedIndex is 0)
                     {
                         Downloading.StartDownloadingTimer();
                     }
-                    else if (pivot.SelectedIndex == 1)
+                    else if (pivot.SelectedIndex is 1)
                     {
                         Downloading.StopDownloadingTimer(false);
                         await Unfinished.GetUnfinishedDataListAsync();
                     }
-                    else if (pivot.SelectedIndex == 2)
+                    else if (pivot.SelectedIndex is 2)
                     {
                         Downloading.StopDownloadingTimer(false);
                         await Completed.GetCompletedDataListAsync();

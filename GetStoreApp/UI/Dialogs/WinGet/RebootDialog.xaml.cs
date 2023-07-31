@@ -5,7 +5,6 @@ using Microsoft.UI.Xaml.Controls;
 namespace GetStoreApp.UI.Dialogs.WinGet
 {
     /// <summary>
-    /// <summary>
     /// 重启设备对话框
     /// </summary>
     public sealed partial class RebootDialog : ContentDialog

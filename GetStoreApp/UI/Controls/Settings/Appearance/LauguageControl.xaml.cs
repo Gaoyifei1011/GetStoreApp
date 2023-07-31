@@ -80,7 +80,7 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
 
         public async void OnSystemLanguageSettingsClicked(object sender, RoutedEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri("ms-settings:regionlanguage-languageoption"));
+            await Launcher.LaunchUriAsync(new Uri("ms-settings:regionlanguage-languageoptions"));
         }
 
         /// <summary>

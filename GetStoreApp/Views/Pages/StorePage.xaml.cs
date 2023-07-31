@@ -28,7 +28,7 @@ namespace GetStoreApp.Views.Pages
             {
                 object[] navigationArgs = args.Parameter as object[];
                 StoreNavigationArgs = (AppNaviagtionArgs)navigationArgs[0];
-                if (navigationArgs.Length == 4)
+                if (navigationArgs.Length is 4)
                 {
                     Request.SelectedType = Request.TypeList.Find(item => item.InternalName.Equals(navigationArgs[1]));
                     Request.SelectedChannel = Request.ChannelList.Find(item => item.InternalName.Equals(navigationArgs[2]));

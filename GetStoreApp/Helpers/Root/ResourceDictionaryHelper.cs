@@ -3,7 +3,7 @@
 namespace GetStoreApp.Helpers.Root
 {
     /// <summary>
-    /// 应用资源字典
+    /// 应用资源字典辅助类
     /// </summary>
     public static class ResourceDictionaryHelper
     {

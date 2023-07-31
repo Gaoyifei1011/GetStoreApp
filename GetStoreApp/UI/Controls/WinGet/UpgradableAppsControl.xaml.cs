@@ -26,6 +26,9 @@ using System.Threading.Tasks;
 
 namespace GetStoreApp.UI.Controls.WinGet
 {
+    /// <summary>
+    /// WinGet 程序包页面：可升级应用控件
+    /// </summary>
     public sealed partial class UpgradableAppsControl : Grid, INotifyPropertyChanged
     {
         private PackageManager UpgradableAppsManager { get; set; }
@@ -216,7 +219,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                         // 获取升级完成后的结果信息
                         // 升级完成，从列表中删除该应用
-                        if (installResult.Status == InstallResultStatus.Ok)
+                        if (installResult.Status is InstallResultStatus.Ok)
                         {
                             AppNotificationService.Show(NotificationArgs.UpgradeSuccessfully, upgradableApps.AppName);
 
@@ -224,7 +227,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             if (installResult.RebootRequired)
                             {
                                 ContentDialogResult Result = await ContentDialogHelper.ShowAsync(new RebootDialog(WinGetOptionArgs.UpgradeInstall, upgradableApps.AppName), this);
-                                if (Result == ContentDialogResult.Primary)
+                                if (Result is ContentDialogResult.Primary)
                                 {
                                     unsafe
                                     {
@@ -521,7 +524,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         FindPackagesResult findResult = await upgradableCatalog.FindPackagesAsync(findPackagesOptions);
                         var result = findResult.Matches.ToList();
 
-                        MatchResultList = findResult.Matches.ToList().Where(item => item.CatalogPackage.IsUpdateAvailable == true).ToList();
+                        MatchResultList = findResult.Matches.ToList().Where(item => item.CatalogPackage.IsUpdateAvailable is true).ToList();
                     }
                 });
             }

@@ -3,7 +3,7 @@
 namespace GetStoreApp.WindowsAPI.PInvoke.User32
 {
     /// <summary>
-    /// 扩展窗口样式。
+    /// 扩展窗口样式
     /// </summary>
     [Flags]
     public enum WindowStyleEx : uint

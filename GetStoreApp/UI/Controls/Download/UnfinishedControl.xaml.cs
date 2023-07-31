@@ -409,7 +409,7 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         public void OnDownloadingListItemsChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
-            if (args.Action == NotifyCollectionChangedAction.Remove)
+            if (args.Action is NotifyCollectionChangedAction.Remove)
             {
                 foreach (object item in args.OldItems)
                 {

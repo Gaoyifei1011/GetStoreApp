@@ -172,7 +172,7 @@ namespace GetStoreApp.Views.Pages
 
                                 if (pinnedList is not null)
                                 {
-                                    IsPinnedSuccessfully = pinnedList.Modify(IntPtr.Zero, pidl, PLMC.PLMC_EXPLORER) == 0;
+                                    IsPinnedSuccessfully = pinnedList.Modify(IntPtr.Zero, pidl, PLMC.PLMC_EXPLORER) is 0;
                                 }
                             }
                         }

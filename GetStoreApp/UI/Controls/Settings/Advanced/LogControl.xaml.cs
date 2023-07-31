@@ -6,7 +6,7 @@ using Microsoft.UI.Xaml.Controls;
 namespace GetStoreApp.UI.Controls.Settings.Advanced
 {
     /// <summary>
-    /// 日志记录控件
+    /// 设置页面：日志记录控件
     /// </summary>
     public sealed partial class LogControl : Expander
     {

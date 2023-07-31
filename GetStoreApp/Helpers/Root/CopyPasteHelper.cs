@@ -12,7 +12,6 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 复制到剪贴板
         /// </summary>
-        /// <param name="content">复制到剪贴板的内容</param>
         public static void CopyToClipBoard(string content)
         {
             DataPackage.RequestedOperation = DataPackageOperation.Copy;

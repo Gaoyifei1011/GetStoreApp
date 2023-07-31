@@ -6,6 +6,9 @@ using System.Text;
 
 namespace GetStoreApp.Models.Controls.WinGet
 {
+    /// <summary>
+    /// 正在安装中应用的数据模型
+    /// </summary>
     public class InstallingAppsModel : INotifyPropertyChanged
     {
         private static string AppNameToolTip = ResourceService.GetLocalized("WinGet/AppNameToolTip");
@@ -105,7 +108,7 @@ namespace GetStoreApp.Models.Controls.WinGet
         /// </summary>
         public bool IsDownloading(PackageInstallProgressState installProgressState)
         {
-            return installProgressState != PackageInstallProgressState.Downloading;
+            return installProgressState is not PackageInstallProgressState.Downloading;
         }
 
         /// <summary>

@@ -101,7 +101,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         /// </summary>
         public static async Task UpdateHistoryJumpListAsync(GroupOptionsModel historyJumpListNum)
         {
-            if (historyJumpListNum.SelectedValue == "Unlimited")
+            if (historyJumpListNum.SelectedValue is "Unlimited")
             {
                 return;
             }

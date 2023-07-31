@@ -6,7 +6,7 @@ using Windows.System;
 namespace GetStoreApp.UI.Controls.WinGet
 {
     /// <summary>
-    /// WinGet 程序包不存在提示控件
+    /// WinGet 程序包页面：WinGet 程序包不存在提示控件
     /// </summary>
     public sealed partial class InitializeFailedControl : Grid
     {

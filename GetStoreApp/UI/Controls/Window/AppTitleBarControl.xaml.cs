@@ -8,7 +8,7 @@ using WinRT;
 namespace GetStoreApp.UI.Controls.Window
 {
     /// <summary>
-    /// 应用标题栏控件
+    /// 主窗口页面：应用标题栏控件
     /// </summary>
     public sealed partial class AppTitleBarControl : Grid, INotifyPropertyChanged
     {

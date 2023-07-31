@@ -3,6 +3,9 @@ using System.Runtime.InteropServices;
 
 namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
 {
+    /// <summary>
+    /// 描述创建快照时驻留在系统地址空间中的进程的列表中的条目
+    /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public unsafe struct PROCESSENTRY32
     {

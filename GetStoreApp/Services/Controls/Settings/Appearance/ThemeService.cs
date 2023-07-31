@@ -74,7 +74,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         {
             if (AppTheme.SelectedValue == ThemeList[0].SelectedValue)
             {
-                if (Application.Current.RequestedTheme == ApplicationTheme.Light)
+                if (Application.Current.RequestedTheme is ApplicationTheme.Light)
                 {
                     Program.ApplicationRoot.MainWindow.WindowTheme = ElementTheme.Light;
                 }

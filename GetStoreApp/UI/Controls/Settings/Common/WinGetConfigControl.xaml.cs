@@ -15,7 +15,7 @@ using WinRT;
 namespace GetStoreApp.UI.Controls.Settings.Common
 {
     /// <summary>
-    /// WinGet 程序包设置控件
+    /// 设置页面：WinGet 程序包设置控件
     /// </summary>
     public sealed partial class WinGetConfigControl : Expander, INotifyPropertyChanged
     {

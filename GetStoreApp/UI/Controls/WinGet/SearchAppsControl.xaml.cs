@@ -232,7 +232,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         InstallResult installResult = await SearchAppsManager.InstallPackageAsync(MatchResultList.Find(item => item.CatalogPackage.DefaultInstallVersion.Id == searchApps.AppID).CatalogPackage, installOptions).AsTask(installTokenSource.Token, progressCallBack);
 
                         // 获取安装完成后的结果信息
-                        if (installResult.Status == InstallResultStatus.Ok)
+                        if (installResult.Status is InstallResultStatus.Ok)
                         {
                             AppNotificationService.Show(NotificationArgs.InstallSuccessfully, searchApps.AppName);
 
@@ -240,7 +240,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             if (installResult.RebootRequired)
                             {
                                 ContentDialogResult Result = await ContentDialogHelper.ShowAsync(new RebootDialog(WinGetOptionArgs.UpgradeInstall, searchApps.AppName), this);
-                                if (Result == ContentDialogResult.Primary)
+                                if (Result is ContentDialogResult.Primary)
                                 {
                                     unsafe
                                     {

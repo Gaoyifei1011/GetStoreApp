@@ -103,7 +103,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                         // 获取卸载后的结果信息
                         // 卸载成功，从列表中删除该应用
-                        if (unInstallResult.Status == UninstallResultStatus.Ok)
+                        if (unInstallResult.Status is UninstallResultStatus.Ok)
                         {
                             AppNotificationService.Show(NotificationArgs.UnInstallSuccessfully, installedApps.AppName);
 
@@ -111,7 +111,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             if (unInstallResult.RebootRequired)
                             {
                                 ContentDialogResult Result = await ContentDialogHelper.ShowAsync(new RebootDialog(WinGetOptionArgs.UnInstall, installedApps.AppName), this);
-                                if (Result == ContentDialogResult.Primary)
+                                if (Result is ContentDialogResult.Primary)
                                 {
                                     unsafe
                                     {
