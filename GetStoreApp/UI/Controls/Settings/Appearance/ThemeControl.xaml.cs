@@ -46,7 +46,7 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
         /// <summary>
         /// 打开系统主题设置
         /// </summary>
-        public async void OnSystemColorSettingsClicked(object sender, RoutedEventArgs args)
+        public async void OnSystemThemeSettingsClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:colors"));
         }

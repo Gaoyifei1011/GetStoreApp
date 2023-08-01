@@ -44,11 +44,11 @@
         Grid.Column="2"
         Margin="0,0,6,0"
         VerticalAlignment="Center"
-        Click="{x:Bind OnSystemColorSettingsClicked}"
-        Content="{x:Bind root:ResourceService.GetLocalized('Settings/SystemColorSettings')}">
+        Click="{x:Bind OnSystemThemeSettingsClicked}"
+        Content="{x:Bind root:ResourceService.GetLocalized('Settings/SystemThemeSettings')}">
 
         <ToolTipService.ToolTip>
-            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/SystemColorSettings')}" Placement="Mouse" />
+            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/SystemThemeSettings')}" Placement="Mouse" />
         </ToolTipService.ToolTip>
     </HyperlinkButton>
 

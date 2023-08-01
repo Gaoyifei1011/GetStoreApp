@@ -393,14 +393,14 @@
   <data name="SystemBackdropSettings" xml:space="preserve">
     <value>系统背景色设置</value>
   </data>
-  <data name="SystemColorSettings" xml:space="preserve">
-    <value>系统颜色设置</value>
-  </data>
   <data name="SystemLanguageSettings" xml:space="preserve">
     <value>系统语言设置</value>
   </data>
   <data name="SystemNotificationSettings" xml:space="preserve">
     <value>系统通知设置</value>
+  </data>
+  <data name="SystemThemeSettings" xml:space="preserve">
+    <value>系统主题设置</value>
   </data>
   <data name="Theme" xml:space="preserve">
     <value>应用主题</value>

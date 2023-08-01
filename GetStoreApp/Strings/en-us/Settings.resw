@@ -393,14 +393,14 @@
   <data name="SystemBackdropSettings" xml:space="preserve">
     <value>System backdrop settings</value>
   </data>
-  <data name="SystemColorSettings" xml:space="preserve">
-    <value>System color settings</value>
-  </data>
   <data name="SystemLanguageSettings" xml:space="preserve">
     <value>System language settings</value>
   </data>
   <data name="SystemNotificationSettings" xml:space="preserve">
     <value>System notification settings</value>
+  </data>
+  <data name="SystemThemeSettings" xml:space="preserve">
+    <value>System theme settings</value>
   </data>
   <data name="Theme" xml:space="preserve">
     <value>Application theme</value>

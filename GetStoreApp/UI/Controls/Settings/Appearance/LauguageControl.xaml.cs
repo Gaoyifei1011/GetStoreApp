@@ -4,6 +4,7 @@ using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.UI.Notifications;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -48,6 +49,13 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
                     Style = ResourceDictionaryHelper.MenuFlyoutResourceDict["ToggleMenuFlyoutItemStyle"] as Style,
                     Tag = index
                 };
+
+                ToolTipService.SetToolTip(toggleMenuFlyoutItem, new ToolTip()
+                {
+                    Content = languageItem.DisplayMember,
+                    Placement = PlacementMode.Mouse
+                });
+
                 if (AppLanguage.SelectedValue == LanguageList[index].SelectedValue)
                 {
                     toggleMenuFlyoutItem.IsChecked = true;
