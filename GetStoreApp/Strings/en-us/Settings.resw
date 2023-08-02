@@ -132,6 +132,9 @@
   <data name="AlwaysShowBackdropOnContent" xml:space="preserve">
     <value>Opened</value>
   </data>
+  <data name="AppCacheFolder" xml:space="preserve">
+    <value>App cache</value>
+  </data>
   <data name="Appearance" xml:space="preserve">
     <value>Appearance</value>
   </data>
@@ -186,6 +189,12 @@
   <data name="Config" xml:space="preserve">
     <value>Config</value>
   </data>
+  <data name="Custom" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="DesktopFolder" xml:space="preserve">
+    <value>Desktop</value>
+  </data>
   <data name="DevVersion" xml:space="preserve">
     <value>Dev version</value>
   </data>
@@ -199,7 +208,7 @@
     <value>Click to install the dev version</value>
   </data>
   <data name="DownloadFolder" xml:space="preserve">
-    <value>File storage path</value>
+    <value>Downloads</value>
   </data>
   <data name="DownloadInApp" xml:space="preserve">
     <value>Use the in-app download manager to download</value>
@@ -230,6 +239,9 @@
   </data>
   <data name="ExperimentalFeaturesDescription" xml:space="preserve">
     <value>Experimental features of the app, generally without modification</value>
+  </data>
+  <data name="FileStoragePath" xml:space="preserve">
+    <value>File storage path</value>
   </data>
   <data name="General" xml:space="preserve">
     <value>General Options</value>
@@ -364,7 +376,7 @@
     <value>After the app settings are modified, some options need to be restarted to take effect</value>
   </data>
   <data name="SelectFolder" xml:space="preserve">
-    <value>Please select the directory you want to save</value>
+    <value>Select folder</value>
   </data>
   <data name="SettingsInstruction" xml:space="preserve">
     <value>Settings instruction</value>
@@ -440,9 +452,6 @@
   </data>
   <data name="TraceClear" xml:space="preserve">
     <value>Select what you want to clean</value>
-  </data>
-  <data name="UseDefaultFolder" xml:space="preserve">
-    <value>Use default directory</value>
   </data>
   <data name="UseDevFirst" xml:space="preserve">
     <value>Priority use dev version</value>

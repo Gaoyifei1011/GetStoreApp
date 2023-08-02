@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GetStoreApp.WindowsAPI.ComTypes;
+using System;
 
 namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
 {

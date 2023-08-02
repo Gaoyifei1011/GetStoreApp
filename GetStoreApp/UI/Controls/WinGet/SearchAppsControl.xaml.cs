@@ -234,7 +234,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         // 获取安装完成后的结果信息
                         if (installResult.Status is InstallResultStatus.Ok)
                         {
-                            AppNotificationService.Show(NotificationArgs.InstallSuccessfully, searchApps.AppName);
+                            ToastNotificationService.Show(NotificationArgs.InstallSuccessfully, searchApps.AppName);
 
                             // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
                             if (installResult.RebootRequired)
@@ -273,7 +273,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         }
                         else
                         {
-                            AppNotificationService.Show(NotificationArgs.InstallFailed, searchApps.AppName, searchApps.AppID);
+                            ToastNotificationService.Show(NotificationArgs.InstallFailed, searchApps.AppName, searchApps.AppID);
                         }
 
                         // 应用安装失败，将当前任务状态修改为可安装状态
@@ -358,7 +358,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             WinGetInstance.InstallingStateDict.Remove(searchApps.AppID);
                         }
 
-                        AppNotificationService.Show(NotificationArgs.InstallFailed, searchApps.AppName, searchApps.AppID);
+                        ToastNotificationService.Show(NotificationArgs.InstallFailed, searchApps.AppName, searchApps.AppID);
                     }
                 }
             };

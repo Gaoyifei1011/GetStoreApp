@@ -1,7 +1,8 @@
-﻿using System;
+﻿using GetStoreApp.WindowsAPI.PInvoke.Ole32;
+using System;
 using System.Runtime.InteropServices;
 
-namespace GetStoreApp.WindowsAPI.PInvoke.Ole32
+namespace GetStoreApp.WindowsAPI.ComTypes
 {
     [ComImport, Guid("0DD79AE2-D156-45D4-9EEB-3B549769E940"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IPinnedList3

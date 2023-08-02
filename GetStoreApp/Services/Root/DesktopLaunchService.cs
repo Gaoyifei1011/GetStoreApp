@@ -197,7 +197,7 @@ namespace GetStoreApp.Services.Root
                 }
                 else
                 {
-                    await AppNotificationService.HandleAppNotificationAsync(DesktopLaunchArgs[0]);
+                    await ToastNotificationService.HandleToastNotificationAsync(DesktopLaunchArgs[0]);
                 }
             }
         }

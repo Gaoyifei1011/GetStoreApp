@@ -1,5 +1,10 @@
-﻿using GetStoreApp.WindowsAPI.PInvoke.Shell32;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Services.Root;
+using GetStoreApp.WindowsAPI.ComTypes;
+using GetStoreApp.WindowsAPI.PInvoke.Ole32;
+using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using System;
+using System.Runtime.InteropServices;
 using Windows.UI.Shell;
 
 namespace GetStoreApp.WindowsAPI.Controls
@@ -9,17 +14,38 @@ namespace GetStoreApp.WindowsAPI.Controls
     /// </summary>
     public static class TaskbarStateManager
     {
-        private static ITaskbarList TaskbarList { get; }
+        private static readonly Guid CLSID_TaskbarList = new Guid("56FDF344-FD6D-11d0-958A-006097C9A090");
+
+        private static readonly Guid IID_IUnknown = new Guid("00000000-0000-0000-C000-000000000046");
+
+        private static ITaskbarList TaskbarList;
 
         // 隐藏默认构造函数
-        static TaskbarStateManager()
+        static unsafe TaskbarStateManager()
         {
-            TaskbarList = (ITaskbarList)new CTaskbarList();
-            TaskbarList.HrInit();
+            try
+            {
+                fixed (Guid* CLSID_TaskbarList_Ptr = &CLSID_TaskbarList, IID_IUnknown_Ptr = &IID_IUnknown)
+                {
+                    Ole32Library.CoCreateInstance(CLSID_TaskbarList_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, IID_IUnknown_Ptr, out IntPtr obj);
+
+                    if (obj != IntPtr.Zero)
+                    {
+                        TaskbarList = (ITaskbarList)Marshal.GetTypedObjectForIUnknown(obj, typeof(ITaskbarList));
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LogType.ERROR, "TaskbarStateManager initialize failed.", e);
+                return;
+            }
+
+            TaskbarList?.HrInit();
         }
 
         /// <summary>
-        /// 指示当前平台是否支持此功能。
+        /// 指示当前平台是否支持此功能
         /// </summary>
         public static bool IsPlatformSupported { get; } = TaskbarManager.GetDefault().IsSupported;
 
@@ -42,7 +68,7 @@ namespace GetStoreApp.WindowsAPI.Controls
         /// <param name="flags">进度按钮的标志</param>
         public static void SetProgressState(TBPFLAG flags, IntPtr windowHandle)
         {
-            if (IsPlatformSupported)
+            if (TaskbarList is not null && IsPlatformSupported)
             {
                 TaskbarList.SetProgressState(windowHandle, flags);
             }

@@ -105,7 +105,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         // 卸载成功，从列表中删除该应用
                         if (unInstallResult.Status is UninstallResultStatus.Ok)
                         {
-                            AppNotificationService.Show(NotificationArgs.UnInstallSuccessfully, installedApps.AppName);
+                            ToastNotificationService.Show(NotificationArgs.UnInstallSuccessfully, installedApps.AppName);
 
                             // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
                             if (unInstallResult.RebootRequired)
@@ -144,20 +144,20 @@ namespace GetStoreApp.UI.Controls.WinGet
                         }
                         else
                         {
-                            AppNotificationService.Show(NotificationArgs.UnInstallFailed, installedApps.AppName);
+                            ToastNotificationService.Show(NotificationArgs.UnInstallFailed, installedApps.AppName);
                         }
                     }
                     // 操作被用户所取消异常
                     catch (OperationCanceledException e)
                     {
                         LogService.WriteLog(LogType.INFO, "App uninstalling operation canceled.", e);
-                        AppNotificationService.Show(NotificationArgs.UnInstallFailed, installedApps.AppName);
+                        ToastNotificationService.Show(NotificationArgs.UnInstallFailed, installedApps.AppName);
                     }
                     // 其他异常
                     catch (Exception e)
                     {
                         LogService.WriteLog(LogType.ERROR, "App uninstalling failed.", e);
-                        AppNotificationService.Show(NotificationArgs.UnInstallFailed, installedApps.AppName);
+                        ToastNotificationService.Show(NotificationArgs.UnInstallFailed, installedApps.AppName);
                     }
                 }
             };

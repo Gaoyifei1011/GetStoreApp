@@ -29,6 +29,8 @@ namespace GetStoreApp
 
         public bool IsAppRunning { get; set; } = true;
 
+        public bool IsAppLaunched { get; set; } = false;
+
         public MainWindow MainWindow { get; private set; }
 
         public JumpList TaskbarJumpList { get; private set; }
@@ -48,7 +50,7 @@ namespace GetStoreApp
             ResourceDictionaryHelper.InitializeResourceDictionary();
 
             MainWindow = new MainWindow();
-            Program.IsAppLaunched = true;
+            IsAppLaunched = true;
             ActivateWindow();
 
             await InitializeJumpListAsync();

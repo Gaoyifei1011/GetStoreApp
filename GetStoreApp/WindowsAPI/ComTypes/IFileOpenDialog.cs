@@ -1,7 +1,8 @@
-﻿using System;
+﻿using GetStoreApp.WindowsAPI.PInvoke.Shell32;
+using System;
 using System.Runtime.InteropServices;
 
-namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
+namespace GetStoreApp.WindowsAPI.ComTypes
 {
     /// <summary>
     /// 通过添加特定于打开对话框的方法扩展 <see cref="IFileOpenDialog"> 接口。

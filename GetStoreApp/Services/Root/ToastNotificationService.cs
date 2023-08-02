@@ -19,23 +19,23 @@ namespace GetStoreApp.Services.Root
     /// <summary>
     /// 应用通知服务
     /// </summary>
-    public static class AppNotificationService
+    public static class ToastNotificationService
     {
         private static ToastNotifier AppToastNotifier { get; } = ToastNotificationManager.CreateToastNotifier();
 
         /// <summary>
         /// 处理应用通知
         /// </summary>
-        public static async Task HandleAppNotificationAsync(string content)
+        public static async Task HandleToastNotificationAsync(string content)
         {
-            string AppNotificationArguments = new WwwFormUrlDecoder(content).GetFirstValueByName("action");
+            string notificationArgs = new WwwFormUrlDecoder(content).GetFirstValueByName("action");
 
-            if (AppNotificationArguments is "CheckNetWorkConnection")
+            if (notificationArgs is "CheckNetWorkConnection")
             {
                 await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
                 Program.IsNeedAppLaunch = Application.Current is not null;
             }
-            else if (AppNotificationArguments is "OpenDownloadFolder")
+            else if (notificationArgs is "OpenDownloadFolder")
             {
                 string wingetTempPath = Path.Combine(Path.GetTempPath(), "WinGet");
                 if (Directory.Exists(wingetTempPath))
@@ -48,14 +48,14 @@ namespace GetStoreApp.Services.Root
                 }
                 Program.IsNeedAppLaunch = Application.Current is not null;
             }
-            else if (AppNotificationArguments is "OpenSettings")
+            else if (notificationArgs is "OpenSettings")
             {
                 await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
                 Program.IsNeedAppLaunch = Application.Current is not null;
             }
-            else if (AppNotificationArguments.Contains("InstallWithCommand"))
+            else if (notificationArgs.Contains("InstallWithCommand"))
             {
-                string[] splitList = AppNotificationArguments.Split(':');
+                string[] splitList = notificationArgs.Split(':');
                 if (splitList.Length > 1)
                 {
                     string appId = splitList[1];
@@ -90,43 +90,46 @@ namespace GetStoreApp.Services.Root
             }
             else
             {
-                if (Program.IsAppLaunched)
-                {
-                    HandleMainThreadNotification(AppNotificationArguments);
-                }
+                HandleUINotification(notificationArgs);
             }
         }
 
         /// <summary>
-        /// 处理必须主线程才能处理的应用通知
+        /// 使用UI线程处理使用到界面的通知
         /// </summary>
-        public static void HandleMainThreadNotification(string args)
+        private static void HandleUINotification(string args)
         {
-            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+            Task.Run(async () =>
             {
-                // 先设置应用窗口的显示方式
-                Program.ApplicationRoot.MainWindow.Show();
-
-                switch (args)
+                while (Program.ApplicationRoot is null || !Program.ApplicationRoot.IsAppLaunched)
                 {
-                    // 正常打开应用
-                    case "OpenApp":
-                        {
-                            break;
-                        }
-                    case "ViewDownloadPage":
-                        {
-                            if (NavigationService.GetCurrentPageType() != typeof(DownloadPage))
-                            {
-                                NavigationService.NavigateTo(typeof(DownloadPage));
-                            }
-                            break;
-                        }
-                    default:
-                        {
-                            break;
-                        }
+                    await Task.Delay(1000);
                 }
+
+                Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+                {
+                    Program.ApplicationRoot.MainWindow.Show();
+
+                    switch (args)
+                    {
+                        case "OpenApp":
+                            {
+                                break;
+                            }
+                        case "ViewDownloadPage":
+                            {
+                                if (NavigationService.GetCurrentPageType() != typeof(DownloadPage))
+                                {
+                                    NavigationService.NavigateTo(typeof(DownloadPage));
+                                }
+                                break;
+                            }
+                        default:
+                            {
+                                break;
+                            }
+                    }
+                });
             });
         }
 

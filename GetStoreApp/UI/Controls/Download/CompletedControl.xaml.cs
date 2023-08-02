@@ -9,7 +9,7 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Dialogs.Download;
 using GetStoreApp.UI.Notifications;
-using GetStoreApp.WindowsAPI.PInvoke.Shell32;
+using GetStoreApp.WindowsAPI.Controls;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -121,14 +121,14 @@ namespace GetStoreApp.UI.Controls.Download
                                             // 安装目标应用
                                             DeploymentResult InstallResult = await packageManager.AddPackageAsync(new Uri(completedItem.FilePath), null, DeploymentOptions.None).AsTask(progressCallBack);
                                             // 显示安装成功通知
-                                            AppNotificationService.Show(NotificationArgs.InstallApp, "Successfully", CompletedFile.Name);
+                                            ToastNotificationService.Show(NotificationArgs.InstallApp, "Successfully", CompletedFile.Name);
                                         }
                                         // 安装失败显示失败信息
                                         catch (Exception e)
                                         {
                                             CompletedDataList[InstallIndex].InstallError = true;
                                             // 显示安装失败通知
-                                            AppNotificationService.Show(NotificationArgs.InstallApp, "Error", CompletedFile.Name, e.Message);
+                                            ToastNotificationService.Show(NotificationArgs.InstallApp, "Error", CompletedFile.Name, e.Message);
                                         }
                                         // 恢复原来的安装信息显示（并延缓当前安装信息显示时间0.5秒）
                                         finally
@@ -272,11 +272,7 @@ namespace GetStoreApp.UI.Controls.Download
                 {
                     try
                     {
-                        IDataTransferManagerInterop interop = DataTransferManager.As<IDataTransferManagerInterop>();
-
-                        IntPtr result = interop.GetForWindow(Program.ApplicationRoot.MainWindow.Handle, new Guid(0xa5caee9b, 0x8708, 0x49d1, 0x8d, 0x36, 0x67, 0xd2, 0x5a, 0x8d, 0xa0, 0x0c));
-
-                        DataTransferManager dataTransferManager = MarshalInterface<DataTransferManager>.FromAbi(result);
+                        DataTransferManager dataTransferManager = DataTransferManagerInterop.GetForWindow(Program.ApplicationRoot.MainWindow.Handle);
 
                         dataTransferManager.DataRequested += async (sender, args) =>
                         {
@@ -287,7 +283,7 @@ namespace GetStoreApp.UI.Controls.Download
                             deferral.Complete();
                         };
 
-                        interop.ShowShareUIForWindow(Program.ApplicationRoot.MainWindow.Handle);
+                        DataTransferManagerInterop.ShowShareUIForWindow(Program.ApplicationRoot.MainWindow.Handle);
                     }
                     catch (Exception e)
                     {
@@ -564,11 +560,7 @@ namespace GetStoreApp.UI.Controls.Download
 
             try
             {
-                IDataTransferManagerInterop interop = DataTransferManager.As<IDataTransferManagerInterop>();
-
-                IntPtr result = interop.GetForWindow(Program.ApplicationRoot.MainWindow.Handle, new Guid(0xa5caee9b, 0x8708, 0x49d1, 0x8d, 0x36, 0x67, 0xd2, 0x5a, 0x8d, 0xa0, 0x0c));
-
-                DataTransferManager dataTransferManager = MarshalInterface<DataTransferManager>.FromAbi(result);
+                DataTransferManager dataTransferManager = DataTransferManagerInterop.GetForWindow(Program.ApplicationRoot.MainWindow.Handle);
 
                 dataTransferManager.DataRequested += async (sender, args) =>
                 {
@@ -585,7 +577,7 @@ namespace GetStoreApp.UI.Controls.Download
                     deferral.Complete();
                 };
 
-                interop.ShowShareUIForWindow(Program.ApplicationRoot.MainWindow.Handle);
+                DataTransferManagerInterop.ShowShareUIForWindow(Program.ApplicationRoot.MainWindow.Handle);
             }
             catch (Exception e)
             {

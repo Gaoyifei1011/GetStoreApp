@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
+namespace GetStoreApp.WindowsAPI.ComTypes
 {
     /// <summary>
     /// 公开创建、修改和解析 Shell 链接的方法。

@@ -132,6 +132,9 @@
   <data name="AlwaysShowBackdropOnContent" xml:space="preserve">
     <value>开启</value>
   </data>
+  <data name="AppCacheFolder" xml:space="preserve">
+    <value>应用缓存</value>
+  </data>
   <data name="Appearance" xml:space="preserve">
     <value>外观</value>
   </data>
@@ -186,6 +189,12 @@
   <data name="Config" xml:space="preserve">
     <value>配置</value>
   </data>
+  <data name="Custom" xml:space="preserve">
+    <value>自定义</value>
+  </data>
+  <data name="DesktopFolder" xml:space="preserve">
+    <value>桌面</value>
+  </data>
   <data name="DevVersion" xml:space="preserve">
     <value>开发版本</value>
   </data>
@@ -199,7 +208,7 @@
     <value>点击安装开发版本</value>
   </data>
   <data name="DownloadFolder" xml:space="preserve">
-    <value>文件存放路径</value>
+    <value>下载</value>
   </data>
   <data name="DownloadInApp" xml:space="preserve">
     <value>使用应用内下载管理器下载</value>
@@ -230,6 +239,9 @@
   </data>
   <data name="ExperimentalFeaturesDescription" xml:space="preserve">
     <value>应用的实验性功能，一般情况下无需修改</value>
+  </data>
+  <data name="FileStoragePath" xml:space="preserve">
+    <value>文件存放路径</value>
   </data>
   <data name="General" xml:space="preserve">
     <value>常规选项</value>
@@ -364,7 +376,7 @@
     <value>应用设置发生修改后，部分选项需要重启后生效</value>
   </data>
   <data name="SelectFolder" xml:space="preserve">
-    <value>请选择要保存的目录</value>
+    <value>选择文件夹</value>
   </data>
   <data name="SettingsInstruction" xml:space="preserve">
     <value>设置说明</value>
@@ -440,9 +452,6 @@
   </data>
   <data name="TraceClear" xml:space="preserve">
     <value>选择要清理的内容</value>
-  </data>
-  <data name="UseDefaultFolder" xml:space="preserve">
-    <value>使用默认目录</value>
   </data>
   <data name="UseDevFirst" xml:space="preserve">
     <value>优先使用开发版本</value>

@@ -695,7 +695,7 @@ namespace GetStoreApp.Views.Windows
                         {
                             Task.Run(async () =>
                             {
-                                await AppNotificationService.HandleAppNotificationAsync(copyDataStruct.lpData);
+                                await ToastNotificationService.HandleToastNotificationAsync(copyDataStruct.lpData);
                             });
 
                             Show();

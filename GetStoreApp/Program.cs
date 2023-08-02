@@ -24,8 +24,6 @@ namespace GetStoreApp
     {
         private static bool IsDesktopProgram { get; set; } = true;
 
-        public static bool IsAppLaunched { get; set; } = false;
-
         public static bool IsNeedAppLaunch { get; set; } = true;
 
         // 应用程序实例

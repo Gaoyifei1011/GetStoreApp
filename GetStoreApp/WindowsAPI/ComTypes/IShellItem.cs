@@ -1,7 +1,8 @@
-﻿using System;
+﻿using GetStoreApp.WindowsAPI.PInvoke.Shell32;
+using System;
 using System.Runtime.InteropServices;
 
-namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
+namespace GetStoreApp.WindowsAPI.ComTypes
 {
     /// <summary>
     /// 公开检索有关 Shell 项的信息的方法。 <see cref="IShellItem"> 和 IShellItem2 是任何新代码中项的首选表示形式。

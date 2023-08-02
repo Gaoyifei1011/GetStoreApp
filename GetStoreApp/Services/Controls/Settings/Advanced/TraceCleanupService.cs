@@ -25,7 +25,7 @@ namespace GetStoreApp.Services.Controls.Settings.Advanced
                 CleanArgs.Download => await DownloadXmlService.ClearAsync(),
                 CleanArgs.History => await HistoryXmlService.ClearAsync(),
                 CleanArgs.JumpList => await CleanTaskbarJumpListAsync(),
-                CleanArgs.LocalFile => IOHelper.CleanFolder(DownloadOptionsService.DefaultFolder),
+                CleanArgs.LocalFile => IOHelper.CleanFolder(DownloadOptionsService.AppCacheFolder),
                 _ => true,
             };
         }

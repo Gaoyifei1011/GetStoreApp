@@ -221,7 +221,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         // 升级完成，从列表中删除该应用
                         if (installResult.Status is InstallResultStatus.Ok)
                         {
-                            AppNotificationService.Show(NotificationArgs.UpgradeSuccessfully, upgradableApps.AppName);
+                            ToastNotificationService.Show(NotificationArgs.UpgradeSuccessfully, upgradableApps.AppName);
 
                             // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
                             if (installResult.RebootRequired)
@@ -308,7 +308,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                 WinGetInstance.InstallingStateDict.Remove(upgradableApps.AppID);
                             }
 
-                            AppNotificationService.Show(NotificationArgs.UpgradeFailed, upgradableApps.AppName, upgradableApps.AppID);
+                            ToastNotificationService.Show(NotificationArgs.UpgradeFailed, upgradableApps.AppName, upgradableApps.AppID);
                         }
                     }
                     // 操作被用户所取消异常
@@ -369,7 +369,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             WinGetInstance.InstallingStateDict.Remove(upgradableApps.AppID);
                         }
 
-                        AppNotificationService.Show(NotificationArgs.UpgradeFailed, upgradableApps.AppName, upgradableApps.AppID);
+                        ToastNotificationService.Show(NotificationArgs.UpgradeFailed, upgradableApps.AppName, upgradableApps.AppID);
                     }
                 }
             };

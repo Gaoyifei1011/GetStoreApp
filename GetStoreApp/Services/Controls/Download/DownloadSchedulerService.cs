@@ -49,7 +49,7 @@ namespace GetStoreApp.Services.Controls.Download
                 if (!WinINetLibrary.InternetGetConnectedState(ref flags, 0))
                 {
                     IsNetWorkConnected = false;
-                    AppNotificationService.Show(NotificationArgs.DownloadAborted, "NotDownload");
+                    ToastNotificationService.Show(NotificationArgs.DownloadAborted, "NotDownload");
                 }
             }
 
@@ -348,11 +348,11 @@ namespace GetStoreApp.Services.Controls.Download
                     // 发送通知
                     if (DownloadingList.Any() || WaitingList.Any())
                     {
-                        AppNotificationService.Show(NotificationArgs.DownloadAborted, "DownloadingNow");
+                        ToastNotificationService.Show(NotificationArgs.DownloadAborted, "DownloadingNow");
                     }
                     else
                     {
-                        AppNotificationService.Show(NotificationArgs.DownloadAborted, "NotDownload");
+                        ToastNotificationService.Show(NotificationArgs.DownloadAborted, "NotDownload");
                     }
                 }
 
@@ -481,7 +481,7 @@ namespace GetStoreApp.Services.Controls.Download
                 // 下载完成后发送通知
                 if (DownloadingList.Count is 0 && WaitingList.Count is 0)
                 {
-                    AppNotificationService.Show(NotificationArgs.DownloadCompleted);
+                    ToastNotificationService.Show(NotificationArgs.DownloadCompleted);
                 }
             }
         }

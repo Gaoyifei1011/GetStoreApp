@@ -4,8 +4,8 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.About;
 using GetStoreApp.UI.Notifications;
+using GetStoreApp.WindowsAPI.ComTypes;
 using GetStoreApp.WindowsAPI.PInvoke.Ole32;
-using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -26,6 +26,8 @@ namespace GetStoreApp.Views.Pages
     public sealed partial class AboutPage : Page
     {
         private static readonly Guid CLSID_TaskbarPin = new Guid("90AA3A4E-1CBA-4233-B8BB-535773D48449");
+
+        private static readonly Guid CLSID_ShellLink = new Guid("00021401-0000-0000-C000-000000000046");
 
         // COM接口：IUnknown 接口
 
@@ -57,17 +59,33 @@ namespace GetStoreApp.Views.Pages
         public async void OnCreateDesktopShortcutClicked(object sender, RoutedEventArgs args)
         {
             bool IsCreatedSuccessfully = false;
+            IShellLink AppLink = null;
 
             try
             {
-                IShellLink AppLink = (IShellLink)new CShellLink();
-                IReadOnlyList<AppListEntry> AppEntries = await Package.Current.GetAppListEntriesAsync();
-                AppListEntry DefaultEntry = AppEntries[0];
-                AppLink.SetPath(string.Format(@"shell:AppsFolder\{0}", DefaultEntry.AppUserModelId));
+                unsafe
+                {
+                    fixed (Guid* CLSID_ShellLink_Ptr = &CLSID_ShellLink, IID_IUnknown_Ptr = &IID_IUnknown)
+                    {
+                        Ole32Library.CoCreateInstance(CLSID_ShellLink_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, IID_IUnknown_Ptr, out IntPtr obj);
 
-                IPersistFile PersistFile = (IPersistFile)AppLink;
-                PersistFile.Save(string.Format(@"{0}\{1}.lnk", InfoHelper.UserDataPath.Desktop, ResourceService.GetLocalized("Resources/AppDisplayName")), false);
-                IsCreatedSuccessfully = true;
+                        if (obj != IntPtr.Zero)
+                        {
+                            AppLink = (IShellLink)Marshal.GetTypedObjectForIUnknown(obj, typeof(IShellLink));
+                        }
+                    }
+                }
+
+                if (AppLink is not null)
+                {
+                    IReadOnlyList<AppListEntry> AppEntries = await Package.Current.GetAppListEntriesAsync();
+                    AppListEntry DefaultEntry = AppEntries[0];
+                    AppLink.SetPath(string.Format(@"shell:AppsFolder\{0}", DefaultEntry.AppUserModelId));
+
+                    IPersistFile PersistFile = (IPersistFile)AppLink;
+                    PersistFile.Save(string.Format(@"{0}\{1}.lnk", InfoHelper.UserDataPath.Desktop, ResourceService.GetLocalized("Resources/AppDisplayName")), false);
+                    IsCreatedSuccessfully = true;
+                }
             }
             catch (Exception e)
             {
@@ -76,6 +94,10 @@ namespace GetStoreApp.Views.Pages
             finally
             {
                 new QuickOperationNotification(this, QuickOperationType.DesktopShortcut, IsCreatedSuccessfully).Show();
+                if (AppLink is not null)
+                {
+                    Marshal.FinalReleaseComObject(AppLink);
+                }
             }
         }
 
@@ -149,30 +171,45 @@ namespace GetStoreApp.Views.Pages
         public async void OnPinToTaskbarClicked(object sender, RoutedEventArgs args)
         {
             bool IsPinnedSuccessfully = false;
-
+            IShellLink AppLink = null;
             try
             {
-                IShellLink AppLink = (IShellLink)new CShellLink();
-                IReadOnlyList<AppListEntry> AppEntries = await Package.Current.GetAppListEntriesAsync();
-                AppListEntry DefaultEntry = AppEntries[0];
-                AppLink.SetPath(string.Format(@"shell:AppsFolder\{0}", DefaultEntry.AppUserModelId));
-
-                AppLink.GetIDList(out IntPtr pidl);
-
-                if (pidl != IntPtr.Zero)
+                unsafe
                 {
-                    unsafe
+                    fixed (Guid* CLSID_ShellLink_Ptr = &CLSID_ShellLink, IID_IUnknown_Ptr = &IID_IUnknown)
                     {
-                        fixed (Guid* CLSID_TaskbarPin_Ptr = &CLSID_TaskbarPin, IID_IUnknown_Ptr = &IID_IUnknown)
-                        {
-                            Ole32Library.CoCreateInstance(CLSID_TaskbarPin_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, IID_IUnknown_Ptr, out IntPtr obj);
-                            if (obj != IntPtr.Zero)
-                            {
-                                IPinnedList3 pinnedList = (IPinnedList3)Marshal.GetTypedObjectForIUnknown(obj, typeof(IPinnedList3));
+                        Ole32Library.CoCreateInstance(CLSID_ShellLink_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, IID_IUnknown_Ptr, out IntPtr obj);
 
-                                if (pinnedList is not null)
+                        if (obj != IntPtr.Zero)
+                        {
+                            AppLink = (IShellLink)Marshal.GetTypedObjectForIUnknown(obj, typeof(IShellLink));
+                        }
+                    }
+                }
+
+                if (AppLink is not null)
+                {
+                    IReadOnlyList<AppListEntry> AppEntries = await Package.Current.GetAppListEntriesAsync();
+                    AppListEntry DefaultEntry = AppEntries[0];
+                    AppLink.SetPath(string.Format(@"shell:AppsFolder\{0}", DefaultEntry.AppUserModelId));
+
+                    AppLink.GetIDList(out IntPtr pidl);
+
+                    if (pidl != IntPtr.Zero)
+                    {
+                        unsafe
+                        {
+                            fixed (Guid* CLSID_TaskbarPin_Ptr = &CLSID_TaskbarPin, IID_IUnknown_Ptr = &IID_IUnknown)
+                            {
+                                Ole32Library.CoCreateInstance(CLSID_TaskbarPin_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, IID_IUnknown_Ptr, out IntPtr obj);
+                                if (obj != IntPtr.Zero)
                                 {
-                                    IsPinnedSuccessfully = pinnedList.Modify(IntPtr.Zero, pidl, PLMC.PLMC_EXPLORER) is 0;
+                                    IPinnedList3 pinnedList = (IPinnedList3)Marshal.GetTypedObjectForIUnknown(obj, typeof(IPinnedList3));
+
+                                    if (pinnedList is not null)
+                                    {
+                                        IsPinnedSuccessfully = pinnedList.Modify(IntPtr.Zero, pidl, PLMC.PLMC_EXPLORER) is 0;
+                                    }
                                 }
                             }
                         }
@@ -186,6 +223,10 @@ namespace GetStoreApp.Views.Pages
             finally
             {
                 new QuickOperationNotification(this, QuickOperationType.Taskbar, IsPinnedSuccessfully).Show();
+                if (AppLink is not null)
+                {
+                    Marshal.FinalReleaseComObject(AppLink);
+                }
             }
         }
 

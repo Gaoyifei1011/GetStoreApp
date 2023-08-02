@@ -24,7 +24,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
 
         public static List<GroupOptionsModel> DownloadModeList { get; set; }
 
-        public static StorageFolder DefaultFolder { get; private set; }
+        public static StorageFolder AppCacheFolder { get; private set; }
 
         private static int DefaultItem { get; } = 1;
 
@@ -43,7 +43,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
         {
             DownloadModeList = ResourceService.DownloadModeList;
 
-            DefaultFolder = await ApplicationData.Current.LocalCacheFolder.CreateFolderAsync("Downloads", CreationCollisionOption.OpenIfExists);
+            AppCacheFolder = await ApplicationData.Current.LocalCacheFolder.CreateFolderAsync("Downloads", CreationCollisionOption.OpenIfExists);
 
             DefaultDownloadMode = DownloadModeList.Find(item => item.SelectedValue.Equals("DownloadInApp", StringComparison.OrdinalIgnoreCase));
 
@@ -65,7 +65,7 @@ namespace GetStoreApp.Services.Controls.Settings.Common
             {
                 if (string.IsNullOrEmpty(folder))
                 {
-                    return DefaultFolder;
+                    return AppCacheFolder;
                 }
                 else
                 {
@@ -75,8 +75,8 @@ namespace GetStoreApp.Services.Controls.Settings.Common
             catch (Exception e)
             {
                 LogService.WriteLog(LogType.WARNING, "Get download saved folder failed.", e);
-                SetFolder(DefaultFolder);
-                return DefaultFolder;
+                SetFolder(AppCacheFolder);
+                return AppCacheFolder;
             }
         }
 

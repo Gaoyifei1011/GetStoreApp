@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Models.Controls.Settings;
+﻿using GetStoreApp.Helpers.Root;
+using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.Dialogs;
@@ -9,7 +10,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.Storage;
+using Windows.Storage.Pickers;
 using WinRT;
+using WinRT.Interop;
 
 namespace GetStoreApp.UI.Controls.Settings.Common
 {
@@ -85,31 +88,68 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         }
 
         /// <summary>
-        /// 使用默认目录
-        /// </summary>
-        public void OnUseDefaultFolderClicked(object sender, RoutedEventArgs args)
-        {
-            DownloadFolder = DownloadOptionsService.DefaultFolder;
-            DownloadOptionsService.SetFolder(DownloadOptionsService.DefaultFolder);
-        }
-
-        /// <summary>
         /// 修改下载目录
         /// </summary>
         public async void OnChangeFolderClicked(object sender, RoutedEventArgs args)
         {
-            FolderPickerDialog dialog = new FolderPickerDialog()
+            MenuFlyoutItem item = sender.As<MenuFlyoutItem>();
+            if (item.Tag is not null)
             {
-                Title = ResourceService.GetLocalized("Settings/SelectFolder"),
-                Path = DownloadFolder.Path
-            };
+                switch ((string)item.Tag)
+                {
+                    case "AppCache":
+                        {
+                            DownloadFolder = DownloadOptionsService.AppCacheFolder;
+                            DownloadOptionsService.SetFolder(DownloadFolder);
+                            break;
+                        }
+                    case "Download":
+                        {
+                            DownloadFolder = await StorageFolder.GetFolderFromPathAsync(InfoHelper.UserDataPath.Downloads);
+                            DownloadOptionsService.SetFolder(DownloadFolder);
+                            break;
+                        }
+                    case "Desktop":
+                        {
+                            DownloadFolder = await StorageFolder.GetFolderFromPathAsync(InfoHelper.UserDataPath.Desktop);
+                            DownloadOptionsService.SetFolder(DownloadFolder);
+                            break;
+                        }
+                    case "Custom":
+                        {
+                            try
+                            {
+                                FolderPicker folderPicker = new FolderPicker();
+                                InitializeWithWindow.Initialize(folderPicker, Program.ApplicationRoot.MainWindow.Handle);
+                                folderPicker.SuggestedStartLocation = PickerLocationId.Unspecified;
 
-            bool Result = dialog.ShowDialog(Program.ApplicationRoot.MainWindow.Handle);
+                                StorageFolder downloadFolder = await folderPicker.PickSingleFolderAsync();
 
-            if (Result)
-            {
-                DownloadFolder = await StorageFolder.GetFolderFromPathAsync(dialog.Path);
-                DownloadOptionsService.SetFolder(DownloadFolder);
+                                if (downloadFolder is not null)
+                                {
+                                    DownloadFolder = downloadFolder;
+                                    DownloadOptionsService.SetFolder(downloadFolder);
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                FolderBrowserDialog dialog = new FolderBrowserDialog()
+                                {
+                                    Title = ResourceService.GetLocalized("Settings/SelectFolder"),
+                                    Path = DownloadFolder.Path
+                                };
+
+                                bool Result = dialog.ShowDialog(Program.ApplicationRoot.MainWindow.Handle);
+
+                                if (Result)
+                                {
+                                    DownloadFolder = await StorageFolder.GetFolderFromPathAsync(dialog.Path);
+                                    DownloadOptionsService.SetFolder(DownloadFolder);
+                                }
+                            }
+                            break;
+                        }
+                }
             }
         }
 

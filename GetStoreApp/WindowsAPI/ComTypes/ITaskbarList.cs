@@ -1,7 +1,8 @@
-﻿using System;
+﻿using GetStoreApp.WindowsAPI.PInvoke.Shell32;
+using System;
 using System.Runtime.InteropServices;
 
-namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
+namespace GetStoreApp.WindowsAPI.ComTypes
 {
     /// <summary>
     /// ITaskbarList：公开控制任务栏的方法。 它允许你在任务栏上动态添加、删除和激活项。
