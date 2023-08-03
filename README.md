@@ -6,8 +6,8 @@
 
 ### 语言选择（Language selection）
 
-> * [简体中文](https://github.com/Gaoyifei1011/GetStoreApp/blob/master/Description/README_ZH-CN.md)&emsp;
-> * [English](https://github.com/Gaoyifei1011/GetStoreApp/blob/master/Description/README_EN-US.md)&emsp;
+> * [简体中文](https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Description/README_ZH-CN.md)&emsp;
+> * [English](https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Description/README_EN-US.md)&emsp;
 
 ------
 
@@ -30,22 +30,47 @@
 
 ### 应用截图
 
-
 #### <p align="center">应用成功获取界面</p>
-![image](https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/441a6ad2-7829-4986-994e-f140f0b60853)
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/441a6ad2-7829-4986-994e-f140f0b60853" />
+</div>
+
 #### <p align="center">WinGet 程序包管理界面</p>
-![image](https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/28200b23-8704-40d8-92ec-767eb38c57c3)
-![image](https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/91ae5f3b-eb7b-4c95-b603-0487fadd1534)
-![image](https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/d177cbec-1438-4496-9d6b-6cd8a2708493)
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/28200b23-8704-40d8-92ec-767eb38c57c3" />
+</div>
+
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/91ae5f3b-eb7b-4c95-b603-0487fadd1534" />
+</div>
+
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/d177cbec-1438-4496-9d6b-6cd8a2708493" />
+</div>
+
 #### <p align="center">历史记录</p>
-![image](https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/0aee441e-3714-4bf3-b817-8cb8cb516737)
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/0aee441e-3714-4bf3-b817-8cb8cb516737" />
+</div>
+
 #### <p align="center">下载管理</p>
-![image](https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/42a5139a-f845-48f9-8b64-30efbadda13c)
-![image](https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/dc6bdb4a-1c6a-4c3c-be46-93db03c5b1fa)
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/42a5139a-f845-48f9-8b64-30efbadda13c" />
+</div>
+
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/dc6bdb4a-1c6a-4c3c-be46-93db03c5b1fa" />
+</div>
+
 #### <p align="center">访问网页版</p>
-![image](https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/6cad3ee4-9b81-49e0-8c8e-00492de005a2)
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/6cad3ee4-9b81-49e0-8c8e-00492de005a2" />
+</div>
+
 #### <p align="center">应用说明</p>
-![image](https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/3a48382d-a53f-4960-951d-ee9f16a7a7d9)
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/3a48382d-a53f-4960-951d-ee9f16a7a7d9" />
+</div>
 
 ------
 
@@ -74,7 +99,7 @@
 > * [Microsoft.WindowsPackageManager.ComInterop](https://github.com/microsoft/winget-cli)&emsp;
 > * [Mile.Aria2](https://github.com/ProjectMile/Mile.Aria2)&emsp;
 
-[学习过程中参考或使用的代码](https://github.com/Gaoyifei1011/GetStoreApp/blob/master/Description/StudyReferenceCode.md)&emsp;
+[学习过程中参考或使用的代码](https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Description/StudyReferenceCode.md)&emsp;
 
 ------
 

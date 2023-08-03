@@ -16,6 +16,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.System;
+using Windows.UI.Shell;
 using Windows.UI.StartScreen;
 
 namespace GetStoreApp.Views.Pages
@@ -25,8 +26,6 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class AboutPage : Page
     {
-        private static readonly Guid CLSID_TaskbarPin = new Guid("90AA3A4E-1CBA-4233-B8BB-535773D48449");
-
         private static readonly Guid CLSID_ShellLink = new Guid("00021401-0000-0000-C000-000000000046");
 
         // COM接口：IUnknown 接口
@@ -167,53 +166,22 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        // 将应用固定到任务栏
+        /// <summary>
+        /// 将应用固定到任务栏
+        /// </summary>
         public async void OnPinToTaskbarClicked(object sender, RoutedEventArgs args)
         {
             bool IsPinnedSuccessfully = false;
-            IShellLink AppLink = null;
             try
             {
-                unsafe
+                string featureId = "com.microsoft.windows.taskbar.pin";
+                string token = FeatureAccessHelper.GenerateTokenFromFeatureId(featureId);
+                string attestation = FeatureAccessHelper.GenerateAttestation(featureId);
+                LimitedAccessFeatureRequestResult accessResult = LimitedAccessFeatures.TryUnlockFeature(featureId, token, attestation);
+
+                if (accessResult.Status is LimitedAccessFeatureStatus.Available)
                 {
-                    fixed (Guid* CLSID_ShellLink_Ptr = &CLSID_ShellLink, IID_IUnknown_Ptr = &IID_IUnknown)
-                    {
-                        Ole32Library.CoCreateInstance(CLSID_ShellLink_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, IID_IUnknown_Ptr, out IntPtr obj);
-
-                        if (obj != IntPtr.Zero)
-                        {
-                            AppLink = (IShellLink)Marshal.GetTypedObjectForIUnknown(obj, typeof(IShellLink));
-                        }
-                    }
-                }
-
-                if (AppLink is not null)
-                {
-                    IReadOnlyList<AppListEntry> AppEntries = await Package.Current.GetAppListEntriesAsync();
-                    AppListEntry DefaultEntry = AppEntries[0];
-                    AppLink.SetPath(string.Format(@"shell:AppsFolder\{0}", DefaultEntry.AppUserModelId));
-
-                    AppLink.GetIDList(out IntPtr pidl);
-
-                    if (pidl != IntPtr.Zero)
-                    {
-                        unsafe
-                        {
-                            fixed (Guid* CLSID_TaskbarPin_Ptr = &CLSID_TaskbarPin, IID_IUnknown_Ptr = &IID_IUnknown)
-                            {
-                                Ole32Library.CoCreateInstance(CLSID_TaskbarPin_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, IID_IUnknown_Ptr, out IntPtr obj);
-                                if (obj != IntPtr.Zero)
-                                {
-                                    IPinnedList3 pinnedList = (IPinnedList3)Marshal.GetTypedObjectForIUnknown(obj, typeof(IPinnedList3));
-
-                                    if (pinnedList is not null)
-                                    {
-                                        IsPinnedSuccessfully = pinnedList.Modify(IntPtr.Zero, pidl, PLMC.PLMC_EXPLORER) is 0;
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    IsPinnedSuccessfully = await TaskbarManager.GetDefault().RequestPinCurrentAppAsync();
                 }
             }
             catch (Exception e)
@@ -223,10 +191,6 @@ namespace GetStoreApp.Views.Pages
             finally
             {
                 new QuickOperationNotification(this, QuickOperationType.Taskbar, IsPinnedSuccessfully).Show();
-                if (AppLink is not null)
-                {
-                    Marshal.FinalReleaseComObject(AppLink);
-                }
             }
         }
 

@@ -5,9 +5,9 @@ using Windows.Storage.Streams;
 namespace GetStoreApp.Helpers.Root
 {
     /// <summary>
-    /// 唯一键值生成辅助类
+    /// 哈希算法计算辅助类
     /// </summary>
-    public static class UniqueKeyHelper
+    public static class HashAlgorithmHelper
     {
         /// <summary>
         /// 拼接并生成唯一的历史记录MD5值
@@ -16,7 +16,7 @@ namespace GetStoreApp.Helpers.Root
         {
             string Content = string.Format("{0} {1} {2}", typeName, channelName, currentLink);
 
-            return CalculateUniqueKey(Content);
+            return ComputeMD5String(Content);
         }
 
         /// <summary>
@@ -26,13 +26,13 @@ namespace GetStoreApp.Helpers.Root
         {
             string Content = string.Format("{0} {1}", fileName, filePath);
 
-            return CalculateUniqueKey(Content);
+            return ComputeMD5String(Content);
         }
 
         /// <summary>
-        /// 计算唯一键值
+        /// 获取计算所得的 MD5 算法加密后的值
         /// </summary>
-        private static string CalculateUniqueKey(string content)
+        private static string ComputeMD5String(string content)
         {
             HashAlgorithmProvider hashAlgorithmProvider = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Md5);
 
@@ -41,6 +41,22 @@ namespace GetStoreApp.Helpers.Root
             IBuffer hashedBuffer = hashAlgorithmProvider.HashData(buffHash);
 
             return CryptographicBuffer.EncodeToHexString(hashedBuffer);
+        }
+
+        /// <summary>
+        /// 获取计算所得的 SHA256 算法加密后的值
+        /// </summary>
+        public static byte[] ComputeSHA256Hash(string content)
+        {
+            HashAlgorithmProvider hashAlgorithmProvider = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Sha256);
+
+            IBuffer buffHash = CryptographicBuffer.ConvertStringToBinary(content, BinaryStringEncoding.Utf8);
+
+            IBuffer hashedBuffer = hashAlgorithmProvider.HashData(buffHash);
+
+            CryptographicBuffer.CopyToByteArray(hashedBuffer, out byte[] hashBytes);
+
+            return hashBytes;
         }
     }
 }

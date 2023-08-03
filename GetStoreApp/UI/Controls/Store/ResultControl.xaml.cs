@@ -114,7 +114,7 @@ namespace GetStoreApp.UI.Controls.Store
 
                         BackgroundModel backgroundItem = new BackgroundModel
                         {
-                            DownloadKey = UniqueKeyHelper.GenerateDownloadKey(resultItem.FileName, DownloadFilePath),
+                            DownloadKey = HashAlgorithmHelper.GenerateDownloadKey(resultItem.FileName, DownloadFilePath),
                             FileName = resultItem.FileName,
                             FileLink = resultItem.FileLink,
                             FilePath = DownloadFilePath,
@@ -397,7 +397,7 @@ namespace GetStoreApp.UI.Controls.Store
 
                     BackgroundModel backgroundItem = new BackgroundModel
                     {
-                        DownloadKey = UniqueKeyHelper.GenerateDownloadKey(resultItem.FileName, DownloadFilePath),
+                        DownloadKey = HashAlgorithmHelper.GenerateDownloadKey(resultItem.FileName, DownloadFilePath),
                         FileName = resultItem.FileName,
                         FileLink = resultItem.FileLink,
                         FilePath = DownloadFilePath,

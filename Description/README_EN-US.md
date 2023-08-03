@@ -24,21 +24,46 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 ### Screenshot of the app
 
 #### <p align="center">The app successfully gets the interface</p>
-![image](https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/75d5bc77-2680-4692-9f2e-fa1126c44ea5)
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/75d5bc77-2680-4692-9f2e-fa1126c44ea5" />
+</div>
 
 #### <p align="center">WinGet package management interface</p>
-![image](https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/9788e38e-4614-4f4f-b080-ed9c72c57995)
-![image](https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/5938b36c-d4db-4784-b020-02251422875c)
-![image](https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/59a56868-7762-4db8-b8b9-31cad199c97f)
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/9788e38e-4614-4f4f-b080-ed9c72c57995" />
+</div>
+
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/5938b36c-d4db-4784-b020-02251422875c" />
+</div>
+
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/59a56868-7762-4db8-b8b9-31cad199c97f" />
+</div>
+
 #### <p align="center">History Record</p>
-![image](https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/2a00ef92-ca15-4679-a962-49a5396aee96)
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/2a00ef92-ca15-4679-a962-49a5396aee96" />
+</div>
+
 #### <p align="center">Download Management</p>
-![image](https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/2177ee35-80a8-49fc-9c99-b82fb92fe470)
-![image](https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/7764c08f-e1b8-4bdd-ab25-e8f9cee94f50)
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/2177ee35-80a8-49fc-9c99-b82fb92fe470" />
+</div>
+
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/7764c08f-e1b8-4bdd-ab25-e8f9cee94f50" />
+</div>
+
 #### <p align="center">Access Webpage</p>
-![image](https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/f3d50960-0afe-43ff-bc1a-bc257633f001)
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/f3d50960-0afe-43ff-bc1a-bc257633f001" />
+</div>
+
 #### <p align="center">Application Descriptions</p>
-![image](https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/0743b5a6-30a4-4f71-9b4e-a38c3bc58061)
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/0743b5a6-30a4-4f71-9b4e-a38c3bc58061" />
+</div>
 
 ------
 
@@ -67,7 +92,7 @@ All the content of the program has been developed
 > * [Microsoft.WindowsPackageManager.ComInterop](https://github.com/microsoft/winget-cli)&emsp;
 > * [Mile.Aria2](https://github.com/ProjectMile/Mile.Aria2)&emsp;
 
-[Code referenced or used during the learning process](https://github.com/Gaoyifei1011/GetStoreApp/blob/master/Description/StudyReferenceCode.md)&emsp;
+[Code referenced or used during the learning process](https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Description/StudyReferenceCode.md)&emsp;
 
 ------
 

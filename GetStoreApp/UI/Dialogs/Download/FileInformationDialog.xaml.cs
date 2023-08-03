@@ -3,11 +3,11 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Notifications;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace GetStoreApp.UI.Dialogs.Download
 {
@@ -68,6 +68,15 @@ namespace GetStoreApp.UI.Dialogs.Download
             {
                 FileSHA1 = completedItem.FileSHA1;
             }
+            Task.Run(async () =>
+            {
+                string fileShA1 = await IOHelper.GetFileSHA1Async(FilePath);
+                Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
+                {
+                    CheckFileSHA1 = fileShA1;
+                    FileCheckState = true;
+                });
+            });
         }
 
         /// <summary>
@@ -90,15 +99,6 @@ namespace GetStoreApp.UI.Dialogs.Download
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
             sender.Hide();
             new FileInformationCopyNotification(this).Show();
-        }
-
-        /// <summary>
-        /// 初始化信息
-        /// </summary>
-        public async void OnLoaded(object sender, RoutedEventArgs args)
-        {
-            CheckFileSHA1 = await IOHelper.GetFileSHA1Async(FilePath);
-            FileCheckState = true;
         }
 
         /// <summary>

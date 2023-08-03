@@ -10,7 +10,6 @@
     BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
     CloseButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
     IsPrimaryButtonEnabled="{x:Bind FileCheckState, Mode=OneWay}"
-    Loaded="{x:Bind OnLoaded}"
     PrimaryButtonClick="{x:Bind OnCopyFileInformationClicked}"
     PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
     PrimaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CopyFileInformation')}"

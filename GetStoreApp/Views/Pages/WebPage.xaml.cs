@@ -330,7 +330,7 @@ namespace GetStoreApp.Views.Pages
 
                         BackgroundModel backgroundItem = new BackgroundModel
                         {
-                            DownloadKey = UniqueKeyHelper.GenerateDownloadKey(DownloadFileName, DownloadFilePath),
+                            DownloadKey = HashAlgorithmHelper.GenerateDownloadKey(DownloadFileName, DownloadFilePath),
                             FileName = DownloadFileName,
                             FileLink = args.DownloadOperation.Uri,
                             FilePath = DownloadFilePath,
@@ -340,7 +340,7 @@ namespace GetStoreApp.Views.Pages
                         };
 
                         backgroundItem.FilePath = string.Format("{0}\\{1}", DownloadOptionsService.DownloadFolder.Path, backgroundItem.FileName);
-                        backgroundItem.DownloadKey = UniqueKeyHelper.GenerateDownloadKey(backgroundItem.FileName, backgroundItem.FilePath);
+                        backgroundItem.DownloadKey = HashAlgorithmHelper.GenerateDownloadKey(backgroundItem.FileName, backgroundItem.FilePath);
 
                         // 检查是否存在相同的任务记录
                         DuplicatedDataInfoArgs CheckResult = await DownloadXmlService.CheckDuplicatedAsync(backgroundItem.DownloadKey);

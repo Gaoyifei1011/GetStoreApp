@@ -6,11 +6,11 @@ using System.Runtime.Versioning;
 // 程序集信息设置
 [assembly: AssemblyCopyright("Copyright ©2022-2023 高怡飞, All Rights Reserved.")]
 [assembly: AssemblyDescription("获取商店应用")]
-[assembly: AssemblyFileVersion("2.2.802.0")]
-[assembly: AssemblyInformationalVersion("2.2.802.0")]
+[assembly: AssemblyFileVersion("2.2.803.0")]
+[assembly: AssemblyInformationalVersion("2.2.803.0")]
 [assembly: AssemblyProduct("获取商店应用")]
 [assembly: AssemblyTitle("获取商店应用")]
-[assembly: AssemblyVersion("2.2.802.0")]
+[assembly: AssemblyVersion("2.2.803.0")]
 
 // 设置程序集对COM组件的访问权限
 [assembly: ComVisible(false)]

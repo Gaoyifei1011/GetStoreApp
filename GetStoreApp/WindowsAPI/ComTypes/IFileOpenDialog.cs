@@ -13,7 +13,6 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// <summary>
         ///  使用模态窗口显示对话框
         /// </summary>
-        /// <param name="hwnd"></param>
         [PreserveSig]
         int Show([In] IntPtr hwnd);
 

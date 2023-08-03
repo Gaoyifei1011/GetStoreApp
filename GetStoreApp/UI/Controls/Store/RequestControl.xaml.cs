@@ -289,7 +289,7 @@ namespace GetStoreApp.UI.Controls.Store
             await HistoryXmlService.AddAsync(new HistoryModel
             {
                 CreateTimeStamp = TimeStamp,
-                HistoryKey = UniqueKeyHelper.GenerateHistoryKey(TypeList[currentType].InternalName, ChannelList[currentChannel].InternalName, currentLink),
+                HistoryKey = HashAlgorithmHelper.GenerateHistoryKey(TypeList[currentType].InternalName, ChannelList[currentChannel].InternalName, currentLink),
                 HistoryType = TypeList[currentType].InternalName,
                 HistoryChannel = ChannelList[currentChannel].InternalName,
                 HistoryLink = currentLink
