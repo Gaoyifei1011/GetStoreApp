@@ -1,9 +1,9 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Controls.Settings.Experiment;
 using GetStoreApp.Services.Root;
-using GetStoreApp.WindowsAPI.PInvoke.WinINet;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -45,11 +45,13 @@ namespace GetStoreApp.Services.Controls.Download
             // 查看是否开启了网络监控服务
             if (NetWorkMonitorService.NetWorkMonitorValue)
             {
-                INTERNET_CONNECTION_FLAGS flags = INTERNET_CONNECTION_FLAGS.INTERNET_CONNECTION_OFFLINE;
-                if (!WinINetLibrary.InternetGetConnectedState(ref flags, 0))
+                if (!NetWorkHelper.IsNetworkConnected(out bool checkFailed))
                 {
-                    IsNetWorkConnected = false;
-                    ToastNotificationService.Show(NotificationArgs.DownloadAborted, "NotDownload");
+                    if (!checkFailed)
+                    {
+                        IsNetWorkConnected = false;
+                        ToastNotificationService.Show(NotificationArgs.DownloadAborted, "NotDownload");
+                    }
                 }
             }
 
@@ -334,30 +336,32 @@ namespace GetStoreApp.Services.Controls.Download
         private static async Task ScheduledGetNetWorkAsync()
         {
             // 网络处于未连接状态，暂停所有任务
-            INTERNET_CONNECTION_FLAGS flags = INTERNET_CONNECTION_FLAGS.INTERNET_CONNECTION_OFFLINE;
-            if (!WinINetLibrary.InternetGetConnectedState(ref flags, 0))
+            if (!NetWorkHelper.IsNetworkConnected(out bool checkFailed))
             {
-                // 如果网络处于正在连接状态，修改当前网络状态并发送通知
-                if (IsNetWorkConnected)
+                if (!checkFailed)
                 {
-                    lock (IsNetWorkConnectedLock)
+                    // 如果网络处于正在连接状态，修改当前网络状态并发送通知
+                    if (IsNetWorkConnected)
                     {
-                        IsNetWorkConnected = false;
+                        lock (IsNetWorkConnectedLock)
+                        {
+                            IsNetWorkConnected = false;
+                        }
+
+                        // 发送通知
+                        if (DownloadingList.Any() || WaitingList.Any())
+                        {
+                            ToastNotificationService.Show(NotificationArgs.DownloadAborted, "DownloadingNow");
+                        }
+                        else
+                        {
+                            ToastNotificationService.Show(NotificationArgs.DownloadAborted, "NotDownload");
+                        }
                     }
 
-                    // 发送通知
-                    if (DownloadingList.Any() || WaitingList.Any())
-                    {
-                        ToastNotificationService.Show(NotificationArgs.DownloadAborted, "DownloadingNow");
-                    }
-                    else
-                    {
-                        ToastNotificationService.Show(NotificationArgs.DownloadAborted, "NotDownload");
-                    }
+                    // 暂停所有下载任务
+                    await PauseAllTaskAsync();
                 }
-
-                // 暂停所有下载任务
-                await PauseAllTaskAsync();
             }
             else
             {

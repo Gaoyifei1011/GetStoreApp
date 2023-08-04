@@ -11,7 +11,6 @@ using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Notifications;
 using GetStoreApp.Views.Pages;
-using GetStoreApp.WindowsAPI.PInvoke.WinINet;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -99,11 +98,13 @@ namespace GetStoreApp.UI.Controls.Store
                     if (NetWorkMonitorService.NetWorkMonitorValue)
                     {
                         // 网络处于未连接状态，不再进行下载，显示通知
-                        INTERNET_CONNECTION_FLAGS flags = INTERNET_CONNECTION_FLAGS.INTERNET_CONNECTION_OFFLINE;
-                        if (!WinINetLibrary.InternetGetConnectedState(ref flags, 0))
+                        if (!NetWorkHelper.IsNetworkConnected(out bool checkFailed))
                         {
-                            new NetWorkErrorNotification(this).Show();
-                            return;
+                            if (!checkFailed)
+                            {
+                                new NetWorkErrorNotification(this).Show();
+                                return;
+                            }
                         }
                     }
 
@@ -367,11 +368,13 @@ namespace GetStoreApp.UI.Controls.Store
             if (NetWorkMonitorService.NetWorkMonitorValue)
             {
                 // 网络处于未连接状态，不再进行下载，显示通知
-                INTERNET_CONNECTION_FLAGS flags = INTERNET_CONNECTION_FLAGS.INTERNET_CONNECTION_OFFLINE;
-                if (!WinINetLibrary.InternetGetConnectedState(ref flags, 0))
+                if (!NetWorkHelper.IsNetworkConnected(out bool checkFailed))
                 {
-                    new NetWorkErrorNotification(this).Show();
-                    return;
+                    if (!checkFailed)
+                    {
+                        new NetWorkErrorNotification(this).Show();
+                        return;
+                    }
                 }
             }
 

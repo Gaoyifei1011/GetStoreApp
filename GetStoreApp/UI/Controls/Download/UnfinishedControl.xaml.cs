@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Controls.Extensions;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Common;
@@ -7,7 +8,6 @@ using GetStoreApp.Services.Controls.Settings.Experiment;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Notifications;
-using GetStoreApp.WindowsAPI.PInvoke.WinINet;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -69,11 +69,13 @@ namespace GetStoreApp.UI.Controls.Download
                     if (NetWorkMonitorService.NetWorkMonitorValue)
                     {
                         // 网络处于未连接状态，不再进行下载，显示通知
-                        INTERNET_CONNECTION_FLAGS flags = INTERNET_CONNECTION_FLAGS.INTERNET_CONNECTION_OFFLINE;
-                        if (!WinINetLibrary.InternetGetConnectedState(ref flags, 0))
+                        if (!NetWorkHelper.IsNetworkConnected(out bool checkFailed))
                         {
-                            new NetWorkErrorNotification(this).Show();
-                            return;
+                            if (!checkFailed)
+                            {
+                                new NetWorkErrorNotification(this).Show();
+                                return;
+                            }
                         }
                     }
 
@@ -191,11 +193,13 @@ namespace GetStoreApp.UI.Controls.Download
             if (NetWorkMonitorService.NetWorkMonitorValue)
             {
                 // 网络处于未连接状态，不再进行下载，显示通知
-                INTERNET_CONNECTION_FLAGS flags = INTERNET_CONNECTION_FLAGS.INTERNET_CONNECTION_OFFLINE;
-                if (!WinINetLibrary.InternetGetConnectedState(ref flags, 0))
+                if (!NetWorkHelper.IsNetworkConnected(out bool checkFailed))
                 {
-                    new NetWorkErrorNotification(this).Show();
-                    return;
+                    if (!checkFailed)
+                    {
+                        new NetWorkErrorNotification(this).Show();
+                        return;
+                    }
                 }
             }
 
