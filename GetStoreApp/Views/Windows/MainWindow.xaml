@@ -46,76 +46,83 @@
             <NavigationView.MenuItems>
                 <NavigationViewItemHeader Content="{x:Bind root:ResourceService.GetLocalized('Window/Title')}" Foreground="{ThemeResource NavigationViewItemForeground}" />
 
-                <NavigationViewItem
-                    Content="{x:Bind root:ResourceService.GetLocalized('Window/Store')}"
-                    Tag="{x:Bind TagList[0]}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/Store')}">
+                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('Window/Store')}" Tag="{x:Bind TagList[0]}">
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.Store}" />
                     </NavigationViewItem.Icon>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Store')}" />
+                    </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
-                <NavigationViewItem
-                    Content="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}"
-                    Tag="{x:Bind TagList[1]}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}">
+                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}" Tag="{x:Bind TagList[1]}">
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.WinGet}" />
                     </NavigationViewItem.Icon>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}" />
+                    </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
-                <NavigationViewItem
-                    Content="{x:Bind root:ResourceService.GetLocalized('Window/History')}"
-                    Tag="{x:Bind TagList[2]}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/History')}">
+                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('Window/History')}" Tag="{x:Bind TagList[2]}">
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.History}" />
                     </NavigationViewItem.Icon>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/History')}" />
+                    </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
-                <NavigationViewItem
-                    Content="{x:Bind root:ResourceService.GetLocalized('Window/Download')}"
-                    Tag="{x:Bind TagList[3]}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/Download')}">
+                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('Window/Download')}" Tag="{x:Bind TagList[3]}">
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.Download}" />
                     </NavigationViewItem.Icon>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Download')}" />
+                    </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
-                <NavigationViewItem
-                    Content="{x:Bind root:ResourceService.GetLocalized('Window/Web')}"
-                    Tag="{x:Bind TagList[4]}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/Web')}">
+                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('Window/Web')}" Tag="{x:Bind TagList[4]}">
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.Web}" />
                     </NavigationViewItem.Icon>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Web')}" />
+                    </ToolTipService.ToolTip>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
 
             <NavigationView.FooterMenuItems>
-                <NavigationViewItem
-                    Content="{x:Bind root:ResourceService.GetLocalized('Window/About')}"
-                    Tag="{x:Bind TagList[5]}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/About')}">
+                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('Window/About')}" Tag="{x:Bind TagList[5]}">
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.About}" />
                     </NavigationViewItem.Icon>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/About')}" />
+                    </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
-                <NavigationViewItem
-                    Content="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}"
-                    Tag="{x:Bind TagList[6]}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}">
+                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}" Tag="{x:Bind TagList[6]}">
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.Settings}" />
                     </NavigationViewItem.Icon>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}" />
+                    </ToolTipService.ToolTip>
                 </NavigationViewItem>
             </NavigationView.FooterMenuItems>
 

@@ -95,8 +95,6 @@
     <Content Remove="Assets\Resources\LICENSE" />
 
     <None Update="Assets\GetStoreApp.ico" CopyToOutputDirectory="Never" />
-
-    <Content Update="Assets\GetStoreApp.png" CopyToOutputDirectory="Always" />
     <Content Update="Assets\Images\DesktopApps.png" CopyToOutputDirectory="Always" />
     <Content Update="Assets\Images\Jumplist.png" CopyToOutputDirectory="Always" />
 
@@ -115,8 +113,6 @@
     <None Include="Assets\ControlIcon\Store.png" CopyToOutputDirectory="Never" />
     <None Include="Assets\ControlIcon\Web.png" CopyToOutputDirectory="Never" />
     <None Include="Assets\ControlIcon\WinGet.png" />
-    
-    <None Remove="Assets\GetStoreApp.png" />
     <None Remove="Assets\LICENSE" />
     <None Remove="Styles\DropDownButton.xaml" />
     <None Remove="Styles\Flyout.xaml" />

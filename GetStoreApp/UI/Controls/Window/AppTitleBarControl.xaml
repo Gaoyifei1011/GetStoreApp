@@ -23,7 +23,7 @@
             Height="22"
             Margin="0,3,0,0"
             HorizontalAlignment="Left"
-            Source="ms-appx:///Assets/GetStoreApp.png" />
+            Source="ms-appx:///Assets/Square44x44Logo.altform-unplated_targetsize-256.png" />
         <TextBlock
             Grid.Column="1"
             Margin="14,2,0,0"

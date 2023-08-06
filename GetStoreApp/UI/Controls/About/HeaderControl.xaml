@@ -21,7 +21,7 @@
         Grid.Column="0"
         Height="140"
         Margin="15,0"
-        Source="ms-appx:///Assets/GetStoreApp.png" />
+        Source="ms-appx:///Assets/Square44x44Logo.altform-unplated_targetsize-256.png" />
 
     <StackPanel Grid.Column="1" VerticalAlignment="Center">
 
