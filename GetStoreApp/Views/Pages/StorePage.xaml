@@ -32,12 +32,8 @@
                 Grid.Column="1"
                 VerticalAlignment="Center"
                 Click="{x:Bind OnUseInstructionClicked}"
-                Content="{x:Bind root:ResourceService.GetLocalized('Store/UseInstruction')}">
-
-                <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/UseInstructionToolTip')}" Placement="Mouse" />
-                </ToolTipService.ToolTip>
-            </Button>
+                Content="{x:Bind root:ResourceService.GetLocalized('Store/UseInstruction')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/UseInstructionToolTip')}" />
         </Grid>
 
         <ScrollViewer

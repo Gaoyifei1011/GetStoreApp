@@ -67,24 +67,6 @@
                 Text="{x:Bind root:ResourceService.GetLocalized('About/PrivacyandSecurityDescription')}"
                 TextAlignment="Justify"
                 TextWrapping="Wrap" />
-            <MenuFlyoutSeparator Margin="0,0,0,8" />
-
-            <TextBlock
-                Margin="0,0,0,10"
-                FontSize="15"
-                FontWeight="Normal"
-                Text="{x:Bind root:ResourceService.GetLocalized('About/Maintenance')}"
-                TextAlignment="Left" />
-            <HyperlinkButton
-                Margin="-5,0,10,0"
-                Padding="5"
-                Content="{x:Bind root:ResourceService.GetLocalized('About/MaintenanceDescription')}"
-                NavigateUri="https://github.com/Gaoyifei1011/GetStoreApp">
-
-                <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/MaintenanceDescription')}" Placement="Mouse" />
-                </ToolTipService.ToolTip>
-            </HyperlinkButton>
         </StackPanel>
     </Expander.Content>
 </Expander>

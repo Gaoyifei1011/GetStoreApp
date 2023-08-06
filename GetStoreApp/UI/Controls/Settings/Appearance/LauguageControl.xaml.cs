@@ -50,11 +50,7 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
                     Tag = index
                 };
 
-                ToolTipService.SetToolTip(toggleMenuFlyoutItem, new ToolTip()
-                {
-                    Content = languageItem.DisplayMember,
-                    Placement = PlacementMode.Mouse
-                });
+                ToolTipService.SetToolTip(toggleMenuFlyoutItem, languageItem.DisplayMember);
 
                 if (AppLanguage.SelectedValue == LanguageList[index].SelectedValue)
                 {

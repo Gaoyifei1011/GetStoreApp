@@ -65,45 +65,29 @@
                         Grid.Column="0"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ArgumentName')}">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Dialog/ArgumentName')}" Placement="Mouse" />
-                        </ToolTipService.ToolTip>
-                    </TextBlock>
+                        Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ArgumentName')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Dialog/ArgumentName')}" />
 
                     <TextBlock
                         Grid.Column="1"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Dialog/Argument')}">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Dialog/Argument')}" Placement="Mouse" />
-                        </ToolTipService.ToolTip>
-                    </TextBlock>
+                        Text="{x:Bind root:ResourceService.GetLocalized('Dialog/Argument')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Dialog/Argument')}" />
 
                     <TextBlock
                         Grid.Column="2"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Dialog/IsRequired')}">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Dialog/IsRequired')}" Placement="Mouse" />
-                        </ToolTipService.ToolTip>
-                    </TextBlock>
+                        Text="{x:Bind root:ResourceService.GetLocalized('Dialog/IsRequired')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Dialog/IsRequired')}" />
 
                     <TextBlock
                         Grid.Column="3"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Dialog/InputContent')}">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Dialog/InputContent')}" Placement="Mouse" />
-                        </ToolTipService.ToolTip>
-                    </TextBlock>
+                        Text="{x:Bind root:ResourceService.GetLocalized('Dialog/InputContent')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Dialog/InputContent')}" />
                 </Grid>
             </ListView.Header>
 
@@ -130,12 +114,8 @@
                             VerticalAlignment="Center"
                             FontSize="14"
                             Text="{x:Bind ArgumentName}"
-                            TextAlignment="Left">
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind ArgumentName}" Placement="Mouse" />
-                            </ToolTipService.ToolTip>
-                        </TextBlock>
+                            TextAlignment="Left"
+                            ToolTipService.ToolTip="{x:Bind ArgumentName}" />
 
                         <TextBlock
                             Grid.Column="1"
@@ -144,12 +124,8 @@
                             VerticalAlignment="Center"
                             FontSize="14"
                             Text="{x:Bind Argument}"
-                            TextAlignment="Left">
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind Argument}" Placement="Mouse" />
-                            </ToolTipService.ToolTip>
-                        </TextBlock>
+                            TextAlignment="Left"
+                            ToolTipService.ToolTip="{x:Bind Argument}" />
 
                         <TextBlock
                             Grid.Column="2"
@@ -158,12 +134,8 @@
                             VerticalAlignment="Center"
                             FontSize="14"
                             Text="{x:Bind IsRequired}"
-                            TextAlignment="Left">
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind IsRequired}" Placement="Mouse" />
-                            </ToolTipService.ToolTip>
-                        </TextBlock>
+                            TextAlignment="Left"
+                            ToolTipService.ToolTip="{x:Bind IsRequired}" />
 
                         <TextBlock
                             Grid.Column="3"
@@ -172,12 +144,8 @@
                             VerticalAlignment="Center"
                             FontSize="14"
                             Text="{x:Bind ArgumentContent}"
-                            TextAlignment="Left">
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind ArgumentContent}" Placement="Mouse" />
-                            </ToolTipService.ToolTip>
-                        </TextBlock>
+                            TextAlignment="Left"
+                            ToolTipService.ToolTip="{x:Bind ArgumentContent}" />
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -203,23 +171,15 @@
             Margin="0"
             Text="{x:Bind SampleShort}"
             TextAlignment="Left"
-            TextWrapping="Wrap">
-
-            <ToolTipService.ToolTip>
-                <ToolTip Content="{x:Bind SampleShort}" Placement="Mouse" />
-            </ToolTipService.ToolTip>
-        </TextBlock>
+            TextWrapping="Wrap"
+            ToolTipService.ToolTip="{x:Bind SampleShort}" />
 
         <TextBlock
             Margin="0"
             Text="{x:Bind SampleFull}"
             TextAlignment="Justify"
-            TextWrapping="Wrap">
-
-            <ToolTipService.ToolTip>
-                <ToolTip Content="{x:Bind SampleFull}" Placement="Mouse" />
-            </ToolTipService.ToolTip>
-        </TextBlock>
+            TextWrapping="Wrap"
+            ToolTipService.ToolTip="{x:Bind SampleFull}" />
 
         <MenuFlyoutSeparator Margin="4,4,4,2" Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />
 
@@ -233,11 +193,7 @@
             Margin="0"
             Text="{x:Bind SampleWithoutParameter}"
             TextAlignment="Justify"
-            TextWrapping="Wrap">
-
-            <ToolTipService.ToolTip>
-                <ToolTip Content="{x:Bind SampleWithoutParameter}" Placement="Mouse" />
-            </ToolTipService.ToolTip>
-        </TextBlock>
+            TextWrapping="Wrap"
+            ToolTipService.ToolTip="{x:Bind SampleWithoutParameter}" />
     </StackPanel>
 </ContentDialog>

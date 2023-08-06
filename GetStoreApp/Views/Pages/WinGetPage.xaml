@@ -33,10 +33,7 @@
             </PivotItem>
 
             <Pivot.RightHeader>
-                <Button VerticalAlignment="Center">
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('WinGet/TaskManager')}" Placement="Mouse" />
-                    </ToolTipService.ToolTip>
+                <Button VerticalAlignment="Center" ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/TaskManager')}">
 
                     <Button.Content>
                         <Grid>
@@ -92,15 +89,13 @@
                                                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                                                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                                 BorderThickness="1"
-                                                CornerRadius="{StaticResource ControlCornerRadius}">
+                                                CornerRadius="{StaticResource ControlCornerRadius}"
+                                                ToolTipService.ToolTip="{x:Bind InstallToolTip(AppName, InstallProgressState, DownloadProgress, DownloadedFileSize, TotalFileSize), Mode=OneWay}">
+
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="*" />
                                                     <ColumnDefinition Width="Auto" />
                                                 </Grid.ColumnDefinitions>
-
-                                                <ToolTipService.ToolTip>
-                                                    <ToolTip Content="{x:Bind InstallToolTip(AppName, InstallProgressState, DownloadProgress, DownloadedFileSize, TotalFileSize), Mode=OneWay}" Placement="Mouse" />
-                                                </ToolTipService.ToolTip>
 
                                                 <Grid Grid.Column="0" VerticalAlignment="Center">
                                                     <Grid.RowDefinitions>
@@ -144,15 +139,12 @@
                                                     VerticalAlignment="Center"
                                                     Command="{Binding ElementName=TaskManagerFlyout, Path=DataContext.CancelInstallCommand, Mode=OneTime}"
                                                     CommandParameter="{x:Bind AppID}"
-                                                    Style="{StaticResource ButtonNormalMenuItemStyle}">
+                                                    Style="{StaticResource ButtonNormalMenuItemStyle}"
+                                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/CancelInstalling')}">
 
                                                     <MenuFlyoutItem.Icon>
                                                         <FontIcon FontSize="16" Glyph="&#xE711;" />
                                                     </MenuFlyoutItem.Icon>
-
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('WinGet/CancelInstalling')}" Placement="Mouse" />
-                                                    </ToolTipService.ToolTip>
                                                 </MenuFlyoutItem>
                                             </Grid>
                                         </DataTemplate>

@@ -150,12 +150,6 @@
   <data name="CheckUpdate" xml:space="preserve">
     <value>Check Update</value>
   </data>
-  <data name="CloudflareValidation" xml:space="preserve">
-    <value>What is Cloudflare 5 seconds validation?</value>
-  </data>
-  <data name="CloudflareValidationContent" xml:space="preserve">
-    <value>Cloudflare-protected sites wait for a 5 second verification on your first visit to check that you are properly accessing them through your browser. If it is not properly accessed through a browser, the server blocks all requests made by the user.</value>
-  </data>
   <data name="ConsoleLaunch" xml:space="preserve">
     <value>Console program parameters</value>
   </data>
@@ -258,12 +252,6 @@
   <data name="LinkFilter" xml:space="preserve">
     <value>Link filtering instructions</value>
   </data>
-  <data name="Maintenance" xml:space="preserve">
-    <value>Subsequent maintenance</value>
-  </data>
-  <data name="MaintenanceDescription" xml:space="preserve">
-    <value>View the project schedule</value>
-  </data>
   <data name="MicrosoftStore" xml:space="preserve">
     <value>1. Microsoft Store</value>
   </data>
@@ -331,7 +319,7 @@
     <value>3. The app needs networking to send a get request. Check your device's network condition and wait until your device's network connection is working properly to try to regain it.</value>
   </data>
   <data name="RequestFailedStep4" xml:space="preserve">
-    <value>4. If Cloudflare 5-second authentication (firewall) is enabled on the web page, we recommend that you use the web version. The web version has been docked with the download interface.</value>
+    <value>4. If you encounter other unknown issues, it is recommended that you use the web browser.</value>
   </data>
   <data name="SendFeedback" xml:space="preserve">
     <value>Send feedback</value>
@@ -371,15 +359,6 @@
   </data>
   <data name="Title" xml:space="preserve">
     <value>About</value>
-  </data>
-  <data name="TraceCleanup" xml:space="preserve">
-    <value>Trace cleanup instructions</value>
-  </data>
-  <data name="TraceCleanupDescription1" xml:space="preserve">
-    <value>Because Web Cache Cleanup requires WebView2 to keep running, the location of Web Cache Cleanup is in "Access webPage - (Title Bar)See more - Clean up the web cache"</value>
-  </data>
-  <data name="TraceCleanupDescription2" xml:space="preserve">
-    <value>There may be some caches that cannot be cleaned properly during browser operation. At this time, you need to open the cache folder of the web page "Access webPage - (Title bar) See more - Open the cache folder", and manually clean up after the web page is completely closed</value>
   </data>
   <data name="TroubleShoot" xml:space="preserve">
     <value>Trouble shoot</value>

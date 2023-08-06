@@ -88,33 +88,21 @@
             HorizontalAlignment="Right"
             Click="{x:Bind OnLearnMoreClicked}"
             Content="{x:Bind root:ResourceService.GetLocalized('WinGet/LearnMore')}"
-            Style="{StaticResource AccentButtonStyle}">
-
-            <ToolTipService.ToolTip>
-                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('WinGet/LearnMoreToolTip')}" Placement="Mouse" />
-            </ToolTipService.ToolTip>
-        </Button>
+            Style="{StaticResource AccentButtonStyle}"
+            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/LearnMoreToolTip')}" />
 
         <Button
             Grid.Column="1"
             HorizontalAlignment="Center"
             Click="{x:Bind OnDownloadFromMicrosoftStoreClicked}"
-            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadFromMicrosoftStore')}">
-
-            <ToolTipService.ToolTip>
-                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadFromMicrosoftStoreToolTip')}" Placement="Mouse" />
-            </ToolTipService.ToolTip>
-        </Button>
+            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadFromMicrosoftStore')}"
+            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadFromMicrosoftStoreToolTip')}" />
 
         <Button
             Grid.Column="2"
             HorizontalAlignment="Left"
             Click="{x:Bind OnDownloadFromGithubClicked}"
-            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadFromGithub')}">
-
-            <ToolTipService.ToolTip>
-                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadFromGithubToolTip')}" Placement="Mouse" />
-            </ToolTipService.ToolTip>
-        </Button>
+            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadFromGithub')}"
+            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadFromGithubToolTip')}" />
     </Grid>
 </Grid>

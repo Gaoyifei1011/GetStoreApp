@@ -55,12 +55,8 @@
         <TextBlock
             Grid.Column="3"
             VerticalAlignment="Center"
-            Text="{x:Bind LocalizeInstalledAppsCountInfo(InstalledAppsDataList.Count), Mode=OneWay}">
-
-            <ToolTipService.ToolTip>
-                <ToolTip Content="{x:Bind LocalizeInstalledAppsCountInfo(InstalledAppsDataList.Count), Mode=OneWay}" Placement="Mouse" />
-            </ToolTipService.ToolTip>
-        </TextBlock>
+            Text="{x:Bind LocalizeInstalledAppsCountInfo(InstalledAppsDataList.Count), Mode=OneWay}"
+            ToolTipService.ToolTip="{x:Bind LocalizeInstalledAppsCountInfo(InstalledAppsDataList.Count), Mode=OneWay}" />
 
         <AutoSuggestBox
             Grid.Column="4"
@@ -92,15 +88,12 @@
                 Click="{x:Bind OnRefreshClicked}"
                 IsEnabled="{x:Bind IsLoadedCompleted, Mode=OneWay}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Refresh')}">
+                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Refresh')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/RefreshToolTip')}">
 
                 <MenuFlyoutItem.Icon>
                     <FontIcon Glyph="&#xE72C;" />
                 </MenuFlyoutItem.Icon>
-
-                <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('WinGet/RefreshToolTip')}" Placement="Mouse" />
-                </ToolTipService.ToolTip>
             </MenuFlyoutItem>
         </StackPanel>
     </Grid>
@@ -128,12 +121,8 @@
                 Margin="0,10"
                 VerticalAlignment="Center"
                 Text="{x:Bind root:ResourceService.GetLocalized('WinGet/LoadingInstalledApps')}"
-                TextAlignment="Center">
-
-                <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('WinGet/LoadingInstalledApps')}" Placement="Mouse" />
-                </ToolTipService.ToolTip>
-            </TextBlock>
+                TextAlignment="Center"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/LoadingInstalledApps')}" />
         </StackPanel>
     </Grid>
 
@@ -161,12 +150,8 @@
                     Margin="0,10"
                     VerticalAlignment="Center"
                     Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledAppsEmptyDescription')}"
-                    TextAlignment="Center">
-
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledAppsEmptyDescription')}" Placement="Mouse" />
-                    </ToolTipService.ToolTip>
-                </TextBlock>
+                    TextAlignment="Center"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledAppsEmptyDescription')}" />
             </Grid>
 
             <Grid Grid.Row="1" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsInstalledAppsEmpty), Mode=OneWay}">
@@ -189,12 +174,8 @@
                         Margin="0,10"
                         VerticalAlignment="Center"
                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledAppsSearchEmptyDescription')}"
-                        TextAlignment="Center">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledAppsSearchEmptyDescription')}" Placement="Mouse" />
-                        </ToolTipService.ToolTip>
-                    </TextBlock>
+                        TextAlignment="Center"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledAppsSearchEmptyDescription')}" />
                 </Grid>
 
                 <ListView
@@ -232,12 +213,8 @@
                                     VerticalAlignment="Center"
                                     FontSize="14"
                                     Text="{x:Bind AppName}"
-                                    TextAlignment="Left">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind converter:StringConverterHelper.WinGetAppsToolTipFormat(AppName,'AppName')}" Placement="Mouse" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                    TextAlignment="Left"
+                                    ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.WinGetAppsToolTipFormat(AppName,'AppName')}" />
 
                                 <TextBlock
                                     Grid.Column="1"
@@ -246,12 +223,8 @@
                                     VerticalAlignment="Center"
                                     FontSize="14"
                                     Text="{x:Bind AppPublisher}"
-                                    TextAlignment="Left">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind converter:StringConverterHelper.WinGetAppsToolTipFormat(AppPublisher,'AppPublisher')}" Placement="Mouse" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                    TextAlignment="Left"
+                                    ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.WinGetAppsToolTipFormat(AppPublisher,'AppPublisher')}" />
 
                                 <TextBlock
                                     Grid.Column="2"
@@ -261,27 +234,17 @@
                                     FontSize="14"
                                     HorizontalTextAlignment="Left"
                                     Text="{x:Bind AppVersion}"
-                                    TextAlignment="Left">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind converter:StringConverterHelper.WinGetAppsToolTipFormat(AppVersion,'AppVersion')}" Placement="Mouse" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                    TextAlignment="Left"
+                                    ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.WinGetAppsToolTipFormat(AppVersion,'AppVersion')}" />
 
                                 <basicInput:ExtendedSplitButton
                                     Grid.Column="3"
                                     MinWidth="100"
+                                    basicInput:ExtendedSplitButton.PrimaryButtonToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/UnInstall')}"
+                                    basicInput:ExtendedSplitButton.SecondaryButtonToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/ViewMoreOptions')}"
                                     Command="{Binding ElementName=InstalledAppsRoot, Path=UnInstallCommand, Mode=OneTime}"
                                     CommandParameter="{Binding}"
                                     Content="{x:Bind root:ResourceService.GetLocalized('WinGet/UnInstall')}">
-
-                                    <basicInput:ExtendedSplitButton.PrimaryButtonToolTip>
-                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('WinGet/UnInstall')}" Placement="Mouse" />
-                                    </basicInput:ExtendedSplitButton.PrimaryButtonToolTip>
-
-                                    <basicInput:ExtendedSplitButton.SecondaryButtonToolTip>
-                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('WinGet/ViewMoreOptions')}" Placement="Mouse" />
-                                    </basicInput:ExtendedSplitButton.SecondaryButtonToolTip>
 
                                     <basicInput:ExtendedSplitButton.Flyout>
                                         <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
@@ -289,15 +252,12 @@
                                                 Command="{Binding ElementName=InstalledAppsRoot, Path=CopyUnInstallTextCommand, Mode=OneTime}"
                                                 CommandParameter="{x:Bind AppID}"
                                                 Style="{StaticResource MenuFlyoutItemStyle}"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUnInstallText')}">
+                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUnInstallText')}"
+                                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUnInstallText')}">
 
                                                 <MenuFlyoutItem.Icon>
                                                     <FontIcon Glyph="&#xE8C8;" />
                                                 </MenuFlyoutItem.Icon>
-
-                                                <ToolTipService.ToolTip>
-                                                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUnInstallText')}" Placement="Mouse" />
-                                                </ToolTipService.ToolTip>
                                             </MenuFlyoutItem>
                                         </MenuFlyout>
                                     </basicInput:ExtendedSplitButton.Flyout>

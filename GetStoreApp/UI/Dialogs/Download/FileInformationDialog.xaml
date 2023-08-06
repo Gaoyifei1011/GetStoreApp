@@ -86,10 +86,8 @@
                 TextAlignment="Justify"
                 TextWrapping="Wrap" />
             <TextBlock
-                x:Name="FileSHA1Info"
                 Grid.Column="1"
                 Margin="0,0,0,5"
-                x:Load="{x:Bind FileSHA1Load}"
                 Text="{x:Bind FileSHA1}"
                 TextAlignment="Justify"
                 TextWrapping="Wrap" />

@@ -24,8 +24,6 @@ namespace GetStoreApp.UI.Dialogs.Download
 
         public string FileSHA1 { get; set; }
 
-        public bool FileSHA1Load { get; set; } = true;
-
         private bool _fileCheckState = false;
 
         public bool FileCheckState
@@ -60,14 +58,7 @@ namespace GetStoreApp.UI.Dialogs.Download
             FileName = completedItem.FileName;
             FilePath = completedItem.FilePath;
             FileSize = StringConverterHelper.DownloadSizeFormat(completedItem.TotalSize);
-            if (FileSHA1 is "WebDownloadUnknown")
-            {
-                FileSHA1Load = false;
-            }
-            else
-            {
-                FileSHA1 = completedItem.FileSHA1;
-            }
+            FileSHA1 = completedItem.FileSHA1;
             Task.Run(async () =>
             {
                 string fileShA1 = await IOHelper.GetFileSHA1Async(FilePath);
@@ -90,10 +81,7 @@ namespace GetStoreApp.UI.Dialogs.Download
             stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileName") + FileName);
             stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FilePath") + FilePath);
             stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileSize") + FileSize);
-            if (FileSHA1Load)
-            {
-                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileSHA1") + FileSHA1);
-            }
+            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileSHA1") + FileSHA1);
             stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/CheckFileSHA1") + CheckFileSHA1);
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());

@@ -55,11 +55,6 @@
 <img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/dc6bdb4a-1c6a-4c3c-be46-93db03c5b1fa" />
 </div>
 
-#### <p align="center">访问网页版</p>
-<div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/6cad3ee4-9b81-49e0-8c8e-00492de005a2" />
-</div>
-
 #### <p align="center">应用说明</p>
 <div align="center">
 <img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/3a48382d-a53f-4960-951d-ee9f16a7a7d9" />
@@ -113,7 +108,6 @@
 > * [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com/) 
 > * .NET桌面开发（Visual Studio Installer中安装，.NET SDK 版本 7.0）
 > * [WinGet 程序包管理器](https://www.microsoft.com/store/productId/9NBLGGH4NNS1) （推荐安装）
-> * [Microsoft Edge WebView2 运行时](https://developer.microsoft.com/zh-cn/microsoft-edge/webview2/) （推荐安装）
 
 #### <p align="center">编译步骤</p>
 

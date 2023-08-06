@@ -60,6 +60,7 @@ namespace GetStoreApp.Views.CustomControls.Notifications
                     RequestedTheme = sender.ActualTheme;
                 };
             }
+            popup.ShouldConstrainToRootBounds = false;
         }
 
         protected override void OnApplyTemplate()

@@ -28,6 +28,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Graphics;
 using Windows.Storage.Streams;
+using Windows.System;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using WinRT;
@@ -149,7 +150,7 @@ namespace GetStoreApp.Views.Windows
             {"WinGet",typeof(WinGetPage) },
             {"History",typeof(HistoryPage) },
             {"Download",typeof(DownloadPage) },
-            {"Web",typeof(WebPage) },
+            {"Web",typeof(Page) },
             {"About",typeof(AboutPage) },
             {"Settings",typeof(SettingsPage) }
         };
@@ -309,7 +310,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnColorValuesChanged(UISettings sender, object args)
         {
-            DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
+            DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
             {
                 if (ThemeService.AppTheme.SelectedValue == ThemeService.ThemeList[0].SelectedValue)
                 {
@@ -380,15 +381,25 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 当菜单中的项收到交互（如单击或点击）时发生
         /// </summary>
-        public void OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        public async void OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
             NavigationViewItemBase navigationViewItem = args.InvokedItemContainer;
             if (navigationViewItem.Tag is not null)
             {
                 NavigationModel navigationItem = NavigationService.NavigationItemList.Find(item => item.NavigationTag == Convert.ToString(navigationViewItem.Tag));
+
                 if (SelectedItem != navigationItem.NavigationItem)
                 {
-                    NavigationService.NavigateTo(navigationItem.NavigationPage);
+                    if (navigationItem.NavigationItem.Tag.ToString() is "Web")
+                    {
+                        NavigationViewItem OriginalSelectedItem = SelectedItem;
+                        await Launcher.LaunchUriAsync(new Uri("https://store.rg-adguard.net/"));
+                        SelectedItem = OriginalSelectedItem;
+                    }
+                    else
+                    {
+                        NavigationService.NavigateTo(navigationItem.NavigationPage);
+                    }
                 }
             }
         }
@@ -665,7 +676,7 @@ namespace GetStoreApp.Views.Windows
                         {
                             Show();
 
-                            DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
+                            DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, async () =>
                             {
                                 await ContentDialogHelper.ShowAsync(new AppRunningDialog(), Content.As<FrameworkElement>());
                             });

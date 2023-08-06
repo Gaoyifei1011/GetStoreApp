@@ -55,12 +55,8 @@
                             Padding="5,8"
                             HorizontalContentAlignment="Center"
                             Content="{x:Bind Key}"
-                            NavigateUri="{x:Bind Value}">
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind converter:StringConverterHelper.AboutThanksToolTipFormat(Key)}" Placement="Mouse" />
-                            </ToolTipService.ToolTip>
-                        </HyperlinkButton>
+                            NavigateUri="{x:Bind Value}"
+                            ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.AboutThanksToolTipFormat(Key)}" />
                     </DataTemplate>
                 </GridView.ItemTemplate>
             </GridView>

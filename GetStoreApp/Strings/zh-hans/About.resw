@@ -150,9 +150,6 @@
   <data name="CheckUpdate" xml:space="preserve">
     <value>检查更新</value>
   </data>
-  <data name="CloudflareValidation" xml:space="preserve">
-    <value>什么是Cloudflare 5秒验证？</value>
-  </data>
   <data name="ConsoleLaunch" xml:space="preserve">
     <value>控制台程序参数</value>
   </data>
@@ -255,12 +252,6 @@
   <data name="LinkFilter" xml:space="preserve">
     <value>链接过滤说明</value>
   </data>
-  <data name="Maintenance" xml:space="preserve">
-    <value>后续的维护</value>
-  </data>
-  <data name="MaintenanceDescription" xml:space="preserve">
-    <value>查看项目计划表</value>
-  </data>
   <data name="MicrosoftStore" xml:space="preserve">
     <value>1.微软商店</value>
   </data>
@@ -328,7 +319,7 @@
     <value>3.应用需要联网功能才能发送获取请求。请检查您设备的网络情况，待到您设备的网络连接正常后尝试重新获取。</value>
   </data>
   <data name="RequestFailedStep4" xml:space="preserve">
-    <value>4.如果网页开启了Cloudflare 5秒验证（防火墙），建议您使用网页版。网页版已经对接下载接口。</value>
+    <value>4.如果遇到其他未知问题，建议您使用网页版。</value>
   </data>
   <data name="SendFeedback" xml:space="preserve">
     <value>发送反馈</value>
@@ -368,15 +359,6 @@
   </data>
   <data name="Title" xml:space="preserve">
     <value>关于</value>
-  </data>
-  <data name="TraceCleanup" xml:space="preserve">
-    <value>痕迹清理说明</value>
-  </data>
-  <data name="TraceCleanupDescription1" xml:space="preserve">
-    <value>因为网页缓存清理需要WebView2运行时保持运行，所以网页缓存清理的位置在“访问网页版-(标题栏)查看更多-清理网页缓存”</value>
-  </data>
-  <data name="TraceCleanupDescription2" xml:space="preserve">
-    <value>浏览器运行期间可能存在部分缓存无法正常清理。此时需要打开网页的缓存文件夹“访问网页版-(标题栏)查看更多-打开缓存文件夹”，待到网页完全关闭后手动清理即可</value>
   </data>
   <data name="TroubleShoot" xml:space="preserve">
     <value>疑难解答</value>

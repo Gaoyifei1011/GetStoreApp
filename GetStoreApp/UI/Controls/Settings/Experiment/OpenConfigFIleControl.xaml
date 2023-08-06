@@ -37,14 +37,11 @@
         Grid.Column="2"
         controlExtensions:CursorHelper.Cursor="Hand"
         Click="{x:Bind OnOpenConfigFileClicked}"
-        Style="{StaticResource ButtonLargeMenuItemStyle}">
+        Style="{StaticResource ButtonLargeMenuItemStyle}"
+        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/OpenConfigFolder')}">
 
         <MenuFlyoutItem.Icon>
             <FontIcon Glyph="&#xE8a7;" />
         </MenuFlyoutItem.Icon>
-
-        <ToolTipService.ToolTip>
-            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/OpenConfigFolder')}" Placement="Mouse" />
-        </ToolTipService.ToolTip>
     </MenuFlyoutItem>
 </Grid>

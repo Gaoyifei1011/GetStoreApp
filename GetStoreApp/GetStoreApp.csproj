@@ -97,7 +97,6 @@
     <None Update="Assets\GetStoreApp.ico" CopyToOutputDirectory="Never" />
 
     <Content Update="Assets\GetStoreApp.png" CopyToOutputDirectory="Always" />
-    <Content Update="Assets\Images\CloudflareValidation.png" CopyToOutputDirectory="Always" />
     <Content Update="Assets\Images\DesktopApps.png" CopyToOutputDirectory="Always" />
     <Content Update="Assets\Images\Jumplist.png" CopyToOutputDirectory="Always" />
 
@@ -118,7 +117,6 @@
     <None Include="Assets\ControlIcon\WinGet.png" />
     
     <None Remove="Assets\GetStoreApp.png" />
-    <None Remove="Assets\Images\CloudflareValidation.png" />
     <None Remove="Assets\LICENSE" />
     <None Remove="Styles\DropDownButton.xaml" />
     <None Remove="Styles\Flyout.xaml" />
@@ -168,8 +166,6 @@
     <None Remove="UI\Controls\Store\RequestControl.xaml" />
     <None Remove="UI\Controls\Store\ResultControl.xaml" />
     <None Remove="UI\Controls\Store\StatusBarControl.xaml" />
-
-    <None Remove="UI\Controls\Web\LoadFailedControl.xaml" />
     
     <None Remove="UI\Controls\Window\AppTitleBarControl.xaml" />
     
@@ -179,7 +175,6 @@
     <None Remove="UI\Controls\WinGet\UpgradableAppsControl.xaml" />
     
     <None Remove="UI\Dialogs\About\AppInformationDialog.xaml" />
-    <None Remove="UI\Dialogs\About\CloudflareValidationDialog.xaml" />
     <None Remove="UI\Dialogs\About\ConsoleStartupArgsDialog.xaml" />
     <None Remove="UI\Dialogs\About\DesktopAppsDialog.xaml" />
     <None Remove="UI\Dialogs\About\DesktopStartupArgsDialog.xaml" />
@@ -198,8 +193,6 @@
     <None Remove="UI\Dialogs\Settings\RestartAppsDialog.xaml" />
     <None Remove="UI\Dialogs\Settings\TraceCleanupPromptDialog.xaml" />
     
-    <None Remove="UI\Dialogs\Web\CoreWebView2FailedDialog.xaml" />
-    
     <None Remove="UI\Dialogs\WinGet\RebootDialog.xaml" />
     
     <None Remove="UI\Notifications\AppInformationCopyNotification.xaml" />
@@ -216,7 +209,6 @@
     <None Remove="UI\Notifications\ResultIDCopyNotification.xaml" />
     <None Remove="UI\Notifications\ResultLinkCopyNotification.xaml" />
     <None Remove="UI\Notifications\ShareFailedNotification.xaml" />
-    <None Remove="UI\Notifications\WebCacheCleanNotification.xaml" />
     <None Remove="UI\Notifications\WinGetCopyNotification.xaml" />
     
     <None Remove="Views\Pages\AboutPage.xaml" />
@@ -224,7 +216,6 @@
     <None Remove="Views\Pages\HistoryPage.xaml" />
     <None Remove="Views\Pages\SettingsPage.xaml" />
     <None Remove="Views\Pages\StorePage.xaml" />
-    <None Remove="Views\Pages\WebPage.xaml" />
     <None Remove="Views\Pages\WinGetPage.xaml" />
     
     <None Remove="Views\Windows\MainWindow.xaml" />
@@ -286,8 +277,6 @@
     <Page Update="UI\Controls\Store\ResultControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Store\StatusBarControl.xaml" Generator="MSBuild:Compile" />
 
-    <Page Update="UI\Controls\Web\LoadFailedControl.xaml" Generator="MSBuild:Compile" />
-
     <Page Update="UI\Controls\WinGet\InitializeFailedControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\WinGet\InstalledAppsControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\WinGet\SearchAppsControl.xaml" Generator="MSBuild:Compile" />
@@ -296,7 +285,6 @@
     <Page Update="UI\Controls\Window\AppTitleBarControl.xaml" Generator="MSBuild:Compile" />
 
     <Page Update="UI\Dialogs\About\AppInformationDialog.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Dialogs\About\CloudflareValidationDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\About\ConsoleStartupArgsDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\About\DesktopAppsDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\About\DesktopStartupArgsDialog.xaml" Generator="MSBuild:Compile" />
@@ -314,8 +302,6 @@
     <Page Update="UI\Dialogs\Settings\ExperimentalConfigDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\Settings\RestartAppsDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\Settings\TraceCleanupPromptDialog.xaml" Generator="MSBuild:Compile" />
-
-    <Page Update="UI\Dialogs\Web\CoreWebView2FailedDialog.xaml" Generator="MSBuild:Compile" />
     
     <Page Update="UI\Dialogs\WinGet\RebootDialog.xaml" Generator="MSBuild:Compile" />
 
@@ -333,7 +319,6 @@
     <Page Update="UI\Notifications\ResultIDCopyNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Notifications\ResultLinkCopyNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Notifications\ShareFailedNotification.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Notifications\WebCacheCleanNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Notifications\WinGetCopyNotification.xaml" Generator="MSBuild:Compile" />
 
     <Page Update="Views\Pages\AboutPage.xaml" Generator="MSBuild:Compile" />
@@ -341,7 +326,6 @@
     <Page Update="Views\Pages\HistoryPage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\SettingsPage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\StorePage.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Views\Pages\WebPage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\WinGetPage.xaml" Generator="MSBuild:Compile" />
     
     <Page Update="Views\Windows\MainWindow.xaml" Generator="MSBuild:Compile" />

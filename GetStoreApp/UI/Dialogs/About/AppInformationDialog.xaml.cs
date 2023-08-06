@@ -62,19 +62,6 @@ namespace GetStoreApp.UI.Dialogs.About
             }
         }
 
-        private string _webView2CoreVersion;
-
-        public string WebView2CoreVersion
-        {
-            get { return _webView2CoreVersion; }
-
-            set
-            {
-                _webView2CoreVersion = value;
-                OnPropertyChanged();
-            }
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         public AppInformationDialog()
@@ -92,7 +79,6 @@ namespace GetStoreApp.UI.Dialogs.About
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WindowsAppSDKVersion") + WindowsAppSDKVersion);
             stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WinUI3Version") + WinUI3Version);
-            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WebView2CoreVersion") + WebView2CoreVersion);
             stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/DoNetVersion") + DoNetVersion);
 
             CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
@@ -129,19 +115,6 @@ namespace GetStoreApp.UI.Dialogs.About
                     {
                         LogService.WriteLog(LogType.WARNING, "Get WinUI3 version failed.", e);
                         WinUI3Version = string.Empty;
-                    }
-
-                    // WebView2 Core 版本信息
-                    try
-                    {
-                        StorageFile WebView2CoreFile = await StorageFile.GetFileFromPathAsync(string.Format(@"{0}\{1}", dependency.InstalledLocation.Path, "Microsoft.Web.WebView2.Core.dll"));
-                        IDictionary<string, object> WebView2CoreFileProperties = await WebView2CoreFile.Properties.RetrievePropertiesAsync(PropertyNamesList);
-                        WebView2CoreVersion = WebView2CoreFileProperties[FileVersionProperty] is not null ? Convert.ToString(WebView2CoreFileProperties[FileVersionProperty]) : string.Empty;
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LogType.WARNING, "Get WebView2 Core version failed.", e);
-                        WebView2CoreVersion = string.Empty;
                     }
                 }
             }

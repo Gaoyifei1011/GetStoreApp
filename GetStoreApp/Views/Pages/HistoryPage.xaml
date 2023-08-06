@@ -62,12 +62,8 @@
             <TextBlock
                 Grid.Column="3"
                 VerticalAlignment="Center"
-                Text="{x:Bind LocalizeHistoryCountInfo(HistoryDataList.Count), Mode=OneWay}">
-
-                <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind LocalizeHistoryCountInfo(HistoryDataList.Count), Mode=OneWay}" Placement="Mouse" />
-                </ToolTipService.ToolTip>
-            </TextBlock>
+                Text="{x:Bind LocalizeHistoryCountInfo(HistoryDataList.Count), Mode=OneWay}"
+                ToolTipService.ToolTip="{x:Bind LocalizeHistoryCountInfo(HistoryDataList.Count), Mode=OneWay}" />
 
             <ContentControl
                 Grid.Column="4"
@@ -87,15 +83,12 @@
                         Click="{x:Bind OnSelectClicked}"
                         IsEnabled="{x:Bind sys:Convert.ToBoolean(HistoryDataList.Count), Mode=OneWay}"
                         Style="{StaticResource AppBarButtonMenuItemStyle}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('History/Select')}">
+                        Text="{x:Bind root:ResourceService.GetLocalized('History/Select')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/SelectToolTip')}">
 
                         <MenuFlyoutItem.Icon>
                             <FontIcon Glyph="&#xE762;" />
                         </MenuFlyoutItem.Icon>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/SelectToolTip')}" Placement="Mouse" />
-                        </ToolTipService.ToolTip>
                     </MenuFlyoutItem>
 
                     <MenuFlyoutItem
@@ -103,15 +96,12 @@
                         Click="{x:Bind OnFlyoutShowClicked}"
                         IsEnabled="{x:Bind sys:Convert.ToBoolean(HistoryDataList.Count), Mode=OneWay}"
                         Style="{StaticResource AppBarButtonMenuItemStyle}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('History/Sort')}">
+                        Text="{x:Bind root:ResourceService.GetLocalized('History/Sort')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/SortToolTip')}">
 
                         <MenuFlyoutItem.Icon>
                             <FontIcon Glyph="&#xE8cb;" />
                         </MenuFlyoutItem.Icon>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/SortToolTip')}" Placement="Mouse" />
-                        </ToolTipService.ToolTip>
 
                         <FlyoutBase.AttachedFlyout>
                             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
@@ -121,24 +111,16 @@
                                     IsChecked="{x:Bind converter:ValueCheckConverterHelper.TimeSortValueCheck(TimeSortOrder, x:True), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="True"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('History/TimeIncreaseSort')}">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/TimeIncreaseSortToolTip')}" Placement="Mouse" />
-                                    </ToolTipService.ToolTip>
-                                </ToggleMenuFlyoutItem>
+                                    Text="{x:Bind root:ResourceService.GetLocalized('History/TimeIncreaseSort')}"
+                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/TimeIncreaseSortToolTip')}" />
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnTimeSortClicked}"
                                     IsChecked="{x:Bind converter:ValueCheckConverterHelper.TimeSortValueCheck(TimeSortOrder, x:False), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="False"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('History/TimeDecreaseSort')}">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/TimeDecreaseSortToolTip')}" Placement="Mouse" />
-                                    </ToolTipService.ToolTip>
-                                </ToggleMenuFlyoutItem>
+                                    Text="{x:Bind root:ResourceService.GetLocalized('History/TimeDecreaseSort')}"
+                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/TimeDecreaseSortToolTip')}" />
                             </MenuFlyout>
                         </FlyoutBase.AttachedFlyout>
                     </MenuFlyoutItem>
@@ -147,15 +129,12 @@
                         controlExtensions:CursorHelper.Cursor="Hand"
                         Click="{x:Bind OnFlyoutShowClicked}"
                         Style="{StaticResource AppBarButtonMenuItemStyle}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('History/Filter')}">
+                        Text="{x:Bind root:ResourceService.GetLocalized('History/Filter')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/FilterToolTip')}">
 
                         <MenuFlyoutItem.Icon>
                             <FontIcon Glyph="&#xE71C;" />
                         </MenuFlyoutItem.Icon>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/FilterToolTip')}" Placement="Mouse" />
-                        </ToolTipService.ToolTip>
 
                         <FlyoutBase.AttachedFlyout>
                             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
@@ -172,48 +151,32 @@
                                         IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'url'),Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="url"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/URL')}">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Resources/URL')}" Placement="Mouse" />
-                                        </ToolTipService.ToolTip>
-                                    </ToggleMenuFlyoutItem>
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/URL')}"
+                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Resources/URL')}" />
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnTypeFilterClicked}"
                                         IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'ProductId'),Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="ProductId"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/ProductID')}">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Resources/ProductID')}" Placement="Mouse" />
-                                        </ToolTipService.ToolTip>
-                                    </ToggleMenuFlyoutItem>
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/ProductID')}"
+                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Resources/ProductID')}" />
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnTypeFilterClicked}"
                                         IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'PackageFamilyName'),Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="PackageFamilyName"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/PackageFamilyName')}">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Resources/PackageFamilyName')}" Placement="Mouse" />
-                                        </ToolTipService.ToolTip>
-                                    </ToggleMenuFlyoutItem>
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/PackageFamilyName')}"
+                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Resources/PackageFamilyName')}" />
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnTypeFilterClicked}"
                                         IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'CategoryId'),Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="CategoryId"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/CategoryID')}">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Resources/CategoryID')}" Placement="Mouse" />
-                                        </ToolTipService.ToolTip>
-                                    </ToggleMenuFlyoutItem>
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/CategoryID')}"
+                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Resources/CategoryID')}" />
 
                                     <MenuFlyoutSeparator />
 
@@ -222,15 +185,11 @@
                                         IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'None'),Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="None"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('History/None')}">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/None')}" Placement="Mouse" />
-                                        </ToolTipService.ToolTip>
-                                    </ToggleMenuFlyoutItem>
+                                        Text="{x:Bind root:ResourceService.GetLocalized('History/None')}"
+                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/None')}" />
                                 </MenuFlyoutSubItem>
 
-                                <MenuFlyoutSubItem Text="{x:Bind root:ResourceService.GetLocalized('History/Channel')}">
+                                <MenuFlyoutSubItem Text="{x:Bind root:ResourceService.GetLocalized('History/Channel')}" ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/Channel')}">
                                     <MenuFlyoutSubItem.Style>
                                         <Style BasedOn="{StaticResource DefaultMenuFlyoutSubItemStyle}" TargetType="MenuFlyoutSubItem">
                                             <Setter Property="Height" Value="32" />
@@ -238,57 +197,37 @@
                                         </Style>
                                     </MenuFlyoutSubItem.Style>
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/Channel')}" Placement="Mouse" />
-                                    </ToolTipService.ToolTip>
-
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnChannelFilterClicked}"
                                         IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'WIF'),Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="WIF"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/Fast')}">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Resources/Fast')}" Placement="Mouse" />
-                                        </ToolTipService.ToolTip>
-                                    </ToggleMenuFlyoutItem>
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/Fast')}"
+                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Resources/Fast')}" />
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnChannelFilterClicked}"
                                         IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'WIS'),Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="WIS"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/Slow')}">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Resources/Slow')}" Placement="Mouse" />
-                                        </ToolTipService.ToolTip>
-                                    </ToggleMenuFlyoutItem>
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/Slow')}"
+                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Resources/Slow')}" />
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnChannelFilterClicked}"
                                         IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'RP'),Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="RP"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/RP')}">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Resources/RP')}" Placement="Mouse" />
-                                        </ToolTipService.ToolTip>
-                                    </ToggleMenuFlyoutItem>
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/RP')}"
+                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Resources/RP')}" />
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnChannelFilterClicked}"
                                         IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'Retail'),Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="Retail"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/Retail')}">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Resources/Retail')}" Placement="Mouse" />
-                                        </ToolTipService.ToolTip>
-                                    </ToggleMenuFlyoutItem>
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/Retail')}"
+                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Resources/Retail')}" />
 
                                     <MenuFlyoutSeparator />
 
@@ -297,12 +236,8 @@
                                         IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'None'),Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="None"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('History/None')}">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/None')}" Placement="Mouse" />
-                                        </ToolTipService.ToolTip>
-                                    </ToggleMenuFlyoutItem>
+                                        Text="{x:Bind root:ResourceService.GetLocalized('History/None')}"
+                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/None')}" />
                                 </MenuFlyoutSubItem>
                             </MenuFlyout>
                         </FlyoutBase.AttachedFlyout>
@@ -313,15 +248,12 @@
                         Click="{x:Bind OnRefreshClicked}"
                         IsEnabled="{x:Bind sys:Convert.ToBoolean(HistoryDataList.Count), Mode=OneWay}"
                         Style="{StaticResource AppBarButtonMenuItemStyle}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('History/Refresh')}">
+                        Text="{x:Bind root:ResourceService.GetLocalized('History/Refresh')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/RefreshToolTip')}">
 
                         <MenuFlyoutItem.Icon>
                             <FontIcon Glyph="&#xE72c;" />
                         </MenuFlyoutItem.Icon>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/RefreshToolTip')}" Placement="Mouse" />
-                        </ToolTipService.ToolTip>
                     </MenuFlyoutItem>
                 </StackPanel>
             </ContentControl>
@@ -343,75 +275,60 @@
                         controlExtensions:CursorHelper.Cursor="Hand"
                         Click="{x:Bind OnSelectAllClicked}"
                         Style="{StaticResource AppBarButtonMenuItemStyle}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('History/SelectAll')}">
+                        Text="{x:Bind root:ResourceService.GetLocalized('History/SelectAll')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/SelectAll')}">
 
                         <MenuFlyoutItem.Icon>
                             <FontIcon Glyph="&#xE8b3;" />
                         </MenuFlyoutItem.Icon>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/SelectAll')}" Placement="Mouse" />
-                        </ToolTipService.ToolTip>
                     </MenuFlyoutItem>
 
                     <MenuFlyoutItem
                         controlExtensions:CursorHelper.Cursor="Hand"
                         Click="{x:Bind OnSelectNoneClicked}"
                         Style="{StaticResource AppBarButtonMenuItemStyle}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('History/SelectNone')}">
+                        Text="{x:Bind root:ResourceService.GetLocalized('History/SelectNone')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/SelectNone')}">
 
                         <MenuFlyoutItem.Icon>
                             <FontIcon Glyph="&#xE8e6;" />
                         </MenuFlyoutItem.Icon>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/SelectNone')}" Placement="Mouse" />
-                        </ToolTipService.ToolTip>
                     </MenuFlyoutItem>
 
                     <MenuFlyoutItem
                         controlExtensions:CursorHelper.Cursor="Hand"
                         Click="{x:Bind OnCopySelectedClicked}"
                         Style="{StaticResource AppBarButtonMenuItemStyle}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('History/CopySelected')}">
+                        Text="{x:Bind root:ResourceService.GetLocalized('History/CopySelected')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/CopySelectedToolTip')}">
 
                         <MenuFlyoutItem.Icon>
                             <FontIcon Glyph="&#xE8c8;" />
                         </MenuFlyoutItem.Icon>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/CopySelectedToolTip')}" Placement="Mouse" />
-                        </ToolTipService.ToolTip>
                     </MenuFlyoutItem>
 
                     <MenuFlyoutItem
                         controlExtensions:CursorHelper.Cursor="Hand"
                         Click="{x:Bind OnDeleteClicked}"
                         Style="{StaticResource AppBarButtonMenuItemStyle}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('History/Delete')}">
+                        Text="{x:Bind root:ResourceService.GetLocalized('History/Delete')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/DeleteToolTip')}">
 
                         <MenuFlyoutItem.Icon>
                             <FontIcon Glyph="&#xE74d;" />
                         </MenuFlyoutItem.Icon>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/DeleteToolTip')}" Placement="Mouse" />
-                        </ToolTipService.ToolTip>
                     </MenuFlyoutItem>
 
                     <MenuFlyoutItem
                         controlExtensions:CursorHelper.Cursor="Hand"
                         Click="{x:Bind OnCancelClicked}"
                         Style="{StaticResource AppBarButtonMenuItemStyle}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('History/Cancel')}">
+                        Text="{x:Bind root:ResourceService.GetLocalized('History/Cancel')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/CancelToolTip')}">
 
                         <MenuFlyoutItem.Icon>
                             <FontIcon Glyph="&#xE711;" />
                         </MenuFlyoutItem.Icon>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/CancelToolTip')}" Placement="Mouse" />
-                        </ToolTipService.ToolTip>
                     </MenuFlyoutItem>
                 </StackPanel>
             </ContentControl>
@@ -440,12 +357,8 @@
                     Margin="0,10"
                     VerticalAlignment="Center"
                     Text="{x:Bind root:ResourceService.GetLocalized('History/LoadingHistory')}"
-                    TextAlignment="Center">
-
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/LoadingHistory')}" Placement="Mouse" />
-                    </ToolTipService.ToolTip>
-                </TextBlock>
+                    TextAlignment="Center"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/LoadingHistory')}" />
             </StackPanel>
         </Grid>
 
@@ -525,56 +438,36 @@
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
                         Text="{x:Bind root:ResourceService.GetLocalized('History/Select')}"
-                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsSelectMode), Mode=OneWay}">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/Select')}" Placement="Mouse" />
-                        </ToolTipService.ToolTip>
-                    </TextBlock>
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/Select')}"
+                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsSelectMode), Mode=OneWay}" />
 
                     <TextBlock
                         Grid.Column="1"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('History/DateTime')}">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/DateTime')}" Placement="Mouse" />
-                        </ToolTipService.ToolTip>
-                    </TextBlock>
+                        Text="{x:Bind root:ResourceService.GetLocalized('History/DateTime')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/DateTime')}" />
 
                     <TextBlock
                         Grid.Column="2"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('History/Type')}">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/Type')}" Placement="Mouse" />
-                        </ToolTipService.ToolTip>
-                    </TextBlock>
+                        Text="{x:Bind root:ResourceService.GetLocalized('History/Type')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/Type')}" />
 
                     <TextBlock
                         Grid.Column="3"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('History/Channel')}">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/Channel')}" Placement="Mouse" />
-                        </ToolTipService.ToolTip>
-                    </TextBlock>
+                        Text="{x:Bind root:ResourceService.GetLocalized('History/Channel')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/Channel')}" />
 
                     <TextBlock
                         Grid.Column="4"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('History/Link')}">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/Link')}" Placement="Mouse" />
-                        </ToolTipService.ToolTip>
-                    </TextBlock>
+                        Text="{x:Bind root:ResourceService.GetLocalized('History/Link')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/Link')}" />
 
                     <TextBlock
                         Grid.Column="5"
@@ -582,12 +475,8 @@
                         Margin="10,0,0,0"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('History/Options')}">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/OptionsToolTip')}" Placement="Mouse" />
-                        </ToolTipService.ToolTip>
-                    </TextBlock>
+                        Text="{x:Bind root:ResourceService.GetLocalized('History/Options')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/OptionsToolTip')}" />
                 </Grid>
 
                 <ListView
@@ -632,12 +521,8 @@
                                     controlExtensions:CursorHelper.Cursor="Hand"
                                     IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
                                     IsThreeState="False"
-                                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsSelectMode), Mode=OneWay}">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind converter:StringConverterHelper.CheckBoxToolTipFormat(IsSelected,'History'),Mode=OneWay}" Placement="Mouse" />
-                                    </ToolTipService.ToolTip>
-                                </CheckBox>
+                                    ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.CheckBoxToolTipFormat(IsSelected,'History'),Mode=OneWay}"
+                                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsSelectMode), Mode=OneWay}" />
 
                                 <TextBlock
                                     Grid.Column="1"
@@ -646,12 +531,8 @@
                                     VerticalAlignment="Center"
                                     FontSize="14"
                                     Text="{x:Bind converter:StringConverterHelper.TimeStampFormat(CreateTimeStamp)}"
-                                    TextAlignment="Left">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind converter:StringConverterHelper.TimeStampFormat(CreateTimeStamp)}" Placement="Mouse" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                    TextAlignment="Left"
+                                    ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.TimeStampFormat(CreateTimeStamp)}" />
 
                                 <TextBlock
                                     Grid.Column="2"
@@ -660,12 +541,8 @@
                                     VerticalAlignment="Center"
                                     FontSize="14"
                                     Text="{x:Bind converter:StringConverterHelper.TypeNameFormat(HistoryType)}"
-                                    TextAlignment="Left">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind converter:StringConverterHelper.TypeNameFormat(HistoryType)}" Placement="Mouse" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                    TextAlignment="Left"
+                                    ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.TypeNameFormat(HistoryType)}" />
 
                                 <TextBlock
                                     Grid.Column="3"
@@ -674,12 +551,8 @@
                                     VerticalAlignment="Center"
                                     FontSize="14"
                                     Text="{x:Bind converter:StringConverterHelper.ChannelNameFormat(HistoryChannel)}"
-                                    TextAlignment="Left">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind converter:StringConverterHelper.ChannelNameFormat(HistoryChannel)}" Placement="Mouse" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                    TextAlignment="Left"
+                                    ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.ChannelNameFormat(HistoryChannel)}" />
 
                                 <TextBlock
                                     Grid.Column="4"
@@ -688,12 +561,8 @@
                                     VerticalAlignment="Center"
                                     FontSize="14"
                                     Text="{x:Bind HistoryLink}"
-                                    TextAlignment="Left">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind HistoryLink}" Placement="Mouse" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                    TextAlignment="Left"
+                                    ToolTipService.ToolTip="{x:Bind HistoryLink}" />
 
                                 <HyperlinkButton
                                     Grid.Column="5"
@@ -702,12 +571,8 @@
                                     CommandParameter="{Binding}"
                                     Content="{x:Bind root:ResourceService.GetLocalized('History/Fillin')}"
                                     IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsSelectMode), Mode=OneWay}"
-                                    Style="{StaticResource HyperlinkButtonStyle}">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/FillinToolTip')}" Placement="Mouse" />
-                                    </ToolTipService.ToolTip>
-                                </HyperlinkButton>
+                                    Style="{StaticResource HyperlinkButtonStyle}"
+                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/FillinToolTip')}" />
 
                                 <HyperlinkButton
                                     Grid.Column="6"
@@ -715,12 +580,8 @@
                                     CommandParameter="{Binding}"
                                     Content="{x:Bind root:ResourceService.GetLocalized('History/Copy')}"
                                     IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsSelectMode), Mode=OneWay}"
-                                    Style="{StaticResource HyperlinkButtonStyle}">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/CopyToolTip')}" Placement="Mouse" />
-                                    </ToolTipService.ToolTip>
-                                </HyperlinkButton>
+                                    Style="{StaticResource HyperlinkButtonStyle}"
+                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/CopyToolTip')}" />
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

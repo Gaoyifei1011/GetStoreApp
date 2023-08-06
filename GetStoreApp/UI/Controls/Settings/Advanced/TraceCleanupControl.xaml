@@ -43,10 +43,6 @@
         Grid.Column="2"
         MinWidth="100"
         Click="{x:Bind OnTraceCleanupClicked}"
-        Content="{x:Bind root:ResourceService.GetLocalized('Settings/TraceClear')}">
-
-        <ToolTipService.ToolTip>
-            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/TraceClear')}" Placement="Mouse" />
-        </ToolTipService.ToolTip>
-    </Button>
+        Content="{x:Bind root:ResourceService.GetLocalized('Settings/TraceClear')}"
+        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/TraceClear')}" />
 </Grid>

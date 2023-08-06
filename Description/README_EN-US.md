@@ -55,11 +55,6 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 <img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/7764c08f-e1b8-4bdd-ab25-e8f9cee94f50" />
 </div>
 
-#### <p align="center">Access Webpage</p>
-<div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/f3d50960-0afe-43ff-bc1a-bc257633f001" />
-</div>
-
 #### <p align="center">Application Descriptions</p>
 <div align="center">
 <img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/0743b5a6-30a4-4f71-9b4e-a38c3bc58061" />
@@ -113,7 +108,6 @@ All the content of the program has been developed
 > * [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com/) 
 > * . NET Desktop Development (Installed in Visual Studio Installer, .NET SDK Version 7.0)
 > * [WinGet package manager](https://www.microsoft.com/store/productId/9NBLGGH4NNS1) (install recommendedly)
-> * [Microsoft Edge WebView2 Runtime](https://developer.microsoft.com/zh-cn/microsoft-edge/webview2/) (install recommendedly)
 
 #### <p align="center">Compilation steps</p>
 

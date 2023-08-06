@@ -62,7 +62,10 @@
                             Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetVersionDescription')}" />
                     </StackPanel>
 
-                    <Button Grid.Column="1" Content="{x:Bind root:ResourceService.GetLocalized('Settings/ShowVersion')}">
+                    <Button
+                        Grid.Column="1"
+                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/ShowVersion')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/ShowVersionToolTip')}">
                         <Button.Flyout>
                             <Flyout
                                 FlyoutPresenterStyle="{StaticResource FlyoutPresenterStyle}"
@@ -93,12 +96,8 @@
                                             x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsOfficialVersionExisted), Mode=OneWay}"
                                             Content="{x:Bind root:ResourceService.GetLocalized('Settings/OfficialVersionInstall')}"
                                             NavigateUri="https://github.com/microsoft/winget-cli/releases"
-                                            Style="{StaticResource HyperlinkButtonStyle}">
-
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/OfficialVersionInstallToolTip')}" Placement="Mouse" />
-                                            </ToolTipService.ToolTip>
-                                        </HyperlinkButton>
+                                            Style="{StaticResource HyperlinkButtonStyle}"
+                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/OfficialVersionInstallToolTip')}" />
                                     </Grid>
 
                                     <Grid Margin="0,0,0,8">
@@ -124,12 +123,8 @@
                                             x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsDevVersionExisted), Mode=OneWay}"
                                             Content="{x:Bind root:ResourceService.GetLocalized('Settings/DevVersionInstall')}"
                                             NavigateUri="https://github.com/microsoft/winget-cli/releases"
-                                            Style="{StaticResource HyperlinkButtonStyle}">
-
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/DevVersionInstallToolTip')}" Placement="Mouse" />
-                                            </ToolTipService.ToolTip>
-                                        </HyperlinkButton>
+                                            Style="{StaticResource HyperlinkButtonStyle}"
+                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/DevVersionInstallToolTip')}" />
                                     </Grid>
 
                                     <MenuFlyoutSeparator
@@ -146,12 +141,9 @@
                                         <TextBlock
                                             Grid.Column="0"
                                             VerticalAlignment="Center"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/UseDevFirst')}">
+                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/UseDevFirst')}"
+                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/UseDevFirstToolTip')}" />
 
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/UseDevFirstToolTip')}" Placement="Mouse" />
-                                            </ToolTipService.ToolTip>
-                                        </TextBlock>
                                         <ToggleSwitch
                                             Grid.Column="1"
                                             MinWidth="0"
@@ -164,10 +156,6 @@
                                 </StackPanel>
                             </Flyout>
                         </Button.Flyout>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/ShowVersionToolTip')}" Placement="Mouse" />
-                        </ToolTipService.ToolTip>
                     </Button>
                 </Grid>
             </StackPanel>
@@ -195,11 +183,8 @@
                     <DropDownButton
                         Grid.Column="1"
                         VerticalAlignment="Center"
-                        Content="{x:Bind WinGetInstallMode.DisplayMember, Mode=OneWay}">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind WinGetInstallMode.DisplayMember, Mode=OneWay}" Placement="Mouse" />
-                        </ToolTipService.ToolTip>
+                        Content="{x:Bind WinGetInstallMode.DisplayMember, Mode=OneWay}"
+                        ToolTipService.ToolTip="{x:Bind WinGetInstallMode.DisplayMember, Mode=OneWay}">
 
                         <DropDownButton.Flyout>
                             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
@@ -208,24 +193,16 @@
                                     IsChecked="{x:Bind IsItemChecked(WinGetInstallMode, WinGetInstallModeList[0]), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="0"
-                                    Text="{x:Bind WinGetInstallModeList[0].DisplayMember}">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind WinGetInstallModeList[0].DisplayMember}" Placement="Mouse" />
-                                    </ToolTipService.ToolTip>
-                                </ToggleMenuFlyoutItem>
+                                    Text="{x:Bind WinGetInstallModeList[0].DisplayMember}"
+                                    ToolTipService.ToolTip="{x:Bind WinGetInstallModeList[0].DisplayMember}" />
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnWinGetInstallModeSelectClicked}"
                                     IsChecked="{x:Bind IsItemChecked(WinGetInstallMode, WinGetInstallModeList[1]), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="1"
-                                    Text="{x:Bind WinGetInstallModeList[1].DisplayMember}">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind WinGetInstallModeList[1].DisplayMember}" Placement="Mouse" />
-                                    </ToolTipService.ToolTip>
-                                </ToggleMenuFlyoutItem>
+                                    Text="{x:Bind WinGetInstallModeList[1].DisplayMember}"
+                                    ToolTipService.ToolTip="{x:Bind WinGetInstallModeList[1].DisplayMember}" />
                             </MenuFlyout>
                         </DropDownButton.Flyout>
                     </DropDownButton>
@@ -256,12 +233,8 @@
                         Grid.Column="1"
                         Click="{x:Bind OnOpenWinGetSettingsClicked}"
                         Content="{x:Bind root:ResourceService.GetLocalized('Settings/OpenWinGetSettings')}"
-                        IsEnabled="{x:Bind IsWinGetExisted(IsOfficialVersionExisted, IsDevVersionExisted)}">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/OpenWinGetSettingsToolTip')}" Placement="Mouse" />
-                        </ToolTipService.ToolTip>
-                    </Button>
+                        IsEnabled="{x:Bind IsWinGetExisted(IsOfficialVersionExisted, IsDevVersionExisted)}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/OpenWinGetSettingsToolTip')}" />
                 </Grid>
             </StackPanel>
         </StackPanel>

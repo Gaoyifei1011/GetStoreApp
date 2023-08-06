@@ -53,12 +53,8 @@
         <TextBlock
             Grid.Column="3"
             VerticalAlignment="Center"
-            Text="{x:Bind LocalizeUnfinishedCountInfo(UnfinishedDataList.Count), Mode=OneWay}">
-
-            <ToolTipService.ToolTip>
-                <ToolTip Content="{x:Bind LocalizeUnfinishedCountInfo(UnfinishedDataList.Count), Mode=OneWay}" Placement="Mouse" />
-            </ToolTipService.ToolTip>
-        </TextBlock>
+            Text="{x:Bind LocalizeUnfinishedCountInfo(UnfinishedDataList.Count), Mode=OneWay}"
+            ToolTipService.ToolTip="{x:Bind LocalizeUnfinishedCountInfo(UnfinishedDataList.Count), Mode=OneWay}" />
 
         <StackPanel
             x:Name="NormalMode"
@@ -74,15 +70,12 @@
                 controlExtensions:CursorHelper.Cursor="Hand"
                 Click="{x:Bind OnOpenFolderClicked}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolder')}">
+                Text="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolder')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolderToolTip')}">
 
                 <MenuFlyoutItem.Icon>
                     <FontIcon Glyph="&#xE8b7;" />
                 </MenuFlyoutItem.Icon>
-
-                <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolderToolTip')}" Placement="Mouse" />
-                </ToolTipService.ToolTip>
             </MenuFlyoutItem>
 
             <MenuFlyoutItem
@@ -90,15 +83,12 @@
                 Click="{x:Bind OnContinueAllClicked}"
                 IsEnabled="{x:Bind sys:Convert.ToBoolean(UnfinishedDataList.Count), Mode=OneWay}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Download/ContinueAll')}">
+                Text="{x:Bind root:ResourceService.GetLocalized('Download/ContinueAll')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/ContinueAllToolTip')}">
 
                 <MenuFlyoutItem.Icon>
                     <FontIcon Glyph="&#xE74b;" />
                 </MenuFlyoutItem.Icon>
-
-                <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Download/ContinueAllToolTip')}" Placement="Mouse" />
-                </ToolTipService.ToolTip>
             </MenuFlyoutItem>
 
             <MenuFlyoutItem
@@ -106,15 +96,12 @@
                 Click="{x:Bind OnSelectClicked}"
                 IsEnabled="{x:Bind sys:Convert.ToBoolean(UnfinishedDataList.Count), Mode=OneWay}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Download/Select')}">
+                Text="{x:Bind root:ResourceService.GetLocalized('Download/Select')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/SelectToolTip')}">
 
                 <MenuFlyoutItem.Icon>
                     <FontIcon Glyph="&#xE762;" />
                 </MenuFlyoutItem.Icon>
-
-                <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Download/SelectToolTip')}" Placement="Mouse" />
-                </ToolTipService.ToolTip>
             </MenuFlyoutItem>
         </StackPanel>
 
@@ -132,60 +119,48 @@
                 controlExtensions:CursorHelper.Cursor="Hand"
                 Click="{x:Bind OnSelectAllClicked}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Download/SelectAll')}">
+                Text="{x:Bind root:ResourceService.GetLocalized('Download/SelectAll')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/SelectAll')}">
 
                 <MenuFlyoutItem.Icon>
                     <FontIcon Glyph="&#xE8b3;" />
                 </MenuFlyoutItem.Icon>
-
-                <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Download/SelectAll')}" Placement="Mouse" />
-                </ToolTipService.ToolTip>
             </MenuFlyoutItem>
 
             <MenuFlyoutItem
                 controlExtensions:CursorHelper.Cursor="Hand"
                 Click="{x:Bind OnSelectNoneClicked}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Download/SelectNone')}">
+                Text="{x:Bind root:ResourceService.GetLocalized('Download/SelectNone')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/SelectNone')}">
 
                 <MenuFlyoutItem.Icon>
                     <FontIcon Glyph="&#xE8e6;" />
                 </MenuFlyoutItem.Icon>
-
-                <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Download/SelectNone')}" Placement="Mouse" />
-                </ToolTipService.ToolTip>
             </MenuFlyoutItem>
 
             <MenuFlyoutItem
                 controlExtensions:CursorHelper.Cursor="Hand"
                 Click="{x:Bind OnDeleteSelectedClicked}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelected')}">
+                Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelected')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedToolTip')}">
 
                 <MenuFlyoutItem.Icon>
                     <FontIcon Glyph="&#xE74d;" />
                 </MenuFlyoutItem.Icon>
-
-                <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedToolTip')}" Placement="Mouse" />
-                </ToolTipService.ToolTip>
             </MenuFlyoutItem>
 
             <MenuFlyoutItem
                 controlExtensions:CursorHelper.Cursor="Hand"
                 Click="{x:Bind OnCancelClicked}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Download/Cancel')}">
+                Text="{x:Bind root:ResourceService.GetLocalized('Download/Cancel')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/CancelToolTip')}">
 
                 <MenuFlyoutItem.Icon>
                     <FontIcon Glyph="&#xE711;" />
                 </MenuFlyoutItem.Icon>
-
-                <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Download/CancelToolTip')}" Placement="Mouse" />
-                </ToolTipService.ToolTip>
             </MenuFlyoutItem>
         </StackPanel>
     </Grid>
@@ -203,12 +178,8 @@
             Margin="0,10"
             VerticalAlignment="Center"
             Text="{x:Bind root:ResourceService.GetLocalized('Download/UnfinishedEmptyDescription')}"
-            TextAlignment="Center">
-
-            <ToolTipService.ToolTip>
-                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Download/UnfinishedEmptyDescription')}" Placement="Mouse" />
-            </ToolTipService.ToolTip>
-        </TextBlock>
+            TextAlignment="Center"
+            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/UnfinishedEmptyDescription')}" />
     </Grid>
 
     <ListView
@@ -248,12 +219,8 @@
                         controlExtensions:CursorHelper.Cursor="Hand"
                         IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
                         IsThreeState="False"
-                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsSelectMode), Mode=OneWay}">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind converter:StringConverterHelper.CheckBoxToolTipFormat(IsSelected,'Download'),Mode=OneWay}" Placement="Mouse" />
-                        </ToolTipService.ToolTip>
-                    </CheckBox>
+                        ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.CheckBoxToolTipFormat(IsSelected,'Download'),Mode=OneWay}"
+                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsSelectMode), Mode=OneWay}" />
 
                     <Grid
                         Grid.Column="1"
@@ -271,12 +238,8 @@
                             VerticalAlignment="Center"
                             FontSize="16"
                             Text="{x:Bind FileName}"
-                            TextAlignment="Left">
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind FileName}" Placement="Mouse" />
-                            </ToolTipService.ToolTip>
-                        </TextBlock>
+                            TextAlignment="Left"
+                            ToolTipService.ToolTip="{x:Bind FileName}" />
 
                         <TextBlock
                             Grid.Row="1"
@@ -285,12 +248,8 @@
                             FontSize="14"
                             Text="{x:Bind root:ResourceService.GetLocalized('Download/PauseDownload')}"
                             TextAlignment="Left"
-                            Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 2)}">
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Download/PauseDownload')}" Placement="Mouse" />
-                            </ToolTipService.ToolTip>
-                        </TextBlock>
+                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/PauseDownload')}"
+                            Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 2)}" />
 
                         <TextBlock
                             Grid.Row="1"
@@ -300,12 +259,8 @@
                             Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
                             Text="{x:Bind root:ResourceService.GetLocalized('Download/DownloadFailed')}"
                             TextAlignment="Left"
-                            Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 0)}">
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Download/DownloadFailed')}" Placement="Mouse" />
-                            </ToolTipService.ToolTip>
-                        </TextBlock>
+                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DownloadFailed')}"
+                            Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 0)}" />
                     </Grid>
 
                     <ContentControl
@@ -326,15 +281,12 @@
                                 Command="{Binding ElementName=UnfinishedRoot, Path=ContinueCommand, Mode=OneTime}"
                                 CommandParameter="{Binding}"
                                 CornerRadius="{StaticResource ControlCornerRadius}"
+                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/ContinueToolTip')}"
                                 Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 2)}">
 
                                 <Button.Content>
                                     <FontIcon FontSize="14" Glyph="&#xE74b;" />
                                 </Button.Content>
-
-                                <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Download/ContinueToolTip')}" Placement="Mouse" />
-                                </ToolTipService.ToolTip>
                             </Button>
 
                             <Button
@@ -345,15 +297,12 @@
                                 controlExtensions:CursorHelper.Cursor="Hand"
                                 Command="{Binding ElementName=UnfinishedRoot, Path=DeleteCommand, Mode=OneTime}"
                                 CommandParameter="{Binding}"
-                                CornerRadius="{StaticResource ControlCornerRadius}">
+                                CornerRadius="{StaticResource ControlCornerRadius}"
+                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteUnfinishedToolTip')}">
 
                                 <Button.Content>
                                     <FontIcon FontSize="14" Glyph="&#xE711;" />
                                 </Button.Content>
-
-                                <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Download/DeleteUnfinishedToolTip')}" Placement="Mouse" />
-                                </ToolTipService.ToolTip>
                             </Button>
                         </StackPanel>
                     </ContentControl>

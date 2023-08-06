@@ -10,13 +10,10 @@
     Message="{x:Bind StateInfoText, Mode=OneWay}"
     Severity="{x:Bind InfoBarSeverity, Mode=OneWay}"
     Style="{StaticResource DefaultInfoBarStyle}"
+    ToolTipService.ToolTip="{x:Bind StateInfoText, Mode=OneWay}"
     mc:Ignorable="d">
 
     <InfoBar.Content>
         <ProgressRing IsIndeterminate="{x:Bind StatePrRingActValue, Mode=OneWay}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(StatePrRingVisValue), Mode=OneWay}" />
     </InfoBar.Content>
-
-    <ToolTipService.ToolTip>
-        <ToolTip Content="{x:Bind StateInfoText, Mode=OneWay}" Placement="Mouse" />
-    </ToolTipService.ToolTip>
 </InfoBar>

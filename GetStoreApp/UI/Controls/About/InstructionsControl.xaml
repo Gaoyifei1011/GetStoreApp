@@ -89,23 +89,15 @@
                     Margin="-5,0,10,0"
                     Padding="5"
                     Click="{x:Bind OnDesktopLaunchClicked}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('About/DesktopLaunch')}">
-
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/DesktopLaunch')}" Placement="Mouse" />
-                    </ToolTipService.ToolTip>
-                </HyperlinkButton>
+                    Content="{x:Bind root:ResourceService.GetLocalized('About/DesktopLaunch')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/DesktopLaunch')}" />
 
                 <HyperlinkButton
                     Margin="-5,0,10,0"
                     Padding="5"
                     Click="{x:Bind OnConsoleLaunchClicked}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('About/ConsoleLaunch')}">
-
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/ConsoleLaunch')}" Placement="Mouse" />
-                    </ToolTipService.ToolTip>
-                </HyperlinkButton>
+                    Content="{x:Bind root:ResourceService.GetLocalized('About/ConsoleLaunch')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/ConsoleLaunch')}" />
             </StackPanel>
 
             <MenuFlyoutSeparator Margin="0,0,0,8" />
@@ -162,34 +154,15 @@
                     Margin="-5,0,10,0"
                     Padding="5"
                     Click="{x:Bind OnCheckNetWorkClicked}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('About/CheckNetwork')}">
-
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/CheckNetwork')}" Placement="Mouse" />
-                    </ToolTipService.ToolTip>
-                </HyperlinkButton>
+                    Content="{x:Bind root:ResourceService.GetLocalized('About/CheckNetwork')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/CheckNetwork')}" />
 
                 <HyperlinkButton
                     Margin="-5,0,10,0"
                     Padding="5"
                     Click="{x:Bind OnTroubleShootClicked}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('About/TroubleShoot')}">
-
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/TroubleShoot')}" Placement="Mouse" />
-                    </ToolTipService.ToolTip>
-                </HyperlinkButton>
-
-                <HyperlinkButton
-                    Margin="-5,0,10,0"
-                    Padding="5"
-                    Click="{x:Bind OnCloudflareValidationClicked}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('About/CloudflareValidation')}">
-
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/CloudflareValidation')}" Placement="Mouse" />
-                    </ToolTipService.ToolTip>
-                </HyperlinkButton>
+                    Content="{x:Bind root:ResourceService.GetLocalized('About/TroubleShoot')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/TroubleShoot')}" />
             </StackPanel>
 
             <MenuFlyoutSeparator Margin="0,0,0,8" />
@@ -230,12 +203,8 @@
                     Margin="-5,0,10,0"
                     Padding="5"
                     Click="{x:Bind OnDownloadSettingsClicked}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('About/DownloadSettings')}">
-
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('About/DownloadSettings')}" Placement="Mouse" />
-                    </ToolTipService.ToolTip>
-                </HyperlinkButton>
+                    Content="{x:Bind root:ResourceService.GetLocalized('About/DownloadSettings')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/DownloadSettings')}" />
             </StackPanel>
         </StackPanel>
     </Expander.Content>

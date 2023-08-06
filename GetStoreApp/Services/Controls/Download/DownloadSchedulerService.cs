@@ -413,6 +413,28 @@ namespace GetStoreApp.Services.Controls.Download
                         continue;
                     }
                 }
+                else
+                {
+                    try
+                    {
+                        DownloadItem.DownloadFlag = 0;
+                        for (int index = 0; index < WaitingList.Count; index++)
+                        {
+                            if (DownloadItem.DownloadKey == WaitingList[index].DownloadKey)
+                            {
+                                WaitingList.RemoveAt(index);
+                                break;
+                            }
+                        }
+
+                        await DownloadXmlService.UpdateFlagAsync(DownloadItem.DownloadKey, DownloadItem.DownloadFlag);
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LogType.WARNING, "Schedule add task failed.", e);
+                        continue;
+                    }
+                }
             }
         }
 

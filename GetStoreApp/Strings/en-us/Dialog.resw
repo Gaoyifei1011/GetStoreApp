@@ -156,12 +156,6 @@
   <data name="ClosingWindowTitle" xml:space="preserve">
     <value>Task downloading prompt</value>
   </data>
-  <data name="CloudflareValidation" xml:space="preserve">
-    <value>What is Cloudflare 5 seconds validation?</value>
-  </data>
-  <data name="CloudflareValidationContent" xml:space="preserve">
-    <value>Cloudflare-protected sites wait for a 5 second verification on your first visit to check that you are properly accessing them through your browser. If it is not properly accessed through a browser, the server blocks all requests made by the user.</value>
-  </data>
   <data name="Continue" xml:space="preserve">
     <value>Continue</value>
   </data>
@@ -170,9 +164,6 @@
   </data>
   <data name="CopyFileInformation" xml:space="preserve">
     <value>Copy file information</value>
-  </data>
-  <data name="CoreWebView2FailedTitle" xml:space="preserve">
-    <value>An exception occurred in th e browser process</value>
   </data>
   <data name="DeleteDownload" xml:space="preserve">
     <value>The selected download records will be permanently deleted, the operation is irrevocable, please proceed with caution.</value>
@@ -342,9 +333,6 @@
   <data name="ViewDownloadRecord" xml:space="preserve">
     <value>View your download history</value>
   </data>
-  <data name="WebCache" xml:space="preserve">
-    <value>Web page cache cleanup</value>
-  </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
   </data>
@@ -389,9 +377,6 @@
   </data>
   <data name="WinUI3Version" xml:space="preserve">
     <value>WinUI3 version：</value>
-  </data>
-  <data name="WebView2CoreVersion" xml:space="preserve">
-    <value>WebView2 Core Version：</value>
   </data>
   <data name="ActionCenter" xml:space="preserve">
     <value>Application notification in action center</value>

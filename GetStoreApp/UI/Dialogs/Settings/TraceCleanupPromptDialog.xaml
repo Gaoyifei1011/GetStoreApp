@@ -48,12 +48,8 @@
                                 VerticalAlignment="Center"
                                 Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
                                 Text="{x:Bind root:ResourceService.GetLocalized('Dialog/CleanFailed')}"
-                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsCleanFailed), Mode=OneWay}">
-
-                                <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind CleanFailedText}" Placement="Mouse" />
-                                </ToolTipService.ToolTip>
-                            </TextBlock>
+                                ToolTipService.ToolTip="{x:Bind CleanFailedText}"
+                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsCleanFailed), Mode=OneWay}" />
                         </ContentControl>
                     </StackPanel>
                 </DataTemplate>

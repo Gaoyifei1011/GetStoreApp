@@ -156,12 +156,6 @@
   <data name="ClosingWindowTitle" xml:space="preserve">
     <value>任务下载中提示</value>
   </data>
-  <data name="CloudflareValidation" xml:space="preserve">
-    <value>什么是Cloudflare 5秒验证？</value>
-  </data>
-  <data name="CloudflareValidationContent" xml:space="preserve">
-    <value>被 Cloudflare 保护的站点，在初次访问时，会等待 5 秒钟的验证，检测你是不是通过浏览器正常访问的。如果不是通过浏览器正常访问，服务器就会阻止用户发出的所有请求。</value>
-  </data>
   <data name="Continue" xml:space="preserve">
     <value>继续</value>
   </data>
@@ -170,9 +164,6 @@
   </data>
   <data name="CopyFileInformation" xml:space="preserve">
     <value>复制文件信息</value>
-  </data>
-  <data name="CoreWebView2FailedTitle" xml:space="preserve">
-    <value>浏览器进程发生异常</value>
   </data>
   <data name="DeleteDownload" xml:space="preserve">
     <value>选定的下载记录将被永久删除，该操作不可撤销，请谨慎操作。</value>
@@ -342,9 +333,6 @@
   <data name="ViewDownloadRecord" xml:space="preserve">
     <value>查看下载记录</value>
   </data>
-  <data name="WebCache" xml:space="preserve">
-    <value>网页缓存清理</value>
-  </data>
   <data name="Yes" xml:space="preserve">
     <value>是</value>
   </data>
@@ -389,9 +377,6 @@
   </data>
   <data name="WinUI3Version" xml:space="preserve">
     <value>WinUI3 版本：</value>
-  </data>
-  <data name="WebView2CoreVersion" xml:space="preserve">
-    <value>WebView2 Core 版本：</value>
   </data>
   <data name="ActionCenter" xml:space="preserve">
     <value>操作中心的应用通知</value>

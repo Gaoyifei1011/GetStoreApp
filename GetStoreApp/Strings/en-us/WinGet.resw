@@ -201,6 +201,9 @@
   <data name="InstallStateToolTip" xml:space="preserve">
     <value>Install state: {0}</value>
   </data>
+  <data name="InstallToolTip" xml:space="preserve">
+    <value>Left: Install</value>
+  </data>
   <data name="InstallWithCmd" xml:space="preserve">
     <value>Install with command</value>
   </data>
@@ -276,11 +279,17 @@
   <data name="UnInstall" xml:space="preserve">
     <value>Uninstall</value>
   </data>
+  <data name="UnInstallToolTip" xml:space="preserve">
+    <value>Left: Uninstall</value>
+  </data>
   <data name="Unknown" xml:space="preserve">
     <value>Unknown</value>
   </data>
   <data name="Update" xml:space="preserve">
     <value>Update</value>
+  </data>
+  <data name="UpdateToolTip" xml:space="preserve">
+    <value>Left: Update</value>
   </data>
   <data name="UpgradableApps" xml:space="preserve">
     <value>Upgradable apps</value>
@@ -295,6 +304,6 @@
     <value>All of your applications are up to date</value>
   </data>
   <data name="ViewMoreOptions" xml:space="preserve">
-    <value>View more options</value>
+    <value>Right: View more options</value>
   </data>
 </root>

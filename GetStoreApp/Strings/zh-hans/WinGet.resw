@@ -201,6 +201,9 @@
   <data name="InstallStateToolTip" xml:space="preserve">
     <value>安装状态：{0}</value>
   </data>
+  <data name="InstallToolTip" xml:space="preserve">
+    <value>左：安装</value>
+  </data>
   <data name="InstallWithCmd" xml:space="preserve">
     <value>使用命令安装</value>
   </data>
@@ -276,11 +279,17 @@
   <data name="UnInstall" xml:space="preserve">
     <value>卸载</value>
   </data>
+  <data name="UnInstallToolTip" xml:space="preserve">
+    <value>左：卸载</value>
+  </data>
   <data name="Unknown" xml:space="preserve">
     <value>未知</value>
   </data>
   <data name="Update" xml:space="preserve">
     <value>升级</value>
+  </data>
+  <data name="UpdateToolTip" xml:space="preserve">
+    <value>左：升级</value>
   </data>
   <data name="UpgradableApps" xml:space="preserve">
     <value>可升级应用</value>
@@ -295,6 +304,6 @@
     <value>您的所有应用已经是最新版本了</value>
   </data>
   <data name="ViewMoreOptions" xml:space="preserve">
-    <value>查看更多选项</value>
+    <value>右：查看更多选项</value>
   </data>
 </root>

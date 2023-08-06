@@ -266,9 +266,6 @@
   <data name="UpgradeInstallCopy" xml:space="preserve">
     <value>Upgrade command was successfully copied to the clipboard</value>
   </data>
-  <data name="WebCacheClean" xml:space="preserve">
-    <value>Web page cache cleanup successfully</value>
-  </data>
   <data name="WinGetInstallFailed" xml:space="preserve">
     <value>&lt;toast launch="action=OpenApp"&gt;
   &lt;visual&gt;

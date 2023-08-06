@@ -53,14 +53,6 @@ namespace GetStoreApp.UI.Controls.About
         }
 
         /// <summary>
-        /// Cloudflare 5秒验证信息
-        /// </summary>
-        public async void OnCloudflareValidationClicked(object sender, RoutedEventArgs args)
-        {
-            await ContentDialogHelper.ShowAsync(new CloudflareValidationDialog(), this);
-        }
-
-        /// <summary>
         /// 打开下载设置
         /// </summary>
         public void OnDownloadSettingsClicked(object sender, RoutedEventArgs args)
