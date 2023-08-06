@@ -168,6 +168,9 @@
   <data name="FileInformationCopy" xml:space="preserve">
     <value>文件信息复制成功</value>
   </data>
+  <data name="FolderPickerFailed" xml:space="preserve">
+    <value>文件夹选取框打开失败</value>
+  </data>
   <data name="FolderPickerOpenFailed" xml:space="preserve">
     <value>文件夹选取框不能在管理员模式下运行，请从普通用户模式运行应用后再尝试修改</value>
   </data>

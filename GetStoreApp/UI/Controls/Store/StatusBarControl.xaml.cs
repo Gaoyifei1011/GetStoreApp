@@ -1,7 +1,5 @@
 ﻿using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Services.Root;
-using GetStoreApp.WindowsAPI.Controls;
-using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -74,7 +72,6 @@ namespace GetStoreApp.UI.Controls.Store
         {
             InitializeComponent();
             StateInfoText = ResourceService.GetLocalized("Store/StatusInfoWelcome");
-            PropertyChanged += OnStatusBarPropertyChanged;
         }
 
         /// <summary>
@@ -94,24 +91,6 @@ namespace GetStoreApp.UI.Controls.Store
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        /// <summary>
-        /// 圆环动画状态修改时修改任务栏的动画显示
-        /// </summary>
-        private void OnStatusBarPropertyChanged(object sender, PropertyChangedEventArgs args)
-        {
-            if (args.PropertyName == nameof(StatePrRingActValue))
-            {
-                if (StatePrRingActValue)
-                {
-                    TaskbarStateManager.SetProgressState(TBPFLAG.TBPF_INDETERMINATE, Program.ApplicationRoot.MainWindow.Handle);
-                }
-                else
-                {
-                    TaskbarStateManager.SetProgressState(TBPFLAG.TBPF_NOPROGRESS, Program.ApplicationRoot.MainWindow.Handle);
-                }
-            }
         }
     }
 }

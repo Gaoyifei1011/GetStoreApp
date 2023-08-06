@@ -168,6 +168,9 @@
   <data name="FileInformationCopy" xml:space="preserve">
     <value>The file information is copied successfully</value>
   </data>
+  <data name="FolderPickerFailed" xml:space="preserve">
+    <value>Folder picker open failed</value>
+  </data>
   <data name="FolderPickerOpenFailed" xml:space="preserve">
     <value>The folder marquee does not work in administrator mode, please run the app from normal user mode before trying to modify it</value>
   </data>

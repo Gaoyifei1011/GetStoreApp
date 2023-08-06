@@ -206,6 +206,7 @@
     <None Remove="UI\Notifications\DownloadCreateNotification.xaml" />
     <None Remove="UI\Notifications\ExceptionCopyNotification.xaml" />
     <None Remove="UI\Notifications\FileInformationCopyNotification.xaml" />
+    <None Remove="UI\Notifications\FolderPickerNotification.xaml" />
     <None Remove="UI\Notifications\HistoryCopyNotification.xaml" />
     <None Remove="UI\Notifications\LanguageChangeNotification.xaml" />
     <None Remove="UI\Notifications\LogCleanNotification.xaml" />
@@ -322,6 +323,7 @@
     <Page Update="UI\Notifications\DownloadCreateNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Notifications\ExceptionCopyNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Notifications\FileInformationCopyNotification.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Notifications\FolderPickerNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Notifications\HistoryCopyNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Notifications\LanguageChangeNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Notifications\LogCleanNotification.xaml" Generator="MSBuild:Compile" />

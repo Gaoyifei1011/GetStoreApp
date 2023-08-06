@@ -1,8 +1,7 @@
 ﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Services.Controls.Settings.Common;
-using GetStoreApp.Services.Root;
-using GetStoreApp.WindowsAPI.Dialogs;
+using GetStoreApp.UI.Notifications;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -121,7 +120,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
                             {
                                 FolderPicker folderPicker = new FolderPicker();
                                 InitializeWithWindow.Initialize(folderPicker, Program.ApplicationRoot.MainWindow.Handle);
-                                folderPicker.SuggestedStartLocation = PickerLocationId.Unspecified;
+                                folderPicker.SuggestedStartLocation = PickerLocationId.Downloads;
 
                                 StorageFolder downloadFolder = await folderPicker.PickSingleFolderAsync();
 
@@ -133,19 +132,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
                             }
                             catch (Exception)
                             {
-                                FolderBrowserDialog dialog = new FolderBrowserDialog()
-                                {
-                                    Title = ResourceService.GetLocalized("Settings/SelectFolder"),
-                                    Path = DownloadFolder.Path
-                                };
-
-                                bool Result = dialog.ShowDialog(Program.ApplicationRoot.MainWindow.Handle);
-
-                                if (Result)
-                                {
-                                    DownloadFolder = await StorageFolder.GetFolderFromPathAsync(dialog.Path);
-                                    DownloadOptionsService.SetFolder(DownloadFolder);
-                                }
+                                new FolderPickerNotification(this).Show();
                             }
                             break;
                         }
