@@ -402,4 +402,13 @@
   <data name="SearchNeedReboot" xml:space="preserve">
     <value>{0} The application has been installed. Some changes need to be restarted to take effect. Do you need to restart the device?</value>
   </data>
+  <data name="AppRunning" xml:space="preserve">
+    <value>The application is running</value>
+  </data>
+  <data name="ElevatedRunning" xml:space="preserve">
+    <value>It is detected that the application may run as an administrator and some functions may be restricted. Please run the application as a common user</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>GetStoreApp</value>
+  </data>
 </root>

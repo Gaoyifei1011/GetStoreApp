@@ -69,20 +69,20 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <DebugType>portable</DebugType>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <ApplicationDefinition Update="App.xaml">
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    
+
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    
+
     <Content Include="$(TargetDir)\Microsoft.Management.Deployment.winmd" ExcludeFromSingleFile="true" Link="Microsoft.Management.Deployment.winmd" CopyToOutputDirectory="Always" />
-    
+
     <Content Remove="Assets\ControlIcon\About.png" />
     <Content Remove="Assets\ControlIcon\Download.png" />
     <Content Remove="Assets\ControlIcon\History.png" />
@@ -99,12 +99,12 @@
     <Content Update="Assets\Images\Jumplist.png" CopyToOutputDirectory="Always" />
 
     <CsWinRTInputs Include="$(TargetDir)\Microsoft.Management.Deployment.winmd" />
-    
+
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    
+
     <Manifest Include="$(ApplicationManifest)" />
 
     <None Include="Assets\ControlIcon\About.png" CopyToOutputDirectory="Never" />
@@ -124,7 +124,7 @@
     <None Remove="Styles\Pivot.xaml" />
     <None Remove="Styles\ScrollBar.xaml" />
     <None Remove="Styles\SplitButton.xaml" />
-    
+
     <None Remove="UI\Controls\About\HeaderControl.xaml" />
     <None Remove="UI\Controls\About\InstructionsControl.xaml" />
     <None Remove="UI\Controls\About\IntroductionControl.xaml" />
@@ -132,29 +132,29 @@
     <None Remove="UI\Controls\About\ReferenceControl.xaml" />
     <None Remove="UI\Controls\About\SettingsHelpControl.xaml" />
     <None Remove="UI\Controls\About\ThanksControl.xaml" />
-    
+
     <None Remove="UI\Controls\Download\CompletedControl.xaml" />
     <None Remove="UI\Controls\Download\DownloadingControl.xaml" />
     <None Remove="UI\Controls\Download\UnfinishedControl.xaml" />
-    
+
     <None Remove="UI\Controls\Settings\Advanced\ExperimentalFeaturesControl.xaml" />
     <None Remove="UI\Controls\Settings\Advanced\InstallModeControl.xaml" />
     <None Remove="UI\Controls\Settings\Advanced\LogControl.xaml" />
     <None Remove="UI\Controls\Settings\Advanced\TraceCleanupControl.xaml" />
-    
-    <None Remove="UI\Controls\Settings\Appearance\AlwaysShowBackdropControl.xaml" />    
+
+    <None Remove="UI\Controls\Settings\Appearance\AlwaysShowBackdropControl.xaml" />
     <None Remove="UI\Controls\Settings\Appearance\BackdropControl.xaml" />
     <None Remove="UI\Controls\Settings\Appearance\LanguageControl.xaml" />
     <None Remove="UI\Controls\Settings\Appearance\ThemeControl.xaml" />
     <None Remove="UI\Controls\Settings\Appearance\TopMostControl.xaml" />
-    
+
     <None Remove="UI\Controls\Settings\Common\DownloadOptionsControl.xaml" />
     <None Remove="UI\Controls\Settings\Common\HistoryRecordControl.xaml" />
     <None Remove="UI\Controls\Settings\Common\LinkFilterControl.xaml" />
     <None Remove="UI\Controls\Settings\Common\NotificationControl.xaml" />
     <None Remove="UI\Controls\Settings\Common\RegionControl.xaml" />
     <None Remove="UI\Controls\Settings\Common\WinGetConfigControl.xaml" />
-    
+
     <None Remove="UI\Controls\Settings\Experiment\NetWorkMonitorControl.xaml" />
     <None Remove="UI\Controls\Settings\Experiment\OpenConfigFileControl.xaml" />
 
@@ -162,14 +162,14 @@
     <None Remove="UI\Controls\Store\RequestControl.xaml" />
     <None Remove="UI\Controls\Store\ResultControl.xaml" />
     <None Remove="UI\Controls\Store\StatusBarControl.xaml" />
-    
+
     <None Remove="UI\Controls\Window\AppTitleBarControl.xaml" />
-    
+
     <None Remove="UI\Controls\WinGet\InstalledAppsControl.xaml" />
     <None Remove="UI\Controls\WinGet\SearchAppsControl.xaml" />
     <None Remove="UI\Controls\WinGet\InitializeFailedControl.xaml" />
     <None Remove="UI\Controls\WinGet\UpgradableAppsControl.xaml" />
-    
+
     <None Remove="UI\Dialogs\About\AppInformationDialog.xaml" />
     <None Remove="UI\Dialogs\About\ConsoleStartupArgsDialog.xaml" />
     <None Remove="UI\Dialogs\About\DesktopAppsDialog.xaml" />
@@ -180,17 +180,18 @@
     <None Remove="UI\Dialogs\Common\ClosingWindowDialog.xaml" />
     <None Remove="UI\Dialogs\Common\DeletePromptDialog.xaml" />
     <None Remove="UI\Dialogs\Common\DownloadNotifyDialog.xaml" />
+    <None Remove="UI\Dialogs\Common\ElevatedRunningDialog.xaml" />
     <None Remove="UI\Dialogs\Common\SelectEmptyPromptDialog.xaml" />
 
     <None Remove="UI\Dialogs\Download\FileInformationDialog.xaml" />
     <None Remove="UI\Dialogs\Download\InstallingNotifyDialog.xaml" />
-    
+
     <None Remove="UI\Dialogs\Settings\ExperimentalConfigDialog.xaml" />
     <None Remove="UI\Dialogs\Settings\RestartAppsDialog.xaml" />
     <None Remove="UI\Dialogs\Settings\TraceCleanupPromptDialog.xaml" />
-    
+
     <None Remove="UI\Dialogs\WinGet\RebootDialog.xaml" />
-    
+
     <None Remove="UI\Notifications\AppInformationCopyNotification.xaml" />
     <None Remove="UI\Notifications\DownloadCreateNotification.xaml" />
     <None Remove="UI\Notifications\ExceptionCopyNotification.xaml" />
@@ -206,19 +207,19 @@
     <None Remove="UI\Notifications\ResultLinkCopyNotification.xaml" />
     <None Remove="UI\Notifications\ShareFailedNotification.xaml" />
     <None Remove="UI\Notifications\WinGetCopyNotification.xaml" />
-    
+
     <None Remove="Views\Pages\AboutPage.xaml" />
     <None Remove="Views\Pages\DownloadPage.xaml" />
     <None Remove="Views\Pages\HistoryPage.xaml" />
     <None Remove="Views\Pages\SettingsPage.xaml" />
     <None Remove="Views\Pages\StorePage.xaml" />
     <None Remove="Views\Pages\WinGetPage.xaml" />
-    
+
     <None Remove="Views\Windows\MainWindow.xaml" />
 
     <None Update="Assets\Resources\LICENSE" CopyToOutputDirectory="Never" />
     <None Update="Mile.Aria2.conf" CopyToOutputDirectory="Never" />
-    
+
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.3" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.230628000-preview1" />
     <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.5.1572">
@@ -226,6 +227,7 @@
       <IncludeAssets>none</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Mile.Aria2" Version="1.0.66" />
+
     <Page Update="Styles\DropDownButton.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\Flyout.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\HyperlinkButton.xaml" Generator="MSBuild:Compile" />
@@ -236,7 +238,7 @@
     <Page Update="Styles\Pivot.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\ScrollBar.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\SplitButton.xaml" Generator="MSBuild:Compile" />
-    
+
     <Page Update="UI\Controls\About\HeaderControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\About\InstructionsControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\About\IntroductionControl.xaml" Generator="MSBuild:Compile" />
@@ -290,15 +292,16 @@
     <Page Update="UI\Dialogs\Common\ClosingWindowDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\Common\DeletePromptDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\Common\DownloadNotifyDialog.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Dialogs\Common\ElevatedRunningDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\Common\SelectEmptyPromptDialog.xaml" Generator="MSBuild:Compile" />
 
     <Page Update="UI\Dialogs\Download\FileInformationDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\Download\InstallingNotifyDialog.xaml" Generator="MSBuild:Compile" />
-    
+
     <Page Update="UI\Dialogs\Settings\ExperimentalConfigDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\Settings\RestartAppsDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\Settings\TraceCleanupPromptDialog.xaml" Generator="MSBuild:Compile" />
-    
+
     <Page Update="UI\Dialogs\WinGet\RebootDialog.xaml" Generator="MSBuild:Compile" />
 
     <Page Update="UI\Notifications\AppInformationCopyNotification.xaml" Generator="MSBuild:Compile" />
@@ -323,7 +326,7 @@
     <Page Update="Views\Pages\SettingsPage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\StorePage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\WinGetPage.xaml" Generator="MSBuild:Compile" />
-    
+
     <Page Update="Views\Windows\MainWindow.xaml" Generator="MSBuild:Compile" />
 
     <TrimmableAssembly Include="Microsoft.InteractiveExperiences.Projection" />
@@ -345,5 +348,9 @@
 
   <Target Name="CopyWinmdToTargetDir" BeforeTargets="BeforeBuild">
     <Copy SourceFiles="$(PkgMicrosoft_WindowsPackageManager_ComInterop)\lib\Microsoft.Management.Deployment.winmd" DestinationFolder="$(TargetDir)" />
+  </Target>
+
+  <Target Name="DigitialSignGeneratedExeFile" AfterTargets="GenerateSingleFileBundle" DependsOnTargets="PrepareForBundle">
+    <Exec Command="$(ProjectDir)signtool.exe sign /f $(SolutionDir)$(AssemblyName)Package\$(AssemblyName)Package_SignKey.pfx /t http://timestamp.digicert.com /fd SHA256 $(ProjectDir)$(BaseOutputPath)$(Platform)\$(Configuration)\$(TargetFramework)\win10-$(Platform)\$(RuntimeIdentifier)\msixpublish\GetStoreApp.exe" />
   </Target>
 </Project>

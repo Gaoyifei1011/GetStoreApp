@@ -4,16 +4,14 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.About;
 using GetStoreApp.UI.Notifications;
-using GetStoreApp.WindowsAPI.ComTypes;
-using GetStoreApp.WindowsAPI.PInvoke.Ole32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
+using Windows.ApplicationModel.Store.Preview;
 using Windows.Foundation;
 using Windows.System;
 using Windows.UI.Shell;
@@ -26,12 +24,6 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class AboutPage : Page
     {
-        private static readonly Guid CLSID_ShellLink = new Guid("00021401-0000-0000-C000-000000000046");
-
-        // COM接口：IUnknown 接口
-
-        private static readonly Guid IID_IUnknown = new Guid("00000000-0000-0000-C000-000000000046");
-
         private AppNaviagtionArgs AboutNavigationArgs { get; set; } = AppNaviagtionArgs.None;
 
         public AboutPage()
@@ -55,34 +47,15 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 创建应用的桌面快捷方式
         /// </summary>
-        public async void OnCreateDesktopShortcutClicked(object sender, RoutedEventArgs args)
+        public void OnCreateDesktopShortcutClicked(object sender, RoutedEventArgs args)
         {
             bool IsCreatedSuccessfully = false;
-            IShellLink AppLink = null;
 
             try
             {
-                unsafe
+                if (StoreConfiguration.IsPinToDesktopSupported())
                 {
-                    fixed (Guid* CLSID_ShellLink_Ptr = &CLSID_ShellLink, IID_IUnknown_Ptr = &IID_IUnknown)
-                    {
-                        Ole32Library.CoCreateInstance(CLSID_ShellLink_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, IID_IUnknown_Ptr, out IntPtr obj);
-
-                        if (obj != IntPtr.Zero)
-                        {
-                            AppLink = (IShellLink)Marshal.GetTypedObjectForIUnknown(obj, typeof(IShellLink));
-                        }
-                    }
-                }
-
-                if (AppLink is not null)
-                {
-                    IReadOnlyList<AppListEntry> AppEntries = await Package.Current.GetAppListEntriesAsync();
-                    AppListEntry DefaultEntry = AppEntries[0];
-                    AppLink.SetPath(string.Format(@"shell:AppsFolder\{0}", DefaultEntry.AppUserModelId));
-
-                    IPersistFile PersistFile = (IPersistFile)AppLink;
-                    PersistFile.Save(string.Format(@"{0}\{1}.lnk", InfoHelper.UserDataPath.Desktop, ResourceService.GetLocalized("Resources/AppDisplayName")), false);
+                    StoreConfiguration.PinToDesktop(Package.Current.Id.FamilyName);
                     IsCreatedSuccessfully = true;
                 }
             }
@@ -93,10 +66,6 @@ namespace GetStoreApp.Views.Pages
             finally
             {
                 new QuickOperationNotification(this, QuickOperationType.DesktopShortcut, IsCreatedSuccessfully).Show();
-                if (AppLink is not null)
-                {
-                    Marshal.FinalReleaseComObject(AppLink);
-                }
             }
         }
 

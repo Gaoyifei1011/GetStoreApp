@@ -201,6 +201,14 @@ namespace GetStoreApp.Views.Windows
                 newDragAreaWindowWndProc = new WNDPROC(NewDragAreaWindowProc);
                 oldDragAreaWindowWndProc = SetWindowLongAuto(childHandle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newDragAreaWindowWndProc));
             }
+
+            if (RuntimeHelper.IsElevated)
+            {
+                DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, async () =>
+                {
+                    await ContentDialogHelper.ShowAsync(new ElevatedRunningDialog(), Content.As<FrameworkElement>());
+                });
+            }
         }
 
         /// <summary>

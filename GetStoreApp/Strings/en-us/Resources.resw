@@ -153,14 +153,8 @@
   <data name="URL" xml:space="preserve">
     <value>URL(Link)</value>
   </data>
-  <data name="AppIsRunning" xml:space="preserve">
-    <value>The application is running.</value>
-  </data>
   <data name="ProtocolName" xml:space="preserve">
     <value>GetStoreApp Desktop App</value>
-  </data>
-  <data name="OK" xml:space="preserve">
-    <value>OK</value>
   </data>
   <data name="SystemBackdropControllerInitializeFailed" xml:space="preserve">
     <value>The app's sytstem backdrop controller failed to initialize</value>

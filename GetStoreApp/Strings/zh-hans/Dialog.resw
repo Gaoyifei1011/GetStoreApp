@@ -402,4 +402,13 @@
   <data name="SearchNeedReboot" xml:space="preserve">
     <value>{0}应用已安装完成，部分更改需要重启后生效，请问您是否需要重启设备？</value>
   </data>
+  <data name="AppRunning" xml:space="preserve">
+    <value>应用程序正在运行中</value>
+  </data>
+  <data name="ElevatedRunning" xml:space="preserve">
+    <value>检测到应用程序可能以管理员身份运行，部分功能可能会受到限制，请以普通用户身份运行应用程序</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>获取商店应用</value>
+  </data>
 </root>

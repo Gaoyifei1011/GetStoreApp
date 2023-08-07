@@ -1,5 +1,5 @@
 <ContentDialog
-    x:Class="GetStoreApp.UI.Dialogs.Common.AppRunningDialog"
+    x:Class="GetStoreApp.UI.Dialogs.Common.ElevatedRunningDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,6 +8,6 @@
     Title="{x:Bind root:ResourceService.GetLocalized('Dialog/AppName')}"
     BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
     CloseButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/OK')}"
-    Content="{x:Bind root:ResourceService.GetLocalized('Dialog/AppRunning')}"
+    Content="{x:Bind root:ResourceService.GetLocalized('Dialog/ElevatedRunning')}"
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d" />
