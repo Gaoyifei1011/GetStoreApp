@@ -26,7 +26,7 @@
             Source="ms-appx:///Assets/Square44x44Logo.altform-unplated_targetsize-256.png" />
         <TextBlock
             Grid.Column="1"
-            Margin="14,2,0,0"
+            Margin="13,2,0,0"
             VerticalAlignment="Center"
             Style="{StaticResource CaptionTextBlockStyle}"
             Text="{x:Bind root:ResourceService.GetLocalized('Window/AppTitle')}"

@@ -265,6 +265,7 @@ namespace GetStoreApp.UI.Controls.Store
             {
                 resultItem.IsSelected = false;
                 resultInstance.ResultDataList.Add(resultItem);
+                await Task.Delay(1);
             }
 
             // 成功状态下更新历史记录

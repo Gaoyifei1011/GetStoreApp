@@ -163,6 +163,7 @@
 
                 <Grid
                     Grid.Row="0"
+                    Height="60"
                     Margin="30,0"
                     Padding="16,12"
                     Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"

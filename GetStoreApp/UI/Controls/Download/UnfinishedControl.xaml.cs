@@ -476,7 +476,7 @@ namespace GetStoreApp.UI.Controls.Download
                 });
             });
 
-            FailureDownloadRawList.ForEach(downloadItem =>
+            FailureDownloadRawList.ForEach(async downloadItem =>
             {
                 UnfinishedDataList.Add(new UnfinishedModel
                 {
@@ -488,6 +488,7 @@ namespace GetStoreApp.UI.Controls.Download
                     TotalSize = downloadItem.TotalSize,
                     DownloadFlag = downloadItem.DownloadFlag
                 });
+                await Task.Delay(1);
             });
 
             lock (UnfinishedDataListLock) isUpdatingNow = false;

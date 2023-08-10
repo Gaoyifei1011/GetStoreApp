@@ -454,7 +454,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 }
                 await Task.Delay(500);
                 await GetUpgradableAppsAsync();
-                InitializeData();
+                await InitializeDataAsync();
                 if (MatchResultList is null || MatchResultList.Count is 0)
                 {
                     IsUpgradableAppsEmpty = true;
@@ -477,7 +477,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             IsLoadedCompleted = false;
             await Task.Delay(500);
             await GetUpgradableAppsAsync();
-            InitializeData();
+            await InitializeDataAsync();
             if (MatchResultList is null || MatchResultList.Count is 0)
             {
                 IsUpgradableAppsEmpty = true;
@@ -534,7 +534,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
-        private void InitializeData()
+        private async Task InitializeDataAsync()
         {
             UpgradableAppsDataList.Clear();
             if (MatchResultList is not null)
@@ -559,6 +559,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         AppNewestVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Version) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.Version,
                         IsUpgrading = isUpgrading
                     });
+                    await Task.Delay(1);
                 }
             }
         }

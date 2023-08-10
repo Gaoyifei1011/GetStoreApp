@@ -443,7 +443,11 @@ namespace GetStoreApp.Views.Pages
             // 保证线程安全
             lock (HistoryDataListLock)
             {
-                HistoryRawList.ForEach(HistoryDataList.Add);
+                HistoryRawList.ForEach(async (item) =>
+                {
+                    HistoryDataList.Add(item);
+                    await Task.Delay(1);
+                });
             }
 
             IsLoadedCompleted = true;

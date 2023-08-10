@@ -149,6 +149,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="winget:UpgradableAppsModel">
                     <Grid
+                        Height="60"
                         Padding="16,12"
                         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"

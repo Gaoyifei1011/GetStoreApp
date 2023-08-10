@@ -79,19 +79,6 @@ namespace GetStoreApp.Views.Windows
             }
         }
 
-        private Thickness _appTitleBarMargin;
-
-        public Thickness AppTitleBarMargin
-        {
-            get { return _appTitleBarMargin; }
-
-            set
-            {
-                _appTitleBarMargin = value;
-                OnPropertyChanged();
-            }
-        }
-
         private bool _isBackEnabled;
 
         public bool IsBackEnabled
@@ -101,19 +88,6 @@ namespace GetStoreApp.Views.Windows
             set
             {
                 _isBackEnabled = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _isPaneToggleButtonVisible;
-
-        public bool IsPaneToggleButtonVisible
-        {
-            get { return _isPaneToggleButtonVisible; }
-
-            set
-            {
-                _isPaneToggleButtonVisible = value;
                 OnPropertyChanged();
             }
         }
@@ -147,9 +121,10 @@ namespace GetStoreApp.Views.Windows
         private Dictionary<string, Type> PageDict { get; } = new Dictionary<string, Type>()
         {
             {"Store",typeof(StorePage) },
-            {"WinGet",typeof(WinGetPage) },
             {"History",typeof(HistoryPage) },
             {"Download",typeof(DownloadPage) },
+            {"WinGet",typeof(WinGetPage) },
+            {"PackageManager",typeof(PackageManagerPage) },
             {"Web",typeof(Page) },
             {"About",typeof(AboutPage) },
             {"Settings",typeof(SettingsPage) }
@@ -158,9 +133,10 @@ namespace GetStoreApp.Views.Windows
         public List<string> TagList { get; } = new List<string>()
         {
             "Store",
-            "WinGet",
             "History",
             "Download",
+            "WinGet",
+            "PackageManager",
             "Web",
             "About",
             "Settings"
@@ -259,7 +235,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         public void OnSizeChanged(object sender, WindowSizeChangedEventArgs args)
         {
-            PaneDisplayMode = args.Size.Width > 768 ? NavigationViewPaneDisplayMode.Left : NavigationViewPaneDisplayMode.LeftMinimal;
+            PaneDisplayMode = args.Size.Width > 768 ? NavigationViewPaneDisplayMode.Left : NavigationViewPaneDisplayMode.LeftCompact;
             if (AppTitlebar.TitlebarMenuFlyout.IsOpen)
             {
                 AppTitlebar.TitlebarMenuFlyout.Hide();
@@ -362,31 +338,6 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
-        /// 当后退按钮收到交互（如单击或点击）时发生
-        /// </summary>
-        public void OnBackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
-        {
-            NavigationService.NavigationFrom();
-        }
-
-        /// <summary>
-        /// 导航控件显示方式发生变化时触发的事件
-        /// </summary>
-        public void OnDisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)
-        {
-            if (args.DisplayMode is NavigationViewDisplayMode.Expanded)
-            {
-                IsPaneToggleButtonVisible = false;
-                AppTitleBarMargin = new Thickness(48, 0, 0, 0);
-            }
-            else
-            {
-                IsPaneToggleButtonVisible = true;
-                AppTitleBarMargin = new Thickness(96, 0, 0, 0);
-            }
-        }
-
-        /// <summary>
         /// 当菜单中的项收到交互（如单击或点击）时发生
         /// </summary>
         public async void OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
@@ -466,6 +417,14 @@ namespace GetStoreApp.Views.Windows
         public void OnNavigationViewUnLoaded(object sender, RoutedEventArgs args)
         {
             AppUISettings.ColorValuesChanged -= OnColorValuesChanged;
+        }
+
+        /// <summary>
+        /// 当后退按钮收到交互（如单击或点击）时发生
+        /// </summary>
+        public void OnBackRequestedClicked(object sender, RoutedEventArgs args)
+        {
+            NavigationService.NavigationFrom();
         }
 
         /// <summary>
@@ -667,8 +626,8 @@ namespace GetStoreApp.Views.Windows
                         if (Content is not null && Content.XamlRoot is not null)
                         {
                             MINMAXINFO minMaxInfo = Marshal.PtrToStructure<MINMAXINFO>(lParam);
-                            minMaxInfo.ptMinTrackSize.X = (int)(600 * Content.XamlRoot.RasterizationScale);
-                            minMaxInfo.ptMinTrackSize.Y = (int)(768 * Content.XamlRoot.RasterizationScale);
+                            minMaxInfo.ptMinTrackSize.X = (int)(960 * Content.XamlRoot.RasterizationScale);
+                            minMaxInfo.ptMinTrackSize.Y = (int)(600 * Content.XamlRoot.RasterizationScale);
                             Marshal.StructureToPtr(minMaxInfo, lParam, true);
                         }
 

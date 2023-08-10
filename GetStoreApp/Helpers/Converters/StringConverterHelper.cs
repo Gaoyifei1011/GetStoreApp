@@ -3,6 +3,8 @@ using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
+using Windows.ApplicationModel;
+using WinRT;
 
 namespace GetStoreApp.Helpers.Converters
 {
@@ -52,6 +54,11 @@ namespace GetStoreApp.Helpers.Converters
             {
                 return ResourceService.GetLocalized(string.Format("/{0}/UnselectedToolTip", content));
             }
+        }
+
+        public static string DateTimeOffsetFormat(DateTimeOffset dateTime)
+        {
+            return dateTime.ToString("yyyy/mm/dd HH:mm");
         }
 
         /// <summary>
@@ -118,6 +125,42 @@ namespace GetStoreApp.Helpers.Converters
         public static string InstallValueFormat(double content)
         {
             return string.Format(ResourceService.GetLocalized("Download/InstallValue"), content);
+        }
+
+        /// <summary>
+        /// 应用管理描述信息格式化
+        /// </summary>
+        public static string PackageManagerToolTipFormat(object content, string type)
+        {
+            if (type is "DisplayName")
+            {
+                return string.Format(ResourceService.GetLocalized("PackageManager/DisplayNameToolTip"), content);
+            }
+            else if (type is "Publisher")
+            {
+                return string.Format(ResourceService.GetLocalized("PackageManager/PublisherToolTip"), content);
+            }
+            else if (type is "Version")
+            {
+                PackageVersion version = content.As<PackageVersion>();
+                return string.Format(ResourceService.GetLocalized("PackageManager/VersionToolTip"), version.Major, version.Minor, version.Build, version.Revision);
+            }
+            else if (type is "InstalledDate")
+            {
+                return string.Format(ResourceService.GetLocalized("PackageManager/InstallDateToolTip"), content.As<DateTimeOffset>().ToString("yyyy/mm/dd HH:mm"));
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// 应用版本号格式化
+        /// </summary>
+        public static string PackageVersionFormat(PackageVersion packageVersion)
+        {
+            return string.Format("{0}.{1}.{2}.{3}", packageVersion.Major, packageVersion.Minor, packageVersion.Build, packageVersion.Revision);
         }
 
         /// <summary>

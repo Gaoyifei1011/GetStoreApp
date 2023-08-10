@@ -18,10 +18,10 @@ namespace GetStoreApp.Views.Pages
             InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs args)
+        protected override async void OnNavigatedTo(NavigationEventArgs args)
         {
             base.OnNavigatedTo(args);
-            Downloading.StartDownloadingTimer();
+            await Downloading.StartDownloadingTimerAsync();
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs args)
@@ -44,7 +44,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     if (pivot.SelectedIndex is 0)
                     {
-                        Downloading.StartDownloadingTimer();
+                        await Downloading.StartDownloadingTimerAsync();
                     }
                     else if (pivot.SelectedIndex is 1)
                     {

@@ -31,7 +31,7 @@
     <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
     <SelfContained>false</SelfContained>
     <StartupObject>GetStoreApp.Program</StartupObject>
-    <TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
+    <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19044.0</TargetPlatformMinVersion>
     <TrimMode>partial</TrimMode>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
@@ -121,6 +121,7 @@
     <None Remove="Styles\InfoBar.xaml" />
     <None Remove="Styles\ListView.xaml" />
     <None Remove="Styles\MenuFlyout.xaml" />
+    <None Remove="Styles\NavigationView.xaml" />
     <None Remove="Styles\Pivot.xaml" />
     <None Remove="Styles\ScrollBar.xaml" />
     <None Remove="Styles\SplitButton.xaml" />
@@ -211,6 +212,7 @@
     <None Remove="Views\Pages\AboutPage.xaml" />
     <None Remove="Views\Pages\DownloadPage.xaml" />
     <None Remove="Views\Pages\HistoryPage.xaml" />
+    <None Remove="Views\Pages\PackageManagerPage.xaml" />
     <None Remove="Views\Pages\SettingsPage.xaml" />
     <None Remove="Views\Pages\StorePage.xaml" />
     <None Remove="Views\Pages\WinGetPage.xaml" />
@@ -235,6 +237,7 @@
     <Page Update="Styles\InfoBar.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\ListView.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\MenuFlyout.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\NavigationView.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\Pivot.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\ScrollBar.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\SplitButton.xaml" Generator="MSBuild:Compile" />
@@ -323,6 +326,7 @@
     <Page Update="Views\Pages\AboutPage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\DownloadPage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\HistoryPage.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Views\Pages\PackageManagerPage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\SettingsPage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\StorePage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\WinGetPage.xaml" Generator="MSBuild:Compile" />

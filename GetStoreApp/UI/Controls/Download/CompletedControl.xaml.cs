@@ -681,6 +681,7 @@ namespace GetStoreApp.UI.Controls.Download
                     TotalSize = downloadRawData.TotalSize,
                     DownloadFlag = downloadRawData.DownloadFlag
                 });
+                await Task.Delay(1);
             }
 
             lock (CompletedDataListLock) isUpdatingNow = false;

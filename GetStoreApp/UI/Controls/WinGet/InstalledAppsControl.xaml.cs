@@ -213,7 +213,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 }
                 await Task.Delay(500);
                 await GetInstalledAppsAsync();
-                InitializeData();
+                await InitializeDataAsync();
                 IsInstalledAppsEmpty = MatchResultList.Count is 0;
                 IsLoadedCompleted = true;
                 isInitialized = true;
@@ -230,7 +230,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             SearchText = string.Empty;
             await Task.Delay(500);
             await GetInstalledAppsAsync();
-            InitializeData();
+            await InitializeDataAsync();
             IsInstalledAppsEmpty = MatchResultList.Count is 0;
             IsLoadedCompleted = true;
         }
@@ -238,21 +238,21 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 根据输入的内容检索应用
         /// </summary>
-        public void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        public async void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            InitializeData(true);
+            await InitializeDataAsync(true);
         }
 
         /// <summary>
         /// 文本输入框内容为空时，复原原来的内容
         /// </summary>
-        public void OnInstalledAppsPropertyChanged(object sender, PropertyChangedEventArgs args)
+        public async void OnInstalledAppsPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
             if (args.PropertyName == nameof(SearchText))
             {
                 if (SearchText == string.Empty && MatchResultList is not null)
                 {
-                    InitializeData();
+                    await InitializeDataAsync();
                 }
             }
         }
@@ -297,7 +297,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 初始化列表数据
         /// </summary>
-        private void InitializeData(bool hasSearchText = false)
+        private async Task InitializeDataAsync(bool hasSearchText = false)
         {
             InstalledAppsDataList.Clear();
             if (MatchResultList is not null)
@@ -315,6 +315,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                 AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Publisher) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.Publisher,
                                 AppVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Version) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.Version,
                             });
+                            await Task.Delay(1);
                         }
                     }
                 }
@@ -329,6 +330,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Publisher) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.Publisher,
                             AppVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Version) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.Version,
                         });
+                        await Task.Delay(1);
                     }
                 }
             }

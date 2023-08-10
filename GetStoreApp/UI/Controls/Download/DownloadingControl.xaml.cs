@@ -326,9 +326,9 @@ namespace GetStoreApp.UI.Controls.Download
         /// <summary>
         /// 开始运行下载计时器，并获取下载任务信息
         /// </summary>
-        public void StartDownloadingTimer()
+        public async Task StartDownloadingTimerAsync()
         {
-            GetDownloadingDataList();
+            await GetDownloadingDataListAsync();
             DownloadingTimer.Start();
         }
 
@@ -363,7 +363,7 @@ namespace GetStoreApp.UI.Controls.Download
         /// <summary>
         /// 从下载调度服务中获取正在下载和等待下载的数据
         /// </summary>
-        private void GetDownloadingDataList()
+        private async Task GetDownloadingDataListAsync()
         {
             // 有信息在更新时，等待操作
             lock (DownloadingNowLock) IsUpdatingNow = true;
@@ -382,6 +382,7 @@ namespace GetStoreApp.UI.Controls.Download
                     TotalSize = downloadItem.TotalSize,
                     DownloadFlag = downloadItem.DownloadFlag
                 });
+                await Task.Delay(1);
             }
 
             foreach (BackgroundModel downloadItem in DownloadSchedulerService.WaitingList)
@@ -396,6 +397,7 @@ namespace GetStoreApp.UI.Controls.Download
                     TotalSize = downloadItem.TotalSize,
                     DownloadFlag = downloadItem.DownloadFlag
                 });
+                await Task.Delay(1);
             }
 
             // 有信息在更新时，等待操作

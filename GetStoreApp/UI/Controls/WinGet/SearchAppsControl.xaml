@@ -138,6 +138,7 @@
         <Grid
             x:Name="SearchingGrid"
             Grid.Row="0"
+            Height="60"
             Margin="30,3,30,0"
             Padding="16,12"
             x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsSearchCompleted), Mode=OneWay}"

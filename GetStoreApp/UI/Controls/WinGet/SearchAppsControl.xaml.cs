@@ -481,7 +481,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 return;
             }
             await GetSearchAppsAsync();
-            InitializeData();
+            await InitializeDataAsync();
             IsSearchCompleted = true;
         }
 
@@ -500,7 +500,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 return;
             }
             await GetSearchAppsAsync();
-            InitializeData();
+            await InitializeDataAsync();
             IsSearchCompleted = true;
         }
 
@@ -546,7 +546,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 初始化列表数据
         /// </summary>
-        public void InitializeData()
+        public async Task InitializeDataAsync()
         {
             SearchAppsDataList.Clear();
             if (MatchResultList is not null)
@@ -572,6 +572,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             AppVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Version) || matchItem.CatalogPackage.DefaultInstallVersion.Version.Equals("Unknown", StringComparison.OrdinalIgnoreCase) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.Version,
                             IsInstalling = isInstalling,
                         });
+                        await Task.Delay(1);
                     }
                 }
             }

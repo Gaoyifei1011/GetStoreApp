@@ -117,61 +117,85 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="About" xml:space="preserve">
-    <value>About</value>
+  <data name="DisplayNameToolTip" xml:space="preserve">
+    <value>App name: {0}</value>
   </data>
-  <data name="AppTitle" xml:space="preserve">
-    <value>GetStoreApp</value>
+  <data name="FastOperatinToolTip" xml:space="preserve">
+    <value>View fast operation options</value>
   </data>
-  <data name="Back" xml:space="preserve">
-    <value>Back</value>
+  <data name="Filter" xml:space="preserve">
+    <value>Filter</value>
   </data>
-  <data name="Close" xml:space="preserve">
-    <value>Close</value>
+  <data name="FilterToolTip" xml:space="preserve">
+    <value>Filter according to the rules</value>
   </data>
-  <data name="Download" xml:space="preserve">
-    <value>Download Management</value>
+  <data name="InstallDateToolTip" xml:space="preserve">
+    <value>Installed date: {0}</value>
   </data>
-  <data name="History" xml:space="preserve">
-    <value>History Record</value>
+  <data name="LoadingPackage" xml:space="preserve">
+    <value>Please wait while loading the list of installed applications...</value>
   </data>
-  <data name="JumpListGroupName" xml:space="preserve">
-    <value>History Record</value>
+  <data name="OpenApp" xml:space="preserve">
+    <value>Open app</value>
   </data>
-  <data name="Maximize" xml:space="preserve">
-    <value>Maximize</value>
+  <data name="OpenInstalledFolder" xml:space="preserve">
+    <value>Open installed folder</value>
   </data>
-  <data name="Minimize" xml:space="preserve">
-    <value>Minimize</value>
+  <data name="OpenManifest" xml:space="preserve">
+    <value>Open app manifest</value>
   </data>
-  <data name="Move" xml:space="preserve">
-    <value>Move</value>
+  <data name="OpenSettings" xml:space="preserve">
+    <value>Open settings</value>
   </data>
-  <data name="NavigationFailed" xml:space="preserve">
-    <value>Page {0} navigation failed</value>
+  <data name="OpenStore" xml:space="preserve">
+    <value>Open Microsoft Store</value>
   </data>
-  <data name="NavigationViewTitle" xml:space="preserve">
-    <value>NavigationView</value>
+  <data name="Operation" xml:space="preserve">
+    <value>Operation</value>
   </data>
-  <data name="PackageManager" xml:space="preserve">
-    <value>Package Manager</value>
+  <data name="PackageCountInfo" xml:space="preserve">
+    <value>There are {0} installed apps</value>
   </data>
-  <data name="Restore" xml:space="preserve">
-    <value>Restore</value>
+  <data name="PackageEmpty" xml:space="preserve">
+    <value>There is no installed apps</value>
   </data>
-  <data name="Settings" xml:space="preserve">
-    <value>Settings</value>
+  <data name="PackageEmptyDescription" xml:space="preserve">
+    <value>There is no app on your device</value>
   </data>
-  <data name="Size" xml:space="preserve">
-    <value>Size</value>
+  <data name="PackageEmptyWithConditionDescription" xml:space="preserve">
+    <value>There are no apps on your device that match the conditions</value>
   </data>
-  <data name="Store" xml:space="preserve">
-    <value>Microsoft Store</value>
+  <data name="PlaceHolderText" xml:space="preserve">
+    <value>Search installed apps</value>
   </data>
-  <data name="Web" xml:space="preserve">
-    <value>Open Browser</value>
+  <data name="PublisherToolTip" xml:space="preserve">
+    <value>Publisher: {0}</value>
   </data>
-  <data name="WinGet" xml:space="preserve">
-    <value>WinGet Package</value>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="RefreshToolTip" xml:space="preserve">
+    <value>Refresh the installed apps data</value>
+  </data>
+  <data name="Sort" xml:space="preserve">
+    <value>Sort</value>
+  </data>
+  <data name="SortToolTip" xml:space="preserve">
+    <value>Sort according to the rules</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Package manager</value>
+  </data>
+  <data name="UnInstall" xml:space="preserve">
+    <value>Uninstall</value>
+  </data>
+  <data name="VersionToolTip" xml:space="preserve">
+    <value>Version: {0}.{1}.{2}.{3}</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="ViewToolTip" xml:space="preserve">
+    <value>View app more information</value>
   </data>
 </root>

@@ -141,5 +141,10 @@ namespace GetStoreApp.Services.Root
                 return false;
             }
         }
+
+        internal static void WriteLog(object eRROR)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
