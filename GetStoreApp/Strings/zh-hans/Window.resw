@@ -153,9 +153,6 @@
   <data name="NavigationViewTitle" xml:space="preserve">
     <value>导航视图</value>
   </data>
-  <data name="PackageManager" xml:space="preserve">
-    <value>应用管理</value>
-  </data>
   <data name="Restore" xml:space="preserve">
     <value>还原</value>
   </data>
@@ -167,6 +164,9 @@
   </data>
   <data name="Store" xml:space="preserve">
     <value>微软商店</value>
+  </data>
+  <data name="UWPApp" xml:space="preserve">
+    <value>应用管理</value>
   </data>
   <data name="Web" xml:space="preserve">
     <value>打开网页</value>

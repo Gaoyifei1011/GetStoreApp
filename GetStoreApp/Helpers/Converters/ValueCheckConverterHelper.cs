@@ -79,5 +79,13 @@ namespace GetStoreApp.Helpers.Converters
         {
             return value == checkValue;
         }
+
+        /// <summary>
+        /// 检测当前页面是否为应用列表页面
+        /// </summary>
+        public static Visibility IsAppListPageCheck(int count)
+        {
+            return count is 1 ? Visibility.Visible : Visibility.Collapsed;
+        }
     }
 }

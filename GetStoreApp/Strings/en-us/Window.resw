@@ -153,9 +153,6 @@
   <data name="NavigationViewTitle" xml:space="preserve">
     <value>NavigationView</value>
   </data>
-  <data name="PackageManager" xml:space="preserve">
-    <value>Package Manager</value>
-  </data>
   <data name="Restore" xml:space="preserve">
     <value>Restore</value>
   </data>
@@ -167,6 +164,9 @@
   </data>
   <data name="Store" xml:space="preserve">
     <value>Microsoft Store</value>
+  </data>
+  <data name="UWPApp" xml:space="preserve">
+    <value>Package Manager</value>
   </data>
   <data name="Web" xml:space="preserve">
     <value>Open Browser</value>

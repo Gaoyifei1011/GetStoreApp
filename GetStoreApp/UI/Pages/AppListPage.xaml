@@ -1,23 +1,22 @@
 <Page
-    x:Class="GetStoreApp.Views.Pages.PackageManagerPage"
+    x:Class="GetStoreApp.UI.Pages.AppListPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:basicInput="using:GetStoreApp.Views.CustomControls.BasicInput"
     xmlns:controlExtensions="using:GetStoreApp.Helpers.Controls.Extensions"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:packageManager="using:GetStoreApp.Models.Controls.PackageManager"
     xmlns:root="using:GetStoreApp.Services.Root"
-    x:Name="PackageManagerRoot"
+    xmlns:uwpApp="using:GetStoreApp.Models.Controls.UWPApp"
+    x:Name="AppListRoot"
     Loaded="{x:Bind OnLoaded}"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
-    <Grid Padding="0">
-
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -25,45 +24,6 @@
 
         <Grid
             Grid.Row="0"
-            Margin="30,15,30,0"
-            ColumnSpacing="5">
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-
-            <TextBlock
-                Grid.Column="0"
-                FontSize="26"
-                Text="{x:Bind root:ResourceService.GetLocalized('PackageManager/Title')}" />
-
-            <AutoSuggestBox
-                Grid.Column="1"
-                Width="200"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                PlaceholderText="{x:Bind root:ResourceService.GetLocalized('PackageManager/PlaceHolderText')}"
-                QuerySubmitted="{x:Bind OnQuerySubmitted}"
-                Text="{x:Bind SearchText, Mode=TwoWay}">
-
-                <AutoSuggestBox.QueryIcon>
-                    <FontIcon
-                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                        FontSize="14"
-                        Glyph="&#xE71E;" />
-                </AutoSuggestBox.QueryIcon>
-            </AutoSuggestBox>
-
-            <Button
-                Grid.Column="2"
-                Click="{x:Bind OnOpenSettingsClicked}"
-                Content="{x:Bind root:ResourceService.GetLocalized('PackageManager/OpenSettings')}" />
-        </Grid>
-
-        <Grid
-            Grid.Row="1"
             Height="66"
             Margin="30,5,30,0"
             Padding="16,8,2,8"
@@ -90,14 +50,14 @@
             <TextBlock
                 Grid.Column="1"
                 VerticalAlignment="Center"
-                Text="{x:Bind root:ResourceService.GetLocalized('PackageManager/Operation')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/Operation')}" />
             <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
 
             <TextBlock
                 Grid.Column="3"
                 VerticalAlignment="Center"
-                Text="{x:Bind LocalizePackageManagerCountInfo(PackageManagerDataList.Count), Mode=OneWay}"
-                ToolTipService.ToolTip="{x:Bind LocalizePackageManagerCountInfo(PackageManagerDataList.Count), Mode=OneWay}" />
+                Text="{x:Bind LocalizeUWPAppCountInfo(UWPAppDataList.Count), Mode=OneWay}"
+                ToolTipService.ToolTip="{x:Bind LocalizeUWPAppCountInfo(UWPAppDataList.Count), Mode=OneWay}" />
 
             <StackPanel
                 Grid.Column="4"
@@ -112,15 +72,57 @@
                     Click="{x:Bind OnSortClicked}"
                     IsEnabled="{x:Bind IsLoadedCompleted, Mode=OneWay}"
                     Style="{StaticResource AppBarButtonMenuItemStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('PackageManager/Sort')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('PackageManager/SortToolTip')}">
+                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/Sort')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/SortToolTip')}">
 
                     <MenuFlyoutItem.Icon>
                         <FontIcon Glyph="&#xE8CB;" />
                     </MenuFlyoutItem.Icon>
 
                     <FlyoutBase.AttachedFlyout>
-                        <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom" />
+                        <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
+                            <MenuFlyoutSubItem Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/SortWay')}">
+                                <MenuFlyoutSubItem.Style>
+                                    <Style BasedOn="{StaticResource DefaultMenuFlyoutSubItemStyle}" TargetType="MenuFlyoutSubItem">
+                                        <Setter Property="Height" Value="32" />
+                                        <Setter Property="Padding" Value="11,0,11,0" />
+                                    </Style>
+                                </MenuFlyoutSubItem.Style>
+
+                                <ToggleMenuFlyoutItem
+                                    IsChecked="{x:Bind IsIncrease, Mode=OneWay}"
+                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPAPP/SortIncrease')}" />
+
+                                <ToggleMenuFlyoutItem
+                                    IsChecked="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsIncrease), Mode=OneWay}"
+                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPAPP/SortDecrease')}" />
+                            </MenuFlyoutSubItem>
+
+                            <MenuFlyoutSubItem Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/SortRule')}">
+                                <MenuFlyoutSubItem.Style>
+                                    <Style BasedOn="{StaticResource DefaultMenuFlyoutSubItemStyle}" TargetType="MenuFlyoutSubItem">
+                                        <Setter Property="Height" Value="32" />
+                                        <Setter Property="Padding" Value="11,0,11,0" />
+                                    </Style>
+                                </MenuFlyoutSubItem.Style>
+
+                                <ToggleMenuFlyoutItem
+                                    IsChecked="{x:Bind IsItemChecked(SelectedType, enum:AppListRuleSeletedType.PackageName), Mode=OneWay}"
+                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPAPP/SortByDisplayName')}" />
+
+                                <ToggleMenuFlyoutItem
+                                    IsChecked="{x:Bind IsItemChecked(SelectedType, enum:AppListRuleSeletedType.PublisherName), Mode=OneWay}"
+                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPAPP/SortByPublisher')}" />
+                                <ToggleMenuFlyoutItem
+                                    IsChecked="{x:Bind IsItemChecked(SelectedType, enum:AppListRuleSeletedType.InstallDate), Mode=OneWay}"
+                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPAPP/SortByInstalledDate')}" />
+                            </MenuFlyoutSubItem>
+                        </MenuFlyout>
                     </FlyoutBase.AttachedFlyout>
                 </MenuFlyoutItem>
 
@@ -129,15 +131,30 @@
                     Click="{x:Bind OnFilterClicked}"
                     IsEnabled="{x:Bind IsLoadedCompleted, Mode=OneWay}"
                     Style="{StaticResource AppBarButtonMenuItemStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('PackageManager/Filter')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('PackageManager/FilterToolTip')}">
+                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/Filter')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/FilterToolTip')}">
 
                     <MenuFlyoutItem.Icon>
                         <FontIcon Glyph="&#xE71c;" />
                     </MenuFlyoutItem.Icon>
 
                     <FlyoutBase.AttachedFlyout>
-                        <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom" />
+                        <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
+                            <ToggleMenuFlyoutItem
+                                IsChecked="{x:Bind IsFramework, Mode=OneWay}"
+                                Style="{StaticResource ToggleMenuFlyoutItemStyle}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/FilterByIsFramework')}" />
+
+                            <ToggleMenuFlyoutItem
+                                IsChecked="{x:Bind IsStorePackage, Mode=OneWay}"
+                                Style="{StaticResource ToggleMenuFlyoutItemStyle}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/FilterByIsStorePackage')}" />
+
+                            <ToggleMenuFlyoutItem
+                                IsChecked="{x:Bind IsSideLoadedPackage, Mode=OneWay}"
+                                Style="{StaticResource ToggleMenuFlyoutItemStyle}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/FilterByIsSideloadPackage')}" />
+                        </MenuFlyout>
                     </FlyoutBase.AttachedFlyout>
                 </MenuFlyoutItem>
 
@@ -146,8 +163,8 @@
                     Click="{x:Bind OnRefreshClicked}"
                     IsEnabled="{x:Bind IsLoadedCompleted, Mode=OneWay}"
                     Style="{StaticResource AppBarButtonMenuItemStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('PackageManager/Refresh')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('PackageManager/RefreshToolTip')}">
+                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/Refresh')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/RefreshToolTip')}">
 
                     <MenuFlyoutItem.Icon>
                         <FontIcon Glyph="&#xE72c;" />
@@ -158,7 +175,7 @@
 
         <Grid
             x:Name="LoadingGrid"
-            Grid.Row="2"
+            Grid.Row="1"
             Margin="30,3,30,0"
             Padding="16,12"
             x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsLoadedCompleted), Mode=OneWay}"
@@ -178,14 +195,14 @@
                 <TextBlock
                     Margin="0,10"
                     VerticalAlignment="Center"
-                    Text="{x:Bind root:ResourceService.GetLocalized('PackageManager/LoadingPackage')}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/LoadingPackage')}"
                     TextAlignment="Center"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('PackageManager/LoadingPackage')}" />
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/LoadingPackage')}" />
             </StackPanel>
         </Grid>
 
         <Grid
-            Grid.Row="3"
+            Grid.Row="2"
             Margin="0,3,0,0"
             Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsLoadedCompleted), Mode=OneWay}">
 
@@ -207,7 +224,7 @@
                 <TextBlock
                     Margin="0,10,0,10"
                     VerticalAlignment="Center"
-                    Text="{x:Bind root:ResourceService.GetLocalized('PackageManager/PackageEmptyDescription')}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/PackageEmptyDescription')}"
                     TextAlignment="Center" />
             </Grid>
 
@@ -230,7 +247,7 @@
                     <TextBlock
                         Margin="0,10,0,10"
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('PackageManager/PackageEmptyWithConditionDescription')}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/PackageEmptyWithConditionDescription')}"
                         TextAlignment="Center" />
                 </Grid>
 
@@ -238,16 +255,16 @@
                     Grid.Row="1"
                     Padding="30,0,30,30"
                     ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
-                    ItemsSource="{x:Bind PackageManagerDataList, Mode=OneWay}"
+                    ItemsSource="{x:Bind UWPAppDataList, Mode=OneWay}"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     ScrollViewer.HorizontalScrollMode="Disabled"
                     ScrollViewer.VerticalScrollBarVisibility="Auto"
                     ScrollViewer.VerticalScrollMode="Enabled"
                     SelectionMode="None"
-                    Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(PackageManagerDataList.Count), Mode=OneWay}">
+                    Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(UWPAppDataList.Count), Mode=OneWay}">
 
                     <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="packageManager:PackageModel">
+                        <DataTemplate x:DataType="uwpApp:PackageModel">
                             <Grid>
                                 <Grid
                                     Height="60"
@@ -288,7 +305,7 @@
                                         FontSize="14"
                                         Text="{x:Bind Package.DisplayName}"
                                         TextAlignment="Left"
-                                        ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.PackageManagerToolTipFormat(Package.DisplayName,'DisplayName')}" />
+                                        ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.UWPAppToolTipFormat(Package.DisplayName,'DisplayName')}" />
 
                                     <TextBlock
                                         Grid.Column="2"
@@ -298,7 +315,7 @@
                                         FontSize="14"
                                         Text="{x:Bind Package.PublisherDisplayName}"
                                         TextAlignment="Left"
-                                        ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.PackageManagerToolTipFormat(Package.PublisherDisplayName,'Publisher')}" />
+                                        ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.UWPAppToolTipFormat(Package.PublisherDisplayName,'Publisher')}" />
 
                                     <TextBlock
                                         Grid.Column="3"
@@ -309,7 +326,7 @@
                                         HorizontalTextAlignment="Left"
                                         Text="{x:Bind converter:StringConverterHelper.PackageVersionFormat(Package.Id.Version)}"
                                         TextAlignment="Left"
-                                        ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.PackageManagerToolTipFormat(Package.Id.Version,'Version')}" />
+                                        ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.UWPAppToolTipFormat(Package.Id.Version,'Version')}" />
 
                                     <TextBlock
                                         Grid.Column="4"
@@ -320,52 +337,47 @@
                                         HorizontalTextAlignment="Left"
                                         Text="{x:Bind converter:StringConverterHelper.DateTimeOffsetFormat(Package.InstalledDate)}"
                                         TextAlignment="Left"
-                                        ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.PackageManagerToolTipFormat(Package.InstalledDate,'InstalledDate')}" />
+                                        ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.UWPAppToolTipFormat(Package.InstalledDate,'InstalledDate')}" />
 
                                     <basicInput:ExtendedSplitButton
                                         Grid.Column="5"
-                                        Content="{x:Bind root:ResourceService.GetLocalized('PackageManager/View')}"
-                                        PrimaryButtonToolTip="{x:Bind root:ResourceService.GetLocalized('PackageManager/ViewToolTip')}"
-                                        SecondaryButtonToolTip="{x:Bind root:ResourceService.GetLocalized('PackageManager/FastOperatinToolTip')}">
+                                        Command="{Binding ElementName=AppListRoot, Path=ViewInformationCommand}"
+                                        CommandParameter="{x:Bind Package}"
+                                        Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/View')}"
+                                        PrimaryButtonToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/ViewToolTip')}"
+                                        SecondaryButtonToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/FastOperationToolTip')}">
 
                                         <basicInput:ExtendedSplitButton.Flyout>
-                                            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}">
+                                            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                                                 <MenuFlyoutItem
-                                                    Command="{Binding ElementName=PackageManagerRoot, Path=OpenAppCommand, Mode=OneTime}"
+                                                    Command="{Binding ElementName=AppListRoot, Path=OpenAppCommand, Mode=OneTime}"
                                                     CommandParameter="{x:Bind Package}"
                                                     Style="{StaticResource MenuFlyoutItemStyle}"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('PackageManager/OpenApp')}"
-                                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('PackageManager/OpenApp')}" />
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenApp')}"
+                                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenApp')}" />
 
                                                 <MenuFlyoutItem
-                                                    Command="{Binding ElementName=PackageManagerRoot, Path=OpenStoreCommand, Mode=OneTime}"
+                                                    Command="{Binding ElementName=AppListRoot, Path=OpenStoreCommand, Mode=OneTime}"
                                                     CommandParameter="{x:Bind Package.Id.FamilyName}"
                                                     Style="{StaticResource MenuFlyoutItemStyle}"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('PackageManager/OpenStore')}"
-                                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('PackageManager/OpenStore')}" />
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenStore')}"
+                                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenStore')}" />
 
                                                 <MenuFlyoutItem
-                                                    Command="{Binding ElementName=PackageManagerRoot, Path=OpenManifestCommand, Mode=OneTime}"
-                                                    CommandParameter="{x:Bind Package}"
+                                                    Command="{Binding ElementName=AppListRoot, Path=GetPackageCommand, Mode=OneTime}"
+                                                    CommandParameter="{x:Bind Package.Id.FamilyName}"
                                                     Style="{StaticResource MenuFlyoutItemStyle}"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('PackageManager/OpenManifest')}"
-                                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('PackageManager/OpenManifest')}" />
-
-                                                <MenuFlyoutItem
-                                                    Command="{Binding ElementName=PackageManagerRoot, Path=OpenInstalledFolderCommand, Mode=OneTime}"
-                                                    CommandParameter="{x:Bind Package.InstalledLocation}"
-                                                    Style="{StaticResource MenuFlyoutItemStyle}"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('PackageManager/OpenInstalledFolder')}"
-                                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('PackageManager/OpenInstalledFolder')}" />
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/GetPackage')}"
+                                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/GetPackage')}" />
 
                                                 <MenuFlyoutSeparator />
 
                                                 <MenuFlyoutItem
-                                                    Command="{Binding ElementName=PackageManagerRoot, Path=UnInstallCommand, Mode=OneTime}"
+                                                    Command="{Binding ElementName=AppListRoot, Path=UnInstallCommand, Mode=OneTime}"
                                                     CommandParameter="{x:Bind Package.Id.FullName}"
                                                     Style="{StaticResource MenuFlyoutItemStyle}"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('PackageManager/UnInstall')}"
-                                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('PackageManager/UnInstall')}" />
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/UnInstall')}"
+                                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/UnInstall')}" />
                                             </MenuFlyout>
                                         </basicInput:ExtendedSplitButton.Flyout>
                                     </basicInput:ExtendedSplitButton>
@@ -375,7 +387,7 @@
                                     Margin="16,0"
                                     VerticalAlignment="Bottom"
                                     IsIndeterminate="True"
-                                    Visibility="Collapsed" />
+                                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsUnInstalling), Mode=OneWay}" />
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

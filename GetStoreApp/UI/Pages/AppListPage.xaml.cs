@@ -1,6 +1,8 @@
 using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Models.Controls.PackageManager;
+using GetStoreApp.Models.Controls.UWPApp;
 using GetStoreApp.Services.Root;
+using GetStoreApp.Services.Window;
+using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -19,16 +21,18 @@ using Windows.Storage;
 using Windows.System;
 using WinRT;
 
-namespace GetStoreApp.Views.Pages
+namespace GetStoreApp.UI.Pages
 {
     /// <summary>
-    /// 应用管理页面
+    /// 应用信息列表页面
     /// </summary>
-    public sealed partial class PackageManagerPage : Page, INotifyPropertyChanged
+    public sealed partial class AppListPage : Page, INotifyPropertyChanged
     {
         private bool isInitialized = false;
 
         private PackageManager PackageManager { get; } = new PackageManager();
+
+        public string SearchText { get; set; } = string.Empty;
 
         private bool _isLoadedCompleted = false;
 
@@ -69,52 +73,111 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _isSelectMode = false;
+        private bool _isIncrease = true;
 
-        public bool IsSelectMode
+        public bool IsIncrease
         {
-            get { return _isSelectMode; }
+            get { return _isIncrease; }
 
             set
             {
-                _isSelectMode = value;
+                _isIncrease = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _searchText = string.Empty;
+        private bool _isFramework = false;
 
-        public string SearchText
+        public bool IsFramework
         {
-            get { return _searchText; }
+            get { return _isFramework; }
 
             set
             {
-                _searchText = value;
+                _isFramework = value;
                 OnPropertyChanged();
             }
         }
 
-        private List<Package> MatchResultList;
+        private bool _isStorePackage = false;
+
+        public bool IsStorePackage
+        {
+            get { return _isStorePackage; }
+
+            set
+            {
+                _isStorePackage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isSideLoadedPackage = false;
+
+        public bool IsSideLoadedPackage
+        {
+            get { return _isSideLoadedPackage; }
+
+            set
+            {
+                _isSideLoadedPackage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private AppListRuleSeletedType _selectedType = AppListRuleSeletedType.PackageName;
+
+        public AppListRuleSeletedType SelectedType
+        {
+            get { return _selectedType; }
+
+            set
+            {
+                _selectedType = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // 查看应用信息
+        public XamlUICommand ViewInformationCommand { get; } = new XamlUICommand();
 
         // 打开应用
         public XamlUICommand OpenAppCommand { get; } = new XamlUICommand();
 
+        // 打开商店
         public XamlUICommand OpenStoreCommand { get; } = new XamlUICommand();
 
+        // 获取应用安装包
+        public XamlUICommand GetPackageCommand { get; } = new XamlUICommand();
+
+        // 打开应用清单文件
         public XamlUICommand OpenManifestCommand { get; } = new XamlUICommand();
 
+        // 打开应用安装目录
         public XamlUICommand OpenInstalledFolderCommand { get; } = new XamlUICommand();
 
+        // 卸载应用
         public XamlUICommand UnInstallCommand { get; } = new XamlUICommand();
 
-        public ObservableCollection<PackageModel> PackageManagerDataList { get; } = new ObservableCollection<PackageModel>();
+        private List<Package> MatchResultList;
+
+        public ObservableCollection<PackageModel> UWPAppDataList { get; } = new ObservableCollection<PackageModel>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public PackageManagerPage()
+        public AppListPage()
         {
             InitializeComponent();
+
+            ViewInformationCommand.ExecuteRequested += (sender, args) =>
+            {
+                Package package = args.Parameter.As<Package>();
+                UWPAppPage uwpAppPage = NavigationService.NavigationFrame.Content.As<UWPAppPage>();
+                if (package is not null && uwpAppPage is not null)
+                {
+                    uwpAppPage.ShowAppInformation(package);
+                }
+            };
 
             OpenAppCommand.ExecuteRequested += async (sender, args) =>
             {
@@ -146,6 +209,15 @@ namespace GetStoreApp.Views.Pages
                     {
                         LogService.WriteLog(LogType.ERROR, string.Format("Open microsoft store {0} failed", packageFamilyName), e);
                     }
+                }
+            };
+
+            GetPackageCommand.ExecuteRequested += (sender, args) =>
+            {
+                string packageFamilyName = args.Parameter as string;
+                if (packageFamilyName is not null)
+                {
+                    NavigationService.NavigateTo(typeof(StorePage), new object[] { AppNaviagtionArgs.Store, "PackageFamilyName", "Retail", packageFamilyName });
                 }
             };
 
@@ -186,23 +258,26 @@ namespace GetStoreApp.Views.Pages
                     await PackageManager.RemovePackageAsync(packageFullName);
                 }
             };
-
-            PropertyChanged += OnPackageManagerPropertyChanged;
         }
 
         /// <summary>
         /// 本地化应用管理记录数量统计信息
         /// </summary>
-        public string LocalizePackageManagerCountInfo(int count)
+        public string LocalizeUWPAppCountInfo(int count)
         {
             if (count is 0)
             {
-                return ResourceService.GetLocalized("PackageManager/PackageEmpty");
+                return ResourceService.GetLocalized("UWPApp/PackageEmpty");
             }
             else
             {
-                return string.Format(ResourceService.GetLocalized("PackageManager/PackageCountInfo"), count);
+                return string.Format(ResourceService.GetLocalized("UWPApp/PackageCountInfo"), count);
             }
+        }
+
+        public bool IsItemChecked(AppListRuleSeletedType seletedType, AppListRuleSeletedType comparedType)
+        {
+            return seletedType == comparedType;
         }
 
         /// <summary>
@@ -216,28 +291,10 @@ namespace GetStoreApp.Views.Pages
                 await GetInstalledAppsAsync();
                 await InitializeDataAsync();
                 IsPackageEmpty = MatchResultList.Count is 0;
-                IsPackageEmptyWithCondition = PackageManagerDataList.Count is 0;
+                IsPackageEmptyWithCondition = UWPAppDataList.Count is 0;
                 IsLoadedCompleted = true;
                 isInitialized = true;
             }
-        }
-
-        /// <summary>
-        /// 根据输入的内容检索应用
-        /// </summary>
-        public void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
-        {
-            if (IsLoadedCompleted)
-            {
-            }
-        }
-
-        /// <summary>
-        /// 打开设置
-        /// </summary>
-        public async void OnOpenSettingsClicked(object sender, RoutedEventArgs args)
-        {
-            await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
         }
 
         /// <summary>
@@ -268,22 +325,8 @@ namespace GetStoreApp.Views.Pages
             await GetInstalledAppsAsync();
             await InitializeDataAsync();
             IsPackageEmpty = MatchResultList.Count is 0;
-            IsPackageEmptyWithCondition = PackageManagerDataList.Count is 0;
+            IsPackageEmptyWithCondition = UWPAppDataList.Count is 0;
             IsLoadedCompleted = true;
-        }
-
-        /// <summary>
-        /// 文本输入框内容为空时，复原原来的内容
-        /// </summary>
-        public void OnPackageManagerPropertyChanged(object sender, PropertyChangedEventArgs args)
-        {
-            if (args.PropertyName == nameof(SearchText))
-            {
-                //if (SearchText == string.Empty && MatchResultList is not null)
-                //{
-                //    InitializeDataAsync();
-                //}
-            }
         }
 
         /// <summary>
@@ -307,7 +350,7 @@ namespace GetStoreApp.Views.Pages
 
         private async Task InitializeDataAsync(bool hasSearchText = false)
         {
-            PackageManagerDataList.Clear();
+            UWPAppDataList.Clear();
             if (MatchResultList is not null)
             {
                 if (hasSearchText)
@@ -327,7 +370,7 @@ namespace GetStoreApp.Views.Pages
                                 {
                                     if (File.Exists(matchwithConditionItem.Logo.OriginalString))
                                     {
-                                        PackageManagerDataList.Add(new PackageModel()
+                                        UWPAppDataList.Add(new PackageModel()
                                         {
                                             IsUnInstalling = false,
                                             Package = matchwithConditionItem
@@ -351,7 +394,7 @@ namespace GetStoreApp.Views.Pages
                         {
                             if (File.Exists(matchItem.Logo.OriginalString))
                             {
-                                PackageManagerDataList.Add(new PackageModel()
+                                UWPAppDataList.Add(new PackageModel()
                                 {
                                     IsUnInstalling = false,
                                     Package = matchItem

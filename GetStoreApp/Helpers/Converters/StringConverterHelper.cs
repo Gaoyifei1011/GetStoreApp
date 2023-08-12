@@ -130,24 +130,24 @@ namespace GetStoreApp.Helpers.Converters
         /// <summary>
         /// 应用管理描述信息格式化
         /// </summary>
-        public static string PackageManagerToolTipFormat(object content, string type)
+        public static string UWPAppToolTipFormat(object content, string type)
         {
             if (type is "DisplayName")
             {
-                return string.Format(ResourceService.GetLocalized("PackageManager/DisplayNameToolTip"), content);
+                return string.Format(ResourceService.GetLocalized("UWPApp/DisplayNameToolTip"), content);
             }
             else if (type is "Publisher")
             {
-                return string.Format(ResourceService.GetLocalized("PackageManager/PublisherToolTip"), content);
+                return string.Format(ResourceService.GetLocalized("UWPApp/PublisherToolTip"), content);
             }
             else if (type is "Version")
             {
                 PackageVersion version = content.As<PackageVersion>();
-                return string.Format(ResourceService.GetLocalized("PackageManager/VersionToolTip"), version.Major, version.Minor, version.Build, version.Revision);
+                return string.Format(ResourceService.GetLocalized("UWPApp/VersionToolTip"), version.Major, version.Minor, version.Build, version.Revision);
             }
             else if (type is "InstalledDate")
             {
-                return string.Format(ResourceService.GetLocalized("PackageManager/InstallDateToolTip"), content.As<DateTimeOffset>().ToString("yyyy/mm/dd HH:mm"));
+                return string.Format(ResourceService.GetLocalized("UWPApp/InstallDateToolTip"), content.As<DateTimeOffset>().ToString("yyyy/mm/dd HH:mm"));
             }
             else
             {

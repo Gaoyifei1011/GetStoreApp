@@ -20,6 +20,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using WinRT;
 
 namespace GetStoreApp.UI.Controls.WinGet
 {
@@ -86,7 +87,6 @@ namespace GetStoreApp.UI.Controls.WinGet
         {
             InitializeComponent();
 
-            PropertyChanged += OnInstalledAppsPropertyChanged;
             UnInstallCommand.ExecuteRequested += async (sender, args) =>
             {
                 InstalledAppsModel installedApps = args.Parameter as InstalledAppsModel;
@@ -175,11 +175,6 @@ namespace GetStoreApp.UI.Controls.WinGet
             };
         }
 
-        ~InstalledAppsControl()
-        {
-            PropertyChanged -= OnInstalledAppsPropertyChanged;
-        }
-
         /// <summary>
         /// 本地化应用数量统计信息
         /// </summary>
@@ -246,11 +241,12 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 文本输入框内容为空时，复原原来的内容
         /// </summary>
-        public async void OnInstalledAppsPropertyChanged(object sender, PropertyChangedEventArgs args)
+        public async void OnTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
         {
-            if (args.PropertyName == nameof(SearchText))
+            AutoSuggestBox autoSuggestBox = sender.As<AutoSuggestBox>();
+            if (autoSuggestBox is not null)
             {
-                if (SearchText == string.Empty && MatchResultList is not null)
+                if (autoSuggestBox.Text == string.Empty && MatchResultList is not null)
                 {
                     await InitializeDataAsync();
                 }

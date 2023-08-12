@@ -112,14 +112,14 @@
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
-                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('Window/PackageManager')}" Tag="{x:Bind TagList[4]}">
+                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('Window/UWPApp')}" Tag="{x:Bind TagList[4]}">
 
                     <NavigationViewItem.Icon>
-                        <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.PackageManager}" />
+                        <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.UWPApp}" />
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/PackageManager')}" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/UWPApp')}" />
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 

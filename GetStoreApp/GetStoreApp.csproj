@@ -208,19 +208,27 @@
     <None Remove="UI\Notifications\ResultLinkCopyNotification.xaml" />
     <None Remove="UI\Notifications\ShareFailedNotification.xaml" />
     <None Remove="UI\Notifications\WinGetCopyNotification.xaml" />
+    <None Remove="UI\Pages\AppInfoPage.xaml" />
+    <None Remove="UI\Pages\AppListPage.xaml" />
 
     <None Remove="Views\Pages\AboutPage.xaml" />
     <None Remove="Views\Pages\DownloadPage.xaml" />
     <None Remove="Views\Pages\HistoryPage.xaml" />
-    <None Remove="Views\Pages\PackageManagerPage.xaml" />
     <None Remove="Views\Pages\SettingsPage.xaml" />
     <None Remove="Views\Pages\StorePage.xaml" />
+    <None Remove="Views\Pages\UWPAppPage.xaml" />
     <None Remove="Views\Pages\WinGetPage.xaml" />
 
     <None Remove="Views\Windows\MainWindow.xaml" />
 
     <None Update="Assets\Resources\LICENSE" CopyToOutputDirectory="Never" />
     <None Update="Mile.Aria2.conf" CopyToOutputDirectory="Never" />
+    <Page Update="UI\Pages\AppInfoPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UI\Pages\AppListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
 
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.3" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.230628000-preview1" />
@@ -326,7 +334,7 @@
     <Page Update="Views\Pages\AboutPage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\DownloadPage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\HistoryPage.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Views\Pages\PackageManagerPage.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Views\Pages\UWPAppPage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\SettingsPage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\StorePage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\WinGetPage.xaml" Generator="MSBuild:Compile" />

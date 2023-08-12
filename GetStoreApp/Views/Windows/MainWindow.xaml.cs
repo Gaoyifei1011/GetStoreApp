@@ -124,7 +124,7 @@ namespace GetStoreApp.Views.Windows
             {"History",typeof(HistoryPage) },
             {"Download",typeof(DownloadPage) },
             {"WinGet",typeof(WinGetPage) },
-            {"PackageManager",typeof(PackageManagerPage) },
+            {"UWPApp",typeof(UWPAppPage) },
             {"Web",typeof(Page) },
             {"About",typeof(AboutPage) },
             {"Settings",typeof(SettingsPage) }
@@ -136,7 +136,7 @@ namespace GetStoreApp.Views.Windows
             "History",
             "Download",
             "WinGet",
-            "PackageManager",
+            "UWPApp",
             "Web",
             "About",
             "Settings"

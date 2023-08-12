@@ -117,85 +117,124 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DisplayNameToolTip" xml:space="preserve">
-    <value>应用名称：{0}</value>
+  <data name="AppInformation" xml:space="preserve">
+    <value>App information</value>
   </data>
-  <data name="FastOperatinToolTip" xml:space="preserve">
-    <value>查看快捷操作选项</value>
+  <data name="AppList" xml:space="preserve">
+    <value>App list</value>
+  </data>
+  <data name="DisplayNameToolTip" xml:space="preserve">
+    <value>App name: {0}</value>
+  </data>
+  <data name="FastOperationToolTip" xml:space="preserve">
+    <value>View fast operation options</value>
   </data>
   <data name="Filter" xml:space="preserve">
-    <value>筛选</value>
+    <value>Filter</value>
+  </data>
+  <data name="FilterByIsFramework" xml:space="preserve">
+    <value>Framework package</value>
+  </data>
+  <data name="FilterByIsSideloadPackage" xml:space="preserve">
+    <value>Sideloaded apps</value>
+  </data>
+  <data name="FilterByIsStorePackage" xml:space="preserve">
+    <value>Store apps</value>
   </data>
   <data name="FilterToolTip" xml:space="preserve">
-    <value>按照规则进行筛选</value>
+    <value>Filter according to the rules</value>
+  </data>
+  <data name="GetPackage" xml:space="preserve">
+    <value>Get app package</value>
   </data>
   <data name="InstallDateToolTip" xml:space="preserve">
-    <value>安装日期：{0}</value>
+    <value>Installed date: {0}</value>
   </data>
   <data name="LoadingPackage" xml:space="preserve">
-    <value>正在加载已安装的应用列表，请稍候......</value>
+    <value>Please wait while loading the list of installed applications...</value>
   </data>
   <data name="OpenApp" xml:space="preserve">
-    <value>打开应用</value>
+    <value>Open app</value>
   </data>
   <data name="OpenInstalledFolder" xml:space="preserve">
-    <value>打开安装目录</value>
+    <value>Open installed folder</value>
   </data>
   <data name="OpenManifest" xml:space="preserve">
-    <value>打开清单文件</value>
+    <value>Open app manifest</value>
   </data>
   <data name="OpenSettings" xml:space="preserve">
-    <value>打开设置</value>
+    <value>Open settings</value>
   </data>
   <data name="OpenStore" xml:space="preserve">
-    <value>打开商店</value>
+    <value>Open Microsoft Store</value>
   </data>
   <data name="Operation" xml:space="preserve">
-    <value>操作</value>
+    <value>Operation</value>
   </data>
   <data name="PackageCountInfo" xml:space="preserve">
-    <value>共有{0}个已安装的应用</value>
+    <value>There are {0} installed apps</value>
   </data>
   <data name="PackageEmpty" xml:space="preserve">
-    <value>没有已安装的应用</value>
+    <value>There is no installed apps</value>
   </data>
   <data name="PackageEmptyDescription" xml:space="preserve">
-    <value>您的设备上没有应用</value>
+    <value>There is no app on your device</value>
   </data>
   <data name="PackageEmptyWithConditionDescription" xml:space="preserve">
-    <value>您的设备上没有符合对应条件的应用</value>
+    <value>There are no apps on your device that match the conditions</value>
   </data>
   <data name="PlaceHolderText" xml:space="preserve">
-    <value>搜索已安装的应用</value>
+    <value>Search installed apps</value>
   </data>
   <data name="PublisherToolTip" xml:space="preserve">
-    <value>发布者：{0}</value>
+    <value>Publisher: {0}</value>
   </data>
   <data name="Refresh" xml:space="preserve">
-    <value>刷新</value>
+    <value>Refresh</value>
   </data>
   <data name="RefreshToolTip" xml:space="preserve">
-    <value>刷新已安装应用数据</value>
+    <value>Refresh the installed apps data</value>
   </data>
   <data name="Sort" xml:space="preserve">
-    <value>排序</value>
+    <value>Sort</value>
+  </data>
+  <data name="SortByDisplayName" xml:space="preserve">
+    <value>Package name</value>
+  </data>
+  <data name="SortByInstalledDate" xml:space="preserve">
+    <value>Install date</value>
+  </data>
+  <data name="SortByPublisher" xml:space="preserve">
+    <value>Publisher name</value>
+  </data>
+  <data name="SortDecrease" xml:space="preserve">
+    <value>Decrease</value>
+  </data>
+  <data name="SortIncrease" xml:space="preserve">
+    <value>Increase</value>
+  </data>
+  <data name="SortRule" xml:space="preserve">
+    <value>Sort rule</value>
   </data>
   <data name="SortToolTip" xml:space="preserve">
-    <value>按照规则进行排序</value>
+    <value>Sort according to the rules</value>
+  </data>
+  <data name="SortWay" xml:space="preserve">
+    <value>Sort way</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>应用管理</value>
+    <value>Package manager</value>
   </data>
   <data name="UnInstall" xml:space="preserve">
-    <value>卸载</value>
+    <value>Uninstall</value>
   </data>
   <data name="VersionToolTip" xml:space="preserve">
-    <value>版本：{0}.{1}.{2}.{3}</value>
+    <value>Version: {0}.{1}.{2}.{3}</value>
   </data>
   <data name="View" xml:space="preserve">
-    <value>查看</value>
+    <value>View</value>
   </data>
   <data name="ViewToolTip" xml:space="preserve">
-    <value>查看应用更多信息</value>
+    <value>View app more information</value>
   </data>
 </root>
