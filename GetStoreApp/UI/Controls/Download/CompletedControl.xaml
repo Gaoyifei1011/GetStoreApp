@@ -52,8 +52,7 @@
         <TextBlock
             Grid.Column="3"
             VerticalAlignment="Center"
-            Text="{x:Bind LocalizeCompletedCountInfo(CompletedDataList.Count), Mode=OneWay}"
-            ToolTipService.ToolTip="{x:Bind LocalizeCompletedCountInfo(CompletedDataList.Count), Mode=OneWay}" />
+            Text="{x:Bind LocalizeCompletedCountInfo(CompletedDataList.Count), Mode=OneWay}" />
 
         <StackPanel
             x:Name="NormalMode"
@@ -105,8 +104,7 @@
                 controlExtensions:CursorHelper.Cursor="Hand"
                 Click="{x:Bind OnSelectAllClicked}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Download/SelectAll')}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/SelectAll')}">
+                Text="{x:Bind root:ResourceService.GetLocalized('Download/SelectAll')}">
 
                 <MenuFlyoutItem.Icon>
                     <FontIcon Glyph="&#xE8b3;" />
@@ -117,8 +115,7 @@
                 controlExtensions:CursorHelper.Cursor="Hand"
                 Click="{x:Bind OnSelectNoneClicked}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Download/SelectNone')}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/SelectNone')}">
+                Text="{x:Bind root:ResourceService.GetLocalized('Download/SelectNone')}">
 
                 <MenuFlyoutItem.Icon>
                     <FontIcon Glyph="&#xE8e6;" />
@@ -157,8 +154,7 @@
                 controlExtensions:CursorHelper.Cursor="Hand"
                 Click="{x:Bind OnShareSelectedFileClicked}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Download/ShareSelectedFile')}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/ShareSelectedFile')}">
+                Text="{x:Bind root:ResourceService.GetLocalized('Download/ShareSelectedFile')}">
 
                 <MenuFlyoutItem.Icon>
                     <FontIcon Glyph="&#xE72d;" />
@@ -192,8 +188,7 @@
             Margin="0,10"
             VerticalAlignment="Center"
             Text="{x:Bind root:ResourceService.GetLocalized('Download/CompletedEmptyDescription')}"
-            TextAlignment="Center"
-            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/CompletedEmptyDescription')}" />
+            TextAlignment="Center" />
     </Grid>
 
     <ListView
@@ -253,13 +248,19 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBlock
+                                x:Name="FileNameText"
                                 Grid.Column="0"
                                 MinWidth="50"
                                 VerticalAlignment="Center"
                                 FontSize="16"
                                 Text="{x:Bind FileName}"
                                 TextAlignment="Left"
-                                ToolTipService.ToolTip="{x:Bind FileName}" />
+                                TextTrimming="CharacterEllipsis">
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip Content="{x:Bind FileName}" Visibility="{Binding ElementName=FileNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
 
                             <TextBlock
                                 Grid.Column="1"
@@ -279,8 +280,7 @@
                                 x:Load="{x:Bind converter:ValueCheckConverterHelper.FileExistCheck(FilePath)}"
                                 FontSize="14"
                                 Text="{x:Bind converter:ValueCheckConverterHelper.FileExistTextCheck(FilePath)}"
-                                TextAlignment="Left"
-                                ToolTipService.ToolTip="{x:Bind converter:ValueCheckConverterHelper.FileExistTextCheck(FilePath)}" />
+                                TextAlignment="Left" />
 
                             <TextBlock
                                 x:Name="FileNotExist"
@@ -290,8 +290,7 @@
                                 FontSize="14"
                                 Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
                                 Text="{x:Bind converter:ValueCheckConverterHelper.FileExistTextCheck(FilePath)}"
-                                TextAlignment="Left"
-                                ToolTipService.ToolTip="{x:Bind converter:ValueCheckConverterHelper.FileExistTextCheck(FilePath)}" />
+                                TextAlignment="Left" />
                         </StackPanel>
 
                         <Grid
@@ -312,8 +311,7 @@
                                 VerticalAlignment="Center"
                                 FontSize="14"
                                 Text="{x:Bind root:ResourceService.GetLocalized('Download/Installing')}"
-                                TextAlignment="Left"
-                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/Installing')}" />
+                                TextAlignment="Left" />
 
                             <ProgressBar
                                 Grid.Column="1"
@@ -329,8 +327,8 @@
                                 x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(InstallError), Mode=OneWay}"
                                 FontSize="14"
                                 Text="{x:Bind converter:StringConverterHelper.InstallValueFormat(InstallValue), Mode=OneWay}"
-                                TextAlignment="Left"
-                                ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.InstallValueFormat(InstallValue), Mode=OneWay}" />
+                                TextAlignment="Left" />
+
                             <TextBlock
                                 x:Name="InstallErrorInfo"
                                 Grid.Column="2"
@@ -339,8 +337,7 @@
                                 x:Load="{x:Bind InstallError, Mode=OneWay}"
                                 FontSize="14"
                                 Text="{x:Bind root:ResourceService.GetLocalized('Download/InstallError')}"
-                                TextAlignment="Left"
-                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/InstallError')}" />
+                                TextAlignment="Left" />
                         </Grid>
                     </Grid>
 
@@ -430,8 +427,7 @@
                                             CommandParameter="{Binding}"
                                             IsEnabled="{x:Bind converter:ValueCheckConverterHelper.FileExistCheck(FilePath)}"
                                             Style="{StaticResource MenuFlyoutItemStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Download/ShareFile')}"
-                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/ShareFile')}">
+                                            Text="{x:Bind root:ResourceService.GetLocalized('Download/ShareFile')}">
 
                                             <MenuFlyoutItem.Icon>
                                                 <FontIcon Glyph="&#xE72d;" />
@@ -443,8 +439,7 @@
                                             CommandParameter="{Binding}"
                                             IsEnabled="{x:Bind converter:ValueCheckConverterHelper.FileExistCheck(FilePath)}"
                                             Style="{StaticResource MenuFlyoutItemStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Download/FileInformation')}"
-                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/FileInformation')}">
+                                            Text="{x:Bind root:ResourceService.GetLocalized('Download/FileInformation')}">
 
                                             <MenuFlyoutItem.Icon>
                                                 <FontIcon Glyph="&#xE946;" />

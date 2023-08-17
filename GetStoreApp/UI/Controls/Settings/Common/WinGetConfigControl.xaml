@@ -183,8 +183,7 @@
                     <DropDownButton
                         Grid.Column="1"
                         VerticalAlignment="Center"
-                        Content="{x:Bind WinGetInstallMode.DisplayMember, Mode=OneWay}"
-                        ToolTipService.ToolTip="{x:Bind WinGetInstallMode.DisplayMember, Mode=OneWay}">
+                        Content="{x:Bind WinGetInstallMode.DisplayMember, Mode=OneWay}">
 
                         <DropDownButton.Flyout>
                             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
@@ -193,16 +192,14 @@
                                     IsChecked="{x:Bind IsItemChecked(WinGetInstallMode, WinGetInstallModeList[0]), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="0"
-                                    Text="{x:Bind WinGetInstallModeList[0].DisplayMember}"
-                                    ToolTipService.ToolTip="{x:Bind WinGetInstallModeList[0].DisplayMember}" />
+                                    Text="{x:Bind WinGetInstallModeList[0].DisplayMember}" />
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnWinGetInstallModeSelectClicked}"
                                     IsChecked="{x:Bind IsItemChecked(WinGetInstallMode, WinGetInstallModeList[1]), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="1"
-                                    Text="{x:Bind WinGetInstallModeList[1].DisplayMember}"
-                                    ToolTipService.ToolTip="{x:Bind WinGetInstallModeList[1].DisplayMember}" />
+                                    Text="{x:Bind WinGetInstallModeList[1].DisplayMember}" />
                             </MenuFlyout>
                         </DropDownButton.Flyout>
                     </DropDownButton>

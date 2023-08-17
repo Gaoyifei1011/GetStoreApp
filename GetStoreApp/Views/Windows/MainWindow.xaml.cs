@@ -31,7 +31,6 @@ using Windows.Storage.Streams;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.ViewManagement;
-using WinRT;
 using WinRT.Interop;
 
 namespace GetStoreApp.Views.Windows
@@ -149,7 +148,7 @@ namespace GetStoreApp.Views.Windows
             InitializeComponent();
             Handle = WindowNative.GetWindowHandle(this);
             NavigationService.NavigationFrame = WindowFrame;
-            Presenter = AppWindow.Presenter.As<OverlappedPresenter>();
+            Presenter = AppWindow.Presenter as OverlappedPresenter;
             ExtendsContentIntoTitleBar = true;
             AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
             AppWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
@@ -157,12 +156,12 @@ namespace GetStoreApp.Views.Windows
             PaneDisplayMode = Bounds.Width > 768 ? NavigationViewPaneDisplayMode.Left : NavigationViewPaneDisplayMode.LeftMinimal;
 
             SetTitleBar(AppTitlebar);
-            SetTitleBarColor(Content.As<FrameworkElement>().ActualTheme);
+            SetTitleBarColor((Content as FrameworkElement).ActualTheme);
 
             AppWindow.Changed += OnAppWindowChanged;
             AppWindow.Closing += OnAppWindowClosing;
             AppUISettings.ColorValuesChanged += OnColorValuesChanged;
-            Content.As<FrameworkElement>().ActualThemeChanged += OnActualThemeChanged;
+            (Content as FrameworkElement).ActualThemeChanged += OnActualThemeChanged;
 
             newMainWindowWndProc = new WNDPROC(NewWindowProc);
             oldMainWindowWndProc = SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newMainWindowWndProc));
@@ -182,7 +181,7 @@ namespace GetStoreApp.Views.Windows
             {
                 DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, async () =>
                 {
-                    await ContentDialogHelper.ShowAsync(new ElevatedRunningDialog(), Content.As<FrameworkElement>());
+                    await ContentDialogHelper.ShowAsync(new ElevatedRunningDialog(), Content as FrameworkElement);
                 });
             }
         }
@@ -266,10 +265,10 @@ namespace GetStoreApp.Views.Windows
             // 下载队列存在任务时，弹出对话窗口确认是否要关闭窗口
             if (DownloadSchedulerService.DownloadingList.Count > 0 || DownloadSchedulerService.WaitingList.Count > 0)
             {
-                sender.As<MainWindow>().Show();
+                (sender as MainWindow).Show();
 
                 // 关闭窗口提示对话框是否已经处于打开状态，如果是，不再弹出
-                ContentDialogResult result = await ContentDialogHelper.ShowAsync(new ClosingWindowDialog(), Content.As<FrameworkElement>());
+                ContentDialogResult result = await ContentDialogHelper.ShowAsync(new ClosingWindowDialog(), Content as FrameworkElement);
 
                 if (result is ContentDialogResult.Primary)
                 {
@@ -370,7 +369,7 @@ namespace GetStoreApp.Views.Windows
         {
             // 导航控件加载完成后初始化内容
 
-            NavigationView navigationView = sender.As<NavigationView>();
+            NavigationView navigationView = sender as NavigationView;
             if (navigationView is not null)
             {
                 foreach (object item in navigationView.MenuItems)
@@ -424,7 +423,15 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         public void OnBackRequestedClicked(object sender, RoutedEventArgs args)
         {
-            NavigationService.NavigationFrom();
+            UWPAppPage uwpAppPage = WindowFrame.Content as UWPAppPage;
+            if (uwpAppPage is not null && uwpAppPage.BreadDataList.Count is 2)
+            {
+                uwpAppPage.BackToAppList();
+            }
+            else
+            {
+                NavigationService.NavigationFrom();
+            }
         }
 
         /// <summary>
@@ -432,7 +439,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         public async void OnIconLoaded(object sender, RoutedEventArgs args)
         {
-            ImageIcon imageIcon = sender.As<ImageIcon>();
+            ImageIcon imageIcon = sender as ImageIcon;
             if (imageIcon is not null)
             {
                 InMemoryRandomAccessStream memoryStream = new InMemoryRandomAccessStream();
@@ -441,7 +448,7 @@ namespace GetStoreApp.Views.Windows
                 await datawriter.StoreAsync();
                 BitmapImage image = new BitmapImage();
                 await image.SetSourceAsync(memoryStream);
-                sender.As<ImageIcon>().Source = image;
+                (sender as ImageIcon).Source = image;
             }
         }
 
@@ -491,7 +498,7 @@ namespace GetStoreApp.Views.Windows
         {
             if (BackdropService.AppBackdrop.SelectedValue == BackdropService.BackdropList[0].SelectedValue)
             {
-                if (Content.As<FrameworkElement>().ActualTheme is ElementTheme.Light)
+                if ((Content as FrameworkElement).ActualTheme is ElementTheme.Light)
                 {
                     WindowBackground = new SolidColorBrush(Color.FromArgb(255, 240, 243, 249));
                 }
@@ -645,7 +652,7 @@ namespace GetStoreApp.Views.Windows
 
                             DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, async () =>
                             {
-                                await ContentDialogHelper.ShowAsync(new AppRunningDialog(), Content.As<FrameworkElement>());
+                                await ContentDialogHelper.ShowAsync(new AppRunningDialog(), Content as FrameworkElement);
                             });
                         }
                         // 获取应用的命令参数
@@ -658,7 +665,7 @@ namespace GetStoreApp.Views.Windows
                                 NavigationService.NavigateTo(typeof(StorePage));
                             }
 
-                            StorePage storePage = NavigationService.NavigationFrame.Content.As<StorePage>();
+                            StorePage storePage = NavigationService.NavigationFrame.Content as StorePage;
                             if (storePage is not null)
                             {
                                 storePage.Request.SelectedType = Convert.ToInt32(startupArgs[0]) is -1 ? storePage.Request.TypeList[0] : storePage.Request.TypeList[Convert.ToInt32(startupArgs[0])];

@@ -4,8 +4,123 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
-    <TextBlock Text="应用信息页面" />
+    <ScrollViewer Margin="0,5,0,0">
+        <StackPanel Margin="30,0" Spacing="40">
+            <Expander
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                IsExpanded="True">
+                <Expander.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <FontIcon
+                            Grid.Column="0"
+                            Margin="0,0,12,0"
+                            FontSize="16"
+                            Glyph="&#xE946;" />
+
+                        <TextBlock
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/AppInformation')}" />
+
+                        <MenuFlyoutItem
+                            Grid.Column="2"
+                            Style="{StaticResource AppBarButtonMenuItemStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/Copy')}">
+
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE8C8;" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                    </Grid>
+                </Expander.Header>
+
+                <Expander.Content>
+                    <Grid Margin="28,0,0,0" RowSpacing="3">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            FontWeight="SemiBold"
+                            Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/DisplayName')}" />
+
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Text="{x:Bind DisplayName, Mode=OneWay}" />
+
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            FontWeight="SemiBold"
+                            Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/Description')}"
+                            TextWrapping="Wrap" />
+
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Text="{x:Bind Description, Mode=OneWay}" />
+
+                        <TextBlock
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            FontWeight="SemiBold"
+                            Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/Publisher')}"
+                            TextWrapping="Wrap" />
+
+                        <TextBlock
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Text="{x:Bind Publisher, Mode=OneWay}" />
+
+                        <TextBlock
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            FontWeight="SemiBold"
+                            Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/InstalledDate')}"
+                            TextWrapping="Wrap" />
+
+                        <TextBlock
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            Text="{x:Bind InstalledDate, Mode=OneWay}" />
+
+                        <TextBlock
+                            Grid.Row="4"
+                            Grid.Column="0"
+                            FontWeight="SemiBold"
+                            Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/Version')}"
+                            TextWrapping="Wrap" />
+
+                        <TextBlock
+                            Grid.Row="4"
+                            Grid.Column="1"
+                            Text="{x:Bind Publisher, Mode=OneWay}" />
+                    </Grid>
+                </Expander.Content>
+            </Expander>
+        </StackPanel>
+    </ScrollViewer>
 </Page>

@@ -62,21 +62,18 @@
             HorizontalAlignment="Right"
             Click="{x:Bind OnProjectDescriptionClicked}"
             Content="{x:Bind root:ResourceService.GetLocalized('About/ProjectHomePage')}"
-            Style="{StaticResource AccentButtonStyle}"
-            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/ProjectHomePage')}" />
+            Style="{StaticResource AccentButtonStyle}" />
 
         <Button
             MinWidth="130"
             HorizontalAlignment="Right"
             Click="{x:Bind OnSendFeedbackClicked}"
-            Content="{x:Bind root:ResourceService.GetLocalized('About/SendFeedback')}"
-            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/SendFeedback')}" />
+            Content="{x:Bind root:ResourceService.GetLocalized('About/SendFeedback')}" />
 
         <Button
             MinWidth="130"
             HorizontalAlignment="Right"
             Click="{x:Bind OnCheckUpdateClicked}"
-            Content="{x:Bind root:ResourceService.GetLocalized('About/CheckUpdate')}"
-            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/CheckUpdate')}" />
+            Content="{x:Bind root:ResourceService.GetLocalized('About/CheckUpdate')}" />
     </StackPanel>
 </Grid>

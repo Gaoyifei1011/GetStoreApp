@@ -10,7 +10,6 @@
     Message="{x:Bind StateInfoText, Mode=OneWay}"
     Severity="{x:Bind InfoBarSeverity, Mode=OneWay}"
     Style="{StaticResource DefaultInfoBarStyle}"
-    ToolTipService.ToolTip="{x:Bind StateInfoText, Mode=OneWay}"
     mc:Ignorable="d">
 
     <InfoBar.Content>

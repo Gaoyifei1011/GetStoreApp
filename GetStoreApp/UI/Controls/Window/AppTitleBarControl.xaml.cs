@@ -3,7 +3,6 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using WinRT;
 
 namespace GetStoreApp.UI.Controls.Window
 {
@@ -61,7 +60,7 @@ namespace GetStoreApp.UI.Controls.Window
         /// </summary>
         public void OnMoveClicked(object sender, RoutedEventArgs args)
         {
-            MenuFlyoutItem menuItem = sender.As<MenuFlyoutItem>();
+            MenuFlyoutItem menuItem = sender as MenuFlyoutItem;
             if (menuItem.Tag is not null)
             {
                 ((MenuFlyout)menuItem.Tag).Hide();
@@ -82,7 +81,7 @@ namespace GetStoreApp.UI.Controls.Window
         /// </summary>
         public void OnSizeClicked(object sender, RoutedEventArgs args)
         {
-            MenuFlyoutItem menuItem = sender.As<MenuFlyoutItem>();
+            MenuFlyoutItem menuItem = sender as MenuFlyoutItem;
             if (menuItem.Tag is not null)
             {
                 ((MenuFlyout)menuItem.Tag).Hide();

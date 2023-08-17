@@ -66,8 +66,7 @@
                     <DropDownButton
                         Grid.Column="1"
                         VerticalAlignment="Center"
-                        Content="{x:Bind HistoryLiteItem.DisplayMember, Mode=OneWay}"
-                        ToolTipService.ToolTip="{x:Bind HistoryLiteItem.DisplayMember, Mode=OneWay}">
+                        Content="{x:Bind HistoryLiteItem.DisplayMember, Mode=OneWay}">
 
                         <DropDownButton.Flyout>
                             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
@@ -76,16 +75,14 @@
                                     IsChecked="{x:Bind IsHistoryLiteItemChecked(HistoryLiteItem, HistoryLiteNumList[0]), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="0"
-                                    Text="{x:Bind HistoryLiteNumList[0].DisplayMember}"
-                                    ToolTipService.ToolTip="{x:Bind HistoryLiteNumList[0].DisplayMember}" />
+                                    Text="{x:Bind HistoryLiteNumList[0].DisplayMember}" />
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnHistoryLiteSelectClicked}"
                                     IsChecked="{x:Bind IsHistoryLiteItemChecked(HistoryLiteItem, HistoryLiteNumList[1]), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="1"
-                                    Text="{x:Bind HistoryLiteNumList[1].DisplayMember}"
-                                    ToolTipService.ToolTip="{x:Bind HistoryLiteNumList[1].DisplayMember}" />
+                                    Text="{x:Bind HistoryLiteNumList[1].DisplayMember}" />
                             </MenuFlyout>
                         </DropDownButton.Flyout>
                     </DropDownButton>
@@ -117,8 +114,7 @@
                     <DropDownButton
                         Grid.Column="1"
                         VerticalAlignment="Center"
-                        Content="{x:Bind HistoryJumpListItem.DisplayMember, Mode=OneWay}"
-                        ToolTipService.ToolTip="{x:Bind HistoryJumpListItem.DisplayMember, Mode=OneWay}">
+                        Content="{x:Bind HistoryJumpListItem.DisplayMember, Mode=OneWay}">
 
                         <DropDownButton.Flyout>
                             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
@@ -127,40 +123,35 @@
                                     IsChecked="{x:Bind IsHistoryJumpListItemChecked(HistoryJumpListItem, HistoryJumpListNumList[0]), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="0"
-                                    Text="{x:Bind HistoryJumpListNumList[0].DisplayMember}"
-                                    ToolTipService.ToolTip="{x:Bind HistoryJumpListNumList[0].DisplayMember}" />
+                                    Text="{x:Bind HistoryJumpListNumList[0].DisplayMember}" />
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnHistoryJumpListSelectClicked}"
                                     IsChecked="{x:Bind IsHistoryJumpListItemChecked(HistoryJumpListItem, HistoryJumpListNumList[1]), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="1"
-                                    Text="{x:Bind HistoryJumpListNumList[1].DisplayMember}"
-                                    ToolTipService.ToolTip="{x:Bind HistoryJumpListNumList[1].DisplayMember}" />
+                                    Text="{x:Bind HistoryJumpListNumList[1].DisplayMember}" />
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnHistoryJumpListSelectClicked}"
                                     IsChecked="{x:Bind IsHistoryJumpListItemChecked(HistoryJumpListItem, HistoryJumpListNumList[2]), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="2"
-                                    Text="{x:Bind HistoryJumpListNumList[2].DisplayMember}"
-                                    ToolTipService.ToolTip="{x:Bind HistoryJumpListNumList[2].DisplayMember}" />
+                                    Text="{x:Bind HistoryJumpListNumList[2].DisplayMember}" />
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnHistoryJumpListSelectClicked}"
                                     IsChecked="{x:Bind IsHistoryJumpListItemChecked(HistoryJumpListItem, HistoryJumpListNumList[3]), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="3"
-                                    Text="{x:Bind HistoryJumpListNumList[3].DisplayMember}"
-                                    ToolTipService.ToolTip="{x:Bind HistoryJumpListNumList[3].DisplayMember}" />
+                                    Text="{x:Bind HistoryJumpListNumList[3].DisplayMember}" />
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnHistoryJumpListSelectClicked}"
                                     IsChecked="{x:Bind IsHistoryJumpListItemChecked(HistoryJumpListItem, HistoryJumpListNumList[4]), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="4"
-                                    Text="{x:Bind HistoryJumpListNumList[4].DisplayMember}"
-                                    ToolTipService.ToolTip="{x:Bind HistoryJumpListNumList[4].DisplayMember}" />
+                                    Text="{x:Bind HistoryJumpListNumList[4].DisplayMember}" />
                             </MenuFlyout>
                         </DropDownButton.Flyout>
                     </DropDownButton>

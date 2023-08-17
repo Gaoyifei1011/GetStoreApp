@@ -45,14 +45,12 @@
         Margin="0,0,6,0"
         VerticalAlignment="Center"
         Click="{x:Bind OnSystemThemeSettingsClicked}"
-        Content="{x:Bind root:ResourceService.GetLocalized('Settings/SystemThemeSettings')}"
-        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/SystemThemeSettings')}" />
+        Content="{x:Bind root:ResourceService.GetLocalized('Settings/SystemThemeSettings')}" />
 
     <DropDownButton
         Grid.Column="3"
         VerticalAlignment="Center"
-        Content="{x:Bind Theme.DisplayMember, Mode=OneWay}"
-        ToolTipService.ToolTip="{x:Bind Theme.DisplayMember, Mode=OneWay}">
+        Content="{x:Bind Theme.DisplayMember, Mode=OneWay}">
 
         <DropDownButton.Flyout>
             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
@@ -61,24 +59,21 @@
                     IsChecked="{x:Bind IsItemChecked(Theme, ThemeList[0]), Mode=OneWay}"
                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="0"
-                    Text="{x:Bind ThemeList[0].DisplayMember}"
-                    ToolTipService.ToolTip="{x:Bind ThemeList[0].DisplayMember}" />
+                    Text="{x:Bind ThemeList[0].DisplayMember}" />
 
                 <ToggleMenuFlyoutItem
                     Click="{x:Bind OnThemeSelectClicked}"
                     IsChecked="{x:Bind IsItemChecked(Theme, ThemeList[1]), Mode=OneWay}"
                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="1"
-                    Text="{x:Bind ThemeList[1].DisplayMember}"
-                    ToolTipService.ToolTip="{x:Bind ThemeList[1].DisplayMember}" />
+                    Text="{x:Bind ThemeList[1].DisplayMember}" />
 
                 <ToggleMenuFlyoutItem
                     Click="{x:Bind OnThemeSelectClicked}"
                     IsChecked="{x:Bind IsItemChecked(Theme, ThemeList[2]), Mode=OneWay}"
                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="2"
-                    Text="{x:Bind ThemeList[2].DisplayMember}"
-                    ToolTipService.ToolTip="{x:Bind ThemeList[2].DisplayMember}" />
+                    Text="{x:Bind ThemeList[2].DisplayMember}" />
             </MenuFlyout>
         </DropDownButton.Flyout>
     </DropDownButton>

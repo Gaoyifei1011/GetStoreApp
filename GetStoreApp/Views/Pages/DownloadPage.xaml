@@ -26,10 +26,7 @@
         </PivotItem>
 
         <Pivot.RightHeader>
-            <Button
-                VerticalAlignment="Center"
-                Content="{x:Bind root:ResourceService.GetLocalized('Download/DownloadDescription')}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DownloadDescription')}">
+            <Button VerticalAlignment="Center" Content="{x:Bind root:ResourceService.GetLocalized('Download/DownloadDescription')}">
 
                 <Button.Flyout>
                     <Flyout
@@ -69,14 +66,10 @@
                             <StackPanel
                                 HorizontalAlignment="Right"
                                 Orientation="Horizontal"
-                                Spacing="5"
-                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/LearnMore')}">
-                                <Button Click="{x:Bind OnLearnMoreClicked}" Content="{x:Bind root:ResourceService.GetLocalized('Download/LearnMore')}" />
+                                Spacing="5">
 
-                                <Button
-                                    Click="{x:Bind OnDownloadSettingsClicked}"
-                                    Content="{x:Bind root:ResourceService.GetLocalized('Download/OpenSettings')}"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/OpenSettings')}" />
+                                <Button Click="{x:Bind OnLearnMoreClicked}" Content="{x:Bind root:ResourceService.GetLocalized('Download/LearnMore')}" />
+                                <Button Click="{x:Bind OnDownloadSettingsClicked}" Content="{x:Bind root:ResourceService.GetLocalized('Download/OpenSettings')}" />
                             </StackPanel>
                         </StackPanel>
                     </Flyout>

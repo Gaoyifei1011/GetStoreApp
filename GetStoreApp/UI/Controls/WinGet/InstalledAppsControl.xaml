@@ -55,8 +55,7 @@
         <TextBlock
             Grid.Column="3"
             VerticalAlignment="Center"
-            Text="{x:Bind LocalizeInstalledAppsCountInfo(InstalledAppsDataList.Count), Mode=OneWay}"
-            ToolTipService.ToolTip="{x:Bind LocalizeInstalledAppsCountInfo(InstalledAppsDataList.Count), Mode=OneWay}" />
+            Text="{x:Bind LocalizeInstalledAppsCountInfo(InstalledAppsDataList.Count), Mode=OneWay}" />
 
         <AutoSuggestBox
             Grid.Column="4"
@@ -122,8 +121,7 @@
                 Margin="0,10"
                 VerticalAlignment="Center"
                 Text="{x:Bind root:ResourceService.GetLocalized('WinGet/LoadingInstalledApps')}"
-                TextAlignment="Center"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/LoadingInstalledApps')}" />
+                TextAlignment="Center" />
         </StackPanel>
     </Grid>
 
@@ -151,8 +149,7 @@
                     Margin="0,10"
                     VerticalAlignment="Center"
                     Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledAppsEmptyDescription')}"
-                    TextAlignment="Center"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledAppsEmptyDescription')}" />
+                    TextAlignment="Center" />
             </Grid>
 
             <Grid Grid.Row="1" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsInstalledAppsEmpty), Mode=OneWay}">
@@ -176,8 +173,7 @@
                         Margin="0,10"
                         VerticalAlignment="Center"
                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledAppsSearchEmptyDescription')}"
-                        TextAlignment="Center"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledAppsSearchEmptyDescription')}" />
+                        TextAlignment="Center" />
                 </Grid>
 
                 <ListView
@@ -254,8 +250,7 @@
                                                 Command="{Binding ElementName=InstalledAppsRoot, Path=CopyUnInstallTextCommand, Mode=OneTime}"
                                                 CommandParameter="{x:Bind AppID}"
                                                 Style="{StaticResource MenuFlyoutItemStyle}"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUnInstallText')}"
-                                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUnInstallText')}">
+                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUnInstallText')}">
 
                                                 <MenuFlyoutItem.Icon>
                                                     <FontIcon Glyph="&#xE8C8;" />

@@ -67,8 +67,7 @@
                         Grid.Column="1"
                         VerticalAlignment="Center"
                         Click="{x:Bind OnOpenLogFolderClicked}"
-                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/OpenLogFolder')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/OpenLogFolder')}" />
+                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/OpenLogFolder')}" />
                 </Grid>
             </StackPanel>
 
@@ -98,8 +97,7 @@
                         Grid.Column="1"
                         VerticalAlignment="Center"
                         Click="{x:Bind OnClearClicked}"
-                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/Clear')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/Clear')}" />
+                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/Clear')}" />
                 </Grid>
             </StackPanel>
         </StackPanel>

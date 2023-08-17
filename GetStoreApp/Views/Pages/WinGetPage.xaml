@@ -33,7 +33,7 @@
             </PivotItem>
 
             <Pivot.RightHeader>
-                <Button VerticalAlignment="Center" ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/TaskManager')}">
+                <Button VerticalAlignment="Center">
 
                     <Button.Content>
                         <Grid>
@@ -140,7 +140,7 @@
                                                     Command="{Binding ElementName=TaskManagerFlyout, Path=DataContext.CancelInstallCommand, Mode=OneTime}"
                                                     CommandParameter="{x:Bind AppID}"
                                                     Style="{StaticResource ButtonNormalMenuItemStyle}"
-                                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/CancelInstalling')}">
+                                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/CancelInstall')}">
 
                                                     <MenuFlyoutItem.Icon>
                                                         <FontIcon FontSize="16" Glyph="&#xE711;" />

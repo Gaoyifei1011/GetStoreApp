@@ -10,7 +10,6 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.Storage;
 using Windows.Storage.Pickers;
-using WinRT;
 using WinRT.Interop;
 
 namespace GetStoreApp.UI.Controls.Settings.Common
@@ -91,7 +90,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// </summary>
         public async void OnChangeFolderClicked(object sender, RoutedEventArgs args)
         {
-            MenuFlyoutItem item = sender.As<MenuFlyoutItem>();
+            MenuFlyoutItem item = sender as MenuFlyoutItem;
             if (item.Tag is not null)
             {
                 switch ((string)item.Tag)
@@ -145,7 +144,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// </summary>
         public void OnDownloadItemSelectClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
+            ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
             if (item.Tag is not null)
             {
                 DownloadItem = Convert.ToInt32(item.Tag);
@@ -158,7 +157,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// </summary>
         public void OnDownloadModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
+            ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
             if (item.Tag is not null)
             {
                 DownloadMode = DownloadModeList[Convert.ToInt32(item.Tag)];

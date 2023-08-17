@@ -5,7 +5,6 @@ using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.System;
-using WinRT;
 
 namespace GetStoreApp.UI.Controls.Settings.Common
 {
@@ -47,7 +46,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// </summary>
         public void OnToggled(object sender, RoutedEventArgs args)
         {
-            ToggleSwitch toggleSwitch = sender.As<ToggleSwitch>();
+            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch is not null)
             {
                 NotificationService.SetNotification(toggleSwitch.IsOn);

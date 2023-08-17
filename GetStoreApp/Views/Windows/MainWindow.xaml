@@ -2,6 +2,8 @@
     x:Class="GetStoreApp.Views.Windows.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controlExtensions="using:GetStoreApp.Helpers.Controls.Extensions"
+    xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:properties="using:GetStoreApp.Properties"
@@ -46,6 +48,7 @@
                         <StackPanel Orientation="Horizontal" Spacing="8">
 
                             <MenuFlyoutItem
+                                controlExtensions:CursorHelper.Cursor="Hand"
                                 Click="{x:Bind OnBackRequestedClicked}"
                                 IsEnabled="{x:Bind IsBackEnabled, Mode=OneWay}"
                                 Style="{StaticResource ButtonLargeMenuItemStyle}"
@@ -66,97 +69,153 @@
             </NavigationView.PaneHeader>
 
             <NavigationView.MenuItems>
-                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('Window/Store')}" Tag="{x:Bind TagList[0]}">
+                <NavigationViewItem Tag="{x:Bind TagList[0]}">
+
+                    <NavigationViewItem.Content>
+                        <TextBlock
+                            x:Name="WindowStoreText"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Window/Store')}"
+                            TextTrimming="CharacterEllipsis" />
+                    </NavigationViewItem.Content>
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.Store}" />
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Store')}" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Store')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(WindowStoreText.IsTextTrimmed)}" />
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
-                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('Window/History')}" Tag="{x:Bind TagList[1]}">
+                <NavigationViewItem Tag="{x:Bind TagList[1]}">
+
+                    <NavigationViewItem.Content>
+                        <TextBlock
+                            x:Name="WindowHistoryText"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Window/History')}"
+                            TextTrimming="CharacterEllipsis" />
+                    </NavigationViewItem.Content>
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.History}" />
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/History')}" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/History')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(WindowHistoryText.IsTextTrimmed)}" />
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
-                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('Window/Download')}" Tag="{x:Bind TagList[2]}">
+                <NavigationViewItem Tag="{x:Bind TagList[2]}">
+
+                    <NavigationViewItem.Content>
+                        <TextBlock
+                            x:Name="WindowDownloadText"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Window/Download')}"
+                            TextTrimming="CharacterEllipsis" />
+                    </NavigationViewItem.Content>
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.Download}" />
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Download')}" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Download')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(WindowDownloadText.IsTextTrimmed)}" />
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
                 <NavigationViewItemSeparator Margin="0,0,5,0" />
 
-                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}" Tag="{x:Bind TagList[3]}">
+                <NavigationViewItem Tag="{x:Bind TagList[3]}">
+
+                    <NavigationViewItem.Content>
+                        <TextBlock
+                            x:Name="WindowWinGetText"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}"
+                            TextTrimming="CharacterEllipsis" />
+                    </NavigationViewItem.Content>
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.WinGet}" />
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(WindowWinGetText.IsTextTrimmed)}" />
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
-                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('Window/UWPApp')}" Tag="{x:Bind TagList[4]}">
+                <NavigationViewItem Tag="{x:Bind TagList[4]}">
+
+                    <NavigationViewItem.Content>
+                        <TextBlock
+                            x:Name="WindowUWPAppText"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Window/UWPApp')}"
+                            TextTrimming="CharacterEllipsis" />
+                    </NavigationViewItem.Content>
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.UWPApp}" />
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/UWPApp')}" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/UWPApp')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(WindowUWPAppText.IsTextTrimmed)}" />
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
                 <NavigationViewItemSeparator Margin="0,0,5,0" />
 
-                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('Window/Web')}" Tag="{x:Bind TagList[4]}">
+                <NavigationViewItem Tag="{x:Bind TagList[4]}">
+
+                    <NavigationViewItem.Content>
+                        <TextBlock
+                            x:Name="WindowWebText"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Window/Web')}"
+                            TextTrimming="CharacterEllipsis" />
+                    </NavigationViewItem.Content>
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.Web}" />
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Web')}" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Web')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(WindowWebText.IsTextTrimmed)}" />
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
 
             <NavigationView.FooterMenuItems>
-                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('Window/About')}" Tag="{x:Bind TagList[6]}">
+                <NavigationViewItem Tag="{x:Bind TagList[6]}">
+
+                    <NavigationViewItem.Content>
+                        <TextBlock
+                            x:Name="WindowAboutText"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Window/About')}"
+                            TextTrimming="CharacterEllipsis" />
+                    </NavigationViewItem.Content>
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.About}" />
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/About')}" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/About')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(WindowAboutText.IsTextTrimmed)}" />
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
-                <NavigationViewItem Content="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}" Tag="{x:Bind TagList[7]}">
+                <NavigationViewItem Tag="{x:Bind TagList[7]}">
+
+                    <NavigationViewItem.Content>
+                        <TextBlock
+                            x:Name="WindowSettingsText"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}"
+                            TextTrimming="CharacterEllipsis" />
+                    </NavigationViewItem.Content>
 
                     <NavigationViewItem.Icon>
                         <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.Settings}" />
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(WindowSettingsText.IsTextTrimmed)}" />
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
             </NavigationView.FooterMenuItems>

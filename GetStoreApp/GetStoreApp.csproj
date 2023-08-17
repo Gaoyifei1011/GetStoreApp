@@ -231,7 +231,7 @@
     </Page>
 
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.3" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.230628000-preview1" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.230811000-preview2" />
     <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.5.1572">
       <GeneratePathProperty>true</GeneratePathProperty>
       <IncludeAssets>none</IncludeAssets>

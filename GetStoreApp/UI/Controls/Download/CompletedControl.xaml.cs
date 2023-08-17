@@ -27,7 +27,6 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.Management.Deployment;
 using Windows.Storage;
 using Windows.System;
-using WinRT;
 
 namespace GetStoreApp.UI.Controls.Download
 {
@@ -385,7 +384,7 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         public void OnDeleteOptionsClicked(object sender, RoutedEventArgs args)
         {
-            FlyoutBase.ShowAttachedFlyout(sender.As<FrameworkElement>());
+            FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
         }
 
         /// <summary>

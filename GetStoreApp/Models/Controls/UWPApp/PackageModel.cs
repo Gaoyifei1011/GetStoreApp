@@ -10,6 +10,11 @@ namespace GetStoreApp.Models.Controls.UWPApp
     public class PackageModel : INotifyPropertyChanged
     {
         /// <summary>
+        /// 应用入口个数
+        /// </summary>
+        public int AppListEntryCount { get; set; }
+
+        /// <summary>
         /// 应用是否正在卸载
         /// </summary>
         private bool _isUnInstalling;

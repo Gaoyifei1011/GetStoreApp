@@ -132,7 +132,7 @@
   <data name="AppVersionToolTIp" xml:space="preserve">
     <value>App version:{0}</value>
   </data>
-  <data name="CancelInstalling" xml:space="preserve">
+  <data name="CancelInstall" xml:space="preserve">
     <value>Cancel the installation</value>
   </data>
   <data name="CopyInstallText" xml:space="preserve">
@@ -295,6 +295,6 @@
     <value>All of your applications are up to date</value>
   </data>
   <data name="ViewMoreOptions" xml:space="preserve">
-    <value>Right: View more options</value>
+    <value>View more options</value>
   </data>
 </root>

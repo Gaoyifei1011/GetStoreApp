@@ -66,8 +66,7 @@
                     <DropDownButton
                         Grid.Column="2"
                         Margin="6,0,0,0"
-                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/ChangeFolder')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/ChangeFolder')}">
+                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/ChangeFolder')}">
 
                         <DropDownButton.Flyout>
                             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
@@ -75,22 +74,19 @@
                                     Click="{x:Bind OnChangeFolderClicked}"
                                     Style="{StaticResource MenuFlyoutItemStyle}"
                                     Tag="AppCache"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/AppCacheFolder')}"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/AppCacheFolder')}" />
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/AppCacheFolder')}" />
 
                                 <MenuFlyoutItem
                                     Click="{x:Bind OnChangeFolderClicked}"
                                     Style="{StaticResource MenuFlyoutItemStyle}"
                                     Tag="Download"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadFolder')}"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadFolder')}" />
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadFolder')}" />
 
                                 <MenuFlyoutItem
                                     Click="{x:Bind OnChangeFolderClicked}"
                                     Style="{StaticResource MenuFlyoutItemStyle}"
                                     Tag="Desktop"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/DesktopFolder')}"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/DesktopFolder')}" />
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/DesktopFolder')}" />
 
                                 <MenuFlyoutSeparator />
 
@@ -98,8 +94,7 @@
                                     Click="{x:Bind OnChangeFolderClicked}"
                                     Style="{StaticResource MenuFlyoutItemStyle}"
                                     Tag="Custom"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/Custom')}"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/Custom')}" />
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/Custom')}" />
                             </MenuFlyout>
                         </DropDownButton.Flyout>
                     </DropDownButton>
@@ -129,8 +124,7 @@
                     <DropDownButton
                         Grid.Column="1"
                         VerticalAlignment="Center"
-                        Content="{x:Bind DownloadItem, Mode=OneWay}"
-                        ToolTipService.ToolTip="{x:Bind DownloadItem, Mode=OneWay}">
+                        Content="{x:Bind DownloadItem, Mode=OneWay}">
 
                         <DropDownButton.Flyout>
                             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
@@ -139,24 +133,21 @@
                                     IsChecked="{x:Bind IsDownloadItemChecked(DownloadItem, 1), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="1"
-                                    Text="1"
-                                    ToolTipService.ToolTip="1" />
+                                    Text="1" />
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnDownloadItemSelectClicked}"
                                     IsChecked="{x:Bind IsDownloadItemChecked(DownloadItem, 2), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="2"
-                                    Text="2"
-                                    ToolTipService.ToolTip="2" />
+                                    Text="2" />
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnDownloadItemSelectClicked}"
                                     IsChecked="{x:Bind IsDownloadItemChecked(DownloadItem, 3), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="3"
-                                    Text="3"
-                                    ToolTipService.ToolTip="3" />
+                                    Text="3" />
                             </MenuFlyout>
                         </DropDownButton.Flyout>
                     </DropDownButton>
@@ -186,8 +177,7 @@
                     <DropDownButton
                         Grid.Column="1"
                         VerticalAlignment="Center"
-                        Content="{x:Bind DownloadMode.DisplayMember, Mode=OneWay}"
-                        ToolTipService.ToolTip="{x:Bind DownloadMode.DisplayMember, Mode=OneWay}">
+                        Content="{x:Bind DownloadMode.DisplayMember, Mode=OneWay}">
 
                         <DropDownButton.Flyout>
                             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
@@ -196,16 +186,14 @@
                                     IsChecked="{x:Bind IsDownloadModeChecked(DownloadMode, DownloadModeList[0]), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="0"
-                                    Text="{x:Bind DownloadModeList[0].DisplayMember}"
-                                    ToolTipService.ToolTip="{x:Bind DownloadModeList[0].DisplayMember}" />
+                                    Text="{x:Bind DownloadModeList[0].DisplayMember}" />
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnDownloadModeSelectClicked}"
                                     IsChecked="{x:Bind IsDownloadModeChecked(DownloadMode, DownloadModeList[1]), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="1"
-                                    Text="{x:Bind DownloadModeList[1].DisplayMember}"
-                                    ToolTipService.ToolTip="{x:Bind DownloadModeList[1].DisplayMember}" />
+                                    Text="{x:Bind DownloadModeList[1].DisplayMember}" />
                             </MenuFlyout>
                         </DropDownButton.Flyout>
                     </DropDownButton>

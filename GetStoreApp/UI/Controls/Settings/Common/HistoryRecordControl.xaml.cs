@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using WinRT;
 
 namespace GetStoreApp.UI.Controls.Settings.Common
 {
@@ -67,7 +66,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// </summary>
         public void OnHistoryLiteSelectClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
+            ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
             if (item.Tag is not null)
             {
                 HistoryLiteItem = HistoryLiteNumList[Convert.ToInt32(item.Tag)];
@@ -80,7 +79,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// </summary>
         public async void OnHistoryJumpListSelectClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
+            ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
             if (item.Tag is not null)
             {
                 HistoryJumpListItem = HistoryJumpListNumList[Convert.ToInt32(item.Tag)];

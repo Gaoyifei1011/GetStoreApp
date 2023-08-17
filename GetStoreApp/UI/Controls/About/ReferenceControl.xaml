@@ -46,9 +46,13 @@
                         Width="320"
                         Padding="5,8"
                         HorizontalContentAlignment="Center"
-                        Content="{x:Bind Key}"
                         NavigateUri="{x:Bind Value}"
-                        ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.AboutReferenceToolTipFormat(Key)}" />
+                        ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.AboutReferenceToolTipFormat(Key)}">
+
+                        <HyperlinkButton.Content>
+                            <TextBlock Text="{x:Bind Key}" TextTrimming="CharacterEllipsis" />
+                        </HyperlinkButton.Content>
+                    </HyperlinkButton>
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>

@@ -19,8 +19,7 @@
     <DropDownButton
         Grid.Column="0"
         VerticalAlignment="Center"
-        Content="{x:Bind SelectedType.DisplayName, Mode=OneWay}"
-        ToolTipService.ToolTip="{x:Bind SelectedType.DisplayName, Mode=OneWay}">
+        Content="{x:Bind SelectedType.DisplayName, Mode=OneWay}">
 
         <DropDownButton.Flyout>
             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
@@ -29,32 +28,28 @@
                     IsChecked="{x:Bind IsTypeItemChecked(SelectedType.InternalName, TypeList[0].InternalName), Mode=OneWay}"
                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="0"
-                    Text="{x:Bind TypeList[0].DisplayName}"
-                    ToolTipService.ToolTip="{x:Bind TypeList[0].DisplayName}" />
+                    Text="{x:Bind TypeList[0].DisplayName}" />
 
                 <ToggleMenuFlyoutItem
                     Click="{x:Bind OnTypeSelectClicked}"
                     IsChecked="{x:Bind IsTypeItemChecked(SelectedType.InternalName, TypeList[1].InternalName), Mode=OneWay}"
                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="1"
-                    Text="{x:Bind TypeList[1].DisplayName}"
-                    ToolTipService.ToolTip="{x:Bind TypeList[1].DisplayName}" />
+                    Text="{x:Bind TypeList[1].DisplayName}" />
 
                 <ToggleMenuFlyoutItem
                     Click="{x:Bind OnTypeSelectClicked}"
                     IsChecked="{x:Bind IsTypeItemChecked(SelectedType.InternalName, TypeList[2].InternalName), Mode=OneWay}"
                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="2"
-                    Text="{x:Bind TypeList[2].DisplayName}"
-                    ToolTipService.ToolTip="{x:Bind TypeList[2].DisplayName}" />
+                    Text="{x:Bind TypeList[2].DisplayName}" />
 
                 <ToggleMenuFlyoutItem
                     Click="{x:Bind OnTypeSelectClicked}"
                     IsChecked="{x:Bind IsTypeItemChecked(SelectedType.InternalName, TypeList[3].InternalName), Mode=OneWay}"
                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="3"
-                    Text="{x:Bind TypeList[3].DisplayName}"
-                    ToolTipService.ToolTip="{x:Bind TypeList[3].DisplayName}" />
+                    Text="{x:Bind TypeList[3].DisplayName}" />
             </MenuFlyout>
         </DropDownButton.Flyout>
     </DropDownButton>
@@ -62,8 +57,7 @@
     <DropDownButton
         Grid.Column="1"
         VerticalAlignment="Center"
-        Content="{x:Bind SelectedChannel.DisplayName, Mode=OneWay}"
-        ToolTipService.ToolTip="{x:Bind SelectedChannel.DisplayName, Mode=OneWay}">
+        Content="{x:Bind SelectedChannel.DisplayName, Mode=OneWay}">
 
         <DropDownButton.Flyout>
             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
@@ -72,32 +66,28 @@
                     IsChecked="{x:Bind IsChannelItemChecked(SelectedChannel.InternalName, ChannelList[0].InternalName), Mode=OneWay}"
                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="0"
-                    Text="{x:Bind ChannelList[0].DisplayName}"
-                    ToolTipService.ToolTip="{x:Bind ChannelList[0].DisplayName}" />
+                    Text="{x:Bind ChannelList[0].DisplayName}" />
 
                 <ToggleMenuFlyoutItem
                     Click="{x:Bind OnChannelSelectClicked}"
                     IsChecked="{x:Bind IsChannelItemChecked(SelectedChannel.InternalName, ChannelList[1].InternalName), Mode=OneWay}"
                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="1"
-                    Text="{x:Bind ChannelList[1].DisplayName}"
-                    ToolTipService.ToolTip="{x:Bind ChannelList[1].DisplayName}" />
+                    Text="{x:Bind ChannelList[1].DisplayName}" />
 
                 <ToggleMenuFlyoutItem
                     Click="{x:Bind OnChannelSelectClicked}"
                     IsChecked="{x:Bind IsChannelItemChecked(SelectedChannel.InternalName, ChannelList[2].InternalName), Mode=OneWay}"
                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="2"
-                    Text="{x:Bind ChannelList[2].DisplayName}"
-                    ToolTipService.ToolTip="{x:Bind ChannelList[2].DisplayName}" />
+                    Text="{x:Bind ChannelList[2].DisplayName}" />
 
                 <ToggleMenuFlyoutItem
                     Click="{x:Bind OnChannelSelectClicked}"
                     IsChecked="{x:Bind IsChannelItemChecked(SelectedChannel.InternalName, ChannelList[3].InternalName), Mode=OneWay}"
                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="3"
-                    Text="{x:Bind ChannelList[3].DisplayName}"
-                    ToolTipService.ToolTip="{x:Bind ChannelList[3].DisplayName}" />
+                    Text="{x:Bind ChannelList[3].DisplayName}" />
             </MenuFlyout>
         </DropDownButton.Flyout>
     </DropDownButton>
@@ -117,6 +107,5 @@
         Click="{x:Bind OnGetLinksClicked}"
         Content="{x:Bind root:ResourceService.GetLocalized('Store/GetLinks')}"
         IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsGettingLinks), Mode=OneWay}"
-        Style="{StaticResource AccentButtonStyle}"
-        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/GetLinks')}" />
+        Style="{StaticResource AccentButtonStyle}" />
 </Grid>

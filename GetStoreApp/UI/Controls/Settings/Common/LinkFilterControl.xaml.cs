@@ -3,7 +3,6 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using WinRT;
 
 namespace GetStoreApp.UI.Controls.Settings.Common
 {
@@ -50,7 +49,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// </summary>
         public void OnStartWithEToggled(object sender, RoutedEventArgs args)
         {
-            ToggleSwitch toggleSwitch = sender.As<ToggleSwitch>();
+            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch is not null)
             {
                 LinkFilterService.SetStartsWithEFilterValue(toggleSwitch.IsOn);
@@ -63,7 +62,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// </summary>
         public void OnBlockMapToggled(object sender, RoutedEventArgs args)
         {
-            ToggleSwitch toggleSwitch = sender.As<ToggleSwitch>();
+            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch is not null)
             {
                 LinkFilterService.SetBlockMapFilterValue(toggleSwitch.IsOn);

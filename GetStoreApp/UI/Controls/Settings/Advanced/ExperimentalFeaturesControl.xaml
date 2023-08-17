@@ -43,6 +43,5 @@
         Grid.Column="2"
         MinWidth="100"
         Click="{x:Bind OnConfigClicked}"
-        Content="{x:Bind root:ResourceService.GetLocalized('Settings/Config')}"
-        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/Config')}" />
+        Content="{x:Bind root:ResourceService.GetLocalized('Settings/Config')}" />
 </Grid>

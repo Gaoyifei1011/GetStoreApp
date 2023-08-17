@@ -4,13 +4,11 @@ using GetStoreApp.Services.Controls.Settings.Appearance;
 using GetStoreApp.UI.Notifications;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.System;
-using WinRT;
 
 namespace GetStoreApp.UI.Controls.Settings.Appearance
 {
@@ -50,8 +48,6 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
                     Tag = index
                 };
 
-                ToolTipService.SetToolTip(toggleMenuFlyoutItem, languageItem.DisplayMember);
-
                 if (AppLanguage.SelectedValue == LanguageList[index].SelectedValue)
                 {
                     toggleMenuFlyoutItem.IsChecked = true;
@@ -61,15 +57,15 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
                 {
                     foreach (MenuFlyoutItemBase menuFlyoutItemBase in LanguageFlyout.Items)
                     {
-                        ToggleMenuFlyoutItem toggleMenuFlyoutItem = menuFlyoutItemBase.As<ToggleMenuFlyoutItem>();
+                        ToggleMenuFlyoutItem toggleMenuFlyoutItem = menuFlyoutItemBase as ToggleMenuFlyoutItem;
                         if (toggleMenuFlyoutItem is not null && toggleMenuFlyoutItem.IsChecked)
                         {
                             toggleMenuFlyoutItem.IsChecked = false;
                         }
                     }
 
-                    int selectedIndex = Convert.ToInt32(sender.As<ToggleMenuFlyoutItem>().Tag);
-                    LanguageFlyout.Items[selectedIndex].As<ToggleMenuFlyoutItem>().IsChecked = true;
+                    int selectedIndex = Convert.ToInt32((sender as ToggleMenuFlyoutItem).Tag);
+                    (LanguageFlyout.Items[selectedIndex] as ToggleMenuFlyoutItem).IsChecked = true;
 
                     if (AppLanguage.SelectedValue != LanguageList[selectedIndex].SelectedValue)
                     {

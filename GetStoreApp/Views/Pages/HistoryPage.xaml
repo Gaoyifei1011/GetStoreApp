@@ -62,8 +62,7 @@
             <TextBlock
                 Grid.Column="3"
                 VerticalAlignment="Center"
-                Text="{x:Bind LocalizeHistoryCountInfo(HistoryDataList.Count), Mode=OneWay}"
-                ToolTipService.ToolTip="{x:Bind LocalizeHistoryCountInfo(HistoryDataList.Count), Mode=OneWay}" />
+                Text="{x:Bind LocalizeHistoryCountInfo(HistoryDataList.Count), Mode=OneWay}" />
 
             <ContentControl
                 Grid.Column="4"
@@ -151,32 +150,28 @@
                                         IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'url'),Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="url"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/URL')}"
-                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Resources/URL')}" />
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/URL')}" />
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnTypeFilterClicked}"
                                         IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'ProductId'),Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="ProductId"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/ProductID')}"
-                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Resources/ProductID')}" />
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/ProductID')}" />
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnTypeFilterClicked}"
                                         IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'PackageFamilyName'),Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="PackageFamilyName"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/PackageFamilyName')}"
-                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Resources/PackageFamilyName')}" />
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/PackageFamilyName')}" />
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnTypeFilterClicked}"
                                         IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'CategoryId'),Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="CategoryId"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/CategoryID')}"
-                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Resources/CategoryID')}" />
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/CategoryID')}" />
 
                                     <MenuFlyoutSeparator />
 
@@ -185,11 +180,10 @@
                                         IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'None'),Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="None"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('History/None')}"
-                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/None')}" />
+                                        Text="{x:Bind root:ResourceService.GetLocalized('History/None')}" />
                                 </MenuFlyoutSubItem>
 
-                                <MenuFlyoutSubItem Text="{x:Bind root:ResourceService.GetLocalized('History/Channel')}" ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/Channel')}">
+                                <MenuFlyoutSubItem Text="{x:Bind root:ResourceService.GetLocalized('History/Channel')}">
                                     <MenuFlyoutSubItem.Style>
                                         <Style BasedOn="{StaticResource DefaultMenuFlyoutSubItemStyle}" TargetType="MenuFlyoutSubItem">
                                             <Setter Property="Height" Value="32" />
@@ -202,32 +196,28 @@
                                         IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'WIF'),Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="WIF"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/Fast')}"
-                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Resources/Fast')}" />
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/Fast')}" />
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnChannelFilterClicked}"
                                         IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'WIS'),Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="WIS"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/Slow')}"
-                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Resources/Slow')}" />
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/Slow')}" />
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnChannelFilterClicked}"
                                         IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'RP'),Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="RP"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/RP')}"
-                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Resources/RP')}" />
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/RP')}" />
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnChannelFilterClicked}"
                                         IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'Retail'),Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="Retail"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/Retail')}"
-                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Resources/Retail')}" />
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Resources/Retail')}" />
 
                                     <MenuFlyoutSeparator />
 
@@ -236,8 +226,7 @@
                                         IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'None'),Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="None"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('History/None')}"
-                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/None')}" />
+                                        Text="{x:Bind root:ResourceService.GetLocalized('History/None')}" />
                                 </MenuFlyoutSubItem>
                             </MenuFlyout>
                         </FlyoutBase.AttachedFlyout>
@@ -275,8 +264,7 @@
                         controlExtensions:CursorHelper.Cursor="Hand"
                         Click="{x:Bind OnSelectAllClicked}"
                         Style="{StaticResource AppBarButtonMenuItemStyle}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('History/SelectAll')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/SelectAll')}">
+                        Text="{x:Bind root:ResourceService.GetLocalized('History/SelectAll')}">
 
                         <MenuFlyoutItem.Icon>
                             <FontIcon Glyph="&#xE8b3;" />
@@ -287,8 +275,7 @@
                         controlExtensions:CursorHelper.Cursor="Hand"
                         Click="{x:Bind OnSelectNoneClicked}"
                         Style="{StaticResource AppBarButtonMenuItemStyle}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('History/SelectNone')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/SelectNone')}">
+                        Text="{x:Bind root:ResourceService.GetLocalized('History/SelectNone')}">
 
                         <MenuFlyoutItem.Icon>
                             <FontIcon Glyph="&#xE8e6;" />
@@ -357,8 +344,7 @@
                     Margin="0,10"
                     VerticalAlignment="Center"
                     Text="{x:Bind root:ResourceService.GetLocalized('History/LoadingHistory')}"
-                    TextAlignment="Center"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/LoadingHistory')}" />
+                    TextAlignment="Center" />
             </StackPanel>
         </Grid>
 
@@ -433,41 +419,71 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock
+                        x:Name="SelectHeaderText"
                         Grid.Column="0"
                         Width="50"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
                         Text="{x:Bind root:ResourceService.GetLocalized('History/Select')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/Select')}"
-                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsSelectMode), Mode=OneWay}" />
+                        TextTrimming="CharacterEllipsis"
+                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsSelectMode), Mode=OneWay}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/Select')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(SelectHeaderText.IsTextTrimmed), Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
 
                     <TextBlock
+                        x:Name="DateTimeHeaderText"
                         Grid.Column="1"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
                         Text="{x:Bind root:ResourceService.GetLocalized('History/DateTime')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/DateTime')}" />
+                        TextTrimming="CharacterEllipsis">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/DateTime')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(DateTimeHeaderText.IsTextTrimmed), Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
 
                     <TextBlock
+                        x:Name="TypeText"
                         Grid.Column="2"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
                         Text="{x:Bind root:ResourceService.GetLocalized('History/Type')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/Type')}" />
+                        TextTrimming="CharacterEllipsis">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/Type')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(TypeText.IsTextTrimmed), Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
 
                     <TextBlock
+                        x:Name="ChannelText"
                         Grid.Column="3"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
                         Text="{x:Bind root:ResourceService.GetLocalized('History/Channel')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/Channel')}" />
+                        TextTrimming="CharacterEllipsis">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/Channel')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(ChannelText.IsTextTrimmed), Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
 
                     <TextBlock
+                        x:Name="LinkText"
                         Grid.Column="4"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
                         Text="{x:Bind root:ResourceService.GetLocalized('History/Link')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/Link')}" />
+                        TextTrimming="CharacterEllipsis">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/Link')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(LinkText.IsTextTrimmed), Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
 
                     <TextBlock
                         Grid.Column="5"
@@ -525,6 +541,7 @@
                                     Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsSelectMode), Mode=OneWay}" />
 
                                 <TextBlock
+                                    x:Name="CreateTimeStampText"
                                     Grid.Column="1"
                                     MinWidth="50"
                                     Margin="10,0,0,0"
@@ -532,9 +549,15 @@
                                     FontSize="14"
                                     Text="{x:Bind converter:StringConverterHelper.TimeStampFormat(CreateTimeStamp)}"
                                     TextAlignment="Left"
-                                    ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.TimeStampFormat(CreateTimeStamp)}" />
+                                    TextTrimming="CharacterEllipsis">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip Content="{x:Bind converter:StringConverterHelper.TimeStampFormat(CreateTimeStamp)}" Visibility="{Binding ElementName=CreateTimeStampText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
 
                                 <TextBlock
+                                    x:Name="HistoryTypeText"
                                     Grid.Column="2"
                                     MinWidth="50"
                                     Margin="10,0,0,0"
@@ -542,9 +565,15 @@
                                     FontSize="14"
                                     Text="{x:Bind converter:StringConverterHelper.TypeNameFormat(HistoryType)}"
                                     TextAlignment="Left"
-                                    ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.TypeNameFormat(HistoryType)}" />
+                                    TextTrimming="CharacterEllipsis">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip Content="{x:Bind converter:StringConverterHelper.TypeNameFormat(HistoryType)}" Visibility="{Binding ElementName=HistoryTypeText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
 
                                 <TextBlock
+                                    x:Name="HistoryChannelText"
                                     Grid.Column="3"
                                     MinWidth="50"
                                     Margin="10,0,0,0"
@@ -552,9 +581,15 @@
                                     FontSize="14"
                                     Text="{x:Bind converter:StringConverterHelper.ChannelNameFormat(HistoryChannel)}"
                                     TextAlignment="Left"
-                                    ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.ChannelNameFormat(HistoryChannel)}" />
+                                    TextTrimming="CharacterEllipsis">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip Content="{x:Bind converter:StringConverterHelper.ChannelNameFormat(HistoryChannel)}" Visibility="{Binding ElementName=HistoryChannelText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
 
                                 <TextBlock
+                                    x:Name="HistoryLinkText"
                                     Grid.Column="4"
                                     MinWidth="50"
                                     Margin="10,0,0,0"
@@ -562,7 +597,12 @@
                                     FontSize="14"
                                     Text="{x:Bind HistoryLink}"
                                     TextAlignment="Left"
-                                    ToolTipService.ToolTip="{x:Bind HistoryLink}" />
+                                    TextTrimming="CharacterEllipsis">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip Content="{x:Bind HistoryLink}" Visibility="{Binding ElementName=HistoryLinkText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
 
                                 <HyperlinkButton
                                     Grid.Column="5"

@@ -40,8 +40,7 @@
                 Margin="-5,0,10,0"
                 Padding="5"
                 Click="{x:Bind OnSystemInformationClicked}"
-                Content="{x:Bind root:ResourceService.GetLocalized('About/SystemInformation')}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/SystemInformation')}" />
+                Content="{x:Bind root:ResourceService.GetLocalized('About/SystemInformation')}" />
             <MenuFlyoutSeparator Margin="0,0,0,8" />
 
             <TextBlock
@@ -64,15 +63,13 @@
                     Margin="-5,0,10,0"
                     Padding="5"
                     Click="{x:Bind OnAppInformationClicked}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('About/AppInformation')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/AppInformation')}" />
+                    Content="{x:Bind root:ResourceService.GetLocalized('About/AppInformation')}" />
 
                 <HyperlinkButton
                     Margin="-5,0,10,0"
                     Padding="5"
                     Click="{x:Bind OnAppSettingsClicked}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('About/AppSettings')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/AppSettings')}" />
+                    Content="{x:Bind root:ResourceService.GetLocalized('About/AppSettings')}" />
             </StackPanel>
 
             <MenuFlyoutSeparator Margin="0,0,0,8" />
@@ -105,15 +102,13 @@
                     Margin="-5,0,10,0"
                     Padding="5"
                     Content="{x:Bind root:ResourceService.GetLocalized('About/StartsWithEButton')}"
-                    NavigateUri="https://github.com/MicrosoftDocs/msix-docs/blob/main/msix-src/package/create-app-package-with-makeappx-tool.md#encrypt-or-decrypt-a-package-or-bundle"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/StartsWithEButton')}" />
+                    NavigateUri="https://github.com/MicrosoftDocs/msix-docs/blob/main/msix-src/package/create-app-package-with-makeappx-tool.md#encrypt-or-decrypt-a-package-or-bundle" />
 
                 <HyperlinkButton
                     Margin="-5,0,10,0"
                     Padding="5"
                     Content="{x:Bind root:ResourceService.GetLocalized('About/BlockMapButton')}"
-                    NavigateUri="https://docs.microsoft.com/uwp/schemas/blockmapschema/app-package-block-map"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/BlockMapButton')}" />
+                    NavigateUri="https://docs.microsoft.com/uwp/schemas/blockmapschema/app-package-block-map" />
             </StackPanel>
 
             <MenuFlyoutSeparator Margin="0,0,0,8" />
@@ -137,8 +132,7 @@
                 Margin="-5,0,10,0"
                 Padding="5"
                 Content="{x:Bind root:ResourceService.GetLocalized('About/LearnWinGetConfig')}"
-                NavigateUri="https://learn.microsoft.com/windows/package-manager/configuration"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/LearnWinGetConfig')}" />
+                NavigateUri="https://learn.microsoft.com/windows/package-manager/configuration" />
 
             <MenuFlyoutSeparator Margin="0,0,0,8" />
 

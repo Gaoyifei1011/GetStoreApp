@@ -44,12 +44,18 @@
 
                         <ContentControl>
                             <TextBlock
+                                x:Name="CleanFailed"
                                 Margin="0,5,0,0"
                                 VerticalAlignment="Center"
                                 Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
                                 Text="{x:Bind root:ResourceService.GetLocalized('Dialog/CleanFailed')}"
-                                ToolTipService.ToolTip="{x:Bind CleanFailedText}"
-                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsCleanFailed), Mode=OneWay}" />
+                                TextTrimming="CharacterEllipsis"
+                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsCleanFailed), Mode=OneWay}">
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip Content="{x:Bind CleanFailedText}" Visibility="{Binding ElementName=CleanFailed, Path=IsTextTrimmed, Mode=OneWay}" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
                         </ContentControl>
                     </StackPanel>
                 </DataTemplate>

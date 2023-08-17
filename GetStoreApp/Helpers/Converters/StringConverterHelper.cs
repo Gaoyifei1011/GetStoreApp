@@ -3,8 +3,7 @@ using GetStoreApp.Services.Controls.Settings.Common;
 using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
-using Windows.ApplicationModel;
-using WinRT;
+using System.Globalization;
 
 namespace GetStoreApp.Helpers.Converters
 {
@@ -19,6 +18,8 @@ namespace GetStoreApp.Helpers.Converters
             { "MB/s",1024*1024 },
             { "KB/s",1024 }
         };
+
+        public static CultureInfo AppCulture { get; set; }
 
         /// <summary>
         /// 关于界面项目引用内容格式化
@@ -54,11 +55,6 @@ namespace GetStoreApp.Helpers.Converters
             {
                 return ResourceService.GetLocalized(string.Format("/{0}/UnselectedToolTip", content));
             }
-        }
-
-        public static string DateTimeOffsetFormat(DateTimeOffset dateTime)
-        {
-            return dateTime.ToString("yyyy/mm/dd HH:mm");
         }
 
         /// <summary>
@@ -116,7 +112,7 @@ namespace GetStoreApp.Helpers.Converters
         /// </summary>
         public static string GMTFormat(string content)
         {
-            return Convert.ToDateTime(content).ToLocalTime().ToString("F");
+            return Convert.ToDateTime(content).ToLocalTime().ToString("G", AppCulture);
         }
 
         /// <summary>
@@ -125,42 +121,6 @@ namespace GetStoreApp.Helpers.Converters
         public static string InstallValueFormat(double content)
         {
             return string.Format(ResourceService.GetLocalized("Download/InstallValue"), content);
-        }
-
-        /// <summary>
-        /// 应用管理描述信息格式化
-        /// </summary>
-        public static string UWPAppToolTipFormat(object content, string type)
-        {
-            if (type is "DisplayName")
-            {
-                return string.Format(ResourceService.GetLocalized("UWPApp/DisplayNameToolTip"), content);
-            }
-            else if (type is "Publisher")
-            {
-                return string.Format(ResourceService.GetLocalized("UWPApp/PublisherToolTip"), content);
-            }
-            else if (type is "Version")
-            {
-                PackageVersion version = content.As<PackageVersion>();
-                return string.Format(ResourceService.GetLocalized("UWPApp/VersionToolTip"), version.Major, version.Minor, version.Build, version.Revision);
-            }
-            else if (type is "InstalledDate")
-            {
-                return string.Format(ResourceService.GetLocalized("UWPApp/InstallDateToolTip"), content.As<DateTimeOffset>().ToString("yyyy/mm/dd HH:mm"));
-            }
-            else
-            {
-                return string.Empty;
-            }
-        }
-
-        /// <summary>
-        /// 应用版本号格式化
-        /// </summary>
-        public static string PackageVersionFormat(PackageVersion packageVersion)
-        {
-            return string.Format("{0}.{1}.{2}.{3}", packageVersion.Major, packageVersion.Minor, packageVersion.Build, packageVersion.Revision);
         }
 
         /// <summary>
@@ -174,7 +134,7 @@ namespace GetStoreApp.Helpers.Converters
 
             DateTime CurrentTime = EpochStartTime.AddSeconds(rawDataTime + UtcOffset.TotalSeconds);
 
-            return CurrentTime.ToString("F");
+            return CurrentTime.ToString("G", AppCulture);
         }
 
         /// <summary>

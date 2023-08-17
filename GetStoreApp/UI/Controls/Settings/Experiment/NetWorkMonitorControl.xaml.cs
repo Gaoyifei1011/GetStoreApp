@@ -3,7 +3,6 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using WinRT;
 
 namespace GetStoreApp.UI.Controls.Settings.Experiment
 {
@@ -37,7 +36,7 @@ namespace GetStoreApp.UI.Controls.Settings.Experiment
         /// </summary>
         public void OnToggled(object sender, RoutedEventArgs args)
         {
-            ToggleSwitch toggleSwitch = sender.As<ToggleSwitch>();
+            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch is not null)
             {
                 NetWorkMonitorService.SetNetWorkMonitorValue(toggleSwitch.IsOn);

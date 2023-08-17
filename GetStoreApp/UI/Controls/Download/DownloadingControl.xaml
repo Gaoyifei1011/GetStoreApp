@@ -53,8 +53,7 @@
             <TextBlock
                 Grid.Column="3"
                 VerticalAlignment="Center"
-                Text="{x:Bind LocalizeDownloadingCountInfo(DownloadingDataList.Count), Mode=OneWay}"
-                ToolTipService.ToolTip="{x:Bind LocalizeDownloadingCountInfo(DownloadingDataList.Count), Mode=OneWay}" />
+                Text="{x:Bind LocalizeDownloadingCountInfo(DownloadingDataList.Count), Mode=OneWay}" />
 
             <StackPanel
                 x:Name="NormalMode"
@@ -119,8 +118,7 @@
                     controlExtensions:CursorHelper.Cursor="Hand"
                     Click="{x:Bind OnSelectAllClicked}"
                     Style="{StaticResource AppBarButtonMenuItemStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Download/SelectAll')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/SelectAll')}">
+                    Text="{x:Bind root:ResourceService.GetLocalized('Download/SelectAll')}">
 
                     <MenuFlyoutItem.Icon>
                         <FontIcon Glyph="&#xE8b3;" />
@@ -131,8 +129,7 @@
                     controlExtensions:CursorHelper.Cursor="Hand"
                     Click="{x:Bind OnSelectNoneClicked}"
                     Style="{StaticResource AppBarButtonMenuItemStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Download/SelectNone')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/SelectNone')}">
+                    Text="{x:Bind root:ResourceService.GetLocalized('Download/SelectNone')}">
 
                     <MenuFlyoutItem.Icon>
                         <FontIcon Glyph="&#xE8e6;" />
@@ -179,8 +176,7 @@
                 Margin="0,10"
                 VerticalAlignment="Center"
                 Text="{x:Bind root:ResourceService.GetLocalized('Download/DownloadingEmptyDescription')}"
-                TextAlignment="Center"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DownloadingEmptyDescription')}" />
+                TextAlignment="Center" />
         </Grid>
 
         <ListView
@@ -246,13 +242,19 @@
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock
+                                    x:Name="FileNameText"
                                     Grid.Column="0"
                                     MinWidth="50"
                                     VerticalAlignment="Center"
                                     FontSize="16"
                                     Text="{x:Bind FileName}"
                                     TextAlignment="Left"
-                                    ToolTipService.ToolTip="{x:Bind FileName}" />
+                                    TextTrimming="CharacterEllipsis">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip Content="{x:Bind FileName}" Visibility="{Binding ElementName=FileNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
 
                                 <TextBlock
                                     Grid.Column="1"
@@ -290,6 +292,7 @@
                                 IsIndeterminate="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsFileDownloading), Mode=OneWay}"
                                 Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 3)}"
                                 Value="{x:Bind DownloadProgress(FinishedSize, TotalSize), Mode=OneWay}" />
+
                             <TextBlock
                                 Grid.Row="1"
                                 MinWidth="50"
@@ -298,7 +301,6 @@
                                 FontSize="14"
                                 Text="{x:Bind root:ResourceService.GetLocalized('Download/WaitDownload')}"
                                 TextAlignment="Left"
-                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/WaitDownload')}"
                                 Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 1)}" />
                         </Grid>
 

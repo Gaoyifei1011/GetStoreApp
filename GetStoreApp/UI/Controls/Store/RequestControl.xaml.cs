@@ -13,7 +13,6 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.UI.StartScreen;
-using WinRT;
 
 namespace GetStoreApp.UI.Controls.Store
 {
@@ -142,7 +141,7 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         public void OnTypeSelectClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
+            ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
             if (item.Tag is not null)
             {
                 SelectedType = TypeList[Convert.ToInt32(item.Tag)];
@@ -158,7 +157,7 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         public void OnChannelSelectClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
+            ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
             if (item.Tag is not null)
             {
                 SelectedChannel = ChannelList[Convert.ToInt32(item.Tag)];

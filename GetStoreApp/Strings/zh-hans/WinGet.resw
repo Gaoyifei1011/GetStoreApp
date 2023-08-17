@@ -132,7 +132,7 @@
   <data name="AppVersionToolTip" xml:space="preserve">
     <value>应用版本：{0}</value>
   </data>
-  <data name="CancelInstalling" xml:space="preserve">
+  <data name="CancelInstall" xml:space="preserve">
     <value>取消安装</value>
   </data>
   <data name="CopyInstallText" xml:space="preserve">
@@ -295,6 +295,6 @@
     <value>您的所有应用已经是最新版本了</value>
   </data>
   <data name="ViewMoreOptions" xml:space="preserve">
-    <value>右：查看更多选项</value>
+    <value>查看更多选项</value>
   </data>
 </root>

@@ -56,8 +56,7 @@
             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(ResultDataList.Count), Mode=OneWay}">
 
             <TextBlock Text="{x:Bind LocalizeCategoryId(CategoryId), Mode=OneWay}" />
-
-            <TextBlock Text="{x:Bind LocalizeResultCountInfo(ResultDataList.Count), Mode=OneWay}" ToolTipService.ToolTip="{x:Bind LocalizeResultCountInfo(ResultDataList.Count), Mode=OneWay}" />
+            <TextBlock Text="{x:Bind LocalizeResultCountInfo(ResultDataList.Count), Mode=OneWay}" />
         </StackPanel>
 
         <TextBlock
@@ -117,8 +116,7 @@
                 controlExtensions:CursorHelper.Cursor="Hand"
                 Click="{x:Bind OnSelectAllClicked}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Store/SelectAll')}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/SelectAll')}">
+                Text="{x:Bind root:ResourceService.GetLocalized('Store/SelectAll')}">
 
                 <MenuFlyoutItem.Icon>
                     <FontIcon Glyph="&#xE8b3;" />
@@ -129,8 +127,7 @@
                 controlExtensions:CursorHelper.Cursor="Hand"
                 Click="{x:Bind OnSelectNoneClicked}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Store/SelectNone')}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/SelectNone')}">
+                Text="{x:Bind root:ResourceService.GetLocalized('Store/SelectNone')}">
 
                 <MenuFlyoutItem.Icon>
                     <FontIcon Glyph="&#xE8e6;" />
@@ -169,8 +166,7 @@
                 controlExtensions:CursorHelper.Cursor="Hand"
                 Click="{x:Bind OnDownloadSelectedClicked}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Store/DownloadSelected')}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/DownloadSelected')}">
+                Text="{x:Bind root:ResourceService.GetLocalized('Store/DownloadSelected')}">
 
                 <MenuFlyoutItem.Icon>
                     <FontIcon Glyph="&#xE74b;" />
@@ -217,41 +213,71 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock
+                    x:Name="SelectHeaderText"
                     Grid.Column="0"
                     Width="50"
                     Margin="10,0,0,0"
                     VerticalAlignment="Center"
                     Text="{x:Bind root:ResourceService.GetLocalized('Store/Select')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/Select')}"
-                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsSelectMode), Mode=OneWay}" />
+                    TextTrimming="CharacterEllipsis"
+                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsSelectMode), Mode=OneWay}">
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/Select')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(SelectHeaderText.IsTextTrimmed), Mode=OneWay}" />
+                    </ToolTipService.ToolTip>
+                </TextBlock>
 
                 <TextBlock
+                    x:Name="FileNameHeaderText"
                     Grid.Column="1"
                     Margin="10,0,0,0"
                     VerticalAlignment="Center"
                     Text="{x:Bind root:ResourceService.GetLocalized('Store/FileName')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/FileName')}" />
+                    TextTrimming="CharacterEllipsis">
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/FileName')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(FileNameHeaderText.IsTextTrimmed), Mode=OneWay}" />
+                    </ToolTipService.ToolTip>
+                </TextBlock>
 
                 <TextBlock
+                    x:Name="LinkExpireTimeText"
                     Grid.Column="2"
                     Margin="10,0,0,0"
                     VerticalAlignment="Center"
                     Text="{x:Bind root:ResourceService.GetLocalized('Store/LinkExpireTime')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/LinkExpireTime')}" />
+                    TextTrimming="CharacterEllipsis">
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/LinkExpireTime')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(LinkExpireTimeText.IsTextTrimmed), Mode=OneWay}" />
+                    </ToolTipService.ToolTip>
+                </TextBlock>
 
                 <TextBlock
+                    x:Name="FileSHA1HeaderText"
                     Grid.Column="3"
                     Margin="10,0,0,0"
                     VerticalAlignment="Center"
                     Text="{x:Bind root:ResourceService.GetLocalized('Store/FileSHA1')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/FileSHA1')}" />
+                    TextTrimming="CharacterEllipsis">
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/FileSHA1')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(FileSHA1HeaderText.IsTextTrimmed), Mode=OneWay}" />
+                    </ToolTipService.ToolTip>
+                </TextBlock>
 
                 <TextBlock
+                    x:Name="FileSizeHeaderText"
                     Grid.Column="4"
                     Margin="10,0,0,0"
                     VerticalAlignment="Center"
                     Text="{x:Bind root:ResourceService.GetLocalized('Store/FileSize')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/FileSize')}" />
+                    TextTrimming="CharacterEllipsis">
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/FileSize')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(FileSizeHeaderText.IsTextTrimmed), Mode=OneWay}" />
+                    </ToolTipService.ToolTip>
+                </TextBlock>
 
                 <TextBlock
                     Grid.Column="5"
@@ -300,11 +326,22 @@
                         VerticalAlignment="Center"
                         Command="{Binding ElementName=ResultRoot, Path=DownloadCommand, Mode=OneTime}"
                         CommandParameter="{Binding}"
-                        Content="{x:Bind FileName}"
-                        Style="{StaticResource HyperlinkButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.FileNameToolTipFormat(FileName)}" />
+                        Style="{StaticResource HyperlinkButtonStyle}">
+
+                        <HyperlinkButton.Content>
+                            <TextBlock
+                                x:Name="FileNameHyperlinkText"
+                                Text="{x:Bind FileName}"
+                                TextTrimming="CharacterEllipsis">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip Content="{x:Bind converter:StringConverterHelper.FileNameToolTipFormat(FileName)}" Visibility="{Binding ElementName=FileNameHyperlinkText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
+                        </HyperlinkButton.Content>
+                    </HyperlinkButton>
 
                     <TextBlock
+                        x:Name="FileLinkExpireTimeText"
                         Grid.Column="2"
                         MinWidth="50"
                         Margin="10,0,0,0"
@@ -312,9 +349,15 @@
                         FontSize="14"
                         Text="{x:Bind converter:StringConverterHelper.GMTFormat(FileLinkExpireTime)}"
                         TextAlignment="Left"
-                        ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.GMTFormat(FileLinkExpireTime)}" />
+                        TextTrimming="CharacterEllipsis">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{x:Bind converter:StringConverterHelper.GMTFormat(FileLinkExpireTime)}" Visibility="{Binding ElementName=FileLinkExpireTimeText, Path=IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
 
                     <TextBlock
+                        x:Name="FileSHA1Text"
                         Grid.Column="3"
                         MinWidth="50"
                         Margin="10,0,0,0"
@@ -322,9 +365,15 @@
                         FontSize="14"
                         Text="{x:Bind FileSHA1}"
                         TextAlignment="Left"
-                        ToolTipService.ToolTip="{x:Bind FileSHA1}" />
+                        TextTrimming="CharacterEllipsis">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{x:Bind FileSHA1}" Visibility="{Binding ElementName=FileSHA1Text, Path=IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
 
                     <TextBlock
+                        x:Name="FileSizeText"
                         Grid.Column="4"
                         MinWidth="50"
                         Margin="10,0,0,0"
@@ -332,7 +381,12 @@
                         FontSize="14"
                         Text="{x:Bind FileSize}"
                         TextAlignment="Left"
-                        ToolTipService.ToolTip="{x:Bind FileSize}" />
+                        TextTrimming="CharacterEllipsis">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{x:Bind FileSize}" Visibility="{Binding ElementName=FileSizeText, Path=IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
 
                     <DropDownButton
                         Grid.Column="5"

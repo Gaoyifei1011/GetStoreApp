@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using WinRT;
 
 namespace GetStoreApp.UI.Controls.Settings.Common
 {
@@ -84,7 +83,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// </summary>
         public void OnWinGetInstallModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
+            ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
             if (item.Tag is not null)
             {
                 WinGetInstallMode = WinGetInstallModeList[Convert.ToInt32(item.Tag)];
@@ -130,7 +129,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// </summary>
         public void OnToggled(object sender, RoutedEventArgs args)
         {
-            ToggleSwitch toggleSwitch = sender.As<ToggleSwitch>();
+            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch is not null)
             {
                 WinGetConfigService.SetUseDevVersion(toggleSwitch.IsOn);

@@ -2,6 +2,7 @@
 using Microsoft.UI.Xaml;
 using System;
 using System.IO;
+using Windows.ApplicationModel;
 
 namespace GetStoreApp.Helpers.Converters
 {
@@ -73,6 +74,14 @@ namespace GetStoreApp.Helpers.Converters
         }
 
         /// <summary>
+        /// 检查应用是否为商店应用
+        /// </summary>
+        public static bool IsStorePackage(Package packagePath)
+        {
+            return packagePath.SignatureKind is PackageSignatureKind.Store;
+        }
+
+        /// <summary>
         /// 历史记录按时间排序单选框检查
         /// </summary>
         public static bool TimeSortValueCheck(bool value, bool checkValue)
@@ -86,6 +95,22 @@ namespace GetStoreApp.Helpers.Converters
         public static Visibility IsAppListPageCheck(int count)
         {
             return count is 1 ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// 检测当前应用是否为商店应用
+        /// </summary>
+        public static Visibility IsStoreAppCheck(PackageSignatureKind packageSignatureKind)
+        {
+            return packageSignatureKind is PackageSignatureKind.Store ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// 检测当前应用是否为系统应用（系统应用无法卸载）
+        /// </summary>
+        public static Visibility IsNotSystemAppCheck(PackageSignatureKind packageSignatureKind)
+        {
+            return packageSignatureKind is PackageSignatureKind.System ? Visibility.Collapsed : Visibility.Visible;
         }
     }
 }

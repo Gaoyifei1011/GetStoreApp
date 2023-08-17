@@ -33,6 +33,8 @@ namespace GetStoreApp.UI.Controls.WinGet
     {
         private PackageManager SearchAppsManager { get; set; }
 
+        private readonly object SearchAppsDataListObject = new object();
+
         internal WinGetPage WinGetInstance;
 
         private string cachedSearchText;
@@ -104,13 +106,16 @@ namespace GetStoreApp.UI.Controls.WinGet
                 {
                     try
                     {
-                        // 禁用当前应用的可安装状态
-                        foreach (SearchAppsModel searchAppsItem in SearchAppsDataList)
+                        lock (SearchAppsDataListObject)
                         {
-                            if (searchAppsItem.AppID == searchApps.AppID)
+                            // 禁用当前应用的可安装状态
+                            foreach (SearchAppsModel searchAppsItem in SearchAppsDataList)
                             {
-                                searchAppsItem.IsInstalling = true;
-                                break;
+                                if (searchAppsItem.AppID == searchApps.AppID)
+                                {
+                                    searchAppsItem.IsInstalling = true;
+                                    break;
+                                }
                             }
                         }
 
@@ -234,7 +239,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         // 获取安装完成后的结果信息
                         if (installResult.Status is InstallResultStatus.Ok)
                         {
-                            ToastNotificationService.Show(NotificationArgs.InstallSuccessfully, searchApps.AppName);
+                            ToastNotificationService.Show(NotificationArgs.WinGetInstallSuccessfully, searchApps.AppName);
 
                             // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
                             if (installResult.RebootRequired)
@@ -273,16 +278,19 @@ namespace GetStoreApp.UI.Controls.WinGet
                         }
                         else
                         {
-                            ToastNotificationService.Show(NotificationArgs.InstallFailed, searchApps.AppName, searchApps.AppID);
+                            ToastNotificationService.Show(NotificationArgs.WinGetInstallFailed, searchApps.AppName, searchApps.AppID);
                         }
 
-                        // 应用安装失败，将当前任务状态修改为可安装状态
-                        foreach (SearchAppsModel searchAppsItem in SearchAppsDataList)
+                        lock (SearchAppsDataListObject)
                         {
-                            if (searchAppsItem.AppID == searchApps.AppID)
+                            // 应用安装失败，将当前任务状态修改为可安装状态
+                            foreach (SearchAppsModel searchAppsItem in SearchAppsDataList)
                             {
-                                searchAppsItem.IsInstalling = false;
-                                break;
+                                if (searchAppsItem.AppID == searchApps.AppID)
+                                {
+                                    searchAppsItem.IsInstalling = false;
+                                    break;
+                                }
                             }
                         }
 
@@ -305,13 +313,16 @@ namespace GetStoreApp.UI.Controls.WinGet
                     {
                         LogService.WriteLog(LogType.INFO, "App installing operation canceled.", e);
 
-                        // 应用安装失败，将当前任务状态修改为可安装状态
-                        foreach (SearchAppsModel searchAppsItem in SearchAppsDataList)
+                        lock (SearchAppsDataListObject)
                         {
-                            if (searchAppsItem.AppID == searchApps.AppID)
+                            // 应用安装失败，将当前任务状态修改为可安装状态
+                            foreach (SearchAppsModel searchAppsItem in SearchAppsDataList)
                             {
-                                searchAppsItem.IsInstalling = false;
-                                break;
+                                if (searchAppsItem.AppID == searchApps.AppID)
+                                {
+                                    searchAppsItem.IsInstalling = false;
+                                    break;
+                                }
                             }
                         }
 
@@ -334,13 +345,16 @@ namespace GetStoreApp.UI.Controls.WinGet
                     {
                         LogService.WriteLog(LogType.ERROR, "App installing failed.", e);
 
-                        // 应用安装失败，将当前任务状态修改为可安装状态
-                        foreach (SearchAppsModel searchAppsItem in SearchAppsDataList)
+                        lock (SearchAppsDataListObject)
                         {
-                            if (searchAppsItem.AppID == searchApps.AppID)
+                            // 应用安装失败，将当前任务状态修改为可安装状态
+                            foreach (SearchAppsModel searchAppsItem in SearchAppsDataList)
                             {
-                                searchAppsItem.IsInstalling = false;
-                                break;
+                                if (searchAppsItem.AppID == searchApps.AppID)
+                                {
+                                    searchAppsItem.IsInstalling = false;
+                                    break;
+                                }
                             }
                         }
 
@@ -358,7 +372,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             WinGetInstance.InstallingStateDict.Remove(searchApps.AppID);
                         }
 
-                        ToastNotificationService.Show(NotificationArgs.InstallFailed, searchApps.AppName, searchApps.AppID);
+                        ToastNotificationService.Show(NotificationArgs.WinGetInstallFailed, searchApps.AppName, searchApps.AppID);
                     }
                 }
             };
@@ -481,7 +495,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 return;
             }
             await GetSearchAppsAsync();
-            await InitializeDataAsync();
+            InitializeData();
             IsSearchCompleted = true;
         }
 
@@ -500,7 +514,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 return;
             }
             await GetSearchAppsAsync();
-            await InitializeDataAsync();
+            InitializeData();
             IsSearchCompleted = true;
         }
 
@@ -546,33 +560,40 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 初始化列表数据
         /// </summary>
-        public async Task InitializeDataAsync()
+        public void InitializeData()
         {
-            SearchAppsDataList.Clear();
+            lock (SearchAppsDataListObject)
+            {
+                SearchAppsDataList.Clear();
+            }
+
             if (MatchResultList is not null)
             {
-                foreach (MatchResult matchItem in MatchResultList)
+                lock (SearchAppsDataListObject)
                 {
-                    if (matchItem.CatalogPackage.DefaultInstallVersion is not null)
+                    foreach (MatchResult matchItem in MatchResultList)
                     {
-                        bool isInstalling = false;
-                        foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsList)
+                        if (matchItem.CatalogPackage.DefaultInstallVersion is not null)
                         {
-                            if (matchItem.CatalogPackage.DefaultInstallVersion.Id == installingAppsItem.AppID)
+                            bool isInstalling = false;
+                            foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsList)
                             {
-                                isInstalling = true;
-                                break;
+                                if (matchItem.CatalogPackage.DefaultInstallVersion.Id == installingAppsItem.AppID)
+                                {
+                                    isInstalling = true;
+                                    break;
+                                }
                             }
+                            SearchAppsDataList.Add(new SearchAppsModel()
+                            {
+                                AppID = matchItem.CatalogPackage.DefaultInstallVersion.Id,
+                                AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.DisplayName) || matchItem.CatalogPackage.DefaultInstallVersion.DisplayName.Equals("Unknown", StringComparison.OrdinalIgnoreCase) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.DisplayName,
+                                AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Publisher) || matchItem.CatalogPackage.DefaultInstallVersion.Publisher.Equals("Unknown", StringComparison.OrdinalIgnoreCase) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.Publisher,
+                                AppVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Version) || matchItem.CatalogPackage.DefaultInstallVersion.Version.Equals("Unknown", StringComparison.OrdinalIgnoreCase) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.Version,
+                                IsInstalling = isInstalling,
+                            });
+                            Task.Delay(1);
                         }
-                        SearchAppsDataList.Add(new SearchAppsModel()
-                        {
-                            AppID = matchItem.CatalogPackage.DefaultInstallVersion.Id,
-                            AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.DisplayName) || matchItem.CatalogPackage.DefaultInstallVersion.DisplayName.Equals("Unknown", StringComparison.OrdinalIgnoreCase) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.DisplayName,
-                            AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Publisher) || matchItem.CatalogPackage.DefaultInstallVersion.Publisher.Equals("Unknown", StringComparison.OrdinalIgnoreCase) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.Publisher,
-                            AppVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Version) || matchItem.CatalogPackage.DefaultInstallVersion.Version.Equals("Unknown", StringComparison.OrdinalIgnoreCase) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.Version,
-                            IsInstalling = isInstalling,
-                        });
-                        await Task.Delay(1);
                     }
                 }
             }

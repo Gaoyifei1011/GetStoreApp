@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
+using GetStoreApp.Helpers.Converters;
 using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Services.Root;
 using System;
@@ -116,6 +117,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
             }
 
             ConfigService.SaveSetting(SettingsKey, language.SelectedValue);
+            StringConverterHelper.AppCulture = new CultureInfo(language.SelectedValue);
         }
     }
 }

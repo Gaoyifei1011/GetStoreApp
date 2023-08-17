@@ -41,8 +41,7 @@
             <Button
                 Grid.Column="2"
                 Click="{x:Bind OnSettingsInstructionClicked}"
-                Content="{x:Bind root:ResourceService.GetLocalized('Settings/SettingsInstruction')}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/SettingsInstruction')}" />
+                Content="{x:Bind root:ResourceService.GetLocalized('Settings/SettingsInstruction')}" />
         </Grid>
 
         <ScrollViewer

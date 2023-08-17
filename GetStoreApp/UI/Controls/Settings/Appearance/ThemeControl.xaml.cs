@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.System;
-using WinRT;
 
 namespace GetStoreApp.UI.Controls.Settings.Appearance
 {
@@ -56,7 +55,7 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
         /// </summary>
         public void OnThemeSelectClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
+            ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
             if (item.Tag is not null)
             {
                 Theme = ThemeList[Convert.ToInt32(item.Tag)];

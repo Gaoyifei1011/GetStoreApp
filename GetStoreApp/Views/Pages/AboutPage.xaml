@@ -32,8 +32,7 @@
             <DropDownButton
                 Grid.Column="1"
                 controlExtensions:CursorHelper.Cursor="Hand"
-                Content="{x:Bind root:ResourceService.GetLocalized('About/Others')}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/OthersToolTip')}">
+                Content="{x:Bind root:ResourceService.GetLocalized('About/Others')}">
 
                 <DropDownButton.Flyout>
                     <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">

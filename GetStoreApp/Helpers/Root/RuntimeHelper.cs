@@ -1,6 +1,9 @@
-﻿using System;
+﻿using GetStoreApp.WindowsAPI.PInvoke;
+using GetStoreApp.WindowsAPI.PInvoke.Advapi32;
+using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
+using System;
+using System.Runtime.InteropServices;
 using Windows.ApplicationModel;
-using Windows.Management.Deployment;
 
 namespace GetStoreApp.Helpers.Root
 {
@@ -46,15 +49,29 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         private static void IsRunningElevated()
         {
-            try
+            IntPtr currentProcessHandle = Kernel32Library.GetCurrentProcess();
+            bool success = Advapi32Library.OpenProcessToken(currentProcessHandle, 0x0008, out IntPtr tokenHandle);
+
+            TOKEN_ELEVATION_TYPE token_elevation_type = TOKEN_ELEVATION_TYPE.TokenElevationTypeDefault;
+            uint tetSize = (uint)Marshal.SizeOf((int)token_elevation_type);
+
+            if (success)
             {
-                new PackageManager().FindPackages();
-                IsElevated = true;
+                IntPtr token_elevation_type_Ptr = Marshal.AllocHGlobal((int)tetSize);
+                try
+                {
+                    if (Advapi32Library.GetTokenInformation(tokenHandle, TOKEN_INFORMATION_CLASS.TokenElevationType, token_elevation_type_Ptr, tetSize, out _))
+                    {
+                        token_elevation_type = (TOKEN_ELEVATION_TYPE)Marshal.ReadInt32(token_elevation_type_Ptr);
+                    }
+                }
+                finally
+                {
+                    Marshal.FreeHGlobal(token_elevation_type_Ptr);
+                }
             }
-            catch (Exception)
-            {
-                IsElevated = false;
-            }
+
+            IsElevated = token_elevation_type == TOKEN_ELEVATION_TYPE.TokenElevationTypeFull;
         }
     }
 }

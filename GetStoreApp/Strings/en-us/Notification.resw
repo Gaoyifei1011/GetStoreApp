@@ -266,6 +266,29 @@
   <data name="UpgradeInstallCopy" xml:space="preserve">
     <value>Upgrade command was successfully copied to the clipboard</value>
   </data>
+  <data name="UWPUnInstallFailed" xml:space="preserve">
+    <value>&lt;toast launch="action=OpenApp"&gt;
+  &lt;visual&gt;
+    &lt;binding template="ToastGeneric"&gt;
+      &lt;text&gt;{0} app uninstall failed&lt;/text&gt;
+      &lt;text&gt;App uninstall failed, please check if you have permission to uninstall the app&lt;/text&gt;
+      &lt;text&gt;Alternatively, you can try uninstalling your app in Settings&amp;#xA;Error code:{1}&amp;#xA;Error message:{2}&lt;/text&gt;
+    &lt;/binding&gt;
+  &lt;/visual&gt;
+  &lt;actions&gt;
+    &lt;action content="Open settings" arguments="action=OpenSettings"/&gt;
+  &lt;/actions&gt;
+&lt;/toast&gt;</value>
+  </data>
+  <data name="UWPUnInstallSuccessfully" xml:space="preserve">
+    <value>&lt;toast launch="action=OpenApp"&gt;
+  &lt;visual&gt;
+    &lt;binding template="ToastGeneric"&gt;
+      &lt;text&gt;{0} app uninstall successfully&lt;/text&gt;
+    &lt;/binding&gt;
+  &lt;/visual&gt;
+&lt;/toast&gt;</value>
+  </data>
   <data name="WinGetInstallFailed" xml:space="preserve">
     <value>&lt;toast launch="action=OpenApp"&gt;
   &lt;visual&gt;

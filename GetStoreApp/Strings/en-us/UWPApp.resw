@@ -123,6 +123,18 @@
   <data name="AppList" xml:space="preserve">
     <value>App list</value>
   </data>
+  <data name="AppType" xml:space="preserve">
+    <value>App type</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>App description</value>
+  </data>
+  <data name="DisplayName" xml:space="preserve">
+    <value>Display name</value>
+  </data>
   <data name="DisplayNameToolTip" xml:space="preserve">
     <value>App name: {0}</value>
   </data>
@@ -131,15 +143,6 @@
   </data>
   <data name="Filter" xml:space="preserve">
     <value>Filter</value>
-  </data>
-  <data name="FilterByIsFramework" xml:space="preserve">
-    <value>Framework package</value>
-  </data>
-  <data name="FilterByIsSideloadPackage" xml:space="preserve">
-    <value>Sideloaded apps</value>
-  </data>
-  <data name="FilterByIsStorePackage" xml:space="preserve">
-    <value>Store apps</value>
   </data>
   <data name="FilterToolTip" xml:space="preserve">
     <value>Filter according to the rules</value>
@@ -150,11 +153,23 @@
   <data name="InstallDateToolTip" xml:space="preserve">
     <value>Installed date: {0}</value>
   </data>
+  <data name="InstalledDate" xml:space="preserve">
+    <value>Installed date</value>
+  </data>
+  <data name="IsFramework" xml:space="preserve">
+    <value>Framework package</value>
+  </data>
   <data name="LoadingPackage" xml:space="preserve">
     <value>Please wait while loading the list of installed applications...</value>
   </data>
   <data name="OpenApp" xml:space="preserve">
     <value>Open app</value>
+  </data>
+  <data name="OpenCacheFolder" xml:space="preserve">
+    <value>Open cache folder</value>
+  </data>
+  <data name="OpenFolder" xml:space="preserve">
+    <value>Open folder</value>
   </data>
   <data name="OpenInstalledFolder" xml:space="preserve">
     <value>Open installed folder</value>
@@ -186,6 +201,9 @@
   <data name="PlaceHolderText" xml:space="preserve">
     <value>Search installed apps</value>
   </data>
+  <data name="Publisher" xml:space="preserve">
+    <value>Publisher name</value>
+  </data>
   <data name="PublisherToolTip" xml:space="preserve">
     <value>Publisher: {0}</value>
   </data>
@@ -194,6 +212,24 @@
   </data>
   <data name="RefreshToolTip" xml:space="preserve">
     <value>Refresh the installed apps data</value>
+  </data>
+  <data name="SignatureDeveloper" xml:space="preserve">
+    <value>Developer</value>
+  </data>
+  <data name="SignatureEnterprise" xml:space="preserve">
+    <value>Enterprise</value>
+  </data>
+  <data name="SignatureNone" xml:space="preserve">
+    <value>None signature</value>
+  </data>
+  <data name="SignatureStore" xml:space="preserve">
+    <value>Store</value>
+  </data>
+  <data name="SignatureSystem" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="SignatureType" xml:space="preserve">
+    <value>Signature type</value>
   </data>
   <data name="Sort" xml:space="preserve">
     <value>Sort</value>
@@ -227,6 +263,12 @@
   </data>
   <data name="UnInstall" xml:space="preserve">
     <value>Uninstall</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Package version</value>
   </data>
   <data name="VersionToolTip" xml:space="preserve">
     <value>Version: {0}.{1}.{2}.{3}</value>

@@ -21,7 +21,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using WinRT;
 
 namespace GetStoreApp.Views.Pages
 {
@@ -207,7 +206,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         public void OnFlyoutShowClicked(object sender, RoutedEventArgs args)
         {
-            FlyoutBase.ShowAttachedFlyout(sender.As<MenuFlyoutItem>());
+            FlyoutBase.ShowAttachedFlyout(sender as MenuFlyoutItem);
         }
 
         /// <summary>
@@ -215,7 +214,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         public async void OnTimeSortClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
+            ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
             if (item.Tag is not null)
             {
                 TimeSortOrder = Convert.ToBoolean(item.Tag);
@@ -228,7 +227,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         public async void OnTypeFilterClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
+            ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
             if (item.Tag is not null)
             {
                 TypeFilter = Convert.ToString(item.Tag);
@@ -241,7 +240,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         public async void OnChannelFilterClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
+            ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
             if (item.Tag is not null)
             {
                 ChannelFilter = Convert.ToString(item.Tag);

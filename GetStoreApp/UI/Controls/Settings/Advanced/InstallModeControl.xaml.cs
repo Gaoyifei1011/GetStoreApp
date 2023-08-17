@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using WinRT;
 
 namespace GetStoreApp.UI.Controls.Settings.Advanced
 {
@@ -47,7 +46,7 @@ namespace GetStoreApp.UI.Controls.Settings.Advanced
         /// </summary>
         public void OnInstallModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem item = sender.As<ToggleMenuFlyoutItem>();
+            ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
             if (item.Tag is not null)
             {
                 InstallMode = InstallModeList[Convert.ToInt32(item.Tag)];
