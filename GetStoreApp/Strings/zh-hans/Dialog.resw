@@ -357,12 +357,6 @@
   <data name="ParameterMode" xml:space="preserve">
     <value>有参数模式</value>
   </data>
-  <data name="JumpList" xml:space="preserve">
-    <value>任务栏右键菜单记录</value>
-  </data>
-  <data name="JumpListCleanError" xml:space="preserve">
-    <value>任务栏右键菜单记录清理失败，请手动清理右键菜单记录</value>
-  </data>
   <data name="AppInformationTitle" xml:space="preserve">
     <value>应用信息</value>
   </data>

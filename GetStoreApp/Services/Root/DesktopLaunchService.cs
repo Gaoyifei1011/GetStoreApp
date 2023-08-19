@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
+using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.DataTransfer.ShareTarget;
+using Windows.System;
 
 namespace GetStoreApp.Services.Root
 {
@@ -31,6 +33,8 @@ namespace GetStoreApp.Services.Root
             {"ChannelName",-1 },
             {"Link",null},
         };
+
+        public static Type InitializePage { get; set; } = typeof(StorePage);
 
         /// <summary>
         /// 处理桌面应用启动的方式
@@ -110,9 +114,37 @@ namespace GetStoreApp.Services.Root
                 // 跳转列表启动的参数
                 if (DesktopLaunchArgs[0] is "JumpList")
                 {
-                    LaunchArgs["TypeName"] = ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(DesktopLaunchArgs[1], StringComparison.OrdinalIgnoreCase));
-                    LaunchArgs["ChannelName"] = ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(DesktopLaunchArgs[2], StringComparison.OrdinalIgnoreCase));
-                    LaunchArgs["Link"] = DesktopLaunchArgs[3];
+                    switch (DesktopLaunchArgs[1])
+                    {
+                        case "History":
+                            {
+                                InitializePage = typeof(HistoryPage);
+                                break;
+                            }
+                        case "Download":
+                            {
+                                InitializePage = typeof(DownloadPage);
+                                break;
+                            }
+                        case "WinGet":
+                            {
+                                InitializePage = typeof(WinGetPage);
+                                break;
+                            }
+                        case "UWPApp":
+                            {
+                                InitializePage = typeof(UWPAppPage);
+                                break;
+                            }
+                        case "Web":
+                            {
+                                Task.Run(async () =>
+                                {
+                                    await Launcher.LaunchUriAsync((new Uri("https://store.rg-adguard.net/")));
+                                });
+                                break;
+                            }
+                    }
                 }
 
                 // 正常启动的参数
@@ -144,7 +176,15 @@ namespace GetStoreApp.Services.Root
             {
                 bool isExisted = false;
 
-                string sendData = string.Format("{0} {1} {2}", LaunchArgs["TypeName"], LaunchArgs["ChannelName"], LaunchArgs["Link"] is null ? "PlaceHolderText" : LaunchArgs["Link"]);
+                string sendData;
+                if (DesktopLaunchArgs.Count is 2 && DesktopLaunchArgs[0] is "JumpList")
+                {
+                    sendData = string.Join(" ", DesktopLaunchArgs);
+                }
+                else
+                {
+                    sendData = string.Format("{0} {1} {2}", LaunchArgs["TypeName"], LaunchArgs["ChannelName"], LaunchArgs["Link"] is null ? "PlaceHolderText" : LaunchArgs["Link"]);
+                }
 
                 // 向主实例发送数据
                 COPYDATASTRUCT copyDataStruct = new COPYDATASTRUCT();

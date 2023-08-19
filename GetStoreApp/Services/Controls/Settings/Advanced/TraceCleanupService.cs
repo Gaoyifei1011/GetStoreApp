@@ -3,7 +3,6 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.History;
 using GetStoreApp.Services.Controls.Settings.Common;
-using System;
 using System.Threading.Tasks;
 using Windows.UI.Notifications;
 
@@ -24,7 +23,6 @@ namespace GetStoreApp.Services.Controls.Settings.Advanced
                 CleanArgs.ActionCenter => ClearActionCenter(),
                 CleanArgs.Download => await DownloadXmlService.ClearAsync(),
                 CleanArgs.History => await HistoryXmlService.ClearAsync(),
-                CleanArgs.JumpList => await CleanTaskbarJumpListAsync(),
                 CleanArgs.LocalFile => IOHelper.CleanFolder(DownloadOptionsService.AppCacheFolder),
                 _ => true,
             };
@@ -37,23 +35,6 @@ namespace GetStoreApp.Services.Controls.Settings.Advanced
         {
             ToastNotificationManager.History.Clear();
             return true;
-        }
-
-        /// <summary>
-        /// 清理任务栏右键跳转列表历史记录内容
-        /// </summary>
-        private static async Task<bool> CleanTaskbarJumpListAsync()
-        {
-            if (Program.ApplicationRoot.TaskbarJumpList is not null)
-            {
-                Program.ApplicationRoot.TaskbarJumpList.Items.Clear();
-                await Program.ApplicationRoot.TaskbarJumpList.SaveAsync();
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
     }
 }

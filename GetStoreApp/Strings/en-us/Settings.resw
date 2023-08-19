@@ -246,27 +246,6 @@
   <data name="General" xml:space="preserve">
     <value>General Options</value>
   </data>
-  <data name="HistoryJumpList" xml:space="preserve">
-    <value>The number of taskbar history item displays</value>
-  </data>
-  <data name="HistoryJumpList3Items" xml:space="preserve">
-    <value>3 items</value>
-  </data>
-  <data name="HistoryJumpList5Items" xml:space="preserve">
-    <value>5 items</value>
-  </data>
-  <data name="HistoryJumpList7Items" xml:space="preserve">
-    <value>7 items</value>
-  </data>
-  <data name="HistoryJumpList9Items" xml:space="preserve">
-    <value>9 items</value>
-  </data>
-  <data name="HistoryJumpListDescription" xml:space="preserve">
-    <value>The maximum number of History entries that can be displayed in the taskbar right-click jump list</value>
-  </data>
-  <data name="HistoryJumpListUnlimited" xml:space="preserve">
-    <value>Unlimited</value>
-  </data>
   <data name="HistoryLite" xml:space="preserve">
     <value>The number of main page history item displays</value>
   </data>
@@ -278,12 +257,6 @@
   </data>
   <data name="HistoryLiteDescription" xml:space="preserve">
     <value>The maximum number of history entries that will appear when the main page opens after the app launches</value>
-  </data>
-  <data name="HistoryRecord" xml:space="preserve">
-    <value>History record</value>
-  </data>
-  <data name="HistoryRecordDescription" xml:space="preserve">
-    <value>Application history record settings</value>
   </data>
   <data name="InstallMode" xml:space="preserve">
     <value>Application install mode</value>

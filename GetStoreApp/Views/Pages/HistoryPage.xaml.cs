@@ -20,6 +20,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.Views.Pages
@@ -158,22 +159,29 @@ namespace GetStoreApp.Views.Pages
             CopyCommand.ExecuteRequested += (sender, args) =>
             {
                 HistoryModel historyItem = (HistoryModel)args.Parameter;
-                if (historyItem is not null)
+                Task.Run(() =>
                 {
-                    string copyContent = string.Format("{0}\t{1}\t{2}",
-                        TypeList.Find(item => item.InternalName.Equals(historyItem.HistoryType)).DisplayName,
-                        ChannelList.Find(item => item.InternalName.Equals(historyItem.HistoryChannel)).DisplayName,
-                        historyItem.HistoryLink);
-                    CopyPasteHelper.CopyToClipBoard(copyContent);
-                    new HistoryCopyNotification(this, false).Show();
-                }
+                    if (historyItem is not null)
+                    {
+                        string copyContent = string.Format("{0}\t{1}\t{2}",
+                            TypeList.Find(item => item.InternalName.Equals(historyItem.HistoryType)).DisplayName,
+                            ChannelList.Find(item => item.InternalName.Equals(historyItem.HistoryChannel)).DisplayName,
+                            historyItem.HistoryLink);
+
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
+                            CopyPasteHelper.CopyToClipBoard(copyContent);
+                            new HistoryCopyNotification(this, false).Show();
+                        });
+                    }
+                });
             };
         }
 
-        protected override async void OnNavigatedTo(NavigationEventArgs args)
+        protected override void OnNavigatedTo(NavigationEventArgs args)
         {
             base.OnNavigatedTo(args);
-            await GetHistoryDataListAsync();
+            GetHistoryDataList();
             if (args.Parameter is not null)
             {
                 HistoryNavigationArgs = (AppNaviagtionArgs)Enum.Parse(typeof(AppNaviagtionArgs), Convert.ToString(args.Parameter));
@@ -212,48 +220,48 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 按时间进行排序
         /// </summary>
-        public async void OnTimeSortClicked(object sender, RoutedEventArgs args)
+        public void OnTimeSortClicked(object sender, RoutedEventArgs args)
         {
             ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
             if (item.Tag is not null)
             {
                 TimeSortOrder = Convert.ToBoolean(item.Tag);
-                await GetHistoryDataListAsync();
+                GetHistoryDataList();
             }
         }
 
         /// <summary>
         /// 按类型进行过滤
         /// </summary>
-        public async void OnTypeFilterClicked(object sender, RoutedEventArgs args)
+        public void OnTypeFilterClicked(object sender, RoutedEventArgs args)
         {
             ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
             if (item.Tag is not null)
             {
                 TypeFilter = Convert.ToString(item.Tag);
-                await GetHistoryDataListAsync();
+                GetHistoryDataList();
             }
         }
 
         /// <summary>
         /// 按通道进行过滤
         /// </summary>
-        public async void OnChannelFilterClicked(object sender, RoutedEventArgs args)
+        public void OnChannelFilterClicked(object sender, RoutedEventArgs args)
         {
             ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
             if (item.Tag is not null)
             {
                 ChannelFilter = Convert.ToString(item.Tag);
-                await GetHistoryDataListAsync();
+                GetHistoryDataList();
             }
         }
 
         /// <summary>
         /// 刷新数据
         /// </summary>
-        public async void OnRefreshClicked(object sender, RoutedEventArgs args)
+        public void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
-            await GetHistoryDataListAsync();
+            GetHistoryDataList();
         }
 
         /// <summary>
@@ -287,82 +295,113 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 复制选定项目的内容
         /// </summary>
-        public async void OnCopySelectedClicked(object sender, RoutedEventArgs args)
+        public void OnCopySelectedClicked(object sender, RoutedEventArgs args)
         {
-            List<HistoryModel> SelectedHistoryDataList = HistoryDataList.Where(item => item.IsSelected is true).ToList();
-
-            if (SelectedHistoryDataList.Count is 0)
+            Task.Run(() =>
             {
-                await ContentDialogHelper.ShowAsync(new SelectEmptyPromptDialog(), this);
-                return;
-            };
+                List<HistoryModel> SelectedHistoryDataList = HistoryDataList.Where(item => item.IsSelected is true).ToList();
 
-            StringBuilder stringBuilder = new StringBuilder();
+                if (SelectedHistoryDataList.Count is 0)
+                {
+                    DispatcherQueue.TryEnqueue(async () =>
+                    {
+                        await ContentDialogHelper.ShowAsync(new SelectEmptyPromptDialog(), this);
+                    });
+                    return;
+                };
 
-            SelectedHistoryDataList.ForEach(selectedHistoryData =>
-            {
-                stringBuilder.AppendLine(string.Format("{0}\t{1}\t{2}",
-                TypeList.Find(i => i.InternalName.Equals(selectedHistoryData.HistoryType)).DisplayName,
-                ChannelList.Find(i => i.InternalName.Equals(selectedHistoryData.HistoryChannel)).DisplayName,
-                selectedHistoryData.HistoryLink));
+                StringBuilder stringBuilder = new StringBuilder();
+
+                foreach (HistoryModel selectedHistoryData in SelectedHistoryDataList)
+                {
+                    stringBuilder.AppendLine(string.Format("{0}\t{1}\t{2}",
+                    TypeList.Find(i => i.InternalName.Equals(selectedHistoryData.HistoryType)).DisplayName,
+                    ChannelList.Find(i => i.InternalName.Equals(selectedHistoryData.HistoryChannel)).DisplayName,
+                    selectedHistoryData.HistoryLink));
+                }
+
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
+                    new HistoryCopyNotification(this, true, SelectedHistoryDataList.Count).Show();
+                });
             });
-
-            CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
-
-            new HistoryCopyNotification(this, true, SelectedHistoryDataList.Count).Show();
         }
 
         /// <summary>
         /// 删除选定的项目
         /// </summary>
-        public async void OnDeleteClicked(object sender, RoutedEventArgs args)
+        public void OnDeleteClicked(object sender, RoutedEventArgs args)
         {
-            List<HistoryModel> SelectedHistoryDataList = HistoryDataList.Where(item => item.IsSelected is true).ToList();
-
-            // 没有选中任何内容时显示空提示对话框
-            if (SelectedHistoryDataList.Count is 0)
+            Task.Run(async () =>
             {
-                await ContentDialogHelper.ShowAsync(new SelectEmptyPromptDialog(), this);
-                return;
-            };
+                AutoResetEvent autoResetEvent = new AutoResetEvent(false);
+                List<HistoryModel> SelectedHistoryDataList = HistoryDataList.Where(item => item.IsSelected is true).ToList();
 
-            // 删除时显示删除确认对话框
-            ContentDialogResult result = await ContentDialogHelper.ShowAsync(new DeletePromptDialog(DeleteArgs.History), this);
-
-            if (result is ContentDialogResult.Primary)
-            {
-                IsSelectMode = false;
-
-                foreach (HistoryModel historyItem in HistoryDataList)
+                // 没有选中任何内容时显示空提示对话框
+                if (SelectedHistoryDataList.Count is 0)
                 {
-                    historyItem.IsSelectMode = false;
-                }
-
-                bool DeleteResult = await HistoryXmlService.DeleteAsync(SelectedHistoryDataList);
-
-                if (DeleteResult)
-                {
-                    // 确保线程安全
-                    lock (HistoryDataListLock)
+                    DispatcherQueue.TryEnqueue(async () =>
                     {
-                        SelectedHistoryDataList.ForEach(historyItem => HistoryDataList.Remove(historyItem));
+                        await ContentDialogHelper.ShowAsync(new SelectEmptyPromptDialog(), this);
+                    });
+                    return;
+                };
+
+                // 删除时显示删除确认对话框
+                ContentDialogResult result = ContentDialogResult.None;
+                DispatcherQueue.TryEnqueue(async () =>
+                {
+                    result = await ContentDialogHelper.ShowAsync(new DeletePromptDialog(DeleteArgs.History), this);
+                    if (result is ContentDialogResult.Primary)
+                    {
+                        IsSelectMode = false;
+
+                        foreach (HistoryModel historyItem in HistoryDataList)
+                        {
+                            historyItem.IsSelectMode = false;
+                        }
+                    }
+                    autoResetEvent.Set();
+                });
+
+                autoResetEvent.WaitOne();
+                autoResetEvent.Dispose();
+
+                if (result is ContentDialogResult.Primary)
+                {
+                    bool DeleteResult = await HistoryXmlService.DeleteAsync(SelectedHistoryDataList);
+
+                    if (DeleteResult)
+                    {
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
+                            // 确保线程安全
+                            lock (HistoryDataListLock)
+                            {
+                                foreach (HistoryModel historyItem in SelectedHistoryDataList)
+                                {
+                                    HistoryDataList.Remove(historyItem);
+                                }
+                            }
+
+                            if (HistoryDataList.Count is 0)
+                            {
+                                if (TypeFilter is "None" || ChannelFilter is "None")
+                                {
+                                    IsHistoryEmpty = true;
+                                    IsHistoryEmptyAfterFilter = false;
+                                }
+                                else
+                                {
+                                    IsHistoryEmpty = false;
+                                    IsHistoryEmptyAfterFilter = true;
+                                }
+                            }
+                        });
                     }
                 }
-
-                if (HistoryDataList.Count is 0)
-                {
-                    if (TypeFilter is "None" || ChannelFilter is "None")
-                    {
-                        IsHistoryEmpty = true;
-                        IsHistoryEmptyAfterFilter = false;
-                    }
-                    else
-                    {
-                        IsHistoryEmpty = false;
-                        IsHistoryEmptyAfterFilter = true;
-                    }
-                }
-            }
+            });
         }
 
         /// <summary>
@@ -417,39 +456,46 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 从数据库中加载数据
         /// </summary>
-        private async Task GetHistoryDataListAsync()
+        private void GetHistoryDataList()
         {
             IsLoadedCompleted = false;
 
-            (List<HistoryModel>, bool, bool) HistoryAllData = await HistoryXmlService.QueryAllAsync(TimeSortOrder, TypeFilter, ChannelFilter);
-
-            // 获取数据库的原始记录数据
-            List<HistoryModel> HistoryRawList = HistoryAllData.Item1;
-            // 数据库中的历史记录表是否为空
-            IsHistoryEmpty = HistoryAllData.Item2;
-
-            // 经过筛选后历史记录是否为空
-            IsHistoryEmptyAfterFilter = HistoryAllData.Item3;
-
-            await Task.Delay(500);
-
-            // 保证线程安全
-            lock (HistoryDataListLock)
+            Task.Run(async () =>
             {
-                HistoryDataList.Clear();
-            }
+                (List<HistoryModel>, bool, bool) HistoryAllData = await HistoryXmlService.QueryAllAsync(TimeSortOrder, TypeFilter, ChannelFilter);
 
-            // 保证线程安全
-            lock (HistoryDataListLock)
-            {
-                HistoryRawList.ForEach(async (item) =>
+                // 获取数据库的原始记录数据
+                List<HistoryModel> HistoryRawList = HistoryAllData.Item1;
+
+                await Task.Delay(500);
+
+                DispatcherQueue.TryEnqueue(() =>
                 {
-                    HistoryDataList.Add(item);
-                    await Task.Delay(1);
-                });
-            }
+                    // 数据库中的历史记录表是否为空
+                    IsHistoryEmpty = HistoryAllData.Item2;
 
-            IsLoadedCompleted = true;
+                    // 经过筛选后历史记录是否为空
+                    IsHistoryEmptyAfterFilter = HistoryAllData.Item3;
+
+                    // 保证线程安全
+                    lock (HistoryDataListLock)
+                    {
+                        HistoryDataList.Clear();
+                    }
+
+                    // 保证线程安全
+                    lock (HistoryDataListLock)
+                    {
+                        foreach (HistoryModel historyItem in HistoryRawList)
+                        {
+                            HistoryDataList.Add(historyItem);
+                            Task.Delay(1);
+                        }
+                    }
+
+                    IsLoadedCompleted = true;
+                });
+            });
         }
     }
 }

@@ -135,9 +135,6 @@
   <data name="History" xml:space="preserve">
     <value>History Record</value>
   </data>
-  <data name="JumpListGroupName" xml:space="preserve">
-    <value>History Record</value>
-  </data>
   <data name="Maximize" xml:space="preserve">
     <value>Maximize</value>
   </data>

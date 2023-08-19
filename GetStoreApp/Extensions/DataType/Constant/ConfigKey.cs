@@ -19,8 +19,6 @@
 
         public const string HistoryLiteNumKey = "HistoryLiteNum";
 
-        public const string HistoryJumpListNumKey = "HistoryJumpListNum";
-
         public const string InstallModeKey = "InstallMode";
 
         public const string IsWindowMaximizedKey = "IsWindowMaximized";

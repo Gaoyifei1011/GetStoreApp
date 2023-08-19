@@ -84,19 +84,20 @@
     <Content Include="$(TargetDir)\Microsoft.Management.Deployment.winmd" ExcludeFromSingleFile="true" Link="Microsoft.Management.Deployment.winmd" CopyToOutputDirectory="Always" />
 
     <Content Remove="Assets\ControlIcon\About.png" />
-    <Content Remove="Assets\ControlIcon\Download.png" />
-    <Content Remove="Assets\ControlIcon\History.png" />
     <Content Remove="Assets\ControlIcon\Settings.png" />
-    <Content Remove="Assets\ControlIcon\Store.png" />
-    <Content Remove="Assets\ControlIcon\Web.png" />
-    <Content Remove="Assets\ControlIcon\WinGet.png" />
     <Content Remove="Assets\GetStoreApp.ico" />
     <Content Remove="Assets\Resources\Lengths.bin" />
     <Content Remove="Assets\Resources\LICENSE" />
 
     <None Update="Assets\GetStoreApp.ico" CopyToOutputDirectory="Never" />
+
+    <Content Update="Assets\ControlIcon\History.png" CopyToOutputDirectory="Always" />
+    <Content Update="Assets\ControlIcon\Download.png" CopyToOutputDirectory="Always" />
+    <Content Update="Assets\ControlIcon\UWPApp.png" CopyToOutputDirectory="Always" />
+    <Content Update="Assets\ControlIcon\Store.png" CopyToOutputDirectory="Always" />
+    <Content Update="Assets\ControlIcon\Web.png" CopyToOutputDirectory="Always" />
+    <Content Update="Assets\ControlIcon\WinGet.png" CopyToOutputDirectory="Always" />
     <Content Update="Assets\Images\DesktopApps.png" CopyToOutputDirectory="Always" />
-    <Content Update="Assets\Images\Jumplist.png" CopyToOutputDirectory="Always" />
 
     <CsWinRTInputs Include="$(TargetDir)\Microsoft.Management.Deployment.winmd" />
 
@@ -108,11 +109,7 @@
     <Manifest Include="$(ApplicationManifest)" />
 
     <None Include="Assets\ControlIcon\About.png" CopyToOutputDirectory="Never" />
-    <None Include="Assets\ControlIcon\Download.png" CopyToOutputDirectory="Never" />
     <None Include="Assets\ControlIcon\Settings.png" CopyToOutputDirectory="Never" />
-    <None Include="Assets\ControlIcon\Store.png" CopyToOutputDirectory="Never" />
-    <None Include="Assets\ControlIcon\Web.png" CopyToOutputDirectory="Never" />
-    <None Include="Assets\ControlIcon\WinGet.png" />
     <None Remove="Assets\LICENSE" />
     <None Remove="Styles\DropDownButton.xaml" />
     <None Remove="Styles\Flyout.xaml" />
@@ -158,11 +155,6 @@
 
     <None Remove="UI\Controls\Settings\Experiment\NetWorkMonitorControl.xaml" />
     <None Remove="UI\Controls\Settings\Experiment\OpenConfigFileControl.xaml" />
-
-    <None Remove="UI\Controls\Store\HistoryLiteControl.xaml" />
-    <None Remove="UI\Controls\Store\RequestControl.xaml" />
-    <None Remove="UI\Controls\Store\ResultControl.xaml" />
-    <None Remove="UI\Controls\Store\StatusBarControl.xaml" />
 
     <None Remove="UI\Controls\Window\AppTitleBarControl.xaml" />
 
@@ -280,11 +272,6 @@
 
     <Page Update="UI\Controls\Settings\Experiment\NetWorkMonitorControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Settings\Experiment\OpenConfigFileControl.xaml" Generator="MSBuild:Compile" />
-
-    <Page Update="UI\Controls\Store\HistoryLiteControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\Store\RequestControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\Store\ResultControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\Store\StatusBarControl.xaml" Generator="MSBuild:Compile" />
 
     <Page Update="UI\Controls\WinGet\InitializeFailedControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\WinGet\InstalledAppsControl.xaml" Generator="MSBuild:Compile" />

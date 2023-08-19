@@ -15,10 +15,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.UI.Controls.WinGet
@@ -29,7 +31,10 @@ namespace GetStoreApp.UI.Controls.WinGet
     public sealed partial class InstalledAppsControl : Grid, INotifyPropertyChanged
     {
         private readonly object InstalledAppsDataListObject = new object();
+
         private bool isInitialized = false;
+
+        private AutoResetEvent autoResetEvent;
 
         private PackageManager InstalledAppsManager { get; set; }
 
@@ -88,78 +93,92 @@ namespace GetStoreApp.UI.Controls.WinGet
         {
             InitializeComponent();
 
-            UnInstallCommand.ExecuteRequested += async (sender, args) =>
+            UnInstallCommand.ExecuteRequested += (sender, args) =>
             {
                 InstalledAppsModel installedApps = args.Parameter as InstalledAppsModel;
+
                 if (installedApps is not null)
                 {
-                    try
+                    Task.Run(async () =>
                     {
-                        UninstallOptions uninstallOptions = WinGetService.CreateUninstallOptions();
-
-                        uninstallOptions.PackageUninstallMode = PackageUninstallMode.Interactive;
-                        uninstallOptions.PackageUninstallScope = PackageUninstallScope.Any;
-
-                        UninstallResult unInstallResult = await InstalledAppsManager.UninstallPackageAsync(MatchResultList.Find(item => item.CatalogPackage.InstalledVersion.Id == installedApps.AppID).CatalogPackage, uninstallOptions);
-
-                        // 获取卸载后的结果信息
-                        // 卸载成功，从列表中删除该应用
-                        if (unInstallResult.Status is UninstallResultStatus.Ok)
+                        AutoResetEvent autoResetEvent = new AutoResetEvent(false);
+                        try
                         {
-                            ToastNotificationService.Show(NotificationArgs.WinGetUnInstallSuccessfully, installedApps.AppName);
+                            UninstallOptions uninstallOptions = WinGetService.CreateUninstallOptions();
 
-                            // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
-                            if (unInstallResult.RebootRequired)
+                            uninstallOptions.PackageUninstallMode = PackageUninstallMode.Interactive;
+                            uninstallOptions.PackageUninstallScope = PackageUninstallScope.Any;
+
+                            UninstallResult unInstallResult = await InstalledAppsManager.UninstallPackageAsync(MatchResultList.Find(item => item.CatalogPackage.InstalledVersion.Id == installedApps.AppID).CatalogPackage, uninstallOptions);
+
+                            // 获取卸载后的结果信息
+                            // 卸载成功，从列表中删除该应用
+                            if (unInstallResult.Status is UninstallResultStatus.Ok)
                             {
-                                ContentDialogResult Result = await ContentDialogHelper.ShowAsync(new RebootDialog(WinGetOptionArgs.UnInstall, installedApps.AppName), this);
-                                if (Result is ContentDialogResult.Primary)
+                                ToastNotificationService.Show(NotificationArgs.WinGetUnInstallSuccessfully, installedApps.AppName);
+
+                                // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
+                                if (unInstallResult.RebootRequired)
                                 {
-                                    unsafe
+                                    ContentDialogResult result = ContentDialogResult.None;
+                                    DispatcherQueue.TryEnqueue(async () =>
                                     {
-                                        Kernel32Library.GetStartupInfo(out STARTUPINFO RebootStartupInfo);
-                                        RebootStartupInfo.lpReserved = null;
-                                        RebootStartupInfo.lpDesktop = null;
-                                        RebootStartupInfo.lpTitle = null;
-                                        RebootStartupInfo.dwX = 0;
-                                        RebootStartupInfo.dwY = 0;
-                                        RebootStartupInfo.dwXSize = 0;
-                                        RebootStartupInfo.dwYSize = 0;
-                                        RebootStartupInfo.dwXCountChars = 500;
-                                        RebootStartupInfo.dwYCountChars = 500;
-                                        RebootStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-                                        RebootStartupInfo.wShowWindow = WindowShowStyle.SW_HIDE;
-                                        RebootStartupInfo.cbReserved2 = 0;
-                                        RebootStartupInfo.lpReserved2 = IntPtr.Zero;
+                                        result = await ContentDialogHelper.ShowAsync(new RebootDialog(WinGetOptionArgs.UnInstall, installedApps.AppName), this);
+                                        autoResetEvent.Set();
+                                    });
 
-                                        RebootStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
-                                        bool createResult = Kernel32Library.CreateProcess(null, string.Format("{0} {1}", Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref RebootStartupInfo, out PROCESS_INFORMATION RebootProcessInformation);
+                                    autoResetEvent.WaitOne();
+                                    autoResetEvent.Dispose();
 
-                                        if (createResult)
+                                    if (result is ContentDialogResult.Primary)
+                                    {
+                                        unsafe
                                         {
-                                            if (RebootProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(RebootProcessInformation.hProcess);
-                                            if (RebootProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(RebootProcessInformation.hThread);
+                                            Kernel32Library.GetStartupInfo(out STARTUPINFO RebootStartupInfo);
+                                            RebootStartupInfo.lpReserved = null;
+                                            RebootStartupInfo.lpDesktop = null;
+                                            RebootStartupInfo.lpTitle = null;
+                                            RebootStartupInfo.dwX = 0;
+                                            RebootStartupInfo.dwY = 0;
+                                            RebootStartupInfo.dwXSize = 0;
+                                            RebootStartupInfo.dwYSize = 0;
+                                            RebootStartupInfo.dwXCountChars = 500;
+                                            RebootStartupInfo.dwYCountChars = 500;
+                                            RebootStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
+                                            RebootStartupInfo.wShowWindow = WindowShowStyle.SW_HIDE;
+                                            RebootStartupInfo.cbReserved2 = 0;
+                                            RebootStartupInfo.lpReserved2 = IntPtr.Zero;
+
+                                            RebootStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+                                            bool createResult = Kernel32Library.CreateProcess(null, string.Format("{0} {1}", Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref RebootStartupInfo, out PROCESS_INFORMATION RebootProcessInformation);
+
+                                            if (createResult)
+                                            {
+                                                if (RebootProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(RebootProcessInformation.hProcess);
+                                                if (RebootProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(RebootProcessInformation.hThread);
+                                            }
                                         }
                                     }
                                 }
                             }
+                            else
+                            {
+                                ToastNotificationService.Show(NotificationArgs.WinGetUnInstallFailed, installedApps.AppName);
+                            }
                         }
-                        else
+                        // 操作被用户所取消异常
+                        catch (OperationCanceledException e)
                         {
+                            LogService.WriteLog(LogType.INFO, "App uninstalling operation canceled.", e);
                             ToastNotificationService.Show(NotificationArgs.WinGetUnInstallFailed, installedApps.AppName);
                         }
-                    }
-                    // 操作被用户所取消异常
-                    catch (OperationCanceledException e)
-                    {
-                        LogService.WriteLog(LogType.INFO, "App uninstalling operation canceled.", e);
-                        ToastNotificationService.Show(NotificationArgs.WinGetUnInstallFailed, installedApps.AppName);
-                    }
-                    // 其他异常
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LogType.ERROR, "App uninstalling failed.", e);
-                        ToastNotificationService.Show(NotificationArgs.WinGetUnInstallFailed, installedApps.AppName);
-                    }
+                        // 其他异常
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LogType.ERROR, "App uninstalling failed.", e);
+                            ToastNotificationService.Show(NotificationArgs.WinGetUnInstallFailed, installedApps.AppName);
+                        }
+                    });
                 }
             };
 
@@ -194,7 +213,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 初始化已安装应用信息
         /// </summary>
-        public async void OnLoaded(object sender, RoutedEventArgs args)
+        public void OnLoaded(object sender, RoutedEventArgs args)
         {
             if (!isInitialized)
             {
@@ -207,11 +226,8 @@ namespace GetStoreApp.UI.Controls.WinGet
                     LogService.WriteLog(LogType.ERROR, "Installed apps information initialized failed.", e);
                     return;
                 }
-                await Task.Delay(500);
-                await GetInstalledAppsAsync();
+                GetInstalledApps();
                 InitializeData();
-                IsInstalledAppsEmpty = MatchResultList.Count is 0;
-                IsLoadedCompleted = true;
                 isInitialized = true;
             }
         }
@@ -219,16 +235,13 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 更新已安装应用数据
         /// </summary>
-        public async void OnRefreshClicked(object sender, RoutedEventArgs args)
+        public void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
             MatchResultList = null;
             IsLoadedCompleted = false;
             SearchText = string.Empty;
-            await Task.Delay(500);
-            await GetInstalledAppsAsync();
+            GetInstalledApps();
             InitializeData();
-            IsInstalledAppsEmpty = MatchResultList.Count is 0;
-            IsLoadedCompleted = true;
         }
 
         /// <summary>
@@ -265,12 +278,14 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 加载系统已安装的应用信息
         /// </summary>
-        private async Task GetInstalledAppsAsync()
+        private void GetInstalledApps()
         {
             try
             {
-                await Task.Run(async () =>
+                Task.Run(async () =>
                 {
+                    autoResetEvent ??= new AutoResetEvent(false);
+                    await Task.Delay(300);
                     PackageCatalogReference searchCatalogReference = InstalledAppsManager.GetLocalPackageCatalog(LocalPackageCatalog.InstalledPackages);
 
                     ConnectResult connectResult = await searchCatalogReference.ConnectAsync();
@@ -283,6 +298,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                         MatchResultList = findResult.Matches.ToList().Where(item => item.CatalogPackage.InstalledVersion.Publisher != string.Empty).ToList();
                     }
+                    autoResetEvent?.Set();
                 });
             }
             catch (Exception e)
@@ -301,46 +317,73 @@ namespace GetStoreApp.UI.Controls.WinGet
                 InstalledAppsDataList.Clear();
             }
 
-            if (MatchResultList is not null)
+            Task.Run(() =>
             {
-                if (hasSearchText)
+                autoResetEvent?.WaitOne();
+                autoResetEvent?.Dispose();
+                autoResetEvent = null;
+
+                if (MatchResultList is not null)
                 {
-                    lock (InstalledAppsDataListObject)
+                    if (hasSearchText)
                     {
+                        List<InstalledAppsModel> installedAppsList = new List<InstalledAppsModel>();
                         foreach (MatchResult matchItem in MatchResultList)
                         {
                             if (matchItem.CatalogPackage.InstalledVersion.DisplayName.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
                             {
-                                InstalledAppsDataList.Add(new InstalledAppsModel()
+                                installedAppsList.Add(new InstalledAppsModel()
                                 {
                                     AppID = matchItem.CatalogPackage.InstalledVersion.Id,
                                     AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.DisplayName) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.DisplayName,
                                     AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Publisher) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.Publisher,
                                     AppVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Version) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.Version,
                                 });
-                                Task.Delay(1);
                             }
                         }
+
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
+                            lock (InstalledAppsDataListObject)
+                            {
+                                foreach (InstalledAppsModel installedApps in installedAppsList)
+                                {
+                                    InstalledAppsDataList.Add(installedApps);
+                                }
+                                IsInstalledAppsEmpty = MatchResultList.Count is 0;
+                                IsLoadedCompleted = true;
+                            }
+                        });
                     }
-                }
-                else
-                {
-                    lock (InstalledAppsDataListObject)
+                    else
                     {
+                        List<InstalledAppsModel> installedAppsList = new List<InstalledAppsModel>();
                         foreach (MatchResult matchItem in MatchResultList)
                         {
-                            InstalledAppsDataList.Add(new InstalledAppsModel()
+                            installedAppsList.Add(new InstalledAppsModel()
                             {
                                 AppID = matchItem.CatalogPackage.InstalledVersion.Id,
                                 AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.DisplayName) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.DisplayName,
                                 AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Publisher) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.Publisher,
                                 AppVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Version) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.Version,
                             });
-                            Task.Delay(1);
                         }
+
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
+                            lock (InstalledAppsDataListObject)
+                            {
+                                foreach (InstalledAppsModel installedApps in installedAppsList)
+                                {
+                                    InstalledAppsDataList.Add(installedApps);
+                                }
+                                IsInstalledAppsEmpty = MatchResultList.Count is 0;
+                                IsLoadedCompleted = true;
+                            }
+                        });
                     }
                 }
-            }
+            });
         }
     }
 }

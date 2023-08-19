@@ -46,6 +46,8 @@ namespace GetStoreApp.UI.Pages
 
         private bool isInitialized = false;
 
+        private AutoResetEvent autoResetEvent;
+
         private PackageManager PackageManager { get; } = new PackageManager();
 
         public string SearchText { get; set; } = string.Empty;
@@ -409,13 +411,13 @@ namespace GetStoreApp.UI.Pages
         /// <summary>
         /// 初始化已安装应用信息
         /// </summary>
-        public async void OnLoaded(object sender, RoutedEventArgs args)
+        public void OnLoaded(object sender, RoutedEventArgs args)
         {
             if (!isInitialized)
             {
-                await Task.Delay(500);
-                await GetInstalledAppsAsync();
-                await InitializeDataAsync();
+                Task.Delay(500);
+                GetInstalledApps();
+                InitializeData();
                 isInitialized = true;
             }
         }
@@ -431,26 +433,26 @@ namespace GetStoreApp.UI.Pages
         /// <summary>
         /// 根据排序方式对列表进行排序
         /// </summary>
-        public async void OnSortWayClicked(object sender, RoutedEventArgs args)
+        public void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
             ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
             if (toggleMenuFlyoutItem is not null)
             {
                 IsIncrease = Convert.ToBoolean(toggleMenuFlyoutItem.Tag);
-                await InitializeDataAsync();
+                InitializeData();
             }
         }
 
         /// <summary>
         /// 根据排序规则对列表进行排序
         /// </summary>
-        public async void OnSortRuleClicked(object sender, RoutedEventArgs args)
+        public void OnSortRuleClicked(object sender, RoutedEventArgs args)
         {
             ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
             if (toggleMenuFlyoutItem is not null)
             {
                 SelectedType = (AppListRuleSeletedType)toggleMenuFlyoutItem.Tag;
-                await InitializeDataAsync();
+                InitializeData();
             }
         }
 
@@ -465,16 +467,16 @@ namespace GetStoreApp.UI.Pages
         /// <summary>
         /// 根据过滤方式对列表进行过滤
         /// </summary>
-        public async void OnFilterWayClicked(object sender, RoutedEventArgs args)
+        public void OnFilterWayClicked(object sender, RoutedEventArgs args)
         {
             IsFramework = !IsFramework;
-            await InitializeDataAsync();
+            InitializeData();
         }
 
         /// <summary>
         /// 根据签名规则进行过滤
         /// </summary>
-        public async void OnSignatureRuleClicked(object sender, RoutedEventArgs args)
+        public void OnSignatureRuleClicked(object sender, RoutedEventArgs args)
         {
             ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
             if (toggleMenuFlyoutItem is not null)
@@ -488,21 +490,21 @@ namespace GetStoreApp.UI.Pages
                     SignType |= (PackageSignType)toggleMenuFlyoutItem.Tag;
                 }
 
-                await InitializeDataAsync();
+                InitializeData();
             }
         }
 
         /// <summary>
         /// 刷新数据
         /// </summary>
-        public async void OnRefreshClicked(object sender, RoutedEventArgs args)
+        public void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
             MatchResultList = null;
             IsLoadedCompleted = false;
             SearchText = string.Empty;
-            await Task.Delay(500);
-            await GetInstalledAppsAsync();
-            await InitializeDataAsync();
+            Task.Delay(500);
+            GetInstalledApps();
+            InitializeData();
         }
 
         /// <summary>
@@ -516,10 +518,11 @@ namespace GetStoreApp.UI.Pages
         /// <summary>
         /// 加载系统已安装的应用信息
         /// </summary>
-        private async Task GetInstalledAppsAsync()
+        private void GetInstalledApps()
         {
-            await Task.Run(() =>
+            Task.Run(() =>
             {
+                autoResetEvent ??= new AutoResetEvent(false);
                 MatchResultList = PackageManager.FindPackagesForUser(string.Empty).ToList();
                 if (MatchResultList is not null)
                 {
@@ -528,13 +531,14 @@ namespace GetStoreApp.UI.Pages
                         IsPackageEmpty = MatchResultList.Count is 0;
                     });
                 }
+                autoResetEvent?.Set();
             });
         }
 
         /// <summary>
         /// 初始化列表数据
         /// </summary>
-        public async Task InitializeDataAsync(bool hasSearchText = false)
+        public void InitializeData(bool hasSearchText = false)
         {
             lock (AppShortListObject)
             {
@@ -542,9 +546,13 @@ namespace GetStoreApp.UI.Pages
                 AppShortList.Clear();
             }
 
-            if (MatchResultList is not null)
+            Task.Run(() =>
             {
-                await Task.Run(() =>
+                autoResetEvent?.WaitOne();
+                autoResetEvent?.Dispose();
+                autoResetEvent = null;
+
+                if (MatchResultList is not null)
                 {
                     // 备份数据
                     List<Package> backupList = MatchResultList;
@@ -631,66 +639,66 @@ namespace GetStoreApp.UI.Pages
                     if (hasSearchText)
                     {
                         filteredList = filteredList.Where(matchItem =>
-                            matchItem.DisplayName.Contains(SearchText) ||
-                            matchItem.Description.Contains(SearchText) ||
-                            matchItem.PublisherDisplayName.Contains(SearchText)).ToList();
+                                matchItem.DisplayName.Contains(SearchText) ||
+                                matchItem.Description.Contains(SearchText) ||
+                                matchItem.PublisherDisplayName.Contains(SearchText)).ToList();
 
                         DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
-                        {
-                            lock (AppShortListObject)
                             {
-                                foreach (Package filteredItem in filteredList)
+                                lock (AppShortListObject)
                                 {
-                                    try
+                                    foreach (Package filteredItem in filteredList)
                                     {
-                                        AppShortList.Add(new PackageModel()
+                                        try
                                         {
-                                            IsUnInstalling = false,
-                                            Package = filteredItem,
-                                            AppListEntryCount = filteredItem.GetAppListEntries().Count,
-                                        });
-                                        Task.Delay(1);
+                                            AppShortList.Add(new PackageModel()
+                                            {
+                                                IsUnInstalling = false,
+                                                Package = filteredItem,
+                                                AppListEntryCount = filteredItem.GetAppListEntries().Count,
+                                            });
+                                            Task.Delay(1);
+                                        }
+                                        catch (Exception)
+                                        {
+                                            continue;
+                                        }
                                     }
-                                    catch (Exception)
-                                    {
-                                        continue;
-                                    }
-                                }
 
-                                IsLoadedCompleted = true;
-                            }
-                        });
+                                    IsLoadedCompleted = true;
+                                }
+                            });
                     }
                     else
                     {
                         DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
-                        {
-                            lock (AppShortListObject)
                             {
-                                foreach (Package filteredItem in filteredList)
+                                lock (AppShortListObject)
                                 {
-                                    try
+                                    foreach (Package filteredItem in filteredList)
                                     {
-                                        AppShortList.Add(new PackageModel()
+                                        try
                                         {
-                                            IsUnInstalling = false,
-                                            Package = filteredItem,
-                                            AppListEntryCount = filteredItem.GetAppListEntries().Count
-                                        });
-                                        Task.Delay(1);
+                                            AppShortList.Add(new PackageModel()
+                                            {
+                                                IsUnInstalling = false,
+                                                Package = filteredItem,
+                                                AppListEntryCount = filteredItem.GetAppListEntries().Count
+                                            });
+                                            Task.Delay(1);
+                                        }
+                                        catch (Exception)
+                                        {
+                                            continue;
+                                        }
                                     }
-                                    catch (Exception)
-                                    {
-                                        continue;
-                                    }
-                                }
 
-                                IsLoadedCompleted = true;
-                            }
-                        });
+                                    IsLoadedCompleted = true;
+                                }
+                            });
                     }
-                });
-            }
+                }
+            });
         }
 
         /// <summary>

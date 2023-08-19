@@ -12,7 +12,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
     /// <summary>
     /// 设置页面：历史记录设置控件
     /// </summary>
-    public sealed partial class HistoryRecordControl : Expander, INotifyPropertyChanged
+    public sealed partial class HistoryRecordControl : Grid, INotifyPropertyChanged
     {
         private GroupOptionsModel _historyLiteItem = HistoryRecordService.HistoryLiteNum;
 
@@ -27,22 +27,7 @@ namespace GetStoreApp.UI.Controls.Settings.Common
             }
         }
 
-        private GroupOptionsModel _historyJumpListItem = HistoryRecordService.HistoryJumpListNum;
-
-        public GroupOptionsModel HistoryJumpListItem
-        {
-            get { return _historyJumpListItem; }
-
-            set
-            {
-                _historyJumpListItem = value;
-                OnPropertyChanged();
-            }
-        }
-
         public List<GroupOptionsModel> HistoryLiteNumList { get; } = HistoryRecordService.HistoryLiteNumList;
-
-        public List<GroupOptionsModel> HistoryJumpListNumList { get; } = HistoryRecordService.HistoryJumpListNumList;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -52,11 +37,6 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         }
 
         public bool IsHistoryLiteItemChecked(GroupOptionsModel selectedMember, GroupOptionsModel comparedMember)
-        {
-            return selectedMember.SelectedValue == comparedMember.SelectedValue;
-        }
-
-        public bool IsHistoryJumpListItemChecked(GroupOptionsModel selectedMember, GroupOptionsModel comparedMember)
         {
             return selectedMember.SelectedValue == comparedMember.SelectedValue;
         }
@@ -71,20 +51,6 @@ namespace GetStoreApp.UI.Controls.Settings.Common
             {
                 HistoryLiteItem = HistoryLiteNumList[Convert.ToInt32(item.Tag)];
                 HistoryRecordService.SetHistoryLiteNum(HistoryLiteItem);
-            }
-        }
-
-        /// <summary>
-        /// 任务栏右键菜单列表“历史记录”显示数目修改
-        /// </summary>
-        public async void OnHistoryJumpListSelectClicked(object sender, RoutedEventArgs args)
-        {
-            ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
-            if (item.Tag is not null)
-            {
-                HistoryJumpListItem = HistoryJumpListNumList[Convert.ToInt32(item.Tag)];
-                HistoryRecordService.SetHistoryJumpListNum(HistoryJumpListItem);
-                await HistoryRecordService.UpdateHistoryJumpListAsync(HistoryJumpListItem);
             }
         }
 

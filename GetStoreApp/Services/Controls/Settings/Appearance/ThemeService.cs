@@ -27,7 +27,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         {
             ThemeList = ResourceService.ThemeList;
 
-            DefaultAppTheme = ThemeList.Find(item => item.SelectedValue == Convert.ToString(ElementTheme.Default));
+            DefaultAppTheme = ThemeList.Find(item => item.SelectedValue == nameof(ElementTheme.Default));
 
             (bool, GroupOptionsModel) ThemeResult = GetTheme();
 
@@ -48,10 +48,12 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
 
             if (string.IsNullOrEmpty(theme))
             {
-                return (true, ThemeList.Find(item => item.SelectedValue.Equals(DefaultAppTheme.SelectedValue, StringComparison.OrdinalIgnoreCase)));
+                return (true, DefaultAppTheme);
             }
 
-            return (false, ThemeList.Find(item => item.SelectedValue.Equals(theme, StringComparison.OrdinalIgnoreCase)));
+            GroupOptionsModel selectedTheme = ThemeList.Find(item => item.SelectedValue.Equals(theme, StringComparison.OrdinalIgnoreCase));
+
+            return selectedTheme is null ? (true, DefaultAppTheme) : (false, ThemeList.Find(item => item.SelectedValue.Equals(theme, StringComparison.OrdinalIgnoreCase)));
         }
 
         /// <summary>

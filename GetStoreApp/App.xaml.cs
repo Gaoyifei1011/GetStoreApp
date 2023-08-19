@@ -44,7 +44,7 @@ namespace GetStoreApp
         /// <summary>
         /// 应用启动后执行其他操作
         /// </summary>
-        protected override async void OnLaunched(LaunchActivatedEventArgs args)
+        protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
             base.OnLaunched(args);
             ResourceDictionaryHelper.InitializeResourceDictionary();
@@ -53,21 +53,49 @@ namespace GetStoreApp
             IsAppLaunched = true;
             ActivateWindow();
 
-            await InitializeJumpListAsync();
+            InitializeJumpList();
             Startup();
         }
 
         /// <summary>
         /// 初始化任务栏的跳转列表
         /// </summary>
-        private async Task InitializeJumpListAsync()
+        private void InitializeJumpList()
         {
             if (JumpList.IsSupported())
             {
-                TaskbarJumpList = await JumpList.LoadCurrentAsync();
-                RemoveUnusedItems();
-                UpdateJumpListGroupName();
-                await TaskbarJumpList.SaveAsync();
+                Task.Run(async () =>
+                {
+                    TaskbarJumpList = await JumpList.LoadCurrentAsync();
+                    TaskbarJumpList.Items.Clear();
+                    TaskbarJumpList.SystemGroupKind = JumpListSystemGroupKind.None;
+
+                    JumpListItem storeItem = JumpListItem.CreateWithArguments("JumpList Store", ResourceService.GetLocalized("Window/Store"));
+                    storeItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/Store.png");
+                    TaskbarJumpList.Items.Add(storeItem);
+
+                    JumpListItem historyItem = JumpListItem.CreateWithArguments("JumpList History", ResourceService.GetLocalized("Window/History"));
+                    historyItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/History.png");
+                    TaskbarJumpList.Items.Add(historyItem);
+
+                    JumpListItem downloadItem = JumpListItem.CreateWithArguments("JumpList Download", ResourceService.GetLocalized("Window/Download"));
+                    downloadItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/Download.png");
+                    TaskbarJumpList.Items.Add(downloadItem);
+
+                    JumpListItem wingetItem = JumpListItem.CreateWithArguments("JumpList WinGet", ResourceService.GetLocalized("Window/WinGet"));
+                    wingetItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/WinGet.png");
+                    TaskbarJumpList.Items.Add(wingetItem);
+
+                    JumpListItem uwpAppItem = JumpListItem.CreateWithArguments("JumpList UWPApp", ResourceService.GetLocalized("Window/UWPApp"));
+                    uwpAppItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/UWPApp.png");
+                    TaskbarJumpList.Items.Add(uwpAppItem);
+
+                    JumpListItem webItem = JumpListItem.CreateWithArguments("JumpList Web", ResourceService.GetLocalized("Window/Web"));
+                    webItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/Web.png");
+                    TaskbarJumpList.Items.Add(webItem);
+
+                    await TaskbarJumpList.SaveAsync();
+                });
             }
         }
 
@@ -154,33 +182,6 @@ namespace GetStoreApp
         }
 
         /// <summary>
-        /// 移除用户主动删除的条目
-        /// </summary>
-        public void RemoveUnusedItems()
-        {
-            // 如果某一条目被用户主动删除，应用初始化时则自动删除该条目
-            for (int index = 0; index < TaskbarJumpList.Items.Count; index++)
-            {
-                if (TaskbarJumpList.Items[index].RemovedByUser)
-                {
-                    TaskbarJumpList.Items.RemoveAt(index);
-                    index--;
-                }
-            }
-        }
-
-        /// <summary>
-        /// 更新跳转列表组名
-        /// </summary>
-        public void UpdateJumpListGroupName()
-        {
-            foreach (JumpListItem jumpListItem in TaskbarJumpList.Items)
-            {
-                jumpListItem.GroupName = ResourceService.GetLocalized("Window/JumpListGroupName");
-            }
-        }
-
-        /// <summary>
         /// 设置应用窗口图标
         /// </summary>
         private void SetAppIcon()
@@ -210,6 +211,12 @@ namespace GetStoreApp
         private void CloseApp()
         {
             IsAppRunning = false;
+            if (RuntimeHelper.IsElevated && MainWindow.Handle != IntPtr.Zero)
+            {
+                CHANGEFILTERSTRUCT changeFilterStatus = new CHANGEFILTERSTRUCT();
+                changeFilterStatus.cbSize = Marshal.SizeOf(typeof(CHANGEFILTERSTRUCT));
+                User32Library.ChangeWindowMessageFilterEx(MainWindow.Handle, WindowMessage.WM_COPYDATA, ChangeFilterAction.MSGFLT_RESET, in changeFilterStatus);
+            }
             SaveWindowInformation();
             DownloadSchedulerService.CloseDownloadScheduler();
             Aria2Service.CloseAria2();

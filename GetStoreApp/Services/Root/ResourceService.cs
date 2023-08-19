@@ -4,6 +4,7 @@ using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Models.Dialogs.Settings;
 using GetStoreApp.Properties;
 using Microsoft.Management.Deployment;
+using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -41,8 +42,6 @@ namespace GetStoreApp.Services.Root
 
         public static List<GroupOptionsModel> HistoryLiteNumList { get; } = new List<GroupOptionsModel>();
 
-        public static List<GroupOptionsModel> HistoryJumpListNumList { get; } = new List<GroupOptionsModel>();
-
         public static List<GroupOptionsModel> InstallModeList { get; } = new List<GroupOptionsModel>();
 
         public static List<GroupOptionsModel> ThemeList { get; } = new List<GroupOptionsModel>();
@@ -78,7 +77,6 @@ namespace GetStoreApp.Services.Root
             InitializeBackdropList();
             InitializeDownloadModeList();
             InitializeHistoryLiteNumList();
-            InitializeHistoryJumpListNumList();
             InitializeInstallModeList();
             InitializeThemeList();
             InitializeTraceCleanupList();
@@ -196,25 +194,25 @@ namespace GetStoreApp.Services.Root
             BackdropList.Add(new GroupOptionsModel
             {
                 DisplayMember = GetLocalized("Settings/BackdropDefault"),
-                SelectedValue = "Default"
+                SelectedValue = nameof(SystemBackdropTheme.Default)
             });
 
             BackdropList.Add(new GroupOptionsModel
             {
                 DisplayMember = GetLocalized("Settings/BackdropMica"),
-                SelectedValue = "Mica"
+                SelectedValue = nameof(MicaKind) + nameof(MicaKind.Base)
             });
 
             BackdropList.Add(new GroupOptionsModel
             {
                 DisplayMember = GetLocalized("Settings/BackdropMicaAlt"),
-                SelectedValue = "MicaAlt"
+                SelectedValue = nameof(MicaKind) + nameof(MicaKind.BaseAlt)
             });
 
             BackdropList.Add(new GroupOptionsModel
             {
                 DisplayMember = GetLocalized("Settings/BackdropAcrylic"),
-                SelectedValue = "Acrylic"
+                SelectedValue = nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Default)
             });
         }
 
@@ -253,38 +251,6 @@ namespace GetStoreApp.Services.Root
         }
 
         /// <summary>
-        /// 初始化任务栏右键跳转列表历史记录显示数量信息列表
-        /// </summary>
-        private static void InitializeHistoryJumpListNumList()
-        {
-            HistoryJumpListNumList.Add(new GroupOptionsModel
-            {
-                DisplayMember = GetLocalized("Settings/HistoryJumpList3Items"),
-                SelectedValue = "3"
-            });
-            HistoryJumpListNumList.Add(new GroupOptionsModel
-            {
-                DisplayMember = GetLocalized("Settings/HistoryJumpList5Items"),
-                SelectedValue = "5"
-            });
-            HistoryJumpListNumList.Add(new GroupOptionsModel
-            {
-                DisplayMember = GetLocalized("Settings/HistoryJumpList7Items"),
-                SelectedValue = "7"
-            });
-            HistoryJumpListNumList.Add(new GroupOptionsModel
-            {
-                DisplayMember = GetLocalized("Settings/HistoryJumpList9Items"),
-                SelectedValue = "9"
-            });
-            HistoryJumpListNumList.Add(new GroupOptionsModel
-            {
-                DisplayMember = GetLocalized("Settings/HistoryJumpListUnlimited"),
-                SelectedValue = "Unlimited"
-            });
-        }
-
-        /// <summary>
         /// 初始化安装模式信息列表
         /// </summary>
         private static void InitializeInstallModeList()
@@ -309,17 +275,17 @@ namespace GetStoreApp.Services.Root
             ThemeList.Add(new GroupOptionsModel
             {
                 DisplayMember = GetLocalized("Settings/ThemeDefault"),
-                SelectedValue = Convert.ToString(ElementTheme.Default)
+                SelectedValue = nameof(ElementTheme.Default)
             });
             ThemeList.Add(new GroupOptionsModel
             {
                 DisplayMember = GetLocalized("Settings/ThemeLight"),
-                SelectedValue = Convert.ToString(ElementTheme.Light)
+                SelectedValue = nameof(ElementTheme.Light)
             });
             ThemeList.Add(new GroupOptionsModel
             {
                 DisplayMember = GetLocalized("Settings/ThemeDark"),
-                SelectedValue = Convert.ToString(ElementTheme.Dark)
+                SelectedValue = nameof(ElementTheme.Dark)
             });
         }
 
@@ -333,12 +299,6 @@ namespace GetStoreApp.Services.Root
                 DisplayName = GetLocalized("Dialog/HistoryRecord"),
                 InternalName = CleanArgs.History,
                 CleanFailedText = GetLocalized("Dialog/HistoryCleanError")
-            });
-            TraceCleanupList.Add(new TraceCleanupModel
-            {
-                DisplayName = GetLocalized("Dialog/JumpList"),
-                InternalName = CleanArgs.JumpList,
-                CleanFailedText = GetLocalized("Dialog/JumpListCleanError")
             });
             TraceCleanupList.Add(new TraceCleanupModel
             {
@@ -368,12 +328,12 @@ namespace GetStoreApp.Services.Root
             WinGetInstallModeList.Add(new GroupOptionsModel
             {
                 DisplayMember = GetLocalized("Settings/InteractiveInstall"),
-                SelectedValue = Convert.ToString(PackageInstallMode.Interactive),
+                SelectedValue = nameof(PackageInstallMode.Interactive),
             });
             WinGetInstallModeList.Add(new GroupOptionsModel
             {
                 DisplayMember = GetLocalized("Settings/SlientInstall"),
-                SelectedValue = Convert.ToString(PackageInstallMode.Silent),
+                SelectedValue = nameof(PackageInstallMode.Silent),
             });
         }
 

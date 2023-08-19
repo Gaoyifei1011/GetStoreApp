@@ -92,7 +92,7 @@ namespace GetStoreApp.Services.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogType.WARNING, "Initialize download record state failed.", e);
+                LogService.WriteLog(LogType.WARNING, "InitializeHistoryRecord download record state failed.", e);
                 return;
             }
         }

@@ -1,10 +1,8 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Controls.Settings.Common;
-using GetStoreApp.Services.Window;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
-using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using System;
 using System.Diagnostics;
@@ -89,49 +87,14 @@ namespace GetStoreApp.Services.Root
                 }
                 Program.IsNeedAppLaunch = Application.Current is not null;
             }
-            else
+            else if (notificationArgs.Contains("OpenApp"))
             {
-                HandleUINotification(notificationArgs);
+                DesktopLaunchService.InitializePage = typeof(StorePage);
             }
-        }
-
-        /// <summary>
-        /// 使用UI线程处理使用到界面的通知
-        /// </summary>
-        private static void HandleUINotification(string args)
-        {
-            Task.Run(async () =>
+            else if (notificationArgs.Contains("ViewDownloadPage"))
             {
-                while (Program.ApplicationRoot is null || !Program.ApplicationRoot.IsAppLaunched)
-                {
-                    await Task.Delay(1000);
-                }
-
-                Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
-                {
-                    Program.ApplicationRoot.MainWindow.Show();
-
-                    switch (args)
-                    {
-                        case "OpenApp":
-                            {
-                                break;
-                            }
-                        case "ViewDownloadPage":
-                            {
-                                if (NavigationService.GetCurrentPageType() != typeof(DownloadPage))
-                                {
-                                    NavigationService.NavigateTo(typeof(DownloadPage));
-                                }
-                                break;
-                            }
-                        default:
-                            {
-                                break;
-                            }
-                    }
-                });
-            });
+                DesktopLaunchService.InitializePage = typeof(DownloadPage);
+            }
         }
 
         /// <summary>
@@ -213,7 +176,6 @@ namespace GetStoreApp.Services.Root
                         {
                             XmlDocument notificationDocument = new XmlDocument();
                             notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/UWPUnInstallFailed"), notificationContent[0], notificationContent[1], notificationContent[2]));
-                            Debug.Write(string.Format(string.Format(ResourceService.GetLocalized("Notification/UWPUnInstallFailed"), notificationContent[0], notificationContent[1], notificationContent[2])));
                             ToastNotification notificaiton = new ToastNotification(notificationDocument);
                             AppToastNotifier.Show(notificaiton);
                             break;

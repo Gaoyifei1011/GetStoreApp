@@ -116,7 +116,7 @@ namespace GetStoreApp
                 ThemeService.InitializeTheme();
                 TopMostService.InitializeTopMostValue();
 
-                HistoryRecordService.Initialize();
+                HistoryRecordService.InitializeHistoryRecord();
                 NotificationService.InitializeNotification();
                 WinGetConfigService.InitializeWinGetConfig();
 

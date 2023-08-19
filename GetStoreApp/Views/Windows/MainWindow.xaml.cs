@@ -1,6 +1,7 @@
 ﻿using GetStoreApp.Extensions.Backdrop;
 using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
+using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Models.Window;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings.Appearance;
@@ -179,6 +180,10 @@ namespace GetStoreApp.Views.Windows
 
             if (RuntimeHelper.IsElevated)
             {
+                CHANGEFILTERSTRUCT changeFilterStatus = new CHANGEFILTERSTRUCT();
+                changeFilterStatus.cbSize = Marshal.SizeOf(typeof(CHANGEFILTERSTRUCT));
+                User32Library.ChangeWindowMessageFilterEx(Handle, WindowMessage.WM_COPYDATA, ChangeFilterAction.MSGFLT_ALLOW, in changeFilterStatus);
+
                 DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, async () =>
                 {
                     await ContentDialogHelper.ShowAsync(new ElevatedRunningDialog(), Content as FrameworkElement);
@@ -191,39 +196,19 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         public void OnActivated(object sender, WindowActivatedEventArgs args)
         {
-            if (Program.ApplicationRoot.IsAppRunning)
+            if (Program.ApplicationRoot.IsAppRunning && SystemBackdrop is not null)
             {
-                // 设置窗口处于非激活状态时的背景色
-                if (BackdropService.AppBackdrop.SelectedValue == BackdropService.BackdropList[1].SelectedValue || BackdropService.AppBackdrop.SelectedValue == BackdropService.BackdropList[2].SelectedValue)
-                {
-                    MicaSystemBackdrop micaBackdrop = SystemBackdrop as MicaSystemBackdrop;
+                MaterialBackdrop materialBackdrop = SystemBackdrop as MaterialBackdrop;
 
-                    if (micaBackdrop is not null && micaBackdrop.BackdropConfiguration is not null)
+                if (materialBackdrop is not null && materialBackdrop.BackdropConfiguration is not null)
+                {
+                    if (AlwaysShowBackdropService.AlwaysShowBackdropValue)
                     {
-                        if (AlwaysShowBackdropService.AlwaysShowBackdropValue)
-                        {
-                            micaBackdrop.BackdropConfiguration.IsInputActive = true;
-                        }
-                        else
-                        {
-                            micaBackdrop.BackdropConfiguration.IsInputActive = args.WindowActivationState is not WindowActivationState.Deactivated;
-                        }
+                        materialBackdrop.BackdropConfiguration.IsInputActive = true;
                     }
-                }
-                else if (BackdropService.AppBackdrop.SelectedValue == BackdropService.BackdropList[3].SelectedValue)
-                {
-                    DesktopAcrylicSystemBackdrop desktopAcrylicSystemBackdrop = SystemBackdrop as DesktopAcrylicSystemBackdrop;
-
-                    if (desktopAcrylicSystemBackdrop is not null && desktopAcrylicSystemBackdrop.BackdropConfiguration is not null)
+                    else
                     {
-                        if (AlwaysShowBackdropService.AlwaysShowBackdropValue)
-                        {
-                            desktopAcrylicSystemBackdrop.BackdropConfiguration.IsInputActive = true;
-                        }
-                        else
-                        {
-                            desktopAcrylicSystemBackdrop.BackdropConfiguration.IsInputActive = args.WindowActivationState is not WindowActivationState.Deactivated;
-                        }
+                        materialBackdrop.BackdropConfiguration.IsInputActive = args.WindowActivationState is not WindowActivationState.Deactivated;
                     }
                 }
             }
@@ -406,6 +391,10 @@ namespace GetStoreApp.Views.Windows
 
                 SelectedItem = NavigationService.NavigationItemList[0].NavigationItem;
                 NavigationService.NavigateTo(typeof(StorePage));
+                if (DesktopLaunchService.InitializePage != typeof(StorePage))
+                {
+                    NavigationService.NavigateTo(DesktopLaunchService.InitializePage);
+                }
                 IsBackEnabled = NavigationService.CanGoBack();
             }
         }
@@ -463,31 +452,25 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 设置应用的背景色
         /// </summary>
-        public void SetSystemBackdrop(string backdropName)
+        public void SetSystemBackdrop(GroupOptionsModel backdropItem)
         {
-            switch (backdropName)
+            if (backdropItem.SelectedValue == BackdropService.BackdropList[1].SelectedValue)
             {
-                case "Mica":
-                    {
-                        SystemBackdrop = new MicaBackdrop() { Kind = MicaKind.Base };
-                        break;
-                    }
-                case "MicaAlt":
-                    {
-                        SystemBackdrop = new MicaSystemBackdrop() { Kind = MicaKind.BaseAlt };
-                        break;
-                    }
-                case "Acrylic":
-                    {
-                        SystemBackdrop = new DesktopAcrylicSystemBackdrop();
-                        break;
-                    }
-                default:
-                    {
-                        SystemBackdrop = null;
-                        break;
-                    }
+                SystemBackdrop = new MaterialBackdrop() { IsMicaBackdrop = true, MicaBackdropKind = MicaKind.Base };
             }
+            else if (backdropItem.SelectedValue == BackdropService.BackdropList[2].SelectedValue)
+            {
+                SystemBackdrop = new MaterialBackdrop() { IsMicaBackdrop = true, MicaBackdropKind = MicaKind.BaseAlt };
+            }
+            else if (backdropItem.SelectedValue == BackdropService.BackdropList[3].SelectedValue)
+            {
+                SystemBackdrop = new MaterialBackdrop() { IsMicaBackdrop = false, DesktopAcrylicBackdropKind = DesktopAcrylicKind.Default };
+            }
+            else
+            {
+                SystemBackdrop = null;
+            }
+
             SetWindowBackground();
         }
 
@@ -496,7 +479,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         public void SetWindowBackground()
         {
-            if (BackdropService.AppBackdrop.SelectedValue == BackdropService.BackdropList[0].SelectedValue)
+            if (SystemBackdrop is null)
             {
                 if ((Content as FrameworkElement).ActualTheme is ElementTheme.Light)
                 {
@@ -660,17 +643,50 @@ namespace GetStoreApp.Views.Windows
                         {
                             string[] startupArgs = copyDataStruct.lpData.Split(' ');
 
-                            if (NavigationService.GetCurrentPageType() != typeof(StorePage))
+                            if (startupArgs.Length is 2)
                             {
-                                NavigationService.NavigateTo(typeof(StorePage));
+                                if (startupArgs[1] is "Store" && NavigationService.GetCurrentPageType() != typeof(StorePage))
+                                {
+                                    NavigationService.NavigateTo(typeof(StorePage));
+                                }
+                                else if (startupArgs[1] is "History" && NavigationService.GetCurrentPageType() != typeof(HistoryPage))
+                                {
+                                    NavigationService.NavigateTo(typeof(HistoryPage));
+                                }
+                                else if (startupArgs[1] is "Download" && NavigationService.GetCurrentPageType() != typeof(DownloadPage))
+                                {
+                                    NavigationService.NavigateTo(typeof(DownloadPage));
+                                }
+                                else if (startupArgs[1] is "WinGet" && NavigationService.GetCurrentPageType() != typeof(WinGetPage))
+                                {
+                                    NavigationService.NavigateTo(typeof(WinGetPage));
+                                }
+                                else if (startupArgs[1] is "UWPApp" && NavigationService.GetCurrentPageType() != typeof(UWPAppPage))
+                                {
+                                    NavigationService.NavigateTo(typeof(UWPAppPage));
+                                }
+                                else if (startupArgs[1] is "Web")
+                                {
+                                    Task.Run(async () =>
+                                    {
+                                        await Launcher.LaunchUriAsync((new Uri("https://store.rg-adguard.net/")));
+                                    });
+                                }
                             }
-
-                            StorePage storePage = NavigationService.NavigationFrame.Content as StorePage;
-                            if (storePage is not null)
+                            else if (startupArgs.Length is 3)
                             {
-                                storePage.Request.SelectedType = Convert.ToInt32(startupArgs[0]) is -1 ? storePage.Request.TypeList[0] : storePage.Request.TypeList[Convert.ToInt32(startupArgs[0])];
-                                storePage.Request.SelectedChannel = Convert.ToInt32(startupArgs[1]) is -1 ? storePage.Request.ChannelList[3] : storePage.Request.ChannelList[Convert.ToInt32(startupArgs[1])];
-                                storePage.Request.LinkText = startupArgs[2] is "PlaceHolderText" ? string.Empty : startupArgs[2];
+                                if (NavigationService.GetCurrentPageType() != typeof(StorePage))
+                                {
+                                    NavigationService.NavigateTo(typeof(StorePage));
+                                }
+
+                                StorePage storePage = NavigationService.NavigationFrame.Content as StorePage;
+                                if (storePage is not null)
+                                {
+                                    storePage.SelectedType = Convert.ToInt32(startupArgs[0]) is -1 ? storePage.TypeList[0] : storePage.TypeList[Convert.ToInt32(startupArgs[0])];
+                                    storePage.SelectedChannel = Convert.ToInt32(startupArgs[1]) is -1 ? storePage.ChannelList[3] : storePage.ChannelList[Convert.ToInt32(startupArgs[1])];
+                                    storePage.LinkText = startupArgs[2] is "PlaceHolderText" ? string.Empty : startupArgs[2];
+                                }
                             }
 
                             Show();

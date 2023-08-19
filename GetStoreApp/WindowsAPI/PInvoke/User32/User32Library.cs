@@ -26,6 +26,18 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         public static partial IntPtr CallWindowProc(IntPtr lpPrevWndFunc, IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
+        /// 修改指定窗口的用户界面特权隔离 (UIPI) 消息筛选器。
+        /// </summary>
+        /// <param name="hWnd">要修改其 UIPI 消息筛选器的窗口的句柄。</param>
+        /// <param name="message">消息筛选器允许通过或阻止的消息。</param>
+        /// <param name="action">要执行的操作，可以执行以下值</param>
+        /// <param name="pChangeFilterStruct">指向 CHANGEFILTERSTRUCT 结构的可选指针。</param>
+        /// <returns>如果函数成功，则返回 TRUE;否则，它将返回 FALSE。</returns>
+        [LibraryImport(User32, EntryPoint = "ChangeWindowMessageFilterEx", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static partial bool ChangeWindowMessageFilterEx(IntPtr hWnd, WindowMessage message, ChangeFilterAction action, in CHANGEFILTERSTRUCT pChangeFilterStruct);
+
+        /// <summary>
         /// 检索一个窗口的句柄，该窗口的类名和窗口名称与指定的字符串匹配。 该函数搜索子窗口，从指定子窗口后面的子窗口开始。 此函数不执行区分大小写的搜索。
         /// </summary>
         /// <param name="hWndParent">要搜索其子窗口的父窗口的句柄。如果 hwndParent 为 NULL，则该函数使用桌面窗口作为父窗口。 函数在桌面的子窗口之间搜索。 如果 hwndParent 为HWND_MESSAGE，则函数将搜索所有 仅消息窗口。</param>

@@ -1,162 +1,65 @@
-﻿<Expander
+﻿<Grid
     x:Class="GetStoreApp.UI.Controls.Settings.Common.HistoryRecordControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    Padding="0"
-    HorizontalAlignment="Stretch"
-    HorizontalContentAlignment="Stretch"
-    IsExpanded="True"
+    Height="61"
+    Padding="16,12"
+    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+    BorderThickness="1"
+    CornerRadius="{StaticResource ControlCornerRadius}"
     mc:Ignorable="d">
 
-    <Expander.Header>
-        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+    </Grid.ColumnDefinitions>
 
-            <FontIcon
-                Grid.Column="0"
-                Margin="0,0,12,0"
-                FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                FontSize="16"
-                Glyph="&#xF738;" />
+    <FontIcon
+        Grid.Column="0"
+        Margin="0,0,12,0"
+        FontFamily="{ThemeResource SymbolThemeFontFamily}"
+        FontSize="16"
+        Glyph="&#xF738;" />
 
-            <StackPanel
-                Grid.Column="1"
-                Margin="0,12"
-                VerticalAlignment="Center"
-                Orientation="Vertical">
+    <StackPanel Grid.Column="1" Orientation="Vertical">
+        <TextBlock
+            VerticalAlignment="Center"
+            Style="{StaticResource BodyTextBlockStyle}"
+            Text="{x:Bind root:ResourceService.GetLocalized('Settings/HistoryLite')}" />
 
-                <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/HistoryRecord')}" />
+        <TextBlock
+            VerticalAlignment="Center"
+            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+            Style="{StaticResource CaptionTextBlockStyle}"
+            Text="{x:Bind root:ResourceService.GetLocalized('Settings/HistoryLiteDescription')}" />
+    </StackPanel>
 
-                <TextBlock
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    Style="{StaticResource CaptionTextBlockStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/HistoryRecordDescription')}" />
-            </StackPanel>
-        </Grid>
-    </Expander.Header>
+    <DropDownButton
+        Grid.Column="2"
+        VerticalAlignment="Center"
+        Content="{x:Bind HistoryLiteItem.DisplayMember, Mode=OneWay}">
 
-    <Expander.Content>
-        <StackPanel Padding="43,6,16,4" HorizontalAlignment="Stretch">
-            <StackPanel>
-                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
+        <DropDownButton.Flyout>
+            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
+                <ToggleMenuFlyoutItem
+                    Click="{x:Bind OnHistoryLiteSelectClicked}"
+                    IsChecked="{x:Bind IsHistoryLiteItemChecked(HistoryLiteItem, HistoryLiteNumList[0]), Mode=OneWay}"
+                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
+                    Tag="0"
+                    Text="{x:Bind HistoryLiteNumList[0].DisplayMember}" />
 
-                    <StackPanel Grid.Column="0" Orientation="Vertical">
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/HistoryLite')}" />
-
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                            Style="{StaticResource CaptionTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/HistoryLiteDescription')}" />
-                    </StackPanel>
-
-                    <DropDownButton
-                        Grid.Column="1"
-                        VerticalAlignment="Center"
-                        Content="{x:Bind HistoryLiteItem.DisplayMember, Mode=OneWay}">
-
-                        <DropDownButton.Flyout>
-                            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
-                                <ToggleMenuFlyoutItem
-                                    Click="{x:Bind OnHistoryLiteSelectClicked}"
-                                    IsChecked="{x:Bind IsHistoryLiteItemChecked(HistoryLiteItem, HistoryLiteNumList[0]), Mode=OneWay}"
-                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
-                                    Tag="0"
-                                    Text="{x:Bind HistoryLiteNumList[0].DisplayMember}" />
-
-                                <ToggleMenuFlyoutItem
-                                    Click="{x:Bind OnHistoryLiteSelectClicked}"
-                                    IsChecked="{x:Bind IsHistoryLiteItemChecked(HistoryLiteItem, HistoryLiteNumList[1]), Mode=OneWay}"
-                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
-                                    Tag="1"
-                                    Text="{x:Bind HistoryLiteNumList[1].DisplayMember}" />
-                            </MenuFlyout>
-                        </DropDownButton.Flyout>
-                    </DropDownButton>
-                </Grid>
-            </StackPanel>
-
-            <MenuFlyoutSeparator Margin="0,4,0,4" />
-
-            <StackPanel Margin="0,0,0,6">
-                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <StackPanel Grid.Column="0" Orientation="Vertical">
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/HistoryJumpList')}" />
-
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                            Style="{StaticResource CaptionTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/HistoryJumpListDescription')}" />
-                    </StackPanel>
-
-                    <DropDownButton
-                        Grid.Column="1"
-                        VerticalAlignment="Center"
-                        Content="{x:Bind HistoryJumpListItem.DisplayMember, Mode=OneWay}">
-
-                        <DropDownButton.Flyout>
-                            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
-                                <ToggleMenuFlyoutItem
-                                    Click="{x:Bind OnHistoryJumpListSelectClicked}"
-                                    IsChecked="{x:Bind IsHistoryJumpListItemChecked(HistoryJumpListItem, HistoryJumpListNumList[0]), Mode=OneWay}"
-                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
-                                    Tag="0"
-                                    Text="{x:Bind HistoryJumpListNumList[0].DisplayMember}" />
-
-                                <ToggleMenuFlyoutItem
-                                    Click="{x:Bind OnHistoryJumpListSelectClicked}"
-                                    IsChecked="{x:Bind IsHistoryJumpListItemChecked(HistoryJumpListItem, HistoryJumpListNumList[1]), Mode=OneWay}"
-                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
-                                    Tag="1"
-                                    Text="{x:Bind HistoryJumpListNumList[1].DisplayMember}" />
-
-                                <ToggleMenuFlyoutItem
-                                    Click="{x:Bind OnHistoryJumpListSelectClicked}"
-                                    IsChecked="{x:Bind IsHistoryJumpListItemChecked(HistoryJumpListItem, HistoryJumpListNumList[2]), Mode=OneWay}"
-                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
-                                    Tag="2"
-                                    Text="{x:Bind HistoryJumpListNumList[2].DisplayMember}" />
-
-                                <ToggleMenuFlyoutItem
-                                    Click="{x:Bind OnHistoryJumpListSelectClicked}"
-                                    IsChecked="{x:Bind IsHistoryJumpListItemChecked(HistoryJumpListItem, HistoryJumpListNumList[3]), Mode=OneWay}"
-                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
-                                    Tag="3"
-                                    Text="{x:Bind HistoryJumpListNumList[3].DisplayMember}" />
-
-                                <ToggleMenuFlyoutItem
-                                    Click="{x:Bind OnHistoryJumpListSelectClicked}"
-                                    IsChecked="{x:Bind IsHistoryJumpListItemChecked(HistoryJumpListItem, HistoryJumpListNumList[4]), Mode=OneWay}"
-                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
-                                    Tag="4"
-                                    Text="{x:Bind HistoryJumpListNumList[4].DisplayMember}" />
-                            </MenuFlyout>
-                        </DropDownButton.Flyout>
-                    </DropDownButton>
-                </Grid>
-            </StackPanel>
-        </StackPanel>
-    </Expander.Content>
-</Expander>
+                <ToggleMenuFlyoutItem
+                    Click="{x:Bind OnHistoryLiteSelectClicked}"
+                    IsChecked="{x:Bind IsHistoryLiteItemChecked(HistoryLiteItem, HistoryLiteNumList[1]), Mode=OneWay}"
+                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
+                    Tag="1"
+                    Text="{x:Bind HistoryLiteNumList[1].DisplayMember}" />
+            </MenuFlyout>
+        </DropDownButton.Flyout>
+    </DropDownButton>
+</Grid>

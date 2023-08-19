@@ -1,6 +1,7 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Services.Root;
+using Microsoft.UI.Composition.SystemBackdrops;
 using System;
 using System.Collections.Generic;
 
@@ -26,7 +27,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         {
             BackdropList = ResourceService.BackdropList;
 
-            DefaultAppBackdrop = BackdropList.Find(item => item.SelectedValue.Equals("Default", StringComparison.OrdinalIgnoreCase));
+            DefaultAppBackdrop = BackdropList.Find(item => item.SelectedValue.Equals(nameof(SystemBackdropTheme.Default), StringComparison.OrdinalIgnoreCase));
 
             AppBackdrop = GetBackdrop();
         }
@@ -40,10 +41,12 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
 
             if (string.IsNullOrEmpty(backdrop))
             {
-                return BackdropList.Find(item => item.SelectedValue.Equals(DefaultAppBackdrop.SelectedValue, StringComparison.OrdinalIgnoreCase));
+                return DefaultAppBackdrop;
             }
 
-            return BackdropList.Find(item => item.SelectedValue.Equals(backdrop, StringComparison.OrdinalIgnoreCase));
+            GroupOptionsModel selectedBackdrop = BackdropList.Find(item => item.SelectedValue.Equals(backdrop, StringComparison.OrdinalIgnoreCase));
+
+            return selectedBackdrop is null ? DefaultAppBackdrop : selectedBackdrop;
         }
 
         /// <summary>
@@ -61,7 +64,7 @@ namespace GetStoreApp.Services.Controls.Settings.Appearance
         /// </summary>
         public static void SetAppBackdrop()
         {
-            Program.ApplicationRoot.MainWindow.SetSystemBackdrop(AppBackdrop.SelectedValue);
+            Program.ApplicationRoot.MainWindow.SetSystemBackdrop(AppBackdrop);
         }
     }
 }

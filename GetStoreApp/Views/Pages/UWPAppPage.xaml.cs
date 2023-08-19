@@ -51,6 +51,14 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
+        /// 打开设置
+        /// </summary>
+        public async void OnOpenSettingsClicked(object sender, RoutedEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
+        }
+
+        /// <summary>
         /// 单击痕迹栏条目时发生的事件
         /// </summary>
         public void OnItemClicked(object sender, BreadcrumbBarItemClickedEventArgs args)
@@ -68,20 +76,20 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 根据输入的内容检索应用
         /// </summary>
-        public async void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        public void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             AppListPage appListPage = UWPAppFrame.Content as AppListPage;
             if (appListPage.Content is not null)
             {
                 appListPage.SearchText = SearchText;
-                await appListPage.InitializeDataAsync(true);
+                appListPage.InitializeData(true);
             }
         }
 
         /// <summary>
         /// 文本输入框内容为空时，复原原来的内容
         /// </summary>
-        public async void OnTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
+        public void OnTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             AutoSuggestBox autoSuggestBox = sender as AutoSuggestBox;
             if (autoSuggestBox is not null && autoSuggestBox.Text == string.Empty)
@@ -90,7 +98,7 @@ namespace GetStoreApp.Views.Pages
                 if (appListPage.Content is not null)
                 {
                     appListPage.SearchText = string.Empty;
-                    await appListPage.InitializeDataAsync();
+                    appListPage.InitializeData();
                 }
             }
         }
@@ -101,14 +109,6 @@ namespace GetStoreApp.Views.Pages
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        /// <summary>
-        /// 打开设置
-        /// </summary>
-        public async void OnOpenSettingsClicked(object sender, RoutedEventArgs args)
-        {
-            await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
         }
 
         /// <summary>
