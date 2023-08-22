@@ -48,14 +48,14 @@
             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                 <ToggleMenuFlyoutItem
                     Click="{x:Bind OnInstallModeSelectClicked}"
-                    IsChecked="{x:Bind IsItemChecked(InstallMode, InstallModeList[0]), Mode=OneWay}"
+                    IsChecked="{x:Bind InstallMode.SelectedValue.Equals(InstallModeList[0].SelectedValue), Mode=OneWay}"
                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="0"
                     Text="{x:Bind InstallModeList[0].DisplayMember}" />
 
                 <ToggleMenuFlyoutItem
                     Click="{x:Bind OnInstallModeSelectClicked}"
-                    IsChecked="{x:Bind IsItemChecked(InstallMode, InstallModeList[1]), Mode=OneWay}"
+                    IsChecked="{x:Bind InstallMode.SelectedValue.Equals(InstallModeList[1].SelectedValue), Mode=OneWay}"
                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="1"
                     Text="{x:Bind InstallModeList[1].DisplayMember}" />

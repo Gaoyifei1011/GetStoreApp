@@ -175,5 +175,29 @@ namespace GetStoreApp.Helpers.Converters
                 return string.Empty;
             }
         }
+
+        public static string UwpAppToolTipFormat(string content, string type)
+        {
+            if (type is "DisplayName")
+            {
+                return string.Format(ResourceService.GetLocalized("UWPApp/DisplayNameToolTip"), content);
+            }
+            else if (type is "PublisherName")
+            {
+                return string.Format(ResourceService.GetLocalized("UWPApp/PublisherToolTip"), content);
+            }
+            else if (type is "Version")
+            {
+                return string.Format(ResourceService.GetLocalized("UWPApp/VersionToolTip"), content);
+            }
+            else if (type is "InstallDate")
+            {
+                return string.Format(ResourceService.GetLocalized("UWPApp/InstallDateToolTip"), content);
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
     }
 }

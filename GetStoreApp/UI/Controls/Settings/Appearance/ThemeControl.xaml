@@ -56,21 +56,21 @@
             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                 <ToggleMenuFlyoutItem
                     Click="{x:Bind OnThemeSelectClicked}"
-                    IsChecked="{x:Bind IsItemChecked(Theme, ThemeList[0]), Mode=OneWay}"
+                    IsChecked="{x:Bind Theme.SelectedValue.Equals(ThemeList[0].SelectedValue), Mode=OneWay}"
                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="0"
                     Text="{x:Bind ThemeList[0].DisplayMember}" />
 
                 <ToggleMenuFlyoutItem
                     Click="{x:Bind OnThemeSelectClicked}"
-                    IsChecked="{x:Bind IsItemChecked(Theme, ThemeList[1]), Mode=OneWay}"
+                    IsChecked="{x:Bind Theme.SelectedValue.Equals(ThemeList[1].SelectedValue), Mode=OneWay}"
                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="1"
                     Text="{x:Bind ThemeList[1].DisplayMember}" />
 
                 <ToggleMenuFlyoutItem
                     Click="{x:Bind OnThemeSelectClicked}"
-                    IsChecked="{x:Bind IsItemChecked(Theme, ThemeList[2]), Mode=OneWay}"
+                    IsChecked="{x:Bind Theme.SelectedValue.Equals(ThemeList[2].SelectedValue), Mode=OneWay}"
                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="2"
                     Text="{x:Bind ThemeList[2].DisplayMember}" />

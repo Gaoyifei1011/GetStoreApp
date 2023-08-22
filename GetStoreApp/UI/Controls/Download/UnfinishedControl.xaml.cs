@@ -230,7 +230,7 @@ namespace GetStoreApp.UI.Controls.Download
                 {
                     try
                     {
-                        UnfinishedDataList.Remove(UnfinishedDataList.First(item => item.DownloadKey == item.DownloadKey));
+                        UnfinishedDataList.Remove(UnfinishedDataList.First(item => item.DownloadKey == unfinishedItem.DownloadKey));
                     }
                     catch (Exception e)
                     {
@@ -365,7 +365,7 @@ namespace GetStoreApp.UI.Controls.Download
 
                     if (DeleteResult)
                     {
-                        UnfinishedDataList.Remove(UnfinishedDataList.First(item => item.DownloadKey == item.DownloadKey));
+                        UnfinishedDataList.Remove(UnfinishedDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey));
                     }
                 }
                 catch (Exception e)

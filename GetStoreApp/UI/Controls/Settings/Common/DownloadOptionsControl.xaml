@@ -130,21 +130,21 @@
                             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnDownloadItemSelectClicked}"
-                                    IsChecked="{x:Bind IsDownloadItemChecked(DownloadItem, 1), Mode=OneWay}"
+                                    IsChecked="{x:Bind DownloadItem.Equals(1), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="1"
                                     Text="1" />
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnDownloadItemSelectClicked}"
-                                    IsChecked="{x:Bind IsDownloadItemChecked(DownloadItem, 2), Mode=OneWay}"
+                                    IsChecked="{x:Bind DownloadItem.Equals(2), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="2"
                                     Text="2" />
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnDownloadItemSelectClicked}"
-                                    IsChecked="{x:Bind IsDownloadItemChecked(DownloadItem, 3), Mode=OneWay}"
+                                    IsChecked="{x:Bind DownloadItem.Equals(3), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="3"
                                     Text="3" />
@@ -183,14 +183,14 @@
                             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnDownloadModeSelectClicked}"
-                                    IsChecked="{x:Bind IsDownloadModeChecked(DownloadMode, DownloadModeList[0]), Mode=OneWay}"
+                                    IsChecked="{x:Bind DownloadMode.SelectedValue.Equals(DownloadModeList[0].SelectedValue), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="0"
                                     Text="{x:Bind DownloadModeList[0].DisplayMember}" />
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnDownloadModeSelectClicked}"
-                                    IsChecked="{x:Bind IsDownloadModeChecked(DownloadMode, DownloadModeList[1]), Mode=OneWay}"
+                                    IsChecked="{x:Bind DownloadMode.SelectedValue.Equals(DownloadModeList[1].SelectedValue), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="1"
                                     Text="{x:Bind DownloadModeList[1].DisplayMember}" />

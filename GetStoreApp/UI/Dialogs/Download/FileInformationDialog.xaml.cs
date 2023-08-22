@@ -77,16 +77,22 @@ namespace GetStoreApp.UI.Dialogs.Download
         {
             args.Cancel = true;
 
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileName") + FileName);
-            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FilePath") + FilePath);
-            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileSize") + FileSize);
-            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileSHA1") + FileSHA1);
-            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/CheckFileSHA1") + CheckFileSHA1);
+            Task.Run(() =>
+            {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileName") + FileName);
+                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FilePath") + FilePath);
+                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileSize") + FileSize);
+                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileSHA1") + FileSHA1);
+                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/CheckFileSHA1") + CheckFileSHA1);
 
-            CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
-            sender.Hide();
-            new FileInformationCopyNotification(this).Show();
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
+                    sender.Hide();
+                    new FileInformationCopyNotification(this).Show();
+                });
+            });
         }
 
         /// <summary>

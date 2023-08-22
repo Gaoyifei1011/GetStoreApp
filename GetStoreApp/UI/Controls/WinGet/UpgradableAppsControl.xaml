@@ -83,7 +83,7 @@
         Grid.Row="1"
         Margin="30,3,30,0"
         Padding="16,12"
-        x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsLoadedCompleted), Mode=OneWay}"
+        x:Load="{x:Bind IsLoadedCompleted.Equals(x:False), Mode=OneWay}"
         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
         BorderThickness="1"
@@ -212,7 +212,7 @@
                             Command="{Binding ElementName=UpgradableAppsRoot, Path=UpdateCommand, Mode=OneTime}"
                             CommandParameter="{Binding}"
                             Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Update')}"
-                            IsPrimaryButtonEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsUpgrading), Mode=OneWay}">
+                            IsPrimaryButtonEnabled="{x:Bind IsUpgrading.Equals(x:False), Mode=OneWay}">
 
                             <basicInput:ExtendedSplitButton.Flyout>
                                 <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">

@@ -60,7 +60,7 @@
             Grid.Column="4"
             Margin="0,0,10,0"
             VerticalAlignment="Center"
-            x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsSelectMode), Mode=OneWay}"
+            x:Load="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
             Background="Transparent"
             Orientation="Horizontal"
             Spacing="2">
@@ -268,7 +268,7 @@
                         Margin="10,0,0,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                        IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsSelectMode), Mode=OneWay}">
+                        IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}">
 
                         <StackPanel Orientation="Horizontal">
 

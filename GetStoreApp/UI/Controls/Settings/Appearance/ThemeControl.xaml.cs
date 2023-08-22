@@ -37,11 +37,6 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
             InitializeComponent();
         }
 
-        public bool IsItemChecked(GroupOptionsModel selectedMember, GroupOptionsModel comparedMember)
-        {
-            return selectedMember.SelectedValue == comparedMember.SelectedValue;
-        }
-
         /// <summary>
         /// 打开系统主题设置
         /// </summary>

@@ -47,12 +47,12 @@ namespace GetStoreApp.Helpers.Root
             IntPtr consoleHandle = Kernel32Library.GetStdHandle(StdHandle.STD_INPUT_HANDLE);
 
             const int bufferSize = 1024;
-            var buffer = new byte[bufferSize];
+            byte[] buffer = new byte[bufferSize];
 
             Kernel32Library.ReadConsole(consoleHandle, buffer, bufferSize, out int charsRead, IntPtr.Zero);
             int numberOfCharsRead = (charsRead - 2) * 2;
             byte[] b = new byte[numberOfCharsRead];
-            for (var i = 0; i < numberOfCharsRead; i++)
+            for (int i = 0; i < numberOfCharsRead; i++)
             {
                 b[i] = buffer[i];
             }

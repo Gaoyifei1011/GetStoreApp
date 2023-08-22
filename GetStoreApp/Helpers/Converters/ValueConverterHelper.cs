@@ -8,14 +8,6 @@ namespace GetStoreApp.Helpers.Converters
     public static class ValueConverterHelper
     {
         /// <summary>
-        /// 布尔值取反
-        /// </summary>
-        public static bool BooleanReverseConvert(bool value)
-        {
-            return !value;
-        }
-
-        /// <summary>
         /// 整数值与控件显示值转换
         /// </summary>
         public static Visibility IntToVisibilityConvert(int value)

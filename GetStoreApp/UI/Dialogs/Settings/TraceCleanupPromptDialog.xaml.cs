@@ -3,6 +3,7 @@ using GetStoreApp.Models.Dialogs.Settings;
 using GetStoreApp.Services.Controls.Settings.Advanced;
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml.Controls;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -49,14 +50,15 @@ namespace GetStoreApp.UI.Dialogs.Settings
         public TraceCleanupPromptDialog()
         {
             InitializeComponent();
-            ResourceService.TraceCleanupList.ForEach(traceCleanupItem =>
+
+            foreach (TraceCleanupModel traceCleanupItem in ResourceService.TraceCleanupList)
             {
                 traceCleanupItem.IsSelected = false;
                 traceCleanupItem.IsCleanFailed = false;
                 traceCleanupItem.PropertyChanged += OnTraceCleanupPropertyChanged;
 
                 TraceCleanupList.Add(traceCleanupItem);
-            });
+            }
         }
 
         public bool IsButtonEnabled(bool isSelected, bool isCleaning)
@@ -81,7 +83,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
         /// <summary>
         /// 痕迹清理
         /// </summary>
-        public async void OnCleanupNowClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        public void OnCleanupNowClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             args.Cancel = true;
 
@@ -92,8 +94,6 @@ namespace GetStoreApp.UI.Dialogs.Settings
 
             IsCleaning = true;
             TraceCleanup();
-            await Task.Delay(1000);
-            IsCleaning = false;
         }
 
         /// <summary>
@@ -114,14 +114,29 @@ namespace GetStoreApp.UI.Dialogs.Settings
         /// </summary>
         private void TraceCleanup()
         {
-            List<CleanArgs> SelectedCleanList = new List<CleanArgs>(TraceCleanupList.Where(item => item.IsSelected is true).Select(item => item.InternalName));
-
-            SelectedCleanList.ForEach(async cleanupArgs =>
+            Task.Run(async () =>
             {
-                // 清理并反馈回结果，修改相应的状态信息
-                bool CleanReusult = await TraceCleanupService.CleanAppTraceAsync(cleanupArgs);
+                List<CleanArgs> SelectedCleanList = new List<CleanArgs>(TraceCleanupList.Where(item => item.IsSelected is true).Select(item => item.InternalName));
 
-                TraceCleanupList[TraceCleanupList.IndexOf(TraceCleanupList.First(item => item.InternalName == cleanupArgs))].IsCleanFailed = !CleanReusult;
+                List<Tuple<CleanArgs, bool>> cleanSuccessfullyDict = new List<Tuple<CleanArgs, bool>>();
+                foreach (CleanArgs cleanArgs in SelectedCleanList)
+                {
+                    // 清理并反馈回结果，修改相应的状态信息
+                    bool cleanReusult = await TraceCleanupService.CleanAppTraceAsync(cleanArgs);
+                    cleanSuccessfullyDict.Add(new Tuple<CleanArgs, bool>(cleanArgs, cleanReusult));
+                }
+
+                await Task.Delay(1000);
+
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    foreach (Tuple<CleanArgs, bool> cleanArgsTuple in cleanSuccessfullyDict)
+                    {
+                        TraceCleanupList[TraceCleanupList.IndexOf(TraceCleanupList.First(item => item.InternalName == cleanArgsTuple.Item1))].IsCleanFailed = !cleanArgsTuple.Item2;
+                    }
+
+                    IsCleaning = false;
+                });
             });
         }
     }

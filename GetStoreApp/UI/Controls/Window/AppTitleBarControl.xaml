@@ -2,7 +2,6 @@
     x:Class="GetStoreApp.UI.Controls.Window.AppTitleBarControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
@@ -74,7 +73,7 @@
 
                 <MenuFlyoutItem
                     Click="{x:Bind OnMaximizeClicked}"
-                    IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsWindowMaximized), Mode=OneWay}"
+                    IsEnabled="{x:Bind IsWindowMaximized.Equals(x:False), Mode=OneWay}"
                     Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
                     Text="{x:Bind root:ResourceService.GetLocalized('Window/Maximize')}">
 

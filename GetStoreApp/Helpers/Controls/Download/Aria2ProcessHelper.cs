@@ -86,7 +86,7 @@ namespace GetStoreApp.Helpers.Controls.Download
 
                 if (hSnapshot == IntPtr.Zero || hSnapshot == Kernel32Library.INVALID_HANDLE_VALUE)
                 {
-                    throw new Exception();
+                    return SearchResult;
                 }
 
                 PROCESSENTRY32 ProcessEntry32 = new PROCESSENTRY32();

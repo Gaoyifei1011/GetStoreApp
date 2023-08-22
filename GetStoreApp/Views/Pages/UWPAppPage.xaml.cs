@@ -79,7 +79,7 @@ namespace GetStoreApp.Views.Pages
         public void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             AppListPage appListPage = UWPAppFrame.Content as AppListPage;
-            if (appListPage.Content is not null)
+            if (appListPage.Content is not null && !string.IsNullOrEmpty(SearchText))
             {
                 appListPage.SearchText = SearchText;
                 appListPage.InitializeData(true);

@@ -140,7 +140,7 @@
             Height="60"
             Margin="30,3,30,0"
             Padding="16,12"
-            x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsSearchCompleted), Mode=OneWay}"
+            x:Load="{x:Bind IsSearchCompleted.Equals(x:False), Mode=OneWay}"
             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
             BorderThickness="1"
@@ -255,7 +255,7 @@
                                 Command="{Binding ElementName=SearchAppsRoot, Path=InstallCommand, Mode=OneTime}"
                                 CommandParameter="{Binding}"
                                 Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Install')}"
-                                IsPrimaryButtonEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsInstalling), Mode=OneWay}">
+                                IsPrimaryButtonEnabled="{x:Bind IsInstalling.Equals(x:False), Mode=OneWay}">
 
                                 <basicInput:ExtendedSplitButton.Flyout>
                                     <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">

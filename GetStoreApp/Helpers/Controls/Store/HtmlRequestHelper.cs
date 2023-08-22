@@ -72,7 +72,10 @@ namespace GetStoreApp.Helpers.Controls.Store
                 // 请求失败
                 else
                 {
-                    throw new Exception();
+                    RequestId = 3;
+                    RequestStatusCode = string.Empty;
+                    RequestExceptionContent = string.Empty;
+                    RequestContent = string.Empty;
                 }
             }
 

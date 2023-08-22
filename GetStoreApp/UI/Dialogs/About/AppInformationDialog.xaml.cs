@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Storage;
 
@@ -76,51 +77,68 @@ namespace GetStoreApp.UI.Dialogs.About
         {
             args.Cancel = true;
 
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WindowsAppSDKVersion") + WindowsAppSDKVersion);
-            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WinUI3Version") + WinUI3Version);
-            stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/DoNetVersion") + DoNetVersion);
+            Task.Run(() =>
+            {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WindowsAppSDKVersion") + WindowsAppSDKVersion);
+                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WinUI3Version") + WinUI3Version);
+                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/DoNetVersion") + DoNetVersion);
 
-            CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
-            sender.Hide();
-            new AppInformationCopyNotification(this).Show();
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
+                    sender.Hide();
+                    new AppInformationCopyNotification(this).Show();
+                });
+            });
         }
 
         /// <summary>
         /// 初始化应用信息
         /// </summary>
-        public async void OnLoaded(object sender, RoutedEventArgs args)
+        public void OnLoaded(object sender, RoutedEventArgs args)
         {
-            IReadOnlyList<Package> DependencyList = Package.Current.Dependencies;
-
-            foreach (Package dependency in DependencyList)
+            Task.Run(async () =>
             {
-                if (dependency.DisplayName.Contains("WindowsAppRuntime"))
-                {
-                    // Windows 应用 SDK 版本信息
-                    WindowsAppSDKVersion = string.Format("{0}.{1}.{2}.{3}",
-                        dependency.Id.Version.Major,
-                        dependency.Id.Version.Minor,
-                        dependency.Id.Version.Build,
-                        dependency.Id.Version.Revision);
+                IReadOnlyList<Package> DependencyList = Package.Current.Dependencies;
 
-                    // WinUI3 版本信息
-                    try
+                foreach (Package dependency in DependencyList)
+                {
+                    if (dependency.DisplayName.Contains("WindowsAppRuntime"))
                     {
-                        StorageFile WinUI3File = await StorageFile.GetFileFromPathAsync(string.Format(@"{0}\{1}", dependency.InstalledLocation.Path, "Microsoft.ui.xaml.Controls.dll"));
-                        IDictionary<string, object> WinUI3FileProperties = await WinUI3File.Properties.RetrievePropertiesAsync(PropertyNamesList);
-                        WinUI3Version = WinUI3FileProperties[FileVersionProperty] is not null ? Convert.ToString(WinUI3FileProperties[FileVersionProperty]) : string.Empty;
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LogType.WARNING, "Get WinUI3 version failed.", e);
-                        WinUI3Version = string.Empty;
+                        // Windows 应用 SDK 版本信息
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
+                            WindowsAppSDKVersion = string.Format("{0}.{1}.{2}.{3}",
+                                dependency.Id.Version.Major,
+                                dependency.Id.Version.Minor,
+                                dependency.Id.Version.Build,
+                                dependency.Id.Version.Revision);
+                        });
+
+                        // WinUI3 版本信息
+                        try
+                        {
+                            StorageFile WinUI3File = await StorageFile.GetFileFromPathAsync(string.Format(@"{0}\{1}", dependency.InstalledLocation.Path, "Microsoft.ui.xaml.Controls.dll"));
+                            IDictionary<string, object> WinUI3FileProperties = await WinUI3File.Properties.RetrievePropertiesAsync(PropertyNamesList);
+                            DispatcherQueue.TryEnqueue(() =>
+                            {
+                                WinUI3Version = WinUI3FileProperties[FileVersionProperty] is not null ? Convert.ToString(WinUI3FileProperties[FileVersionProperty]) : string.Empty;
+                            });
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LogType.WARNING, "Get WinUI3 version failed.", e);
+                            DispatcherQueue.TryEnqueue(() =>
+                            {
+                                WinUI3Version = string.Empty;
+                            });
+                        }
                     }
                 }
-            }
+            });
 
-            // .NET 版本信息
-            DoNetVersion = Convert.ToString(Environment.Version);
+            DoNetVersion = Environment.Version.ToString();
         }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)

@@ -48,14 +48,14 @@
             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                 <ToggleMenuFlyoutItem
                     Click="{x:Bind OnHistoryLiteSelectClicked}"
-                    IsChecked="{x:Bind IsHistoryLiteItemChecked(HistoryLiteItem, HistoryLiteNumList[0]), Mode=OneWay}"
+                    IsChecked="{x:Bind HistoryLiteItem.SelectedValue.Equals(HistoryLiteNumList[0].SelectedValue), Mode=OneWay}"
                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="0"
                     Text="{x:Bind HistoryLiteNumList[0].DisplayMember}" />
 
                 <ToggleMenuFlyoutItem
                     Click="{x:Bind OnHistoryLiteSelectClicked}"
-                    IsChecked="{x:Bind IsHistoryLiteItemChecked(HistoryLiteItem, HistoryLiteNumList[1]), Mode=OneWay}"
+                    IsChecked="{x:Bind HistoryLiteItem.SelectedValue.Equals(HistoryLiteNumList[1].SelectedValue), Mode=OneWay}"
                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="1"
                     Text="{x:Bind HistoryLiteNumList[1].DisplayMember}" />

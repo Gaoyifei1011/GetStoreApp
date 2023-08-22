@@ -8,8 +8,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:page="using:GetStoreApp.UI.Pages"
     xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:sys="using:System"
     xmlns:uwpApp="using:GetStoreApp.Models.Controls.UWPApp"
     x:Name="AppListRoot"
     Loaded="{x:Bind OnLoaded}"
@@ -56,7 +56,7 @@
             <TextBlock
                 Grid.Column="3"
                 VerticalAlignment="Center"
-                Text="{x:Bind LocalizeUWPAppCountInfo(AppShortList.Count), Mode=OneWay}" />
+                Text="{x:Bind LocalizeUWPAppCountInfo(UwpAppDataList.Count), Mode=OneWay}" />
 
             <StackPanel
                 Grid.Column="4"
@@ -97,7 +97,7 @@
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnSortWayClicked}"
-                                    IsChecked="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsIncrease), Mode=OneWay}"
+                                    IsChecked="{x:Bind IsIncrease.Equals(x:False), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="False"
                                     Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/SortDecrease')}" />
@@ -113,21 +113,21 @@
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnSortRuleClicked}"
-                                    IsChecked="{x:Bind IsItemChecked(SelectedType, enum:AppListRuleSeletedType.PackageName), Mode=OneWay}"
+                                    IsChecked="{x:Bind sys:Object.Equals(SelectedType, enum:AppListRuleSeletedType.PackageName), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="{x:Bind enum:AppListRuleSeletedType.PackageName}"
                                     Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/SortByDisplayName')}" />
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnSortRuleClicked}"
-                                    IsChecked="{x:Bind IsItemChecked(SelectedType, enum:AppListRuleSeletedType.PublisherName), Mode=OneWay}"
+                                    IsChecked="{x:Bind sys:Object.Equals(SelectedType, enum:AppListRuleSeletedType.PublisherName), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="{x:Bind enum:AppListRuleSeletedType.PublisherName}"
                                     Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/SortByPublisher')}" />
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnSortRuleClicked}"
-                                    IsChecked="{x:Bind IsItemChecked(SelectedType, enum:AppListRuleSeletedType.InstallDate), Mode=OneWay}"
+                                    IsChecked="{x:Bind sys:Object.Equals(SelectedType, enum:AppListRuleSeletedType.InstallDate), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="{x:Bind enum:AppListRuleSeletedType.InstallDate}"
                                     Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/SortByInstalledDate')}" />
@@ -175,35 +175,35 @@
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnSignatureRuleClicked}"
-                                    IsChecked="{x:Bind IsSignatureItemChecked(SignType, enum:PackageSignType.Store), Mode=OneWay}"
+                                    IsChecked="{x:Bind sys:Object.Equals(SignType, enum:PackageSignType.Store), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="{x:Bind enum:PackageSignType.Store}"
                                     Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/SignatureStore')}" />
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnSignatureRuleClicked}"
-                                    IsChecked="{x:Bind IsSignatureItemChecked(SignType, enum:PackageSignType.System), Mode=OneWay}"
+                                    IsChecked="{x:Bind sys:Object.Equals(SignType, enum:PackageSignType.System), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="{x:Bind enum:PackageSignType.System}"
                                     Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/SignatureSystem')}" />
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnSignatureRuleClicked}"
-                                    IsChecked="{x:Bind IsSignatureItemChecked(SignType, enum:PackageSignType.Enterprise), Mode=OneWay}"
+                                    IsChecked="{x:Bind sys:Object.Equals(SignType, enum:PackageSignType.Enterprise), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="{x:Bind enum:PackageSignType.Enterprise}"
                                     Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/SignatureEnterprise')}" />
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnSignatureRuleClicked}"
-                                    IsChecked="{x:Bind IsSignatureItemChecked(SignType, enum:PackageSignType.Developer), Mode=OneWay}"
+                                    IsChecked="{x:Bind sys:Object.Equals(SignType, enum:PackageSignType.Developer), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="{x:Bind enum:PackageSignType.Developer}"
                                     Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/SignatureDeveloper')}" />
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnSignatureRuleClicked}"
-                                    IsChecked="{x:Bind IsSignatureItemChecked(SignType, enum:PackageSignType.None), Mode=OneWay}"
+                                    IsChecked="{x:Bind sys:Object.Equals(SignType, enum:PackageSignType.None), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="{x:Bind enum:PackageSignType.None}"
                                     Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/SignatureNone')}" />
@@ -232,7 +232,7 @@
             Grid.Row="1"
             Margin="30,3,30,0"
             Padding="16,12"
-            x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsLoadedCompleted), Mode=OneWay}"
+            x:Load="{x:Bind IsLoadedCompleted.Equals(x:False), Mode=OneWay}"
             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
             BorderThickness="1"
@@ -296,7 +296,7 @@
                     BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1"
                     CornerRadius="{StaticResource ControlCornerRadius}"
-                    Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(AppShortList.Count), Mode=OneWay}">
+                    Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(UwpAppDataList.Count), Mode=OneWay}">
                     <TextBlock
                         Margin="0,10,0,10"
                         VerticalAlignment="Center"
@@ -308,13 +308,13 @@
                     Grid.Row="1"
                     Padding="30,0,30,30"
                     ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
-                    ItemsSource="{x:Bind AppShortList, Mode=OneWay}"
+                    ItemsSource="{x:Bind UwpAppDataList, Mode=OneWay}"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     ScrollViewer.HorizontalScrollMode="Disabled"
                     ScrollViewer.VerticalScrollBarVisibility="Auto"
                     ScrollViewer.VerticalScrollMode="Enabled"
                     SelectionMode="None"
-                    Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppShortList.Count), Mode=OneWay}">
+                    Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(UwpAppDataList.Count), Mode=OneWay}">
 
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="uwpApp:PackageModel">
@@ -329,7 +329,6 @@
                                     CornerRadius="{StaticResource ControlCornerRadius}">
 
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="120" />
@@ -337,18 +336,16 @@
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
 
-                                    <Grid
+                                    <TextBlock
                                         Grid.Column="0"
-                                        Width="20"
-                                        Height="20"
-                                        Background="#dddddd"
-                                        CornerRadius="4">
-                                        <ImageIcon>
-                                            <ImageIcon.Source>
-                                                <BitmapImage UriSource="{x:Bind page:AppListPage.GetAppLogo(Package)}" />
-                                            </ImageIcon.Source>
-                                        </ImageIcon>
-                                    </Grid>
+                                        MinWidth="50"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        Text="{x:Bind DisplayName}"
+                                        TextAlignment="Left"
+                                        TextTrimming="CharacterEllipsis"
+                                        ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.UwpAppToolTipFormat(DisplayName,'DisplayName')}" />
 
                                     <TextBlock
                                         Grid.Column="1"
@@ -356,10 +353,10 @@
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
                                         FontSize="14"
-                                        Text="{x:Bind page:AppListPage.GetDisplayName(Package, x:False)}"
+                                        Text="{x:Bind PublisherName}"
                                         TextAlignment="Left"
                                         TextTrimming="CharacterEllipsis"
-                                        ToolTipService.ToolTip="{x:Bind page:AppListPage.GetDisplayName(Package, x:True)}" />
+                                        ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.UwpAppToolTipFormat(PublisherName,'PublisherName')}" />
 
                                     <TextBlock
                                         Grid.Column="2"
@@ -367,10 +364,11 @@
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
                                         FontSize="14"
-                                        Text="{x:Bind page:AppListPage.GetPublisherDisplayName(Package, x:False)}"
+                                        HorizontalTextAlignment="Left"
+                                        Text="{x:Bind Version}"
                                         TextAlignment="Left"
                                         TextTrimming="CharacterEllipsis"
-                                        ToolTipService.ToolTip="{x:Bind page:AppListPage.GetPublisherDisplayName(Package, x:True)}" />
+                                        ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.UwpAppToolTipFormat(Version,'Version')}" />
 
                                     <TextBlock
                                         Grid.Column="3"
@@ -379,25 +377,13 @@
                                         VerticalAlignment="Center"
                                         FontSize="14"
                                         HorizontalTextAlignment="Left"
-                                        Text="{x:Bind page:AppListPage.GetVersion(Package, x:False)}"
+                                        Text="{x:Bind InstallDate}"
                                         TextAlignment="Left"
                                         TextTrimming="CharacterEllipsis"
-                                        ToolTipService.ToolTip="{x:Bind page:AppListPage.GetVersion(Package, x:True)}" />
-
-                                    <TextBlock
-                                        Grid.Column="4"
-                                        MinWidth="50"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        FontSize="14"
-                                        HorizontalTextAlignment="Left"
-                                        Text="{x:Bind page:AppListPage.GetInstallDate(Package, x:False)}"
-                                        TextAlignment="Left"
-                                        TextTrimming="CharacterEllipsis"
-                                        ToolTipService.ToolTip="{x:Bind page:AppListPage.GetInstallDate(Package, x:True)}" />
+                                        ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.UwpAppToolTipFormat(InstallDate,'InstallDate')}" />
 
                                     <basicInput:ExtendedSplitButton
-                                        Grid.Column="5"
+                                        Grid.Column="4"
                                         Command="{Binding ElementName=AppListRoot, Path=ViewInformationCommand}"
                                         CommandParameter="{x:Bind Package}"
                                         Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/View')}"
@@ -418,14 +404,14 @@
                                                     CommandParameter="{x:Bind Package}"
                                                     Style="{StaticResource MenuFlyoutItemStyle}"
                                                     Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenStore')}"
-                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.IsStoreAppCheck(Package.SignatureKind)}" />
+                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.IsStoreAppCheck(SignatureKind)}" />
 
                                                 <MenuFlyoutItem
                                                     Command="{Binding ElementName=AppListRoot, Path=GetPackageCommand, Mode=OneTime}"
                                                     CommandParameter="{x:Bind Package}"
                                                     Style="{StaticResource MenuFlyoutItemStyle}"
                                                     Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/GetPackage')}"
-                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.IsStoreAppCheck(Package.SignatureKind)}" />
+                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.IsStoreAppCheck(SignatureKind)}" />
 
                                                 <MenuFlyoutItem
                                                     Command="{Binding ElementName=AppListRoot, Path=OpenManifestCommand, Mode=OneTime}"
@@ -459,7 +445,7 @@
                                                     CommandParameter="{x:Bind Package}"
                                                     Style="{StaticResource MenuFlyoutItemStyle}"
                                                     Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/UnInstall')}"
-                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.IsNotSystemAppCheck(Package.SignatureKind)}" />
+                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.IsNotSystemAppCheck(SignatureKind)}" />
                                             </MenuFlyout>
                                         </basicInput:ExtendedSplitButton.Flyout>
                                     </basicInput:ExtendedSplitButton>

@@ -9,6 +9,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Store.Preview;
@@ -45,31 +46,6 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 创建应用的桌面快捷方式
-        /// </summary>
-        public void OnCreateDesktopShortcutClicked(object sender, RoutedEventArgs args)
-        {
-            bool IsCreatedSuccessfully = false;
-
-            try
-            {
-                if (StoreConfiguration.IsPinToDesktopSupported())
-                {
-                    StoreConfiguration.PinToDesktop(Package.Current.Id.FamilyName);
-                    IsCreatedSuccessfully = true;
-                }
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LogType.ERROR, "Create desktop shortcut failed.", e);
-            }
-            finally
-            {
-                new QuickOperationNotification(this, QuickOperationType.DesktopShortcut, IsCreatedSuccessfully).Show();
-            }
-        }
-
-        /// <summary>
         /// 页面加载完成后如果有具体的要求，将页面滚动到指定位置
         /// </summary>
         public void OnLoaded(object sender, RoutedEventArgs args)
@@ -100,67 +76,110 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 将应用固定到“开始”屏幕
+        /// 创建应用的桌面快捷方式
         /// </summary>
-        public async void OnPinToStartScreenClicked(object sender, RoutedEventArgs args)
+        public void OnCreateDesktopShortcutClicked(object sender, RoutedEventArgs args)
         {
-            bool IsPinnedSuccessfully = false;
-
-            try
+            Task.Run(() =>
             {
-                IReadOnlyList<AppListEntry> AppEntries = await Package.Current.GetAppListEntriesAsync();
+                bool IsCreatedSuccessfully = false;
 
-                AppListEntry DefaultEntry = AppEntries[0];
-
-                if (DefaultEntry is not null)
+                try
                 {
-                    StartScreenManager startScreenManager = StartScreenManager.GetDefault();
-
-                    bool containsEntry = await startScreenManager.ContainsAppListEntryAsync(DefaultEntry);
-
-                    if (!containsEntry)
+                    if (StoreConfiguration.IsPinToDesktopSupported())
                     {
-                        await startScreenManager.RequestAddAppListEntryAsync(DefaultEntry);
+                        StoreConfiguration.PinToDesktop(Package.Current.Id.FamilyName);
+                        IsCreatedSuccessfully = true;
                     }
                 }
-                IsPinnedSuccessfully = true;
-            }
-            catch (Exception e)
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LogType.ERROR, "Create desktop shortcut failed.", e);
+                }
+                finally
+                {
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        new QuickOperationNotification(this, QuickOperationType.DesktopShortcut, IsCreatedSuccessfully).Show();
+                    });
+                }
+            });
+        }
+
+        /// <summary>
+        /// 将应用固定到“开始”屏幕
+        /// </summary>
+        public void OnPinToStartScreenClicked(object sender, RoutedEventArgs args)
+        {
+            Task.Run(async () =>
             {
-                LogService.WriteLog(LogType.ERROR, "Pin app to startscreen failed.", e);
-            }
-            finally
-            {
-                new QuickOperationNotification(this, QuickOperationType.StartScreen, IsPinnedSuccessfully).Show();
-            }
+                bool IsPinnedSuccessfully = false;
+
+                try
+                {
+                    IReadOnlyList<AppListEntry> AppEntries = await Package.Current.GetAppListEntriesAsync();
+
+                    AppListEntry DefaultEntry = AppEntries[0];
+
+                    if (DefaultEntry is not null)
+                    {
+                        StartScreenManager startScreenManager = StartScreenManager.GetDefault();
+
+                        bool containsEntry = await startScreenManager.ContainsAppListEntryAsync(DefaultEntry);
+
+                        if (!containsEntry)
+                        {
+                            await startScreenManager.RequestAddAppListEntryAsync(DefaultEntry);
+                        }
+                    }
+                    IsPinnedSuccessfully = true;
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LogType.ERROR, "Pin app to startscreen failed.", e);
+                }
+                finally
+                {
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        new QuickOperationNotification(this, QuickOperationType.StartScreen, IsPinnedSuccessfully).Show();
+                    });
+                }
+            });
         }
 
         /// <summary>
         /// 将应用固定到任务栏
         /// </summary>
-        public async void OnPinToTaskbarClicked(object sender, RoutedEventArgs args)
+        public void OnPinToTaskbarClicked(object sender, RoutedEventArgs args)
         {
-            bool IsPinnedSuccessfully = false;
-            try
+            Task.Run(async () =>
             {
-                string featureId = "com.microsoft.windows.taskbar.pin";
-                string token = FeatureAccessHelper.GenerateTokenFromFeatureId(featureId);
-                string attestation = FeatureAccessHelper.GenerateAttestation(featureId);
-                LimitedAccessFeatureRequestResult accessResult = LimitedAccessFeatures.TryUnlockFeature(featureId, token, attestation);
-
-                if (accessResult.Status is LimitedAccessFeatureStatus.Available)
+                bool IsPinnedSuccessfully = false;
+                try
                 {
-                    IsPinnedSuccessfully = await TaskbarManager.GetDefault().RequestPinCurrentAppAsync();
+                    string featureId = "com.microsoft.windows.taskbar.pin";
+                    string token = FeatureAccessHelper.GenerateTokenFromFeatureId(featureId);
+                    string attestation = FeatureAccessHelper.GenerateAttestation(featureId);
+                    LimitedAccessFeatureRequestResult accessResult = LimitedAccessFeatures.TryUnlockFeature(featureId, token, attestation);
+
+                    if (accessResult.Status is LimitedAccessFeatureStatus.Available)
+                    {
+                        IsPinnedSuccessfully = await TaskbarManager.GetDefault().RequestPinCurrentAppAsync();
+                    }
                 }
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LogType.ERROR, "Pin app to taskbar failed.", e);
-            }
-            finally
-            {
-                new QuickOperationNotification(this, QuickOperationType.Taskbar, IsPinnedSuccessfully).Show();
-            }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LogType.ERROR, "Pin app to taskbar failed.", e);
+                }
+                finally
+                {
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        new QuickOperationNotification(this, QuickOperationType.Taskbar, IsPinnedSuccessfully).Show();
+                    });
+                }
+            });
         }
 
         /// <summary>

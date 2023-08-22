@@ -29,7 +29,7 @@ namespace GetStoreApp.Helpers.Root
 
                 if (hSnapshot == IntPtr.Zero || hSnapshot == Kernel32Library.INVALID_HANDLE_VALUE)
                 {
-                    throw new Exception();
+                    return ProcessEntry32PIDList;
                 }
 
                 PROCESSENTRY32 ProcessEntry32 = new PROCESSENTRY32();

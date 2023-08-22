@@ -57,14 +57,14 @@
             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                 <ToggleMenuFlyoutItem
                     Click="{x:Bind OnBackdropSelectClicked}"
-                    IsChecked="{x:Bind IsItemChecked(Backdrop, BackdropList[0]), Mode=OneWay}"
+                    IsChecked="{x:Bind Backdrop.SelectedValue.Equals(BackdropList[0].SelectedValue), Mode=OneWay}"
                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="0"
                     Text="{x:Bind BackdropList[0].DisplayMember}" />
 
                 <ToggleMenuFlyoutItem
                     Click="{x:Bind OnBackdropSelectClicked}"
-                    IsChecked="{x:Bind IsItemChecked(Backdrop, BackdropList[1]), Mode=OneWay}"
+                    IsChecked="{x:Bind Backdrop.SelectedValue.Equals(BackdropList[1].SelectedValue), Mode=OneWay}"
                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="1"
                     Text="{x:Bind BackdropList[1].DisplayMember}"
@@ -72,7 +72,7 @@
 
                 <ToggleMenuFlyoutItem
                     Click="{x:Bind OnBackdropSelectClicked}"
-                    IsChecked="{x:Bind IsItemChecked(Backdrop, BackdropList[2]), Mode=OneWay}"
+                    IsChecked="{x:Bind Backdrop.SelectedValue.Equals(BackdropList[2].SelectedValue), Mode=OneWay}"
                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="2"
                     Text="{x:Bind BackdropList[2].DisplayMember}"
@@ -80,7 +80,7 @@
 
                 <ToggleMenuFlyoutItem
                     Click="{x:Bind OnBackdropSelectClicked}"
-                    IsChecked="{x:Bind IsItemChecked(Backdrop, BackdropList[3]), Mode=OneWay}"
+                    IsChecked="{x:Bind Backdrop.SelectedValue.Equals(BackdropList[3].SelectedValue), Mode=OneWay}"
                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                     Tag="3"
                     Text="{x:Bind BackdropList[3].DisplayMember}" />

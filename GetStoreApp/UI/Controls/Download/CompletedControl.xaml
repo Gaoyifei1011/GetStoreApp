@@ -6,6 +6,7 @@
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:download="using:GetStoreApp.Models.Controls.Download"
+    xmlns:io="using:System.IO"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:sys="using:System"
@@ -59,7 +60,7 @@
             Grid.Column="4"
             Margin="0,0,10,0"
             VerticalAlignment="Center"
-            x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsSelectMode), Mode=OneWay}"
+            x:Load="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
             Background="Transparent"
             Orientation="Horizontal"
             Spacing="2">
@@ -277,7 +278,7 @@
                                 x:Name="FileExist"
                                 MinWidth="50"
                                 VerticalAlignment="Center"
-                                x:Load="{x:Bind converter:ValueCheckConverterHelper.FileExistCheck(FilePath)}"
+                                x:Load="{x:Bind io:File.Exists(FilePath)}"
                                 FontSize="14"
                                 Text="{x:Bind converter:ValueCheckConverterHelper.FileExistTextCheck(FilePath)}"
                                 TextAlignment="Left" />
@@ -324,7 +325,7 @@
                                 Grid.Column="2"
                                 MinWidth="50"
                                 VerticalAlignment="Center"
-                                x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(InstallError), Mode=OneWay}"
+                                x:Load="{x:Bind InstallError.Equals(x:False), Mode=OneWay}"
                                 FontSize="14"
                                 Text="{x:Bind converter:StringConverterHelper.InstallValueFormat(InstallValue), Mode=OneWay}"
                                 TextAlignment="Left" />
@@ -346,11 +347,11 @@
                         Margin="10,0,0,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                        IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsSelectMode), Mode=OneWay}">
+                        IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}">
 
                         <StackPanel Orientation="Horizontal">
 
-                            <ContentControl IsEnabled="{x:Bind converter:ValueCheckConverterHelper.FileExistCheck(FilePath)}">
+                            <ContentControl IsEnabled="{x:Bind io:File.Exists(FilePath)}">
 
                                 <StackPanel Orientation="Horizontal">
                                     <ContentControl IsEnabled="{x:Bind converter:ValueCheckConverterHelper.InstallFileExistsCheck(FileName)}">
@@ -363,7 +364,7 @@
                                             Command="{Binding ElementName=CompletedRoot, Path=InstallCommand, Mode=OneTime}"
                                             CommandParameter="{Binding}"
                                             CornerRadius="{StaticResource ControlCornerRadius}"
-                                            IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsInstalling), Mode=OneWay}"
+                                            IsEnabled="{x:Bind IsInstalling.Equals(x:False), Mode=OneWay}"
                                             ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/InstallToolTip')}">
 
                                             <Button.Content>
@@ -415,7 +416,7 @@
                                         <MenuFlyoutItem
                                             Command="{Binding ElementName=CompletedRoot, Path=DeleteWithFileCommand, Mode=OneTime}"
                                             CommandParameter="{Binding}"
-                                            IsEnabled="{x:Bind converter:ValueCheckConverterHelper.FileExistCheck(FilePath)}"
+                                            IsEnabled="{x:Bind io:File.Exists(FilePath)}"
                                             Style="{StaticResource MenuFlyoutItemStyle}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteWithFile')}"
                                             ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteWithFileToolTip')}" />
@@ -425,7 +426,7 @@
                                         <MenuFlyoutItem
                                             Command="{Binding ElementName=CompletedRoot, Path=ShareFileCommand, Mode=OneTime}"
                                             CommandParameter="{Binding}"
-                                            IsEnabled="{x:Bind converter:ValueCheckConverterHelper.FileExistCheck(FilePath)}"
+                                            IsEnabled="{x:Bind io:File.Exists(FilePath)}"
                                             Style="{StaticResource MenuFlyoutItemStyle}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Download/ShareFile')}">
 
@@ -437,7 +438,7 @@
                                         <MenuFlyoutItem
                                             Command="{Binding ElementName=CompletedRoot, Path=FileInformationCommand, Mode=OneTime}"
                                             CommandParameter="{Binding}"
-                                            IsEnabled="{x:Bind converter:ValueCheckConverterHelper.FileExistCheck(FilePath)}"
+                                            IsEnabled="{x:Bind io:File.Exists(FilePath)}"
                                             Style="{StaticResource MenuFlyoutItemStyle}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Download/FileInformation')}">
 

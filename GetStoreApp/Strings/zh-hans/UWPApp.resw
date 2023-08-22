@@ -268,7 +268,7 @@
     <value>应用版本</value>
   </data>
   <data name="VersionToolTip" xml:space="preserve">
-    <value>版本：{0}.{1}.{2}.{3}</value>
+    <value>版本：{0}</value>
   </data>
   <data name="View" xml:space="preserve">
     <value>查看</value>

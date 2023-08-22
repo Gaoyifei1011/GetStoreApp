@@ -519,7 +519,7 @@ namespace GetStoreApp.UI.Controls.Download
 
                         if (DeleteResult)
                         {
-                            CompletedDataList.Remove(CompletedDataList.First(item => item.DownloadKey == item.DownloadKey));
+                            CompletedDataList.Remove(CompletedDataList.First(item => item.DownloadKey == completedItem.DownloadKey));
                         }
                     }
                     catch (Exception e)

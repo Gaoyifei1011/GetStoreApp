@@ -15,7 +15,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -226,9 +225,9 @@ namespace GetStoreApp.UI.Controls.WinGet
                     LogService.WriteLog(LogType.ERROR, "Installed apps information initialized failed.", e);
                     return;
                 }
+                isInitialized = true;
                 GetInstalledApps();
                 InitializeData();
-                isInitialized = true;
             }
         }
 
@@ -249,7 +248,10 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         public void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            InitializeData(true);
+            if (!string.IsNullOrEmpty(SearchText))
+            {
+                InitializeData(true);
+            }
         }
 
         /// <summary>
@@ -282,9 +284,9 @@ namespace GetStoreApp.UI.Controls.WinGet
         {
             try
             {
+                autoResetEvent ??= new AutoResetEvent(false);
                 Task.Run(async () =>
                 {
-                    autoResetEvent ??= new AutoResetEvent(false);
                     await Task.Delay(300);
                     PackageCatalogReference searchCatalogReference = InstalledAppsManager.GetLocalPackageCatalog(LocalPackageCatalog.InstalledPackages);
 

@@ -67,16 +67,6 @@ namespace GetStoreApp.UI.Controls.Settings.Common
             InitializeComponent();
         }
 
-        public bool IsDownloadItemChecked(int selectedIndex, int index)
-        {
-            return selectedIndex == index;
-        }
-
-        public bool IsDownloadModeChecked(GroupOptionsModel selectedMember, GroupOptionsModel comparedMember)
-        {
-            return selectedMember.SelectedValue == comparedMember.SelectedValue;
-        }
-
         /// <summary>
         /// 打开文件存放目录
         /// </summary>

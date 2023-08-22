@@ -248,7 +248,7 @@ namespace GetStoreApp.Services.Controls.Download
                 // 请求失败
                 else
                 {
-                    throw new Exception();
+                    return (false, string.Empty);
                 }
             }
 
@@ -329,7 +329,7 @@ namespace GetStoreApp.Services.Controls.Download
                 // 请求失败
                 else
                 {
-                    throw new Exception();
+                    return (false, string.Empty);
                 }
             }
 
@@ -430,7 +430,7 @@ namespace GetStoreApp.Services.Controls.Download
                 // 请求失败
                 else
                 {
-                    throw new Exception();
+                    return (false, string.Empty, default(double), default(double), default(double));
                 }
             }
 

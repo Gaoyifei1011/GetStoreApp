@@ -22,15 +22,15 @@ namespace GetStoreApp.Helpers.Root
         {
             if (size / SizeDict["GB"] >= 1)
             {
-                return string.Format("{0}{1}", Math.Round(Convert.ToDouble(size) / SizeDict["GB"], 2), "GB");
+                return string.Format("{0}{1}", Math.Round(size / SizeDict["GB"], 2), "GB");
             }
             else if (size / SizeDict["MB"] >= 1)
             {
-                return string.Format("{0}{1}", Math.Round(Convert.ToDouble(size) / SizeDict["MB"], 2), "MB");
+                return string.Format("{0}{1}", Math.Round(size / SizeDict["MB"], 2), "MB");
             }
             else if (size / SizeDict["KB"] >= 1)
             {
-                return string.Format("{0}{1}", Math.Round(Convert.ToDouble(size) / SizeDict["KB"], 2), "KB");
+                return string.Format("{0}{1}", Math.Round(size / SizeDict["KB"], 2), "KB");
             }
             else
             {

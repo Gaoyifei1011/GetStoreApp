@@ -493,16 +493,6 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        public bool IsTypeItemChecked(string selectedInternalName, string internalName)
-        {
-            return selectedInternalName == internalName;
-        }
-
-        public bool IsChannelItemChecked(string selectedInternalName, string internalName)
-        {
-            return selectedInternalName == internalName;
-        }
-
         /// <summary>
         /// 本地化CategoryId信息
         /// </summary>

@@ -88,28 +88,28 @@
                             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnTypeSelectClicked}"
-                                    IsChecked="{x:Bind IsTypeItemChecked(SelectedType.InternalName, TypeList[0].InternalName), Mode=OneWay}"
+                                    IsChecked="{x:Bind SelectedType.InternalName.Equals(TypeList[0].InternalName), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="0"
                                     Text="{x:Bind TypeList[0].DisplayName}" />
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnTypeSelectClicked}"
-                                    IsChecked="{x:Bind IsTypeItemChecked(SelectedType.InternalName, TypeList[1].InternalName), Mode=OneWay}"
+                                    IsChecked="{x:Bind SelectedType.InternalName.Equals(TypeList[1].InternalName), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="1"
                                     Text="{x:Bind TypeList[1].DisplayName}" />
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnTypeSelectClicked}"
-                                    IsChecked="{x:Bind IsTypeItemChecked(SelectedType.InternalName, TypeList[2].InternalName), Mode=OneWay}"
+                                    IsChecked="{x:Bind SelectedType.InternalName.Equals(TypeList[2].InternalName), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="2"
                                     Text="{x:Bind TypeList[2].DisplayName}" />
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnTypeSelectClicked}"
-                                    IsChecked="{x:Bind IsTypeItemChecked(SelectedType.InternalName, TypeList[3].InternalName), Mode=OneWay}"
+                                    IsChecked="{x:Bind SelectedType.InternalName.Equals(TypeList[3].InternalName), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="3"
                                     Text="{x:Bind TypeList[3].DisplayName}" />
@@ -126,28 +126,28 @@
                             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnChannelSelectClicked}"
-                                    IsChecked="{x:Bind IsChannelItemChecked(SelectedChannel.InternalName, ChannelList[0].InternalName), Mode=OneWay}"
+                                    IsChecked="{x:Bind SelectedChannel.InternalName.Equals(ChannelList[0].InternalName), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="0"
                                     Text="{x:Bind ChannelList[0].DisplayName}" />
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnChannelSelectClicked}"
-                                    IsChecked="{x:Bind IsChannelItemChecked(SelectedChannel.InternalName, ChannelList[1].InternalName), Mode=OneWay}"
+                                    IsChecked="{x:Bind SelectedChannel.InternalName.Equals(ChannelList[1].InternalName), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="1"
                                     Text="{x:Bind ChannelList[1].DisplayName}" />
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnChannelSelectClicked}"
-                                    IsChecked="{x:Bind IsChannelItemChecked(SelectedChannel.InternalName, ChannelList[2].InternalName), Mode=OneWay}"
+                                    IsChecked="{x:Bind SelectedChannel.InternalName.Equals(ChannelList[2].InternalName), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="2"
                                     Text="{x:Bind ChannelList[2].DisplayName}" />
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnChannelSelectClicked}"
-                                    IsChecked="{x:Bind IsChannelItemChecked(SelectedChannel.InternalName, ChannelList[3].InternalName), Mode=OneWay}"
+                                    IsChecked="{x:Bind SelectedChannel.InternalName.Equals(ChannelList[3].InternalName), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="3"
                                     Text="{x:Bind ChannelList[3].DisplayName}" />
@@ -157,7 +157,7 @@
 
                     <TextBox
                         Grid.Column="2"
-                        IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsGettingLinks), Mode=OneWay}"
+                        IsEnabled="{x:Bind IsGettingLinks.Equals(x:False), Mode=OneWay}"
                         PlaceholderText="{x:Bind LinkPlaceHolderText, Mode=OneWay}"
                         Text="{x:Bind LinkText, Mode=TwoWay}" />
 
@@ -167,7 +167,7 @@
                         VerticalAlignment="Bottom"
                         Click="{x:Bind OnGetLinksClicked}"
                         Content="{x:Bind root:ResourceService.GetLocalized('Store/GetLinks')}"
-                        IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsGettingLinks), Mode=OneWay}"
+                        IsEnabled="{x:Bind IsGettingLinks.Equals(x:False), Mode=OneWay}"
                         Style="{StaticResource AccentButtonStyle}" />
                 </Grid>
 
@@ -455,7 +455,7 @@
                             Grid.Column="4"
                             Margin="0,0,10,0"
                             VerticalAlignment="Center"
-                            x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsSelectMode), Mode=OneWay}"
+                            x:Load="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
                             Background="Transparent"
                             Orientation="Horizontal"
                             Spacing="2">
@@ -785,7 +785,7 @@
                                         BorderThickness="0"
                                         Content="{x:Bind root:ResourceService.GetLocalized('Store/Copy')}"
                                         Foreground="{ThemeResource HyperlinkButtonForeground}"
-                                        IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsSelectMode), Mode=OneWay}"
+                                        IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
                                         Style="{StaticResource HyperLinkDropDownButtonStyle}"
                                         ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/CopyOptionsToolTip')}">
 

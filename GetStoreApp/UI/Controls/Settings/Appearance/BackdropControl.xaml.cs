@@ -42,11 +42,6 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
             CanUseMicaBackdrop = BuildNumber >= 20000;
         }
 
-        public bool IsItemChecked(GroupOptionsModel selectedMember, GroupOptionsModel comparedMember)
-        {
-            return selectedMember.SelectedValue == comparedMember.SelectedValue;
-        }
-
         /// <summary>
         /// 背景色修改设置
         /// </summary>

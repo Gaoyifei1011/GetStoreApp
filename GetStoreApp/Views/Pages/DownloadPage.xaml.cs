@@ -32,7 +32,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// DownloadPivot选中项发生变化时，关闭离开页面的事件，开启要导航到的页面的事件，并更新新页面的数据
+        /// 下载透视控件选中项发生变化时，关闭离开页面的事件，开启要导航到的页面的事件，并更新新页面的数据
         /// </summary>
         public async void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
         {

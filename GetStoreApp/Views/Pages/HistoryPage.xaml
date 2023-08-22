@@ -72,7 +72,7 @@
 
                 <StackPanel
                     x:Name="NormalMode"
-                    x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsSelectMode), Mode=OneWay}"
+                    x:Load="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
                     Background="Transparent"
                     Orientation="Horizontal"
                     Spacing="2">
@@ -107,7 +107,7 @@
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnTimeSortClicked}"
-                                    IsChecked="{x:Bind converter:ValueCheckConverterHelper.TimeSortValueCheck(TimeSortOrder, x:True), Mode=OneWay}"
+                                    IsChecked="{x:Bind TimeSortOrder.Equals(x:True), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="True"
                                     Text="{x:Bind root:ResourceService.GetLocalized('History/TimeIncreaseSort')}"
@@ -115,7 +115,7 @@
 
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnTimeSortClicked}"
-                                    IsChecked="{x:Bind converter:ValueCheckConverterHelper.TimeSortValueCheck(TimeSortOrder, x:False), Mode=OneWay}"
+                                    IsChecked="{x:Bind TimeSortOrder.Equals(x:False), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="False"
                                     Text="{x:Bind root:ResourceService.GetLocalized('History/TimeDecreaseSort')}"
@@ -147,28 +147,28 @@
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnTypeFilterClicked}"
-                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'url'),Mode=OneWay}"
+                                        IsChecked="{x:Bind sys:String.Equals(TypeFilter,'url'), Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="url"
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/URL')}" />
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnTypeFilterClicked}"
-                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'ProductId'),Mode=OneWay}"
+                                        IsChecked="{x:Bind sys:String.Equals(TypeFilter,'ProductId'), Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="ProductId"
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/ProductID')}" />
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnTypeFilterClicked}"
-                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'PackageFamilyName'),Mode=OneWay}"
+                                        IsChecked="{x:Bind sys:String.Equals(TypeFilter,'PackageFamilyName'), Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="PackageFamilyName"
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/PackageFamilyName')}" />
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnTypeFilterClicked}"
-                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'CategoryId'),Mode=OneWay}"
+                                        IsChecked="{x:Bind sys:String.Equals(TypeFilter,'CategoryId'), Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="CategoryId"
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/CategoryID')}" />
@@ -177,7 +177,7 @@
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnTypeFilterClicked}"
-                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'None'),Mode=OneWay}"
+                                        IsChecked="{x:Bind sys:String.Equals(TypeFilter,'None'), Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="None"
                                         Text="{x:Bind root:ResourceService.GetLocalized('History/None')}" />
@@ -193,28 +193,28 @@
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnChannelFilterClicked}"
-                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'WIF'),Mode=OneWay}"
+                                        IsChecked="{x:Bind sys:String.Equals(ChannelFilter,'WIF'), Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="WIF"
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/Fast')}" />
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnChannelFilterClicked}"
-                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'WIS'),Mode=OneWay}"
+                                        IsChecked="{x:Bind sys:String.Equals(ChannelFilter,'WIS'), Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="WIS"
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/Slow')}" />
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnChannelFilterClicked}"
-                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'RP'),Mode=OneWay}"
+                                        IsChecked="{x:Bind sys:String.Equals(ChannelFilter,'RP'), Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="RP"
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/RP')}" />
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnChannelFilterClicked}"
-                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'Retail'),Mode=OneWay}"
+                                        IsChecked="{x:Bind sys:String.Equals(ChannelFilter,'Retail'), Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="Retail"
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/Retail')}" />
@@ -223,7 +223,7 @@
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnChannelFilterClicked}"
-                                        IsChecked="{x:Bind converter:ValueCheckConverterHelper.FilterValueCheck(TypeFilter,'None'),Mode=OneWay}"
+                                        IsChecked="{x:Bind sys:String.Equals(ChannelFilter,'None'), Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="None"
                                         Text="{x:Bind root:ResourceService.GetLocalized('History/None')}" />
@@ -326,7 +326,7 @@
             Grid.Row="2"
             Margin="30,3,30,0"
             Padding="16,12"
-            x:Load="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsLoadedCompleted), Mode=OneWay}"
+            x:Load="{x:Bind IsLoadedCompleted.Equals(x:False), Mode=OneWay}"
             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
             BorderThickness="1"
@@ -610,7 +610,7 @@
                                     Command="{Binding ElementName=HistoryRoot, Path=FillinCommand, Mode=OneTime}"
                                     CommandParameter="{Binding}"
                                     Content="{x:Bind root:ResourceService.GetLocalized('History/Fillin')}"
-                                    IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsSelectMode), Mode=OneWay}"
+                                    IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
                                     Style="{StaticResource HyperlinkButtonStyle}"
                                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/FillinToolTip')}" />
 
@@ -619,7 +619,7 @@
                                     Command="{Binding ElementName=HistoryRoot, Path=CopyCommand, Mode=OneTime}"
                                     CommandParameter="{Binding}"
                                     Content="{x:Bind root:ResourceService.GetLocalized('History/Copy')}"
-                                    IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsSelectMode), Mode=OneWay}"
+                                    IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
                                     Style="{StaticResource HyperlinkButtonStyle}"
                                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/CopyToolTip')}" />
                             </Grid>

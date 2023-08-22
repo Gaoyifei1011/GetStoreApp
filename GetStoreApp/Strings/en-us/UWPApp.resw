@@ -271,7 +271,7 @@
     <value>Package version</value>
   </data>
   <data name="VersionToolTip" xml:space="preserve">
-    <value>Version: {0}.{1}.{2}.{3}</value>
+    <value>Version: {0}</value>
   </data>
   <data name="View" xml:space="preserve">
     <value>View</value>

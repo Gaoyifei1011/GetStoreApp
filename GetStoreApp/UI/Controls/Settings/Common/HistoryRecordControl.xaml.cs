@@ -36,11 +36,6 @@ namespace GetStoreApp.UI.Controls.Settings.Common
             InitializeComponent();
         }
 
-        public bool IsHistoryLiteItemChecked(GroupOptionsModel selectedMember, GroupOptionsModel comparedMember)
-        {
-            return selectedMember.SelectedValue == comparedMember.SelectedValue;
-        }
-
         /// <summary>
         /// 微软商店页面“历史记录”显示数目修改
         /// </summary>

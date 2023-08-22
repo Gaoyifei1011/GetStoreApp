@@ -17,14 +17,6 @@ namespace GetStoreApp.Helpers.Converters
         }
 
         /// <summary>
-        /// 检测文件是否存在
-        /// </summary>
-        public static bool FileExistCheck(string path)
-        {
-            return File.Exists(path);
-        }
-
-        /// <summary>
         /// 检测文件是否存在（判断结果相反）
         /// </summary>
         public static bool FileExistReverseCheck(string path)
@@ -48,14 +40,6 @@ namespace GetStoreApp.Helpers.Converters
         }
 
         /// <summary>
-        /// 历史记录过滤单选框检查
-        /// </summary>
-        public static bool FilterValueCheck(string filterRawType, string filterValue)
-        {
-            return filterRawType == filterValue;
-        }
-
-        /// <summary>
         /// 安装文件按钮可用值检查
         /// </summary>
         public static bool InstallFileExistsCheck(string path)
@@ -71,22 +55,6 @@ namespace GetStoreApp.Helpers.Converters
             {
                 return false;
             }
-        }
-
-        /// <summary>
-        /// 检查应用是否为商店应用
-        /// </summary>
-        public static bool IsStorePackage(Package packagePath)
-        {
-            return packagePath.SignatureKind is PackageSignatureKind.Store;
-        }
-
-        /// <summary>
-        /// 历史记录按时间排序单选框检查
-        /// </summary>
-        public static bool TimeSortValueCheck(bool value, bool checkValue)
-        {
-            return value == checkValue;
         }
 
         /// <summary>

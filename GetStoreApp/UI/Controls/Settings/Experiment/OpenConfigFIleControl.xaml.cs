@@ -3,6 +3,7 @@ using GetStoreApp.Services.Controls.Download;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.System;
 
@@ -21,32 +22,35 @@ namespace GetStoreApp.UI.Controls.Settings.Experiment
         /// <summary>
         /// 打开配置文件目录
         /// </summary>
-        public async void OnOpenConfigFileClicked(object sender, RoutedEventArgs args)
+        public void OnOpenConfigFileClicked(object sender, RoutedEventArgs args)
         {
             if (Aria2Service.Aria2ConfPath is not null)
             {
-                string filePath = Aria2Service.Aria2ConfPath.Replace(@"\\", @"\");
-
-                // 定位文件，若定位失败，则仅启动资源管理器并打开桌面目录
-                if (!string.IsNullOrEmpty(filePath))
+                Task.Run(async () =>
                 {
-                    try
+                    string filePath = Aria2Service.Aria2ConfPath.Replace(@"\\", @"\");
+
+                    // 定位文件，若定位失败，则仅启动资源管理器并打开桌面目录
+                    if (!string.IsNullOrEmpty(filePath))
                     {
-                        StorageFile file = await StorageFile.GetFileFromPathAsync(filePath);
-                        StorageFolder folder = await file.GetParentAsync();
-                        FolderLauncherOptions options = new FolderLauncherOptions();
-                        options.ItemsToSelect.Add(file);
-                        await Launcher.LaunchFolderAsync(folder, options);
+                        try
+                        {
+                            StorageFile file = await StorageFile.GetFileFromPathAsync(filePath);
+                            StorageFolder folder = await file.GetParentAsync();
+                            FolderLauncherOptions options = new FolderLauncherOptions();
+                            options.ItemsToSelect.Add(file);
+                            await Launcher.LaunchFolderAsync(folder, options);
+                        }
+                        catch (Exception)
+                        {
+                            await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
+                        }
                     }
-                    catch (Exception)
+                    else
                     {
                         await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
                     }
-                }
-                else
-                {
-                    await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
-                }
+                });
             }
         }
     }

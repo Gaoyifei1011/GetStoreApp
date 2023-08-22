@@ -67,12 +67,12 @@ namespace GetStoreApp.Services.Controls.Download
                                 bool isModified = false;
                                 foreach (IXmlNode downloadItemElement in DownloadRootElement.ChildNodes)
                                 {
-                                    if (downloadItemElement.Attributes.GetNamedItem(DownloadFlag).InnerText.Equals(Convert.ToString(1)) ||
-                                       downloadItemElement.Attributes.GetNamedItem(DownloadFlag).InnerText.Equals(Convert.ToString(3))
+                                    if (downloadItemElement.Attributes.GetNamedItem(DownloadFlag).InnerText.Equals(1.ToString()) ||
+                                       downloadItemElement.Attributes.GetNamedItem(DownloadFlag).InnerText.Equals(3.ToString())
                                        )
                                     {
                                         isModified = true;
-                                        downloadItemElement.Attributes.GetNamedItem(DownloadFlag).InnerText = Convert.ToString(2);
+                                        downloadItemElement.Attributes.GetNamedItem(DownloadFlag).InnerText = 2.ToString();
                                     }
                                 }
 

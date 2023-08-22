@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace GetStoreApp.UI.Controls.Settings.Common
 {
@@ -73,11 +74,6 @@ namespace GetStoreApp.UI.Controls.Settings.Common
             return isOfficialVersionExisted || isDevVersionExisted;
         }
 
-        public bool IsItemChecked(GroupOptionsModel selectedMember, GroupOptionsModel comparedMember)
-        {
-            return selectedMember.SelectedValue == comparedMember.SelectedValue;
-        }
-
         /// <summary>
         /// WinGet 程序包安装方式设置
         /// </summary>
@@ -96,32 +92,35 @@ namespace GetStoreApp.UI.Controls.Settings.Common
         /// </summary>
         public void OnOpenWinGetSettingsClicked(object sender, RoutedEventArgs args)
         {
-            unsafe
+            Task.Run(() =>
             {
-                Kernel32Library.GetStartupInfo(out STARTUPINFO WinGetSettingsStartupInfo);
-                WinGetSettingsStartupInfo.lpReserved = null;
-                WinGetSettingsStartupInfo.lpDesktop = null;
-                WinGetSettingsStartupInfo.lpTitle = null;
-                WinGetSettingsStartupInfo.dwX = 0;
-                WinGetSettingsStartupInfo.dwY = 0;
-                WinGetSettingsStartupInfo.dwXSize = 0;
-                WinGetSettingsStartupInfo.dwYSize = 0;
-                WinGetSettingsStartupInfo.dwXCountChars = 500;
-                WinGetSettingsStartupInfo.dwYCountChars = 500;
-                WinGetSettingsStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-                WinGetSettingsStartupInfo.wShowWindow = WindowShowStyle.SW_HIDE;
-                WinGetSettingsStartupInfo.cbReserved2 = 0;
-                WinGetSettingsStartupInfo.lpReserved2 = IntPtr.Zero;
-
-                WinGetSettingsStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
-                bool createResult = Kernel32Library.CreateProcess(null, string.Format("{0} {1}", "winget.exe", "settings"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref WinGetSettingsStartupInfo, out PROCESS_INFORMATION WinGetSettingsProcessInformation);
-
-                if (createResult)
+                unsafe
                 {
-                    if (WinGetSettingsProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetSettingsProcessInformation.hProcess);
-                    if (WinGetSettingsProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetSettingsProcessInformation.hThread);
+                    Kernel32Library.GetStartupInfo(out STARTUPINFO WinGetSettingsStartupInfo);
+                    WinGetSettingsStartupInfo.lpReserved = null;
+                    WinGetSettingsStartupInfo.lpDesktop = null;
+                    WinGetSettingsStartupInfo.lpTitle = null;
+                    WinGetSettingsStartupInfo.dwX = 0;
+                    WinGetSettingsStartupInfo.dwY = 0;
+                    WinGetSettingsStartupInfo.dwXSize = 0;
+                    WinGetSettingsStartupInfo.dwYSize = 0;
+                    WinGetSettingsStartupInfo.dwXCountChars = 500;
+                    WinGetSettingsStartupInfo.dwYCountChars = 500;
+                    WinGetSettingsStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
+                    WinGetSettingsStartupInfo.wShowWindow = WindowShowStyle.SW_HIDE;
+                    WinGetSettingsStartupInfo.cbReserved2 = 0;
+                    WinGetSettingsStartupInfo.lpReserved2 = IntPtr.Zero;
+
+                    WinGetSettingsStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+                    bool createResult = Kernel32Library.CreateProcess(null, string.Format("{0} {1}", "winget.exe", "settings"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref WinGetSettingsStartupInfo, out PROCESS_INFORMATION WinGetSettingsProcessInformation);
+
+                    if (createResult)
+                    {
+                        if (WinGetSettingsProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetSettingsProcessInformation.hProcess);
+                        if (WinGetSettingsProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetSettingsProcessInformation.hThread);
+                    }
                 }
-            }
+            });
         }
 
         /// <summary>
