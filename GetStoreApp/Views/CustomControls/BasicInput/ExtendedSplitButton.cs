@@ -12,7 +12,7 @@ namespace GetStoreApp.Views.CustomControls.BasicInput
         public ExtendedSplitButton()
         {
             DefaultStyleKey = typeof(ExtendedSplitButton);
-            Style = ResourceDictionaryHelper.SplitButtonResourceDict["SplitButtonWithToolTipStyle"] as Style;
+            Style = ResourceDictionaryHelper.SplitButtonResourceDict["ExtendedSplitButtonStyle"] as Style;
         }
 
         public bool IsPrimaryButtonEnabled

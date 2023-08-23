@@ -153,12 +153,6 @@
   <data name="ConsoleLaunch" xml:space="preserve">
     <value>控制台程序参数</value>
   </data>
-  <data name="CreateDesktopShortcut" xml:space="preserve">
-    <value>创建快捷方式</value>
-  </data>
-  <data name="CreateDesktopShortcutToolTip" xml:space="preserve">
-    <value>在电脑桌面创建此应用的快捷方式</value>
-  </data>
   <data name="DataStorage" xml:space="preserve">
     <value>数据存储</value>
   </data>
@@ -269,6 +263,12 @@
   </data>
   <data name="PaidAppsDescription" xml:space="preserve">
     <value>微软在 Windows 系统中对付费应用的运行进行了限制，没有购买的付费应用是不能通过离线安装包安装后正常运行的。如果您有已经购买的付费应用，请从 Microsoft Store 中下载。</value>
+  </data>
+  <data name="PinToDesktop" xml:space="preserve">
+    <value>固定到桌面</value>
+  </data>
+  <data name="PinToDesktopToolTip" xml:space="preserve">
+    <value>将应用固定到桌面</value>
   </data>
   <data name="PinToStartScreen" xml:space="preserve">
     <value>固定到”开始“屏幕</value>

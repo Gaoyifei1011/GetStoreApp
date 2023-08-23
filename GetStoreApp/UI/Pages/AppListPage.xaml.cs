@@ -18,6 +18,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Management.Deployment;
 using Windows.Storage;
@@ -31,6 +32,10 @@ namespace GetStoreApp.UI.Pages
     public sealed partial class AppListPage : Page, INotifyPropertyChanged
     {
         private string Unknown { get; } = ResourceService.GetLocalized("UWPApp/Unknown");
+
+        private string Yes { get; } = ResourceService.GetLocalized("UWPApp/Yes");
+
+        private string No { get; } = ResourceService.GetLocalized("UWPApp/No");
 
         private readonly object AppShortListObject = new object();
 
@@ -158,12 +163,160 @@ namespace GetStoreApp.UI.Pages
 
             ViewInformationCommand.ExecuteRequested += (sender, args) =>
             {
-                Package package = args.Parameter as Package;
+                PackageModel packageItem = args.Parameter as PackageModel;
                 UWPAppPage uwpAppPage = NavigationService.NavigationFrame.Content as UWPAppPage;
 
-                if (package is not null && uwpAppPage is not null)
+                if (packageItem is not null && uwpAppPage is not null)
                 {
-                    uwpAppPage.ShowAppInformation(package);
+                    Task.Run(() =>
+                    {
+                        Dictionary<string, object> packageDict = new Dictionary<string, object>();
+
+                        packageDict["DisplayName"] = packageItem.DisplayName;
+                        try
+                        {
+                            packageDict["FamilyName"] = string.IsNullOrEmpty(packageItem.Package.Id.FamilyName) ? Unknown : packageItem.Package.Id.FamilyName;
+                        }
+                        catch
+                        {
+                            packageDict["DisplayName"] = Unknown;
+                        }
+
+                        try
+                        {
+                            packageDict["FullName"] = string.IsNullOrEmpty(packageItem.Package.Id.FullName) ? Unknown : packageItem.Package.Id.FullName;
+                        }
+                        catch
+                        {
+                            packageDict["FullName"] = Unknown;
+                        }
+
+                        try
+                        {
+                            packageDict["Description"] = string.IsNullOrEmpty(packageItem.Package.Description) ? Unknown : packageItem.Package.Description;
+                        }
+                        catch
+                        {
+                            packageDict["FullName"] = Unknown;
+                        }
+
+                        packageDict["PublisherName"] = packageItem.PublisherName;
+
+                        try
+                        {
+                            packageDict["PublisherId"] = string.IsNullOrEmpty(packageItem.Package.Id.PublisherId) ? Unknown : packageItem.Package.Id.PublisherId;
+                        }
+                        catch
+                        {
+                            packageDict["PublisherId"] = Unknown;
+                        }
+
+                        packageDict["Version"] = packageItem.Version;
+                        packageDict["InstalledDate"] = packageItem.InstallDate;
+
+                        try
+                        {
+                            packageDict["Architecture"] = string.IsNullOrEmpty(packageItem.Package.Id.Architecture.ToString()) ? Unknown : packageItem.Package.Id.Architecture.ToString();
+                        }
+                        catch
+                        {
+                            packageDict["Architecture"] = Unknown;
+                        }
+
+                        packageDict["SignatureKind"] = ResourceService.GetLocalized(string.Format("UWPApp/Signature{0}", packageItem.SignatureKind.ToString()));
+
+                        try
+                        {
+                            packageDict["ResourceId"] = string.IsNullOrEmpty(packageItem.Package.Id.ResourceId) ? Unknown : packageItem.Package.Id.ResourceId;
+                        }
+                        catch
+                        {
+                            packageDict["ResourceId"] = Unknown;
+                        }
+
+                        try
+                        {
+                            packageDict["IsBundle"] = packageItem.Package.IsBundle ? Yes : No;
+                        }
+                        catch
+                        {
+                            packageDict["IsBundle"] = Unknown;
+                        }
+
+                        try
+                        {
+                            packageDict["IsDevelopmentMode"] = packageItem.Package.IsDevelopmentMode ? Yes : No;
+                        }
+                        catch
+                        {
+                            packageDict["IsDevelopmentMode"] = Unknown;
+                        }
+
+                        packageDict["IsFramework"] = packageItem.IsFramework ? Yes : No;
+
+                        try
+                        {
+                            packageDict["IsOptional"] = packageItem.Package.IsOptional ? Yes : No;
+                        }
+                        catch
+                        {
+                            packageDict["IsOptional"] = Unknown;
+                        }
+
+                        try
+                        {
+                            packageDict["IsResourcePackage"] = packageItem.Package.IsResourcePackage ? Yes : No;
+                        }
+                        catch
+                        {
+                            packageDict["IsResourcePackage"] = Unknown;
+                        }
+
+                        try
+                        {
+                            packageDict["IsStub"] = packageItem.Package.IsStub ? Yes : No;
+                        }
+                        catch
+                        {
+                            packageDict["IsStub"] = Unknown;
+                        }
+
+                        try
+                        {
+                            packageDict["VertifyIsOK"] = packageItem.Package.Status.VerifyIsOK() ? Yes : No;
+                        }
+                        catch (Exception)
+                        {
+                            packageDict["VertifyIsOK"] = Unknown;
+                        }
+
+                        packageDict["AppListEntryCount"] = packageItem.AppListEntryCount;
+
+                        try
+                        {
+                            List<AppListEntryModel> appListEntryList = new List<AppListEntryModel>();
+                            foreach (AppListEntry appListEntryItem in packageItem.Package.GetAppListEntries().ToList())
+                            {
+                                appListEntryList.Add(new AppListEntryModel()
+                                {
+                                    DisplayName = appListEntryItem.DisplayInfo.DisplayName,
+                                    Description = appListEntryItem.DisplayInfo.Description,
+                                    AppUserModelId = appListEntryItem.AppUserModelId,
+                                    AppListEntry = appListEntryItem
+                                });
+                            }
+                            packageDict["AppListEntryList"] = appListEntryList;
+                        }
+                        catch (Exception)
+                        {
+                            packageDict["AppListEntryList"] = new List<AppListEntry>();
+                        }
+
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
+                            uwpAppPage.ShowAppInformation(packageDict);
+                        });
+                    });
                 }
             };
 

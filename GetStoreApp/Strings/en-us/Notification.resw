@@ -117,11 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppInformationCopy" xml:space="preserve">
+    <value>The app information has been successfully copied to the clipboard</value>
+  </data>
+  <data name="AppUserModelIdCopy" xml:space="preserve">
+    <value>The AUMID has been successfully copied to the clipboard</value>
+  </data>
   <data name="CheckNetWorkConnection" xml:space="preserve">
     <value>Check the network connection</value>
-  </data>
-  <data name="CopyAppInformation" xml:space="preserve">
-    <value>The app information has been successfully copied to the clipboard</value>
   </data>
   <data name="DesktopShortcutSuccessfully" xml:space="preserve">
     <value>The desktop shortcut for the app was created successfully</value>
@@ -223,6 +226,9 @@
     &lt;action content="Check the network connection" arguments="action=CheckNetWorkConnection"/&gt;
   &lt;/actions&gt;
 &lt;/toast&gt;</value>
+  </data>
+  <data name="PackageInformationCopy" xml:space="preserve">
+    <value>The package information has been successfully copied to the clipboard</value>
   </data>
   <data name="ResultContentCopy" xml:space="preserve">
     <value>The download record was successfully copied to the clipboard</value>

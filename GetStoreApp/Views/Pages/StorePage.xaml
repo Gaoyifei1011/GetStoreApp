@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:history="using:GetStoreApp.Models.Controls.History"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:page="using:GetStoreApp.Views.Pages"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:store="using:GetStoreApp.Models.Controls.Store"
     xmlns:system="using:System"
@@ -219,7 +220,6 @@
                             <MenuFlyoutItem
                                 Grid.Column="2"
                                 Margin="0,0,-15,0"
-                                controlExtensions:CursorHelper.Cursor="Hand"
                                 Click="{x:Bind OnViewAllClicked}"
                                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                                 Text="{x:Bind root:ResourceService.GetLocalized('Store/ViewAll')}"
@@ -461,7 +461,6 @@
                             Spacing="2">
 
                             <MenuFlyoutItem
-                                controlExtensions:CursorHelper.Cursor="Hand"
                                 Click="{x:Bind OnCopyIDClicked}"
                                 IsEnabled="{x:Bind system:Convert.ToBoolean(ResultDataList.Count), Mode=OneWay}"
                                 Style="{StaticResource AppBarButtonMenuItemStyle}"
@@ -474,7 +473,6 @@
                             </MenuFlyoutItem>
 
                             <MenuFlyoutItem
-                                controlExtensions:CursorHelper.Cursor="Hand"
                                 Click="{x:Bind OnSelectClicked}"
                                 IsEnabled="{x:Bind system:Convert.ToBoolean(ResultDataList.Count), Mode=OneWay}"
                                 Style="{StaticResource AppBarButtonMenuItemStyle}"
@@ -498,7 +496,6 @@
                             Spacing="2">
 
                             <MenuFlyoutItem
-                                controlExtensions:CursorHelper.Cursor="Hand"
                                 Click="{x:Bind OnSelectAllClicked}"
                                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                                 Text="{x:Bind root:ResourceService.GetLocalized('Store/SelectAll')}">
@@ -509,7 +506,6 @@
                             </MenuFlyoutItem>
 
                             <MenuFlyoutItem
-                                controlExtensions:CursorHelper.Cursor="Hand"
                                 Click="{x:Bind OnSelectNoneClicked}"
                                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                                 Text="{x:Bind root:ResourceService.GetLocalized('Store/SelectNone')}">
@@ -520,7 +516,6 @@
                             </MenuFlyoutItem>
 
                             <MenuFlyoutItem
-                                controlExtensions:CursorHelper.Cursor="Hand"
                                 Click="{x:Bind OnCopyOptionsClicked}"
                                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                                 Text="{x:Bind root:ResourceService.GetLocalized('Store/CopyOptions')}"
@@ -548,7 +543,6 @@
                             </MenuFlyoutItem>
 
                             <MenuFlyoutItem
-                                controlExtensions:CursorHelper.Cursor="Hand"
                                 Click="{x:Bind OnDownloadSelectedClicked}"
                                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                                 Text="{x:Bind root:ResourceService.GetLocalized('Store/DownloadSelected')}">
@@ -559,7 +553,6 @@
                             </MenuFlyoutItem>
 
                             <MenuFlyoutItem
-                                controlExtensions:CursorHelper.Cursor="Hand"
                                 Click="{x:Bind OnCancelClicked}"
                                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                                 Text="{x:Bind root:ResourceService.GetLocalized('Store/Cancel')}"
@@ -699,7 +692,6 @@
                                         Margin="10,0,0,0"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
-                                        controlExtensions:CursorHelper.Cursor="Hand"
                                         IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
                                         IsThreeState="False"
                                         ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.CheckBoxToolTipFormat(IsSelected,'Store'),Mode=OneWay}"
@@ -711,6 +703,9 @@
                                         VerticalAlignment="Center"
                                         Command="{Binding ElementName=StoreRoot, Path=DownloadCommand, Mode=OneTime}"
                                         CommandParameter="{Binding}"
+                                        IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
+                                        IsRightTapEnabled="True"
+                                        RightTapped="{x:Bind page:StorePage.OnButtonRightTapped}"
                                         Style="{StaticResource HyperlinkButtonStyle}">
 
                                         <HyperlinkButton.Content>

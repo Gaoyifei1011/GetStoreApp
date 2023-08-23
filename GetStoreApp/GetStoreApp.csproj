@@ -185,21 +185,15 @@
 
     <None Remove="UI\Dialogs\WinGet\RebootDialog.xaml" />
 
-    <None Remove="UI\Notifications\AppInformationCopyNotification.xaml" />
+    <None Remove="UI\Notifications\DataCopyNotification.xaml" />
     <None Remove="UI\Notifications\DownloadCreateNotification.xaml" />
-    <None Remove="UI\Notifications\ExceptionCopyNotification.xaml" />
-    <None Remove="UI\Notifications\FileInformationCopyNotification.xaml" />
     <None Remove="UI\Notifications\FolderPickerNotification.xaml" />
-    <None Remove="UI\Notifications\HistoryCopyNotification.xaml" />
     <None Remove="UI\Notifications\LanguageChangeNotification.xaml" />
     <None Remove="UI\Notifications\LogCleanNotification.xaml" />
     <None Remove="UI\Notifications\NetWorkErrorNotification.xaml" />
     <None Remove="UI\Notifications\QuickOperationNotification.xaml" />
-    <None Remove="UI\Notifications\ResultContentCopyNotification.xaml" />
-    <None Remove="UI\Notifications\ResultIDCopyNotification.xaml" />
-    <None Remove="UI\Notifications\ResultLinkCopyNotification.xaml" />
     <None Remove="UI\Notifications\ShareFailedNotification.xaml" />
-    <None Remove="UI\Notifications\WinGetCopyNotification.xaml" />
+    
     <None Remove="UI\Pages\AppInfoPage.xaml" />
     <None Remove="UI\Pages\AppListPage.xaml" />
 
@@ -215,12 +209,6 @@
 
     <None Update="Assets\Resources\LICENSE" CopyToOutputDirectory="Never" />
     <None Update="Mile.Aria2.conf" CopyToOutputDirectory="Never" />
-    <Page Update="UI\Pages\AppInfoPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UI\Pages\AppListPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
 
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.3" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.230811000-preview2" />
@@ -299,25 +287,21 @@
     <Page Update="UI\Dialogs\Settings\ExperimentalConfigDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\Settings\RestartAppsDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\Settings\TraceCleanupPromptDialog.xaml" Generator="MSBuild:Compile" />
-
+    
     <Page Update="UI\Dialogs\WinGet\RebootDialog.xaml" Generator="MSBuild:Compile" />
 
-    <Page Update="UI\Notifications\AppInformationCopyNotification.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Notifications\DataCopyNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Notifications\DownloadCreateNotification.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Notifications\ExceptionCopyNotification.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Notifications\FileInformationCopyNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Notifications\FolderPickerNotification.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Notifications\HistoryCopyNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Notifications\LanguageChangeNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Notifications\LogCleanNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Notifications\NetWorkErrorNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Notifications\QuickOperationNotification.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Notifications\ResultContentCopyNotification.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Notifications\ResultIDCopyNotification.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Notifications\ResultLinkCopyNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Notifications\ShareFailedNotification.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Notifications\WinGetCopyNotification.xaml" Generator="MSBuild:Compile" />
 
+    <Page Update="UI\Pages\AppInfoPage.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Pages\AppListPage.xaml" Generator="MSBuild:Compile" />
+    
     <Page Update="Views\Pages\AboutPage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\DownloadPage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\HistoryPage.xaml" Generator="MSBuild:Compile" />

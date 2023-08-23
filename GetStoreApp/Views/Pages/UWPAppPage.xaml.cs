@@ -5,10 +5,10 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Windows.ApplicationModel;
 using Windows.System;
 
 namespace GetStoreApp.Views.Pages
@@ -114,7 +114,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 查看应用信息
         /// </summary>
-        public void ShowAppInformation(Package packageInstance)
+        public void ShowAppInformation(Dictionary<string, object> packageInstance)
         {
             if (packageInstance is not null)
             {

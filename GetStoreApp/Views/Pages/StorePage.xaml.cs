@@ -252,7 +252,7 @@ namespace GetStoreApp.Views.Pages
                         historyItem.HistoryLink);
                     CopyPasteHelper.CopyToClipBoard(copyContent);
 
-                    new HistoryCopyNotification(this, false).Show();
+                    new DataCopyNotification(this, DataCopyType.History, false).Show();
                 }
             };
 
@@ -433,7 +433,7 @@ namespace GetStoreApp.Views.Pages
                 if (fileLink is not null)
                 {
                     CopyPasteHelper.CopyToClipBoard(fileLink);
-                    new ResultLinkCopyNotification(this, false).Show();
+                    new DataCopyNotification(this, DataCopyType.ResultLink, false).Show();
                 }
             };
 
@@ -450,7 +450,7 @@ namespace GetStoreApp.Views.Pages
                         );
 
                     CopyPasteHelper.CopyToClipBoard(copyContent);
-                    new ResultContentCopyNotification(this, false).Show();
+                    new DataCopyNotification(this, DataCopyType.ResultContent, false).Show();
                 }
             };
         }
@@ -578,7 +578,7 @@ namespace GetStoreApp.Views.Pages
         public void OnCopyIDClicked(object sender, RoutedEventArgs args)
         {
             CopyPasteHelper.CopyToClipBoard(CategoryId);
-            new ResultIDCopyNotification(this).Show();
+            new DataCopyNotification(this, DataCopyType.ResultID).Show();
         }
 
         /// <summary>
@@ -668,7 +668,7 @@ namespace GetStoreApp.Views.Pages
                 DispatcherQueue.TryEnqueue(() =>
                 {
                     CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
-                    new ResultContentCopyNotification(this, true, selectedResultDataList.Count).Show();
+                    new DataCopyNotification(this, DataCopyType.ResultContent, true, selectedResultDataList.Count).Show();
                 });
             });
         }
@@ -702,7 +702,7 @@ namespace GetStoreApp.Views.Pages
                 DispatcherQueue.TryEnqueue(() =>
                 {
                     CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
-                    new ResultLinkCopyNotification(this, true, selectedResultDataList.Count).Show();
+                    new DataCopyNotification(this, DataCopyType.ResultLink, true, selectedResultDataList.Count).Show();
                 });
             });
         }
@@ -876,6 +876,14 @@ namespace GetStoreApp.Views.Pages
                     ResultDataList[ClickedIndex].IsSelected = !ResultDataList[ClickedIndex].IsSelected;
                 }
             }
+        }
+
+        /// <summary>
+        /// 单击右键直接打开网页
+        /// </summary>
+        public static async void OnButtonRightTapped(object sender, RoutedEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri(((sender as HyperlinkButton).DataContext as ResultModel).FileLink));
         }
 
         /// <summary>

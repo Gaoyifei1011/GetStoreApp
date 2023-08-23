@@ -204,6 +204,9 @@
   <data name="HistoryLiteEmpty" xml:space="preserve">
     <value>历史记录空空如也</value>
   </data>
+  <data name="Launch" xml:space="preserve">
+    <value>启动</value>
+  </data>
   <data name="Link" xml:space="preserve">
     <value>链接</value>
   </data>

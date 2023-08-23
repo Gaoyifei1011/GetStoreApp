@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Helpers.Converters;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Converters;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Root;
@@ -90,7 +91,7 @@ namespace GetStoreApp.UI.Dialogs.Download
                 {
                     CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
                     sender.Hide();
-                    new FileInformationCopyNotification(this).Show();
+                    new DataCopyNotification(this, DataCopyType.FileInformation).Show();
                 });
             });
         }

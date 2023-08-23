@@ -78,7 +78,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 创建应用的桌面快捷方式
         /// </summary>
-        public void OnCreateDesktopShortcutClicked(object sender, RoutedEventArgs args)
+        public void OnPinToDesktopClicked(object sender, RoutedEventArgs args)
         {
             Task.Run(() =>
             {
@@ -125,14 +125,8 @@ namespace GetStoreApp.Views.Pages
                     {
                         StartScreenManager startScreenManager = StartScreenManager.GetDefault();
 
-                        bool containsEntry = await startScreenManager.ContainsAppListEntryAsync(DefaultEntry);
-
-                        if (!containsEntry)
-                        {
-                            await startScreenManager.RequestAddAppListEntryAsync(DefaultEntry);
-                        }
+                        IsPinnedSuccessfully = await startScreenManager.RequestAddAppListEntryAsync(DefaultEntry);
                     }
-                    IsPinnedSuccessfully = true;
                 }
                 catch (Exception e)
                 {
@@ -156,6 +150,7 @@ namespace GetStoreApp.Views.Pages
             Task.Run(async () =>
             {
                 bool IsPinnedSuccessfully = false;
+
                 try
                 {
                     string featureId = "com.microsoft.windows.taskbar.pin";
