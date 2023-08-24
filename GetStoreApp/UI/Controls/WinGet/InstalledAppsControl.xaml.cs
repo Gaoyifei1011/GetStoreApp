@@ -159,6 +159,23 @@ namespace GetStoreApp.UI.Controls.WinGet
                                         }
                                     }
                                 }
+
+                                DispatcherQueue.TryEnqueue(() =>
+                                {
+                                    lock (InstalledAppsDataListObject)
+                                    {
+                                        // 从已安装应用列表中移除已卸载完成的应用
+                                        foreach (InstalledAppsModel installedAppsItem in InstalledAppsDataList)
+                                        {
+                                            if (installedAppsItem.AppID == installedApps.AppID)
+                                            {
+                                                InstalledAppsDataList.Remove(installedAppsItem);
+                                                IsInstalledAppsEmpty = InstalledAppsDataList.Count is 0;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                });
                             }
                             else
                             {

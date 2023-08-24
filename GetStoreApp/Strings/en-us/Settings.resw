@@ -145,7 +145,13 @@
     <value>Window background material</value>
   </data>
   <data name="BackdropAcrylic" xml:space="preserve">
-    <value>Acrylic</value>
+    <value>Default</value>
+  </data>
+  <data name="BackdropAcrylicBase" xml:space="preserve">
+    <value>Base</value>
+  </data>
+  <data name="BackdropAcrylicThin" xml:space="preserve">
+    <value>Thin</value>
   </data>
   <data name="BackdropDefault" xml:space="preserve">
     <value>None</value>
@@ -154,10 +160,10 @@
     <value>Sets the background color of the app's rendering</value>
   </data>
   <data name="BackdropMica" xml:space="preserve">
-    <value>Mica</value>
+    <value>Default</value>
   </data>
   <data name="BackdropMicaAlt" xml:space="preserve">
-    <value>Mica alt</value>
+    <value>Alt</value>
   </data>
   <data name="BlockMap" xml:space="preserve">
     <value>Files with file name extensions called BlockMap are not displayed</value>
@@ -191,6 +197,9 @@
   </data>
   <data name="Custom" xml:space="preserve">
     <value>Custom</value>
+  </data>
+  <data name="DesktopAcrylic" xml:space="preserve">
+    <value>Acrylic</value>
   </data>
   <data name="DesktopFolder" xml:space="preserve">
     <value>Desktop</value>
@@ -290,6 +299,9 @@
   </data>
   <data name="LogRecordDescription" xml:space="preserve">
     <value>Manage app log record</value>
+  </data>
+  <data name="Mica" xml:space="preserve">
+    <value>Mica</value>
   </data>
   <data name="NetWorkMonitor" xml:space="preserve">
     <value>Network monitoring status</value>

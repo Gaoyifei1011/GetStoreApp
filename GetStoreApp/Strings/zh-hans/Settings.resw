@@ -145,7 +145,13 @@
     <value>窗口背景材质</value>
   </data>
   <data name="BackdropAcrylic" xml:space="preserve">
-    <value>亚克力</value>
+    <value>默认</value>
+  </data>
+  <data name="BackdropAcrylicBase" xml:space="preserve">
+    <value>Base</value>
+  </data>
+  <data name="BackdropAcrylicThin" xml:space="preserve">
+    <value>Thin</value>
   </data>
   <data name="BackdropDefault" xml:space="preserve">
     <value>不开启</value>
@@ -154,10 +160,10 @@
     <value>设置应用呈现的背景色</value>
   </data>
   <data name="BackdropMica" xml:space="preserve">
-    <value>云母</value>
+    <value>默认</value>
   </data>
   <data name="BackdropMicaAlt" xml:space="preserve">
-    <value>云母（Alt）</value>
+    <value>Alt</value>
   </data>
   <data name="BlockMap" xml:space="preserve">
     <value>不显示文件扩展名称为BlockMap的文件</value>
@@ -191,6 +197,9 @@
   </data>
   <data name="Custom" xml:space="preserve">
     <value>自定义</value>
+  </data>
+  <data name="DesktopAcrylic" xml:space="preserve">
+    <value>亚克力</value>
   </data>
   <data name="DesktopFolder" xml:space="preserve">
     <value>桌面</value>
@@ -290,6 +299,9 @@
   </data>
   <data name="LogRecordDescription" xml:space="preserve">
     <value>管理应用日志记录</value>
+  </data>
+  <data name="Mica" xml:space="preserve">
+    <value>云母</value>
   </data>
   <data name="NetWorkMonitor" xml:space="preserve">
     <value>网络监控状态</value>

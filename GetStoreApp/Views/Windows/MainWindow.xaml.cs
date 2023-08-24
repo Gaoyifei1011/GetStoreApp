@@ -466,6 +466,14 @@ namespace GetStoreApp.Views.Windows
             {
                 SystemBackdrop = new MaterialBackdrop() { IsMicaBackdrop = false, DesktopAcrylicBackdropKind = DesktopAcrylicKind.Default };
             }
+            else if (backdropItem.SelectedValue == BackdropService.BackdropList[4].SelectedValue)
+            {
+                SystemBackdrop = new MaterialBackdrop() { IsMicaBackdrop = false, DesktopAcrylicBackdropKind = DesktopAcrylicKind.Base };
+            }
+            else if (backdropItem.SelectedValue == BackdropService.BackdropList[5].SelectedValue)
+            {
+                SystemBackdrop = new MaterialBackdrop() { IsMicaBackdrop = false, DesktopAcrylicBackdropKind = DesktopAcrylicKind.Thin };
+            }
             else
             {
                 SystemBackdrop = null;

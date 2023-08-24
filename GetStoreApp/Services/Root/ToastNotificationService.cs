@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Controls.Settings.Common;
+using GetStoreApp.Services.Window;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
@@ -88,11 +89,37 @@ namespace GetStoreApp.Services.Root
             }
             else if (notificationArgs.Contains("OpenApp"))
             {
-                DesktopLaunchService.InitializePage = typeof(StorePage);
+                if (Application.Current is null)
+                {
+                    DesktopLaunchService.InitializePage = typeof(StorePage);
+                }
+                else
+                {
+                    Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
+                    {
+                        if (NavigationService.GetCurrentPageType() != typeof(StorePage))
+                        {
+                            NavigationService.NavigateTo(typeof(StorePage));
+                        }
+                    });
+                }
             }
             else if (notificationArgs.Contains("ViewDownloadPage"))
             {
-                DesktopLaunchService.InitializePage = typeof(DownloadPage);
+                if (Application.Current is null)
+                {
+                    DesktopLaunchService.InitializePage = typeof(DownloadPage);
+                }
+                else
+                {
+                    Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
+                    {
+                        if (NavigationService.GetCurrentPageType() != typeof(DownloadPage))
+                        {
+                            NavigationService.NavigateTo(typeof(DownloadPage));
+                        }
+                    });
+                }
             }
         }
 

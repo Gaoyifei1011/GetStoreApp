@@ -214,6 +214,18 @@ namespace GetStoreApp.Services.Root
                 DisplayMember = GetLocalized("Settings/BackdropAcrylic"),
                 SelectedValue = nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Default)
             });
+
+            BackdropList.Add(new GroupOptionsModel
+            {
+                DisplayMember = GetLocalized("Settings/BackdropAcrylicBase"),
+                SelectedValue = nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Base)
+            });
+
+            BackdropList.Add(new GroupOptionsModel
+            {
+                DisplayMember = GetLocalized("Settings/BackdropAcrylicThin"),
+                SelectedValue = nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Thin)
+            });
         }
 
         /// <summary>

@@ -144,6 +144,24 @@
   <data name="CopyAUMID" xml:space="preserve">
     <value>Copy AUMID</value>
   </data>
+  <data name="CopyDependencyInformation" xml:space="preserve">
+    <value>Copy app information</value>
+  </data>
+  <data name="CopyDependencyName" xml:space="preserve">
+    <value>Copy app name</value>
+  </data>
+  <data name="DependencyInformation" xml:space="preserve">
+    <value>Dependency information</value>
+  </data>
+  <data name="DependencyName" xml:space="preserve">
+    <value>App name</value>
+  </data>
+  <data name="DependencyPublisher" xml:space="preserve">
+    <value>Publisher</value>
+  </data>
+  <data name="DependencyVersion" xml:space="preserve">
+    <value>Version</value>
+  </data>
   <data name="Description" xml:space="preserve">
     <value>App description</value>
   </data>

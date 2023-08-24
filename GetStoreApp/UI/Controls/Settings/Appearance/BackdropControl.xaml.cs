@@ -1,6 +1,7 @@
 ﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Services.Controls.Settings.Appearance;
+using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -70,6 +71,28 @@ namespace GetStoreApp.UI.Controls.Settings.Appearance
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private string LocalizeDisplayNumber(GroupOptionsModel selectedBackdrop)
+        {
+            int index = BackdropList.FindIndex(item => item.SelectedValue.Equals(selectedBackdrop.SelectedValue));
+
+            if (index is 0)
+            {
+                return selectedBackdrop.DisplayMember;
+            }
+            else if (index is 1 || index is 2)
+            {
+                return ResourceService.GetLocalized("Settings/Mica") + " " + selectedBackdrop.DisplayMember;
+            }
+            else if (index is 3 || index is 4 || index is 5)
+            {
+                return ResourceService.GetLocalized("Settings/DesktopAcrylic") + " " + selectedBackdrop.DisplayMember;
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
     }
 }

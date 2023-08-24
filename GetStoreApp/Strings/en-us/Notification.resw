@@ -126,6 +126,12 @@
   <data name="CheckNetWorkConnection" xml:space="preserve">
     <value>Check the network connection</value>
   </data>
+  <data name="DependencyInformationCopy" xml:space="preserve">
+    <value>The dependency name was successfully copied to the clipboard</value>
+  </data>
+  <data name="DependencyNameCopy" xml:space="preserve">
+    <value>The dependency information was successfully copied to the clipboard</value>
+  </data>
   <data name="DesktopShortcutSuccessfully" xml:space="preserve">
     <value>The desktop shortcut for the app was created successfully</value>
   </data>

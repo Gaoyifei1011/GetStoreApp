@@ -51,7 +51,7 @@
     <DropDownButton
         Grid.Column="3"
         VerticalAlignment="Center"
-        Content="{x:Bind Backdrop.DisplayMember, Mode=OneWay}">
+        Content="{x:Bind LocalizeDisplayNumber(Backdrop), Mode=OneWay}">
 
         <DropDownButton.Flyout>
             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
@@ -62,28 +62,58 @@
                     Tag="0"
                     Text="{x:Bind BackdropList[0].DisplayMember}" />
 
-                <ToggleMenuFlyoutItem
-                    Click="{x:Bind OnBackdropSelectClicked}"
-                    IsChecked="{x:Bind Backdrop.SelectedValue.Equals(BackdropList[1].SelectedValue), Mode=OneWay}"
-                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
-                    Tag="1"
-                    Text="{x:Bind BackdropList[1].DisplayMember}"
-                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(CanUseMicaBackdrop)}" />
+                <MenuFlyoutSubItem Text="{x:Bind root:ResourceService.GetLocalized('Settings/Mica')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(CanUseMicaBackdrop)}">
+                    <MenuFlyoutSubItem.Style>
+                        <Style BasedOn="{StaticResource DefaultMenuFlyoutSubItemStyle}" TargetType="MenuFlyoutSubItem">
+                            <Setter Property="Height" Value="32" />
+                            <Setter Property="Padding" Value="11,0,11,0" />
+                        </Style>
+                    </MenuFlyoutSubItem.Style>
 
-                <ToggleMenuFlyoutItem
-                    Click="{x:Bind OnBackdropSelectClicked}"
-                    IsChecked="{x:Bind Backdrop.SelectedValue.Equals(BackdropList[2].SelectedValue), Mode=OneWay}"
-                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
-                    Tag="2"
-                    Text="{x:Bind BackdropList[2].DisplayMember}"
-                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(CanUseMicaBackdrop), Mode=OneWay}" />
+                    <ToggleMenuFlyoutItem
+                        Click="{x:Bind OnBackdropSelectClicked}"
+                        IsChecked="{x:Bind Backdrop.SelectedValue.Equals(BackdropList[1].SelectedValue), Mode=OneWay}"
+                        Style="{StaticResource ToggleMenuFlyoutItemStyle}"
+                        Tag="1"
+                        Text="{x:Bind BackdropList[1].DisplayMember}" />
 
-                <ToggleMenuFlyoutItem
-                    Click="{x:Bind OnBackdropSelectClicked}"
-                    IsChecked="{x:Bind Backdrop.SelectedValue.Equals(BackdropList[3].SelectedValue), Mode=OneWay}"
-                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
-                    Tag="3"
-                    Text="{x:Bind BackdropList[3].DisplayMember}" />
+                    <ToggleMenuFlyoutItem
+                        Click="{x:Bind OnBackdropSelectClicked}"
+                        IsChecked="{x:Bind Backdrop.SelectedValue.Equals(BackdropList[2].SelectedValue), Mode=OneWay}"
+                        Style="{StaticResource ToggleMenuFlyoutItemStyle}"
+                        Tag="2"
+                        Text="{x:Bind BackdropList[2].DisplayMember}" />
+                </MenuFlyoutSubItem>
+
+                <MenuFlyoutSubItem Text="{x:Bind root:ResourceService.GetLocalized('Settings/DesktopAcrylic')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(CanUseMicaBackdrop)}">
+                    <MenuFlyoutSubItem.Style>
+                        <Style BasedOn="{StaticResource DefaultMenuFlyoutSubItemStyle}" TargetType="MenuFlyoutSubItem">
+                            <Setter Property="Height" Value="32" />
+                            <Setter Property="Padding" Value="11,0,11,0" />
+                        </Style>
+                    </MenuFlyoutSubItem.Style>
+
+                    <ToggleMenuFlyoutItem
+                        Click="{x:Bind OnBackdropSelectClicked}"
+                        IsChecked="{x:Bind Backdrop.SelectedValue.Equals(BackdropList[3].SelectedValue), Mode=OneWay}"
+                        Style="{StaticResource ToggleMenuFlyoutItemStyle}"
+                        Tag="3"
+                        Text="{x:Bind BackdropList[3].DisplayMember}" />
+
+                    <ToggleMenuFlyoutItem
+                        Click="{x:Bind OnBackdropSelectClicked}"
+                        IsChecked="{x:Bind Backdrop.SelectedValue.Equals(BackdropList[4].SelectedValue), Mode=OneWay}"
+                        Style="{StaticResource ToggleMenuFlyoutItemStyle}"
+                        Tag="4"
+                        Text="{x:Bind BackdropList[4].DisplayMember}" />
+
+                    <ToggleMenuFlyoutItem
+                        Click="{x:Bind OnBackdropSelectClicked}"
+                        IsChecked="{x:Bind Backdrop.SelectedValue.Equals(BackdropList[5].SelectedValue), Mode=OneWay}"
+                        Style="{StaticResource ToggleMenuFlyoutItemStyle}"
+                        Tag="5"
+                        Text="{x:Bind BackdropList[5].DisplayMember}" />
+                </MenuFlyoutSubItem>
             </MenuFlyout>
         </DropDownButton.Flyout>
     </DropDownButton>

@@ -40,6 +40,16 @@ namespace GetStoreApp.UI.Notifications
                         NotificationContent.Text = ResourceService.GetLocalized("Notification/AppUserModelIdCopy");
                         break;
                     }
+                case DataCopyType.DependencyName:
+                    {
+                        NotificationContent.Text = ResourceService.GetLocalized("Notification/DependencyNameCopy");
+                        break;
+                    }
+                case DataCopyType.DependencyInformation:
+                    {
+                        NotificationContent.Text = ResourceService.GetLocalized("Notification/DependencyInformationCopy");
+                        break;
+                    }
                 case DataCopyType.Exception:
                     {
                         NotificationContent.Text = ResourceService.GetLocalized("Notification/ExceptionCopy");

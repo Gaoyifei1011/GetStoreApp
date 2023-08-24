@@ -82,6 +82,8 @@ namespace GetStoreApp
                     downloadItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/Download.png");
                     TaskbarJumpList.Items.Add(downloadItem);
 
+                    TaskbarJumpList.Items.Add(JumpListItem.CreateSeparator());
+
                     JumpListItem wingetItem = JumpListItem.CreateWithArguments("JumpList WinGet", ResourceService.GetLocalized("Window/WinGet"));
                     wingetItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/WinGet.png");
                     TaskbarJumpList.Items.Add(wingetItem);
@@ -89,6 +91,8 @@ namespace GetStoreApp
                     JumpListItem uwpAppItem = JumpListItem.CreateWithArguments("JumpList UWPApp", ResourceService.GetLocalized("Window/UWPApp"));
                     uwpAppItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/UWPApp.png");
                     TaskbarJumpList.Items.Add(uwpAppItem);
+
+                    TaskbarJumpList.Items.Add(JumpListItem.CreateSeparator());
 
                     JumpListItem webItem = JumpListItem.CreateWithArguments("JumpList Web", ResourceService.GetLocalized("Window/Web"));
                     webItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/Web.png");
@@ -220,7 +224,7 @@ namespace GetStoreApp
             SaveWindowInformation();
             DownloadSchedulerService.CloseDownloadScheduler();
             Aria2Service.CloseAria2();
-            Exit();
+            Environment.Exit(0);
         }
 
         /// <summary>

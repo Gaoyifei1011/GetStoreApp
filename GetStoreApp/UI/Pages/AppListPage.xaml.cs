@@ -285,12 +285,10 @@ namespace GetStoreApp.UI.Pages
                         {
                             packageDict["VertifyIsOK"] = packageItem.Package.Status.VerifyIsOK() ? Yes : No;
                         }
-                        catch (Exception)
+                        catch
                         {
                             packageDict["VertifyIsOK"] = Unknown;
                         }
-
-                        packageDict["AppListEntryCount"] = packageItem.AppListEntryCount;
 
                         try
                         {
@@ -307,9 +305,47 @@ namespace GetStoreApp.UI.Pages
                             }
                             packageDict["AppListEntryList"] = appListEntryList;
                         }
-                        catch (Exception)
+                        catch
                         {
                             packageDict["AppListEntryList"] = new List<AppListEntry>();
+                        }
+
+                        try
+                        {
+                            List<PackageModel> dependenciesList = new List<PackageModel>();
+                            IReadOnlyList<Package> dependcies = packageItem.Package.Dependencies;
+
+                            if (dependcies.Count > 0)
+                            {
+                                foreach (Package packageItem in dependcies.ToList())
+                                {
+                                    try
+                                    {
+                                        dependenciesList.Add(new PackageModel()
+                                        {
+                                            DisplayName = packageItem.DisplayName,
+                                            PublisherName = packageItem.PublisherDisplayName,
+                                            Version = string.Format("{0}.{1}.{2}.{3}",
+                                                packageItem.Id.Version.Major,
+                                                packageItem.Id.Version.Minor,
+                                                packageItem.Id.Version.Build,
+                                                packageItem.Id.Version.Revision
+                                                ),
+                                            Package = packageItem
+                                        });
+                                    }
+                                    catch
+                                    {
+                                        continue;
+                                    }
+                                }
+                            }
+
+                            packageDict["DependenciesList"] = dependenciesList;
+                        }
+                        catch
+                        {
+                            packageDict["DependenciesList"] = new List<PackageModel>();
                         }
 
                         DispatcherQueue.TryEnqueue(() =>

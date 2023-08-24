@@ -16,6 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Store.Preview;
+using Windows.System;
 using Windows.UI.Shell;
 using Windows.UI.StartScreen;
 
@@ -262,19 +263,6 @@ namespace GetStoreApp.UI.Pages
             }
         }
 
-        private int _appListEntryCount;
-
-        public int AppListEntryCount
-        {
-            get { return _appListEntryCount; }
-
-            set
-            {
-                _appListEntryCount = value;
-                OnPropertyChanged();
-            }
-        }
-
         // 启动对应入口的应用
         public XamlUICommand LaunchCommand { get; } = new XamlUICommand();
 
@@ -290,7 +278,21 @@ namespace GetStoreApp.UI.Pages
         // 固定应用入口到任务栏
         public XamlUICommand PinToTaskbarCommand { get; } = new XamlUICommand();
 
+        // 打开商店
+        public XamlUICommand OpenStoreCommand { get; } = new XamlUICommand();
+
+        // 打开安装目录
+        public XamlUICommand OpenFolderCommand { get; } = new XamlUICommand();
+
+        // 复制依赖包名称
+        public XamlUICommand CopyDependencyNameCommand { get; } = new XamlUICommand();
+
+        // 复制依赖包信息
+        public XamlUICommand CopyDependencyInformationCommand { get; } = new XamlUICommand();
+
         public ObservableCollection<AppListEntryModel> AppListEntryList { get; } = new ObservableCollection<AppListEntryModel>();
+
+        public ObservableCollection<PackageModel> DependenciesList { get; } = new ObservableCollection<PackageModel>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -420,6 +422,84 @@ namespace GetStoreApp.UI.Pages
                     });
                 }
             };
+
+            OpenStoreCommand.ExecuteRequested += (sender, args) =>
+            {
+                Package package = args.Parameter as Package;
+
+                if (package is not null)
+                {
+                    Task.Run(async () =>
+                    {
+                        try
+                        {
+                            await Launcher.LaunchUriAsync(new Uri($"ms-windows-store://pdp/?PFN={package.Id.FamilyName}"));
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LogType.ERROR, string.Format("Open microsoft store {0} failed", package.DisplayName), e);
+                        }
+                    });
+                }
+            };
+
+            OpenFolderCommand.ExecuteRequested += (sender, args) =>
+            {
+                Package package = args.Parameter as Package;
+
+                if (package is not null)
+                {
+                    Task.Run(async () =>
+                    {
+                        try
+                        {
+                            await Launcher.LaunchFolderPathAsync(package.InstalledPath);
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LogType.WARNING, string.Format("{0} app installed folder open failed", package.DisplayName), e);
+                        }
+                    });
+                }
+            };
+
+            CopyDependencyNameCommand.ExecuteRequested += (sender, args) =>
+            {
+                string displayName = args.Parameter as string;
+                if (displayName is not null)
+                {
+                    CopyPasteHelper.CopyToClipBoard(displayName);
+                    new DataCopyNotification(this, DataCopyType.DependencyName).Show();
+                }
+            };
+
+            CopyDependencyInformationCommand.ExecuteRequested += (sender, args) =>
+            {
+                Package package = args.Parameter as Package;
+                if (package is not null)
+                {
+                    Task.Run(() =>
+                    {
+                        try
+                        {
+                            StringBuilder copyBuilder = new StringBuilder();
+                            copyBuilder.AppendLine(package.DisplayName);
+                            copyBuilder.AppendLine(package.Id.FamilyName);
+                            copyBuilder.AppendLine(package.Id.FullName);
+
+                            DispatcherQueue.TryEnqueue(() =>
+                            {
+                                CopyPasteHelper.CopyToClipBoard(copyBuilder.ToString());
+                                new DataCopyNotification(this, DataCopyType.DependencyInformation).Show();
+                            });
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LogType.ERROR, "App information copy failed", e);
+                        }
+                    });
+                }
+            };
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs args)
@@ -499,12 +579,17 @@ namespace GetStoreApp.UI.Pages
             IsResourcePackage = AppInfoDict[nameof(IsResourcePackage)].ToString();
             IsStub = AppInfoDict[nameof(IsStub)].ToString();
             VertifyIsOK = AppInfoDict[nameof(VertifyIsOK)].ToString();
-            AppListEntryCount = Convert.ToInt32(AppInfoDict[nameof(AppListEntryCount)]);
 
             AppListEntryList.Clear();
             foreach (AppListEntryModel appListEntry in AppInfoDict[nameof(AppListEntryList)] as List<AppListEntryModel>)
             {
                 AppListEntryList.Add(appListEntry);
+            }
+
+            DependenciesList.Clear();
+            foreach (PackageModel packageItem in AppInfoDict[nameof(DependenciesList)] as List<PackageModel>)
+            {
+                DependenciesList.Add(packageItem);
             }
         }
     }
