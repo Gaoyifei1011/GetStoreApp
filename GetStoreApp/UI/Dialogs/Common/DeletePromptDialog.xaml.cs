@@ -11,13 +11,13 @@ namespace GetStoreApp.UI.Dialogs.Common
     {
         public string DeleteContent { get; set; }
 
-        public DeletePromptDialog(DeleteArgs deletePrompt)
+        public DeletePromptDialog(DeleteKind deletePrompt)
         {
             switch (deletePrompt)
             {
-                case DeleteArgs.History: DeleteContent = ResourceService.GetLocalized(string.Format("/Dialog/Delete{0}", deletePrompt.ToString())); break;
-                case DeleteArgs.Download: DeleteContent = ResourceService.GetLocalized(string.Format("/Dialog/Delete{0}", deletePrompt.ToString())); break;
-                case DeleteArgs.DownloadWithFile: DeleteContent = ResourceService.GetLocalized(string.Format("/Dialog/Delete{0}", deletePrompt.ToString())); break;
+                case DeleteKind.History: DeleteContent = ResourceService.GetLocalized(string.Format("/Dialog/Delete{0}", deletePrompt.ToString())); break;
+                case DeleteKind.Download: DeleteContent = ResourceService.GetLocalized(string.Format("/Dialog/Delete{0}", deletePrompt.ToString())); break;
+                case DeleteKind.DownloadWithFile: DeleteContent = ResourceService.GetLocalized(string.Format("/Dialog/Delete{0}", deletePrompt.ToString())); break;
             }
 
             InitializeComponent();

@@ -47,7 +47,7 @@ namespace GetStoreApp.Helpers.Root
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogType.ERROR, "Get process Pid list failed.", e);
+                LogService.WriteLog(LogLevel.ERROR, "Get process Pid list failed.", e);
                 return ProcessEntry32PIDList;
             }
         }

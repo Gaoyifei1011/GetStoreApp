@@ -43,7 +43,7 @@ namespace GetStoreApp.Helpers.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogType.ERROR, "Aria2 Process create failed.", e);
+                LogService.WriteLog(LogLevel.ERROR, "Aria2 Process create failed.", e);
                 return false;
             }
         }
@@ -69,7 +69,7 @@ namespace GetStoreApp.Helpers.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogType.ERROR, "Aria2 Process kill failed.", e);
+                LogService.WriteLog(LogLevel.ERROR, "Aria2 Process kill failed.", e);
                 return;
             }
         }
@@ -103,7 +103,7 @@ namespace GetStoreApp.Helpers.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogType.ERROR, "Aria2 Process search failed.", e);
+                LogService.WriteLog(LogLevel.ERROR, "Aria2 Process search failed.", e);
                 SearchResult = false;
             }
             return SearchResult;

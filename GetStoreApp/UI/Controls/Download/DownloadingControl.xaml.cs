@@ -2,7 +2,7 @@
 using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Download;
-using GetStoreApp.Services.Controls.Settings.Common;
+using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
 using Microsoft.UI.Xaml;
@@ -107,7 +107,7 @@ namespace GetStoreApp.UI.Controls.Download
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogType.WARNING, "Delete downloading file failed.", e);
+                            LogService.WriteLog(LogLevel.WARNING, "Delete downloading file failed.", e);
                         }
 
                         // 删除Aria2后缀下载信息记录文件
@@ -120,7 +120,7 @@ namespace GetStoreApp.UI.Controls.Download
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogType.WARNING, "Delete downloading information file failed.", e);
+                            LogService.WriteLog(LogLevel.WARNING, "Delete downloading information file failed.", e);
                         }
                     }
 
@@ -271,7 +271,7 @@ namespace GetStoreApp.UI.Controls.Download
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LogType.WARNING, "Delete downloading file failed.", e);
+                        LogService.WriteLog(LogLevel.WARNING, "Delete downloading file failed.", e);
                     }
 
                     // 删除Aria2后缀下载信息记录文件
@@ -284,7 +284,7 @@ namespace GetStoreApp.UI.Controls.Download
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LogType.WARNING, "Delete downloading information file failed.", e);
+                        LogService.WriteLog(LogLevel.WARNING, "Delete downloading information file failed.", e);
                     }
                 }
             });
@@ -436,7 +436,7 @@ namespace GetStoreApp.UI.Controls.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LogType.WARNING, "Update downloading progress failed.", e);
+                    LogService.WriteLog(LogLevel.WARNING, "Update downloading progress failed.", e);
                     continue;
                 }
             }
@@ -502,7 +502,7 @@ namespace GetStoreApp.UI.Controls.Download
                             }
                             catch (Exception e)
                             {
-                                LogService.WriteLog(LogType.WARNING, "Downloading list remove items failed", e);
+                                LogService.WriteLog(LogLevel.WARNING, "Downloading list remove items failed", e);
                                 continue;
                             }
                         }
@@ -569,7 +569,7 @@ namespace GetStoreApp.UI.Controls.Download
                             }
                             catch (Exception e)
                             {
-                                LogService.WriteLog(LogType.WARNING, "Waiting list remove items failed", e);
+                                LogService.WriteLog(LogLevel.WARNING, "Waiting list remove items failed", e);
                                 continue;
                             }
                         }

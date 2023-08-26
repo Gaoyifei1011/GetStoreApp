@@ -2,7 +2,7 @@
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Controls.Download;
-using GetStoreApp.Services.Controls.Settings.Appearance;
+using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
@@ -113,13 +113,13 @@ namespace GetStoreApp
             // 系统背景色弹出的异常，不进行处理
             if (args.Exception.HResult is -2147024809 && args.Exception.StackTrace.Contains("SystemBackdropConfiguration"))
             {
-                LogService.WriteLog(LogType.WARNING, "System backdrop config warning.", args.Exception);
+                LogService.WriteLog(LogLevel.WARNING, "System backdrop config warning.", args.Exception);
                 return;
             }
             // 处理其他异常
             else
             {
-                LogService.WriteLog(LogType.ERROR, "Unknown unhandled exception.", args.Exception);
+                LogService.WriteLog(LogLevel.ERROR, "Unknown unhandled exception.", args.Exception);
 
                 // 退出应用
                 Dispose();
@@ -232,7 +232,7 @@ namespace GetStoreApp
         /// </summary>
         private void SaveWindowInformation()
         {
-            ConfigService.SaveSetting(ConfigKey.IsWindowMaximizedKey, MainWindow.AppTitlebar.IsWindowMaximized);
+            ConfigService.SaveSetting(ConfigKey.IsWindowMaximizedKey, MainWindow.IsWindowMaximized);
             ConfigService.SaveSetting(ConfigKey.WindowWidthKey, MainWindow.AppWindow.Size.Width);
             ConfigService.SaveSetting(ConfigKey.WindowHeightKey, MainWindow.AppWindow.Size.Height);
             ConfigService.SaveSetting(ConfigKey.WindowPositionXAxisKey, MainWindow.AppWindow.Position.X);

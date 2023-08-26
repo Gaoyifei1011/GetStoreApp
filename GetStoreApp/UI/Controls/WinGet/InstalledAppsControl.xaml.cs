@@ -10,6 +10,7 @@ using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
@@ -63,6 +64,19 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
+        private bool _isIncrease = true;
+
+        public bool IsIncrease
+        {
+            get { return _isIncrease; }
+
+            set
+            {
+                _isIncrease = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _searchText = string.Empty;
 
         public string SearchText
@@ -72,6 +86,19 @@ namespace GetStoreApp.UI.Controls.WinGet
             set
             {
                 _searchText = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private AppSortRuleKind _selectedRule = AppSortRuleKind.DisplayName;
+
+        public AppSortRuleKind SelectedRule
+        {
+            get { return _selectedRule; }
+
+            set
+            {
+                _selectedRule = value;
                 OnPropertyChanged();
             }
         }
@@ -114,7 +141,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             // 卸载成功，从列表中删除该应用
                             if (unInstallResult.Status is UninstallResultStatus.Ok)
                             {
-                                ToastNotificationService.Show(NotificationArgs.WinGetUnInstallSuccessfully, installedApps.AppName);
+                                ToastNotificationService.Show(NotificationKind.WinGetUnInstallSuccessfully, installedApps.AppName);
 
                                 // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
                                 if (unInstallResult.RebootRequired)
@@ -122,7 +149,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                     ContentDialogResult result = ContentDialogResult.None;
                                     DispatcherQueue.TryEnqueue(async () =>
                                     {
-                                        result = await ContentDialogHelper.ShowAsync(new RebootDialog(WinGetOptionArgs.UnInstall, installedApps.AppName), this);
+                                        result = await ContentDialogHelper.ShowAsync(new RebootDialog(WinGetOptionKind.UnInstall, installedApps.AppName), this);
                                         autoResetEvent.Set();
                                     });
 
@@ -179,20 +206,20 @@ namespace GetStoreApp.UI.Controls.WinGet
                             }
                             else
                             {
-                                ToastNotificationService.Show(NotificationArgs.WinGetUnInstallFailed, installedApps.AppName);
+                                ToastNotificationService.Show(NotificationKind.WinGetUnInstallFailed, installedApps.AppName);
                             }
                         }
                         // 操作被用户所取消异常
                         catch (OperationCanceledException e)
                         {
-                            LogService.WriteLog(LogType.INFO, "App uninstalling operation canceled.", e);
-                            ToastNotificationService.Show(NotificationArgs.WinGetUnInstallFailed, installedApps.AppName);
+                            LogService.WriteLog(LogLevel.INFO, "App uninstalling operation canceled.", e);
+                            ToastNotificationService.Show(NotificationKind.WinGetUnInstallFailed, installedApps.AppName);
                         }
                         // 其他异常
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogType.ERROR, "App uninstalling failed.", e);
-                            ToastNotificationService.Show(NotificationArgs.WinGetUnInstallFailed, installedApps.AppName);
+                            LogService.WriteLog(LogLevel.ERROR, "App uninstalling failed.", e);
+                            ToastNotificationService.Show(NotificationKind.WinGetUnInstallFailed, installedApps.AppName);
                         }
                     });
                 }
@@ -206,7 +233,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                     string copyContent = string.Format("winget uninstall {0}", appId);
                     CopyPasteHelper.CopyToClipBoard(copyContent);
 
-                    new DataCopyNotification(this, DataCopyType.WinGetUnInstall).Show();
+                    new DataCopyNotification(this, DataCopyKind.WinGetUnInstall).Show();
                 }
             };
         }
@@ -239,11 +266,45 @@ namespace GetStoreApp.UI.Controls.WinGet
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LogType.ERROR, "Installed apps information initialized failed.", e);
+                    LogService.WriteLog(LogLevel.ERROR, "Installed apps information initialized failed.", e);
                     return;
                 }
                 isInitialized = true;
                 GetInstalledApps();
+                InitializeData();
+            }
+        }
+
+        /// <summary>
+        /// 显示排序规则
+        /// </summary>
+        public void OnSortClicked(object sender, RoutedEventArgs args)
+        {
+            FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
+        }
+
+        /// <summary>
+        /// 根据排序方式对列表进行排序
+        /// </summary>
+        public void OnSortWayClicked(object sender, RoutedEventArgs args)
+        {
+            ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
+            if (toggleMenuFlyoutItem is not null)
+            {
+                IsIncrease = Convert.ToBoolean(toggleMenuFlyoutItem.Tag);
+                InitializeData();
+            }
+        }
+
+        /// <summary>
+        /// 根据排序规则对列表进行排序
+        /// </summary>
+        public void OnSortRuleClicked(object sender, RoutedEventArgs args)
+        {
+            ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
+            if (toggleMenuFlyoutItem is not null)
+            {
+                SelectedRule = (AppSortRuleKind)toggleMenuFlyoutItem.Tag;
                 InitializeData();
             }
         }
@@ -322,7 +383,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogType.ERROR, "Get installed apps information failed.", e);
+                LogService.WriteLog(LogLevel.ERROR, "Get installed apps information failed.", e);
             }
         }
 
@@ -344,9 +405,10 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                 if (MatchResultList is not null)
                 {
+                    List<InstalledAppsModel> installedAppsList = new List<InstalledAppsModel>();
+
                     if (hasSearchText)
                     {
-                        List<InstalledAppsModel> installedAppsList = new List<InstalledAppsModel>();
                         foreach (MatchResult matchItem in MatchResultList)
                         {
                             if (matchItem.CatalogPackage.InstalledVersion.DisplayName.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
@@ -360,23 +422,9 @@ namespace GetStoreApp.UI.Controls.WinGet
                                 });
                             }
                         }
-
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            lock (InstalledAppsDataListObject)
-                            {
-                                foreach (InstalledAppsModel installedApps in installedAppsList)
-                                {
-                                    InstalledAppsDataList.Add(installedApps);
-                                }
-                                IsInstalledAppsEmpty = MatchResultList.Count is 0;
-                                IsLoadedCompleted = true;
-                            }
-                        });
                     }
                     else
                     {
-                        List<InstalledAppsModel> installedAppsList = new List<InstalledAppsModel>();
                         foreach (MatchResult matchItem in MatchResultList)
                         {
                             installedAppsList.Add(new InstalledAppsModel()
@@ -387,20 +435,48 @@ namespace GetStoreApp.UI.Controls.WinGet
                                 AppVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Version) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.Version,
                             });
                         }
-
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            lock (InstalledAppsDataListObject)
-                            {
-                                foreach (InstalledAppsModel installedApps in installedAppsList)
-                                {
-                                    InstalledAppsDataList.Add(installedApps);
-                                }
-                                IsInstalledAppsEmpty = MatchResultList.Count is 0;
-                                IsLoadedCompleted = true;
-                            }
-                        });
                     }
+
+                    switch (SelectedRule)
+                    {
+                        case AppSortRuleKind.DisplayName:
+                            {
+                                if (IsIncrease)
+                                {
+                                    installedAppsList = installedAppsList.OrderBy(item => item.AppName).ToList();
+                                }
+                                else
+                                {
+                                    installedAppsList = installedAppsList.OrderByDescending(item => item.AppName).ToList();
+                                }
+                                break;
+                            }
+                        case AppSortRuleKind.PublisherName:
+                            {
+                                if (IsIncrease)
+                                {
+                                    installedAppsList = installedAppsList.OrderBy(item => item.AppPublisher).ToList();
+                                }
+                                else
+                                {
+                                    installedAppsList = installedAppsList.OrderByDescending(item => item.AppPublisher).ToList();
+                                }
+                                break;
+                            }
+                    }
+
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        lock (InstalledAppsDataListObject)
+                        {
+                            foreach (InstalledAppsModel installedApps in installedAppsList)
+                            {
+                                InstalledAppsDataList.Add(installedApps);
+                            }
+                            IsInstalledAppsEmpty = MatchResultList.Count is 0;
+                            IsLoadedCompleted = true;
+                        }
+                    });
                 }
             });
         }

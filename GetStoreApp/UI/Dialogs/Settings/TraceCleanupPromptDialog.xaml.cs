@@ -1,6 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Models.Dialogs.Settings;
-using GetStoreApp.Services.Controls.Settings.Advanced;
+using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -116,21 +116,21 @@ namespace GetStoreApp.UI.Dialogs.Settings
         {
             Task.Run(async () =>
             {
-                List<CleanArgs> SelectedCleanList = new List<CleanArgs>(TraceCleanupList.Where(item => item.IsSelected is true).Select(item => item.InternalName));
+                List<CleaKind> SelectedCleanList = new List<CleaKind>(TraceCleanupList.Where(item => item.IsSelected is true).Select(item => item.InternalName));
 
-                List<Tuple<CleanArgs, bool>> cleanSuccessfullyDict = new List<Tuple<CleanArgs, bool>>();
-                foreach (CleanArgs cleanArgs in SelectedCleanList)
+                List<Tuple<CleaKind, bool>> cleanSuccessfullyDict = new List<Tuple<CleaKind, bool>>();
+                foreach (CleaKind cleanArgs in SelectedCleanList)
                 {
                     // 清理并反馈回结果，修改相应的状态信息
                     bool cleanReusult = await TraceCleanupService.CleanAppTraceAsync(cleanArgs);
-                    cleanSuccessfullyDict.Add(new Tuple<CleanArgs, bool>(cleanArgs, cleanReusult));
+                    cleanSuccessfullyDict.Add(new Tuple<CleaKind, bool>(cleanArgs, cleanReusult));
                 }
 
                 await Task.Delay(1000);
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    foreach (Tuple<CleanArgs, bool> cleanArgsTuple in cleanSuccessfullyDict)
+                    foreach (Tuple<CleaKind, bool> cleanArgsTuple in cleanSuccessfullyDict)
                     {
                         TraceCleanupList[TraceCleanupList.IndexOf(TraceCleanupList.First(item => item.InternalName == cleanArgsTuple.Item1))].IsCleanFailed = !cleanArgsTuple.Item2;
                     }

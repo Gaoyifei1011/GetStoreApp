@@ -109,9 +109,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private string _typeFilter = "None";
+        private TypeKind _typeFilter = TypeKind.None;
 
-        public string TypeFilter
+        public TypeKind TypeFilter
         {
             get { return _typeFilter; }
 
@@ -122,9 +122,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private string _channelFilter = "None";
+        private ChannelKind _channelFilter = ChannelKind.None;
 
-        public string ChannelFilter
+        public ChannelKind ChannelFilter
         {
             get { return _channelFilter; }
 
@@ -171,7 +171,7 @@ namespace GetStoreApp.Views.Pages
                         DispatcherQueue.TryEnqueue(() =>
                         {
                             CopyPasteHelper.CopyToClipBoard(copyContent);
-                            new DataCopyNotification(this, DataCopyType.History, false).Show();
+                            new DataCopyNotification(this, DataCopyKind.History, false).Show();
                         });
                     }
                 });
@@ -238,7 +238,7 @@ namespace GetStoreApp.Views.Pages
             ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
             if (item.Tag is not null)
             {
-                TypeFilter = Convert.ToString(item.Tag);
+                TypeFilter = (TypeKind)item.Tag;
                 GetHistoryDataList();
             }
         }
@@ -251,7 +251,7 @@ namespace GetStoreApp.Views.Pages
             ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
             if (item.Tag is not null)
             {
-                ChannelFilter = Convert.ToString(item.Tag);
+                ChannelFilter = (ChannelKind)item.Tag;
                 GetHistoryDataList();
             }
         }
@@ -323,7 +323,7 @@ namespace GetStoreApp.Views.Pages
                 DispatcherQueue.TryEnqueue(() =>
                 {
                     CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
-                    new DataCopyNotification(this, DataCopyType.History, true, SelectedHistoryDataList.Count).Show();
+                    new DataCopyNotification(this, DataCopyKind.History, true, SelectedHistoryDataList.Count).Show();
                 });
             });
         }
@@ -352,7 +352,7 @@ namespace GetStoreApp.Views.Pages
                 ContentDialogResult result = ContentDialogResult.None;
                 DispatcherQueue.TryEnqueue(async () =>
                 {
-                    result = await ContentDialogHelper.ShowAsync(new DeletePromptDialog(DeleteArgs.History), this);
+                    result = await ContentDialogHelper.ShowAsync(new DeletePromptDialog(DeleteKind.History), this);
                     if (result is ContentDialogResult.Primary)
                     {
                         IsSelectMode = false;
@@ -387,7 +387,7 @@ namespace GetStoreApp.Views.Pages
 
                             if (HistoryDataList.Count is 0)
                             {
-                                if (TypeFilter is "None" || ChannelFilter is "None")
+                                if (TypeFilter is TypeKind.None || ChannelFilter is ChannelKind.None)
                                 {
                                     IsHistoryEmpty = true;
                                     IsHistoryEmptyAfterFilter = false;

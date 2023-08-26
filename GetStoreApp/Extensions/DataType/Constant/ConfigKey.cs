@@ -29,7 +29,7 @@
 
         public const string NotificationKey = "AppNotification";
 
-        public const string StartsWithEFilterKey = "StartsWithEFilterValue";
+        public const string EncryptedPackageFilterKey = "EncryptedPackageFilterValue";
 
         public const string ThemeKey = "AppTheme";
 

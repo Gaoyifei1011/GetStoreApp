@@ -4,7 +4,7 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Models.Window;
 using GetStoreApp.Services.Controls.Download;
-using GetStoreApp.Services.Controls.Settings.Appearance;
+using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Common;
@@ -52,6 +52,19 @@ namespace GetStoreApp.Views.Windows
         public IntPtr Handle { get; }
 
         public OverlappedPresenter Presenter { get; }
+
+        private bool _isWindowMaximized;
+
+        public bool IsWindowMaximized
+        {
+            get { return _isWindowMaximized; }
+
+            set
+            {
+                _isWindowMaximized = value;
+                OnPropertyChanged();
+            }
+        }
 
         private ElementTheme _windowTheme;
 
@@ -153,7 +166,7 @@ namespace GetStoreApp.Views.Windows
             ExtendsContentIntoTitleBar = true;
             AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
             AppWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
-            AppTitlebar.IsWindowMaximized = Presenter.State is OverlappedPresenterState.Maximized;
+            IsWindowMaximized = Presenter.State is OverlappedPresenterState.Maximized;
             PaneDisplayMode = Bounds.Width > 768 ? NavigationViewPaneDisplayMode.Left : NavigationViewPaneDisplayMode.LeftMinimal;
 
             SetTitleBar(AppTitlebar);
@@ -220,9 +233,9 @@ namespace GetStoreApp.Views.Windows
         public void OnSizeChanged(object sender, WindowSizeChangedEventArgs args)
         {
             PaneDisplayMode = args.Size.Width > 768 ? NavigationViewPaneDisplayMode.Left : NavigationViewPaneDisplayMode.LeftCompact;
-            if (AppTitlebar.TitlebarMenuFlyout.IsOpen)
+            if (TitlebarMenuFlyout.IsOpen)
             {
-                AppTitlebar.TitlebarMenuFlyout.Hide();
+                TitlebarMenuFlyout.Hide();
             }
         }
 
@@ -233,10 +246,68 @@ namespace GetStoreApp.Views.Windows
         {
             if (args.DidPositionChange)
             {
-                if (AppTitlebar.TitlebarMenuFlyout.IsOpen)
+                if (TitlebarMenuFlyout.IsOpen)
                 {
-                    AppTitlebar.TitlebarMenuFlyout.Hide();
+                    TitlebarMenuFlyout.Hide();
                 }
+            }
+        }
+
+        /// <summary>
+        /// 窗口关闭
+        /// </summary>
+        public void OnCloseClicked(object sender, RoutedEventArgs args)
+        {
+            Program.ApplicationRoot.Dispose();
+        }
+
+        /// <summary>
+        /// 窗口最大化
+        /// </summary>
+        public void OnMaximizeClicked(object sender, RoutedEventArgs args)
+        {
+            MaximizeOrRestore();
+        }
+
+        /// <summary>
+        /// 窗口最小化
+        /// </summary>
+        public void OnMinimizeClicked(object sender, RoutedEventArgs args)
+        {
+            Minimize();
+        }
+
+        /// <summary>
+        /// 窗口移动
+        /// </summary>
+        public void OnMoveClicked(object sender, RoutedEventArgs args)
+        {
+            MenuFlyoutItem menuItem = sender as MenuFlyoutItem;
+            if (menuItem.Tag is not null)
+            {
+                ((MenuFlyout)menuItem.Tag).Hide();
+                User32Library.SendMessage(Handle, WindowMessage.WM_SYSCOMMAND, 0xF010, 0);
+            }
+        }
+
+        /// <summary>
+        /// 窗口还原
+        /// </summary>
+        public void OnRestoreClicked(object sender, RoutedEventArgs args)
+        {
+            MaximizeOrRestore();
+        }
+
+        /// <summary>
+        /// 窗口大小
+        /// </summary>
+        public void OnSizeClicked(object sender, RoutedEventArgs args)
+        {
+            MenuFlyoutItem menuItem = sender as MenuFlyoutItem;
+            if (menuItem.Tag is not null)
+            {
+                ((MenuFlyout)menuItem.Tag).Hide();
+                User32Library.SendMessage(Handle, WindowMessage.WM_SYSCOMMAND, 0xF000, 0);
             }
         }
 
@@ -722,7 +793,7 @@ namespace GetStoreApp.Views.Windows
                             FlyoutShowOptions options = new FlyoutShowOptions();
                             options.Position = new Point(0, 15);
                             options.ShowMode = FlyoutShowMode.Standard;
-                            AppTitlebar.TitlebarMenuFlyout.ShowAt(null, options);
+                            TitlebarMenuFlyout.ShowAt(null, options);
                             return 0;
                         }
                         else if (sysCommand is SystemCommand.SC_KEYMENU)
@@ -730,7 +801,7 @@ namespace GetStoreApp.Views.Windows
                             FlyoutShowOptions options = new FlyoutShowOptions();
                             options.Position = new Point(0, 45);
                             options.ShowMode = FlyoutShowMode.Standard;
-                            AppTitlebar.TitlebarMenuFlyout.ShowAt(null, options);
+                            TitlebarMenuFlyout.ShowAt(null, options);
                             return 0;
                         }
                         break;
@@ -749,9 +820,9 @@ namespace GetStoreApp.Views.Windows
                 // 当用户按下鼠标左键时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCLBUTTONDOWN:
                     {
-                        if (AppTitlebar.TitlebarMenuFlyout.IsOpen)
+                        if (TitlebarMenuFlyout.IsOpen)
                         {
-                            AppTitlebar.TitlebarMenuFlyout.Hide();
+                            TitlebarMenuFlyout.Hide();
                         }
                         break;
                     }
@@ -772,7 +843,7 @@ namespace GetStoreApp.Views.Windows
                             new Point((pt.X - AppWindow.Position.X - 8) / Content.XamlRoot.RasterizationScale, (pt.Y - AppWindow.Position.Y) / Content.XamlRoot.RasterizationScale) :
                             new Point(pt.X - AppWindow.Position.X - 8, pt.Y - AppWindow.Position.Y);
 
-                            AppTitlebar.TitlebarMenuFlyout.ShowAt(Content, options);
+                            TitlebarMenuFlyout.ShowAt(Content, options);
                         }
                         return 0;
                     }

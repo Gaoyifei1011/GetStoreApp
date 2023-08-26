@@ -1,7 +1,9 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
+using GetStoreApp.Models.Controls.About;
 using GetStoreApp.Services.Root;
+using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.About;
 using GetStoreApp.UI.Notifications;
 using Microsoft.UI.Xaml;
@@ -25,6 +27,38 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class AboutPage : Page
     {
+        private readonly int MajorVersion = InfoHelper.AppVersion.Major;
+
+        private readonly int MinorVersion = InfoHelper.AppVersion.Minor;
+
+        private readonly int BuildVersion = InfoHelper.AppVersion.Build;
+
+        private readonly int RevisionVersion = InfoHelper.AppVersion.Revision;
+
+        public string AppVersion => string.Format(ResourceService.GetLocalized("About/AppVersion"), MajorVersion, MinorVersion, BuildVersion, RevisionVersion);
+
+        public Uri ReleaseNotes = new Uri("https://github.com/Gaoyifei1011/GetStoreApp/releases");
+
+        //项目引用信息
+        public List<KeyValuePairModel> ReferenceList { get; } = new List<KeyValuePairModel>()
+        {
+            new KeyValuePairModel(){ Key = "Microsoft.Windows.CsWinRT",Value = "https://github.com/microsoft/cswinrt"},
+            new KeyValuePairModel(){ Key = "Microsoft.WindowsAppSDK",Value = "https://github.com/microsoft/windowsappsdkt"},
+            new KeyValuePairModel(){ Key = "Microsoft.WindowsPackageManager.ComInterop",Value = "https://github.com/microsoft/winget-cli"},
+            new KeyValuePairModel(){ Key = "Mile.Aria2",Value = "https://github.com/ProjectMile/Mile.Aria2"},
+        };
+
+        //项目感谢者信息
+        public List<KeyValuePairModel> ThanksList { get; } = new List<KeyValuePairModel>()
+        {
+            new KeyValuePairModel(){ Key = "AndromedaMelody",Value = "https://github.com/AndromedaMelody" },
+            new KeyValuePairModel(){ Key = "cnbluefire",Value = "https://github.com/cnbluefire" },
+            new KeyValuePairModel(){ Key = "飞翔",Value = "https://fionlen.azurewebsites.net" },
+            new KeyValuePairModel(){ Key = "MouriNaruto",Value = "https://github.com/MouriNaruto" },
+            new KeyValuePairModel(){ Key = "TaylorShi",Value = "https://github.com/TaylorShi" },
+            new KeyValuePairModel(){ Key = "wherewhere",Value = "https://github.com/wherewhere" },
+        };
+
         private AppNaviagtionArgs AboutNavigationArgs { get; set; } = AppNaviagtionArgs.None;
 
         public AboutPage()
@@ -94,13 +128,13 @@ namespace GetStoreApp.Views.Pages
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LogType.ERROR, "Create desktop shortcut failed.", e);
+                    LogService.WriteLog(LogLevel.ERROR, "Create desktop shortcut failed.", e);
                 }
                 finally
                 {
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        new QuickOperationNotification(this, QuickOperationType.DesktopShortcut, IsCreatedSuccessfully).Show();
+                        new QuickOperationNotification(this, QuickOperationKind.Desktop, IsCreatedSuccessfully).Show();
                     });
                 }
             });
@@ -130,13 +164,13 @@ namespace GetStoreApp.Views.Pages
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LogType.ERROR, "Pin app to startscreen failed.", e);
+                    LogService.WriteLog(LogLevel.ERROR, "Pin app to startscreen failed.", e);
                 }
                 finally
                 {
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        new QuickOperationNotification(this, QuickOperationType.StartScreen, IsPinnedSuccessfully).Show();
+                        new QuickOperationNotification(this, QuickOperationKind.StartScreen, IsPinnedSuccessfully).Show();
                     });
                 }
             });
@@ -165,16 +199,24 @@ namespace GetStoreApp.Views.Pages
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LogType.ERROR, "Pin app to taskbar failed.", e);
+                    LogService.WriteLog(LogLevel.ERROR, "Pin app to taskbar failed.", e);
                 }
                 finally
                 {
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        new QuickOperationNotification(this, QuickOperationType.Taskbar, IsPinnedSuccessfully).Show();
+                        new QuickOperationNotification(this, QuickOperationKind.Taskbar, IsPinnedSuccessfully).Show();
                     });
                 }
             });
+        }
+
+        /// <summary>
+        /// 查看更新日志
+        /// </summary>
+        public async void OnShowReleaseNotesClicked(object sender, RoutedEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/releases"));
         }
 
         /// <summary>
@@ -186,11 +228,99 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 查看更新日志
+        /// 项目主页
         /// </summary>
-        public async void OnShowReleaseNotesClicked(object sender, RoutedEventArgs args)
+        public async void OnProjectDescriptionClicked(object sender, RoutedEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp"));
+        }
+
+        /// <summary>
+        /// 发送反馈
+        /// </summary>
+        public async void OnSendFeedbackClicked(object sender, RoutedEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/issues"));
+        }
+
+        /// <summary>
+        /// 检查更新
+        /// </summary>
+        public async void OnCheckUpdateClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/releases"));
+        }
+
+        /// <summary>
+        /// 桌面程序启动参数说明
+        /// </summary>
+        public async void OnDesktopLaunchClicked(object sender, RoutedEventArgs args)
+        {
+            await ContentDialogHelper.ShowAsync(new DesktopStartupArgsDialog(), this);
+        }
+
+        /// <summary>
+        /// 控制台程序启动参数说明
+        /// </summary>
+        public async void OnConsoleLaunchClicked(object sender, RoutedEventArgs args)
+        {
+            await ContentDialogHelper.ShowAsync(new ConsoleStartupArgsDialog(), this);
+        }
+
+        /// <summary>
+        /// 检查网络
+        /// </summary>
+        public async void OnCheckNetWorkClicked(object sender, RoutedEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
+        }
+
+        /// <summary>
+        /// 疑难解答
+        /// </summary>
+        public async void OnTroubleShootClicked(object sender, RoutedEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri("ms-settings:troubleshoot"));
+        }
+
+        /// <summary>
+        /// 打开下载设置
+        /// </summary>
+        public void OnDownloadSettingsClicked(object sender, RoutedEventArgs args)
+        {
+            NavigationService.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.DownloadOptions);
+        }
+
+        /// <summary>
+        /// 区分传统桌面应用
+        /// </summary>
+        public async void OnRecognizeClicked(object sender, RoutedEventArgs args)
+        {
+            await ContentDialogHelper.ShowAsync(new DesktopAppsDialog(), this);
+        }
+
+        /// <summary>
+        /// 系统信息
+        /// </summary>
+        public async void OnSystemInformationClicked(object sender, RoutedEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri("ms-settings:about"));
+        }
+
+        /// <summary>
+        /// 应用信息
+        /// </summary>
+        public async void OnAppInformationClicked(object sender, RoutedEventArgs args)
+        {
+            await ContentDialogHelper.ShowAsync(new AppInformationDialog(), this);
+        }
+
+        /// <summary>
+        /// 应用设置
+        /// </summary>
+        public async void OnAppSettingsClicked(object sender, RoutedEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures-app"));
         }
     }
 }

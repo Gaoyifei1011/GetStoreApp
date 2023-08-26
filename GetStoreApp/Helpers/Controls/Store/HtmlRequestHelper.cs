@@ -66,7 +66,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                     responseSuccessBuilder.Append(response.RequestMessage is null ? "" : LogService.WhiteSpaceRegex.Replace(response.RequestMessage.ToString(), ""));
                     responseSuccessBuilder.Append('\n');
 
-                    LogService.WriteLog(LogType.INFO, "Requested successfully.", responseSuccessBuilder);
+                    LogService.WriteLog(LogLevel.INFO, "Requested successfully.", responseSuccessBuilder);
                 }
 
                 // 请求失败
@@ -86,7 +86,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                 RequestStatusCode = string.Empty;
                 RequestExceptionContent = e.Message;
                 RequestContent = string.Empty;
-                LogService.WriteLog(LogType.WARNING, "Network disconnected.", e);
+                LogService.WriteLog(LogLevel.WARNING, "Network disconnected.", e);
             }
 
             // 捕捉因访问超时引发的异常
@@ -96,7 +96,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                 RequestStatusCode = string.Empty;
                 RequestExceptionContent = e.Message;
                 RequestContent = string.Empty;
-                LogService.WriteLog(LogType.WARNING, "Network access timeout.", e);
+                LogService.WriteLog(LogLevel.WARNING, "Network access timeout.", e);
             }
 
             // 其他异常
@@ -106,7 +106,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                 RequestStatusCode = string.Empty;
                 RequestExceptionContent = e.Message;
                 RequestContent = string.Empty;
-                LogService.WriteLog(LogType.WARNING, "Network state unknown.", e);
+                LogService.WriteLog(LogLevel.WARNING, "Network state unknown.", e);
             }
             finally
             {

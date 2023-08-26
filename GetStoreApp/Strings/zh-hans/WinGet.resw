@@ -261,11 +261,32 @@
   <data name="SearchingApps" xml:space="preserve">
     <value>应用正在搜索中，清稍候...</value>
   </data>
+  <data name="Sort" xml:space="preserve">
+    <value>排序</value>
+  </data>
+  <data name="SortByDisplayName" xml:space="preserve">
+    <value>应用包名称</value>
+  </data>
+  <data name="SortByPublisher" xml:space="preserve">
+    <value>发布者名称</value>
+  </data>
+  <data name="SortDecrease" xml:space="preserve">
+    <value>降序</value>
+  </data>
+  <data name="SortIncrease" xml:space="preserve">
+    <value>升序</value>
+  </data>
   <data name="SortMode" xml:space="preserve">
     <value>排序方式</value>
   </data>
   <data name="SortRule" xml:space="preserve">
     <value>排序规则</value>
+  </data>
+  <data name="SortToolTip" xml:space="preserve">
+    <value>按照规则进行排序</value>
+  </data>
+  <data name="SortWay" xml:space="preserve">
+    <value>排序方式</value>
   </data>
   <data name="StopDownload" xml:space="preserve">
     <value>停止下载</value>

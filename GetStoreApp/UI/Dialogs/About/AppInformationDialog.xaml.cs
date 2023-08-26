@@ -88,7 +88,7 @@ namespace GetStoreApp.UI.Dialogs.About
                 {
                     CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
                     sender.Hide();
-                    new DataCopyNotification(this, DataCopyType.AppInformation).Show();
+                    new DataCopyNotification(this, DataCopyKind.AppInformation).Show();
                 });
             });
         }
@@ -128,7 +128,7 @@ namespace GetStoreApp.UI.Dialogs.About
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogType.WARNING, "Get WinUI3 version failed.", e);
+                            LogService.WriteLog(LogLevel.WARNING, "Get WinUI3 version failed.", e);
                             DispatcherQueue.TryEnqueue(() =>
                             {
                                 WinUI3Version = string.Empty;

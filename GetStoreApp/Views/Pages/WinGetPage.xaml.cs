@@ -1,11 +1,14 @@
 using GetStoreApp.Models.Controls.WinGet;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using Windows.System;
 
 namespace GetStoreApp.Views.Pages
 {
@@ -88,10 +91,34 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 初始化 WinGet 程序包
         /// </summary>
-        private void OnInitializeSuccessLoaded()
+        public void OnInitializeSuccessLoaded(object sender, RoutedEventArgs args)
         {
             SearchApps.WinGetInstance = this;
             UpgradableApps.WinGetInstance = this;
+        }
+
+        /// <summary>
+        /// 了解更多有关 WinGet 程序包的描述信息
+        /// </summary>
+        public async void OnLearnMoreClicked(object sender, RoutedEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri(@"https://learn.microsoft.com/windows/package-manager/"));
+        }
+
+        /// <summary>
+        /// 从微软商店中下载 WinGet 程序包管理器
+        /// </summary>
+        public async void OnDownloadFromMicrosoftStoreClicked(object sender, RoutedEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri("ms-windows-store://pdp/ProductId=9NBLGGH4NNS1"));
+        }
+
+        /// <summary>
+        /// 从Github中下载 WinGet 程序包管理器
+        /// </summary>
+        public async void OnDownloadFromGithubClicked(object sender, RoutedEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri("https://github.com/microsoft/winget-cli/releases"));
         }
     }
 }

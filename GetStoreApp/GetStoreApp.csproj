@@ -123,44 +123,12 @@
     <None Remove="Styles\ScrollBar.xaml" />
     <None Remove="Styles\SplitButton.xaml" />
 
-    <None Remove="UI\Controls\About\HeaderControl.xaml" />
-    <None Remove="UI\Controls\About\InstructionsControl.xaml" />
-    <None Remove="UI\Controls\About\IntroductionControl.xaml" />
-    <None Remove="UI\Controls\About\PrecautionControl.xaml" />
-    <None Remove="UI\Controls\About\ReferenceControl.xaml" />
-    <None Remove="UI\Controls\About\SettingsHelpControl.xaml" />
-    <None Remove="UI\Controls\About\ThanksControl.xaml" />
-
     <None Remove="UI\Controls\Download\CompletedControl.xaml" />
     <None Remove="UI\Controls\Download\DownloadingControl.xaml" />
     <None Remove="UI\Controls\Download\UnfinishedControl.xaml" />
 
-    <None Remove="UI\Controls\Settings\Advanced\ExperimentalFeaturesControl.xaml" />
-    <None Remove="UI\Controls\Settings\Advanced\InstallModeControl.xaml" />
-    <None Remove="UI\Controls\Settings\Advanced\LogControl.xaml" />
-    <None Remove="UI\Controls\Settings\Advanced\TraceCleanupControl.xaml" />
-
-    <None Remove="UI\Controls\Settings\Appearance\AlwaysShowBackdropControl.xaml" />
-    <None Remove="UI\Controls\Settings\Appearance\BackdropControl.xaml" />
-    <None Remove="UI\Controls\Settings\Appearance\LanguageControl.xaml" />
-    <None Remove="UI\Controls\Settings\Appearance\ThemeControl.xaml" />
-    <None Remove="UI\Controls\Settings\Appearance\TopMostControl.xaml" />
-
-    <None Remove="UI\Controls\Settings\Common\DownloadOptionsControl.xaml" />
-    <None Remove="UI\Controls\Settings\Common\HistoryRecordControl.xaml" />
-    <None Remove="UI\Controls\Settings\Common\LinkFilterControl.xaml" />
-    <None Remove="UI\Controls\Settings\Common\NotificationControl.xaml" />
-    <None Remove="UI\Controls\Settings\Common\RegionControl.xaml" />
-    <None Remove="UI\Controls\Settings\Common\WinGetConfigControl.xaml" />
-
-    <None Remove="UI\Controls\Settings\Experiment\NetWorkMonitorControl.xaml" />
-    <None Remove="UI\Controls\Settings\Experiment\OpenConfigFileControl.xaml" />
-
-    <None Remove="UI\Controls\Window\AppTitleBarControl.xaml" />
-
     <None Remove="UI\Controls\WinGet\InstalledAppsControl.xaml" />
     <None Remove="UI\Controls\WinGet\SearchAppsControl.xaml" />
-    <None Remove="UI\Controls\WinGet\InitializeFailedControl.xaml" />
     <None Remove="UI\Controls\WinGet\UpgradableAppsControl.xaml" />
 
     <None Remove="UI\Dialogs\About\AppInformationDialog.xaml" />
@@ -230,43 +198,13 @@
     <Page Update="Styles\ScrollBar.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\SplitButton.xaml" Generator="MSBuild:Compile" />
 
-    <Page Update="UI\Controls\About\HeaderControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\About\InstructionsControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\About\IntroductionControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\About\PrecautionControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\About\ReferenceControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\About\SettingsHelpControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\About\ThanksControl.xaml" Generator="MSBuild:Compile" />
-
     <Page Update="UI\Controls\Download\CompletedControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Download\DownloadingControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Download\UnfinishedControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\Settings\Advanced\ExperimentalFeaturesControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\Settings\Advanced\InstallModeControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\Settings\Advanced\LogControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\Settings\Advanced\TraceCleanupControl.xaml" Generator="MSBuild:Compile" />
-
-    <Page Update="UI\Controls\Settings\Appearance\AlwaysShowBackdropControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\Settings\Appearance\BackdropControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\Settings\Appearance\LanguageControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\Settings\Appearance\ThemeControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\Settings\Appearance\TopMostControl.xaml" Generator="MSBuild:Compile" />
-
-    <Page Update="UI\Controls\Settings\Common\DownloadOptionsControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\Settings\Common\HistoryRecordControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\Settings\Common\LinkFilterControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\Settings\Common\NotificationControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\Settings\Common\WinGetConfigControl.xaml" Generator="MSBuild:Compile" />
-
-    <Page Update="UI\Controls\Settings\Experiment\NetWorkMonitorControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\Settings\Experiment\OpenConfigFileControl.xaml" Generator="MSBuild:Compile" />
-
-    <Page Update="UI\Controls\WinGet\InitializeFailedControl.xaml" Generator="MSBuild:Compile" />
+    
     <Page Update="UI\Controls\WinGet\InstalledAppsControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\WinGet\SearchAppsControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\WinGet\UpgradableAppsControl.xaml" Generator="MSBuild:Compile" />
-
-    <Page Update="UI\Controls\Window\AppTitleBarControl.xaml" Generator="MSBuild:Compile" />
 
     <Page Update="UI\Dialogs\About\AppInformationDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\About\ConsoleStartupArgsDialog.xaml" Generator="MSBuild:Compile" />

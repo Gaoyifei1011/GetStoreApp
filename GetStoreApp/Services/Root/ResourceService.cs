@@ -309,25 +309,25 @@ namespace GetStoreApp.Services.Root
             TraceCleanupList.Add(new TraceCleanupModel
             {
                 DisplayName = GetLocalized("Dialog/HistoryRecord"),
-                InternalName = CleanArgs.History,
+                InternalName = CleaKind.History,
                 CleanFailedText = GetLocalized("Dialog/HistoryCleanError")
             });
             TraceCleanupList.Add(new TraceCleanupModel
             {
                 DisplayName = GetLocalized("Dialog/ActionCenter"),
-                InternalName = CleanArgs.ActionCenter,
+                InternalName = CleaKind.ActionCenter,
                 CleanFailedText = GetLocalized("Dialog/ActionCenterError")
             });
             TraceCleanupList.Add(new TraceCleanupModel
             {
                 DisplayName = GetLocalized("Dialog/DownloadRecord"),
-                InternalName = CleanArgs.Download,
+                InternalName = CleaKind.Download,
                 CleanFailedText = GetLocalized("Dialog/DownloadCleanError")
             });
             TraceCleanupList.Add(new TraceCleanupModel
             {
                 DisplayName = GetLocalized("Dialog/LocalFile"),
-                InternalName = CleanArgs.LocalFile,
+                InternalName = CleaKind.LocalFile,
                 CleanFailedText = GetLocalized("Dialog/LocalFileCleanError")
             });
         }
@@ -362,14 +362,14 @@ namespace GetStoreApp.Services.Root
                 }
                 catch (Exception currentResourceException)
                 {
-                    LogService.WriteLog(LogType.WARNING, string.Format("Get resource context with langauge {0} failed.", CurrentAppLanguage.SelectedValue), currentResourceException);
+                    LogService.WriteLog(LogLevel.WARNING, string.Format("Get resource context with langauge {0} failed.", CurrentAppLanguage.SelectedValue), currentResourceException);
                     try
                     {
                         return ResourceMap.GetValue(resource, DefaultResourceContext).ValueAsString;
                     }
                     catch (Exception defaultResourceException)
                     {
-                        LogService.WriteLog(LogType.WARNING, string.Format("Get resource context with langauge {0} failed.", DefaultAppLanguage.SelectedValue), defaultResourceException);
+                        LogService.WriteLog(LogLevel.WARNING, string.Format("Get resource context with langauge {0} failed.", DefaultAppLanguage.SelectedValue), defaultResourceException);
                         return resource;
                     }
                 }

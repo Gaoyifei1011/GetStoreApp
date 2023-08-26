@@ -1,10 +1,7 @@
 ﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Properties;
 using GetStoreApp.Services.Controls.Download;
-using GetStoreApp.Services.Controls.Settings.Advanced;
-using GetStoreApp.Services.Controls.Settings.Appearance;
-using GetStoreApp.Services.Controls.Settings.Common;
-using GetStoreApp.Services.Controls.Settings.Experiment;
+using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using Microsoft.UI.Dispatching;

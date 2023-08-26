@@ -49,7 +49,7 @@ namespace GetStoreApp.Models.Dialogs.Settings
         /// <summary>
         /// 清理选项内部的名称
         /// </summary>
-        public CleanArgs InternalName { get; set; }
+        public CleaKind InternalName { get; set; }
 
         /// <summary>
         /// 清理失败时详细的错误文字信息

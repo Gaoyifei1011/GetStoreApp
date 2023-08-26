@@ -5,7 +5,5 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:notification="using:GetStoreApp.Views.CustomControls.Notifications"
-    mc:Ignorable="d">
-
-    <TextBlock x:Name="NotificationContent" Foreground="{ThemeResource SystemFillColorSuccessBrush}" />
-</notification:InAppNotification>
+    Foreground="{ThemeResource SystemFillColorSuccessBrush}"
+    mc:Ignorable="d" />

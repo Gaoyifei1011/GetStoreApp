@@ -11,9 +11,9 @@ namespace GetStoreApp.UI.Notifications
     /// </summary>
     public sealed partial class QuickOperationNotification : InAppNotification, INotifyPropertyChanged
     {
-        private QuickOperationType _operationType;
+        private QuickOperationKind _operationType;
 
-        public QuickOperationType OperationType
+        public QuickOperationKind OperationType
         {
             get { return _operationType; }
 
@@ -39,36 +39,36 @@ namespace GetStoreApp.UI.Notifications
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public QuickOperationNotification(FrameworkElement element, QuickOperationType operationType, bool isPinnedSuccessfully = false) : base(element)
+        public QuickOperationNotification(FrameworkElement element, QuickOperationKind operationType, bool isPinnedSuccessfully = false) : base(element)
         {
             InitializeComponent();
             OperationType = operationType;
             IsPinnedSuccessfully = isPinnedSuccessfully;
         }
 
-        public bool ControlLoad(QuickOperationType operationType, bool isPinnedSuccessfully, string controlName)
+        public bool ControlLoad(QuickOperationKind operationType, bool isPinnedSuccessfully, string controlName)
         {
-            if (controlName is "DesktopShortcutSuccess" && operationType is QuickOperationType.DesktopShortcut && isPinnedSuccessfully)
+            if (controlName is "DesktopShortcutSuccess" && operationType is QuickOperationKind.Desktop && isPinnedSuccessfully)
             {
                 return true;
             }
-            else if (controlName is "DesktopShortcutFailed" && operationType is QuickOperationType.DesktopShortcut && !isPinnedSuccessfully)
+            else if (controlName is "DesktopShortcutFailed" && operationType is QuickOperationKind.Desktop && !isPinnedSuccessfully)
             {
                 return true;
             }
-            else if (controlName is "StartScreenSuccess" && operationType is QuickOperationType.StartScreen && isPinnedSuccessfully)
+            else if (controlName is "StartScreenSuccess" && operationType is QuickOperationKind.StartScreen && isPinnedSuccessfully)
             {
                 return true;
             }
-            else if (controlName is "StartScreenFailed" && operationType is QuickOperationType.StartScreen && !isPinnedSuccessfully)
+            else if (controlName is "StartScreenFailed" && operationType is QuickOperationKind.StartScreen && !isPinnedSuccessfully)
             {
                 return true;
             }
-            else if (controlName is "TaskbarSuccess" && operationType is QuickOperationType.Taskbar && isPinnedSuccessfully)
+            else if (controlName is "TaskbarSuccess" && operationType is QuickOperationKind.Taskbar && isPinnedSuccessfully)
             {
                 return true;
             }
-            else if (controlName is "TaskbarFailed" && operationType is QuickOperationType.Taskbar && !isPinnedSuccessfully)
+            else if (controlName is "TaskbarFailed" && operationType is QuickOperationKind.Taskbar && !isPinnedSuccessfully)
             {
                 return true;
             }

@@ -1,8 +1,7 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
-using GetStoreApp.Services.Controls.Settings.Common;
-using GetStoreApp.Services.Controls.Settings.Experiment;
+using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
@@ -50,7 +49,7 @@ namespace GetStoreApp.Services.Controls.Download
                     if (!checkFailed)
                     {
                         IsNetWorkConnected = false;
-                        ToastNotificationService.Show(NotificationArgs.DownloadAborted, "NotDownload");
+                        ToastNotificationService.Show(NotificationKind.DownloadAborted, "NotDownload");
                     }
                 }
             }
@@ -153,7 +152,7 @@ namespace GetStoreApp.Services.Controls.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LogType.WARNING, "Pause waiting list task failed.", e);
+                    LogService.WriteLog(LogLevel.WARNING, "Pause waiting list task failed.", e);
                     Result = false;
                 }
             }
@@ -173,7 +172,7 @@ namespace GetStoreApp.Services.Controls.Download
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LogType.WARNING, "Pause downloading list task failed.", e);
+                        LogService.WriteLog(LogLevel.WARNING, "Pause downloading list task failed.", e);
                         Result = false;
                     }
                 }
@@ -212,7 +211,7 @@ namespace GetStoreApp.Services.Controls.Download
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LogType.WARNING, "Pause all downloading list task failed.", e);
+                        LogService.WriteLog(LogLevel.WARNING, "Pause all downloading list task failed.", e);
                         continue;
                     }
                 }
@@ -227,7 +226,7 @@ namespace GetStoreApp.Services.Controls.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LogType.WARNING, "Pause all waiting list task failed.", e);
+                    LogService.WriteLog(LogLevel.WARNING, "Pause all waiting list task failed.", e);
                     continue;
                 }
             }
@@ -266,7 +265,7 @@ namespace GetStoreApp.Services.Controls.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LogType.WARNING, "Delete waiting list task failed.", e);
+                    LogService.WriteLog(LogLevel.WARNING, "Delete waiting list task failed.", e);
                     Result = false;
                 }
             }
@@ -291,7 +290,7 @@ namespace GetStoreApp.Services.Controls.Download
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LogType.WARNING, "Delete downloading list task failed.", e);
+                        LogService.WriteLog(LogLevel.WARNING, "Delete downloading list task failed.", e);
                         Result = false;
                     }
                 }
@@ -351,11 +350,11 @@ namespace GetStoreApp.Services.Controls.Download
                         // 发送通知
                         if (DownloadingList.Any() || WaitingList.Any())
                         {
-                            ToastNotificationService.Show(NotificationArgs.DownloadAborted, "DownloadingNow");
+                            ToastNotificationService.Show(NotificationKind.DownloadAborted, "DownloadingNow");
                         }
                         else
                         {
-                            ToastNotificationService.Show(NotificationArgs.DownloadAborted, "NotDownload");
+                            ToastNotificationService.Show(NotificationKind.DownloadAborted, "NotDownload");
                         }
                     }
 
@@ -409,7 +408,7 @@ namespace GetStoreApp.Services.Controls.Download
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LogType.WARNING, "Schedule add task failed.", e);
+                        LogService.WriteLog(LogLevel.WARNING, "Schedule add task failed.", e);
                         continue;
                     }
                 }
@@ -431,7 +430,7 @@ namespace GetStoreApp.Services.Controls.Download
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LogType.WARNING, "Schedule add task failed.", e);
+                        LogService.WriteLog(LogLevel.WARNING, "Schedule add task failed.", e);
                         continue;
                     }
                 }
@@ -507,7 +506,7 @@ namespace GetStoreApp.Services.Controls.Download
                 // 下载完成后发送通知
                 if (DownloadingList.Count is 0 && WaitingList.Count is 0)
                 {
-                    ToastNotificationService.Show(NotificationArgs.DownloadCompleted);
+                    ToastNotificationService.Show(NotificationKind.DownloadCompleted);
                 }
             }
         }

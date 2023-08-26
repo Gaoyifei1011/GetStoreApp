@@ -24,7 +24,7 @@ namespace GetStoreApp.Services.Root
 
         private static List<string> DesktopLaunchArgs;
 
-        private static MessageType SendMessageType = MessageType.None;
+        private static MessageKind SendMessageType = MessageKind.None;
 
         // 应用启动时使用的参数
         public static Dictionary<string, object> LaunchArgs { get; set; } = new Dictionary<string, object>()
@@ -63,7 +63,7 @@ namespace GetStoreApp.Services.Root
                 // 使用共享目标方式启动
                 case ActivationKind.ShareTarget:
                     {
-                        SendMessageType = MessageType.Information;
+                        SendMessageType = MessageKind.Information;
                         ShareOperation shareOperation = (ActivatedEventArgs as ShareTargetActivatedEventArgs).ShareOperation;
                         shareOperation.ReportCompleted();
                         LaunchArgs["Link"] = Convert.ToString(await shareOperation.Data.GetUriAsync());
@@ -72,7 +72,7 @@ namespace GetStoreApp.Services.Root
                 // 从系统通知处启动
                 case ActivationKind.ToastNotification:
                     {
-                        SendMessageType = MessageType.Notification;
+                        SendMessageType = MessageKind.Notification;
                         break;
                     }
                 // 其他方式
@@ -91,25 +91,25 @@ namespace GetStoreApp.Services.Root
         {
             if (DesktopLaunchArgs.Count is 0)
             {
-                SendMessageType = MessageType.Normal;
+                SendMessageType = MessageKind.Normal;
                 return;
             }
             else if (DesktopLaunchArgs.Count is 1)
             {
                 if (DesktopLaunchArgs[0] is "Restart")
                 {
-                    SendMessageType = MessageType.None;
+                    SendMessageType = MessageKind.None;
                     return;
                 }
                 else
                 {
-                    SendMessageType = MessageType.Information;
+                    SendMessageType = MessageKind.Information;
                     LaunchArgs["Link"] = DesktopLaunchArgs[0];
                 }
             }
             else
             {
-                SendMessageType = MessageType.Information;
+                SendMessageType = MessageKind.Information;
 
                 // 跳转列表启动的参数
                 if (DesktopLaunchArgs[0] is "JumpList")
@@ -168,11 +168,11 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static async Task DealLaunchArgsAsync()
         {
-            if (SendMessageType is MessageType.None)
+            if (SendMessageType is MessageKind.None)
             {
                 return;
             }
-            else if (SendMessageType is MessageType.Normal || SendMessageType is MessageType.Information)
+            else if (SendMessageType is MessageKind.Normal || SendMessageType is MessageKind.Information)
             {
                 bool isExisted = false;
 
@@ -207,7 +207,7 @@ namespace GetStoreApp.Services.Root
                 // 然后退出实例并停止
                 Program.IsNeedAppLaunch = !isExisted;
             }
-            else if (SendMessageType is MessageType.Notification)
+            else if (SendMessageType is MessageKind.Notification)
             {
                 bool isExisted = false;
                 string sendData = DesktopLaunchArgs[0];

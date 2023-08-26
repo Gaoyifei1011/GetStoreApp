@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Services.Controls.Settings.Common;
+﻿using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.WindowsAPI.PInvoke.Ole32;
 using Microsoft.Management.Deployment;
 using System;

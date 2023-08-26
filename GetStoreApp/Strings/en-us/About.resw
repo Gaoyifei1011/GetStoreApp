@@ -124,7 +124,7 @@
     <value>Open App settings</value>
   </data>
   <data name="AppVersion" xml:space="preserve">
-    <value>Application Version: {0}</value>
+    <value>Application Version: {0}.{1}.{2}.{3}</value>
   </data>
   <data name="Backdrop" xml:space="preserve">
     <value>Backdrop settings instructions</value>
@@ -212,6 +212,12 @@
   </data>
   <data name="DownloadSettings" xml:space="preserve">
     <value>Download settings</value>
+  </data>
+  <data name="EncryptedPackageButton" xml:space="preserve">
+    <value>Learn about encrypted packages</value>
+  </data>
+  <data name="EncryptedPackageInstruction" xml:space="preserve">
+    <value>The encrypted package files include '.eappx', '.eappxbundle', '.emsix', and '.emsixbundle'</value>
   </data>
   <data name="HeaderDescription" xml:space="preserve">
     <value>Welcome to download the GetStoreApp.Wish you a pleasant experience</value>
@@ -338,12 +344,6 @@
   </data>
   <data name="ShowReleaseNotesToolTip" xml:space="preserve">
     <value>Learn about app-specific updates</value>
-  </data>
-  <data name="StartsWithEButton" xml:space="preserve">
-    <value>Learn about files that begin with ".e"</value>
-  </data>
-  <data name="StartsWithEInstruction" xml:space="preserve">
-    <value>Files that begin with '.e' include files in the formats '.eappx', '.eappxbundle', '.emsix', '.emsixbundle'</value>
   </data>
   <data name="SystemInformation" xml:space="preserve">
     <value>View system information</value>

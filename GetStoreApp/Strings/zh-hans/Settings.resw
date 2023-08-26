@@ -243,6 +243,18 @@
   <data name="DownloadWithBrowser" xml:space="preserve">
     <value>使用浏览器下载</value>
   </data>
+  <data name="EncryptedPackage" xml:space="preserve">
+    <value>不显示加密包文件</value>
+  </data>
+  <data name="EncryptedPackageDescription" xml:space="preserve">
+    <value>该类型文件是从Windows 8.1应用商店以来提供的加密的应用程序包</value>
+  </data>
+  <data name="EncryptedPackageOffContent" xml:space="preserve">
+    <value>不过滤</value>
+  </data>
+  <data name="EncryptedPackageOnContent" xml:space="preserve">
+    <value>过滤</value>
+  </data>
   <data name="ExperimentalFeatures" xml:space="preserve">
     <value>实验性功能</value>
   </data>
@@ -374,18 +386,6 @@
   </data>
   <data name="SlientInstall" xml:space="preserve">
     <value>以静默方式安装</value>
-  </data>
-  <data name="StartsWithE" xml:space="preserve">
-    <value>不显示文件扩展名称以'.e'开头的文件</value>
-  </data>
-  <data name="StartsWithEDescription" xml:space="preserve">
-    <value>该类型文件是从Windows 8.1应用商店以来提供的加密的应用程序包</value>
-  </data>
-  <data name="StartsWithEOffContent" xml:space="preserve">
-    <value>不过滤</value>
-  </data>
-  <data name="StartsWithEOnContent" xml:space="preserve">
-    <value>过滤</value>
   </data>
   <data name="SystemBackdropSettings" xml:space="preserve">
     <value>系统背景色设置</value>

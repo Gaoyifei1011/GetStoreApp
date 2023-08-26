@@ -1,5 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Services.Controls.Settings.Common;
+using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Window;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
@@ -126,13 +126,13 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 显示通知
         /// </summary>
-        public static void Show(NotificationArgs notificationKey, params string[] notificationContent)
+        public static void Show(NotificationKind notificationKey, params string[] notificationContent)
         {
             if (NotificationService.AppNotification)
             {
                 switch (notificationKey)
                 {
-                    case NotificationArgs.DownloadAborted:
+                    case NotificationKind.DownloadAborted:
                         {
                             if (notificationContent.Length is 0) return;
 
@@ -157,7 +157,7 @@ namespace GetStoreApp.Services.Root
                         }
 
                     // 安装应用显示相应的通知
-                    case NotificationArgs.InstallApp:
+                    case NotificationKind.InstallApp:
                         {
                             if (notificationContent.Length is 0) return;
 
@@ -180,7 +180,7 @@ namespace GetStoreApp.Services.Root
                         }
 
                     // 所有任务下载完成时显示通知
-                    case NotificationArgs.DownloadCompleted:
+                    case NotificationKind.DownloadCompleted:
                         {
                             XmlDocument notificationDocument = new XmlDocument();
                             notificationDocument.LoadXml(ResourceService.GetLocalized("Notification/DownloadCompleted"));
@@ -189,7 +189,7 @@ namespace GetStoreApp.Services.Root
                             break;
                         }
                     // UWP 应用卸载成功通知
-                    case NotificationArgs.UWPUnInstallSuccessfully:
+                    case NotificationKind.UWPUnInstallSuccessfully:
                         {
                             XmlDocument notificationDocument = new XmlDocument();
                             notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/UWPUnInstallSuccessfully"), notificationContent[0]));
@@ -198,7 +198,7 @@ namespace GetStoreApp.Services.Root
                             break;
                         }
                     // UWP 应用卸载失败通知
-                    case NotificationArgs.UWPUnInstallFailed:
+                    case NotificationKind.UWPUnInstallFailed:
                         {
                             XmlDocument notificationDocument = new XmlDocument();
                             notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/UWPUnInstallFailed"), notificationContent[0], notificationContent[1], notificationContent[2]));
@@ -207,7 +207,7 @@ namespace GetStoreApp.Services.Root
                             break;
                         }
                     // WinGet 应用安装成功通知
-                    case NotificationArgs.WinGetInstallSuccessfully:
+                    case NotificationKind.WinGetInstallSuccessfully:
                         {
                             XmlDocument notificationDocument = new XmlDocument();
                             notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/WinGetInstallSuccessfully"), notificationContent[0]));
@@ -216,7 +216,7 @@ namespace GetStoreApp.Services.Root
                             break;
                         }
                     // WinGet 应用安装失败通知
-                    case NotificationArgs.WinGetInstallFailed:
+                    case NotificationKind.WinGetInstallFailed:
                         {
                             XmlDocument notificationDocument = new XmlDocument();
                             notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/WinGetInstallFailed"), notificationContent[0], notificationContent[1]));
@@ -225,7 +225,7 @@ namespace GetStoreApp.Services.Root
                             break;
                         }
                     // WinGet 应用卸载成功通知
-                    case NotificationArgs.WinGetUnInstallSuccessfully:
+                    case NotificationKind.WinGetUnInstallSuccessfully:
                         {
                             XmlDocument notificationDocument = new XmlDocument();
                             notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/WinGetUnInstallSuccessfully"), notificationContent[0]));
@@ -234,7 +234,7 @@ namespace GetStoreApp.Services.Root
                             break;
                         }
                     // WinGet 应用卸载失败通知
-                    case NotificationArgs.WinGetUnInstallFailed:
+                    case NotificationKind.WinGetUnInstallFailed:
                         {
                             XmlDocument notificationDocument = new XmlDocument();
                             notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/WinGetUnInstallFailed"), notificationContent[0]));
@@ -243,7 +243,7 @@ namespace GetStoreApp.Services.Root
                             break;
                         }
                     // WinGet 应用升级成功通知
-                    case NotificationArgs.WinGetUpgradeSuccessfully:
+                    case NotificationKind.WinGetUpgradeSuccessfully:
                         {
                             XmlDocument notificationDocument = new XmlDocument();
                             notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/WinGetUpgradeSuccessfully"), notificationContent[0]));
@@ -252,7 +252,7 @@ namespace GetStoreApp.Services.Root
                             break;
                         }
                     // WinGet 应用升级失败通知
-                    case NotificationArgs.WinGetUpgradeFailed:
+                    case NotificationKind.WinGetUpgradeFailed:
                         {
                             XmlDocument notificationDocument = new XmlDocument();
                             notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed"), notificationContent[0], notificationContent[1]));

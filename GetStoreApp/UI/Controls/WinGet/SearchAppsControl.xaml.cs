@@ -2,7 +2,7 @@ using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.WinGet;
-using GetStoreApp.Services.Controls.Settings.Common;
+using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.WinGet;
 using GetStoreApp.UI.Notifications;
@@ -270,7 +270,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             // 获取安装完成后的结果信息
                             if (installResult.Status is InstallResultStatus.Ok)
                             {
-                                ToastNotificationService.Show(NotificationArgs.WinGetInstallSuccessfully, searchApps.AppName);
+                                ToastNotificationService.Show(NotificationKind.WinGetInstallSuccessfully, searchApps.AppName);
 
                                 // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
                                 if (installResult.RebootRequired)
@@ -278,7 +278,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                     ContentDialogResult result = ContentDialogResult.None;
                                     DispatcherQueue.TryEnqueue(async () =>
                                     {
-                                        result = await ContentDialogHelper.ShowAsync(new RebootDialog(WinGetOptionArgs.UpgradeInstall, searchApps.AppName), this);
+                                        result = await ContentDialogHelper.ShowAsync(new RebootDialog(WinGetOptionKind.UpgradeInstall, searchApps.AppName), this);
                                         autoResetEvent.Set();
                                     });
 
@@ -318,7 +318,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             }
                             else
                             {
-                                ToastNotificationService.Show(NotificationArgs.WinGetInstallFailed, searchApps.AppName, searchApps.AppID);
+                                ToastNotificationService.Show(NotificationKind.WinGetInstallFailed, searchApps.AppName, searchApps.AppID);
                             }
 
                             DispatcherQueue.TryEnqueue(() =>
@@ -354,7 +354,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         // 操作被用户所取消异常
                         catch (OperationCanceledException e)
                         {
-                            LogService.WriteLog(LogType.INFO, "App installing operation canceled.", e);
+                            LogService.WriteLog(LogLevel.INFO, "App installing operation canceled.", e);
 
                             DispatcherQueue.TryEnqueue(() =>
                             {
@@ -389,7 +389,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         // 其他异常
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogType.ERROR, "App installing failed.", e);
+                            LogService.WriteLog(LogLevel.ERROR, "App installing failed.", e);
 
                             DispatcherQueue.TryEnqueue(() =>
                             {
@@ -421,7 +421,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                 }
                             });
 
-                            ToastNotificationService.Show(NotificationArgs.WinGetInstallFailed, searchApps.AppName, searchApps.AppID);
+                            ToastNotificationService.Show(NotificationKind.WinGetInstallFailed, searchApps.AppName, searchApps.AppID);
                         }
                     });
                 }
@@ -435,7 +435,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                     string copyContent = string.Format("winget install {0}", appId);
                     CopyPasteHelper.CopyToClipBoard(copyContent);
 
-                    new DataCopyNotification(this, DataCopyType.WinGetSearchInstall).Show();
+                    new DataCopyNotification(this, DataCopyKind.WinGetSearchInstall).Show();
                 }
             };
 
@@ -524,7 +524,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LogType.ERROR, "Search apps information initialized failed.", e);
+                    LogService.WriteLog(LogLevel.ERROR, "Search apps information initialized failed.", e);
                     return;
                 }
                 finally
@@ -604,7 +604,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogType.WARNING, "Get search apps information failed.", e);
+                LogService.WriteLog(LogLevel.WARNING, "Get search apps information failed.", e);
             }
         }
 

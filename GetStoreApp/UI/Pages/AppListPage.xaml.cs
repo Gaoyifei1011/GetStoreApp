@@ -101,22 +101,22 @@ namespace GetStoreApp.UI.Pages
             }
         }
 
-        private AppListRuleSeletedType _selectedType = AppListRuleSeletedType.PackageName;
+        private AppSortRuleKind _selectedRule = AppSortRuleKind.DisplayName;
 
-        public AppListRuleSeletedType SelectedType
+        public AppSortRuleKind SelectedRule
         {
-            get { return _selectedType; }
+            get { return _selectedRule; }
 
             set
             {
-                _selectedType = value;
+                _selectedRule = value;
                 OnPropertyChanged();
             }
         }
 
-        private PackageSignType _signType = PackageSignType.Store;
+        private PackageSignKind _signType = PackageSignKind.Store;
 
-        public PackageSignType SignType
+        public PackageSignKind SignType
         {
             get { return _signType; }
 
@@ -341,6 +341,7 @@ namespace GetStoreApp.UI.Pages
                                 }
                             }
 
+                            dependenciesList = dependenciesList.OrderBy(item => item.DisplayName).ToList();
                             packageDict["DependenciesList"] = dependenciesList;
                         }
                         catch
@@ -370,7 +371,7 @@ namespace GetStoreApp.UI.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogType.ERROR, string.Format("Open app {0} failed", package.DisplayName), e);
+                            LogService.WriteLog(LogLevel.ERROR, string.Format("Open app {0} failed", package.DisplayName), e);
                         }
                     });
                 }
@@ -390,7 +391,7 @@ namespace GetStoreApp.UI.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogType.ERROR, string.Format("Open microsoft store {0} failed", package.DisplayName), e);
+                            LogService.WriteLog(LogLevel.ERROR, string.Format("Open microsoft store {0} failed", package.DisplayName), e);
                         }
                     });
                 }
@@ -423,7 +424,7 @@ namespace GetStoreApp.UI.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogType.ERROR, string.Format("{0}'s AppxManifest.xml file open failed", package.DisplayName), e);
+                            LogService.WriteLog(LogLevel.ERROR, string.Format("{0}'s AppxManifest.xml file open failed", package.DisplayName), e);
                         }
                     });
                 }
@@ -443,7 +444,7 @@ namespace GetStoreApp.UI.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogType.WARNING, string.Format("{0} app installed folder open failed", package.DisplayName), e);
+                            LogService.WriteLog(LogLevel.WARNING, string.Format("{0} app installed folder open failed", package.DisplayName), e);
                         }
                     });
                 }
@@ -465,7 +466,7 @@ namespace GetStoreApp.UI.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogType.INFO, "Open app cache folder failed.", e);
+                            LogService.WriteLog(LogLevel.INFO, "Open app cache folder failed.", e);
                         }
                     });
                 }
@@ -510,7 +511,7 @@ namespace GetStoreApp.UI.Pages
                                             {
                                                 if (pacakgeItem.Package.Id.FullName == package.Id.FullName)
                                                 {
-                                                    ToastNotificationService.Show(NotificationArgs.UWPUnInstallSuccessfully, pacakgeItem.Package.DisplayName);
+                                                    ToastNotificationService.Show(NotificationKind.UWPUnInstallSuccessfully, pacakgeItem.Package.DisplayName);
 
                                                     UwpAppDataList.Remove(pacakgeItem);
                                                     break;
@@ -533,13 +534,13 @@ namespace GetStoreApp.UI.Pages
                                             {
                                                 if (pacakgeItem.Package.Id.FullName == package.Id.FullName)
                                                 {
-                                                    ToastNotificationService.Show(NotificationArgs.UWPUnInstallFailed,
+                                                    ToastNotificationService.Show(NotificationKind.UWPUnInstallFailed,
                                                         pacakgeItem.Package.DisplayName,
                                                         uninstallResult.ExtendedErrorCode.HResult.ToString(),
                                                         uninstallResult.ErrorText
                                                         );
 
-                                                    LogService.WriteLog(LogType.INFO, string.Format("UnInstall app {0} failed", pacakgeItem.Package.DisplayName), uninstallResult.ExtendedErrorCode);
+                                                    LogService.WriteLog(LogLevel.INFO, string.Format("UnInstall app {0} failed", pacakgeItem.Package.DisplayName), uninstallResult.ExtendedErrorCode);
 
                                                     pacakgeItem.IsUnInstalling = false;
                                                     break;
@@ -558,7 +559,7 @@ namespace GetStoreApp.UI.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LogType.INFO, string.Format("UnInstall app {0} failed", package.Id.FullName), e);
+                        LogService.WriteLog(LogLevel.INFO, string.Format("UnInstall app {0} failed", package.Id.FullName), e);
                     }
                 }
             };
@@ -577,6 +578,11 @@ namespace GetStoreApp.UI.Pages
             {
                 return string.Format(ResourceService.GetLocalized("UWPApp/PackageCountInfo"), count);
             }
+        }
+
+        public bool IsSelected(Enum value, Enum comparedValue)
+        {
+            return value.HasFlag(comparedValue);
         }
 
         /// <summary>
@@ -622,7 +628,7 @@ namespace GetStoreApp.UI.Pages
             ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
             if (toggleMenuFlyoutItem is not null)
             {
-                SelectedType = (AppListRuleSeletedType)toggleMenuFlyoutItem.Tag;
+                SelectedRule = (AppSortRuleKind)toggleMenuFlyoutItem.Tag;
                 InitializeData();
             }
         }
@@ -652,13 +658,13 @@ namespace GetStoreApp.UI.Pages
             ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
             if (toggleMenuFlyoutItem is not null)
             {
-                if (SignType.HasFlag((PackageSignType)toggleMenuFlyoutItem.Tag))
+                if (SignType.HasFlag((PackageSignKind)toggleMenuFlyoutItem.Tag))
                 {
-                    SignType &= ~(PackageSignType)toggleMenuFlyoutItem.Tag;
+                    SignType &= ~(PackageSignKind)toggleMenuFlyoutItem.Tag;
                 }
                 else
                 {
-                    SignType |= (PackageSignType)toggleMenuFlyoutItem.Tag;
+                    SignType |= (PackageSignKind)toggleMenuFlyoutItem.Tag;
                 }
 
                 InitializeData();
@@ -740,35 +746,35 @@ namespace GetStoreApp.UI.Pages
                     }
 
                     List<Package> filteredList = new List<Package>();
-                    if (SignType.HasFlag(PackageSignType.Store))
+                    if (SignType.HasFlag(PackageSignKind.Store))
                     {
                         filteredList.AddRange(appTypesList.Where(item => item.SignatureKind == PackageSignatureKind.Store));
                     }
 
-                    if (SignType.HasFlag(PackageSignType.System))
+                    if (SignType.HasFlag(PackageSignKind.System))
                     {
                         filteredList.AddRange(appTypesList.Where(item => item.SignatureKind == PackageSignatureKind.System));
                     }
 
-                    if (SignType.HasFlag(PackageSignType.Enterprise))
+                    if (SignType.HasFlag(PackageSignKind.Enterprise))
                     {
                         filteredList.AddRange(appTypesList.Where(item => item.SignatureKind == PackageSignatureKind.Enterprise));
                     }
 
-                    if (SignType.HasFlag(PackageSignType.Developer))
+                    if (SignType.HasFlag(PackageSignKind.Developer))
                     {
                         filteredList.AddRange(appTypesList.Where(item => item.SignatureKind == PackageSignatureKind.Developer));
                     }
 
-                    if (SignType.HasFlag(PackageSignType.None))
+                    if (SignType.HasFlag(PackageSignKind.None))
                     {
                         filteredList.AddRange(appTypesList.Where(item => item.SignatureKind == PackageSignatureKind.None));
                     }
 
                     // 对过滤后的列表数据进行排序
-                    switch (SelectedType)
+                    switch (SelectedRule)
                     {
-                        case AppListRuleSeletedType.PackageName:
+                        case AppSortRuleKind.DisplayName:
                             {
                                 if (IsIncrease)
                                 {
@@ -780,7 +786,7 @@ namespace GetStoreApp.UI.Pages
                                 }
                                 break;
                             }
-                        case AppListRuleSeletedType.PublisherName:
+                        case AppSortRuleKind.PublisherName:
                             {
                                 if (IsIncrease)
                                 {
@@ -792,7 +798,7 @@ namespace GetStoreApp.UI.Pages
                                 }
                                 break;
                             }
-                        case AppListRuleSeletedType.InstallDate:
+                        case AppSortRuleKind.InstallDate:
                             {
                                 if (IsIncrease)
                                 {

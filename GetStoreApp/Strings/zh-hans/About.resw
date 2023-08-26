@@ -124,7 +124,7 @@
     <value>打开应用设置</value>
   </data>
   <data name="AppVersion" xml:space="preserve">
-    <value>应用版本：{0}</value>
+    <value>应用版本：{0}.{1}.{2}.{3}</value>
   </data>
   <data name="Backdrop" xml:space="preserve">
     <value>背景色设置说明</value>
@@ -212,6 +212,12 @@
   </data>
   <data name="DownloadSettings" xml:space="preserve">
     <value>下载设置</value>
+  </data>
+  <data name="EncryptedPackageButton" xml:space="preserve">
+    <value>了解加密包</value>
+  </data>
+  <data name="EncryptedPackageInstruction" xml:space="preserve">
+    <value>加密包文件包括'.eappx'、'.eappxbundle'、 '.emsix'、'.emsixbundle'这些格式的文件</value>
   </data>
   <data name="HeaderDescription" xml:space="preserve">
     <value>欢迎大家下载获取商店应用，祝您使用愉快</value>
@@ -338,12 +344,6 @@
   </data>
   <data name="ShowReleaseNotesToolTip" xml:space="preserve">
     <value>了解应用具体的更新内容</value>
-  </data>
-  <data name="StartsWithEButton" xml:space="preserve">
-    <value>了解以“.e”开头的文件</value>
-  </data>
-  <data name="StartsWithEInstruction" xml:space="preserve">
-    <value>以'.e'开头的文件包括'.eappx'、'.eappxbundle'、 '.emsix'、'.emsixbundle'这些格式的文件</value>
   </data>
   <data name="SystemInformation" xml:space="preserve">
     <value>查看系统信息</value>

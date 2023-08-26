@@ -261,11 +261,32 @@
   <data name="SearchingApps" xml:space="preserve">
     <value>The application is searching, please wait...</value>
   </data>
+  <data name="Sort" xml:space="preserve">
+    <value>Sort</value>
+  </data>
+  <data name="SortByDisplayName" xml:space="preserve">
+    <value>Package name</value>
+  </data>
+  <data name="SortByPublisher" xml:space="preserve">
+    <value>Publisher name</value>
+  </data>
+  <data name="SortDecrease" xml:space="preserve">
+    <value>Decrease</value>
+  </data>
+  <data name="SortIncrease" xml:space="preserve">
+    <value>Increase</value>
+  </data>
   <data name="SortMode" xml:space="preserve">
     <value>Sorting mode</value>
   </data>
   <data name="SortRule" xml:space="preserve">
     <value>Sorting rules</value>
+  </data>
+  <data name="SortToolTip" xml:space="preserve">
+    <value>Sort according to the rules</value>
+  </data>
+  <data name="SortWay" xml:space="preserve">
+    <value>Sort way</value>
   </data>
   <data name="StopDownload" xml:space="preserve">
     <value>Stop download</value>

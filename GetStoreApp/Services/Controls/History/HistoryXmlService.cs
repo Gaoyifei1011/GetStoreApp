@@ -79,7 +79,7 @@ namespace GetStoreApp.Services.Controls.History
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogType.WARNING, "Add history record failed.", e);
+                LogService.WriteLog(LogLevel.WARNING, "Add history record failed.", e);
                 return;
             }
         }
@@ -91,7 +91,7 @@ namespace GetStoreApp.Services.Controls.History
         /// <param name="typeFilter">选择过滤的类型，默认为None，不过滤</param>
         /// <param name="channelFilter">选择过的通道，默认为None，不过滤</param>
         /// <returns>返回历史记录列表</returns>
-        public static async Task<(List<HistoryModel>, bool, bool)> QueryAllAsync(bool timeSortOrder = false, string typeFilter = "None", string channelFilter = "None")
+        public static async Task<(List<HistoryModel>, bool, bool)> QueryAllAsync(bool timeSortOrder = false, TypeKind typeFilter = TypeKind.None, ChannelKind channelFilter = ChannelKind.None)
         {
             List<HistoryModel> historyRawList = new List<HistoryModel>();
             bool isHistoryEmpty = true;
@@ -115,16 +115,16 @@ namespace GetStoreApp.Services.Controls.History
 
                             bool isfiltered = false;
                             // 类型过滤
-                            if (typeFilter is not "None")
+                            if (typeFilter is not TypeKind.None)
                             {
-                                FilteredResultList = FilteredResultList.Where(item => item.Attributes.GetNamedItem(HistoryType).InnerText.Equals(typeFilter, StringComparison.OrdinalIgnoreCase));
+                                FilteredResultList = FilteredResultList.Where(item => item.Attributes.GetNamedItem(HistoryType).InnerText.Equals(typeFilter.ToString(), StringComparison.OrdinalIgnoreCase));
                                 isfiltered = true;
                             }
 
                             // 通道过滤
-                            if (channelFilter is not "None")
+                            if (channelFilter is not ChannelKind.None)
                             {
-                                FilteredResultList = FilteredResultList.Where(item => item.Attributes.GetNamedItem(HistoryChannel).InnerText.Equals(channelFilter, StringComparison.OrdinalIgnoreCase));
+                                FilteredResultList = FilteredResultList.Where(item => item.Attributes.GetNamedItem(HistoryChannel).InnerText.Equals(channelFilter.ToString(), StringComparison.OrdinalIgnoreCase));
                                 isfiltered = true;
                             }
 
@@ -182,7 +182,7 @@ namespace GetStoreApp.Services.Controls.History
             {
                 isHistoryEmpty = true;
                 isHistoryEmptyAfterFilter = true;
-                LogService.WriteLog(LogType.WARNING, "Query history record with condition failed.", e);
+                LogService.WriteLog(LogLevel.WARNING, "Query history record with condition failed.", e);
                 return (historyRawList, isHistoryEmpty, isHistoryEmptyAfterFilter);
             }
         }
@@ -242,7 +242,7 @@ namespace GetStoreApp.Services.Controls.History
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogType.WARNING, "Query history record failed.", e);
+                LogService.WriteLog(LogLevel.WARNING, "Query history record failed.", e);
                 return HistoryRawList;
             }
         }
@@ -290,7 +290,7 @@ namespace GetStoreApp.Services.Controls.History
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogType.WARNING, "Delete history record failed.", e);
+                LogService.WriteLog(LogLevel.WARNING, "Delete history record failed.", e);
                 return false;
             }
         }
@@ -326,7 +326,7 @@ namespace GetStoreApp.Services.Controls.History
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogType.WARNING, "Clear history record failed.", e);
+                LogService.WriteLog(LogLevel.WARNING, "Clear history record failed.", e);
                 return false;
             }
         }

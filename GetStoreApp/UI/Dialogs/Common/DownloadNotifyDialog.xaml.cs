@@ -11,13 +11,13 @@ namespace GetStoreApp.UI.Dialogs.Common
     {
         public string DownloadNotifyContent { get; set; }
 
-        public DownloadNotifyDialog(DuplicatedDataInfoArgs duplicatedDataInfo)
+        public DownloadNotifyDialog(DuplicatedDataKind duplicatedDataInfo)
         {
             switch (duplicatedDataInfo)
             {
-                case DuplicatedDataInfoArgs.Unfinished: DownloadNotifyContent = ResourceService.GetLocalized("Dialog/DownloadUnfinishedContent"); break;
-                case DuplicatedDataInfoArgs.Completed: DownloadNotifyContent = ResourceService.GetLocalized("Dialog/DownloadCompletedContent"); break;
-                case DuplicatedDataInfoArgs.MultiRecord: DownloadNotifyContent = ResourceService.GetLocalized("Dialog/DownloadMultiRecordContent"); break;
+                case DuplicatedDataKind.Unfinished: DownloadNotifyContent = ResourceService.GetLocalized("Dialog/DownloadUnfinishedContent"); break;
+                case DuplicatedDataKind.Completed: DownloadNotifyContent = ResourceService.GetLocalized("Dialog/DownloadCompletedContent"); break;
+                case DuplicatedDataKind.MultiRecord: DownloadNotifyContent = ResourceService.GetLocalized("Dialog/DownloadMultiRecordContent"); break;
             }
 
             InitializeComponent();

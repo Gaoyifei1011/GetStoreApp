@@ -6,7 +6,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:notification="using:GetStoreApp.Views.CustomControls.Notifications"
     xmlns:root="using:GetStoreApp.Services.Root"
-    mc:Ignorable="d">
-
-    <TextBlock Foreground="{ThemeResource SystemFillColorSuccessBrush}" Text="{x:Bind root:ResourceService.GetLocalized('Notification/LanguageChange')}" />
-</notification:InAppNotification>
+    Content="{x:Bind root:ResourceService.GetLocalized('Notification/LanguageChange')}"
+    Foreground="{ThemeResource SystemFillColorSuccessBrush}"
+    mc:Ignorable="d" />

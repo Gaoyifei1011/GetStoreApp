@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
     xmlns:history="using:GetStoreApp.Models.Controls.History"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
@@ -133,95 +134,89 @@
 
                         <FlyoutBase.AttachedFlyout>
                             <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
-                                <MenuFlyoutSubItem Text="{x:Bind root:ResourceService.GetLocalized('History/Type')}">
-                                    <MenuFlyoutSubItem.Style>
-                                        <Style BasedOn="{StaticResource DefaultMenuFlyoutSubItemStyle}" TargetType="MenuFlyoutSubItem">
-                                            <Setter Property="Height" Value="32" />
-                                            <Setter Property="Padding" Value="11,0,11,0" />
-                                        </Style>
-                                    </MenuFlyoutSubItem.Style>
+                                <MenuFlyoutSubItem
+                                    Height="32"
+                                    Padding="11,0,11,0"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('History/Type')}">
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnTypeFilterClicked}"
-                                        IsChecked="{x:Bind sys:String.Equals(TypeFilter,'url'), Mode=OneWay}"
+                                        IsChecked="{x:Bind sys:Object.Equals(TypeFilter, enum:TypeKind.URL), Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
-                                        Tag="url"
+                                        Tag="{x:Bind enum:TypeKind.URL}"
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/URL')}" />
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnTypeFilterClicked}"
-                                        IsChecked="{x:Bind sys:String.Equals(TypeFilter,'ProductId'), Mode=OneWay}"
+                                        IsChecked="{x:Bind sys:Object.Equals(TypeFilter, enum:TypeKind.ProductId), Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
-                                        Tag="ProductId"
+                                        Tag="{x:Bind enum:TypeKind.ProductId}"
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/ProductID')}" />
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnTypeFilterClicked}"
-                                        IsChecked="{x:Bind sys:String.Equals(TypeFilter,'PackageFamilyName'), Mode=OneWay}"
+                                        IsChecked="{x:Bind sys:Object.Equals(TypeFilter, enum:TypeKind.PackageFamilyName), Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
-                                        Tag="PackageFamilyName"
+                                        Tag="{x:Bind enum:TypeKind.PackageFamilyName}"
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/PackageFamilyName')}" />
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnTypeFilterClicked}"
-                                        IsChecked="{x:Bind sys:String.Equals(TypeFilter,'CategoryId'), Mode=OneWay}"
+                                        IsChecked="{x:Bind sys:Object.Equals(TypeFilter, enum:TypeKind.CategoryId), Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
-                                        Tag="CategoryId"
+                                        Tag="{x:Bind enum:TypeKind.CategoryId}"
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/CategoryID')}" />
 
                                     <MenuFlyoutSeparator />
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnTypeFilterClicked}"
-                                        IsChecked="{x:Bind sys:String.Equals(TypeFilter,'None'), Mode=OneWay}"
+                                        IsChecked="{x:Bind sys:Object.Equals(TypeFilter, enum:TypeKind.None), Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
-                                        Tag="None"
+                                        Tag="{x:Bind enum:TypeKind.None}"
                                         Text="{x:Bind root:ResourceService.GetLocalized('History/None')}" />
                                 </MenuFlyoutSubItem>
 
-                                <MenuFlyoutSubItem Text="{x:Bind root:ResourceService.GetLocalized('History/Channel')}">
-                                    <MenuFlyoutSubItem.Style>
-                                        <Style BasedOn="{StaticResource DefaultMenuFlyoutSubItemStyle}" TargetType="MenuFlyoutSubItem">
-                                            <Setter Property="Height" Value="32" />
-                                            <Setter Property="Padding" Value="11,0,11,0" />
-                                        </Style>
-                                    </MenuFlyoutSubItem.Style>
+                                <MenuFlyoutSubItem
+                                    Height="32"
+                                    Padding="11,0,11,0"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('History/Channel')}">
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnChannelFilterClicked}"
-                                        IsChecked="{x:Bind sys:String.Equals(ChannelFilter,'WIF'), Mode=OneWay}"
+                                        IsChecked="{x:Bind sys:Object.Equals(ChannelFilter, enum:ChannelKind.WIF), Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
-                                        Tag="WIF"
+                                        Tag="{x:Bind enum:ChannelKind.WIF}"
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/Fast')}" />
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnChannelFilterClicked}"
-                                        IsChecked="{x:Bind sys:String.Equals(ChannelFilter,'WIS'), Mode=OneWay}"
+                                        IsChecked="{x:Bind sys:Object.Equals(ChannelFilter, enum:ChannelKind.WIS), Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
-                                        Tag="WIS"
+                                        Tag="{x:Bind enum:ChannelKind.WIS}"
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/Slow')}" />
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnChannelFilterClicked}"
-                                        IsChecked="{x:Bind sys:String.Equals(ChannelFilter,'RP'), Mode=OneWay}"
+                                        IsChecked="{x:Bind sys:Object.Equals(ChannelFilter, enum:ChannelKind.RP), Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
-                                        Tag="RP"
+                                        Tag="{x:Bind enum:ChannelKind.RP}"
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/RP')}" />
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnChannelFilterClicked}"
-                                        IsChecked="{x:Bind sys:String.Equals(ChannelFilter,'Retail'), Mode=OneWay}"
+                                        IsChecked="{x:Bind sys:Object.Equals(ChannelFilter, enum:ChannelKind.Retail), Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
-                                        Tag="Retail"
+                                        Tag="{x:Bind enum:ChannelKind.Retail}"
                                         Text="{x:Bind root:ResourceService.GetLocalized('Resources/Retail')}" />
 
                                     <MenuFlyoutSeparator />
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnChannelFilterClicked}"
-                                        IsChecked="{x:Bind sys:String.Equals(ChannelFilter,'None'), Mode=OneWay}"
+                                        IsChecked="{x:Bind sys:Object.Equals(ChannelFilter, enum:ChannelKind.None), Mode=OneWay}"
                                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
-                                        Tag="None"
+                                        Tag="{x:Bind enum:ChannelKind.None}"
                                         Text="{x:Bind root:ResourceService.GetLocalized('History/None')}" />
                                 </MenuFlyoutSubItem>
                             </MenuFlyout>

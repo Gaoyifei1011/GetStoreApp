@@ -2,7 +2,7 @@
 using GetStoreApp.Helpers.Controls.Store;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Store;
-using GetStoreApp.Services.Controls.Settings.Common;
+using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
@@ -45,7 +45,7 @@ namespace GetStoreApp.Services.Shell
         private static void ResultListFilter(ref List<ResultModel> resultDataList)
         {
             // 按要求过滤列表内容
-            if (LinkFilterService.StartWithEFilterValue)
+            if (LinkFilterService.EncryptedPackageFilterValue)
             {
                 resultDataList.RemoveAll(item =>
                 item.FileName.EndsWith(".eappx", StringComparison.OrdinalIgnoreCase) ||

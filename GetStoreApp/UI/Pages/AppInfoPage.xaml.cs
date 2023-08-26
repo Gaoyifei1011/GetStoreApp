@@ -311,7 +311,7 @@ namespace GetStoreApp.UI.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LogType.ERROR, string.Format("Open app {0} failed", appListEntryItem.DisplayName), e);
+                        LogService.WriteLog(LogLevel.ERROR, string.Format("Open app {0} failed", appListEntryItem.DisplayName), e);
                     }
                 });
             };
@@ -323,7 +323,7 @@ namespace GetStoreApp.UI.Pages
                 if (aumid is not null)
                 {
                     CopyPasteHelper.CopyToClipBoard(aumid);
-                    new DataCopyNotification(this, DataCopyType.AppUserModelId).Show();
+                    new DataCopyNotification(this, DataCopyKind.AppUserModelId).Show();
                 }
             };
 
@@ -343,13 +343,13 @@ namespace GetStoreApp.UI.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LogType.ERROR, "Create desktop shortcut failed.", e);
+                        LogService.WriteLog(LogLevel.ERROR, "Create desktop shortcut failed.", e);
                     }
                     finally
                     {
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            new QuickOperationNotification(this, QuickOperationType.DesktopShortcut, IsPinnedSuccessfully).Show();
+                            new QuickOperationNotification(this, QuickOperationKind.Desktop, IsPinnedSuccessfully).Show();
                         });
                     }
                 });
@@ -373,13 +373,13 @@ namespace GetStoreApp.UI.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogType.ERROR, "Pin app to startscreen failed.", e);
+                            LogService.WriteLog(LogLevel.ERROR, "Pin app to startscreen failed.", e);
                         }
                         finally
                         {
                             DispatcherQueue.TryEnqueue(() =>
                             {
-                                new QuickOperationNotification(this, QuickOperationType.StartScreen, IsPinnedSuccessfully).Show();
+                                new QuickOperationNotification(this, QuickOperationKind.StartScreen, IsPinnedSuccessfully).Show();
                             });
                         }
                     });
@@ -410,13 +410,13 @@ namespace GetStoreApp.UI.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogType.ERROR, "Pin app to taskbar failed.", e);
+                            LogService.WriteLog(LogLevel.ERROR, "Pin app to taskbar failed.", e);
                         }
                         finally
                         {
                             DispatcherQueue.TryEnqueue(() =>
                             {
-                                new QuickOperationNotification(this, QuickOperationType.Taskbar, IsPinnedSuccessfully).Show();
+                                new QuickOperationNotification(this, QuickOperationKind.Taskbar, IsPinnedSuccessfully).Show();
                             });
                         }
                     });
@@ -437,7 +437,7 @@ namespace GetStoreApp.UI.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogType.ERROR, string.Format("Open microsoft store {0} failed", package.DisplayName), e);
+                            LogService.WriteLog(LogLevel.ERROR, string.Format("Open microsoft store {0} failed", package.DisplayName), e);
                         }
                     });
                 }
@@ -457,7 +457,7 @@ namespace GetStoreApp.UI.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogType.WARNING, string.Format("{0} app installed folder open failed", package.DisplayName), e);
+                            LogService.WriteLog(LogLevel.WARNING, string.Format("{0} app installed folder open failed", package.DisplayName), e);
                         }
                     });
                 }
@@ -469,7 +469,7 @@ namespace GetStoreApp.UI.Pages
                 if (displayName is not null)
                 {
                     CopyPasteHelper.CopyToClipBoard(displayName);
-                    new DataCopyNotification(this, DataCopyType.DependencyName).Show();
+                    new DataCopyNotification(this, DataCopyKind.DependencyName).Show();
                 }
             };
 
@@ -490,12 +490,12 @@ namespace GetStoreApp.UI.Pages
                             DispatcherQueue.TryEnqueue(() =>
                             {
                                 CopyPasteHelper.CopyToClipBoard(copyBuilder.ToString());
-                                new DataCopyNotification(this, DataCopyType.DependencyInformation).Show();
+                                new DataCopyNotification(this, DataCopyKind.DependencyInformation).Show();
                             });
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogType.ERROR, "App information copy failed", e);
+                            LogService.WriteLog(LogLevel.ERROR, "App information copy failed", e);
                         }
                     });
                 }
@@ -543,7 +543,7 @@ namespace GetStoreApp.UI.Pages
                 DispatcherQueue.TryEnqueue(() =>
                 {
                     CopyPasteHelper.CopyToClipBoard(copyBuilder.ToString());
-                    new DataCopyNotification(this, DataCopyType.PackageInformation).Show();
+                    new DataCopyNotification(this, DataCopyKind.PackageInformation).Show();
                 });
             });
         }

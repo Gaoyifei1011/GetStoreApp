@@ -1,11 +1,14 @@
-﻿using GetStoreApp.Services.Controls.Download;
-using GetStoreApp.Services.Controls.Settings.Experiment;
-using GetStoreApp.UI.Controls.Settings.Experiment;
+﻿using GetStoreApp.Helpers.Root;
+using GetStoreApp.Services.Controls.Download;
+using GetStoreApp.Services.Controls.Settings;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using Windows.Storage;
+using Windows.System;
 
 namespace GetStoreApp.UI.Dialogs.Settings
 {
@@ -31,6 +34,19 @@ namespace GetStoreApp.UI.Dialogs.Settings
             }
         }
 
+        private bool _netWorkMonitorValue = NetWorkMonitorService.NetWorkMonitorValue;
+
+        public bool NetWorkMonitorValue
+        {
+            get { return _netWorkMonitorValue; }
+
+            set
+            {
+                _netWorkMonitorValue = value;
+                OnPropertyChanged();
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ExperimentalConfigDialog()
@@ -48,6 +64,54 @@ namespace GetStoreApp.UI.Dialogs.Settings
         }
 
         /// <summary>
+        /// 下载文件时“网络状态监控”开启设置
+        /// </summary>
+        public void OnToggled(object sender, RoutedEventArgs args)
+        {
+            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
+            if (toggleSwitch is not null)
+            {
+                NetWorkMonitorService.SetNetWorkMonitorValue(toggleSwitch.IsOn);
+                NetWorkMonitorValue = toggleSwitch.IsOn;
+            }
+        }
+
+        /// <summary>
+        /// 打开配置文件目录
+        /// </summary>
+        public void OnOpenConfigFileClicked(object sender, RoutedEventArgs args)
+        {
+            if (Aria2Service.Aria2ConfPath is not null)
+            {
+                Task.Run(async () =>
+                {
+                    string filePath = Aria2Service.Aria2ConfPath.Replace(@"\\", @"\");
+
+                    // 定位文件，若定位失败，则仅启动资源管理器并打开桌面目录
+                    if (!string.IsNullOrEmpty(filePath))
+                    {
+                        try
+                        {
+                            StorageFile file = await StorageFile.GetFileFromPathAsync(filePath);
+                            StorageFolder folder = await file.GetParentAsync();
+                            FolderLauncherOptions options = new FolderLauncherOptions();
+                            options.ItemsToSelect.Add(file);
+                            await Launcher.LaunchFolderAsync(folder, options);
+                        }
+                        catch (Exception)
+                        {
+                            await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
+                        }
+                    }
+                    else
+                    {
+                        await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
+                    }
+                });
+            }
+        }
+
+        /// <summary>
         /// 还原默认值
         /// </summary>
         public void OnRestoreDefaultClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -56,7 +120,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
 
             if (sender.Tag is not null)
             {
-                ((NetWorkMonitorControl)sender.Tag).NetWorkMonitorValue = true;
+                NetWorkMonitorValue = true;
                 Aria2Service.RestoreDefault();
                 NetWorkMonitorService.RestoreDefaultValue();
 

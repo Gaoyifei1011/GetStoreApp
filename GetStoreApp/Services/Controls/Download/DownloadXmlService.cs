@@ -92,7 +92,7 @@ namespace GetStoreApp.Services.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogType.WARNING, "InitializeHistoryRecord download record state failed.", e);
+                LogService.WriteLog(LogLevel.WARNING, "InitializeHistoryRecord download record state failed.", e);
                 return;
             }
         }
@@ -140,7 +140,7 @@ namespace GetStoreApp.Services.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogType.WARNING, "Add download record failed.", e);
+                LogService.WriteLog(LogLevel.WARNING, "Add download record failed.", e);
                 return false;
             }
         }
@@ -192,7 +192,7 @@ namespace GetStoreApp.Services.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogType.WARNING, "Update download record flag failed.", e);
+                LogService.WriteLog(LogLevel.WARNING, "Update download record flag failed.", e);
             }
             return isUpdatedSuccessfully;
         }
@@ -244,7 +244,7 @@ namespace GetStoreApp.Services.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogType.WARNING, "Update file size failed.", e);
+                LogService.WriteLog(LogLevel.WARNING, "Update file size failed.", e);
             }
             return isUpdatedSuccessfully;
         }
@@ -296,7 +296,7 @@ namespace GetStoreApp.Services.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogType.WARNING, "Query download record with flag failed.", e);
+                LogService.WriteLog(LogLevel.WARNING, "Query download record with flag failed.", e);
                 return DownloadRawList;
             }
         }
@@ -345,7 +345,7 @@ namespace GetStoreApp.Services.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogType.WARNING, "Query download record with downloadKey failed.", e);
+                LogService.WriteLog(LogLevel.WARNING, "Query download record with downloadKey failed.", e);
                 return downloadRawModel;
             }
         }
@@ -353,9 +353,9 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 检查是否存在相同键值的数据
         /// </summary>
-        public static async Task<DuplicatedDataInfoArgs> CheckDuplicatedAsync(string downloadKey)
+        public static async Task<DuplicatedDataKind> CheckDuplicatedAsync(string downloadKey)
         {
-            DuplicatedDataInfoArgs duplicatedDataInfo = DuplicatedDataInfoArgs.None;
+            DuplicatedDataKind duplicatedDataInfo = DuplicatedDataKind.None;
 
             try
             {
@@ -379,11 +379,11 @@ namespace GetStoreApp.Services.Controls.Download
                                 int downloadFlag = Convert.ToInt32(downloadItemElement.Attributes.GetNamedItem(DownloadFlag).InnerText);
                                 if (downloadFlag is 4)
                                 {
-                                    duplicatedDataInfo = DuplicatedDataInfoArgs.Completed;
+                                    duplicatedDataInfo = DuplicatedDataKind.Completed;
                                 }
                                 else
                                 {
-                                    duplicatedDataInfo = DuplicatedDataInfoArgs.Unfinished;
+                                    duplicatedDataInfo = DuplicatedDataKind.Unfinished;
                                 }
                             }
                         }
@@ -393,7 +393,7 @@ namespace GetStoreApp.Services.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogType.WARNING, "Check duplicated download data record failed.", e);
+                LogService.WriteLog(LogLevel.WARNING, "Check duplicated download data record failed.", e);
                 return duplicatedDataInfo;
             }
         }
@@ -445,7 +445,7 @@ namespace GetStoreApp.Services.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogType.WARNING, "Delete download record failed.", e);
+                LogService.WriteLog(LogLevel.WARNING, "Delete download record failed.", e);
             }
             return isDeleteSuccessfully;
         }
@@ -500,7 +500,7 @@ namespace GetStoreApp.Services.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogType.WARNING, "Delete selected download record failed.", e);
+                LogService.WriteLog(LogLevel.WARNING, "Delete selected download record failed.", e);
             }
             return isDeleteSuccessfully;
         }
@@ -542,7 +542,7 @@ namespace GetStoreApp.Services.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogType.WARNING, "Clear download record failed.", e);
+                LogService.WriteLog(LogLevel.WARNING, "Clear download record failed.", e);
                 return false;
             }
         }

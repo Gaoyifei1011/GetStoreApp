@@ -8,8 +8,7 @@ using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.History;
-using GetStoreApp.Services.Controls.Settings.Common;
-using GetStoreApp.Services.Controls.Settings.Experiment;
+using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Common;
@@ -252,7 +251,7 @@ namespace GetStoreApp.Views.Pages
                         historyItem.HistoryLink);
                     CopyPasteHelper.CopyToClipBoard(copyContent);
 
-                    new DataCopyNotification(this, DataCopyType.History, false).Show();
+                    new DataCopyNotification(this, DataCopyKind.History, false).Show();
                 }
             };
 
@@ -311,11 +310,11 @@ namespace GetStoreApp.Views.Pages
                             };
 
                             // 检查是否存在相同的任务记录
-                            DuplicatedDataInfoArgs CheckResult = await DownloadXmlService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
+                            DuplicatedDataKind CheckResult = await DownloadXmlService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
 
                             switch (CheckResult)
                             {
-                                case DuplicatedDataInfoArgs.None:
+                                case DuplicatedDataKind.None:
                                     {
                                         bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add");
                                         DispatcherQueue.TryEnqueue(() =>
@@ -325,13 +324,13 @@ namespace GetStoreApp.Views.Pages
                                         break;
                                     }
 
-                                case DuplicatedDataInfoArgs.Unfinished:
+                                case DuplicatedDataKind.Unfinished:
                                     {
                                         ContentDialogResult result = ContentDialogResult.None;
 
                                         DispatcherQueue.TryEnqueue(async () =>
                                         {
-                                            result = await ContentDialogHelper.ShowAsync(new DownloadNotifyDialog(DuplicatedDataInfoArgs.Unfinished), this);
+                                            result = await ContentDialogHelper.ShowAsync(new DownloadNotifyDialog(DuplicatedDataKind.Unfinished), this);
                                             autoResetEvent.Set();
                                         });
 
@@ -348,7 +347,7 @@ namespace GetStoreApp.Views.Pages
                                             }
                                             catch (Exception e)
                                             {
-                                                LogService.WriteLog(LogType.WARNING, "Delete duplicated unfinished downloaded file failed.", e);
+                                                LogService.WriteLog(LogLevel.WARNING, "Delete duplicated unfinished downloaded file failed.", e);
                                             }
                                             finally
                                             {
@@ -369,13 +368,13 @@ namespace GetStoreApp.Views.Pages
                                         break;
                                     }
 
-                                case DuplicatedDataInfoArgs.Completed:
+                                case DuplicatedDataKind.Completed:
                                     {
                                         ContentDialogResult result = ContentDialogResult.None;
 
                                         DispatcherQueue.TryEnqueue(async () =>
                                         {
-                                            result = await ContentDialogHelper.ShowAsync(new DownloadNotifyDialog(DuplicatedDataInfoArgs.Completed), this);
+                                            result = await ContentDialogHelper.ShowAsync(new DownloadNotifyDialog(DuplicatedDataKind.Completed), this);
                                             autoResetEvent.Set();
                                         });
 
@@ -392,7 +391,7 @@ namespace GetStoreApp.Views.Pages
                                             }
                                             catch (Exception e)
                                             {
-                                                LogService.WriteLog(LogType.WARNING, "Delete duplicated completed downloaded file failed.", e);
+                                                LogService.WriteLog(LogLevel.WARNING, "Delete duplicated completed downloaded file failed.", e);
                                             }
                                             finally
                                             {
@@ -433,7 +432,7 @@ namespace GetStoreApp.Views.Pages
                 if (fileLink is not null)
                 {
                     CopyPasteHelper.CopyToClipBoard(fileLink);
-                    new DataCopyNotification(this, DataCopyType.ResultLink, false).Show();
+                    new DataCopyNotification(this, DataCopyKind.ResultLink, false).Show();
                 }
             };
 
@@ -450,7 +449,7 @@ namespace GetStoreApp.Views.Pages
                         );
 
                     CopyPasteHelper.CopyToClipBoard(copyContent);
-                    new DataCopyNotification(this, DataCopyType.ResultContent, false).Show();
+                    new DataCopyNotification(this, DataCopyKind.ResultContent, false).Show();
                 }
             };
         }
@@ -578,7 +577,7 @@ namespace GetStoreApp.Views.Pages
         public void OnCopyIDClicked(object sender, RoutedEventArgs args)
         {
             CopyPasteHelper.CopyToClipBoard(CategoryId);
-            new DataCopyNotification(this, DataCopyType.ResultID).Show();
+            new DataCopyNotification(this, DataCopyKind.ResultID).Show();
         }
 
         /// <summary>
@@ -668,7 +667,7 @@ namespace GetStoreApp.Views.Pages
                 DispatcherQueue.TryEnqueue(() =>
                 {
                     CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
-                    new DataCopyNotification(this, DataCopyType.ResultContent, true, selectedResultDataList.Count).Show();
+                    new DataCopyNotification(this, DataCopyKind.ResultContent, true, selectedResultDataList.Count).Show();
                 });
             });
         }
@@ -702,7 +701,7 @@ namespace GetStoreApp.Views.Pages
                 DispatcherQueue.TryEnqueue(() =>
                 {
                     CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
-                    new DataCopyNotification(this, DataCopyType.ResultLink, true, selectedResultDataList.Count).Show();
+                    new DataCopyNotification(this, DataCopyKind.ResultLink, true, selectedResultDataList.Count).Show();
                 });
             });
         }
@@ -765,9 +764,9 @@ namespace GetStoreApp.Views.Pages
                             DownloadFlag = 1
                         };
 
-                        DuplicatedDataInfoArgs CheckResult = await DownloadXmlService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
+                        DuplicatedDataKind CheckResult = await DownloadXmlService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
 
-                        if (CheckResult is DuplicatedDataInfoArgs.None)
+                        if (CheckResult is DuplicatedDataKind.None)
                         {
                             await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add");
                             IsDownloadSuccessfully = true;
@@ -784,7 +783,7 @@ namespace GetStoreApp.Views.Pages
 
                         DispatcherQueue.TryEnqueue(async () =>
                         {
-                            result = await ContentDialogHelper.ShowAsync(new DownloadNotifyDialog(DuplicatedDataInfoArgs.MultiRecord), this);
+                            result = await ContentDialogHelper.ShowAsync(new DownloadNotifyDialog(DuplicatedDataKind.MultiRecord), this);
                             autoResetEvent.Set();
                         });
 
@@ -804,7 +803,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                                 catch (Exception e)
                                 {
-                                    LogService.WriteLog(LogType.WARNING, "Delete duplicated downloaded file failed.", e);
+                                    LogService.WriteLog(LogLevel.WARNING, "Delete duplicated downloaded file failed.", e);
                                 }
                                 finally
                                 {
@@ -1027,7 +1026,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void ResultListFilter(ref List<ResultModel> resultDataList)
         {
-            if (LinkFilterService.StartWithEFilterValue)
+            if (LinkFilterService.EncryptedPackageFilterValue)
             {
                 resultDataList.RemoveAll(item =>
                 item.FileName.EndsWith(".eappx", StringComparison.OrdinalIgnoreCase) ||

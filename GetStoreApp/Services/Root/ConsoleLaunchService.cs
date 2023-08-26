@@ -87,7 +87,7 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeRequestContent()
         {
-            if (GetLaunchMode() is ConsoleLaunchModeArgs.WithoutQuery)
+            if (ConsoleLaunchArgs.Count is not 1)
             {
                 ParseLaunchArgs();
                 RequestService.InitializeWithoutQueryData();
@@ -108,7 +108,7 @@ namespace GetStoreApp.Services.Root
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LogType.WARNING, "Parse console params(type) failed.", e);
+                    LogService.WriteLog(LogLevel.WARNING, "Parse console params(type) failed.", e);
                     typeIndex = 1;
                 }
 
@@ -126,7 +126,7 @@ namespace GetStoreApp.Services.Root
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LogType.WARNING, "Parse console params(channel) failed.", e);
+                    LogService.WriteLog(LogLevel.WARNING, "Parse console params(channel) failed.", e);
                     channelIndex = 4;
                 }
 
@@ -135,21 +135,6 @@ namespace GetStoreApp.Services.Root
                 string link = ConsoleHelper.ReadLine();
 
                 RequestService.InitializeQueryData(typeIndex, channelIndex, link);
-            }
-        }
-
-        /// <summary>
-        /// 获取控制台应用的启动方式
-        /// </summary>
-        private static ConsoleLaunchModeArgs GetLaunchMode()
-        {
-            if (ConsoleLaunchArgs.Count is 1)
-            {
-                return ConsoleLaunchModeArgs.NeedQuery;
-            }
-            else
-            {
-                return ConsoleLaunchModeArgs.WithoutQuery;
             }
         }
 

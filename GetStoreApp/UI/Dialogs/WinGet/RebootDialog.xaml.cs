@@ -11,22 +11,22 @@ namespace GetStoreApp.UI.Dialogs.WinGet
     {
         public string RebootContent { get; set; }
 
-        public RebootDialog(WinGetOptionArgs options, string appName)
+        public RebootDialog(WinGetOptionKind options, string appName)
         {
             InitializeComponent();
             switch (options)
             {
-                case WinGetOptionArgs.SearchInstall:
+                case WinGetOptionKind.SearchInstall:
                     {
                         RebootContent = string.Format(ResourceService.GetLocalized("Dialog/InstallNeedReboot"), appName);
                         break;
                     }
-                case WinGetOptionArgs.UnInstall:
+                case WinGetOptionKind.UnInstall:
                     {
                         RebootContent = string.Format(ResourceService.GetLocalized("Dialog/UnInstallNeedReboot"), appName);
                         break;
                     }
-                case WinGetOptionArgs.UpgradeInstall:
+                case WinGetOptionKind.UpgradeInstall:
                     {
                         RebootContent = string.Format(ResourceService.GetLocalized("Dialog/UpgradeNeedReboot"), appName);
                         break;

@@ -243,6 +243,18 @@
   <data name="DownloadWithBrowser" xml:space="preserve">
     <value>Download using the browser</value>
   </data>
+  <data name="EncryptedPackage" xml:space="preserve">
+    <value>The encrypted package file is not displayed</value>
+  </data>
+  <data name="EncryptedPackageDescription" xml:space="preserve">
+    <value>This type of file is an encrypted application package that has been available since the Windows 8.1 Store</value>
+  </data>
+  <data name="EncryptedPackageOffContent" xml:space="preserve">
+    <value>Do not filter</value>
+  </data>
+  <data name="EncryptedPackageOnContent" xml:space="preserve">
+    <value>filter</value>
+  </data>
   <data name="ExperimentalFeatures" xml:space="preserve">
     <value>Experimental features</value>
   </data>
@@ -374,18 +386,6 @@
   </data>
   <data name="SlientInstall" xml:space="preserve">
     <value>Install sliently</value>
-  </data>
-  <data name="StartsWithE" xml:space="preserve">
-    <value>Files whose file extension begins with '.e' is not displayed</value>
-  </data>
-  <data name="StartsWithEDescription" xml:space="preserve">
-    <value>This type of file is an encrypted application package that has been available since the Windows 8.1 Store</value>
-  </data>
-  <data name="StartsWithEOffContent" xml:space="preserve">
-    <value>Do not filter</value>
-  </data>
-  <data name="StartsWithEOnContent" xml:space="preserve">
-    <value>filter</value>
   </data>
   <data name="SystemBackdropSettings" xml:space="preserve">
     <value>System backdrop settings</value>

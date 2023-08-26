@@ -5,8 +5,10 @@
     xmlns:basicInput="using:GetStoreApp.Views.CustomControls.BasicInput"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:sys="using:System"
     xmlns:winget="using:GetStoreApp.Models.Controls.WinGet"
     x:Name="InstalledAppsRoot"
     Padding="0"
@@ -81,6 +83,62 @@
             VerticalAlignment="Center"
             Background="Transparent"
             Orientation="Horizontal">
+
+            <MenuFlyoutItem
+                Click="{x:Bind OnSortClicked}"
+                IsEnabled="{x:Bind IsLoadedCompleted, Mode=OneWay}"
+                Style="{StaticResource AppBarButtonMenuItemStyle}"
+                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Sort')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/SortToolTip')}">
+
+                <MenuFlyoutItem.Icon>
+                    <FontIcon Glyph="&#xE8CB;" />
+                </MenuFlyoutItem.Icon>
+
+                <FlyoutBase.AttachedFlyout>
+                    <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
+                        <MenuFlyoutSubItem
+                            Height="32"
+                            Padding="11,0,11,0"
+                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortWay')}">
+
+                            <ToggleMenuFlyoutItem
+                                Click="{x:Bind OnSortWayClicked}"
+                                IsChecked="{x:Bind IsIncrease, Mode=OneWay}"
+                                Style="{StaticResource ToggleMenuFlyoutItemStyle}"
+                                Tag="True"
+                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortIncrease')}" />
+
+                            <ToggleMenuFlyoutItem
+                                Click="{x:Bind OnSortWayClicked}"
+                                IsChecked="{x:Bind IsIncrease.Equals(x:False), Mode=OneWay}"
+                                Style="{StaticResource ToggleMenuFlyoutItemStyle}"
+                                Tag="False"
+                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortDecrease')}" />
+                        </MenuFlyoutSubItem>
+
+                        <MenuFlyoutSubItem
+                            Height="32"
+                            Padding="11,0,11,0"
+                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortRule')}">
+
+                            <ToggleMenuFlyoutItem
+                                Click="{x:Bind OnSortRuleClicked}"
+                                IsChecked="{x:Bind sys:Object.Equals(SelectedRule, enum:AppSortRuleKind.DisplayName), Mode=OneWay}"
+                                Style="{StaticResource ToggleMenuFlyoutItemStyle}"
+                                Tag="{x:Bind enum:AppSortRuleKind.DisplayName}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortByDisplayName')}" />
+
+                            <ToggleMenuFlyoutItem
+                                Click="{x:Bind OnSortRuleClicked}"
+                                IsChecked="{x:Bind sys:Object.Equals(SelectedRule, enum:AppSortRuleKind.PublisherName), Mode=OneWay}"
+                                Style="{StaticResource ToggleMenuFlyoutItemStyle}"
+                                Tag="{x:Bind enum:AppSortRuleKind.PublisherName}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortByPublisher')}" />
+                        </MenuFlyoutSubItem>
+                    </MenuFlyout>
+                </FlyoutBase.AttachedFlyout>
+            </MenuFlyoutItem>
 
             <MenuFlyoutItem
                 Click="{x:Bind OnRefreshClicked}"
