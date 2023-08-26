@@ -265,7 +265,7 @@
     <value>排序</value>
   </data>
   <data name="SortByDisplayName" xml:space="preserve">
-    <value>应用包名称</value>
+    <value>应用名称</value>
   </data>
   <data name="SortByPublisher" xml:space="preserve">
     <value>发布者名称</value>

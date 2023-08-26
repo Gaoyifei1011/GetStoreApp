@@ -20,7 +20,7 @@
         <Setter Property="FocusVisualMargin" Value="-1" />
         <Setter Property="IsTabStop" Value="True" />
         <Setter Property="Padding" Value="{ThemeResource ButtonPadding}" />
-        <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
+        <Setter Property="CornerRadius" Value="{StaticResource ControlCornerRadius}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="basicInput:ExtendedSplitButton">

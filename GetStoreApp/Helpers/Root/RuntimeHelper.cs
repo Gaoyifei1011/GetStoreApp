@@ -1,5 +1,4 @@
-﻿using GetStoreApp.WindowsAPI.PInvoke;
-using GetStoreApp.WindowsAPI.PInvoke.Advapi32;
+﻿using GetStoreApp.WindowsAPI.PInvoke.Advapi32;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using System;
 using System.Runtime.InteropServices;

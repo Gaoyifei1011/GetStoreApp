@@ -82,6 +82,7 @@
 | 控制台应用程序（快速下载）      | 已完成                                                             |
 | 程序性能优化                    | 已完成                                                             |
 | 界面现代化改造                  | 已完成                                                             |
+| 应用包管理                      | 已完成                                                             |
 
 程序所有功能都已开发完成
 
@@ -89,6 +90,8 @@
 
 ### 项目引用（按英文首字母排序）
 
+> * [Microsoft.NET.ILLink.Analyzers](https://github.com/dotnet/linker)&emsp;
+> * [Microsoft.NET.ILLink.Tasks](https://github.com/dotnet/linker)&emsp;
 > * [Microsoft.Windows.CsWinRT](https://github.com/microsoft/cswinrt)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Microsoft.WindowsPackageManager.ComInterop](https://github.com/microsoft/winget-cli)&emsp;

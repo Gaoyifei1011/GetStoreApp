@@ -247,7 +247,7 @@
                             HorizontalContentAlignment="Stretch"
                             BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}"
                             BorderThickness="1"
-                            CornerRadius="{ThemeResource ControlCornerRadius}"
+                            CornerRadius="{StaticResource ControlCornerRadius}"
                             ItemsSource="{x:Bind ReferenceList}"
                             SelectionMode="None">
 
@@ -783,7 +783,7 @@
                                 HorizontalContentAlignment="Stretch"
                                 BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}"
                                 BorderThickness="1"
-                                CornerRadius="{ThemeResource ControlCornerRadius}"
+                                CornerRadius="{StaticResource ControlCornerRadius}"
                                 ItemsSource="{x:Bind ThanksList}"
                                 SelectionMode="None">
 

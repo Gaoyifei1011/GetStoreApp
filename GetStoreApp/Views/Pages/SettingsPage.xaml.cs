@@ -403,51 +403,11 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 开关按钮切换时修改相应设置
-        /// </summary>
-        public void OnAlwaysShowBackdropToggled(object sender, RoutedEventArgs args)
-        {
-            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
-            if (toggleSwitch is not null)
-            {
-                AlwaysShowBackdropService.SetAlwaysShowBackdrop(toggleSwitch.IsOn);
-                AlwaysShowBackdropValue = toggleSwitch.IsOn;
-            }
-        }
-
-        /// <summary>
-        /// 是否开启应用窗口置顶
-        /// </summary>
-        public void OnTopMostToggled(object sender, RoutedEventArgs args)
-        {
-            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
-            if (toggleSwitch is not null)
-            {
-                TopMostService.SetTopMostValue(toggleSwitch.IsOn);
-                TopMostService.SetAppTopMost();
-                TopMostValue = toggleSwitch.IsOn;
-            }
-        }
-
-        /// <summary>
         /// 打开系统通知设置
         /// </summary>
         public async void OnSystemNotificationSettingsClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:notifications"));
-        }
-
-        /// <summary>
-        /// 设置是否开启应用通知
-        /// </summary>
-        public void OnNotificationToggled(object sender, RoutedEventArgs args)
-        {
-            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
-            if (toggleSwitch is not null)
-            {
-                NotificationService.SetNotification(toggleSwitch.IsOn);
-                Notification = toggleSwitch.IsOn;
-            }
         }
 
         /// <summary>
@@ -468,32 +428,6 @@ namespace GetStoreApp.Views.Pages
             {
                 HistoryLiteItem = HistoryLiteNumList[Convert.ToInt32(item.Tag)];
                 HistoryRecordService.SetHistoryLiteNum(HistoryLiteItem);
-            }
-        }
-
-        /// <summary>
-        /// 设置是否过滤加密包文件
-        /// </summary>
-        public void OnStartWithEToggled(object sender, RoutedEventArgs args)
-        {
-            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
-            if (toggleSwitch is not null)
-            {
-                LinkFilterService.SetEncryptedPackageFilterValue(toggleSwitch.IsOn);
-                EncryptedPackageFilterValue = toggleSwitch.IsOn;
-            }
-        }
-
-        /// <summary>
-        /// 设置是否过滤包块映射文件
-        /// </summary>
-        public void OnBlockMapToggled(object sender, RoutedEventArgs args)
-        {
-            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
-            if (toggleSwitch is not null)
-            {
-                LinkFilterService.SetBlockMapFilterValue(toggleSwitch.IsOn);
-                BlockMapFilterValue = toggleSwitch.IsOn;
             }
         }
 
@@ -544,19 +478,6 @@ namespace GetStoreApp.Views.Pages
                     }
                 }
             });
-        }
-
-        /// <summary>
-        /// 当两个版本共存时，设置是否优先使用开发版本
-        /// </summary>
-        public void OnWinGetConfigToggled(object sender, RoutedEventArgs args)
-        {
-            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
-            if (toggleSwitch is not null)
-            {
-                WinGetConfigService.SetUseDevVersion(toggleSwitch.IsOn);
-                UseDevVersion = toggleSwitch.IsOn;
-            }
         }
 
         /// <summary>
@@ -691,6 +612,85 @@ namespace GetStoreApp.Views.Pages
         {
             bool result = LogService.ClearLog();
             new LogCleanNotification(this, result).Show();
+        }
+
+        /// <summary>
+        /// 开关按钮切换时修改相应设置
+        /// </summary>
+        public void OnAlwaysShowBackdropToggled(object sender, RoutedEventArgs args)
+        {
+            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
+            if (toggleSwitch is not null)
+            {
+                AlwaysShowBackdropService.SetAlwaysShowBackdrop(toggleSwitch.IsOn);
+                AlwaysShowBackdropValue = toggleSwitch.IsOn;
+            }
+        }
+
+        /// <summary>
+        /// 是否开启应用窗口置顶
+        /// </summary>
+        public void OnTopMostToggled(object sender, RoutedEventArgs args)
+        {
+            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
+            if (toggleSwitch is not null)
+            {
+                TopMostService.SetTopMostValue(toggleSwitch.IsOn);
+                TopMostService.SetAppTopMost();
+                TopMostValue = toggleSwitch.IsOn;
+            }
+        }
+
+        /// <summary>
+        /// 设置是否开启应用通知
+        /// </summary>
+        public void OnNotificationToggled(object sender, RoutedEventArgs args)
+        {
+            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
+            if (toggleSwitch is not null)
+            {
+                NotificationService.SetNotification(toggleSwitch.IsOn);
+                Notification = toggleSwitch.IsOn;
+            }
+        }
+
+        /// <summary>
+        /// 设置是否过滤加密包文件
+        /// </summary>
+        public void OnStartWithEToggled(object sender, RoutedEventArgs args)
+        {
+            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
+            if (toggleSwitch is not null)
+            {
+                LinkFilterService.SetEncryptedPackageFilterValue(toggleSwitch.IsOn);
+                EncryptedPackageFilterValue = toggleSwitch.IsOn;
+            }
+        }
+
+        /// <summary>
+        /// 设置是否过滤包块映射文件
+        /// </summary>
+        public void OnBlockMapToggled(object sender, RoutedEventArgs args)
+        {
+            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
+            if (toggleSwitch is not null)
+            {
+                LinkFilterService.SetBlockMapFilterValue(toggleSwitch.IsOn);
+                BlockMapFilterValue = toggleSwitch.IsOn;
+            }
+        }
+
+        /// <summary>
+        /// 当两个版本共存时，设置是否优先使用开发版本
+        /// </summary>
+        public void OnWinGetConfigToggled(object sender, RoutedEventArgs args)
+        {
+            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
+            if (toggleSwitch is not null)
+            {
+                WinGetConfigService.SetUseDevVersion(toggleSwitch.IsOn);
+                UseDevVersion = toggleSwitch.IsOn;
+            }
         }
 
         /// <summary>

@@ -228,6 +228,9 @@
   <data name="FileNotExists" xml:space="preserve">
     <value>文件不存在</value>
   </data>
+  <data name="FileSizeToolTip" xml:space="preserve">
+    <value>文件大小：{0}</value>
+  </data>
   <data name="FinishedSizeToolTip" xml:space="preserve">
     <value>已下载完成：{0}</value>
   </data>

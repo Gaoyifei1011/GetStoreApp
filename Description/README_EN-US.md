@@ -75,6 +75,7 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 | Console applications (quickly download)                  | Completed                                                                                                          |
 | Program performance optimization                         | Completed                                                                                                          |
 | Interface modernization                                  | Completed                                                                                                          |
+| Package management                                       | Completed                                                                                                          |
 
 All the content of the program has been developed
 
@@ -82,6 +83,8 @@ All the content of the program has been developed
 
 ### Project References (Sort by alphabetical order)
 
+> * [Microsoft.NET.ILLink.Analyzers](https://github.com/dotnet/linker)&emsp;
+> * [Microsoft.NET.ILLink.Tasks](https://github.com/dotnet/linker)&emsp;
 > * [Microsoft.Windows.CsWinRT](https://github.com/microsoft/cswinrt)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Microsoft.WindowsPackageManager.ComInterop](https://github.com/microsoft/winget-cli)&emsp;

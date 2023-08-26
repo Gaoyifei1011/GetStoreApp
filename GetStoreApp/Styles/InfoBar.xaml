@@ -10,7 +10,7 @@
         <Setter Property="BorderThickness" Value="{ThemeResource InfoBarBorderThickness}" />
         <Setter Property="AutomationProperties.LandmarkType" Value="Custom" />
         <Setter Property="AutomationProperties.IsDialog" Value="True" />
-        <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
+        <Setter Property="CornerRadius" Value="{StaticResource ControlCornerRadius}" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Template">
             <Setter.Value>

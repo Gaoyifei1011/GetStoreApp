@@ -137,28 +137,27 @@
             </NavigationView.Resources>
 
             <NavigationView.PaneHeader>
-                <NavigationViewItemHeader Margin="8,10,0,0" Style="{StaticResource NavigationViewItemHeaderStyle}">
-                    <NavigationViewItemHeader.Content>
-                        <StackPanel Orientation="Horizontal" Spacing="8">
+                <StackPanel
+                    Margin="8,10,0,0"
+                    Orientation="Horizontal"
+                    Spacing="8">
 
-                            <MenuFlyoutItem
-                                Click="{x:Bind OnBackRequestedClicked}"
-                                IsEnabled="{x:Bind IsBackEnabled, Mode=OneWay}"
-                                Style="{StaticResource ButtonLargeMenuItemStyle}"
-                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/Back')}">
+                    <MenuFlyoutItem
+                        Click="{x:Bind OnBackRequestedClicked}"
+                        IsEnabled="{x:Bind IsBackEnabled, Mode=OneWay}"
+                        Style="{StaticResource ButtonLargeMenuItemStyle}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/Back')}">
 
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon Glyph="&#xE973;" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Glyph="&#xE973;" />
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
 
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                FontWeight="SemiBold"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Window/NavigationViewTitle')}" />
-                        </StackPanel>
-                    </NavigationViewItemHeader.Content>
-                </NavigationViewItemHeader>
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontWeight="SemiBold"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Window/NavigationViewTitle')}" />
+                </StackPanel>
             </NavigationView.PaneHeader>
 
             <NavigationView.MenuItems>

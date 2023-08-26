@@ -265,7 +265,7 @@
     <value>Sort</value>
   </data>
   <data name="SortByDisplayName" xml:space="preserve">
-    <value>Package name</value>
+    <value>App name</value>
   </data>
   <data name="SortByPublisher" xml:space="preserve">
     <value>Publisher name</value>

@@ -261,7 +261,7 @@
                                 FontSize="16"
                                 Text="{x:Bind converter:StringConverterHelper.DownloadSizeFormat(TotalSize), Mode=OneWay}"
                                 TextAlignment="Left"
-                                ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.DownloadSizeFormat(TotalSize), Mode=OneWay}" />
+                                ToolTipService.ToolTip="{x:Bind GetCompletedToolTip(TotalSize), Mode=OneWay}" />
                         </Grid>
 
                         <StackPanel Grid.Row="1" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsInstalling), Mode=OneWay}">

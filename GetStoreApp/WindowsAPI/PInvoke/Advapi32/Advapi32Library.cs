@@ -1,8 +1,7 @@
-﻿using GetStoreApp.WindowsAPI.PInvoke.Advapi32;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 
-namespace GetStoreApp.WindowsAPI.PInvoke
+namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
 {
     /// <summary>
     /// advapi32.dll 函数库

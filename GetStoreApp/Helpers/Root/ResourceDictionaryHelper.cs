@@ -21,8 +21,6 @@ namespace GetStoreApp.Helpers.Root
 
         public static ResourceDictionary MenuFlyoutResourceDict { get; private set; }
 
-        public static ResourceDictionary NavigationViewResourceDict { get; private set; }
-
         public static ResourceDictionary PivotResourceDict { get; private set; }
 
         public static ResourceDictionary ScrollBarResourceDict { get; private set; }
@@ -41,10 +39,9 @@ namespace GetStoreApp.Helpers.Root
             InfoBarResourceDict = Application.Current.Resources.MergedDictionaries[5];
             ListViewResourceDict = Application.Current.Resources.MergedDictionaries[6];
             MenuFlyoutResourceDict = Application.Current.Resources.MergedDictionaries[7];
-            NavigationViewResourceDict = Application.Current.Resources.MergedDictionaries[8];
-            PivotResourceDict = Application.Current.Resources.MergedDictionaries[9];
-            ScrollBarResourceDict = Application.Current.Resources.MergedDictionaries[10];
-            SplitButtonResourceDict = Application.Current.Resources.MergedDictionaries[11];
+            PivotResourceDict = Application.Current.Resources.MergedDictionaries[8];
+            ScrollBarResourceDict = Application.Current.Resources.MergedDictionaries[9];
+            SplitButtonResourceDict = Application.Current.Resources.MergedDictionaries[10];
         }
     }
 }

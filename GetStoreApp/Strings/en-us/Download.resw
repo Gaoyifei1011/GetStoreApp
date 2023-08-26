@@ -228,6 +228,9 @@
   <data name="FileNotExists" xml:space="preserve">
     <value>The file does not exist</value>
   </data>
+  <data name="FileSizeToolTip" xml:space="preserve">
+    <value>File size: {0}</value>
+  </data>
   <data name="FinishedSizeToolTip" xml:space="preserve">
     <value>Download completed: {0}</value>
   </data>
