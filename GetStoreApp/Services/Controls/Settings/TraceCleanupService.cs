@@ -15,14 +15,14 @@ namespace GetStoreApp.Services.Controls.Settings
         /// <summary>
         /// 根据传入的清理选项清理应用痕迹
         /// </summary>
-        public static async Task<bool> CleanAppTraceAsync(CleaKind cleanupArgs)
+        public static async Task<bool> CleanAppTraceAsync(CleanKind cleanupArgs)
         {
             return cleanupArgs switch
             {
-                CleaKind.ActionCenter => ClearActionCenter(),
-                CleaKind.Download => await DownloadXmlService.ClearAsync(),
-                CleaKind.History => await HistoryXmlService.ClearAsync(),
-                CleaKind.LocalFile => IOHelper.CleanFolder(DownloadOptionsService.AppCacheFolder),
+                CleanKind.ActionCenter => ClearActionCenter(),
+                CleanKind.Download => await DownloadXmlService.ClearAsync(),
+                CleanKind.History => await HistoryXmlService.ClearAsync(),
+                CleanKind.LocalFile => IOHelper.CleanFolder(DownloadOptionsService.AppCacheFolder),
                 _ => true,
             };
         }

@@ -148,7 +148,7 @@
     <value>Page {0} navigation failed</value>
   </data>
   <data name="NavigationViewTitle" xml:space="preserve">
-    <value>NavigationView</value>
+    <value>Navigation</value>
   </data>
   <data name="Restore" xml:space="preserve">
     <value>Restore</value>

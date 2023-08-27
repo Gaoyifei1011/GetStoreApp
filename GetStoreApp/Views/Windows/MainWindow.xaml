@@ -175,7 +175,7 @@
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Store')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(WindowStoreText.IsTextTrimmed)}" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Store')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(WindowStoreText.IsTextTrimmed), Mode=OneWay}" />
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
@@ -193,7 +193,7 @@
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/History')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(WindowHistoryText.IsTextTrimmed)}" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/History')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(WindowHistoryText.IsTextTrimmed), Mode=OneWay}" />
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
@@ -211,7 +211,7 @@
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Download')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(WindowDownloadText.IsTextTrimmed)}" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Download')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(WindowDownloadText.IsTextTrimmed), Mode=OneWay}" />
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
@@ -231,7 +231,7 @@
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(WindowWinGetText.IsTextTrimmed)}" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(WindowWinGetText.IsTextTrimmed), Mode=OneWay}" />
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
@@ -249,7 +249,7 @@
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/UWPApp')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(WindowUWPAppText.IsTextTrimmed)}" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/UWPApp')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(WindowUWPAppText.IsTextTrimmed), Mode=OneWay}" />
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
@@ -269,7 +269,7 @@
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Web')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(WindowWebText.IsTextTrimmed)}" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Web')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(WindowWebText.IsTextTrimmed), Mode=OneWay}" />
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
@@ -289,7 +289,7 @@
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/About')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(WindowAboutText.IsTextTrimmed)}" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/About')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(WindowAboutText.IsTextTrimmed), Mode=OneWay}" />
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
@@ -307,7 +307,7 @@
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(WindowSettingsText.IsTextTrimmed)}" />
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(WindowSettingsText.IsTextTrimmed), Mode=OneWay}" />
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
             </NavigationView.FooterMenuItems>

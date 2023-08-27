@@ -148,7 +148,7 @@
     <value>页面{0}导航失败</value>
   </data>
   <data name="NavigationViewTitle" xml:space="preserve">
-    <value>导航视图</value>
+    <value>导航</value>
   </data>
   <data name="Restore" xml:space="preserve">
     <value>还原</value>

@@ -3,7 +3,7 @@
     /// <summary>
     /// 痕迹清理枚举值
     /// </summary>
-    public enum CleaKind
+    public enum CleanKind
     {
         ActionCenter = 0,
         Download = 1,

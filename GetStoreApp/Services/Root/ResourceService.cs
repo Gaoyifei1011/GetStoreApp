@@ -309,25 +309,25 @@ namespace GetStoreApp.Services.Root
             TraceCleanupList.Add(new TraceCleanupModel
             {
                 DisplayName = GetLocalized("Dialog/HistoryRecord"),
-                InternalName = CleaKind.History,
+                InternalName = CleanKind.History,
                 CleanFailedText = GetLocalized("Dialog/HistoryCleanError")
             });
             TraceCleanupList.Add(new TraceCleanupModel
             {
                 DisplayName = GetLocalized("Dialog/ActionCenter"),
-                InternalName = CleaKind.ActionCenter,
+                InternalName = CleanKind.ActionCenter,
                 CleanFailedText = GetLocalized("Dialog/ActionCenterError")
             });
             TraceCleanupList.Add(new TraceCleanupModel
             {
                 DisplayName = GetLocalized("Dialog/DownloadRecord"),
-                InternalName = CleaKind.Download,
+                InternalName = CleanKind.Download,
                 CleanFailedText = GetLocalized("Dialog/DownloadCleanError")
             });
             TraceCleanupList.Add(new TraceCleanupModel
             {
                 DisplayName = GetLocalized("Dialog/LocalFile"),
-                InternalName = CleaKind.LocalFile,
+                InternalName = CleanKind.LocalFile,
                 CleanFailedText = GetLocalized("Dialog/LocalFileCleanError")
             });
         }
