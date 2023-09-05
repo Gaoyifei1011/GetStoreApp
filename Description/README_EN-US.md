@@ -23,41 +23,50 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 
 ### Screenshot of the app
 
-#### <p align="center">The app successfully gets the interface</p>
+#### <p align="center">The app successfully gets the page</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/75d5bc77-2680-4692-9f2e-fa1126c44ea5" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/bb4de970-ebe2-4f5c-bee9-913f0fc38e0d" />
 </div>
 
-#### <p align="center">WinGet package management interface</p>
+#### <p align="center">WinGet package management page</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/9788e38e-4614-4f4f-b080-ed9c72c57995" />
-</div>
-
-<div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/5938b36c-d4db-4784-b020-02251422875c" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/e28e8807-ce41-4a97-893c-bfb8e634cc18" />
 </div>
 
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/59a56868-7762-4db8-b8b9-31cad199c97f" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/4f106381-57f1-4523-98d2-856db3cada26" />
+</div>
+
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/13e0444c-193d-4b4a-bd7c-b92768f7ebd6" />
+</div>
+
+#### <p align="center">Package manager page</p>
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/412cbcae-4a4a-42df-913c-23bec729d2ab" />
+</div>
+
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/ca5268ad-7d0a-4f42-9665-e8165f6a5320" />
 </div>
 
 #### <p align="center">History Record</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/2a00ef92-ca15-4679-a962-49a5396aee96" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/21425a03-ff59-4e8a-b414-410bfde68b88" />
 </div>
 
 #### <p align="center">Download Management</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/2177ee35-80a8-49fc-9c99-b82fb92fe470" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/06c1baf1-4ef4-4b52-b5f1-8b0618afd2e5" />
 </div>
 
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/7764c08f-e1b8-4bdd-ab25-e8f9cee94f50" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/514d7d8e-13ef-4f63-ac75-52465961ef12" />
 </div>
 
 #### <p align="center">Application Descriptions</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/0743b5a6-30a4-4f71-9b4e-a38c3bc58061" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/709c9aca-7f0f-4651-9dea-54911fd02256" />
 </div>
 
 ------

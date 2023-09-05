@@ -23,41 +23,50 @@
 
 ### 应用截图
 
-#### <p align="center">应用成功获取界面</p>
+#### <p align="center">应用成功获取页面</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/441a6ad2-7829-4986-994e-f140f0b60853" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/5fa2442c-3972-4ddb-918d-b9482903f126" />
 </div>
 
-#### <p align="center">WinGet 程序包管理界面</p>
+#### <p align="center">WinGet 程序包管理页面</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/28200b23-8704-40d8-92ec-767eb38c57c3" />
-</div>
-
-<div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/91ae5f3b-eb7b-4c95-b603-0487fadd1534" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/0c9bdc74-b608-4985-a7fb-a60434cc93d3" />
 </div>
 
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/d177cbec-1438-4496-9d6b-6cd8a2708493" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/212c4175-dd49-463a-83d2-b63058877bab" />
+</div>
+
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/c110b67e-7d27-4588-9e31-57360fa22e33" />
+</div>
+
+#### <p align="center">应用管理页面</p>
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/1d7f82c1-11ad-4e07-ae79-0a30b6d3bf70" />
+</div>
+
+<div align="center">
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/63d7cf6a-019a-47cf-8a47-aec01b1ca4ae" />
 </div>
 
 #### <p align="center">历史记录</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/0aee441e-3714-4bf3-b817-8cb8cb516737" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/7110cd3c-7de3-4b9a-97e1-027114b926f3" />
 </div>
 
 #### <p align="center">下载管理</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/42a5139a-f845-48f9-8b64-30efbadda13c" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/e5242f09-c992-4b4e-b533-d49c7668054f" />
 </div>
 
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/dc6bdb4a-1c6a-4c3c-be46-93db03c5b1fa" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/ddbcbef0-2155-4282-a743-538d4e7dddba" />
 </div>
 
 #### <p align="center">应用说明</p>
 <div align="center">
-<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/3a48382d-a53f-4960-951d-ee9f16a7a7d9" />
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/28272ed5-6347-47d8-bc05-9a4300fe4062" />
 </div>
 
 ------
