@@ -167,6 +167,7 @@
                             FontSize="14"
                             Text="{x:Bind AppName}"
                             TextAlignment="Left"
+                            TextTrimming="CharacterEllipsis"
                             ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.WinGetAppsToolTipFormat(AppName,'AppName')}" />
 
                         <TextBlock
@@ -177,6 +178,7 @@
                             FontSize="14"
                             Text="{x:Bind AppPublisher}"
                             TextAlignment="Left"
+                            TextTrimming="CharacterEllipsis"
                             ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.WinGetAppsToolTipFormat(AppPublisher,'AppPublisher')}" />
 
                         <TextBlock
@@ -188,6 +190,7 @@
                             HorizontalTextAlignment="Left"
                             Text="{x:Bind AppCurrentVersion}"
                             TextAlignment="Left"
+                            TextTrimming="CharacterEllipsis"
                             ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.WinGetAppsToolTipFormat(AppCurrentVersion,'AppCurrentVersion')}" />
 
                         <TextBlock
@@ -200,6 +203,7 @@
                             HorizontalTextAlignment="Left"
                             Text="{x:Bind AppNewestVersion}"
                             TextAlignment="Left"
+                            TextTrimming="CharacterEllipsis"
                             ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.WinGetAppsToolTipFormat(AppNewestVersion,'AppNewestVersion')}" />
 
                         <basicInput:ExtendedSplitButton

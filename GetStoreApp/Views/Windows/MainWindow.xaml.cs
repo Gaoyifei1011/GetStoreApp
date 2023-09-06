@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.Backdrop;
+using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings;
@@ -196,11 +197,7 @@ namespace GetStoreApp.Views.Windows
                 CHANGEFILTERSTRUCT changeFilterStatus = new CHANGEFILTERSTRUCT();
                 changeFilterStatus.cbSize = Marshal.SizeOf(typeof(CHANGEFILTERSTRUCT));
                 User32Library.ChangeWindowMessageFilterEx(Handle, WindowMessage.WM_COPYDATA, ChangeFilterAction.MSGFLT_ALLOW, in changeFilterStatus);
-
-                DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, async () =>
-                {
-                    await ContentDialogHelper.ShowAsync(new ElevatedRunningDialog(), Content as FrameworkElement);
-                });
+                ToastNotificationService.Show(NotificationKind.RunAsAdministrator);
             }
         }
 

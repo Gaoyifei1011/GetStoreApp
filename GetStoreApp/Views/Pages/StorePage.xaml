@@ -10,7 +10,7 @@
     xmlns:page="using:GetStoreApp.Views.Pages"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:store="using:GetStoreApp.Models.Controls.Store"
-    xmlns:system="using:System"
+    xmlns:sys="using:System"
     x:Name="StoreRoot"
     Loaded="{x:Bind OnLoaded}"
     NavigationCacheMode="Enabled"
@@ -160,7 +160,8 @@
                         Grid.Column="2"
                         IsEnabled="{x:Bind IsGettingLinks.Equals(x:False), Mode=OneWay}"
                         PlaceholderText="{x:Bind LinkPlaceHolderText, Mode=OneWay}"
-                        Text="{x:Bind LinkText, Mode=TwoWay}" />
+                        Text="{x:Bind LinkText, Mode=OneWay}"
+                        TextChanged="{x:Bind OnTextChanged}" />
 
                     <Button
                         Grid.Column="3"
@@ -437,11 +438,10 @@
                         <StackPanel
                             Grid.Column="3"
                             VerticalAlignment="Center"
-                            ToolTipService.ToolTip="{x:Bind CategoryId, Mode=OneWay}"
                             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(ResultDataList.Count), Mode=OneWay}">
 
-                            <TextBlock Text="{x:Bind LocalizeCategoryId(CategoryId), Mode=OneWay}" />
-                            <TextBlock Text="{x:Bind LocalizeResultCountInfo(ResultDataList.Count), Mode=OneWay}" />
+                            <TextBlock Text="{x:Bind sys:String.Format(CategoryIdText, CategoryId), Mode=OneWay}" />
+                            <TextBlock Text="{x:Bind sys:String.Format(ResultCountInfo, ResultDataList.Count), Mode=OneWay}" />
                         </StackPanel>
 
                         <TextBlock
@@ -462,7 +462,7 @@
 
                             <MenuFlyoutItem
                                 Click="{x:Bind OnCopyIDClicked}"
-                                IsEnabled="{x:Bind system:Convert.ToBoolean(ResultDataList.Count), Mode=OneWay}"
+                                IsEnabled="{x:Bind sys:Convert.ToBoolean(ResultDataList.Count), Mode=OneWay}"
                                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                                 Text="{x:Bind root:ResourceService.GetLocalized('Store/CopyID')}"
                                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/CopyIDToolTip')}">
@@ -474,7 +474,7 @@
 
                             <MenuFlyoutItem
                                 Click="{x:Bind OnSelectClicked}"
-                                IsEnabled="{x:Bind system:Convert.ToBoolean(ResultDataList.Count), Mode=OneWay}"
+                                IsEnabled="{x:Bind sys:Convert.ToBoolean(ResultDataList.Count), Mode=OneWay}"
                                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                                 Text="{x:Bind root:ResourceService.GetLocalized('Store/Select')}"
                                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/SelectToolTip')}">
@@ -663,8 +663,8 @@
                                     Margin="10,0,0,0"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Center"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('History/Options')}"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('History/OptionsToolTip')}" />
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Store/Options')}"
+                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/OptionsToolTip')}" />
                             </Grid>
                         </ListView.Header>
 

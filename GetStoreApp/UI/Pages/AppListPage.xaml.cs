@@ -818,9 +818,9 @@ namespace GetStoreApp.UI.Pages
                     if (hasSearchText)
                     {
                         filteredList = filteredList.Where(matchItem =>
-                                matchItem.DisplayName.Contains(SearchText) ||
-                                matchItem.Description.Contains(SearchText) ||
-                                matchItem.PublisherDisplayName.Contains(SearchText)).ToList();
+                                matchItem.DisplayName.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+                                matchItem.Description.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+                                matchItem.PublisherDisplayName.Contains(SearchText, StringComparison.OrdinalIgnoreCase)).ToList();
                     }
 
                     foreach (Package packageItem in filteredList)

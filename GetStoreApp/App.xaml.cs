@@ -210,24 +210,6 @@ namespace GetStoreApp
         }
 
         /// <summary>
-        /// 关闭应用并释放所有资源
-        /// </summary>
-        private void CloseApp()
-        {
-            IsAppRunning = false;
-            if (RuntimeHelper.IsElevated && MainWindow.Handle != IntPtr.Zero)
-            {
-                CHANGEFILTERSTRUCT changeFilterStatus = new CHANGEFILTERSTRUCT();
-                changeFilterStatus.cbSize = Marshal.SizeOf(typeof(CHANGEFILTERSTRUCT));
-                User32Library.ChangeWindowMessageFilterEx(MainWindow.Handle, WindowMessage.WM_COPYDATA, ChangeFilterAction.MSGFLT_RESET, in changeFilterStatus);
-            }
-            SaveWindowInformation();
-            DownloadSchedulerService.CloseDownloadScheduler();
-            Aria2Service.CloseAria2();
-            Environment.Exit(0);
-        }
-
-        /// <summary>
         /// 关闭窗口时保存窗口的大小和位置信息
         /// </summary>
         private void SaveWindowInformation()
@@ -297,11 +279,22 @@ namespace GetStoreApp
             {
                 if (disposing)
                 {
-                    CloseApp();
+                    IsAppRunning = false;
+                    if (RuntimeHelper.IsElevated && MainWindow.Handle != IntPtr.Zero)
+                    {
+                        CHANGEFILTERSTRUCT changeFilterStatus = new CHANGEFILTERSTRUCT();
+                        changeFilterStatus.cbSize = Marshal.SizeOf(typeof(CHANGEFILTERSTRUCT));
+                        User32Library.ChangeWindowMessageFilterEx(MainWindow.Handle, WindowMessage.WM_COPYDATA, ChangeFilterAction.MSGFLT_RESET, in changeFilterStatus);
+                    }
+                    SaveWindowInformation();
+                    DownloadSchedulerService.CloseDownloadScheduler();
+                    Aria2Service.CloseAria2();
                 }
 
                 isDisposed = true;
             }
+
+            Environment.Exit(0);
         }
     }
 }

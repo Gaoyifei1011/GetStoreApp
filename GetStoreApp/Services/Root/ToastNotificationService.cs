@@ -132,6 +132,15 @@ namespace GetStoreApp.Services.Root
             {
                 switch (notificationKey)
                 {
+                    // 管理员身份运行应用显示通知
+                    case NotificationKind.RunAsAdministrator:
+                        {
+                            XmlDocument notificationDocument = new XmlDocument();
+                            notificationDocument.LoadXml(ResourceService.GetLocalized("Notification/ElevatedRunning"));
+                            ToastNotification notificaiton = new ToastNotification(notificationDocument);
+                            AppToastNotifier.Show(notificaiton);
+                            break;
+                        }
                     case NotificationKind.DownloadAborted:
                         {
                             if (notificationContent.Length is 0) return;

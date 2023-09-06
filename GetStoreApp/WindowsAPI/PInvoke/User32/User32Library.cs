@@ -5,7 +5,7 @@ using Windows.Graphics;
 namespace GetStoreApp.WindowsAPI.PInvoke.User32
 {
     /// <summary>
-    /// User32.dll 函数库。
+    /// User32.dll 函数库
     /// </summary>
     public static partial class User32Library
     {

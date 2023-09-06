@@ -8,13 +8,14 @@
         DownloadAborted = 0,
         InstallApp = 1,
         DownloadCompleted = 2,
-        UWPUnInstallSuccessfully = 3,
-        UWPUnInstallFailed = 4,
-        WinGetInstallSuccessfully = 5,
-        WinGetInstallFailed = 6,
-        WinGetUnInstallSuccessfully = 7,
-        WinGetUnInstallFailed = 8,
-        WinGetUpgradeSuccessfully = 9,
-        WinGetUpgradeFailed = 10
+        RunAsAdministrator = 3,
+        UWPUnInstallSuccessfully = 4,
+        UWPUnInstallFailed = 5,
+        WinGetInstallSuccessfully = 6,
+        WinGetInstallFailed = 7,
+        WinGetUnInstallSuccessfully = 8,
+        WinGetUnInstallFailed = 9,
+        WinGetUpgradeSuccessfully = 10,
+        WinGetUpgradeFailed = 11
     }
 }

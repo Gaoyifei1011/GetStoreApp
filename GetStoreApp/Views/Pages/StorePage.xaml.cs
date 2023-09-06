@@ -46,6 +46,10 @@ namespace GetStoreApp.Views.Pages
 
         private string SampleTitle { get; } = ResourceService.GetLocalized("Store/SampleTitle");
 
+        private string CategoryIdText { get; } = ResourceService.GetLocalized("Store/categoryId");
+
+        private string ResultCountInfo { get; } = ResourceService.GetLocalized("Store/ResultCountInfo");
+
         private string SampleLink { get; set; }
 
         public GroupOptionsModel HistoryLiteItem { get; set; } = HistoryRecordService.HistoryLiteNum;
@@ -493,22 +497,6 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 本地化CategoryId信息
-        /// </summary>
-        public string LocalizeCategoryId(string categoryId)
-        {
-            return string.Format(ResourceService.GetLocalized("Store/categoryId"), categoryId);
-        }
-
-        /// <summary>
-        /// 本地化获取结果数量统计信息
-        /// </summary>
-        public string LocalizeResultCountInfo(int count)
-        {
-            return string.Format(ResourceService.GetLocalized("Store/ResultCountInfo"), count);
-        }
-
-        /// <summary>
         /// 页面加载完成后如果有具体的要求，将页面滚动到指定位置
         /// </summary>
         public void OnLoaded(object sender, RoutedEventArgs args)
@@ -517,6 +505,14 @@ namespace GetStoreApp.Views.Pages
             {
                 StoreScroll.ChangeView(null, 0, null);
             }
+        }
+
+        /// <summary>
+        /// 输入文本框内容发生改变时响应的事件
+        /// </summary>
+        public void OnTextChanged(object sender, TextChangedEventArgs args)
+        {
+            LinkText = (sender as TextBox).Text;
         }
 
         /// <summary>

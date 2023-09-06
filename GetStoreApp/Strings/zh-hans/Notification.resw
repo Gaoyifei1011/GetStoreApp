@@ -171,6 +171,16 @@
   &lt;/actions&gt;
 &lt;/toast&gt;</value>
   </data>
+  <data name="ElevatedRunning" xml:space="preserve">
+    <value>&lt;toast launch="action=OpenApp"&gt;
+  &lt;visual&gt;
+    &lt;binding template="ToastGeneric"&gt;
+      &lt;text&gt;运行提示&lt;/text&gt;
+      &lt;text&gt;检测到应用程序可能以管理员身份运行，部分功能可能会受到限制，建议您以普通用户身份运行应用程序&lt;/text&gt;
+    &lt;/binding&gt;
+  &lt;/visual&gt;
+&lt;/toast&gt;</value>
+  </data>
   <data name="ExceptionCopy" xml:space="preserve">
     <value>浏览器异常信息已成功复制到剪贴板</value>
   </data>
@@ -179,9 +189,6 @@
   </data>
   <data name="FolderPickerFailed" xml:space="preserve">
     <value>文件夹选取框打开失败</value>
-  </data>
-  <data name="FolderPickerOpenFailed" xml:space="preserve">
-    <value>文件夹选取框不能在管理员模式下运行，请从普通用户模式运行应用后再尝试修改</value>
   </data>
   <data name="HistoryCopy" xml:space="preserve">
     <value>该条历史记录已成功复制到剪贴板</value>

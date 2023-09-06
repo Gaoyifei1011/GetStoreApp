@@ -1,7 +1,10 @@
-﻿using GetStoreApp.Services.Controls.Settings;
+﻿using GetStoreApp.Helpers.Root;
+using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.WindowsAPI.PInvoke.Ole32;
+using GetStoreApp.WindowsAPI.PInvoke.Winrtact;
 using Microsoft.Management.Deployment;
 using System;
+using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Root
 {
@@ -42,21 +45,43 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         public static unsafe void InitializeService()
         {
-            fixed (Guid* CLSID_PackageManager_Ptr = &CLSID_PackageManager, IID_IUnknown_Ptr = &IID_IUnknown)
+            Task.Run(() =>
             {
-                Ole32Library.CoCreateInstance(CLSID_PackageManager_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
-                IsOfficialVersionExisted = obj != IntPtr.Zero;
-            }
-            fixed (Guid* CLSID_PackageManager_Dev_Ptr = &CLSID_PackageManager_Dev, IID_IUnknown_Ptr = &IID_IUnknown)
-            {
-                Ole32Library.CoCreateInstance(CLSID_PackageManager_Dev_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
-                IsDevVersionExisted = obj != IntPtr.Zero;
-            }
+                fixed (Guid* CLSID_PackageManager_Ptr = &CLSID_PackageManager, IID_IUnknown_Ptr = &IID_IUnknown)
+                {
+                    if (RuntimeHelper.IsElevated)
+                    {
+                        WinrtactLibrary.WinGetServerManualActivation_CreateInstance(CLSID_PackageManager_Ptr, IID_IUnknown_Ptr, 0, out IntPtr obj);
+                        IsOfficialVersionExisted = obj != IntPtr.Zero;
+                    }
+                    else
+                    {
+                        Ole32Library.CoCreateInstance(CLSID_PackageManager_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
+                        IsOfficialVersionExisted = obj != IntPtr.Zero;
+                    }
+                }
+                fixed (Guid* CLSID_PackageManager_Dev_Ptr = &CLSID_PackageManager_Dev, IID_IUnknown_Ptr = &IID_IUnknown)
+                {
+                    if (RuntimeHelper.IsElevated)
+                    {
+                        WinrtactLibrary.WinGetServerManualActivation_CreateInstance(CLSID_PackageManager_Dev_Ptr, IID_IUnknown_Ptr, 0, out IntPtr obj);
+                        IsDevVersionExisted = obj != IntPtr.Zero;
+                    }
+                    else
+                    {
+                        Ole32Library.CoCreateInstance(CLSID_PackageManager_Dev_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
+                        IsDevVersionExisted = obj != IntPtr.Zero;
+                    }
+                }
 
-            if (WinGetConfigService.UseDevVersion)
-            {
-                if (IsDevVersionExisted) actuallyUseDev = true;
-            }
+                if (WinGetConfigService.UseDevVersion)
+                {
+                    if (IsDevVersionExisted)
+                    {
+                        actuallyUseDev = true;
+                    }
+                }
+            });
         }
 
         /// <summary>
@@ -68,16 +93,32 @@ namespace GetStoreApp.Services.Root
             {
                 fixed (Guid* CLSID_PackageManager_Dev_Ptr = &CLSID_PackageManager_Dev, IID_IUnknown_Ptr = &IID_IUnknown)
                 {
-                    Ole32Library.CoCreateInstance(CLSID_PackageManager_Dev_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
-                    return PackageManager.FromAbi(obj);
+                    if (RuntimeHelper.IsElevated)
+                    {
+                        WinrtactLibrary.WinGetServerManualActivation_CreateInstance(CLSID_PackageManager_Dev_Ptr, IID_IUnknown_Ptr, 0, out IntPtr obj);
+                        return PackageManager.FromAbi(obj);
+                    }
+                    else
+                    {
+                        Ole32Library.CoCreateInstance(CLSID_PackageManager_Dev_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
+                        return PackageManager.FromAbi(obj);
+                    }
                 }
             }
             else
             {
                 fixed (Guid* CLSID_PackageManager_Ptr = &CLSID_PackageManager, IID_IUnknown_Ptr = &IID_IUnknown)
                 {
-                    Ole32Library.CoCreateInstance(CLSID_PackageManager_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
-                    return PackageManager.FromAbi(obj);
+                    if (RuntimeHelper.IsElevated)
+                    {
+                        WinrtactLibrary.WinGetServerManualActivation_CreateInstance(CLSID_PackageManager_Ptr, IID_IUnknown_Ptr, 0, out IntPtr obj);
+                        return PackageManager.FromAbi(obj);
+                    }
+                    else
+                    {
+                        Ole32Library.CoCreateInstance(CLSID_PackageManager_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
+                        return PackageManager.FromAbi(obj);
+                    }
                 }
             }
         }
@@ -91,16 +132,32 @@ namespace GetStoreApp.Services.Root
             {
                 fixed (Guid* CLSID_InstallOptions_Dev_Ptr = &CLSID_InstallOptions_Dev, IID_IUnknown_Ptr = &IID_IUnknown)
                 {
-                    Ole32Library.CoCreateInstance(CLSID_InstallOptions_Dev_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
-                    return InstallOptions.FromAbi(obj);
+                    if (RuntimeHelper.IsElevated)
+                    {
+                        WinrtactLibrary.WinGetServerManualActivation_CreateInstance(CLSID_InstallOptions_Dev_Ptr, IID_IUnknown_Ptr, 0, out IntPtr obj);
+                        return InstallOptions.FromAbi(obj);
+                    }
+                    else
+                    {
+                        Ole32Library.CoCreateInstance(CLSID_InstallOptions_Dev_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
+                        return InstallOptions.FromAbi(obj);
+                    }
                 }
             }
             else
             {
                 fixed (Guid* CLSID_InstallOptions_Ptr = &CLSID_InstallOptions, IID_IUnknown_Ptr = &IID_IUnknown)
                 {
-                    Ole32Library.CoCreateInstance(CLSID_InstallOptions_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
-                    return InstallOptions.FromAbi(obj);
+                    if (RuntimeHelper.IsElevated)
+                    {
+                        WinrtactLibrary.WinGetServerManualActivation_CreateInstance(CLSID_InstallOptions_Ptr, IID_IUnknown_Ptr, 0, out IntPtr obj);
+                        return InstallOptions.FromAbi(obj);
+                    }
+                    else
+                    {
+                        Ole32Library.CoCreateInstance(CLSID_InstallOptions_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
+                        return InstallOptions.FromAbi(obj);
+                    }
                 }
             }
         }
@@ -114,16 +171,32 @@ namespace GetStoreApp.Services.Root
             {
                 fixed (Guid* CLSID_UnInstallOptions_Dev_Ptr = &CLSID_UnInstallOptions_Dev, IID_IUnknown_Ptr = &IID_IUnknown)
                 {
-                    Ole32Library.CoCreateInstance(CLSID_UnInstallOptions_Dev_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
-                    return UninstallOptions.FromAbi(obj);
+                    if (RuntimeHelper.IsElevated)
+                    {
+                        WinrtactLibrary.WinGetServerManualActivation_CreateInstance(CLSID_UnInstallOptions_Dev_Ptr, IID_IUnknown_Ptr, 0, out IntPtr obj);
+                        return UninstallOptions.FromAbi(obj);
+                    }
+                    else
+                    {
+                        Ole32Library.CoCreateInstance(CLSID_UnInstallOptions_Dev_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
+                        return UninstallOptions.FromAbi(obj);
+                    }
                 }
             }
             else
             {
                 fixed (Guid* CLSID_UnInstallOptions_Ptr = &CLSID_UnInstallOptions, IID_IUnknown_Ptr = &IID_IUnknown)
                 {
-                    Ole32Library.CoCreateInstance(CLSID_UnInstallOptions_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
-                    return UninstallOptions.FromAbi(obj);
+                    if (RuntimeHelper.IsElevated)
+                    {
+                        WinrtactLibrary.WinGetServerManualActivation_CreateInstance(CLSID_UnInstallOptions_Ptr, IID_IUnknown_Ptr, 0, out IntPtr obj);
+                        return UninstallOptions.FromAbi(obj);
+                    }
+                    else
+                    {
+                        Ole32Library.CoCreateInstance(CLSID_UnInstallOptions_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
+                        return UninstallOptions.FromAbi(obj);
+                    }
                 }
             }
         }
@@ -137,16 +210,32 @@ namespace GetStoreApp.Services.Root
             {
                 fixed (Guid* CLSID_FindPackagesOptions_Dev_Ptr = &CLSID_FindPackagesOptions_Dev, IID_IUnknown_Ptr = &IID_IUnknown)
                 {
-                    Ole32Library.CoCreateInstance(CLSID_FindPackagesOptions_Dev_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
-                    return FindPackagesOptions.FromAbi(obj);
+                    if (RuntimeHelper.IsElevated)
+                    {
+                        WinrtactLibrary.WinGetServerManualActivation_CreateInstance(CLSID_FindPackagesOptions_Dev_Ptr, IID_IUnknown_Ptr, 0, out IntPtr obj);
+                        return FindPackagesOptions.FromAbi(obj);
+                    }
+                    else
+                    {
+                        Ole32Library.CoCreateInstance(CLSID_FindPackagesOptions_Dev_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
+                        return FindPackagesOptions.FromAbi(obj);
+                    }
                 }
             }
             else
             {
                 fixed (Guid* CLSID_FindPackagesOptions_Ptr = &CLSID_FindPackagesOptions, IID_IUnknown_Ptr = &IID_IUnknown)
                 {
-                    Ole32Library.CoCreateInstance(CLSID_FindPackagesOptions_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
-                    return FindPackagesOptions.FromAbi(obj);
+                    if (RuntimeHelper.IsElevated)
+                    {
+                        WinrtactLibrary.WinGetServerManualActivation_CreateInstance(CLSID_FindPackagesOptions_Ptr, IID_IUnknown_Ptr, 0, out IntPtr obj);
+                        return FindPackagesOptions.FromAbi(obj);
+                    }
+                    else
+                    {
+                        Ole32Library.CoCreateInstance(CLSID_FindPackagesOptions_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
+                        return FindPackagesOptions.FromAbi(obj);
+                    }
                 }
             }
         }
@@ -160,16 +249,32 @@ namespace GetStoreApp.Services.Root
             {
                 fixed (Guid* CLSID_CreateCompositePackageCatalogOptions_Dev_Ptr = &CLSID_CreateCompositePackageCatalogOptions_Dev, IID_IUnknown_Ptr = &IID_IUnknown)
                 {
-                    Ole32Library.CoCreateInstance(CLSID_CreateCompositePackageCatalogOptions_Dev_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
-                    return CreateCompositePackageCatalogOptions.FromAbi(obj);
+                    if (RuntimeHelper.IsElevated)
+                    {
+                        WinrtactLibrary.WinGetServerManualActivation_CreateInstance(CLSID_CreateCompositePackageCatalogOptions_Dev_Ptr, IID_IUnknown_Ptr, 0, out IntPtr obj);
+                        return CreateCompositePackageCatalogOptions.FromAbi(obj);
+                    }
+                    else
+                    {
+                        Ole32Library.CoCreateInstance(CLSID_CreateCompositePackageCatalogOptions_Dev_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
+                        return CreateCompositePackageCatalogOptions.FromAbi(obj);
+                    }
                 }
             }
             else
             {
                 fixed (Guid* CLSID_CreateCompositePackageCatalogOptions_Ptr = &CLSID_CreateCompositePackageCatalogOptions, IID_IUnknown_Ptr = &IID_IUnknown)
                 {
-                    Ole32Library.CoCreateInstance(CLSID_CreateCompositePackageCatalogOptions_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
-                    return CreateCompositePackageCatalogOptions.FromAbi(obj);
+                    if (RuntimeHelper.IsElevated)
+                    {
+                        WinrtactLibrary.WinGetServerManualActivation_CreateInstance(CLSID_CreateCompositePackageCatalogOptions_Ptr, IID_IUnknown_Ptr, 0, out IntPtr obj);
+                        return CreateCompositePackageCatalogOptions.FromAbi(obj);
+                    }
+                    else
+                    {
+                        Ole32Library.CoCreateInstance(CLSID_CreateCompositePackageCatalogOptions_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
+                        return CreateCompositePackageCatalogOptions.FromAbi(obj);
+                    }
                 }
             }
         }
@@ -183,16 +288,32 @@ namespace GetStoreApp.Services.Root
             {
                 fixed (Guid* CLSID_PackageMatchFilter_Dev_Ptr = &CLSID_PackageMatchFilter_Dev, IID_IUnknown_Ptr = &IID_IUnknown)
                 {
-                    Ole32Library.CoCreateInstance(CLSID_PackageMatchFilter_Dev_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
-                    return PackageMatchFilter.FromAbi(obj);
+                    if (RuntimeHelper.IsElevated)
+                    {
+                        WinrtactLibrary.WinGetServerManualActivation_CreateInstance(CLSID_PackageMatchFilter_Dev_Ptr, IID_IUnknown_Ptr, 0, out IntPtr obj);
+                        return PackageMatchFilter.FromAbi(obj);
+                    }
+                    else
+                    {
+                        Ole32Library.CoCreateInstance(CLSID_PackageMatchFilter_Dev_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
+                        return PackageMatchFilter.FromAbi(obj);
+                    }
                 }
             }
             else
             {
                 fixed (Guid* CLSID_PackageMatchFilter_Ptr = &CLSID_PackageMatchFilter, IID_IUnknown_Ptr = &IID_IUnknown)
                 {
-                    Ole32Library.CoCreateInstance(CLSID_PackageMatchFilter_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
-                    return PackageMatchFilter.FromAbi(obj);
+                    if (RuntimeHelper.IsElevated)
+                    {
+                        WinrtactLibrary.WinGetServerManualActivation_CreateInstance(CLSID_PackageMatchFilter_Ptr, IID_IUnknown_Ptr, 0, out IntPtr obj);
+                        return PackageMatchFilter.FromAbi(obj);
+                    }
+                    else
+                    {
+                        Ole32Library.CoCreateInstance(CLSID_PackageMatchFilter_Ptr, IntPtr.Zero, CLSCTX.CLSCTX_ALL, IID_IUnknown_Ptr, out IntPtr obj);
+                        return PackageMatchFilter.FromAbi(obj);
+                    }
                 }
             }
         }
