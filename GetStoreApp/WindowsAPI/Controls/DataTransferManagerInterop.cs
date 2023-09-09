@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.WindowsAPI.ComTypes;
 using System;
 using Windows.ApplicationModel.DataTransfer;
-using WinRT;
 
 namespace GetStoreApp.WindowsAPI.Controls
 {
@@ -19,7 +18,7 @@ namespace GetStoreApp.WindowsAPI.Controls
         /// </summary>
         public static DataTransferManager GetForWindow(IntPtr window)
         {
-            return MarshalInterface<DataTransferManager>.FromAbi(dataTransferManagerInterop.GetForWindow(window, riid));
+            return DataTransferManager.FromAbi(dataTransferManagerInterop.GetForWindow(window, riid));
         }
 
         /// <summary>

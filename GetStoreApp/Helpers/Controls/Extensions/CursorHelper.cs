@@ -17,20 +17,13 @@ namespace GetStoreApp.Helpers.Controls.Extensions
         public static void SetCursor(DependencyObject obj, InputSystemCursorShape value)
         {
             obj.SetValue(CursorProperty, value);
+            if (obj is FrameworkElement element)
+            {
+                typeof(FrameworkElement).GetProperty("ProtectedCursor", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(element, InputSystemCursor.Create(GetCursor(element)));
+            }
         }
 
         public static readonly DependencyProperty CursorProperty =
-            DependencyProperty.RegisterAttached("Cursor", typeof(InputSystemCursorShape), typeof(CursorHelper), new PropertyMetadata(InputSystemCursorShape.Arrow, OnCursorChanged));
-
-        public static void OnCursorChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
-        {
-            if (obj is FrameworkElement element)
-            {
-                element.Loaded += (sender, args) =>
-                {
-                    typeof(FrameworkElement).GetProperty("ProtectedCursor", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(element, InputSystemCursor.Create(GetCursor(sender as FrameworkElement)));
-                };
-            }
-        }
+            DependencyProperty.RegisterAttached("Cursor", typeof(InputSystemCursorShape), typeof(CursorHelper), new PropertyMetadata(InputSystemCursorShape.Arrow));
     }
 }
