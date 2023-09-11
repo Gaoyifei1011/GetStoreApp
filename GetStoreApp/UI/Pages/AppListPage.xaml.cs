@@ -853,6 +853,13 @@ namespace GetStoreApp.UI.Pages
                         IsLoadedCompleted = true;
                     });
                 }
+                else
+                {
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        IsLoadedCompleted = true;
+                    });
+                }
             });
         }
 

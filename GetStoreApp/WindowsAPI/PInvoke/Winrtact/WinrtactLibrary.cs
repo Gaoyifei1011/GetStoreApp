@@ -14,6 +14,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Winrtact
         /// 提权模式（管理员）下激活 WinGet COM 组件
         /// </summary>
         [LibraryImport(Winrtact, EntryPoint = "WinGetServerManualActivation_CreateInstance", SetLastError = true)]
-        public static unsafe partial int WinGetServerManualActivation_CreateInstance(Guid* clsid, Guid* iid, uint flags, out IntPtr instance);
+        public static partial int WinGetServerManualActivation_CreateInstance(ref Guid clsid, ref Guid iid, uint flags, out IntPtr instance);
     }
 }

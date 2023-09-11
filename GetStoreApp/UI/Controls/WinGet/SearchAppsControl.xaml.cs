@@ -664,6 +664,13 @@ namespace GetStoreApp.UI.Controls.WinGet
                         IsSearchCompleted = true;
                     });
                 }
+                else
+                {
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        IsSearchCompleted = true;
+                    });
+                }
             });
         }
 

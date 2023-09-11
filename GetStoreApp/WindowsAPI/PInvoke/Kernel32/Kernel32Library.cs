@@ -244,7 +244,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 要获得更多的错误信息，请调用 GetLastError。</returns>
         [LibraryImport(Kernel32, EntryPoint = "ReadConsoleW", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static unsafe partial bool ReadConsole(
+        public static partial bool ReadConsole(
             IntPtr hConsoleInput,
             byte[] lpBuffer,
             int nNumberOfCharsToRead,
@@ -341,7 +341,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 要获得更多的错误信息，请调用 GetLastError。</returns>
         [LibraryImport(Kernel32, EntryPoint = "WriteConsoleW", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static unsafe partial bool WriteConsole(
+        public static partial bool WriteConsole(
              IntPtr hConsoleOutput,
              [MarshalAs(UnmanagedType.LPWStr)] string lpBuffer,
              int nNumberOfCharsToWrite,

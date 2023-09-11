@@ -478,6 +478,17 @@ namespace GetStoreApp.UI.Controls.WinGet
                         }
                     });
                 }
+                else
+                {
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        lock (InstalledAppsDataListObject)
+                        {
+                            IsInstalledAppsEmpty = true;
+                            IsLoadedCompleted = true;
+                        }
+                    });
+                }
             });
         }
     }

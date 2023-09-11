@@ -639,7 +639,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             }
                         }
 
-                        if (MatchResultList is null || MatchResultList.Count is 0)
+                        if (MatchResultList.Count is 0)
                         {
                             IsUpgradableAppsEmpty = true;
                         }
@@ -647,6 +647,14 @@ namespace GetStoreApp.UI.Controls.WinGet
                         {
                             IsUpgradableAppsEmpty = false;
                         }
+                        IsLoadedCompleted = true;
+                    });
+                }
+                else
+                {
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        IsUpgradableAppsEmpty = true;
                         IsLoadedCompleted = true;
                     });
                 }
