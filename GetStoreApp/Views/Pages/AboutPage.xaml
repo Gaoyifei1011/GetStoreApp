@@ -11,6 +11,25 @@
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Dark">
+                    <LinearGradientBrush x:Key="BackgroundGradientBrush" StartPoint="0.4,-0.2" EndPoint="0.9,1.3">
+                        <GradientStop Offset="0.2" Color="#212121" />
+                        <GradientStop Offset="2.2" Color="#15246A" />
+                    </LinearGradientBrush>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <LinearGradientBrush x:Key="BackgroundGradientBrush" StartPoint="0.4,-0.2" EndPoint="0.9,1.3">
+                        <GradientStop Offset="0.2" Color="#F6F8FA" />
+                        <GradientStop Offset="2.2" Color="#59BCDC" />
+                    </LinearGradientBrush>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
     <Grid Padding="0">
 
         <Grid.RowDefinitions>
@@ -85,7 +104,7 @@
 
                 <!--  顶部栏介绍信息  -->
                 <Grid
-                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    Background="{ThemeResource BackgroundGradientBrush}"
                     BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1"
                     CornerRadius="4">
