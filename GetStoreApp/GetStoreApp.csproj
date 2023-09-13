@@ -35,6 +35,7 @@
     <TargetPlatformMinVersion>10.0.19044.0</TargetPlatformMinVersion>
     <TrimMode>partial</TrimMode>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
+    <UseRidGraph>true</UseRidGraph>
     <WindowsAppSDKDeploymentManagerInitialize>false</WindowsAppSDKDeploymentManagerInitialize>
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
     <WindowsPackageType>MSIX</WindowsPackageType>
