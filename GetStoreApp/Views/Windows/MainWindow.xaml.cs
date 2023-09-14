@@ -18,6 +18,7 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
+using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
@@ -45,8 +46,8 @@ namespace GetStoreApp.Views.Windows
         private WNDPROC newMainWindowWndProc = null;
         private IntPtr oldMainWindowWndProc = IntPtr.Zero;
 
-        private WNDPROC newDragAreaWindowWndProc = null;
-        private IntPtr oldDragAreaWindowWndProc = IntPtr.Zero;
+        private WNDPROC newInputNonClientPointerSourceWndProc = null;
+        private IntPtr oldInputNonClientPointerSourceWndProc = IntPtr.Zero;
 
         private UISettings AppUISettings { get; } = new UISettings();
 
@@ -176,20 +177,19 @@ namespace GetStoreApp.Views.Windows
             AppWindow.Changed += OnAppWindowChanged;
             AppWindow.Closing += OnAppWindowClosing;
             AppUISettings.ColorValuesChanged += OnColorValuesChanged;
-            (Content as FrameworkElement).ActualThemeChanged += OnActualThemeChanged;
 
-            newMainWindowWndProc = new WNDPROC(NewWindowProc);
+            newMainWindowWndProc = new WNDPROC(WindowWndProc);
             oldMainWindowWndProc = SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newMainWindowWndProc));
 
-            IntPtr childHandle = User32Library.FindWindowEx(Handle, IntPtr.Zero, "InputNonClientPointerSource", null);
+            IntPtr inputNonClientPointerSourceHandle = User32Library.FindWindowEx(Handle, IntPtr.Zero, "InputNonClientPointerSource", null);
 
-            if (childHandle != IntPtr.Zero)
+            if (inputNonClientPointerSourceHandle != IntPtr.Zero)
             {
                 int style = GetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_STYLE);
                 SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_STYLE, style & ~(int)WindowStyle.WS_SYSMENU);
 
-                newDragAreaWindowWndProc = new WNDPROC(NewDragAreaWindowProc);
-                oldDragAreaWindowWndProc = SetWindowLongAuto(childHandle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newDragAreaWindowWndProc));
+                newInputNonClientPointerSourceWndProc = new WNDPROC(InputNonClientPointerSourceWndProc);
+                oldInputNonClientPointerSourceWndProc = SetWindowLongAuto(inputNonClientPointerSourceHandle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newInputNonClientPointerSourceWndProc));
             }
 
             if (RuntimeHelper.IsElevated)
@@ -233,20 +233,6 @@ namespace GetStoreApp.Views.Windows
             if (TitlebarMenuFlyout.IsOpen)
             {
                 TitlebarMenuFlyout.Hide();
-            }
-        }
-
-        /// <summary>
-        /// 窗口位置变化发生的事件
-        /// </summary>
-        public void OnAppWindowChanged(AppWindow sender, AppWindowChangedEventArgs args)
-        {
-            if (args.DidPositionChange)
-            {
-                if (TitlebarMenuFlyout.IsOpen)
-                {
-                    TitlebarMenuFlyout.Hide();
-                }
             }
         }
 
@@ -309,6 +295,20 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
+        /// 窗口位置变化发生的事件
+        /// </summary>
+        public void OnAppWindowChanged(AppWindow sender, AppWindowChangedEventArgs args)
+        {
+            if (args.DidPositionChange)
+            {
+                if (TitlebarMenuFlyout.IsOpen)
+                {
+                    TitlebarMenuFlyout.Hide();
+                }
+            }
+        }
+
+        /// <summary>
         /// 关闭窗口之后关闭其他服务
         /// </summary>
         public async void OnAppWindowClosing(object sender, AppWindowClosingEventArgs args)
@@ -325,6 +325,7 @@ namespace GetStoreApp.Views.Windows
 
                 if (result is ContentDialogResult.Primary)
                 {
+                    AppUISettings.ColorValuesChanged -= OnColorValuesChanged;
                     Program.ApplicationRoot.Dispose();
                 }
                 else if (result is ContentDialogResult.Secondary)
@@ -337,6 +338,7 @@ namespace GetStoreApp.Views.Windows
             }
             else
             {
+                AppUISettings.ColorValuesChanged -= OnColorValuesChanged;
                 Program.ApplicationRoot.Dispose();
             }
         }
@@ -369,6 +371,25 @@ namespace GetStoreApp.Views.Windows
         {
             SetTitleBarColor(sender.ActualTheme);
             SetWindowBackground();
+        }
+
+        /// <summary>
+        /// 按下 Alt + Space 键时，导航控件返回到上一页
+        /// </summary>
+        public void OnKeyDown(object sender, KeyRoutedEventArgs args)
+        {
+            if (args.Key == VirtualKey.Back && args.KeyStatus.IsMenuKeyDown)
+            {
+                UWPAppPage uwpAppPage = WindowFrame.Content as UWPAppPage;
+                if (uwpAppPage is not null && uwpAppPage.BreadDataList.Count is 2)
+                {
+                    uwpAppPage.BackToAppList();
+                }
+                else
+                {
+                    NavigationService.NavigationFrom();
+                }
+            }
         }
 
         /// <summary>
@@ -418,7 +439,7 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 导航控件加载完成后初始化内容，初始化导航控件属性、屏幕缩放比例值和应用的背景色
         /// </summary>
-        public void OnNavigationViewLoaded(object sender, RoutedEventArgs args)
+        public void OnLoaded(object sender, RoutedEventArgs args)
         {
             // 导航控件加载完成后初始化内容
 
@@ -465,14 +486,6 @@ namespace GetStoreApp.Views.Windows
                 }
                 IsBackEnabled = NavigationService.CanGoBack();
             }
-        }
-
-        /// <summary>
-        /// 窗口被卸载时，注销所有事件
-        /// </summary>
-        public void OnNavigationViewUnLoaded(object sender, RoutedEventArgs args)
-        {
-            AppUISettings.ColorValuesChanged -= OnColorValuesChanged;
         }
 
         /// <summary>
@@ -682,7 +695,7 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 应用主窗口消息处理
         /// </summary>
-        private IntPtr NewWindowProc(IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam)
+        private IntPtr WindowWndProc(IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam)
         {
             switch (Msg)
             {
@@ -810,7 +823,7 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 应用拖拽区域窗口消息处理
         /// </summary>
-        private IntPtr NewDragAreaWindowProc(IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam)
+        private IntPtr InputNonClientPointerSourceWndProc(IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam)
         {
             switch (Msg)
             {
@@ -845,7 +858,7 @@ namespace GetStoreApp.Views.Windows
                         return 0;
                     }
             }
-            return User32Library.CallWindowProc(oldDragAreaWindowWndProc, hWnd, Msg, wParam, lParam);
+            return User32Library.CallWindowProc(oldInputNonClientPointerSourceWndProc, hWnd, Msg, wParam, lParam);
         }
     }
 }

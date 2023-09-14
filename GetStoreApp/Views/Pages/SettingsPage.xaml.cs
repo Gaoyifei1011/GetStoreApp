@@ -694,6 +694,19 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
+        /// 当应用未启用背景色设置时，自动关闭始终显示背景色设置
+        /// </summary>
+        public void OnIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs args)
+        {
+            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
+            if (toggleSwitch is not null)
+            {
+                AlwaysShowBackdropService.SetAlwaysShowBackdrop(false);
+                AlwaysShowBackdropValue = false;
+            }
+        }
+
+        /// <summary>
         /// 属性值发生变化时通知更改
         /// </summary>
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)

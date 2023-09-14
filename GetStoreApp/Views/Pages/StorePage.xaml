@@ -181,7 +181,10 @@
                     Style="{StaticResource DefaultInfoBarStyle}">
 
                     <InfoBar.Content>
-                        <ProgressRing IsActive="{x:Bind StatePrRingActValue, Mode=OneWay}" IsIndeterminate="True" />
+                        <ProgressRing
+                            IsActive="{x:Bind StatePrRingActValue, Mode=OneWay}"
+                            IsIndeterminate="True"
+                            Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(StatePrRingActValue), Mode=OneWay}" />
                     </InfoBar.Content>
                 </InfoBar>
 

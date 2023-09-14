@@ -12,7 +12,11 @@
     SizeChanged="{x:Bind OnSizeChanged}"
     mc:Ignorable="d">
 
-    <Grid Background="{x:Bind WindowBackground, Mode=OneWay}" RequestedTheme="{x:Bind WindowTheme, Mode=OneWay}">
+    <Grid
+        ActualThemeChanged="{x:Bind OnActualThemeChanged}"
+        Background="{x:Bind WindowBackground, Mode=OneWay}"
+        KeyDown="{x:Bind OnKeyDown}"
+        RequestedTheme="{x:Bind WindowTheme, Mode=OneWay}">
 
         <!--  应用标题栏内容  -->
         <Grid
@@ -125,11 +129,10 @@
             IsPaneToggleButtonVisible="False"
             IsSettingsVisible="False"
             ItemInvoked="{x:Bind OnItemInvoked}"
-            Loaded="{x:Bind OnNavigationViewLoaded}"
+            Loaded="{x:Bind OnLoaded}"
             OpenPaneLength="220"
             PaneDisplayMode="{x:Bind PaneDisplayMode, Mode=OneWay}"
-            SelectedItem="{x:Bind SelectedItem, Mode=OneWay}"
-            Unloaded="{x:Bind OnNavigationViewUnLoaded}">
+            SelectedItem="{x:Bind SelectedItem, Mode=OneWay}">
 
             <NavigationView.Resources>
                 <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent" />
