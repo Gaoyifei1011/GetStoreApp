@@ -32,14 +32,14 @@
                 VerticalAlignment="Center"
                 Canvas.ZIndex="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="22" />
+                    <ColumnDefinition Width="20" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Image
                     Grid.Column="0"
-                    Width="22"
-                    Height="22"
-                    Margin="0,3,0,0"
+                    Width="18"
+                    Height="18"
+                    Margin="2,3,0,0"
                     HorizontalAlignment="Left"
                     Source="ms-appx:///Assets/Square44x44Logo.altform-unplated_targetsize-256.png" />
                 <TextBlock
@@ -174,7 +174,7 @@
                     </NavigationViewItem.Content>
 
                     <NavigationViewItem.Icon>
-                        <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.Store}" />
+                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/Store.png" />
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
@@ -192,7 +192,7 @@
                     </NavigationViewItem.Content>
 
                     <NavigationViewItem.Icon>
-                        <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.History}" />
+                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/History.png" />
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
@@ -210,7 +210,7 @@
                     </NavigationViewItem.Content>
 
                     <NavigationViewItem.Icon>
-                        <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.Download}" />
+                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/Download.png" />
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
@@ -230,7 +230,7 @@
                     </NavigationViewItem.Content>
 
                     <NavigationViewItem.Icon>
-                        <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.WinGet}" />
+                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/WinGet.png" />
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
@@ -248,7 +248,7 @@
                     </NavigationViewItem.Content>
 
                     <NavigationViewItem.Icon>
-                        <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.UWPApp}" />
+                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/UWPApp.png" />
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
@@ -268,7 +268,7 @@
                     </NavigationViewItem.Content>
 
                     <NavigationViewItem.Icon>
-                        <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.Web}" />
+                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/Web.png" />
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
@@ -288,7 +288,7 @@
                     </NavigationViewItem.Content>
 
                     <NavigationViewItem.Icon>
-                        <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.About}" />
+                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/About.png" />
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>
@@ -306,7 +306,7 @@
                     </NavigationViewItem.Content>
 
                     <NavigationViewItem.Icon>
-                        <ImageIcon Loaded="{x:Bind OnIconLoaded}" Tag="{x:Bind properties:Resources.Settings}" />
+                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/Settings.png" />
                     </NavigationViewItem.Icon>
 
                     <ToolTipService.ToolTip>

@@ -20,7 +20,6 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
@@ -30,7 +29,6 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Graphics;
-using Windows.Storage.Streams;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.ViewManagement;
@@ -501,24 +499,6 @@ namespace GetStoreApp.Views.Windows
             else
             {
                 NavigationService.NavigationFrom();
-            }
-        }
-
-        /// <summary>
-        /// 加载导航控件按钮的图标
-        /// </summary>
-        public async void OnIconLoaded(object sender, RoutedEventArgs args)
-        {
-            ImageIcon imageIcon = sender as ImageIcon;
-            if (imageIcon is not null)
-            {
-                InMemoryRandomAccessStream memoryStream = new InMemoryRandomAccessStream();
-                DataWriter datawriter = new DataWriter(memoryStream.GetOutputStreamAt(0));
-                datawriter.WriteBytes((byte[])imageIcon.Tag);
-                await datawriter.StoreAsync();
-                BitmapImage image = new BitmapImage();
-                await image.SetSourceAsync(memoryStream);
-                (sender as ImageIcon).Source = image;
             }
         }
 
