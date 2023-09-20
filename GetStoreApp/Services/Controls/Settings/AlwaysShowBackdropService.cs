@@ -31,6 +31,7 @@ namespace GetStoreApp.Services.Controls.Settings
 
             if (!alwaysShowBackdropValue.HasValue)
             {
+                SetAlwaysShowBackdrop(DefaultAlwaysShowBackdropValue);
                 return DefaultAlwaysShowBackdropValue;
             }
 

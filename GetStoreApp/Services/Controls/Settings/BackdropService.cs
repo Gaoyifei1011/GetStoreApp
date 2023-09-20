@@ -41,6 +41,7 @@ namespace GetStoreApp.Services.Controls.Settings
 
             if (string.IsNullOrEmpty(backdrop))
             {
+                SetBackdrop(DefaultAppBackdrop);
                 return DefaultAppBackdrop;
             }
 

@@ -39,6 +39,7 @@ namespace GetStoreApp.Services.Controls.Settings
 
             if (string.IsNullOrEmpty(historyLiteNumValue))
             {
+                SetHistoryLiteNum(DefaultHistoryLiteNum);
                 return HistoryLiteNumList.Find(item => item.SelectedValue == DefaultHistoryLiteNum.SelectedValue);
             }
 

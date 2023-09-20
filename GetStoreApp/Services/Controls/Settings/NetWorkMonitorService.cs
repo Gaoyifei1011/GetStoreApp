@@ -32,6 +32,7 @@ namespace GetStoreApp.Services.Controls.Settings
 
             if (!netWorkMonitorValue.HasValue)
             {
+                SetNetWorkMonitorValue(DefaultNetWorkMonitorValue);
                 return DefaultNetWorkMonitorValue;
             }
 

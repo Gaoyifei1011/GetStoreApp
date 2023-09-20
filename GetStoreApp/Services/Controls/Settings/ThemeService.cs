@@ -29,43 +29,32 @@ namespace GetStoreApp.Services.Controls.Settings
 
             DefaultAppTheme = ThemeList.Find(item => item.SelectedValue == nameof(ElementTheme.Default));
 
-            (bool, GroupOptionsModel) ThemeResult = GetTheme();
-
-            AppTheme = ThemeResult.Item2;
-
-            if (ThemeResult.Item1)
-            {
-                SetTheme(AppTheme, false);
-            }
+            AppTheme = GetTheme();
         }
 
         /// <summary>
         /// 获取设置存储的主题值，如果设置没有存储，使用默认值
         /// </summary>
-        private static (bool, GroupOptionsModel) GetTheme()
+        private static GroupOptionsModel GetTheme()
         {
             string theme = ConfigService.ReadSetting<string>(ThemeSettingsKey);
 
             if (string.IsNullOrEmpty(theme))
             {
-                return (true, DefaultAppTheme);
+                SetTheme(DefaultAppTheme);
+                return DefaultAppTheme;
             }
 
             GroupOptionsModel selectedTheme = ThemeList.Find(item => item.SelectedValue.Equals(theme, StringComparison.OrdinalIgnoreCase));
 
-            return selectedTheme is null ? (true, DefaultAppTheme) : (false, ThemeList.Find(item => item.SelectedValue.Equals(theme, StringComparison.OrdinalIgnoreCase)));
+            return selectedTheme is null ? DefaultAppTheme : ThemeList.Find(item => item.SelectedValue.Equals(theme, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
         /// 应用主题发生修改时修改设置存储的主题值
         /// </summary>
-        public static void SetTheme(GroupOptionsModel theme, bool isNotFirstSet = true)
+        public static void SetTheme(GroupOptionsModel theme)
         {
-            if (isNotFirstSet)
-            {
-                AppTheme = theme;
-            }
-
             ConfigService.SaveSetting(ThemeSettingsKey, theme.SelectedValue);
         }
 

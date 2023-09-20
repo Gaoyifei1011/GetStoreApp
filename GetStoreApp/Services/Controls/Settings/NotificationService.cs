@@ -32,6 +32,7 @@ namespace GetStoreApp.Services.Controls.Settings
 
             if (!appNotification.HasValue)
             {
+                SetNotification(DefaultAppNotification);
                 return DefaultAppNotification;
             }
 

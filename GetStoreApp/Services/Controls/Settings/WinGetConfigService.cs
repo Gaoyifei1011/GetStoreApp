@@ -49,6 +49,7 @@ namespace GetStoreApp.Services.Controls.Settings
 
             if (!useDevVersion.HasValue)
             {
+                SetUseDevVersion(DefaultUseDevVersion);
                 return DefaultUseDevVersion;
             }
 
@@ -74,6 +75,7 @@ namespace GetStoreApp.Services.Controls.Settings
 
             if (string.IsNullOrEmpty(winGetInstallMode))
             {
+                SetWinGetInstallMode(DefaultWinGetInstallMode);
                 return WinGetInstallModeList.Find(item => item.SelectedValue.Equals(DefaultWinGetInstallMode.SelectedValue, StringComparison.OrdinalIgnoreCase));
             }
 

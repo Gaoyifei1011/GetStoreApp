@@ -40,6 +40,7 @@ namespace GetStoreApp.Services.Controls.Settings
 
             if (string.IsNullOrEmpty(installMode))
             {
+                SetInstallMode(DefaultInstallMode);
                 return InstallModeList.Find(item => item.SelectedValue.Equals(DefaultInstallMode.SelectedValue, StringComparison.OrdinalIgnoreCase));
             }
 

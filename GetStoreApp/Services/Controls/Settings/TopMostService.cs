@@ -32,6 +32,7 @@ namespace GetStoreApp.Services.Controls.Settings
 
             if (!topMostValue.HasValue)
             {
+                SetTopMostValue(DefaultTopMostValue);
                 return DefaultTopMostValue;
             }
 

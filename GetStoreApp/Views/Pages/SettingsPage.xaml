@@ -585,7 +585,7 @@
                                         IsOn="{x:Bind EncryptedPackageFilterValue, Mode=OneWay}"
                                         OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackageOffContent')}"
                                         OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackageOnContent')}"
-                                        Toggled="{x:Bind OnStartWithEToggled}" />
+                                        Toggled="{x:Bind OnEncryptedPackageToggled}" />
                                 </Grid>
                             </StackPanel>
 

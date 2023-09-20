@@ -657,7 +657,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 设置是否过滤加密包文件
         /// </summary>
-        public void OnStartWithEToggled(object sender, RoutedEventArgs args)
+        public void OnEncryptedPackageToggled(object sender, RoutedEventArgs args)
         {
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch is not null)

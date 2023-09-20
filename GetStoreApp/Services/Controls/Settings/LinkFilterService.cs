@@ -24,7 +24,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         public static void InitializeLinkFilterValue()
         {
-            EncryptedPackageFilterValue = GetStartWithEFilterValue();
+            EncryptedPackageFilterValue = GetEncryptedPackageFilterValue();
 
             BlockMapFilterValue = GetBlockMapFilterValue();
         }
@@ -32,16 +32,17 @@ namespace GetStoreApp.Services.Controls.Settings
         /// <summary>
         /// 获取设置存储的加密包显示设置的过滤值，如果设置没有存储，使用默认值
         /// </summary>
-        private static bool GetStartWithEFilterValue()
+        private static bool GetEncryptedPackageFilterValue()
         {
-            bool? startWithEFilterValue = ConfigService.ReadSetting<bool?>(EncryptedPackageSettingsKey);
+            bool? encryptedPackageFilterValue = ConfigService.ReadSetting<bool?>(EncryptedPackageSettingsKey);
 
-            if (!startWithEFilterValue.HasValue)
+            if (!encryptedPackageFilterValue.HasValue)
             {
+                SetEncryptedPackageFilterValue(DefaultLinkFilterValue);
                 return DefaultLinkFilterValue;
             }
 
-            return Convert.ToBoolean(startWithEFilterValue);
+            return Convert.ToBoolean(encryptedPackageFilterValue);
         }
 
         /// <summary>
@@ -53,6 +54,7 @@ namespace GetStoreApp.Services.Controls.Settings
 
             if (!blockMapFilterValue.HasValue)
             {
+                SetBlockMapFilterValue(DefaultLinkFilterValue);
                 return DefaultLinkFilterValue;
             }
 

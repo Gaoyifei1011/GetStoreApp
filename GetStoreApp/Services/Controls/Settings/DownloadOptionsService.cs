@@ -65,6 +65,7 @@ namespace GetStoreApp.Services.Controls.Settings
             {
                 if (string.IsNullOrEmpty(folder))
                 {
+                    SetFolder(AppCacheFolder);
                     return AppCacheFolder;
                 }
                 else
@@ -89,6 +90,7 @@ namespace GetStoreApp.Services.Controls.Settings
 
             if (!downloadItemValue.HasValue)
             {
+                SetItem(DefaultItem);
                 return DefaultItem;
             }
 
@@ -104,6 +106,7 @@ namespace GetStoreApp.Services.Controls.Settings
 
             if (string.IsNullOrEmpty(downloadMode))
             {
+                SetMode(DefaultDownloadMode);
                 return DownloadModeList.Find(item => item.SelectedValue.Equals(DefaultDownloadMode.SelectedValue, StringComparison.OrdinalIgnoreCase));
             }
 
